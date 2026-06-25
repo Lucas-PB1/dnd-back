@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "ritual-caster",
+  "name": "Conjurador Ritualista",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": false,
+  "prerequisite": "Nível 4 ou superior, Inteligência, Sabedoria ou Carisma 13 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.801Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."
+    },
+    {
+      "name": "Magias Rituais",
+      "description": "Escolha um número de magias de 1º círculo igual ao seu Bônus de Proficiência que tem o marcador Ritual. Você tem essas magias sempre preparadas e pode conjurá-las com qualquer espaço de magia que tiver. O atributo de conjuração das magias é o atributo aumentado por este talento. Sempre que seu Bônus de Proficiência aumentar depois disso, você pode adicionar uma magia de 1º círculo com o marcador Ritual às magias sempre preparadas com esta característica."
+    },
+    {
+      "name": "Ritual Rápido",
+      "description": "Com este benefício, você pode conjurar uma magia Ritual que tem preparada usando seu tempo de conjuração normal, em vez do tempo prolon- gado para um Ritual. Realizar isso não requer um espaço de magia. Após conjurar a magia desse modo, você não pode usar esse benefício novamente até completar um Descanso Longo."
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "inspiring-leader",
+  "name": "Líder Inspirador",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": false,
+  "prerequisite": "Nível 4 ou superior, Sabedoria ou Carisma 13 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.806Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente seu valor de Sabedoria ou Carisma em 1, até no máximo 20."
+    },
+    {
+      "name": "Atuação Encorajadora",
+      "description": "Ao completar um Descanso Curto ou Longo, você pode fazer uma atuação encorajadora: um discurso, música ou dança. Ao realizar isso, escolha até seis aliados (você pode se incluir) a até 9 metros de você que presenciaram a atuação. Criaturas escolhidas recebem Pontos de Vida Temporários iguais ao seu nível de personagem mais o modificador do atributo que você aumentou com este talento."
+    }
+  ]
+}

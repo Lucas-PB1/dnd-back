@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "boon-of-speed",
+  "name": "Dádiva da Velocidade",
+  "category": "epic-boon",
+  "categoryLabel": "Dádiva Épica",
+  "typeLabel": "Talento de Dádiva Épica",
+  "repeatable": false,
+  "prerequisite": "Nível 19 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.822Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente um valor de atributo à sua escolha em 1, até no máximo 30."
+    },
+    {
+      "name": "Artista de Fuga",
+      "description": "Como uma Ação Bônus, você pode executar a ação Desengajar, que também encerra a condição Imobilizado em você."
+    },
+    {
+      "name": "Agilidade",
+      "description": "Seu Deslocamento aumenta em 9 metros."
+    }
+  ]
+}

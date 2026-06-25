@@ -1,0 +1,549 @@
+{
+  "$schema": "../../schema/feats-index.schema.json",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.824Z"
+  },
+  "featCount": 75,
+  "byCategory": {
+    "origin": 10,
+    "general": 43,
+    "fighting-style": 10,
+    "epic-boon": 12
+  },
+  "feats": [
+    {
+      "id": "elemental-adept",
+      "name": "Adepto Elemental",
+      "category": "general",
+      "repeatable": true,
+      "file": "elemental-adept.json"
+    },
+    {
+      "id": "charger",
+      "name": "Agressor",
+      "category": "general",
+      "repeatable": false,
+      "file": "charger.json"
+    },
+    {
+      "id": "alert",
+      "name": "Alerta",
+      "category": "origin",
+      "repeatable": false,
+      "file": "alert.json"
+    },
+    {
+      "id": "observant",
+      "name": "Analítico",
+      "category": "general",
+      "repeatable": false,
+      "file": "observant.json"
+    },
+    {
+      "id": "archery",
+      "name": "Arquearia",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "archery.json"
+    },
+    {
+      "id": "artisan",
+      "name": "Artifista",
+      "category": "origin",
+      "repeatable": false,
+      "file": "artisan.json"
+    },
+    {
+      "id": "savage-attacker",
+      "name": "Atacante Selvagem",
+      "category": "origin",
+      "repeatable": false,
+      "file": "savage-attacker.json"
+    },
+    {
+      "id": "spell-sniper",
+      "name": "Atirador Arcano",
+      "category": "general",
+      "repeatable": false,
+      "file": "spell-sniper.json"
+    },
+    {
+      "id": "athlete",
+      "name": "Atleta",
+      "category": "general",
+      "repeatable": false,
+      "file": "athlete.json"
+    },
+    {
+      "id": "actor",
+      "name": "Ator",
+      "category": "general",
+      "repeatable": false,
+      "file": "actor.json"
+    },
+    {
+      "id": "ability-score-improvement",
+      "name": "Aumento no Valor de Atributo",
+      "category": "general",
+      "repeatable": true,
+      "file": "ability-score-improvement.json"
+    },
+    {
+      "id": "chef",
+      "name": "Chef",
+      "category": "general",
+      "repeatable": false,
+      "file": "chef.json"
+    },
+    {
+      "id": "thrown-weapon-fighting",
+      "name": "Combate com Armas de Arremesso",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "thrown-weapon-fighting.json"
+    },
+    {
+      "id": "great-weapon-fighting",
+      "name": "Combate com Armas Grandes",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "great-weapon-fighting.json"
+    },
+    {
+      "id": "two-weapon-fighting",
+      "name": "Combate com Duas Armas",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "two-weapon-fighting.json"
+    },
+    {
+      "id": "unarmed-fighting",
+      "name": "Combate Desarmado",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "unarmed-fighting.json"
+    },
+    {
+      "id": "mounted-combatant",
+      "name": "Combatente Montado",
+      "category": "general",
+      "repeatable": false,
+      "file": "mounted-combatant.json"
+    },
+    {
+      "id": "war-caster",
+      "name": "Conjurador Bélico",
+      "category": "general",
+      "repeatable": false,
+      "file": "war-caster.json"
+    },
+    {
+      "id": "ritual-caster",
+      "name": "Conjurador Ritualista",
+      "category": "general",
+      "repeatable": false,
+      "file": "ritual-caster.json"
+    },
+    {
+      "id": "healer",
+      "name": "Curandeiro",
+      "category": "origin",
+      "repeatable": false,
+      "file": "healer.json"
+    },
+    {
+      "id": "boon-of-fortitude",
+      "name": "Dádiva da Fortitude",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-fortitude.json"
+    },
+    {
+      "id": "boon-of-combat-prowess",
+      "name": "Dádiva da Proeza em Combate",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-combat-prowess.json"
+    },
+    {
+      "id": "boon-of-skill-proficiency",
+      "name": "Dádiva da Proficiência em Perícia",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-skill-proficiency.json"
+    },
+    {
+      "id": "boon-of-spell-recall",
+      "name": "Dádiva da Recordação de Magia",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-spell-recall.json"
+    },
+    {
+      "id": "boon-of-recovery",
+      "name": "Dádiva da Recuperação",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-recovery.json"
+    },
+    {
+      "id": "boon-of-energy-resistance",
+      "name": "Dádiva da Resistência à Energia",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-energy-resistance.json"
+    },
+    {
+      "id": "boon-of-speed",
+      "name": "Dádiva da Velocidade",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-speed.json"
+    },
+    {
+      "id": "boon-of-dimensional-travel",
+      "name": "Dádiva da Viagem Dimensional",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-dimensional-travel.json"
+    },
+    {
+      "id": "boon-of-truesight",
+      "name": "Dádiva da Visão Verdadeira",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-truesight.json"
+    },
+    {
+      "id": "boon-of-irresistible-offense",
+      "name": "Dádiva do Ataque Irresistível",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-irresistible-offense.json"
+    },
+    {
+      "id": "boon-of-fate",
+      "name": "Dádiva do Destino",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-fate.json"
+    },
+    {
+      "id": "boon-of-the-night-spirit",
+      "name": "Dádiva do Espírito da Noite",
+      "category": "epic-boon",
+      "repeatable": false,
+      "file": "boon-of-the-night-spirit.json"
+    },
+    {
+      "id": "defense",
+      "name": "Defensivo",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "defense.json"
+    },
+    {
+      "id": "dueling",
+      "name": "Duelismo",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "dueling.json"
+    },
+    {
+      "id": "defensive-duelist",
+      "name": "Duelista Defensivo",
+      "category": "general",
+      "repeatable": false,
+      "file": "defensive-duelist.json"
+    },
+    {
+      "id": "poisoner",
+      "name": "Envenenador",
+      "category": "general",
+      "repeatable": false,
+      "file": "poisoner.json"
+    },
+    {
+      "id": "crusher",
+      "name": "Esmagador",
+      "category": "general",
+      "repeatable": false,
+      "file": "crusher.json"
+    },
+    {
+      "id": "dual-wielder",
+      "name": "Especialista Ambidestro",
+      "category": "general",
+      "repeatable": false,
+      "file": "dual-wielder.json"
+    },
+    {
+      "id": "lightly-armored",
+      "name": "Especialista em Armaduras Leves",
+      "category": "general",
+      "repeatable": false,
+      "file": "lightly-armored.json"
+    },
+    {
+      "id": "moderately-armored",
+      "name": "Especialista em Armaduras Médias",
+      "category": "general",
+      "repeatable": false,
+      "file": "moderately-armored.json"
+    },
+    {
+      "id": "heavily-armored",
+      "name": "Especialista em Armaduras Pesadas",
+      "category": "general",
+      "repeatable": false,
+      "file": "heavily-armored.json"
+    },
+    {
+      "id": "crossbow-expert",
+      "name": "Especialista em Besta",
+      "category": "general",
+      "repeatable": false,
+      "file": "crossbow-expert.json"
+    },
+    {
+      "id": "skill-expert",
+      "name": "Especialista em Perícia",
+      "category": "general",
+      "repeatable": false,
+      "file": "skill-expert.json"
+    },
+    {
+      "id": "mage-slayer",
+      "name": "Exterminador de Conjuradores",
+      "category": "general",
+      "repeatable": false,
+      "file": "mage-slayer.json"
+    },
+    {
+      "id": "skilled",
+      "name": "Habilidoso",
+      "category": "origin",
+      "repeatable": true,
+      "file": "skilled.json"
+    },
+    {
+      "id": "grappler",
+      "name": "Imobilizador",
+      "category": "general",
+      "repeatable": false,
+      "file": "grappler.json"
+    },
+    {
+      "id": "magic-initiate",
+      "name": "Iniciado em Magia",
+      "category": "origin",
+      "repeatable": true,
+      "file": "magic-initiate.json"
+    },
+    {
+      "id": "interception",
+      "name": "Interceptação",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "interception.json"
+    },
+    {
+      "id": "inspiring-leader",
+      "name": "Líder Inspirador",
+      "category": "general",
+      "repeatable": false,
+      "file": "inspiring-leader.json"
+    },
+    {
+      "id": "blind-fighting",
+      "name": "Luta às Cegas",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "blind-fighting.json"
+    },
+    {
+      "id": "keen-mind",
+      "name": "Mente Aguçada",
+      "category": "general",
+      "repeatable": false,
+      "file": "keen-mind.json"
+    },
+    {
+      "id": "weapon-master",
+      "name": "Mestre das Armas",
+      "category": "general",
+      "repeatable": false,
+      "file": "weapon-master.json"
+    },
+    {
+      "id": "medium-armor-master",
+      "name": "Mestre em Armaduras Médias",
+      "category": "general",
+      "repeatable": false,
+      "file": "medium-armor-master.json"
+    },
+    {
+      "id": "heavy-armor-master",
+      "name": "Mestre em Armaduras Pesadas",
+      "category": "general",
+      "repeatable": false,
+      "file": "heavy-armor-master.json"
+    },
+    {
+      "id": "polearm-master",
+      "name": "Mestre em Armas de Haste",
+      "category": "general",
+      "repeatable": false,
+      "file": "polearm-master.json"
+    },
+    {
+      "id": "great-weapon-master",
+      "name": "Mestre em Armas Grandes",
+      "category": "general",
+      "repeatable": false,
+      "file": "great-weapon-master.json"
+    },
+    {
+      "id": "shield-master",
+      "name": "Mestre em Escudos",
+      "category": "general",
+      "repeatable": false,
+      "file": "shield-master.json"
+    },
+    {
+      "id": "sharpshooter",
+      "name": "Mestre-Atirador",
+      "category": "general",
+      "repeatable": false,
+      "file": "sharpshooter.json"
+    },
+    {
+      "id": "musician",
+      "name": "Músico",
+      "category": "origin",
+      "repeatable": false,
+      "file": "musician.json"
+    },
+    {
+      "id": "piercer",
+      "name": "Perfurador",
+      "category": "general",
+      "repeatable": false,
+      "file": "piercer.json"
+    },
+    {
+      "id": "protection",
+      "name": "Protetivo",
+      "category": "fighting-style",
+      "repeatable": false,
+      "file": "protection.json"
+    },
+    {
+      "id": "resilient",
+      "name": "Resiliente",
+      "category": "general",
+      "repeatable": false,
+      "file": "resilient.json"
+    },
+    {
+      "id": "durable",
+      "name": "Resistente",
+      "category": "general",
+      "repeatable": false,
+      "file": "durable.json"
+    },
+    {
+      "id": "sentinel",
+      "name": "Sentinela",
+      "category": "general",
+      "repeatable": false,
+      "file": "sentinel.json"
+    },
+    {
+      "id": "stealthy",
+      "name": "Sorrateiro",
+      "category": "general",
+      "repeatable": false,
+      "file": "stealthy.json"
+    },
+    {
+      "id": "lucky",
+      "name": "Sortudo",
+      "category": "origin",
+      "repeatable": false,
+      "file": "lucky.json"
+    },
+    {
+      "id": "slasher",
+      "name": "Talhador",
+      "category": "general",
+      "repeatable": false,
+      "file": "slasher.json"
+    },
+    {
+      "id": "telekinetic",
+      "name": "Telecinético",
+      "category": "general",
+      "repeatable": false,
+      "file": "telekinetic.json"
+    },
+    {
+      "id": "telepathic",
+      "name": "Telepático",
+      "category": "general",
+      "repeatable": false,
+      "file": "telepathic.json"
+    },
+    {
+      "id": "shadow-touched",
+      "name": "Tocado pela Sombra",
+      "category": "general",
+      "repeatable": false,
+      "file": "shadow-touched.json"
+    },
+    {
+      "id": "fey-touched",
+      "name": "Tocado pelas Fadas",
+      "category": "general",
+      "repeatable": false,
+      "file": "fey-touched.json"
+    },
+    {
+      "id": "martial-weapon-training",
+      "name": "Treinamento com Armas Marciais",
+      "category": "general",
+      "repeatable": false,
+      "file": "martial-weapon-training.json"
+    },
+    {
+      "id": "tavern-brawler",
+      "name": "Valentão de Taverna",
+      "category": "origin",
+      "repeatable": false,
+      "file": "tavern-brawler.json"
+    },
+    {
+      "id": "mobile",
+      "name": "Velocista",
+      "category": "general",
+      "repeatable": false,
+      "file": "mobile.json"
+    },
+    {
+      "id": "tough",
+      "name": "Vigoroso",
+      "category": "origin",
+      "repeatable": false,
+      "file": "tough.json"
+    }
+  ]
+}

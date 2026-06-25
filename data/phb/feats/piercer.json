@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "piercer",
+  "name": "Perfurador",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": false,
+  "prerequisite": "Nível 4 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.810Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente seu valor de Força ou Destreza em 1, até no máximo 20."
+    },
+    {
+      "name": "Punção",
+      "description": "Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Perfurante, pode jogar novamente um dos dados de dano do ataque, e você deve usar a nova jogada."
+    },
+    {
+      "name": "Crítico Melhorado",
+      "description": "Ao obter um Acerto Crítico que causa dano Perfurante a uma criatura, você pode jogar um dado de dano adicional ao determinar o dano Perfurante adicional que o alvo sofre."
+    }
+  ]
+}

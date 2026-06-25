@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "athlete",
+  "name": "Atleta",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": false,
+  "prerequisite": "Nível 4 ou superior, Força ou Destreza 13 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.798Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente seu valor de Força ou Destreza em 1, até no máximo 20."
+    },
+    {
+      "name": "Deslocamento de Escalada",
+      "description": "Você adquire Deslocamento de Escalada igual ao seu Deslocamento."
+    },
+    {
+      "name": "Levantar",
+      "description": "Quando você tem a condição Caído, pode se reerguer com apenas 1,5 metro de movimento."
+    },
+    {
+      "name": "Saltar",
+      "description": "Você pode realizar um Salto em Distância ou Salto em Altura correndo após mover-se apenas 1,5 metro."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "great-weapon-fighting",
+  "name": "Combate com Armas Grandes",
+  "category": "fighting-style",
+  "categoryLabel": "Estilo de Luta",
+  "typeLabel": "Talento de Estilo de Luta",
+  "repeatable": false,
+  "prerequisite": "Característica de Estilo de Luta",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.817Z"
+  },
+  "benefits": [
+    {
+      "description": "Quando você joga dano para um ataque que realiza com uma arma Corpo a Corpo que está empunhando com as duas mãos, pode tratar qualquer 1 ou 2 em um dado de dano como um 3. A arma deve ter a propriedade Duas Mãos ou Versátil para obter este benefício."
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "$schema": "../../../schema/feat-rules.schema.json",
+  "id": "intro",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.780Z"
+  },
+  "intro": "Este capítulo oferece uma variedade de talentos, que são características especiais não vinculadas a uma classe de personagem. Um talento representa uma capacidade específica ou uma área de especialização que concede qualidades especiais ao personagem. Ele incorpora treinamento, experiência e habilidades além do que uma classe oferece.\nAs seções abaixo explicam as partes de um talento e apresentam uma variedade de opções de talentos organizados em categorias.\nSeu antecedente concede um talento e, em determinados níveis, sua classe concede o talento Aumento no\nValor de Atributo ou a escolha de outro talento para o qual você se qualifique.\nIndependentemente do modo pelo qual você adquire um talento, você só pode obtê-lo uma vez, a menos que a descrição do talento indique o contrário.\nDescrições dos Talentos\nOs talentos deste capítulo estão organizados por categoria — Origem, Geral, Estilo de Luta ou Dádiva\nÉpica — e em ordem alfabética dentro de cada categoria. Todos os talentos estão listados alfabeticamente na tabela Talentos. Se um talento puder ser adquirido mais de uma vez, um asterisco aparece após o nome do talento na tabela.\nPartes de um Talento\nA descrição de um talento contém as seguintes partes,\napresentadas após o nome do talento.\nCategoria. Um talento pertence a uma categoria, indicada no talento. Se você for instruído a escolher um talento de uma categoria específica, como a categoria\nOrigem, essa categoria deve aparecer sob o nome do talento. Se for instruído a escolher um talento sem especificar uma categoria, você pode escolher qualquer categoria.\nPré-requisito. Para adquirir um talento, você deve atender a qualquer pré-requisito descrito, a menos que uma característica permita que você adquira o talento sem o cumprir. Se um pré-requisito incluir uma classe,\nvocê deve ter pelo menos 1 nível naquela classe para adquirir o talento.\nBenefício. Os benefícios de um talento são detalhados após qualquer pré-requisito. Se você possui um talento, adquire os benefícios dele.\nRepetível. Um talento pode ser adquirido apenas uma vez, a menos que a descrição do talento indique o contrário em uma subseção chamada “Repetível”.",
+  "rules": [
+    {
+      "id": "descriptions",
+      "title": "Descrições dos Talentos",
+      "text": "Descrições dos Talentos\nOs talentos deste capítulo estão organizados por categoria — Origem, Geral, Estilo de Luta ou Dádiva\nÉpica — e em ordem alfabética dentro de cada categoria. Todos os talentos estão listados alfabeticamente na tabela Talentos. Se um talento puder ser adquirido mais de uma vez, um asterisco aparece após o nome do talento na tabela.\nPartes de um Talento\nA descrição de um talento contém as seguintes partes,\napresentadas após o nome do talento.\nCategoria. Um talento pertence a uma categoria, indicada no talento. Se você for instruído a escolher um talento de uma categoria específica, como a categoria\nOrigem, essa categoria deve aparecer sob o nome do talento. Se for instruído a escolher um talento sem especificar uma categoria, você pode escolher qualquer categoria.\nPré-requisito. Para adquirir um talento, você deve atender a qualquer pré-requisito descrito, a menos que uma característica permita que você adquira o talento sem o cumprir. Se um pré-requisito incluir uma classe,\nvocê deve ter pelo menos 1 nível naquela classe para adquirir o talento.\nBenefício. Os benefícios de um talento são detalhados após qualquer pré-requisito. Se você possui um talento, adquire os benefícios dele.\nRepetível. Um talento pode ser adquirido apenas uma vez, a menos que a descrição do talento indique o contrário em uma subseção chamada “Repetível”.\nLista de Talentos"
+    },
+    {
+      "id": "categories",
+      "title": "Categoria",
+      "text": "Categoria. Um talento pertence a uma categoria, indicada no talento. Se você for instruído a escolher um talento de uma categoria específica, como a categoria\nOrigem, essa categoria deve aparecer sob o nome do talento. Se for instruído a escolher um talento sem especificar uma categoria, você pode escolher qualquer categoria.\nPré-requisito. Para adquirir um talento, você deve atender a qualquer pré-requisito descrito, a menos que uma característica permita que você adquira o talento sem o cumprir. Se um pré-requisito incluir uma classe,\nvocê deve ter pelo menos 1 nível naquela classe para adquirir o talento.\nBenefício. Os benefícios de um talento são detalhados após qualquer pré-requisito. Se você possui um talento, adquire os benefícios dele.\nRepetível. Um talento pode ser adquirido apenas uma vez, a menos que a descrição do talento indique o contrário em uma subseção chamada “Repetível”.\nLista de Talentos"
+    }
+  ]
+}

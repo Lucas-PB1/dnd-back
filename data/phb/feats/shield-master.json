@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "shield-master",
+  "name": "Mestre em Escudos",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": false,
+  "prerequisite": "Nível 4 ou superior, Treinamento com Escudo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.809Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente seu valor de Força em 1, até no máximo 20."
+    },
+    {
+      "name": "Golpe de Escudo",
+      "description": "Ao atacar uma criatura a até 1,5 metro de você como parte da ação Atacar e atingir com uma arma Corpo a Corpo, você pode atacar imediatamente o alvo com seu Escudo se ele estiver equipado, forçando o alvo a realizar uma salvaguarda de Força (CD 8 mais seu modificador de Força e seu Bônus de Proficiência). Se falhar, você empurra o alvo a 1,5 metro de você ou impõe a ele a condição Caído (à sua escolha). Você pode usar esse benefício apenas uma vez em cada um dos seus turnos."
+    },
+    {
+      "name": "Interpor Escudo",
+      "description": "Se você for submetido a um efeito que lhe permita realizar uma salvaguarda de Destreza para sofrer apenas metade do dano, pode usar uma Reação para não sofrer dano se você for bem-sucedido na salvaguarda e estiver segurando um Escudo."
+    }
+  ]
+}

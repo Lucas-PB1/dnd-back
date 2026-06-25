@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "charger",
+  "name": "Agressor",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": false,
+  "prerequisite": "Nível 4 ou superior, Força ou Destreza 13 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.797Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente seu valor de Força ou Destreza em 1, até no máximo 20."
+    },
+    {
+      "name": "Corrida Aprimorada",
+      "description": "Quando você executa a ação Correr, seu Deslocamento aumenta em 3 metros para esta ação."
+    },
+    {
+      "name": "Ataque em Investida",
+      "description": "Se você se mover pelo menos 3 metros em linha reta em direção a um alvo imediatamente antes de atingi-lo com uma jogada de ataque corpo a corpo como parte da ação Atacar, escolha um dos seguintes efeitos: obter um bônus de +1d8 na jogada de dano do ataque ou empurrar o alvo até 3 metros se ele não for um tamanho maior que você. Você pode usar esse benefício apenas uma vez em cada um dos seus turnos."
+    }
+  ]
+}

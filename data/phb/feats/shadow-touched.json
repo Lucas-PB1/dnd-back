@@ -1,0 +1,32 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "shadow-touched",
+  "name": "Tocado pela Sombra",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": false,
+  "prerequisite": "Nível 4 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.814Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."
+    },
+    {
+      "name": "Magia Sombria",
+      "description": "Escolha uma magia de 1º círculo da escola de magia Ilusão ou Necromancia. Você tem essa magia e Invisibilidade sempre preparadas, podendo conjurá-las sem gastar espaço de magia. Após usar uma delas desse modo, você não pode conjurá-la assim novamente até completar um Descanso Longo. Também é possível conjurar estas magias utilizando espaços de magia de círculos apropriados. O atributo de conjuração das magias é o aprimorado por este talento."
+    }
+  ]
+}

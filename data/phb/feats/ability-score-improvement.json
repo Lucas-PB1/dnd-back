@@ -1,0 +1,31 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "ability-score-improvement",
+  "name": "Aumento no Valor de Atributo",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": true,
+  "prerequisite": "Nível 4 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.799Z"
+  },
+  "benefits": [
+    {
+      "description": "Aumente um valor de atributo à sua escolha em 2, ou aumente dois valores de atributo à sua escolha em 1. Este talento não pode aumentar um valor de atributo acima de 20."
+    },
+    {
+      "name": "Repetível",
+      "description": "Você pode adquirir este talento mais de uma vez."
+    }
+  ]
+}

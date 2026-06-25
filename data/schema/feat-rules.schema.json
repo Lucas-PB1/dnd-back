@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/feat-rules.schema.json",
+  "title": "Regras do Capítulo de Talentos PHB",
+  "type": "object",
+  "required": ["id", "source", "intro"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "intro": { "type": "string" },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "text"],
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "text": { "type": "string" }
+        }
+      }
+    }
+  }
+}

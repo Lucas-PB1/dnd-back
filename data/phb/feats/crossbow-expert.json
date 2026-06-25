@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/feat.schema.json",
+  "id": "crossbow-expert",
+  "name": "Especialista em Besta",
+  "category": "general",
+  "categoryLabel": "Geral",
+  "typeLabel": "Talento Geral",
+  "repeatable": false,
+  "prerequisite": "Nível 4 ou superior, Destreza 13 ou superior",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 5,
+    "chapterTitle": "Talentos",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      205,
+      217
+    ],
+    "extractedAt": "2026-06-25T01:46:09.804Z"
+  },
+  "benefits": [
+    {
+      "name": "Aumento no Valor de Atributo",
+      "description": "Aumente seu valor de Destreza em 1, até no máximo 20."
+    },
+    {
+      "name": "Ignorar Recarga",
+      "description": "Você ignora a propriedade Recarga da Besta de Mão, Besta Leve e Besta Pesada (todas chamadas de bestas em outras partes deste talento). Se estiver segurando uma dessas bestas, você pode carregar uma peça de munição nela mesmo sem ter uma mão livre."
+    },
+    {
+      "name": "Disparo à Queima-Roupa",
+      "description": "Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com bestas."
+    },
+    {
+      "name": "Combate com Duas Armas",
+      "description": "Ao realizar o ataque adicional da propriedade Leve, você pode adicionar seu modificador de atributo ao dano do ataque adicional se esse ataque for com uma besta que tenha a propriedade Leve e você ainda não estiver adicionando esse modificador ao dano."
+    }
+  ]
+}
