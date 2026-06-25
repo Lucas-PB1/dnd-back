@@ -1,0 +1,65 @@
+{
+  "$schema": "../../../schema/equipment-rules.schema.json",
+  "id": "magic-items",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 6,
+    "chapterTitle": "Equipamento",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pageRanges": [
+      [
+        219,
+        219
+      ],
+      [
+        226,
+        239
+      ]
+    ],
+    "extractedAt": "2026-06-25T01:39:43.402Z"
+  },
+  "intro": "As aventuras oferecem a promessa — mas não uma\ngarantia — de encontrar itens mágicos. Centenas de\nitens mágicos são detalhados no Livro do Mestre, já\nque o Mestre decide quando você encontra tal item.\nAqui está o que você precisa saber sobre o uso de itens\nmágicos.",
+  "sections": [
+    {
+      "id": "identifying",
+      "title": "Identificando um Item Mágico",
+      "description": "Alguns itens mágicos não podem ser diferenciados de\nseus pares não mágicos, enquanto outros são evidentemente mágicos. Manipular um item mágico é suficiente\npara lhe dar a sensação de que ele é extraordinário,\nmas aprender sobre as propriedades de um item mágico não é algo que vem automaticamente.\nA magia Identificar é a maneira mais rápida de revelar\nas propriedades de um item. Como alternativa, você\npode se concentrar em um item mágico durante um\nDescanso Curto enquanto estiver em contato físico\ncom ele. Ao terminar o descanso, você aprende as\npropriedades do item e como usá-las (mas não sobre\nqualquer maldição que ele possa conter).\nPor vezes, um item mágico oferece uma indicação\nsobre suas propriedades. A palavra de ativação de um\nanel pode estar gravada no interior da banda, ou um\npadrão de penas pode indicar que se trata de um Anel\nde Queda Suave.\nUsar ou experimentar um item também pode oferecer pistas sobre as propriedades dele. No caso específico de Poções, provar um pouco é suficiente para que\naquele que bebe descubra o que a poção faz. Outros\nitens podem exigir mais experimentação. Por exemplo,\nse o personagem colocar um Anel de Natação, o Mestre\npode dizer: “Seu movimento parece estranhamente\nfluido”. Talvez o personagem então mergulhe em um\nrio para ver o que acontece. O Mestre então informaria\nque ele nada de forma surpreendentemente boa."
+    },
+    {
+      "id": "attunement",
+      "title": "Sintonização",
+      "description": "Alguns itens mágicos exigem que uma criatura forme\num vínculo com eles — chamado de Sintonização — antes que a criatura possa usar as propriedades mágicas\ndo item. Sem se sintonizar a um item que requer Sintonização, você só obtém seus benefícios não mágicos,\na menos que a descrição do item indique o contrário.\nPor exemplo, um Escudo mágico que requer Sintonização oferece os benefícios de um Escudo normal se\nvocê não estiver sintonizado a ele, mas nenhuma das\npropriedades mágicas dele."
+    },
+    {
+      "id": "attunement-short-rest",
+      "title": "Sintonização Durante um Descanso Curto",
+      "description": "Sintonizar-se a um item exige que você termine um\nDescanso Curto focado apenas neste item enquanto estiver em contato físico com ele (não pode ser o mesmo\nDescanso Curto usado para aprender as propriedades\ndo item). Esse foco pode assumir a forma de prática\nde armas (para uma Arma), meditação (para uma\nVarinha) ou alguma outra atividade apropriada. Se o\nDescanso Curto for interrompido, a tentativa de Sintonização falha. Caso contrário, ao final do Descanso\nCurto, você está sintonizado com o item mágico e pode\nacessar as capacidades mágicas completas dele."
+    },
+    {
+      "id": "attunement-limit",
+      "title": "Não Mais do Que Três Itens",
+      "description": "Você pode estar sintonizado com no máximo três itens\nmágicos ao mesmo tempo. Qualquer tentativa de sintonizar um quarto item falha; você deve encerrar sua\nSintonização com um item primeiro. Além disso, você\nnão pode sintonizar mais de um exemplar de um item.\nPor exemplo, você não pode sintonizar mais de um Anel\nde Proteção ao mesmo tempo."
+    },
+    {
+      "id": "attunement-end",
+      "title": "Encerrando a Sintonização",
+      "description": "Sua Sintonização com um item termina se você não\nsatisfizer mais os pré-requisitos para Sintonização, se o\nitem estiver a mais de 30 metros de distância por pelo\nmenos 24 horas, se você morrer ou se outra criatura\nse sintonizar com o item. Você também pode encerrar\nvoluntariamente a Sintonização terminando outro\nDescanso Curto focado no item, a menos que o item\nseja amaldiçoado."
+    },
+    {
+      "id": "wearing",
+      "title": "Vestindo e Empunhando Itens",
+      "description": "Usar as propriedades de um item mágico pode significar vesti-lo ou empunhá-lo. Um item mágico destinado\na ser usado deve ser usado da maneira pretendida:\nbotas nos pés, luvas nas mãos, chapéus e capacetes\nna cabeça e anéis no dedo. Armadura mágica deve ser\nvestida, um Escudo colocado no braço, uma capa presa\nsobre os ombros. Uma arma deve ser empunhada.\n\nGeralmente, um item mágico que deve ser usado\npode caber em uma criatura, independentemente do\ntamanho ou porte físico dela. As roupas mágicas são\nfabricadas para serem facilmente ajustáveis, ou elas se\najustam magicamente ao usuário."
+    },
+    {
+      "id": "same-type",
+      "title": "Vários Itens do Mesmo Tipo",
+      "description": "Você não pode usar mais de um de certos itens mágicos. Normalmente, você não pode usar mais de um par\nde calçados, um par de luvas ou manoplas, um par de\nbraçadeiras, uma armadura, um item de cabeça ou uma\ncapa. O Mestre pode abrir exceções."
+    },
+    {
+      "id": "pairs",
+      "title": "Itens em Par",
+      "description": "Itens que vêm em pares — como botas, braçadeiras,\nmanoplas e luvas — transmitem seus benefícios apenas\nse ambos os itens do par forem usados. Por exemplo,\num personagem usando uma Bota de Caminhar e Saltar\nem um pé e uma Bota Élfica no outro pé não se beneficia de nenhum dos dois."
+    }
+  ]
+}

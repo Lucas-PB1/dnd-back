@@ -1,0 +1,343 @@
+{
+  "$schema": "../schema/index.schema.json",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "classCount": 12,
+  "subclassCount": 48,
+  "classes": [
+    {
+      "id": "barbarian",
+      "name": "Bárbaro",
+      "file": "classes/barbarian.json",
+      "subclasses": [
+        {
+          "id": "world-tree",
+          "name": "Trilha da Árvore do Mundo",
+          "file": "subclasses/barbarian-world-tree.json"
+        },
+        {
+          "id": "berserker",
+          "name": "Trilha do Berserker",
+          "file": "subclasses/barbarian-berserker.json"
+        },
+        {
+          "id": "wild-heart",
+          "name": "Trilha do Coração Selvagem",
+          "file": "subclasses/barbarian-wild-heart.json"
+        },
+        {
+          "id": "zealot",
+          "name": "Trilha do Fanático",
+          "file": "subclasses/barbarian-zealot.json"
+        }
+      ]
+    },
+    {
+      "id": "bard",
+      "name": "Bardo",
+      "file": "classes/bard.json",
+      "subclasses": [
+        {
+          "id": "valor",
+          "name": "Colégio da Bravura",
+          "file": "subclasses/bard-valor.json"
+        },
+        {
+          "id": "dance",
+          "name": "Colégio da Dança",
+          "file": "subclasses/bard-dance.json"
+        },
+        {
+          "id": "lore",
+          "name": "Colégio do Conhecimento",
+          "file": "subclasses/bard-lore.json"
+        },
+        {
+          "id": "glamour",
+          "name": "Colégio do Glamour",
+          "file": "subclasses/bard-glamour.json"
+        }
+      ]
+    },
+    {
+      "id": "warlock",
+      "name": "Bruxo",
+      "file": "classes/warlock.json",
+      "subclasses": [
+        {
+          "id": "archfey",
+          "name": "Patrono Arquifada",
+          "file": "subclasses/warlock-archfey.json"
+        },
+        {
+          "id": "celestial",
+          "name": "Patrono Celestial",
+          "file": "subclasses/warlock-celestial.json"
+        },
+        {
+          "id": "great-old-one",
+          "name": "Patrono O Grande Antigo",
+          "file": "subclasses/warlock-great-old-one.json"
+        },
+        {
+          "id": "fiend",
+          "name": "Patrono Ínfero",
+          "file": "subclasses/warlock-fiend.json"
+        }
+      ]
+    },
+    {
+      "id": "cleric",
+      "name": "Clérigo",
+      "file": "classes/cleric.json",
+      "subclasses": [
+        {
+          "id": "life",
+          "name": "Domínio da Vida",
+          "file": "subclasses/cleric-life.json"
+        },
+        {
+          "id": "light",
+          "name": "Domínio da Luz",
+          "file": "subclasses/cleric-light.json"
+        },
+        {
+          "id": "trickery",
+          "name": "Domínio da Trapaça",
+          "file": "subclasses/cleric-trickery.json"
+        },
+        {
+          "id": "war",
+          "name": "Domínio da Guerra",
+          "file": "subclasses/cleric-war.json"
+        }
+      ]
+    },
+    {
+      "id": "druid",
+      "name": "Druida",
+      "file": "classes/druid.json",
+      "subclasses": [
+        {
+          "id": "land",
+          "name": "Círculo da Terra",
+          "file": "subclasses/druid-land.json"
+        },
+        {
+          "id": "moon",
+          "name": "Círculo da Lua",
+          "file": "subclasses/druid-moon.json"
+        },
+        {
+          "id": "stars",
+          "name": "Círculo das Estrelas",
+          "file": "subclasses/druid-stars.json"
+        },
+        {
+          "id": "sea",
+          "name": "Círculo do Mar",
+          "file": "subclasses/druid-sea.json"
+        }
+      ]
+    },
+    {
+      "id": "sorcerer",
+      "name": "Feiticeiro",
+      "file": "classes/sorcerer.json",
+      "subclasses": [
+        {
+          "id": "aberrant",
+          "name": "Feitiçaria Aberrante",
+          "file": "subclasses/sorcerer-aberrant.json"
+        },
+        {
+          "id": "draconic",
+          "name": "Feitiçaria Dracônica",
+          "file": "subclasses/sorcerer-draconic.json"
+        },
+        {
+          "id": "clockwork",
+          "name": "Feitiçaria Mecânica",
+          "file": "subclasses/sorcerer-clockwork.json"
+        },
+        {
+          "id": "wild-magic",
+          "name": "Feitiçaria Selvagem",
+          "file": "subclasses/sorcerer-wild-magic.json"
+        }
+      ]
+    },
+    {
+      "id": "ranger",
+      "name": "Guardião",
+      "file": "classes/ranger.json",
+      "subclasses": [
+        {
+          "id": "fey-wanderer",
+          "name": "Andarilho Feérico",
+          "file": "subclasses/ranger-fey-wanderer.json"
+        },
+        {
+          "id": "hunter",
+          "name": "Caçador",
+          "file": "subclasses/ranger-hunter.json"
+        },
+        {
+          "id": "beast-master",
+          "name": "Senhor das Feras",
+          "file": "subclasses/ranger-beast-master.json"
+        },
+        {
+          "id": "gloom-stalker",
+          "name": "Vigilante das Sombras",
+          "file": "subclasses/ranger-gloom-stalker.json"
+        }
+      ]
+    },
+    {
+      "id": "fighter",
+      "name": "Guerreiro",
+      "file": "classes/fighter.json",
+      "subclasses": [
+        {
+          "id": "champion",
+          "name": "Campeão",
+          "file": "subclasses/fighter-champion.json"
+        },
+        {
+          "id": "eldritch-knight",
+          "name": "Cavaleiro Místico",
+          "file": "subclasses/fighter-eldritch-knight.json"
+        },
+        {
+          "id": "psi-warrior",
+          "name": "Combatente Psíquico",
+          "file": "subclasses/fighter-psi-warrior.json"
+        },
+        {
+          "id": "battle-master",
+          "name": "Mestre da Batalha",
+          "file": "subclasses/fighter-battle-master.json"
+        }
+      ]
+    },
+    {
+      "id": "rogue",
+      "name": "Ladino",
+      "file": "classes/rogue.json",
+      "subclasses": [
+        {
+          "id": "soulknife",
+          "name": "Adaga Espiritual",
+          "file": "subclasses/rogue-soulknife.json"
+        },
+        {
+          "id": "assassin",
+          "name": "Assassino",
+          "file": "subclasses/rogue-assassin.json"
+        },
+        {
+          "id": "thief",
+          "name": "Ladrão",
+          "file": "subclasses/rogue-thief.json"
+        },
+        {
+          "id": "arcane-trickster",
+          "name": "Trapaceiro Arcano",
+          "file": "subclasses/rogue-arcane-trickster.json"
+        }
+      ]
+    },
+    {
+      "id": "wizard",
+      "name": "Mago",
+      "file": "classes/wizard.json",
+      "subclasses": [
+        {
+          "id": "abjurer",
+          "name": "Abjurador",
+          "file": "subclasses/wizard-abjurer.json"
+        },
+        {
+          "id": "diviner",
+          "name": "Adivinhador",
+          "file": "subclasses/wizard-diviner.json"
+        },
+        {
+          "id": "evoker",
+          "name": "Evocador",
+          "file": "subclasses/wizard-evoker.json"
+        },
+        {
+          "id": "illusionist",
+          "name": "Ilusionista",
+          "file": "subclasses/wizard-illusionist.json"
+        }
+      ]
+    },
+    {
+      "id": "monk",
+      "name": "Monge",
+      "file": "classes/monk.json",
+      "subclasses": [
+        {
+          "id": "elements",
+          "name": "Combatente dos Elementos",
+          "file": "subclasses/monk-elements.json"
+        },
+        {
+          "id": "open-hand",
+          "name": "Combatente da Mão Espalmada",
+          "file": "subclasses/monk-open-hand.json"
+        },
+        {
+          "id": "mercy",
+          "name": "Combatente da Misericórdia",
+          "file": "subclasses/monk-mercy.json"
+        },
+        {
+          "id": "shadow",
+          "name": "Combatente das Sombras",
+          "file": "subclasses/monk-shadow.json"
+        }
+      ]
+    },
+    {
+      "id": "paladin",
+      "name": "Paladino",
+      "file": "classes/paladin.json",
+      "subclasses": [
+        {
+          "id": "ancients",
+          "name": "Juramento dos Anciões",
+          "file": "subclasses/paladin-ancients.json"
+        },
+        {
+          "id": "devotion",
+          "name": "Juramento da Devoção",
+          "file": "subclasses/paladin-devotion.json"
+        },
+        {
+          "id": "glory",
+          "name": "Juramento da Glória",
+          "file": "subclasses/paladin-glory.json"
+        },
+        {
+          "id": "vengeance",
+          "name": "Juramento da Vingança",
+          "file": "subclasses/paladin-vengeance.json"
+        }
+      ]
+    }
+  ]
+}

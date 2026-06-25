@@ -1,0 +1,85 @@
+{
+  "$schema": "../../../schema/equipment-rules.schema.json",
+  "id": "crafting",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 6,
+    "chapterTitle": "Equipamento",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pageRanges": [
+      [
+        219,
+        219
+      ],
+      [
+        226,
+        239
+      ]
+    ],
+    "extractedAt": "2026-06-25T01:39:43.402Z"
+  },
+  "description": "Além de comida, roupas e suprimentos básicos, os personagens podem criar seus próprios itens não mágicos,\nPoções de Cura e Pergaminhos Mágicos.\nFabricação de Itens Não Mágicos\nPara criar um item não mágico, você precisa de ferramentas, matérias-primas e tempo, cada um dos quais é\ndetalhado abaixo. Se você atender aos requisitos, você\nfabrica o item e pode usá-lo ou vendê-lo pelo preço\nnormal.\nFerramentas\nA seção “Ferramentas” deste capítulo indica quais\nferramentas são necessárias para criar determinados\nitens. O Mestre atribui as ferramentas necessárias para\nitens não indicados lá.\nVocê deve usar a ferramenta necessária para fabricar\num item e ter proficiência com essa ferramenta. Qualquer um que ajude você também deve ter proficiência\ncom isso.\nMatérias-primas\nPara fabricar um item, você precisa de matérias-primas\nno valor de metade do custo de compra (arredondado\npara baixo). Por exemplo, você precisa de 750 PO em\nmatérias-primas para fabricar a Armadura de Placas,\nque é vendida por 1.500 PO. O Mestre determina se as\nmatérias-primas apropriadas estão disponíveis.\nTempo\nPara determinar quantos dias (trabalhando 8 horas\npor dia) leva para fabricar um item, divida o custo de\ncompra dele em PO por 10 (arredonde uma fração até\num dia). Por exemplo, você precisa de 5 dias para fazer\numa Besta Pesada, que é vendida por 50 PO.\nSe um item exigir vários dias, os dias não precisam\nser consecutivos.\nOs personagens podem combinar seus esforços para\nencurtar o tempo de fabricação. Divida o tempo necessário para fabricar um item pelo número de personagens que estão trabalhando nele. Normalmente, apenas\num personagem pode ajudá-lo, mas o Mestre pode\npermitir mais assistentes.\nPreparando Poções que Curam\nUm personagem que tenha proficiência com o Kit de\nHerbalismo pode fabricar uma Poção de Cura. Para isso,\né necessário usar esse kit e 25 PO de matéria-prima ao\nlongo de 1 dia (8 horas de trabalho).\nEscrevendo Pergaminhos Mágicos\nUm conjurador pode transferir uma magia para um\npergaminho e criar um Pergaminho Mágico, usando as\nregras abaixo.\nTempo e Custo\nEscrever um pergaminho leva uma quantidade de\ntempo e dinheiro com base no círculo da magia, como\nmostrado na tabela Custos do Pergaminho Mágico.\nPara cada dia de inscrição, você deve trabalhar por 8\nhoras. Se um pergaminho exigir vários dias, esses dias\nnão precisam ser consecutivos.\nPré-requisitos para Escrever\nPergaminhos Mágicos\nPara escrever um pergaminho, você deve ter proficiência na perícia Arcanismo ou com os Suprimentos de\nCalígrafo e preparar a magia em cada dia da inscrição.\nVocê também deve ter à mão quaisquer componentes\nMateriais exigidos pela magia; se a magia consumir os\ncomponentes Materiais, eles serão consumidos somente quando você completar o pergaminho. A magia do\npergaminho usa sua CD de salvaguarda contra magia e\nseu bônus de ataque mágico.\nTruques\nSe a magia escrita for um truque, a versão no pergaminho funciona como se o conjurador tivesse o seu nível.",
+  "scrollCosts": [
+    {
+      "circle": 0,
+      "label": "Truque",
+      "time": "1 dia",
+      "cost": "15 PO"
+    },
+    {
+      "circle": 1,
+      "label": "1º Círculo",
+      "time": "1 dia",
+      "cost": "25 PO"
+    },
+    {
+      "circle": 2,
+      "label": "2º Círculo",
+      "time": "3 dias",
+      "cost": "100 PO"
+    },
+    {
+      "circle": 3,
+      "label": "3º Círculo",
+      "time": "5 dias",
+      "cost": "150 PO"
+    },
+    {
+      "circle": 4,
+      "label": "4º Círculo",
+      "time": "10 dias",
+      "cost": "1.000 PO"
+    },
+    {
+      "circle": 5,
+      "label": "5º Círculo",
+      "time": "25 dias",
+      "cost": "1.500 PO"
+    },
+    {
+      "circle": 6,
+      "label": "6º Círculo",
+      "time": "40 dias",
+      "cost": "10.000 PO"
+    },
+    {
+      "circle": 7,
+      "label": "7º Círculo",
+      "time": "50 dias",
+      "cost": "12.500 PO"
+    },
+    {
+      "circle": 8,
+      "label": "8º Círculo",
+      "time": "60 dias",
+      "cost": "15.000 PO"
+    },
+    {
+      "circle": 9,
+      "label": "9º Círculo",
+      "time": "120 dias",
+      "cost": "50.000 PO"
+    }
+  ]
+}

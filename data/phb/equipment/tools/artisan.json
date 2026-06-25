@@ -1,0 +1,195 @@
+{
+  "$schema": "../../../schema/tool.schema.json",
+  "id": "artisan-tools",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 6,
+    "chapterTitle": "Equipamento",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pageRanges": [
+      [
+        219,
+        219
+      ],
+      [
+        226,
+        239
+      ]
+    ],
+    "extractedAt": "2026-06-25T01:39:43.402Z"
+  },
+  "description": "Se você tem proficiência com uma ferramenta, adicione seu Bônus de Proficiência a qualquer teste de\natributo que use a ferramenta. Se você tem proficiência em uma perícia usada com esse teste, também tem\nVantagem no teste.\nSuas características podem lhe dar proficiência\ncom uma ferramenta. Um monstro tem proficiência\ncom qualquer ferramenta em seu próprio bloco de\nestatísticas.",
+  "tools": [
+    {
+      "id": "ferramentas-de-carpinteiro",
+      "name": "Ferramentas de Carpinteiro",
+      "cost": "8 PO",
+      "attribute": "Força",
+      "weight": "3 kg",
+      "useObject": "Selar ou abrir uma porta ou recipiente (CD 20)",
+      "crafting": "Aríete Portável, Baliza, Barril, Baú, Cajado, Clava,\nClava Grande, Escada, Tocha",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-cartografo",
+      "name": "Ferramentas de Cartógrafo",
+      "cost": "15 PO",
+      "attribute": "Sabedoria",
+      "weight": "3 kg",
+      "useObject": "Elaborar o mapa de uma pequena área (CD 15)",
+      "crafting": "Mapa",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-coureiro",
+      "name": "Ferramentas de Coureiro",
+      "cost": "5 PO",
+      "attribute": "Destreza",
+      "weight": "2,5 kg",
+      "useObject": "Moldar a estética de um item de couro (CD 10)",
+      "crafting": "Algibeira, Aljava, Armadura de Couro, Armadura\nde Couro Batido, Cantil, Chicote, Estojo de Mapa ou\nPergaminho, Estojo de Virotes de Besta, Funda, Gibão de\nPeles, Mochila, Pergaminho",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-entalhador",
+      "name": "Ferramentas de Entalhador",
+      "cost": "1 PO",
+      "attribute": "Destreza",
+      "weight": "2,5 kg",
+      "useObject": "Entalhar um padrão em madeira (CD 10)",
+      "crafting": "Armas à Distância (exceto Funda, Mosquete e\nPistola), Cajado, Caneta Tinteiro, Clava, Clava Grande,\nDardos, Flechas, Foco Arcano, Foco Druídico, Virotes",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-ferreiro",
+      "name": "Ferramentas de Ferreiro",
+      "cost": "20 PO",
+      "attribute": "Força",
+      "weight": "4 kg",
+      "useObject": "Forçar a abertura de uma porta ou recipiente (CD 20)",
+      "crafting": "qualquer arma Corpo a Corpo (exceto Cajado,\nChicote, Clava, Clava Grande), armadura Média (exceto\nGibão de Peles), armadura Pesada, Arpéu e Gancho, Balas\nde Arma de Fogo, Balas de Funda, Balde, Corrente, Esferas\nde Metal, Estacas de Ferro, Estrepes, Panela de Ferro, Pé de\nCabra",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-funileiro",
+      "name": "Ferramentas de Funileiro",
+      "cost": "50 PO",
+      "attribute": "Destreza",
+      "weight": "5 kg",
+      "useObject": "Monte um item Minúsculo composto de sucata,\nque se desfaz em 1 minuto (CD 20)",
+      "crafting": "Apito Sinalizador, Armadilha de Caça, Cadeado\nou Fechadura, Caixa para Fogo, Espelho, Grilhões, Lanterna\nCoberta, Lanterna Foca-Facho, Mosquete, Pá, Pistola,Pote,\nSino",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-joalheiro",
+      "name": "Ferramentas de Joalheiro",
+      "cost": "25 PO",
+      "attribute": "Inteligência",
+      "weight": "1 kg",
+      "useObject": "Discernir o valor de uma gema (CD 15)",
+      "crafting": "Foco Arcano, Símbolo Sagrado",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-oleiro",
+      "name": "Ferramentas de Oleiro",
+      "cost": "10 PO",
+      "attribute": "Inteligência",
+      "weight": "1,5 kg",
+      "useObject": "Discernir como um objeto de cerâmica foi\nmanuseado nas últimas 24 horas (CD 15)",
+      "crafting": "Jarro, Lâmpada",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-pedreiro",
+      "name": "Ferramentas de Pedreiro",
+      "cost": "10 PO",
+      "attribute": "Força",
+      "weight": "4 kg",
+      "useObject": "Cinzelar um símbolo ou buraco na pedra (CD 10)",
+      "crafting": "Roldana e Polias",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-sapateiro",
+      "name": "Ferramentas de Sapateiro",
+      "cost": "5 PO",
+      "attribute": "Destreza",
+      "weight": "2,5 kg",
+      "useObject": "Modificar calçado para conceder Vantagem no\npróximo teste de Destreza (Acrobacia) do usuário (CD 10)",
+      "crafting": "Kit de Escalada",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-tecelao",
+      "name": "Ferramentas de Tecelão",
+      "cost": "1 PO",
+      "attribute": "Destreza",
+      "weight": "2,5 kg",
+      "useObject": "Reparar um rasgo em uma roupa (CD 10) ou\ncosturar um ornamento Minúsculo (CD 10)",
+      "crafting": "Armadura Acolchoada, Cesta, Cobertor, Saco de\nDormir, Roupas Finas, Rede, Túnica, Corda, Saca, Cordão,\nTenda, Roupas de Viagem",
+      "variants": null
+    },
+    {
+      "id": "ferramentas-de-vidreiro",
+      "name": "Ferramentas de Vidreiro",
+      "cost": "30 PO",
+      "attribute": "Inteligência",
+      "weight": "2,5 kg",
+      "useObject": "Discernir como um objeto de vidro foi\nmanuseado nas últimas 24 horas (CD 15)",
+      "crafting": "Frasco, Jarro, Luneta, Lupa",
+      "variants": null
+    },
+    {
+      "id": "suprimentos-de-alquimista",
+      "name": "Suprimentos de Alquimista",
+      "cost": "50 PO",
+      "attribute": "Inteligência",
+      "weight": "4 kg",
+      "useObject": "Identificar uma substância (CD 15) ou iniciar um\nincêndio (CD 15)",
+      "crafting": "Ácido, Bolsa de Componentes, Fogo Alquímico,\nÓleo, Papel, Perfume",
+      "variants": null
+    },
+    {
+      "id": "suprimentos-de-caligrafo",
+      "name": "Suprimentos de Calígrafo",
+      "cost": "10 PO",
+      "attribute": "Destreza",
+      "weight": "2,5 kg",
+      "useObject": "Escrever texto com uma caligrafia que protege\ncontra falsificação (CD 15)",
+      "crafting": "Pergaminho Mágico, Tinta",
+      "variants": null
+    },
+    {
+      "id": "suprimentos-de-cervejeiro",
+      "name": "Suprimentos de Cervejeiro",
+      "cost": "20 PO",
+      "attribute": "Inteligência",
+      "weight": "4,5 kg",
+      "useObject": "Detectar bebida envenenada (CD 15) ou\nidentificar álcool (CD 10)",
+      "crafting": "Antitoxina",
+      "variants": null
+    },
+    {
+      "id": "suprimentos-de-pintor",
+      "name": "Suprimentos de Pintor",
+      "cost": "10 PO",
+      "attribute": "Sabedoria",
+      "weight": "2,5 kg",
+      "useObject": "Fazer uma pintura reconhecível de algo que você\nviu (CD 10)",
+      "crafting": "Foco Druídico, Símbolo Sagrado",
+      "variants": null
+    },
+    {
+      "id": "utensilios-de-cozinheiro",
+      "name": "Utensílios de Cozinheiro",
+      "cost": "1 PO",
+      "attribute": "Sabedoria",
+      "weight": "4 kg",
+      "useObject": "Melhorar o sabor dos alimentos (CD 10) ou\ndetectar alimentos estragados ou envenenados (CD 15)",
+      "crafting": "Rações",
+      "variants": null
+    }
+  ]
+}

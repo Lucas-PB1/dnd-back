@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "illusionist",
+  "classId": "wizard",
+  "name": "Ilusionista",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Teça magias de ilusão",
+  "summary": "Tecer magias de ilusão.",
+  "description": "Você se especializa em magia que deslumbra os sentidos e engana a mente, e as ilusões que você cria fazem\no impossível parecer real.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Ilusões Aprimoradas",
+      "description": "Você pode conjurar magias de Ilusão sem fornecer\ncomponentes Verbais e se uma magia de Ilusão que\nvocê conjurar tiver um alcance de 3 metros ou mais, o\nalcance aumenta em 18 metros.\nVocê também conhece o truque Ilusão Menor. Se já o\nconhece, você aprende um truque de Mago diferente\nà sua escolha. O truque não conta para o seu número\nde truques conhecidos. Você pode criar um som e uma\nimagem com uma única conjuração de Ilusão Menor e\npode conjurá-la como uma Ação Bônus."
+    },
+    {
+      "level": 3,
+      "name": "Versado em Ilusão",
+      "description": "Escolha duas magias de Mago da escola de Ilusão, cada\numa deve ser de 2º círculo ou inferior e adicione-as\ngratuitamente ao seu livro de magias.\nAlém disso, ao adquirir acesso a um novo círculo de\nespaços de magia nesta classe, você pode adicionar gratuitamente uma magia de Mago da escola de Ilusão ao\nseu livro de magias. A magia escolhida deve ser de um\ncírculo para o qual você tenha espaços de magia."
+    },
+    {
+      "level": 6,
+      "name": "Criaturas Espectrais",
+      "description": "Você sempre tem as magias Convocar Feérico e Invocar\nFera preparadas. Ao conjurar qualquer uma das magias,\nvocê pode mudar sua escola para Ilusão, o que faz com\nque a criatura invocada pareça espectral. Você pode\nconjurar a versão Ilusão de cada magia sem gastar um\nespaço de magia, mas conjurá-la sem um espaço de magia reduz pela metade os Pontos de Vida da criatura.\nApós conjurar qualquer uma das magias sem um espaço de magia, você deve completar um Descanso Longo\nantes de conjurar novamente a magia desta forma."
+    },
+    {
+      "level": 10,
+      "name": "Autoimagem Ilusória",
+      "description": "Ao ser atingido pela jogada de ataque de uma criatura,\nvocê pode usar uma Reação para criar uma duplicata\nilusória de si entre você e o atacante. O ataque erra\nautomaticamente e a ilusão se dissipa.\nApós usar esta característica, você não pode utilizá-\n-la novamente até completar um Descanso Curto ou\nLongo. Você também pode restaurar seu uso gastando\num espaço de magia de 2º círculo ou superior (nenhuma ação é necessária)."
+    },
+    {
+      "level": 14,
+      "name": "Realidade Ilusória",
+      "description": "Você aprendeu a tecer magia sombria em suas ilusões\npara dar a elas uma semi-realidade. Ao conjurar uma\nmagia Ilusão com um espaço de magia, você pode escolher um objeto inanimado e não mágico que faça parte\nda ilusão e tornar esse objeto real. Você pode executar\nisso no seu turno como uma Ação Bônus, enquanto a\nmagia estiver em andamento. O objeto permanece real\npor 1 minuto, durante o qual não pode causar dano ou\nconferir quaisquer condições. Por exemplo, você pode\ncriar uma ilusão de uma ponte sobre um abismo e, em\nseguida, torná-la real e atravessá-la."
+    }
+  ]
+}

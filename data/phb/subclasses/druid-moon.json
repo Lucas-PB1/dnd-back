@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "moon",
+  "classId": "druid",
+  "name": "Círculo da Lua",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Adote formas animais poderosas",
+  "summary": "Adotar formas de animais poderosos.",
+  "description": "Druidas do Círculo da Lua canalizam a magia lunar\npara se transformarem. A ordem se reúne sob a lua\npara compartilhar informações e realizar rituais.\nAssim como a lua é mutável, um Druida desse círculo\npode espreitar como um grande felino em uma noite,\nsobrevoar as copas das árvores como uma águia no\ndia seguinte e, depois, atravessar a vegetação como um\nurso para afastar um monstro invasor. A vida selvagem\ncorre no sangue do Druida.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Formas Animais dos Círculos Druídicos",
+      "description": "Você pode canalizar a magia lunar ao assumir uma\nForma Selvagem, obtendo os seguintes benefícios.\nNível de Desafio. O Nível de Desafio máximo para\na forma é igual ao seu nível de Druida dividido por 3\n(arredondado para baixo).\nClasse de Armadura. Até sair da forma, sua CA passa\na ser 13 + seu modificador de Sabedoria, se esse valor\nfor maior que a CA da Fera.\nPontos de Vida Temporários. Você adquire um número de Pontos de Vida Temporários igual a três vezes o\nseu nível de Druida."
+    },
+    {
+      "level": 3,
+      "name": "Magias do Círculo da Lua",
+      "description": "Ao atingir um nível de Druida detalhado na tabela\nMagias do Círculo da Lua, você tem a as magias da lista\nsempre preparadas.\nAlém disso, você pode conjurar as magias dessa característica enquanto estiver em uma Forma Selvagem.\nMagias do Círculo da Lua\nNível de Druida Magias de Círculo Druídico\n3 Curar Ferimentos, Fagulha Estelar,\nRaio Lunar\n5 Invocar Animais\n7 Fonte do Luar\n9 Curar Ferimentos em Massa"
+    },
+    {
+      "level": 6,
+      "name": "Formas Animais dos Círculos Druídicos Aprimorada",
+      "description": "Enquanto estiver em uma Forma Selvagem, você adquire os seguintes benefícios.\nRadiância Lunar. Cada um de seus ataques na Forma\nSelvagem pode causar seu tipo de dano normal ou\ndano Radiante. Você escolhe cada vez que acerta com\nesses ataques.\nVigor Aumentado. Você pode adicionar seu modificador de Sabedoria às suas salvaguardas de Constituição."
+    },
+    {
+      "level": 10,
+      "name": "Passo Lunar",
+      "description": "Você se transporta magicamente, reaparecendo em\nmeio a uma explosão de luar. Como uma Ação Bônus,\nvocê se teleporta até 9 metros para um espaço desocupado à sua vista e tem Vantagem na próxima jogada de\nataque que realizar antes do final deste turno.\nVocê pode usar essa característica um número de\nvezes igual ao seu modificador de Sabedoria (mínimo\nde uma vez) e restaura todos os usos gastos ao completar um Descanso Longo. Você também pode recuperar\nusos gastando um espaço de magia de 2º círculo ou\nsuperior para cada uso que deseja recuperar (nenhuma\nação é necessária)."
+    },
+    {
+      "level": 14,
+      "name": "Forma Lunar",
+      "description": "O poder da lua permeia você, concedendo os seguintes\nbenefícios.\nRadiância Lunar Aprimorada. Uma vez por turno,\nvocê pode causar 2d10 pontos de dano Radiante\nadicional a um alvo que você acerta com o ataque da\nForma Selvagem.\nLuar Compartilhado. Sempre que usar Passo Lunar,\nvocê também pode teleportar uma criatura voluntária.\nEssa criatura deve estar a até 3 metros de você, e você\na teleporta para um espaço desocupado à sua vista a\naté 3 metros do seu destino."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "land",
+  "classId": "druid",
+  "name": "Círculo da Terra",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Canalize a magia do ambiente",
+  "summary": "Aproveitar a magia do ambiente.",
+  "description": "O Círculo da Terra é composto por místicos e sábios\nque preservam conhecimentos e rituais ancestrais.\nEsses Druidas se reúnem em círculos sagrados de\nárvores ou pedras para sussurrar segredos primordiais\nem druídico. Os membros mais sábios do círculo atuam\ncomo sumos sacerdotes de suas comunidades.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Auxílio da Terra",
+      "description": "Como uma ação Usar Magia, você pode gastar um\nuso de sua Forma Selvagem e escolher um ponto a até\n18 metros de você. Flores que concedem vitalidade e\nespinhos drenadores de vida surgem momentaneamente em uma Esfera de 3 metros de raio, centrada nesse\nponto. Cada criatura à sua escolha na Esfera deve\nrealizar uma salvaguarda de Constituição contra a CD\npara evitar sua magia, sofrendo 2d6 pontos de dano\nNecrótico se falhar ou metade desse dano em caso de\nsucesso. Uma criatura à sua escolha na área restaura\n2d6 Pontos de Vida.\nO dano e cura aumentam em 1d6 quando você atinge\no nível 10 (3d6) e 14 (4d6) de Druida."
+    },
+    {
+      "level": 3,
+      "name": "Magias do Círculo da Terra",
+      "description": "Sempre que completar um Descanso Longo, escolha\num tipo de terreno: árido, polar, temperado ou tropical. Consulte a tabela abaixo correspondente ao tipo\nescolhido; você tem a lista de magias preparadas de seu\nnível de Druida e inferior."
+    },
+    {
+      "level": 6,
+      "name": "Recuperação Natural",
+      "description": "Você pode conjurar uma das magias de 1º círculo ou\nsuperior que preparou de sua característica Magias\nde Círculo Druídico sem gastar um espaço de magia, e\ndeve completar um Descanso Longo antes de fazê-lo\nnovamente.\nAlém disso, ao completar um Descanso Curto, pode\nescolher recuperar espaços de magia gastos. A somatória dos círculos desses espaços deve ser menor ou\nigual à metade do seu nível como Druida (arredondado para cima), e nenhum deles pode ser de 6º círculo\nou superior. Por exemplo, se você for um Druida de\nnível 6, pode recuperar até três círculos de espaços de\nmagia. Você pode recuperar um espaço de magia de 3º\ncírculo, ou um de 2º círculo e um de 1º círculo, ou três\nde 1º círculo. Após recuperar espaços de magia com\nesta característica, você não pode fazê-lo novamente\naté completar um Descanso Longo."
+    },
+    {
+      "level": 10,
+      "name": "Proteção Natural",
+      "description": "Você é imune à condição Envenenado e tem Resistência a um tipo de dano associado à sua escolha atual de\nterreno na característica Magias de Círculo Druídico,\nconforme mostrado na tabela Proteção Natural.\nProteção Natural\nTipo de\nTerreno Resistência\nTipo de\nTerreno Resistência\nÁrido Ígneo Temperado Elétrico\nPolar Gélido Tropical Venenoso"
+    },
+    {
+      "level": 14,
+      "name": "Santuário Natural",
+      "description": "Como uma ação Usar Magia, você pode gastar um uso\nde sua Forma Selvagem e produzir árvores e vinhas\nespectrais que aparecem em um Cubo de 4,5 metros de\nlados no chão a até 36 metros de você. Elas permanecem por 1 minuto ou até você morrer, ou ter a condição Incapacitado. Você e seus aliados têm Cobertura\nParcial enquanto estiverem nessa área, e seus aliados\nadquirem a Resistência atual da sua Proteção Natural\nenquanto estão lá.\nComo uma Ação Bônus, você pode mover o Cubo até\n18 metros para o chão a até 36 metros de você."
+    }
+  ]
+}

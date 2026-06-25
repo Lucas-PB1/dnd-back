@@ -1,0 +1,151 @@
+{
+  "$schema": "../../schema/armor.schema.json",
+  "id": "armor",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 6,
+    "chapterTitle": "Equipamento",
+    "section": "Armaduras",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pageRanges": [
+      [
+        224,
+        225
+      ]
+    ],
+    "extractedAt": "2026-06-25T01:36:51.704Z"
+  },
+  "items": [
+    {
+      "id": "padded",
+      "name": "Acolchoada",
+      "category": "light",
+      "ac": "11 + modificador de Des",
+      "strength": null,
+      "stealthDisadvantage": true,
+      "weight": "4 kg",
+      "cost": "5 PO"
+    },
+    {
+      "id": "leather",
+      "name": "Couro",
+      "category": "light",
+      "ac": "11 + modificador de Des",
+      "strength": null,
+      "stealthDisadvantage": false,
+      "weight": "5 kg",
+      "cost": "10 PO"
+    },
+    {
+      "id": "studded-leather",
+      "name": "Couro Batido",
+      "category": "light",
+      "ac": "12 + modificador de Des",
+      "strength": null,
+      "stealthDisadvantage": false,
+      "weight": "6,5 kg",
+      "cost": "45 PO"
+    },
+    {
+      "id": "hide",
+      "name": "Gibão de Peles",
+      "category": "medium",
+      "ac": "12 + modificador de Des (máx. 2)",
+      "strength": null,
+      "stealthDisadvantage": false,
+      "weight": "6 kg",
+      "cost": "10 PO"
+    },
+    {
+      "id": "chain-shirt",
+      "name": "Cota de Malha Parcial",
+      "category": "medium",
+      "ac": "13 + modificador de Des (máx. 2)",
+      "strength": null,
+      "stealthDisadvantage": false,
+      "weight": "10 kg",
+      "cost": "50 PO"
+    },
+    {
+      "id": "scale-mail",
+      "name": "Loriga de Escamas",
+      "category": "medium",
+      "ac": "14 + Modificador de Des (máx. 2)",
+      "strength": null,
+      "stealthDisadvantage": true,
+      "weight": "22 kg",
+      "cost": "50 PO"
+    },
+    {
+      "id": "breastplate",
+      "name": "Couraça Peitoral",
+      "category": "medium",
+      "ac": "14 + Modificador de Des (máx. 2)",
+      "strength": null,
+      "stealthDisadvantage": false,
+      "weight": "10 kg",
+      "cost": "400 PO"
+    },
+    {
+      "id": "half-plate",
+      "name": "Placas Parcial",
+      "category": "medium",
+      "ac": "15 + Modificador de Des (máx. 2)",
+      "strength": null,
+      "stealthDisadvantage": true,
+      "weight": "20 kg",
+      "cost": "750 PO"
+    },
+    {
+      "id": "ring-mail",
+      "name": "Cota de Anéis",
+      "category": "heavy",
+      "ac": "14",
+      "strength": null,
+      "stealthDisadvantage": true,
+      "weight": "20 kg",
+      "cost": "30 PO"
+    },
+    {
+      "id": "chain-mail",
+      "name": "Cota de Malha",
+      "category": "heavy",
+      "ac": "16",
+      "strength": "For 13",
+      "stealthDisadvantage": true,
+      "weight": "27 kg",
+      "cost": "75 PO"
+    },
+    {
+      "id": "splint",
+      "name": "Armadura de Talas",
+      "category": "heavy",
+      "ac": "17",
+      "strength": "For 15",
+      "stealthDisadvantage": true,
+      "weight": "30 kg",
+      "cost": "200 PO"
+    },
+    {
+      "id": "plate",
+      "name": "Placas",
+      "category": "heavy",
+      "ac": "18",
+      "strength": "For 15",
+      "stealthDisadvantage": true,
+      "weight": "32 kg",
+      "cost": "1.500 PO"
+    },
+    {
+      "id": "shield",
+      "name": "Escudo",
+      "category": "shield",
+      "ac": "+2",
+      "strength": null,
+      "stealthDisadvantage": false,
+      "weight": "3 kg",
+      "cost": "10 PO"
+    }
+  ]
+}

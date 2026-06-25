@@ -1,0 +1,53 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "battle-master",
+  "classId": "fighter",
+  "name": "Mestre da Batalha",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Use manobras de combate especiais",
+  "summary": "Usar manobras de combate especiais.",
+  "description": "Os Mestres da Batalha são estudantes da arte do\ncombate, aprendendo técnicas marciais transmitidas\npor gerações. Os mais bem-sucedidos equilibram suas\nhabilidades marciais cuidadosamente aprimoradas com\nestudos acadêmicos em história, teoria e artes.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Estudioso da Guerra",
+      "description": "Você adquire proficiência com um tipo de Ferramentas de Artesão à sua escolha e adquire proficiência em\numa perícia à sua escolha das perícias disponíveis para\nGuerreiros no nível 1."
+    },
+    {
+      "level": 3,
+      "name": "Superioridade em Combate",
+      "description": "Sua experiência em combate aprimorou suas técnicas de luta, permitindo que você aprenda manobras\ncom base em dados especiais chamados Dados de\nSuperioridade.\nManobras. Você aprende três manobras à sua escolha\nna seção “Opções de Manobras” mais adiante na descrição desta subclasse. Muitas manobras aprimoram,\nde alguma forma, um ataque. Você pode usar apenas\numa manobra por ataque.\nVocê aprende duas manobras adicionais à sua escolha quando atinge os níveis 7, 10 e 15 de Guerreiro.\nCada vez que aprende novas manobras, você também\npode substituir uma manobra que você conhece por\numa diferente.\nDados de Superioridade. Você tem quatro Dados de\nSuperioridade, os quais são d8s. Um Dado de Superioridade é gasto ao usá-lo. Você restaura todos os Dados\nde Superioridade gastos quando completa um Descanso Curto ou Longo.\nVocê adquire um Dado de Superioridade adicional\nao atingir os níveis 7 (cinco dados no total) e 15 (seis\ndados no total) de Guerreiro.\nSalvaguardas. Se uma manobra exigir uma salvaguarda, a CD é igual a 8 mais seu modificador de Força ou\nDestreza (à sua escolha) e seu Bônus de Proficiência."
+    },
+    {
+      "level": 7,
+      "name": "Conheça Seu Inimigo",
+      "description": "Como uma Ação Bônus, você pode examinar certos\npontos fortes e fracos de uma criatura à sua vista a até\n9 metros de você; você sabe se essa criatura tem Imunidades, Resistências ou Vulnerabilidades, e se a criatura\ntiver alguma, você sabe quais são.\nApós usar essa característica, você não pode fazer\nisso novamente até completar um Descanso Longo.\nVocê também pode recuperar um uso da característica\ngastando um Dado de Superioridade (nenhuma ação é\nnecessária)."
+    },
+    {
+      "level": 10,
+      "name": "Superioridade em Combate Aprimorada",
+      "description": "Seu Dado de Superioridade se torna um d10."
+    },
+    {
+      "level": 15,
+      "name": "Implacável",
+      "description": "Uma vez por turno, ao usar uma manobra, você pode\njogar 1d8 e usar o resultado em vez de gastar um Dado\nde Superioridade."
+    },
+    {
+      "level": 18,
+      "name": "Superioridade em Combate Suprema",
+      "description": "Seu Dado de Superioridade se torna um d12.\nOpções de Manobra\nAs manobras são apresentadas em ordem alfabética.\nAparar. Ao receber dano de outra criatura em uma\njogada de ataque corpo a corpo, você pode executar\numa Reação e gastar um Dado de Superioridade para\nreduzir o dano pelo número obtido no Dado de Superioridade mais seu modificador de Força ou Destreza\n(à sua escolha).\nAtaque Ameaçador. Ao atingir uma criatura com\numa jogada de ataque, você pode gastar um Dado de\nSuperioridade para tentar amedrontar o alvo. Adicione o resultado do Dado de Superioridade à jogada de\ndano do ataque. O alvo deve ser bem-sucedido em uma\nsalvaguarda de Sabedoria ou tem a condição Amedrontado até o final do seu próximo turno.\nAtaque de Varredura. Ao atingir uma criatura com\numa jogada de ataque corpo a corpo usando uma arma\nou um Ataque Desarmado, você pode gastar um Dado\nde Superioridade para tentar causar dano a outra\ncriatura. Escolha outra criatura a até 1,5 metro do alvo\noriginal e ao seu alcance. Se a jogada de ataque original\natingir a segunda criatura, ela sofre dano igual ao resultado do Dado de Superioridade. O dano é do mesmo\ntipo causado pelo ataque original.\nAtaque Estendido. Como uma Ação Bônus, você pode\ngastar um Dado de Superioridade e executar a ação\nCorrer. Se você se mover pelo menos 1,5 metro em\nlinha reta imediatamente antes de realizar um ataque\ncorpo a corpo como parte da ação Atacar neste turno,\npode adicionar o resultado do Dado de Superioridade à\njogada de dano do ataque.\nAtaque para Distrair. Ao atingir uma criatura com\numa jogada de ataque, você pode gastar um Dado de\nSuperioridade para distrair o alvo. Adicione o resultado do Dado de Superioridade à jogada de dano do ataque. A próxima jogada de ataque contra o alvo por um\natacante diferente de você tem Vantagem se o ataque\nfor realizado antes do início do seu próximo turno.\nAtaque Preciso. Ao errar uma jogada de ataque, você\npode gastar um Dado de Superioridade e adicionar o\nresultado à jogada de ataque, fazendo potencialmente\no ataque acertar."
+    }
+  ]
+}

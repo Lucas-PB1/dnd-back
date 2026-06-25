@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "sea",
+  "classId": "druid",
+  "name": "Círculo do Mar",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Canalize marés e tempestades",
+  "summary": "Canalizar marés e tempestades.",
+  "description": "Druidas do Círculo do Mar canalizam as forças\ntempestuosas dos oceanos e das tormentas. Alguns se\nveem como encarnações da ira da natureza, buscando\nvingança contra aqueles que destroem o meio ambiente. Outros procuram uma unidade mística com a\nnatureza ao sintonizarem-se com o fluxo e refluxo das\nmarés, seguindo a correnteza e as ondas, ouvindo os\nsussurros e rugidos indecifráveis dos ventos.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Ira do Mar",
+      "description": "Como uma Ação Bônus, você pode gastar um uso da\nsua Forma Selvagem para manifestar uma Emanação\nde 1,5 metro, que toma a forma de respingos de água\ndo oceano ao seu redor por 10 minutos. Ela se encerra\ncaso você a disperse (nenhuma ação é necessária), manifeste-a novamente ou tenha a condição Incapacitado.\nAo manifestar a Emanação e como uma Ação Bônus\nem seus turnos subsequentes, você pode escolher outra\ncriatura à sua vista na Emanação. O alvo deve ser bem-\n-sucedido em uma salvaguarda de Constituição contra\na sua CD para evitar magia ou sofre dano Gélido e, se\na criatura for Grande ou menor, é empurrada até 4,5\nmetros para longe de você. Para determinar esse dano,\njogue um número de d6s igual ao seu modificador de\nSabedoria (mínimo de um dado)."
+    },
+    {
+      "level": 3,
+      "name": "Magias do Círculo do Mar",
+      "description": "Ao atingir um nível de Druida detalhado na tabela Magias do Círculo do Mar, você tem a as magias da lista\nsempre preparadas.\nMagias do Círculo do Mar\nNível de Druida Magias de Círculo Druídico\n3 Despedaçar, Lufada de Vento, Névoa\nObscurecente, Onda Trovejante, Raio\nde Gelo\n5 Relâmpago, Respirar na Água\n7 Controlar Água, Tempestade Glacial\n9 Invocar Elemental, Paralisar Monstro"
+    },
+    {
+      "level": 6,
+      "name": "Afinidade Aquática",
+      "description": "O tamanho da Emanação criada pela sua Ira do Mar\naumenta para 3 metros.\nAlém disso, você adquire um Deslocamento de Natação igual ao seu Deslocamento."
+    },
+    {
+      "level": 10,
+      "name": "Filho da Tempestade",
+      "description": "Sua Ira do Mar confere dois benefícios adicionais enquanto estiver ativa, conforme detalhado abaixo.\nVoo. Você adquire um Deslocamento de Voo igual ao\nseu Deslocamento.\nResistência. Você tem Resistência a dano Elétrico,\nGélido e Trovejante."
+    },
+    {
+      "level": 14,
+      "name": "Manifestação Oceânica",
+      "description": "Em vez de manifestar a Emanação da Ira do Mar ao\nseu redor, você pode manifestá-la ao redor de uma\ncriatura voluntária a até 18 metros de você. Essa\ncriatura adquire todos os benefícios da Emanação,\nusando sua CD para evitar magia e seu modificador de\nSabedoria.\nAlém disso, você pode manifestar a Emanação ao redor de si mesmo e da outra criatura ao gastar dois usos\nda sua Forma Selvagem, em vez de um, ao manifestá-la."
+    }
+  ]
+}

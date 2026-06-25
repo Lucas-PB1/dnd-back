@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "abjurer",
+  "classId": "wizard",
+  "name": "Abjurador",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Proteja aliados e banir inimigos",
+  "summary": "Proteger aliados e banir inimigos.",
+  "description": "Seu estudo da magia concentra-se em magias de\nbloqueio, banimento e proteção, eliminando efeitos\nnocivos, repelindo influências malignas e defendendo\nos fracos. Abjuradores são chamados para exorcizar\nespíritos malignos, proteger locais contra espionagem\nmágica e fechar portais para outros planos de existência. Grupos de aventureiros valorizam os Abjuradores por sua proteção contra diversas magias hostis e\nataques.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Proteção Arcana",
+      "description": "Você pode tecer magia ao seu redor para se proteger.\nAo conjurar uma magia de Abjuração com um espaço\nde magia, você pode usar simultaneamente um fio da\nmagia para criar uma proteção mágica em si que dura\naté você completar um Descanso Longo. A proteção\ntem Pontos de Vida máximos iguais ao dobro do seu\nnível de Mago mais seu modificador de Inteligência.\nAo sofrer dano, a proteção o absorve em vez de você.\nAplique qualquer Resistência ou Vulnerabilidade antes\nde reduzir os Pontos de Vida da proteção. Se o dano\nreduzir a proteção a 0 Pontos de Vida, você sofre o\ndano restante. Com 0 Pontos de Vida, a proteção não\npode mais absorver dano, mas sua magia permanece.\nAo conjurar uma magia Abjuração com um espaço\nde magia, a proteção restaura um número de Pontos\nde Vida igual ao dobro do nível do espaço de magia.\nVocê também pode, como uma Ação Bônus, gastar um\nespaço de magia, e a proteção recupera um número de\nPontos de Vida igual ao dobro do nível do espaço de\nmagia gasto.\nApós conjurar a proteção, você não pode conjurá-la\nnovamente até completar um Descanso Longo."
+    },
+    {
+      "level": 3,
+      "name": "Versado em Abjuração",
+      "description": "Escolha duas magias de Mago da escola de Abjuração,\ncada uma deve ser de 2º círculo ou inferior e adicione-\n-as gratuitamente ao seu livro de magias.\nAlém disso, ao adquirir acesso a um novo círculo de\nespaços de magia nesta classe, você pode adicionar gratuitamente uma magia de Mago da escola de Abjuração\nao seu livro de magias. A magia escolhida deve ser de\num círculo para o qual você tenha espaços de magia."
+    },
+    {
+      "level": 6,
+      "name": "Proteção Projetada",
+      "description": "Quando uma criatura à sua vista a até 9 metros de\nvocê sofrer dano, você pode executar uma Reação para\nque sua Proteção Arcana absorva esse dano. Caso isto"
+    },
+    {
+      "level": 10,
+      "name": "Rompe-Magia",
+      "description": "Você sempre tem as magias Contramagia e Dissipar Magia preparadas. Além disso, você pode conjurar Dissipar\nMagia como uma Ação Bônus e pode adicionar seu\nBônus de Proficiência ao seu teste de atributo.\nAo conjurar uma das magias com um espaço de\nmagia, esse espaço não é gasto se a magia falhar em\ninterromper uma magia."
+    },
+    {
+      "level": 14,
+      "name": "Resistência à Magia",
+      "description": "Você tem Vantagem em salvaguardas contra magias e\nResistência ao dano proveniente de magias."
+    }
+  ]
+}

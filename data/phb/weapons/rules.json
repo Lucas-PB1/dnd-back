@@ -1,0 +1,99 @@
+{
+  "$schema": "../../schema/equipment-rules.schema.json",
+  "id": "weapon-rules",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 6,
+    "chapterTitle": "Equipamento",
+    "section": "Armas",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pageRanges": [
+      [
+        219,
+        223
+      ]
+    ],
+    "extractedAt": "2026-06-25T01:36:38.303Z"
+  },
+  "intro": "Armas\nA tabela Armas nesta seção mostra as principais armas\ndo jogo. A tabela lista o custo e o peso de cada arma,\nbem como os seguintes detalhes:\nCategoria. Cada arma se enquadra em uma categoria:\nSimples ou Marcial. Proficiências com armas geralmente estão vinculadas a uma dessas categorias.\nPor exemplo, você pode ter proficiência com armas\nSimples.\nCorpo a Corpo ou à Distância. Uma arma é classificada como Corpo a Corpo ou à Distância. Uma arma\nCorpo a Corpo é usada para atacar um alvo a até 1,5\nmetro, enquanto uma arma à Distância é usada para\natacar a uma distância maior.\nDano. A tabela lista a quantidade de dano que uma\narma causa quando um atacante acerta um ataque\ncom ela, bem como o tipo desse dano.\nMaestria. Cada arma tem uma propriedade de maestria, que é definida na seção “Propriedades de\nMaestria” mais adiante neste capítulo. Para usar essa\npropriedade, você deve ter uma característica que\npermita usá-la.\nPropriedades. Quaisquer propriedades que uma arma\npossua são listadas na coluna Propriedades. Cada\npropriedade é definida na seção “Propriedades”.",
+  "proficiency": "Proficiência em Armas\nQualquer um pode empunhar uma arma, mas você\ndeve ter proficiência com ela para adicionar seu Bônus\nde Proficiência a uma jogada de ataque que você faz\ncom ela. As características de um personagem do\njogador podem fornecer proficiências em arma. Um\nmonstro é proficiente com qualquer arma que esteja\nem seu bloco de estatísticas.",
+  "properties": [
+    {
+      "name": "Acuidade",
+      "description": "Ao realizar um ataque com uma arma que possui\nAcuidade, utilize seu modificador de Força ou Destreza, à sua escolha, para as jogadas de ataque e dano.\nVocê deve aplicar o mesmo modificador em ambas as\njogadas."
+    },
+    {
+      "name": "Alcance",
+      "description": "Uma arma com Alcance possui um alcance indicado\nentre parênteses após a propriedade Munição ou Arremesso. O alcance apresenta dois números: o primeiro representa o alcance normal da arma em metros,\nenquanto o segundo indica o alcance máximo. Ao\natacar um alvo que esteja além do alcance normal, você\ntem Desvantagem na jogada de ataque. Não é possível\natacar um alvo que esteja além do alcance máximo."
+    },
+    {
+      "name": "Arremesso",
+      "description": "Se uma arma possui a propriedade Arremesso, você\npode arremessá-la para realizar um ataque à distância, e\npode sacar essa arma como parte do ataque. Se a arma\nfor corpo a corpo, utilize o mesmo modificador de atributo para as jogadas de ataque e dano que você emprega ao realizar um ataque corpo a corpo com essa arma.\nVendendo Equipamento\nO equipamento é vendido pela metade de seu preço.\nEm contraste, bens comerciais e objetos de valor - como\npedras preciosas e objetos de arte — mantêm seu preço\ntotal no mercado. O Livro do Mestre traz os preços para\nitens mágicos."
+    },
+    {
+      "name": "Duas Mãos",
+      "description": "Uma arma de Duas Mãos exige o uso de duas mãos\nquando você ataca com ela."
+    },
+    {
+      "name": "Extensão",
+      "description": "Uma arma de Extensão adiciona 1,5 metro ao seu\nalcance quando você ataca com ela, bem como ao determinar seu alcance para realizar Ataques de Oportunidade com ela."
+    },
+    {
+      "name": "Leve",
+      "description": "Quando você executa a ação Atacar em seu turno e\nusa uma arma Leve, pode realizar um ataque adicional\ncomo uma Ação Bônus mais tarde no mesmo turno.\nEsse ataque adicional deve ser realizado com uma arma\nLeve diferente, e você não adiciona seu modificador\nde atributo ao dano do ataque adicional, a menos que\nesse modificador seja negativo. Por exemplo, você pode\natacar com uma Espada Curta em uma mão e uma\nAdaga na outra executando a ação Atacar e uma Ação\nBônus, mas não adiciona seu modificador de Força ou\nDestreza à jogada de dano da Ação Bônus, a menos que\nesse modificador seja negativo."
+    },
+    {
+      "name": "Munição",
+      "description": "Você só pode usar uma arma com a propriedade\nMunição para realizar um ataque à distância se tiver\nmunição disponível. O tipo de munição necessária é especificado junto ao alcance da arma. Cada ataque gasta\numa peça de munição. Sacar a munição é parte do\nataque (você precisa de uma mão livre para carregar\numa arma com uma mão). Após uma luta, você pode\ngastar 1 minuto para recuperar metade da munição (arredondado para baixo) que utilizou na luta; o restante\né perdido."
+    },
+    {
+      "name": "Pesada",
+      "description": "Você tem Desvantagem em jogadas de ataque com uma\narma Pesada se for uma arma Corpo a Corpo e seu\nvalor de Força for inferior a 13, ou se for uma arma à\nDistância e seu valor de Destreza for inferior a 13."
+    },
+    {
+      "name": "Recarga",
+      "description": "Você pode disparar apenas uma única peça de munição\nde uma arma com Recarga ao executar uma ação, uma\nAção Bônus ou uma Reação para dispará-la, independentemente do número de ataques que você normalmente pode realizar."
+    },
+    {
+      "name": "Versátil",
+      "description": "Uma arma Versátil pode ser usada com uma ou duas\nmãos. Um valor de dano entre parênteses aparece com\na propriedade. A arma causa esse dano quando usada\ncom as duas mãos ao realizar um ataque corpo a corpo."
+    }
+  ],
+  "masteryProperties": [
+    {
+      "name": "Afligir",
+      "description": "Se você atingir uma criatura com esta arma e causar\ndano a ela, você tem Vantagem em sua próxima jogada\nde ataque contra essa criatura antes do final do seu\npróximo turno."
+    },
+    {
+      "name": "Ágil",
+      "description": "Ao realizar o ataque adicional da propriedade Leve,\nvocê pode fazê-lo como parte da ação Atacar, em vez\nde uma Ação Bônus. Esse ataque adicional só pode ser\nrealizado uma vez por turno."
+    },
+    {
+      "name": "Derrubar",
+      "description": "Se você atingir uma criatura com esta arma, você pode\nforçar a criatura a realizar uma salvaguarda de Constituição (CD 8 mais o modificador de atributo usado\npara realizar a jogada de ataque e seu Bônus de Proficiência). Se falhar, a criatura tem a condição Caído."
+    },
+    {
+      "name": "Drenar",
+      "description": "Se você atingir uma criatura com esta arma, essa criatura tem Desvantagem na próxima jogada de ataque\ndela antes do início do seu próximo turno."
+    },
+    {
+      "name": "Empurrar",
+      "description": "Se atingir uma criatura com esta arma, você pode empurrá-la até 3 metros para longe de você se a criatura\nfor Grande ou menor."
+    },
+    {
+      "name": "Garantido",
+      "description": "Se sua jogada de ataque com esta arma errar uma\ncriatura, você pode causar dano a essa criatura igual\nao modificador de atributo que utilizou para realizar a\njogada de ataque. Este dano é do mesmo tipo causado\npela arma, e só pode ser aumentado se o modificador\nde atributo for incrementado."
+    },
+    {
+      "name": "Lentidão",
+      "description": "Se você atingir uma criatura com esta arma e causar\ndano a ela, você pode reduzir o Deslocamento da criatura atingida em 3 metros até o início do seu próximo\nturno. Se a criatura for atingida mais de uma vez por\narmas que tenham essa propriedade, a redução de\nDeslocamento não excede 3 metros."
+    },
+    {
+      "name": "Trespassar",
+      "description": "Se atingir uma criatura com uma jogada de ataque\ncorpo a corpo usando esta arma, você pode realizar\numa jogada de ataque corpo a corpo com a mesma\narma contra uma segunda criatura a até 1,5 metro da\nprimeira que também esteja ao seu alcance. Se acertar,\na segunda criatura sofre o dano da arma, mas você não\nadiciona seu modificador de atributo a esse dano, a menos que esse modificador seja negativo. Você pode realizar esse ataque adicional apenas uma vez por turno."
+    }
+  ],
+  "improvised": "Armas Improvisadas\nSe você usar um objeto — como uma perna de mesa,\nfrigideira ou garrafa — como uma arma improvisada,\nveja “Armas Improvisadas” no glossário de regras. Veja\ntambém essas regras se você empunhar uma arma de\numa maneira incomum, como usar uma arma à Distância\npara realizar um ataque corpo a corpo.\n\nCAPÍTULO 6 | EQUIPAMENTO 215",
+  "selling": "O equipamento é vendido pela metade de seu preço.\nEm contraste, bens comerciais e objetos de valor - como\npedras preciosas e objetos de arte — mantêm seu preço\ntotal no mercado. O Livro do Mestre traz os preços para\nitens mágicos."
+}

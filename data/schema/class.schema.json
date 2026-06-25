@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/class.schema.json",
+  "title": "Classe PHB",
+  "description": "Classe de personagem do Livro do Jogador 2024 (PT-BR). Referências (subclasses, magias, talentos) são strings — não há relação de banco.",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "source",
+    "tagline",
+    "summary",
+    "primaryAbility",
+    "hitDie",
+    "savingThrows",
+    "subclassUnlockLevel",
+    "subclassLabel",
+    "subclasses",
+    "features"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Identificador estável em inglês (slug)."
+    },
+    "name": { "type": "string", "description": "Nome em português." },
+    "source": { "$ref": "#/$defs/source" },
+    "tagline": { "type": "string" },
+    "summary": { "type": "string" },
+    "description": {
+      "type": "string",
+      "description": "Texto flavor do livro (opcional)."
+    },
+    "primaryAbility": { "type": "string" },
+    "hitDie": { "type": "string", "pattern": "^D\\d+$" },
+    "savingThrows": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "skillChoices": { "$ref": "#/$defs/skillChoices" },
+    "weaponProficiencies": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "armorTraining": { "$ref": "#/$defs/armorTraining" },
+    "toolProficiencies": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "startingEquipment": { "$ref": "#/$defs/startingEquipment" },
+    "spellcasting": { "$ref": "#/$defs/spellcasting" },
+    "subclassUnlockLevel": { "type": "integer", "minimum": 1, "maximum": 20 },
+    "subclassLabel": {
+      "type": "string",
+      "description": "Prefixo das subclasses (Trilha, Colégio, etc.)."
+    },
+    "subclasses": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Ids das subclasses — ver arquivos em subclasses/."
+    },
+    "related": { "$ref": "#/$defs/related" },
+    "features": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/feature" }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "required": ["book", "language", "chapter", "pdfPath"],
+      "properties": {
+        "book": { "type": "string" },
+        "language": { "type": "string" },
+        "chapter": { "type": "integer" },
+        "chapterTitle": { "type": "string" },
+        "pdfPath": { "type": "string" },
+        "pdfPages": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "extractedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "skillChoices": {
+      "type": "object",
+      "required": ["count"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 1 },
+        "from": {
+          "oneOf": [
+            { "type": "string", "const": "any" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        }
+      }
+    },
+    "armorTraining": {
+      "type": "object",
+      "required": ["light", "medium", "heavy", "shields"],
+      "properties": {
+        "light": { "type": "boolean" },
+        "medium": { "type": "boolean" },
+        "heavy": { "type": "boolean" },
+        "shields": { "type": "boolean" }
+      }
+    },
+    "startingEquipment": {
+      "type": "object",
+      "required": ["options"],
+      "properties": {
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "items"],
+            "properties": {
+              "label": { "type": "string" },
+              "items": {
+                "type": "array",
+                "items": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "spellcasting": {
+      "type": "object",
+      "required": ["type", "ability"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["full", "half", "pact", "none"]
+        },
+        "ability": { "type": "string" },
+        "focus": { "type": "string" },
+        "ritual": { "type": "boolean" }
+      }
+    },
+    "related": {
+      "type": "object",
+      "description": "Referências textuais a outros conteúdos do livro.",
+      "properties": {
+        "spells": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "feats": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "chapter": { "type": "string" }
+      }
+    },
+    "feature": {
+      "type": "object",
+      "required": ["level", "name", "description"],
+      "properties": {
+        "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "name": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "dance",
+  "classId": "bard",
+  "name": "Colégio da Dança",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Mova-se em Harmonia com o Cosmos",
+  "summary": "Aproveitar a agilidade no combate.",
+  "description": "Bardos do Colégio da Dança entendem que as Palavras de Criação transcendem a fala e a canção; elas se\nmanifestam nos movimentos dos corpos celestes e nos\ngestos das menores criaturas. Esses Bardos buscam\numa harmonia com o turbilhão do cosmos, enfatizando\nagilidade, velocidade e graça.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Ginga Fascinante",
+      "description": "Enquanto você não estiver vestindo armadura ou empunhando um Escudo, adquire os seguintes benefícios.\nDança Virtuosa. Você tem Vantagem em qualquer teste de Carisma (Atuação) que envolva você\ndançando.\nDano de Bardo. Você pode usar Destreza em vez de\nForça para as jogadas de ataque de seus Ataques Desarmados. Quando você causar dano com um Ataque\nDesarmado, pode causar dano Contundente igual ao\nresultado do dado da sua Inspiração de Bardo mais seu\nmodificador de Destreza, em vez do dano normal do\nataque. Esse uso não gasta o dado.\nDefesa sem Armadura. Sua Classe de Armadura base\né igual a 10 mais seus modificadores de Destreza e\nCarisma.\nGolpes Ágeis. Quando você gastar um uso da sua Inspiração de Bardo como parte de uma ação, Ação Bônus\nou Reação, pode realizar um Ataque Desarmado como\nparte dessa ação, Ação Bônus ou Reação."
+    },
+    {
+      "level": 6,
+      "name": "Gingado Coordenado",
+      "description": "Ao jogar Iniciativa, você pode gastar um uso da sua\nInspiração de Bardo se não estiver com a condição\nIncapacitado. Ao realizar isso, jogue o dado da sua\nInspiração de Bardo; você e cada aliado a até 9 metros\nde você que puder ver ou ouvir você adquire um bônus\nna Iniciativa igual ao número jogado."
+    },
+    {
+      "level": 6,
+      "name": "Movimento Inspirador",
+      "description": "Quando um inimigo à sua vista encerra o turno dele a\naté 1,5 metro de você, você pode executar uma Reação\ne gastar um uso da sua Inspiração de Bardo para se\nmover até metade do seu Deslocamento. Em seguida,\num aliado à sua escolha a até 9 metros de você também\npode se mover até metade do Deslocamento dele usando a própria Reação.\nNenhum movimento dessa característica provoca\nAtaques de Oportunidade."
+    },
+    {
+      "level": 14,
+      "name": "Evasão Liderada",
+      "description": "Se você for alvo de um efeito que permita uma salvaguarda de Destreza para receber apenas metade do\ndano, você não recebe dano algum se for bem-sucedido\ne apenas metade se falhar. Se criaturas até 1,5 metro\nde você também realizarem a salvaguarda, você pode\ncompartilhar esse benefício com elas.\nVocê não pode usar esta característica se estiver com\na condição Incapacitado."
+    }
+  ]
+}

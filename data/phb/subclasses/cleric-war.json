@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "war",
+  "classId": "cleric",
+  "name": "Domínio da Guerra",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Inspire bravura marcial",
+  "summary": "Inspirar bravura e punir inimigos.",
+  "description": "A guerra se manifesta de diversas formas, capaz de\ntransformar pessoas comuns em heróis. Pode ser\naterrorizante, com crueldades e covardias ofuscando\natos de bravura e coragem. Os Clérigos do Domínio\nda Guerra se destacam em batalhas, inspirando outros\na lutar pelo bem ou convertendo atos de violência em\norações.\nOs Deuses do Domínio da Guerra observam e\nrecompensam os guerreiros por suas conquistas. Eles\nincluem deuses de honra e cavalheirismo, assim como\nde destruição e pilhagem. Outros deuses da guerra\nadotam uma postura neutra, apoiando a belicosidade\nem todas as suas formas e incentivando os combatentes em todas as situações.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Magias de Domínio da Guerra",
+      "description": "Sua conexão com este domínio divino garante que\nvocê sempre tenha certas magias preparadas. Ao atingir um nível de Clérigo especificado na tabela Magias\nde Domínio da Guerra, você sempre tem as magias\nlistadas preparadas.\nMagias de Domínio da Guerra\nNível de Clérigo Magias Preparadas\n3 Arma Espiritual, Arma Mágica, Escudo\nda Fé, Raio Guia\n5 Guardiões Espirituais, Manto do Cruzado\n7 Escudo Ardente, Movimentação Livre\n9 Golpe de Arço, Paralisar Monstro"
+    },
+    {
+      "level": 3,
+      "name": "Ataque Direcionado",
+      "description": "Quando você ou uma criatura a até 9 metros de você\nerra uma jogada de ataque, você pode gastar um uso\nde seu Canalizar Divindade e dar a essa jogada um\nbônus de +10, potencialmente fazendo-o acertar. Você\nusa sua Reação para conceder esse bônus a uma jogada de ataque a outra criatura."
+    },
+    {
+      "level": 3,
+      "name": "Sacerdote da Guerra",
+      "description": "Como uma Ação Bônus, você pode realizar um ataque\ncom uma arma ou um Ataque Desarmado. Você pode\nusar essa Ação Bônus um número de vezes igual ao\nseu modificador de Sabedoria (mínimo de uma vez).\nVocê restaura todos os usos gastos ao completar um\nDescanso Curto ou Longo."
+    },
+    {
+      "level": 6,
+      "name": "Bênção do Deus da Guerra",
+      "description": "Você pode gastar um uso de seu Canalizar Divindade\npara conjurar Arma Espiritual ou Escudo da Fé em vez\nde gastar um espaço de magia. Uma magia conjurada dessa maneira não requer Concentração. Em vez\ndisso, a magia permanece por 1 minuto, mas encerra\nse você conjurá-la novamente, ter a condição Incapacitado ou morrer."
+    },
+    {
+      "level": 17,
+      "name": "Avatar da Guerra",
+      "description": "Você adquire Resistência a dano Contundente, Cortante e Perfurante."
+    }
+  ]
+}

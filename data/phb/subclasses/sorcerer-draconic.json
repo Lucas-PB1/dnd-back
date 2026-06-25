@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "draconic",
+  "classId": "sorcerer",
+  "name": "Feitiçaria Dracônica",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Emane a magia dos dragões",
+  "summary": "Emanar a magia dos dragões.",
+  "description": "Sua magia inata provém da dádiva de um dragão.\nTalvez um dragão antigo, que estava à beira da morte,\ntenha legado parte de seu poder mágico a você ou a um\nde seus antepassados. Você pode ter absorvido a magia\nde um local impregnado com o poder dos dragões. Ou\ntalvez tenha manuseado um tesouro retirado do covil\nde um dragão, repleto de poder dracônico. Ou quem\nsabe você tenha um dragão como ancestral.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Magias Dracônicas",
+      "description": "Ao atingir um nível de Feiticeiro detalhado na tabela\nMagias Dracônicas, você tem as magias listadas sempre\npreparadas.\nMagias Dracônicas\nNível de Feiticeiro Magias\n3 Alterar-se, Comando, Orbe Cromático,\nSopro de Dragão\n5 Medo, Voo\n7 Enfeitiçar Monstro, Olho Arcano\n9 Invocar Dragão, Lendas e Histórias"
+    },
+    {
+      "level": 3,
+      "name": "Resiliência Dracônica",
+      "description": "A magia em seu corpo manifesta traços físicos da bênção dracônica. Seus Pontos de Vida máximos aumentam em 3, e aumentam em 1 sempre que você atinge\noutro nível de Feiticeiro.\nPartes da sua pele são cobertas por finas escamas reluzentes, semelhantes às de um dragão. Enquanto não\nestiver vestindo armadura, sua Classe de Armadura\nbase é igual a 10 mais seus modificadores de Destreza\ne Carisma."
+    },
+    {
+      "level": 6,
+      "name": "Afinidade Elemental",
+      "description": "Sua magia dracônica tem relação com um tipo de dano\nassociado a dragões. Escolha um desses tipos: Ácido,\nElétrico, Gélido, Ígneo ou Venenoso.\nVocê tem Resistência a esse tipo de dano e ao conjurar uma magia que cause dano do tipo associado com a\nsua ancestralidade dracônica, pode adicionar seu modificador de Carisma a uma jogada de dano dessa magia."
+    },
+    {
+      "level": 14,
+      "name": "Asas de Dragão",
+      "description": "Como uma Ação Bônus, você pode fazer com que asas\ndracônicas apareçam em suas costas. As asas duram 1\nhora ou até você encerrar este efeito (nenhuma ação é\nnecessária). Pela duração, você tem um Deslocamento\nde Voo de 18 metros.\nVocê pode usar esta característica novamente após\ncompletar um Descanso Longo ou gastando 3 Pontos\nde Feitiçaria (nenhuma ação é necessária) para restaurar seu uso."
+    },
+    {
+      "level": 18,
+      "name": "Companheiro Dracônico",
+      "description": "Você pode conjurar Invocar Dragão sem um componente Material. Além disso, pode conjurá-la uma vez sem\ngastar um espaço de magia, recuperando a capacidade\nde conjurá-la deste modo ao completar um Descanso\nLongo.\nAo começar a conjurar a magia, você pode modificá-\n-la para não exigir Concentração e a duração da magia\nse torna 1 minuto para esta conjuração."
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "$schema": "../../schema/class.schema.json",
+  "id": "wizard",
+  "name": "Mago",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Estudioso da magia arcana",
+  "summary": "Estude magia arcana e domine magias para todos os propósitos.",
+  "description": "Magos são reconhecidos por seu estudo\naprofundado da magia. Eles conjuram magias\nexplosivas, raios, ilusões e transformações\nnotáveis, além de invocar criaturas de outros planos,\nprever o futuro e criar barreiras protetoras. Suas\nmagias mais poderosas podem transformar substâncias,\ninvocar meteoros ou abrir portais para outros mundos.\nGeralmente, os Magos adotam uma abordagem acadêmica, explorando os fundamentos teóricos e categorizando magias em escolas. Figuras renomadas como\nBigby, Tasha, Mordenkainen e Yolande contribuíram\npara a criação de magias icônicas reconhecidas por\ntodo o multiverso.\nO máximo que um Mago pode vivenciar de maneira\ncomum é atuar como sábio ou mentor. Muitos oferecem serviços como conselheiros, servem em forças\nmilitares ou se envolvem com o crime ou a dominação.\nEntretanto, a busca pelo conhecimento leva até os\nmagos mais cautelosos a abandonar a segurança de\nsuas bibliotecas e laboratórios em busca de ruínas\ndecadentes e cidades perdidas. A maioria acredita que\ncivilizações antigas guardavam segredos de magia que\npoderiam conceder um poder maior do que o disponível na atualidade.",
+  "primaryAbility": "Inteligência",
+  "hitDie": "D6",
+  "savingThrows": [
+    "Inteligência",
+    "Sabedoria"
+  ],
+  "skillChoices": {
+    "count": 2,
+    "from": [
+      "Arcanismo",
+      "História",
+      "Investigação",
+      "Medicina",
+      "Natureza",
+      "Religião"
+    ]
+  },
+  "weaponProficiencies": [
+    "Adagas",
+    "Dardos",
+    "Fundas",
+    "Bordões",
+    "Bestas Leves"
+  ],
+  "armorTraining": {
+    "light": false,
+    "medium": false,
+    "heavy": false,
+    "shields": false
+  },
+  "startingEquipment": {
+    "options": [
+      {
+        "label": "A",
+        "items": [
+          "2 Adagas",
+          "Foco Arcano (orbe)",
+          "Kit de Erudito",
+          "Kit de Aventureiro",
+          "5 PO"
+        ]
+      },
+      {
+        "label": "B",
+        "items": [
+          "55 PO"
+        ]
+      }
+    ]
+  },
+  "spellcasting": {
+    "type": "full",
+    "ability": "Inteligência",
+    "focus": "Foco Arcano",
+    "ritual": true
+  },
+  "subclassUnlockLevel": 3,
+  "subclassLabel": "Tradição",
+  "subclasses": [
+    "abjurer",
+    "diviner",
+    "evoker",
+    "illusionist"
+  ],
+  "related": {
+    "spells": [
+      "Lista de Magias de Mago"
+    ],
+    "feats": [
+      "Aumento no Valor de Atributo",
+      "Dádiva Épica"
+    ],
+    "chapter": "Capítulo 5 — Talentos"
+  },
+  "features": [
+    {
+      "level": 1,
+      "name": "Adepto de Ritual",
+      "description": "Você pode conjurar qualquer magia como um Ritual se\nessa magia tiver o marcador Ritual e a magia estiver em\nseu livro de magias. Você não precisa ter a magia preparada, mas deve ler o livro para conjurar uma magia\ndeste modo."
+    },
+    {
+      "level": 1,
+      "name": "Conjuração",
+      "description": "Como estudante de magia arcana, você aprendeu a\nconjurar magias. Veja o capítulo 7 para as regras sobre\nconjuração de magias. As informações abaixo detalham\ncomo você usa essas regras com magias de Mago, que\naparecem na lista de magias de Mago mais adiante na\ndescrição da classe.\nTruques. Você conhece três truques de Mago à\nsua escolha. Luz, Mãos Mágicas e Raio de Gelo são\nrecomendados. Ao completar um Descanso Longo,\nvocê pode substituir um dos seus truques dessa\ncaracterística por outro truque de Mago à sua escolha.\nAo atingir os níveis 4 e 10 de Mago, você aprende\nmais um truque de Mago à sua escolha, conforme\ndetalhado na coluna Truques da tabela Características\nde Mago.\nLivro de Magias. Seu aprendizado de mago culminou\nna criação de um livro único: seu livro de magias. É\num objeto Minúsculo que pesa 1,5 quilo, contém 100\npáginas e pode ser lido apenas por você ou por alguém\nque conjure Identificar. Você determina a aparência\ne os materiais do livro, como um tomo com bordas\ndouradas ou uma coleção de pergaminhos amarrados\ncom barbante.\nO livro contém as magias de 1º círculo ou superior\nque você conhece. Ele começa com seis magias de\nmago 1º círculo à sua escolha. Armadura Arcana, Detectar Magia, Mísseis Mágicos, Onda Trovejante, Queda Suave\ne Sono são recomendadas.\nAo atingir um nível de Mago após o primeiro, adicione duas magias de Mago à sua escolha ao seu livro de\nmagias. Cada uma dessas magias deve ser de um círculo\npara o qual você tenha espaços de magia, conforme detalhado na tabela Características de Mago. As magias\nsão o ponto culminante da pesquisa arcana que você\nfaz regularmente.\nEspaços de Magia. A tabela Características de Mago\nmostra quantos espaços de magia você tem para conjurar\nsuas magias de 1º círculo ou superior. Você restaura todos\nos espaços gastos ao completar um Descanso Longo.\nMagias Preparadas de 1º Círculo ou Superior. Você\nprepara a lista de magias de 1º círculo ou superior que\nestão disponíveis para você conjurar com essa característica. Para isso, escolha quatro magias do seu livro de\nmagias. As magias escolhidas devem ser de um círculo\npara o qual você tenha espaços de magia.\nO número de magias em sua lista aumenta à medida\nque você alcança níveis de Mago, conforme detalhado\nna coluna Magias Preparadas da tabela Características\nde Mago. Sempre que esse número aumentar, escolha\nmagias adicionais de Mago até que o número de magias em sua lista corresponda ao número na tabela. As\nmagias escolhidas devem ser de um círculo para o qual\nvocê possua espaços de magia. Por exemplo, se você\né um Mago de nível 3, sua lista de magias preparadas,\nescolhidas do seu livro de magias, pode incluir seis magias de 1º ou 2º círculo, em qualquer combinação.\nSe outra característica de Mago lhe conceder magias\nque você sempre tem preparadas, essas magias não\ncontam para o número de magias que você pode preparar com esta característica, mas essas magias, de outra\nforma, contam como magias de Mago para você.\nMudando Suas Magias Preparadas. Ao completar um\nDescanso Longo, você pode alterar sua lista de magias\npreparadas, substituindo qualquer uma das magias por\noutras do seu livro de magias.\nAtributo de Conjuração. Inteligência é seu atributo de\nconjuração para suas magias de Mago.\nFoco de Conjuração. Você pode usar um Foco Arcano\nou seu livro de magias como um Foco de Conjuração\npara suas magias de Mago."
+    },
+    {
+      "level": 1,
+      "name": "Recuperação Arcana",
+      "description": "Você pode recuperar um pouco de sua energia mágica estudando seu livro de magias. Ao completar um\nDescanso Curto, você pode escolher recuperar espaços\nde magia gastos. Os espaços de magia podem ter um\ncírculo combinado igual a não mais da metade do seu\nnível de Mago (arredondado para cima), e nenhum\ndos espaços pode ser de 6º círculo ou superior. Por\nexemplo, se você é um Mago de nível 4, pode recuperar um valor de até dois círculos de espaços de magia,\nrecuperando um espaço de magia de 2º círculo ou dois\nespaços de magia de 1º círculo.\nVocê pode usar esta característica novamente após\ncompletar um Descanso Longo."
+    },
+    {
+      "level": 2,
+      "name": "Acadêmico",
+      "description": "Enquanto estudava magia, você também se especializou em outro campo de estudo. Escolha uma das\nseguintes perícias nas quais você tem proficiência: Arcanismo, História, Investigação, Medicina, Natureza ou\nReligião. Você tem Especialização na perícia escolhida."
+    },
+    {
+      "level": 3,
+      "name": "Subclasse de Mago",
+      "description": "Você adquire uma subclasse de Mago à sua escolha. As\nsubclasses Abjurador, Adivinhador, Evocador e Ilusionista estão detalhadas após a descrição desta classe.Uma\nsubclasse é uma especialidade que concede a você características em determinados níveis de Mago. Durante\ntoda sua jornada, você adquire cada uma das características de sua subclasse de seu nível de Mago ou menor."
+    },
+    {
+      "level": 4,
+      "name": "Aumento no Valor de Atributo",
+      "description": "Você adquire o talento Aumento no Valor de Atributo\n(veja o capítulo 5) ou outro talento à sua escolha para\no qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Mago."
+    },
+    {
+      "level": 5,
+      "name": "Memorizar Magia",
+      "description": "Ao completar um Descanso Curto, você pode estudar\nseu livro de magias e substituir uma das magias de\nMago de 1º círculo ou superior que você preparou para\nsua característica Conjuração por outra magia de 1º\ncírculo ou superior do livro."
+    },
+    {
+      "level": 18,
+      "name": "Maestria de Magias",
+      "description": "Você alcançou tal domínio sobre certas magias que\npode conjurá-las à vontade. Escolha uma magia de 1º e\numa de 2º círculo em seu livro de magias que tenham\num tempo de conjuração de uma ação. Você sempre\ntem essas magias preparadas, e pode conjurá-las em\nseu círculo mais baixo sem gastar um espaço de magia.\nPara conjurar qualquer uma delas em um círculo superior, você deve gastar um espaço de magia.\nAo completar um Descanso Longo, você pode estudar seu livro de magias e substituir uma dessas magias\npor uma magia elegível do mesmo círculo do livro."
+    },
+    {
+      "level": 19,
+      "name": "Dádiva Épica",
+      "description": "Você adquire o talento Dádiva Épica (veja o capítulo 5)\nou outro talento à sua escolha para o qual se qualifica.\nDádiva da Recordação de Magia é recomendado."
+    },
+    {
+      "level": 20,
+      "name": "Assinatura Mágica",
+      "description": "Escolha duas magias de 3º círculo em seu livro de magias como suas assinaturas mágicas. Você sempre tem\nessas magias preparadas e pode conjurá-las, cada uma\ndelas, uma vez no 3º círculo sem gastar um espaço de\nmagia. Ao realizar isso, você não pode conjurá-las deste\nmodo novamente até completar um Descanso Curto ou\nLongo. Para conjurar uma das magias em um círculo\nsuperior, você deve gastar um espaço de magia.\nExpandindo e Substituindo um Livro de Magias\nAs magias que você adiciona ao seu livro de magias à\nmedida que avança de nível refletem sua pesquisa mágica\nem andamento. Durante suas aventuras, você pode\nencontrar outras magias que podem ser incorporadas\nao livro, como uma magia de Mago em um Pergaminho\nMágico, que você pode copiar para o livro de magias.\nCopiando uma Magia para o Livro. Ao encontrar uma\nmagia de Mago de 1º círculo ou superior, você pode\ncopiá-la para o seu livro de magias se for de um círculo\nque você possa preparar e se tiver tempo para copiá-la.\nPara cada círculo de magia, a transcrição leva 2 horas e\ncusta 50 PO. Depois disso, você pode preparar a magia\ncomo as outras magias em seu livro de magias.\nCopiando o Livro. Você pode copiar uma magia do\nseu livro de magias para outro livro. Isso é como copiar\numa nova magia em seu livro de magias, mas mais\nrápido, já que você já sabe como conjurá-la. Você precisa\ngastar apenas 1 hora e 10 PO para cada círculo de magia\ncopiada.\nSe você perder seu livro de magias, você pode usar\no mesmo procedimento para transcrever as magias\nde Mago que preparou em um novo livro de magias.\nPreencher o restante do novo livro exige que você\nencontre novas magias para fazê-lo. Por esse motivo,\nmuitos magos mantêm um livro de magias reserva.\nA rainha élfica Yolande\nimpressiona um dragão\nvermelho com sua magia,\nPresença Régia de Yolande."
+    }
+  ]
+}

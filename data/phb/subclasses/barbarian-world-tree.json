@@ -1,0 +1,43 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "world-tree",
+  "classId": "barbarian",
+  "name": "Trilha da Árvore do Mundo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Entrelace as Raízes e Ramos do Multiverso",
+  "summary": "Acessar a vitalidade cósmica.",
+  "description": "Bárbaros que seguem a Trilha da Árvore do Mundo\nconectam-se à árvore cósmica Yggdrasil por meio de\nsua Fúria. Essa árvore cresce entre os Planos Externos,\nligando-os entre si e ao Plano Material. Esses Bárbaros extraem a magia da árvore para obter vitalidade e\nviajar entre dimensões.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Vitalidade da Árvore",
+      "description": "Sua Fúria se conecta à força vital da Árvore do Mundo.\nVocê adquire os seguintes benefícios.\nForça Revigorante. No início de cada um dos seus\nturnos enquanto sua Fúria estiver ativa, você pode\nescolher outra criatura a até 3 metros de você para\nreceber Pontos de Vida Temporários. Para determinar\na quantidade de Pontos de Vida Temporários, jogue um\nnúmero de d6s igual ao seu bônus de Dano da Fúria e\nsome os valores. Se qualquer um desses Pontos de Vida\nTemporários ainda estiverem ativos quando sua Fúria\nterminar, eles desaparecem.\nSurto de Vitalidade. Ao ativar sua Fúria, você recebe\num número de Pontos de Vida Temporários igual ao\nseu nível de Bárbaro."
+    },
+    {
+      "level": 6,
+      "name": "Ramos da Árvore",
+      "description": "Sempre que uma criatura que você pode ver começar\no turno a até 9 metros de você enquanto sua Fúria\nestiver ativa, você pode executar uma Reação para convocar ramos espectrais da Árvore do Mundo ao redor\ndela. O alvo deve ser bem-sucedido em uma salvaguarda de Força (CD 8 mais seu modificador de Força e\nseu Bônus de Proficiência) ou é teleportado para um\nespaço desocupado à sua vista a até 1,5 metro de você\nou no espaço desocupado mais próximo à sua vista.\nDepois que o alvo se teleportar, você pode reduzir o\nDeslocamento dele a 0 até o final do turno atual."
+    },
+    {
+      "level": 10,
+      "name": "Raízes Devastadoras",
+      "description": "Durante o seu turno, seu alcance é 3 metros maior com\nqualquer arma corpo a corpo que tenha a propriedade\nPesada ou Versátil, à medida que as raízes da Árvore do Mundo se estendem a partir de você. Quando\nvocê atinge com tal arma no seu turno, pode ativar a\npropriedade de maestria Derrubar ou Empurrar, além\nde outra propriedade de maestria que você estiver\nutilizando com a arma."
+    },
+    {
+      "level": 14,
+      "name": "Percorrer a Árvore",
+      "description": "Ao ativar sua Fúria e, como uma Ação Bônus enquanto\nela estiver ativa, você pode se teleportar a até 18 metros para um espaço desocupado à sua vista.\nAlém disso, uma vez por Fúria, você pode aumentar\no alcance desse teleporte para 45 metros. Ao fazer isso,\nvocê também pode levar até seis criaturas voluntárias\nque estejam a até 3 metros de você. Cada criatura se\nteleporta para um espaço desocupado à sua escolha a\naté 3 metros do seu destino."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "soulknife",
+  "classId": "rogue",
+  "name": "Adaga Espiritual",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Golpeie inimigos com lâminas psíquicas",
+  "summary": "Golpear inimigos com lâminas psíquicas.",
+  "description": "psiônicas podem ter se manifestado, revelando todo\no seu potencial sob estresse em aventuras. Ou então,\nvocê pode ter buscado uma ordem de adeptos psíquicos, dedicando anos a aprender a manifestar seu poder.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Lâminas Psíquicas",
+      "description": "Você pode manifestar lâminas cintilantes de energia\npsíquica. Ao executar a ação Atacar ou realizar um\nAtaque de Oportunidade, você pode manifestar uma\nLâmina Psíquica em sua mão livre e atacar com essa lâmina. A lâmina mágica tem as seguintes características:\nCategoria de Arma: Simples Corpo a Corpo\nDano em Caso de Acerto: 1d6 Psíquico mais o modificador\nde atributo usado na jogada de ataque\nPropriedades: Acuidade, Arremesso (alcance 18/36 metros)\nMaestria: Afligir (você pode usar esta propriedade, e ela\nnão conta para o número de propriedades que você pode\nusar com Maestria em Armas)\nA lâmina desaparece imediatamente após atingir ou\nerrar o alvo, e não deixa marca se causar dano.\nApós atacar com a lâmina no seu turno, você pode\nrealizar um ataque corpo a corpo ou à distância com\numa segunda lâmina psíquica como uma Ação Bônus\nno mesmo turno, se sua outra mão estiver livre para\ncriá-la. O dado de dano deste ataque bônus é 1d4 em\nvez de 1d6."
+    },
+    {
+      "level": 3,
+      "name": "Poder Psiônico",
+      "description": "Você possui uma fonte de energia psiônica, representada pelos seus Dados de Energia Psiônica, que alimenta\ncertos poderes desta subclasse. A tabela Dados de\nEnergia do Adaga Espiritual indica o tipo e a quantidade desses dados conforme você atinge certos níveis de\nLadino.\nDados de Energia do Adaga Espiritual\nNível de Ladino Tipo de Dado Quantidade\n3 D6 4\n5 D8 6\n9 D8 8\n11 D10 8\n13 D10 10\n17 D12 12\nQualquer característica desta subclasse que utilize\num Dado de Energia Psiônica emprega apenas os\ndados dessa subclasse. Alguns poderes consomem esse\nDado, conforme detalhado na respectiva descrição, e\nvocê não pode usar um poder se ele exigir um dado\ne todos os seus Dados de Energia Psiônica estiverem\nesgotados.\nVocê recupera um de seus Dados de Energia Psiônica\ngastos ao completar um Descanso Curto, e restaura\ntodos ao completar um Descanso Longo.\nAptidão Reforçada Psiquicamente. Ao falhar em um\nteste de atributo usando uma perícia ou ferramenta\n\ncom a qual você tem proficiência, você pode jogar um\nDado de Energia Psiônica e adicionar o resultado do\nteste, transformando potencialmente a falha em sucesso. O dado é gasto apenas se o teste for bem-sucedido.\nSussurros Psíquicos. Você pode estabelecer comunicação telepática com outras criaturas. Como uma\nação Usar Magia, escolha até um número de criaturas\nigual ao seu Bônus de Proficiência que estejam à vista\ne jogue um Dado de Energia Psiônica. Por um número de horas igual ao resultado, essas criaturas podem\nse comunicar telepaticamente com você e vice-versa.\nPara enviar ou receber mensagens (nenhuma ação é\nnecessária), você e a outra criatura devem estar a até\n1,5 km de distância. Qualquer criatura pode encerrar\na conexão telepática a qualquer momento (nenhuma\nação é necessária).\nNa primeira vez que você usa este poder após um\nDescanso Longo, não gasta o Dado de Energia Psiônica; nas demais vezes, você o gasta."
+    },
+    {
+      "level": 9,
+      "name": "Lâminas da Alma",
+      "description": "Agora você pode usar os seguintes poderes com suas\nLâminas Psíquicas.\nGolpes Teleguiados. Ao realizar uma jogada de ataque\ncom sua Lâmina Psíquica e errar o alvo, você pode\njogar um Dado de Energia Psiônica e adicionar o resultado jogado à jogada de ataque. Caso o ataque atinja\ndevido a este bônus, o dado é gasto.\nTeleporte Psíquico. Como uma Ação Bônus, você manifesta uma Lâmina Psíquica, gasta um dado de Energia Psíquica e o joga, então arremessa a lâmina em um\nespaço desocupado à sua vista e a até uma distância em\nmetros igual a 3 vezes o resultado do dado. Você então\nse teleporta para esse espaço, e a lâmina desaparece."
+    },
+    {
+      "level": 13,
+      "name": "Véu Psíquico",
+      "description": "Você pode tecer um véu de estática psíquica para\nse mascarar. Como uma ação Usar Magia, você tem\na condição Invisível por 1 hora ou até encerrar este\nefeito (nenhuma ação é necessária). Essa invisibilidade\nencerra se você causar dano a uma criatura ou forçar\numa criatura a realizar uma salvaguarda.\nVocê pode usar esta característica novamente gastando um Dado de Energia Psiônica (nenhuma ação é\nnecessária) ou após completar um Descanso Longo."
+    },
+    {
+      "level": 17,
+      "name": "Rasgar Mente",
+      "description": "Você pode passar suas Lâminas Psíquicas diretamente\npela mente de uma criatura. Ao causar dano de Ataque\nFurtivo com uma das suas Lâminas Psíquicas a uma\ncriatura, você pode forçá-la a realizar uma salvaguarda de Sabedoria (CD 8 + seu modificador de Destreza\n+ seu Bônus de Proficiência). O alvo tem a condição\nAtordoado por 1 minuto se falhar, e repete a salvaguarda no final de cada um dos turnos dele, encerrando o\nefeito sobre si em caso de sucesso.\nVocê pode usar esta característica novamente gastando três Dados de Energia Psiônica (nenhuma ação é\nnecessária) ou após completar um Descanso Longo."
+    }
+  ]
+}

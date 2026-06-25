@@ -1,0 +1,43 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "valor",
+  "classId": "bard",
+  "name": "Colégio da Bravura",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Cante os Feitos dos Heróis Antigos",
+  "summary": "Brandir armas com magias.",
+  "description": "Os Bardos do Colégio da Bravura são narradores ousados cujas histórias preservam a memória dos grandes\nheróis do passado. Eles cantam os feitos dos poderosos em salões suntuosos ou para multidões reunidas\nem torno de grandes fogueiras. Esses Bardos viajam\npara testemunhar grandes eventos em primeira mão e\ngarantir que a lembrança desses acontecimentos não\ndesapareça. Com suas canções, eles inspiram novas\ngerações a alcançar os mesmos feitos grandiosos dos\nheróis de outrora.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Inspiração em Combate",
+      "description": "Você pode usar sua astúcia para virar o rumo da batalha. Uma criatura que possui um dado de Inspiração\nde Bardo seu pode utilizá-lo para um dos seguintes\nefeitos.\nDefensivo. Quando a criatura é atingida por uma\njogada de ataque, pode executar a própria Reação\npara jogar o dado da Inspiração de Bardo e adicionar\no resultado jogado à própria CA contra aquele ataque,\npotencialmente fazendo com que o ataque erre.\nOfensivo. Imediatamente após a criatura atingir um\nalvo com uma jogada de ataque, ela pode jogar o dado\nda Inspiração de Bardo e adicionar o resultado jogado\nao dano do ataque contra o alvo."
+    },
+    {
+      "level": 3,
+      "name": "Treinamento Marcial",
+      "description": "Você adquire proficiência com armas Marciais, armaduras Médias e treinamento com Escudos.\nAlém disso, você pode usar uma arma Simples ou\nMarcial como Foco de Conjuração para conjurar magias da sua lista de magias de Bardo."
+    },
+    {
+      "level": 6,
+      "name": "Ataque Extra",
+      "description": "Você pode atacar duas vezes, em vez de uma, sempre\nque executar a ação Atacar no seu turno.\nAlém disso, você pode conjurar um de seus truques\nque tenha um tempo de conjuração de uma ação no\nlugar de um desses ataques."
+    },
+    {
+      "level": 14,
+      "name": "Magia de Batalha",
+      "description": "Após conjurar uma magia que tenha um tempo de\nconjuração de uma ação, você pode realizar um ataque\ncom uma arma como uma Ação Bônus."
+    }
+  ]
+}

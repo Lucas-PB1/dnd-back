@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "hunter",
+  "classId": "ranger",
+  "name": "Caçador",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Proteja a natureza com versatilidade marcial",
+  "summary": "Proteger a natureza com versatilidade marcial.",
+  "description": "Você persegue presas nos ermos e em outros lugares,\nusando suas habilidades como Caçador para proteger\na natureza e as pessoas em todos os lugares de forças\nque as destruiriam.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Conhecimento do Caçador",
+      "description": "Você pode recorrer às forças da natureza para revelar\ncertos pontos fortes e fracos de sua presa. Enquanto\numa criatura está marcada pela Marca do Predador,\nvocê sabe se essa criatura tem Imunidades, Resistências ou Vulnerabilidades, e se a criatura tiver\nalguma, você sabe quais são."
+    },
+    {
+      "level": 3,
+      "name": "Presa do Caçador",
+      "description": "Você recebe uma das seguintes opções de\ncaracterísticas à sua escolha. Ao completar um\nDescanso Curto ou Longo, você pode substituir a opção escolhida pela outra.\nAssassino de Colossos. Sua tenacidade pode\nderrubar até mesmo os inimigos mais poderosos. Ao atingir com arma uma criatura com\nos Pontos de Vida menor que o máximo, você\ncausa 1d8 pontos de dano adicional. Você pode\ncausar esse dano adicional apenas uma vez por\nturno.\nDestruidor de Hordas. Uma vez em cada um dos\nseus turnos, ao realizar um ataque com uma arma,\nvocê pode realizar outro ataque com a mesma arma\ncontra uma criatura diferente que está a 1,5 metro\ndo alvo original, que está dentro do alcance da arma e\nque você não atacou neste turno."
+    },
+    {
+      "level": 7,
+      "name": "Táticas Defensivas",
+      "description": "Você recebe uma das seguintes opções de características à sua escolha. Ao completar um Descanso\nCurto ou Longo, você pode substituir a opção\nescolhida pela outra.\nDefesa Contra Ataques Múltiplos. Ao ser atingido por\numa criatura com uma jogada de ataque, essa criatura\ntem Desvantagem em todas as outras jogadas de ataque contra você neste turno.\nEscapar de Hordas. Ataques de Oportunidade têm\nDesvantagem contra você."
+    },
+    {
+      "level": 11,
+      "name": "Presa do Caçador Superior",
+      "description": "Uma vez por turno, ao causar dano a uma criatura\nmarcada pela Marca do Predador, você também\npode causar dano adicional dessa magia a uma\ncriatura diferente à sua vista e a até 9 metros da\nprimeira criatura."
+    },
+    {
+      "level": 15,
+      "name": "Defesa do Caçador",
+      "description": "Superior\nAo sofrer dano, você pode executar uma Reação\npara conceder a si mesmo Resistência a esse dano e\na qualquer outro dano do mesmo tipo até o final do\nturno atual."
+    }
+  ]
+}

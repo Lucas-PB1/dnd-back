@@ -1,0 +1,161 @@
+{
+  "$schema": "../../schema/class.schema.json",
+  "id": "druid",
+  "name": "Druida",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Guardião da natureza e da magia primal",
+  "summary": "Canalize a magia da natureza para curar, moldar e controlar os elementos.",
+  "primaryAbility": "Sabedoria",
+  "hitDie": "D8",
+  "savingThrows": [
+    "Inteligência",
+    "Sabedoria"
+  ],
+  "skillChoices": {
+    "count": 2,
+    "from": [
+      "Arcanismo",
+      "Lidar com Animais",
+      "Intuição",
+      "Medicina",
+      "Natureza",
+      "Percepção",
+      "Religião",
+      "Sobrevivência"
+    ]
+  },
+  "weaponProficiencies": [
+    "Armas Simples"
+  ],
+  "armorTraining": {
+    "light": true,
+    "medium": true,
+    "heavy": false,
+    "shields": true
+  },
+  "toolProficiencies": [
+    "Kit de Herbalismo"
+  ],
+  "startingEquipment": {
+    "options": [
+      {
+        "label": "A",
+        "items": [
+          "Armadura de Couro",
+          "Escudo",
+          "Foice",
+          "Kit de Druida",
+          "9 PO"
+        ]
+      },
+      {
+        "label": "B",
+        "items": [
+          "50 PO"
+        ]
+      }
+    ]
+  },
+  "spellcasting": {
+    "type": "full",
+    "ability": "Sabedoria",
+    "focus": "Foco Druídico",
+    "ritual": true
+  },
+  "subclassUnlockLevel": 3,
+  "subclassLabel": "Círculo",
+  "subclasses": [
+    "land",
+    "moon",
+    "stars",
+    "sea"
+  ],
+  "related": {
+    "spells": [
+      "Lista de Magias de Druida"
+    ],
+    "feats": [
+      "Aumento no Valor de Atributo",
+      "Dádiva Épica"
+    ],
+    "chapter": "Capítulo 5 — Talentos"
+  },
+  "features": [
+    {
+      "level": 1,
+      "name": "Conjuração",
+      "description": "Você aprendeu a conjurar magias através do estudo\ndas forças místicas da natureza. Veja o capítulo 7\npara as regras de conjuração. As informações abaixo\ndetalham como você usa essas regras com magias de\nDruida, que aparecem na lista de magias de Druida\nmais adiante na descrição da classe.\nTruques. Você conhece dois truques à sua escolha da\nlista de magias de Druida. Arte Druídica e Criar Chamas\nsão recomendadas.\nSempre que você alcança um nível de Druida, pode\nsubstituir um de seus truques por outro truque à sua\nescolha da lista de magias de Druida.\nAo atingir os níveis 4 e 10 de Druida, você aprende\nmais um truque à sua escolha da lista de magias de\nDruida, conforme mostrado na coluna Truques da\ntabela Características de Druida.\nEspaços de Magia. A tabela Características de Druida\nmostra quantos espaços de magia você tem para conjurar suas magias de 1º círculo ou superior. Você restaura todos os espaços gastos ao completar um Descanso\nLongo.\nMagias Preparadas de 1º Círculo ou Superior. Você\nprepara a lista de magias de 1º círculo ou superior que\nestão disponíveis para você conjurar com esta característica. Para começar, escolha quatro magias de 1º\ncírculo da lista de magias de Druida. Amizade Animal,\nCurar Ferimentos, Fogo das Fadas e Onda Trovejante são\nrecomendadas.\nO número de magias em sua lista aumenta à medida\nque você alcança níveis de Druida, conforme mostrado\nna coluna Magias Preparadas da tabela Características\nde Druida. Sempre que esse número aumentar, escolha magias adicionais da lista de magias de Druida até\nque o número de magias em sua lista corresponda ao\nnúmero da tabela. As magias escolhidas devem ser de\num círculo para o qual você possui espaços de magia.\nPor exemplo, se você é um Druida de nível 3, sua lista\nde magias preparadas pode incluir seis magias de 1º ou\n2º círculo em qualquer combinação.\nSe outra característica de Druida lhe der magias que\nvocê sempre tem preparadas, essas magias não contam\npara o número de magias que você pode preparar com \nesta característica, mas essas magias, de outra forma,\ncontam como magias de Druida para você.\nMudando Suas Magias Preparadas. Sempre que completar um Descanso Longo, você pode mudar sua lista\nde magias preparadas, substituindo qualquer uma das\nmagias por outras magias de Druida para as quais você\ntem espaços de magia.\nAtributo de Conjuração. Sabedoria é seu atributo de\nconjuração para suas magias de Druida.\nFoco de Conjuração. Você pode usar um Foco Druídico como um Foco de Conjuração para suas magias de\nDruida."
+    },
+    {
+      "level": 1,
+      "name": "Idioma Druídico",
+      "description": "Você domina Druídico, o idioma secreto dos Druidas.\nAo aprender esse idioma antigo, você também adquiriu\na habilidade mágica de se comunicar com animais; você\nsempre tem a magia Falar com Animais preparada.\nVocê pode usar Druídico para deixar mensagens\nocultas. Você e outros que conhecem Druídico identificam automaticamente tal mensagem. Outros podem\nperceber a presença da mensagem com um teste de\nInteligência (Investigação) CD 15, mas não podem\ndecifrá-la sem magia."
+    },
+    {
+      "level": 1,
+      "name": "Ordem Primal",
+      "description": "Você se dedicou a uma das seguintes funções sagradas\nà sua escolha.\nProtetor. Treinado para a batalha, você adquire\nproficiência com armas Marciais e treinamento com\narmadura Média.\nXamã. Você conhece um truque adicional da lista de\nmagias de Druida. Além disso, sua conexão mística com\na natureza lhe concede um bônus em seus testes de\nInteligência (Arcanismo ou Natureza). O bônus é igual\nao seu modificador de Sabedoria (bônus mínimo de +1)."
+    },
+    {
+      "level": 2,
+      "name": "Companheiro Selvagem",
+      "description": "Você pode invocar um espírito da natureza que assume\na forma de um animal para auxiliá-lo. Como uma ação\nUsar Magia, você pode gastar um espaço de magia ou\num uso de Forma Selvagem para conjurar a magia\nConvocar Familiar sem componentes Materiais.\nAo conjurar a magia deste modo, o familiar é uma\ncriatura Feérica e desaparece ao completar um Descanso Longo."
+    },
+    {
+      "level": 2,
+      "name": "Forma Selvagem",
+      "description": "O poder da natureza permite que você assuma a forma\nde um animal. Como uma Ação Bônus, você multimorfa para uma forma Animal que você aprendeu com\nesta característica (veja “Formas Conhecidas”, abaixo). Você fica nessa forma por um número de horas\nigual à metade do seu nível de Druida, até usar Forma\nSelvagem novamente, ter a condição Incapacitado ou\nmorrer. Você também pode sair da forma antes como\numa Ação Bônus."
+    },
+    {
+      "level": 3,
+      "name": "Subclasse de Druida",
+      "description": "Você adquire uma subclasse de Druida à sua escolha.\nAs subclasses Círculo da Lua, Círculo da Terra, Círculo\ndas Estrelas e Círculo do Mar são detalhadas a seguir\nneste capítulo. Uma subclasse é uma especialidade que\nlhe concede características em determinados níveis de\nDruida. Durante toda sua carreira, você recebe cada\numa das características de sua subclasse que são de seu\nnível de Druida ou inferior."
+    },
+    {
+      "level": 4,
+      "name": "Aumento no Valor de Atributo",
+      "description": "Você adquire o talento Aumento no Valor de Atributo\n(veja o capítulo 5) ou outro talento à sua escolha para\no qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Druida."
+    },
+    {
+      "level": 5,
+      "name": "Ressurgimento Selvagem",
+      "description": "Uma vez em cada um de seus turnos, se você não tiver\nmais usos de Forma Selvagem, pode recuperar um\nuso gastando um espaço de magia (nenhuma ação é\nnecessária).\nAlém disso, você pode gastar um uso de Forma Selvagem (nenhuma ação é necessária) para recuperar um\nespaço de magia de 1º círculo, mas não pode fazê-lo\nnovamente até completar um Descanso Longo."
+    },
+    {
+      "level": 7,
+      "name": "Fúria Elemental",
+      "description": "O poder dos elementos flui através de você. Você recebe uma das seguintes opções à sua escolha.\nAtaque Primal. Uma vez em cada um dos seus turnos,\nao atingir uma criatura com uma jogada de ataque\nusando uma arma ou um ataque da forma Animal em\nForma Selvagem, pode causar 1d8 pontos de dano\nElétrico, Gélido, Ígneo ou Trovejante (à sua escolha\nquando você atinge) adicional ao alvo.\nConjuração Poderosa. Adicione seu modificador de\nSabedoria ao dano causado com qualquer truque de\nDruida."
+    },
+    {
+      "level": 15,
+      "name": "Fúria Elemental Aprimorada",
+      "description": "A opção que você escolheu para Fúria Elemental fica\nmais poderosa, conforme detalhado abaixo.\nAtaque Primal. O dano adicional de seu Ataque Primal aumenta para 2d8.\nConjuração Poderosa. Ao conjurar um truque de\nDruida com um alcance de 3 metros ou mais, o alcance\nda magia aumenta para 90 metros."
+    },
+    {
+      "level": 18,
+      "name": "Magias Bestiais",
+      "description": "Ao usar Forma Selvagem, você pode conjurar magias\nna forma Animal, exceto magias que tenham um com-\n\nponente Material com um custo especificado ou que\nconsuma seu componente Material."
+    },
+    {
+      "level": 19,
+      "name": "Dádiva Épica",
+      "description": "Você adquire o talento Dádiva Épica (veja o capítulo 5)\nou outro talento à sua escolha para o qual se qualifica.\nDádiva da Viagem Dimensional é recomendada."
+    },
+    {
+      "level": 20,
+      "name": "Arquidruida",
+      "description": "A vitalidade da natureza floresce constantemente dentro de você, concedendo-lhe os seguintes benefícios.\nForma Selvagem Eterna. Sempre que você joga Iniciativa e não tem mais usos de Forma Selvagem, você\nrecupera um uso gasto dela.\nNatureza Xamânica. Você pode converter usos de\nForma Selvagem em um espaço de magia (nenhuma\nação é necessária). Escolha um número de seus usos\nnão gastos de Forma Selvagem e transforme-os em\num único espaço de magia, com cada uso contribuindo\ncom espaços de magia de 2º círculo. Por exemplo, se\nvocê transformar dois usos de Forma Selvagem, você\nproduz um espaço de magia de 4º círculo. Após usar\neste benefício, você não pode fazê-lo novamente até\ncompletar um Descanso Longo.\nLongevidade. A magia primitiva que você utiliza permite que você envelheça mais lentamente: para cada\ndez anos que passam, seu corpo envelhece apenas um."
+    }
+  ]
+}

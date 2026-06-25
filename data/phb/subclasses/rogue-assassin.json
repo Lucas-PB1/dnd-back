@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "assassin",
+  "classId": "rogue",
+  "name": "Assassino",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Realize emboscadas e envenenamentos",
+  "summary": "Realizar emboscadas e envenenamentos.",
+  "description": "O treinamento de um Assassino se concentra em usar\nfurtividade, veneno e disfarce para eliminar inimigos\ncom eficiência mortal. Enquanto alguns Ladinos que\nseguem este caminho são assassinos contratados, espiões ou caçadores de recompensas, as capacidades desta\nsubclasse são igualmente úteis para aventureiros que\nenfrentam uma variedade de inimigos monstruosos.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Assassinar",
+      "description": "Você é adepto de emboscar um alvo, concedendo-lhe\nos seguintes benefícios.\nIniciativa. Você tem Vantagem nas jogadas de\nIniciativa.\nGolpe Surpreendente. Durante a primeira rodada de\ncada combate, você tem Vantagem em jogadas de ataque contra qualquer criatura que não tenha realizado\no turno. Caso seu Ataque Furtivo atinja qualquer alvo\nna rodada, o alvo sofre dano adicional do tipo da arma\nigual ao seu nível de Ladino."
+    },
+    {
+      "level": 3,
+      "name": "Ferramentas de Assassino",
+      "description": "Você adquire um Kit de Disfarce e um Kit de Veneno, e\ntem proficiência com eles."
+    },
+    {
+      "level": 9,
+      "name": "Especialista em Infiltração",
+      "description": "Você é especialista nas seguintes técnicas que auxiliam\nsuas infiltrações.\nMimetismo Magistral. Você pode imitar perfeitamente a fala, a caligrafia ou ambos de outra pessoa se tiver\npassado pelo menos 1 hora estudando-os.\nMira Móvel. Ao usar Mira Firme, seu Deslocamento\nnão é reduzido a 0."
+    },
+    {
+      "level": 13,
+      "name": "Armas Venenosas",
+      "description": "Ao usar a opção Envenenar do seu Golpe Astuto, o\nalvo também sofre 2d6 pontos de dano Venenoso\nsempre que falhar na salvaguarda. Este dano ignora\nResistência a dano Venenoso."
+    },
+    {
+      "level": 17,
+      "name": "Golpe Mortal",
+      "description": "Ao acertar com seu Ataque Furtivo na primeira rodada\nde um combate, o alvo deve ser bem-sucedido em uma\nsalvaguarda de Constituição (CD 8 mais seu modificador de Destreza e seu Bônus de Proficiência) ou o dano\ndo ataque é dobrado contra o alvo."
+    }
+  ]
+}

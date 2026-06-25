@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "light",
+  "classId": "cleric",
+  "name": "Domínio da Luz",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Empunhe luz ardente",
+  "summary": "Empunhar luz ardente e protetora.",
+  "description": "O Domínio da Luz destaca o poder divino de gerar\nlabaredas e revelação. Seus Clérigos, almas iluminadas, possuem a visão clara de suas divindades, encarregados de afastar mentiras e dissipar as trevas.\nEste domínio está ligado a deuses da verdade, vigilância, beleza, percepção e renovação. Alguns desses\ndeuses são identificados com o sol ou como condutores de carruagens que guiam o sol pelo céu. Outros\natuam como sentinelas contra o engano, enquanto\nalgumas divindades da beleza e da arte ensinam que a\narte é um caminho para o aprimoramento da alma.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Brilho do Amanhecer",
+      "description": "Como uma ação Usar Magia, você ergue seu Símbolo\nSagrado e gasta o uso de seu Canalizar Divindade\npara emitir um feixe de luz em uma Emanação de 9\nmetros originada em você. Qualquer Escuridão mágica, como a criada pela magia Escuridão, nessa área\né dissipada. Além disso, cada criatura à sua escolha\nnessa área deve realizar uma salvaguarda de Constituição, sofrendo dano Radiante igual a 2d10 mais seu\nnível de Clérigo se falhar ou metade desse dano em\ncaso de sucesso."
+    },
+    {
+      "level": 3,
+      "name": "Labareda Protetora",
+      "description": "Quando uma criatura à sua vista a até 9 metros de\nvocê realiza uma jogada de ataque, você pode executar uma Reação para impor Desvantagem na jogada\nde ataque, fazendo com que a luz brilhe antes de acertar ou errar."
+    },
+    {
+      "level": 3,
+      "name": "Magias de Domínio da Luz",
+      "description": "Sua conexão com este domínio divino garante que\nvocê sempre tenha certas magias preparadas. Ao\natingir um nível de Clérigo especificado na tabela Magias de Domínio da Luz, você sempre tem as magias\nlistadas preparadas.\nMagias de Domínio da Luz\nNível de Clérigo Magias Preparadas\n3 Fogo das Fadas, Mãos Ardentes, Raio\nArdente, Ver o Invisível\n5 Bola de Fogo, Luz do Dia\n7 Muralha de Fogo, Olho Arcano\n9 Coluna de Chamas, Vidência"
+    },
+    {
+      "level": 6,
+      "name": "Labareda Protetora Aprimorada",
+      "description": "Você restaura todos os usos gastos da sua Labareda Protetora ao completar um Descanso Curto ou\nLongo.\nAlém disso, sempre que usar Labareda Protetora,\nvocê pode conceder ao alvo do ataque desencadeado\num número de Pontos de Vida Temporários igual a\n2d6 mais seu modificador de Sabedoria."
+    },
+    {
+      "level": 17,
+      "name": "Coroa de Luz",
+      "description": "Como uma ação Usar Magia, você emite uma aura de\nluz solar que dura 1 minuto ou até que você a encerre\n(nenhuma ação é necessária). Você emite Luz Plena em um raio de 18 metros e Meia-luz por mais 9\nmetros. Seus inimigos na Luz Plena têm Desvantagem\nem salvaguardas contra seu Brilho do Amanhecer e\nqualquer magia que cause dano Ígneo ou Radiante.\nVocê pode usar esta característica um número de\nvezes igual ao seu modificador de Sabedoria (mínimo\nde uma vez) e restaura todos os usos gastos ao completar um Descanso Longo."
+    }
+  ]
+}

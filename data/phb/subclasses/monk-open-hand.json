@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "open-hand",
+  "classId": "monk",
+  "name": "Combatente da Mão Espalmada",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [55, 182],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Domine o combate desarmado",
+  "summary": "Dominar o combate desarmado.",
+  "description": "Os Combatentes da Mão Espalmada são mestres do\ncombate desarmado. Eles aprendem técnicas para\nempurrar e derrubar seus oponentes e manipular sua\nprópria energia para se proteger de danos.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Técnica da Mão Espalmada",
+      "description": "Ao atingir uma criatura com um ataque concedido\npor sua Torrente de Golpes, você pode impor um dos\nseguintes efeitos ao alvo.\nDerrubar. O alvo deve ser bem-sucedido em uma\nsalvaguarda de Destreza ou tem a condição Caído.\nDesorientar. O alvo não pode realizar Ataques de\nOportunidade até o início do próximo turno dele.\nEmpurrar. O alvo deve ser bem-sucedido em uma\nsalvaguarda de Força ou é empurrado até 4,5 metros\npara longe de você."
+    },
+    {
+      "level": 6,
+      "name": "Integridade Corporal",
+      "description": "Você adquire a capacidade de se curar. Como uma\nAção Bônus, você pode jogar seu dado de Artes Marciais.\nVocê recupera um número de Pontos de Vida\nigual ao resultado mais seu modificador de Sabedoria\n(mínimo de 1 Ponto de Vida recuperado).\nVocê pode usar essa característica um número de\nvezes igual ao seu modificador de Sabedoria (mínimo\nde uma vez) e restaura todos os usos gastos ao completar um Descanso Longo."
+    },
+    {
+      "level": 11,
+      "name": "Passo Veloz",
+      "description": "Ao executar uma Ação Bônus diferente de Passo do\nVento, você também pode usar Passo do Vento imediatamente após essa Ação Bônus."
+    },
+    {
+      "level": 17,
+      "name": "Palma Vibrante",
+      "description": "Você obtém a habilidade de infligir vibrações letais no\ncorpo de outra pessoa. Ao acertar uma criatura com\num Ataque Desarmado, você pode gastar 4 Pontos\nde Foco para iniciar essas vibrações imperceptíveis,\nque duram por um número de dias igual ao seu nível\nde Monge. As vibrações são inofensivas, a menos que\nvocê execute uma Ação para encerrá-las. Como alternativa, ao executar a ação Atacar no seu turno, você\npode renunciar a um dos ataques para acabar com\nas vibrações. Para encerrá-las, você e o alvo devem\nestar no mesmo plano de existência. Ao fazer isso, o\nalvo deve realizar uma salvaguarda de Constituição,\nsofrendo 10d12 pontos de dano Energético se falhar\nou metade do dano em caso de sucesso.\nVocê pode ter apenas uma criatura sob o efeito desta\ncaracterística por vez. Você pode encerrar as vibrações\ninofensivamente (nenhuma ação é necessária)."
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "eldritch-knight",
+  "classId": "fighter",
+  "name": "Cavaleiro Místico",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Aprenda magias que auxiliem no combate",
+  "summary": "Aprender magias que auxiliem no combate.",
+  "description": "Cavaleiros Místicos unem habilidades marciais de\nGuerreiros a um estudo aprofundado da magia, que\nnão só complementa suas técnicas de combate como\ntambém oferece proteção adicional à armadura e\npermite enfrentar múltiplos inimigos simultaneamente\ncom magia explosiva.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Conjuração",
+      "description": "Você aprendeu a conjurar magias. Veja o capítulo 7\npara as regras sobre conjuração de magias. As informações abaixo detalham como você usa essas regras como\num Cavaleiro Místico.\nTruques. Você conhece dois truques à sua escolha da\nlista de magias de Mago (veja a seção desta classe para\na lista de magias). Raio de Gelo e Toque Chocante são\nrecomendados. Sempre que você atinge um nível de\nGuerreiro, pode substituir um desses truques por outro\ntruque à sua escolha da lista de magias de Mago.\nAo atingir o nível 10 de Guerreiro, você aprende mais\num truque de Mago à sua escolha.\nEspaços de Magia. A tabela Conjuração de Cavaleiro\nMístico apresenta quantos espaços de magia você tem\npara conjurar suas magias de 1º círculo ou superior.\nVocê restaura todos os espaços gastos ao completar\num Descanso Longo.\nConjuração de Cavaleiro Místico\nNível de\nGuerreiro\nMagias\nPreparadas\nEspaços de Magia por Círculo de Magia\n1 2 3 4\n3 3 2 — — —\n4 4 3 — — —\n5 4 3 — — —\n6 4 3 — — —\n7 5 4 2 — —\n8 6 4 2 — —\n9 6 4 2 — —\n10 7 4 3 — —\n11 8 4 3 — —\n12 8 4 3 — —\n13 9 4 3 2 —\n14 10 4 3 2 —\n15 10 4 3 2 —\n16 11 4 3 3 —\n17 11 4 3 3 —\n18 11 4 3 3 —\n19 12 4 3 3 1\n20 13 4 3 3 1\nMagias Preparadas de 1º Círculo ou Superior. Você\nprepara a lista de magias de 1º círculo ou superior\nque estão disponíveis para você ao conjurar com essa\ncaracterística. Para começar, escolha três magias de"
+    },
+    {
+      "level": 3,
+      "name": "Vínculo com Arma",
+      "description": "Você aprende um ritual que cria um vínculo mágico\nentre você e uma arma. Você realiza o ritual ao longo\nde 1 hora, o que pode ser concluído durante um Descanso Curto. A arma deve estar ao seu alcance durante\ntodo o ritual e, ao concluí-lo, você toca a arma e estabelece o vínculo. O vínculo falha se outro Guerreiro\nestiver ligado à arma ou se a arma for um item mágico\ncom o qual outra pessoa está sintonizada.\nApós ter vinculado uma arma a si, ela não pode ser\ndesarmada de você, a menos que você tenha a condição\nIncapacitado. Se ela estiver no mesmo plano de existência, você pode invocar essa arma como uma Ação\nBônus, teleportando-a instantaneamente para sua mão.\nVocê pode ter até dois vínculos com armas, mas pode\ninvocar apenas uma de cada vez com uma Ação Bônus.\nSe você tentar se vincular com uma terceira arma, você\ndeve quebrar o vínculo com uma das outras duas."
+    },
+    {
+      "level": 7,
+      "name": "Magia de Guerra",
+      "description": "Ao executar a ação Atacar no seu turno, você pode\nsubstituir um dos ataques por uma conjuração de um\nde seus truques de Mago que tenha um tempo de conjuração de uma ação."
+    },
+    {
+      "level": 10,
+      "name": "Golpe Místico",
+      "description": "Você aprende a usar seus ataques com armas para reduzir a resistência de uma criatura às suas magias. Ao\natingir uma criatura com um ataque usando uma arma,\nessa criatura sofre Desvantagem na próxima salvaguarda que realizar contra uma magia que você conjurar\nantes do final do seu próximo turno."
+    },
+    {
+      "level": 15,
+      "name": "Investida Mística",
+      "description": "Ao usar seu Surto de Ação, você pode se teleportar até\n9 metros para um espaço desocupado à sua vista. Você\npode se teleportar antes ou depois da ação adicional."
+    },
+    {
+      "level": 18,
+      "name": "Magia de Guerra Aprimorada",
+      "description": "Ao executar a ação Atacar no seu turno, você pode\nsubstituir dois ataques pela conjuração de uma das\nsuas magias de Mago de 1º ou 2º círculo que tenha um\ntempo de conjuração de uma ação."
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "trickery",
+  "classId": "cleric",
+  "name": "Domínio da Trapaça",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Engane e confunda",
+  "summary": "Atormentar inimigos com artimanhas.",
+  "description": "O Domínio da Trapaça fornece magias de enganação,\nilusão e furtividade. Os Clérigos que usam essa magia\nsão uma força disruptiva no mundo, perfurando o\norgulho, zombando de tiranos, libertando cativos e\ndesprezando tradições vazias. Eles preferem estratagemas e brincadeiras ao confronto direto.\nOs deuses da trapaça são instigadores e trapaceiros\nque desafiam a ordem entre deuses e mortais. Eles\npersonificam a mudança e a agitação social, sendo\npatronos de ladrões, vigaristas, apostadores, rebeldes\ne libertadores. Ordens religiosas secretas, especialmente as que buscam minar governos ou hierarquias\nopressivas, também se apoiam no poder do Domínio\nda Trapaça.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Magias de Domínio da Trapaça",
+      "description": "Sua conexão com este domínio divino garante que\nvocê sempre tenha certas magias preparadas. Ao atingir um nível de Clérigo especificado na tabela Magias\nde Domínio da Trapaça, você sempre tem as magias\nlistadas preparadas.\nMagias de Domínio da Trapaça\nNível de Clérigo Magias Preparadas\n3 Disfarçar-se, Enfeitiçar Pessoa,\nInvisibilidade, Passo Sem Rastro\n5 Indetectável, Padrão Hipnótico\n7 Confusão, Porta Dimensional\n9 Dominar Pessoa, Modificar Memória"
+    },
+    {
+      "level": 3,
+      "name": "Bênção do Trapaceiro",
+      "description": "Com uma ação Usar Magia, você pode escolher a si ou\na uma criatura voluntária a até 9 metros de você para\nter Vantagem em testes de Destreza (Furtividade).\nEssa bênção permanece até você completar um Descanso Longo ou usar esta característica novamente."
+    },
+    {
+      "level": 3,
+      "name": "Invocar Duplicidade",
+      "description": "Como uma Ação Bônus, você pode gastar um uso de\nseu Canalizar Divindade para criar uma ilusão visual\nperfeita de si em um espaço desocupado à sua vista a\naté 9 metros de si. A ilusão é intangível e não ocupa\nseu espaço. Ela permanece por 1 minuto e acaba se\nvocê tiver a condição Incapacitado ou a encerrar (nenhuma ação é necessária). A ilusão é animada e imita\nsuas expressões e gestos. Enquanto ela persistir, você\nadquire os seguintes benefícios.\nConjurar Magias. Você pode conjurar magias como\nse estivesse no espaço da ilusão, mas deve usar seus\npróprios sentidos.\nDistração. Quando você e sua ilusão estão a até 1,5\nmetro de uma criatura que pode ver a ilusão, você\ntem Vantagem em jogadas de ataque contra essa\ncriatura, considerando quão perturbadora a ilusão é\npara o alvo.\nMover. Como uma Ação Bônus, você pode\nmover a ilusão até 9 metros para um espaço\ndesocupado que esteja a até 36 metros de\nvocê."
+    },
+    {
+      "level": 6,
+      "name": "Transposição do Trapaceiro",
+      "description": "Ao executar a Ação Bônus para criar ou mover a ilusão de seu Invocar Duplicidade, você\npode se teleportar, trocando de lugar com a\nilusão."
+    },
+    {
+      "level": 17,
+      "name": "Duplicidade Aprimorada",
+      "description": "A ilusão de seu Invocar Duplicidade ficou mais poderosa das seguintes maneiras.\nDistração Compartilhada. Quando você e seus aliados realizam jogadas de ataque contra uma criatura\na até 1,5 metro da ilusão, as jogadas de ataque têm\nVantagem."
+    }
+  ]
+}

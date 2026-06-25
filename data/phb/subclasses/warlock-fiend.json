@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "fiend",
+  "classId": "warlock",
+  "name": "Patrono Ínfero",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [55, 182],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Faça um pacto com um poder infernal",
+  "summary": "Invocar poderes sinistros.",
+  "description": "Seu pacto se fundamenta nos Planos Inferiores, reinos\nde perdição. Você pode negociar com um lorde demônio como Demogorgon ou Orcus; um arquidiabo como\nAsmodeus; ou um Diabo do Fosso, balor, yugoloth ou\numa poderosa megera da noite. Os objetivos desse patrono são malignos — visam à corrupção ou destruição\nde tudo, inclusive você — e seu caminho é determinado\npelo seu esforço em se opor a esses objetivos.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Bênção do Tenebroso",
+      "description": "Ao reduzir um inimigo a 0 Pontos de Vida, você adquire\nPontos de Vida Temporários iguais ao seu modificador\nde Carisma mais seu nível de Bruxo (mínimo de 1\nPonto de Vida Temporário). Você também recebe esse\nbenefício se outra pessoa reduzir um inimigo a até 3\nmetros de você a 0 Pontos de Vida."
+    },
+    {
+      "level": 3,
+      "name": "Magias de Pacto do Ínfero",
+      "description": "A magia do seu patrono assegura que você sempre\ntenha algumas magias disponíveis; ao atingir um nível\nde Bruxo indicado na tabela Magias do Ínfero, você\nsempre tem essas magias preparadas.\nMagias do Ínfero\nNível de Bruxo Magias\n3 Comando, Mãos Flamejantes, Raio Ardente,\nSugestão\n5 Bola de Fogo, Nuvem Fétida\n7 Escudo Ardente, Muralha de Fogo\n9 Missão, Praga de Insetos"
+    },
+    {
+      "level": 6,
+      "name": "A Sorte do Próprio Tenebroso",
+      "description": "Você pode chamar seu patrono Ínfero para alterar o\ndestino a seu favor. Ao realizar um teste de atributo\nou uma salvaguarda, você pode usar essa característica\npara adicionar 1d10 à sua jogada. Você pode fazer\nisso após ver a jogada, mas antes que qualquer um dos\nefeitos da jogada ocorra.\nVocê pode usar essa característica um número de\nvezes igual ao seu modificador de Carisma (mínimo de\numa vez), no máximo uma vez por jogada, e restaura\ntodos os usos gastos ao completar um Descanso Longo."
+    },
+    {
+      "level": 10,
+      "name": "Resistência Ínfera",
+      "description": "Ao completar um Descanso Curto ou Longo, escolha\num tipo de dano, exceto Energético. Você tem Resistência a esse tipo de dano até escolher um tipo de dano\ndiferente com esta característica."
+    },
+    {
+      "level": 14,
+      "name": "Lançar no Inferno",
+      "description": "Uma vez por turno, ao atingir uma criatura com uma\njogada de ataque, você pode tentar transportar instantaneamente o alvo para os Planos Inferiores. O alvo\ndeve ser bem-sucedido em uma salvaguarda de Carisma\ncontra a CD para evitar sua magia, ou ele desaparece\ne atravessa uma paisagem de pesadelo. O alvo sofre\n8d10 pontos de dano Psíquico se não for um Ínfero e tem\na condição Incapacitado até o final do seu próximo\nturno, quando retorna ao espaço que ocupava anteriormente ou ao espaço desocupado mais próximo.\nVocê pode usar esta característica novamente após\ncompletar um Descanso Longo, a menos que gaste um\nespaço de Magia de Pacto (nenhuma ação é necessária)\npara restaurar seu uso."
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "beast-master",
+  "classId": "ranger",
+  "name": "Senhor das Feras",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [55, 182],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Forme um laço com uma fera primitiva",
+  "summary": "Formar um laço com uma fera primitiva.",
+  "description": "Um Senhor das Feras forma um vínculo místico com\num animal especial, com base em magia primal e uma\nprofunda conexão com o mundo natural.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Companheiro Primal",
+      "description": "Você invoca magicamente uma fera primal, que extrai\nforça de seu vínculo com a natureza. Escolha o bloco\nde estatísticas da fera: Fera da Terra, Fera do Céu\nou Fera do Mar. Você também determina o tipo de\nanimal, escolhendo um tipo apropriado para o bloco\nde estatísticas. Seja qual for a fera que você escolher,\nela apresenta sinais primais que indicam a origem\nsobrenatural dela.\nA fera é Amigável a você e seus aliados e obedece\naos seus comandos. Ela desaparece se você morrer.\nA Fera em Combate. Em combate, a fera age durante seu turno. Ela pode se mover e usar a própria\nReação, embora a única ação padrão que ela execute\nseja Esquivar, a menos que você use uma Ação Bônus\npara comandá-la a executar uma ação do bloco de\nestatísticas dela ou alguma outra ação.\nVocê também pode sacrificar um ataque ao\nexecutar a ação Atacar para ordenar a fera a realizar\na ação Golpe da Fera. Se você tem a condição\nIncapacitado, a fera age sozinha e não se restringe à\nação Esquivar.\nRestaurar ou Substituir a Fera. Se a fera\nmorreu na última hora, você pode executar uma\nação Usar Magia para tocá-la e gastar um espaço\nde magia. A fera retorna à vida após 1 minuto\ncom todos os Pontos de Vida restaurados.\nSempre que completar um Descanso Longo, você\npode invocar uma Fera primal diferente, que aparece\nem um espaço desocupado a até 1,5 metro de você.\nVocê escolhe o bloco de estatísticas e aparência dela.\nSe você já tem uma fera devido a esta característica, a\nantiga desaparece quando a nova surge."
+    },
+    {
+      "level": 7,
+      "name": "Treinamento Excepcional",
+      "description": "Ao executar uma Ação Bônus para ordenar sua fera\nCompanheira Primal, você também pode ordená-la\nexecutar a ação Ajudar, Correr, Desengajar ou Esquivar\nusando a Ação Bônus dela.\nAlém disso, sempre que a fera acertar com uma jogada\nde ataque e causar dano, ela pode causar dano Energético ou o tipo de dano normal dela, à sua escolha."
+    },
+    {
+      "level": 11,
+      "name": "Fúria Bestial",
+      "description": "Ao ordenar sua fera Companheira Primal a executar a\nação Golpe da Fera, ela pode usá-la duas vezes.\nAlém disso, na primeira vez em cada turno que ela\natinge uma criatura sob o efeito da magia Marca do\nPredador, a fera causa dano Energético adicional igual\nao dano bônus dessa magia."
+    },
+    {
+      "level": 15,
+      "name": "Compartilhar Magias",
+      "description": "Ao conjurar uma magia em si, você também pode afetar\nsua fera Companheira Primal com a magia se a Fera\nestiver a até 9 metros de você."
+    }
+  ]
+}

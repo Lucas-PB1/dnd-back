@@ -1,0 +1,48 @@
+{
+  "$schema": "../../schema/subclass.schema.json",
+  "id": "wild-heart",
+  "classId": "barbarian",
+  "name": "Trilha do Coração Selvagem",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 3,
+    "chapterTitle": "Classes de Personagem",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      55,
+      182
+    ],
+    "extractedAt": "2026-06-25T01:13:29.372Z"
+  },
+  "tagline": "Ande em Comunhão com o Mundo Animal",
+  "summary": "Manifestar seu instinto animal.",
+  "description": "Bárbaros que seguem a Trilha do Coração Selvagem\nse consideram parentes dos animais. Esses Bárbaros\naprendem meios mágicos de se comunicar com os\nanimais, e sua Fúria intensifica essa conexão com eles,\npreenchendo-os com poder sobrenatural.",
+  "features": [
+    {
+      "level": 3,
+      "name": "Arauto da Fauna",
+      "description": "Você pode conjurar as magias Falar com Animais e\nSentido Feral, mas apenas como Rituais. Sabedoria é seu\natributo de conjuração para elas."
+    },
+    {
+      "level": 3,
+      "name": "Fúria dos Selvagens",
+      "description": "Sua Fúria se conecta ao poder primitivo dos animais.\nSempre que você ativar sua Fúria, adquire uma das\nseguintes opções à sua escolha.\nÁguia. Ao ativar sua Fúria, você pode executar as\nações Correr e Desengajar como parte dessa Ação\nBônus. Enquanto sua Fúria estiver ativa, você pode\nexecutar uma Ação Bônus para realizar ambas as\nações.\nLobo. Enquanto sua Fúria estiver ativa, seus aliados\ntêm Vantagem em jogadas de ataque contra qualquer\ninimigo seu a até 1,5 metro de você.\nUrso. Enquanto em Fúria, você tem Resistência a\ntodos os tipos de dano, exceto Energético, Necrótico,\nPsíquico e Radiante."
+    },
+    {
+      "level": 6,
+      "name": "Aspecto dos Selvagens",
+      "description": "Você recebe uma das seguintes opções à sua escolha.\nSempre que completar um Descanso Longo, você pode\nalterar sua escolha.\nCoruja. Você tem Visão no Escuro com um alcance\nde 18 metros. Se você já tem Visão no Escuro, seu\nalcance aumenta em 18 metros.\nPantera. Você tem um Deslocamento de Escalada\nigual ao seu Deslocamento.\nSalmão. Você tem um Deslocamento de Natação\nigual ao seu Deslocamento."
+    },
+    {
+      "level": 10,
+      "name": "Arauto da Natureza",
+      "description": "Você pode conjurar a magia Comunhão com a Natureza,\nmas apenas como um Ritual. Sabedoria é seu atributo\nde conjuração para isso."
+    },
+    {
+      "level": 14,
+      "name": "Poder dos Selvagens",
+      "description": "Sempre que você ativar sua Fúria, recebe uma das\nseguintes opções à sua escolha.\nCarneiro. Enquanto sua Fúria estiver ativa, você pode\nimpor a condição Caído em uma criatura Grande ou\nmenor quando você a atinge com um ataque corpo a\ncorpo.\nFalcão. Enquanto sua Fúria estiver ativa, você tem\num Deslocamento de Voo igual ao seu Deslocamento\nse não estiver usando nenhuma armadura.\nLeão. Enquanto sua Fúria estiver ativa, qualquer um\nde seus inimigos a até 1,5 metro de você tem Desvantagem em jogadas de ataque contra alvos que não sejam\nvocê ou outro Bárbaro que tenha essa opção ativa."
+    }
+  ]
+}

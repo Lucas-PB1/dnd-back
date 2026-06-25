@@ -1,0 +1,24 @@
+{
+  "$schema": "../../../schema/equipment-rules.schema.json",
+  "id": "intro",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 6,
+    "chapterTitle": "Equipamento",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pageRanges": [
+      [
+        219,
+        219
+      ],
+      [
+        226,
+        239
+      ]
+    ],
+    "extractedAt": "2026-06-25T01:39:43.402Z"
+  },
+  "intro": "O equipamento certo pode fazer a diferença entre o sucesso e o fracasso dos aventureiros. Este capítulo fornece regras e preços para\narmas, armaduras e outros tipos de equipamentos\nque os personagens podem comprar ou encontrar. O\nMestre informa se uma loja tem um item à venda e se\nele está disponível pelo preço listado.",
+  "selling": "O equipamento é vendido pela metade de seu preço.\nEm contraste, bens comerciais e objetos de valor - como\npedras preciosas e objetos de arte — mantêm seu preço\ntotal no mercado. O Livro do Mestre traz os preços para\nitens mágicos."
+}

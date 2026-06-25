@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/equipment-index.schema.json",
+  "title": "Índice PHB — Equipamento",
+  "type": "object",
+  "required": ["source", "files"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "gearCount": { "type": "integer" },
+    "artisanToolCount": { "type": "integer" },
+    "otherToolCount": { "type": "integer" },
+    "itemCount": { "type": "integer" },
+    "weaponCount": { "type": "integer" },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "file"],
+        "properties": {
+          "id": { "type": "string" },
+          "file": { "type": "string" }
+        }
+      }
+    }
+  }
+}
