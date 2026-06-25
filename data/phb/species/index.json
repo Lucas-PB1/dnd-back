@@ -1,0 +1,68 @@
+{
+  "$schema": "../../schema/species-index.schema.json",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      192,
+      203
+    ],
+    "extractedAt": "2026-06-25T23:51:33.040Z"
+  },
+  "speciesCount": 10,
+  "species": [
+    {
+      "id": "aasimar",
+      "name": "Aasimar",
+      "file": "aasimar.json"
+    },
+    {
+      "id": "dwarf",
+      "name": "Anão",
+      "file": "dwarf.json"
+    },
+    {
+      "id": "dragonborn",
+      "name": "Draconato",
+      "file": "dragonborn.json"
+    },
+    {
+      "id": "elf",
+      "name": "Elfo",
+      "file": "elf.json"
+    },
+    {
+      "id": "gnome",
+      "name": "Gnomo",
+      "file": "gnome.json"
+    },
+    {
+      "id": "goliath",
+      "name": "Golias",
+      "file": "goliath.json"
+    },
+    {
+      "id": "human",
+      "name": "Humano",
+      "file": "human.json"
+    },
+    {
+      "id": "orc",
+      "name": "Orc",
+      "file": "orc.json"
+    },
+    {
+      "id": "halfling",
+      "name": "Pequenino",
+      "file": "halfling.json"
+    },
+    {
+      "id": "tiefling",
+      "name": "Tiferino",
+      "file": "tiefling.json"
+    }
+  ]
+}

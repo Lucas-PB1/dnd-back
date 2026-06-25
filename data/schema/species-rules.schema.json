@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/species-rules.schema.json",
+  "title": "Regras introdutórias de espécies",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "source", "content"],
+  "properties": {
+    "id": { "type": "string", "const": "species-intro" },
+    "title": { "type": "string", "minLength": 1 },
+    "$schema": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "content": { "type": "string", "minLength": 50 }
+  }
+}

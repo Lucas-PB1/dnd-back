@@ -1,0 +1,75 @@
+{
+  "$schema": "../../schema/species.schema.json",
+  "id": "elf",
+  "name": "Elfo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      192,
+      203
+    ],
+    "extractedAt": "2026-06-25T23:51:33.040Z"
+  },
+  "description": "Criados por Corellon, os primeiros elfos podiam mudar de forma à vontade. Essa habilidade foi perdida quando Corellon os amaldiçoou por conspirarem com Lolth, que falhou em usurpar seu domínio. Após a queda de Lolth no Abismo, a maioria dos elfos a renunciou e recebeu o perdão de Corellon, mas o que ele havia tomado deles se perdeu para sempre. Impossibilitados de mudar de forma à vontade, os elfos recuaram para Faéria, onde sua tristeza aumentou sob a influência daquele plano. Com o tempo, a curiosidade levou muitos a explorar outros planos de existência, incluindo mundos do Plano Material. Elfos possuem orelhas pontudas e não têm pelos faciais ou corporais. Vivem cerca de 750 anos e não dormem, mas entram em transe para descansar, mantendo a consciência do ambiente enquanto revisitam memórias e meditações. Um ambiente transforma sutilmente os elfos depois que eles o habitam por um milênio ou mais, e lhes concede certos tipos de magia. Altos elfos, drow e elfos silvestres são exemplos de elfos transformados assim. Altos elfos receberam magia das encruzilhadas entre Faéria e o Plano Material. Em alguns mundos, esses elfos são conhecidos por outros nomes, como elfos solares ou lunares em Reinos Esquecidos, Silvanesti e Qualinesti em Dragonlance, e Aereni em Eberron. Drow. Os drow normalmente residem em Umbraeterna, que os moldou. Embora alguns indivíduos e sociedades drow evitem essa região, eles ainda carregam sua magia. No cenário de Eberron, os drow habitam florestas tropicais e ruínas ciclópicas no continente de Xen’drik. Elfos silvestres. Elfos silvestres, também conhecidos como elfos selvagens, elfos verdes e elfos dos bosques, carregam a magia das florestas primitivas. Grugach são elfos silvestres reclusos de Greyhawk, enquanto Kagonesti e Tairnadal são elfos silvestres de Dragonlance e Eberron, respectivamente.",
+  "creatureType": "Humanoide",
+  "size": "Médio (cerca de 1,50-1,80 metro de altura)",
+  "speed": "9 metros",
+  "traits": [
+    {
+      "name": "Visão no Escuro",
+      "description": "Você tem Visão no Escuro com um alcance de 18 metros."
+    },
+    {
+      "name": "Linhagem Élfica",
+      "description": "Você é de uma linhagem que lhe concede habilidades sobrenaturais. Escolha uma linhagem da tabela Linhagem Élfica. Você adquire o benefício de nível 1 dessa linhagem. Ao atingir os níveis 3 e 5, você aprende uma magia de círculo superior, conforme indicado na tabela. Essa magia está sempre preparada e pode ser conjurada uma vez sem usar um espaço de magia, restaurando essa capacidade ao completar um Descanso Longo. Além disso, você pode conjurá-la usando qualquer espaço de magia apropriado que possua. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias que você conjura com este traço (escolha o atributo quando selecionar a linhagem).",
+      "table": {
+        "title": "Linhagem Élfica",
+        "columns": [
+          "Linhagem",
+          "Nível 1",
+          "Nível 3",
+          "Nível 5"
+        ],
+        "rows": [
+          {
+            "id": "high-elf",
+            "legacy": "Alto Elfo",
+            "level1": "Você conhece o truque Prestidigitação Arcana. Sempre que completar um Descanso Longo, você pode substituir este truque por um truque diferente da lista de magias de Mago.",
+            "level3": "Detectar Magia",
+            "level5": "Passo Nebuloso"
+          },
+          {
+            "id": "drow",
+            "legacy": "Drow",
+            "level1": "O alcance da sua Visão no Escuro aumenta para 36 metros. Você também conhece o truque Luzes Dançantes.",
+            "level3": "Fogo das Fadas",
+            "level5": "Escuridão"
+          },
+          {
+            "id": "wood-elf",
+            "legacy": "Elfo Silvestre",
+            "level1": "Seu Deslocamento aumenta para 10,5 metros. Você também conhece o truque Arte Druídica.",
+            "level3": "Passos Largos",
+            "level5": "Passos Sem Rastro"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ancestralidade Feérica",
+      "description": "Você tem Vantagem ao realizar salvaguardas para evitar ou encerrar a condição Enfeitiçado."
+    },
+    {
+      "name": "Sentidos Aguçados",
+      "description": "Você tem proficiência na perícia Intuição, Percepção ou Sobrevivência."
+    },
+    {
+      "name": "Transe",
+      "description": "Você pode completar um Descanso Longo em 4 horas ao meditar, sem a necessidade de dormir, mantendo a consciência, e magia não pode forçá-lo a dormir."
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "$schema": "../../schema/species.schema.json",
+  "id": "gnome",
+  "name": "Gnomo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      192,
+      203
+    ],
+    "extractedAt": "2026-06-25T23:51:33.040Z"
+  },
+  "description": "Gnomos são seres mágicos criados por deuses da invenção, ilusões e vida subterrânea. Raramente vistos por outros, devido à sua natureza reservada e à tendência de viver em florestas e tocas, os gnomos compensaram sua estatura com inteligência, confundindo predadores com armadilhas e túneis labirínticos. Aprenderam magia de deuses como Garl Brilhouro- -Resplandecente, Baervan Passagresteandante e Baravar Capasombriomanto, que os visitaram disfarçados. Isso resultou nas linhagens de gnomos do bosque e gnomos das rochas. Os gnomos são um povo pequeno com olhos grandes e orelhas pontudas, que vivem cerca de 425 anos. Muitos gnomos gostam da sensação de um teto sobre a cabeça, mesmo que esse “teto” não seja nada mais do que um chapéu.",
+  "creatureType": "Humanoide",
+  "size": "Pequeno (cerca de 0,90-1,20 metro de altura)",
+  "speed": "9 metros",
+  "traits": [
+    {
+      "name": "Visão no Escuro",
+      "description": "Você tem Visão no Escuro com um alcance de 18 metros."
+    },
+    {
+      "name": "Astúcia de Gnomo",
+      "description": "Você tem Vantagem em salvaguardas de Inteligência, Sabedoria e Carisma."
+    },
+    {
+      "name": "Linhagem Gnômica",
+      "description": "Você pertence a uma linhagem que lhe confere habilidades sobrenaturais. Escolha uma das seguintes opções; sua escolha determina se Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias desse traço (escolha o atributo quando selecionar a linhagem): Gnomo das Rochas. Você conhece os truques Prestidigitação Arcana e Reparar. Além disso, você pode gastar 10 minutos conjurando Prestidigitação Arcana para fabricar um dispositivo mecânico minúsculo (CA 5, 1 PV), como um brinquedo, isqueiro mecânico ou caixa de música. Ao fabricar o dispositivo, você determina a função dele escolhendo um efeito de Prestidigitação Arcana; o dispositivo produz esse efeito sempre que você ou outra criatura executa uma Ação Bônus para ativá-lo com um toque. Se o efeito escolhido tiver opções possíveis, você escolhe uma dessas opções para o dispositivo ao fabricá-lo. Por exemplo, se você escolher o efeito de Brincar com Fogo da magia, você determina se o dispositivo acende ou extingue fogo; o dispositivo não faz ambas as coisas. Você pode ter três desses dispositivos ao mesmo tempo, e cada um se desfaz 8 horas após ser fabricado ou quando você o desmonta com um toque como uma ação Usar Objeto. Gnomo do Bosque. Você conhece o truque Ilusão Menor. Você também sempre tem a magia Falar com Animais preparada. É possível conjurá-la sem um espaço de magia um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo. Você também pode usar qualquer espaço de magia que tiver para conjurá-la."
+    }
+  ]
+}

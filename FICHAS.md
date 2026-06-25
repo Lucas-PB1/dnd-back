@@ -15,7 +15,7 @@ No sistema 2024, uma ficha completa reúne escolhas do jogador com valores calcu
 | Campo | Origem no livro | Status dos dados |
 |-------|-----------------|------------------|
 | Nome, aparência, personalidade | Jogador | — |
-| Espécie (traços, tamanho, velocidade, idiomas) | Cap. 2 | **Falta extrair** |
+| Espécie (traços, tamanho, velocidade, idiomas) | Cap. 2 | ✅ `data/phb/species/` (10) |
 | Antecedente (talento de origem, perícias, ferramenta) | Cap. 4 | ✅ `data/phb/backgrounds/` (16) |
 | Idiomas | Cap. 2 | **Falta extrair** |
 
@@ -41,7 +41,7 @@ No sistema 2024, uma ficha completa reúne escolhas do jogador com valores calcu
 
 | Campo | Origem no livro | Status dos dados |
 |-------|-----------------|------------------|
-| CA, iniciativa, deslocamento | Classe + espécie + armadura | Armaduras ✅; espécie falta |
+| CA, iniciativa, deslocamento | Classe + espécie + armadura | Armaduras ✅; espécie ✅ |
 | Ataques, dano, armas | Cap. 6 | ✅ `weapons/`, `armor/` |
 | Condições ativas | Apêndice B | **Falta extrair** |
 | Descanso, PV temporários | Cap. 1 | **Falta** |
@@ -74,6 +74,7 @@ data/phb/
 ├── subclasses/         # 48 subclasses
 ├── feats/              # 75 talentos + regras
 ├── backgrounds/        # 16 antecedentes + índice + regras
+├── species/            # 10 espécies + índice + regras
 ├── equipment/          # equipamento, ferramentas, montarias, serviços
 ├── armor/              # armaduras
 ├── weapons/            # armas
@@ -174,8 +175,8 @@ flowchart TD
   H --> I[Ficha pronta]
 
   subgraph dados_phb [data/phb]
-    S1[species - falta]
-    S2[backgrounds - falta]
+    S1[species ✅]
+    S2[backgrounds ✅]
     S3[classes ✅]
     S4[feats ✅]
     S5[equipment ✅]
@@ -196,8 +197,8 @@ flowchart TD
 
 ### Fase 1 — Ficha nível 1 jogável
 
-- [ ] Extrair **espécies** e **antecedentes** (Cap. 2)
-- [ ] Schemas: `species.schema.json`, `background.schema.json`
+- [x] Extrair **espécies** (Cap. 4) e **antecedentes** (Cap. 4)
+- [x] Schemas: `species.schema.json`, `background.schema.json`
 - [ ] Definir schema da ficha: `character.schema.json`
 - [ ] Pasta `data/characters/` (exemplos + fichas reais do grupo)
 - [ ] Resolver referências por `id` (classe, magia, talento, item)

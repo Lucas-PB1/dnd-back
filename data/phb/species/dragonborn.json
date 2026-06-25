@@ -1,0 +1,102 @@
+{
+  "$schema": "../../schema/species.schema.json",
+  "id": "dragonborn",
+  "name": "Draconato",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      192,
+      203
+    ],
+    "extractedAt": "2026-06-25T23:51:33.040Z"
+  },
+  "description": "Os ancestrais dos draconatos nasceram dos ovos de dragões cromáticos e metálicos. Uma narrativa diz que esses ovos foram abençoados pelos deuses dracônicos Bahamut e Tiamat, que desejavam criar seres à sua imagem no multiverso. Outra versão afirma que os dragões geraram o primeiro draconato sem a intervenção divina. Independentemente da origem, os draconatos estabeleceram lares no Plano Material. Os draconatos parecem dragões bípedes sem asas — escamosos, de olhos brilhantes, com ossos grossos e chifres na cabeça — e sua coloração e outras características lembram seus ancestrais dracônicos.",
+  "creatureType": "Humanoide",
+  "size": "Médio (cerca de 1,50-2,10 metros de altura)",
+  "speed": "9 metros",
+  "traits": [
+    {
+      "name": "Herança Dracônica",
+      "description": "Sua linhagem deriva de um progenitor dracônico. Escolha o tipo de dragão da tabela Herança Dracônica. Sua escolha afeta suas características de Ataque de Sopro e Resistência a Dano, bem como sua aparência.",
+      "table": {
+        "title": "Herança Dracônica",
+        "columns": [
+          "Dragão",
+          "Tipo de Dano"
+        ],
+        "rows": [
+          {
+            "id": "blue",
+            "legacy": "Azul",
+            "level1": "Elétrico"
+          },
+          {
+            "id": "black",
+            "legacy": "Negro",
+            "level1": "Ácido"
+          },
+          {
+            "id": "white",
+            "legacy": "Branco",
+            "level1": "Gélido"
+          },
+          {
+            "id": "gold",
+            "legacy": "Ouro",
+            "level1": "Ígneo"
+          },
+          {
+            "id": "bronze",
+            "legacy": "Bronze",
+            "level1": "Elétrico"
+          },
+          {
+            "id": "silver",
+            "legacy": "Prata",
+            "level1": "Gélido"
+          },
+          {
+            "id": "copper",
+            "legacy": "Cobre",
+            "level1": "Ácido"
+          },
+          {
+            "id": "green",
+            "legacy": "Verde",
+            "level1": "Venenoso"
+          },
+          {
+            "id": "brass",
+            "legacy": "Latão",
+            "level1": "Ígneo"
+          },
+          {
+            "id": "red",
+            "legacy": "Vermelho",
+            "level1": "Ígneo"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Ataque de Sopro",
+      "description": "Ao executar a ação Atacar no seu turno, você pode substituir um de seus ataques por uma emissão de energia mágica em um Cone de 4,5 metros ou em uma Linha de 9 metros de comprimento e 1,5 metros de largura (escolha a forma a cada vez). Cada criatura nessa área deve realizar uma salvaguarda de Destreza (CD 8 + seu modificador de Constituição e seu Bônus de Proficiência). Se falhar, uma criatura sofre 1d10 pontos de dano do tipo determinado por seu traço Herança Dracônica. Em caso de sucesso, uma criatura sofre metade do dano. Esse dano aumenta em 1d10 quando você atinge os níveis de personagem 5 (2d10), 11 (3d10) e 17 (4d10). Você pode usar esse Ataque de Sopro um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo."
+    },
+    {
+      "name": "Resistência a Dano",
+      "description": "Você tem Resistência ao tipo de dano determinado por seu traço Herança Dracônica."
+    },
+    {
+      "name": "Visão no Escuro",
+      "description": "Você tem Visão no Escuro com um alcance de 18 metros."
+    },
+    {
+      "name": "Voo Dracônico",
+      "description": "No nível 5 do personagem, você pode canalizar magia dracônica para beneficiar de um voo temporário. Como uma Ação Bônus, você cria asas espectrais nas costas que duram 10 minutos ou até que você as retraia (nenhuma ação é necessária) ou tem a condição Incapacitado. Pela duração, você tem um Deslocamento de Voo igual ao seu Deslocamento. Suas asas parecem feitas da mesma energia que o seu Ataque de Sopro. Após usar esse traço, você não pode usá-lo novamente até completar um Descanso Longo."
+    }
+  ]
+}
