@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "mao-de-bigby",
+  "name": "Mão de Bigby",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "36 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma casca de ovo e uma luva",
+    "text": "V, S, M (uma casca de ovo e uma luva)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você cria uma mão Grande de energia mágica cintilante em um espaço desocupado à sua vista e no alcance da magia. A mão permanece pela duração da magia e se move ao seu comando, imitando os movimentos da sua própria mão.\nA mão é um objeto que tem CA 20 e Pontos de Vida iguais aos seus Pontos de Vida máximos. Se a mão é reduzida a 0 Pontos de Vida, a magia encerra. A mão não ocupa um espaço.\nAo conjurar a magia e como uma Ação Bônus em seus turnos posteriores, você pode mover a mão até 18\nmetros e causar um dos seguintes efeitos:\nMão Esmagadora. A mão tenta imobilizar uma criatura Enorme ou menor a até 1,5 metro dela. O alvo deve ser bem-sucedido em uma salvaguarda de Destreza ou tem a condição Imobilizado, com uma CD para escapar igual à CD para evitar sua magia. Enquanto a mão imobiliza o alvo, você pode executar uma ação\nBônus para fazer com que a mão o esmague, causando ao alvo 4d6 pontos de dano Contundente mais seu modificador de atributo de conjuração.\nMão Interposta. A mão concede a você Cobertura\nParcial contra ataques e outros efeitos originados do espaço da mão ou que passem por ele. Além disso, o espaço da mão conta como Terreno Difícil para seus inimigos.\nMão Vigorosa. A mão tenta empurrar uma criatura\nEnorme ou menor a até 1,5 metro dela. O alvo deve ser bem-sucedido em uma salvaguarda de Força, ou a mão empurra o alvo até 1,5 metro mais 1,5 metro multiplicado pelo valor de seu modificador de atributo de conjuração. A mão se move com o alvo, permanecendo a até 1,5 metro dele.\nPunho Cerrado. A mão atinge um alvo a até 1,5\nmetro dela. Realize um ataque mágico corpo a corpo.\nBRIAN VALEZA\nEm caso de acerto, o alvo sofre 5d8 pontos de dano\nEnergético.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano do Punho Cerrado aumenta em 2d8 e o dano da\nMão Esmagadora aumenta em 2d6 para cada círculo de espaço de magia acima de 5.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.588Z"
+  }
+}

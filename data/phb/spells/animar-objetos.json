@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "animar-objetos",
+  "name": "Animar Objetos",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Bardo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "36 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Objetos são animados ao seu comando. Escolha uma série de objetos não mágicos no alcance da magia que não estejam sendo usados ou carregados, não estejam fixados a uma superfície e não sejam Colossais. O\nnúmero máximo de objetos é igual ao seu modificador de atributo de conjuração. Para este número, um tamanho Médio ou menor conta como um objeto, um alvo Grande conta como dois e um alvo Enorme conta como três.\nCada alvo se anima, faz brotar pernas e se torna um\nConstructo que usa o bloco de estatísticas do Objeto\nAnimado; esta criatura está sob seu controle até que a magia termine ou até que ela seja reduzida a 0 Pontos de Vida. Cada criatura que você anima com esta magia é uma aliada sua e de seus aliados. Em combate, ela compartilha a contagem de Iniciativa com você e tem o turno dela imediatamente após o seu.\nAté que a magia encerre, você pode executar uma\nAção Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 150 metros de você (se você controlar várias criaturas, pode comandar quaisquer delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Se você não der nenhum comando, a criatura executa a ação Esquivar e se move apenas para evitar danos. Quando a criatura é reduzida a 0 Pontos de\nVida, ela reverte para sua forma de objeto, e qualquer dano restante é transferido para essa forma.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano de Pancada da criatura aumenta em 1d4 (Médio ou menor), 1d6 (Grande) ou 1d12 (Enorme) para cada círculo de espaço de magia acima de 5.\nUm Braseiro Afetado pela\nMagia\nAnimar Objetos\nDAVID AUDEN NASH\nObjetos Animados\nConstruto Grande ou Menor, Sem Alinhamento\nCA 15\nPV 10 (Médio ou menor), 20 (Grande), 40 (Enorme)\nDeslocamento 9 m\nMOD SG MOD SG MOD SG\nFor 16 +3 +3 Des 10 +0 +0 Con 10 +0 +0\nInt 3 –4 –4 Sab 3 –4 –4 Car 1 –5 –5\nImunidades Psíquico, Venenoso; Amedrontado, Enfeitiçado,\nEnvenenado, Exaustão, Paralisado\nSentidos Visão às Cegas 9 m, Percepção Passiva 6\nIdiomas Compreende os idiomas que você conhece\nND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)\nAções\nPancada. Jogada de Ataque Corpo a Corpo: Bônus igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano:\nEnergético igual a 1d4 + 3 (Médio ou menor), 2d6 + 3 + seu modificador de atributo de conjuração (Grande) ou 2d12 + 3 +\nseu modificador de atributo de conjuração (Enorme).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.490Z"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "sonho",
+  "name": "Sonho",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Ilusão",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Mago"
+  ],
+  "castingTime": "1 minuto",
+  "range": "Especial",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um punhado de areia",
+    "text": "V, S, M (um punhado de areia)"
+  },
+  "duration": "8 horas",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você tem como alvo uma criatura que você conhece no mesmo plano de existência. Você ou uma criatura voluntária que você toca entra em um estado de transe para agir como um mensageiro dos sonhos. Enquanto estiver em transe, o mensageiro está Incapacitado e tem Deslocamento 0.\nSe o alvo estiver dormindo, o mensageiro aparece nos sonhos do alvo e pode conversar com ele enquanto ele permanecer dormindo, pela duração da magia.\nO mensageiro também pode moldar o ambiente do sonho, criando paisagens, objetos e outras imagens. O\nmensageiro pode emergir do transe a qualquer momento, encerrando a magia. O alvo se lembra do sonho perfeitamente ao acordar.\nSe o alvo estiver acordado quando você conjurar a magia, o mensageiro sabe disso e pode encerrar o transe (e a magia) ou esperar que o alvo durma, momento em que o mensageiro entra nos sonhos do alvo.\nVocê pode tornar o mensageiro aterrorizante para o alvo. Se você fizer isso, o mensageiro pode entregar uma mensagem de no máximo dez palavras e, em seguida, o alvo realiza uma salvaguarda de Sabedoria.\nSe falhar, o alvo não recebe nenhum benefício do descanso e sofre 3d6 pontos de dano Psíquico quando acordar.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.638Z"
+  }
+}

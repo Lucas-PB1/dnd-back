@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "raio-do-enfraquecimento",
+  "name": "Raio do Enfraquecimento",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Bruxo",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Um feixe de energia enfraquecedora parte de você em direção a uma criatura no alcance da magia. A criatura deve realizar uma salvaguarda de Constituição.\nEm caso de sucesso, a criatura tem Desvantagem na próxima jogada de ataque que realizar até o início do seu próximo turno.\nSe falhar, a criatura tem Desvantagem em Testes de\nD20 baseados em Força pela duração da magia. Nesse período, ela também subtrai 1d8 de todas as jogadas de dano que fizer. A criatura repete a salvaguarda no final de cada um dos turnos dela, encerrando a magia sobre si em caso de sucesso.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.622Z"
+  }
+}

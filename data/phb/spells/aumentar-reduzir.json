@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "aumentar-reduzir",
+  "name": "Aumentar/Reduzir",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Bardo",
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "9 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma pitada de ferro em pó",
+    "text": "V, S, M (uma pitada de ferro em pó)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Pela duração da magia, você amplia ou reduz uma criatura, ou objeto, à sua vista e no alcance da magia\n(veja o efeito escolhido abaixo). Um objeto à vista não deve ser usado nem transportado. Se o alvo for uma criatura involuntária, ele pode realizar uma salvaguarda de Constituição. Em caso de sucesso, a magia não surte efeito.\nTudo o que uma criatura estiver usando e carregando muda de tamanho com ela. Qualquer item que cair retorna ao tamanho normal de uma só vez. Uma arma ou munição arremessada retorna ao tamanho normal imediatamente após atingir ou errar um alvo.\nAumentar. O tamanho do alvo aumenta em uma categoria — de Médio para Grande, por exemplo. O\nalvo também tem Vantagem em testes de Força e salvaguardas de Força. Os ataques do alvo com suas armas ampliadas ou Ataques Desarmados causam 1d4 pontos de dano adicionais em caso de acerto.\nReduzir. O tamanho do alvo diminui em uma categoria — de Médio para Pequeno, por exemplo. O\nalvo também tem Desvantagem em testes de Força e salvaguardas de Força. Os ataques do alvo com suas armas reduzidas ou Ataques Desarmados causam 1d4\npontos de dano a menos em caso de acerto (isso não pode reduzir o dano abaixo de 1).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.498Z"
+  }
+}

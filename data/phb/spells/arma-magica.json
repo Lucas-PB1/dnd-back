@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "arma-magica",
+  "name": "Arma Mágica",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Feiticeiro",
+    "Guardião",
+    "Mago",
+    "Paladino"
+  ],
+  "castingTime": "Ação Bônus",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "1 hora",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você toca uma arma não-mágica. Até que a magia encerre, essa arma se torna uma arma mágica com bônus de +1 para jogadas de ataque e dano. A magia encerra se você a conjurar novamente.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\nbônus aumenta para +2 com um espaço de magia de\n3º–5º círculo. O bônus aumenta para +3 com um espaço de magia de 6º círculo ou superior.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.493Z"
+  }
+}

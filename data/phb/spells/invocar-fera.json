@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "invocar-fera",
+  "name": "Invocar Fera",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Druida",
+    "Guardião"
+  ],
+  "castingTime": "Ação",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma pluma, tufo de pele e rabo de peixe dentro de uma bolota dourada no valor de 200 ou mais PO",
+    "text": "V, S, M (uma pluma, tufo de pele e rabo de peixe dentro de uma bolota dourada no valor de 200 ou mais PO)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você invoca um Espírito Bestial. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Bestial.\nAo conjurar a magia, escolha um ambiente: Água, Ar ou Terra. A criatura se assemelha a um animal à sua escolha que é nativo do ambiente escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.\nA criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,\nmas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação\nEsquivar e usa o movimento dela para evitar o perigo.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.577Z"
+  }
+}

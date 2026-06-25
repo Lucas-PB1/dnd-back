@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "convocar-feerico",
+  "name": "Convocar Feérico",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Bruxo",
+    "Druida",
+    "Guardião",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma flor dourada no valor de 300 ou mais PO",
+    "text": "V, S, M (uma flor dourada no valor de 300 ou mais PO)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você invoca um Espírito Feérico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Feérico. Ao conjurar a magia, escolha um humor: Alegre,\nEnfurecido ou Malandro. A criatura se assemelha a uma criatura Feérica à sua escolha definida pelo humor escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece se reduzida a 0 Pontos de Vida ou quando a magia termina.\nA criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,\nmas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é neUm Guardião conjura\nConvocar Feérico,\nconjurando um Espírito Feérico enfurecido para enfrentar um Merrow saqueador.\nEspírito Feérico\nFeérico Pequeno, Neutro\nCA 12 + o círculo da magia\nPV 30 + 10 para cada círculo de magia acima de 3\nDeslocamento 9 m, Voo 9 m\nMOD SG MOD SG MOD SG\nFor 13 +1 +1 Des 16 +3 +3 Con 14 +2 +2\nInt 14 +2 +2 Sab 11 +0 +0 Car 16 +3 +3\nImunidades Enfeitiçado\nSentidos Visão no Escuro 18 m, Percepção Passiva 10\nIdiomas Silvestre, compreende os idiomas que você fala\nND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)\nAções\nAtaques Múltiplos. O espírito realiza um número de ataques com Lâmina Feérica igual à metade do círculo da magia\n(arredondado para baixo).\nLâmina Feérica. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano:\n2d6 + 3 + o círculo da magia pontos de dano Energético.\nAções Bônus\nPasso Feérico. O espírito se teleporta magicamente até 9\nmetros para um espaço desocupado à vista dele. Em seguida,\nocorre um dos seguintes efeitos, com base no humor escolhido para o espírito:\nAlegre. Salvaguarda de Sabedoria: CD é igual a CD para evitar sua magia, uma criatura à vista do espírito e a até 3 metros dele. Falha: O alvo fica Enfeitiçado por você e pelo espírito por 1 minuto ou até que o alvo sofra qualquer dano.\nEnfurecido. O espírito tem Vantagem na próxima jogada de ataque que realizar antes do final deste turno.\nMalandro. O espírito preenche um Cubo de 3 metros de lado a até 1,5 metro dele com Escuridão mágica, que dura até o final do próximo turno dele.\nJOSEPH WESTON\ncessária). Se você não emitir nenhum, ela executa a ação\nEsquivar e usa o movimento dela para evitar o perigo.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.525Z"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "metamorfose",
+  "name": "Metamorfose",
+  "level": 9,
+  "levelLabel": "9º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Druida",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma argola de jade no valor de 1.500 ou mais PO",
+    "text": "V, S, M (uma argola de jade no valor de 1.500 ou mais PO)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você se multimorfa em outra criatura pela duração da magia ou até executar uma ação Usar Magia para se multimorfa em uma criatura diferente. A nova forma deve ser de uma criatura com um Nível de Desafio igual ou inferior ao seu nível ou ao seu Nível de Desafio. Você deve ter visto esse tipo de criatura antes, e ela não pode ser um Constructo ou um Morto-vivo.\nAo conjurar esta magia, você recebe um número de\nPontos de Vida Temporários igual aos Pontos de Vida da primeira forma na qual você se transforma. Esses\nPontos de Vida Temporários desaparecem, caso ainda restem, quando a magia terminar.\nAs suas estatísticas de jogo são substituídas pelo bloco de estatísticas da nova forma, mas você mantém seu tipo de criatura, alinhamento, personalidade, valores de Inteligência, Sabedoria e Carisma, Pontos de Vida,\nDados de Vida, proficiências e capacidade de comunicação. Se você possuir a característica Conjuração,\ntambém a mantém.\nAo se multimorfar, você decide se seu equipamento cai no chão ou se altera em tamanho e forma para se ajustar à nova forma enquanto você a mantém.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.591Z"
+  }
+}

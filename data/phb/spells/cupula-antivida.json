@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "cupula-antivida",
+  "name": "Cúpula Antivida",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Druida"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Uma aura estende-se de você em uma Emanação de\n3 metros pela duração da magia. A aura impede que criaturas que não sejam Constructos e Mortos-Vivos passem ou alcancem através dela. Uma criatura afetada pode conjurar magias ou realizar ataques com armas à\nDistância ou com Extensão através da barreira.\nSe você se mover de modo que uma criatura afetada seja forçada a atravessar a barreira, a magia encerra.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.532Z"
+  }
+}

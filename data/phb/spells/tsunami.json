@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "tsunami",
+  "name": "Tsunami",
+  "level": 8,
+  "levelLabel": "8º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Druida"
+  ],
+  "castingTime": "1 minuto",
+  "range": "1,5 km",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 6 rodadas",
+  "concentration": true,
+  "ritual": false,
+  "description": "Uma muralha de água surge em um ponto à sua escolha no alcance da magia. Você pode fazer a muralha com até 90 metros de comprimento, 90 metros de altura e 15 metros de espessura. A muralha permanece pela duração da magia.\nQuando a muralha aparece, cada criatura na área realiza uma salvaguarda de Força, sofrendo 6d10 pontos de dano Contundente se falhar, ou metade desse dano em caso de sucesso.\nNo início de cada um dos seus turnos após o aparecimento da muralha, ela se move 15 metros para longe de você, juntamente com quaisquer criaturas que estejam dentro dela. Qualquer criatura de tamanho Enorme ou menor dentro da muralha, ou cujo espaço a muralha adentre ao se mover, deve ser bem-sucedida em uma salvaguarda de Força ou sofre 5d10 pontos de dano\nContundente. Uma criatura pode sofrer esse dano apenas uma vez por rodada. No final de cada turno, a altura da muralha é reduzida em 15 metros, e o dano que a muralha causa nas rodadas subsequentes é reduzido em 1d10. Quando a muralha atinge 0 metros de altura, a magia termina.\nUma criatura apanhada pela muralha pode se mover nadando. No entanto, devido à força da onda, a criatura deve ser bem-sucedida em um teste de Força\n(Atletismo) contra a CD para evitar sua magia para se mover. Se falhar no teste, ela não pode se mover. Uma criatura que sair da muralha cai no chão.\nO Transporte via Plantas e\nPasso\nArbóreo transformam as árvores em uma rede de transporte.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.650Z"
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "portal",
+  "name": "Portal",
+  "level": 9,
+  "levelLabel": "9º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Bruxo",
+    "Clérigo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um diamante no valor de 5.000 ou mais PO",
+    "text": "V, S, M (um diamante no valor de 5.000 ou mais PO)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você conjura um portal que liga um espaço desocupado à sua vista e no alcance da magia a um local preciso em um plano de existência diferente. O portal é uma abertura circular, que você pode criar com 1,5\na 6 metros de diâmetro. Você pode orientar o portal em qualquer direção que escolher. O portal permanece pela duração da magia e o destino para o qual ele leva é visível através dele.\nO portal tem uma frente e um verso em cada plano onde aparece. Se deslocar pelo portal só é possível movendo-se pela frente. Qualquer coisa que o faça é instantaneamente transportada para o outro plano, aparecendo no espaço desocupado mais próximo do portal.\nDivindades e outros governantes dos planos podem impedir que portais criados por esta magia se abram em sua presença ou em qualquer lugar dentro de seus domínios.\nAo conjurar esta magia, você pode proferir o nome de uma criatura específica (não funciona com um pseudônimo, título ou apelido). Se essa criatura estiver\nem um plano diferente daquele em que você está, o portal se abre ao lado da criatura nomeada e a transporta para o espaço desocupado mais próximo do seu lado do portal. Você não recebe nenhum poder especial sobre a criatura, e ela é livre para agir conforme o\nMestre julgar apropriado. Ela pode ir embora, atacar você ou ajudá-lo.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.615Z"
+  }
+}

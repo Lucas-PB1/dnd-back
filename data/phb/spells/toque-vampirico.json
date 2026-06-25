@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "toque-vampirico",
+  "name": "Toque Vampírico",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "O toque da sua mão envolta em sombras pode sugar a força vital dos outros para curar suas feridas. Realize um ataque mágico corpo a corpo contra uma criatura no alcance da magia. Em caso de acerto, o alvo sofre\n3d6 pontos de dano Necrótico e você recupera Pontos de Vida iguais à metade da quantidade do dano Necrótico causado.\nAté que a magia termine, você pode realizar o ataque novamente em cada um dos seus turnos como uma ação Usar Magia, atingindo a mesma criatura ou uma diferente.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano aumenta em 1d6 para cada círculo de espaço de magia acima de 3.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.648Z"
+  }
+}

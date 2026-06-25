@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "lufada-de-vento",
+  "name": "Lufada de Vento",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Druida",
+    "Feiticeiro",
+    "Guardião",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "a semente de um legume",
+    "text": "V, S, M (a semente de um legume)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você sopra uma Linha com um vento forte de 18\nmetros de comprimento e 3 metros de largura em uma direção à sua escolha pela duração da magia. Cada criatura na Linha deve ser bem-sucedida em uma salvaguarda de Força ou é empurrada 4,5 metros para longe de você em uma direção seguindo a Linha. Uma criatura que termine o turno na Linha deve realizar a mesma salvaguarda.\nQualquer criatura na Linha deve gastar 3 metros de movimento para cada 1,5 metro que se move ao se aproximar de você.\nA lufada dispersa gás ou vapor e extingue velas e chamas desprotegidas similares na área. Isso faz com que as chamas protegidas, como as de lanternas, dancem descontroladamente e possuem 50% de chance de serem extinguidas.\nComo uma Ação Bônus em seus turnos posteriores,\nvocê pode alterar a direção da Linha soprada por você.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.585Z"
+  }
+}

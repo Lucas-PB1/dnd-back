@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "esfera-congelante-de-otiluke",
+  "name": "Esfera Congelante de Otiluke",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "90 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma esfera de cristal em miniatura",
+    "text": "V, S, M (uma esfera de cristal em miniatura)"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Um globo gelado se estende de você até um ponto à\nsua escolha no alcance da magia, onde explode em uma\nEsfera de 18 metros de raio. Cada criatura nessa área realiza uma salvaguarda de Constituição, sofrendo\n10d6 pontos de dano Gélido se falhar ou metade desse dano em caso de sucesso.\nSe o globo atingir um corpo d’água, ele congela a água a uma profundidade de 15 centímetros sobre uma área de 9 metros quadrados. Esse gelo dura 1 minuto.\nCriaturas que estavam nadando na superfície da água congelada estão presas no gelo e têm a condição Contido. Uma criatura presa pode executar uma ação para realizar um teste de Força (Atletismo) contra a CD\npara evitar sua magia para se libertar.\nVocê pode escolher não disparar o globo após completar a conjuração da magia. Se você fizer isso,\num globo do tamanho de uma bala de funda, gelado ao toque, aparece em sua mão. A qualquer momento, você\nou uma criatura a quem você dá o globo pode arremessá-lo (até um alcance de 12 metros) ou arremessá-lo com uma funda (até o alcance normal da funda). Ele se estilhaça com o impacto, com o mesmo efeito que uma conjuração normal da magia. Você também pode baixar o globo sem quebrá-lo. Após 1 minuto, se o globo ainda não se estilhaçou, ele explode.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano aumenta em 1d6 para cada círculo de espaço de magia acima de 6.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.553Z"
+  }
+}

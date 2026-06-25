@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "invocar-aberracao",
+  "name": "Invocar Aberração",
+  "level": 4,
+  "levelLabel": "4º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Bruxo",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de 400 ou mais PO",
+    "text": "V, S, M (um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de 400 ou mais PO)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Inseto Gigante\nFera Grande, Sem Alinhamento\nCA 11 + o círculo da magia\nPV 30 + 10 para cada círculo de magia acima do 4\nDeslocamento 12 m, Escalada 12 m, Voo 12 m (apenas Vespa)\nMOD SG MOD SG MOD SG\nFor 17 +3 +3 Des 13 +1 +1 Con 15 +2 +2\nInt 4 –3 –3 Sab 3 –3 –3 Car 14 +2 +2\nSentidos: Visão no Escuro 18 m, Percepção Passiva 12\nIdiomas Compreende os idiomas que você conhece\nND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)\nTraços\nEscalada de Aranha. O inseto pode escalar superfícies difíceis,\ninclusive ao longo de tetos, sem precisar realizar um teste de atributo.\nAções\nAtaques Múltiplos. O inseto realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).\nPunição Venenosa. Jogada de Ataque Corpo a Corpo. Bônus é igual ao seu modificador de ataque mágico, alcance 3 m.\nDano: 1d6 + 3 mais o círculo da magia em pontos de dano\nPerfurante mais 1d4 pontos de dano Venenoso.\nRaio de Teia (Apenas Aranha). Jogada de Ataque à Distância.\nBônus é igual ao seu modificador de ataque mágico, alcance\n18 m. Dano: 1d10 + 3 mais o círculo da magia em pontos de dano Contundente, e o Deslocamento do alvo é reduzido a 0\naté o início do próximo turno do inseto.\nAções Bônus\nCuspe Venenoso (Apenas Centopeia). Salvaguarda de\nConstituição. Sua CD para evitar magia, uma criatura à vista do inseto a até 3 metros. Falha: O alvo tem a condição\nEnvenenado até o início do próximo turno do inseto.\nVocê invoca um Espírito Aberrante. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Aberrante. Ao conjurar a magia, escolha entre Devorador de Mentes, Pseudo-observador ou Slaad. A criatura se assemelha a uma Aberração desse tipo, o que determina certos detalhes no bloco de estatísticas da criatura.\nA criatura desaparece ao ser reduzida a 0 Pontos de\nVida ou quando a magia termina.\nA criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.573Z"
+  }
+}

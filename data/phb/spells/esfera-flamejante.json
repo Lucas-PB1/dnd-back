@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "esfera-flamejante",
+  "name": "Esfera Flamejante",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma bola de cera",
+    "text": "V, S, M (uma bola de cera)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você cria uma esfera de fogo de 1,5 metro de diâmetro em um espaço desocupado no chão no alcance e pela duração da magia. Qualquer criatura que termine o turno a até 1,5 metro da esfera realiza uma salvaguarda de Destreza, sofrendo 2d6 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.\nComo uma Ação Bônus, você pode mover a esfera até 9 metros, rolando-a pelo chão. Se você mover a esfera para o espaço de uma criatura, essa criatura realiza a salvaguarda contra a esfera, e a esfera para de se mover durante o turno.\nAo mover a esfera, você pode direcioná-la sobre barreiras de até 1,5 metro de altura e saltar sobre poços de até 3 metros de largura. Objetos inflamáveis que não\nestão sendo usados ou carregados entram em combustão se tocados pela esfera, e ela emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano aumenta em 1d6 para cada círculo de espaço de magia acima de 2.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.553Z"
+  }
+}

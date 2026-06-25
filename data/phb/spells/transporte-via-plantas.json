@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "transporte-via-plantas",
+  "name": "Transporte via Plantas",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Druida"
+  ],
+  "castingTime": "Ação",
+  "range": "3 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "1 minuto",
+  "concentration": false,
+  "ritual": false,
+  "description": "Esta magia cria um elo mágico entre uma planta inanimada Grande ou maior no alcance da magia e outra planta, a qualquer distância, no mesmo plano de existência. Você deve ter visto ou tocado na planta-alvo pelo menos uma vez antes. Pela duração da magia,\nqualquer criatura pode entrar na planta-alvo e sair da planta-destino usando 1,5 metro de movimento.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.649Z"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "malogro",
+  "name": "Malogro",
+  "level": 4,
+  "levelLabel": "4º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Bruxo",
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "9 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Um elfo Clérigo usa a magia\nLuz do Dia para trazer a luz do amanhecer para uma corte de vampiros.\nUma criatura à sua vista e no alcance da magia realiza uma salvaguarda de Constituição, sofrendo 8d8 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso. Uma criatura do tipo Planta falha automaticamente na salvaguarda.\nComo alternativa, escolha como alvo uma planta não mágica que não seja uma criatura, como uma árvore ou um arbusto. Ela não realiza uma salvaguarda; ela simplesmente murcha e morre.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano aumenta em 1d8 para cada círculo de espaço de magia acima de 4.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.587Z"
+  }
+}

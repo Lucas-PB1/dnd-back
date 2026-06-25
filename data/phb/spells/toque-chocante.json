@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "toque-chocante",
+  "name": "Toque Chocante",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Evocação",
+  "classes": [
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Raios saltam de você em direção a uma criatura que você tenta tocar. Realize uma jogada de ataque mágico corpo a corpo contra o alvo. Em caso de acerto, o alvo sofre 1d8 pontos de dano Elétrico e não pode realizar\nAtaques de Oportunidade até o início do próximo turno dele.\nAprimoramento de Truque. O dano aumenta em 1d8\nquando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.646Z"
+  }
+}

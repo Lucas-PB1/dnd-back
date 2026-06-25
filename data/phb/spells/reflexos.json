@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "reflexos",
+  "name": "Reflexos",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Ilusão",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "1 minuto",
+  "concentration": false,
+  "ritual": false,
+  "description": "Um anão teve um encontro infeliz com o raio anil da\nRajada Prismática.\nRANDALL MACKEY\nTrês cópias ilusórias suas aparecem em seu espaço. Até que a magia termine, as cópias se movem com você e imitam suas ações, mudando de posição de forma que seja impossível rastrear qual imagem é a verdadeira.\nCada vez que uma criatura atinge você com uma jogada de ataque pela duração da magia, jogue um d6\npara cada uma das cópias restantes. Se qualquer um dos d6s resultar em 3 ou mais, uma das cópias é atingida em seu lugar e é destruída. As cópias ignoram todos os outros danos e efeitos. A magia se encerra quando as três cópias são destruídas.\nUma criatura não é afetada por esta magia se tem a condição Cego, ou se possuir Visão às Cegas ou Visão\nVerdadeira.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.626Z"
+  }
+}

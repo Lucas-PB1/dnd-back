@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "cao-fiel-de-mordenkainen",
+  "name": "Cão Fiel de Mordenkainen",
+  "level": 4,
+  "levelLabel": "4º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "9 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um apito de prata",
+    "text": "V, S, M (um apito de prata)"
+  },
+  "duration": "8 horas",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você conjura um cão de guarda fantasmagórico em um espaço desocupado à sua vista e no alcance da magia.\nO cão permanece pela duração magia ou até que vocês dois estejam separados por mais de 90 metros.\nNinguém além de você pode ver o cão, e ele é intangível e invulnerável. Quando uma criatura de tamanho\nPequeno ou maior se aproxima a 9 metros dele sem antes falar a senha que você especificou ao conjurar essa magia, o cão começa a latir alto. O cão possui Visão\nVerdadeira com alcance de 9 metros.\nNo início de cada um dos seus turnos, o cão tenta morder um inimigo a até 1,5 metro dele. Esse inimigo deve ser bem-sucedido em uma salvaguarda de Destreza ou sofre 4d8 pontos de dano Energético.\nNos seus turnos subsequentes, você pode executar uma ação Usar Magia para mover o cão até 9 metros.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.508Z"
+  }
+}

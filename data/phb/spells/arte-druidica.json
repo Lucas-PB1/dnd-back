@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "arte-druidica",
+  "name": "Arte Druídica",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Transmutação",
+  "classes": [
+    "Druida"
+  ],
+  "castingTime": "Ação",
+  "range": "9 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Sussurrando para os espíritos da natureza, você cria um dos seguintes efeitos no alcance da magia.\nBrincar com Fogo. Você acende ou apaga uma vela,\numa tocha ou uma fogueira.\nEfeito Sensorial. Você cria um efeito sensorial inofensivo, como folhas caindo, fadas dançantes espectrais,\numa brisa suave, o som de um animal ou o leve odor de gambá. O efeito deve caber em um Cubo de 1,5 metro de lados.\nUm Golias Clérigo conjura\nArma Espiritual em batalha contra um Tríbulo Brutal.\nJUSTINE CRUZ\nUm sprite conjuraArte Druídica para fazer as flores florescerem.\nFlorescimento. Você instantaneamente faz uma flor desabrochar, uma vagem se abrir ou um botão de folha se abrir.\nSensor Climático. Você cria um efeito sensorial minúsculo e inofensivo que prevê qual será o clima no local onde você está pelas próximas 24 horas. O efeito pode se manifestar como uma esfera dourada para céu claro,\numa nuvem para chuva, flocos de neve caindo para neve e assim por diante. Esse efeito persiste por 1 rodada.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.495Z"
+  }
+}

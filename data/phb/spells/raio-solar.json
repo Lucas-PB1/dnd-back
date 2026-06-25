@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "raio-solar",
+  "name": "Raio Solar",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Clérigo",
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma lupa",
+    "text": "V, S, M (uma lupa)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você lança um feixe de luz em uma linha de 1,5 metro de largura e 18 metros de comprimento. Cada criatura na\nLinha realiza uma salvaguarda de Constituição. Se falhar, uma criatura sofre 6d8 pontos de dano Radiante e tem a condição Cego até o início do seu próximo turno.\nEm caso de sucesso, ela sofre apenas metade do dano.\nAté que a magia termine, você pode executar uma ação\nUsar Magia para criar uma nova Linha de radiância.\nPela duração da magia, uma fagulha de radiância brilha acima de você. Ela emite Luz Plena em um raio de 9 metros e Meia-luz por mais 9 metros. Essa luz é a luz do sol.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.624Z"
+  }
+}

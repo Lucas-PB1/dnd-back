@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "protecao-contra-laminas",
+  "name": "Proteção Contra Lâminas",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Abjuração",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Sempre que uma criatura realizar uma jogada de ataque contra você antes que a magia termine, o atacante subtrai 1d4 da jogada de ataque.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.619Z"
+  }
+}

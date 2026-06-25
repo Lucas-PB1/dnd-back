@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "invocar-morto-vivo",
+  "name": "Invocar Morto-Vivo",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Bruxo",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um crânio dourado no valor de 300 ou mais PO",
+    "text": "V, S, M (um crânio dourado no valor de 300 ou mais PO)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você invoca um Espírito Morto-Vivo. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Morto-\n-vivo. Ao conjurar a magia, escolha a forma da criatura: Esquelético, Fantasmagórico ou Pútrido. O espírito se assemelha a uma criatura Morta-viva com a forma escolhida, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.\nA criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.\nCA 11 + o círculo da magia\nPV 30 (apenas Fantasmagórico e Pútrido) ou 20 (apenas\nEsquelético) + 10 para cada círculo de magia acima de 3\nDeslocamento 9 m; Voo 12 m (pairar; apenas Fantasmagórico)\nMOD SG MOD SG MOD SG\nFor 12 +1 +1 Des 16 +3 +3 Con 15 +2 +2\nInt 4 –3 –3 Sab 10 +0 +0 Car 9 –1 –1\nImunidades Necrótico, Venenoso; Amedrontado, Envenenado,\nExaustão, Paralisado\nSentidos Visão no Escuro 18 m, Percepção Passiva 10\nIdiomas Compreende os idiomas que você fala\nND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)\nTraços\nAura Purulenta (Apenas Pútrido). Salvaguarda de Constituição:\nCD é igual a CD para evitar sua magia, qualquer criatura\n(exceto você) que inicie o turno dentro de uma Emanação de\n1,5 metro originada a partir do espírito. Falha: A criatura tem a condição Envenenado até o início de seu próximo turno.\nPassagem Incorpórea (Apenas Fantasmagórico). O espírito pode se mover através de outras criaturas e objetos como se fossem Terreno Difícil. Se ele terminar o turno dentro de um objeto, ele é desviado para o espaço desocupado mais próximo e sofre 1d10 pontos de dano Energético por cada 1,5\nmetro percorrido.\nAções\nAtaques Múltiplos. O espírito realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).\nGarra Podre (Apenas Pútrido). Jogada de Ataque Corpo a Corpo:\nBônus é igual ao seu modificador de ataque mágico, alcance\n1,5 m. Dano: 1d6 + 3 mais o círculo da magia em pontos de dano Cortante. Se o alvo tem a condição Envenenado, ele tem a condição Paralisado até o final do próximo turno dele.\nRaio da Cova (Somente Esquelético). Jogada de Ataque à\nDistância: Bônus é igual ao seu modificador de ataque mágico,\nalcance 45 m. Dano: 2d4 + 3 mais o círculo da magia em pontos de dano Necrótico.\nToque Mortal (Apenas Fantasmagórico). Jogada de Ataque\nCorpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Necrótico, e o alvo tem a condição\nAmedrontado até o final do próximo turno dele.\nEspírito Morto-Vivo\nMorto-vivo Médio, Neutro\nEspírito Morto-vivo\n(Fantasmagórico)\nJUSTIN SWEET",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.578Z"
+  }
+}

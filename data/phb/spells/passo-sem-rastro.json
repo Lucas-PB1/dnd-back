@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "passo-sem-rastro",
+  "name": "Passo Sem Rastro",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Druida",
+    "Guardião"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "cinzas de ramo de visco queimado",
+    "text": "V, S, M (cinzas de ramo de visco queimado)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você irradia uma aura de ocultação em uma Emanação de 9 metros pela duração da magia. Enquanto estiver na aura, você e cada criatura escolhida têm um bônus de +10 em testes de Destreza (Furtividade) e não deixam rastros.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.610Z"
+  }
+}

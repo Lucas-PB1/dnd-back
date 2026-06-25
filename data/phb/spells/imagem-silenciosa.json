@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "imagem-silenciosa",
+  "name": "Imagem Silenciosa",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Ilusão",
+  "classes": [
+    "Bardo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um pouco de lã",
+    "text": "V, S, M (um pouco de lã)"
+  },
+  "duration": "Concentração, até 10 minutos",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você cria a imagem de um objeto, uma criatura ou algum outro fenômeno visível que não seja maior do que um Cubo de 4,5 metros de lado. A imagem aparece em um local pela duração e no alcance da magia. A\nimagem é puramente visual; não é acompanhada por som, cheiro ou outros efeitos sensoriais.\nComo uma ação Usar Magia, você pode mover a imagem para qualquer ponto no alcance da magia. À\nmedida que a imagem muda de local, você pode alterar a aparência da imagem para que os movimentos dela pareçam naturais para a imagem. Por exemplo, se você\ncriar a imagem de uma criatura e movê-la, pode alterá-\n-la para que pareça estar andando.\nA interação física com a imagem revela que ela é uma ilusão, pois as coisas podem passar por ela. Uma criatura que executa uma ação Analisar para examinar a imagem pode determinar que ela é uma ilusão com um teste bem-sucedido de Inteligência (Investigação)\ncontra a CD para evitar sua magia. Se uma criatura perceber a ilusão pelo que ela é, a criatura pode ver através da imagem.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.569Z"
+  }
+}

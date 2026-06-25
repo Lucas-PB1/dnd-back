@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "forma-gasosa",
+  "name": "Forma Gasosa",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um pouco de gaze",
+    "text": "V, S, M (um pouco de gaze)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Uma criatura voluntária que você toca multimorfa-se,\njunto com tudo o que está vestindo e carregando, em uma nuvem de neblina durante a duração da magia. A\nmagia se encerra no alvo se ele for reduzido a 0 Pontos de Vida ou se executar uma ação Usar Magia para encerrá-la.\nEnquanto estiver nesta forma, o único método de movimento do alvo é um Deslocamento de Voo de 3\nmetros, e ele pode pairar. O alvo pode entrar e ocupar o espaço de outra criatura. O alvo tem Resistência a dano Contundente, Cortante e Perfurante; tem Imunidade à condição Caído; e tem Vantagem em salvaguardas de Força, Destreza e Constituição. O alvo pode passar por aberturas estreitas, mas considera líquidos como se fossem superfícies sólidas.\nO alvo não pode falar ou manipular objetos, e qualquer objeto que ele estava carregando ou segurando não pode ser derrubado, usado ou interagido de outra forma.\nPor fim, o alvo não pode atacar ou conjurar magias.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior.\nVocê pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 3.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.561Z"
+  }
+}

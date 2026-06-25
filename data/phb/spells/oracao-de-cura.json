@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "oracao-de-cura",
+  "name": "Oração de Cura",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Clérigo",
+    "Paladino"
+  ],
+  "castingTime": "10 minutos",
+  "range": "9 metros",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "materialDescription": null,
+    "text": "V"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Até cinco criaturas à sua escolha que permanecerem no alcance da magia por toda a conjuração obtêm os benefícios de um Descanso Curto e recuperam 2d8 Pontos de Vida. Uma criatura não pode ser afetada por esta magia novamente até ela completar um Descanso Longo.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. A\ncura aumenta em 1d8 para cada círculo de espaço de magia acima de 2.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.604Z"
+  }
+}

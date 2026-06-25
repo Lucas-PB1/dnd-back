@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "polimorfia",
+  "name": "Polimorfia",
+  "level": 4,
+  "levelLabel": "4º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Bardo",
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um casulo de lagarta",
+    "text": "V, S, M (um casulo de lagarta)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você tenta transformar uma criatura à sua vista e no alcance da magia em uma Fera. O alvo deve ser bem-\n-sucedido em uma salvaguarda de Sabedoria ou se multimorfa em uma Fera pela duração da magia. Essa forma pode ser qualquer Fera com Nível de Desafio igual ou menor que o do alvo (ou igual ao seu nível se não tiver Nível de Desafio). As estatísticas do alvo são substituídas pelas da Fera escolhida, mas o alvo mantém seu alinhamento, personalidade, tipo de criatura, Pontos de Vida e Dados de Pontos de Vida.\nVeja também o apêndice B para amostras dos blocos de estatísticas das Feras.\nO alvo recebe um número de Pontos de Vida Temporários igual aos Pontos de Vida da forma de Fera.\nA magia se encerra no alvo se ele não tiver Pontos de Vida Temporários restantes. Esses Pontos de Vida\nTemporários desaparecem, caso ainda restem, quando a magia terminar.\nO alvo é limitado às ações que pode realizar pela anatomia de sua nova forma, e não pode falar ou conjurar magias.\nO equipamento do alvo se funde com a nova forma.\nA criatura não pode usar ou se beneficiar de nenhum desses equipamentos.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.613Z"
+  }
+}

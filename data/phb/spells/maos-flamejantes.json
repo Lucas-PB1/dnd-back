@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "maos-flamejantes",
+  "name": "Mãos Flamejantes",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Uma fina camada de chamas parte de você. Cada criatura em um Cone de 4,5 metros realiza uma salvaguarda de Destreza, sofrendo 3d6 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.\nObjetos inflamáveis no Cone que não estão sendo usados ou carregados entram em combustão.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.588Z"
+  }
+}

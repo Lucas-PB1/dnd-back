@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "fogo-das-fadas",
+  "name": "Fogo das Fadas",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Bardo",
+    "Druida"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "materialDescription": null,
+    "text": "V"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Objetos em um Cubo de 6 metros de lado no alcance da magia são delineados por luz azul, verde ou violeta\n(à sua escolha). Cada criatura no Cubo também é delineada se falhar em uma salvaguarda de Destreza. Pela duração da magia, objetos e criaturas afetadas emitem\nMeia-Luz em um raio de 3 metros e não podem se beneficiar da condição Invisível.\nJogadas de ataque contra uma criatura ou objeto afetado têm Vantagem se o atacante puder vê-la.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.560Z"
+  }
+}

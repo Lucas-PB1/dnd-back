@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "ver-o-invisivel",
+  "name": "Ver o Invisível",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Adivinhação",
+  "classes": [
+    "Bardo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma pitada de talco",
+    "text": "V, S, M (uma pitada de talco)"
+  },
+  "duration": "1 hora",
+  "concentration": false,
+  "ritual": false,
+  "description": "Pela duração da magia, você vê criaturas e objetos que têm a condição Invisível como se estivessem visíveis e pode ver o Plano Etéreo. Criaturas e objetos nele tem aparência fantasmagórica.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.650Z"
+  }
+}

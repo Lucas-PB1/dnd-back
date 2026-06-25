@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "compreender-idiomas",
+  "name": "Compreender Idiomas",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Adivinhação",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação ou Ritual",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma pitada de fuligem e sal",
+    "text": "V, S, M (uma pitada de fuligem e sal)"
+  },
+  "duration": "1 hora",
+  "concentration": false,
+  "ritual": true,
+  "description": "Pela duração da magia, você entende o significado literal de qualquer idioma que ouça ou veja escrito. Você\ntambém entende qualquer escrita que veja, mas deve estar tocando a superfície na qual as palavras estão escritas. Leva cerca de 1 minuto para ler uma página de texto. Esta magia não decodifica símbolos ou mensagens secretas.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.517Z"
+  }
+}

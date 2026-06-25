@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "dissipar-o-bem-e-o-mal",
+  "name": "Dissipar o Bem e o Mal",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Clérigo",
+    "Paladino"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "prata e ferro em pó",
+    "text": "V, S, M (prata e ferro em pó)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Pela duração da magia, Celestiais, Elementais, Feéricos,\nÍnferos e Mortos-Vivos têm Desvantagem em jogadas de ataque contra você. Você pode encerrar a magia mais cedo usando uma das seguintes funções especiais.\nExorcizar. Como uma ação Usar Magia, você tem como alvo uma criatura a sua vista a até 1,5 metro de você e que seja um dos tipos de criatura acima. O alvo deve ser bem-sucedido em uma salvaguarda de Carisma ou é enviado de volta ao seu plano de origem, se ainda não estiver lá. Se não estiverem em seu plano de origem, Feéricos são enviados para Faéria e Mortos-Vivos são enviadas para o Sombral.\nQuebrar Encantamento. Como uma ação Usar Magia,\ntoque uma criatura que esteja possuída ou sob os efeitos de Amedrontado ou Enfeitiçado por uma ou mais das criaturas mencionadas. O alvo deixa de estar possuído, Amedrontado ou Enfeitiçado por elas.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.545Z"
+  }
+}

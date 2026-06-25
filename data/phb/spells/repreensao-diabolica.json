@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "repreensao-diabolica",
+  "name": "Repreensão Diabólica",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Bruxo"
+  ],
+  "castingTime": "Reação, que você realiza ao receber dano de uma criatura à sua vista e a até 18 metros de você",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "A criatura que lhe causou dano é momentaneamente cercada por chamas verdes. Ela realiza uma salvaguarda de Destreza, sofrendo 2d10 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano aumenta em 1d10 para cada círculo de espaço de magia acima de 1.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.629Z"
+  }
+}

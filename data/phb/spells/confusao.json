@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "confusao",
+  "name": "Confusão",
+  "level": 4,
+  "levelLabel": "4º Círculo",
+  "school": "Encantamento",
+  "classes": [
+    "Bardo",
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "três cascas de nozes",
+    "text": "V, S, M (três cascas de nozes)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Cada criatura em uma Esfera de 3 metros de raio centrada em um ponto à sua escolha no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria, ou esse alvo não pode executar Ações Bônus ou\nReações, e deve jogar 1d10 no início de cada um dos turnos dele para determinar o comportamento nesse turno, consultando a tabela abaixo.\n1d10 Comportamento para o Turno\n1 O alvo não executa uma ação e usa todo o deslocamento para se mover. Jogue 1d4 para a direção:\n1, norte; 2, leste; 3, sul; ou 4, oeste.\n2-6 O alvo não se move ou executa ações.\n7-8 O alvo não se move e executa a ação Atacar para realizar um ataque corpo a corpo contra uma criatura aleatória ao alcance. Se nenhuma estiver ao alcance, o alvo não executa nenhuma ação.\n9-10 O alvo escolhe o comportamento dele.\nAo final de cada um dos turnos dele, um alvo afetado repete a salvaguarda, encerrando a magia em caso de sucesso.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\nraio da Esfera aumenta em 1,5 metro para cada círculo de espaço de magia acima de 4.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.520Z"
+  }
+}

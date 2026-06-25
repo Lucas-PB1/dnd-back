@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "simular-morte",
+  "name": "Simular Morte",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Bardo",
+    "Clérigo",
+    "Druida",
+    "Mago"
+  ],
+  "castingTime": "Ação ou Ritual",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma pitada de terra de cemitério",
+    "text": "V, S, M (uma pitada de terra de cemitério)"
+  },
+  "duration": "1 hora",
+  "concentration": false,
+  "ritual": true,
+  "description": "Você toca uma criatura voluntária e a coloca em um estado cataléptico que é indistinguível da morte.\nPela duração da magia, o alvo parece morto em uma inspeção externa e para magias usadas para determinar a situação do alvo. O alvo está com as condições Cego e Incapacitado, e o Deslocamento dele é 0.\nO alvo também tem Resistência a todos os tipos de dano, exceto dano Psíquico, e tem Imunidade à condição Envenenado.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.638Z"
+  }
+}

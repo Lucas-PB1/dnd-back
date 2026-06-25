@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "emaranhar",
+  "name": "Emaranhar",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Druida",
+    "Guardião"
+  ],
+  "castingTime": "Ação",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Plantas agarradoras brotam do chão em um quadrado de 6 metros de lado no alcance da magia. Pela duração da magia, essas plantas transformam o terreno em Terreno Difícil. Elas desaparecem quando a magia termina.\nCada criatura (exceto você) na área quando você\nconjura a magia deve ser bem-sucedida em uma salvaguarda de Força ou tem a condição Contido até que a magia termine. Uma criatura Contida pode executar uma ação para realizar um teste de Força (Atletismo)\ncontra a CD para evitar sua magia. Em caso de sucesso,\nela se liberta das plantas agarradoras e não está mais\nContida por elas.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.548Z"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "forma-eterea",
+  "name": "Forma Etérea",
+  "level": 7,
+  "levelLabel": "7º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Clérigo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Até 8 horas",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você entra nas regiões de fronteira do Plano Etéreo,\nonde ele se sobrepõe ao seu plano atual.\nVocê permanece na Fronteira Etérea pela duração da magia. Durante esse período, você pode se mover em qualquer direção. Se você se mover para cima ou para baixo, cada metro de movimento custa um metro adicional. Você pode ver o plano que você deixou, que parece cinza, e você não pode ver nada lá a mais de 18\nmetros de distância.\nEnquanto estiver no Plano Etéreo, você pode afetar e ser afetado apenas por criaturas, objetos e efeitos nesse plano. Criaturas que não estão no Plano Etéreo não podem perceber ou interagir com você, a menos que uma característica lhes dê a capacidade de fazê-lo.\nQuando a magia termina, você retorna ao plano que deixou no local que corresponde ao seu espaço na Fronteira Etérea. Se você aparecer em um espaço ocupado, você é direcionado para o espaço desocupado mais próximo e sofre dano Energético igual a 10 pontos para cada 1,5 metro que é movido.\nEsta magia se encerra instantaneamente se você a conjurar enquanto estiver no Plano Etéreo ou em um plano que não faz fronteira com ele, como um dos\nPlanos Externos.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior.\nVocê pode escolher até três criaturas voluntárias\n(incluindo você) para cada círculo de espaço de magia acima de 7. As criaturas devem estar a até 3 metros de você quando você conjurar a magia.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.561Z"
+  }
+}

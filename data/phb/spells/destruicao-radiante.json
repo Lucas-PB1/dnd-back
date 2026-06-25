@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "destruicao-radiante",
+  "name": "Destruição Radiante",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Paladino"
+  ],
+  "castingTime": "Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma\nCorpo a Corpo ou um Ataque Desarmado",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "materialDescription": null,
+    "text": "V"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "O alvo atingido pelo ataque sofre um adicional de 2d6\npontos de dano Radiante. Até que a magia termine, o alvo emite Luz Plena em um raio de 1,5 metro, e jogadas de ataque contra ele têm Vantagem e ele não pode se beneficiar da condição Invisível.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano aumenta em 1d6 para cada círculo de espaço de magia acima de 2.\nUma anã Paladina fortalece sua arma com\nDestruição Divina, desencadeando a ira sagrada em ínferos Mezzoloths.\nBRYAN SOLA",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.542Z"
+  }
+}

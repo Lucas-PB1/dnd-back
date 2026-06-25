@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "consagrar",
+  "name": "Consagrar",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Clérigo"
+  ],
+  "castingTime": "24 horas",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "incenso no valor de 1.000 ou mais PO, que a magia consome",
+    "text": "V, S, M (incenso no valor de 1.000 ou mais PO, que a magia consome)"
+  },
+  "duration": "Até ser dissipada",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você toca um ponto e infunde uma área ao seu redor com poder sagrado ou profano. A área pode ter um raio de até 18 metros, e a magia falha se o raio incluir uma área já sob o efeito de Consagrar. A área afetada tem os seguintes efeitos.\nVigília Consagrada. Escolha um tipo de criatura:\nAberração, Celestial, Elemental, Feérico, Ínfero ou\nMorto-Vivo. Criaturas do tipo escolhido não podem entrar voluntariamente na área, e qualquer criatura que esteja possuída por elas, ou tem a condição Amedrontado ou Enfeitiçado por essas criaturas, não será considerada possuída, nem terá as condições Amedrontado ou Enfeitiçado enquanto enquanto estiver na área.\nEfeito Adicional. Você vincula um efeito adicional à\nárea da lista abaixo:\nCoragem. Criaturas de qualquer tipo que você escolher não recebem a condição Amedrontado enquanto estiverem na área.\nDescanso Pacífico. Cadáveres enterrados na área não podem ser transformados em Mortos-vivos.\nEscuridão. Escuridão preenche a área. A luz normal,\nbem como a luz mágica criada por magias de um círculo inferior a esta magia, não pode iluminar a área.\nIdiomas. Criaturas de qualquer tipo que você escolher podem se comunicar com qualquer outra criatura na área,\nmesmo que não compartilhem um idioma em comum.\nInterferência Extradimensional. Criaturas de qualquer tipo que você escolher não podem entrar ou sair da área usando teleporte ou viagem interplanar.\nLuz do Dia. Luz Plena preenche a área. Escuridão mágica criada por magias de um círculo inferior a esta magia não pode extinguir a luz.\nMedo. Criaturas de qualquer tipo que você escolher tem a condição Amedrontado enquanto estiverem na área.\nResistência. Criaturas de qualquer tipo que você escolher têm Resistência a um tipo de dano à sua escolha enquanto estiverem na área.\nSilêncio. Nenhum som pode emanar de dentro da área e nenhum som pode adentrá-la.\nVulnerabilidade. Criaturas de qualquer tipo que você escolher têm Vulnerabilidade a um tipo de dano à\nsua escolha enquanto estiverem na área.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.520Z"
+  }
+}

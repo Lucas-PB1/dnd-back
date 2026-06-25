@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "restauracao-maior",
+  "name": "Restauração Maior",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Bardo",
+    "Clérigo",
+    "Druida",
+    "Guardião",
+    "Paladino"
+  ],
+  "castingTime": "Ação",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "poeira de diamante no valor de 100 ou mais PO, que a magia consome",
+    "text": "V, S, M (poeira de diamante no valor de 100 ou mais PO, que a magia consome)"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você toca uma criatura e magicamente remove um dos seguintes efeitos:\n• 1 nível de Exaustão\n• A condição Enfeitiçado ou Petrificado\n• Uma maldição, incluindo a Sintonização do alvo com um item mágico amaldiçoado\n• Qualquer redução em um dos valores de atributo do alvo\n• Qualquer redução nos Pontos de Vida máximos do alvo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.631Z"
+  }
+}

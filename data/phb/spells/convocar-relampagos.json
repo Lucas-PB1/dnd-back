@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "convocar-relampagos",
+  "name": "Convocar Relâmpagos",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Druida"
+  ],
+  "castingTime": "Ação",
+  "range": "36 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 10 minutos",
+  "concentration": true,
+  "ritual": false,
+  "description": "Uma nuvem de tempestade aparece em um ponto no alcance da magia à sua vista acima de você. A nuvem tem a forma de um Cilindro com 3 metros de altura e um raio de 18 metros.\nAo conjurar a magia, escolha um ponto à sua vista sob a nuvem. Um relâmpago é disparado da nuvem até aquele ponto. Cada criatura a até 1,5 metro desse ponto realiza uma salvaguarda de Destreza, sofrendo 3d10\npontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.\nAté que a magia termine, você pode executar uma ação Usar Magia para invocar relâmpagos desse modo novamente, escolhendo o mesmo ponto ou um diferente.\nSe o conjurador estiver ao ar livre durante uma tempestade ao conjurar esta magia, ele passa a controlar a tempestade existente em vez de criar uma nova. Nessas condições, o dano da magia é aumentado em 1d10.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano é aumentado em 1d10 pontos para cada círculo de espaço de magia acima de 3.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.525Z"
+  }
+}

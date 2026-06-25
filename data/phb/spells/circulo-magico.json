@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "circulo-magico",
+  "name": "Círculo Mágico",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Bruxo",
+    "Clérigo",
+    "Mago",
+    "Paladino"
+  ],
+  "castingTime": "1 minuto",
+  "range": "3 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "sal e prata em pó no valor de 100 ou mais PO, que a magia consome",
+    "text": "V, S, M (sal e prata em pó no valor de 100 ou mais PO, que a magia consome)"
+  },
+  "duration": "1 hora",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você cria um Cilindro de energia mágica com 3 metros de raio e 6 metros de altura, centrado em um ponto visível e ao alcance no chão. Runas brilhantes surgem onde o Cilindro toca o chão ou outra superfície.\nEscolha um ou mais dos seguintes tipos de criaturas:\nCelestiais, Elementais, Feéricos, Ínferos ou Mortos-Vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:\nA criatura não pode entrar voluntariamente no Cilindro por meios não mágicos. Se a criatura tentar usar teleporte ou viagem interplanar para fazer isso, ela deve primeiro ser bem-sucedida em uma salvaguarda de Carisma.\nA criatura tem Desvantagem nas jogadas de ataque contra alvos dentro do Cilindro.\nAlvos dentro do Cilindro não podem ser possuídos ou ter a condição Amedrontado ou Enfeitiçado pela criatura.\nAo conjurar essa magia, você pode fazer com que ela funcione na direção inversa, impedindo que uma criatura do tipo especificado saia do Cilindro e protegendo alvos fora dele.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. A\nduração aumenta em 1 hora para cada círculo de espaço de magia acima de 3.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.514Z"
+  }
+}

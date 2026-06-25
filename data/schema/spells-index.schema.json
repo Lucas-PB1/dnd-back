@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/spells-index.schema.json",
+  "title": "Índice de Magias PHB",
+  "type": "object",
+  "required": ["source", "spellCount", "byLevel", "spells"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "spellCount": { "type": "integer", "minimum": 1 },
+    "byLevel": {
+      "type": "object",
+      "additionalProperties": { "type": "integer", "minimum": 0 }
+    },
+    "spells": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "level", "school", "file"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "level": { "type": "integer" },
+          "school": { "type": "string" },
+          "file": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "contagio",
+  "name": "Contágio",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Clérigo",
+    "Druida"
+  ],
+  "castingTime": "Ação",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "7 dias",
+  "concentration": false,
+  "ritual": false,
+  "description": "Seu toque inflige um contágio mágico. O alvo deve ser bem-sucedido em uma salvaguarda de Constituição ou sofre 11d8 pontos de dano necrótico e tem a condição Envenenado. Além disso, escolha um atributo ao conjurar a magia. Enquanto estiver envenenado, o alvo tem Desvantagem em salvaguardas realizadas com o atributo escolhido.\nO alvo deve repetir a salvaguarda no final de cada um dos turnos até obter três sucessos ou fracassos. Se o alvo obtiver três sucessos, a magia encerra para o alvo. Se obter três fracassos, a magia permanece 7 dias sobre ele.\nSempre que o alvo Envenenado receber um efeito que encerre a condição Envenenado, ele deve ser bem-\n-sucedido em uma salvaguarda de Constituição, ou a condição Envenenado não encerra nele.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.521Z"
+  }
+}

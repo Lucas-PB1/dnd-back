@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "zombaria-perversa",
+  "name": "Zombaria Perversa",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Encantamento",
+  "classes": [
+    "Bardo"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "materialDescription": null,
+    "text": "V"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você libera uma série de insultos carregados com encantamentos sutis em uma criatura que pode ouvir você e que esteja à sua vista e no alcance da magia. O\nalvo deve ser bem-sucedido em uma salvaguarda de\nSabedoria ou sofre 1d6 pontos de dano Psíquico e tem\nDesvantagem na próxima jogada de ataque que realizar antes do final do próximo turno dele.\nAprimoramento de Truque. O dano aumenta em 1d6\nquando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.653Z"
+  }
+}

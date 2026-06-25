@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "pequeno-refugio-de-leomund",
+  "name": "Pequeno Refúgio de Leomund",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Bardo",
+    "Mago"
+  ],
+  "castingTime": "1 minuto ou Ritual",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma conta de cristal",
+    "text": "V, S, M (uma conta de cristal)"
+  },
+  "duration": "8 horas",
+  "concentration": false,
+  "ritual": true,
+  "description": "Uma Emanação de 3 metros surge ao seu redor e permanece estacionária pela duração. A magia falha quando você a conjura se a Emanação não for grande o suficiente para envolver totalmente todas as criaturas em sua área.\nCriaturas e objetos dentro da Emanação quando você conjura a magia podem se mover livremente através dela. Todas as outras criaturas e objetos são impedidos de atravessá-la. Magias de 3º círculo ou inferior não podem ser conjuradas através dela, e os efeitos dessas magias não podem se estender para dentro dela.\nA atmosfera no interior da Emanação é confortável e seca, independentemente do clima externo. Até que a magia termine, você pode determinar se no interior há\nMeia-luz ou Escuridão (nenhuma ação é necessária). A\nEmanação é opaca por fora e de qualquer cor que você\nescolher, mas é transparente por dentro.\nA magia encerra se você sair da Emanação ou se a conjurar novamente.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.611Z"
+  }
+}

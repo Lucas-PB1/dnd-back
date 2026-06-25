@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "explosao-elemental",
+  "name": "Explosão Elemental",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Evocação",
+  "classes": [
+    "Feiticeiro"
+  ],
+  "castingTime": "Ação",
+  "range": "36 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você dispara energia arcana contra uma criatura ou objeto no alcance da magia. Realize uma jogada de ataque à distância contra o alvo. Em caso de acerto, o alvo sofre 1d8 pontos de dano de um tipo à sua escolha: Ácido, Elétrico, Gélido, Ígneo, Psíquico, Trovejante ou Venenoso.\nSe você tirar um 8 no d8 para esta magia, pode jogar outro d8 e adicionar ao dano. Ao conjurar essa magia,\no número máximo de d8 adicionais que você pode somar ao dano da magia é igual ao seu modificador de atributo de conjuração.\nAprimoramento de Truque. O dano aumenta em 1d8\nquando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.556Z"
+  }
+}

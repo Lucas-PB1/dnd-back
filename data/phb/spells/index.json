@@ -1,0 +1,2767 @@
+{
+  "$schema": "../../schema/spells-index.schema.json",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.654Z"
+  },
+  "spellCount": 391,
+  "byLevel": {
+    "0": 34,
+    "1": 64,
+    "2": 63,
+    "3": 52,
+    "4": 41,
+    "5": 48,
+    "6": 34,
+    "7": 21,
+    "8": 18,
+    "9": 16
+  },
+  "spells": [
+    {
+      "id": "acalmar-emocoes",
+      "name": "Acalmar Emoções",
+      "level": 2,
+      "school": "Encantamento",
+      "file": "acalmar-emocoes.json"
+    },
+    {
+      "id": "acudir-os-moribundos",
+      "name": "Acudir os Moribundos",
+      "level": 0,
+      "school": "Necromancia",
+      "file": "acudir-os-moribundos.json"
+    },
+    {
+      "id": "alarme",
+      "name": "Alarme",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "alarme.json"
+    },
+    {
+      "id": "aliado-extraplanar",
+      "name": "Aliado Extraplanar",
+      "level": 6,
+      "school": "Invocação",
+      "file": "aliado-extraplanar.json"
+    },
+    {
+      "id": "aljava-veloz",
+      "name": "Aljava Veloz",
+      "level": 5,
+      "school": "Transmutação",
+      "file": "aljava-veloz.json"
+    },
+    {
+      "id": "alterar-se",
+      "name": "Alterar-se",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "alterar-se.json"
+    },
+    {
+      "id": "amigos",
+      "name": "Amigos",
+      "level": 0,
+      "school": "Encantamento",
+      "file": "amigos.json"
+    },
+    {
+      "id": "amizade-animal",
+      "name": "Amizade Animal",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "amizade-animal.json"
+    },
+    {
+      "id": "ancora-planar",
+      "name": "Âncora Planar",
+      "level": 5,
+      "school": "Abjuração",
+      "file": "ancora-planar.json"
+    },
+    {
+      "id": "animar-mortos",
+      "name": "Animar Mortos",
+      "level": 3,
+      "school": "Necromancia",
+      "file": "animar-mortos.json"
+    },
+    {
+      "id": "animar-objetos",
+      "name": "Animar Objetos",
+      "level": 5,
+      "school": "Transmutação",
+      "file": "animar-objetos.json"
+    },
+    {
+      "id": "antipatia-simpatia",
+      "name": "Antipatia/Simpatia",
+      "level": 8,
+      "school": "Encantamento",
+      "file": "antipatia-simpatia.json"
+    },
+    {
+      "id": "aprimorar-atributo",
+      "name": "Aprimorar Atributo",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "aprimorar-atributo.json"
+    },
+    {
+      "id": "aprisionamento",
+      "name": "Aprisionamento",
+      "level": 9,
+      "school": "Abjuração",
+      "file": "aprisionamento.json"
+    },
+    {
+      "id": "arca-secreta-de-leomund",
+      "name": "Arca Secreta de Leomund",
+      "level": 4,
+      "school": "Invocação",
+      "file": "arca-secreta-de-leomund.json"
+    },
+    {
+      "id": "arma-elemental",
+      "name": "Arma Elemental",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "arma-elemental.json"
+    },
+    {
+      "id": "arma-espiritual",
+      "name": "Arma Espiritual",
+      "level": 2,
+      "school": "Evocação",
+      "file": "arma-espiritual.json"
+    },
+    {
+      "id": "arma-magica",
+      "name": "Arma Mágica",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "arma-magica.json"
+    },
+    {
+      "id": "armadura-arcana",
+      "name": "Armadura Arcana",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "armadura-arcana.json"
+    },
+    {
+      "id": "armadura-de-agathys",
+      "name": "Armadura de Agathys",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "armadura-de-agathys.json"
+    },
+    {
+      "id": "arrombar",
+      "name": "Arrombar",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "arrombar.json"
+    },
+    {
+      "id": "arte-druidica",
+      "name": "Arte Druídica",
+      "level": 0,
+      "school": "Transmutação",
+      "file": "arte-druidica.json"
+    },
+    {
+      "id": "assassino-fantasmagorico",
+      "name": "Assassino Fantasmagórico",
+      "level": 4,
+      "school": "Ilusão",
+      "file": "assassino-fantasmagorico.json"
+    },
+    {
+      "id": "augurio",
+      "name": "Augúrio",
+      "level": 2,
+      "school": "Adivinhação",
+      "file": "augurio.json"
+    },
+    {
+      "id": "aumentar-reduzir",
+      "name": "Aumentar/Reduzir",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "aumentar-reduzir.json"
+    },
+    {
+      "id": "aura-de-pureza",
+      "name": "Aura de Pureza",
+      "level": 4,
+      "school": "Abjuração",
+      "file": "aura-de-pureza.json"
+    },
+    {
+      "id": "aura-de-vida",
+      "name": "Aura de Vida",
+      "level": 4,
+      "school": "Abjuração",
+      "file": "aura-de-vida.json"
+    },
+    {
+      "id": "aura-de-vitalidade",
+      "name": "Aura de Vitalidade",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "aura-de-vitalidade.json"
+    },
+    {
+      "id": "aura-magica-de-nystul",
+      "name": "Aura Mágica de Nystul",
+      "level": 2,
+      "school": "Ilusão",
+      "file": "aura-magica-de-nystul.json"
+    },
+    {
+      "id": "aura-sagrada",
+      "name": "Aura Sagrada",
+      "level": 8,
+      "school": "Abjuração",
+      "file": "aura-sagrada.json"
+    },
+    {
+      "id": "auxilio",
+      "name": "Auxílio",
+      "level": 2,
+      "school": "Abjuração",
+      "file": "auxilio.json"
+    },
+    {
+      "id": "badalar-funebre",
+      "name": "Badalar Fúnebre",
+      "level": 0,
+      "school": "Necromancia",
+      "file": "badalar-funebre.json"
+    },
+    {
+      "id": "banimento",
+      "name": "Banimento",
+      "level": 4,
+      "school": "Abjuração",
+      "file": "banimento.json"
+    },
+    {
+      "id": "banquete-de-herois",
+      "name": "Banquete de Heróis",
+      "level": 6,
+      "school": "Invocação",
+      "file": "banquete-de-herois.json"
+    },
+    {
+      "id": "barreira-de-laminas",
+      "name": "Barreira de Lâminas",
+      "level": 6,
+      "school": "Evocação",
+      "file": "barreira-de-laminas.json"
+    },
+    {
+      "id": "bencao",
+      "name": "Bênção",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "bencao.json"
+    },
+    {
+      "id": "boca-encantada",
+      "name": "Boca Encantada",
+      "level": 2,
+      "school": "Ilusão",
+      "file": "boca-encantada.json"
+    },
+    {
+      "id": "bola-de-fogo",
+      "name": "Bola de Fogo",
+      "level": 3,
+      "school": "Evocação",
+      "file": "bola-de-fogo.json"
+    },
+    {
+      "id": "bola-de-fogo-adiavel",
+      "name": "Bola de Fogo Adiável",
+      "level": 7,
+      "school": "Evocação",
+      "file": "bola-de-fogo-adiavel.json"
+    },
+    {
+      "id": "bolha-acida",
+      "name": "Bolha Ácida",
+      "level": 0,
+      "school": "Evocação",
+      "file": "bolha-acida.json"
+    },
+    {
+      "id": "bom-fruto",
+      "name": "Bom Fruto",
+      "level": 1,
+      "school": "Invocação",
+      "file": "bom-fruto.json"
+    },
+    {
+      "id": "bordao-mistico",
+      "name": "Bordão Místico",
+      "level": 0,
+      "school": "Transmutação",
+      "file": "bordao-mistico.json"
+    },
+    {
+      "id": "bracos-de-hadar",
+      "name": "Braços de Hadar",
+      "level": 1,
+      "school": "Invocação",
+      "file": "bracos-de-hadar.json"
+    },
+    {
+      "id": "caldeirao-borbulhante-de-tasha",
+      "name": "Caldeirão Borbulhante de Tasha",
+      "level": 6,
+      "school": "Invocação",
+      "file": "caldeirao-borbulhante-de-tasha.json"
+    },
+    {
+      "id": "caminhar-no-vento",
+      "name": "Caminhar no Vento",
+      "level": 6,
+      "school": "Transmutação",
+      "file": "caminhar-no-vento.json"
+    },
+    {
+      "id": "caminhar-sobre-as-aguas",
+      "name": "Caminhar Sobre as Águas",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "caminhar-sobre-as-aguas.json"
+    },
+    {
+      "id": "campo-antimagia",
+      "name": "Campo Antimagia",
+      "level": 8,
+      "school": "Abjuração",
+      "file": "campo-antimagia.json"
+    },
+    {
+      "id": "cao-fiel-de-mordenkainen",
+      "name": "Cão Fiel de Mordenkainen",
+      "level": 4,
+      "school": "Invocação",
+      "file": "cao-fiel-de-mordenkainen.json"
+    },
+    {
+      "id": "carcere-de-energia",
+      "name": "Cárcere de Energia",
+      "level": 7,
+      "school": "Evocação",
+      "file": "carcere-de-energia.json"
+    },
+    {
+      "id": "cativar",
+      "name": "Cativar",
+      "level": 2,
+      "school": "Encantamento",
+      "file": "cativar.json"
+    },
+    {
+      "id": "cegueira-surdez",
+      "name": "Cegueira/Surdez",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "cegueira-surdez.json"
+    },
+    {
+      "id": "celeridade",
+      "name": "Celeridade",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "celeridade.json"
+    },
+    {
+      "id": "chama-continua",
+      "name": "Chama Contínua",
+      "level": 2,
+      "school": "Evocação",
+      "file": "chama-continua.json"
+    },
+    {
+      "id": "chama-sagrada",
+      "name": "Chama Sagrada",
+      "level": 0,
+      "school": "Evocação",
+      "file": "chama-sagrada.json"
+    },
+    {
+      "id": "chicote-de-espinhos",
+      "name": "Chicote de Espinhos",
+      "level": 0,
+      "school": "Transmutação",
+      "file": "chicote-de-espinhos.json"
+    },
+    {
+      "id": "chuva-de-meteoros",
+      "name": "Chuva de Meteoros",
+      "level": 9,
+      "school": "Evocação",
+      "file": "chuva-de-meteoros.json"
+    },
+    {
+      "id": "circulo-da-morte",
+      "name": "Círculo da Morte",
+      "level": 6,
+      "school": "Necromancia",
+      "file": "circulo-da-morte.json"
+    },
+    {
+      "id": "circulo-de-poder",
+      "name": "Círculo de Poder",
+      "level": 5,
+      "school": "Abjuração",
+      "file": "circulo-de-poder.json"
+    },
+    {
+      "id": "circulo-de-teleporte",
+      "name": "Círculo de Teleporte",
+      "level": 5,
+      "school": "Invocação",
+      "file": "circulo-de-teleporte.json"
+    },
+    {
+      "id": "circulo-magico",
+      "name": "Círculo Mágico",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "circulo-magico.json"
+    },
+    {
+      "id": "clarividencia",
+      "name": "Clarividência",
+      "level": 3,
+      "school": "Adivinhação",
+      "file": "clarividencia.json"
+    },
+    {
+      "id": "clone",
+      "name": "Clone",
+      "level": 8,
+      "school": "Necromancia",
+      "file": "clone.json"
+    },
+    {
+      "id": "coluna-de-chamas",
+      "name": "Coluna de Chamas",
+      "level": 5,
+      "school": "Evocação",
+      "file": "coluna-de-chamas.json"
+    },
+    {
+      "id": "comando",
+      "name": "Comando",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "comando.json"
+    },
+    {
+      "id": "compreender-idiomas",
+      "name": "Compreender Idiomas",
+      "level": 1,
+      "school": "Adivinhação",
+      "file": "compreender-idiomas.json"
+    },
+    {
+      "id": "compulsao",
+      "name": "Compulsão",
+      "level": 4,
+      "school": "Encantamento",
+      "file": "compulsao.json"
+    },
+    {
+      "id": "comunhao",
+      "name": "Comunhão",
+      "level": 5,
+      "school": "Adivinhação",
+      "file": "comunhao.json"
+    },
+    {
+      "id": "comunhao-com-a-natureza",
+      "name": "Comunhão com a Natureza",
+      "level": 5,
+      "school": "Adivinhação",
+      "file": "comunhao-com-a-natureza.json"
+    },
+    {
+      "id": "cone-de-frio",
+      "name": "Cone de Frio",
+      "level": 5,
+      "school": "Evocação",
+      "file": "cone-de-frio.json"
+    },
+    {
+      "id": "confusao",
+      "name": "Confusão",
+      "level": 4,
+      "school": "Encantamento",
+      "file": "confusao.json"
+    },
+    {
+      "id": "consagrar",
+      "name": "Consagrar",
+      "level": 5,
+      "school": "Abjuração",
+      "file": "consagrar.json"
+    },
+    {
+      "id": "contagio",
+      "name": "Contágio",
+      "level": 5,
+      "school": "Necromancia",
+      "file": "contagio.json"
+    },
+    {
+      "id": "contato-extraplanar",
+      "name": "Contato Extraplanar",
+      "level": 5,
+      "school": "Adivinhação",
+      "file": "contato-extraplanar.json"
+    },
+    {
+      "id": "contingencia",
+      "name": "Contingência",
+      "level": 6,
+      "school": "Abjuração",
+      "file": "contingencia.json"
+    },
+    {
+      "id": "contramagia",
+      "name": "Contramagia",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "contramagia.json"
+    },
+    {
+      "id": "controlar-agua",
+      "name": "Controlar Água",
+      "level": 4,
+      "school": "Transmutação",
+      "file": "controlar-agua.json"
+    },
+    {
+      "id": "controlar-o-clima",
+      "name": "Controlar o Clima",
+      "level": 8,
+      "school": "Transmutação",
+      "file": "controlar-o-clima.json"
+    },
+    {
+      "id": "convocar-celestial",
+      "name": "Convocar Celestial",
+      "level": 5,
+      "school": "Invocação",
+      "file": "convocar-celestial.json"
+    },
+    {
+      "id": "convocar-elemental",
+      "name": "Convocar Elemental",
+      "level": 4,
+      "school": "Invocação",
+      "file": "convocar-elemental.json"
+    },
+    {
+      "id": "convocar-familiar",
+      "name": "Convocar Familiar",
+      "level": 1,
+      "school": "Invocação",
+      "file": "convocar-familiar.json"
+    },
+    {
+      "id": "convocar-feerico",
+      "name": "Convocar Feérico",
+      "level": 3,
+      "school": "Invocação",
+      "file": "convocar-feerico.json"
+    },
+    {
+      "id": "convocar-montaria",
+      "name": "Convocar Montaria",
+      "level": 2,
+      "school": "Invocação",
+      "file": "convocar-montaria.json"
+    },
+    {
+      "id": "convocar-relampagos",
+      "name": "Convocar Relâmpagos",
+      "level": 3,
+      "school": "Invocação",
+      "file": "convocar-relampagos.json"
+    },
+    {
+      "id": "corda-extradimensional",
+      "name": "Corda Extradimensional",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "corda-extradimensional.json"
+    },
+    {
+      "id": "cordao-de-flechas",
+      "name": "Cordão de Flechas",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "cordao-de-flechas.json"
+    },
+    {
+      "id": "coroa-da-loucura",
+      "name": "Coroa da Loucura",
+      "level": 2,
+      "school": "Encantamento",
+      "file": "coroa-da-loucura.json"
+    },
+    {
+      "id": "corrente-de-relampagos",
+      "name": "Corrente de Relâmpagos",
+      "level": 6,
+      "school": "Evocação",
+      "file": "corrente-de-relampagos.json"
+    },
+    {
+      "id": "crescer-espinhos",
+      "name": "Crescer Espinhos",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "crescer-espinhos.json"
+    },
+    {
+      "id": "crescimento-de-plantas",
+      "name": "Crescimento de Plantas",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "crescimento-de-plantas.json"
+    },
+    {
+      "id": "criacao",
+      "name": "Criação",
+      "level": 5,
+      "school": "Ilusão",
+      "file": "criacao.json"
+    },
+    {
+      "id": "criar-chamas",
+      "name": "Criar Chamas",
+      "level": 0,
+      "school": "Invocação",
+      "file": "criar-chamas.json"
+    },
+    {
+      "id": "criar-comida-e-agua",
+      "name": "Criar Comida e Água",
+      "level": 3,
+      "school": "Invocação",
+      "file": "criar-comida-e-agua.json"
+    },
+    {
+      "id": "criar-mortos-vivos",
+      "name": "Criar Mortos-Vivos",
+      "level": 6,
+      "school": "Necromancia",
+      "file": "criar-mortos-vivos.json"
+    },
+    {
+      "id": "criar-ou-destruir-agua",
+      "name": "Criar ou Destruir Água",
+      "level": 1,
+      "school": "Transmutação",
+      "file": "criar-ou-destruir-agua.json"
+    },
+    {
+      "id": "criar-passagem",
+      "name": "Criar Passagem",
+      "level": 5,
+      "school": "Transmutação",
+      "file": "criar-passagem.json"
+    },
+    {
+      "id": "cupula-antivida",
+      "name": "Cúpula Antivida",
+      "level": 5,
+      "school": "Abjuração",
+      "file": "cupula-antivida.json"
+    },
+    {
+      "id": "cura-completa",
+      "name": "Cura Completa",
+      "level": 6,
+      "school": "Abjuração",
+      "file": "cura-completa.json"
+    },
+    {
+      "id": "cura-completa-em-massa",
+      "name": "Cura Completa em Massa",
+      "level": 9,
+      "school": "Abjuração",
+      "file": "cura-completa-em-massa.json"
+    },
+    {
+      "id": "curar-ferimentos",
+      "name": "Curar Ferimentos",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "curar-ferimentos.json"
+    },
+    {
+      "id": "curar-ferimentos-em-massa",
+      "name": "Curar Ferimentos em Massa",
+      "level": 5,
+      "school": "Abjuração",
+      "file": "curar-ferimentos-em-massa.json"
+    },
+    {
+      "id": "danacao",
+      "name": "Danação",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "danacao.json"
+    },
+    {
+      "id": "danca-irresistivel-de-otto",
+      "name": "Dança Irresistível de Otto",
+      "level": 6,
+      "school": "Encantamento",
+      "file": "danca-irresistivel-de-otto.json"
+    },
+    {
+      "id": "de-carne-para-pedra",
+      "name": "De Carne para Pedra",
+      "level": 6,
+      "school": "Transmutação",
+      "file": "de-carne-para-pedra.json"
+    },
+    {
+      "id": "dedo-da-morte",
+      "name": "Dedo da Morte",
+      "level": 7,
+      "school": "Necromancia",
+      "file": "dedo-da-morte.json"
+    },
+    {
+      "id": "defensor-da-fe",
+      "name": "Defensor da Fé",
+      "level": 4,
+      "school": "Invocação",
+      "file": "defensor-da-fe.json"
+    },
+    {
+      "id": "desejo",
+      "name": "Desejo",
+      "level": 9,
+      "school": "Invocação",
+      "file": "desejo.json"
+    },
+    {
+      "id": "desintegrar",
+      "name": "Desintegrar",
+      "level": 6,
+      "school": "Transmutação",
+      "file": "desintegrar.json"
+    },
+    {
+      "id": "despedacar",
+      "name": "Despedaçar",
+      "level": 2,
+      "school": "Evocação",
+      "file": "despedacar.json"
+    },
+    {
+      "id": "despertar",
+      "name": "Despertar",
+      "level": 5,
+      "school": "Transmutação",
+      "file": "despertar.json"
+    },
+    {
+      "id": "despistar",
+      "name": "Despistar",
+      "level": 5,
+      "school": "Ilusão",
+      "file": "despistar.json"
+    },
+    {
+      "id": "destruicao-atordoante",
+      "name": "Destruição Atordoante",
+      "level": 4,
+      "school": "Encantamento",
+      "file": "destruicao-atordoante.json"
+    },
+    {
+      "id": "destruicao-banidora",
+      "name": "Destruição Banidora",
+      "level": 5,
+      "school": "Invocação",
+      "file": "destruicao-banidora.json"
+    },
+    {
+      "id": "destruicao-cauterizante",
+      "name": "Destruição Cauterizante",
+      "level": 1,
+      "school": "Evocação",
+      "file": "destruicao-cauterizante.json"
+    },
+    {
+      "id": "destruicao-cegante",
+      "name": "Destruição Cegante",
+      "level": 3,
+      "school": "Evocação",
+      "file": "destruicao-cegante.json"
+    },
+    {
+      "id": "destruicao-colerica",
+      "name": "Destruição Colérica",
+      "level": 1,
+      "school": "Necromancia",
+      "file": "destruicao-colerica.json"
+    },
+    {
+      "id": "destruicao-divina",
+      "name": "Destruição Divina",
+      "level": 1,
+      "school": "Evocação",
+      "file": "destruicao-divina.json"
+    },
+    {
+      "id": "destruicao-estrondosa",
+      "name": "Destruição Estrondosa",
+      "level": 1,
+      "school": "Evocação",
+      "file": "destruicao-estrondosa.json"
+    },
+    {
+      "id": "destruicao-radiante",
+      "name": "Destruição Radiante",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "destruicao-radiante.json"
+    },
+    {
+      "id": "detectar-magia",
+      "name": "Detectar Magia",
+      "level": 1,
+      "school": "Adivinhação",
+      "file": "detectar-magia.json"
+    },
+    {
+      "id": "detectar-o-bem-e-o-mal",
+      "name": "Detectar o Bem e o Mal",
+      "level": 1,
+      "school": "Adivinhação",
+      "file": "detectar-o-bem-e-o-mal.json"
+    },
+    {
+      "id": "detectar-pensamentos",
+      "name": "Detectar Pensamentos",
+      "level": 2,
+      "school": "Adivinhação",
+      "file": "detectar-pensamentos.json"
+    },
+    {
+      "id": "detectar-veneno-e-doenca",
+      "name": "Detectar Veneno e Doença",
+      "level": 1,
+      "school": "Adivinhação",
+      "file": "detectar-veneno-e-doenca.json"
+    },
+    {
+      "id": "disco-flutuante-de-tenser",
+      "name": "Disco Flutuante de Tenser",
+      "level": 1,
+      "school": "Invocação",
+      "file": "disco-flutuante-de-tenser.json"
+    },
+    {
+      "id": "disfarcar-se",
+      "name": "Disfarçar-se",
+      "level": 1,
+      "school": "Ilusão",
+      "file": "disfarcar-se.json"
+    },
+    {
+      "id": "dissipar-magia",
+      "name": "Dissipar Magia",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "dissipar-magia.json"
+    },
+    {
+      "id": "dissipar-o-bem-e-o-mal",
+      "name": "Dissipar o Bem e o Mal",
+      "level": 5,
+      "school": "Abjuração",
+      "file": "dissipar-o-bem-e-o-mal.json"
+    },
+    {
+      "id": "dominar-fera",
+      "name": "Dominar Fera",
+      "level": 4,
+      "school": "Encantamento",
+      "file": "dominar-fera.json"
+    },
+    {
+      "id": "dominar-monstro",
+      "name": "Dominar Monstro",
+      "level": 8,
+      "school": "Encantamento",
+      "file": "dominar-monstro.json"
+    },
+    {
+      "id": "dominar-pessoa",
+      "name": "Dominar Pessoa",
+      "level": 5,
+      "school": "Encantamento",
+      "file": "dominar-pessoa.json"
+    },
+    {
+      "id": "duelo-compelido",
+      "name": "Duelo Compelido",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "duelo-compelido.json"
+    },
+    {
+      "id": "elementalismo",
+      "name": "Elementalismo",
+      "level": 0,
+      "school": "Transmutação",
+      "file": "elementalismo.json"
+    },
+    {
+      "id": "emaranhar",
+      "name": "Emaranhar",
+      "level": 1,
+      "school": "Invocação",
+      "file": "emaranhar.json"
+    },
+    {
+      "id": "encarnacao-fantasmagorica",
+      "name": "Encarnação Fantasmagórica",
+      "level": 9,
+      "school": "Ilusão",
+      "file": "encarnacao-fantasmagorica.json"
+    },
+    {
+      "id": "encontrar-armadilhas",
+      "name": "Encontrar Armadilhas",
+      "level": 2,
+      "school": "Adivinhação",
+      "file": "encontrar-armadilhas.json"
+    },
+    {
+      "id": "encontrar-o-caminho",
+      "name": "Encontrar o Caminho",
+      "level": 6,
+      "school": "Adivinhação",
+      "file": "encontrar-o-caminho.json"
+    },
+    {
+      "id": "enfeiticar-monstro",
+      "name": "Enfeitiçar Monstro",
+      "level": 4,
+      "school": "Encantamento",
+      "file": "enfeiticar-monstro.json"
+    },
+    {
+      "id": "enfeiticar-pessoa",
+      "name": "Enfeitiçar Pessoa",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "enfeiticar-pessoa.json"
+    },
+    {
+      "id": "escalada-de-aranha",
+      "name": "Escalada de Aranha",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "escalada-de-aranha.json"
+    },
+    {
+      "id": "escrita-ilusoria",
+      "name": "Escrita Ilusória",
+      "level": 1,
+      "school": "Ilusão",
+      "file": "escrita-ilusoria.json"
+    },
+    {
+      "id": "escudo-arcano",
+      "name": "Escudo Arcano",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "escudo-arcano.json"
+    },
+    {
+      "id": "escudo-ardente",
+      "name": "Escudo Ardente",
+      "level": 4,
+      "school": "Evocação",
+      "file": "escudo-ardente.json"
+    },
+    {
+      "id": "escudo-da-fe",
+      "name": "Escudo da Fé",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "escudo-da-fe.json"
+    },
+    {
+      "id": "escuridao",
+      "name": "Escuridão",
+      "level": 2,
+      "school": "Evocação",
+      "file": "escuridao.json"
+    },
+    {
+      "id": "esfera-congelante-de-otiluke",
+      "name": "Esfera Congelante de Otiluke",
+      "level": 6,
+      "school": "Evocação",
+      "file": "esfera-congelante-de-otiluke.json"
+    },
+    {
+      "id": "esfera-flamejante",
+      "name": "Esfera Flamejante",
+      "level": 2,
+      "school": "Invocação",
+      "file": "esfera-flamejante.json"
+    },
+    {
+      "id": "esfera-resiliente-de-otiluke",
+      "name": "Esfera Resiliente de Otiluke",
+      "level": 4,
+      "school": "Abjuração",
+      "file": "esfera-resiliente-de-otiluke.json"
+    },
+    {
+      "id": "esfera-vitriolica",
+      "name": "Esfera Vitriólica",
+      "level": 4,
+      "school": "Evocação",
+      "file": "esfera-vitriolica.json"
+    },
+    {
+      "id": "espada-de-mordenkainen",
+      "name": "Espada de Mordenkainen",
+      "level": 7,
+      "school": "Evocação",
+      "file": "espada-de-mordenkainen.json"
+    },
+    {
+      "id": "espinho-mental",
+      "name": "Espinho Mental",
+      "level": 2,
+      "school": "Adivinhação",
+      "file": "espinho-mental.json"
+    },
+    {
+      "id": "esquentar-metal",
+      "name": "Esquentar Metal",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "esquentar-metal.json"
+    },
+    {
+      "id": "estatica-sinaptica",
+      "name": "Estática Sináptica",
+      "level": 5,
+      "school": "Encantamento",
+      "file": "estatica-sinaptica.json"
+    },
+    {
+      "id": "explosao-elemental",
+      "name": "Explosão Elemental",
+      "level": 0,
+      "school": "Evocação",
+      "file": "explosao-elemental.json"
+    },
+    {
+      "id": "explosao-solar",
+      "name": "Explosão Solar",
+      "level": 8,
+      "school": "Evocação",
+      "file": "explosao-solar.json"
+    },
+    {
+      "id": "fabricar",
+      "name": "Fabricar",
+      "level": 4,
+      "school": "Transmutação",
+      "file": "fabricar.json"
+    },
+    {
+      "id": "faca-de-gelo",
+      "name": "Faca de Gelo",
+      "level": 1,
+      "school": "Invocação",
+      "file": "faca-de-gelo.json"
+    },
+    {
+      "id": "fagulha-estelar",
+      "name": "Fagulha Estelar",
+      "level": 0,
+      "school": "Evocação",
+      "file": "fagulha-estelar.json"
+    },
+    {
+      "id": "falar-com-animais",
+      "name": "Falar com Animais",
+      "level": 1,
+      "school": "Adivinhação",
+      "file": "falar-com-animais.json"
+    },
+    {
+      "id": "falar-com-mortos",
+      "name": "Falar com Mortos",
+      "level": 3,
+      "school": "Necromancia",
+      "file": "falar-com-mortos.json"
+    },
+    {
+      "id": "falar-com-plantas",
+      "name": "Falar com Plantas",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "falar-com-plantas.json"
+    },
+    {
+      "id": "favor-divino",
+      "name": "Favor Divino",
+      "level": 1,
+      "school": "Transmutação",
+      "file": "favor-divino.json"
+    },
+    {
+      "id": "flecha-acida-de-melf",
+      "name": "Flecha Ácida de Melf",
+      "level": 2,
+      "school": "Evocação",
+      "file": "flecha-acida-de-melf.json"
+    },
+    {
+      "id": "flecha-relampago",
+      "name": "Flecha Relâmpago",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "flecha-relampago.json"
+    },
+    {
+      "id": "fogo-das-fadas",
+      "name": "Fogo das Fadas",
+      "level": 1,
+      "school": "Evocação",
+      "file": "fogo-das-fadas.json"
+    },
+    {
+      "id": "fome-de-hadar",
+      "name": "Fome de Hadar",
+      "level": 3,
+      "school": "Invocação",
+      "file": "fome-de-hadar.json"
+    },
+    {
+      "id": "fonte-do-luar",
+      "name": "Fonte do Luar",
+      "level": 4,
+      "school": "Evocação",
+      "file": "fonte-do-luar.json"
+    },
+    {
+      "id": "forca-espectral",
+      "name": "Força Espectral",
+      "level": 2,
+      "school": "Ilusão",
+      "file": "forca-espectral.json"
+    },
+    {
+      "id": "forma-eterea",
+      "name": "Forma Etérea",
+      "level": 7,
+      "school": "Invocação",
+      "file": "forma-eterea.json"
+    },
+    {
+      "id": "forma-gasosa",
+      "name": "Forma Gasosa",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "forma-gasosa.json"
+    },
+    {
+      "id": "formas-animais",
+      "name": "Formas Animais",
+      "level": 8,
+      "school": "Transmutação",
+      "file": "formas-animais.json"
+    },
+    {
+      "id": "gargalhada-nefasta-de-tasha",
+      "name": "Gargalhada Nefasta de Tasha",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "gargalhada-nefasta-de-tasha.json"
+    },
+    {
+      "id": "glifo-de-protecao",
+      "name": "Glifo de Proteção",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "glifo-de-protecao.json"
+    },
+    {
+      "id": "globo-de-invulnerabilidade",
+      "name": "Globo de Invulnerabilidade",
+      "level": 6,
+      "school": "Abjuração",
+      "file": "globo-de-invulnerabilidade.json"
+    },
+    {
+      "id": "golpe-certeiro",
+      "name": "Golpe Certeiro",
+      "level": 0,
+      "school": "Adivinhação",
+      "file": "golpe-certeiro.json"
+    },
+    {
+      "id": "golpe-constritor",
+      "name": "Golpe Constritor",
+      "level": 1,
+      "school": "Invocação",
+      "file": "golpe-constritor.json"
+    },
+    {
+      "id": "golpe-de-arco",
+      "name": "Golpe de Arço",
+      "level": 5,
+      "school": "Invocação",
+      "file": "golpe-de-arco.json"
+    },
+    {
+      "id": "graxa",
+      "name": "Graxa",
+      "level": 1,
+      "school": "Invocação",
+      "file": "graxa.json"
+    },
+    {
+      "id": "guardioes-espirituais",
+      "name": "Guardiões Espirituais",
+      "level": 3,
+      "school": "Invocação",
+      "file": "guardioes-espirituais.json"
+    },
+    {
+      "id": "heroismo",
+      "name": "Heroísmo",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "heroismo.json"
+    },
+    {
+      "id": "identificar",
+      "name": "Identificar",
+      "level": 1,
+      "school": "Adivinhação",
+      "file": "identificar.json"
+    },
+    {
+      "id": "ilusao-menor",
+      "name": "Ilusão Menor",
+      "level": 0,
+      "school": "Ilusão",
+      "file": "ilusao-menor.json"
+    },
+    {
+      "id": "ilusao-programada",
+      "name": "Ilusão Programada",
+      "level": 6,
+      "school": "Ilusão",
+      "file": "ilusao-programada.json"
+    },
+    {
+      "id": "imagem-maior",
+      "name": "Imagem Maior",
+      "level": 3,
+      "school": "Ilusão",
+      "file": "imagem-maior.json"
+    },
+    {
+      "id": "imagem-silenciosa",
+      "name": "Imagem Silenciosa",
+      "level": 1,
+      "school": "Ilusão",
+      "file": "imagem-silenciosa.json"
+    },
+    {
+      "id": "indetectavel",
+      "name": "Indetectável",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "indetectavel.json"
+    },
+    {
+      "id": "infligir-ferimentos",
+      "name": "Infligir Ferimentos",
+      "level": 1,
+      "school": "Necromancia",
+      "file": "infligir-ferimentos.json"
+    },
+    {
+      "id": "inseto-gigante",
+      "name": "Inseto Gigante",
+      "level": 4,
+      "school": "Invocação",
+      "file": "inseto-gigante.json"
+    },
+    {
+      "id": "inverter-a-gravidade",
+      "name": "Inverter a Gravidade",
+      "level": 7,
+      "school": "Transmutação",
+      "file": "inverter-a-gravidade.json"
+    },
+    {
+      "id": "invisibilidade",
+      "name": "Invisibilidade",
+      "level": 2,
+      "school": "Ilusão",
+      "file": "invisibilidade.json"
+    },
+    {
+      "id": "invisibilidade-maior",
+      "name": "Invisibilidade Maior",
+      "level": 4,
+      "school": "Ilusão",
+      "file": "invisibilidade-maior.json"
+    },
+    {
+      "id": "invocacao-instantanea-de-drawmij",
+      "name": "Invocação Instantânea de Drawmij",
+      "level": 6,
+      "school": "Invocação",
+      "file": "invocacao-instantanea-de-drawmij.json"
+    },
+    {
+      "id": "invocar-aberracao",
+      "name": "Invocar Aberração",
+      "level": 4,
+      "school": "Invocação",
+      "file": "invocar-aberracao.json"
+    },
+    {
+      "id": "invocar-animais",
+      "name": "Invocar Animais",
+      "level": 3,
+      "school": "Invocação",
+      "file": "invocar-animais.json"
+    },
+    {
+      "id": "invocar-barragem",
+      "name": "Invocar Barragem",
+      "level": 3,
+      "school": "Invocação",
+      "file": "invocar-barragem.json"
+    },
+    {
+      "id": "invocar-celestial",
+      "name": "Invocar Celestial",
+      "level": 7,
+      "school": "Invocação",
+      "file": "invocar-celestial.json"
+    },
+    {
+      "id": "invocar-constructo",
+      "name": "Invocar Constructo",
+      "level": 4,
+      "school": "Invocação",
+      "file": "invocar-constructo.json"
+    },
+    {
+      "id": "invocar-dragao",
+      "name": "Invocar Dragão",
+      "level": 5,
+      "school": "Invocação",
+      "file": "invocar-dragao.json"
+    },
+    {
+      "id": "invocar-elementais-menores",
+      "name": "Invocar Elementais Menores",
+      "level": 4,
+      "school": "Invocação",
+      "file": "invocar-elementais-menores.json"
+    },
+    {
+      "id": "invocar-elemental",
+      "name": "Invocar Elemental",
+      "level": 5,
+      "school": "Invocação",
+      "file": "invocar-elemental.json"
+    },
+    {
+      "id": "invocar-feerico",
+      "name": "Invocar Feérico",
+      "level": 6,
+      "school": "Invocação",
+      "file": "invocar-feerico.json"
+    },
+    {
+      "id": "invocar-fera",
+      "name": "Invocar Fera",
+      "level": 2,
+      "school": "Invocação",
+      "file": "invocar-fera.json"
+    },
+    {
+      "id": "invocar-infero",
+      "name": "Invocar Ínfero",
+      "level": 6,
+      "school": "Invocação",
+      "file": "invocar-infero.json"
+    },
+    {
+      "id": "invocar-morto-vivo",
+      "name": "Invocar Morto-Vivo",
+      "level": 3,
+      "school": "Necromancia",
+      "file": "invocar-morto-vivo.json"
+    },
+    {
+      "id": "invocar-saraivada",
+      "name": "Invocar Saraivada",
+      "level": 5,
+      "school": "Invocação",
+      "file": "invocar-saraivada.json"
+    },
+    {
+      "id": "invocar-seres-da-floresta",
+      "name": "Invocar Seres da Floresta",
+      "level": 4,
+      "school": "Invocação",
+      "file": "invocar-seres-da-floresta.json"
+    },
+    {
+      "id": "labirinto",
+      "name": "Labirinto",
+      "level": 8,
+      "school": "Invocação",
+      "file": "labirinto.json"
+    },
+    {
+      "id": "lamina-flamejante",
+      "name": "Lâmina Flamejante",
+      "level": 2,
+      "school": "Evocação",
+      "file": "lamina-flamejante.json"
+    },
+    {
+      "id": "lendas-e-historias",
+      "name": "Lendas e Histórias",
+      "level": 5,
+      "school": "Adivinhação",
+      "file": "lendas-e-historias.json"
+    },
+    {
+      "id": "lentidao",
+      "name": "Lentidão",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "lentidao.json"
+    },
+    {
+      "id": "leque-cromatico",
+      "name": "Leque Cromático",
+      "level": 1,
+      "school": "Ilusão",
+      "file": "leque-cromatico.json"
+    },
+    {
+      "id": "levitacao",
+      "name": "Levitação",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "levitacao.json"
+    },
+    {
+      "id": "ligacao-telepatica-de-rary",
+      "name": "Ligação Telepática de Rary",
+      "level": 5,
+      "school": "Adivinhação",
+      "file": "ligacao-telepatica-de-rary.json"
+    },
+    {
+      "id": "limpar-a-mente",
+      "name": "Limpar a Mente",
+      "level": 8,
+      "school": "Abjuração",
+      "file": "limpar-a-mente.json"
+    },
+    {
+      "id": "linguas",
+      "name": "Línguas",
+      "level": 3,
+      "school": "Adivinhação",
+      "file": "linguas.json"
+    },
+    {
+      "id": "localizar-animais-ou-plantas",
+      "name": "Localizar Animais ou Plantas",
+      "level": 2,
+      "school": "Adivinhação",
+      "file": "localizar-animais-ou-plantas.json"
+    },
+    {
+      "id": "localizar-criatura",
+      "name": "Localizar Criatura",
+      "level": 4,
+      "school": "Adivinhação",
+      "file": "localizar-criatura.json"
+    },
+    {
+      "id": "localizar-objeto",
+      "name": "Localizar Objeto",
+      "level": 2,
+      "school": "Adivinhação",
+      "file": "localizar-objeto.json"
+    },
+    {
+      "id": "loquacidade",
+      "name": "Loquacidade",
+      "level": 8,
+      "school": "Encantamento",
+      "file": "loquacidade.json"
+    },
+    {
+      "id": "lufada-de-vento",
+      "name": "Lufada de Vento",
+      "level": 2,
+      "school": "Evocação",
+      "file": "lufada-de-vento.json"
+    },
+    {
+      "id": "luz",
+      "name": "Luz",
+      "level": 0,
+      "school": "Evocação",
+      "file": "luz.json"
+    },
+    {
+      "id": "luz-do-dia",
+      "name": "Luz do Dia",
+      "level": 3,
+      "school": "Evocação",
+      "file": "luz-do-dia.json"
+    },
+    {
+      "id": "luzes-dancantes",
+      "name": "Luzes Dançantes",
+      "level": 0,
+      "school": "Ilusão",
+      "file": "luzes-dancantes.json"
+    },
+    {
+      "id": "malogro",
+      "name": "Malogro",
+      "level": 4,
+      "school": "Necromancia",
+      "file": "malogro.json"
+    },
+    {
+      "id": "mansao-magnifica-de-mordenkainen",
+      "name": "Mansão Magnífica de Mordenkainen",
+      "level": 7,
+      "school": "Invocação",
+      "file": "mansao-magnifica-de-mordenkainen.json"
+    },
+    {
+      "id": "manto-do-cruzado",
+      "name": "Manto do Cruzado",
+      "level": 3,
+      "school": "Evocação",
+      "file": "manto-do-cruzado.json"
+    },
+    {
+      "id": "mao-de-bigby",
+      "name": "Mão de Bigby",
+      "level": 5,
+      "school": "Evocação",
+      "file": "mao-de-bigby.json"
+    },
+    {
+      "id": "maos-flamejantes",
+      "name": "Mãos Flamejantes",
+      "level": 1,
+      "school": "Evocação",
+      "file": "maos-flamejantes.json"
+    },
+    {
+      "id": "maos-magicas",
+      "name": "Mãos Mágicas",
+      "level": 0,
+      "school": "Invocação",
+      "file": "maos-magicas.json"
+    },
+    {
+      "id": "marca-do-predador",
+      "name": "Marca do Predador",
+      "level": 1,
+      "school": "Adivinhação",
+      "file": "marca-do-predador.json"
+    },
+    {
+      "id": "mau-olhado",
+      "name": "Mau Olhado",
+      "level": 6,
+      "school": "Necromancia",
+      "file": "mau-olhado.json"
+    },
+    {
+      "id": "medo",
+      "name": "Medo",
+      "level": 3,
+      "school": "Ilusão",
+      "file": "medo.json"
+    },
+    {
+      "id": "mensageiro-animal",
+      "name": "Mensageiro Animal",
+      "level": 2,
+      "school": "Encantamento",
+      "file": "mensageiro-animal.json"
+    },
+    {
+      "id": "mensagem",
+      "name": "Mensagem",
+      "level": 0,
+      "school": "Transmutação",
+      "file": "mensagem.json"
+    },
+    {
+      "id": "mesclar-se-as-rochas",
+      "name": "Mesclar-se às Rochas",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "mesclar-se-as-rochas.json"
+    },
+    {
+      "id": "metamorfose",
+      "name": "Metamorfose",
+      "level": 9,
+      "school": "Transmutação",
+      "file": "metamorfose.json"
+    },
+    {
+      "id": "miragem-arcana",
+      "name": "Miragem Arcana",
+      "level": 7,
+      "school": "Ilusão",
+      "file": "miragem-arcana.json"
+    },
+    {
+      "id": "missao",
+      "name": "Missão",
+      "level": 5,
+      "school": "Encantamento",
+      "file": "missao.json"
+    },
+    {
+      "id": "misseis-magicos",
+      "name": "Mísseis Mágicos",
+      "level": 1,
+      "school": "Evocação",
+      "file": "misseis-magicos.json"
+    },
+    {
+      "id": "modificar-memoria",
+      "name": "Modificar Memória",
+      "level": 5,
+      "school": "Encantamento",
+      "file": "modificar-memoria.json"
+    },
+    {
+      "id": "moldar-rochas",
+      "name": "Moldar Rochas",
+      "level": 4,
+      "school": "Transmutação",
+      "file": "moldar-rochas.json"
+    },
+    {
+      "id": "molestia",
+      "name": "Moléstia",
+      "level": 6,
+      "school": "Necromancia",
+      "file": "molestia.json"
+    },
+    {
+      "id": "montaria-fantasmagorica",
+      "name": "Montaria Fantasmagórica",
+      "level": 3,
+      "school": "Ilusão",
+      "file": "montaria-fantasmagorica.json"
+    },
+    {
+      "id": "mover-terra",
+      "name": "Mover Terra",
+      "level": 6,
+      "school": "Transmutação",
+      "file": "mover-terra.json"
+    },
+    {
+      "id": "movimentacao-livre",
+      "name": "Movimentação Livre",
+      "level": 4,
+      "school": "Abjuração",
+      "file": "movimentacao-livre.json"
+    },
+    {
+      "id": "muralha-de-energia",
+      "name": "Muralha de Energia",
+      "level": 5,
+      "school": "Evocação",
+      "file": "muralha-de-energia.json"
+    },
+    {
+      "id": "muralha-de-espinhos",
+      "name": "Muralha de Espinhos",
+      "level": 6,
+      "school": "Invocação",
+      "file": "muralha-de-espinhos.json"
+    },
+    {
+      "id": "muralha-de-fogo",
+      "name": "Muralha de Fogo",
+      "level": 4,
+      "school": "Evocação",
+      "file": "muralha-de-fogo.json"
+    },
+    {
+      "id": "muralha-de-gelo",
+      "name": "Muralha de Gelo",
+      "level": 6,
+      "school": "Evocação",
+      "file": "muralha-de-gelo.json"
+    },
+    {
+      "id": "muralha-de-pedra",
+      "name": "Muralha de Pedra",
+      "level": 5,
+      "school": "Evocação",
+      "file": "muralha-de-pedra.json"
+    },
+    {
+      "id": "muralha-de-vento",
+      "name": "Muralha de Vento",
+      "level": 3,
+      "school": "Evocação",
+      "file": "muralha-de-vento.json"
+    },
+    {
+      "id": "muralha-prismatica",
+      "name": "Muralha Prismática",
+      "level": 9,
+      "school": "Abjuração",
+      "file": "muralha-prismatica.json"
+    },
+    {
+      "id": "nevasca",
+      "name": "Nevasca",
+      "level": 3,
+      "school": "Invocação",
+      "file": "nevasca.json"
+    },
+    {
+      "id": "nevoa-mortal",
+      "name": "Névoa Mortal",
+      "level": 5,
+      "school": "Invocação",
+      "file": "nevoa-mortal.json"
+    },
+    {
+      "id": "nevoa-obscurecente",
+      "name": "Névoa Obscurecente",
+      "level": 1,
+      "school": "Invocação",
+      "file": "nevoa-obscurecente.json"
+    },
+    {
+      "id": "nuvem-de-adagas",
+      "name": "Nuvem de Adagas",
+      "level": 2,
+      "school": "Invocação",
+      "file": "nuvem-de-adagas.json"
+    },
+    {
+      "id": "nuvem-fetida",
+      "name": "Nuvem Fétida",
+      "level": 3,
+      "school": "Invocação",
+      "file": "nuvem-fetida.json"
+    },
+    {
+      "id": "nuvem-incendiaria",
+      "name": "Nuvem Incendiária",
+      "level": 8,
+      "school": "Invocação",
+      "file": "nuvem-incendiaria.json"
+    },
+    {
+      "id": "olho-arcano",
+      "name": "Olho Arcano",
+      "level": 4,
+      "school": "Adivinhação",
+      "file": "olho-arcano.json"
+    },
+    {
+      "id": "onda-destrutiva",
+      "name": "Onda Destrutiva",
+      "level": 5,
+      "school": "Evocação",
+      "file": "onda-destrutiva.json"
+    },
+    {
+      "id": "onda-trovejante",
+      "name": "Onda Trovejante",
+      "level": 1,
+      "school": "Evocação",
+      "file": "onda-trovejante.json"
+    },
+    {
+      "id": "oracao-de-cura",
+      "name": "Oração de Cura",
+      "level": 2,
+      "school": "Abjuração",
+      "file": "oracao-de-cura.json"
+    },
+    {
+      "id": "orbe-cromatico",
+      "name": "Orbe Cromático",
+      "level": 1,
+      "school": "Evocação",
+      "file": "orbe-cromatico.json"
+    },
+    {
+      "id": "orientacao",
+      "name": "Orientação",
+      "level": 0,
+      "school": "Adivinhação",
+      "file": "orientacao.json"
+    },
+    {
+      "id": "padrao-hipnotico",
+      "name": "Padrão Hipnótico",
+      "level": 3,
+      "school": "Ilusão",
+      "file": "padrao-hipnotico.json"
+    },
+    {
+      "id": "palavra-curativa",
+      "name": "Palavra Curativa",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "palavra-curativa.json"
+    },
+    {
+      "id": "palavra-curativa-em-massa",
+      "name": "Palavra Curativa em Massa",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "palavra-curativa-em-massa.json"
+    },
+    {
+      "id": "palavra-de-poder-atordoar",
+      "name": "Palavra de Poder: Atordoar",
+      "level": 8,
+      "school": "Encantamento",
+      "file": "palavra-de-poder-atordoar.json"
+    },
+    {
+      "id": "palavra-de-poder-fortificar",
+      "name": "Palavra de Poder: Fortificar",
+      "level": 7,
+      "school": "Encantamento",
+      "file": "palavra-de-poder-fortificar.json"
+    },
+    {
+      "id": "palavra-de-poder-matar",
+      "name": "Palavra de Poder: Matar",
+      "level": 9,
+      "school": "Encantamento",
+      "file": "palavra-de-poder-matar.json"
+    },
+    {
+      "id": "palavra-de-poder-salvar",
+      "name": "Palavra de Poder: Salvar",
+      "level": 9,
+      "school": "Encantamento",
+      "file": "palavra-de-poder-salvar.json"
+    },
+    {
+      "id": "palavra-de-radiancia",
+      "name": "Palavra de Radiância",
+      "level": 0,
+      "school": "Evocação",
+      "file": "palavra-de-radiancia.json"
+    },
+    {
+      "id": "palavra-de-regresso",
+      "name": "Palavra de Regresso",
+      "level": 6,
+      "school": "Invocação",
+      "file": "palavra-de-regresso.json"
+    },
+    {
+      "id": "palavra-sagrada",
+      "name": "Palavra Sagrada",
+      "level": 7,
+      "school": "Evocação",
+      "file": "palavra-sagrada.json"
+    },
+    {
+      "id": "paralisar-monstro",
+      "name": "Paralisar Monstro",
+      "level": 5,
+      "school": "Encantamento",
+      "file": "paralisar-monstro.json"
+    },
+    {
+      "id": "paralisar-pessoa",
+      "name": "Paralisar Pessoa",
+      "level": 2,
+      "school": "Encantamento",
+      "file": "paralisar-pessoa.json"
+    },
+    {
+      "id": "parar-o-tempo",
+      "name": "Parar o Tempo",
+      "level": 9,
+      "school": "Transmutação",
+      "file": "parar-o-tempo.json"
+    },
+    {
+      "id": "passo-arboreo",
+      "name": "Passo Arbóreo",
+      "level": 5,
+      "school": "Invocação",
+      "file": "passo-arboreo.json"
+    },
+    {
+      "id": "passo-nebuloso",
+      "name": "Passo Nebuloso",
+      "level": 2,
+      "school": "Invocação",
+      "file": "passo-nebuloso.json"
+    },
+    {
+      "id": "passo-sem-rastro",
+      "name": "Passo Sem Rastro",
+      "level": 2,
+      "school": "Abjuração",
+      "file": "passo-sem-rastro.json"
+    },
+    {
+      "id": "passos-largos",
+      "name": "Passos Largos",
+      "level": 1,
+      "school": "Transmutação",
+      "file": "passos-largos.json"
+    },
+    {
+      "id": "pele-casca",
+      "name": "Pele-Casca",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "pele-casca.json"
+    },
+    {
+      "id": "pele-rocha",
+      "name": "Pele-Rocha",
+      "level": 4,
+      "school": "Transmutação",
+      "file": "pele-rocha.json"
+    },
+    {
+      "id": "pequeno-refugio-de-leomund",
+      "name": "Pequeno Refúgio de Leomund",
+      "level": 3,
+      "school": "Evocação",
+      "file": "pequeno-refugio-de-leomund.json"
+    },
+    {
+      "id": "perdicao",
+      "name": "Perdição",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "perdicao.json"
+    },
+    {
+      "id": "piscar",
+      "name": "Piscar",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "piscar.json"
+    },
+    {
+      "id": "polimorfia",
+      "name": "Polimorfia",
+      "level": 4,
+      "school": "Transmutação",
+      "file": "polimorfia.json"
+    },
+    {
+      "id": "polimorfia-total",
+      "name": "Polimorfia Total",
+      "level": 9,
+      "school": "Transmutação",
+      "file": "polimorfia-total.json"
+    },
+    {
+      "id": "porta-dimensional",
+      "name": "Porta Dimensional",
+      "level": 4,
+      "school": "Invocação",
+      "file": "porta-dimensional.json"
+    },
+    {
+      "id": "portais-arcanos",
+      "name": "Portais Arcanos",
+      "level": 6,
+      "school": "Invocação",
+      "file": "portais-arcanos.json"
+    },
+    {
+      "id": "portal",
+      "name": "Portal",
+      "level": 9,
+      "school": "Invocação",
+      "file": "portal.json"
+    },
+    {
+      "id": "praga-de-insetos",
+      "name": "Praga de Insetos",
+      "level": 5,
+      "school": "Invocação",
+      "file": "praga-de-insetos.json"
+    },
+    {
+      "id": "presenca-regia-de-yolande",
+      "name": "Presença Régia de Yolande",
+      "level": 5,
+      "school": "Encantamento",
+      "file": "presenca-regia-de-yolande.json"
+    },
+    {
+      "id": "pressagio",
+      "name": "Presságio",
+      "level": 4,
+      "school": "Adivinhação",
+      "file": "pressagio.json"
+    },
+    {
+      "id": "prestidigitacao-arcana",
+      "name": "Prestidigitação Arcana",
+      "level": 0,
+      "school": "Transmutação",
+      "file": "prestidigitacao-arcana.json"
+    },
+    {
+      "id": "proibicao",
+      "name": "Proibição",
+      "level": 6,
+      "school": "Abjuração",
+      "file": "proibicao.json"
+    },
+    {
+      "id": "projecao-astral",
+      "name": "Projeção Astral",
+      "level": 9,
+      "school": "Necromancia",
+      "file": "projecao-astral.json"
+    },
+    {
+      "id": "projetar-imagem",
+      "name": "Projetar Imagem",
+      "level": 7,
+      "school": "Ilusão",
+      "file": "projetar-imagem.json"
+    },
+    {
+      "id": "protecao-contra-a-morte",
+      "name": "Proteção Contra a Morte",
+      "level": 4,
+      "school": "Abjuração",
+      "file": "protecao-contra-a-morte.json"
+    },
+    {
+      "id": "protecao-contra-energia",
+      "name": "Proteção Contra Energia",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "protecao-contra-energia.json"
+    },
+    {
+      "id": "protecao-contra-laminas",
+      "name": "Proteção Contra Lâminas",
+      "level": 0,
+      "school": "Abjuração",
+      "file": "protecao-contra-laminas.json"
+    },
+    {
+      "id": "protecao-contra-o-bem-e-o-mal",
+      "name": "Proteção Contra o Bem e o Mal",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "protecao-contra-o-bem-e-o-mal.json"
+    },
+    {
+      "id": "protecao-contra-veneno",
+      "name": "Proteção Contra Veneno",
+      "level": 2,
+      "school": "Abjuração",
+      "file": "protecao-contra-veneno.json"
+    },
+    {
+      "id": "proteger-fortaleza",
+      "name": "Proteger Fortaleza",
+      "level": 6,
+      "school": "Abjuração",
+      "file": "proteger-fortaleza.json"
+    },
+    {
+      "id": "purificar-alimentos-e-bebidas",
+      "name": "Purificar Alimentos e Bebidas",
+      "level": 1,
+      "school": "Transmutação",
+      "file": "purificar-alimentos-e-bebidas.json"
+    },
+    {
+      "id": "queda-suave",
+      "name": "Queda Suave",
+      "level": 1,
+      "school": "Transmutação",
+      "file": "queda-suave.json"
+    },
+    {
+      "id": "raio-ardente",
+      "name": "Raio Ardente",
+      "level": 2,
+      "school": "Evocação",
+      "file": "raio-ardente.json"
+    },
+    {
+      "id": "raio-de-bruxa",
+      "name": "Raio de Bruxa",
+      "level": 1,
+      "school": "Evocação",
+      "file": "raio-de-bruxa.json"
+    },
+    {
+      "id": "raio-de-fogo",
+      "name": "Raio de Fogo",
+      "level": 0,
+      "school": "Evocação",
+      "file": "raio-de-fogo.json"
+    },
+    {
+      "id": "raio-de-gelo",
+      "name": "Raio de Gelo",
+      "level": 0,
+      "school": "Evocação",
+      "file": "raio-de-gelo.json"
+    },
+    {
+      "id": "raio-do-enfraquecimento",
+      "name": "Raio do Enfraquecimento",
+      "level": 2,
+      "school": "Necromancia",
+      "file": "raio-do-enfraquecimento.json"
+    },
+    {
+      "id": "raio-guia",
+      "name": "Raio Guia",
+      "level": 1,
+      "school": "Evocação",
+      "file": "raio-guia.json"
+    },
+    {
+      "id": "raio-lunar",
+      "name": "Raio Lunar",
+      "level": 2,
+      "school": "Evocação",
+      "file": "raio-lunar.json"
+    },
+    {
+      "id": "raio-mistico",
+      "name": "Raio Místico",
+      "level": 0,
+      "school": "Evocação",
+      "file": "raio-mistico.json"
+    },
+    {
+      "id": "raio-nauseante",
+      "name": "Raio Nauseante",
+      "level": 1,
+      "school": "Necromancia",
+      "file": "raio-nauseante.json"
+    },
+    {
+      "id": "raio-solar",
+      "name": "Raio Solar",
+      "level": 6,
+      "school": "Evocação",
+      "file": "raio-solar.json"
+    },
+    {
+      "id": "rajada-de-veneno",
+      "name": "Rajada de Veneno",
+      "level": 0,
+      "school": "Necromancia",
+      "file": "rajada-de-veneno.json"
+    },
+    {
+      "id": "rajada-prismatica",
+      "name": "Rajada Prismática",
+      "level": 7,
+      "school": "Evocação",
+      "file": "rajada-prismatica.json"
+    },
+    {
+      "id": "receptaculo-arcano",
+      "name": "Receptáculo Arcano",
+      "level": 6,
+      "school": "Necromancia",
+      "file": "receptaculo-arcano.json"
+    },
+    {
+      "id": "reencarnar",
+      "name": "Reencarnar",
+      "level": 5,
+      "school": "Necromancia",
+      "file": "reencarnar.json"
+    },
+    {
+      "id": "reflexos",
+      "name": "Reflexos",
+      "level": 2,
+      "school": "Ilusão",
+      "file": "reflexos.json"
+    },
+    {
+      "id": "refugiar",
+      "name": "Refugiar",
+      "level": 7,
+      "school": "Transmutação",
+      "file": "refugiar.json"
+    },
+    {
+      "id": "regeneracao",
+      "name": "Regeneração",
+      "level": 7,
+      "school": "Transmutação",
+      "file": "regeneracao.json"
+    },
+    {
+      "id": "relampago",
+      "name": "Relâmpago",
+      "level": 3,
+      "school": "Evocação",
+      "file": "relampago.json"
+    },
+    {
+      "id": "remeter",
+      "name": "Remeter",
+      "level": 3,
+      "school": "Adivinhação",
+      "file": "remeter.json"
+    },
+    {
+      "id": "remover-maldicao",
+      "name": "Remover Maldição",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "remover-maldicao.json"
+    },
+    {
+      "id": "reparar",
+      "name": "Reparar",
+      "level": 0,
+      "school": "Transmutação",
+      "file": "reparar.json"
+    },
+    {
+      "id": "repouso-tranquilo",
+      "name": "Repouso Tranquilo",
+      "level": 2,
+      "school": "Necromancia",
+      "file": "repouso-tranquilo.json"
+    },
+    {
+      "id": "repreensao-diabolica",
+      "name": "Repreensão Diabólica",
+      "level": 1,
+      "school": "Evocação",
+      "file": "repreensao-diabolica.json"
+    },
+    {
+      "id": "resistencia",
+      "name": "Resistência",
+      "level": 0,
+      "school": "Abjuração",
+      "file": "resistencia.json"
+    },
+    {
+      "id": "respirar-na-agua",
+      "name": "Respirar na Água",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "respirar-na-agua.json"
+    },
+    {
+      "id": "ressurreicao",
+      "name": "Ressurreição",
+      "level": 7,
+      "school": "Necromancia",
+      "file": "ressurreicao.json"
+    },
+    {
+      "id": "ressurreicao-verdadeira",
+      "name": "Ressurreição Verdadeira",
+      "level": 9,
+      "school": "Necromancia",
+      "file": "ressurreicao-verdadeira.json"
+    },
+    {
+      "id": "restauracao-maior",
+      "name": "Restauração Maior",
+      "level": 5,
+      "school": "Abjuração",
+      "file": "restauracao-maior.json"
+    },
+    {
+      "id": "restauracao-menor",
+      "name": "Restauração Menor",
+      "level": 2,
+      "school": "Abjuração",
+      "file": "restauracao-menor.json"
+    },
+    {
+      "id": "retirada-acelerada",
+      "name": "Retirada Acelerada",
+      "level": 1,
+      "school": "Transmutação",
+      "file": "retirada-acelerada.json"
+    },
+    {
+      "id": "reviver-os-mortos",
+      "name": "Reviver os Mortos",
+      "level": 5,
+      "school": "Necromancia",
+      "file": "reviver-os-mortos.json"
+    },
+    {
+      "id": "revivificar",
+      "name": "Revivificar",
+      "level": 3,
+      "school": "Necromancia",
+      "file": "revivificar.json"
+    },
+    {
+      "id": "rogar-maldicao",
+      "name": "Rogar Maldição",
+      "level": 3,
+      "school": "Necromancia",
+      "file": "rogar-maldicao.json"
+    },
+    {
+      "id": "salto",
+      "name": "Salto",
+      "level": 1,
+      "school": "Transmutação",
+      "file": "salto.json"
+    },
+    {
+      "id": "santuario",
+      "name": "Santuário",
+      "level": 1,
+      "school": "Abjuração",
+      "file": "santuario.json"
+    },
+    {
+      "id": "santuario-particular-de-mordenkainen",
+      "name": "Santuário Particular de Mordenkainen",
+      "level": 4,
+      "school": "Abjuração",
+      "file": "santuario-particular-de-mordenkainen.json"
+    },
+    {
+      "id": "saraivada-de-espinhos",
+      "name": "Saraivada de Espinhos",
+      "level": 1,
+      "school": "Invocação",
+      "file": "saraivada-de-espinhos.json"
+    },
+    {
+      "id": "semiplano",
+      "name": "Semiplano",
+      "level": 8,
+      "school": "Invocação",
+      "file": "semiplano.json"
+    },
+    {
+      "id": "sentido-feral",
+      "name": "Sentido Feral",
+      "level": 2,
+      "school": "Adivinhação",
+      "file": "sentido-feral.json"
+    },
+    {
+      "id": "servo-invisivel",
+      "name": "Servo Invisível",
+      "level": 1,
+      "school": "Invocação",
+      "file": "servo-invisivel.json"
+    },
+    {
+      "id": "sexto-sentido",
+      "name": "Sexto Sentido",
+      "level": 9,
+      "school": "Adivinhação",
+      "file": "sexto-sentido.json"
+    },
+    {
+      "id": "silencio",
+      "name": "Silêncio",
+      "level": 2,
+      "school": "Ilusão",
+      "file": "silencio.json"
+    },
+    {
+      "id": "simbolo",
+      "name": "Símbolo",
+      "level": 7,
+      "school": "Abjuração",
+      "file": "simbolo.json"
+    },
+    {
+      "id": "similaridade",
+      "name": "Similaridade",
+      "level": 5,
+      "school": "Ilusão",
+      "file": "similaridade.json"
+    },
+    {
+      "id": "simulacro",
+      "name": "Simulacro",
+      "level": 7,
+      "school": "Ilusão",
+      "file": "simulacro.json"
+    },
+    {
+      "id": "simular-morte",
+      "name": "Simular Morte",
+      "level": 3,
+      "school": "Necromancia",
+      "file": "simular-morte.json"
+    },
+    {
+      "id": "sinal-de-esperanca",
+      "name": "Sinal de Esperança",
+      "level": 3,
+      "school": "Abjuração",
+      "file": "sinal-de-esperanca.json"
+    },
+    {
+      "id": "sonho",
+      "name": "Sonho",
+      "level": 5,
+      "school": "Ilusão",
+      "file": "sonho.json"
+    },
+    {
+      "id": "sono",
+      "name": "Sono",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "sono.json"
+    },
+    {
+      "id": "sopro-de-dragao",
+      "name": "Sopro de Dragão",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "sopro-de-dragao.json"
+    },
+    {
+      "id": "sugestao",
+      "name": "Sugestão",
+      "level": 2,
+      "school": "Encantamento",
+      "file": "sugestao.json"
+    },
+    {
+      "id": "sugestao-em-massa",
+      "name": "Sugestão em Massa",
+      "level": 6,
+      "school": "Encantamento",
+      "file": "sugestao-em-massa.json"
+    },
+    {
+      "id": "suplicio",
+      "name": "Suplício",
+      "level": 8,
+      "school": "Encantamento",
+      "file": "suplicio.json"
+    },
+    {
+      "id": "sussurros-dissonantes",
+      "name": "Sussurros Dissonantes",
+      "level": 1,
+      "school": "Encantamento",
+      "file": "sussurros-dissonantes.json"
+    },
+    {
+      "id": "talho-mental",
+      "name": "Talho Mental",
+      "level": 0,
+      "school": "Encantamento",
+      "file": "talho-mental.json"
+    },
+    {
+      "id": "taumaturgia",
+      "name": "Taumaturgia",
+      "level": 0,
+      "school": "Transmutação",
+      "file": "taumaturgia.json"
+    },
+    {
+      "id": "teia",
+      "name": "Teia",
+      "level": 2,
+      "school": "Invocação",
+      "file": "teia.json"
+    },
+    {
+      "id": "telecinese",
+      "name": "Telecinese",
+      "level": 5,
+      "school": "Transmutação",
+      "file": "telecinese.json"
+    },
+    {
+      "id": "telepatia",
+      "name": "Telepatia",
+      "level": 8,
+      "school": "Adivinhação",
+      "file": "telepatia.json"
+    },
+    {
+      "id": "teleporte",
+      "name": "Teleporte",
+      "level": 7,
+      "school": "Invocação",
+      "file": "teleporte.json"
+    },
+    {
+      "id": "tempestade-da-vinganca",
+      "name": "Tempestade da Vingança",
+      "level": 9,
+      "school": "Invocação",
+      "file": "tempestade-da-vinganca.json"
+    },
+    {
+      "id": "tempestade-de-fogo",
+      "name": "Tempestade de Fogo",
+      "level": 7,
+      "school": "Evocação",
+      "file": "tempestade-de-fogo.json"
+    },
+    {
+      "id": "tempestade-glacial",
+      "name": "Tempestade Glacial",
+      "level": 4,
+      "school": "Evocação",
+      "file": "tempestade-glacial.json"
+    },
+    {
+      "id": "tempestade-radiante-de-jallarzi",
+      "name": "Tempestade Radiante de Jallarzi",
+      "level": 5,
+      "school": "Evocação",
+      "file": "tempestade-radiante-de-jallarzi.json"
+    },
+    {
+      "id": "tentaculos-negros-de-evard",
+      "name": "Tentáculos Negros de Evard",
+      "level": 4,
+      "school": "Invocação",
+      "file": "tentaculos-negros-de-evard.json"
+    },
+    {
+      "id": "terremoto",
+      "name": "Terremoto",
+      "level": 8,
+      "school": "Transmutação",
+      "file": "terremoto.json"
+    },
+    {
+      "id": "terreno-alucinatorio",
+      "name": "Terreno Alucinatório",
+      "level": 4,
+      "school": "Ilusão",
+      "file": "terreno-alucinatorio.json"
+    },
+    {
+      "id": "toque-chocante",
+      "name": "Toque Chocante",
+      "level": 0,
+      "school": "Evocação",
+      "file": "toque-chocante.json"
+    },
+    {
+      "id": "toque-necrotico",
+      "name": "Toque Necrótico",
+      "level": 0,
+      "school": "Necromancia",
+      "file": "toque-necrotico.json"
+    },
+    {
+      "id": "toque-vampirico",
+      "name": "Toque Vampírico",
+      "level": 3,
+      "school": "Necromancia",
+      "file": "toque-vampirico.json"
+    },
+    {
+      "id": "tranca-arcana",
+      "name": "Tranca Arcana",
+      "level": 2,
+      "school": "Abjuração",
+      "file": "tranca-arcana.json"
+    },
+    {
+      "id": "transicao-planar",
+      "name": "Transição Planar",
+      "level": 7,
+      "school": "Invocação",
+      "file": "transicao-planar.json"
+    },
+    {
+      "id": "transporte-via-plantas",
+      "name": "Transporte via Plantas",
+      "level": 6,
+      "school": "Invocação",
+      "file": "transporte-via-plantas.json"
+    },
+    {
+      "id": "trovao",
+      "name": "Trovão",
+      "level": 0,
+      "school": "Evocação",
+      "file": "trovao.json"
+    },
+    {
+      "id": "tsunami",
+      "name": "Tsunami",
+      "level": 8,
+      "school": "Invocação",
+      "file": "tsunami.json"
+    },
+    {
+      "id": "turvar",
+      "name": "Turvar",
+      "level": 2,
+      "school": "Ilusão",
+      "file": "turvar.json"
+    },
+    {
+      "id": "ver-o-invisivel",
+      "name": "Ver o Invisível",
+      "level": 2,
+      "school": "Adivinhação",
+      "file": "ver-o-invisivel.json"
+    },
+    {
+      "id": "videncia",
+      "name": "Vidência",
+      "level": 5,
+      "school": "Adivinhação",
+      "file": "videncia.json"
+    },
+    {
+      "id": "vigor-arcano",
+      "name": "Vigor Arcano",
+      "level": 2,
+      "school": "Abjuração",
+      "file": "vigor-arcano.json"
+    },
+    {
+      "id": "vinculo-de-protecao",
+      "name": "Vínculo de Proteção",
+      "level": 2,
+      "school": "Abjuração",
+      "file": "vinculo-de-protecao.json"
+    },
+    {
+      "id": "vinha-agarradora",
+      "name": "Vinha Agarradora",
+      "level": 4,
+      "school": "Invocação",
+      "file": "vinha-agarradora.json"
+    },
+    {
+      "id": "visao-da-verdade",
+      "name": "Visão da Verdade",
+      "level": 6,
+      "school": "Adivinhação",
+      "file": "visao-da-verdade.json"
+    },
+    {
+      "id": "visao-no-escuro",
+      "name": "Visão no Escuro",
+      "level": 2,
+      "school": "Transmutação",
+      "file": "visao-no-escuro.json"
+    },
+    {
+      "id": "vitalidade-vazia",
+      "name": "Vitalidade Vazia",
+      "level": 1,
+      "school": "Necromancia",
+      "file": "vitalidade-vazia.json"
+    },
+    {
+      "id": "voo",
+      "name": "Voo",
+      "level": 3,
+      "school": "Transmutação",
+      "file": "voo.json"
+    },
+    {
+      "id": "zombaria-perversa",
+      "name": "Zombaria Perversa",
+      "level": 0,
+      "school": "Encantamento",
+      "file": "zombaria-perversa.json"
+    },
+    {
+      "id": "zona-da-verdade",
+      "name": "Zona da Verdade",
+      "level": 2,
+      "school": "Encantamento",
+      "file": "zona-da-verdade.json"
+    }
+  ]
+}

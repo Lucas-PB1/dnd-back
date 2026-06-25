@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "encontrar-o-caminho",
+  "name": "Encontrar o Caminho",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Adivinhação",
+  "classes": [
+    "Bardo",
+    "Clérigo",
+    "Druida"
+  ],
+  "castingTime": "1 minuto",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um conjunto de ferramentas de adivinhação — como cartas ou runas — no valor de 100 ou mais PO",
+    "text": "V, S, M (um conjunto de ferramentas de adivinhação — como cartas ou runas — no valor de 100 ou mais PO)"
+  },
+  "duration": "Concentração, até 1 dia",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você sente magicamente a rota física mais direta para um local que você nomeia. Você deve estar familiarizado com o local, e a magia falha se você declarar um destino em outro plano de existência, um destino em movimento (como uma fortaleza móvel) ou um destino inespecífico (como “o covil de um dragão verde”).\nEnquanto durar a magia, desde que você esteja no mesmo plano de existência do destino, você sabe a que distância ele está e em que direção se encontra. Sempre que se depara com uma escolha de caminhos ao longo do trajeto, você sabe qual é o caminho mais direto.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.549Z"
+  }
+}

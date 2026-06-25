@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "detectar-pensamentos",
+  "name": "Detectar Pensamentos",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Adivinhação",
+  "classes": [
+    "Bardo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "1 Peça de Cobre",
+    "text": "V, S, M (1 Peça de Cobre)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você ativa um dos efeitos abaixo. Até que a magia termine, você pode ativar qualquer um dos efeitos como uma ação Usar Magia em seus turnos posteriores.\nSentir Pensamentos. Você sente a presença de pensamentos a até 9 metros de você que pertencem a criaturas que conhecem idiomas ou são telepáticas. Você\nnão lê os pensamentos, mas sabe o que uma criatura presente está pensando.\nA magia é bloqueada por 30 centímetros de pedra,\nterra ou madeira, 2,5 centímetros de metal ou uma folha fina de chumbo.\nLer Pensamentos. Escolha uma criatura à sua vista a até 9 metros de você ou uma criatura a até 9 metros de você que você tenha detectado com a opção Sentir Pensamentos. Você agora descobre o que mais se destaca no pensamento do alvo. Se o alvo não souber nenhum idioma e não for telepático, você não descobre nada.\nComo uma ação Usar Magia em seu próximo turno,\nvocê pode tentar sondar mais profundamente a mente do alvo. Se você investigar mais profundamente, o alvo realiza uma salvaguarda de Sabedoria. Se falhar, você\ndescobre o raciocínio, as emoções e algo que paira na mente dele (como preocupação, amor ou ódio). Em caso de sucesso, a magia encerra. De qualquer forma,\no alvo sabe que você está sondando a mente dele e, até que você desvie sua atenção da mente do alvo, o alvo pode executar uma ação no turno dele para realizar um teste de Inteligência (Arcanismo) contra a CD para evitar sua magia, encerrando a magia em caso de sucesso.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.543Z"
+  }
+}

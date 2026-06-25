@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "arrombar",
+  "name": "Arrombar",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Bardo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "materialDescription": null,
+    "text": "V"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Escolha um objeto à sua vista e no alcance da magia. O\nobjeto pode ser uma porta, uma caixa, um baú, um conjunto de grilhões, um cadeado ou outro objeto que contenha um meio mundano ou mágico que impeça o acesso.\nUm alvo mantido fechado por uma fechadura mundana ou que está preso ou barrado fica destrancado,\ndesemperrado ou desobstruído. Se o objeto tiver várias fechaduras, apenas uma delas é destrancada.\nSe o alvo for mantido fechado por Tranca Arcana,\nessa magia é suprimida por 10 minutos, durante os quais o alvo pode ser aberto e fechado.\nAo conjurar a magia, um estrondo, audível a até 90\nmetros de distância, emana do alvo.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.495Z"
+  }
+}

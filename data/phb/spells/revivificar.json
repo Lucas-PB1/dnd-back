@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "revivificar",
+  "name": "Revivificar",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Clérigo",
+    "Druida",
+    "Guardião",
+    "Paladino"
+  ],
+  "castingTime": "Ação",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um diamante no valor de 300 ou mais PO, que a magia consome",
+    "text": "V, S, M (um diamante no valor de 300 ou mais PO, que a magia consome)"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você toca uma criatura que morreu no último minuto.\nEssa criatura revive com 1 Ponto de Vida. Esta magia não pode reviver uma criatura que morreu de velhice,\nnem restaura partes do corpo ausentes.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.633Z"
+  }
+}

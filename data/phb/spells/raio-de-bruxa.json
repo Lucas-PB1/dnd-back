@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "raio-de-bruxa",
+  "name": "Raio de Bruxa",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um galho atingido por um raio",
+    "text": "V, S, M (um galho atingido por um raio)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Um feixe de energia crepitante é lançado em direção a uma criatura no alcance da magia, formando um arco sustentado de relâmpago entre você e o alvo. Realize um ataque mágico à distância contra ele. Em caso de acerto, o alvo sofre 2d12 pontos de dano Elétrico.\nEm cada um dos seus turnos posteriores, você pode executar uma ação Bônus para causar 1d12 pontos de dano Elétrico automaticamente ao alvo, mesmo que o primeiro ataque tenha falhado.\nA magia encerra se o alvo estiver fora do alcance da magia ou se tiver Cobertura Total em relação a você.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior.\nO dano inicial aumenta em 1d12 para cada círculo de espaço de magia acima de 1.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.621Z"
+  }
+}

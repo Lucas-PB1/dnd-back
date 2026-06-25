@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "silencio",
+  "name": "Silêncio",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Ilusão",
+  "classes": [
+    "Bardo",
+    "Clérigo",
+    "Guardião"
+  ],
+  "castingTime": "Ação ou Ritual",
+  "range": "36 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 10 minutos",
+  "concentration": true,
+  "ritual": true,
+  "description": "Pela duração da magia, nenhum som pode ser criado dentro ou passar através de uma esfera com raio de 6\nmetros centrada em um ponto à sua escolha no alcance da magia. Qualquer criatura ou objeto totalmente dentro da esfera é imune a dano Trovejante, e as criaturas têm a condição Surdo enquanto estiverem totalmente dentro dela. É impossível conjurar uma magia que incluia um componente Verbal neste local.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.636Z"
+  }
+}

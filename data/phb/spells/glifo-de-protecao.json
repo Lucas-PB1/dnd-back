@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "glifo-de-protecao",
+  "name": "Glifo de Proteção",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Bardo",
+    "Clérigo",
+    "Mago"
+  ],
+  "castingTime": "1 hora",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um diamante em pó no valor de 200 ou mais PO, que a magia consome",
+    "text": "V, S, M (um diamante em pó no valor de 200 ou mais PO, que a magia consome)"
+  },
+  "duration": "Até ser dissipada ou acionada",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você inscreve um glifo que mais tarde aciona um efeito mágico. Você o inscreve em uma superfície (como uma mesa ou uma seção de piso no chão) ou dentro de um objeto que pode ser fechado (como um livro ou baú)\npara ocultar o glifo. O glifo pode cobrir uma área não superior a 3 metros de diâmetro. Se a superfície ou objeto for movido a mais de 3 metros de onde você\nconjurou esta magia, o glifo é quebrado e a magia encerra sem ser acionada.\nO glifo é quase imperceptível e requer um teste bem-\n-sucedido de Sabedoria (Percepção) contra a CD para evitar sua magia para ser notado.\nQuando inscreve o glifo, você define o gatilho dele e escolhe se ele é uma runa explosiva ou um glifo de magia, conforme explicado abaixo.\nDefina o Gatilho. Você decide o que aciona o glifo quando conjura a magia. Para glifos inscritos em uma superfície, os gatilhos comuns incluem tocar ou pisar no glifo, remover outro objeto que o cubra ou se aproximar a uma certa distância dele. Para glifos inscritos em um objeto, os gatilhos comuns incluem abrir esse objeto ou ver o glifo. Uma vez que um glifo é acionado,\nesta magia se encerra.\nVocê pode ajustar o gatilho para que apenas criaturas de certos tipos o ativem (por exemplo, o glifo pode ser definido para afetar Aberrações). Você também pode definir condições para criaturas que não acionam o glifo, como aquelas que dizem uma determinada senha.\nRuna Explosiva. Quando acionado, o glifo irrompe com energia mágica em uma Esfera de 6 metros de raio centrada no glifo. Cada criatura na área realiza uma salvaguarda de Destreza. Se falhar, uma criatura sofre\n5d8 pontos de dano Ácido, Elétrico, Gélido, Ígneo ou\nTrovejante (à sua escolha ao criar o glifo), ou metade desse dano em caso de sucesso.\nGlifo de Magia. Você pode armazenar uma magia preparada de 3º círculo ou inferior no glifo, conjurando-a como parte da criação do glifo. A magia deve ter como alvo uma única criatura ou uma área. A magia que está sendo armazenada não tem efeito imediato quando conjurada desse modo.\nQuando o glifo é acionado, a magia armazenada entra em efeito. Se a magia tiver um alvo, ela tem como alvo a criatura que acionou o glifo. Se a magia afetar uma área, a área está centrada nessa criatura. Se a magia invocar criaturas hostis ou criar objetos ou armadilhas prejudiciais, elas aparecem o mais próximo possível do intruso e o atacam. Se a magia exigir Concentração, ela dura até o final da duração total da magia.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano de uma runa explosiva aumenta em 1d8 para cada círculo de espaço de magia acima de 3. Se você criar um glifo de magia, você pode armazenar qualquer magia de até o mesmo círculo que o espaço de magia que você usa para o Glifo de Proteção.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.563Z"
+  }
+}

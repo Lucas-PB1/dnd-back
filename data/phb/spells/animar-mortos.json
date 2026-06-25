@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "animar-mortos",
+  "name": "Animar Mortos",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Clérigo",
+    "Mago"
+  ],
+  "castingTime": "1 minuto",
+  "range": "3 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma gota de sangue, um pedaço de carne e uma pitada de pó de osso",
+    "text": "V, S, M (uma gota de sangue, um pedaço de carne e uma pitada de pó de osso)"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Escolha uma pilha de ossos ou um cadáver de um\nHumanoide Médio ou Pequeno no alcance da magia.\nO alvo se torna um Morto-vivo: um Esqueleto se tiver escolhido ossos ou um Zumbi se tiver escolhido um cadáver (veja o apêndice B para os blocos de estatística).\nEm cada um dos seus turnos, você pode executar uma Ação Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 18 metros de você (se você\ncontrolar várias criaturas, pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Você decide qual ação a criatura realiza e para onde ela se move no próximo turno dela, ou pode emitir um comando geral, como proteger uma câmara ou um corredor. Se você não der nenhum comando, a criatura executa a ação Esquivar e move-se apenas para evitar dano. Uma vez dada uma ordem, a criatura continua a segui-la até que a tarefa seja concluída.\nA criatura fica sob seu controle por 24 horas, após as quais ela deixa de obedecer a qualquer comando que você tenha dado a ela. Para manter o controle da criatura por mais 24 horas, é necessário conjurar essa magia na criatura novamente antes que o período atual de 24 horas termine. Esse uso da magia reafirma seu controle sobre até quatro criaturas que você animou com essa magia em vez de animar uma nova criatura.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior.\nVocê anima ou reafirma o controle sobre duas criaturas Mortas-vivas adicionais para cada círculo de espaço de magia acima de 3. Cada uma das criaturas deve vir de um cadáver ou pilha de ossos diferente.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.489Z"
+  }
+}

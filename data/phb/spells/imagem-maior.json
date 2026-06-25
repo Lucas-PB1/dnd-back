@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "imagem-maior",
+  "name": "Imagem Maior",
+  "level": 3,
+  "levelLabel": "3º Círculo",
+  "school": "Ilusão",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "36 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um pouco de lã",
+    "text": "V, S, M (um pouco de lã)"
+  },
+  "duration": "Concentração, até 10 minutos",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você cria a imagem de um objeto, uma criatura ou algum outro fenômeno visível que não seja maior do que um Cubo de 6 metros. A imagem aparece em um local\nà sua vista e no alcance da magia e permanece pela duração. A imagem parece real, incluindo sons, cheiros e temperatura apropriados para a coisa representada,\nmas não pode causar danos ou condições.\nSe você estiver dentro do alcance da imagem, pode usar a ação Usar Magia para movê-la para outro ponto no alcance da magia. Durante essa movimentação, você\npode alterar sua aparência para que os movimentos pareçam naturais. Por exemplo, ao mover a imagem de uma criatura, pode fazê-la parecer que está andando.\nAlém disso, você pode fazer com que a imagem emita sons diferentes em momentos distintos, como continuar uma conversa.\nA interação física com a imagem revela que ela é uma ilusão, pois as coisas podem passar por ela. Uma\nUm conjurador pode usar\nIlusão\nProgramada para fazer com que um cão de guarda apareça e peça gentilmente para que intrusos saiam.\nJUSTINE CRUZ\ncriatura que executa uma ação Analisar para examinar a imagem pode determinar que ela é uma ilusão com um teste bem-sucedido de Inteligência (Investigação)\ncontra a CD para evitar sua magia. Se uma criatura perceber a ilusão pelo que ela é, ela pode ver através da imagem, e suas outras qualidades sensoriais tornam-se fracas para a criatura.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. A\nmagia dura até ser dissipada, sem exigir Concentração,\nse conjurada com um espaço de magia de 4º círculo ou superior.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.568Z"
+  }
+}

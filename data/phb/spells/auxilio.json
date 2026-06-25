@@ -1,0 +1,41 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "auxilio",
+  "name": "Auxílio",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Bardo",
+    "Clérigo",
+    "Druida",
+    "Guardião",
+    "Paladino"
+  ],
+  "castingTime": "Ação",
+  "range": "9 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma tira de pano branco",
+    "text": "V, S, M (uma tira de pano branco)"
+  },
+  "duration": "8 horas",
+  "concentration": false,
+  "ritual": false,
+  "description": "Escolha até três criaturas no alcance da magia. Os\nPontos de Vida máximos e os Pontos de Vida atuais de cada alvo aumentam em 5 pela duração da magia.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. Os\nPontos de Vida de cada alvo aumentam em 5 para cada círculo de espaço de magia acima de 2.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.500Z"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "globo-de-invulnerabilidade",
+  "name": "Globo de Invulnerabilidade",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma conta de vidro",
+    "text": "V, S, M (uma conta de vidro)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Uma barreira imóvel e cintilante aparece em uma\nEmanação de 3 metros ao seu redor e permanece pela duração da magia.\nQualquer magia de 5º círculo ou inferior conjurada de fora da barreira não pode afetar nada dentro dela.\nTal magia pode ter como alvo criaturas e objetos dentro da barreira, mas a magia não tem efeito sobre eles.\nDa mesma forma, a área dentro da barreira é excluída das áreas de efeito criadas por tais magias.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. A\nbarreira bloqueia magias de 1º círculo ou superior para cada círculo de espaço de magia acima de 6.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.564Z"
+  }
+}

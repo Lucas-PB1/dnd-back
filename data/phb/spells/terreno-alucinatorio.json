@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "terreno-alucinatorio",
+  "name": "Terreno Alucinatório",
+  "level": 4,
+  "levelLabel": "4º Círculo",
+  "school": "Ilusão",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Druida",
+    "Mago"
+  ],
+  "castingTime": "10 minutos",
+  "range": "90 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um cogumelo",
+    "text": "V, S, M (um cogumelo)"
+  },
+  "duration": "24 horas",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você cria um terreno natural em um cubo de 45 metros de comprimento que possui a aparência, o som e o cheiro de outro tipo de terreno natural. Assim, campos abertos ou uma estrada podem ser moldados para se assemelhar a um pântano, colina, fenda ou algum outro terreno difícil ou intransitável. Uma lagoa pode ser formada para parecer um prado verdejante, um precipício como uma encosta suave ou um barranco pedregoso como uma estrada larga e plana. Criaturas, estruturas e equipamentos manufaturados dentro da área não são alterados.\nAs características táteis do terreno permanecem inalteradas, portanto, é provável que as criaturas que entram na área percebam a ilusão. Se a diferença não for evidente ao toque, uma criatura que examina a ilusão pode executar a ação Analisar para realizar um teste de Inteligência (Investigação) contra a CD para evitar sua magia, a fim de não acreditar nela. Se uma criatura perceber que o terreno é ilusório, ela vê uma imagem vaga sobreposta ao terreno real.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.645Z"
+  }
+}

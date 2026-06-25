@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "mover-terra",
+  "name": "Mover Terra",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "36 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma pá em miniatura",
+    "text": "V, S, M (uma pá em miniatura)"
+  },
+  "duration": "Concentração, até 2 horas",
+  "concentration": true,
+  "ritual": false,
+  "description": "Escolha uma área de terreno no alcance da magia, com até 12 metros de lados. Você pode remodelar terra,\nareia ou argila na área da maneira que desejar pela duração. Você pode aumentar ou diminuir a elevação da área, criar ou preencher uma trincheira, erguer ou aplanar uma parede, ou formar um pilar. A extensão dessas mudanças não pode exceder metade da maior dimensão da área. Por exemplo, se você afetar um quadrado de 12 metros, pode criar um pilar de até 6\nmetros de altura, aumentar ou diminuir a elevação do quadrado em até 6 metros, cavar uma trincheira de até\n6 metros de profundidade, e assim por diante. Essas mudanças demoram 10 minutos para serem concluídas.\nComo a transformação do terreno ocorre lentamente,\ncriaturas na área geralmente não ficam presas ou feridas pelo movimento do solo.\nAo final de cada 10 minutos que gastar se concentrando na magia, você pode escolher uma nova área de terreno para afetar.\nEssa magia não pode manipular pedra natural ou construção de pedra. Rochas e estruturas se ajustam para acomodar o novo terreno. Se a forma que você\nmoldar o terreno tornar uma estrutura instável, ela pode desmoronar.\nDa mesma forma, essa magia não afeta diretamente o crescimento de plantas. A terra movida carrega qualquer planta junto com ela.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.593Z"
+  }
+}

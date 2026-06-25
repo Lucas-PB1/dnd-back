@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "videncia",
+  "name": "Vidência",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Adivinhação",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Clérigo",
+    "Druida",
+    "Mago"
+  ],
+  "castingTime": "10 minutos",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um foco no valor de 1.000 ou mais PO, como uma bola de cristal, espelho ou fonte cheia de água",
+    "text": "V, S, M (um foco no valor de 1.000 ou mais PO, como uma bola de cristal, espelho ou fonte cheia de água)"
+  },
+  "duration": "Concentração, até 10 minutos",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você pode ver e ouvir uma criatura que você escolheu e que está no mesmo plano de existência que você.\nO alvo realiza uma salvaguarda de Sabedoria, que é modificada (veja as tabelas abaixo) por quão bem você\nconhece o alvo e o tipo de conexão física que você tem com ele. O alvo não sabe contra o que está realizando a salvaguarda, apenas que se sente desconfortável.\nSeu Conhecimento do Alvo É... Modificador\nDe segunda mão (ouviu falar do alvo) +5\nDe primeira mão (conhece o alvo) +0\nAmplo (conhece bem o alvo) –5\nVocê Possui Algo do Alvo… Modificador\nRetrato ou outra imagem –2\nRoupa ou outra posse –4\nParte do corpo, mecha de cabelo ou pedaço de unha\n–10\nEm caso de sucesso, o alvo não é afetado e você não pode usar esta magia nele novamente por 24 horas.\nSe falhar, a magia cria um sensor Invisível e intangível a até 3 metros do alvo. Você pode ver e ouvir através do sensor como se estivesse lá. O sensor se move com o alvo, permanecendo a 3 metros dele pela duração da magia. Se algo puder ver o sensor, ele aparece como uma esfera luminosa do tamanho do seu punho.\nEm vez de uma criatura, você pode escolher um local que viu. Ao fazer isso, o sensor aparece nesse local e não se move.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.651Z"
+  }
+}

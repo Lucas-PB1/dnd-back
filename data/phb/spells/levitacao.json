@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "levitacao",
+  "name": "Levitação",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma mola de metal",
+    "text": "V, S, M (uma mola de metal)"
+  },
+  "duration": "Concentração, até 10 minutos",
+  "concentration": true,
+  "ritual": false,
+  "description": "Uma criatura ou objeto solto à sua escolha, à sua vista e no alcance da magia sobe verticalmente até 6 metros e permanece suspenso pela duração. A magia pode levitar um objeto que pesa até 200 quilos. Uma criatura involuntária que seja bem-sucedida em uma salvaguarda de Constituição não é afetada.\nO alvo pode se mover apenas empurrando ou puxando um objeto ou superfície fixa ao alcance dele\n(como uma parede ou um teto), o que permite que ele se mova como se estivesse escalando. No seu turno,\nvocê pode mudar a altitude do alvo em até 6 metros em qualquer direção. Se você for o alvo, pode se mover para cima ou para baixo como parte de seu movimento. Caso contrário, você pode executar uma ação Usar\nMagia para mover o alvo, que deve permanecer no alcance da magia.\nQuando a magia termina, o alvo flutua suavemente até o chão se ainda estiver no alto.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.582Z"
+  }
+}

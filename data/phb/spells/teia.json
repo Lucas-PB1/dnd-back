@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "teia",
+  "name": "Teia",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um pouco de teia de aranha",
+    "text": "V, S, M (um pouco de teia de aranha)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você conjura uma massa de teias pegajosas em um ponto no alcance da magia. As teias enchem um\nCubo de 6 metros de lado pela duração da magia, são\nTerreno Difícil e a área dentro delas é Parcialmente\nObscurecida.\nSe as teias não estiverem sustentadas entre duas massas sólidas (como paredes ou árvores) ou em camadas no chão, parede ou teto, a teia colapsa sobre si mesma e a magia se encerra no início do seu próximo turno. As teias em camadas sobre uma superfície plana têm uma profundidade de 1,5 metro.\nA primeira vez que uma criatura entra nas teias em um turno ou começa o turno nelas, deve ser bem-sucedida em uma salvaguarda de Destreza ou tem a condição Contido enquanto está nas teias ou até se libertar.\nUma criatura Contida pelas teias pode executar uma ação para realizar um teste de Força (Atletismo) contra a CD para evitar sua magia. Em caso de sucesso, a criatura não está mais Contida.\nAs teias são inflamáveis. Qualquer Cubo de 1,5\nmetro de lado com teias expostas ao fogo queima em 1\nrodada, causando 2d4 pontos de dano Ígneo a qualquer criatura que inicie seu turno no fogo.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.641Z"
+  }
+}

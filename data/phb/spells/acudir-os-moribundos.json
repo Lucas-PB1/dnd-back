@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "acudir-os-moribundos",
+  "name": "Acudir os Moribundos",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Necromancia",
+  "classes": [
+    "Clérigo",
+    "Druida"
+  ],
+  "castingTime": "Ação",
+  "range": "4,5 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Escolha uma criatura no alcance da magia que tenha\n0 Pontos de Vida e não esteja morta. A criatura fica\nEstável.\nAprimoramento de Truque. O alcance da magia dobra quando você atinge os níveis 5 (9 metros), 11 (18 metros) e 17 (36 metros).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.485Z"
+  }
+}

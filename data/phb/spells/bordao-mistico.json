@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "bordao-mistico",
+  "name": "Bordão Místico",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Transmutação",
+  "classes": [
+    "Druida"
+  ],
+  "castingTime": "Ação Bônus",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um ramo de visco",
+    "text": "V, S, M (um ramo de visco)"
+  },
+  "duration": "1 minuto",
+  "concentration": false,
+  "ritual": false,
+  "description": "Um Cajado ou Clava que você está segurando é imbuído com o poder da natureza. Pela duração da magia,\nvocê pode usar seu atributo de conjuração em vez de\nForça para as jogadas de ataque e dano de ataques corpo a corpo com essa arma, e o dado de dano da arma se torna um d8. Se o ataque causar dano, ele pode ser de dano Energético ou do tipo de dano normal da arma\n(à sua escolha).\nUm elfo Mago demonstra o potencial de resolução de problema da magia\nBola de Fogo.\nYUHONG DING\nA magia encerra se você a conjurar novamente ou se soltar a arma.\nAprimoramento de Truque. O dado de dano muda quando você atinge os níveis 5 (1d10), 11 (1d12) e 17 (2d6).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.505Z"
+  }
+}

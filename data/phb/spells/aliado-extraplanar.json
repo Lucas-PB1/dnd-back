@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "aliado-extraplanar",
+  "name": "Aliado Extraplanar",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Clérigo"
+  ],
+  "castingTime": "10 minutos",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você implora pela ajuda de uma entidade sobrenatural.\nVocê deve conhecer o ser: um deus, um príncipe demônio ou algum outro ser de poder cósmico. Essa entidade envia um Celestial, um Elemental ou um Ínfero leal a ela para ajudá-lo, fazendo com que a criatura apareça em um espaço desocupado no alcance da magia. Se você\nsouber o nome de uma criatura específica, você pode proferir esse nome quando conjurar a magia para solicitar essa criatura, embora você possa obter uma criatura diferente de qualquer modo (à escolha do Mestre).\nQuando a criatura aparece, ela não é obrigada a comportar-se de uma maneira específica. Você pode pedir que ela realize um serviço em troca de pagamento, mas ela não é obrigada a fazê-lo. A tarefa solicitada pode variar de simples (nos levar voando através do abismo ou nos ajudar a lutar em uma batalha) a complexa (espionar nossos inimigos ou nos proteger durante nossa incursão na masmorra). Você deve ser capaz de se comunicar com a criatura para negociar pelos serviços dela.\nO pagamento pode assumir várias formas. Um\nCelestial pode exigir uma doação considerável de ouro ou itens mágicos para um templo aliado, enquanto um\nÍnfero pode exigir um sacrifício vivo ou um presente na forma de um tesouro. Algumas criaturas podem trocar o serviço por uma missão realizada por você.\nUma tarefa que pode ser medida em minutos requer um pagamento no valor de 100 PO por minuto. Uma tarefa medida em horas requer 1.000 PO por hora. Já uma tarefa medida em dias (até 10 dias) requer 10.000\nPO por dia. O Mestre pode ajustar esses pagamentos com base nas circunstâncias em que você conjurou a magia. Se a tarefa estiver alinhada com os interesses da criatura, o pagamento pode ser reduzido pela metade ou até mesmo dispensado. Tarefas não perigosas normalmente exigem apenas metade do pagamento sugerido, enquanto tarefas especialmente perigosas podem demandar um pagamento maior. Criaturas raramente aceitam tarefas que parecem suicidas.\nDepois que a criatura conclui a tarefa, ou quando a duração combinada do serviço acaba, a criatura retorna ao seu plano de origem após se reportar a você, se possível. Se você não conseguir chegar a um acordo sobre um preço pelo serviço da criatura, a criatura retorna imediatamente ao seu plano de origem.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.486Z"
+  }
+}

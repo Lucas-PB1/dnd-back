@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "dedo-da-morte",
+  "name": "Dedo da Morte",
+  "level": 7,
+  "levelLabel": "7º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você libera energia negativa através de uma criatura\nà sua vista e no alcance da magia. O alvo realiza uma salvaguarda de Constituição, sofrendo 7d8 + 30 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso.\nUm Humanoide morto por esta magia levanta-se no início do seu próximo turno como um Zumbi (veja o apêndice B) que segue suas ordens verbais.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.536Z"
+  }
+}

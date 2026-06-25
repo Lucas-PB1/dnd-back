@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "rajada-prismatica",
+  "name": "Rajada Prismática",
+  "level": 7,
+  "levelLabel": "7º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Bardo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Oito raios luminosos partem de você em um Cone de\n18 metros. Cada criatura no Cone realiza uma salvaguarda de Destreza. Para cada alvo, jogue 1d8 para determinar qual raio colorido o afeta, consultando a tabela Raios Prismáticos.\nRaios Prismáticos\n1d8 Raio\n1 Vermelho. Se falhar: 12d6 pontos de dano Ígneo. Em caso de sucesso: metade do dano.\n2 Laranja. Se falhar: 12d6 pontos de dano Ácido. Em caso de sucesso: metade do dano.\n3 Amarelo. Se falhar: 12d6 pontos de dano Elétrico. Em caso de sucesso: metade do dano.\n4 Verde. Se falhar: 12d6 pontos de dano Venenoso. Em caso de sucesso: metade do dano.\n5 Azul. Se falhar: 12d6 pontos de dano Gélido. Em caso de sucesso: metade do dano.\n6 Anil. Se falhar: O alvo tem a condição Contido e realiza uma salvaguarda de Constituição no final de cada um dos turnos dele. Se bem-sucedido três vezes,\na condição encerra. Se falhar três vezes, ele tem a condição Petrificado até ser liberado por um efeito como a magia Restauração Maior. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo alcance três de um tipo.\n7 Violeta. Se falhar: O alvo tem a condição Cego e realiza uma salvaguarda de Sabedoria no início do seu próximo turno. Em uma salvaguarda bem-sucedida,\na condição encerra. Se falhar, a condição encerra e a criatura se teleporta para outro plano de existência (à\nescolha do Mestre).\n8 Especial. O alvo é atingido por dois raios. Jogue duas vezes, jogando novamente quaisquer 8.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.625Z"
+  }
+}

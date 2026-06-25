@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "duelo-compelido",
+  "name": "Duelo Compelido",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Encantamento",
+  "classes": [
+    "Paladino"
+  ],
+  "castingTime": "Ação Bônus",
+  "range": "9 metros",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "materialDescription": null,
+    "text": "V"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você tenta obrigar uma criatura a um duelo. Uma criatura à sua vista e no alcance da magia realiza uma salvaguarda de Sabedoria. Se falhar, o alvo tem Desvantagem nas jogadas de ataque contra criaturas que não sejam você, e não pode se mover voluntariamente para um espaço a mais de 9 metros de você.\nA magia encerra se você realizar uma jogada de ataque contra uma criatura que não seja o alvo, se você\nconjurar uma magia em um inimigo que não seja o alvo,\nse um aliado seu causar dano ao alvo ou se você terminar seu turno a mais de 9 metros de distância do alvo.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.547Z"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "cura-completa-em-massa",
+  "name": "Cura Completa em Massa",
+  "level": 9,
+  "levelLabel": "9º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Clérigo"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Uma onda de energia curativa flui de você para as criaturas ao seu redor. Você restaura até 700 Pontos de Vida, divididos à sua escolha entre qualquer número de criaturas à sua vista e no alcance da magia. Criaturas curadas por esta magia também têm as condições\nCego, Envenenado e Surdo removidas.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.533Z"
+  }
+}

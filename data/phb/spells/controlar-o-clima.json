@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "controlar-o-clima",
+  "name": "Controlar o Clima",
+  "level": 8,
+  "levelLabel": "8º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Clérigo",
+    "Druida",
+    "Mago"
+  ],
+  "castingTime": "10 minutos",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um incenso aceso",
+    "text": "V, S, M (um incenso aceso)"
+  },
+  "duration": "Concentração, até 8 horas",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você assume o controle do clima a até 8 quilômetros de você pela duração da magia. Você deve estar ao ar livre para conjurar esta magia, e ela encerra se você for para áreas internas.\nAo conjurar a magia, você altera a condição climática atual, determinada pelo Mestre. Você pode alterar a precipitação, a temperatura e o vento. Leva 1d4 x 10\nminutos para as novas condições do clima entrarem em vigor. Depois que elas se estabelecerem, você pode alterar as condições novamente. Quando a magia termina,\no clima volta gradualmente ao normal.\nAo alterar as condições meteorológicas, encontre uma condição atual nas tabelas a seguir e altere o estágio em um, para cima ou para baixo. Ao mudar o vento,\nvocê pode alterar a direção dele.\nPrecipitação\nEstágio Condição\n1 Limpo\n2 Nuvens leves\n3 Nublado ou com neblina\n4 Chuva, granizo ou neve\n5 Chuva torrencial, tempestade de granizo ou nevasca\nTemperatura Vento\nEstágio Condição Estágio Condição\n1 Calor insuportável 1 Calmo\n2 Quente 2 Vento moderado\n3 Ameno 3 Vento forte\n4 Fresco 4 Vendaval\n5 Frio 5 Tempestade\n6 Frio extremo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.523Z"
+  }
+}

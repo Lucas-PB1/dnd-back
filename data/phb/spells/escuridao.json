@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "escuridao",
+  "name": "Escuridão",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": true,
+    "materialDescription": "pelo de morcego e um pedaço de carvão",
+    "text": "V, M (pelo de morcego e um pedaço de carvão)"
+  },
+  "duration": "Concentração, até 10 minutos",
+  "concentration": true,
+  "ritual": false,
+  "description": "Pela duração da magia, uma Escuridão mágica se espalha a partir de um ponto no alcance da magia e preenche uma Esfera de 4,5 metros de raio. Visão no escuro não pode ver através dela, e luz não mágica não pode iluminá-la.\nComo alternativa, você conjura a magia em um objeto que não esteja sendo usado ou carregado, fazendo com que a Escuridão preencha uma Emanação de 4,5 metros originada desse objeto. Cobrir esse objeto com algo opaco, como uma tigela ou elmo, bloqueia a Escuridão.\nSe qualquer área desta magia se sobrepuser a uma área de Luz Plena ou Meia-luz criada por uma magia de 2º círculo ou inferior, essa outra magia é dissipada.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.552Z"
+  }
+}

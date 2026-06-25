@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "moldar-rochas",
+  "name": "Moldar Rochas",
+  "level": 4,
+  "levelLabel": "4º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Clérigo",
+    "Druida",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "argila mole",
+    "text": "V, S, M (argila mole)"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você toca um objeto de pedra de tamanho Médio ou menor, ou uma seção de pedra com no máximo 1,5\nmetro em qualquer dimensão e o molda na forma que desejar. Por exemplo, você pode moldar uma rocha grande em uma arma, estátua ou baú, ou criar uma pequena passagem por uma parede com até 1,5 metro de espessura. Também é possível moldar uma porta de pedra ou seu batente para selar a porta. O objeto criado pode ter até duas dobradiças e uma fechadura, mas detalhes mecânicos mais finos não são possíveis.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.592Z"
+  }
+}

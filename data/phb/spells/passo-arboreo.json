@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "passo-arboreo",
+  "name": "Passo Arbóreo",
+  "level": 5,
+  "levelLabel": "5º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Druida",
+    "Guardião"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você adquire a capacidade de entrar em uma árvore e se mover de dentro dela para dentro de outra árvore do mesmo tipo a até 150 metros. Ambas as árvores devem ser vivas e pelo menos do mesmo tamanho que você. Você deve usar 1,5 metro de movimento para entrar em uma árvore. Você sabe instantaneamente a localização de todas as outras árvores do mesmo tipo a até 150 metros e, como parte do movimento usado para entrar na árvore, pode tanto passar por uma dessas árvores quanto sair da árvore em que você está.\nVocê aparece em um local à sua escolha a até 1,5 metro da árvore-destino, usando outro 1,5 metro de movimento. Se você não tiver mais nenhum movimento,\naparece a menos de 1,5 metro da árvore em que entrou.\nVocê pode usar essa habilidade de transporte apenas uma vez em cada um dos seus turnos. Você deve terminar cada turno fora de uma árvore.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.609Z"
+  }
+}

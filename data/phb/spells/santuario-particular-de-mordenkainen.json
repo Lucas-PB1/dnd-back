@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "santuario-particular-de-mordenkainen",
+  "name": "Santuário Particular de Mordenkainen",
+  "level": 4,
+  "levelLabel": "4º Círculo",
+  "school": "Abjuração",
+  "classes": [
+    "Mago"
+  ],
+  "castingTime": "10 minutos",
+  "range": "36 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma folha fina de chumbo",
+    "text": "V, S, M (uma folha fina de chumbo)"
+  },
+  "duration": "24 horas",
+  "concentration": false,
+  "ritual": false,
+  "description": "Você torna uma área no alcance da magia magicamente segura. A área é um Cubo que pode ter de 1,5 metro a 30 metros de lado. A magia permanece pela duração.\nAo conjurar a magia, você determina o tipo de proteção que a magia oferece, escolhendo qualquer uma das seguintes propriedades:\n• O som não pode atravessar a barreira na borda da área protegida.\n• A barreira da área protegida aparece escura e enevoada, impedindo a visão (incluindo Visão no Escuro)\natravés dela.\n• Sensores criados por magias de Adivinhação não podem aparecer dentro da área protegida nem atravessar a barreira em seu perímetro.\n• Criaturas na área não podem ser alvo de magias de\nAdivinhação.\n• Nada pode se teleportar para dentro ou fora da área protegida.\n• Viagens planares são bloqueadas dentro da área protegida.\nConjurar essa magia no mesmo local todos os dias por 365 dias faz com que a magia dure até ser dissipada.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior.\nVocê pode aumentar o tamanho do Cubo em 30 metros para cada círculo de espaço de magia acima de 4.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.634Z"
+  }
+}

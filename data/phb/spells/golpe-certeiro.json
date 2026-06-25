@@ -1,0 +1,39 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "golpe-certeiro",
+  "name": "Golpe Certeiro",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Adivinhação",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": false,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma arma com a qual você tem proficiência e que vale 1 ou mais PC",
+    "text": "S, M (uma arma com a qual você tem proficiência e que vale 1 ou mais PC)"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Guiado pelo lampejo de uma intuição mágica, você\nrealiza um ataque com a arma usada na conjuração da magia. O ataque usa seu atributo de conjuração para as jogadas de ataque e dano em vez de usar Força ou Destreza. Se o ataque causar dano, ele pode ser Radiante ou do tipo de dano normal da arma (à sua escolha).\nAprimoramento de Truque. Seja o dano Radiante ou o tipo de dano normal da arma, o ataque causa dano Radiante adicional quando você atinge os níveis 5 (1d6),\n11 (2d6) e 17 (3d6).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.564Z"
+  }
+}

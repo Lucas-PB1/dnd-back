@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "de-carne-para-pedra",
+  "name": "De Carne para Pedra",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma pena de cocatriz",
+    "text": "V, S, M (uma pena de cocatriz)"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você tenta transformar uma criatura à sua vista e no alcance da magia em pedra. O alvo realiza uma salvaguarda de Constituição. Se falhar, ele tem a condição\nContido pela duração da magia. Em uma salvaguarda bem-sucedida, o Deslocamento dele é 0 até o início do seu próximo turno. Constructos são bem-sucedidos automaticamente na salvaguarda.\nUm alvo Contido realiza outra salvaguarda de\nConstituição no final de cada um dos turnos dele. Em caso de sucesso por três vezes contra esta magia, ela se encerra. Se falhar por três vezes, ele é transformado em pedra e tem a condição Petrificado pela duração da magia. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo alcance três de um tipo.\nSe você mantiver sua Concentração nesta magia por toda a duração possível, o alvo tem a condição Petrificado até que a condição seja encerrada por Restauração\nMaior ou efeito mágico semelhante.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.535Z"
+  }
+}

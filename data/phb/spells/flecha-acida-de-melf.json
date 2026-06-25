@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "flecha-acida-de-melf",
+  "name": "Flecha Ácida de Melf",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "folha de ruibarbo em pó",
+    "text": "V, S, M (folha de ruibarbo em pó)"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Uma flecha verde brilhante dispara em direção a um alvo no alcance da magia, explodindo em um borrifo de ácido. Realize um ataque mágico à distância contra o alvo. Em caso de acerto, o alvo sofre 4d4 pontos de dano Ácido e 2d4 pontos de dano Ácido no final do próximo turno dele. Se falhar, a flecha respinga ácido no alvo, causando somente metade do dano inicial.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano (inicial e posterior) aumenta em 1d4 para cada círculo de espaço de magia acima de 2.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.559Z"
+  }
+}

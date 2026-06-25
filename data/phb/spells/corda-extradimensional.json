@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "corda-extradimensional",
+  "name": "Corda Extradimensional",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Toque",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um pedaço de corda",
+    "text": "V, S, M (um pedaço de corda)"
+  },
+  "duration": "1 hora",
+  "concentration": false,
+  "ritual": false,
+  "description": "Montaria Sobrenatural\nCelestial Grande, Feérico ou Ínfero (À Sua Escolha), Neutro\nCA 10 + 1 por círculo de magia\nPV 5 + 10 por círculo de magia (a montaria tem um número de\nDados de Vida [d10s] igual ao círculo da magia)\nDeslocamento 18 m, Voo 18 m (requer magia de 4º círculo ou superior)\nMOD SG MOD SG MOD SG\nFor 18 +4 +4 Des 12 +1 +1 Con 14 +2 +2\nInt 6 –2 –2 Sab 12 +1 +1 Car 8 –1 –1\nSentidos Percepção Passiva 11\nIdiomas Telepatia 1,5 km (funciona apenas com você)\nND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)\nTraços\nVínculo Vital. Ao recuperar Pontos de Vida de uma magia 1º\ncírculo ou superior, a montaria recupera o mesmo número de\nPontos de Vida se você estiver a até 1,5 metro dela.\nAções\nPancada Sobrenatural. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5\nm. Dano: 1d8 mais o círculo da magia de pontos de dano\nRadiante (Celestial), Psíquico (Feérico) ou Necrótico (Ínfero).\nAções Bônus\nDerrubar Brilho (Apenas Ínfero; Recarrega após um Descanso\nLongo). Salvaguarda de Sabedoria: CD é igual a CD para evitar sua magia, uma criatura a até 18 metros à vista da montaria.\nFalha: O alvo tem a condição Amedrontado até o final do seu próximo turno.\nPasso Feérico (Apenas Feérico; Recarrega após um Descanso\nLongo). A montaria se teleporta, junto com seu cavaleiro,\npara um espaço desocupado à sua escolha a até 18 metros de distância de onde está.\nToque Curativo (Apenas Celestial; Recarrega após um Descanso\nLongo). Uma criatura a até 1,5 metro da montaria recupera um número de Pontos de Vida igual a 2d8 mais o círculo da magia.\nVocê toca uma corda. Uma extremidade dela paira para cima até que a corda fique perpendicular ao chão ou alcance um teto. Na extremidade superior da corda,\num portal Invisível de 1 metro por 1,5 metro se abre para um espaço extradimensional que permanece até que a magia termine. Esse espaço pode ser alcançado escalando a corda, que pode ser puxada para dentro ou para fora dele.\nO espaço pode conter até oito criaturas Médias ou menores. Ataques, magias e outros efeitos não podem passar para dentro ou para fora do espaço, mas as criaturas dentro dele podem ver através do portal. Qualquer coisa dentro do espaço cai quando a magia termina.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.526Z"
+  }
+}

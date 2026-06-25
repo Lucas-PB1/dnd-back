@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "teleporte",
+  "name": "Teleporte",
+  "level": 7,
+  "levelLabel": "7º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Bardo",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "3 metros",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "materialDescription": null,
+    "text": "V"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Esta magia transporta instantaneamente você e até oito criaturas voluntárias ou um único objeto à sua vista e no alcance da magia, para um destino à sua escolha. Se você escolher um objeto, ele deve ser Grande ou menor e não pode estar sendo segurado ou carregado por uma criatura involuntária.\nO destino que você escolheu deve ser de seu conhecimento e deve estar no mesmo plano de existência que você. Sua familiaridade com o destino determina se você chega lá com sucesso. O Mestre joga 1d100 e consulta a tabela Resultado do Teleporte e as explicações posteriores.\nResultado do Teleporte\nFamiliaridade Azar\nÁrea\nSimilar\nFora do Alvo\nNo\nAlvo\nCírculo permanente — — — 01–100\nObjeto associado — — — 01–100\nMuito familiar 01–05 06–13 14–24 25–100\nVisto casualmente 01–33 34–43 44–53 54–100\nVisto uma vez ou descrito\n01–43 44–53 54–73 74–100\nDestino falso 01–50 51–100 — —\nFamiliaridade. Aqui estão os significados dos termos na coluna Familiaridade da tabela:\n• “Círculo permanente” significa um círculo de teleporte permanente cuja sequência de símbolos você conhece.\n• “Objeto associado” significa que você possui um objeto retirado do destino desejado nos últimos seis meses, como um livro da biblioteca de um mago.\n• “Muito familiar” é um lugar que você visitou com frequência, um lugar que você estudou cuidadosamente ou um lugar à sua vista ao conjurar a magia.\n• “Visto casualmente” é um lugar que você já viu mais de uma vez, mas com o qual não está muito familiarizado.\n• “Visto uma vez ou descrito” é um lugar que você já viu uma vez, possivelmente usando magia, ou um lugar que você conhece através da descrição de outra pessoa, talvez através de um mapa.\n• “Destino falso” é um lugar que não existe. Talvez você\ntenha tentado visualizar o santuário de um inimigo,\nmas em vez disso viu uma ilusão, ou está tentando se teleportar para um local que não existe mais.\nAzar. A natureza imprevisível da magia resulta em uma jornada difícil. Cada criatura se teleportando (ou o objeto alvo) sofre 3d10 pontos de dano Energético, e o Mestre joga novamente a tabela para ver onde você\nparou (mais de um azar pode acontecer, causando dano a cada vez).\nÁrea Similar. Você e seu grupo (ou o objeto de destino) aparecem em uma área diferente que é visual ou tematicamente semelhante à área de destino. Você aparece no lugar semelhante mais próximo. Se você estiver indo para seu laboratório, por exemplo, pode aparecer no laboratório de outra pessoa na mesma cidade.\nFora do Alvo. Você e seu grupo (ou o objeto alvo)\naparecem a 2d12 x 1,5 quilômetros da distância do destino em uma direção aleatória. Jogue 1d8 para a direção: 1, leste; 2, sudeste; 3, sul; 4, sudoeste; 5, oeste;\n6, noroeste; 7, norte; ou 8, nordeste.\nNo Alvo. Você e seu grupo (ou o objeto alvo) aparecem onde você pretendia.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.643Z"
+  }
+}

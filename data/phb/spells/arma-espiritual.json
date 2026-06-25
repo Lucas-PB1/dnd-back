@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "arma-espiritual",
+  "name": "Arma Espiritual",
+  "level": 2,
+  "levelLabel": "2º Círculo",
+  "school": "Evocação",
+  "classes": [
+    "Clérigo"
+  ],
+  "castingTime": "Ação Bônus",
+  "range": "18 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Concentração, até 1 minuto",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você cria uma energia espectral flutuante que se assemelha a uma arma à sua escolha e permanece pela duração da magia.\nA energia aparece no alcance da magia em um espaço à sua escolha, e você pode realizar imediatamente um ataque mágico corpo a corpo contra uma criatura a até 1,5 metro dela. Em caso de acerto, o alvo sofre 1d8\npontos de dano Energético mais o seu modificador de atributo de conjuração.\nComo uma Ação Bônus em seus turnos posteriores,\nvocê pode mover a energia até 6 metros e repetir o ataque contra uma criatura a até 1,5 metro dela.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. O\ndano aumenta em 1d8 para cada círculo de espaço de magia acima de 2.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.493Z"
+  }
+}

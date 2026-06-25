@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "purificar-alimentos-e-bebidas",
+  "name": "Purificar Alimentos e Bebidas",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Transmutação",
+  "classes": [
+    "Clérigo",
+    "Druida",
+    "Paladino"
+  ],
+  "castingTime": "Ação ou Ritual",
+  "range": "3 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "V, S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": true,
+  "description": "Você remove veneno e podridão de alimentos e bebidas não mágicos em uma Esfera de 1,5 metro de raio centrada em um ponto no alcance da magia.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.620Z"
+  }
+}

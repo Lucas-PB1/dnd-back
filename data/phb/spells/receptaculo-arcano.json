@@ -1,0 +1,36 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "receptaculo-arcano",
+  "name": "Receptáculo Arcano",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Necromancia",
+  "classes": [
+    "Mago"
+  ],
+  "castingTime": "1 minuto",
+  "range": "Pessoal",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "uma gema, cristal ou relicário no valor de 500 ou mais PO",
+    "text": "V, S, M (uma gema, cristal ou relicário no valor de 500 ou mais PO)"
+  },
+  "duration": "Até ser dissipada",
+  "concentration": false,
+  "ritual": false,
+  "description": "Seu corpo entra em um estado catatônico enquanto sua alma se desprende dele e adentra o receptáculo que você utilizou como componente Material da magia.\nEnquanto sua alma habita o receptáculo, você percebe os arredores como se estivesse no espaço ocupado por ele. Você não pode se mover ou usar Reações. A única ação que pode realizar é projetar sua alma a até 30\nmetros do receptáculo, seja retornando ao seu corpo vivo (e encerrando a magia) ou tentando possuir um corpo Humanoide.\nVocê pode tentar possuir qualquer criatura Humanoide a até 30 metros do seu alcance e que esteja à sua vista (criaturas protegidas pela magia Círculo Mágico ou\nProteção contra o Bem e o Mal não podem ser possuídas).\nO alvo deve realizar uma salvaguarda de Carisma.\nSe falhar, a sua alma projeta-se do receptáculo para dentro do corpo do alvo, expulsando a alma dele, que agora fica aprisionada no receptáculo. Em caso de sucesso, o alvo resiste aos seus esforços para possuí-lo,\ne você não pode tentar novamente por 24 horas.\nUma vez que possua o corpo de uma criatura, você\na controla. Seus Pontos de Vida, Dados de Vida, Força,\nDestreza, Constituição, Deslocamento e sentidos são substituídos pelos da criatura. Por outro lado, você\nmantém suas estatísticas de jogo.\nEnquanto isso, a alma da criatura possuída pode perceber a partir do receptáculo usando seus próprios sentidos, mas ela não pode se mover e está Incapacitada.\nEnquanto estiver possuindo um corpo, você pode usar uma de suas ações para retornar do corpo do hospedeiro para o receptáculo, desde que este esteja a até\n30 metros de distância, devolvendo a alma do hospedeiro ao corpo dela. Se o corpo do hospedeiro morrer enquanto você estiver nele, a criatura morre e você deve realizar uma salvaguarda de Carisma contra a CD do seu próprio atributo de conjuração. Em caso de sucesso,\ne se o receptáculo estiver a até 30 metros de distância,\nsua alma retorna a ele. Caso contrário, você morre.\nSe o receptáculo for destruído ou a magia terminar,\nsua alma retorna imediatamente ao seu corpo. Se o seu corpo estiver a mais de 30 metros de distância ou se ele estiver morto quando sua alma tentar retornar,\nvocê morre. Se a alma de outra criatura estiver no receptáculo quando ele for destruído, ela retorna ao corpo dela se este estiver vivo e a até 30 metros de distância. Caso contrário, a criatura morre.\nQuando a magia termina, o receptáculo é destruído.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.625Z"
+  }
+}

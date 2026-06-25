@@ -1,0 +1,40 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "trovao",
+  "name": "Trovão",
+  "level": 0,
+  "levelLabel": "Truque",
+  "school": "Evocação",
+  "classes": [
+    "Bardo",
+    "Bruxo",
+    "Druida",
+    "Feiticeiro",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "Pessoal",
+  "components": {
+    "verbal": false,
+    "somatic": true,
+    "material": false,
+    "materialDescription": null,
+    "text": "S"
+  },
+  "duration": "Instantânea",
+  "concentration": false,
+  "ritual": false,
+  "description": "Cada criatura em uma Emanação de 1,5 metro originada em você deve ser bem-sucedida em uma salvaguarda de Constituição ou sofre 1d6 pontos de dano Trovejante. O som estrondoso da magia pode ser ouvido a até\n30 metros de distância.\nAprimoramento de Truque. O dano aumenta em 1d6\nquando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.649Z"
+  }
+}

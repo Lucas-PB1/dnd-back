@@ -1,0 +1,38 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "invocar-infero",
+  "name": "Invocar Ínfero",
+  "level": 6,
+  "levelLabel": "6º Círculo",
+  "school": "Invocação",
+  "classes": [
+    "Bruxo",
+    "Mago"
+  ],
+  "castingTime": "Ação",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "materialDescription": "um frasco com sangue no valor de 600 ou mais PO",
+    "text": "V, S, M (um frasco com sangue no valor de 600 ou mais PO)"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você invoca um Espírito Ínfero. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Ínfero. Ao conjurar a magia, escolha Demônio, Diabo ou Yugoloth.\nA criatura se assemelha a um Ínfero do tipo escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.\nA criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,\nmas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação\nEsquivar e usa o movimento dela para evitar o perigo.\nEspírito Ínfero\nÍnfero Grande, Neutro\nCA 12 + o círculo da magia\nPV 50 (apenas Demônio) ou 40 (apenas Diabo) ou 60 (apenas\nYugoloth) + 15 para cada círculo de magia acima de 6\nDeslocamento 12 m; Escalada 12 m (apenas Demônio); Voo\n18 m (apenas Diabo)\nMOD SG MOD SG MOD SG\nFor 13 +1 +1 Des 16 +3 +3 Con 16 +2 +2\nInt 10 +0 +0 Sab 10 +0 +0 Car 16 +3 +3\nResistências Ígneo\nImunidades Venenoso; Envenenado\nSentidos Visão no Escuro 18 m, Percepção Passiva 10\nIdiomas Abissal, Infernal, Telepatia 18 m\nND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)\nTraços\nEspasmos da Morte (Apenas Demônio). Quando o espírito é reduzido a 0 Pontos de Vida ou a magia terminar, o espírito explode. Salvaguarda de Destreza: CD é igual a CD para evitar sua magia, cada criatura em uma Emanação de 3 metros originada a partir do espírito. Falha: 2d10 mais o círculo da magia em pontos de dano Ígneo. Sucesso: Metade do dano.\nResistência à Magia. O espírito tem Vantagem em salvaguardas contra magias e outros efeitos mágicos.\nVisão Diabólica (Apenas Diabo). Escuridão Mágica não impede a Visão no Escuro do espírito.\nAções\nAtaques Múltiplos. O espírito realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).\nArremesso de Chamas (Apenas Diabo). Jogada de Ataque à\nDistância: Bônus é igual ao seu modificador de ataque mágico,\nalcance 1,5 m ou alcance 45 m. Dano: 2d6 + 3 mais o círculo da magia em pontos de dano pontos de dano Ígneo.\nGarras (Apenas Yugoloth). Jogada de Ataque Corpo a Corpo:\nBônus é igual ao seu modificador de ataque mágico, alcance\n1,5 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Cortante. Imediatamente após o ataque acertar ou errar,\no espírito pode se teleportar até 9 metros para um espaço desocupado à vista dele.\nMordida (Apenas Demônio). Jogada de Ataque Corpo a Corpo:\nBônus é igual ao seu modificador de ataque mágico, alcance\n1,5 m. Dano: 1d12 + 3 mais o círculo da magia em pontos de dano Necrótico.\nEspírito Ínfero (Diabo)\nEspírito Bestial\nFera Pequena, Neutra\nCA 11 + o círculo da magia\nPV 20 (apenas Ar) ou 30 (apenas Água e Terra) + 5 para cada círculo de magia acima de 2\nDeslocamento 9 m; Escalada 9 m (Apenas Terra); Natação 9 m\n(Apenas água); Voo 18 m (Apenas Ar)\nMOD SG MOD SG MOD SG\nFor 13 +1 +1 Des 16 +3 +3 Con 15 +2 +2\nInt 10 +0 +0 Sab 10 +0 +0 Car 16 +3 +3\nSentidos: Visão no Escuro 18 m, Percepção Passiva 12\nIdiomas: Compreende os idiomas que você fala\nND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)\nTraços\nRespirar na Água (Apenas Água). O espírito só pode respirar debaixo d’água.\nSobrevoo (Apenas Ar). O espírito não provoca Ataques de\nOportunidade quando voa para fora do alcance de um inimigo.\nTáticas de Grupo (Apenas Água e Terra). O espírito tem\nVantagem em uma jogada de ataque contra uma criatura se pelo menos um dos aliados do espírito estiver a até 1,5 metro da criatura e o aliado não tem a condição Incapacitado.\nAções\nAtaques Múltiplos. O espírito realiza um número de ataques de Dilacerar igual à metade do círculo da magia (arredondado para baixo).\nDilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 +\n4 mais o círculo da magia em pontos de dano Perfurante.\nALEXANDRE HONORE",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.578Z"
+  }
+}

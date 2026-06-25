@@ -1,0 +1,37 @@
+{
+  "$schema": "../../schema/spell.schema.json",
+  "id": "marca-do-predador",
+  "name": "Marca do Predador",
+  "level": 1,
+  "levelLabel": "1º Círculo",
+  "school": "Adivinhação",
+  "classes": [
+    "Guardião"
+  ],
+  "castingTime": "Ação Bônus",
+  "range": "27 metros",
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "materialDescription": null,
+    "text": "V"
+  },
+  "duration": "Concentração, até 1 hora",
+  "concentration": true,
+  "ritual": false,
+  "description": "Você marca magicamente como sua presa uma criatura\nà sua vista e no alcance da magia. Até que a magia termine, você causa 1d6 pontos de dano Energético adicionais ao alvo sempre que o acertar com uma jogada de ataque. Você também tem Vantagem em qualquer teste de Sabedoria (Percepção ou Sobrevivência) que realizar para encontrá-lo.\nSe o alvo é reduzido a 0 Pontos de Vida antes que esta magia termine, você pode executar uma ação\nBônus para mover a marca para uma nova criatura à\nsua vista e no alcance da magia.",
+  "higherLevels": "Usando um Espaço de Magia de Círculo Superior.\nSua Concentração pode durar mais com um espaço de magia de 3º–4º círculo (em até 8 horas) ou 5º círculo ou superior (em até 24 horas).",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.589Z"
+  }
+}
