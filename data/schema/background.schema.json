@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/background.schema.json",
+  "title": "Antecedente PHB",
+  "description": "Antecedente do Livro do Jogador 2024 (PT-BR).",
+  "type": "object",
+  "required": [
+    "id",
+    "name",
+    "source",
+    "description",
+    "abilityOptions",
+    "feat",
+    "skills",
+    "toolProficiency",
+    "equipment"
+  ],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "name": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "description": { "type": "string", "minLength": 20 },
+    "abilityOptions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "feat": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "spellList": {
+          "type": "string",
+          "enum": ["Clérigo", "Druida", "Mago"]
+        }
+      }
+    },
+    "skills": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "toolProficiency": {
+      "type": "object",
+      "required": ["description"],
+      "properties": {
+        "description": { "type": "string" },
+        "kind": {
+          "type": "string",
+          "enum": ["fixed", "choice"]
+        },
+        "category": { "type": "string" }
+      }
+    },
+    "equipment": {
+      "type": "object",
+      "required": ["goldOption", "packages"],
+      "properties": {
+        "goldOption": { "type": "string" },
+        "packages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["id", "label", "items"],
+            "properties": {
+              "id": { "type": "string", "enum": ["a"] },
+              "label": { "type": "string" },
+              "items": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 1
+              },
+              "gold": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

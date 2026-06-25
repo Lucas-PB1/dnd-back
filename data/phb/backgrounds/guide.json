@@ -1,0 +1,55 @@
+{
+  "$schema": "../../schema/background.schema.json",
+  "id": "guide",
+  "name": "Guia",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      177,
+      185
+    ],
+    "extractedAt": "2026-06-25T23:29:50.537Z"
+  },
+  "description": "Você cresceu ao ar livre, longe de terras povoadas. Sua casa ficava em qualquer lugar que você escolhesse para estender seu saco de dormir. Há maravilhas na natureza — monstros estranhos, florestas e riachos intocados, ruínas imensas de grandes salões outrora pisados por gigantes — e você aprendeu a se defender enquanto as explorava. De tempos em tempos, você guiava sacerdotes da natureza amigáveis que o instruíam nos fundamentos de canalizar a magia da natureza.",
+  "abilityOptions": [
+    "Destreza",
+    "Constituição",
+    "Sabedoria"
+  ],
+  "feat": {
+    "id": "magic-initiate",
+    "name": "Iniciado em Magia (Druida)",
+    "spellList": "Druida"
+  },
+  "skills": [
+    "Furtividade",
+    "Sobrevivência"
+  ],
+  "toolProficiency": {
+    "description": "Ferramentas de Cartógrafo",
+    "kind": "fixed"
+  },
+  "equipment": {
+    "goldOption": "50 PO",
+    "packages": [
+      {
+        "id": "a",
+        "label": "A",
+        "items": [
+          "Arco Curto",
+          "20 Flechas",
+          "Ferramentas de Cartógrafo",
+          "Aljava",
+          "Roupas de Viagem",
+          "Saco de Dormir",
+          "Tenda"
+        ],
+        "gold": "3 PO"
+      }
+    ]
+  }
+}

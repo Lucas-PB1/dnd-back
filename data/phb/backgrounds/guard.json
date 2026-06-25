@@ -1,0 +1,56 @@
+{
+  "$schema": "../../schema/background.schema.json",
+  "id": "guard",
+  "name": "Guarda",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      177,
+      185
+    ],
+    "extractedAt": "2026-06-25T23:29:50.537Z"
+  },
+  "description": "Seus pés doem quando você se lembra das incontáveis horas que passou em seu posto na torre. Você foi treinado para manter um olho atento para o que ocorria do lado fora da muralha, observando saqueadores vasculhando a floresta próxima, e seu outro olho voltado para dentro da muralha, procurando por assaltantes e encrenqueiros.",
+  "abilityOptions": [
+    "Força",
+    "Inteligência",
+    "Sabedoria"
+  ],
+  "feat": {
+    "id": "alert",
+    "name": "Alerta"
+  },
+  "skills": [
+    "Atletismo",
+    "Percepção"
+  ],
+  "toolProficiency": {
+    "description": "Escolha um tipo de Kit de Jogos (veja o capítulo 6)",
+    "kind": "choice",
+    "category": "Kit de Jogos"
+  },
+  "equipment": {
+    "goldOption": "50 PO",
+    "packages": [
+      {
+        "id": "a",
+        "label": "A",
+        "items": [
+          "Lança",
+          "Besta Leve",
+          "20 Virotes",
+          "Kit de Jogo (o mesmo que acima)",
+          "Aljava",
+          "Grilhões",
+          "Lanterna Coberta",
+          "Roupas de Viagem"
+        ],
+        "gold": "12 PO"
+      }
+    ]
+  }
+}

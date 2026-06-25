@@ -1,0 +1,51 @@
+{
+  "$schema": "../../schema/background.schema.json",
+  "id": "sailor",
+  "name": "Marinheiro",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      177,
+      185
+    ],
+    "extractedAt": "2026-06-25T23:29:50.537Z"
+  },
+  "description": "Você viveu como um marinheiro, com o vento nas costas e os conveses balançando sob seus pés. Você já se sentou em bancos de bar em mais portos de escala do que consegue se lembrar, enfrentou grandes tempestades e trocou histórias com pessoas que vivem sob as ondas.",
+  "abilityOptions": [
+    "Força",
+    "Destreza",
+    "Sabedoria"
+  ],
+  "feat": {
+    "id": "tavern-brawler",
+    "name": "Valentão de Taverna"
+  },
+  "skills": [
+    "Acrobacia",
+    "Percepção"
+  ],
+  "toolProficiency": {
+    "description": "Ferramentas de Navegador",
+    "kind": "fixed"
+  },
+  "equipment": {
+    "goldOption": "50 PO",
+    "packages": [
+      {
+        "id": "a",
+        "label": "A",
+        "items": [
+          "Adaga",
+          "Ferramentas de Navegador",
+          "Corda",
+          "Roupas de Viagem"
+        ],
+        "gold": "20 PO"
+      }
+    ]
+  }
+}

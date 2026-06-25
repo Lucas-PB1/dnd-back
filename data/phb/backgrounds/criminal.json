@@ -1,0 +1,52 @@
+{
+  "$schema": "../../schema/background.schema.json",
+  "id": "criminal",
+  "name": "Criminoso",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      177,
+      185
+    ],
+    "extractedAt": "2026-06-25T23:29:50.537Z"
+  },
+  "description": "Você sobrevivia em becos escuros, furtando pessoas ou assaltando lojas. Talvez fizesse parte de uma pequena gangue de criminosos que se protegiam mutuamente, ou fosse um lobo solitário, enfrentando a guilda dos ladrões locais e os criminosos mais temíveis.",
+  "abilityOptions": [
+    "Destreza",
+    "Constituição",
+    "Inteligência"
+  ],
+  "feat": {
+    "id": "alert",
+    "name": "Alerta"
+  },
+  "skills": [
+    "Furtividade",
+    "Prestidigitação"
+  ],
+  "toolProficiency": {
+    "description": "Ferramentas de Ladrão",
+    "kind": "fixed"
+  },
+  "equipment": {
+    "goldOption": "50 PO",
+    "packages": [
+      {
+        "id": "a",
+        "label": "A",
+        "items": [
+          "2 Adagas",
+          "Ferramentas de Ladrão",
+          "2 Algibeiras",
+          "Pé de Cabra",
+          "Roupas de Viagem"
+        ],
+        "gold": "16 PO"
+      }
+    ]
+  }
+}

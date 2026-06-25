@@ -1,0 +1,54 @@
+{
+  "$schema": "../../schema/background.schema.json",
+  "id": "hermit",
+  "name": "Eremita",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      177,
+      185
+    ],
+    "extractedAt": "2026-06-25T23:29:50.537Z"
+  },
+  "description": "Você passou seus primeiros anos isolado em uma cabana ou mosteiro localizado bem além dos arredores do povoado mais próximo. Naqueles dias, seus únicos companheiros eram as criaturas da floresta e aqueles que ocasionalmente faziam uma visita para trazer suprimentos e notícias do mundo externo. A solidão permitia que você passasse muitas horas ponderando os mistérios da criação.",
+  "abilityOptions": [
+    "Constituição",
+    "Sabedoria",
+    "Carisma"
+  ],
+  "feat": {
+    "id": "healer",
+    "name": "Curandeiro"
+  },
+  "skills": [
+    "Medicina",
+    "Religião"
+  ],
+  "toolProficiency": {
+    "description": "Kit de Herbalismo",
+    "kind": "fixed"
+  },
+  "equipment": {
+    "goldOption": "50 PO",
+    "packages": [
+      {
+        "id": "a",
+        "label": "A",
+        "items": [
+          "Cajado",
+          "Kit de Herbalismo",
+          "Lâmpada",
+          "Livro (filosofia)",
+          "Óleo (3 frascos)",
+          "Roupas de Viagem",
+          "Saco de Dormir"
+        ],
+        "gold": "16 PO"
+      }
+    ]
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "../../schema/background.schema.json",
+  "id": "farmer",
+  "name": "Fazendeiro",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 4,
+    "chapterTitle": "Origens dos Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      177,
+      185
+    ],
+    "extractedAt": "2026-06-25T23:29:50.537Z"
+  },
+  "description": "Você cresceu perto da terra. Os anos cuidando de animais e cultivando a terra o recompensaram com paciência e boa saúde. Você tem um grande apreço pela generosidade da natureza, juntamente com um respeito saudável pela ira dela.",
+  "abilityOptions": [
+    "Força",
+    "Constituição",
+    "Sabedoria"
+  ],
+  "feat": {
+    "id": "tough",
+    "name": "Vigoroso"
+  },
+  "skills": [
+    "Lidar com Animais",
+    "Natureza"
+  ],
+  "toolProficiency": {
+    "description": "Ferramentas de Carpinteiro",
+    "kind": "fixed"
+  },
+  "equipment": {
+    "goldOption": "50 PO",
+    "packages": [
+      {
+        "id": "a",
+        "label": "A",
+        "items": [
+          "Foice",
+          "Ferramentas de Carpinteiro",
+          "Kit de Curandeiro",
+          "Balde de Ferro",
+          "Pá"
+        ],
+        "gold": "30 PO"
+      }
+    ]
+  }
+}
