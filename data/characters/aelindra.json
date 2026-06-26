@@ -15,6 +15,12 @@
     "divineOrder": "thaumaturge",
     "skillIds": ["medicine", "persuasion"]
   },
+  "alignmentId": "neutral-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": ["common", "elvish", "celestial"],
   "abilities": {
     "forca": 10,
     "destreza": 14,

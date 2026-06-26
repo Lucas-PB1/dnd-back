@@ -75,6 +75,21 @@ const spellIds = new Set(
 const skillIds = new Set(
   JSON.parse(fs.readFileSync(path.join(phb, "skills/index.json"), "utf8")).skills.map((s) => s.id)
 );
+const alignmentIds = new Set(
+  JSON.parse(fs.readFileSync(path.join(phb, "creation/alignments.json"), "utf8")).alignments.map(
+    (a) => a.id
+  )
+);
+const languageIds = new Set(
+  JSON.parse(fs.readFileSync(path.join(phb, "creation/languages.json"), "utf8")).languages.map(
+    (l) => l.id
+  )
+);
+const abilityMethods = new Set(
+  JSON.parse(
+    fs.readFileSync(path.join(phb, "creation/ability-generation.json"), "utf8")
+  ).methods.map((m) => m.id)
+);
 const itemIds = collectItemIds();
 
 let errors = 0;
@@ -229,6 +244,17 @@ for (const file of files) {
 
   for (const s of doc.skillProficiencies) {
     if (!skillIds.has(s.skillId)) fail(`${label}: skillId ${s.skillId}`);
+  }
+
+  if (!alignmentIds.has(doc.alignmentId)) fail(`${label}: alignmentId ${doc.alignmentId}`);
+  if (!abilityMethods.has(doc.abilityGeneration?.methodId)) {
+    fail(`${label}: abilityGeneration.methodId ${doc.abilityGeneration?.methodId}`);
+  }
+  if (!doc.languageIds.includes("common")) {
+    fail(`${label}: languageIds deve incluir common`);
+  }
+  for (const langId of doc.languageIds) {
+    if (!languageIds.has(langId)) fail(`${label}: languageId ${langId}`);
   }
 
   for (const item of doc.equipment) {

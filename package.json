@@ -18,7 +18,10 @@
     "generate:skills": "node scripts/generate-skills.mjs",
     "validate:skills": "node scripts/validate-skills.mjs",
     "skills:all": "npm run generate:skills && npm run validate:skills",
+    "validate:creation": "node scripts/validate-creation.mjs",
+    "creation:all": "npm run validate:creation",
     "validate:rules": "node scripts/validate-rules.mjs",
+    "apply:hp": "node scripts/apply-hp-data.mjs",
     "rules:all": "npm run apply:hp && npm run validate:rules",
     "spellcasting:all": "npm run generate:spell-lists && npm run apply:progression && npm run validate:spellcasting && npm run check:spellcasting && npm run verify:pdf-progression"
   },

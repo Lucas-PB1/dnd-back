@@ -12,6 +12,9 @@
     "speciesChoices",
     "backgroundId",
     "classId",
+    "alignmentId",
+    "abilityGeneration",
+    "languageIds",
     "abilities",
     "skillProficiencies",
     "savingThrowProficiencies",
@@ -33,6 +36,14 @@
     "classId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
     "subclassId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
     "classChoices": { "$ref": "#/$defs/classChoices" },
+    "alignmentId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "abilityGeneration": { "$ref": "#/$defs/abilityGeneration" },
+    "languageIds": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
     "abilities": { "$ref": "#/$defs/abilities" },
     "skillProficiencies": {
       "type": "array",
@@ -109,6 +120,21 @@
         "skillIds": {
           "type": "array",
           "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "abilityGeneration": {
+      "type": "object",
+      "required": ["methodId"],
+      "properties": {
+        "methodId": {
+          "type": "string",
+          "enum": ["standard-array", "roll", "point-buy"]
+        },
+        "backgroundBoostId": {
+          "type": "string",
+          "enum": ["two-and-one", "three-plus-one"]
         }
       },
       "additionalProperties": false

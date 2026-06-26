@@ -1,0 +1,100 @@
+{
+  "$schema": "../../schema/alignments.schema.json",
+  "id": "alignments",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 2,
+    "chapterTitle": "Criação de Personagens",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [39, 39]
+  },
+  "summary": "O alinhamento combina moralidade (bom, mau, neutro) com ordem (ordeiro, caótico, neutro). D&D presume que personagens dos jogadores não tenham alinhamento mau — consulte o Mestre.",
+  "axes": {
+    "morality": [
+      { "id": "good", "name": "Bom" },
+      { "id": "neutral", "name": "Neutro" },
+      { "id": "evil", "name": "Mau" }
+    ],
+    "order": [
+      { "id": "lawful", "name": "Ordeiro" },
+      { "id": "neutral", "name": "Neutro" },
+      { "id": "chaotic", "name": "Caótico" }
+    ]
+  },
+  "alignments": [
+    {
+      "id": "lawful-good",
+      "abbreviation": "OB",
+      "name": "Ordeiro e Bom",
+      "morality": "good",
+      "order": "lawful",
+      "description": "Criaturas Ordeiras e Boas se esforçam para fazer a coisa certa, conforme esperado pela sociedade."
+    },
+    {
+      "id": "neutral-good",
+      "abbreviation": "NB",
+      "name": "Neutro e Bom",
+      "morality": "good",
+      "order": "neutral",
+      "description": "Criaturas Neutras e Boas fazem o melhor que podem, trabalhando dentro das regras, mas sem se sentir obrigadas por elas."
+    },
+    {
+      "id": "chaotic-good",
+      "abbreviation": "CB",
+      "name": "Caótico e Bom",
+      "morality": "good",
+      "order": "chaotic",
+      "description": "Criaturas Caóticas e Boas agem conforme sua consciência, sem se importar muito com o que os outros esperam."
+    },
+    {
+      "id": "lawful-neutral",
+      "abbreviation": "ON",
+      "name": "Ordeiro e Neutro",
+      "morality": "neutral",
+      "order": "lawful",
+      "description": "Indivíduos Ordeiros e Neutros agem de acordo com a lei, tradição ou códigos pessoais."
+    },
+    {
+      "id": "true-neutral",
+      "abbreviation": "N",
+      "name": "Neutro",
+      "morality": "neutral",
+      "order": "neutral",
+      "description": "Neutro é o alinhamento daqueles que preferem evitar questões morais e não tomam partido."
+    },
+    {
+      "id": "chaotic-neutral",
+      "abbreviation": "CN",
+      "name": "Caótico e Neutro",
+      "morality": "neutral",
+      "order": "chaotic",
+      "description": "Criaturas Caóticas e Neutras seguem seus impulsos, valorizando sua liberdade pessoal acima de tudo."
+    },
+    {
+      "id": "lawful-evil",
+      "abbreviation": "OM",
+      "name": "Ordeiro e Mau",
+      "morality": "evil",
+      "order": "lawful",
+      "description": "Criaturas Ordeiras e Más tomam metodicamente o que querem dentro dos limites de um código de tradição, lealdade ou ordem."
+    },
+    {
+      "id": "neutral-evil",
+      "abbreviation": "NM",
+      "name": "Neutro e Mau",
+      "morality": "evil",
+      "order": "neutral",
+      "description": "Neutro e Mau é o alinhamento daqueles que não se preocupam com o mal que causam enquanto perseguem seus desejos."
+    },
+    {
+      "id": "chaotic-evil",
+      "abbreviation": "CM",
+      "name": "Caótico e Mau",
+      "morality": "evil",
+      "order": "chaotic",
+      "description": "Criaturas Caóticas e Más agem com violência arbitrária, impulsionadas pelo ódio ou pela sede de sangue."
+    }
+  ],
+  "noAlignmentNote": "A maioria das criaturas sem pensamento racional não tem alinhamento."
+}
