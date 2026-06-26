@@ -28,6 +28,9 @@ Snapshot do que consideramos **in scope** para a ficha (atualizado conforme extr
 | Equipamento | Armas, armaduras, itens, moedas | `weapons/`, `armor/`, `equipment/` |
 | **Propriedades de armas** | Glossário + ids nas 38 armas | `weapons/properties.json`, `propertyIds`, `masteryId` |
 | **Maestria em armas** | Slots por classe + escolhas na ficha | `weapons/mastery-progression.json`, `weaponMasteryWeaponIds` |
+| **Propriedades de armadura** | Glossário + ids nos 13 itens | `armor/properties.json`, `propertyIds`, `acFormula` |
+| **CA na ficha** | Campo derivado validado | `armorClass` + `expectedArmorClass()` |
+| **Estilo de luta** | Escolha de classe | `classChoices.fightingStyleId`, `classes/fighting-styles.json` |
 | Ficha de teste | Schema + validador + 2 fichas exemplo | `character.schema.json`, `validate:character` |
 
 ### ✅ Validação derivada
@@ -38,6 +41,8 @@ Snapshot do que consideramos **in scope** para a ficha (atualizado conforme extr
 | Magias de subclasse sempre preparadas | `preparedSpellsByLevel` em `subclasses/*.json` |
 | Maestria em armas vs nível/classe | `validateWeaponMasteryChoices()` |
 | Treinamento de armadura equipada | `validateEquippedArmorTraining()` |
+| CA vs armadura + escudo + estilo | `validateArmorClass()` |
+| Estilo de luta (guerreiro/paladino/ranger) | `validateFightingStyle()` |
 | Conjuração, PV, equipamento inicial | `validate-character.mjs` |
 
 ### 🔲 Secundário (só se a ficha guardar o campo)
@@ -73,6 +78,8 @@ Nome, aparência, personalidade, história, notas.
 | `languageIds` | ✅ | inclui `common` |
 | `feats[]`, perícias, equipamento | ✅ | |
 | `weaponMasteryWeaponIds` | ✅ | Obrigatório quando a classe concede maestria (ex.: guerreiro) |
+| `armorClass` | ✅ | Total + decomposição (base, dex, escudo, estilo) |
+| `classChoices.fightingStyleId` | ✅ | Guerreiro, paladino, ranger nível 1+ |
 | `spellcasting` (opcional) | ✅ | Obrigatório só para conjuradores; omitir em guerreiro etc. |
 
 ### Estado em jogo
@@ -113,7 +120,8 @@ npm run validate:character    # fichas
 npm run validate:references   # classes, antecedentes, skills
 npm run rules:all             # PV, proficiência
 npm run skills:all            # perícias
-npm run weapons:all            # propriedades + maestria estruturadas
+npm run weapons:all            # propriedades + maestria de armas
+npm run armor:all              # propriedades + fórmula de CA de armaduras
 npm run spellcasting:all      # conjuração + PDF
 ```
 
@@ -210,11 +218,14 @@ flowchart TD
 
 - [x] Glossário de propriedades e maestrias de armas (`weapons/properties.json`)
 - [x] Armas com `propertyIds`, `masteryId`, alcance/versátil/munição estruturados
+- [x] **Glossário de propriedades de armadura** (`armor/properties.json`)
+- [x] Armaduras com `propertyIds`, `acFormula`, `strengthMinimum`
 - [x] Progressão de maestria por classe (`weapons/mastery-progression.json`)
 - [x] Campo `weaponMasteryWeaponIds` na ficha + validador
 - [x] Validador de treinamento de armadura equipada
-- [ ] CA calculada na ficha (runtime ou campo derivado)
-- [ ] Estilo de luta, proficiência fina por arma
+- [x] **CA na ficha** (`armorClass`) validada vs equipamento + Destreza + estilo Defensivo
+- [x] **Estilo de luta** (`fightingStyleId`) para guerreiro/paladino/ranger
+- [ ] Proficiência fina por arma, Combatente Abençoado/Druídico
 
 ### Fora do roadmap
 
@@ -234,7 +245,10 @@ UI, exportação, motor de combate, Apêndice B, LM, multiclasse.
 | Propriedade de arma | `finesse`, `light`, `thrown`, `two-handed`, … |
 | Maestria de arma | `nick`, `vex`, `sap`, `cleave`, … |
 | Maestria escolhida | `weapon id` (ex.: `longsword`) — não o id da propriedade |
-| Armadura | campos no item: `category`, `ac`, `strength`, `stealthDisadvantage` (sem glossário separado) |
+| Propriedade de armadura | `stealth-disadvantage`, `strength-requirement`, `shield-ac-bonus` |
+| Fórmula de CA | `acFormula.type`: `dex-plus-base`, `fixed`, `shield-bonus` |
+| Estilo de luta | `defense`, `dueling`, `archery`, … (feat id) |
+| Armadura (legado) | colunas `ac`, `strength`, `stealthDisadvantage` mantidas para leitura |
 | Classe / espécie / etc. | Ver `index.json` de cada pasta |
 
 ---
@@ -278,6 +292,38 @@ Maestria na ficha (guerreiro nível 1 = 3 slots):
 
 Slots por classe/nível: `weapons/mastery-progression.json`.
 
-## Armaduras
+Regras com ids: `weapons/rules.json` referencia o mesmo glossário de `properties.json`.
 
-No PHB 2024, armadura não usa glossário de “propriedades” como armas. Cada item em `armor/armor.json` traz CA, categoria (leve/média/pesada/escudo), requisito de Força e desvantagem em Furtividade. O validador confere se a classe tem treinamento para a armadura **equipada**.
+## Armaduras — propriedades e CA
+
+Glossário em `armor/properties.json`. Cada item referencia ids e fórmula:
+
+```json
+{
+  "id": "chain-mail",
+  "category": "heavy",
+  "propertyIds": ["stealth-disadvantage", "strength-requirement"],
+  "strengthMinimum": 13,
+  "acFormula": { "type": "fixed", "base": 16 }
+}
+```
+
+CA na ficha (Marcus: cota de malha 16 + escudo 2 + Defensivo +1):
+
+```json
+"armorClass": {
+  "total": 19,
+  "base": 16,
+  "dexBonus": 0,
+  "shieldBonus": 2,
+  "fightingStyleBonus": 1
+}
+```
+
+Estilo de luta (guerreiro nível 1):
+
+```json
+"classChoices": { "fightingStyleId": "defense", "skillIds": ["history", "survival"] }
+```
+
+Regras com ids: `armor/rules.json` + `classes/fighting-styles.json`.

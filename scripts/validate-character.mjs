@@ -22,6 +22,8 @@ import {
   loadClass,
   validateAbilityScores,
   validateEquippedArmorTraining,
+  validateArmorClass,
+  validateFightingStyle,
   validateWeaponMasteryChoices,
 } from "./character-rules.mjs";
 
@@ -303,6 +305,16 @@ for (const file of files) {
   const armorCheck = validateEquippedArmorTraining(doc);
   if (!armorCheck.ok) {
     fail(`${label}: armadura — ${armorCheck.reason}`);
+  }
+
+  const styleCheck = validateFightingStyle(doc);
+  if (!styleCheck.ok) {
+    fail(`${label}: estilo de luta — ${styleCheck.reason}`);
+  }
+
+  const acCheck = validateArmorClass(doc);
+  if (!acCheck.ok) {
+    fail(`${label}: CA — ${acCheck.reason}`);
   }
 
   const expectedHp = expectedMaxHp(doc.classId, doc.level, doc.abilities.constituicao);

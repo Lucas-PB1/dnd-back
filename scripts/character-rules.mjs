@@ -258,6 +258,9 @@ const ARMOR_DOC = JSON.parse(fs.readFileSync(path.join(phb, "armor/armor.json"),
 const MASTERY_PROGRESSION = JSON.parse(
   fs.readFileSync(path.join(phb, "weapons/mastery-progression.json"), "utf8")
 );
+const FIGHTING_STYLES = JSON.parse(
+  fs.readFileSync(path.join(phb, "classes/fighting-styles.json"), "utf8")
+);
 
 const WEAPONS_BY_ID = Object.fromEntries(WEAPONS_DOC.weapons.map((w) => [w.id, w]));
 const ARMOR_BY_ID = Object.fromEntries(ARMOR_DOC.items.map((a) => [a.id, a]));
@@ -354,6 +357,112 @@ export function validateEquippedArmorTraining(doc) {
         reason: `sem treinamento para ${armor.name} (${armor.category})`,
       };
     }
+  }
+
+  return { ok: true };
+}
+
+function equippedItem(doc, slot) {
+  return doc.equipment.find((item) => item.equipped && item.slot === slot);
+}
+
+/** Calcula CA esperada a partir de armadura equipada, escudo, Destreza e estilo de luta. */
+export function expectedArmorClass(doc) {
+  const dexMod = abilityMod(doc.abilities.destreza);
+  const armorItem = equippedItem(doc, "armor");
+  const shieldItem = equippedItem(doc, "shield");
+
+  let base = 10;
+  let dexBonus = dexMod;
+  let shieldBonus = 0;
+  let fightingStyleBonus = 0;
+
+  if (armorItem) {
+    const armor = loadArmor(armorItem.itemId);
+    if (armor?.acFormula?.type === "fixed") {
+      base = armor.acFormula.base;
+      dexBonus = 0;
+    } else if (armor?.acFormula?.type === "dex-plus-base") {
+      base = armor.acFormula.base;
+      const cap = armor.acFormula.dexMax;
+      dexBonus = cap != null ? Math.min(dexMod, cap) : dexMod;
+    }
+  }
+
+  if (shieldItem) {
+    const shield = loadArmor(shieldItem.itemId);
+    shieldBonus = shield?.acFormula?.bonus ?? 0;
+  }
+
+  const styleId = doc.classChoices?.fightingStyleId;
+  const styleRule = styleId ? FIGHTING_STYLES.acBonuses?.[styleId] : null;
+  if (styleRule) {
+    const wornArmor = armorItem ? loadArmor(armorItem.itemId) : null;
+    const qualifies =
+      !styleRule.requiresEquippedArmor ||
+      (wornArmor && styleRule.armorCategories?.includes(wornArmor.category));
+    if (qualifies) fightingStyleBonus = styleRule.bonus;
+  }
+
+  const otherBonus = doc.armorClass?.otherBonus ?? 0;
+  const total = base + dexBonus + shieldBonus + fightingStyleBonus + otherBonus;
+
+  return {
+    total,
+    base,
+    dexBonus,
+    shieldBonus,
+    fightingStyleBonus,
+    otherBonus,
+  };
+}
+
+export function validateArmorClass(doc) {
+  const expected = expectedArmorClass(doc);
+  const actual = doc.armorClass;
+
+  if (!actual) {
+    return { ok: false, reason: "armorClass ausente" };
+  }
+
+  if (actual.total !== expected.total) {
+    return {
+      ok: false,
+      reason: `armorClass.total=${actual.total}, esperado ${expected.total}`,
+    };
+  }
+
+  const fields = ["base", "dexBonus", "shieldBonus", "fightingStyleBonus"];
+  for (const field of fields) {
+    if (actual[field] != null && actual[field] !== expected[field]) {
+      return {
+        ok: false,
+        reason: `armorClass.${field}=${actual[field]}, esperado ${expected[field]}`,
+      };
+    }
+  }
+
+  return { ok: true };
+}
+
+export function validateFightingStyle(doc) {
+  const needsStyle =
+    FIGHTING_STYLES.classesWithFightingStyle.includes(doc.classId) &&
+    doc.level >= FIGHTING_STYLES.unlockLevel;
+
+  const styleId = doc.classChoices?.fightingStyleId;
+
+  if (!needsStyle) {
+    if (styleId) return { ok: false, reason: "classe não usa estilo de luta" };
+    return { ok: true };
+  }
+
+  if (!styleId) {
+    return { ok: false, reason: "classChoices.fightingStyleId ausente" };
+  }
+
+  if (!FIGHTING_STYLES.standardStyleIds.includes(styleId)) {
+    return { ok: false, reason: `estilo de luta inválido: ${styleId}` };
   }
 
   return { ok: true };

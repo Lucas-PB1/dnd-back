@@ -21,6 +21,7 @@
     "startingPackages",
     "equipment",
     "hp",
+    "armorClass",
     "resources"
   ],
   "properties": {
@@ -75,6 +76,7 @@
       "items": { "$ref": "#/$defs/equipmentItem" }
     },
     "hp": { "$ref": "#/$defs/hp" },
+    "armorClass": { "$ref": "#/$defs/armorClass" },
     "resources": { "$ref": "#/$defs/resources" },
     "weaponMasteryWeaponIds": {
       "type": "array",
@@ -124,6 +126,10 @@
         "skillIds": {
           "type": "array",
           "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+        },
+        "fightingStyleId": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
         }
       },
       "additionalProperties": false
@@ -252,6 +258,19 @@
         "current": { "type": "integer", "minimum": 0 },
         "max": { "type": "integer", "minimum": 1 },
         "temp": { "type": "integer", "minimum": 0, "default": 0 }
+      },
+      "additionalProperties": false
+    },
+    "armorClass": {
+      "type": "object",
+      "required": ["total"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "base": { "type": "integer" },
+        "dexBonus": { "type": "integer" },
+        "shieldBonus": { "type": "integer", "minimum": 0 },
+        "fightingStyleBonus": { "type": "integer", "minimum": 0 },
+        "otherBonus": { "type": "integer", "default": 0 }
       },
       "additionalProperties": false
     },

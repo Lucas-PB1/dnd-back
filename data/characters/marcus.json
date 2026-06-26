@@ -7,7 +7,8 @@
   "backgroundId": "soldier",
   "classId": "fighter",
   "classChoices": {
-    "skillIds": ["history", "survival"]
+    "skillIds": ["history", "survival"],
+    "fightingStyleId": "defense"
   },
   "alignmentId": "lawful-neutral",
   "abilityGeneration": {
@@ -56,6 +57,13 @@
     { "itemId": "roupas-viagem", "source": "background-starting" }
   ],
   "hp": { "current": 12, "max": 12, "temp": 0 },
+  "armorClass": {
+    "total": 19,
+    "base": 16,
+    "dexBonus": 0,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 1
+  },
   "weaponMasteryWeaponIds": ["longsword", "light-crossbow", "spear"],
   "resources": {},
   "notes": "Pacote A da classe + pacote A do antecedente Soldado. Conjunto padrão com +1 em For, Des e Con (soldado). 18 PO iniciais (4 + 14)."

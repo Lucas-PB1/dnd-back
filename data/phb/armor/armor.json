@@ -25,7 +25,14 @@
       "strength": null,
       "stealthDisadvantage": true,
       "weight": "4 kg",
-      "cost": "5 PO"
+      "cost": "5 PO",
+      "acFormula": {
+        "type": "dex-plus-base",
+        "base": 11
+      },
+      "propertyIds": [
+        "stealth-disadvantage"
+      ]
     },
     {
       "id": "leather",
@@ -35,7 +42,12 @@
       "strength": null,
       "stealthDisadvantage": false,
       "weight": "5 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "acFormula": {
+        "type": "dex-plus-base",
+        "base": 11
+      },
+      "propertyIds": []
     },
     {
       "id": "studded-leather",
@@ -45,7 +57,12 @@
       "strength": null,
       "stealthDisadvantage": false,
       "weight": "6,5 kg",
-      "cost": "45 PO"
+      "cost": "45 PO",
+      "acFormula": {
+        "type": "dex-plus-base",
+        "base": 12
+      },
+      "propertyIds": []
     },
     {
       "id": "hide",
@@ -55,7 +72,13 @@
       "strength": null,
       "stealthDisadvantage": false,
       "weight": "6 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "acFormula": {
+        "type": "dex-plus-base",
+        "base": 12,
+        "dexMax": 2
+      },
+      "propertyIds": []
     },
     {
       "id": "chain-shirt",
@@ -65,7 +88,13 @@
       "strength": null,
       "stealthDisadvantage": false,
       "weight": "10 kg",
-      "cost": "50 PO"
+      "cost": "50 PO",
+      "acFormula": {
+        "type": "dex-plus-base",
+        "base": 13,
+        "dexMax": 2
+      },
+      "propertyIds": []
     },
     {
       "id": "scale-mail",
@@ -75,7 +104,15 @@
       "strength": null,
       "stealthDisadvantage": true,
       "weight": "22 kg",
-      "cost": "50 PO"
+      "cost": "50 PO",
+      "acFormula": {
+        "type": "dex-plus-base",
+        "base": 14,
+        "dexMax": 2
+      },
+      "propertyIds": [
+        "stealth-disadvantage"
+      ]
     },
     {
       "id": "breastplate",
@@ -85,7 +122,13 @@
       "strength": null,
       "stealthDisadvantage": false,
       "weight": "10 kg",
-      "cost": "400 PO"
+      "cost": "400 PO",
+      "acFormula": {
+        "type": "dex-plus-base",
+        "base": 14,
+        "dexMax": 2
+      },
+      "propertyIds": []
     },
     {
       "id": "half-plate",
@@ -95,7 +138,15 @@
       "strength": null,
       "stealthDisadvantage": true,
       "weight": "20 kg",
-      "cost": "750 PO"
+      "cost": "750 PO",
+      "acFormula": {
+        "type": "dex-plus-base",
+        "base": 15,
+        "dexMax": 2
+      },
+      "propertyIds": [
+        "stealth-disadvantage"
+      ]
     },
     {
       "id": "ring-mail",
@@ -105,7 +156,14 @@
       "strength": null,
       "stealthDisadvantage": true,
       "weight": "20 kg",
-      "cost": "30 PO"
+      "cost": "30 PO",
+      "acFormula": {
+        "type": "fixed",
+        "base": 14
+      },
+      "propertyIds": [
+        "stealth-disadvantage"
+      ]
     },
     {
       "id": "chain-mail",
@@ -115,7 +173,16 @@
       "strength": "For 13",
       "stealthDisadvantage": true,
       "weight": "27 kg",
-      "cost": "75 PO"
+      "cost": "75 PO",
+      "acFormula": {
+        "type": "fixed",
+        "base": 16
+      },
+      "propertyIds": [
+        "stealth-disadvantage",
+        "strength-requirement"
+      ],
+      "strengthMinimum": 13
     },
     {
       "id": "splint",
@@ -125,7 +192,16 @@
       "strength": "For 15",
       "stealthDisadvantage": true,
       "weight": "30 kg",
-      "cost": "200 PO"
+      "cost": "200 PO",
+      "acFormula": {
+        "type": "fixed",
+        "base": 17
+      },
+      "propertyIds": [
+        "stealth-disadvantage",
+        "strength-requirement"
+      ],
+      "strengthMinimum": 15
     },
     {
       "id": "plate",
@@ -135,7 +211,16 @@
       "strength": "For 15",
       "stealthDisadvantage": true,
       "weight": "32 kg",
-      "cost": "1.500 PO"
+      "cost": "1.500 PO",
+      "acFormula": {
+        "type": "fixed",
+        "base": 18
+      },
+      "propertyIds": [
+        "stealth-disadvantage",
+        "strength-requirement"
+      ],
+      "strengthMinimum": 15
     },
     {
       "id": "shield",
@@ -145,7 +230,14 @@
       "strength": null,
       "stealthDisadvantage": false,
       "weight": "3 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "acFormula": {
+        "type": "shield-bonus",
+        "bonus": 2
+      },
+      "propertyIds": [
+        "shield-ac-bonus"
+      ]
     }
   ]
 }

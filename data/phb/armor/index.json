@@ -18,6 +18,10 @@
   "itemCount": 13,
   "files": [
     {
+      "id": "armor-properties",
+      "file": "properties.json"
+    },
+    {
       "id": "armor-rules",
       "file": "rules.json"
     },

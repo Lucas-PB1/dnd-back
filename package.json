@@ -26,6 +26,9 @@
     "apply:weapons": "node scripts/apply-weapon-structure.mjs",
     "validate:weapons": "node scripts/validate-weapons.mjs",
     "weapons:all": "npm run apply:weapons && npm run validate:weapons",
+    "apply:armor": "node scripts/apply-armor-structure.mjs",
+    "validate:armor": "node scripts/validate-armor.mjs",
+    "armor:all": "npm run apply:armor && npm run validate:armor",
     "spellcasting:all": "npm run generate:spell-lists && npm run apply:progression && npm run validate:spellcasting && npm run check:spellcasting && npm run verify:pdf-progression"
   },
   "keywords": [],

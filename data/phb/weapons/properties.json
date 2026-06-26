@@ -52,6 +52,11 @@
       "description": "Você pode disparar apenas uma única peça de munição de uma arma com Recarga ao executar uma ação, uma Ação Bônus ou uma Reação para dispará-la, independentemente do número de ataques que você normalmente pode realizar."
     },
     {
+      "id": "range",
+      "name": "Alcance",
+      "description": "Indicado entre parênteses após Munição ou Arremesso. O primeiro número é o alcance normal em metros; o segundo, o alcance máximo. Ataques além do alcance normal têm Desvantagem; além do máximo são impossíveis."
+    },
+    {
       "id": "versatile",
       "name": "Versátil",
       "description": "Uma arma Versátil pode ser usada com uma ou duas mãos. Um valor de dano entre parênteses aparece com a propriedade. A arma causa esse dano quando usada com as duas mãos ao realizar um ataque corpo a corpo."
