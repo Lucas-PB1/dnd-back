@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/weapon-properties.schema.json",
+  "title": "Propriedades e maestrias de armas",
+  "type": "object",
+  "required": ["id", "source", "weaponProperties", "weaponMasteries"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "weaponProperties": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/glossaryEntry" },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "weaponMasteries": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/glossaryEntry" },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  },
+  "$defs": {
+    "glossaryEntry": {
+      "type": "object",
+      "required": ["id", "name", "description"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "name": { "type": "string" },
+        "description": { "type": "string", "minLength": 10 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

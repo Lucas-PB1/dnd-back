@@ -23,6 +23,9 @@
     "validate:rules": "node scripts/validate-rules.mjs",
     "apply:hp": "node scripts/apply-hp-data.mjs",
     "rules:all": "npm run apply:hp && npm run validate:rules",
+    "apply:weapons": "node scripts/apply-weapon-structure.mjs",
+    "validate:weapons": "node scripts/validate-weapons.mjs",
+    "weapons:all": "npm run apply:weapons && npm run validate:weapons",
     "spellcasting:all": "npm run generate:spell-lists && npm run apply:progression && npm run validate:spellcasting && npm run check:spellcasting && npm run verify:pdf-progression"
   },
   "keywords": [],

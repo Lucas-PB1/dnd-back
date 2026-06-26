@@ -76,6 +76,12 @@
     },
     "hp": { "$ref": "#/$defs/hp" },
     "resources": { "$ref": "#/$defs/resources" },
+    "weaponMasteryWeaponIds": {
+      "type": "array",
+      "description": "Tipos de arma (weapon id) cujas propriedades de maestria o personagem pode usar.",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+      "uniqueItems": true
+    },
     "notes": { "type": "string" }
   },
   "additionalProperties": false,

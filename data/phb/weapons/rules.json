@@ -29,7 +29,7 @@
     },
     {
       "name": "Arremesso",
-      "description": "Se uma arma possui a propriedade Arremesso, você\npode arremessá-la para realizar um ataque à distância, e\npode sacar essa arma como parte do ataque. Se a arma\nfor corpo a corpo, utilize o mesmo modificador de atributo para as jogadas de ataque e dano que você emprega ao realizar um ataque corpo a corpo com essa arma.\nVendendo Equipamento\nO equipamento é vendido pela metade de seu preço.\nEm contraste, bens comerciais e objetos de valor - como\npedras preciosas e objetos de arte — mantêm seu preço\ntotal no mercado. O Livro do Mestre traz os preços para\nitens mágicos."
+      "description": "Se uma arma possui a propriedade Arremesso, você\npode arremessá-la para realizar um ataque à distância, e\npode sacar essa arma como parte do ataque. Se a arma\nfor corpo a corpo, utilize o mesmo modificador de atributo para as jogadas de ataque e dano que você emprega ao realizar um ataque corpo a corpo com essa arma."
     },
     {
       "name": "Duas Mãos",

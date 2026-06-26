@@ -21,6 +21,8 @@ import {
   loadBackground,
   loadClass,
   validateAbilityScores,
+  validateEquippedArmorTraining,
+  validateWeaponMasteryChoices,
 } from "./character-rules.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -291,6 +293,16 @@ for (const file of files) {
   const abilityCheck = validateAbilityScores(doc);
   if (!abilityCheck.ok) {
     fail(`${label}: atributos — ${abilityCheck.reason}`);
+  }
+
+  const masteryCheck = validateWeaponMasteryChoices(doc);
+  if (!masteryCheck.ok) {
+    fail(`${label}: maestria em armas — ${masteryCheck.reason}`);
+  }
+
+  const armorCheck = validateEquippedArmorTraining(doc);
+  if (!armorCheck.ok) {
+    fail(`${label}: armadura — ${armorCheck.reason}`);
   }
 
   const expectedHp = expectedMaxHp(doc.classId, doc.level, doc.abilities.constituicao);

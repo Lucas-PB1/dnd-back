@@ -18,6 +18,14 @@
   "weaponCount": 38,
   "files": [
     {
+      "id": "weapon-properties",
+      "file": "properties.json"
+    },
+    {
+      "id": "weapon-mastery-progression",
+      "file": "mastery-progression.json"
+    },
+    {
       "id": "weapon-rules",
       "file": "rules.json"
     },

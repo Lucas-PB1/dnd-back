@@ -54,7 +54,17 @@
       "properties": "Acuidade, Arremesso (Alcance 6/18), Leve",
       "mastery": "Ágil",
       "weight": "0,5 kg",
-      "cost": "2 PO"
+      "cost": "2 PO",
+      "propertyIds": [
+        "finesse",
+        "thrown",
+        "light"
+      ],
+      "masteryId": "nick",
+      "range": {
+        "normal": 6,
+        "max": 18
+      }
     },
     {
       "id": "javelin",
@@ -67,7 +77,15 @@
       "properties": "Arremesso (Alcance 9/36)",
       "mastery": "Lentidão",
       "weight": "1 kg",
-      "cost": "5 PP"
+      "cost": "5 PP",
+      "propertyIds": [
+        "thrown"
+      ],
+      "masteryId": "slow",
+      "range": {
+        "normal": 9,
+        "max": 36
+      }
     },
     {
       "id": "quarterstaff",
@@ -80,7 +98,12 @@
       "properties": "Versátil (1d8)",
       "mastery": "Derrubar",
       "weight": "2 kg",
-      "cost": "2 PP"
+      "cost": "2 PP",
+      "propertyIds": [
+        "versatile"
+      ],
+      "masteryId": "topple",
+      "versatileDamage": "1d8"
     },
     {
       "id": "club",
@@ -93,7 +116,11 @@
       "properties": "Leve",
       "mastery": "Lentidão",
       "weight": "1 kg",
-      "cost": "1 PP"
+      "cost": "1 PP",
+      "propertyIds": [
+        "light"
+      ],
+      "masteryId": "slow"
     },
     {
       "id": "greatclub",
@@ -106,7 +133,11 @@
       "properties": "Duas Mãos",
       "mastery": "Empurrar",
       "weight": "5 kg",
-      "cost": "2 PP"
+      "cost": "2 PP",
+      "propertyIds": [
+        "two-handed"
+      ],
+      "masteryId": "push"
     },
     {
       "id": "sickle",
@@ -119,7 +150,11 @@
       "properties": "Leve",
       "mastery": "Ágil",
       "weight": "1 kg",
-      "cost": "1 PO"
+      "cost": "1 PO",
+      "propertyIds": [
+        "light"
+      ],
+      "masteryId": "nick"
     },
     {
       "id": "spear",
@@ -132,7 +167,17 @@
       "properties": "Arremesso (Alcance 6/18), Versátil (1d8)",
       "mastery": "Drenar",
       "weight": "1,5 kg",
-      "cost": "1 PO"
+      "cost": "1 PO",
+      "propertyIds": [
+        "thrown",
+        "versatile"
+      ],
+      "masteryId": "sap",
+      "range": {
+        "normal": 6,
+        "max": 18
+      },
+      "versatileDamage": "1d8"
     },
     {
       "id": "mace",
@@ -145,7 +190,9 @@
       "properties": "—",
       "mastery": "Drenar",
       "weight": "2 kg",
-      "cost": "5 PO"
+      "cost": "5 PO",
+      "propertyIds": [],
+      "masteryId": "sap"
     },
     {
       "id": "handaxe",
@@ -158,7 +205,16 @@
       "properties": "Arremesso (Alcance 6/18), Leve",
       "mastery": "Afligir",
       "weight": "1 kg",
-      "cost": "5 PO"
+      "cost": "5 PO",
+      "propertyIds": [
+        "thrown",
+        "light"
+      ],
+      "masteryId": "vex",
+      "range": {
+        "normal": 6,
+        "max": 18
+      }
     },
     {
       "id": "light-hammer",
@@ -171,7 +227,16 @@
       "properties": "Arremesso (Alcance 6/18), Leve",
       "mastery": "Ágil",
       "weight": "1 kg",
-      "cost": "2 PO"
+      "cost": "2 PO",
+      "propertyIds": [
+        "thrown",
+        "light"
+      ],
+      "masteryId": "nick",
+      "range": {
+        "normal": 6,
+        "max": 18
+      }
     },
     {
       "id": "shortbow",
@@ -184,7 +249,17 @@
       "properties": "Duas Mãos, Munição (Alcance 24/96; Flecha)",
       "mastery": "Afligir",
       "weight": "1 kg",
-      "cost": "25 PO"
+      "cost": "25 PO",
+      "propertyIds": [
+        "two-handed",
+        "ammunition"
+      ],
+      "masteryId": "vex",
+      "range": {
+        "normal": 24,
+        "max": 96
+      },
+      "ammunitionType": "Flecha"
     },
     {
       "id": "light-crossbow",
@@ -197,7 +272,18 @@
       "properties": "Duas Mãos, Munição (Alcance 24/96; Virote), Recarga",
       "mastery": "Lentidão",
       "weight": "2,5 kg",
-      "cost": "25 PO"
+      "cost": "25 PO",
+      "propertyIds": [
+        "two-handed",
+        "ammunition",
+        "loading"
+      ],
+      "masteryId": "slow",
+      "range": {
+        "normal": 24,
+        "max": 96
+      },
+      "ammunitionType": "Virote"
     },
     {
       "id": "dart",
@@ -210,7 +296,16 @@
       "properties": "Acuidade, Arremesso (Alcance 6/18),",
       "mastery": "Afligir",
       "weight": "150 g",
-      "cost": "5 PC"
+      "cost": "5 PC",
+      "propertyIds": [
+        "finesse",
+        "thrown"
+      ],
+      "masteryId": "vex",
+      "range": {
+        "normal": 6,
+        "max": 18
+      }
     },
     {
       "id": "sling",
@@ -223,7 +318,16 @@
       "properties": "Munição (Alcance 9/36; Bala)",
       "mastery": "Lentidão",
       "weight": "—",
-      "cost": "1 PP"
+      "cost": "1 PP",
+      "propertyIds": [
+        "ammunition"
+      ],
+      "masteryId": "slow",
+      "range": {
+        "normal": 9,
+        "max": 36
+      },
+      "ammunitionType": "Bala"
     },
     {
       "id": "halberd",
@@ -236,7 +340,13 @@
       "properties": "Duas Mãos, Extensão, Pesada",
       "mastery": "Trespassar",
       "weight": "3 kg",
-      "cost": "20 PO"
+      "cost": "20 PO",
+      "propertyIds": [
+        "two-handed",
+        "reach",
+        "heavy"
+      ],
+      "masteryId": "cleave"
     },
     {
       "id": "whip",
@@ -249,7 +359,12 @@
       "properties": "Acuidade, Extensão",
       "mastery": "Lentidão",
       "weight": "1,5 kg",
-      "cost": "2 PO"
+      "cost": "2 PO",
+      "propertyIds": [
+        "finesse",
+        "reach"
+      ],
+      "masteryId": "slow"
     },
     {
       "id": "scimitar",
@@ -262,7 +377,12 @@
       "properties": "Acuidade, Leve",
       "mastery": "Ágil",
       "weight": "1,5 kg",
-      "cost": "25 PO"
+      "cost": "25 PO",
+      "propertyIds": [
+        "finesse",
+        "light"
+      ],
+      "masteryId": "nick"
     },
     {
       "id": "shortsword",
@@ -275,7 +395,12 @@
       "properties": "Acuidade, Leve",
       "mastery": "Afligir",
       "weight": "1 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "propertyIds": [
+        "finesse",
+        "light"
+      ],
+      "masteryId": "vex"
     },
     {
       "id": "greatsword",
@@ -288,7 +413,12 @@
       "properties": "Duas Mãos, Pesada",
       "mastery": "Garantido",
       "weight": "3 kg",
-      "cost": "50 PO"
+      "cost": "50 PO",
+      "propertyIds": [
+        "two-handed",
+        "heavy"
+      ],
+      "masteryId": "graze"
     },
     {
       "id": "longsword",
@@ -301,7 +431,12 @@
       "properties": "Versátil (1d10)",
       "mastery": "Drenar",
       "weight": "1,5 kg",
-      "cost": "15 PO"
+      "cost": "15 PO",
+      "propertyIds": [
+        "versatile"
+      ],
+      "masteryId": "sap",
+      "versatileDamage": "1d10"
     },
     {
       "id": "glaive",
@@ -314,7 +449,13 @@
       "properties": "Duas Mãos, Extensão, Pesada",
       "mastery": "Garantido",
       "weight": "3 kg",
-      "cost": "20 PO"
+      "cost": "20 PO",
+      "propertyIds": [
+        "two-handed",
+        "reach",
+        "heavy"
+      ],
+      "masteryId": "graze"
     },
     {
       "id": "lance",
@@ -327,7 +468,13 @@
       "properties": "Duas Mãos (a menos que montado), Extensão, Pesada",
       "mastery": "Derrubar",
       "weight": "3 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "propertyIds": [
+        "two-handed",
+        "reach",
+        "heavy"
+      ],
+      "masteryId": "topple"
     },
     {
       "id": "pike",
@@ -340,7 +487,13 @@
       "properties": "Duas Mãos, Extensão, Pesada",
       "mastery": "Empurrar",
       "weight": "9 kg",
-      "cost": "5 PO"
+      "cost": "5 PO",
+      "propertyIds": [
+        "two-handed",
+        "reach",
+        "heavy"
+      ],
+      "masteryId": "push"
     },
     {
       "id": "morningstar",
@@ -353,7 +506,9 @@
       "properties": "—",
       "mastery": "Drenar",
       "weight": "2 kg",
-      "cost": "15 PO"
+      "cost": "15 PO",
+      "propertyIds": [],
+      "masteryId": "sap"
     },
     {
       "id": "battleaxe",
@@ -366,7 +521,12 @@
       "properties": "Versátil (1d10)",
       "mastery": "Derrubar",
       "weight": "2,5 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "propertyIds": [
+        "versatile"
+      ],
+      "masteryId": "topple",
+      "versatileDamage": "1d10"
     },
     {
       "id": "greataxe",
@@ -379,7 +539,12 @@
       "properties": "Duas Mãos, Pesada",
       "mastery": "Trespassar",
       "weight": "3,5 kg",
-      "cost": "30 PO"
+      "cost": "30 PO",
+      "propertyIds": [
+        "two-handed",
+        "heavy"
+      ],
+      "masteryId": "cleave"
     },
     {
       "id": "maul",
@@ -392,7 +557,12 @@
       "properties": "Duas Mãos, Pesada",
       "mastery": "Derrubar",
       "weight": "5 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "propertyIds": [
+        "two-handed",
+        "heavy"
+      ],
+      "masteryId": "topple"
     },
     {
       "id": "flail",
@@ -405,7 +575,9 @@
       "properties": "—",
       "mastery": "Drenar",
       "weight": "1 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "propertyIds": [],
+      "masteryId": "sap"
     },
     {
       "id": "warhammer",
@@ -418,7 +590,12 @@
       "properties": "Versátil (1d10)",
       "mastery": "Empurrar",
       "weight": "1 kg",
-      "cost": "15 PO"
+      "cost": "15 PO",
+      "propertyIds": [
+        "versatile"
+      ],
+      "masteryId": "push",
+      "versatileDamage": "1d10"
     },
     {
       "id": "war-pick",
@@ -431,7 +608,12 @@
       "properties": "Versátil (1d10)",
       "mastery": "Drenar",
       "weight": "1 kg",
-      "cost": "5 PO"
+      "cost": "5 PO",
+      "propertyIds": [
+        "versatile"
+      ],
+      "masteryId": "sap",
+      "versatileDamage": "1d10"
     },
     {
       "id": "rapier",
@@ -444,7 +626,11 @@
       "properties": "Acuidade",
       "mastery": "Afligir",
       "weight": "1 kg",
-      "cost": "25 PO"
+      "cost": "25 PO",
+      "propertyIds": [
+        "finesse"
+      ],
+      "masteryId": "vex"
     },
     {
       "id": "trident",
@@ -457,7 +643,17 @@
       "properties": "Arremesso (Alcance 6/18), Versátil (1d10)",
       "mastery": "Derrubar",
       "weight": "2 kg",
-      "cost": "5 PO"
+      "cost": "5 PO",
+      "propertyIds": [
+        "thrown",
+        "versatile"
+      ],
+      "masteryId": "topple",
+      "range": {
+        "normal": 6,
+        "max": 18
+      },
+      "versatileDamage": "1d10"
     },
     {
       "id": "longbow",
@@ -470,7 +666,18 @@
       "properties": "Duas Mãos, Munição (Alcance 45/180; Flecha), Pesada",
       "mastery": "Lentidão",
       "weight": "1 kg",
-      "cost": "50 PO"
+      "cost": "50 PO",
+      "propertyIds": [
+        "two-handed",
+        "ammunition",
+        "heavy"
+      ],
+      "masteryId": "slow",
+      "range": {
+        "normal": 45,
+        "max": 180
+      },
+      "ammunitionType": "Flecha"
     },
     {
       "id": "hand-crossbow",
@@ -483,7 +690,18 @@
       "properties": "Leve, Munição (Alcance 9/36; Virote), Recarga",
       "mastery": "Afligir",
       "weight": "1,5 kg",
-      "cost": "75 PO"
+      "cost": "75 PO",
+      "propertyIds": [
+        "light",
+        "ammunition",
+        "loading"
+      ],
+      "masteryId": "vex",
+      "range": {
+        "normal": 9,
+        "max": 36
+      },
+      "ammunitionType": "Virote"
     },
     {
       "id": "heavy-crossbow",
@@ -496,7 +714,19 @@
       "properties": "Duas Mãos, Munição (Alcance 30/120; Virote), Pesada, Recarga",
       "mastery": "Empurrar",
       "weight": "9 kg",
-      "cost": "50 PO"
+      "cost": "50 PO",
+      "propertyIds": [
+        "two-handed",
+        "ammunition",
+        "heavy",
+        "loading"
+      ],
+      "masteryId": "push",
+      "range": {
+        "normal": 30,
+        "max": 120
+      },
+      "ammunitionType": "Virote"
     },
     {
       "id": "musket",
@@ -509,7 +739,18 @@
       "properties": "Duas Mãos, Munição (Alcance 12/36; Bala), Recarga",
       "mastery": "Lentidão",
       "weight": "5 kg",
-      "cost": "500 PO"
+      "cost": "500 PO",
+      "propertyIds": [
+        "two-handed",
+        "ammunition",
+        "loading"
+      ],
+      "masteryId": "slow",
+      "range": {
+        "normal": 12,
+        "max": 36
+      },
+      "ammunitionType": "Bala"
     },
     {
       "id": "pistol",
@@ -522,7 +763,17 @@
       "properties": "Munição (Alcance 9/27; Bala), Recarga",
       "mastery": "Afligir",
       "weight": "1,5 kg",
-      "cost": "250 PO"
+      "cost": "250 PO",
+      "propertyIds": [
+        "ammunition",
+        "loading"
+      ],
+      "masteryId": "vex",
+      "range": {
+        "normal": 9,
+        "max": 27
+      },
+      "ammunitionType": "Bala"
     },
     {
       "id": "blowgun",
@@ -535,7 +786,12 @@
       "properties": "Munição (Alcance 7,5/30; Agulha), Recarga",
       "mastery": "Afligir",
       "weight": "0,5 kg",
-      "cost": "10 PO"
+      "cost": "10 PO",
+      "propertyIds": [
+        "ammunition",
+        "loading"
+      ],
+      "masteryId": "vex"
     }
   ]
 }

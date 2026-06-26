@@ -250,3 +250,111 @@ export function allPreparedIds(character) {
   if (!character.spellcasting?.prepared) return [];
   return Object.values(character.spellcasting.prepared).flat();
 }
+
+const WEAPONS_DOC = JSON.parse(
+  fs.readFileSync(path.join(phb, "weapons/weapons.json"), "utf8")
+);
+const ARMOR_DOC = JSON.parse(fs.readFileSync(path.join(phb, "armor/armor.json"), "utf8"));
+const MASTERY_PROGRESSION = JSON.parse(
+  fs.readFileSync(path.join(phb, "weapons/mastery-progression.json"), "utf8")
+);
+
+const WEAPONS_BY_ID = Object.fromEntries(WEAPONS_DOC.weapons.map((w) => [w.id, w]));
+const ARMOR_BY_ID = Object.fromEntries(ARMOR_DOC.items.map((a) => [a.id, a]));
+
+export function loadWeapon(weaponId) {
+  return WEAPONS_BY_ID[weaponId] ?? null;
+}
+
+export function loadArmor(armorId) {
+  return ARMOR_BY_ID[armorId] ?? null;
+}
+
+/** Slots de maestria em armas no nível atual (0 se a classe não usa). */
+export function expectedWeaponMasterySlots(classId, level, featIds = []) {
+  const rule = MASTERY_PROGRESSION.classes[classId];
+  if (!rule) return 0;
+
+  let slots = 0;
+  for (const [lvlStr, count] of Object.entries(rule.slotsByLevel)) {
+    if (level >= Number(lvlStr)) slots = Math.max(slots, count);
+  }
+
+  const bonus = MASTERY_PROGRESSION.featBonus;
+  if (bonus && featIds.includes(bonus.featId)) {
+    slots += bonus.extraSlots;
+  }
+
+  return slots;
+}
+
+export function validateWeaponMasteryChoices(doc) {
+  const featIds = doc.feats.map((f) => f.featId);
+  const expected = expectedWeaponMasterySlots(doc.classId, doc.level, featIds);
+  const choices = doc.weaponMasteryWeaponIds ?? [];
+
+  if (expected === 0) {
+    if (choices.length) {
+      return { ok: false, reason: "classe não concede maestria em armas" };
+    }
+    return { ok: true };
+  }
+
+  if (choices.length !== expected) {
+    return {
+      ok: false,
+      reason: `${choices.length} armas de maestria, esperado ${expected} no nível ${doc.level}`,
+    };
+  }
+
+  const rule = MASTERY_PROGRESSION.classes[doc.classId];
+  const unique = new Set(choices);
+  if (unique.size !== choices.length) {
+    return { ok: false, reason: "arma de maestria duplicada" };
+  }
+
+  for (const weaponId of choices) {
+    const weapon = loadWeapon(weaponId);
+    if (!weapon) return { ok: false, reason: `arma desconhecida: ${weaponId}` };
+    if (!rule.allowedCategories.includes(weapon.category)) {
+      return { ok: false, reason: `${weaponId}: categoria ${weapon.category} não permitida` };
+    }
+    if (!rule.allowedTypes.includes(weapon.type)) {
+      return { ok: false, reason: `${weaponId}: tipo ${weapon.type} não permitido para a classe` };
+    }
+  }
+
+  return { ok: true };
+}
+
+const ARMOR_CATEGORY_TO_TRAINING = {
+  light: "light",
+  medium: "medium",
+  heavy: "heavy",
+  shield: "shields",
+};
+
+export function validateEquippedArmorTraining(doc) {
+  const cls = loadClass(doc.classId);
+  const training = cls.armorTraining;
+  if (!training) return { ok: true };
+
+  for (const item of doc.equipment) {
+    if (!item.equipped || (item.slot !== "armor" && item.slot !== "shield")) continue;
+
+    const armor = loadArmor(item.itemId);
+    if (!armor) {
+      return { ok: false, reason: `equipamento ${item.itemId} não é armadura` };
+    }
+
+    const key = ARMOR_CATEGORY_TO_TRAINING[armor.category];
+    if (!key || !training[key]) {
+      return {
+        ok: false,
+        reason: `sem treinamento para ${armor.name} (${armor.category})`,
+      };
+    }
+  }
+
+  return { ok: true };
+}

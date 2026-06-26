@@ -13,7 +13,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "group", "category", "type", "damage", "damageType", "weight", "cost"],
+        "required": ["id", "name", "group", "category", "type", "damage", "damageType", "weight", "cost", "propertyIds", "masteryId"],
         "properties": {
           "id": { "type": "string" },
           "name": { "type": "string" },
@@ -22,8 +22,25 @@
           "type": { "type": "string", "enum": ["melee", "ranged"] },
           "damage": { "type": "string" },
           "damageType": { "type": "string" },
-          "properties": { "type": ["string", "null"] },
-          "mastery": { "type": ["string", "null"] },
+          "properties": { "type": ["string", "null"], "description": "Texto legado da tabela PHB." },
+          "mastery": { "type": ["string", "null"], "description": "Nome legado da maestria." },
+          "propertyIds": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+            "uniqueItems": true
+          },
+          "masteryId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "range": {
+            "type": "object",
+            "required": ["normal", "max"],
+            "properties": {
+              "normal": { "type": "number", "minimum": 0 },
+              "max": { "type": "number", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "versatileDamage": { "type": "string" },
+          "ammunitionType": { "type": "string" },
           "weight": { "type": "string" },
           "cost": { "type": "string" }
         }

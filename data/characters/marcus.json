@@ -56,6 +56,7 @@
     { "itemId": "roupas-viagem", "source": "background-starting" }
   ],
   "hp": { "current": 12, "max": 12, "temp": 0 },
+  "weaponMasteryWeaponIds": ["longsword", "light-crossbow", "spear"],
   "resources": {},
   "notes": "Pacote A da classe + pacote A do antecedente Soldado. Conjunto padrão com +1 em For, Des e Con (soldado). 18 PO iniciais (4 + 14)."
 }

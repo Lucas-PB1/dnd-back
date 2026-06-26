@@ -26,6 +26,8 @@ Snapshot do que consideramos **in scope** para a ficha (atualizado conforme extr
 | Magia | 391 magias, listas por classe, progressão | `spells/`, `spells/by-class/` |
 | Talentos | 75 talentos | `feats/` |
 | Equipamento | Armas, armaduras, itens, moedas | `weapons/`, `armor/`, `equipment/` |
+| **Propriedades de armas** | Glossário + ids nas 38 armas | `weapons/properties.json`, `propertyIds`, `masteryId` |
+| **Maestria em armas** | Slots por classe + escolhas na ficha | `weapons/mastery-progression.json`, `weaponMasteryWeaponIds` |
 | Ficha de teste | Schema + validador + 2 fichas exemplo | `character.schema.json`, `validate:character` |
 
 ### ✅ Validação derivada
@@ -34,6 +36,8 @@ Snapshot do que consideramos **in scope** para a ficha (atualizado conforme extr
 |-------|------|
 | Atributos finais vs método + bônus do antecedente | `validateAbilityScores()` em `character-rules.mjs` |
 | Magias de subclasse sempre preparadas | `preparedSpellsByLevel` em `subclasses/*.json` |
+| Maestria em armas vs nível/classe | `validateWeaponMasteryChoices()` |
+| Treinamento de armadura equipada | `validateEquippedArmorTraining()` |
 | Conjuração, PV, equipamento inicial | `validate-character.mjs` |
 
 ### 🔲 Secundário (só se a ficha guardar o campo)
@@ -68,6 +72,7 @@ Nome, aparência, personalidade, história, notas.
 | `abilityGeneration` | ✅ | `methodId` + `backgroundBoostId` |
 | `languageIds` | ✅ | inclui `common` |
 | `feats[]`, perícias, equipamento | ✅ | |
+| `weaponMasteryWeaponIds` | ✅ | Obrigatório quando a classe concede maestria (ex.: guerreiro) |
 | `spellcasting` (opcional) | ✅ | Obrigatório só para conjuradores; omitir em guerreiro etc. |
 
 ### Estado em jogo
@@ -108,6 +113,7 @@ npm run validate:character    # fichas
 npm run validate:references   # classes, antecedentes, skills
 npm run rules:all             # PV, proficiência
 npm run skills:all            # perícias
+npm run weapons:all            # propriedades + maestria estruturadas
 npm run spellcasting:all      # conjuração + PDF
 ```
 
@@ -138,7 +144,7 @@ npm run spellcasting:all      # conjuração + PDF
 }
 ```
 
-**Não conjurador (nível 1):** omitir `spellcasting` e `subclassId`. Ver `marcus.json`.
+**Não conjurador (nível 1):** omitir `spellcasting` e `subclassId`. Incluir `weaponMasteryWeaponIds` se a classe conceder maestria. Ver `marcus.json`.
 
 Referência completa: `data/characters/aelindra.json`, `data/characters/marcus.json`.
 
@@ -200,6 +206,16 @@ flowchart TD
 
 - [ ] Condições, descanso — se a ficha passar a rastrear
 
+### Fase 4 — Combate na ficha ✅
+
+- [x] Glossário de propriedades e maestrias de armas (`weapons/properties.json`)
+- [x] Armas com `propertyIds`, `masteryId`, alcance/versátil/munição estruturados
+- [x] Progressão de maestria por classe (`weapons/mastery-progression.json`)
+- [x] Campo `weaponMasteryWeaponIds` na ficha + validador
+- [x] Validador de treinamento de armadura equipada
+- [ ] CA calculada na ficha (runtime ou campo derivado)
+- [ ] Estilo de luta, proficiência fina por arma
+
 ### Fora do roadmap
 
 UI, exportação, motor de combate, Apêndice B, LM, multiclasse.
@@ -215,6 +231,10 @@ UI, exportação, motor de combate, Apêndice B, LM, multiclasse.
 | Método de atributos | `standard-array`, `roll`, `point-buy` |
 | Bônus do antecedente | `two-and-one`, `three-plus-one` |
 | Magias de subclasse | chave em `prepared` = `preparedSpellSourceKey` (ex.: `life-domain`) |
+| Propriedade de arma | `finesse`, `light`, `thrown`, `two-handed`, … |
+| Maestria de arma | `nick`, `vex`, `sap`, `cleave`, … |
+| Maestria escolhida | `weapon id` (ex.: `longsword`) — não o id da propriedade |
+| Armadura | campos no item: `category`, `ac`, `strength`, `stealthDisadvantage` (sem glossário separado) |
 | Classe / espécie / etc. | Ver `index.json` de cada pasta |
 
 ---
@@ -234,3 +254,30 @@ Em `subclasses/{classId}-{subclassId}.json`:
 ```
 
 O validador acumula entradas cujo nível de desbloqueio ≤ nível do personagem.
+
+---
+
+## Armas — propriedades e maestria
+
+Glossário em `weapons/properties.json`. Cada arma referencia ids:
+
+```json
+{
+  "id": "longsword",
+  "propertyIds": ["versatile"],
+  "masteryId": "sap",
+  "versatileDamage": "1d10"
+}
+```
+
+Maestria na ficha (guerreiro nível 1 = 3 slots):
+
+```json
+"weaponMasteryWeaponIds": ["longsword", "light-crossbow", "spear"]
+```
+
+Slots por classe/nível: `weapons/mastery-progression.json`.
+
+## Armaduras
+
+No PHB 2024, armadura não usa glossário de “propriedades” como armas. Cada item em `armor/armor.json` traz CA, categoria (leve/média/pesada/escudo), requisito de Força e desvantagem em Furtividade. O validador confere se a classe tem treinamento para a armadura **equipada**.
