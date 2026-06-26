@@ -19,19 +19,15 @@
   "description": "Magos são reconhecidos por seu estudo\naprofundado da magia. Eles conjuram magias\nexplosivas, raios, ilusões e transformações\nnotáveis, além de invocar criaturas de outros planos,\nprever o futuro e criar barreiras protetoras. Suas\nmagias mais poderosas podem transformar substâncias,\ninvocar meteoros ou abrir portais para outros mundos.\nGeralmente, os Magos adotam uma abordagem acadêmica, explorando os fundamentos teóricos e categorizando magias em escolas. Figuras renomadas como\nBigby, Tasha, Mordenkainen e Yolande contribuíram\npara a criação de magias icônicas reconhecidas por\ntodo o multiverso.\nO máximo que um Mago pode vivenciar de maneira\ncomum é atuar como sábio ou mentor. Muitos oferecem serviços como conselheiros, servem em forças\nmilitares ou se envolvem com o crime ou a dominação.\nEntretanto, a busca pelo conhecimento leva até os\nmagos mais cautelosos a abandonar a segurança de\nsuas bibliotecas e laboratórios em busca de ruínas\ndecadentes e cidades perdidas. A maioria acredita que\ncivilizações antigas guardavam segredos de magia que\npoderiam conceder um poder maior do que o disponível na atualidade.",
   "primaryAbility": "Inteligência",
   "hitDie": "D6",
-  "savingThrows": [
-    "Inteligência",
-    "Sabedoria"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "Arcanismo",
-      "História",
-      "Investigação",
-      "Medicina",
-      "Natureza",
-      "Religião"
+    "skillIds": [
+      "arcana",
+      "history",
+      "investigation",
+      "medicine",
+      "nature",
+      "religion"
     ]
   },
   "weaponProficiencies": [
@@ -52,17 +48,29 @@
       {
         "label": "A",
         "items": [
-          "2 Adagas",
-          "Foco Arcano (orbe)",
-          "Kit de Erudito",
-          "Kit de Aventureiro",
-          "5 PO"
+          {
+            "choice": "2 Adagas"
+          },
+          {
+            "id": "foco-arcano"
+          },
+          {
+            "id": "kit-de-erudito"
+          },
+          {
+            "id": "kit-de-aventureiro"
+          },
+          {
+            "gold": 5
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "55 PO"
+          {
+            "gold": 55
+          }
         ]
       }
     ]
@@ -71,7 +79,8 @@
     "type": "full",
     "ability": "Inteligência",
     "focus": "Foco Arcano",
-    "ritual": true
+    "ritual": true,
+    "focusItemId": "foco-arcano"
   },
   "subclassUnlockLevel": 3,
   "subclassLabel": "Tradição",
@@ -421,5 +430,10 @@
         }
       }
     ]
-  }
+  },
+  "primaryAbilityId": "inteligencia",
+  "savingThrowIds": [
+    "inteligencia",
+    "sabedoria"
+  ]
 }

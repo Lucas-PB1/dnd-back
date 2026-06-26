@@ -18,18 +18,14 @@
   "summary": "Invoque magia divina para curar, fortalecer e castigar.",
   "primaryAbility": "Sabedoria",
   "hitDie": "D8",
-  "savingThrows": [
-    "Sabedoria",
-    "Carisma"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "História",
-      "Intuição",
-      "Medicina",
-      "Persuasão",
-      "Religião"
+    "skillIds": [
+      "history",
+      "insight",
+      "medicine",
+      "persuasion",
+      "religion"
     ]
   },
   "weaponProficiencies": [
@@ -46,18 +42,32 @@
       {
         "label": "A",
         "items": [
-          "Armadura de Couro",
-          "Escudo",
-          "Maça",
-          "Kit Sacerdotal",
-          "Símbolo Sagrado",
-          "7 PO"
+          {
+            "id": "leather"
+          },
+          {
+            "id": "shield"
+          },
+          {
+            "id": "mace"
+          },
+          {
+            "id": "kit-de-sacerdote"
+          },
+          {
+            "id": "simbolo-sagrado"
+          },
+          {
+            "gold": 7
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "110 PO"
+          {
+            "gold": 110
+          }
         ]
       }
     ]
@@ -66,7 +76,8 @@
     "type": "full",
     "ability": "Sabedoria",
     "focus": "Símbolo Sagrado",
-    "ritual": true
+    "ritual": true,
+    "focusItemId": "simbolo-sagrado"
   },
   "subclassUnlockLevel": 3,
   "subclassLabel": "Domínio",
@@ -442,5 +453,10 @@
         }
       }
     ]
-  }
+  },
+  "primaryAbilityId": "sabedoria",
+  "savingThrowIds": [
+    "sabedoria",
+    "carisma"
+  ]
 }

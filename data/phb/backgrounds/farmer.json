@@ -24,29 +24,40 @@
     "id": "tough",
     "name": "Vigoroso"
   },
-  "skills": [
-    "Lidar com Animais",
-    "Natureza"
-  ],
   "toolProficiency": {
     "description": "Ferramentas de Carpinteiro",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "ferramentas-de-carpinteiro"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Foice",
-          "Ferramentas de Carpinteiro",
-          "Kit de Curandeiro",
-          "Balde de Ferro",
-          "Pá"
+          {
+            "id": "sickle"
+          },
+          {
+            "id": "ferramentas-de-carpinteiro"
+          },
+          {
+            "id": "kit-de-curandeiro"
+          },
+          {
+            "id": "balde"
+          },
+          {
+            "id": "pa"
+          }
         ],
-        "gold": "30 PO"
+        "gold": 30
       }
     ]
-  }
+  },
+  "skillIds": [
+    "animal-handling",
+    "nature"
+  ]
 }

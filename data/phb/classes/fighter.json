@@ -18,21 +18,17 @@
   "summary": "Domine todas as armas e armaduras.",
   "primaryAbility": "Força ou Destreza",
   "hitDie": "D10",
-  "savingThrows": [
-    "Força",
-    "Constituição"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "Acrobacia",
-      "Lidar com Animais",
-      "Atletismo",
-      "História",
-      "Intuição",
-      "Intimidação",
-      "Percepção",
-      "Sobrevivência"
+    "skillIds": [
+      "acrobatics",
+      "animal-handling",
+      "athletics",
+      "history",
+      "insight",
+      "intimidation",
+      "perception",
+      "survival"
     ]
   },
   "weaponProficiencies": [
@@ -50,19 +46,35 @@
       {
         "label": "A",
         "items": [
-          "Cota de Malha",
-          "Espada Longa",
-          "Escudo",
-          "Besta Leve",
-          "Aljava com 20 Virotes",
-          "Kit de Aventureiro",
-          "4 PO"
+          {
+            "id": "chain-mail"
+          },
+          {
+            "id": "longsword"
+          },
+          {
+            "id": "shield"
+          },
+          {
+            "id": "light-crossbow"
+          },
+          {
+            "id": "aljava"
+          },
+          {
+            "id": "kit-de-aventureiro"
+          },
+          {
+            "gold": 4
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "155 PO"
+          {
+            "gold": 155
+          }
         ]
       }
     ]
@@ -158,5 +170,13 @@
       "name": "Três Ataques Extras",
       "description": "Você pode atacar quatro vezes, em vez de uma, sempre\nque executar a ação Atacar no seu turno."
     }
+  ],
+  "primaryAbilityIds": [
+    "forca",
+    "destreza"
+  ],
+  "savingThrowIds": [
+    "forca",
+    "constituicao"
   ]
 }

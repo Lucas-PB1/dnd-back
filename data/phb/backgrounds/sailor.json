@@ -24,28 +24,37 @@
     "id": "tavern-brawler",
     "name": "Valentão de Taverna"
   },
-  "skills": [
-    "Acrobacia",
-    "Percepção"
-  ],
   "toolProficiency": {
     "description": "Ferramentas de Navegador",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "ferramentas-de-navegador"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Adaga",
-          "Ferramentas de Navegador",
-          "Corda",
-          "Roupas de Viagem"
+          {
+            "id": "dagger"
+          },
+          {
+            "id": "ferramentas-de-navegador"
+          },
+          {
+            "id": "corda"
+          },
+          {
+            "id": "roupas-viagem"
+          }
         ],
-        "gold": "20 PO"
+        "gold": 20
       }
     ]
-  }
+  },
+  "skillIds": [
+    "acrobatics",
+    "perception"
+  ]
 }

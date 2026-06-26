@@ -24,29 +24,40 @@
     "id": "alert",
     "name": "Alerta"
   },
-  "skills": [
-    "Furtividade",
-    "Prestidigitação"
-  ],
   "toolProficiency": {
     "description": "Ferramentas de Ladrão",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "ferramentas-de-ladrao"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "2 Adagas",
-          "Ferramentas de Ladrão",
-          "2 Algibeiras",
-          "Pé de Cabra",
-          "Roupas de Viagem"
+          {
+            "choice": "2 Adagas"
+          },
+          {
+            "id": "ferramentas-de-ladrao"
+          },
+          {
+            "choice": "2 Algibeiras"
+          },
+          {
+            "id": "pe-de-cabra"
+          },
+          {
+            "id": "roupas-viagem"
+          }
         ],
-        "gold": "16 PO"
+        "gold": 16
       }
     ]
-  }
+  },
+  "skillIds": [
+    "stealth",
+    "sleight-of-hand"
+  ]
 }

@@ -18,19 +18,15 @@
   "summary": "Entre e saia do combate corpo a corpo com velocidade e precisão.",
   "primaryAbility": "Destreza e Sabedoria",
   "hitDie": "D8",
-  "savingThrows": [
-    "Força",
-    "Destreza"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "Acrobacia",
-      "Atletismo",
-      "História",
-      "Intuição",
-      "Religião",
-      "Furtividade"
+    "skillIds": [
+      "acrobatics",
+      "athletics",
+      "history",
+      "insight",
+      "religion",
+      "stealth"
     ]
   },
   "weaponProficiencies": [
@@ -51,16 +47,27 @@
       {
         "label": "A",
         "items": [
-          "Espada Curta",
-          "10 Dardos",
-          "Kit de Aventureiro",
-          "5 PO"
+          {
+            "id": "shortsword"
+          },
+          {
+            "id": "dart",
+            "quantity": 10
+          },
+          {
+            "id": "kit-de-aventureiro"
+          },
+          {
+            "gold": 5
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "50 PO"
+          {
+            "gold": 50
+          }
         ]
       }
     ]
@@ -191,5 +198,13 @@
       "name": "Corpo e Mente",
       "description": "Você auto aperfeiçoou seu corpo e mente a novos patamares. Seus valores de Destreza e Sabedoria aumentam em 4, até no máximo 25."
     }
+  ],
+  "primaryAbilityIds": [
+    "destreza",
+    "sabedoria"
+  ],
+  "savingThrowIds": [
+    "forca",
+    "destreza"
   ]
 }

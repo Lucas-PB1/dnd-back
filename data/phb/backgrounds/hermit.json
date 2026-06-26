@@ -24,31 +24,46 @@
     "id": "healer",
     "name": "Curandeiro"
   },
-  "skills": [
-    "Medicina",
-    "Religião"
-  ],
   "toolProficiency": {
     "description": "Kit de Herbalismo",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "kit-de-herbalismo"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Cajado",
-          "Kit de Herbalismo",
-          "Lâmpada",
-          "Livro (filosofia)",
-          "Óleo (3 frascos)",
-          "Roupas de Viagem",
-          "Saco de Dormir"
+          {
+            "id": "quarterstaff"
+          },
+          {
+            "id": "kit-de-herbalismo"
+          },
+          {
+            "id": "lampada"
+          },
+          {
+            "id": "livro"
+          },
+          {
+            "id": "oleo"
+          },
+          {
+            "id": "roupas-viagem"
+          },
+          {
+            "id": "saco-de-dormir"
+          }
         ],
-        "gold": "16 PO"
+        "gold": 16
       }
     ]
-  }
+  },
+  "skillIds": [
+    "medicine",
+    "religion"
+  ]
 }

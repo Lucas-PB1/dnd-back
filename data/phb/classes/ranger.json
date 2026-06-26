@@ -18,21 +18,17 @@
   "summary": "Una proezas marciais, magia da natureza e habilidades de sobrevivência.",
   "primaryAbility": "Destreza e Sabedoria",
   "hitDie": "D10",
-  "savingThrows": [
-    "Força",
-    "Destreza"
-  ],
   "skillChoices": {
     "count": 3,
-    "from": [
-      "Lidar com Animais",
-      "Atletismo",
-      "Intuição",
-      "Investigação",
-      "Natureza",
-      "Percepção",
-      "Furtividade",
-      "Sobrevivência"
+    "skillIds": [
+      "animal-handling",
+      "athletics",
+      "insight",
+      "investigation",
+      "nature",
+      "perception",
+      "stealth",
+      "survival"
     ]
   },
   "weaponProficiencies": [
@@ -50,18 +46,32 @@
       {
         "label": "A",
         "items": [
-          "Armadura de Couro",
-          "2 Adagas",
-          "Arco Longo",
-          "Aljava com 20 Flechas",
-          "Kit de Aventureiro",
-          "7 PO"
+          {
+            "id": "leather"
+          },
+          {
+            "choice": "2 Adagas"
+          },
+          {
+            "id": "longbow"
+          },
+          {
+            "id": "aljava"
+          },
+          {
+            "id": "kit-de-aventureiro"
+          },
+          {
+            "gold": 7
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "150 PO"
+          {
+            "gold": 150
+          }
         ]
       }
     ]
@@ -70,7 +80,8 @@
     "type": "half",
     "ability": "Sabedoria",
     "focus": "Foco Druídico",
-    "ritual": false
+    "ritual": false,
+    "focusItemId": "foco-druidico"
   },
   "subclassUnlockLevel": 3,
   "subclassLabel": "Arquétipo",
@@ -407,5 +418,13 @@
         }
       }
     ]
-  }
+  },
+  "primaryAbilityIds": [
+    "destreza",
+    "sabedoria"
+  ],
+  "savingThrowIds": [
+    "forca",
+    "destreza"
+  ]
 }

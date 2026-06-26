@@ -24,27 +24,34 @@
     "id": "lucky",
     "name": "Sortudo"
   },
-  "skills": [
-    "Lidar com Animais",
-    "Persuasão"
-  ],
   "toolProficiency": {
     "description": "Ferramentas de Navegador",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "ferramentas-de-navegador"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Ferramentas de Navegador",
-          "2 Algibeiras",
-          "Roupas de Viagem"
+          {
+            "id": "ferramentas-de-navegador"
+          },
+          {
+            "choice": "2 Algibeiras"
+          },
+          {
+            "id": "roupas-viagem"
+          }
         ],
-        "gold": "22 PO"
+        "gold": 22
       }
     ]
-  }
+  },
+  "skillIds": [
+    "animal-handling",
+    "persuasion"
+  ]
 }

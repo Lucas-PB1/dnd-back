@@ -15,26 +15,28 @@ No sistema 2024, uma ficha completa reúne escolhas do jogador com valores calcu
 | Campo | Origem no livro | Status dos dados |
 |-------|-----------------|------------------|
 | Nome, aparência, personalidade | Jogador | — |
-| Espécie (traços, tamanho, velocidade, idiomas) | Cap. 2 | ✅ `data/phb/species/` (10) |
+| Espécie (traços, tamanho, velocidade) | Cap. 4 | ✅ `data/phb/species/` (10) |
 | Antecedente (talento de origem, perícias, ferramenta) | Cap. 4 | ✅ `data/phb/backgrounds/` (16) |
-| Idiomas | Cap. 2 | **Falta extrair** |
+| Idiomas (regras de criação) | Cap. 4 | **Falta extrair** (não há campo estruturado nas espécies) |
 
 ### Classe e progressão
 
 | Campo | Origem no livro | Status dos dados |
 |-------|-----------------|------------------|
 | Classe, nível, subclasse | Cap. 3 | ✅ `data/phb/classes/`, `subclasses/` |
-| PV, dado de vida, proficiências | Cap. 3 | ✅ nas classes |
 | Características por nível | Cap. 3 | ✅ `features[]` |
 | Tabela de espaços de magia / truques | Cap. 3 | ✅ `progression` nas 8 classes conjuradoras |
+| PV máximos por nível (`hitDie` + progressão) | Cap. 3 | Parcial — `hitDie` nas classes; tabela de PV/nível **falta** |
+| Bônus de proficiência por nível | Cap. 1 | Parcial — em `progression` das 8 conjuradoras; regra geral **falta** |
+| Perícias, salvaguardas, especialização | Cap. 1 + classe + antecedente | ✅ `skillIds` / `savingThrowIds` nas classes e antecedentes |
 
 ### Atributos e perícias
 
 | Campo | Origem no livro | Status dos dados |
 |-------|-----------------|------------------|
 | Seis atributos e modificadores | Cap. 1 + criação | **Regras do Cap. 1 faltam** |
-| Bônus de proficiência por nível | Cap. 1 | **Falta** |
-| Perícias, salvaguardas, especialização | Cap. 1 + classe + antecedente | Parcial (classes têm `skillChoices`) |
+| Bônus de proficiência (regra geral) | Cap. 1 | **Falta** — só implícito em `progression` das conjuradoras |
+| Perícias (lista e regras) | Cap. 1 | **Falta** — nomes soltos em classes/antecedentes |
 | CD de magia / ataque mágico | Cap. 7 | ✅ regras em `spells/rules/intro.json` |
 
 ### Combate e recursos
@@ -78,13 +80,24 @@ data/phb/
 ├── equipment/          # equipamento, ferramentas, montarias, serviços
 ├── armor/              # armaduras
 ├── weapons/            # armas
-└── spells/             # 391 magias + índice + regras de conjuração
-    └── by-class/       # 8 listas por classe (truques + círculos 1–9)
+├── spells/             # 391 magias + índice + regras de conjuração
+│   └── by-class/       # 8 listas por classe (truques + círculos 1–9)
+├── skills/             # 18 perícias + 6 atributos (índice com ids)
+└── ...
 
+data/characters/        # fichas de personagem (instâncias)
 data/schema/            # JSON Schema de cada tipo de dado
 ```
 
-**Volume atual:** ~547 arquivos de regras do PHB (caps. 3, 5, 6 e 7).
+**Volume atual:** ~586 arquivos de regras do PHB (caps. 3–7 + origens).
+
+**Validação automatizada hoje:**
+
+| Comando | Cobre |
+|---------|--------|
+| `npm run spellcasting:all` | listas por classe, progressão, PDF |
+| `npm run validate:references` | skills, antecedentes, classes (schemas + ids) |
+| `npm run validate:character` | fichas em `data/characters/` |
 
 ---
 
@@ -92,61 +105,65 @@ data/schema/            # JSON Schema de cada tipo de dado
 
 Prioridade para conseguir **criar personagem nível 1** e **subir de nível** sem o PDF:
 
-1. **Espécies (Cap. 4)** — traços, tamanho, velocidade, idiomas.
-2. **Regras base (Cap. 1)** — atributos, perícias, bônus de proficiência, combate, descanso.
-3. **Glossário / condições (Apêndice B)** — necessário para aplicar efeitos em jogo.
-4. **Multiclasse (Apêndice A)** — se fichas precisarem de mais de uma classe.
-5. **Índices cruzados** — hoje as referências são strings soltas; a ficha precisa de `id` estáveis:
-   - antecedente → `featId` de origem
-   - classe → `subclassId`
-   - magias preparadas → `spellId` (ex.: `bola-de-fogo`)
-   - equipamento → `itemId` (ex.: `leather`)
+### Extração de dados (PHB)
+
+1. **Regras base (Cap. 1)** — atributos, método de criação, perícias, bônus de proficiência, combate, descanso.
+2. **Glossário / condições (Apêndice B)** — necessário para aplicar efeitos em jogo.
+3. **Idiomas (Cap. 4)** — regras de quantos idiomas o personagem conhece na criação.
+4. **Tabelas de PV por nível** — hoje só `hitDie`; falta progressão estruturada nas 12 classes.
+5. **Multiclasse (Apêndice A)** — se fichas precisarem de mais de uma classe.
+
+### Modelo da ficha (camada de aplicação)
+
+- [x] **`character.schema.json`** — escolhas, estado e **fonte** de cada elemento
+- [x] **Exemplo** — `data/characters/aelindra.json`
+- [x] **Validação de regras** — `validate:character` confere contagens vs tabela de progressão
+
+A ficha separa **o que veio de onde** (classe, antecedente, espécie, subclasse, talento) em vez de listas planas.
+
+| Referência | Na ficha |
+|------------|----------|
+| antecedente → talento | `feats[].featId` + `magicInitiate` |
+| espécie → traços | `speciesId` + `speciesChoices` (linhagem, Sentidos Aguçados) |
+| classe → magias | `spellcasting.cantrips/prepared` por chave de origem |
+| pacotes iniciais | `startingPackages` + `equipment[].source` |
 
 ### Melhorias nos dados atuais (sem novo capítulo)
 
-- Listas de magia por classe (`spells/by-class/`) derivadas do campo `classes` de cada magia. ✅
+- Listas de magia por classe (`spells/by-class/`). ✅
+- Tabelas de progressão de conjuração (truques, preparadas, slots). ✅
 - Índice mestre do PHB (além do `index.json` só de classes).
-- Limpeza residual em `spells/rules/intro.json` e legendas de ilustração em algumas classes.
-- Tabelas de progressão estruturadas (PV por nível, espaços de magia, truques) em vez de só texto em `features`. ✅ conjuração; PV ainda falta
-
----
+- Limpeza residual: `species/rules/intro.json` (texto corrompido), legendas de arte em `spells/rules/intro.json`.
+- Validador permanente para **todos** os JSON do PHB (hoje só conjuração).
 
 ## Modelo conceitual da ficha
 
-A ficha **não** deve duplicar texto do livro. Ela guarda escolhas e estado; o app resolve o resto consultando `data/phb/`.
+A ficha **não** duplica texto do livro. Guarda **escolhas do jogador**, **estado de jogo** e **referências por origem**; traços completos vêm de `data/phb/species/{id}.json` + `speciesChoices`.
 
 ```json
 {
-  "id": "uuid-ou-slug",
-  "name": "Aelindra",
-  "level": 3,
   "speciesId": "elf",
-  "backgroundId": "acolyte",
-  "classId": "cleric",
-  "subclassId": "life",
-  "abilities": {
-    "forca": 10,
-    "destreza": 14,
-    "constituicao": 13,
-    "inteligencia": 10,
-    "sabedoria": 16,
-    "carisma": 8
+  "speciesChoices": { "lineageId": "high-elf", "keenSensesSkillId": "perception" },
+  "spellcasting": {
+    "cantrips": {
+      "class": ["…4 truques (3 da tabela + Taumaturgo)"],
+      "magic-initiate": ["luz", "resistencia"],
+      "elf-lineage": ["prestidigitacao-arcana"]
+    },
+    "prepared": {
+      "class": ["…6 magias da tabela, nível 3"],
+      "magic-initiate": ["escudo-da-fe"],
+      "life-domain": ["auxilio", "bencao", "curar-ferimentos", "restauracao-menor"],
+      "elf-lineage": ["detectar-magia"]
+    },
+    "slotsMax": { "1": 4, "2": 2 }
   },
-  "skillProficiencies": ["medicina", "religiao"],
-  "expertise": ["medicina"],
-  "savingThrowProficiencies": ["sabedoria", "carisma"],
-  "featIds": ["alert"],
-  "knownSpellIds": ["chama-sagrada", "orientacao", "taumaturgia"],
-  "preparedSpellIds": ["curar-ferimentos", "escudo-da-fe", "benção"],
-  "equipment": [
-    { "itemId": "chain-mail", "equipped": true, "slot": "armor" },
-    { "itemId": "mace", "equipped": true, "slot": "mainHand" }
-  ],
-  "hp": { "current": 24, "max": 24, "temp": 0 },
-  "spellSlots": { "1": 4, "2": 2 },
-  "notes": ""
+  "startingPackages": { "classOption": "A", "backgroundOption": "a" },
+  "equipment": [{ "itemId": "leather", "source": "class-starting", "equipped": true }]
 }
 ```
+
+Ver ficha completa: `data/characters/aelindra.json`.
 
 ### Campos calculados (não persistir, ou cachear)
 
@@ -154,6 +171,7 @@ Derivados em tempo de execução a partir dos JSON do PHB:
 
 - Modificadores de atributo
 - Bônus de proficiência
+- **Texto dos traços de espécie** (Visão no Escuro, Transe, linhagem…) a partir de `speciesId` + `speciesChoices`
 - CA (armadura + treinamento + escudo + efeitos)
 - CD de magia e bônus de ataque mágico
 - Perícias com bônus total
@@ -182,6 +200,7 @@ flowchart TD
     S4[feats ✅]
     S5[equipment ✅]
     S6[spells ✅]
+    S6b[by-class ✅]
   end
 
   A -.-> S1
@@ -190,6 +209,7 @@ flowchart TD
   F -.-> S4
   G -.-> S5
   H -.-> S6
+  H -.-> S6b
 ```
 
 ---
@@ -198,16 +218,20 @@ flowchart TD
 
 ### Fase 1 — Ficha nível 1 jogável
 
-- [x] Extrair **espécies** (Cap. 4) e **antecedentes** (Cap. 4)
+- [x] Extrair **espécies** e **antecedentes** (Cap. 4)
 - [x] Schemas: `species.schema.json`, `background.schema.json`
-- [ ] Definir schema da ficha: `character.schema.json`
-- [ ] Pasta `data/characters/` (exemplos + fichas reais do grupo)
-- [ ] Resolver referências por `id` (classe, magia, talento, item)
+- [x] Dados de classe, talento, equipamento, magia (caps. 3, 5, 6, 7)
+- [x] Índice de perícias (`skills/index.json`) e normalização de `skillIds` / `itemId`
+- [x] Definir schema da ficha: `character.schema.json`
+- [x] Pasta `data/characters/` — exemplo `aelindra.json`
+- [x] Resolver referências por `id` (equipamento e perícias nos pacotes iniciais)
 
 ### Fase 2 — Progressão e magia
 
-- [x] Tabelas de nível estruturadas nas classes (truques, preparadas, slots)
+- [x] Tabelas de nível estruturadas nas 8 classes conjuradoras (truques, preparadas, slots)
 - [x] `spells/by-class/*.json` — índice invertido por classe
+- [x] Pipeline de validação da conjuração (`spellcasting:all`)
+- [ ] Tabelas de PV por nível nas 12 classes
 - [ ] Lógica de subida de nível (novas features, talento ASI, magias)
 - [ ] Multiclasse (Apêndice A), se necessário
 
@@ -220,7 +244,9 @@ flowchart TD
 
 ### Fase 4 — Qualidade e manutenção
 
-- [ ] Validador permanente dos JSON do PHB (sem pipeline de PDF)
+- [x] Validador da conjuração (Ajv + checagens + PDF)
+- [x] Validadores de referências e fichas (`validate:references`, `validate:character`)
+- [ ] Validador permanente de **todo** o PHB (sem depender de PDF)
 - [ ] Índice mestre `data/phb/manifest.json`
 - [ ] Testes de integridade entre fichas e regras
 
@@ -235,6 +261,8 @@ flowchart TD
 | Classe | inglês | `cleric` |
 | Subclasse | inglês | `life` |
 | Magia | slug PT | `curar-ferimentos` |
+| Perícia | inglês (kebab) | `medicine`, `religion` |
+| Atributo | português (slug) | `sabedoria`, `destreza` |
 | Talento | inglês | `alert` |
 | Item | inglês | `chain-mail` |
 
@@ -254,6 +282,9 @@ A ficha pode referenciar um item mágico por nome, mas o banco de dados de itens
 
 ## Próximo passo recomendado
 
-**Capítulo 2 (Espécies + Antecedentes)** é o que mais destrava fichas: conecta diretamente com os talentos de origem (`feats/` categoria `origin`) e com as proficiências que as classes assumem na criação.
+**Fase 1 concluída** — dados do PHB + modelo de ficha + exemplo jogável. Próximos blocos:
 
-Depois disso: schema da ficha + um personagem de exemplo em `data/characters/` para validar o modelo antes de construir interface ou exportação.
+1. **Cap. 1 + Apêndice B** — regras de combate, perícias, condições (extração).
+2. **Tabelas de PV por nível** nas 12 classes.
+3. **UI ou exportação** — renderizar ficha a partir de `data/characters/` + `data/phb/`.
+4. **Lógica de subida de nível** — app que consulta `features` e `progression`.

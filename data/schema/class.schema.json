@@ -12,7 +12,7 @@
     "summary",
     "primaryAbility",
     "hitDie",
-    "savingThrows",
+    "savingThrowIds",
     "subclassUnlockLevel",
     "subclassLabel",
     "subclasses",
@@ -34,14 +34,40 @@
       "description": "Texto flavor do livro (opcional)."
     },
     "primaryAbility": { "type": "string" },
-    "hitDie": { "type": "string", "pattern": "^D\\d+$" },
-    "savingThrows": {
+    "primaryAbilityId": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$"
+    },
+    "primaryAbilityIds": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
       "minItems": 2,
       "maxItems": 2
     },
-    "skillChoices": { "$ref": "#/$defs/skillChoices" },
+    "hitDie": { "type": "string", "pattern": "^D\\d+$" },
+    "savingThrowIds": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "skillChoices": {
+      "type": "object",
+      "required": ["count"],
+      "properties": {
+        "count": { "type": "integer", "minimum": 1 },
+        "skillIds": {
+          "type": "array",
+          "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+        },
+        "from": {
+          "oneOf": [
+            { "type": "string", "const": "any" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        }
+      }
+    },
     "weaponProficiencies": {
       "type": "array",
       "items": { "type": "string" }
@@ -125,7 +151,7 @@
               "label": { "type": "string" },
               "items": {
                 "type": "array",
-                "items": { "type": "string" }
+                "items": { "$ref": "equipment-entry.schema.json" }
               }
             }
           }
@@ -142,6 +168,7 @@
         },
         "ability": { "type": "string" },
         "focus": { "type": "string" },
+        "focusItemId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
         "ritual": { "type": "boolean" }
       }
     },

@@ -24,28 +24,34 @@
     "id": "artisan",
     "name": "Artifista"
   },
-  "skills": [
-    "Investigação",
-    "Persuasão"
-  ],
   "toolProficiency": {
     "description": "Escolha um tipo de Ferramentas de Artesão (veja o capítulo 6)",
     "kind": "choice",
     "category": "Ferramentas de Artesão"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Ferramentas de Artesão (a mesma que acima)",
-          "2 Algibeiras",
-          "Roupas de Viagem"
+          {
+            "choice": "Ferramentas de Artesão (a mesma que acima)"
+          },
+          {
+            "choice": "2 Algibeiras"
+          },
+          {
+            "id": "roupas-viagem"
+          }
         ],
-        "gold": "32 PO"
+        "gold": 32
       }
     ]
-  }
+  },
+  "skillIds": [
+    "investigation",
+    "persuasion"
+  ]
 }

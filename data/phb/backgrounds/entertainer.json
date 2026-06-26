@@ -24,30 +24,40 @@
     "id": "musician",
     "name": "Músico"
   },
-  "skills": [
-    "Acrobacia",
-    "Atuação"
-  ],
   "toolProficiency": {
     "description": "Escolha um tipo de Instrumento Musical (veja o capítulo 6)",
     "kind": "choice",
     "category": "Instrumento Musical"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Instrumento Musical (o mesmo que acima)",
-          "Espelho",
-          "2 Fantasias",
-          "Perfume",
-          "Roupas de Viagem"
+          {
+            "choice": "Instrumento Musical (o mesmo que acima)"
+          },
+          {
+            "id": "espelho"
+          },
+          {
+            "choice": "2 Fantasias"
+          },
+          {
+            "id": "perfume"
+          },
+          {
+            "id": "roupas-viagem"
+          }
         ],
-        "gold": "11 PO"
+        "gold": 11
       }
     ]
-  }
+  },
+  "skillIds": [
+    "acrobatics",
+    "performance"
+  ]
 }

@@ -18,21 +18,17 @@
   "summary": "Canalize a magia da natureza para curar, moldar e controlar os elementos.",
   "primaryAbility": "Sabedoria",
   "hitDie": "D8",
-  "savingThrows": [
-    "Inteligência",
-    "Sabedoria"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "Arcanismo",
-      "Lidar com Animais",
-      "Intuição",
-      "Medicina",
-      "Natureza",
-      "Percepção",
-      "Religião",
-      "Sobrevivência"
+    "skillIds": [
+      "arcana",
+      "animal-handling",
+      "insight",
+      "medicine",
+      "nature",
+      "perception",
+      "religion",
+      "survival"
     ]
   },
   "weaponProficiencies": [
@@ -52,17 +48,29 @@
       {
         "label": "A",
         "items": [
-          "Armadura de Couro",
-          "Escudo",
-          "Foice",
-          "Kit de Druida",
-          "9 PO"
+          {
+            "id": "leather"
+          },
+          {
+            "id": "shield"
+          },
+          {
+            "id": "sickle"
+          },
+          {
+            "id": "foco-druidico"
+          },
+          {
+            "gold": 9
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "50 PO"
+          {
+            "gold": 50
+          }
         ]
       }
     ]
@@ -71,7 +79,8 @@
     "type": "full",
     "ability": "Sabedoria",
     "focus": "Foco Druídico",
-    "ritual": true
+    "ritual": true,
+    "focusItemId": "foco-druidico"
   },
   "subclassUnlockLevel": 3,
   "subclassLabel": "Círculo",
@@ -457,5 +466,10 @@
         }
       }
     ]
-  }
+  },
+  "primaryAbilityId": "sabedoria",
+  "savingThrowIds": [
+    "inteligencia",
+    "sabedoria"
+  ]
 }

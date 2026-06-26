@@ -18,22 +18,18 @@
   "summary": "Desfira Ataques Furtivos mortais enquanto evita danos através da furtividade.",
   "primaryAbility": "Destreza",
   "hitDie": "D8",
-  "savingThrows": [
-    "Destreza",
-    "Inteligência"
-  ],
   "skillChoices": {
     "count": 4,
-    "from": [
-      "Acrobacia",
-      "Atletismo",
-      "Enganação",
-      "Intuição",
-      "Intimidação",
-      "Investigação",
-      "Percepção",
-      "Persuasão",
-      "Furtividade"
+    "skillIds": [
+      "acrobatics",
+      "athletics",
+      "deception",
+      "insight",
+      "intimidation",
+      "investigation",
+      "perception",
+      "persuasion",
+      "stealth"
     ]
   },
   "weaponProficiencies": [
@@ -57,19 +53,35 @@
       {
         "label": "A",
         "items": [
-          "Armadura de Couro",
-          "2 Adagas",
-          "Espada Curta",
-          "Espada Longa",
-          "Kit de Ladrão",
-          "Kit de Aventureiro",
-          "8 PO"
+          {
+            "id": "leather"
+          },
+          {
+            "choice": "2 Adagas"
+          },
+          {
+            "id": "shortsword"
+          },
+          {
+            "id": "longsword"
+          },
+          {
+            "id": "kit-de-assaltante"
+          },
+          {
+            "id": "kit-de-aventureiro"
+          },
+          {
+            "gold": 8
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "100 PO"
+          {
+            "gold": 100
+          }
         ]
       }
     ]
@@ -180,5 +192,10 @@
       "name": "Golpe de Sorte",
       "description": "Você tem uma vocação maravilhosa para ter sucesso\nquando necessário. Se você falhar em um Teste de\nD20, pode transformar o resultado em um 20.\nApós usar essa característica, você não pode usá-\n-la novamente até completar um Descanso Curto ou\nLongo."
     }
+  ],
+  "primaryAbilityId": "destreza",
+  "savingThrowIds": [
+    "destreza",
+    "inteligencia"
   ]
 }

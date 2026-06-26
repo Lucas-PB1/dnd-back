@@ -24,32 +24,46 @@
     "id": "savage-attacker",
     "name": "Atacante Selvagem"
   },
-  "skills": [
-    "Atletismo",
-    "Intimidação"
-  ],
   "toolProficiency": {
     "description": "Escolha um tipo de Kit de Jogos (veja o capítulo 6)",
     "kind": "choice",
     "category": "Kit de Jogos"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Lança",
-          "Arco Curto",
-          "20 Flechas",
-          "Kit de Curandeiro",
-          "Kit de Jogo (o mesmo que acima)",
-          "Aljava",
-          "Roupas de Viagem"
+          {
+            "id": "spear"
+          },
+          {
+            "id": "shortbow"
+          },
+          {
+            "choice": "20 Flechas"
+          },
+          {
+            "id": "kit-de-curandeiro"
+          },
+          {
+            "choice": "Kit de Jogo (o mesmo que acima)"
+          },
+          {
+            "id": "aljava"
+          },
+          {
+            "id": "roupas-viagem"
+          }
         ],
-        "gold": "14 PO"
+        "gold": 14
       }
     ]
-  }
+  },
+  "skillIds": [
+    "athletics",
+    "intimidation"
+  ]
 }

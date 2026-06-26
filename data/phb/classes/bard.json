@@ -19,10 +19,6 @@
   "description": "Bardos são peritos em inspirar os outros,\naliviar ferimentos, desanimar inimigos e criar\nilusões. Eles acreditam que o multiverso foi trazido à\nexistência por meio de palavras pronunciadas e que\nresquícios das Palavras de Criação ainda ressoam e\nbrilham em todos os planos de existência. A magia dos\nBardos tenta canalizar essas palavras, que transcendem\nqualquer idioma.\nQualquer coisa pode inspirar uma nova canção ou\nhistória, o que faz com que os Bardos sejam fascinados\npor quase tudo. Eles se tornam mestres em muitas\ncoisas, incluindo tocar música, realizar magia e fazer\nbrincadeiras.\nA vida de um Bardo é passada viajando, coletando conhecimento, contando histórias e vivendo da\ngratidão dos ouvintes, como qualquer outro artista. No\nentanto, a profundidade de conhecimento e o domínio\nda magia distinguem os Bardos dos demais.",
   "primaryAbility": "Carisma",
   "hitDie": "D8",
-  "savingThrows": [
-    "Destreza",
-    "Carisma"
-  ],
   "skillChoices": {
     "count": 3,
     "from": "any"
@@ -44,17 +40,29 @@
       {
         "label": "A",
         "items": [
-          "Armadura de Couro",
-          "2 Adagas",
-          "Instrumento Musical (escolha)",
-          "Kit de Artista",
-          "19 PO"
+          {
+            "id": "leather"
+          },
+          {
+            "choice": "2 Adagas"
+          },
+          {
+            "choice": "Instrumento Musical (escolha)"
+          },
+          {
+            "id": "kit-de-artista"
+          },
+          {
+            "gold": 19
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "90 PO"
+          {
+            "gold": 90
+          }
         ]
       }
     ]
@@ -63,7 +71,8 @@
     "type": "full",
     "ability": "Carisma",
     "focus": "Instrumento Musical",
-    "ritual": false
+    "ritual": false,
+    "focusItemId": "instrumento-musical"
   },
   "subclassUnlockLevel": 3,
   "subclassLabel": "Colégio",
@@ -444,5 +453,10 @@
         }
       }
     ]
-  }
+  },
+  "primaryAbilityId": "carisma",
+  "savingThrowIds": [
+    "destreza",
+    "carisma"
+  ]
 }

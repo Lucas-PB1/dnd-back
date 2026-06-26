@@ -15,6 +15,10 @@ const schemaDir = path.join(root, "data/schema");
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 addFormats(ajv);
+const equipmentEntrySchema = JSON.parse(
+  fs.readFileSync(path.join(schemaDir, "equipment-entry.schema.json"), "utf8")
+);
+ajv.addSchema(equipmentEntrySchema);
 const classSchema = JSON.parse(
   fs.readFileSync(path.join(schemaDir, "class.schema.json"), "utf8")
 );

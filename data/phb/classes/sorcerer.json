@@ -19,19 +19,15 @@
   "description": "Feiticeiros são raros. Algumas linhagens familiares\ngeram apenas um Feiticeiro por geração, enquanto,\ngeralmente, esse dom aparece de forma inesperada.\nAqueles que possuem esse poder logo percebem que\nnão conseguem ficar ociosos. A magia de um Feiticeiro\nanseia por ser utilizada.",
   "primaryAbility": "Carisma",
   "hitDie": "D6",
-  "savingThrows": [
-    "Constituição",
-    "Carisma"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "Arcanismo",
-      "Enganação",
-      "Intimidação",
-      "Investigação",
-      "Natureza",
-      "Religião"
+    "skillIds": [
+      "arcana",
+      "deception",
+      "intimidation",
+      "investigation",
+      "nature",
+      "religion"
     ]
   },
   "weaponProficiencies": [
@@ -52,16 +48,26 @@
       {
         "label": "A",
         "items": [
-          "2 Adagas",
-          "Foco Arcano",
-          "Kit de Explorador",
-          "28 PO"
+          {
+            "choice": "2 Adagas"
+          },
+          {
+            "id": "foco-arcano"
+          },
+          {
+            "id": "kit-de-explorador-de-masmorras"
+          },
+          {
+            "gold": 28
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "50 PO"
+          {
+            "gold": 50
+          }
         ]
       }
     ]
@@ -70,7 +76,8 @@
     "type": "full",
     "ability": "Carisma",
     "focus": "Foco Arcano",
-    "ritual": false
+    "ritual": false,
+    "focusItemId": "foco-arcano"
   },
   "subclassUnlockLevel": 3,
   "subclassLabel": "Feitiçaria",
@@ -441,5 +448,10 @@
         }
       }
     ]
-  }
+  },
+  "primaryAbilityId": "carisma",
+  "savingThrowIds": [
+    "constituicao",
+    "carisma"
+  ]
 }

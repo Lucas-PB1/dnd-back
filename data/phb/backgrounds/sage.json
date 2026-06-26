@@ -25,29 +25,40 @@
     "name": "Iniciado em Magia (Mago)",
     "spellList": "Mago"
   },
-  "skills": [
-    "Arcanismo",
-    "História"
-  ],
   "toolProficiency": {
     "description": "Suprimentos de Calígrafo",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "suprimentos-de-caligrafo"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Cajado",
-          "Suprimentos de Calígrafo",
-          "Livro (história)",
-          "Pergaminho (8 folhas)",
-          "Túnica"
+          {
+            "id": "quarterstaff"
+          },
+          {
+            "id": "suprimentos-de-caligrafo"
+          },
+          {
+            "id": "livro"
+          },
+          {
+            "id": "pergaminho"
+          },
+          {
+            "id": "tunica"
+          }
         ],
-        "gold": "8 PO"
+        "gold": 8
       }
     ]
-  }
+  },
+  "skillIds": [
+    "arcana",
+    "history"
+  ]
 }

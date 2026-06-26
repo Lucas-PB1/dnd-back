@@ -12,6 +12,9 @@
     "check:spellcasting": "node scripts/check-spellcasting-data.mjs",
     "audit:spellcasting": "node scripts/audit-spellcasting-data.mjs",
     "verify:pdf-progression": "node scripts/verify-pdf-progression.mjs",
+    "apply:reference-ids": "node scripts/apply-reference-ids.mjs",
+    "validate:references": "node scripts/validate-references.mjs",
+    "validate:character": "node scripts/validate-character.mjs",
     "spellcasting:all": "npm run generate:spell-lists && npm run apply:progression && npm run validate:spellcasting && npm run check:spellcasting && npm run verify:pdf-progression"
   },
   "keywords": [],

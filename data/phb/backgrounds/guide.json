@@ -25,31 +25,46 @@
     "name": "Iniciado em Magia (Druida)",
     "spellList": "Druida"
   },
-  "skills": [
-    "Furtividade",
-    "Sobrevivência"
-  ],
   "toolProficiency": {
     "description": "Ferramentas de Cartógrafo",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "ferramentas-de-cartografo"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Arco Curto",
-          "20 Flechas",
-          "Ferramentas de Cartógrafo",
-          "Aljava",
-          "Roupas de Viagem",
-          "Saco de Dormir",
-          "Tenda"
+          {
+            "id": "shortbow"
+          },
+          {
+            "choice": "20 Flechas"
+          },
+          {
+            "id": "ferramentas-de-cartografo"
+          },
+          {
+            "id": "aljava"
+          },
+          {
+            "id": "roupas-viagem"
+          },
+          {
+            "id": "saco-de-dormir"
+          },
+          {
+            "id": "tenda"
+          }
         ],
-        "gold": "3 PO"
+        "gold": 3
       }
     ]
-  }
+  },
+  "skillIds": [
+    "stealth",
+    "survival"
+  ]
 }

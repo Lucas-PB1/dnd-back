@@ -24,33 +24,49 @@
     "id": "alert",
     "name": "Alerta"
   },
-  "skills": [
-    "Atletismo",
-    "Percepção"
-  ],
   "toolProficiency": {
     "description": "Escolha um tipo de Kit de Jogos (veja o capítulo 6)",
     "kind": "choice",
     "category": "Kit de Jogos"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Lança",
-          "Besta Leve",
-          "20 Virotes",
-          "Kit de Jogo (o mesmo que acima)",
-          "Aljava",
-          "Grilhões",
-          "Lanterna Coberta",
-          "Roupas de Viagem"
+          {
+            "id": "spear"
+          },
+          {
+            "id": "light-crossbow"
+          },
+          {
+            "choice": "20 Virotes"
+          },
+          {
+            "choice": "Kit de Jogo (o mesmo que acima)"
+          },
+          {
+            "id": "aljava"
+          },
+          {
+            "id": "grilhoes"
+          },
+          {
+            "id": "lanterna-coberta"
+          },
+          {
+            "id": "roupas-viagem"
+          }
         ],
-        "gold": "12 PO"
+        "gold": 12
       }
     ]
-  }
+  },
+  "skillIds": [
+    "athletics",
+    "perception"
+  ]
 }

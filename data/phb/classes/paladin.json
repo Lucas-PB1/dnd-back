@@ -19,19 +19,15 @@
   "description": "Paladinos são unidos por seus juramentos de combater as forças da aniquilação e\nda corrupção. Seja diante do altar de um deus,\nem uma clareira sagrada diante de espíritos da natureza ou em momentos de desespero e tristeza com os\nmortos como as únicas testemunhas, o juramento de\num Paladino é um vínculo poderoso. Ele transforma\num combatente devoto em um campeão abençoado.\nPaladinos treinam para dominar armas e armaduras,\nmas suas habilidades marciais são superadas pelo poder\nmágico que possuem: curar feridos, punir inimigos e\nproteger os indefesos e aqueles que lutam ao seu lado.\nA vida de um Paladino é, quase por definição, uma\nvida de aventura, pois eles estão na linha de frente da\nluta cósmica contra a aniquilação. Guerreiros são raros\nnos exércitos de um mundo, e ainda menos indivíduos\npodem reivindicar a vocação de um Paladino. Ao receber esse chamado, essas pessoas abençoadas abandonam suas ocupações anteriores para empunhar armas\ne magia.",
   "primaryAbility": "Força e Carisma",
   "hitDie": "D10",
-  "savingThrows": [
-    "Sabedoria",
-    "Carisma"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "Atletismo",
-      "Intuição",
-      "Intimidação",
-      "Medicina",
-      "Persuasão",
-      "Religião"
+    "skillIds": [
+      "athletics",
+      "insight",
+      "intimidation",
+      "medicine",
+      "persuasion",
+      "religion"
     ]
   },
   "weaponProficiencies": [
@@ -49,19 +45,35 @@
       {
         "label": "A",
         "items": [
-          "Cota de Malha",
-          "Espada Longa",
-          "Escudo",
-          "6 Azagaias",
-          "Kit Sacerdotal",
-          "Símbolo Sagrado",
-          "7 PO"
+          {
+            "id": "chain-mail"
+          },
+          {
+            "id": "longsword"
+          },
+          {
+            "id": "shield"
+          },
+          {
+            "choice": "6 Azagaias"
+          },
+          {
+            "id": "kit-de-sacerdote"
+          },
+          {
+            "id": "simbolo-sagrado"
+          },
+          {
+            "gold": 7
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "150 PO"
+          {
+            "gold": 150
+          }
         ]
       }
     ]
@@ -70,7 +82,8 @@
     "type": "half",
     "ability": "Carisma",
     "focus": "Símbolo Sagrado",
-    "ritual": false
+    "ritual": false,
+    "focusItemId": "simbolo-sagrado"
   },
   "subclassUnlockLevel": 3,
   "subclassLabel": "Juramento",
@@ -407,5 +420,13 @@
         }
       }
     ]
-  }
+  },
+  "primaryAbilityIds": [
+    "forca",
+    "carisma"
+  ],
+  "savingThrowIds": [
+    "sabedoria",
+    "carisma"
+  ]
 }

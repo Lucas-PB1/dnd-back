@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/skills-index.schema.json",
+  "title": "Índice de perícias e atributos PHB",
+  "type": "object",
+  "required": ["source", "abilities", "skills"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "abilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "name": { "type": "string" }
+        }
+      },
+      "minItems": 6,
+      "maxItems": 6
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "ability"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "name": { "type": "string" },
+          "ability": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+        }
+      },
+      "minItems": 18,
+      "maxItems": 18
+    }
+  }
+}

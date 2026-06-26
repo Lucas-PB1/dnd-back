@@ -24,28 +24,34 @@
     "id": "skilled",
     "name": "Habilidoso"
   },
-  "skills": [
-    "História",
-    "Persuasão"
-  ],
   "toolProficiency": {
     "description": "Escolha um tipo de Kit de Jogos (veja o capítulo 6)",
     "kind": "choice",
     "category": "Kit de Jogos"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Kit de Jogos (o mesmo que acima)",
-          "Perfume",
-          "Roupas Finas"
+          {
+            "choice": "Kit de Jogos (o mesmo que acima)"
+          },
+          {
+            "id": "perfume"
+          },
+          {
+            "id": "roupas-finas"
+          }
         ],
-        "gold": "29 PO"
+        "gold": 29
       }
     ]
-  }
+  },
+  "skillIds": [
+    "history",
+    "persuasion"
+  ]
 }

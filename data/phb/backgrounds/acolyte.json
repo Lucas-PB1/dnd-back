@@ -8,46 +8,37 @@
     "chapter": 4,
     "chapterTitle": "Origens dos Personagens",
     "pdfPath": "doc/livro-jogador.pdf",
-    "pdfPages": [
-      177,
-      185
-    ],
+    "pdfPages": [177, 185],
     "extractedAt": "2026-06-25T23:29:50.537Z"
   },
   "description": "Você se dedicou ao serviço em um templo, localizado em uma aldeia ou em um bosque sagrado, onde realizava ritos em homenagem a um deus ou panteão. Sob a orientação de um sacerdote, você estudou religião e, graças à sua devoção, aprendeu a canalizar um pouco do poder divino para o seu local de culto e para as pessoas que ali oravam.",
-  "abilityOptions": [
-    "Inteligência",
-    "Sabedoria",
-    "Carisma"
-  ],
+  "abilityOptions": ["Inteligência", "Sabedoria", "Carisma"],
   "feat": {
     "id": "magic-initiate",
     "name": "Iniciado em Magia (Clérigo)",
     "spellList": "Clérigo"
   },
-  "skills": [
-    "Intuição",
-    "Religião"
-  ],
   "toolProficiency": {
     "description": "Suprimentos de Calígrafo",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "suprimentos-de-caligrafo"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Suprimentos de Calígrafo",
-          "Livro (orações)",
-          "Símbolo Sagrado",
-          "Pergaminho (10 folhas)",
-          "Túnica"
+          { "id": "suprimentos-de-caligrafo" },
+          { "id": "livro" },
+          { "id": "simbolo-sagrado" },
+          { "id": "pergaminho" },
+          { "id": "tunica" }
         ],
-        "gold": "8 PO"
+        "gold": 8
       }
     ]
-  }
+  },
+  "skillIds": ["insight", "religion"]
 }

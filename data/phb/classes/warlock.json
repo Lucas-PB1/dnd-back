@@ -18,20 +18,16 @@
   "summary": "Conjure magias derivadas de conhecimento oculto.",
   "primaryAbility": "Carisma",
   "hitDie": "D8",
-  "savingThrows": [
-    "Sabedoria",
-    "Carisma"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "Arcanismo",
-      "Enganação",
-      "História",
-      "Intimidação",
-      "Investigação",
-      "Natureza",
-      "Religião"
+    "skillIds": [
+      "arcana",
+      "deception",
+      "history",
+      "intimidation",
+      "investigation",
+      "nature",
+      "religion"
     ]
   },
   "weaponProficiencies": [
@@ -48,19 +44,35 @@
       {
         "label": "A",
         "items": [
-          "Armadura de Couro",
-          "Foice",
-          "2 Adagas",
-          "Foco Arcano (orbe)",
-          "Livro (conhecimento oculto)",
-          "Kit de Erudito",
-          "15 PO"
+          {
+            "id": "leather"
+          },
+          {
+            "id": "sickle"
+          },
+          {
+            "choice": "2 Adagas"
+          },
+          {
+            "id": "foco-arcano"
+          },
+          {
+            "id": "livro"
+          },
+          {
+            "id": "kit-de-erudito"
+          },
+          {
+            "gold": 15
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "100 PO"
+          {
+            "gold": 100
+          }
         ]
       }
     ]
@@ -69,7 +81,8 @@
     "type": "pact",
     "ability": "Carisma",
     "focus": "Foco Arcano",
-    "ritual": false
+    "ritual": false,
+    "focusItemId": "foco-arcano"
   },
   "subclassUnlockLevel": 3,
   "subclassLabel": "Patrono",
@@ -328,5 +341,10 @@
         "pactSlotLevel": 5
       }
     ]
-  }
+  },
+  "primaryAbilityId": "carisma",
+  "savingThrowIds": [
+    "sabedoria",
+    "carisma"
+  ]
 }

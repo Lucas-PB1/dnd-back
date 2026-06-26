@@ -24,27 +24,34 @@
     "id": "skilled",
     "name": "Habilidoso"
   },
-  "skills": [
-    "Enganação",
-    "Prestidigitação"
-  ],
   "toolProficiency": {
     "description": "Kit de Falsificação",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "kit-de-falsificacao"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Kit de Falsificação",
-          "Fantasia",
-          "Roupas Finas"
+          {
+            "id": "kit-de-falsificacao"
+          },
+          {
+            "id": "roupas-fantasia"
+          },
+          {
+            "id": "roupas-finas"
+          }
         ],
-        "gold": "15 PO"
+        "gold": 15
       }
     ]
-  }
+  },
+  "skillIds": [
+    "deception",
+    "sleight-of-hand"
+  ]
 }

@@ -24,29 +24,40 @@
     "id": "skilled",
     "name": "Habilidoso"
   },
-  "skills": [
-    "Investigação",
-    "Percepção"
-  ],
   "toolProficiency": {
     "description": "Suprimentos de Calígrafo",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "suprimentos-de-caligrafo"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "Suprimentos de Calígrafo",
-          "Lâmpada",
-          "Óleo (3 frascos)",
-          "Pergaminho (12 folhas)",
-          "Roupas Finas"
+          {
+            "id": "suprimentos-de-caligrafo"
+          },
+          {
+            "id": "lampada"
+          },
+          {
+            "id": "oleo"
+          },
+          {
+            "id": "pergaminho"
+          },
+          {
+            "id": "roupas-finas"
+          }
         ],
-        "gold": "23 PO"
+        "gold": 23
       }
     ]
-  }
+  },
+  "skillIds": [
+    "investigation",
+    "perception"
+  ]
 }

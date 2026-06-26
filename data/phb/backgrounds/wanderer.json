@@ -24,30 +24,43 @@
     "id": "lucky",
     "name": "Sortudo"
   },
-  "skills": [
-    "Furtividade",
-    "Intuição"
-  ],
   "toolProficiency": {
     "description": "Ferramentas de Ladrão",
-    "kind": "fixed"
+    "kind": "fixed",
+    "itemId": "ferramentas-de-ladrao"
   },
   "equipment": {
-    "goldOption": "50 PO",
+    "goldOption": 50,
     "packages": [
       {
         "id": "a",
         "label": "A",
         "items": [
-          "2 Adagas",
-          "Ferramentas de Ladrão",
-          "Kit de Jogos (qualquer um)",
-          "2 Algibeiras",
-          "Roupas de Viagem",
-          "Saco de Dormir"
+          {
+            "choice": "2 Adagas"
+          },
+          {
+            "id": "ferramentas-de-ladrao"
+          },
+          {
+            "choice": "Kit de Jogos (qualquer um)"
+          },
+          {
+            "choice": "2 Algibeiras"
+          },
+          {
+            "id": "roupas-viagem"
+          },
+          {
+            "id": "saco-de-dormir"
+          }
         ],
-        "gold": "16 PO"
+        "gold": 16
       }
     ]
-  }
+  },
+  "skillIds": [
+    "stealth",
+    "insight"
+  ]
 }

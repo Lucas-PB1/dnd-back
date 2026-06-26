@@ -19,19 +19,15 @@
   "description": "Bárbaros são combatentes poderosos,\nimpulsionados por forças primitivas do multiverso que se manifestam com sua Fúria. Mais\ndo que uma simples emoção — e não limitada à raiva — essa Fúria é a encarnação da ferocidade de um\npredador, da fúria de uma tempestade e da turbulência\ndo mar.\nAlguns Bárbaros personificam sua Fúria como um\nespírito feroz ou um antepassado reverenciado. Outros\na veem como uma conexão com a dor e o sofrimento\ndo mundo, um emaranhado impessoal de magia selvagem ou uma expressão de seu eu mais profundo. Para\ncada Bárbaro, a Fúria é uma força que alimenta não\napenas sua habilidade de combate, mas também seus\nreflexos aprimorados e sentidos ampliados.\nBárbaros frequentemente servem como protetores\ne líderes em suas comunidades. Eles se entregam de\ncabeça no perigo para que aqueles sob sua proteção\nnão precisem. Sua coragem diante do perigo torna os\nBárbaros perfeitamente adequados para aventuras.",
   "primaryAbility": "Força",
   "hitDie": "D12",
-  "savingThrows": [
-    "Força",
-    "Constituição"
-  ],
   "skillChoices": {
     "count": 2,
-    "from": [
-      "Atletismo",
-      "Intimidação",
-      "Lidar com Animais",
-      "Natureza",
-      "Percepção",
-      "Sobrevivência"
+    "skillIds": [
+      "athletics",
+      "intimidation",
+      "animal-handling",
+      "nature",
+      "perception",
+      "survival"
     ]
   },
   "weaponProficiencies": [
@@ -49,16 +45,26 @@
       {
         "label": "A",
         "items": [
-          "4 Machadinhas",
-          "Machado Grande",
-          "Kit de Aventureiro",
-          "15 PO"
+          {
+            "choice": "4 Machadinhas"
+          },
+          {
+            "id": "greataxe"
+          },
+          {
+            "id": "kit-de-aventureiro"
+          },
+          {
+            "gold": 15
+          }
         ]
       },
       {
         "label": "B",
         "items": [
-          "75 PO"
+          {
+            "gold": 75
+          }
         ]
       }
     ]
@@ -179,5 +185,10 @@
       "name": "Campeão Primitivo",
       "description": "Você incorpora o poder primitivo. Seus valores de\nForça e Constituição aumentam em 4, até um máximo\nde 25."
     }
+  ],
+  "primaryAbilityId": "forca",
+  "savingThrowIds": [
+    "forca",
+    "constituicao"
   ]
 }
