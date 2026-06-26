@@ -1,0 +1,125 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "oak",
+  "name": "Oak",
+  "level": 1,
+  "speciesId": "dwarf",
+  "backgroundId": "farmer",
+  "classId": "druid",
+  "alignmentId": "true-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "sabedoria": 16,
+    "constituicao": 15,
+    "forca": 14,
+    "destreza": 12,
+    "inteligencia": 10,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "animal-handling",
+      "source": "background"
+    },
+    {
+      "skillId": "nature",
+      "source": "background"
+    },
+    {
+      "skillId": "arcana",
+      "source": "class"
+    },
+    {
+      "skillId": "insight",
+      "source": "class"
+    },
+    {
+      "skillId": "history",
+      "source": "species"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "inteligencia",
+    "sabedoria"
+  ],
+  "feats": [
+    {
+      "featId": "tough",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    },
+    {
+      "itemId": "sickle",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 13,
+    "max": 13,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 11,
+    "dexBonus": 1,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "classChoices": {
+    "skillIds": [
+      "animal-handling",
+      "nature"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "acudir-os-moribundos",
+        "arte-druidica"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "amizade-animal",
+        "bom-fruto",
+        "criar-ou-destruir-agua",
+        "curar-ferimentos"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "passivePerception": 13
+}

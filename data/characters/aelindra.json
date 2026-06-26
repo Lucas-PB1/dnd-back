@@ -97,5 +97,6 @@
   "resources": {
     "channelDivinity": { "max": 2, "remaining": 2 }
   },
+  "passivePerception": 15,
   "notes": "Pacote A da classe + pacote A do antecedente Acólito. Símbolo Sagrado veio da classe (duplicata do antecedente omitida). 15 PO iniciais (7 + 8)."
 }

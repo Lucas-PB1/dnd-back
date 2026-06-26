@@ -31,3 +31,22 @@ export function expectedMaxHp(classId, level, constitutionScore) {
   }
   return max;
 }
+
+/** Bônus de PV por espécie (ex.: Tenacidade Anã = +1 por nível). */
+export function speciesHpBonus(speciesId, level) {
+  if (speciesId === "dwarf") return level;
+  return 0;
+}
+
+/** Bônus de PV por talento Vigoroso (2× nível ao obter + 2 por nível depois = 2× nível atual). */
+export function toughFeatHpBonus(level, toughFeatCount = 1) {
+  return toughFeatCount > 0 ? 2 * level * toughFeatCount : 0;
+}
+
+/** PV máximos da ficha incluindo espécie e talentos. */
+export function expectedMaxHpForCharacter(doc) {
+  const base = expectedMaxHp(doc.classId, doc.level, doc.abilities.constituicao);
+  if (base == null) return null;
+  const toughCount = doc.feats?.filter((f) => f.featId === "tough").length ?? 0;
+  return base + speciesHpBonus(doc.speciesId, doc.level) + toughFeatHpBonus(doc.level, toughCount);
+}

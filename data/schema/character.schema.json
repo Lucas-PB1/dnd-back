@@ -84,6 +84,11 @@
       "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
       "uniqueItems": true
     },
+    "passivePerception": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Percepção passiva (10 + bônus de Percepção)."
+    },
     "notes": { "type": "string" }
   },
   "additionalProperties": false,
@@ -283,6 +288,24 @@
       "type": "object",
       "properties": {
         "channelDivinity": {
+          "type": "object",
+          "required": ["max", "remaining"],
+          "properties": {
+            "max": { "type": "integer", "minimum": 0 },
+            "remaining": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "rage": {
+          "type": "object",
+          "required": ["max", "remaining"],
+          "properties": {
+            "max": { "type": "integer", "minimum": 0 },
+            "remaining": { "type": "integer", "minimum": 0 }
+          },
+          "additionalProperties": false
+        },
+        "focusPoints": {
           "type": "object",
           "required": ["max", "remaining"],
           "properties": {

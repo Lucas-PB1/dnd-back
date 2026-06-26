@@ -12,6 +12,8 @@
     "check:spellcasting": "node scripts/check-spellcasting-data.mjs",
     "validate:references": "node scripts/validate-references.mjs",
     "validate:character": "node scripts/validate-character.mjs",
+    "generate:test-characters": "node scripts/generate-test-characters.mjs",
+    "analyze:characters": "node scripts/analyze-characters.mjs",
     "generate:skills": "node scripts/generate-skills.mjs",
     "validate:skills": "node scripts/validate-skills.mjs",
     "skills:all": "npm run generate:skills && npm run validate:skills",

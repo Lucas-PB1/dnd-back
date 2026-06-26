@@ -8,9 +8,8 @@ import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import {
   allCantripIds,
-  expectedChannelDivinity,
   expectedClassCantrips,
-  expectedMaxHp,
+  expectedMaxHpForCharacter,
   expectedPreparedCount,
   expectedProficiencyBonus,
   expectedSpellSlots,
@@ -21,9 +20,14 @@ import {
   loadBackground,
   loadClass,
   validateAbilityScores,
-  validateEquippedArmorTraining,
   validateArmorClass,
+  validateClassResources,
+  validateEquippedArmorTraining,
   validateFightingStyle,
+  validatePassivePerception,
+  validateSkillProficiencies,
+  validateStartingEquipment,
+  validateSubclassLevel,
   validateWeaponMasteryChoices,
 } from "./character-rules.mjs";
 
@@ -129,6 +133,11 @@ function validateSpellcastingRules(doc) {
     expectedCantrips += 1;
   }
 
+  const altStyle = classChoices?.fightingStyleId;
+  if (altStyle === "blessed-warrior" || altStyle === "druidic-warrior") {
+    expectedCantrips = 2;
+  }
+
   const miFeat = feats.find((f) => f.featId === "magic-initiate");
   const miCantrips = miFeat?.magicInitiate?.cantripIds ?? [];
   const lineageCant = speciesChoices?.lineageId ? lineageCantrips(speciesChoices.lineageId) : [];
@@ -220,22 +229,11 @@ function validateSpellcastingRules(doc) {
   if (uniqueCantrips.size !== allCantrips.length) {
     fail(`${doc.id}: truque duplicado entre fontes`);
   }
-
-  const cd = expectedChannelDivinity(classId, level);
-  if (cd != null && doc.resources?.channelDivinity?.max !== cd) {
-    fail(`${doc.id}: Canalizar Divindade max=${doc.resources?.channelDivinity?.max}, esperado ${cd}`);
-  }
 }
 
 function validateStartingGear(doc) {
-  const cls = loadClass(doc.classId);
-  const bg = loadBackground(doc.backgroundId);
-  const classOpt = cls.startingEquipment?.options?.find(
-    (o) => o.label === doc.startingPackages.classOption
-  );
-  const bgOpt = bg.equipment?.packages?.find((p) => p.id === doc.startingPackages.backgroundOption);
-  if (!classOpt) fail(`${doc.id}: opção de equipamento de classe inválida`);
-  if (!bgOpt) fail(`${doc.id}: opção de equipamento de antecedente inválida`);
+  const check = validateStartingEquipment(doc);
+  if (!check.ok) fail(`${doc.id}: equipamento inicial — ${check.reason}`);
 }
 
 const files = fs.readdirSync(charsDir).filter((f) => f.endsWith(".json"));
@@ -319,9 +317,29 @@ for (const file of files) {
     fail(`${label}: CA — ${acCheck.reason}`);
   }
 
-  const expectedHp = expectedMaxHp(doc.classId, doc.level, doc.abilities.constituicao);
+  const skillCheck = validateSkillProficiencies(doc);
+  if (!skillCheck.ok) {
+    fail(`${label}: perícias — ${skillCheck.reason}`);
+  }
+
+  const subclassCheck = validateSubclassLevel(doc);
+  if (!subclassCheck.ok) {
+    fail(`${label}: subclasse — ${subclassCheck.reason}`);
+  }
+
+  const passiveCheck = validatePassivePerception(doc);
+  if (!passiveCheck.ok) {
+    fail(`${label}: percepção passiva — ${passiveCheck.reason}`);
+  }
+
+  const resourceCheck = validateClassResources(doc);
+  if (!resourceCheck.ok) {
+    fail(`${label}: recursos — ${resourceCheck.reason}`);
+  }
+
+  const expectedHp = expectedMaxHpForCharacter(doc);
   if (expectedHp != null && doc.hp?.max !== expectedHp) {
-    fail(`${label}: hp.max=${doc.hp?.max}, esperado ${expectedHp} (PV fixo + CON)`);
+    fail(`${label}: hp.max=${doc.hp?.max}, esperado ${expectedHp} (PV + CON + espécie/talentos)`);
   }
 
   const expectedProf = expectedProficiencyBonus(doc.level);

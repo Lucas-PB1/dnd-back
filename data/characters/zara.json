@@ -1,0 +1,125 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "zara",
+  "name": "Zara",
+  "level": 1,
+  "speciesId": "dragonborn",
+  "backgroundId": "noble",
+  "classId": "sorcerer",
+  "alignmentId": "lawful-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "carisma": 15,
+    "constituicao": 14,
+    "destreza": 13,
+    "sabedoria": 12,
+    "inteligencia": 11,
+    "forca": 10
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "history",
+      "source": "background"
+    },
+    {
+      "skillId": "persuasion",
+      "source": "background"
+    },
+    {
+      "skillId": "arcana",
+      "source": "class"
+    },
+    {
+      "skillId": "deception",
+      "source": "class"
+    },
+    {
+      "skillId": "intimidation",
+      "source": "species"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "feat"
+    },
+    {
+      "skillId": "athletics",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "constituicao",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "foco-arcano",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "focus"
+    }
+  ],
+  "hp": {
+    "current": 8,
+    "max": 8,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 11,
+    "base": 10,
+    "dexBonus": 1,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "classChoices": {
+    "skillIds": [
+      "arcana",
+      "persuasion"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "bolha-acida",
+        "elementalismo",
+        "explosao-elemental"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "armadura-arcana",
+        "compreender-idiomas"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "passivePerception": 11
+}

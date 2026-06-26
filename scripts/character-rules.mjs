@@ -5,7 +5,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { CLASS_PROGRESSION } from "./class-progression-data.mjs";
-import { abilityMod, expectedMaxHp } from "./hp-data.mjs";
+import { abilityMod, expectedMaxHp, expectedMaxHpForCharacter, speciesHpBonus, toughFeatHpBonus } from "./hp-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -18,7 +18,7 @@ export const ELF_LINEAGE_SPELLS = {
   "wood-elf": { 1: ["arte-druidica"], 3: ["passos-largos"], 5: ["passo-sem-rastro"] },
 };
 
-export { abilityMod, expectedMaxHp };
+export { abilityMod, expectedMaxHp, expectedMaxHpForCharacter, speciesHpBonus, toughFeatHpBonus };
 
 const ADVANCEMENT = JSON.parse(
   fs.readFileSync(path.join(phb, "rules/character-advancement.json"), "utf8")
@@ -110,6 +110,64 @@ export function loadSubclass(classId, subclassId) {
   return JSON.parse(
     fs.readFileSync(path.join(phb, "subclasses", `${classId}-${subclassId}.json`), "utf8")
   );
+}
+
+export function loadSpecies(id) {
+  return JSON.parse(fs.readFileSync(path.join(phb, "species", `${id}.json`), "utf8"));
+}
+
+const ALL_SKILL_IDS = JSON.parse(
+  fs.readFileSync(path.join(phb, "skills/index.json"), "utf8")
+).skills.map((s) => s.id);
+
+/** Usos de Fúria por nível de bárbaro (PHB 2024). */
+const RAGES_BY_LEVEL = [2, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 6, 6, 6, 6];
+
+/** Pontos de Foco por nível de monge (nível 1 não tem). */
+const FOCUS_BY_LEVEL = [0, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
+
+export function expectedRageUses(level) {
+  if (level < 1 || level > 20) return null;
+  return RAGES_BY_LEVEL[level - 1];
+}
+
+export function expectedFocusPoints(level) {
+  if (level < 2 || level > 20) return null;
+  return FOCUS_BY_LEVEL[level - 1];
+}
+
+function classSkillPool(cls) {
+  if (cls.skillChoices?.skillIds?.length) return cls.skillChoices.skillIds;
+  if (cls.skillChoices?.from === "any") return ALL_SKILL_IDS;
+  return [];
+}
+
+/** Treinamento de armadura efetivo (classe + ordem divina + subclasse). */
+export function effectiveArmorTraining(doc) {
+  const cls = loadClass(doc.classId);
+  const training = { ...(cls.armorTraining ?? {}) };
+
+  if (doc.classId === "cleric" && doc.classChoices?.divineOrder === "protector") {
+    training.heavy = true;
+  }
+
+  if (doc.classId === "bard" && doc.subclassId === "valor" && doc.level >= 3) {
+    training.medium = true;
+    training.shields = true;
+  }
+
+  return training;
+}
+
+function unarmoredDefenseBonus(doc, armorItem, shieldItem) {
+  if (armorItem) return 0;
+  if (doc.classId === "barbarian") {
+    return abilityMod(doc.abilities.constituicao);
+  }
+  if (doc.classId === "monk" && !shieldItem) {
+    return abilityMod(doc.abilities.sabedoria);
+  }
+  return 0;
 }
 
 /** Magias sempre preparadas da subclasse no nível atual (null se a subclasse não define). */
@@ -360,9 +418,8 @@ const ARMOR_CATEGORY_TO_TRAINING = {
 };
 
 export function validateEquippedArmorTraining(doc) {
-  const cls = loadClass(doc.classId);
-  const training = cls.armorTraining;
-  if (!training) return { ok: true };
+  const training = effectiveArmorTraining(doc);
+  if (!Object.keys(training).length) return { ok: true };
 
   for (const item of doc.equipment) {
     if (!item.equipped || (item.slot !== "armor" && item.slot !== "shield")) continue;
@@ -426,7 +483,9 @@ export function expectedArmorClass(doc) {
     if (qualifies) fightingStyleBonus = styleRule.bonus;
   }
 
-  const otherBonus = doc.armorClass?.otherBonus ?? 0;
+  const unarmoredBonus = unarmoredDefenseBonus(doc, armorItem, shieldItem);
+  const enchantBonus = doc.armorClass?.otherBonus ?? 0;
+  const otherBonus = unarmoredBonus > 0 ? unarmoredBonus : enchantBonus;
   const total = base + dexBonus + shieldBonus + fightingStyleBonus + otherBonus;
 
   return {
@@ -454,7 +513,7 @@ export function validateArmorClass(doc) {
     };
   }
 
-  const fields = ["base", "dexBonus", "shieldBonus", "fightingStyleBonus"];
+  const fields = ["base", "dexBonus", "shieldBonus", "fightingStyleBonus", "otherBonus"];
   for (const field of fields) {
     if (actual[field] != null && actual[field] !== expected[field]) {
       return {
@@ -508,6 +567,206 @@ export function validateFightingStyle(doc) {
         reason: `Combatente Druídico exige 2 truques de Druida em spellcasting.cantrips.class (tem ${cantrips.length})`,
       };
     }
+  }
+
+  return { ok: true };
+}
+
+export function validateSkillProficiencies(doc) {
+  const bg = loadBackground(doc.backgroundId);
+  const cls = loadClass(doc.classId);
+  const skills = doc.skillProficiencies ?? [];
+  const skillIds = skills.map((s) => s.skillId);
+
+  if (new Set(skillIds).size !== skillIds.length) {
+    return { ok: false, reason: "perícia duplicada em skillProficiencies" };
+  }
+
+  for (const skillId of bg.skillIds) {
+    const entry = skills.find((s) => s.skillId === skillId);
+    if (!entry) {
+      return { ok: false, reason: `perícia do antecedente ausente: ${skillId}` };
+    }
+    if (entry.source !== "background") {
+      return { ok: false, reason: `${skillId} deveria ter source background` };
+    }
+  }
+
+  const classNeeded = cls.skillChoices?.count ?? 0;
+  const classSkills = skills.filter((s) => s.source === "class");
+  if (classSkills.length !== classNeeded) {
+    return {
+      ok: false,
+      reason: `${classSkills.length} perícias de classe, esperado ${classNeeded}`,
+    };
+  }
+
+  const pool = classSkillPool(cls);
+  for (const { skillId } of classSkills) {
+    if (!pool.includes(skillId)) {
+      return { ok: false, reason: `perícia de classe inválida: ${skillId}` };
+    }
+  }
+
+  if (doc.speciesId === "human") {
+    const speciesSkills = skills.filter((s) => s.source === "species");
+    if (speciesSkills.length !== 1) {
+      return { ok: false, reason: "humano (Hábil) exige exatamente 1 perícia de espécie" };
+    }
+  }
+
+  if (doc.speciesChoices?.keenSensesSkillId) {
+    const keen = skills.find((s) => s.skillId === doc.speciesChoices.keenSensesSkillId);
+    if (!keen || keen.source !== "species") {
+      return {
+        ok: false,
+        reason: `perícia de Sentidos Aguçados ausente: ${doc.speciesChoices.keenSensesSkillId}`,
+      };
+    }
+  }
+
+  const skilledCount = doc.feats?.filter((f) => f.featId === "skilled").length ?? 0;
+  if (skilledCount > 0) {
+    const featSkills = skills.filter((s) => s.source === "feat");
+    const expectedFeatSkills = skilledCount * 3;
+    if (featSkills.length < expectedFeatSkills) {
+      return {
+        ok: false,
+        reason: `talento Habilidoso exige ${expectedFeatSkills} perícias de feat, tem ${featSkills.length}`,
+      };
+    }
+  }
+
+  return { ok: true };
+}
+
+export function validateSubclassLevel(doc) {
+  if (!doc.subclassId) return { ok: true };
+
+  const cls = loadClass(doc.classId);
+  const unlock = cls.subclassUnlockLevel ?? 3;
+  if (doc.level < unlock) {
+    return {
+      ok: false,
+      reason: `subclasse ${doc.subclassId} antes do nível ${unlock}`,
+    };
+  }
+
+  const classData = JSON.parse(
+    fs.readFileSync(path.join(phb, "index.json"), "utf8")
+  ).classes.find((c) => c.id === doc.classId);
+  const validSubs = classData?.subclasses?.map((s) => s.id) ?? [];
+  if (!validSubs.includes(doc.subclassId)) {
+    return { ok: false, reason: `subclasse ${doc.subclassId} inválida para ${doc.classId}` };
+  }
+
+  return { ok: true };
+}
+
+export function validatePassivePerception(doc) {
+  const expected = expectedPassivePerception(doc);
+  if (doc.passivePerception == null) {
+    return { ok: false, reason: "passivePerception ausente" };
+  }
+  if (doc.passivePerception !== expected) {
+    return {
+      ok: false,
+      reason: `passivePerception=${doc.passivePerception}, esperado ${expected}`,
+    };
+  }
+  return { ok: true };
+}
+
+function packageFixedItemIds(pkg) {
+  if (!pkg?.items) return [];
+  return pkg.items.filter((i) => i.id).map((i) => i.id);
+}
+
+/** Itens típicos de escolhas textuais nos pacotes iniciais (PHB 2024). */
+const PACKAGE_CHOICE_ITEMS = {
+  "2 Adagas": ["dagger"],
+  "2 adagas": ["dagger"],
+  "4 Machadinhas": ["handaxe"],
+  "6 Azagaias": ["javelin"],
+};
+
+function packageAllowedItemIds(pkg) {
+  const ids = new Set(packageFixedItemIds(pkg));
+  for (const item of pkg?.items ?? []) {
+    if (item.choice && PACKAGE_CHOICE_ITEMS[item.choice]) {
+      for (const id of PACKAGE_CHOICE_ITEMS[item.choice]) ids.add(id);
+    }
+  }
+  return ids;
+}
+
+export function validateStartingEquipment(doc) {
+  const cls = loadClass(doc.classId);
+  const bg = loadBackground(doc.backgroundId);
+  const classOpt = cls.startingEquipment?.options?.find(
+    (o) => o.label === doc.startingPackages.classOption
+  );
+  const bgOpt = bg.equipment?.packages?.find((p) => p.id === doc.startingPackages.backgroundOption);
+
+  if (!classOpt) return { ok: false, reason: "opção de equipamento de classe inválida" };
+  if (!bgOpt) return { ok: false, reason: "opção de equipamento de antecedente inválida" };
+
+  const allowedClass = packageAllowedItemIds(classOpt);
+  const allowedBg = packageAllowedItemIds(bgOpt);
+
+  for (const item of doc.equipment) {
+    if (item.source === "purchased" || item.source === "other") continue;
+    if (item.source === "class-starting" && !allowedClass.has(item.itemId)) {
+      return {
+        ok: false,
+        reason: `${item.itemId} não consta no pacote ${doc.startingPackages.classOption} da classe`,
+      };
+    }
+    if (item.source === "background-starting" && !allowedBg.has(item.itemId)) {
+      return {
+        ok: false,
+        reason: `${item.itemId} não consta no pacote do antecedente`,
+      };
+    }
+  }
+
+  return { ok: true };
+}
+
+export function validateClassResources(doc) {
+  const { classId, level, resources } = doc;
+
+  const cd = expectedChannelDivinity(classId, level);
+  if (cd != null) {
+    if (resources?.channelDivinity?.max !== cd) {
+      return {
+        ok: false,
+        reason: `Canalizar Divindade max=${resources?.channelDivinity?.max}, esperado ${cd}`,
+      };
+    }
+  } else if (resources?.channelDivinity != null) {
+    return { ok: false, reason: "classe não usa Canalizar Divindade" };
+  }
+
+  const rages = expectedRageUses(level);
+  if (classId === "barbarian" && rages != null) {
+    if (resources?.rage?.max !== rages) {
+      return { ok: false, reason: `Fúria max=${resources?.rage?.max}, esperado ${rages}` };
+    }
+  } else if (resources?.rage != null) {
+    return { ok: false, reason: "classe não usa Fúria" };
+  }
+
+  const focus = expectedFocusPoints(level);
+  if (classId === "monk" && level >= 2 && focus != null) {
+    if (resources?.focusPoints?.max !== focus) {
+      return {
+        ok: false,
+        reason: `Pontos de Foco max=${resources?.focusPoints?.max}, esperado ${focus}`,
+      };
+    }
+  } else if (resources?.focusPoints != null) {
+    return { ok: false, reason: "classe não usa Pontos de Foco neste nível" };
   }
 
   return { ok: true };
