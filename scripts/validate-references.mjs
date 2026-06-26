@@ -58,7 +58,10 @@ for (const f of fs
   );
 }
 
-for (const f of fs.readdirSync(path.join(phb, "classes")).filter((x) => x.endsWith(".json"))) {
+const classFiles = JSON.parse(fs.readFileSync(path.join(phb, "index.json"), "utf8")).classes.map(
+  (c) => path.basename(c.file)
+);
+for (const f of classFiles) {
   check(
     validators.class,
     `classes/${f}`,

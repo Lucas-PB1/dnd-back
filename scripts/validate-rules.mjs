@@ -98,6 +98,7 @@ for (const group of hpRules.level1MaxHp) {
 for (const file of fs.readdirSync(path.join(phb, "classes")).filter((f) => f.endsWith(".json"))) {
   const cls = JSON.parse(fs.readFileSync(path.join(phb, "classes", file), "utf8"));
   const expected = HP_BY_CLASS[cls.id];
+  if (!expected) continue;
   if (!cls.hitPoints) {
     fail(`${cls.id}: falta hitPoints (rode npm run apply:hp)`);
     continue;

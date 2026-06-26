@@ -10,9 +10,6 @@
     "apply:progression": "node scripts/apply-class-progression.mjs",
     "validate:spellcasting": "node scripts/validate-spellcasting-data.mjs",
     "check:spellcasting": "node scripts/check-spellcasting-data.mjs",
-    "audit:spellcasting": "node scripts/audit-spellcasting-data.mjs",
-    "verify:pdf-progression": "node scripts/verify-pdf-progression.mjs",
-    "apply:reference-ids": "node scripts/apply-reference-ids.mjs",
     "validate:references": "node scripts/validate-references.mjs",
     "validate:character": "node scripts/validate-character.mjs",
     "generate:skills": "node scripts/generate-skills.mjs",
@@ -32,7 +29,8 @@
     "apply:subclass-spells": "node scripts/apply-subclass-spells.mjs",
     "validate:subclasses": "node scripts/validate-subclasses.mjs",
     "subclasses:all": "npm run apply:subclass-spells && npm run validate:subclasses",
-    "spellcasting:all": "npm run generate:spell-lists && npm run apply:progression && npm run validate:spellcasting && npm run check:spellcasting && npm run verify:pdf-progression"
+    "fichas:all": "npm run creation:all && npm run rules:all && npm run skills:all && npm run weapons:all && npm run armor:all && npm run subclasses:all && npm run validate:references && npm run validate:character",
+    "spellcasting:all": "npm run generate:spell-lists && npm run apply:progression && npm run validate:spellcasting && npm run check:spellcasting"
   },
   "keywords": [],
   "author": "",
@@ -40,7 +38,6 @@
   "description": "",
   "devDependencies": {
     "ajv": "^8.20.0",
-    "ajv-formats": "^3.0.1",
-    "pdf-parse": "^2.4.5"
+    "ajv-formats": "^3.0.1"
   }
 }

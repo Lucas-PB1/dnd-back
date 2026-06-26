@@ -49,6 +49,18 @@ export function expectedProficiencyBonus(level) {
   return ADVANCEMENT.levels.find((r) => r.level === level)?.proficiencyBonus ?? null;
 }
 
+/** Percepção Passiva = 10 + bônus do teste de Sabedoria (Percepção). */
+export function expectedPassivePerception(doc) {
+  const wisMod = abilityMod(doc.abilities.sabedoria);
+  const prof = expectedProficiencyBonus(doc.level) ?? 0;
+  const proficient = doc.skillProficiencies?.some((s) => s.skillId === "perception");
+  const expert = doc.expertise?.includes("perception");
+  let skillBonus = wisMod;
+  if (proficient) skillBonus += prof;
+  if (expert) skillBonus += prof;
+  return 10 + skillBonus;
+}
+
 export function expectedClassCantrips(classId, level) {
   const row = CLASS_PROGRESSION[classId]?.levels[level - 1];
   return row?.cantrips ?? null;

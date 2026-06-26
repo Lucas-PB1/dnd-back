@@ -1,3 +1,4 @@
 doc/
 *.pdf
 node_modules/
+data/extracted/

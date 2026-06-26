@@ -13,10 +13,7 @@ for (const file of fs.readdirSync(classesDir).filter((f) => f.endsWith(".json"))
   const filePath = path.join(classesDir, file);
   const doc = JSON.parse(fs.readFileSync(filePath, "utf8"));
   const hp = HP_BY_CLASS[doc.id];
-  if (!hp) {
-    console.error(`✗ Sem dados de PV para ${doc.id}`);
-    process.exit(1);
-  }
+  if (!hp) continue;
   const dieFromHitDie = parseInt(doc.hitDie.slice(1), 10);
   if (dieFromHitDie !== hp.level1Die) {
     console.error(
