@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { CLASS_PROGRESSION } from "./class-progression-data.mjs";
+import { abilityMod, expectedMaxHp } from "./hp-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -25,8 +26,14 @@ export const ELF_LINEAGE_SPELLS = {
   "wood-elf": { 1: ["arte-druidica"], 3: ["passos-largos"], 5: ["passo-sem-rastro"] },
 };
 
-export function abilityMod(score) {
-  return Math.floor((score - 10) / 2);
+export { abilityMod, expectedMaxHp };
+
+const ADVANCEMENT = JSON.parse(
+  fs.readFileSync(path.join(phb, "rules/character-advancement.json"), "utf8")
+);
+
+export function expectedProficiencyBonus(level) {
+  return ADVANCEMENT.levels.find((r) => r.level === level)?.proficiencyBonus ?? null;
 }
 
 export function expectedClassCantrips(classId, level) {

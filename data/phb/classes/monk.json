@@ -206,5 +206,11 @@
   "savingThrowIds": [
     "forca",
     "destreza"
-  ]
+  ],
+  "hitPoints": {
+    "level1DieValue": 8,
+    "fixedHpPerLevel": 5,
+    "minimumGainPerLevel": 1,
+    "constitutionModApplies": true
+  }
 }

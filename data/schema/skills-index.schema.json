@@ -28,7 +28,8 @@
         "properties": {
           "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
           "name": { "type": "string" },
-          "ability": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+          "ability": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "exampleUses": { "type": "string" }
         }
       },
       "minItems": 18,

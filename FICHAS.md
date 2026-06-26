@@ -1,8 +1,10 @@
 # Objetivo: fichas de personagem
 
-Este repositório extrai o **Livro do Jogador 2024 (PT-BR)** para JSON estruturado. O objetivo final é **gerar e manter fichas de personagem** — criar, nivelar, equipar e consultar regras sem depender do PDF.
+Este repositório extrai o **Livro do Jogador 2024 (PT-BR)** para JSON estruturado. O objetivo **atual** é montar a **biblioteca de regras** em `data/phb/` e **testar** se os dados fecham (schemas, referências cruzadas, checagens contra o PDF).
 
-Os dados em `data/phb/` são a **biblioteca de regras**. A ficha é a **instância** de um personagem que referencia esses dados.
+As fichas em `data/characters/` são **casos de teste de integração** — personagens de exemplo que provam que espécie + antecedente + classe + magia + equipamento referenciam o acervo corretamente. **Não** é objetivo deste repo gerar UI, exportar PDF ou implementar motor de jogo.
+
+No futuro, uma aplicação poderia consumir esses JSON; isso fica fora do escopo imediato.
 
 ---
 
@@ -26,17 +28,18 @@ No sistema 2024, uma ficha completa reúne escolhas do jogador com valores calcu
 | Classe, nível, subclasse | Cap. 3 | ✅ `data/phb/classes/`, `subclasses/` |
 | Características por nível | Cap. 3 | ✅ `features[]` |
 | Tabela de espaços de magia / truques | Cap. 3 | ✅ `progression` nas 8 classes conjuradoras |
-| PV máximos por nível (`hitDie` + progressão) | Cap. 3 | Parcial — `hitDie` nas classes; tabela de PV/nível **falta** |
-| Bônus de proficiência por nível | Cap. 1 | Parcial — em `progression` das 8 conjuradoras; regra geral **falta** |
+| PV máximos por nível (`hitDie` + progressão) | Cap. 2 | ✅ `hitPoints` nas classes + `rules/hp.json` |
+| Bônus de proficiência por nível | Cap. 1 | ✅ `rules/proficiency-bonus.json` + `character-advancement.json` |
 | Perícias, salvaguardas, especialização | Cap. 1 + classe + antecedente | ✅ `skillIds` / `savingThrowIds` nas classes e antecedentes |
 
 ### Atributos e perícias
 
 | Campo | Origem no livro | Status dos dados |
 |-------|-----------------|------------------|
-| Seis atributos e modificadores | Cap. 1 + criação | **Regras do Cap. 1 faltam** |
-| Bônus de proficiência (regra geral) | Cap. 1 | **Falta** — só implícito em `progression` das conjuradoras |
-| Perícias (lista e regras) | Cap. 1 | **Falta** — nomes soltos em classes/antecedentes |
+| Seis atributos e modificadores | Cap. 1 + criação | ✅ `rules/ability-modifiers.json` |
+| Bônus de proficiência (regra geral) | Cap. 1 | ✅ `rules/proficiency-bonus.json` |
+| Perícias (lista e regras) | Cap. 1 | ✅ `skills/index.json` (18 + exemplos de uso) |
+| Testes de atributo e salvaguardas | Cap. 1 | ✅ `rules/ability-checks.json`, `saving-throws.json`, `d20-tests.json` |
 | CD de magia / ataque mágico | Cap. 7 | ✅ regras em `spells/rules/intro.json` |
 
 ### Combate e recursos
@@ -83,6 +86,7 @@ data/phb/
 ├── spells/             # 391 magias + índice + regras de conjuração
 │   └── by-class/       # 8 listas por classe (truques + círculos 1–9)
 ├── skills/             # 18 perícias + 6 atributos (índice com ids)
+├── rules/              # Cap. 1–2: testes de D20, PV, evolução, proficiência
 └── ...
 
 data/characters/        # fichas de personagem (instâncias)
@@ -97,7 +101,8 @@ data/schema/            # JSON Schema de cada tipo de dado
 |---------|--------|
 | `npm run spellcasting:all` | listas por classe, progressão, PDF |
 | `npm run validate:references` | skills, antecedentes, classes (schemas + ids) |
-| `npm run validate:character` | fichas em `data/characters/` |
+| `npm run validate:character` | fichas em `data/characters/` (incl. PV fixo) |
+| `npm run rules:all` | PV nas classes + regras Cap. 1/2 (schema + cruzamentos) |
 
 ---
 
@@ -107,19 +112,19 @@ Prioridade para conseguir **criar personagem nível 1** e **subir de nível** se
 
 ### Extração de dados (PHB)
 
-1. **Regras base (Cap. 1)** — atributos, método de criação, perícias, bônus de proficiência, combate, descanso.
+1. ~~**Regras base (Cap. 1)** — atributos, testes de atributo, proficiência, salvaguardas.~~ ✅ Parcial — falta combate, descanso, ações.
 2. **Glossário / condições (Apêndice B)** — necessário para aplicar efeitos em jogo.
 3. **Idiomas (Cap. 4)** — regras de quantos idiomas o personagem conhece na criação.
-4. **Tabelas de PV por nível** — hoje só `hitDie`; falta progressão estruturada nas 12 classes.
+4. ~~**Tabelas de PV por nível**~~ ✅ `rules/hp.json` + `hitPoints` nas 12 classes.
 5. **Multiclasse (Apêndice A)** — se fichas precisarem de mais de uma classe.
 
-### Modelo da ficha (camada de aplicação)
+### Ficha de teste (`data/characters/`)
 
 - [x] **`character.schema.json`** — escolhas, estado e **fonte** de cada elemento
-- [x] **Exemplo** — `data/characters/aelindra.json`
-- [x] **Validação de regras** — `validate:character` confere contagens vs tabela de progressão
+- [x] **Exemplo** — `aelindra.json` (clériga elfa nível 3)
+- [x] **`validate:character`** — contagens vs tabela de progressão e referências ao PHB
 
-A ficha separa **o que veio de onde** (classe, antecedente, espécie, subclasse, talento) em vez de listas planas.
+A ficha **não** duplica o livro; prova que os JSON referenciam uns aos outros corretamente.
 
 | Referência | Na ficha |
 |------------|----------|
@@ -216,39 +221,39 @@ flowchart TD
 
 ## Roadmap sugerido
 
-### Fase 1 — Ficha nível 1 jogável
+Roadmap orientado a **extração + validação**. Itens de produto (UI, motor de regras) estão em [Fora do escopo imediato](#fora-do-escopo-imediato).
+
+### Fase 1 — Dados para personagem nível 1 ✅
 
 - [x] Extrair **espécies** e **antecedentes** (Cap. 4)
 - [x] Schemas: `species.schema.json`, `background.schema.json`
 - [x] Dados de classe, talento, equipamento, magia (caps. 3, 5, 6, 7)
 - [x] Índice de perícias (`skills/index.json`) e normalização de `skillIds` / `itemId`
-- [x] Definir schema da ficha: `character.schema.json`
-- [x] Pasta `data/characters/` — exemplo `aelindra.json`
-- [x] Resolver referências por `id` (equipamento e perícias nos pacotes iniciais)
+- [x] Schema da ficha de teste: `character.schema.json`
+- [x] Ficha-exemplo `data/characters/aelindra.json` + `validate:character`
 
-### Fase 2 — Progressão e magia
+### Fase 2 — Progressão e magia (extração)
 
-- [x] Tabelas de nível estruturadas nas 8 classes conjuradoras (truques, preparadas, slots)
-- [x] `spells/by-class/*.json` — índice invertido por classe
-- [x] Pipeline de validação da conjuração (`spellcasting:all`)
-- [ ] Tabelas de PV por nível nas 12 classes
-- [ ] Lógica de subida de nível (novas features, talento ASI, magias)
-- [ ] Multiclasse (Apêndice A), se necessário
+- [x] Tabelas de conjuração nas 8 classes conjuradoras (truques, preparadas, slots)
+- [x] `spells/by-class/*.json` + pipeline `spellcasting:all`
+- [ ] Tabelas de **PV por nível** nas 12 classes
+- [ ] Magias de subclasse/domínio estruturadas (hoje muitas só em `features[].description`)
+- [ ] Multiclasse — **extrair** Apêndice A (se precisar testar com ficha multiclasse)
 
-### Fase 3 — Jogo em mesa
+### Fase 3 — Regras de jogo (extração)
 
-- [ ] Regras de combate e perícias (Cap. 1)
-- [ ] Condições (Apêndice B)
-- [ ] Atualizar PV, slots, descanso, inspiração
-- [ ] Exportar ficha (PDF/HTML) ou UI
+- [ ] **Cap. 1** — atributos, criação, perícias, proficiência, combate, descanso
+- [ ] **Apêndice B** — condições (glossário)
+- [ ] **Idiomas** (Cap. 4) — regras de criação
+- [ ] Mais **fichas de teste** (nível 1, outra classe, sem conjuração) para achar lacunas
 
-### Fase 4 — Qualidade e manutenção
+### Fase 4 — Qualidade do acervo
 
 - [x] Validador da conjuração (Ajv + checagens + PDF)
 - [x] Validadores de referências e fichas (`validate:references`, `validate:character`)
-- [ ] Validador permanente de **todo** o PHB (sem depender de PDF)
+- [ ] Validador único de **todo** o PHB (sem depender de PDF no dia a dia)
 - [ ] Índice mestre `data/phb/manifest.json`
-- [ ] Testes de integridade entre fichas e regras
+- [ ] Limpeza residual (`species/rules/intro.json`, legendas em `spells/rules/intro.json`)
 
 ---
 
@@ -272,19 +277,40 @@ Os dados atuais já usam `id` em inglês para classes/talentos/itens e slug PT p
 
 ## Fora do escopo imediato
 
+### Produto / aplicação (não é o foco agora)
+
+- **UI ou exportação de ficha** (PDF, HTML, planilha)
+- **Motor de jogo** — subir de nível, calcular CA, aplicar condições em tempo real
+- Qualquer sistema que *consuma* os JSON pode vir depois; este repo entrega os dados e os testes
+
+### Outros livros
+
 - **Itens mágicos completos** — catálogo no Livro do Mestre, não no Jogador.
 - **Monstros e NPCs** — Livro dos Monstros.
 - **Campanhas e cenário** — outros produtos.
 
-A ficha pode referenciar um item mágico por nome, mas o banco de dados de itens mágicos seria outro livro.
+A ficha de teste pode referenciar um item mágico por nome, mas o banco de dados de itens mágicos seria outro livro.
 
 ---
 
 ## Próximo passo recomendado
 
-**Fase 1 concluída** — dados do PHB + modelo de ficha + exemplo jogável. Próximos blocos:
+**Fase 1 concluída.** Ritual daqui pra frente: **extrair capítulo → schema + validate → ficha de teste (se fizer sentido)**.
 
-1. **Cap. 1 + Apêndice B** — regras de combate, perícias, condições (extração).
-2. **Tabelas de PV por nível** nas 12 classes.
-3. **UI ou exportação** — renderizar ficha a partir de `data/characters/` + `data/phb/`.
-4. **Lógica de subida de nível** — app que consulta `features` e `progression`.
+| Prioridade | O quê | Para quê |
+|------------|--------|----------|
+| **1** | **Cap. 1** + **Apêndice B** | Regras base e condições que faltam no acervo |
+| **2** | **PV por nível** nas 12 classes | Completar progressão além de conjuração |
+| **3** | **Magias de subclasse** em JSON estruturado | Tirar do texto (ex.: Domínio da Vida) e validar sem constantes no script |
+| **4** | **Mais fichas de teste** | Ex.: guerreiro nível 1, bardo nível 1 — achar buracos nos dados |
+| **5** | **`manifest.json`** + validador único do PHB | Um comando que valida todo o acervo |
+
+**Não** é próximo passo: UI, exportação, lógica de app de mesa.
+
+Comandos úteis hoje:
+
+```bash
+npm run spellcasting:all      # conjuração + PDF
+npm run validate:references   # classes, antecedentes, skills
+npm run validate:character    # fichas em data/characters/
+```

@@ -1,0 +1,33 @@
+{
+  "$schema": "../../schema/character-advancement.schema.json",
+  "id": "character-advancement",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 2,
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [47, 47]
+  },
+  "levels": [
+    { "level": 1, "xp": 0, "proficiencyBonus": 2 },
+    { "level": 2, "xp": 300, "proficiencyBonus": 2 },
+    { "level": 3, "xp": 900, "proficiencyBonus": 2 },
+    { "level": 4, "xp": 2700, "proficiencyBonus": 2 },
+    { "level": 5, "xp": 6500, "proficiencyBonus": 3 },
+    { "level": 6, "xp": 14000, "proficiencyBonus": 3 },
+    { "level": 7, "xp": 23000, "proficiencyBonus": 3 },
+    { "level": 8, "xp": 34000, "proficiencyBonus": 3 },
+    { "level": 9, "xp": 48000, "proficiencyBonus": 4 },
+    { "level": 10, "xp": 64000, "proficiencyBonus": 4 },
+    { "level": 11, "xp": 85000, "proficiencyBonus": 4 },
+    { "level": 12, "xp": 100000, "proficiencyBonus": 4 },
+    { "level": 13, "xp": 120000, "proficiencyBonus": 5 },
+    { "level": 14, "xp": 140000, "proficiencyBonus": 5 },
+    { "level": 15, "xp": 165000, "proficiencyBonus": 5 },
+    { "level": 16, "xp": 195000, "proficiencyBonus": 5 },
+    { "level": 17, "xp": 225000, "proficiencyBonus": 6 },
+    { "level": 18, "xp": 265000, "proficiencyBonus": 6 },
+    { "level": 19, "xp": 305000, "proficiencyBonus": 6 },
+    { "level": 20, "xp": 355000, "proficiencyBonus": 6 }
+  ]
+}

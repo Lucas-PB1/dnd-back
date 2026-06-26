@@ -1,0 +1,45 @@
+{
+  "$schema": "../../schema/d20-tests.schema.json",
+  "id": "d20-tests",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 1,
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [16, 18]
+  },
+  "steps": [
+    {
+      "order": 1,
+      "title": "Jogue um 1d20",
+      "text": "Você sempre deseja tirar um valor alto. Com Vantagem ou Desvantagem, jogue dois d20 e use o maior ou o menor."
+    },
+    {
+      "order": 2,
+      "title": "Adicione modificadores",
+      "text": "Modificador de atributo relevante; Bônus de Proficiência, se aplicável; bônus e penalidades circunstanciais."
+    },
+    {
+      "order": 3,
+      "title": "Compare com o número-alvo",
+      "text": "Total ≥ número-alvo = sucesso. CD para testes de atributo e salvaguardas; CA para jogadas de ataque."
+    }
+  ],
+  "types": [
+    {
+      "id": "ability-check",
+      "name": "Teste de Atributo",
+      "targetLabel": "Classe de Dificuldade (CD)"
+    },
+    {
+      "id": "saving-throw",
+      "name": "Salvaguarda",
+      "targetLabel": "Classe de Dificuldade (CD)"
+    },
+    {
+      "id": "attack-roll",
+      "name": "Jogada de Ataque",
+      "targetLabel": "Classe de Armadura (CA)"
+    }
+  ]
+}

@@ -11,7 +11,9 @@ import {
   allCantripIds,
   expectedChannelDivinity,
   expectedClassCantrips,
+  expectedMaxHp,
   expectedPreparedCount,
+  expectedProficiencyBonus,
   expectedSpellSlots,
   lineageCantrips,
   lineagePreparedSpells,
@@ -235,6 +237,16 @@ for (const file of files) {
 
   validateSpellcastingRules(doc);
   validateStartingGear(doc);
+
+  const expectedHp = expectedMaxHp(doc.classId, doc.level, doc.abilities.constituicao);
+  if (expectedHp != null && doc.hp?.max !== expectedHp) {
+    fail(`${label}: hp.max=${doc.hp?.max}, esperado ${expectedHp} (PV fixo + CON)`);
+  }
+
+  const expectedProf = expectedProficiencyBonus(doc.level);
+  if (expectedProf != null && doc.proficiencyBonus != null && doc.proficiencyBonus !== expectedProf) {
+    fail(`${label}: proficiencyBonus=${doc.proficiencyBonus}, esperado ${expectedProf}`);
+  }
 }
 
 if (errors) {

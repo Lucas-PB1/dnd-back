@@ -197,5 +197,11 @@
   "savingThrowIds": [
     "destreza",
     "inteligencia"
-  ]
+  ],
+  "hitPoints": {
+    "level1DieValue": 8,
+    "fixedHpPerLevel": 5,
+    "minimumGainPerLevel": 1,
+    "constitutionModApplies": true
+  }
 }

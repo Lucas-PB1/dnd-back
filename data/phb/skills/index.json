@@ -4,8 +4,9 @@
     "book": "Livro do Jogador 2024",
     "language": "pt-BR",
     "chapter": 1,
-    "chapterTitle": "Jogando D&D",
-    "pdfPath": "doc/livro-jogador.pdf"
+    "chapterTitle": "Jogando o Jogo",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [20, 20]
   },
   "abilities": [
     { "id": "forca", "name": "Força" },
@@ -16,23 +17,113 @@
     { "id": "carisma", "name": "Carisma" }
   ],
   "skills": [
-    { "id": "acrobatics", "name": "Acrobacia", "ability": "destreza" },
-    { "id": "animal-handling", "name": "Lidar com Animais", "ability": "sabedoria" },
-    { "id": "arcana", "name": "Arcanismo", "ability": "inteligencia" },
-    { "id": "athletics", "name": "Atletismo", "ability": "forca" },
-    { "id": "performance", "name": "Atuação", "ability": "carisma" },
-    { "id": "deception", "name": "Enganação", "ability": "carisma" },
-    { "id": "stealth", "name": "Furtividade", "ability": "destreza" },
-    { "id": "history", "name": "História", "ability": "inteligencia" },
-    { "id": "intimidation", "name": "Intimidação", "ability": "carisma" },
-    { "id": "insight", "name": "Intuição", "ability": "sabedoria" },
-    { "id": "investigation", "name": "Investigação", "ability": "inteligencia" },
-    { "id": "medicine", "name": "Medicina", "ability": "sabedoria" },
-    { "id": "nature", "name": "Natureza", "ability": "inteligencia" },
-    { "id": "perception", "name": "Percepção", "ability": "sabedoria" },
-    { "id": "persuasion", "name": "Persuasão", "ability": "carisma" },
-    { "id": "sleight-of-hand", "name": "Prestidigitação", "ability": "destreza" },
-    { "id": "religion", "name": "Religião", "ability": "inteligencia" },
-    { "id": "survival", "name": "Sobrevivência", "ability": "sabedoria" }
+    {
+      "id": "acrobatics",
+      "name": "Acrobacia",
+      "ability": "destreza",
+      "exampleUses": "Manter-se em pé em uma situação complicada ou realizar uma acrobacia."
+    },
+    {
+      "id": "animal-handling",
+      "name": "Lidar com Animais",
+      "ability": "sabedoria",
+      "exampleUses": "Acalmar ou treinar um animal, ou fazer com que ele se comporte de uma determinada maneira."
+    },
+    {
+      "id": "arcana",
+      "name": "Arcanismo",
+      "ability": "inteligencia",
+      "exampleUses": "Recordar conhecimentos sobre magias, itens mágicos e planos de existência."
+    },
+    {
+      "id": "athletics",
+      "name": "Atletismo",
+      "ability": "forca",
+      "exampleUses": "Pular mais longe do que o normal, manter-se à tona em águas agitadas ou quebrar algo."
+    },
+    {
+      "id": "performance",
+      "name": "Atuação",
+      "ability": "carisma",
+      "exampleUses": "Atuar, contar uma história, tocar música ou dançar."
+    },
+    {
+      "id": "deception",
+      "name": "Enganação",
+      "ability": "carisma",
+      "exampleUses": "Contar uma mentira convincente ou usar um disfarce de forma convincente."
+    },
+    {
+      "id": "stealth",
+      "name": "Furtividade",
+      "ability": "destreza",
+      "exampleUses": "Evitar ser notado movendo-se silenciosamente e se escondendo atrás de objetos."
+    },
+    {
+      "id": "history",
+      "name": "História",
+      "ability": "inteligencia",
+      "exampleUses": "Relembrar fatos sobre eventos históricos, pessoas, nações e culturas."
+    },
+    {
+      "id": "intimidation",
+      "name": "Intimidação",
+      "ability": "carisma",
+      "exampleUses": "Atemorizar ou ameaçar alguém para que faça o que você quer."
+    },
+    {
+      "id": "insight",
+      "name": "Intuição",
+      "ability": "sabedoria",
+      "exampleUses": "Perceber o humor e as intenções de uma pessoa."
+    },
+    {
+      "id": "investigation",
+      "name": "Investigação",
+      "ability": "inteligencia",
+      "exampleUses": "Encontrar informações obscuras em livros ou deduzir como algo funciona."
+    },
+    {
+      "id": "medicine",
+      "name": "Medicina",
+      "ability": "sabedoria",
+      "exampleUses": "Diagnosticar uma doença ou determinar o que matou uma pessoa que morreu recentemente."
+    },
+    {
+      "id": "nature",
+      "name": "Natureza",
+      "ability": "inteligencia",
+      "exampleUses": "Relembrar fatos sobre o terreno, as plantas, os animais e o clima."
+    },
+    {
+      "id": "perception",
+      "name": "Percepção",
+      "ability": "sabedoria",
+      "exampleUses": "Usando uma combinação de sentidos, notar algo que é fácil de passar despercebido."
+    },
+    {
+      "id": "persuasion",
+      "name": "Persuasão",
+      "ability": "carisma",
+      "exampleUses": "Convencer alguém de algo de forma honesta e graciosa."
+    },
+    {
+      "id": "sleight-of-hand",
+      "name": "Prestidigitação",
+      "ability": "destreza",
+      "exampleUses": "Furtar um bolso, ocultar um objeto portátil ou fazer truque com as mãos."
+    },
+    {
+      "id": "religion",
+      "name": "Religião",
+      "ability": "inteligencia",
+      "exampleUses": "Relembrar fatos sobre deuses, rituais religiosos e símbolos sagrados."
+    },
+    {
+      "id": "survival",
+      "name": "Sobrevivência",
+      "ability": "sabedoria",
+      "exampleUses": "Seguir rastros, procurar alimentos, encontrar uma trilha ou evitar perigos naturais."
+    }
   ]
 }

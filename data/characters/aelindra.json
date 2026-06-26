@@ -80,7 +80,7 @@
     { "itemId": "pergaminho", "source": "background-starting" },
     { "itemId": "tunica", "source": "background-starting" }
   ],
-  "hp": { "current": 27, "max": 27, "temp": 0 },
+  "hp": { "current": 21, "max": 21, "temp": 0 },
   "resources": {
     "channelDivinity": { "max": 2, "remaining": 2 }
   },

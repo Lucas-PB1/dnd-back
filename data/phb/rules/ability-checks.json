@@ -1,0 +1,31 @@
+{
+  "$schema": "../../schema/ability-checks.schema.json",
+  "id": "ability-checks",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 1,
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [16, 20]
+  },
+  "summary": "Um teste de atributo representa uma criatura utilizando talento e treinamento para superar um desafio. O Mestre solicita quando a ação tem chance significativa de falha.",
+  "proficiencyRule": "Adicione o Bônus de Proficiência quando uma perícia ou ferramenta relevante se aplica e você possui proficiência (ex.: teste de Força com Acrobacia ou Atletismo).",
+  "defaultDifficulty": [
+    { "label": "Muito fácil", "dc": 5 },
+    { "label": "Fácil", "dc": 10 },
+    { "label": "Média", "dc": 15 },
+    { "label": "Difícil", "dc": 20 },
+    { "label": "Muito difícil", "dc": 25 },
+    { "label": "Quase impossível", "dc": 30 }
+  ],
+  "byAbility": [
+    { "abilityId": "forca", "example": "Levantar, empurrar, puxar ou quebrar algo" },
+    { "abilityId": "destreza", "example": "Mover-se de maneira ágil, rápida ou silenciosa" },
+    { "abilityId": "constituicao", "example": "Forçar seu corpo além dos limites normais" },
+    { "abilityId": "inteligencia", "example": "Raciocinar ou lembrar" },
+    { "abilityId": "sabedoria", "example": "Notar coisas no ambiente ou no comportamento das criaturas" },
+    { "abilityId": "carisma", "example": "Influenciar, entreter ou enganar" }
+  ],
+  "skillRule": "A maioria dos testes de atributo usa uma perícia (ex.: Destreza + Furtividade). Perícias detalhadas em data/phb/skills/index.json.",
+  "alternateAbilityRule": "O Mestre pode permitir proficiência em um teste de atributo diferente (ex.: Força + Intimidação em vez de Carisma + Intimidação)."
+}

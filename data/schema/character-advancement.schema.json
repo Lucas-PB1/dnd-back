@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/character-advancement.schema.json",
+  "title": "Evolução do personagem PHB",
+  "type": "object",
+  "required": ["id", "source", "levels"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "levels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["level", "xp", "proficiencyBonus"],
+        "properties": {
+          "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+          "xp": { "type": "integer", "minimum": 0 },
+          "proficiencyBonus": { "type": "integer", "minimum": 2 }
+        }
+      },
+      "minItems": 20,
+      "maxItems": 20
+    }
+  }
+}

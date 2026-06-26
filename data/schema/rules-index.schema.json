@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/rules-index.schema.json",
+  "title": "Índice de regras do Capítulo 1 PHB",
+  "type": "object",
+  "required": ["source", "sections"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "file", "title"],
+        "properties": {
+          "id": { "type": "string" },
+          "file": { "type": "string" },
+          "title": { "type": "string" }
+        }
+      },
+      "minItems": 1
+    }
+  }
+}

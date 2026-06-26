@@ -190,5 +190,11 @@
   "savingThrowIds": [
     "forca",
     "constituicao"
-  ]
+  ],
+  "hitPoints": {
+    "level1DieValue": 12,
+    "fixedHpPerLevel": 7,
+    "minimumGainPerLevel": 1,
+    "constitutionModApplies": true
+  }
 }

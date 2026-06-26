@@ -453,5 +453,11 @@
   "savingThrowIds": [
     "constituicao",
     "carisma"
-  ]
+  ],
+  "hitPoints": {
+    "level1DieValue": 6,
+    "fixedHpPerLevel": 4,
+    "minimumGainPerLevel": 1,
+    "constitutionModApplies": true
+  }
 }

@@ -45,6 +45,16 @@
       "maxItems": 2
     },
     "hitDie": { "type": "string", "pattern": "^D\\d+$" },
+    "hitPoints": {
+      "type": "object",
+      "required": ["level1DieValue", "fixedHpPerLevel", "minimumGainPerLevel"],
+      "properties": {
+        "level1DieValue": { "type": "integer", "minimum": 4, "maximum": 12 },
+        "fixedHpPerLevel": { "type": "integer", "minimum": 4, "maximum": 7 },
+        "minimumGainPerLevel": { "type": "integer", "minimum": 1 },
+        "constitutionModApplies": { "type": "boolean" }
+      }
+    },
     "savingThrowIds": {
       "type": "array",
       "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
