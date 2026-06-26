@@ -1,0 +1,35 @@
+{
+  "$schema": "../../../schema/skill-rules.schema.json",
+  "id": "proficiency",
+  "title": "Proficiências em Perícias",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 1,
+    "chapterTitle": "Jogando o Jogo",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      13,
+      14
+    ]
+  },
+  "summary": "A maioria dos testes de atributo envolve o uso de uma perícia. O Mestre tem a palavra final sobre a relevância de uma perícia em uma situação.",
+  "rules": [
+    {
+      "id": "with-proficiency",
+      "text": "Se uma criatura for proficiente em uma perícia, aplica seu Bônus de Proficiência a testes de atributo relacionados a essa perícia."
+    },
+    {
+      "id": "without-proficiency",
+      "text": "Sem proficiência, a criatura ainda pode realizar testes de atributo envolvendo essa perícia, mas não adiciona seu Bônus de Proficiência."
+    },
+    {
+      "id": "example",
+      "text": "Escalar um penhasco pode exigir um teste de Força (Atletismo). Com proficiência em Atletismo, soma-se o Bônus de Proficiência ao teste de Força."
+    },
+    {
+      "id": "determining",
+      "text": "Proficiências iniciais de personagens são definidas na criação; proficiências de monstros aparecem no bloco de estatísticas."
+    }
+  ]
+}

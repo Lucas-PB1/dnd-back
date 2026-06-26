@@ -1,0 +1,87 @@
+{
+  "$schema": "../../../schema/skill-rules.schema.json",
+  "id": "knowledge-areas",
+  "title": "Áreas de Conhecimento",
+  "actionId": "analyze",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 1,
+    "chapterTitle": "Glossário de Regras",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      361,
+      361
+    ]
+  },
+  "intro": "Com a ação Analisar, você realiza um teste de Inteligência para examinar memória, livro, pista ou outra fonte e recordar informação importante.",
+  "bySkill": [
+    {
+      "skillId": "arcana",
+      "topics": [
+        "Itens mágicos",
+        "magias",
+        "planos de existência",
+        "símbolos arcanos",
+        "tradições mágicas"
+      ],
+      "creatureTypes": [
+        "Aberrações",
+        "Constructos",
+        "Elementais",
+        "Feéricos",
+        "Monstruosidades"
+      ]
+    },
+    {
+      "skillId": "history",
+      "topics": [
+        "Eventos e pessoas históricas",
+        "civilizações antigas",
+        "guerras"
+      ],
+      "creatureTypes": [
+        "Gigantes",
+        "Humanoides"
+      ]
+    },
+    {
+      "skillId": "investigation",
+      "topics": [
+        "Armadilhas",
+        "códigos",
+        "dispositivos",
+        "enigmas"
+      ],
+      "creatureTypes": []
+    },
+    {
+      "skillId": "nature",
+      "topics": [
+        "Clima",
+        "flora",
+        "terreno"
+      ],
+      "creatureTypes": [
+        "Dragões",
+        "Feras",
+        "Gosmas",
+        "Plantas"
+      ]
+    },
+    {
+      "skillId": "religion",
+      "topics": [
+        "Cultos",
+        "deidades",
+        "hierarquias e ritos religiosos",
+        "símbolos sagrados"
+      ],
+      "creatureTypes": [
+        "Celestiais",
+        "Ínferos",
+        "Mortos-Vivos"
+      ]
+    }
+  ]
+}

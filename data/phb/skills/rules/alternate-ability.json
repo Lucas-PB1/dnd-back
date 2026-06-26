@@ -1,0 +1,23 @@
+{
+  "$schema": "../../../schema/skill-rules.schema.json",
+  "id": "alternate-ability",
+  "title": "Perícias com Atributos Diferentes",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 1,
+    "chapterTitle": "Jogando o Jogo",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      14,
+      14
+    ]
+  },
+  "summary": "Cada proficiência com perícia está vinculada a um teste de atributo. O Mestre pode permitir proficiência em um teste de atributo diferente.",
+  "alternateAbilityExample": {
+    "skillId": "intimidation",
+    "defaultAbilityId": "carisma",
+    "alternateAbilityId": "forca",
+    "situation": "Intimidar alguém por meio de uma demonstração de força física — teste de Força (Intimidação) em vez de Carisma (Intimidação)."
+  }
+}

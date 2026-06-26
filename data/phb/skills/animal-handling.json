@@ -1,0 +1,22 @@
+{
+  "$schema": "../../schema/skill.schema.json",
+  "id": "animal-handling",
+  "name": "Lidar com Animais",
+  "abilityId": "sabedoria",
+  "exampleUses": "Acalmar ou treinar um animal, ou fazer com que ele se comporte de uma determinada maneira.",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 1,
+    "chapterTitle": "Jogando o Jogo",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      14,
+      370
+    ]
+  },
+  "actionIds": [
+    "influence"
+  ],
+  "influenceUse": "Convencer com gentileza uma Fera ou Monstruosidade"
+}

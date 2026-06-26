@@ -38,7 +38,7 @@ No sistema 2024, uma ficha completa reúne escolhas do jogador com valores calcu
 |-------|-----------------|------------------|
 | Seis atributos e modificadores | Cap. 1 + criação | ✅ `rules/ability-modifiers.json` |
 | Bônus de proficiência (regra geral) | Cap. 1 | ✅ `rules/proficiency-bonus.json` |
-| Perícias (lista e regras) | Cap. 1 | ✅ `skills/index.json` (18 + exemplos de uso) |
+| Perícias (lista e regras) | Cap. 1 + Apêndice C | ✅ `skills/` — 18 arquivos + áreas de conhecimento, ações, regras |
 | Testes de atributo e salvaguardas | Cap. 1 | ✅ `rules/ability-checks.json`, `saving-throws.json`, `d20-tests.json` |
 | CD de magia / ataque mágico | Cap. 7 | ✅ regras em `spells/rules/intro.json` |
 
@@ -85,7 +85,7 @@ data/phb/
 ├── weapons/            # armas
 ├── spells/             # 391 magias + índice + regras de conjuração
 │   └── by-class/       # 8 listas por classe (truques + círculos 1–9)
-├── skills/             # 18 perícias + 6 atributos (índice com ids)
+├── skills/             # 18 perícias (1 arquivo cada) + rules/ + índice
 ├── rules/              # Cap. 1–2: testes de D20, PV, evolução, proficiência
 └── ...
 
@@ -103,6 +103,7 @@ data/schema/            # JSON Schema de cada tipo de dado
 | `npm run validate:references` | skills, antecedentes, classes (schemas + ids) |
 | `npm run validate:character` | fichas em `data/characters/` (incl. PV fixo) |
 | `npm run rules:all` | PV nas classes + regras Cap. 1/2 (schema + cruzamentos) |
+| `npm run skills:all` | gera e valida 18 perícias + regras |
 
 ---
 

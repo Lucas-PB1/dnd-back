@@ -20,20 +20,39 @@
       "minItems": 6,
       "maxItems": 6
     },
+    "skillCount": { "type": "integer", "const": 18 },
     "skills": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "ability"],
+        "required": ["id", "name", "ability", "file"],
         "properties": {
           "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
           "name": { "type": "string" },
           "ability": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
-          "exampleUses": { "type": "string" }
+          "file": { "type": "string" }
         }
       },
       "minItems": 18,
       "maxItems": 18
+    },
+    "rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "file", "title"],
+        "properties": {
+          "id": { "type": "string" },
+          "file": { "type": "string" },
+          "title": { "type": "string" },
+          "pdfPages": {
+            "type": "array",
+            "items": { "type": "integer" },
+            "minItems": 1,
+            "maxItems": 2
+          }
+        }
+      }
     }
   }
 }

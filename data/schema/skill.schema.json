@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rpg.local/schema/skill.schema.json",
+  "title": "Perícia PHB",
+  "type": "object",
+  "required": ["id", "name", "abilityId", "exampleUses", "source"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "name": { "type": "string" },
+    "abilityId": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+    "exampleUses": { "type": "string" },
+    "actionIds": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+    },
+    "knowledgeAreas": {
+      "type": "object",
+      "required": ["topics"],
+      "properties": {
+        "topics": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "creatureTypes": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "influenceUse": { "type": "string" },
+    "searchUse": { "type": "string" },
+    "source": { "$ref": "class.schema.json#/$defs/source" }
+  }
+}
