@@ -19,6 +19,16 @@
       "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
       "uniqueItems": true
     },
+    "classAlternativeStyleIds": {
+      "type": "object",
+      "description": "Alternativas ao talento Estilo de Luta (ex.: Combatente Abençoado).",
+      "propertyNames": { "pattern": "^[a-z][a-z0-9-]*$" },
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "uniqueItems": true
+      }
+    },
     "acBonuses": {
       "type": "object",
       "propertyNames": { "pattern": "^[a-z][a-z0-9-]*$" },

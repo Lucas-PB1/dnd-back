@@ -9,7 +9,10 @@
     "chapter": 3,
     "chapterTitle": "Classes de Personagem",
     "pdfPath": "doc/livro-jogador.pdf",
-    "pdfPages": [55, 182],
+    "pdfPages": [
+      55,
+      182
+    ],
     "extractedAt": "2026-06-25T01:13:29.372Z"
   },
   "tagline": "Persiga os malfeitores",
@@ -41,5 +44,28 @@
       "name": "Anjo Vingador",
       "description": "Como uma Ação Bônus, você adquire os benefícios\nabaixo por 10 minutos ou até a encerrar (nenhuma\nação é necessária). Após usar esta característica, você\nnão pode utilizá-la novamente até completar um\nDescanso Longo. Você também pode recuperar seu uso\ngastando um espaço de magia de 5º círculo (nenhuma\nação é necessária).\nAura Amedrontadora. Sempre que um inimigo inicia\no turno dele em sua Aura de Proteção, ele deve ser\nbem-sucedido em uma salvaguarda de Sabedoria ou\ntem a condição Amedrontado por 1 minuto, ou até sofrer qualquer dano. Jogadas de ataque contra a criatura\nAmedrontada têm Vantagem.\nVoo. Você cria asas espectrais nas costas e tem um\nDeslocamento de Voo de 18 metros, além de poder\npairar."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "vengeance-oath",
+  "preparedSpellsByLevel": {
+    "3": [
+      "marca-do-predador",
+      "perdicao"
+    ],
+    "5": [
+      "paralisar-pessoa",
+      "passo-nebuloso"
+    ],
+    "9": [
+      "celeridade",
+      "protecao-contra-energia"
+    ],
+    "13": [
+      "banimento",
+      "porta-dimensional"
+    ],
+    "17": [
+      "paralisar-monstro",
+      "videncia"
+    ]
+  }
 }

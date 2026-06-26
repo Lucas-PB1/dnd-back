@@ -44,5 +44,27 @@
       "name": "Manifestação Oceânica",
       "description": "Em vez de manifestar a Emanação da Ira do Mar ao\nseu redor, você pode manifestá-la ao redor de uma\ncriatura voluntária a até 18 metros de você. Essa\ncriatura adquire todos os benefícios da Emanação,\nusando sua CD para evitar magia e seu modificador de\nSabedoria.\nAlém disso, você pode manifestar a Emanação ao redor de si mesmo e da outra criatura ao gastar dois usos\nda sua Forma Selvagem, em vez de um, ao manifestá-la."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "sea-circle",
+  "preparedSpellsByLevel": {
+    "3": [
+      "despedacar",
+      "lufada-de-vento",
+      "nevoa-obscurecente",
+      "onda-trovejante",
+      "raio-de-gelo"
+    ],
+    "5": [
+      "relampago",
+      "respirar-na-agua"
+    ],
+    "7": [
+      "controlar-agua",
+      "tempestade-glacial"
+    ],
+    "9": [
+      "invocar-elemental",
+      "paralisar-monstro"
+    ]
+  }
 }

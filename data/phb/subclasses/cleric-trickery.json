@@ -44,5 +44,26 @@
       "name": "Duplicidade Aprimorada",
       "description": "A ilusão de seu Invocar Duplicidade ficou mais poderosa das seguintes maneiras.\nDistração Compartilhada. Quando você e seus aliados realizam jogadas de ataque contra uma criatura\na até 1,5 metro da ilusão, as jogadas de ataque têm\nVantagem."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "trickery-domain",
+  "preparedSpellsByLevel": {
+    "3": [
+      "disfarcar-se",
+      "enfeiticar-pessoa",
+      "invisibilidade",
+      "passo-sem-rastro"
+    ],
+    "5": [
+      "indetectavel",
+      "padrao-hipnotico"
+    ],
+    "7": [
+      "confusao",
+      "porta-dimensional"
+    ],
+    "9": [
+      "dominar-pessoa",
+      "modificar-memoria"
+    ]
+  }
 }

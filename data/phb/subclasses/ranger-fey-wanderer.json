@@ -49,5 +49,23 @@
       "name": "Andarilho Nebuloso",
       "description": "Você pode conjurar Passo Nebuloso sem gastar um espaço de magia. Você pode fazer isso um número de vezes\nigual ao seu modificador de Sabedoria (mínimo de uma\nvez) e restaura todos os usos gastos ao completar um\nDescanso Longo.\nAlém disso, sempre que você conjurar Passo Nebuloso,\npode levar junto uma criatura voluntária à sua vista a\naté 1,5 metro de você. Essa criatura se teleporta para\num espaço desocupado à sua escolha a até 1,5 metro do\nseu destino."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "fey-wanderer-spells",
+  "preparedSpellsByLevel": {
+    "3": [
+      "enfeiticar-pessoa"
+    ],
+    "5": [
+      "passo-nebuloso"
+    ],
+    "9": [
+      "convocar-feerico"
+    ],
+    "13": [
+      "porta-dimensional"
+    ],
+    "17": [
+      "despistar"
+    ]
+  }
 }

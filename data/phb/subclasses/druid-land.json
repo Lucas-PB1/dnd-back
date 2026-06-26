@@ -44,5 +44,90 @@
       "name": "Santuário Natural",
       "description": "Como uma ação Usar Magia, você pode gastar um uso\nde sua Forma Selvagem e produzir árvores e vinhas\nespectrais que aparecem em um Cubo de 4,5 metros de\nlados no chão a até 36 metros de você. Elas permanecem por 1 minuto ou até você morrer, ou ter a condição Incapacitado. Você e seus aliados têm Cobertura\nParcial enquanto estiverem nessa área, e seus aliados\nadquirem a Resistência atual da sua Proteção Natural\nenquanto estão lá.\nComo uma Ação Bônus, você pode mover o Cubo até\n18 metros para o chão a até 36 metros de você."
     }
+  ],
+  "preparedSpellSourceKey": "land-circle",
+  "preparedSpellsByTerrain": {
+    "arid": {
+      "3": [
+        "maos-flamejantes",
+        "turvar",
+        "raio-de-fogo"
+      ],
+      "5": [
+        "bola-de-fogo",
+        "muralha-de-fogo"
+      ],
+      "7": [
+        "malogro",
+        "muralha-de-pedra"
+      ],
+      "9": [
+        "coluna-de-chamas",
+        "videncia"
+      ]
+    },
+    "polar": {
+      "3": [
+        "nevoa-obscurecente",
+        "paralisar-pessoa",
+        "raio-de-gelo"
+      ],
+      "5": [
+        "nevasca",
+        "lentidao"
+      ],
+      "7": [
+        "cone-de-frio",
+        "tempestade-glacial"
+      ],
+      "9": [
+        "comunhao-com-a-natureza",
+        "passo-arboreo"
+      ]
+    },
+    "temperate": {
+      "3": [
+        "passo-nebuloso",
+        "toque-chocante",
+        "sono"
+      ],
+      "5": [
+        "relampago",
+        "crescimento-de-plantas"
+      ],
+      "7": [
+        "movimentacao-livre",
+        "moldar-rochas"
+      ],
+      "9": [
+        "comunhao-com-a-natureza",
+        "muralha-de-pedra"
+      ]
+    },
+    "tropical": {
+      "3": [
+        "bolha-acida",
+        "rajada-de-veneno",
+        "teia"
+      ],
+      "5": [
+        "nuvem-fetida",
+        "polimorfia"
+      ],
+      "7": [
+        "praga-de-insetos",
+        "muralha-de-espinhos"
+      ],
+      "9": [
+        "nevoa-mortal",
+        "passo-arboreo"
+      ]
+    }
+  },
+  "landTerrainIds": [
+    "arid",
+    "polar",
+    "temperate",
+    "tropical"
   ]
 }

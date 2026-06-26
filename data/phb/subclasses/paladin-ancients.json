@@ -9,7 +9,10 @@
     "chapter": 3,
     "chapterTitle": "Classes de Personagem",
     "pdfPath": "doc/livro-jogador.pdf",
-    "pdfPages": [55, 182],
+    "pdfPages": [
+      55,
+      182
+    ],
     "extractedAt": "2026-06-25T01:13:29.372Z"
   },
   "tagline": "Preserve a vida, a alegria e a natureza",
@@ -41,5 +44,28 @@
       "name": "Campeão Ancestral",
       "description": "Como uma Ação Bônus, você pode imbuir sua Aura de\nProteção com poder sagrado, concedendo os benefícios\nabaixo por 1 minuto ou até a encerrar (nenhuma ação\né necessária). Após usar esta característica, você não\npode utilizá-la novamente até completar um Descanso\nLongo. Você também pode restaurar seu uso gastando\num espaço de magia de 5º círculo (nenhuma ação é\nnecessária).\nAliviar Desafio. Inimigos na sua aura têm Desvantagem em salvaguardas contra suas magias e opções de\nCanalizar Divindade.\nMagias Ágeis. Sempre que conjurar uma magia que\ntenha um tempo de conjuração de uma ação, você\npode conjurá-la usando uma Ação Bônus.\nRegeneração. No início de cada um dos seus turnos,\nvocê recupera 10 Pontos de Vida."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "ancients-oath",
+  "preparedSpellsByLevel": {
+    "3": [
+      "falar-com-animais",
+      "golpe-constritor"
+    ],
+    "5": [
+      "passo-nebuloso",
+      "raio-lunar"
+    ],
+    "9": [
+      "crescimento-de-plantas",
+      "protecao-contra-energia"
+    ],
+    "13": [
+      "pele-rocha",
+      "tempestade-glacial"
+    ],
+    "17": [
+      "comunhao-com-a-natureza",
+      "passo-arboreo"
+    ]
+  }
 }

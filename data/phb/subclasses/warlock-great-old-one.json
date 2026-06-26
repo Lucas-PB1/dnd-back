@@ -9,7 +9,10 @@
     "chapter": 3,
     "chapterTitle": "Classes de Personagem",
     "pdfPath": "doc/livro-jogador.pdf",
-    "pdfPages": [55, 182],
+    "pdfPages": [
+      55,
+      182
+    ],
     "extractedAt": "2026-06-25T01:13:29.372Z"
   },
   "tagline": "Faça um pacto com uma entidade do Reino Distante",
@@ -51,5 +54,26 @@
       "name": "Criar Servo",
       "description": "Ao conjurar Invocar Aberração, você pode modificá-la\npara não exigir Concentração. Ao fazer isso, a duração\nda magia se torna 1 minuto para essa conjuração e,\nquando invocada, a Aberração tem um número de Pontos de Vida Temporários igual ao seu nível de Bruxo\nmais seu modificador de Carisma.\nAlém disso, na primeira vez de cada turno que a\nAberração atinge uma criatura sob o efeito da sua Danação, a Aberração causa um dano Psíquico adicional\nao alvo igual ao dano bônus dessa magia."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "great-old-one-pact",
+  "preparedSpellsByLevel": {
+    "3": [
+      "detectar-pensamentos",
+      "forca-espectral",
+      "gargalhada-nefasta-de-tasha",
+      "sussurros-dissonantes"
+    ],
+    "5": [
+      "clarividencia",
+      "fome-de-hadar"
+    ],
+    "7": [
+      "confusao",
+      "invocar-aberracao"
+    ],
+    "9": [
+      "modificar-memoria",
+      "telecinese"
+    ]
+  }
 }

@@ -172,8 +172,10 @@ function validateSpellcastingRules(doc) {
   }
 
   if (subclassId) {
-    const domain = expectedSubclassPrepared(classId, subclassId, level);
-    if (domain) {
+    const domain = expectedSubclassPrepared(classId, subclassId, level, classChoices);
+    if (domain?.requiresTerrain) {
+      fail(`${doc.id}: classChoices.landTerrainId ausente (Círculo da Terra)`);
+    } else if (domain) {
       const domainListed = spellcasting.prepared[domain.sourceKey] ?? [];
       if (domainListed.length !== domain.spellIds.length) {
         fail(

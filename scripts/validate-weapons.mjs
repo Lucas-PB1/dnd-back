@@ -77,6 +77,13 @@ for (const weapon of weaponsDoc.weapons) {
       fail(`${weapon.id}: mastery "${weapon.mastery}" ≠ glossário "${expected}"`);
     }
   }
+  const hasFinesseId = weapon.propertyIds.includes("finesse");
+  const hasFinesseLegacy = weapon.properties?.includes("Acuidade");
+  if (hasFinesseId !== Boolean(hasFinesseLegacy)) {
+    fail(
+      `${weapon.id}: Acuidade inconsistente (propertyIds finesse=${hasFinesseId}, texto=${hasFinesseLegacy})`
+    );
+  }
 }
 
 for (const [classId, rule] of Object.entries(masteryDoc.classes)) {

@@ -38,11 +38,12 @@ Snapshot do que consideramos **in scope** para a ficha (atualizado conforme extr
 | Regra | Onde |
 |-------|------|
 | Atributos finais vs método + bônus do antecedente | `validateAbilityScores()` em `character-rules.mjs` |
-| Magias de subclasse sempre preparadas | `preparedSpellsByLevel` em `subclasses/*.json` |
+| Magias de subclasse sempre preparadas | `preparedSpellsByLevel` / `preparedSpellsByTerrain` em `subclasses/*.json` |
 | Maestria em armas vs nível/classe | `validateWeaponMasteryChoices()` |
 | Treinamento de armadura equipada | `validateEquippedArmorTraining()` |
 | CA vs armadura + escudo + estilo | `validateArmorClass()` |
-| Estilo de luta (guerreiro/paladino/ranger) | `validateFightingStyle()` |
+| Estilo de luta (guerreiro/paladino/ranger) | `validateFightingStyle()` — inclui Combatente Abençoado/Druídico |
+| Acuidade (finesse) por arma | `propertyIds: ["finesse"]` + `finesseAttackModifier()` |
 | Conjuração, PV, equipamento inicial | `validate-character.mjs` |
 
 ### 🔲 Secundário (só se a ficha guardar o campo)
@@ -79,7 +80,8 @@ Nome, aparência, personalidade, história, notas.
 | `feats[]`, perícias, equipamento | ✅ | |
 | `weaponMasteryWeaponIds` | ✅ | Obrigatório quando a classe concede maestria (ex.: guerreiro) |
 | `armorClass` | ✅ | Total + decomposição (base, dex, escudo, estilo) |
-| `classChoices.fightingStyleId` | ✅ | Guerreiro, paladino, ranger nível 1+ |
+| `classChoices.fightingStyleId` | ✅ | Guerreiro, paladino, ranger nível 1+ (ou `blessed-warrior` / `druidic-warrior`) |
+| `classChoices.landTerrainId` | ✅ | Druida Círculo da Terra — terreno atual após Descanso Longo |
 | `spellcasting` (opcional) | ✅ | Obrigatório só para conjuradores; omitir em guerreiro etc. |
 
 ### Estado em jogo
@@ -122,6 +124,7 @@ npm run rules:all             # PV, proficiência
 npm run skills:all            # perícias
 npm run weapons:all            # propriedades + maestria de armas
 npm run armor:all              # propriedades + fórmula de CA de armaduras
+npm run subclasses:all         # magias de subclasse + schema
 npm run spellcasting:all      # conjuração + PDF
 ```
 
@@ -225,7 +228,8 @@ flowchart TD
 - [x] Validador de treinamento de armadura equipada
 - [x] **CA na ficha** (`armorClass`) validada vs equipamento + Destreza + estilo Defensivo
 - [x] **Estilo de luta** (`fightingStyleId`) para guerreiro/paladino/ranger
-- [ ] Proficiência fina por arma, Combatente Abençoado/Druídico
+- [x] **Acuidade (finesse)** — `propertyIds` + validador cruzado com texto legado
+- [x] **Combatente Abençoado / Druídico** — alternativas em `fighting-styles.json`
 
 ### Fora do roadmap
 
@@ -241,7 +245,8 @@ UI, exportação, motor de combate, Apêndice B, LM, multiclasse.
 | Idioma | `common`, `elvish`, `celestial` |
 | Método de atributos | `standard-array`, `roll`, `point-buy` |
 | Bônus do antecedente | `two-and-one`, `three-plus-one` |
-| Magias de subclasse | chave em `prepared` = `preparedSpellSourceKey` (ex.: `life-domain`) |
+| Magias de subclasse | chave em `prepared` = `preparedSpellSourceKey` (ex.: `life-domain`, `moon-circle`, `devotion-oath`) |
+| Terreno druida | `classChoices.landTerrainId`: `arid`, `polar`, `temperate`, `tropical` |
 | Propriedade de arma | `finesse`, `light`, `thrown`, `two-handed`, … |
 | Maestria de arma | `nick`, `vex`, `sap`, `cleave`, … |
 | Maestria escolhida | `weapon id` (ex.: `longsword`) — não o id da propriedade |
@@ -255,6 +260,8 @@ UI, exportação, motor de combate, Apêndice B, LM, multiclasse.
 
 ## Subclasse — magias sempre preparadas
 
+**17 subclasses** com tabela fixa estruturada (4 clérigo, 3 druida, 4 paladino, 4 bruxo, 2 ranger). Subclasses com escolha do jogador (ex.: Colégio do Conhecimento, Abjurador) ficam só no texto da feature.
+
 Em `subclasses/{classId}-{subclassId}.json`:
 
 ```json
@@ -267,7 +274,28 @@ Em `subclasses/{classId}-{subclassId}.json`:
 }
 ```
 
+**Círculo da Terra** — escolha de terreno após Descanso Longo:
+
+```json
+{
+  "preparedSpellSourceKey": "land-circle",
+  "landTerrainIds": ["arid", "polar", "temperate", "tropical"],
+  "preparedSpellsByTerrain": {
+    "temperate": {
+      "3": ["passo-nebuloso", "toque-chocante", "sono"],
+      "5": ["relampago", "crescimento-de-plantas"]
+    }
+  }
+}
+```
+
+Na ficha: `classChoices.landTerrainId` + chave `land-circle` em `spellcasting.prepared`.
+
 O validador acumula entradas cujo nível de desbloqueio ≤ nível do personagem.
+
+```bash
+npm run subclasses:all   # apply + validate (schema + spell ids)
+```
 
 ---
 

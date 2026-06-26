@@ -130,6 +130,11 @@
         "fightingStyleId": {
           "type": "string",
           "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "landTerrainId": {
+          "type": "string",
+          "enum": ["arid", "polar", "temperate", "tropical"],
+          "description": "Terreno atual do Círculo da Terra (escolha após Descanso Longo)."
         }
       },
       "additionalProperties": false

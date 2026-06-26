@@ -44,5 +44,27 @@
       "name": "Magia Sedutora",
       "description": "Seu patrono concede a você a capacidade de tecer sua\nmagia com teleporte. Imediatamente após conjurar\numa magia de Encantamento ou Ilusão usando uma\nação e um espaço de magia, você pode conjurar Passo\nNebuloso como parte da mesma ação e sem gastar um\nespaço de magia."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "archfey-pact",
+  "preparedSpellsByLevel": {
+    "3": [
+      "acalmar-emocoes",
+      "fogo-das-fadas",
+      "forca-espectral",
+      "passo-nebuloso",
+      "sono"
+    ],
+    "5": [
+      "crescimento-de-plantas",
+      "piscar"
+    ],
+    "7": [
+      "dominar-fera",
+      "invisibilidade-maior"
+    ],
+    "9": [
+      "dominar-pessoa",
+      "similaridade"
+    ]
+  }
 }

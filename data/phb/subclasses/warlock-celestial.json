@@ -44,5 +44,28 @@
       "name": "Vingança Calcinante",
       "description": "Quando você ou um aliado a até 18 metros de você estiver prestes a realizar uma Salvaguarda Contra Morte,\nvocê pode liberar energia radiante para salvar a criatura. A criatura restaura Pontos de Vida iguais à metade\nde seus Pontos de Vida máximos e pode encerrar a\ncondição Caído em si. Cada criatura à sua escolha que\nesteja a até 9 metros da criatura sofre dano Radiante\nigual a 2d8 mais seu modificador de Carisma e cada\numa tem a condição Cego até o final do turno atual.\nVocê pode usar esta característica novamente após\ncompletar um Descanso Longo."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "celestial-pact",
+  "preparedSpellsByLevel": {
+    "3": [
+      "auxilio",
+      "chama-sagrada",
+      "curar-ferimentos",
+      "luz",
+      "raio-guia",
+      "restauracao-menor"
+    ],
+    "5": [
+      "luz-do-dia",
+      "revivificar"
+    ],
+    "7": [
+      "defensor-da-fe",
+      "muralha-de-fogo"
+    ],
+    "9": [
+      "convocar-celestial",
+      "restauracao-maior"
+    ]
+  }
 }

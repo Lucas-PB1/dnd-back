@@ -17,7 +17,7 @@
   },
   "tagline": "Comporte-se como os anjos da justiça",
   "summary": "Comportar-se como os anjos da justiça.",
-  "description": "tenha certas magias prontas; ao atingir um nível de\nPaladino detalhado na tabela Magias do Juramento\nda Devoção, você sempre tem as magias apresentadas\npreparadas.\nMagias do Juramento da Devoção\nNível de Paladino Magias\n3 Escudo da Fé, Proteção Contra\no Bem e o Mal\n5 Auxílio, Zona da Verdade\n9 Dissipar Magia, Sinal\nde Esperança\n13 Defensor da Fé,\nMovimentação Livre\n17 Coluna de Chamas, Comunhão",
+  "description": "O Juramento da Devoção vincula um Paladino aos\nideais mais elevados de justiça, virtude e ordem. Paladinos que assumem este juramento comportam-se com\nhonra e integridade, protegendo os inocentes e punindo\nos malfeitores com a força sagrada de suas armas.",
   "features": [
     {
       "level": 3,
@@ -39,5 +39,28 @@
       "name": "Resplendor Sagrado",
       "description": "Como uma Ação Bônus, você pode imbuir sua Aura de\nProteção com poder sagrado, concedendo os benefícios abaixo por 10 minutos ou até a encerrar (nenhuma ação é necessária). Após usar esta característica,\nvocê não pode utilizá-la novamente até completar um\nDescanso Longo. Você também pode recuperar seu uso\ngastando um espaço de magia de 5º círculo (nenhuma\nação é necessária).\nDano Radiante. Sempre que um inimigo inicia o\nturno na sua aura, essa criatura sofre dano Radiante\nigual ao seu modificador de Carisma mais seu Bônus de\nProficiência.\nLuz Solar. A aura é preenchida com Luz Plena que é\nluz solar.\nVigília Consagrada. Você tem Vantagem em qualquer\nsalvaguarda que seja forçado a realizar por um Ínfero\nou um Morto-Vivo."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "devotion-oath",
+  "preparedSpellsByLevel": {
+    "3": [
+      "escudo-da-fe",
+      "protecao-contra-o-bem-e-o-mal"
+    ],
+    "5": [
+      "auxilio",
+      "zona-da-verdade"
+    ],
+    "9": [
+      "dissipar-magia",
+      "sinal-de-esperanca"
+    ],
+    "13": [
+      "defensor-da-fe",
+      "movimentacao-livre"
+    ],
+    "17": [
+      "coluna-de-chamas",
+      "comunhao"
+    ]
+  }
 }

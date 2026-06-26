@@ -23,6 +23,10 @@
     "two-weapon-fighting",
     "unarmed-fighting"
   ],
+  "classAlternativeStyleIds": {
+    "paladin": ["blessed-warrior"],
+    "ranger": ["druidic-warrior"]
+  },
   "acBonuses": {
     "defense": {
       "bonus": 1,

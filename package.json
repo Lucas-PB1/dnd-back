@@ -29,6 +29,9 @@
     "apply:armor": "node scripts/apply-armor-structure.mjs",
     "validate:armor": "node scripts/validate-armor.mjs",
     "armor:all": "npm run apply:armor && npm run validate:armor",
+    "apply:subclass-spells": "node scripts/apply-subclass-spells.mjs",
+    "validate:subclasses": "node scripts/validate-subclasses.mjs",
+    "subclasses:all": "npm run apply:subclass-spells && npm run validate:subclasses",
     "spellcasting:all": "npm run generate:spell-lists && npm run apply:progression && npm run validate:spellcasting && npm run check:spellcasting && npm run verify:pdf-progression"
   },
   "keywords": [],

@@ -101,25 +101,35 @@ export function loadSubclass(classId, subclassId) {
 }
 
 /** Magias sempre preparadas da subclasse no nível atual (null se a subclasse não define). */
-export function expectedSubclassPrepared(classId, subclassId, level) {
+export function expectedSubclassPrepared(classId, subclassId, level, classChoices = {}) {
   let sub;
   try {
     sub = loadSubclass(classId, subclassId);
   } catch {
     return null;
   }
-  if (!sub.preparedSpellsByLevel) return null;
+
+  const sourceKey = sub.preparedSpellSourceKey ?? `${subclassId}-domain`;
+
+  let table = sub.preparedSpellsByLevel;
+  if (sub.preparedSpellsByTerrain) {
+    const terrainId = classChoices?.landTerrainId;
+    if (!terrainId) {
+      return { sourceKey, spellIds: [], requiresTerrain: true };
+    }
+    table = sub.preparedSpellsByTerrain[terrainId];
+    if (!table) return null;
+  }
+
+  if (!table) return null;
 
   const spellIds = [];
-  for (const [lvlStr, ids] of Object.entries(sub.preparedSpellsByLevel)) {
+  for (const [lvlStr, ids] of Object.entries(table)) {
     if (level >= Number(lvlStr)) spellIds.push(...ids);
   }
-  if (!spellIds.length) return null;
+  if (!spellIds.length && !sub.preparedSpellsByTerrain) return null;
 
-  return {
-    sourceKey: sub.preparedSpellSourceKey ?? `${subclassId}-domain`,
-    spellIds,
-  };
+  return { sourceKey, spellIds, requiresTerrain: false };
 }
 
 function sortedMultiset(values) {
@@ -461,9 +471,45 @@ export function validateFightingStyle(doc) {
     return { ok: false, reason: "classChoices.fightingStyleId ausente" };
   }
 
-  if (!FIGHTING_STYLES.standardStyleIds.includes(styleId)) {
+  const classAlternatives = FIGHTING_STYLES.classAlternativeStyleIds?.[doc.classId] ?? [];
+  const allowed = [...FIGHTING_STYLES.standardStyleIds, ...classAlternatives];
+
+  if (!allowed.includes(styleId)) {
     return { ok: false, reason: `estilo de luta inválido: ${styleId}` };
   }
 
+  if (styleId === "blessed-warrior") {
+    const cantrips = doc.spellcasting?.cantrips?.class ?? [];
+    if (cantrips.length !== 2) {
+      return {
+        ok: false,
+        reason: `Combatente Abençoado exige 2 truques de Clérigo em spellcasting.cantrips.class (tem ${cantrips.length})`,
+      };
+    }
+  }
+
+  if (styleId === "druidic-warrior") {
+    const cantrips = doc.spellcasting?.cantrips?.class ?? [];
+    if (cantrips.length !== 2) {
+      return {
+        ok: false,
+        reason: `Combatente Druídico exige 2 truques de Druida em spellcasting.cantrips.class (tem ${cantrips.length})`,
+      };
+    }
+  }
+
   return { ok: true };
+}
+
+/** Modificador de ataque para arma com Acuidade (finesse): maior entre Força e Destreza. */
+export function finesseAttackModifier(abilities) {
+  return Math.max(abilityMod(abilities.forca), abilityMod(abilities.destreza));
+}
+
+export function weaponHasFinesse(weaponId) {
+  const weaponsDoc = JSON.parse(
+    fs.readFileSync(path.join(phb, "weapons/weapons.json"), "utf8")
+  );
+  const weapon = weaponsDoc.weapons.find((w) => w.id === weaponId);
+  return weapon?.propertyIds?.includes("finesse") ?? false;
 }

@@ -44,5 +44,26 @@
       "name": "Coroa de Luz",
       "description": "Como uma ação Usar Magia, você emite uma aura de\nluz solar que dura 1 minuto ou até que você a encerre\n(nenhuma ação é necessária). Você emite Luz Plena em um raio de 18 metros e Meia-luz por mais 9\nmetros. Seus inimigos na Luz Plena têm Desvantagem\nem salvaguardas contra seu Brilho do Amanhecer e\nqualquer magia que cause dano Ígneo ou Radiante.\nVocê pode usar esta característica um número de\nvezes igual ao seu modificador de Sabedoria (mínimo\nde uma vez) e restaura todos os usos gastos ao completar um Descanso Longo."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "light-domain",
+  "preparedSpellsByLevel": {
+    "3": [
+      "fogo-das-fadas",
+      "maos-flamejantes",
+      "raio-ardente",
+      "ver-o-invisivel"
+    ],
+    "5": [
+      "bola-de-fogo",
+      "luz-do-dia"
+    ],
+    "7": [
+      "muralha-de-fogo",
+      "olho-arcano"
+    ],
+    "9": [
+      "coluna-de-chamas",
+      "videncia"
+    ]
+  }
 }

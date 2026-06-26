@@ -9,7 +9,10 @@
     "chapter": 3,
     "chapterTitle": "Classes de Personagem",
     "pdfPath": "doc/livro-jogador.pdf",
-    "pdfPages": [55, 182],
+    "pdfPages": [
+      55,
+      182
+    ],
     "extractedAt": "2026-06-25T01:13:29.372Z"
   },
   "tagline": "Persiga inimigos nas trevas",
@@ -46,5 +49,23 @@
       "name": "Esquiva Sombria",
       "description": "Quando uma criatura realiza uma jogada de ataque\ncontra você, você pode executar uma Reação para\nimpor Desvantagem nessa jogada. Se o ataque acertar\nou errar, você pode se teleportar até 9 metros para um\nespaço desocupado à sua vista."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "gloom-stalker-spells",
+  "preparedSpellsByLevel": {
+    "3": [
+      "disfarcar-se"
+    ],
+    "5": [
+      "corda-extradimensional"
+    ],
+    "9": [
+      "medo"
+    ],
+    "13": [
+      "invisibilidade-maior"
+    ],
+    "17": [
+      "similaridade"
+    ]
+  }
 }

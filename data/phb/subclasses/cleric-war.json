@@ -44,5 +44,26 @@
       "name": "Avatar da Guerra",
       "description": "Você adquire Resistência a dano Contundente, Cortante e Perfurante."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "war-domain",
+  "preparedSpellsByLevel": {
+    "3": [
+      "arma-espiritual",
+      "arma-magica",
+      "escudo-da-fe",
+      "raio-guia"
+    ],
+    "5": [
+      "guardioes-espirituais",
+      "manto-do-cruzado"
+    ],
+    "7": [
+      "escudo-ardente",
+      "movimentacao-livre"
+    ],
+    "9": [
+      "golpe-de-arco",
+      "paralisar-monstro"
+    ]
+  }
 }

@@ -44,5 +44,22 @@
       "name": "Forma Lunar",
       "description": "O poder da lua permeia você, concedendo os seguintes\nbenefícios.\nRadiância Lunar Aprimorada. Uma vez por turno,\nvocê pode causar 2d10 pontos de dano Radiante\nadicional a um alvo que você acerta com o ataque da\nForma Selvagem.\nLuar Compartilhado. Sempre que usar Passo Lunar,\nvocê também pode teleportar uma criatura voluntária.\nEssa criatura deve estar a até 3 metros de você, e você\na teleporta para um espaço desocupado à sua vista a\naté 3 metros do seu destino."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "moon-circle",
+  "preparedSpellsByLevel": {
+    "3": [
+      "curar-ferimentos",
+      "fagulha-estelar",
+      "raio-lunar"
+    ],
+    "5": [
+      "invocar-animais"
+    ],
+    "7": [
+      "fonte-do-luar"
+    ],
+    "9": [
+      "curar-ferimentos-em-massa"
+    ]
+  }
 }

@@ -9,7 +9,10 @@
     "chapter": 3,
     "chapterTitle": "Classes de Personagem",
     "pdfPath": "doc/livro-jogador.pdf",
-    "pdfPages": [55, 182],
+    "pdfPages": [
+      55,
+      182
+    ],
     "extractedAt": "2026-06-25T01:13:29.372Z"
   },
   "tagline": "Faça um pacto com um poder infernal",
@@ -41,5 +44,26 @@
       "name": "Lançar no Inferno",
       "description": "Uma vez por turno, ao atingir uma criatura com uma\njogada de ataque, você pode tentar transportar instantaneamente o alvo para os Planos Inferiores. O alvo\ndeve ser bem-sucedido em uma salvaguarda de Carisma\ncontra a CD para evitar sua magia, ou ele desaparece\ne atravessa uma paisagem de pesadelo. O alvo sofre\n8d10 pontos de dano Psíquico se não for um Ínfero e tem\na condição Incapacitado até o final do seu próximo\nturno, quando retorna ao espaço que ocupava anteriormente ou ao espaço desocupado mais próximo.\nVocê pode usar esta característica novamente após\ncompletar um Descanso Longo, a menos que gaste um\nespaço de Magia de Pacto (nenhuma ação é necessária)\npara restaurar seu uso."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "fiend-pact",
+  "preparedSpellsByLevel": {
+    "3": [
+      "comando",
+      "maos-flamejantes",
+      "raio-ardente",
+      "sugestao"
+    ],
+    "5": [
+      "bola-de-fogo",
+      "nuvem-fetida"
+    ],
+    "7": [
+      "escudo-ardente",
+      "muralha-de-fogo"
+    ],
+    "9": [
+      "missao",
+      "praga-de-insetos"
+    ]
+  }
 }

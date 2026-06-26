@@ -49,5 +49,28 @@
       "name": "Lenda Viva",
       "description": "Você pode se fortalecer com as lendas — verdadeiras\nou exageradas — de seus grandes feitos. Como uma\nAção Bônus, você recebe os benefícios abaixo por\n10 minutos. Após usar essa característica, você não\npode utilizá-la novamente até completar um Descanso\nLongo. Você também pode recuperar seu uso gastando\num espaço de magia de 5º círculo (nenhuma ação é\nnecessária).\nCarismático. Você é abençoado com uma presença\nsobrenatural e tem Vantagem em todos os testes de\nCarisma.\nGolpe Infalível. Uma vez em cada um dos seus turnos,\nao realizar uma jogada de ataque com uma arma e\nerrar, você pode fazer com que esse ataque atinja.\nJogar Novamente a Salvaguarda. Se você falhar em\numa salvaguarda, pode usar sua Reação para jogá-la\nnovamente. Você deve usar o novo resultado."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "glory-oath",
+  "preparedSpellsByLevel": {
+    "3": [
+      "heroismo",
+      "raio-guia"
+    ],
+    "5": [
+      "aprimorar-atributo",
+      "arma-magica"
+    ],
+    "9": [
+      "celeridade",
+      "protecao-contra-energia"
+    ],
+    "13": [
+      "compulsao",
+      "movimentacao-livre"
+    ],
+    "17": [
+      "lendas-e-historias",
+      "presenca-regia-de-yolande"
+    ]
+  }
 }
