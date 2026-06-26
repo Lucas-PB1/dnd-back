@@ -7,7 +7,6 @@ import { fileURLToPath } from "url";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 import {
-  LIFE_DOMAIN_PREPARED,
   allCantripIds,
   expectedChannelDivinity,
   expectedClassCantrips,
@@ -15,10 +14,13 @@ import {
   expectedPreparedCount,
   expectedProficiencyBonus,
   expectedSpellSlots,
+  expectedSubclassPrepared,
+  isSpellcaster,
   lineageCantrips,
   lineagePreparedSpells,
   loadBackground,
   loadClass,
+  validateAbilityScores,
 } from "./character-rules.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -101,8 +103,23 @@ function fail(msg) {
 function validateSpellcastingRules(doc) {
   const { classId, level, subclassId, speciesChoices, classChoices, spellcasting, feats } = doc;
 
+  const caster = isSpellcaster(classId, level);
+  const hasSpellcastingData =
+    spellcasting &&
+    (Object.keys(spellcasting.cantrips ?? {}).length > 0 ||
+      Object.keys(spellcasting.prepared ?? {}).length > 0 ||
+      Object.keys(spellcasting.slotsMax ?? {}).length > 0);
+
+  if (!caster && !hasSpellcastingData) return;
+
+  if (caster && !spellcasting) {
+    fail(`${doc.id}: classe conjuradora exige spellcasting`);
+    return;
+  }
+
   let expectedCantrips = expectedClassCantrips(classId, level);
-  if (expectedCantrips == null) return;
+  if (expectedCantrips == null && !hasSpellcastingData) return;
+  if (expectedCantrips == null) expectedCantrips = 0;
 
   if (classId === "cleric" && classChoices?.divineOrder === "thaumaturge") {
     expectedCantrips += 1;
@@ -150,14 +167,18 @@ function validateSpellcastingRules(doc) {
     );
   }
 
-  if (subclassId === "life" && LIFE_DOMAIN_PREPARED[level]) {
-    const domainListed = spellcasting.prepared["life-domain"] ?? [];
-    const expected = LIFE_DOMAIN_PREPARED[level];
-    if (domainListed.length !== expected.length) {
-      fail(`${doc.id}: domínio da vida ${domainListed.length} magias, esperado ${expected.length}`);
-    }
-    for (const id of expected) {
-      if (!domainListed.includes(id)) fail(`${doc.id}: magia de domínio ${id} ausente`);
+  if (subclassId) {
+    const domain = expectedSubclassPrepared(classId, subclassId, level);
+    if (domain) {
+      const domainListed = spellcasting.prepared[domain.sourceKey] ?? [];
+      if (domainListed.length !== domain.spellIds.length) {
+        fail(
+          `${doc.id}: ${domain.sourceKey} ${domainListed.length} magias, esperado ${domain.spellIds.length}`
+        );
+      }
+      for (const id of domain.spellIds) {
+        if (!domainListed.includes(id)) fail(`${doc.id}: magia de subclasse ${id} ausente`);
+      }
     }
   }
 
@@ -236,7 +257,10 @@ for (const file of files) {
     if (!featIds.has(f.featId)) fail(`${label}: featId ${f.featId}`);
   }
 
-  for (const ids of [Object.values(doc.spellcasting.cantrips), Object.values(doc.spellcasting.prepared)]) {
+  for (const ids of [
+    Object.values(doc.spellcasting?.cantrips ?? {}),
+    Object.values(doc.spellcasting?.prepared ?? {}),
+  ]) {
     for (const list of ids) {
       for (const id of list) if (!spellIds.has(id)) fail(`${label}: spellId ${id}`);
     }
@@ -263,6 +287,11 @@ for (const file of files) {
 
   validateSpellcastingRules(doc);
   validateStartingGear(doc);
+
+  const abilityCheck = validateAbilityScores(doc);
+  if (!abilityCheck.ok) {
+    fail(`${label}: atributos — ${abilityCheck.reason}`);
+  }
 
   const expectedHp = expectedMaxHp(doc.classId, doc.level, doc.abilities.constituicao);
   if (expectedHp != null && doc.hp?.max !== expectedHp) {

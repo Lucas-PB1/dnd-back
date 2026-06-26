@@ -26,15 +26,15 @@ Snapshot do que consideramos **in scope** para a ficha (atualizado conforme extr
 | Magia | 391 magias, listas por classe, progressão | `spells/`, `spells/by-class/` |
 | Talentos | 75 talentos | `feats/` |
 | Equipamento | Armas, armaduras, itens, moedas | `weapons/`, `armor/`, `equipment/` |
-| Ficha de teste | Schema + validador + Aelindra nível 3 | `character.schema.json`, `validate:character` |
+| Ficha de teste | Schema + validador + 2 fichas exemplo | `character.schema.json`, `validate:character` |
 
-### 🔲 Próximo na ficha (não bloqueia nível 1)
+### ✅ Validação derivada
 
-| Item | Nota |
-|------|------|
-| Ficha de teste **nível 1** | Ex.: guerreiro ou bardo — validar criação do zero |
-| Validar **atributos finais** vs método + bônus do antecedente | Regra derivada (não só ids) |
-| Magias de subclasse em JSON | Domínio da Vida ainda hardcoded no validador |
+| Regra | Onde |
+|-------|------|
+| Atributos finais vs método + bônus do antecedente | `validateAbilityScores()` em `character-rules.mjs` |
+| Magias de subclasse sempre preparadas | `preparedSpellsByLevel` em `subclasses/*.json` |
+| Conjuração, PV, equipamento inicial | `validate-character.mjs` |
 
 ### 🔲 Secundário (só se a ficha guardar o campo)
 
@@ -46,7 +46,7 @@ Snapshot do que consideramos **in scope** para a ficha (atualizado conforme extr
 
 ### ⛔ Fora do escopo da ficha
 
-Apêndice B (criaturas), raridades de item mágico (LM), combate completo, multiclasse, tipos de dano/dado como referência solta, catálogo de itens mágicos. Ver seção final do doc anterior se precisar do detalhe.
+Apêndice B (criaturas), raridades de item mágico (LM), combate completo, multiclasse, tipos de dano/dado como referência solta, catálogo de itens mágicos.
 
 ---
 
@@ -60,18 +60,19 @@ Nome, aparência, personalidade, história, notas.
 
 | Campo | Schema | Status |
 |-------|--------|--------|
-| `speciesId` + `speciesChoices` | ✅ | |
+| `speciesId` + `speciesChoices` (opcional) | ✅ | Obrigatório só quando a espécie exige escolhas (ex.: linhagem élfica) |
 | `backgroundId` | ✅ | |
 | `classId`, `subclassId`, `classChoices` | ✅ | |
-| `abilities` (6 valores finais) | ✅ | |
+| `abilities` (6 valores finais) | ✅ | Validados vs `abilityGeneration` |
 | `alignmentId` | ✅ | ex.: `neutral-good` |
-| `abilityGeneration` | ✅ | `methodId` + `backgroundBoostId` opcional |
+| `abilityGeneration` | ✅ | `methodId` + `backgroundBoostId` |
 | `languageIds` | ✅ | inclui `common` |
-| `feats[]`, perícias, equipamento, magias | ✅ | |
+| `feats[]`, perícias, equipamento | ✅ | |
+| `spellcasting` (opcional) | ✅ | Obrigatório só para conjuradores; omitir em guerreiro etc. |
 
 ### Estado em jogo
 
-Nível, PV, slots usados, recursos de classe, equipamento equipado — ver `data/characters/aelindra.json`.
+Nível, PV, slots usados, recursos de classe, equipamento equipado — ver `data/characters/`.
 
 ### Calculado em runtime
 
@@ -94,6 +95,8 @@ data/phb/
 └── equipment/ + armor/ + weapons/
 
 data/characters/
+  aelindra.json         # clériga elfa nível 3 (conjuração + subclasse)
+  marcus.json           # guerreiro humano nível 1 (sem conjuração)
 data/schema/
 ```
 
@@ -112,6 +115,8 @@ npm run spellcasting:all      # conjuração + PDF
 
 ## Modelo da ficha
 
+**Conjurador (nível 3+):**
+
 ```json
 {
   "speciesId": "elf",
@@ -121,20 +126,21 @@ npm run spellcasting:all      # conjuração + PDF
   "subclassId": "life",
   "level": 3,
   "alignmentId": "neutral-good",
-  "abilityGeneration": {
-    "methodId": "standard-array",
-    "backgroundBoostId": "two-and-one"
-  },
+  "abilityGeneration": { "methodId": "standard-array", "backgroundBoostId": "two-and-one" },
   "languageIds": ["common", "elvish", "celestial"],
-  "abilities": { "forca": 10, "destreza": 14, "constituicao": 13, "inteligencia": 10, "sabedoria": 16, "carisma": 8 },
-  "spellcasting": { "cantrips": { "class": ["…"] }, "prepared": { "class": ["…"] }, "slotsMax": { "1": 4, "2": 2 } },
-  "hp": { "current": 21, "max": 21, "temp": 0 },
-  "startingPackages": { "classOption": "A", "backgroundOption": "a" },
-  "equipment": [{ "itemId": "leather", "source": "class-starting", "equipped": true }]
+  "abilities": { "forca": 12, "destreza": 14, "constituicao": 13, "inteligencia": 11, "sabedoria": 17, "carisma": 8 },
+  "spellcasting": {
+    "cantrips": { "class": ["…"], "magic-initiate": ["…"], "elf-lineage": ["…"] },
+    "prepared": { "class": ["…"], "life-domain": ["…"], "magic-initiate": ["…"] },
+    "slotsMax": { "1": 4, "2": 2 }
+  },
+  "hp": { "current": 21, "max": 21 }
 }
 ```
 
-Referência completa: `data/characters/aelindra.json`.
+**Não conjurador (nível 1):** omitir `spellcasting` e `subclassId`. Ver `marcus.json`.
+
+Referência completa: `data/characters/aelindra.json`, `data/characters/marcus.json`.
 
 ---
 
@@ -149,7 +155,7 @@ flowchart TD
   E --> F[Perícias / salvaguardas]
   F --> G[Talento origem]
   G --> H[Equipamento]
-  H --> I[Magias]
+  H --> I[Magias se conjurador]
   I --> J[Ficha pronta]
 
   subgraph ok [Pronto]
@@ -176,20 +182,19 @@ flowchart TD
 
 ## Roadmap (só ficha do jogador)
 
-### Fase 1 — Personagem nível 1
+### Fase 1 — Personagem nível 1 ✅
 
 - [x] Espécies, antecedentes, classes, talentos, equipamento, magias
 - [x] Perícias, PV/proficiência, regras D20
 - [x] **Cap. 2** — `creation/` (alinhamento, atributos, idiomas)
 - [x] Schema da ficha — `alignmentId`, `abilityGeneration`, `languageIds`
-- [x] Aelindra atualizada com campos de criação
-- [ ] Ficha nível 1 adicional (guerreiro ou bardo)
-- [ ] Validador: atributos finais coerentes com método + antecedente
+- [x] Fichas exemplo — Aelindra (nível 3) + Marcus (nível 1)
+- [x] Validador: atributos finais coerentes com método + antecedente
 
-### Fase 2 — Progressão
+### Fase 2 — Progressão ✅
 
 - [x] Conjuração por nível, PV por nível
-- [ ] Magias de subclasse estruturadas (tirar hardcode do validador)
+- [x] Magias de subclasse estruturadas (`preparedSpellsByLevel` em JSON)
 
 ### Fase 3 — Estado em jogo (opcional)
 
@@ -208,12 +213,24 @@ UI, exportação, motor de combate, Apêndice B, LM, multiclasse.
 | Alinhamento | `neutral-good`, `lawful-neutral` |
 | Idioma | `common`, `elvish`, `celestial` |
 | Método de atributos | `standard-array`, `roll`, `point-buy` |
+| Bônus do antecedente | `two-and-one`, `three-plus-one` |
+| Magias de subclasse | chave em `prepared` = `preparedSpellSourceKey` (ex.: `life-domain`) |
 | Classe / espécie / etc. | Ver `index.json` de cada pasta |
 
 ---
 
-## Próximo passo
+## Subclasse — magias sempre preparadas
 
-1. **Ficha nível 1** de teste (classe sem conjuração ou conjurador simples).
-2. **Validação derivada de atributos** — conferir base + bônus do antecedente vs `abilities` finais.
-3. **Magias de subclasse** em JSON (ex.: Domínio da Vida por nível).
+Em `subclasses/{classId}-{subclassId}.json`:
+
+```json
+{
+  "preparedSpellSourceKey": "life-domain",
+  "preparedSpellsByLevel": {
+    "3": ["auxilio", "bencao", "curar-ferimentos", "restauracao-menor"],
+    "5": ["palavra-curativa-em-massa", "revivificar"]
+  }
+}
+```
+
+O validador acumula entradas cujo nível de desbloqueio ≤ nível do personagem.

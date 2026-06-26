@@ -11,14 +11,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const phb = path.join(root, "data/phb");
 
-/** Magias sempre preparadas do Domínio da Vida por nível de clérigo. */
-export const LIFE_DOMAIN_PREPARED = {
-  3: ["auxilio", "bencao", "curar-ferimentos", "restauracao-menor"],
-  5: ["palavra-curativa-em-massa", "revivificar"],
-  7: ["aura-de-vida", "protecao-contra-a-morte"],
-  9: ["curar-ferimentos-em-massa", "restauracao-maior"],
-};
-
 /** Magia de linhagem élfica por nível (além do truque de nível 1). */
 export const ELF_LINEAGE_SPELLS = {
   "high-elf": { 1: ["prestidigitacao-arcana"], 3: ["detectar-magia"], 5: ["passo-nebuloso"] },
@@ -30,6 +22,27 @@ export { abilityMod, expectedMaxHp };
 
 const ADVANCEMENT = JSON.parse(
   fs.readFileSync(path.join(phb, "rules/character-advancement.json"), "utf8")
+);
+
+const ABILITY_GENERATION = JSON.parse(
+  fs.readFileSync(path.join(phb, "creation/ability-generation.json"), "utf8")
+);
+
+const STANDARD_ARRAY = ABILITY_GENERATION.methods.find((m) => m.id === "standard-array").values;
+
+const ABILITY_PT_TO_ID = {
+  Força: "forca",
+  Destreza: "destreza",
+  Constituição: "constituicao",
+  Inteligência: "inteligencia",
+  Sabedoria: "sabedoria",
+  Carisma: "carisma",
+};
+
+const ABILITY_IDS = Object.values(ABILITY_PT_TO_ID);
+
+const POINT_BUY_COSTS = Object.fromEntries(
+  ABILITY_GENERATION.pointBuyCosts.map((r) => [r.score, r.cost])
 );
 
 export function expectedProficiencyBonus(level) {
@@ -87,10 +100,153 @@ export function loadSubclass(classId, subclassId) {
   );
 }
 
+/** Magias sempre preparadas da subclasse no nível atual (null se a subclasse não define). */
+export function expectedSubclassPrepared(classId, subclassId, level) {
+  let sub;
+  try {
+    sub = loadSubclass(classId, subclassId);
+  } catch {
+    return null;
+  }
+  if (!sub.preparedSpellsByLevel) return null;
+
+  const spellIds = [];
+  for (const [lvlStr, ids] of Object.entries(sub.preparedSpellsByLevel)) {
+    if (level >= Number(lvlStr)) spellIds.push(...ids);
+  }
+  if (!spellIds.length) return null;
+
+  return {
+    sourceKey: sub.preparedSpellSourceKey ?? `${subclassId}-domain`,
+    spellIds,
+  };
+}
+
+function sortedMultiset(values) {
+  return [...values].sort((a, b) => a - b);
+}
+
+function multisetsEqual(a, b) {
+  const sa = sortedMultiset(a);
+  const sb = sortedMultiset(b);
+  return sa.length === sb.length && sa.every((v, i) => v === sb[i]);
+}
+
+function backgroundAbilityIds(backgroundId) {
+  const bg = loadBackground(backgroundId);
+  return bg.abilityOptions.map((label) => ABILITY_PT_TO_ID[label]).filter(Boolean);
+}
+
+function baseScoresFromBoost(abilities, allowedBoosts, boostId) {
+  if (boostId === "three-plus-one") {
+    const base = {};
+    for (const id of ABILITY_IDS) {
+      base[id] = abilities[id] - (allowedBoosts.includes(id) ? 1 : 0);
+    }
+    return base;
+  }
+
+  if (boostId === "two-and-one") {
+    const candidates = [];
+    for (const boosted of allowedBoosts) {
+      for (const second of allowedBoosts) {
+        if (boosted === second) continue;
+        const base = {};
+        for (const id of ABILITY_IDS) {
+          let score = abilities[id];
+          if (id === boosted) score -= 2;
+          else if (id === second) score -= 1;
+          base[id] = score;
+        }
+        if (Object.values(base).every((s) => s >= 1)) candidates.push(base);
+      }
+    }
+    return candidates.length === 1 ? candidates[0] : candidates;
+  }
+
+  return null;
+}
+
+function validateStandardArrayBase(base) {
+  return multisetsEqual(Object.values(base), STANDARD_ARRAY);
+}
+
+function validatePointBuyBase(base) {
+  let total = 0;
+  for (const score of Object.values(base)) {
+    if (score < 8 || score > 15) return false;
+    if (!(score in POINT_BUY_COSTS)) return false;
+    total += POINT_BUY_COSTS[score];
+  }
+  return total === ABILITY_GENERATION.methods.find((m) => m.id === "point-buy").totalPoints;
+}
+
+function validateRollBase(base) {
+  return Object.values(base).every((s) => s >= 3 && s <= 18);
+}
+
+/**
+ * Verifica se os atributos finais são coerentes com methodId + bônus do antecedente.
+ * Retorna { ok: true } ou { ok: false, reason: string }.
+ */
+export function validateAbilityScores(doc) {
+  const { abilities, abilityGeneration, backgroundId } = doc;
+  const { methodId, backgroundBoostId } = abilityGeneration ?? {};
+  const maxScore = ABILITY_GENERATION.backgroundBoost.maxScore;
+
+  for (const score of Object.values(abilities)) {
+    if (score < 1 || score > maxScore) {
+      return { ok: false, reason: `valor fora do intervalo 1–${maxScore}` };
+    }
+  }
+
+  if (!backgroundBoostId) {
+    return { ok: false, reason: "backgroundBoostId ausente" };
+  }
+
+  const allowedBoosts = backgroundAbilityIds(backgroundId);
+  if (allowedBoosts.length !== 3) {
+    return { ok: false, reason: "antecedente sem três atributos elegíveis" };
+  }
+
+  const baseResult = baseScoresFromBoost(abilities, allowedBoosts, backgroundBoostId);
+  const bases = Array.isArray(baseResult) ? baseResult : baseResult ? [baseResult] : [];
+  if (!bases.length) {
+    return { ok: false, reason: "combinação de bônus do antecedente inválida" };
+  }
+
+  const matchesMethod = (base) => {
+    if (methodId === "standard-array") return validateStandardArrayBase(base);
+    if (methodId === "point-buy") return validatePointBuyBase(base);
+    if (methodId === "roll") return validateRollBase(base);
+    return false;
+  };
+
+  if (bases.some(matchesMethod)) return { ok: true };
+
+  if (methodId === "standard-array") {
+    return { ok: false, reason: "base não corresponde ao conjunto padrão após remover bônus" };
+  }
+  if (methodId === "point-buy") {
+    return { ok: false, reason: "base não corresponde a ponto buy (27 pts, scores 8–15)" };
+  }
+  if (methodId === "roll") {
+    return { ok: false, reason: "base fora do intervalo 3–18 (4d6 descartando menor)" };
+  }
+
+  return { ok: false, reason: `methodId desconhecido: ${methodId}` };
+}
+
+export function isSpellcaster(classId, level) {
+  return expectedClassCantrips(classId, level) != null || expectedPreparedCount(classId, level) != null;
+}
+
 export function allCantripIds(character) {
+  if (!character.spellcasting?.cantrips) return [];
   return Object.values(character.spellcasting.cantrips).flat();
 }
 
 export function allPreparedIds(character) {
+  if (!character.spellcasting?.prepared) return [];
   return Object.values(character.spellcasting.prepared).flat();
 }

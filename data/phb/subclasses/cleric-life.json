@@ -17,6 +17,13 @@
   },
   "tagline": "Preserve a força vital",
   "summary": "Ser um mestre da cura.",
+  "preparedSpellSourceKey": "life-domain",
+  "preparedSpellsByLevel": {
+    "3": ["auxilio", "bencao", "curar-ferimentos", "restauracao-menor"],
+    "5": ["palavra-curativa-em-massa", "revivificar"],
+    "7": ["aura-de-vida", "protecao-contra-a-morte"],
+    "9": ["curar-ferimentos-em-massa", "restauracao-maior"]
+  },
   "description": "O Domínio da Vida se concentra na energia positiva que ajuda a sustentar toda a vida no multiverso.\nOs clérigos que acessam este domínio são mestres\nda cura, usando essa força vital para curar muitas\nferidas.\nA existência deste domínio repousa na energia\npositiva que o envolve, atraindo Clérigos de várias\ntradições religiosas. Está especialmente conectado\na divindades agrícolas, deuses da cura e resistência,\nalém de entidades do lar e da comunidade. Ordens religiosas voltadas para a cura também buscam a magia\ndeste domínio.",
   "features": [
     {

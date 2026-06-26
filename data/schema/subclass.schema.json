@@ -25,6 +25,22 @@
     "features": {
       "type": "array",
       "items": { "$ref": "class.schema.json#/$defs/feature" }
+    },
+    "preparedSpellSourceKey": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Chave em spellcasting.prepared da ficha (ex.: life-domain)."
+    },
+    "preparedSpellsByLevel": {
+      "type": "object",
+      "description": "Magias sempre preparadas da subclasse, desbloqueadas no nível de classe indicado.",
+      "propertyNames": { "pattern": "^[0-9]+$" },
+      "additionalProperties": {
+        "type": "array",
+        "items": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "minItems": 1,
+        "uniqueItems": true
+      }
     }
   }
 }

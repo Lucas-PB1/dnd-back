@@ -22,11 +22,11 @@
   },
   "languageIds": ["common", "elvish", "celestial"],
   "abilities": {
-    "forca": 10,
+    "forca": 12,
     "destreza": 14,
     "constituicao": 13,
-    "inteligencia": 10,
-    "sabedoria": 16,
+    "inteligencia": 11,
+    "sabedoria": 17,
     "carisma": 8
   },
   "skillProficiencies": [
