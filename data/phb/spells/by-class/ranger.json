@@ -1,0 +1,380 @@
+{
+  "$schema": "../../../schema/spell-by-class.schema.json",
+  "classId": "ranger",
+  "className": "Guardião",
+  "listLabel": "Lista de Magias de Guardião",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.654Z"
+  },
+  "spellCount": 61,
+  "byLevel": {
+    "0": [],
+    "1": [
+      {
+        "id": "alarme",
+        "name": "Alarme",
+        "school": "Abjuração",
+        "ritual": true
+      },
+      {
+        "id": "amizade-animal",
+        "name": "Amizade Animal",
+        "school": "Encantamento"
+      },
+      {
+        "id": "bom-fruto",
+        "name": "Bom Fruto",
+        "school": "Invocação"
+      },
+      {
+        "id": "curar-ferimentos",
+        "name": "Curar Ferimentos",
+        "school": "Abjuração"
+      },
+      {
+        "id": "detectar-magia",
+        "name": "Detectar Magia",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "detectar-veneno-e-doenca",
+        "name": "Detectar Veneno e Doença",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "emaranhar",
+        "name": "Emaranhar",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "falar-com-animais",
+        "name": "Falar com Animais",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "golpe-constritor",
+        "name": "Golpe Constritor",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "marca-do-predador",
+        "name": "Marca do Predador",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "nevoa-obscurecente",
+        "name": "Névoa Obscurecente",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "passos-largos",
+        "name": "Passos Largos",
+        "school": "Transmutação"
+      },
+      {
+        "id": "salto",
+        "name": "Salto",
+        "school": "Transmutação"
+      },
+      {
+        "id": "saraivada-de-espinhos",
+        "name": "Saraivada de Espinhos",
+        "school": "Invocação"
+      }
+    ],
+    "2": [
+      {
+        "id": "aprimorar-atributo",
+        "name": "Aprimorar Atributo",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "arma-magica",
+        "name": "Arma Mágica",
+        "school": "Transmutação"
+      },
+      {
+        "id": "auxilio",
+        "name": "Auxílio",
+        "school": "Abjuração"
+      },
+      {
+        "id": "cordao-de-flechas",
+        "name": "Cordão de Flechas",
+        "school": "Transmutação"
+      },
+      {
+        "id": "crescer-espinhos",
+        "name": "Crescer Espinhos",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "encontrar-armadilhas",
+        "name": "Encontrar Armadilhas",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "invocar-fera",
+        "name": "Invocar Fera",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "localizar-animais-ou-plantas",
+        "name": "Localizar Animais ou Plantas",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "localizar-objeto",
+        "name": "Localizar Objeto",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "lufada-de-vento",
+        "name": "Lufada de Vento",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "mensageiro-animal",
+        "name": "Mensageiro Animal",
+        "school": "Encantamento",
+        "ritual": true
+      },
+      {
+        "id": "passo-sem-rastro",
+        "name": "Passo Sem Rastro",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "pele-casca",
+        "name": "Pele-Casca",
+        "school": "Transmutação"
+      },
+      {
+        "id": "protecao-contra-veneno",
+        "name": "Proteção Contra Veneno",
+        "school": "Abjuração"
+      },
+      {
+        "id": "restauracao-menor",
+        "name": "Restauração Menor",
+        "school": "Abjuração"
+      },
+      {
+        "id": "sentido-feral",
+        "name": "Sentido Feral",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "silencio",
+        "name": "Silêncio",
+        "school": "Ilusão",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "visao-no-escuro",
+        "name": "Visão no Escuro",
+        "school": "Transmutação"
+      }
+    ],
+    "3": [
+      {
+        "id": "arma-elemental",
+        "name": "Arma Elemental",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "caminhar-sobre-as-aguas",
+        "name": "Caminhar Sobre as Águas",
+        "school": "Transmutação",
+        "ritual": true
+      },
+      {
+        "id": "convocar-feerico",
+        "name": "Convocar Feérico",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "crescimento-de-plantas",
+        "name": "Crescimento de Plantas",
+        "school": "Transmutação"
+      },
+      {
+        "id": "dissipar-magia",
+        "name": "Dissipar Magia",
+        "school": "Abjuração"
+      },
+      {
+        "id": "falar-com-plantas",
+        "name": "Falar com Plantas",
+        "school": "Transmutação"
+      },
+      {
+        "id": "flecha-relampago",
+        "name": "Flecha Relâmpago",
+        "school": "Transmutação"
+      },
+      {
+        "id": "indetectavel",
+        "name": "Indetectável",
+        "school": "Abjuração"
+      },
+      {
+        "id": "invocar-animais",
+        "name": "Invocar Animais",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "invocar-barragem",
+        "name": "Invocar Barragem",
+        "school": "Invocação"
+      },
+      {
+        "id": "luz-do-dia",
+        "name": "Luz do Dia",
+        "school": "Evocação"
+      },
+      {
+        "id": "mesclar-se-as-rochas",
+        "name": "Mesclar-se às Rochas",
+        "school": "Transmutação",
+        "ritual": true
+      },
+      {
+        "id": "muralha-de-vento",
+        "name": "Muralha de Vento",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "protecao-contra-energia",
+        "name": "Proteção Contra Energia",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "respirar-na-agua",
+        "name": "Respirar na Água",
+        "school": "Transmutação",
+        "ritual": true
+      },
+      {
+        "id": "revivificar",
+        "name": "Revivificar",
+        "school": "Necromancia"
+      }
+    ],
+    "4": [
+      {
+        "id": "convocar-elemental",
+        "name": "Convocar Elemental",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "dominar-fera",
+        "name": "Dominar Fera",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "invocar-seres-da-floresta",
+        "name": "Invocar Seres da Floresta",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "localizar-criatura",
+        "name": "Localizar Criatura",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "movimentacao-livre",
+        "name": "Movimentação Livre",
+        "school": "Abjuração"
+      },
+      {
+        "id": "pele-rocha",
+        "name": "Pele-Rocha",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "vinha-agarradora",
+        "name": "Vinha Agarradora",
+        "school": "Invocação",
+        "concentration": true
+      }
+    ],
+    "5": [
+      {
+        "id": "aljava-veloz",
+        "name": "Aljava Veloz",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "comunhao-com-a-natureza",
+        "name": "Comunhão com a Natureza",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "golpe-de-arco",
+        "name": "Golpe de Arço",
+        "school": "Invocação"
+      },
+      {
+        "id": "invocar-saraivada",
+        "name": "Invocar Saraivada",
+        "school": "Invocação"
+      },
+      {
+        "id": "passo-arboreo",
+        "name": "Passo Arbóreo",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "restauracao-maior",
+        "name": "Restauração Maior",
+        "school": "Abjuração"
+      }
+    ],
+    "6": [],
+    "7": [],
+    "8": [],
+    "9": []
+  }
+}

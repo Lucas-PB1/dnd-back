@@ -1,0 +1,316 @@
+{
+  "$schema": "../../../schema/spell-by-class.schema.json",
+  "classId": "paladin",
+  "className": "Paladino",
+  "listLabel": "Lista de Magias de Paladino",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.654Z"
+  },
+  "spellCount": 51,
+  "byLevel": {
+    "0": [],
+    "1": [
+      {
+        "id": "bencao",
+        "name": "Bênção",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "comando",
+        "name": "Comando",
+        "school": "Encantamento"
+      },
+      {
+        "id": "curar-ferimentos",
+        "name": "Curar Ferimentos",
+        "school": "Abjuração"
+      },
+      {
+        "id": "destruicao-cauterizante",
+        "name": "Destruição Cauterizante",
+        "school": "Evocação"
+      },
+      {
+        "id": "destruicao-colerica",
+        "name": "Destruição Colérica",
+        "school": "Necromancia"
+      },
+      {
+        "id": "destruicao-divina",
+        "name": "Destruição Divina",
+        "school": "Evocação"
+      },
+      {
+        "id": "destruicao-estrondosa",
+        "name": "Destruição Estrondosa",
+        "school": "Evocação"
+      },
+      {
+        "id": "detectar-magia",
+        "name": "Detectar Magia",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "detectar-o-bem-e-o-mal",
+        "name": "Detectar o Bem e o Mal",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "detectar-veneno-e-doenca",
+        "name": "Detectar Veneno e Doença",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "duelo-compelido",
+        "name": "Duelo Compelido",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "escudo-da-fe",
+        "name": "Escudo da Fé",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "favor-divino",
+        "name": "Favor Divino",
+        "school": "Transmutação"
+      },
+      {
+        "id": "heroismo",
+        "name": "Heroísmo",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "protecao-contra-o-bem-e-o-mal",
+        "name": "Proteção Contra o Bem e o Mal",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "purificar-alimentos-e-bebidas",
+        "name": "Purificar Alimentos e Bebidas",
+        "school": "Transmutação",
+        "ritual": true
+      }
+    ],
+    "2": [
+      {
+        "id": "arma-magica",
+        "name": "Arma Mágica",
+        "school": "Transmutação"
+      },
+      {
+        "id": "auxilio",
+        "name": "Auxílio",
+        "school": "Abjuração"
+      },
+      {
+        "id": "convocar-montaria",
+        "name": "Convocar Montaria",
+        "school": "Invocação"
+      },
+      {
+        "id": "destruicao-radiante",
+        "name": "Destruição Radiante",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "localizar-objeto",
+        "name": "Localizar Objeto",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "oracao-de-cura",
+        "name": "Oração de Cura",
+        "school": "Abjuração"
+      },
+      {
+        "id": "protecao-contra-veneno",
+        "name": "Proteção Contra Veneno",
+        "school": "Abjuração"
+      },
+      {
+        "id": "repouso-tranquilo",
+        "name": "Repouso Tranquilo",
+        "school": "Necromancia",
+        "ritual": true
+      },
+      {
+        "id": "restauracao-menor",
+        "name": "Restauração Menor",
+        "school": "Abjuração"
+      },
+      {
+        "id": "vinculo-de-protecao",
+        "name": "Vínculo de Proteção",
+        "school": "Abjuração"
+      },
+      {
+        "id": "zona-da-verdade",
+        "name": "Zona da Verdade",
+        "school": "Encantamento"
+      }
+    ],
+    "3": [
+      {
+        "id": "arma-elemental",
+        "name": "Arma Elemental",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "aura-de-vitalidade",
+        "name": "Aura de Vitalidade",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "circulo-magico",
+        "name": "Círculo Mágico",
+        "school": "Abjuração"
+      },
+      {
+        "id": "criar-comida-e-agua",
+        "name": "Criar Comida e Água",
+        "school": "Invocação"
+      },
+      {
+        "id": "destruicao-cegante",
+        "name": "Destruição Cegante",
+        "school": "Evocação"
+      },
+      {
+        "id": "dissipar-magia",
+        "name": "Dissipar Magia",
+        "school": "Abjuração"
+      },
+      {
+        "id": "luz-do-dia",
+        "name": "Luz do Dia",
+        "school": "Evocação"
+      },
+      {
+        "id": "manto-do-cruzado",
+        "name": "Manto do Cruzado",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "remover-maldicao",
+        "name": "Remover Maldição",
+        "school": "Abjuração"
+      },
+      {
+        "id": "revivificar",
+        "name": "Revivificar",
+        "school": "Necromancia"
+      }
+    ],
+    "4": [
+      {
+        "id": "aura-de-pureza",
+        "name": "Aura de Pureza",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "aura-de-vida",
+        "name": "Aura de Vida",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "banimento",
+        "name": "Banimento",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "destruicao-atordoante",
+        "name": "Destruição Atordoante",
+        "school": "Encantamento"
+      },
+      {
+        "id": "localizar-criatura",
+        "name": "Localizar Criatura",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "protecao-contra-a-morte",
+        "name": "Proteção Contra a Morte",
+        "school": "Abjuração"
+      }
+    ],
+    "5": [
+      {
+        "id": "circulo-de-poder",
+        "name": "Círculo de Poder",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "convocar-celestial",
+        "name": "Convocar Celestial",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "destruicao-banidora",
+        "name": "Destruição Banidora",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "dissipar-o-bem-e-o-mal",
+        "name": "Dissipar o Bem e o Mal",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "missao",
+        "name": "Missão",
+        "school": "Encantamento"
+      },
+      {
+        "id": "onda-destrutiva",
+        "name": "Onda Destrutiva",
+        "school": "Evocação"
+      },
+      {
+        "id": "restauracao-maior",
+        "name": "Restauração Maior",
+        "school": "Abjuração"
+      },
+      {
+        "id": "reviver-os-mortos",
+        "name": "Reviver os Mortos",
+        "school": "Necromancia"
+      }
+    ],
+    "6": [],
+    "7": [],
+    "8": [],
+    "9": []
+  }
+}

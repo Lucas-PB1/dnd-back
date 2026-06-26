@@ -1,0 +1,544 @@
+{
+  "$schema": "../../../schema/spell-by-class.schema.json",
+  "classId": "warlock",
+  "className": "Bruxo",
+  "listLabel": "Lista de Magias de Bruxo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.654Z"
+  },
+  "spellCount": 91,
+  "byLevel": {
+    "0": [
+      {
+        "id": "amigos",
+        "name": "Amigos",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "badalar-funebre",
+        "name": "Badalar Fúnebre",
+        "school": "Necromancia"
+      },
+      {
+        "id": "golpe-certeiro",
+        "name": "Golpe Certeiro",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "ilusao-menor",
+        "name": "Ilusão Menor",
+        "school": "Ilusão"
+      },
+      {
+        "id": "maos-magicas",
+        "name": "Mãos Mágicas",
+        "school": "Invocação"
+      },
+      {
+        "id": "prestidigitacao-arcana",
+        "name": "Prestidigitação Arcana",
+        "school": "Transmutação"
+      },
+      {
+        "id": "protecao-contra-laminas",
+        "name": "Proteção Contra Lâminas",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "raio-mistico",
+        "name": "Raio Místico",
+        "school": "Evocação"
+      },
+      {
+        "id": "rajada-de-veneno",
+        "name": "Rajada de Veneno",
+        "school": "Necromancia"
+      },
+      {
+        "id": "talho-mental",
+        "name": "Talho Mental",
+        "school": "Encantamento"
+      },
+      {
+        "id": "toque-necrotico",
+        "name": "Toque Necrótico",
+        "school": "Necromancia"
+      },
+      {
+        "id": "trovao",
+        "name": "Trovão",
+        "school": "Evocação"
+      }
+    ],
+    "1": [
+      {
+        "id": "armadura-de-agathys",
+        "name": "Armadura de Agathys",
+        "school": "Abjuração"
+      },
+      {
+        "id": "bracos-de-hadar",
+        "name": "Braços de Hadar",
+        "school": "Invocação"
+      },
+      {
+        "id": "compreender-idiomas",
+        "name": "Compreender Idiomas",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "danacao",
+        "name": "Danação",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "detectar-magia",
+        "name": "Detectar Magia",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "enfeiticar-pessoa",
+        "name": "Enfeitiçar Pessoa",
+        "school": "Encantamento"
+      },
+      {
+        "id": "escrita-ilusoria",
+        "name": "Escrita Ilusória",
+        "school": "Ilusão",
+        "ritual": true
+      },
+      {
+        "id": "falar-com-animais",
+        "name": "Falar com Animais",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "gargalhada-nefasta-de-tasha",
+        "name": "Gargalhada Nefasta de Tasha",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "perdicao",
+        "name": "Perdição",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "protecao-contra-o-bem-e-o-mal",
+        "name": "Proteção Contra o Bem e o Mal",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "raio-de-bruxa",
+        "name": "Raio de Bruxa",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "repreensao-diabolica",
+        "name": "Repreensão Diabólica",
+        "school": "Evocação"
+      },
+      {
+        "id": "retirada-acelerada",
+        "name": "Retirada Acelerada",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "servo-invisivel",
+        "name": "Servo Invisível",
+        "school": "Invocação",
+        "ritual": true
+      }
+    ],
+    "2": [
+      {
+        "id": "cativar",
+        "name": "Cativar",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "coroa-da-loucura",
+        "name": "Coroa da Loucura",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "escalada-de-aranha",
+        "name": "Escalada de Aranha",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "escuridao",
+        "name": "Escuridão",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "espinho-mental",
+        "name": "Espinho Mental",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "invisibilidade",
+        "name": "Invisibilidade",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "nuvem-de-adagas",
+        "name": "Nuvem de Adagas",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "paralisar-pessoa",
+        "name": "Paralisar Pessoa",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "passo-nebuloso",
+        "name": "Passo Nebuloso",
+        "school": "Invocação"
+      },
+      {
+        "id": "raio-do-enfraquecimento",
+        "name": "Raio do Enfraquecimento",
+        "school": "Necromancia",
+        "concentration": true
+      },
+      {
+        "id": "reflexos",
+        "name": "Reflexos",
+        "school": "Ilusão"
+      },
+      {
+        "id": "sugestao",
+        "name": "Sugestão",
+        "school": "Encantamento",
+        "concentration": true
+      }
+    ],
+    "3": [
+      {
+        "id": "circulo-magico",
+        "name": "Círculo Mágico",
+        "school": "Abjuração"
+      },
+      {
+        "id": "contramagia",
+        "name": "Contramagia",
+        "school": "Abjuração"
+      },
+      {
+        "id": "convocar-feerico",
+        "name": "Convocar Feérico",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "dissipar-magia",
+        "name": "Dissipar Magia",
+        "school": "Abjuração"
+      },
+      {
+        "id": "fome-de-hadar",
+        "name": "Fome de Hadar",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "forma-gasosa",
+        "name": "Forma Gasosa",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "imagem-maior",
+        "name": "Imagem Maior",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "invocar-morto-vivo",
+        "name": "Invocar Morto-Vivo",
+        "school": "Necromancia",
+        "concentration": true
+      },
+      {
+        "id": "linguas",
+        "name": "Línguas",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "medo",
+        "name": "Medo",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "padrao-hipnotico",
+        "name": "Padrão Hipnótico",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "remover-maldicao",
+        "name": "Remover Maldição",
+        "school": "Abjuração"
+      },
+      {
+        "id": "toque-vampirico",
+        "name": "Toque Vampírico",
+        "school": "Necromancia",
+        "concentration": true
+      },
+      {
+        "id": "voo",
+        "name": "Voo",
+        "school": "Transmutação",
+        "concentration": true
+      }
+    ],
+    "4": [
+      {
+        "id": "banimento",
+        "name": "Banimento",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "enfeiticar-monstro",
+        "name": "Enfeitiçar Monstro",
+        "school": "Encantamento"
+      },
+      {
+        "id": "invocar-aberracao",
+        "name": "Invocar Aberração",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "malogro",
+        "name": "Malogro",
+        "school": "Necromancia"
+      },
+      {
+        "id": "porta-dimensional",
+        "name": "Porta Dimensional",
+        "school": "Invocação"
+      },
+      {
+        "id": "terreno-alucinatorio",
+        "name": "Terreno Alucinatório",
+        "school": "Ilusão"
+      }
+    ],
+    "5": [
+      {
+        "id": "ancora-planar",
+        "name": "Âncora Planar",
+        "school": "Abjuração"
+      },
+      {
+        "id": "circulo-de-teleporte",
+        "name": "Círculo de Teleporte",
+        "school": "Invocação"
+      },
+      {
+        "id": "contato-extraplanar",
+        "name": "Contato Extraplanar",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "despistar",
+        "name": "Despistar",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "estatica-sinaptica",
+        "name": "Estática Sináptica",
+        "school": "Encantamento"
+      },
+      {
+        "id": "paralisar-monstro",
+        "name": "Paralisar Monstro",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "sonho",
+        "name": "Sonho",
+        "school": "Ilusão"
+      },
+      {
+        "id": "tempestade-radiante-de-jallarzi",
+        "name": "Tempestade Radiante de Jallarzi",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "videncia",
+        "name": "Vidência",
+        "school": "Adivinhação",
+        "concentration": true
+      }
+    ],
+    "6": [
+      {
+        "id": "caldeirao-borbulhante-de-tasha",
+        "name": "Caldeirão Borbulhante de Tasha",
+        "school": "Invocação"
+      },
+      {
+        "id": "circulo-da-morte",
+        "name": "Círculo da Morte",
+        "school": "Necromancia"
+      },
+      {
+        "id": "criar-mortos-vivos",
+        "name": "Criar Mortos-Vivos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "invocar-infero",
+        "name": "Invocar Ínfero",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "mau-olhado",
+        "name": "Mau Olhado",
+        "school": "Necromancia",
+        "concentration": true
+      },
+      {
+        "id": "portais-arcanos",
+        "name": "Portais Arcanos",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "visao-da-verdade",
+        "name": "Visão da Verdade",
+        "school": "Adivinhação"
+      }
+    ],
+    "7": [
+      {
+        "id": "carcere-de-energia",
+        "name": "Cárcere de Energia",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "dedo-da-morte",
+        "name": "Dedo da Morte",
+        "school": "Necromancia"
+      },
+      {
+        "id": "forma-eterea",
+        "name": "Forma Etérea",
+        "school": "Invocação"
+      },
+      {
+        "id": "transicao-planar",
+        "name": "Transição Planar",
+        "school": "Invocação"
+      }
+    ],
+    "8": [
+      {
+        "id": "dominar-monstro",
+        "name": "Dominar Monstro",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "loquacidade",
+        "name": "Loquacidade",
+        "school": "Encantamento"
+      },
+      {
+        "id": "palavra-de-poder-atordoar",
+        "name": "Palavra de Poder: Atordoar",
+        "school": "Encantamento"
+      },
+      {
+        "id": "semiplano",
+        "name": "Semiplano",
+        "school": "Invocação"
+      },
+      {
+        "id": "suplicio",
+        "name": "Suplício",
+        "school": "Encantamento"
+      }
+    ],
+    "9": [
+      {
+        "id": "aprisionamento",
+        "name": "Aprisionamento",
+        "school": "Abjuração"
+      },
+      {
+        "id": "encarnacao-fantasmagorica",
+        "name": "Encarnação Fantasmagórica",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "palavra-de-poder-matar",
+        "name": "Palavra de Poder: Matar",
+        "school": "Encantamento"
+      },
+      {
+        "id": "polimorfia-total",
+        "name": "Polimorfia Total",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "portal",
+        "name": "Portal",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "projecao-astral",
+        "name": "Projeção Astral",
+        "school": "Necromancia"
+      },
+      {
+        "id": "sexto-sentido",
+        "name": "Sexto Sentido",
+        "school": "Adivinhação"
+      }
+    ]
+  }
+}

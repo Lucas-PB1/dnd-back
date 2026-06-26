@@ -1,0 +1,26 @@
+{
+  "name": "rpg",
+  "version": "1.0.0",
+  "type": "module",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "generate:spell-lists": "node scripts/generate-spell-lists-by-class.mjs",
+    "apply:progression": "node scripts/apply-class-progression.mjs",
+    "validate:spellcasting": "node scripts/validate-spellcasting-data.mjs",
+    "check:spellcasting": "node scripts/check-spellcasting-data.mjs",
+    "audit:spellcasting": "node scripts/audit-spellcasting-data.mjs",
+    "verify:pdf-progression": "node scripts/verify-pdf-progression.mjs",
+    "spellcasting:all": "npm run generate:spell-lists && npm run apply:progression && npm run validate:spellcasting && npm run check:spellcasting && npm run verify:pdf-progression"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "pdf-parse": "^2.4.5"
+  }
+}

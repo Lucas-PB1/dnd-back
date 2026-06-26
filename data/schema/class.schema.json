@@ -53,6 +53,7 @@
     },
     "startingEquipment": { "$ref": "#/$defs/startingEquipment" },
     "spellcasting": { "$ref": "#/$defs/spellcasting" },
+    "progression": { "$ref": "#/$defs/progression" },
     "subclassUnlockLevel": { "type": "integer", "minimum": 1, "maximum": 20 },
     "subclassLabel": {
       "type": "string",
@@ -166,6 +167,50 @@
         "level": { "type": "integer", "minimum": 1, "maximum": 20 },
         "name": { "type": "string" },
         "description": { "type": "string" }
+      }
+    },
+    "spellSlots": {
+      "type": "object",
+      "description": "Espaços de magia por círculo (chave = círculo 1–9).",
+      "propertyNames": { "pattern": "^[1-9]$" },
+      "additionalProperties": { "type": "integer", "minimum": 1 }
+    },
+    "progressionLevel": {
+      "type": "object",
+      "required": ["level", "proficiencyBonus"],
+      "properties": {
+        "level": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "proficiencyBonus": { "type": "integer", "minimum": 2, "maximum": 6 },
+        "cantrips": { "type": "integer", "minimum": 0 },
+        "preparedSpells": { "type": "integer", "minimum": 0 },
+        "spellSlots": { "$ref": "#/$defs/spellSlots" },
+        "pactSlots": { "type": "integer", "minimum": 1 },
+        "pactSlotLevel": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "channelDivinity": { "type": "integer", "minimum": 0 },
+        "wildShape": { "type": "integer", "minimum": 0 },
+        "sorceryPoints": { "type": "integer", "minimum": 0 },
+        "invocations": { "type": "integer", "minimum": 0 },
+        "inspirationDie": { "type": "integer", "enum": [6, 8, 10, 12] },
+        "favoredEnemy": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "progression": {
+      "type": "object",
+      "required": ["tableTitle", "columns", "levels"],
+      "additionalProperties": false,
+      "properties": {
+        "tableTitle": { "type": "string" },
+        "columns": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "type": "string" }
+        },
+        "levels": {
+          "type": "array",
+          "minItems": 20,
+          "maxItems": 20,
+          "items": { "$ref": "#/$defs/progressionLevel" }
+        }
       }
     }
   }

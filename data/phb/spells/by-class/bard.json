@@ -1,0 +1,807 @@
+{
+  "$schema": "../../../schema/spell-by-class.schema.json",
+  "classId": "bard",
+  "className": "Bardo",
+  "listLabel": "Lista de Magias de Bardo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.654Z"
+  },
+  "spellCount": 140,
+  "byLevel": {
+    "0": [
+      {
+        "id": "amigos",
+        "name": "Amigos",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "fagulha-estelar",
+        "name": "Fagulha Estelar",
+        "school": "Evocação"
+      },
+      {
+        "id": "golpe-certeiro",
+        "name": "Golpe Certeiro",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "ilusao-menor",
+        "name": "Ilusão Menor",
+        "school": "Ilusão"
+      },
+      {
+        "id": "luz",
+        "name": "Luz",
+        "school": "Evocação"
+      },
+      {
+        "id": "luzes-dancantes",
+        "name": "Luzes Dançantes",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "maos-magicas",
+        "name": "Mãos Mágicas",
+        "school": "Invocação"
+      },
+      {
+        "id": "mensagem",
+        "name": "Mensagem",
+        "school": "Transmutação"
+      },
+      {
+        "id": "prestidigitacao-arcana",
+        "name": "Prestidigitação Arcana",
+        "school": "Transmutação"
+      },
+      {
+        "id": "protecao-contra-laminas",
+        "name": "Proteção Contra Lâminas",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "reparar",
+        "name": "Reparar",
+        "school": "Transmutação"
+      },
+      {
+        "id": "trovao",
+        "name": "Trovão",
+        "school": "Evocação"
+      },
+      {
+        "id": "zombaria-perversa",
+        "name": "Zombaria Perversa",
+        "school": "Encantamento"
+      }
+    ],
+    "1": [
+      {
+        "id": "amizade-animal",
+        "name": "Amizade Animal",
+        "school": "Encantamento"
+      },
+      {
+        "id": "comando",
+        "name": "Comando",
+        "school": "Encantamento"
+      },
+      {
+        "id": "compreender-idiomas",
+        "name": "Compreender Idiomas",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "curar-ferimentos",
+        "name": "Curar Ferimentos",
+        "school": "Abjuração"
+      },
+      {
+        "id": "detectar-magia",
+        "name": "Detectar Magia",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "disfarcar-se",
+        "name": "Disfarçar-se",
+        "school": "Ilusão"
+      },
+      {
+        "id": "enfeiticar-pessoa",
+        "name": "Enfeitiçar Pessoa",
+        "school": "Encantamento"
+      },
+      {
+        "id": "escrita-ilusoria",
+        "name": "Escrita Ilusória",
+        "school": "Ilusão",
+        "ritual": true
+      },
+      {
+        "id": "falar-com-animais",
+        "name": "Falar com Animais",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "fogo-das-fadas",
+        "name": "Fogo das Fadas",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "gargalhada-nefasta-de-tasha",
+        "name": "Gargalhada Nefasta de Tasha",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "heroismo",
+        "name": "Heroísmo",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "identificar",
+        "name": "Identificar",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "imagem-silenciosa",
+        "name": "Imagem Silenciosa",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "leque-cromatico",
+        "name": "Leque Cromático",
+        "school": "Ilusão"
+      },
+      {
+        "id": "onda-trovejante",
+        "name": "Onda Trovejante",
+        "school": "Evocação"
+      },
+      {
+        "id": "palavra-curativa",
+        "name": "Palavra Curativa",
+        "school": "Abjuração"
+      },
+      {
+        "id": "passos-largos",
+        "name": "Passos Largos",
+        "school": "Transmutação"
+      },
+      {
+        "id": "perdicao",
+        "name": "Perdição",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "queda-suave",
+        "name": "Queda Suave",
+        "school": "Transmutação"
+      },
+      {
+        "id": "servo-invisivel",
+        "name": "Servo Invisível",
+        "school": "Invocação",
+        "ritual": true
+      },
+      {
+        "id": "sono",
+        "name": "Sono",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "sussurros-dissonantes",
+        "name": "Sussurros Dissonantes",
+        "school": "Encantamento"
+      }
+    ],
+    "2": [
+      {
+        "id": "acalmar-emocoes",
+        "name": "Acalmar Emoções",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "aprimorar-atributo",
+        "name": "Aprimorar Atributo",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "arrombar",
+        "name": "Arrombar",
+        "school": "Transmutação"
+      },
+      {
+        "id": "aumentar-reduzir",
+        "name": "Aumentar/Reduzir",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "auxilio",
+        "name": "Auxílio",
+        "school": "Abjuração"
+      },
+      {
+        "id": "boca-encantada",
+        "name": "Boca Encantada",
+        "school": "Ilusão",
+        "ritual": true
+      },
+      {
+        "id": "cativar",
+        "name": "Cativar",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "cegueira-surdez",
+        "name": "Cegueira/Surdez",
+        "school": "Transmutação"
+      },
+      {
+        "id": "coroa-da-loucura",
+        "name": "Coroa da Loucura",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "despedacar",
+        "name": "Despedaçar",
+        "school": "Evocação"
+      },
+      {
+        "id": "detectar-pensamentos",
+        "name": "Detectar Pensamentos",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "esquentar-metal",
+        "name": "Esquentar Metal",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "forca-espectral",
+        "name": "Força Espectral",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "invisibilidade",
+        "name": "Invisibilidade",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "localizar-animais-ou-plantas",
+        "name": "Localizar Animais ou Plantas",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "localizar-objeto",
+        "name": "Localizar Objeto",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "mensageiro-animal",
+        "name": "Mensageiro Animal",
+        "school": "Encantamento",
+        "ritual": true
+      },
+      {
+        "id": "nuvem-de-adagas",
+        "name": "Nuvem de Adagas",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "paralisar-pessoa",
+        "name": "Paralisar Pessoa",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "reflexos",
+        "name": "Reflexos",
+        "school": "Ilusão"
+      },
+      {
+        "id": "restauracao-menor",
+        "name": "Restauração Menor",
+        "school": "Abjuração"
+      },
+      {
+        "id": "silencio",
+        "name": "Silêncio",
+        "school": "Ilusão",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "sugestao",
+        "name": "Sugestão",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "ver-o-invisivel",
+        "name": "Ver o Invisível",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "zona-da-verdade",
+        "name": "Zona da Verdade",
+        "school": "Encantamento"
+      }
+    ],
+    "3": [
+      {
+        "id": "clarividencia",
+        "name": "Clarividência",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "crescimento-de-plantas",
+        "name": "Crescimento de Plantas",
+        "school": "Transmutação"
+      },
+      {
+        "id": "dissipar-magia",
+        "name": "Dissipar Magia",
+        "school": "Abjuração"
+      },
+      {
+        "id": "falar-com-mortos",
+        "name": "Falar com Mortos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "falar-com-plantas",
+        "name": "Falar com Plantas",
+        "school": "Transmutação"
+      },
+      {
+        "id": "glifo-de-protecao",
+        "name": "Glifo de Proteção",
+        "school": "Abjuração"
+      },
+      {
+        "id": "imagem-maior",
+        "name": "Imagem Maior",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "indetectavel",
+        "name": "Indetectável",
+        "school": "Abjuração"
+      },
+      {
+        "id": "lentidao",
+        "name": "Lentidão",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "linguas",
+        "name": "Línguas",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "medo",
+        "name": "Medo",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "nuvem-fetida",
+        "name": "Nuvem Fétida",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "padrao-hipnotico",
+        "name": "Padrão Hipnótico",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "palavra-curativa-em-massa",
+        "name": "Palavra Curativa em Massa",
+        "school": "Abjuração"
+      },
+      {
+        "id": "pequeno-refugio-de-leomund",
+        "name": "Pequeno Refúgio de Leomund",
+        "school": "Evocação",
+        "ritual": true
+      },
+      {
+        "id": "remeter",
+        "name": "Remeter",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "rogar-maldicao",
+        "name": "Rogar Maldição",
+        "school": "Necromancia",
+        "concentration": true
+      },
+      {
+        "id": "simular-morte",
+        "name": "Simular Morte",
+        "school": "Necromancia",
+        "ritual": true
+      }
+    ],
+    "4": [
+      {
+        "id": "assassino-fantasmagorico",
+        "name": "Assassino Fantasmagórico",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "compulsao",
+        "name": "Compulsão",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "confusao",
+        "name": "Confusão",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "enfeiticar-monstro",
+        "name": "Enfeitiçar Monstro",
+        "school": "Encantamento"
+      },
+      {
+        "id": "fonte-do-luar",
+        "name": "Fonte do Luar",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "invisibilidade-maior",
+        "name": "Invisibilidade Maior",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "localizar-criatura",
+        "name": "Localizar Criatura",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "movimentacao-livre",
+        "name": "Movimentação Livre",
+        "school": "Abjuração"
+      },
+      {
+        "id": "polimorfia",
+        "name": "Polimorfia",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "porta-dimensional",
+        "name": "Porta Dimensional",
+        "school": "Invocação"
+      },
+      {
+        "id": "terreno-alucinatorio",
+        "name": "Terreno Alucinatório",
+        "school": "Ilusão"
+      }
+    ],
+    "5": [
+      {
+        "id": "ancora-planar",
+        "name": "Âncora Planar",
+        "school": "Abjuração"
+      },
+      {
+        "id": "animar-objetos",
+        "name": "Animar Objetos",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "circulo-de-teleporte",
+        "name": "Círculo de Teleporte",
+        "school": "Invocação"
+      },
+      {
+        "id": "curar-ferimentos-em-massa",
+        "name": "Curar Ferimentos em Massa",
+        "school": "Abjuração"
+      },
+      {
+        "id": "despertar",
+        "name": "Despertar",
+        "school": "Transmutação"
+      },
+      {
+        "id": "despistar",
+        "name": "Despistar",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "dominar-pessoa",
+        "name": "Dominar Pessoa",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "estatica-sinaptica",
+        "name": "Estática Sináptica",
+        "school": "Encantamento"
+      },
+      {
+        "id": "lendas-e-historias",
+        "name": "Lendas e Histórias",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "ligacao-telepatica-de-rary",
+        "name": "Ligação Telepática de Rary",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "missao",
+        "name": "Missão",
+        "school": "Encantamento"
+      },
+      {
+        "id": "modificar-memoria",
+        "name": "Modificar Memória",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "paralisar-monstro",
+        "name": "Paralisar Monstro",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "presenca-regia-de-yolande",
+        "name": "Presença Régia de Yolande",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "restauracao-maior",
+        "name": "Restauração Maior",
+        "school": "Abjuração"
+      },
+      {
+        "id": "reviver-os-mortos",
+        "name": "Reviver os Mortos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "similaridade",
+        "name": "Similaridade",
+        "school": "Ilusão"
+      },
+      {
+        "id": "sonho",
+        "name": "Sonho",
+        "school": "Ilusão"
+      },
+      {
+        "id": "videncia",
+        "name": "Vidência",
+        "school": "Adivinhação",
+        "concentration": true
+      }
+    ],
+    "6": [
+      {
+        "id": "banquete-de-herois",
+        "name": "Banquete de Heróis",
+        "school": "Invocação"
+      },
+      {
+        "id": "danca-irresistivel-de-otto",
+        "name": "Dança Irresistível de Otto",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "encontrar-o-caminho",
+        "name": "Encontrar o Caminho",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "ilusao-programada",
+        "name": "Ilusão Programada",
+        "school": "Ilusão"
+      },
+      {
+        "id": "mau-olhado",
+        "name": "Mau Olhado",
+        "school": "Necromancia",
+        "concentration": true
+      },
+      {
+        "id": "proteger-fortaleza",
+        "name": "Proteger Fortaleza",
+        "school": "Abjuração"
+      },
+      {
+        "id": "sugestao-em-massa",
+        "name": "Sugestão em Massa",
+        "school": "Encantamento"
+      },
+      {
+        "id": "visao-da-verdade",
+        "name": "Visão da Verdade",
+        "school": "Adivinhação"
+      }
+    ],
+    "7": [
+      {
+        "id": "carcere-de-energia",
+        "name": "Cárcere de Energia",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "espada-de-mordenkainen",
+        "name": "Espada de Mordenkainen",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "forma-eterea",
+        "name": "Forma Etérea",
+        "school": "Invocação"
+      },
+      {
+        "id": "mansao-magnifica-de-mordenkainen",
+        "name": "Mansão Magnífica de Mordenkainen",
+        "school": "Invocação"
+      },
+      {
+        "id": "miragem-arcana",
+        "name": "Miragem Arcana",
+        "school": "Ilusão"
+      },
+      {
+        "id": "palavra-de-poder-fortificar",
+        "name": "Palavra de Poder: Fortificar",
+        "school": "Encantamento"
+      },
+      {
+        "id": "projetar-imagem",
+        "name": "Projetar Imagem",
+        "school": "Ilusão",
+        "concentration": true
+      },
+      {
+        "id": "rajada-prismatica",
+        "name": "Rajada Prismática",
+        "school": "Evocação"
+      },
+      {
+        "id": "regeneracao",
+        "name": "Regeneração",
+        "school": "Transmutação"
+      },
+      {
+        "id": "ressurreicao",
+        "name": "Ressurreição",
+        "school": "Necromancia"
+      },
+      {
+        "id": "simbolo",
+        "name": "Símbolo",
+        "school": "Abjuração"
+      },
+      {
+        "id": "teleporte",
+        "name": "Teleporte",
+        "school": "Invocação"
+      }
+    ],
+    "8": [
+      {
+        "id": "antipatia-simpatia",
+        "name": "Antipatia/Simpatia",
+        "school": "Encantamento"
+      },
+      {
+        "id": "dominar-monstro",
+        "name": "Dominar Monstro",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "limpar-a-mente",
+        "name": "Limpar a Mente",
+        "school": "Abjuração"
+      },
+      {
+        "id": "loquacidade",
+        "name": "Loquacidade",
+        "school": "Encantamento"
+      },
+      {
+        "id": "palavra-de-poder-atordoar",
+        "name": "Palavra de Poder: Atordoar",
+        "school": "Encantamento"
+      },
+      {
+        "id": "suplicio",
+        "name": "Suplício",
+        "school": "Encantamento"
+      }
+    ],
+    "9": [
+      {
+        "id": "muralha-prismatica",
+        "name": "Muralha Prismática",
+        "school": "Abjuração"
+      },
+      {
+        "id": "palavra-de-poder-matar",
+        "name": "Palavra de Poder: Matar",
+        "school": "Encantamento"
+      },
+      {
+        "id": "palavra-de-poder-salvar",
+        "name": "Palavra de Poder: Salvar",
+        "school": "Encantamento"
+      },
+      {
+        "id": "polimorfia-total",
+        "name": "Polimorfia Total",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "sexto-sentido",
+        "name": "Sexto Sentido",
+        "school": "Adivinhação"
+      }
+    ]
+  }
+}

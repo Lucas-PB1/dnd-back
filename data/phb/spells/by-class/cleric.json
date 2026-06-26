@@ -1,0 +1,678 @@
+{
+  "$schema": "../../../schema/spell-by-class.schema.json",
+  "classId": "cleric",
+  "className": "Clérigo",
+  "listLabel": "Lista de Magias de Clérigo",
+  "source": {
+    "book": "Livro do Jogador 2024",
+    "language": "pt-BR",
+    "chapter": 7,
+    "chapterTitle": "Magias",
+    "pdfPath": "doc/livro-jogador.pdf",
+    "pdfPages": [
+      241,
+      349
+    ],
+    "extractedAt": "2026-06-25T01:53:01.654Z"
+  },
+  "spellCount": 117,
+  "byLevel": {
+    "0": [
+      {
+        "id": "acudir-os-moribundos",
+        "name": "Acudir os Moribundos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "badalar-funebre",
+        "name": "Badalar Fúnebre",
+        "school": "Necromancia"
+      },
+      {
+        "id": "chama-sagrada",
+        "name": "Chama Sagrada",
+        "school": "Evocação"
+      },
+      {
+        "id": "luz",
+        "name": "Luz",
+        "school": "Evocação"
+      },
+      {
+        "id": "orientacao",
+        "name": "Orientação",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "palavra-de-radiancia",
+        "name": "Palavra de Radiância",
+        "school": "Evocação"
+      },
+      {
+        "id": "reparar",
+        "name": "Reparar",
+        "school": "Transmutação"
+      },
+      {
+        "id": "resistencia",
+        "name": "Resistência",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "taumaturgia",
+        "name": "Taumaturgia",
+        "school": "Transmutação"
+      }
+    ],
+    "1": [
+      {
+        "id": "bencao",
+        "name": "Bênção",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "comando",
+        "name": "Comando",
+        "school": "Encantamento"
+      },
+      {
+        "id": "criar-ou-destruir-agua",
+        "name": "Criar ou Destruir Água",
+        "school": "Transmutação"
+      },
+      {
+        "id": "curar-ferimentos",
+        "name": "Curar Ferimentos",
+        "school": "Abjuração"
+      },
+      {
+        "id": "detectar-magia",
+        "name": "Detectar Magia",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "detectar-o-bem-e-o-mal",
+        "name": "Detectar o Bem e o Mal",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "detectar-veneno-e-doenca",
+        "name": "Detectar Veneno e Doença",
+        "school": "Adivinhação",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "escudo-da-fe",
+        "name": "Escudo da Fé",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "infligir-ferimentos",
+        "name": "Infligir Ferimentos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "palavra-curativa",
+        "name": "Palavra Curativa",
+        "school": "Abjuração"
+      },
+      {
+        "id": "perdicao",
+        "name": "Perdição",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "protecao-contra-o-bem-e-o-mal",
+        "name": "Proteção Contra o Bem e o Mal",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "purificar-alimentos-e-bebidas",
+        "name": "Purificar Alimentos e Bebidas",
+        "school": "Transmutação",
+        "ritual": true
+      },
+      {
+        "id": "raio-guia",
+        "name": "Raio Guia",
+        "school": "Evocação"
+      },
+      {
+        "id": "santuario",
+        "name": "Santuário",
+        "school": "Abjuração"
+      }
+    ],
+    "2": [
+      {
+        "id": "acalmar-emocoes",
+        "name": "Acalmar Emoções",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "aprimorar-atributo",
+        "name": "Aprimorar Atributo",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "arma-espiritual",
+        "name": "Arma Espiritual",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "augurio",
+        "name": "Augúrio",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "auxilio",
+        "name": "Auxílio",
+        "school": "Abjuração"
+      },
+      {
+        "id": "cegueira-surdez",
+        "name": "Cegueira/Surdez",
+        "school": "Transmutação"
+      },
+      {
+        "id": "chama-continua",
+        "name": "Chama Contínua",
+        "school": "Evocação"
+      },
+      {
+        "id": "encontrar-armadilhas",
+        "name": "Encontrar Armadilhas",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "localizar-objeto",
+        "name": "Localizar Objeto",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "oracao-de-cura",
+        "name": "Oração de Cura",
+        "school": "Abjuração"
+      },
+      {
+        "id": "paralisar-pessoa",
+        "name": "Paralisar Pessoa",
+        "school": "Encantamento",
+        "concentration": true
+      },
+      {
+        "id": "protecao-contra-veneno",
+        "name": "Proteção Contra Veneno",
+        "school": "Abjuração"
+      },
+      {
+        "id": "repouso-tranquilo",
+        "name": "Repouso Tranquilo",
+        "school": "Necromancia",
+        "ritual": true
+      },
+      {
+        "id": "restauracao-menor",
+        "name": "Restauração Menor",
+        "school": "Abjuração"
+      },
+      {
+        "id": "silencio",
+        "name": "Silêncio",
+        "school": "Ilusão",
+        "ritual": true,
+        "concentration": true
+      },
+      {
+        "id": "vinculo-de-protecao",
+        "name": "Vínculo de Proteção",
+        "school": "Abjuração"
+      },
+      {
+        "id": "zona-da-verdade",
+        "name": "Zona da Verdade",
+        "school": "Encantamento"
+      }
+    ],
+    "3": [
+      {
+        "id": "animar-mortos",
+        "name": "Animar Mortos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "aura-de-vitalidade",
+        "name": "Aura de Vitalidade",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "caminhar-sobre-as-aguas",
+        "name": "Caminhar Sobre as Águas",
+        "school": "Transmutação",
+        "ritual": true
+      },
+      {
+        "id": "circulo-magico",
+        "name": "Círculo Mágico",
+        "school": "Abjuração"
+      },
+      {
+        "id": "clarividencia",
+        "name": "Clarividência",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "criar-comida-e-agua",
+        "name": "Criar Comida e Água",
+        "school": "Invocação"
+      },
+      {
+        "id": "dissipar-magia",
+        "name": "Dissipar Magia",
+        "school": "Abjuração"
+      },
+      {
+        "id": "falar-com-mortos",
+        "name": "Falar com Mortos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "glifo-de-protecao",
+        "name": "Glifo de Proteção",
+        "school": "Abjuração"
+      },
+      {
+        "id": "guardioes-espirituais",
+        "name": "Guardiões Espirituais",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "linguas",
+        "name": "Línguas",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "luz-do-dia",
+        "name": "Luz do Dia",
+        "school": "Evocação"
+      },
+      {
+        "id": "mesclar-se-as-rochas",
+        "name": "Mesclar-se às Rochas",
+        "school": "Transmutação",
+        "ritual": true
+      },
+      {
+        "id": "palavra-curativa-em-massa",
+        "name": "Palavra Curativa em Massa",
+        "school": "Abjuração"
+      },
+      {
+        "id": "protecao-contra-energia",
+        "name": "Proteção Contra Energia",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "remeter",
+        "name": "Remeter",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "remover-maldicao",
+        "name": "Remover Maldição",
+        "school": "Abjuração"
+      },
+      {
+        "id": "revivificar",
+        "name": "Revivificar",
+        "school": "Necromancia"
+      },
+      {
+        "id": "rogar-maldicao",
+        "name": "Rogar Maldição",
+        "school": "Necromancia",
+        "concentration": true
+      },
+      {
+        "id": "simular-morte",
+        "name": "Simular Morte",
+        "school": "Necromancia",
+        "ritual": true
+      },
+      {
+        "id": "sinal-de-esperanca",
+        "name": "Sinal de Esperança",
+        "school": "Abjuração",
+        "concentration": true
+      }
+    ],
+    "4": [
+      {
+        "id": "aura-de-pureza",
+        "name": "Aura de Pureza",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "aura-de-vida",
+        "name": "Aura de Vida",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "banimento",
+        "name": "Banimento",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "controlar-agua",
+        "name": "Controlar Água",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "defensor-da-fe",
+        "name": "Defensor da Fé",
+        "school": "Invocação"
+      },
+      {
+        "id": "localizar-criatura",
+        "name": "Localizar Criatura",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "moldar-rochas",
+        "name": "Moldar Rochas",
+        "school": "Transmutação"
+      },
+      {
+        "id": "movimentacao-livre",
+        "name": "Movimentação Livre",
+        "school": "Abjuração"
+      },
+      {
+        "id": "pressagio",
+        "name": "Presságio",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "protecao-contra-a-morte",
+        "name": "Proteção Contra a Morte",
+        "school": "Abjuração"
+      }
+    ],
+    "5": [
+      {
+        "id": "ancora-planar",
+        "name": "Âncora Planar",
+        "school": "Abjuração"
+      },
+      {
+        "id": "circulo-de-poder",
+        "name": "Círculo de Poder",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "coluna-de-chamas",
+        "name": "Coluna de Chamas",
+        "school": "Evocação"
+      },
+      {
+        "id": "comunhao",
+        "name": "Comunhão",
+        "school": "Adivinhação",
+        "ritual": true
+      },
+      {
+        "id": "consagrar",
+        "name": "Consagrar",
+        "school": "Abjuração"
+      },
+      {
+        "id": "contagio",
+        "name": "Contágio",
+        "school": "Necromancia"
+      },
+      {
+        "id": "convocar-celestial",
+        "name": "Convocar Celestial",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "curar-ferimentos-em-massa",
+        "name": "Curar Ferimentos em Massa",
+        "school": "Abjuração"
+      },
+      {
+        "id": "dissipar-o-bem-e-o-mal",
+        "name": "Dissipar o Bem e o Mal",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "lendas-e-historias",
+        "name": "Lendas e Histórias",
+        "school": "Adivinhação"
+      },
+      {
+        "id": "missao",
+        "name": "Missão",
+        "school": "Encantamento"
+      },
+      {
+        "id": "praga-de-insetos",
+        "name": "Praga de Insetos",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "restauracao-maior",
+        "name": "Restauração Maior",
+        "school": "Abjuração"
+      },
+      {
+        "id": "reviver-os-mortos",
+        "name": "Reviver os Mortos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "videncia",
+        "name": "Vidência",
+        "school": "Adivinhação",
+        "concentration": true
+      }
+    ],
+    "6": [
+      {
+        "id": "aliado-extraplanar",
+        "name": "Aliado Extraplanar",
+        "school": "Invocação"
+      },
+      {
+        "id": "banquete-de-herois",
+        "name": "Banquete de Heróis",
+        "school": "Invocação"
+      },
+      {
+        "id": "barreira-de-laminas",
+        "name": "Barreira de Lâminas",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "criar-mortos-vivos",
+        "name": "Criar Mortos-Vivos",
+        "school": "Necromancia"
+      },
+      {
+        "id": "cura-completa",
+        "name": "Cura Completa",
+        "school": "Abjuração"
+      },
+      {
+        "id": "encontrar-o-caminho",
+        "name": "Encontrar o Caminho",
+        "school": "Adivinhação",
+        "concentration": true
+      },
+      {
+        "id": "molestia",
+        "name": "Moléstia",
+        "school": "Necromancia"
+      },
+      {
+        "id": "palavra-de-regresso",
+        "name": "Palavra de Regresso",
+        "school": "Invocação"
+      },
+      {
+        "id": "proibicao",
+        "name": "Proibição",
+        "school": "Abjuração",
+        "ritual": true
+      },
+      {
+        "id": "raio-solar",
+        "name": "Raio Solar",
+        "school": "Evocação",
+        "concentration": true
+      },
+      {
+        "id": "visao-da-verdade",
+        "name": "Visão da Verdade",
+        "school": "Adivinhação"
+      }
+    ],
+    "7": [
+      {
+        "id": "forma-eterea",
+        "name": "Forma Etérea",
+        "school": "Invocação"
+      },
+      {
+        "id": "invocar-celestial",
+        "name": "Invocar Celestial",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "palavra-de-poder-fortificar",
+        "name": "Palavra de Poder: Fortificar",
+        "school": "Encantamento"
+      },
+      {
+        "id": "palavra-sagrada",
+        "name": "Palavra Sagrada",
+        "school": "Evocação"
+      },
+      {
+        "id": "regeneracao",
+        "name": "Regeneração",
+        "school": "Transmutação"
+      },
+      {
+        "id": "ressurreicao",
+        "name": "Ressurreição",
+        "school": "Necromancia"
+      },
+      {
+        "id": "simbolo",
+        "name": "Símbolo",
+        "school": "Abjuração"
+      },
+      {
+        "id": "tempestade-de-fogo",
+        "name": "Tempestade de Fogo",
+        "school": "Evocação"
+      },
+      {
+        "id": "transicao-planar",
+        "name": "Transição Planar",
+        "school": "Invocação"
+      }
+    ],
+    "8": [
+      {
+        "id": "aura-sagrada",
+        "name": "Aura Sagrada",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "campo-antimagia",
+        "name": "Campo Antimagia",
+        "school": "Abjuração",
+        "concentration": true
+      },
+      {
+        "id": "controlar-o-clima",
+        "name": "Controlar o Clima",
+        "school": "Transmutação",
+        "concentration": true
+      },
+      {
+        "id": "explosao-solar",
+        "name": "Explosão Solar",
+        "school": "Evocação"
+      },
+      {
+        "id": "terremoto",
+        "name": "Terremoto",
+        "school": "Transmutação",
+        "concentration": true
+      }
+    ],
+    "9": [
+      {
+        "id": "cura-completa-em-massa",
+        "name": "Cura Completa em Massa",
+        "school": "Abjuração"
+      },
+      {
+        "id": "palavra-de-poder-salvar",
+        "name": "Palavra de Poder: Salvar",
+        "school": "Encantamento"
+      },
+      {
+        "id": "portal",
+        "name": "Portal",
+        "school": "Invocação",
+        "concentration": true
+      },
+      {
+        "id": "projecao-astral",
+        "name": "Projeção Astral",
+        "school": "Necromancia"
+      },
+      {
+        "id": "ressurreicao-verdadeira",
+        "name": "Ressurreição Verdadeira",
+        "school": "Necromancia"
+      }
+    ]
+  }
+}

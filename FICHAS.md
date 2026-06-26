@@ -26,7 +26,7 @@ No sistema 2024, uma ficha completa reúne escolhas do jogador com valores calcu
 | Classe, nível, subclasse | Cap. 3 | ✅ `data/phb/classes/`, `subclasses/` |
 | PV, dado de vida, proficiências | Cap. 3 | ✅ nas classes |
 | Características por nível | Cap. 3 | ✅ `features[]` |
-| Tabela de espaços de magia / truques | Cap. 3 | ⚠️ embutida em texto; não estruturada |
+| Tabela de espaços de magia / truques | Cap. 3 | ✅ `progression` nas 8 classes conjuradoras |
 
 ### Atributos e perícias
 
@@ -50,8 +50,8 @@ No sistema 2024, uma ficha completa reúne escolhas do jogador com valores calcu
 
 | Campo | Origem no livro | Status dos dados |
 |-------|-----------------|------------------|
-| Truques e magias conhecidas/preparadas | Cap. 3 + 7 | Magias ✅; listas por classe ⚠️ deriváveis |
-| Espaços de magia gastos | Cap. 3 | Tabela não estruturada |
+| Truques e magias conhecidas/preparadas | Cap. 3 + 7 | ✅ magias + `spells/by-class/` (8 listas) |
+| Espaços de magia gastos | Cap. 3 | ✅ `progression.spellSlots` / `pactSlots` |
 | Talentos (origem, geral, estilo de luta, dádiva épica) | Cap. 5 | ✅ `data/phb/feats/` |
 | Invocações, canalizar divindade, etc. | Cap. 3 | ✅ em `features[]` (texto) |
 
@@ -79,6 +79,7 @@ data/phb/
 ├── armor/              # armaduras
 ├── weapons/            # armas
 └── spells/             # 391 magias + índice + regras de conjuração
+    └── by-class/       # 8 listas por classe (truques + círculos 1–9)
 
 data/schema/            # JSON Schema de cada tipo de dado
 ```
@@ -103,10 +104,10 @@ Prioridade para conseguir **criar personagem nível 1** e **subir de nível** se
 
 ### Melhorias nos dados atuais (sem novo capítulo)
 
-- Listas de magia por classe (`spells/by-class/`) derivadas do campo `classes` de cada magia.
+- Listas de magia por classe (`spells/by-class/`) derivadas do campo `classes` de cada magia. ✅
 - Índice mestre do PHB (além do `index.json` só de classes).
 - Limpeza residual em `spells/rules/intro.json` e legendas de ilustração em algumas classes.
-- Tabelas de progressão estruturadas (PV por nível, espaços de magia, truques) em vez de só texto em `features`.
+- Tabelas de progressão estruturadas (PV por nível, espaços de magia, truques) em vez de só texto em `features`. ✅ conjuração; PV ainda falta
 
 ---
 
@@ -205,8 +206,8 @@ flowchart TD
 
 ### Fase 2 — Progressão e magia
 
-- [ ] Tabelas de nível estruturadas nas classes (PV, slots, truques)
-- [ ] `spells/by-class/*.json` ou índice invertido
+- [x] Tabelas de nível estruturadas nas classes (truques, preparadas, slots)
+- [x] `spells/by-class/*.json` — índice invertido por classe
 - [ ] Lógica de subida de nível (novas features, talento ASI, magias)
 - [ ] Multiclasse (Apêndice A), se necessário
 
