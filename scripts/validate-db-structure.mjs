@@ -21,6 +21,7 @@ const REQUIRED_TABLES = [
   "phb_feat_category",
   "phb_feat",
   "phb_feat_benefit",
+  "phb_spell_school",
   "phb_spell",
   "phb_hit_die",
   "phb_weapon_proficiency",
@@ -81,6 +82,9 @@ const FORBIDDEN = [
   /phb_class_option_def/i,
   /phb_class_option_value/i,
   /phb_species_trait[\s\S]{0,200}trait_table JSONB/i,
+  /phb_spell[\s\S]{0,400}components JSONB/i,
+  /phb_spell[\s\S]{0,300}source_meta JSONB/i,
+  /phb_spell[\s\S]{0,250}\bschool TEXT/i,
 ];
 
 const REQUIRED_PATTERNS = [
@@ -103,7 +107,9 @@ const REQUIRED_PATTERNS = [
   [/v_phb_class_skill_choice/i, "view v_phb_class_skill_choice"],
   [/phb_feat_benefit/i, "benefícios de talento normalizados"],
   [/phb_divine_order/i, "ordem divina do clérigo"],
-  [/v_phb_species_trait_choices/i, "view v_phb_species_trait_choices"],
+  [/v_phb_spell/i, "view v_phb_spell"],
+  [/phb_spell_school/i, "escolas de magia normalizadas"],
+  [/school_id/i, "FK escola de magia"],
   [/phb_elf_lineage/i, "linhagens élficas normalizadas"],
   [/spell_slot_pattern_id/i, "FK padrão de espelhos na classe"],
 ];
@@ -145,6 +151,6 @@ if (errors) {
 }
 
 console.log(
-  `✓ PostgreSQL v4 — ${REQUIRED_TABLES.length} tabelas catálogo, BIGINT+slug, 9 views`
+  `✓ PostgreSQL v4 — ${REQUIRED_TABLES.length} tabelas catálogo, BIGINT+slug, 10 views`
 );
 process.exit(0);

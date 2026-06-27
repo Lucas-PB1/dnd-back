@@ -80,6 +80,7 @@ TRUNCATE TABLE
   rpg.phb_background,
   rpg.phb_species,
   rpg.phb_spell,
+  rpg.phb_spell_school,
   rpg.phb_feat_benefit,
   rpg.phb_feat,
   rpg.phb_feat_category,
@@ -262,6 +263,19 @@ lines.push(
   )
 );
 
+// spell schools (antes das magias)
+lines.push(
+  batchInsert(
+    "rpg.phb_spell_school",
+    ["slug", "name", "sort_order"],
+    catalog.spellSchools.map((s) => ({
+      slug: sqlStr(s.slug),
+      name: sqlStr(s.name),
+      sort_order: String(s.sortOrder),
+    }))
+  )
+);
+
 // spells
 lines.push(
   batchInsert(
@@ -271,32 +285,42 @@ lines.push(
       "name",
       "level",
       "level_label",
-      "school",
+      "school_id",
       "casting_time",
       "range",
-      "components",
+      "has_verbal",
+      "has_somatic",
+      "has_material",
+      "material_description",
+      "components_label",
       "duration",
       "concentration",
       "ritual",
       "description",
       "higher_levels",
-      "source_meta",
+      "source_citation_id",
     ],
     catalog.spells.map((s) => ({
       slug: sqlStr(s.id),
       name: sqlStr(s.name),
       level: sqlInt(s.level),
       level_label: sqlStr(s.levelLabel),
-      school: sqlStr(s.school),
+      school_id: sqlRef("phb_spell_school", s.schoolSlug),
       casting_time: sqlStr(s.castingTime),
       range: sqlStr(s.range),
-      components: sqlJson(s.components),
+      has_verbal: sqlBool(s.hasVerbal),
+      has_somatic: sqlBool(s.hasSomatic),
+      has_material: sqlBool(s.hasMaterial),
+      material_description: sqlStr(s.materialDescription),
+      components_label: sqlStr(s.componentsLabel),
       duration: sqlStr(s.duration),
       concentration: sqlBool(s.concentration),
       ritual: sqlBool(s.ritual),
       description: sqlStr(s.description),
       higher_levels: sqlStr(s.higherLevels ?? null),
-      source_meta: sqlJson(s.source ?? null),
+      source_citation_id: s.sourceCitationSlug
+        ? sqlRef("phb_source_citation", s.sourceCitationSlug)
+        : "NULL",
     }))
   )
 );

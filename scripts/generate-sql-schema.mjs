@@ -150,22 +150,33 @@ CREATE TABLE rpg.phb_divine_order (
   description TEXT NOT NULL
 );
 
+CREATE TABLE rpg.phb_spell_school (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0
+);
+
 CREATE TABLE rpg.phb_spell (
   id BIGSERIAL PRIMARY KEY,
   slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
   level INTEGER NOT NULL CHECK (level BETWEEN 0 AND 9),
   level_label TEXT NOT NULL,
-  school TEXT NOT NULL,
+  school_id BIGINT NOT NULL REFERENCES rpg.phb_spell_school(id),
   casting_time TEXT NOT NULL,
   range TEXT NOT NULL,
-  components JSONB NOT NULL,
+  has_verbal BOOLEAN NOT NULL DEFAULT FALSE,
+  has_somatic BOOLEAN NOT NULL DEFAULT FALSE,
+  has_material BOOLEAN NOT NULL DEFAULT FALSE,
+  material_description TEXT,
+  components_label TEXT NOT NULL,
   duration TEXT NOT NULL,
   concentration BOOLEAN NOT NULL DEFAULT FALSE,
   ritual BOOLEAN NOT NULL DEFAULT FALSE,
   description TEXT NOT NULL,
   higher_levels TEXT,
-  source_meta JSONB
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
 );
 
 CREATE TABLE rpg.phb_spell_slot_pattern (
@@ -562,10 +573,40 @@ SELECT
   c.name AS class_name,
   s.level AS spell_level,
   s.slug AS spell_slug,
-  s.name AS spell_name
+  s.name AS spell_name,
+  sch.slug AS school_slug,
+  sch.name AS school_name
 FROM rpg.phb_class c
 JOIN rpg.phb_spell_class sc ON sc.class_id = c.id
-JOIN rpg.phb_spell s ON s.id = sc.spell_id;
+JOIN rpg.phb_spell s ON s.id = sc.spell_id
+JOIN rpg.phb_spell_school sch ON sch.id = s.school_id;
+
+CREATE OR REPLACE VIEW rpg.v_phb_spell AS
+SELECT
+  s.slug,
+  s.name,
+  s.level,
+  s.level_label,
+  sch.slug AS school_slug,
+  sch.name AS school_name,
+  s.casting_time,
+  s.range,
+  s.has_verbal,
+  s.has_somatic,
+  s.has_material,
+  s.material_description,
+  s.components_label,
+  s.duration,
+  s.concentration,
+  s.ritual,
+  s.description,
+  s.higher_levels,
+  sc.chapter AS source_chapter,
+  e.slug AS edition_slug
+FROM rpg.phb_spell s
+JOIN rpg.phb_spell_school sch ON sch.id = s.school_id
+LEFT JOIN rpg.phb_source_citation sc ON sc.id = s.source_citation_id
+LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id;
 
 CREATE OR REPLACE VIEW rpg.v_phb_armor AS
 SELECT
@@ -765,6 +806,8 @@ CREATE INDEX idx_phb_elf_lineage_spells ON rpg.phb_elf_lineage(spell_level3_id, 
 CREATE INDEX idx_phb_feat_category ON rpg.phb_feat(category_id);
 CREATE INDEX idx_phb_feat_source ON rpg.phb_feat(source_citation_id);
 CREATE INDEX idx_phb_feat_benefit_feat ON rpg.phb_feat_benefit(feat_id);
+CREATE INDEX idx_phb_spell_school ON rpg.phb_spell(school_id);
+CREATE INDEX idx_phb_spell_source ON rpg.phb_spell(source_citation_id);
 CREATE INDEX idx_phb_spell_slug ON rpg.phb_spell(slug);
 CREATE INDEX idx_phb_class_slug ON rpg.phb_class(slug);
 CREATE INDEX idx_phb_item_slug ON rpg.phb_item(slug);

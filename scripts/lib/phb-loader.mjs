@@ -10,6 +10,7 @@ import {
 import { FEAT_CATEGORIES } from "./feat-categories.mjs";
 import { CLASS_SPELL_SLOT_PATTERN } from "./spell-slot-patterns.mjs";
 import { collectSourceCitations, sourceCitationSlug } from "./source-citations.mjs";
+import { SPELL_SCHOOL_SLUG_BY_NAME, SPELL_SCHOOLS } from "./spell-schools.mjs";
 
 const ABILITY_PT = {
   Força: "forca",
@@ -74,7 +75,27 @@ export function loadPhbCatalog(root) {
   }
 
   const spellIndex = readJson(path.join(phb, "spells/index.json"));
-  const spells = spellIndex.spells.map(({ file }) => readJson(path.join(phb, "spells", file)));
+  const spellsRaw = spellIndex.spells.map(({ file }) => readJson(path.join(phb, "spells", file)));
+  const spells = spellsRaw.map((s) => ({
+    id: s.id,
+    name: s.name,
+    level: s.level,
+    levelLabel: s.levelLabel,
+    schoolSlug: SPELL_SCHOOL_SLUG_BY_NAME[s.school],
+    castingTime: s.castingTime,
+    range: s.range,
+    hasVerbal: s.components.verbal,
+    hasSomatic: s.components.somatic,
+    hasMaterial: s.components.material,
+    materialDescription: s.components.materialDescription ?? null,
+    componentsLabel: s.components.text,
+    duration: s.duration,
+    concentration: s.concentration,
+    ritual: s.ritual,
+    description: s.description,
+    higherLevels: s.higherLevels ?? null,
+    sourceCitationSlug: sourceCitationSlug(s.source),
+  }));
 
   const index = readJson(path.join(phb, "index.json"));
   const classesRaw = index.classes.map(({ file }) => readJson(path.join(phb, file)));
@@ -361,7 +382,7 @@ export function loadPhbCatalog(root) {
     };
   });
 
-  const sourceCitations = collectSourceCitations(backgrounds, classesRaw, featsRaw);
+  const sourceCitations = collectSourceCitations(backgrounds, classesRaw, featsRaw, spellsRaw);
 
   const classSavingThrows = [];
   for (const cls of classes) {
@@ -378,6 +399,7 @@ export function loadPhbCatalog(root) {
     feats,
     featBenefits,
     featCategories: FEAT_CATEGORIES,
+    spellSchools: SPELL_SCHOOLS,
     spells,
     classes,
     classPrimaryAbilities: classCatalog.classPrimaryAbilities,
