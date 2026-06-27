@@ -1,0 +1,168 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-tiefling-l13",
+  "name": "tiefling L13",
+  "level": 13,
+  "speciesId": "tiefling",
+  "backgroundId": "scribe",
+  "classId": "bard",
+  "alignmentId": "true-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "carisma": 15,
+    "destreza": 15,
+    "constituicao": 13,
+    "inteligencia": 13,
+    "sabedoria": 11,
+    "forca": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "investigation",
+      "source": "background"
+    },
+    {
+      "skillId": "perception",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "class"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "class"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "class"
+    },
+    {
+      "skillId": "arcana",
+      "source": "feat"
+    },
+    {
+      "skillId": "athletics",
+      "source": "feat"
+    },
+    {
+      "skillId": "performance",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "destreza",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    }
+  ],
+  "hp": {
+    "current": 81,
+    "max": 81,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 13,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "infernalLegacyId": "chthonic",
+    "infernalCastingAbilityId": "sabedoria"
+  },
+  "subclassId": "lore",
+  "classChoices": {
+    "skillIds": [
+      "perception",
+      "religion",
+      "animal-handling"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "fagulha-estelar",
+        "golpe-certeiro",
+        "ilusao-menor"
+      ],
+      "infernal-legacy": [
+        "toque-necrotico"
+      ],
+      "tiefling-presence": [
+        "taumaturgia"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "amizade-animal",
+        "comando",
+        "compreender-idiomas",
+        "curar-ferimentos",
+        "detectar-magia",
+        "disfarcar-se",
+        "enfeiticar-pessoa",
+        "escrita-ilusoria",
+        "falar-com-animais",
+        "fogo-das-fadas",
+        "gargalhada-nefasta-de-tasha",
+        "heroismo",
+        "identificar",
+        "imagem-silenciosa",
+        "leque-cromatico",
+        "onda-trovejante",
+        "palavra-curativa"
+      ],
+      "infernal-legacy": [
+        "vitalidade-vazia",
+        "raio-do-enfraquecimento"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 2,
+      "6": 1,
+      "7": 1
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 0
+    }
+  },
+  "passivePerception": 15
+}

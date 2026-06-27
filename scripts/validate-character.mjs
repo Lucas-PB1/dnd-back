@@ -15,8 +15,11 @@ import {
   expectedSpellSlots,
   expectedSubclassPrepared,
   isSpellcaster,
-  lineageCantrips,
-  lineagePreparedSpells,
+  speciesSpellEntries,
+  validateSpeciesChoices,
+  validateSpeciesResources,
+  validateSingleClass,
+  validateSpeciesSpellcasting,
   loadBackground,
   loadClass,
   validateAbilityScores,
@@ -109,14 +112,20 @@ function fail(msg) {
 }
 
 function validateSpellcastingRules(doc) {
-  const { classId, level, subclassId, speciesChoices, classChoices, spellcasting, feats } = doc;
+  const { classId, level, subclassId, speciesChoices, speciesId, classChoices, spellcasting, feats } = doc;
 
+  const speciesSpells = speciesSpellEntries(speciesId, speciesChoices ?? {}, level);
   const caster = isSpellcaster(classId, level);
   const hasSpellcastingData =
     spellcasting &&
     (Object.keys(spellcasting.cantrips ?? {}).length > 0 ||
       Object.keys(spellcasting.prepared ?? {}).length > 0 ||
       Object.keys(spellcasting.slotsMax ?? {}).length > 0);
+
+  if (speciesSpells.length > 0 && !spellcasting) {
+    fail(`${doc.id}: espécie com magias exige spellcasting`);
+    return;
+  }
 
   if (!caster && !hasSpellcastingData) return;
 
@@ -140,11 +149,9 @@ function validateSpellcastingRules(doc) {
 
   const miFeat = feats.find((f) => f.featId === "magic-initiate");
   const miCantrips = miFeat?.magicInitiate?.cantripIds ?? [];
-  const lineageCant = speciesChoices?.lineageId ? lineageCantrips(speciesChoices.lineageId) : [];
 
   const classCantrips = spellcasting.cantrips.class ?? [];
   const miCantripsListed = spellcasting.cantrips["magic-initiate"] ?? [];
-  const lineageListed = spellcasting.cantrips["elf-lineage"] ?? [];
 
   if (classCantrips.length !== expectedCantrips) {
     fail(
@@ -163,13 +170,9 @@ function validateSpellcastingRules(doc) {
     }
   }
 
-  if (speciesChoices?.lineageId) {
-    if (lineageListed.length !== lineageCant.length) {
-      fail(`${doc.id}: truques de linhagem ${lineageListed.length}, esperado ${lineageCant.length}`);
-    }
-    for (const id of lineageCant) {
-      if (!lineageListed.includes(id)) fail(`${doc.id}: truque de linhagem ${id} ausente`);
-    }
+  const speciesSpellCheck = validateSpeciesSpellcasting(doc);
+  if (!speciesSpellCheck.ok) {
+    fail(`${doc.id}: magias de espécie — ${speciesSpellCheck.reason}`);
   }
 
   const expectedPrepared = expectedPreparedCount(classId, level);
@@ -194,19 +197,6 @@ function validateSpellcastingRules(doc) {
       for (const id of domain.spellIds) {
         if (!domainListed.includes(id)) fail(`${doc.id}: magia de subclasse ${id} ausente`);
       }
-    }
-  }
-
-  if (speciesChoices?.lineageId) {
-    const expectedLineage = lineagePreparedSpells(speciesChoices.lineageId, level);
-    const lineagePrep = spellcasting.prepared["elf-lineage"] ?? [];
-    if (lineagePrep.length !== expectedLineage.length) {
-      fail(
-        `${doc.id}: magias de linhagem ${lineagePrep.length}, esperado ${expectedLineage.length}`
-      );
-    }
-    for (const id of expectedLineage) {
-      if (!lineagePrep.includes(id)) fail(`${doc.id}: magia de linhagem ${id} ausente`);
     }
   }
 
@@ -335,6 +325,21 @@ for (const file of files) {
   const resourceCheck = validateClassResources(doc);
   if (!resourceCheck.ok) {
     fail(`${label}: recursos — ${resourceCheck.reason}`);
+  }
+
+  const speciesChoiceCheck = validateSpeciesChoices(doc);
+  if (!speciesChoiceCheck.ok) {
+    fail(`${label}: espécie — ${speciesChoiceCheck.reason}`);
+  }
+
+  const speciesResourceCheck = validateSpeciesResources(doc);
+  if (!speciesResourceCheck.ok) {
+    fail(`${label}: recursos de espécie — ${speciesResourceCheck.reason}`);
+  }
+
+  const singleClassCheck = validateSingleClass(doc);
+  if (!singleClassCheck.ok) {
+    fail(`${label}: classe — ${singleClassCheck.reason}`);
   }
 
   const expectedHp = expectedMaxHpForCharacter(doc);

@@ -1,0 +1,135 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-dragonborn-l16",
+  "name": "dragonborn L16",
+  "level": 16,
+  "speciesId": "dragonborn",
+  "backgroundId": "guide",
+  "classId": "barbarian",
+  "alignmentId": "lawful-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "forca": 15,
+    "constituicao": 15,
+    "destreza": 15,
+    "sabedoria": 12,
+    "carisma": 10,
+    "inteligencia": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "stealth",
+      "source": "background"
+    },
+    {
+      "skillId": "survival",
+      "source": "background"
+    },
+    {
+      "skillId": "athletics",
+      "source": "class"
+    },
+    {
+      "skillId": "nature",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "constituicao"
+  ],
+  "feats": [
+    {
+      "featId": "magic-initiate",
+      "source": "background",
+      "magicInitiate": {
+        "spellListClassId": "druid",
+        "cantripIds": [
+          "acudir-os-moribundos",
+          "arte-druidica"
+        ],
+        "preparedSpellId": "amizade-animal",
+        "castingAbilityId": "sabedoria"
+      }
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "greataxe",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 149,
+    "max": 149,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 10,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0,
+    "otherBonus": 2
+  },
+  "resources": {
+    "rage": {
+      "max": 5,
+      "remaining": 5
+    },
+    "breathWeapon": {
+      "max": 5,
+      "remaining": 5
+    },
+    "dragonFlight": {
+      "max": 1,
+      "remaining": 1
+    }
+  },
+  "speciesChoices": {
+    "dragonAncestryId": "copper"
+  },
+  "subclassId": "world-tree",
+  "classChoices": {
+    "skillIds": [
+      "athletics",
+      "nature"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "magic-initiate": [
+        "acudir-os-moribundos",
+        "arte-druidica"
+      ]
+    },
+    "prepared": {
+      "magic-initiate": [
+        "amizade-animal"
+      ]
+    },
+    "slotsMax": {},
+    "slotsUsed": {}
+  },
+  "weaponMasteryWeaponIds": [
+    "greataxe",
+    "handaxe",
+    "javelin",
+    "dagger"
+  ],
+  "passivePerception": 11
+}

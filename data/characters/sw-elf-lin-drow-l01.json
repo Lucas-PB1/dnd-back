@@ -1,0 +1,124 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sw-elf-lin-drow-l01",
+  "name": "elf-lin drow L1",
+  "level": 1,
+  "speciesId": "elf",
+  "backgroundId": "hermit",
+  "classId": "warlock",
+  "alignmentId": "chaotic-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "carisma": 16,
+    "constituicao": 15,
+    "destreza": 13,
+    "inteligencia": 12,
+    "sabedoria": 11,
+    "forca": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "medicine",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "background"
+    },
+    {
+      "skillId": "deception",
+      "source": "class"
+    },
+    {
+      "skillId": "investigation",
+      "source": "class"
+    },
+    {
+      "skillId": "survival",
+      "source": "species"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "sabedoria",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "healer",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "sickle",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 10,
+    "max": 10,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 12,
+    "base": 11,
+    "dexBonus": 1,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "lineageId": "drow",
+    "keenSensesSkillId": "survival"
+  },
+  "classChoices": {
+    "skillIds": [
+      "deception",
+      "investigation"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "badalar-funebre"
+      ],
+      "elf-lineage": [
+        "luzes-dancantes"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "armadura-de-agathys",
+        "bracos-de-hadar"
+      ]
+    },
+    "slotsMax": {
+      "1": 1
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "passivePerception": 10
+}

@@ -1,0 +1,141 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-dwarf-l02",
+  "name": "dwarf L2",
+  "level": 2,
+  "speciesId": "dwarf",
+  "backgroundId": "acolyte",
+  "classId": "ranger",
+  "alignmentId": "lawful-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "destreza": 15,
+    "sabedoria": 15,
+    "constituicao": 13,
+    "forca": 12,
+    "inteligencia": 12,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "insight",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "background"
+    },
+    {
+      "skillId": "stealth",
+      "source": "class"
+    },
+    {
+      "skillId": "athletics",
+      "source": "class"
+    },
+    {
+      "skillId": "nature",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "destreza"
+  ],
+  "feats": [
+    {
+      "featId": "magic-initiate",
+      "source": "background",
+      "magicInitiate": {
+        "spellListClassId": "cleric",
+        "cantripIds": [
+          "acudir-os-moribundos",
+          "badalar-funebre"
+        ],
+        "preparedSpellId": "bencao",
+        "castingAbilityId": "sabedoria"
+      }
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longbow",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 20,
+    "max": 20,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 1
+  },
+  "resources": {
+    "stonecunning": {
+      "max": 2,
+      "remaining": 2
+    }
+  },
+  "classChoices": {
+    "skillIds": [
+      "stealth",
+      "athletics",
+      "nature"
+    ],
+    "fightingStyleId": "defense"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "magic-initiate": [
+        "acudir-os-moribundos",
+        "badalar-funebre"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "alarme",
+        "amizade-animal",
+        "bom-fruto"
+      ],
+      "magic-initiate": [
+        "bencao"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "weaponMasteryWeaponIds": [
+    "longbow",
+    "shortsword"
+  ],
+  "passivePerception": 12
+}

@@ -1,0 +1,162 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-elf-l18",
+  "name": "elf L18",
+  "level": 18,
+  "speciesId": "elf",
+  "backgroundId": "farmer",
+  "classId": "ranger",
+  "alignmentId": "lawful-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "destreza": 15,
+    "sabedoria": 14,
+    "constituicao": 14,
+    "forca": 14,
+    "inteligencia": 10,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "animal-handling",
+      "source": "background"
+    },
+    {
+      "skillId": "nature",
+      "source": "background"
+    },
+    {
+      "skillId": "stealth",
+      "source": "class"
+    },
+    {
+      "skillId": "athletics",
+      "source": "class"
+    },
+    {
+      "skillId": "insight",
+      "source": "species"
+    },
+    {
+      "skillId": "investigation",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "destreza"
+  ],
+  "feats": [
+    {
+      "featId": "tough",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longbow",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 184,
+    "max": 184,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 13,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "lineageId": "high-elf",
+    "keenSensesSkillId": "insight"
+  },
+  "subclassId": "fey-wanderer",
+  "classChoices": {
+    "skillIds": [
+      "stealth",
+      "athletics",
+      "nature"
+    ],
+    "fightingStyleId": "two-weapon-fighting"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "elf-lineage": [
+        "prestidigitacao-arcana"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "alarme",
+        "amizade-animal",
+        "bom-fruto",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-veneno-e-doenca",
+        "emaranhar",
+        "falar-com-animais",
+        "golpe-constritor",
+        "marca-do-predador",
+        "nevoa-obscurecente",
+        "passos-largos",
+        "salto",
+        "saraivada-de-espinhos"
+      ],
+      "elf-lineage": [
+        "detectar-magia",
+        "passo-nebuloso"
+      ],
+      "fey-wanderer-spells": [
+        "enfeiticar-pessoa",
+        "passo-nebuloso",
+        "convocar-feerico",
+        "porta-dimensional",
+        "despistar"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 1
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    }
+  },
+  "weaponMasteryWeaponIds": [
+    "longbow",
+    "shortsword"
+  ],
+  "passivePerception": 12
+}

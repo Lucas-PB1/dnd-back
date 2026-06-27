@@ -1,0 +1,140 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-orc-l16",
+  "name": "orc L16",
+  "level": 16,
+  "speciesId": "orc",
+  "backgroundId": "sage",
+  "classId": "rogue",
+  "alignmentId": "chaotic-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "destreza": 15,
+    "inteligencia": 15,
+    "constituicao": 14,
+    "carisma": 12,
+    "sabedoria": 11,
+    "forca": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "arcana",
+      "source": "background"
+    },
+    {
+      "skillId": "history",
+      "source": "background"
+    },
+    {
+      "skillId": "investigation",
+      "source": "class"
+    },
+    {
+      "skillId": "stealth",
+      "source": "class"
+    },
+    {
+      "skillId": "deception",
+      "source": "class"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "destreza",
+    "inteligencia"
+  ],
+  "feats": [
+    {
+      "featId": "magic-initiate",
+      "source": "background",
+      "magicInitiate": {
+        "spellListClassId": "wizard",
+        "cantripIds": [
+          "amigos",
+          "badalar-funebre"
+        ],
+        "preparedSpellId": "alarme",
+        "castingAbilityId": "inteligencia"
+      }
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "shortsword",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 115,
+    "max": 115,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 13,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "adrenalineSurge": {
+      "max": 5,
+      "remaining": 5
+    },
+    "relentlessEndurance": {
+      "max": 1,
+      "remaining": 1
+    }
+  },
+  "subclassId": "soulknife",
+  "classChoices": {
+    "skillIds": [
+      "investigation",
+      "stealth",
+      "deception"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "magic-initiate": [
+        "amigos",
+        "badalar-funebre"
+      ]
+    },
+    "prepared": {
+      "magic-initiate": [
+        "alarme"
+      ]
+    },
+    "slotsMax": {},
+    "slotsUsed": {}
+  },
+  "weaponMasteryWeaponIds": [
+    "rapier",
+    "shortbow"
+  ],
+  "passivePerception": 10
+}

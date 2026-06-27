@@ -1,0 +1,135 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sw-tf-leg-infernal-l01",
+  "name": "tf-leg infernal L1",
+  "level": 1,
+  "speciesId": "tiefling",
+  "backgroundId": "sailor",
+  "classId": "paladin",
+  "alignmentId": "chaotic-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "forca": 16,
+    "carisma": 14,
+    "constituicao": 13,
+    "sabedoria": 13,
+    "destreza": 11,
+    "inteligencia": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "acrobatics",
+      "source": "background"
+    },
+    {
+      "skillId": "perception",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "class"
+    },
+    {
+      "skillId": "intimidation",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "sabedoria",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "tavern-brawler",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "chain-mail",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longsword",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    }
+  ],
+  "hp": {
+    "current": 11,
+    "max": 11,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 19,
+    "base": 16,
+    "dexBonus": 0,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 1
+  },
+  "resources": {
+    "channelDivinity": {
+      "max": 0,
+      "remaining": 0
+    }
+  },
+  "speciesChoices": {
+    "infernalLegacyId": "infernal",
+    "infernalCastingAbilityId": "carisma"
+  },
+  "classChoices": {
+    "skillIds": [
+      "religion",
+      "intimidation"
+    ],
+    "fightingStyleId": "defense"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "infernal-legacy": [
+        "raio-de-fogo"
+      ],
+      "tiefling-presence": [
+        "taumaturgia"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "bencao",
+        "comando"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "weaponMasteryWeaponIds": [
+    "longsword",
+    "javelin"
+  ],
+  "passivePerception": 13
+}

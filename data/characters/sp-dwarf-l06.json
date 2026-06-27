@@ -1,0 +1,110 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-dwarf-l06",
+  "name": "dwarf L6",
+  "level": 6,
+  "speciesId": "dwarf",
+  "backgroundId": "charlatan",
+  "classId": "monk",
+  "alignmentId": "neutral-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "destreza": 16,
+    "sabedoria": 14,
+    "constituicao": 14,
+    "forca": 12,
+    "inteligencia": 10,
+    "carisma": 9
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "deception",
+      "source": "background"
+    },
+    {
+      "skillId": "sleight-of-hand",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "class"
+    },
+    {
+      "skillId": "athletics",
+      "source": "class"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "feat"
+    },
+    {
+      "skillId": "arcana",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "destreza"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "shortsword",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 51,
+    "max": 51,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 15,
+    "base": 10,
+    "dexBonus": 3,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0,
+    "otherBonus": 2
+  },
+  "resources": {
+    "focusPoints": {
+      "max": 6,
+      "remaining": 6
+    },
+    "stonecunning": {
+      "max": 3,
+      "remaining": 3
+    }
+  },
+  "subclassId": "elements",
+  "classChoices": {
+    "skillIds": [
+      "religion",
+      "athletics"
+    ]
+  },
+  "passivePerception": 12
+}

@@ -18,6 +18,42 @@ export const ELF_LINEAGE_SPELLS = {
   "wood-elf": { 1: ["arte-druidica"], 3: ["passos-largos"], 5: ["passo-sem-rastro"] },
 };
 
+/** Legado ínfero do tiferino — truque (nível 1) e magias preparadas (níveis 3 e 5). */
+export const TIEFLING_LEGACY_SPELLS = {
+  abyssal: { 1: ["rajada-de-veneno"], 3: ["raio-nauseante"], 5: ["paralisar-pessoa"] },
+  chthonic: { 1: ["toque-necrotico"], 3: ["vitalidade-vazia"], 5: ["raio-do-enfraquecimento"] },
+  infernal: { 1: ["raio-de-fogo"], 3: ["repreensao-diabolica"], 5: ["escuridao"] },
+};
+
+/** Linhagem gnômica — truques e magias sempre preparadas. */
+export const GNOME_LINEAGE_SPELLS = {
+  "rock-gnome": { cantrips: ["prestidigitacao-arcana", "reparar"], prepared: [] },
+  "forest-gnome": { cantrips: ["ilusao-menor"], prepared: ["falar-com-animais"] },
+};
+
+export const DRAGON_ANCESTRIES = [
+  "blue",
+  "black",
+  "white",
+  "gold",
+  "bronze",
+  "silver",
+  "copper",
+  "green",
+  "brass",
+  "red",
+];
+
+export const GIANT_ANCESTRIES = ["ice", "fire", "stone", "cloud", "hill", "storm"];
+
+export const TIEFLING_LEGACIES = ["abyssal", "chthonic", "infernal"];
+
+export const GNOME_LINEAGES = ["rock-gnome", "forest-gnome"];
+
+export const AASIMAR_REVELATIONS = ["celestial-wings", "necrotic-shroud", "radiant-consumption"];
+
+const CASTING_ABILITIES = ["inteligencia", "sabedoria", "carisma"];
+
 export { abilityMod, expectedMaxHp, expectedMaxHpForCharacter, speciesHpBonus, toughFeatHpBonus };
 
 const ADVANCEMENT = JSON.parse(
@@ -96,6 +132,226 @@ export function lineagePreparedSpells(lineageId, level) {
 
 export function lineageCantrips(lineageId) {
   return ELF_LINEAGE_SPELLS[lineageId]?.[1] ?? [];
+}
+
+function legacyPreparedSpells(table, level) {
+  if (!table) return [];
+  const spells = [];
+  if (level >= 3 && table[3]) spells.push(...table[3]);
+  if (level >= 5 && table[5]) spells.push(...table[5]);
+  return spells;
+}
+
+function legacyCantrips(table) {
+  return table?.[1] ?? [];
+}
+
+/** Entradas de conjuração de espécie para spellcasting.cantrips / .prepared. */
+export function speciesSpellEntries(speciesId, speciesChoices = {}, level = 1) {
+  const entries = [];
+
+  if (speciesId === "elf" && speciesChoices.lineageId) {
+    entries.push({
+      sourceKey: "elf-lineage",
+      cantrips: lineageCantrips(speciesChoices.lineageId),
+      prepared: lineagePreparedSpells(speciesChoices.lineageId, level),
+    });
+  }
+
+  if (speciesId === "tiefling" && speciesChoices.infernalLegacyId) {
+    const table = TIEFLING_LEGACY_SPELLS[speciesChoices.infernalLegacyId];
+    entries.push({
+      sourceKey: "infernal-legacy",
+      cantrips: legacyCantrips(table),
+      prepared: legacyPreparedSpells(table, level),
+    });
+    entries.push({
+      sourceKey: "tiefling-presence",
+      cantrips: ["taumaturgia"],
+      prepared: [],
+    });
+  }
+
+  if (speciesId === "gnome" && speciesChoices.gnomeLineageId) {
+    const table = GNOME_LINEAGE_SPELLS[speciesChoices.gnomeLineageId];
+    if (table) {
+      entries.push({
+        sourceKey: "gnome-lineage",
+        cantrips: table.cantrips ?? [],
+        prepared: table.prepared ?? [],
+      });
+    }
+  }
+
+  if (speciesId === "aasimar") {
+    entries.push({
+      sourceKey: "aasimar-light",
+      cantrips: ["luz"],
+      prepared: [],
+    });
+  }
+
+  return entries;
+}
+
+export function allSpeciesCantripIds(speciesId, speciesChoices = {}, level = 1) {
+  return speciesSpellEntries(speciesId, speciesChoices, level).flatMap((e) => e.cantrips);
+}
+
+/** Recursos de traços de espécie esperados (max por descanso). */
+export function expectedSpeciesResources(doc) {
+  const { speciesId, level } = doc;
+  const pb = expectedProficiencyBonus(level);
+  const out = {};
+
+  if (speciesId === "dragonborn") {
+    out.breathWeapon = { max: pb };
+    if (level >= 5) out.dragonFlight = { max: 1 };
+  }
+  if (speciesId === "goliath") {
+    out.giantAncestry = { max: pb };
+    if (level >= 5) out.largeForm = { max: 1 };
+  }
+  if (speciesId === "orc") {
+    out.adrenalineSurge = { max: pb };
+    out.relentlessEndurance = { max: 1 };
+  }
+  if (speciesId === "aasimar") {
+    out.healingHands = { max: 1 };
+    if (level >= 3) out.celestialRevelation = { max: 1 };
+  }
+  if (speciesId === "dwarf") {
+    out.stonecunning = { max: pb };
+  }
+
+  return out;
+}
+
+export function validateSpeciesChoices(doc) {
+  const { speciesId, speciesChoices = {}, level } = doc;
+
+  if (speciesId === "elf") {
+    if (!speciesChoices.lineageId) {
+      return { ok: false, reason: "elfo exige speciesChoices.lineageId" };
+    }
+    if (!speciesChoices.keenSensesSkillId) {
+      return { ok: false, reason: "elfo exige speciesChoices.keenSensesSkillId" };
+    }
+  }
+
+  if (speciesId === "tiefling") {
+    if (!speciesChoices.infernalLegacyId) {
+      return { ok: false, reason: "tiferino exige speciesChoices.infernalLegacyId" };
+    }
+    if (!speciesChoices.infernalCastingAbilityId) {
+      return { ok: false, reason: "tiferino exige speciesChoices.infernalCastingAbilityId" };
+    }
+    if (!CASTING_ABILITIES.includes(speciesChoices.infernalCastingAbilityId)) {
+      return { ok: false, reason: "infernalCastingAbilityId inválido" };
+    }
+  }
+
+  if (speciesId === "gnome") {
+    if (!speciesChoices.gnomeLineageId) {
+      return { ok: false, reason: "gnomo exige speciesChoices.gnomeLineageId" };
+    }
+    if (!speciesChoices.gnomeCastingAbilityId) {
+      return { ok: false, reason: "gnomo exige speciesChoices.gnomeCastingAbilityId" };
+    }
+  }
+
+  if (speciesId === "dragonborn" && !speciesChoices.dragonAncestryId) {
+    return { ok: false, reason: "draconato exige speciesChoices.dragonAncestryId" };
+  }
+
+  if (speciesId === "goliath" && !speciesChoices.giantAncestryId) {
+    return { ok: false, reason: "golias exige speciesChoices.giantAncestryId" };
+  }
+
+  if (speciesId === "aasimar" && level >= 3 && !speciesChoices.aasimarRevelationId) {
+    return { ok: false, reason: "aasimar nível 3+ exige speciesChoices.aasimarRevelationId" };
+  }
+
+  return { ok: true };
+}
+
+/** Fichas usam uma única classe; multiclasse não é modelado. */
+export function validateSingleClass(doc) {
+  if (Array.isArray(doc.classLevels) && doc.classLevels.length > 0) {
+    return { ok: false, reason: "multiclasse (classLevels) não é suportado" };
+  }
+  if (!doc.classId) {
+    return { ok: false, reason: "classId ausente" };
+  }
+  if (doc.level < 1 || doc.level > 20) {
+    return { ok: false, reason: `nível ${doc.level} inválido para classe única` };
+  }
+  return { ok: true };
+}
+
+export function validateSpeciesSpellcasting(doc) {
+  const { speciesId, speciesChoices, level, spellcasting } = doc;
+  const entries = speciesSpellEntries(speciesId, speciesChoices ?? {}, level);
+
+  for (const { sourceKey, cantrips, prepared } of entries) {
+    const listedCantrips = spellcasting?.cantrips?.[sourceKey] ?? [];
+    if (listedCantrips.length !== cantrips.length) {
+      return {
+        ok: false,
+        reason: `truques de ${sourceKey}: ${listedCantrips.length}, esperado ${cantrips.length}`,
+      };
+    }
+    for (const id of cantrips) {
+      if (!listedCantrips.includes(id)) {
+        return { ok: false, reason: `truque de ${sourceKey} ausente: ${id}` };
+      }
+    }
+
+    const listedPrepared = spellcasting?.prepared?.[sourceKey] ?? [];
+    if (listedPrepared.length !== prepared.length) {
+      return {
+        ok: false,
+        reason: `magias de ${sourceKey}: ${listedPrepared.length}, esperado ${prepared.length}`,
+      };
+    }
+    for (const id of prepared) {
+      if (!listedPrepared.includes(id)) {
+        return { ok: false, reason: `magia de ${sourceKey} ausente: ${id}` };
+      }
+    }
+  }
+
+  return { ok: true };
+}
+
+export function validateSpeciesResources(doc) {
+  const expected = expectedSpeciesResources(doc);
+  const { resources = {} } = doc;
+
+  for (const [key, { max }] of Object.entries(expected)) {
+    if (resources[key]?.max !== max) {
+      return { ok: false, reason: `${key} max=${resources[key]?.max}, esperado ${max}` };
+    }
+  }
+
+  const speciesKeys = new Set(Object.keys(expected));
+  for (const key of [
+    "breathWeapon",
+    "dragonFlight",
+    "giantAncestry",
+    "largeForm",
+    "adrenalineSurge",
+    "relentlessEndurance",
+    "healingHands",
+    "celestialRevelation",
+    "stonecunning",
+  ]) {
+    if (resources[key] != null && !speciesKeys.has(key)) {
+      return { ok: false, reason: `recurso de espécie ${key} inesperado para ${doc.speciesId}` };
+    }
+  }
+
+  return { ok: true };
 }
 
 export function loadBackground(id) {

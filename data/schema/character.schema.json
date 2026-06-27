@@ -108,7 +108,7 @@
     },
     "speciesChoices": {
       "type": "object",
-      "description": "Escolhas dentro da espécie (linhagem, perícia de Sentidos Aguçados, etc.).",
+      "description": "Escolhas dentro da espécie (linhagem, ancestralidade, perícia de Sentidos Aguçados, etc.).",
       "properties": {
         "lineageId": {
           "type": "string",
@@ -117,6 +117,34 @@
         "keenSensesSkillId": {
           "type": "string",
           "enum": ["insight", "perception", "survival"]
+        },
+        "infernalLegacyId": {
+          "type": "string",
+          "enum": ["abyssal", "chthonic", "infernal"]
+        },
+        "infernalCastingAbilityId": {
+          "type": "string",
+          "enum": ["inteligencia", "sabedoria", "carisma"]
+        },
+        "gnomeLineageId": {
+          "type": "string",
+          "enum": ["rock-gnome", "forest-gnome"]
+        },
+        "gnomeCastingAbilityId": {
+          "type": "string",
+          "enum": ["inteligencia", "sabedoria", "carisma"]
+        },
+        "dragonAncestryId": {
+          "type": "string",
+          "enum": ["blue", "black", "white", "gold", "bronze", "silver", "copper", "green", "brass", "red"]
+        },
+        "giantAncestryId": {
+          "type": "string",
+          "enum": ["ice", "fire", "stone", "cloud", "hill", "storm"]
+        },
+        "aasimarRevelationId": {
+          "type": "string",
+          "enum": ["celestial-wings", "necrotic-shroud", "radiant-consumption"]
         }
       },
       "additionalProperties": false
@@ -313,9 +341,27 @@
             "remaining": { "type": "integer", "minimum": 0 }
           },
           "additionalProperties": false
-        }
+        },
+        "breathWeapon": { "$ref": "#/$defs/resourcePool" },
+        "dragonFlight": { "$ref": "#/$defs/resourcePool" },
+        "giantAncestry": { "$ref": "#/$defs/resourcePool" },
+        "largeForm": { "$ref": "#/$defs/resourcePool" },
+        "adrenalineSurge": { "$ref": "#/$defs/resourcePool" },
+        "relentlessEndurance": { "$ref": "#/$defs/resourcePool" },
+        "healingHands": { "$ref": "#/$defs/resourcePool" },
+        "celestialRevelation": { "$ref": "#/$defs/resourcePool" },
+        "stonecunning": { "$ref": "#/$defs/resourcePool" }
       },
       "additionalProperties": true
+    },
+    "resourcePool": {
+      "type": "object",
+      "required": ["max", "remaining"],
+      "properties": {
+        "max": { "type": "integer", "minimum": 0 },
+        "remaining": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
     }
   }
 }

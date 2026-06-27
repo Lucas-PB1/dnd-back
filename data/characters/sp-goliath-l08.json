@@ -1,0 +1,175 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-goliath-l08",
+  "name": "goliath L8",
+  "level": 8,
+  "speciesId": "goliath",
+  "backgroundId": "sage",
+  "classId": "druid",
+  "alignmentId": "true-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "sabedoria": 16,
+    "constituicao": 15,
+    "destreza": 13,
+    "inteligencia": 13,
+    "forca": 10,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "arcana",
+      "source": "background"
+    },
+    {
+      "skillId": "history",
+      "source": "background"
+    },
+    {
+      "skillId": "nature",
+      "source": "class"
+    },
+    {
+      "skillId": "survival",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "inteligencia",
+    "sabedoria"
+  ],
+  "feats": [
+    {
+      "featId": "magic-initiate",
+      "source": "background",
+      "magicInitiate": {
+        "spellListClassId": "wizard",
+        "cantripIds": [
+          "amigos",
+          "badalar-funebre"
+        ],
+        "preparedSpellId": "alarme",
+        "castingAbilityId": "inteligencia"
+      }
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    },
+    {
+      "itemId": "sickle",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 59,
+    "max": 59,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 11,
+    "dexBonus": 1,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "giantAncestry": {
+      "max": 3,
+      "remaining": 3
+    },
+    "largeForm": {
+      "max": 1,
+      "remaining": 1
+    }
+  },
+  "speciesChoices": {
+    "giantAncestryId": "hill"
+  },
+  "subclassId": "land",
+  "classChoices": {
+    "skillIds": [
+      "nature",
+      "survival"
+    ],
+    "landTerrainId": "arid"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "acudir-os-moribundos",
+        "arte-druidica",
+        "bordao-mistico"
+      ],
+      "magic-initiate": [
+        "amigos",
+        "badalar-funebre"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "amizade-animal",
+        "bom-fruto",
+        "criar-ou-destruir-agua",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-veneno-e-doenca",
+        "emaranhar",
+        "enfeiticar-pessoa",
+        "faca-de-gelo",
+        "falar-com-animais",
+        "fogo-das-fadas",
+        "nevoa-obscurecente"
+      ],
+      "magic-initiate": [
+        "alarme"
+      ],
+      "land-circle": [
+        "maos-flamejantes",
+        "turvar",
+        "raio-de-fogo",
+        "bola-de-fogo",
+        "muralha-de-fogo",
+        "malogro",
+        "muralha-de-pedra"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3,
+      "3": 3,
+      "4": 2
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    }
+  },
+  "passivePerception": 13
+}

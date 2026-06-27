@@ -53,7 +53,16 @@
   "feats": [
     {
       "featId": "magic-initiate",
-      "source": "background"
+      "source": "background",
+      "magicInitiate": {
+        "spellListClassId": "druid",
+        "cantripIds": [
+          "acudir-os-moribundos",
+          "arte-druidica"
+        ],
+        "preparedSpellId": "amizade-animal",
+        "castingAbilityId": "sabedoria"
+      }
     }
   ],
   "startingPackages": {
@@ -100,11 +109,18 @@
       "class": [
         "fagulha-estelar",
         "orientacao"
+      ],
+      "magic-initiate": [
+        "acudir-os-moribundos",
+        "arte-druidica"
       ]
     },
     "prepared": {
       "class": [
         "alarme",
+        "amizade-animal"
+      ],
+      "magic-initiate": [
         "amizade-animal"
       ]
     },

@@ -40,10 +40,6 @@
     {
       "skillId": "insight",
       "source": "class"
-    },
-    {
-      "skillId": "history",
-      "source": "species"
     }
   ],
   "savingThrowProficiencies": [
@@ -92,7 +88,12 @@
     "shieldBonus": 2,
     "fightingStyleBonus": 0
   },
-  "resources": {},
+  "resources": {
+    "stonecunning": {
+      "max": 2,
+      "remaining": 2
+    }
+  },
   "classChoices": {
     "skillIds": [
       "animal-handling",

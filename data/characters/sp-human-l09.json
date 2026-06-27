@@ -1,0 +1,162 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-human-l09",
+  "name": "human L9",
+  "level": 9,
+  "speciesId": "human",
+  "backgroundId": "scribe",
+  "classId": "wizard",
+  "alignmentId": "lawful-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "inteligencia": 16,
+    "constituicao": 14,
+    "destreza": 15,
+    "sabedoria": 12,
+    "carisma": 10,
+    "forca": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "investigation",
+      "source": "background"
+    },
+    {
+      "skillId": "perception",
+      "source": "background"
+    },
+    {
+      "skillId": "medicine",
+      "source": "class"
+    },
+    {
+      "skillId": "arcana",
+      "source": "class"
+    },
+    {
+      "skillId": "history",
+      "source": "species"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "feat"
+    },
+    {
+      "skillId": "athletics",
+      "source": "feat"
+    },
+    {
+      "skillId": "performance",
+      "source": "feat"
+    },
+    {
+      "skillId": "deception",
+      "source": "feat"
+    },
+    {
+      "skillId": "stealth",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "inteligencia",
+    "sabedoria"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    },
+    {
+      "featId": "skilled",
+      "source": "species"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "foco-arcano",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "focus"
+    }
+  ],
+  "hp": {
+    "current": 56,
+    "max": 56,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 12,
+    "base": 10,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "subclassId": "evoker",
+  "classChoices": {
+    "skillIds": [
+      "medicine",
+      "arcana"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "badalar-funebre",
+        "bolha-acida",
+        "elementalismo"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "alarme",
+        "armadura-arcana",
+        "compreender-idiomas",
+        "convocar-familiar",
+        "detectar-magia",
+        "disco-flutuante-de-tenser",
+        "disfarcar-se",
+        "enfeiticar-pessoa",
+        "escrita-ilusoria",
+        "escudo-arcano",
+        "faca-de-gelo",
+        "gargalhada-nefasta-de-tasha",
+        "graxa",
+        "identificar"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3,
+      "3": 3,
+      "4": 3,
+      "5": 1
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0,
+      "5": 0
+    }
+  },
+  "passivePerception": 15
+}

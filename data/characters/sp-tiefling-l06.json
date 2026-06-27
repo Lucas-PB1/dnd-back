@@ -1,0 +1,156 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-tiefling-l06",
+  "name": "tiefling L6",
+  "level": 6,
+  "speciesId": "tiefling",
+  "backgroundId": "charlatan",
+  "classId": "ranger",
+  "alignmentId": "lawful-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "destreza": 17,
+    "sabedoria": 14,
+    "constituicao": 14,
+    "forca": 12,
+    "inteligencia": 10,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "deception",
+      "source": "background"
+    },
+    {
+      "skillId": "sleight-of-hand",
+      "source": "background"
+    },
+    {
+      "skillId": "insight",
+      "source": "class"
+    },
+    {
+      "skillId": "perception",
+      "source": "class"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "class"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "arcana",
+      "source": "feat"
+    },
+    {
+      "skillId": "athletics",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "destreza"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longbow",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 52,
+    "max": 52,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 11,
+    "dexBonus": 3,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "infernalLegacyId": "abyssal",
+    "infernalCastingAbilityId": "inteligencia"
+  },
+  "subclassId": "fey-wanderer",
+  "classChoices": {
+    "skillIds": [
+      "insight",
+      "perception",
+      "animal-handling"
+    ],
+    "fightingStyleId": "protection"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "infernal-legacy": [
+        "rajada-de-veneno"
+      ],
+      "tiefling-presence": [
+        "taumaturgia"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "alarme",
+        "amizade-animal",
+        "bom-fruto",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-veneno-e-doenca"
+      ],
+      "infernal-legacy": [
+        "raio-nauseante",
+        "paralisar-pessoa"
+      ],
+      "fey-wanderer-spells": [
+        "enfeiticar-pessoa",
+        "passo-nebuloso"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 2
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0
+    }
+  },
+  "weaponMasteryWeaponIds": [
+    "longbow",
+    "shortsword"
+  ],
+  "passivePerception": 15
+}

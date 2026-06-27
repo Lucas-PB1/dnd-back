@@ -1,0 +1,118 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-goliath-l01",
+  "name": "goliath L1",
+  "level": 1,
+  "speciesId": "goliath",
+  "backgroundId": "sailor",
+  "classId": "wizard",
+  "alignmentId": "lawful-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "inteligencia": 15,
+    "constituicao": 14,
+    "destreza": 14,
+    "sabedoria": 12,
+    "carisma": 10,
+    "forca": 10
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "acrobatics",
+      "source": "background"
+    },
+    {
+      "skillId": "perception",
+      "source": "background"
+    },
+    {
+      "skillId": "medicine",
+      "source": "class"
+    },
+    {
+      "skillId": "arcana",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "inteligencia",
+    "sabedoria"
+  ],
+  "feats": [
+    {
+      "featId": "tavern-brawler",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "foco-arcano",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "focus"
+    }
+  ],
+  "hp": {
+    "current": 8,
+    "max": 8,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 12,
+    "base": 10,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "giantAncestry": {
+      "max": 2,
+      "remaining": 2
+    }
+  },
+  "speciesChoices": {
+    "giantAncestryId": "cloud"
+  },
+  "classChoices": {
+    "skillIds": [
+      "medicine",
+      "arcana"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "badalar-funebre",
+        "bolha-acida"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "alarme",
+        "armadura-arcana",
+        "compreender-idiomas",
+        "convocar-familiar"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "passivePerception": 13
+}

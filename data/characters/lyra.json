@@ -44,10 +44,6 @@
     {
       "skillId": "arcana",
       "source": "class"
-    },
-    {
-      "skillId": "religion",
-      "source": "species"
     }
   ],
   "savingThrowProficiencies": [
@@ -85,6 +81,10 @@
     "fightingStyleBonus": 0
   },
   "resources": {},
+  "speciesChoices": {
+    "infernalLegacyId": "infernal",
+    "infernalCastingAbilityId": "carisma"
+  },
   "classChoices": {
     "skillIds": [
       "performance",
@@ -96,6 +96,12 @@
       "class": [
         "amigos",
         "fagulha-estelar"
+      ],
+      "infernal-legacy": [
+        "raio-de-fogo"
+      ],
+      "tiefling-presence": [
+        "taumaturgia"
       ]
     },
     "prepared": {

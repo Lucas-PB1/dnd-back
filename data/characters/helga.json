@@ -40,10 +40,6 @@
     {
       "skillId": "insight",
       "source": "class"
-    },
-    {
-      "skillId": "history",
-      "source": "species"
     }
   ],
   "savingThrowProficiencies": [
@@ -94,6 +90,10 @@
   },
   "resources": {
     "channelDivinity": {
+      "max": 2,
+      "remaining": 2
+    },
+    "stonecunning": {
       "max": 2,
       "remaining": 2
     }

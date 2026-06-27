@@ -1,0 +1,154 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-aasimar-l03",
+  "name": "aasimar L3",
+  "level": 3,
+  "speciesId": "aasimar",
+  "backgroundId": "wanderer",
+  "classId": "cleric",
+  "alignmentId": "lawful-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "sabedoria": 16,
+    "constituicao": 14,
+    "forca": 13,
+    "carisma": 12,
+    "destreza": 12,
+    "inteligencia": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "stealth",
+      "source": "background"
+    },
+    {
+      "skillId": "insight",
+      "source": "background"
+    },
+    {
+      "skillId": "persuasion",
+      "source": "class"
+    },
+    {
+      "skillId": "history",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "sabedoria",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "lucky",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    },
+    {
+      "itemId": "mace",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 24,
+    "max": 24,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 11,
+    "dexBonus": 1,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "channelDivinity": {
+      "max": 2,
+      "remaining": 2
+    },
+    "healingHands": {
+      "max": 1,
+      "remaining": 1
+    },
+    "celestialRevelation": {
+      "max": 1,
+      "remaining": 1
+    }
+  },
+  "speciesChoices": {
+    "aasimarRevelationId": "celestial-wings"
+  },
+  "subclassId": "trickery",
+  "classChoices": {
+    "skillIds": [
+      "persuasion",
+      "insight"
+    ],
+    "divineOrder": "thaumaturge"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "acudir-os-moribundos",
+        "badalar-funebre",
+        "chama-sagrada",
+        "orientacao"
+      ],
+      "aasimar-light": [
+        "luz"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "bencao",
+        "comando",
+        "criar-ou-destruir-agua",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-o-bem-e-o-mal"
+      ],
+      "trickery-domain": [
+        "disfarcar-se",
+        "enfeiticar-pessoa",
+        "invisibilidade",
+        "passo-sem-rastro"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 2
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0
+    }
+  },
+  "passivePerception": 13
+}

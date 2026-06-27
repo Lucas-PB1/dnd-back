@@ -40,10 +40,6 @@
     {
       "skillId": "deception",
       "source": "class"
-    },
-    {
-      "skillId": "intimidation",
-      "source": "species"
     }
   ],
   "savingThrowProficiencies": [
@@ -80,7 +76,15 @@
     "shieldBonus": 0,
     "fightingStyleBonus": 0
   },
-  "resources": {},
+  "resources": {
+    "breathWeapon": {
+      "max": 2,
+      "remaining": 2
+    }
+  },
+  "speciesChoices": {
+    "dragonAncestryId": "gold"
+  },
   "subclassId": "draconic",
   "classChoices": {
     "skillIds": [

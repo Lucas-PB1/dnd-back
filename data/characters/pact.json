@@ -42,10 +42,6 @@
       "source": "class"
     },
     {
-      "skillId": "religion",
-      "source": "species"
-    },
-    {
       "skillId": "acrobatics",
       "source": "feat"
     },
@@ -99,6 +95,10 @@
     "fightingStyleBonus": 0
   },
   "resources": {},
+  "speciesChoices": {
+    "infernalLegacyId": "chthonic",
+    "infernalCastingAbilityId": "carisma"
+  },
   "classChoices": {
     "skillIds": [
       "deception",
@@ -110,6 +110,12 @@
       "class": [
         "amigos",
         "badalar-funebre"
+      ],
+      "infernal-legacy": [
+        "toque-necrotico"
+      ],
+      "tiefling-presence": [
+        "taumaturgia"
       ]
     },
     "prepared": {

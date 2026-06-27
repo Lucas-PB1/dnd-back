@@ -1,0 +1,169 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-goliath-l18",
+  "name": "goliath L18",
+  "level": 18,
+  "speciesId": "goliath",
+  "backgroundId": "acolyte",
+  "classId": "warlock",
+  "alignmentId": "chaotic-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "carisma": 16,
+    "constituicao": 14,
+    "destreza": 13,
+    "inteligencia": 13,
+    "sabedoria": 11,
+    "forca": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "insight",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "background"
+    },
+    {
+      "skillId": "arcana",
+      "source": "class"
+    },
+    {
+      "skillId": "intimidation",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "sabedoria",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "magic-initiate",
+      "source": "background",
+      "magicInitiate": {
+        "spellListClassId": "cleric",
+        "cantripIds": [
+          "acudir-os-moribundos",
+          "chama-sagrada"
+        ],
+        "preparedSpellId": "bencao",
+        "castingAbilityId": "sabedoria"
+      }
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "sickle",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 129,
+    "max": 129,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 12,
+    "base": 11,
+    "dexBonus": 1,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "giantAncestry": {
+      "max": 6,
+      "remaining": 6
+    },
+    "largeForm": {
+      "max": 1,
+      "remaining": 1
+    }
+  },
+  "speciesChoices": {
+    "giantAncestryId": "stone"
+  },
+  "subclassId": "archfey",
+  "classChoices": {
+    "skillIds": [
+      "arcana",
+      "intimidation"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "badalar-funebre",
+        "golpe-certeiro",
+        "ilusao-menor"
+      ],
+      "magic-initiate": [
+        "acudir-os-moribundos",
+        "chama-sagrada"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "armadura-de-agathys",
+        "bracos-de-hadar",
+        "compreender-idiomas",
+        "danacao",
+        "detectar-magia",
+        "enfeiticar-pessoa",
+        "escrita-ilusoria",
+        "falar-com-animais",
+        "gargalhada-nefasta-de-tasha",
+        "perdicao",
+        "protecao-contra-o-bem-e-o-mal",
+        "raio-de-bruxa",
+        "repreensao-diabolica",
+        "retirada-acelerada"
+      ],
+      "magic-initiate": [
+        "bencao"
+      ],
+      "archfey-pact": [
+        "acalmar-emocoes",
+        "fogo-das-fadas",
+        "forca-espectral",
+        "passo-nebuloso",
+        "sono",
+        "crescimento-de-plantas",
+        "piscar",
+        "dominar-fera",
+        "invisibilidade-maior",
+        "dominar-pessoa",
+        "similaridade"
+      ]
+    },
+    "slotsMax": {
+      "5": 4
+    },
+    "slotsUsed": {
+      "5": 0
+    }
+  },
+  "passivePerception": 10
+}

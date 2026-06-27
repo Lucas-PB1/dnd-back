@@ -1,0 +1,147 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-halfling-l10",
+  "name": "halfling L10",
+  "level": 10,
+  "speciesId": "halfling",
+  "backgroundId": "charlatan",
+  "classId": "ranger",
+  "alignmentId": "lawful-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "destreza": 17,
+    "sabedoria": 14,
+    "constituicao": 14,
+    "forca": 12,
+    "inteligencia": 10,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "deception",
+      "source": "background"
+    },
+    {
+      "skillId": "sleight-of-hand",
+      "source": "background"
+    },
+    {
+      "skillId": "insight",
+      "source": "class"
+    },
+    {
+      "skillId": "perception",
+      "source": "class"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "class"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "arcana",
+      "source": "feat"
+    },
+    {
+      "skillId": "athletics",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "destreza"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longbow",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 84,
+    "max": 84,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 11,
+    "dexBonus": 3,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "subclassId": "fey-wanderer",
+  "classChoices": {
+    "skillIds": [
+      "insight",
+      "perception",
+      "animal-handling"
+    ],
+    "fightingStyleId": "archery"
+  },
+  "spellcasting": {
+    "cantrips": {},
+    "prepared": {
+      "class": [
+        "alarme",
+        "amizade-animal",
+        "bom-fruto",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-veneno-e-doenca",
+        "emaranhar",
+        "falar-com-animais",
+        "golpe-constritor"
+      ],
+      "fey-wanderer-spells": [
+        "enfeiticar-pessoa",
+        "passo-nebuloso",
+        "convocar-feerico"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3,
+      "3": 2
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0,
+      "3": 0
+    }
+  },
+  "weaponMasteryWeaponIds": [
+    "longbow",
+    "shortsword"
+  ],
+  "passivePerception": 16
+}

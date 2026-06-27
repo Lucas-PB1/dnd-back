@@ -1,0 +1,131 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-gnome-l01",
+  "name": "gnome L1",
+  "level": 1,
+  "speciesId": "gnome",
+  "backgroundId": "scribe",
+  "classId": "sorcerer",
+  "alignmentId": "chaotic-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "carisma": 15,
+    "constituicao": 14,
+    "destreza": 14,
+    "sabedoria": 13,
+    "inteligencia": 11,
+    "forca": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "investigation",
+      "source": "background"
+    },
+    {
+      "skillId": "perception",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "class"
+    },
+    {
+      "skillId": "intimidation",
+      "source": "class"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "feat"
+    },
+    {
+      "skillId": "arcana",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "constituicao",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "foco-arcano",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "focus"
+    }
+  ],
+  "hp": {
+    "current": 8,
+    "max": 8,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 12,
+    "base": 10,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "gnomeLineageId": "forest-gnome",
+    "gnomeCastingAbilityId": "carisma"
+  },
+  "classChoices": {
+    "skillIds": [
+      "religion",
+      "intimidation"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "bolha-acida",
+        "elementalismo",
+        "explosao-elemental"
+      ],
+      "gnome-lineage": [
+        "ilusao-menor"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "armadura-arcana",
+        "compreender-idiomas"
+      ],
+      "gnome-lineage": [
+        "falar-com-animais"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "passivePerception": 13
+}

@@ -1,0 +1,139 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sw-gn-lin-forest-gnome-l17",
+  "name": "gn-lin forest-gnome L17",
+  "level": 17,
+  "speciesId": "gnome",
+  "backgroundId": "scribe",
+  "classId": "fighter",
+  "alignmentId": "neutral-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "forca": 15,
+    "constituicao": 14,
+    "destreza": 14,
+    "sabedoria": 13,
+    "carisma": 10,
+    "inteligencia": 9
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "investigation",
+      "source": "background"
+    },
+    {
+      "skillId": "perception",
+      "source": "background"
+    },
+    {
+      "skillId": "survival",
+      "source": "class"
+    },
+    {
+      "skillId": "athletics",
+      "source": "class"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "feat"
+    },
+    {
+      "skillId": "arcana",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "constituicao"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "chain-mail",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longsword",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    }
+  ],
+  "hp": {
+    "current": 140,
+    "max": 140,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 19,
+    "base": 16,
+    "dexBonus": 0,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 1
+  },
+  "resources": {},
+  "speciesChoices": {
+    "gnomeLineageId": "forest-gnome",
+    "gnomeCastingAbilityId": "sabedoria"
+  },
+  "subclassId": "battle-master",
+  "classChoices": {
+    "skillIds": [
+      "survival",
+      "athletics"
+    ],
+    "fightingStyleId": "defense"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "gnome-lineage": [
+        "ilusao-menor"
+      ]
+    },
+    "prepared": {
+      "gnome-lineage": [
+        "falar-com-animais"
+      ]
+    },
+    "slotsMax": {},
+    "slotsUsed": {}
+  },
+  "weaponMasteryWeaponIds": [
+    "longsword",
+    "light-crossbow",
+    "spear",
+    "javelin",
+    "dagger",
+    "quarterstaff"
+  ],
+  "passivePerception": 17
+}

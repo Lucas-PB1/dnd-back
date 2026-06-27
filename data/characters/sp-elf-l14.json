@@ -1,0 +1,166 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-elf-l14",
+  "name": "elf L14",
+  "level": 14,
+  "speciesId": "elf",
+  "backgroundId": "charlatan",
+  "classId": "warlock",
+  "alignmentId": "chaotic-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "carisma": 16,
+    "constituicao": 15,
+    "destreza": 14,
+    "inteligencia": 12,
+    "sabedoria": 10,
+    "forca": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "deception",
+      "source": "background"
+    },
+    {
+      "skillId": "sleight-of-hand",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "class"
+    },
+    {
+      "skillId": "history",
+      "source": "class"
+    },
+    {
+      "skillId": "survival",
+      "source": "species"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "feat"
+    },
+    {
+      "skillId": "arcana",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "sabedoria",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "sickle",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 101,
+    "max": 101,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 13,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "lineageId": "wood-elf",
+    "keenSensesSkillId": "survival"
+  },
+  "subclassId": "archfey",
+  "classChoices": {
+    "skillIds": [
+      "religion",
+      "history"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "badalar-funebre",
+        "golpe-certeiro",
+        "ilusao-menor"
+      ],
+      "elf-lineage": [
+        "arte-druidica"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "armadura-de-agathys",
+        "bracos-de-hadar",
+        "compreender-idiomas",
+        "danacao",
+        "detectar-magia",
+        "enfeiticar-pessoa",
+        "escrita-ilusoria",
+        "falar-com-animais",
+        "gargalhada-nefasta-de-tasha",
+        "perdicao",
+        "protecao-contra-o-bem-e-o-mal",
+        "raio-de-bruxa"
+      ],
+      "elf-lineage": [
+        "passos-largos",
+        "passo-sem-rastro"
+      ],
+      "archfey-pact": [
+        "acalmar-emocoes",
+        "fogo-das-fadas",
+        "forca-espectral",
+        "passo-nebuloso",
+        "sono",
+        "crescimento-de-plantas",
+        "piscar",
+        "dominar-fera",
+        "invisibilidade-maior",
+        "dominar-pessoa",
+        "similaridade"
+      ]
+    },
+    "slotsMax": {
+      "5": 3
+    },
+    "slotsUsed": {
+      "5": 0
+    }
+  },
+  "passivePerception": 10
+}

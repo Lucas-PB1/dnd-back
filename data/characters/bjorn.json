@@ -81,7 +81,14 @@
     "rage": {
       "max": 2,
       "remaining": 2
+    },
+    "giantAncestry": {
+      "max": 2,
+      "remaining": 2
     }
+  },
+  "speciesChoices": {
+    "giantAncestryId": "hill"
   },
   "classChoices": {
     "skillIds": [

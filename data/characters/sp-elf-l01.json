@@ -1,0 +1,125 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-elf-l01",
+  "name": "elf L1",
+  "level": 1,
+  "speciesId": "elf",
+  "backgroundId": "entertainer",
+  "classId": "bard",
+  "alignmentId": "true-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "carisma": 16,
+    "destreza": 15,
+    "constituicao": 13,
+    "inteligencia": 12,
+    "sabedoria": 10,
+    "forca": 9
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "acrobatics",
+      "source": "background"
+    },
+    {
+      "skillId": "performance",
+      "source": "background"
+    },
+    {
+      "skillId": "perception",
+      "source": "species"
+    },
+    {
+      "skillId": "religion",
+      "source": "class"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "class"
+    },
+    {
+      "skillId": "arcana",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "destreza",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "musician",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    }
+  ],
+  "hp": {
+    "current": 9,
+    "max": 9,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 13,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "lineageId": "drow",
+    "keenSensesSkillId": "perception"
+  },
+  "classChoices": {
+    "skillIds": [
+      "perception",
+      "religion",
+      "animal-handling"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "fagulha-estelar"
+      ],
+      "elf-lineage": [
+        "luzes-dancantes"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "amizade-animal",
+        "comando",
+        "compreender-idiomas",
+        "curar-ferimentos"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "passivePerception": 12
+}

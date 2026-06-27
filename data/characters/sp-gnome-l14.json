@@ -1,0 +1,149 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-gnome-l14",
+  "name": "gnome L14",
+  "level": 14,
+  "speciesId": "gnome",
+  "backgroundId": "farmer",
+  "classId": "ranger",
+  "alignmentId": "lawful-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "destreza": 15,
+    "sabedoria": 14,
+    "constituicao": 14,
+    "forca": 14,
+    "inteligencia": 10,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "animal-handling",
+      "source": "background"
+    },
+    {
+      "skillId": "nature",
+      "source": "background"
+    },
+    {
+      "skillId": "stealth",
+      "source": "class"
+    },
+    {
+      "skillId": "athletics",
+      "source": "class"
+    },
+    {
+      "skillId": "insight",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "destreza"
+  ],
+  "feats": [
+    {
+      "featId": "tough",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longbow",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 144,
+    "max": 144,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 13,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "gnomeLineageId": "rock-gnome",
+    "gnomeCastingAbilityId": "inteligencia"
+  },
+  "subclassId": "fey-wanderer",
+  "classChoices": {
+    "skillIds": [
+      "stealth",
+      "athletics",
+      "nature"
+    ],
+    "fightingStyleId": "great-weapon-fighting"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "gnome-lineage": [
+        "prestidigitacao-arcana",
+        "reparar"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "alarme",
+        "amizade-animal",
+        "bom-fruto",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-veneno-e-doenca",
+        "emaranhar",
+        "falar-com-animais",
+        "golpe-constritor",
+        "marca-do-predador",
+        "nevoa-obscurecente"
+      ],
+      "fey-wanderer-spells": [
+        "enfeiticar-pessoa",
+        "passo-nebuloso",
+        "convocar-feerico",
+        "porta-dimensional"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3,
+      "3": 3,
+      "4": 1
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    }
+  },
+  "weaponMasteryWeaponIds": [
+    "longbow",
+    "shortsword"
+  ],
+  "passivePerception": 12
+}

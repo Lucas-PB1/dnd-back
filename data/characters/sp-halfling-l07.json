@@ -1,0 +1,154 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-halfling-l07",
+  "name": "halfling L7",
+  "level": 7,
+  "speciesId": "halfling",
+  "backgroundId": "criminal",
+  "classId": "cleric",
+  "alignmentId": "lawful-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "two-and-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "sabedoria": 15,
+    "constituicao": 15,
+    "forca": 13,
+    "carisma": 12,
+    "destreza": 12,
+    "inteligencia": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "stealth",
+      "source": "background"
+    },
+    {
+      "skillId": "sleight-of-hand",
+      "source": "background"
+    },
+    {
+      "skillId": "medicine",
+      "source": "class"
+    },
+    {
+      "skillId": "history",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "sabedoria",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "alert",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    },
+    {
+      "itemId": "mace",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 52,
+    "max": 52,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 11,
+    "dexBonus": 1,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "channelDivinity": {
+      "max": 3,
+      "remaining": 3
+    }
+  },
+  "subclassId": "trickery",
+  "classChoices": {
+    "skillIds": [
+      "medicine",
+      "history"
+    ],
+    "divineOrder": "thaumaturge"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "acudir-os-moribundos",
+        "badalar-funebre",
+        "chama-sagrada",
+        "luz",
+        "orientacao"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "bencao",
+        "comando",
+        "criar-ou-destruir-agua",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-o-bem-e-o-mal",
+        "detectar-veneno-e-doenca",
+        "escudo-da-fe",
+        "infligir-ferimentos",
+        "palavra-curativa",
+        "perdicao"
+      ],
+      "trickery-domain": [
+        "disfarcar-se",
+        "enfeiticar-pessoa",
+        "invisibilidade",
+        "passo-sem-rastro",
+        "indetectavel",
+        "padrao-hipnotico",
+        "confusao",
+        "porta-dimensional"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3,
+      "3": 3,
+      "4": 1
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0,
+      "3": 0,
+      "4": 0
+    }
+  },
+  "passivePerception": 12
+}

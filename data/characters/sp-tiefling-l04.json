@@ -1,0 +1,163 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-tiefling-l04",
+  "name": "tiefling L4",
+  "level": 4,
+  "speciesId": "tiefling",
+  "backgroundId": "guide",
+  "classId": "druid",
+  "alignmentId": "true-neutral",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "sabedoria": 16,
+    "constituicao": 15,
+    "destreza": 14,
+    "inteligencia": 12,
+    "forca": 10,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "stealth",
+      "source": "background"
+    },
+    {
+      "skillId": "survival",
+      "source": "background"
+    },
+    {
+      "skillId": "arcana",
+      "source": "class"
+    },
+    {
+      "skillId": "medicine",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "inteligencia",
+    "sabedoria"
+  ],
+  "feats": [
+    {
+      "featId": "magic-initiate",
+      "source": "background",
+      "magicInitiate": {
+        "spellListClassId": "druid",
+        "cantripIds": [
+          "chicote-de-espinhos",
+          "criar-chamas"
+        ],
+        "preparedSpellId": "amizade-animal",
+        "castingAbilityId": "sabedoria"
+      }
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    },
+    {
+      "itemId": "sickle",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 31,
+    "max": 31,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 15,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "infernalLegacyId": "chthonic",
+    "infernalCastingAbilityId": "sabedoria"
+  },
+  "subclassId": "land",
+  "classChoices": {
+    "skillIds": [
+      "arcana",
+      "medicine"
+    ],
+    "landTerrainId": "arid"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "acudir-os-moribundos",
+        "arte-druidica",
+        "bordao-mistico"
+      ],
+      "infernal-legacy": [
+        "toque-necrotico"
+      ],
+      "tiefling-presence": [
+        "taumaturgia"
+      ],
+      "magic-initiate": [
+        "chicote-de-espinhos",
+        "criar-chamas"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "amizade-animal",
+        "bom-fruto",
+        "criar-ou-destruir-agua",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-veneno-e-doenca",
+        "emaranhar"
+      ],
+      "infernal-legacy": [
+        "vitalidade-vazia"
+      ],
+      "magic-initiate": [
+        "amizade-animal"
+      ],
+      "land-circle": [
+        "maos-flamejantes",
+        "turvar",
+        "raio-de-fogo"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0
+    }
+  },
+  "passivePerception": 13
+}

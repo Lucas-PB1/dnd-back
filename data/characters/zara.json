@@ -42,10 +42,6 @@
       "source": "class"
     },
     {
-      "skillId": "intimidation",
-      "source": "species"
-    },
-    {
       "skillId": "acrobatics",
       "source": "feat"
     },
@@ -92,7 +88,15 @@
     "shieldBonus": 0,
     "fightingStyleBonus": 0
   },
-  "resources": {},
+  "resources": {
+    "breathWeapon": {
+      "max": 2,
+      "remaining": 2
+    }
+  },
+  "speciesChoices": {
+    "dragonAncestryId": "red"
+  },
   "classChoices": {
     "skillIds": [
       "arcana",

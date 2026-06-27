@@ -1,0 +1,130 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sw-elf-lin-high-elf-l01",
+  "name": "elf-lin high-elf L1",
+  "level": 1,
+  "speciesId": "elf",
+  "backgroundId": "artisan",
+  "classId": "ranger",
+  "alignmentId": "lawful-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "destreza": 16,
+    "sabedoria": 14,
+    "constituicao": 13,
+    "forca": 13,
+    "inteligencia": 11,
+    "carisma": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "investigation",
+      "source": "background"
+    },
+    {
+      "skillId": "persuasion",
+      "source": "background"
+    },
+    {
+      "skillId": "insight",
+      "source": "species"
+    },
+    {
+      "skillId": "perception",
+      "source": "class"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "class"
+    },
+    {
+      "skillId": "athletics",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "forca",
+    "destreza"
+  ],
+  "feats": [
+    {
+      "featId": "artisan",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longbow",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 11,
+    "max": 11,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 14,
+    "base": 11,
+    "dexBonus": 3,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {},
+  "speciesChoices": {
+    "lineageId": "high-elf",
+    "keenSensesSkillId": "insight"
+  },
+  "classChoices": {
+    "skillIds": [
+      "insight",
+      "perception",
+      "animal-handling"
+    ],
+    "fightingStyleId": "archery"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "elf-lineage": [
+        "prestidigitacao-arcana"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "alarme",
+        "amizade-animal"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "weaponMasteryWeaponIds": [
+    "longbow",
+    "shortsword"
+  ],
+  "passivePerception": 14
+}

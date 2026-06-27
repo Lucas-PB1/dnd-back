@@ -44,10 +44,6 @@
     {
       "skillId": "athletics",
       "source": "class"
-    },
-    {
-      "skillId": "stealth",
-      "source": "species"
     }
   ],
   "savingThrowProficiencies": [

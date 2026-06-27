@@ -1,0 +1,137 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-aasimar-l01",
+  "name": "aasimar L1",
+  "level": 1,
+  "speciesId": "aasimar",
+  "backgroundId": "scribe",
+  "classId": "bard",
+  "alignmentId": "neutral-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "carisma": 15,
+    "destreza": 15,
+    "constituicao": 13,
+    "inteligencia": 13,
+    "sabedoria": 11,
+    "forca": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "investigation",
+      "source": "background"
+    },
+    {
+      "skillId": "perception",
+      "source": "background"
+    },
+    {
+      "skillId": "animal-handling",
+      "source": "class"
+    },
+    {
+      "skillId": "performance",
+      "source": "class"
+    },
+    {
+      "skillId": "history",
+      "source": "class"
+    },
+    {
+      "skillId": "acrobatics",
+      "source": "feat"
+    },
+    {
+      "skillId": "arcana",
+      "source": "feat"
+    },
+    {
+      "skillId": "athletics",
+      "source": "feat"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "destreza",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "skilled",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    }
+  ],
+  "hp": {
+    "current": 9,
+    "max": 9,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 13,
+    "base": 11,
+    "dexBonus": 2,
+    "shieldBonus": 0,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "healingHands": {
+      "max": 1,
+      "remaining": 1
+    }
+  },
+  "speciesChoices": {
+    "aasimarRevelationId": "necrotic-shroud"
+  },
+  "classChoices": {
+    "skillIds": [
+      "animal-handling",
+      "performance",
+      "history"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "amigos",
+        "fagulha-estelar"
+      ],
+      "aasimar-light": [
+        "luz"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "amizade-animal",
+        "comando",
+        "compreender-idiomas",
+        "curar-ferimentos"
+      ]
+    },
+    "slotsMax": {
+      "1": 2
+    },
+    "slotsUsed": {
+      "1": 0
+    }
+  },
+  "passivePerception": 12
+}

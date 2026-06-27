@@ -53,8 +53,8 @@
       "magicInitiate": {
         "spellListClassId": "cleric",
         "cantripIds": [
-          "luz",
-          "taumaturgia"
+          "taumaturgia",
+          "acudir-os-moribundos"
         ],
         "preparedSpellId": "curar-ferimentos",
         "castingAbilityId": "sabedoria"
@@ -91,7 +91,19 @@
     "shieldBonus": 0,
     "fightingStyleBonus": 0
   },
-  "resources": {},
+  "resources": {
+    "healingHands": {
+      "max": 1,
+      "remaining": 1
+    },
+    "celestialRevelation": {
+      "max": 1,
+      "remaining": 1
+    }
+  },
+  "speciesChoices": {
+    "aasimarRevelationId": "celestial-wings"
+  },
   "subclassId": "celestial",
   "classChoices": {
     "skillIds": [
@@ -105,9 +117,12 @@
         "amigos",
         "badalar-funebre"
       ],
+      "aasimar-light": [
+        "luz"
+      ],
       "magic-initiate": [
-        "luz",
-        "taumaturgia"
+        "taumaturgia",
+        "acudir-os-moribundos"
       ]
     },
     "prepared": {

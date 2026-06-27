@@ -1,0 +1,160 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sw-tf-leg-chthonic-l05",
+  "name": "tf-leg chthonic L5",
+  "level": 5,
+  "speciesId": "tiefling",
+  "backgroundId": "soldier",
+  "classId": "cleric",
+  "alignmentId": "lawful-evil",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "sabedoria": 15,
+    "constituicao": 15,
+    "forca": 14,
+    "carisma": 12,
+    "destreza": 11,
+    "inteligencia": 8
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "athletics",
+      "source": "background"
+    },
+    {
+      "skillId": "intimidation",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "class"
+    },
+    {
+      "skillId": "medicine",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "sabedoria",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "savage-attacker",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "leather",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    },
+    {
+      "itemId": "mace",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    }
+  ],
+  "hp": {
+    "current": 38,
+    "max": 38,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 13,
+    "base": 11,
+    "dexBonus": 0,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "channelDivinity": {
+      "max": 2,
+      "remaining": 2
+    }
+  },
+  "speciesChoices": {
+    "infernalLegacyId": "chthonic",
+    "infernalCastingAbilityId": "inteligencia"
+  },
+  "subclassId": "war",
+  "classChoices": {
+    "skillIds": [
+      "religion",
+      "medicine"
+    ]
+  },
+  "spellcasting": {
+    "cantrips": {
+      "class": [
+        "acudir-os-moribundos",
+        "badalar-funebre",
+        "chama-sagrada",
+        "luz"
+      ],
+      "infernal-legacy": [
+        "toque-necrotico"
+      ],
+      "tiefling-presence": [
+        "taumaturgia"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "bencao",
+        "comando",
+        "criar-ou-destruir-agua",
+        "curar-ferimentos",
+        "detectar-magia",
+        "detectar-o-bem-e-o-mal",
+        "detectar-veneno-e-doenca",
+        "escudo-da-fe",
+        "infligir-ferimentos"
+      ],
+      "infernal-legacy": [
+        "vitalidade-vazia",
+        "raio-do-enfraquecimento"
+      ],
+      "war-domain": [
+        "arma-espiritual",
+        "arma-magica",
+        "escudo-da-fe",
+        "raio-guia",
+        "guardioes-espirituais",
+        "manto-do-cruzado"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3,
+      "3": 2
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0,
+      "3": 0
+    }
+  },
+  "passivePerception": 12
+}

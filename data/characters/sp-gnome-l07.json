@@ -1,0 +1,149 @@
+{
+  "$schema": "../../schema/character.schema.json",
+  "id": "sp-gnome-l07",
+  "name": "gnome L7",
+  "level": 7,
+  "speciesId": "gnome",
+  "backgroundId": "criminal",
+  "classId": "paladin",
+  "alignmentId": "chaotic-good",
+  "abilityGeneration": {
+    "methodId": "standard-array",
+    "backgroundBoostId": "three-plus-one"
+  },
+  "languageIds": [
+    "common",
+    "dwarvish",
+    "elvish"
+  ],
+  "abilities": {
+    "forca": 15,
+    "carisma": 14,
+    "constituicao": 14,
+    "sabedoria": 12,
+    "destreza": 11,
+    "inteligencia": 9
+  },
+  "skillProficiencies": [
+    {
+      "skillId": "stealth",
+      "source": "background"
+    },
+    {
+      "skillId": "sleight-of-hand",
+      "source": "background"
+    },
+    {
+      "skillId": "religion",
+      "source": "class"
+    },
+    {
+      "skillId": "intimidation",
+      "source": "class"
+    }
+  ],
+  "savingThrowProficiencies": [
+    "sabedoria",
+    "carisma"
+  ],
+  "feats": [
+    {
+      "featId": "alert",
+      "source": "background"
+    }
+  ],
+  "startingPackages": {
+    "classOption": "A",
+    "backgroundOption": "a"
+  },
+  "equipment": [
+    {
+      "itemId": "chain-mail",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "armor"
+    },
+    {
+      "itemId": "longsword",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "mainHand"
+    },
+    {
+      "itemId": "shield",
+      "source": "class-starting",
+      "equipped": true,
+      "slot": "shield"
+    }
+  ],
+  "hp": {
+    "current": 60,
+    "max": 60,
+    "temp": 0
+  },
+  "armorClass": {
+    "total": 18,
+    "base": 16,
+    "dexBonus": 0,
+    "shieldBonus": 2,
+    "fightingStyleBonus": 0
+  },
+  "resources": {
+    "channelDivinity": {
+      "max": 2,
+      "remaining": 2
+    }
+  },
+  "speciesChoices": {
+    "gnomeLineageId": "forest-gnome",
+    "gnomeCastingAbilityId": "carisma"
+  },
+  "subclassId": "glory",
+  "classChoices": {
+    "skillIds": [
+      "religion",
+      "intimidation"
+    ],
+    "fightingStyleId": "thrown-weapon-fighting"
+  },
+  "spellcasting": {
+    "cantrips": {
+      "gnome-lineage": [
+        "ilusao-menor"
+      ]
+    },
+    "prepared": {
+      "class": [
+        "bencao",
+        "comando",
+        "curar-ferimentos",
+        "destruicao-cauterizante",
+        "destruicao-colerica",
+        "destruicao-divina",
+        "destruicao-estrondosa"
+      ],
+      "gnome-lineage": [
+        "falar-com-animais"
+      ],
+      "glory-oath": [
+        "heroismo",
+        "raio-guia",
+        "aprimorar-atributo",
+        "arma-magica"
+      ]
+    },
+    "slotsMax": {
+      "1": 4,
+      "2": 3
+    },
+    "slotsUsed": {
+      "1": 0,
+      "2": 0
+    }
+  },
+  "weaponMasteryWeaponIds": [
+    "longsword",
+    "javelin"
+  ],
+  "passivePerception": 11
+}
