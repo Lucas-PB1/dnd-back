@@ -14,6 +14,15 @@
     "validate:character": "node scripts/validate-character.mjs",
     "generate:test-characters": "node scripts/generate-test-characters.mjs",
     "analyze:characters": "node scripts/analyze-characters.mjs",
+    "generate:sql-schema": "node scripts/generate-sql-schema.mjs",
+    "validate:db": "node scripts/validate-db-structure.mjs",
+    "db:all": "npm run generate:sql-schema && npm run validate:db",
+    "generate:seed-phb": "node scripts/seed-phb.mjs",
+    "generate:seed-characters": "node scripts/import-characters.mjs",
+    "generate:seed": "node scripts/generate-seed.mjs",
+    "validate:seed": "node scripts/validate-seed.mjs",
+    "seed:all": "npm run generate:seed && npm run validate:seed",
+    "seed:run": "node scripts/run-seed.mjs",
     "generate:skills": "node scripts/generate-skills.mjs",
     "validate:skills": "node scripts/validate-skills.mjs",
     "skills:all": "npm run generate:skills && npm run validate:skills",
@@ -41,5 +50,8 @@
   "devDependencies": {
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1"
+  },
+  "dependencies": {
+    "pg": "^8.22.0"
   }
 }

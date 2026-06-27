@@ -1,0 +1,7022 @@
+-- PHB seed — PostgreSQL v2
+
+-- Gerado por: npm run generate:seed-phb
+
+BEGIN;
+
+
+-- Limpa catálogo (personagens devem ser reimportados depois)
+TRUNCATE TABLE
+  rpg.player_character_class_option,
+  rpg.player_character_species_option,
+  rpg.player_character_resource,
+  rpg.player_character_spell_slot,
+  rpg.player_character_spell_list,
+  rpg.player_character_expertise,
+  rpg.player_character_weapon_mastery,
+  rpg.player_character_equipment,
+  rpg.player_character_feat,
+  rpg.player_character_saving_throw,
+  rpg.player_character_skill,
+  rpg.player_character_language,
+  rpg.player_character,
+  rpg.phb_subclass_prepared_spell,
+  rpg.phb_spell_class,
+  rpg.phb_class_skill_pool,
+  rpg.phb_class_feature,
+  rpg.phb_class_progression,
+  rpg.phb_background_skill,
+  rpg.phb_species_trait,
+  rpg.phb_tool,
+  rpg.phb_armor,
+  rpg.phb_weapon,
+  rpg.phb_item,
+  rpg.phb_subclass,
+  rpg.phb_class,
+  rpg.phb_background,
+  rpg.phb_species,
+  rpg.phb_spell,
+  rpg.phb_feat,
+  rpg.phb_weapon_property,
+  rpg.phb_fighting_style,
+  rpg.phb_skill,
+  rpg.phb_language,
+  rpg.phb_alignment,
+  rpg.phb_character_level
+CASCADE;
+
+
+INSERT INTO rpg.phb_alignment (id, name, abbreviation, description)
+VALUES
+  ('lawful-good', 'Ordeiro e Bom', 'OB', 'Criaturas Ordeiras e Boas se esforçam para fazer a coisa certa, conforme esperado pela sociedade.'),
+  ('neutral-good', 'Neutro e Bom', 'NB', 'Criaturas Neutras e Boas fazem o melhor que podem, trabalhando dentro das regras, mas sem se sentir obrigadas por elas.'),
+  ('chaotic-good', 'Caótico e Bom', 'CB', 'Criaturas Caóticas e Boas agem conforme sua consciência, sem se importar muito com o que os outros esperam.'),
+  ('lawful-neutral', 'Ordeiro e Neutro', 'ON', 'Indivíduos Ordeiros e Neutros agem de acordo com a lei, tradição ou códigos pessoais.'),
+  ('true-neutral', 'Neutro', 'N', 'Neutro é o alinhamento daqueles que preferem evitar questões morais e não tomam partido.'),
+  ('chaotic-neutral', 'Caótico e Neutro', 'CN', 'Criaturas Caóticas e Neutras seguem seus impulsos, valorizando sua liberdade pessoal acima de tudo.'),
+  ('lawful-evil', 'Ordeiro e Mau', 'OM', 'Criaturas Ordeiras e Más tomam metodicamente o que querem dentro dos limites de um código de tradição, lealdade ou ordem.'),
+  ('neutral-evil', 'Neutro e Mau', 'NM', 'Neutro e Mau é o alinhamento daqueles que não se preocupam com o mal que causam enquanto perseguem seus desejos.'),
+  ('chaotic-evil', 'Caótico e Mau', 'CM', 'Criaturas Caóticas e Más agem com violência arbitrária, impulsionadas pelo ódio ou pela sede de sangue.');
+
+
+INSERT INTO rpg.phb_language (id, name, script, typical_speakers, is_rare)
+VALUES
+  ('common', 'Comum', NULL, NULL, FALSE),
+  ('sign-language', 'Língua de Sinais Comum', NULL, NULL, FALSE),
+  ('draconic', 'Dracônico', NULL, NULL, FALSE),
+  ('dwarvish', 'Anão', NULL, NULL, FALSE),
+  ('elvish', 'Élfico', NULL, NULL, FALSE),
+  ('giant', 'Gigante', NULL, NULL, FALSE),
+  ('gnomish', 'Gnômico', NULL, NULL, FALSE),
+  ('goblin', 'Goblin', NULL, NULL, FALSE),
+  ('halfling', 'Pequenino', NULL, NULL, FALSE),
+  ('orc', 'Orc', NULL, NULL, FALSE),
+  ('abyssal', 'Abissal', NULL, NULL, TRUE),
+  ('celestial', 'Celestial', NULL, NULL, TRUE),
+  ('deep-speech', 'Dialeto Obscuro', NULL, NULL, TRUE),
+  ('druidic', 'Druídico', NULL, NULL, TRUE),
+  ('thieves-cant', 'Gíria dos Ladrões', NULL, NULL, TRUE),
+  ('infernal', 'Infernal', NULL, NULL, TRUE),
+  ('primordial', 'Primordial', NULL, NULL, TRUE),
+  ('sylvan', 'Silvestre', NULL, NULL, TRUE),
+  ('undercommon', 'Subcomum', NULL, NULL, TRUE);
+
+
+INSERT INTO rpg.phb_skill (id, name, ability_id, description)
+VALUES
+  ('acrobatics', 'Acrobacia', 'destreza'::rpg.ability_id, 'Manter-se em pé em uma situação complicada ou realizar uma acrobacia.'),
+  ('animal-handling', 'Lidar com Animais', 'sabedoria'::rpg.ability_id, 'Acalmar ou treinar um animal, ou fazer com que ele se comporte de uma determinada maneira.'),
+  ('arcana', 'Arcanismo', 'inteligencia'::rpg.ability_id, 'Recordar conhecimentos sobre magias, itens mágicos e planos de existência.'),
+  ('athletics', 'Atletismo', 'forca'::rpg.ability_id, 'Pular mais longe do que o normal, manter-se à tona em águas agitadas ou quebrar algo.'),
+  ('deception', 'Enganação', 'carisma'::rpg.ability_id, 'Contar uma mentira convincente ou usar um disfarce de forma convincente.'),
+  ('history', 'História', 'inteligencia'::rpg.ability_id, 'Relembrar fatos sobre eventos históricos, pessoas, nações e culturas.'),
+  ('insight', 'Intuição', 'sabedoria'::rpg.ability_id, 'Perceber o humor e as intenções de uma pessoa.'),
+  ('intimidation', 'Intimidação', 'carisma'::rpg.ability_id, 'Atemorizar ou ameaçar alguém para que faça o que você quer.'),
+  ('investigation', 'Investigação', 'inteligencia'::rpg.ability_id, 'Encontrar informações obscuras em livros ou deduzir como algo funciona.'),
+  ('medicine', 'Medicina', 'sabedoria'::rpg.ability_id, 'Diagnosticar uma doença ou determinar o que matou uma pessoa que morreu recentemente.'),
+  ('nature', 'Natureza', 'inteligencia'::rpg.ability_id, 'Relembrar fatos sobre o terreno, as plantas, os animais e o clima.'),
+  ('perception', 'Percepção', 'sabedoria'::rpg.ability_id, 'Usando uma combinação de sentidos, notar algo que é fácil de passar despercebido.'),
+  ('performance', 'Atuação', 'carisma'::rpg.ability_id, 'Atuar, contar uma história, tocar música ou dançar.'),
+  ('persuasion', 'Persuasão', 'carisma'::rpg.ability_id, 'Convencer alguém de algo de forma honesta e graciosa.'),
+  ('religion', 'Religião', 'inteligencia'::rpg.ability_id, 'Relembrar fatos sobre deuses, rituais religiosos e símbolos sagrados.'),
+  ('sleight-of-hand', 'Prestidigitação', 'destreza'::rpg.ability_id, 'Furtar um bolso, ocultar um objeto portátil ou fazer truque com as mãos.'),
+  ('stealth', 'Furtividade', 'destreza'::rpg.ability_id, 'Evitar ser notado movendo-se silenciosamente e se escondendo atrás de objetos.'),
+  ('survival', 'Sobrevivência', 'sabedoria'::rpg.ability_id, 'Seguir rastros, procurar alimentos, encontrar uma trilha ou evitar perigos naturais.');
+
+
+INSERT INTO rpg.phb_fighting_style (id, name, description, classes)
+VALUES
+  ('archery', 'Arquearia', 'Você recebe um bônus de +2 nas jogadas de ataque com armas à Distância.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('blind-fighting', 'Luta às Cegas', 'Você tem Visão às Cegas com um alcance de 3 metros.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('defense', 'Defensivo', 'Enquanto estiver usando armadura Leve, Média ou Pesada, você recebe um bônus de +1 na Classe de Armadura.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('dueling', 'Duelismo', 'Quando você segura uma arma Corpo a Corpo em uma mão e nenhuma outra arma, você recebe um bônus de +2 nas jogadas de dano desta arma.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('great-weapon-fighting', 'Combate com Armas Grandes', 'Quando você joga dano para um ataque que realiza com uma arma Corpo a Corpo que está empunhando com as duas mãos, pode tratar qualquer 1 ou 2 em um dado de dano como um 3. A arma deve ter a propriedade Duas Mãos ou Versátil para obter este benefício.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('interception', 'Interceptação', 'Quando uma criatura à sua vista atinge outra criatura a até 1,5 metro de você com uma jogada de ataque, você pode executar uma Reação para reduzir o dano causado ao alvo em 1d10 mais seu Bônus de Proficiência. Você deve estar segurando um Escudo ou uma arma Simples ou Marcial para executar esta Reação.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('protection', 'Protetivo', 'Quando uma criatura à sua vista ataca um alvo que não é você e que está a até 1,5 metro de distância, você pode executar uma Reação para interpor seu Escudo, se o estiver segurando. Isso impõe Desvantagem na jogada de ataque que acionou a reação e em todas as jogadas contra o alvo até o início do seu próximo turno, enquanto você estiver a até 1,5 metro do alvo.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('thrown-weapon-fighting', 'Combate com Armas de Arremesso', 'Quando você atinge com uma jogada de ataque à distância usando uma arma com a propriedade Arremesso, você obtém um bônus de +2 na jogada de dano.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('two-weapon-fighting', 'Combate com Duas Armas', 'Quando você realiza um ataque adicional como resultado de usar uma arma com a propriedade Leve, você pode adicionar seu modificador de atributo ao dano desse ataque, se já não estiver adicionando-o ao dano.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('unarmed-fighting', 'Combate Desarmado', 'Quando você atinge com seu Ataque Desarmado e causa dano, pode causar dano Contundente igual a 1d6 mais seu modificador de Força em vez do dano normal de um Ataque Desarmado. Se você não estiver segurando nenhuma arma ou Escudo quando realizar a jogada de ataque, o d6 se torna um d8. No início de cada um dos seus turnos, você pode causar 1d4 pontos de dano Contundente a uma criatura Imobilizada por você.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
+  ('blessed-warrior', 'Combatente Abençoado', 'Estilo de luta alternativo do Paladino (PHB 2024).', ARRAY['paladin']::text[]),
+  ('druidic-warrior', 'Combatente Druídico', 'Estilo de luta alternativo do Guardião (PHB 2024).', ARRAY['ranger']::text[]);
+
+
+INSERT INTO rpg.phb_weapon_property (id, name, description)
+VALUES
+  ('finesse', 'Acuidade', 'Ao realizar um ataque com uma arma que possui Acuidade, utilize seu modificador de Força ou Destreza, à sua escolha, para as jogadas de ataque e dano. Você deve aplicar o mesmo modificador em ambas as jogadas.'),
+  ('light', 'Leve', 'Quando você executa a ação Atacar em seu turno e usa uma arma Leve, pode realizar um ataque adicional com uma Ação Bônus mais tarde no mesmo turno. Esse ataque adicional deve ser realizado com uma arma Leve diferente, e você não adiciona seu modificador de atributo ao dano do ataque adicional, a menos que esse modificador seja negativo.'),
+  ('thrown', 'Arremesso', 'Se uma arma possui a propriedade Arremesso, você pode arremessá-la para realizar um ataque à distância, e pode sacar essa arma como parte do ataque. Se a arma for corpo a corpo, utilize o mesmo modificador de atributo para as jogadas de ataque e dano que você emprega ao realizar um ataque corpo a corpo com essa arma.'),
+  ('two-handed', 'Duas Mãos', 'Uma arma de Duas Mãos exige o uso de duas mãos quando você ataca com ela.'),
+  ('reach', 'Extensão', 'Uma arma de Extensão adiciona 1,5 metro ao seu alcance quando você ataca com ela, bem como ao determinar seu alcance para realizar Ataques de Oportunidade com ela.'),
+  ('heavy', 'Pesada', 'Você tem Desvantagem em jogadas de ataque com uma arma Pesada se for uma arma Corpo a Corpo e seu valor de Força for inferior a 13, ou se for uma arma à Distância e seu valor de Destreza for inferior a 13.'),
+  ('ammunition', 'Munição', 'Você só pode usar uma arma com a propriedade Munição para realizar um ataque à distância se tiver munição disponível. Cada ataque gasta uma peça de munição. Sacar a munição é parte do ataque.'),
+  ('loading', 'Recarga', 'Você pode disparar apenas uma única peça de munição de uma arma com Recarga ao executar uma ação, uma Ação Bônus ou uma Reação para dispará-la, independentemente do número de ataques que você normalmente pode realizar.'),
+  ('range', 'Alcance', 'Indicado entre parênteses após Munição ou Arremesso. O primeiro número é o alcance normal em metros; o segundo, o alcance máximo. Ataques além do alcance normal têm Desvantagem; além do máximo são impossíveis.'),
+  ('versatile', 'Versátil', 'Uma arma Versátil pode ser usada com uma ou duas mãos. Um valor de dano entre parênteses aparece com a propriedade. A arma causa esse dano quando usada com as duas mãos ao realizar um ataque corpo a corpo.');
+
+
+INSERT INTO rpg.phb_feat (id, name, category, repeatable, prerequisite, benefits, source_meta)
+VALUES
+  ('elemental-adept', 'Adepto Elemental', 'general', TRUE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Domínio Elemental","description":"Escolha um dos seguintes tipos de dano: Ácido, Elétrico, Gélido, Ígneo ou Trovejante. Magias que você conjura ignoram a Resistência a dano do tipo escolhido. Além disso, ao jogar dano para uma magia que causa dano deste tipo, você pode tratar qualquer 1 em um dado de dano como um 2."},{"name":"Repetível","description":"Repetível. Você pode adquirir este talento mais de uma vez, mas deve escolher um tipo de dano diferente a cada vez para Domínio Elemental."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.796Z"}'::jsonb),
+  ('charger', 'Agressor', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Corrida Aprimorada","description":"Quando você executa a ação Correr, seu Deslocamento aumenta em 3 metros para esta ação."},{"name":"Ataque em Investida","description":"Se você se mover pelo menos 3 metros em linha reta em direção a um alvo imediatamente antes de atingi-lo com uma jogada de ataque corpo a corpo como parte da ação Atacar, escolha um dos seguintes efeitos: obter um bônus de +1d8 na jogada de dano do ataque ou empurrar o alvo até 3 metros se ele não for um tamanho maior que você. Você pode usar esse benefício apenas uma vez em cada um dos seus turnos."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.797Z"}'::jsonb),
+  ('alert', 'Alerta', 'origin', FALSE, NULL, '[{"name":"Proficiência em Iniciativa","description":"Quando você joga Iniciativa, pode adicionar seu Bônus de Proficiência à jogada."},{"name":"Troca de Iniciativa","description":"Imediatamente após jogar Iniciativa, você pode trocar sua Iniciativa com a Iniciativa de um aliado voluntário no mesmo combate. Não é possível fazer a troca se você ou o aliado tem a condição Incapacitado."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.789Z"}'::jsonb),
+  ('observant', 'Analítico', 'general', FALSE, 'Nível 4 ou superior, Inteligência ou Sabedoria 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência ou Sabedoria em 1, até no máximo 20."},{"name":"Observador Atento","description":"Escolha uma das seguintes perícias: Intuição, Investigação ou Percepção. Se não tiver proficiência na perícia escolhida, você a adquire; se já for proficiente, adquire Especialização."},{"name":"Pesquisa Rápida","description":"Você pode executar a ação Procurar como uma Ação Bônus."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.797Z"}'::jsonb),
+  ('archery', 'Arquearia', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Você recebe um bônus de +2 nas jogadas de ataque com armas à Distância."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.816Z"}'::jsonb),
+  ('artisan', 'Artifista', 'origin', FALSE, NULL, '[{"name":"Proficiência com Ferramentas","description":"Você adquire proficiência com três Ferramentas de Artesão diferentes à sua escolha na tabela Fabricação Rápida."},{"name":"Desconto","description":"Sempre que você compra um item não mágico, recebe um desconto de 20% nele."},{"name":"Fabricação Rápida","description":"Quando completa um Descanso Longo, você pode fabricar uma peça de equipamento da tabela Fabricação Rápida, se tiver as Ferramentas de Artesão associadas a esse item e tenha proficiência com essas ferramentas. O item permanece até que você complete outro Descanso Longo, momento em que o item se desfaz. Fabricação Rápida\n\nFerramentas de Artesão | Itens de Fabricação\nFerramentas de Carpinteiro | Escada, Tocha \nFerramentas de Coureiro | Algibeira, Estojo \nFerramentas de Entalhador | Cajado, Clava, Clava Grande \nFerramentas de Ferreiro | Arpéu, Balde, Esferas de Metal, Estrepes, Panela de Ferro \nFerramentas de Funileiro | Pederneira, Pá, Sino \nFerramentas de Oleiro | Jarro, Lâmpada \nFerramentas de Pedreiro | Roldana e Polias \nFerramentas de Tecelão | Cesta, Corda, Rede, Tenda"}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.790Z"}'::jsonb),
+  ('savage-attacker', 'Atacante Selvagem', 'origin', FALSE, NULL, '[{"description":"Uma vez por turno, quando você atinge um alvo com uma arma, pode jogar os dados de dano da arma duas vezes e usar qualquer uma das jogadas contra o alvo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.790Z"}'::jsonb),
+  ('spell-sniper', 'Atirador Arcano', 'general', FALSE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Ignorar Cobertura","description":"Jogadas de ataque com magias ignoram Cobertura Parcial e Cobertura de Três Quartos."},{"name":"Conjuração à Queima-Roupa","description":"Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com magias."},{"name":"Alcance Aumentado","description":"Ao conjurar uma magia que tem um alcance de pelo menos 3 metros e exija realizar uma jogada de ataque, você pode aumentar o alcance da magia em 18 metros."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.798Z"}'::jsonb),
+  ('athlete', 'Atleta', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Deslocamento de Escalada","description":"Você adquire Deslocamento de Escalada igual ao seu Deslocamento."},{"name":"Levantar","description":"Quando você tem a condição Caído, pode se reerguer com apenas 1,5 metro de movimento."},{"name":"Saltar","description":"Você pode realizar um Salto em Distância ou Salto em Altura correndo após mover-se apenas 1,5 metro."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.798Z"}'::jsonb),
+  ('actor', 'Ator', 'general', FALSE, 'Nível 4 ou superior, Carisma 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Carisma em 1, até no máximo 20."},{"name":"Personificação","description":"Enquanto está disfarçado como uma pessoa real ou fictícia, você tem Vantagem em testes de Carisma (Atuação ou Enganação) para convencer os outros de que você é essa pessoa."},{"name":"Mimetismo","description":"Você pode imitar os sons de outras criaturas, incluindo a fala. Uma criatura que ouve a imitação deve ser bem-sucedida em um teste de Sabedoria (Intuição) para determinar que o efeito é falso (CD 8 mais seu modificador de Carisma e seu Bônus de Proficiência)."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.799Z"}'::jsonb),
+  ('ability-score-improvement', 'Aumento no Valor de Atributo', 'general', TRUE, 'Nível 4 ou superior', '[{"description":"Aumente um valor de atributo à sua escolha em 2, ou aumente dois valores de atributo à sua escolha em 1. Este talento não pode aumentar um valor de atributo acima de 20."},{"name":"Repetível","description":"Você pode adquirir este talento mais de uma vez."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.799Z"}'::jsonb),
+  ('chef', 'Chef', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Constituição ou Sabedoria em 1, até no máximo 20."},{"name":"Utensílios de Cozinheiro","description":"Você adquire proficiência com Utensílios de Cozinheiro se ainda não o tiver."},{"name":"Refeição Satisfatória","description":"Como parte de um Descanso Curto, você pode cozinhar alimentos especiais se tiver ingredientes e Utensílios de Cozinheiro à mão. Você pode preparar comida suficiente para um número de criaturas igual a 4 mais seu Bônus de Proficiência. No final do Descanso Curto, qualquer criatura que comer a comida e gastar um ou mais Dados de Vida para recuperar Pontos de Vida recupera 1d8 Pontos de Vida adicionais."},{"name":"Guloseimas Revigorantes","description":"Com 1 hora de trabalho ou quando completar um Descanso Longo, você pode cozinhar um número de guloseimas igual ao seu Bônus de Proficiência se tiver ingredientes e Utensílios de Cozinheiro à mão. Essas guloseimas especiais permanecem por 8 horas após serem feitas. Uma criatura pode executar uma Ação Bônus para comer uma dessas guloseimas e obter um número de Pontos de Vida Temporários igual ao seu Bônus de Proficiência."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.800Z"}'::jsonb),
+  ('thrown-weapon-fighting', 'Combate com Armas de Arremesso', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você atinge com uma jogada de ataque à distância usando uma arma com a propriedade Arremesso, você obtém um bônus de +2 na jogada de dano."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.816Z"}'::jsonb),
+  ('great-weapon-fighting', 'Combate com Armas Grandes', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você joga dano para um ataque que realiza com uma arma Corpo a Corpo que está empunhando com as duas mãos, pode tratar qualquer 1 ou 2 em um dado de dano como um 3. A arma deve ter a propriedade Duas Mãos ou Versátil para obter este benefício."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.817Z"}'::jsonb),
+  ('two-weapon-fighting', 'Combate com Duas Armas', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você realiza um ataque adicional como resultado de usar uma arma com a propriedade Leve, você pode adicionar seu modificador de atributo ao dano desse ataque, se já não estiver adicionando-o ao dano."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.817Z"}'::jsonb),
+  ('unarmed-fighting', 'Combate Desarmado', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você atinge com seu Ataque Desarmado e causa dano, pode causar dano Contundente igual a 1d6 mais seu modificador de Força em vez do dano normal de um Ataque Desarmado. Se você não estiver segurando nenhuma arma ou Escudo quando realizar a jogada de ataque, o d6 se torna um d8. No início de cada um dos seus turnos, você pode causar 1d4 pontos de dano Contundente a uma criatura Imobilizada por você."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.817Z"}'::jsonb),
+  ('mounted-combatant', 'Combatente Montado', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força, Destreza ou Sabedoria em 1, até no máximo 20."},{"name":"Golpe Montado","description":"Enquanto estiver montado, você tem Vantagem em jogadas de ataque contra qualquer criatura desmontada a até 1,5 metro de sua montaria que seja pelo menos um tamanho menor que a montaria."},{"name":"Pulo Lateral","description":"Se sua montaria for submetida a um efeito que lhe permita realizar uma salvaguarda de Destreza para sofrer apenas metade do dano, ela não sofre dano em caso de sucesso, e apenas metade do dano se falhar. Para que sua montaria obtenha esse benefício, você deve estar montando-a, e nenhum de vocês pode ter a condição Incapacitado."},{"name":"Redirecionar Ataque","description":"Enquanto estiver montado, você pode forçar um ataque que atinge sua montaria a atingi-lo se você não tem a condição Incapacitado."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.800Z"}'::jsonb),
+  ('war-caster', 'Conjurador Bélico', 'general', FALSE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Concentração","description":"Você tem Vantagem em salvaguardas de Constituição que realiza para manter a Concentração."},{"name":"Magia Reativa","description":"Quando uma criatura provocar um Ataque de Oportunidade a você ao sair do seu alcance, você pode executar uma Reação para conjurar uma magia contra a criatura, em vez de realizar o Ataque de Oportunidade. A magia deve ter um tempo de conjuração de uma ação e deve ter como alvo apenas aquela criatura."},{"name":"Componentes Somáticos","description":"Você pode realizar os componentes somáticos de magias mesmo quando estiver com armas ou um Escudo em uma ou ambas as mãos."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.801Z"}'::jsonb),
+  ('ritual-caster', 'Conjurador Ritualista', 'general', FALSE, 'Nível 4 ou superior, Inteligência, Sabedoria ou Carisma 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Magias Rituais","description":"Escolha um número de magias de 1º círculo igual ao seu Bônus de Proficiência que tem o marcador Ritual. Você tem essas magias sempre preparadas e pode conjurá-las com qualquer espaço de magia que tiver. O atributo de conjuração das magias é o atributo aumentado por este talento. Sempre que seu Bônus de Proficiência aumentar depois disso, você pode adicionar uma magia de 1º círculo com o marcador Ritual às magias sempre preparadas com esta característica."},{"name":"Ritual Rápido","description":"Com este benefício, você pode conjurar uma magia Ritual que tem preparada usando seu tempo de conjuração normal, em vez do tempo prolon- gado para um Ritual. Realizar isso não requer um espaço de magia. Após conjurar a magia desse modo, você não pode usar esse benefício novamente até completar um Descanso Longo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.801Z"}'::jsonb),
+  ('healer', 'Curandeiro', 'origin', FALSE, NULL, '[{"name":"Médico de Combate","description":"Caso tenha um Kit de Curandeiro, você pode gastar um uso e cuidar de uma criatura a até 1,5 metro de você como uma ação Usar Objeto. Essa criatura pode gastar um dos Dados de Pontos de Vida dela e você joga esse dado. A criatura recupera um número de Pontos de Vida igual à jogada mais o seu Bônus de Proficiência."},{"name":"Cura Garantida","description":"Sempre que jogar um dado para determinar o número de Pontos de Vida que você recupera com uma magia ou com o benefício do talento Médico de Combate, você pode jogar novamente o dado se o resultado for 1, e você deve usar a nova jogada."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.790Z"}'::jsonb),
+  ('boon-of-fortitude', 'Dádiva da Fortitude', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Saúde Fortalecida","description":"Seus Pontos de Vida máximos aumentam em 40. Além disso, sempre que você recuperar Pontos de Vida, pode recuperar Pontos de Vida adicionais iguais ao seu modificador de Constituição. Após recuperar esses Pontos de Vida adicionais, você não pode fazer isso novamente até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.820Z"}'::jsonb),
+  ('boon-of-combat-prowess', 'Dádiva da Proeza em Combate', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Pontaria Inigualável","description":"Quando você erra uma jogada de ataque, em vez disso você acerta. Após usar este benefício, você não pode utilizá-lo novamente até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.820Z"}'::jsonb),
+  ('boon-of-skill-proficiency', 'Dádiva da Proficiência em Perícia', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Assecla Completo","description":"Você adquire proficiência em todas as perícias."},{"name":"Especialização","description":"Escolha uma perícia na qual você tenha proficiência, mas não tenha Especialização. Você obtém Especialização nessa perícia."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.820Z"}'::jsonb),
+  ('boon-of-spell-recall', 'Dádiva da Recordação de Magia', 'epic-boon', FALSE, 'Nível 19 ou superior, Característica de Conjuração', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 30."},{"name":"Conjuração Livre","description":"Sempre que você conjurar uma magia com um espaço de magia de 1º a 4º círculo, jogue 1d4. Se o resultado que você tirar for o mesmo que o círculo do espaço, o espaço não é gasto."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.821Z"}'::jsonb),
+  ('boon-of-recovery', 'Dádiva da Recuperação', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Até a Morte","description":"Quando você for reduzido a 0 Pontos de Vida, pode escolher ficar com 1 Ponto de Vida e recuperar um número de Pontos de Vida igual à metade dos seus Pontos de Vida máximos. Após usar esse benefício, você não pode usá-lo novamente até completar um Descanso Longo."},{"name":"Recuperar Vitalidade","description":"Você tem uma reserva de dez d10s. Como uma Ação Bônus, você pode gastar dados da reserva, jogá-los e recuperar um número de Pontos de Vida igual ao total do resultado. Você restaura todos os dados gastos quando você completa um Descanso Longo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.821Z"}'::jsonb),
+  ('boon-of-energy-resistance', 'Dádiva da Resistência à Energia', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Resistências à Energia","description":"Você obtém Resistência a dois dos seguintes tipos de dano à sua escolha: Ácido, Elétrico, Gélido, Ígneo, Necrótico, Psíquico, Radiante, Trovejante ou Venenoso. Sempre que completar um Descanso Longo, você pode mudar suas escolhas."},{"name":"Redirecionamento de Energia","description":"Ao sofrer dano de um dos tipos escolhidos para o benefício Resistências à Energia, você pode executar uma Reação para direcionar o dano do mesmo tipo para outra criatura à sua vista a até 18 metros de você que não esteja sob Cobertura Total. Se você fizer isso, essa criatura deve ser bem-sucedida em uma salvaguarda de Destreza (CD 8 mais seu modificador de Constituição e seu Bônus de Proficiência) ou sofre dano igual a 2d12 mais seu modificador de Constituição."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.821Z"}'::jsonb),
+  ('boon-of-speed', 'Dádiva da Velocidade', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Artista de Fuga","description":"Como uma Ação Bônus, você pode executar a ação Desengajar, que também encerra a condição Imobilizado em você."},{"name":"Agilidade","description":"Seu Deslocamento aumenta em 9 metros."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.822Z"}'::jsonb),
+  ('boon-of-dimensional-travel', 'Dádiva da Viagem Dimensional', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Passos Fugazes","description":"Imediatamente após executar a ação Atacar ou Usar Magia, você pode se teleportar até 9 metros para um espaço desocupado à sua vista."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.822Z"}'::jsonb),
+  ('boon-of-truesight', 'Dádiva da Visão Verdadeira', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Visão Verdadeira","description":"Você tem Visão Verdadeira com um alcance de 18 metros."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.822Z"}'::jsonb),
+  ('boon-of-irresistible-offense', 'Dádiva do Ataque Irresistível', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 30."},{"name":"Superar Defesas","description":"O dano Contundente, Cortante e Perfurante que você causa sempre ignora Resistência."},{"name":"Golpe Devastador","description":"Quando você tira 20 no d20 para uma jogada de ataque, pode causar dano adicional ao alvo igual ao valor do atributo aumentado por este talento. O tipo de dano adicional é o mesmo do ataque."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.823Z"}'::jsonb),
+  ('boon-of-fate', 'Dádiva do Destino', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Aprimorar Destino","description":"Quando você ou outra criatura a até 18 metros de você for bem-sucedida ou falhar em um Teste D20, você pode jogar 2d4 e aplicar os resultados como bônus ou penalidade na jogada de d20. Após usar este benefício, você não pode utilizá-lo novamente até jogar Iniciativa ou completar um Descanso Curto ou Longo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.823Z"}'::jsonb),
+  ('boon-of-the-night-spirit', 'Dádiva do Espírito da Noite', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Fundir-se com Sombras","description":"Enquanto estiver em Meia- -luz ou Escuridão, você pode se conceder a condição Invisível como uma Ação Bônus. A condição encerra imediatamente após você executar uma ação, uma Ação Bônus ou uma Reação."},{"name":"Forma Sombria","description":"Enquanto estiver em Meia-luz ou Escuridão, você tem Resistência a todos os danos, exceto Psíquico e Radiante."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.823Z"}'::jsonb),
+  ('defense', 'Defensivo', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Enquanto estiver usando armadura Leve, Média ou Pesada, você recebe um bônus de +1 na Classe de Armadura."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.818Z"}'::jsonb),
+  ('dueling', 'Duelismo', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você segura uma arma Corpo a Corpo em uma mão e nenhuma outra arma, você recebe um bônus de +2 nas jogadas de dano desta arma."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.818Z"}'::jsonb),
+  ('defensive-duelist', 'Duelista Defensivo', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza em 1, até no máximo 20."},{"name":"Aparar","description":"Se estiver segurando uma arma de Acuidade e outra criatura acertar você com um ataque corpo a corpo, você pode executar uma Reação para adicionar seu Bônus de Proficiência à sua Classe de Armadura, potencialmente fazendo com que o ataque erre. Você obtém este bônus na sua CA contra ataques corpo a corpo até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.802Z"}'::jsonb),
+  ('poisoner', 'Envenenador', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza ou Inteligência em 1, até no máximo 20."},{"name":"Veneno Potente","description":"Ao realizar uma jogada de dano que causa dano Venenoso, você ignora Resistência a dano Venenoso."},{"name":"Preparar Veneno","description":"Você adquire proficiência com o Kit de Veneno. Com 1 hora de trabalho usando esse kit e gastando 50 PO em materiais, você pode fabricar um número de doses de veneno igual ao seu Bônus de Proficiência. Como uma Ação Bônus, você pode aplicar uma dose de veneno a uma arma ou peça de munição. Uma vez aplicado, o veneno retém sua potência por 1 minuto ou até você causar dano com o item envenenado, o que for mais curto. Ao sofrer dano do item envenenado, uma criatura deve ser bem-sucedida em uma salvaguarda de Constituição (CD 8 mais o modificador do atributo aumentado por este talento e seu Bônus de Proficiência) ou sofre 2d8 pontos de dano Venenoso e está com a condição Envenenado até o final do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.802Z"}'::jsonb),
+  ('crusher', 'Esmagador', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Constituição em 1, até no máximo 20."},{"name":"Empurrar","description":"Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Contundente, você pode movê-la 1,5 metro para um espaço desocupado se o alvo não for um tamanho maior que você."},{"name":"Crítico Melhorado","description":"Ao obter um Acerto Crítico que causa dano Contundente a uma criatura, jogadas de ataque contra essa criatura tem Vantagem até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.802Z"}'::jsonb),
+  ('dual-wielder', 'Especialista Ambidestro', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Combate com Duas Armas Aprimorado","description":"Quando você executa a ação Atacar no seu turno com uma arma que tenha a propriedade Leve, pode realizar um ataque adicional como uma Ação Bônus no mesmo turno com uma arma diferente, que deve ser uma arma Corpo a Corpo que não possua a propriedade Duas Mãos. Você não pode adicionar o seu modificador de atributo ao dano do ataque adicional, a menos que o modificador seja negativo."},{"name":"Saque Rápido","description":"Você pode desembainhar ou embainhar duas armas que não possuam a propriedade Duas Mãos quando normalmente poderia desembainhar ou embainhar apenas uma."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.803Z"}'::jsonb),
+  ('lightly-armored', 'Especialista em Armaduras Leves', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Treinamento com Armadura","description":"Você obtém treinamento com Armadura Leve e Escudos."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.803Z"}'::jsonb),
+  ('moderately-armored', 'Especialista em Armaduras Médias', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Armadura Leve', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Treinamento com Armadura","description":"Você obtém treinamento com Armadura Média."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.804Z"}'::jsonb),
+  ('heavily-armored', 'Especialista em Armaduras Pesadas', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Armadura Média', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Constituição ou Força em 1, até no máximo 20."},{"name":"Treinamento com Armadura","description":"Você adquire treinamento com Armadura Pesada."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.804Z"}'::jsonb),
+  ('crossbow-expert', 'Especialista em Besta', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza em 1, até no máximo 20."},{"name":"Ignorar Recarga","description":"Você ignora a propriedade Recarga da Besta de Mão, Besta Leve e Besta Pesada (todas chamadas de bestas em outras partes deste talento). Se estiver segurando uma dessas bestas, você pode carregar uma peça de munição nela mesmo sem ter uma mão livre."},{"name":"Disparo à Queima-Roupa","description":"Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com bestas."},{"name":"Combate com Duas Armas","description":"Ao realizar o ataque adicional da propriedade Leve, você pode adicionar seu modificador de atributo ao dano do ataque adicional se esse ataque for com uma besta que tenha a propriedade Leve e você ainda não estiver adicionando esse modificador ao dano."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.804Z"}'::jsonb),
+  ('skill-expert', 'Especialista em Perícia', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 20."},{"name":"Proficiência em Perícia","description":"Você adquire proficiência em uma perícia à sua escolha."},{"name":"Especialização","description":"Escolha uma perícia na qual você tenha proficiência, mas não seja Especialização. Você obtém Especialização nessa perícia."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.805Z"}'::jsonb),
+  ('mage-slayer', 'Exterminador de Conjuradores', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Quebrador de Concentração","description":"Quando você causa dano a uma criatura que está se concentrando em uma magia, ela tem Desvantagem na salvaguarda que realiza para manter a Concentração."},{"name":"Resguardo Mental","description":"Se falhar em uma salvaguarda de Inteligência, Sabedoria ou Carisma, em vez disso você escolhe ser bem-sucedido. Após usar esse benefício, você não pode usá-lo novamente até completar um Descanso Curto ou Longo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.805Z"}'::jsonb),
+  ('skilled', 'Habilidoso', 'origin', TRUE, NULL, '[{"description":"Você adquire proficiência em qualquer combinação de três perícias ou ferramentas à sua escolha."},{"name":"Repetível","description":"Você pode adquirir este talento mais de uma vez."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.791Z"}'::jsonb),
+  ('grappler', 'Imobilizador', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Socar e Imobilizar","description":"Quando você atinge uma criatura com um Ataque Desarmado como parte da ação Atacar no seu turno, pode usar as opções Dano e Imobilizar apenas uma vez por turno."},{"name":"Vantagem no Ataque","description":"Você tem Vantagem em jogadas de ataque contra uma criatura Imobilizada por você."},{"name":"Imobilizador Veloz","description":"Você não precisa gastar movimento adicional para se mover enquanto estiver imobilizando uma criatura Imobilizada, desde que ela seja do seu tamanho ou menor."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.806Z"}'::jsonb),
+  ('magic-initiate', 'Iniciado em Magia', 'origin', TRUE, NULL, '[{"name":"Dois Truques","description":"Você aprende dois truques à sua escolha na lista de magias de Clérigo, Druida ou Mago. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias deste talento (escolha quando selecionar este talento)."},{"name":"Magia de 1º Círculo","description":"Escolha uma magia de 1º círculo da mesma lista que você selecionou para os truques deste talento. Você tem essa magia sempre preparada. Você pode conjurá-la uma vez sem um espaço de magia, e você restaura a capacidade de conjurá-la dessa maneira quando completa um Descanso Longo. Você também pode conjurar a magia usando qualquer espaço de magia que tiver."},{"name":"Substituição de Magia","description":"Sempre que você alcança um novo nível, pode substituir uma das magias que escolheu para este talento por uma magia diferente do mesmo círculo da lista de magias escolhida."},{"name":"Repetível","description":"Repetível. Você pode adquirir este talento mais de uma vez, mas deve escolher uma lista de magias diferente a cada vez."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.791Z"}'::jsonb),
+  ('interception', 'Interceptação', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando uma criatura à sua vista atinge outra criatura a até 1,5 metro de você com uma jogada de ataque, você pode executar uma Reação para reduzir o dano causado ao alvo em 1d10 mais seu Bônus de Proficiência. Você deve estar segurando um Escudo ou uma arma Simples ou Marcial para executar esta Reação."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.818Z"}'::jsonb),
+  ('inspiring-leader', 'Líder Inspirador', 'general', FALSE, 'Nível 4 ou superior, Sabedoria ou Carisma 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Atuação Encorajadora","description":"Ao completar um Descanso Curto ou Longo, você pode fazer uma atuação encorajadora: um discurso, música ou dança. Ao realizar isso, escolha até seis aliados (você pode se incluir) a até 9 metros de você que presenciaram a atuação. Criaturas escolhidas recebem Pontos de Vida Temporários iguais ao seu nível de personagem mais o modificador do atributo que você aumentou com este talento."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.806Z"}'::jsonb),
+  ('blind-fighting', 'Luta às Cegas', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Você tem Visão às Cegas com um alcance de 3 metros."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.819Z"}'::jsonb),
+  ('keen-mind', 'Mente Aguçada', 'general', FALSE, 'Nível 4 ou superior, Inteligência 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência em 1, até no máximo 20."},{"name":"Conhecimento Vasto","description":"Escolha uma das seguintes perícias: Arcanismo, História, Investigação, Natureza ou Religião. Se não tiver proficiência na perícia escolhida, você a adquire; se já for proficiente, adquire Especialização."},{"name":"Análise Rápida","description":"Você pode executar a ação Analisar como uma Ação Bônus."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.807Z"}'::jsonb),
+  ('weapon-master', 'Mestre das Armas', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Propriedade de Maestria","description":"Seu treinamento com armas permite que você use a propriedade de maestria de um tipo de arma Simples ou Marcial à sua escolha, desde que você tenha proficiência com ela. Sempre que completar um Descanso Longo, você pode trocar o tipo de arma por outro elegível."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.807Z"}'::jsonb),
+  ('medium-armor-master', 'Mestre em Armaduras Médias', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Armadura Média', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Portador Ágil","description":"Enquanto estiver usando armadura Média, você pode adicionar 3, em vez de 2, à sua CA se tiver um valor de Destreza 16 ou superior."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.807Z"}'::jsonb),
+  ('heavy-armor-master', 'Mestre em Armaduras Pesadas', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Armadura Pesada', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Constituição em 1, até no máximo 20."},{"name":"Redução de Dano","description":"Quando você é atingido por um ataque enquanto está vestido com uma armadura Pesada, qualquer dano Contundente, Cortante e Perfurante causado a você por esse ataque é reduzido em uma quantidade de pontos igual ao seu Bônus de Proficiência."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.808Z"}'::jsonb),
+  ('polearm-master', 'Mestre em Armas de Haste', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Golpe de Haste","description":"Como uma ação, imediatamente após atacar com um Cajado, Lança ou uma arma que tenha a propriedade Extensão e Pesado, você pode executar uma Ação Bônus para realizar um ataque corpo a corpo com a extremidade oposta da arma. A arma causa dano Contundente, e o dado de dano da arma para este ataque é um d4."},{"name":"Golpe Reativo","description":"Ao empunhar um Cajado, Lança ou uma arma que tenha as propriedades Extensão e Pesado, você pode executar uma Reação para realizar um ataque corpo a corpo com essa arma contra uma criatura que entra no seu alcance."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.808Z"}'::jsonb),
+  ('great-weapon-master', 'Mestre em Armas Grandes', 'general', FALSE, 'Nível 4 ou superior, Força 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força em 1, até no máximo 20."},{"name":"Maestria em Armas Pesadas","description":"Quando você atinge uma criatura com uma arma que tem a propriedade Pesada como parte da ação Atacar no seu turno, você pode causar dano adicional ao alvo com a arma. O dano adicional é igual ao seu Bônus de Proficiência."},{"name":"Cortar","description":"Imediatamente após obter um Acerto Crítico ou reduzir uma criatura a 0 Pontos de Vida com uma arma Corpo a Corpo, você pode realizar um ataque com a mesma arma como uma Ação Bônus."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.809Z"}'::jsonb),
+  ('shield-master', 'Mestre em Escudos', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Escudo', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força em 1, até no máximo 20."},{"name":"Golpe de Escudo","description":"Ao atacar uma criatura a até 1,5 metro de você como parte da ação Atacar e atingir com uma arma Corpo a Corpo, você pode atacar imediatamente o alvo com seu Escudo se ele estiver equipado, forçando o alvo a realizar uma salvaguarda de Força (CD 8 mais seu modificador de Força e seu Bônus de Proficiência). Se falhar, você empurra o alvo a 1,5 metro de você ou impõe a ele a condição Caído (à sua escolha). Você pode usar esse benefício apenas uma vez em cada um dos seus turnos."},{"name":"Interpor Escudo","description":"Se você for submetido a um efeito que lhe permita realizar uma salvaguarda de Destreza para sofrer apenas metade do dano, pode usar uma Reação para não sofrer dano se você for bem-sucedido na salvaguarda e estiver segurando um Escudo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.809Z"}'::jsonb),
+  ('sharpshooter', 'Mestre-Atirador', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza em 1, até no máximo 20."},{"name":"Ignorar Cobertura","description":"Seus ataques à distância com armas ignoram Cobertura Parcial e Cobertura de Três Quartos."},{"name":"Disparo à Queima-Roupa","description":"Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com armas à Distância."},{"name":"Tiro Longo","description":"Atacar com alcance máximo não impõe Desvantagem em suas jogadas de ataque com armas à Distância."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.809Z"}'::jsonb),
+  ('musician', 'Músico', 'origin', FALSE, NULL, '[{"name":"Treinamento em Instrumentos","description":"Você adquire proficiência com três Instrumentos Musicais à sua escolha."},{"name":"Canção Encorajadora","description":"Ao completar um Descanso Curto ou Longo, você pode tocar uma música em um Instrumento Musical com o qual tem proficiência e conceder Inspiração Heroica a aliados que ouvem a música. O número de aliados que você pode afetar desse modo é igual ao seu Bônus de Proficiência."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.792Z"}'::jsonb),
+  ('piercer', 'Perfurador', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Punção","description":"Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Perfurante, pode jogar novamente um dos dados de dano do ataque, e você deve usar a nova jogada."},{"name":"Crítico Melhorado","description":"Ao obter um Acerto Crítico que causa dano Perfurante a uma criatura, você pode jogar um dado de dano adicional ao determinar o dano Perfurante adicional que o alvo sofre."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.810Z"}'::jsonb),
+  ('protection', 'Protetivo', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando uma criatura à sua vista ataca um alvo que não é você e que está a até 1,5 metro de distância, você pode executar uma Reação para interpor seu Escudo, se o estiver segurando. Isso impõe Desvantagem na jogada de ataque que acionou a reação e em todas as jogadas contra o alvo até o início do seu próximo turno, enquanto você estiver a até 1,5 metro do alvo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.819Z"}'::jsonb),
+  ('resilient', 'Resiliente', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Escolha um atributo no qual você não tenha proficiência em salvaguarda. Aumente o valor de atributo escolhido em 1, até no máximo 20."},{"name":"Proficiência em Salvaguarda","description":"Você adquire proficiência em salvaguardas com o atributo escolhido."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.811Z"}'::jsonb),
+  ('durable', 'Resistente', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Constituição em 1, até no máximo 20."},{"name":"Desafie a Morte","description":"Você tem Vantagem em Salvaguardas Contra Morte."},{"name":"Recuperação Rápida","description":"Como uma Ação Bônus, você pode gastar um de seus Dados de Pontos de Vida, jogar o dado e recuperar um número de Pontos de Vida igual ao resultado."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.811Z"}'::jsonb),
+  ('sentinel', 'Sentinela', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Diligente","description":"Imediatamente após uma criatura em até 1,5 metro de você executar a ação Desengajar ou atingir um alvo diferente de você com um ataque, você pode realizar um Ataque de Oportunidade contra essa criatura."},{"name":"Deter","description":"Ao atingir uma criatura com um Ataque de Oportunidade, o Deslocamento da criatura se torna 0 pelo resto do turno atual."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.812Z"}'::jsonb),
+  ('stealthy', 'Sorrateiro', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza em 1, até no máximo 20."},{"name":"Visão às Cegas","description":"Você tem Visão às Cegas com um alcance de 3 metros."},{"name":"Névoa de Guerra","description":"Você explora as distrações da batalha e tem Vantagem em qualquer teste de Destreza (Furtividade) que realiza como parte da ação Esconder durante o combate."},{"name":"Atirador","description":"Se você realizar uma jogada de ataque enquanto estiver escondido e errar a jogada, realizar a jogada de ataque não revela sua localização."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.812Z"}'::jsonb),
+  ('lucky', 'Sortudo', 'origin', FALSE, NULL, '[{"name":"Pontos de Sorte","description":"Você tem um número de Pontos de Sorte igual ao seu Bônus de Proficiência e pode gastar os pontos nos benefícios abaixo. Você restaura seus Pontos de Sorte gastos quando completa um Descanso Longo."},{"name":"Vantagem","description":"Quando você joga um d20 para um Teste de D20, pode gastar 1 Ponto de Sorte para ter Vantagem na jogada."},{"name":"Desvantagem","description":"Quando uma criatura jogar um d20 para uma jogada de ataque contra você, você pode gastar 1 Ponto de Sorte para impor Desvantagem nessa jogada."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.793Z"}'::jsonb),
+  ('slasher', 'Talhador', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Debilitar","description":"Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Cortante, você pode reduzir o Deslocamento dessa criatura em 3 metros até o início do seu próximo turno."},{"name":"Crítico Melhorado","description":"Ao obter um Acerto Crítico que causa dano Cortante a uma criatura, ela tem Desvantagem nas jogadas de ataque até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.813Z"}'::jsonb),
+  ('telekinetic', 'Telecinético', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Telecinese Menor","description":"Você aprende a magia Mãos Mágicas. Você pode conjurá-la sem componentes Verbais ou Somáticos, pode usar a mão espectral Invisível e o alcance dela e a distância que ela pode estar de você aumentam em 9 metros ao conjurá-la. O atributo de conjuração da magia é o atributo aumentado por este talento."},{"name":"Empurrão Telecinético","description":"Como uma Ação Bônus, você pode empurrar telecinéticamente uma criatura à sua vista a até 9 metros de você. Ao realizar isso, o alvo deve ser bem-sucedido em uma salvaguarda de Força (CD 8 mais o modificador de atributo do aumento por este talento e seu Bônus de Proficiência) ou é movido 1,5 metro na sua direção ou para longe de você."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.813Z"}'::jsonb),
+  ('telepathic', 'Telepático', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Enunciado Telepático","description":"Você pode falar telepaticamente com qualquer criatura à sua vista a até 18 metros de você. Seus enunciados telepáticos estão em um idioma que você conhece, e a criatura só o entende se souber esse idioma. Sua comunicação não dá à criatura a capacidade de responder a você telepaticamente."},{"name":"Detectar Pensamentos","description":"Você tem a magia Detectar Pensamentos sempre preparada. Você pode conjurá-la sem um espaço de magia ou componentes de magia, não podendo conjurá-la dessa forma novamente antes de completar um Descanso Longo. Além disso, pode conjurá-la gastando o espaço de magia que você tem do círculo apropriado. Seu atributo de conjuração para a magia é o atributo aumentado por este talento."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.813Z"}'::jsonb),
+  ('shadow-touched', 'Tocado pela Sombra', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Magia Sombria","description":"Escolha uma magia de 1º círculo da escola de magia Ilusão ou Necromancia. Você tem essa magia e Invisibilidade sempre preparadas, podendo conjurá-las sem gastar espaço de magia. Após usar uma delas desse modo, você não pode conjurá-la assim novamente até completar um Descanso Longo. Também é possível conjurar estas magias utilizando espaços de magia de círculos apropriados. O atributo de conjuração das magias é o aprimorado por este talento."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.814Z"}'::jsonb),
+  ('fey-touched', 'Tocado pelas Fadas', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Magia Feérica","description":"Escolha uma magia de 1º círculo da escola de magia Adivinhação ou Encantamento. Você tem sempre essa magia e Passo Nebuloso preparadas, podendo conjurá-las sem gastar espaço de magia. Após usar uma delas desse modo, você não pode conjurá-la assim novamente até completar um Descanso Longo. Também é possível conjurar essas magias utilizando espaços de magia de círculos apropriados. O atributo de conjuração das magias é o aprimorado por este talento."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.814Z"}'::jsonb),
+  ('martial-weapon-training', 'Treinamento com Armas Marciais', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Proficiência com Armas","description":"Você adquire proficiência com armas Marciais."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.815Z"}'::jsonb),
+  ('tavern-brawler', 'Valentão de Taverna', 'origin', FALSE, NULL, '[{"name":"Ataque Desarmado Aprimorado","description":"Quando você atinge com seu Ataque Desarmado e causar dano, pode causar dano Contundente igual a 1d4 pontos mais seu modificador de Força em vez do dano normal de um Ataque Desarmado."},{"name":"Dano Garantido","description":"Sempre que você joga um dado de dano para seu Ataque Desarmado, pode jogar novamente o dado se o resultado for 1, e deve usar a nova jogada."},{"name":"Armamento Improvisado","description":"Você tem proficiência com armas improvisadas."},{"name":"Empurrar","description":"Quando você atinge uma criatura com um Ataque Desarmado como parte da ação Atacar no seu turno, pode causar dano ao alvo e também empurrá- -lo 1,5 metro para longe de você. Você pode usar esse benefício apenas uma vez por turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.793Z"}'::jsonb),
+  ('mobile', 'Velocista', 'general', FALSE, 'Nível 4 ou superior, Destreza ou Constituição 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza ou Constituição em 1, até no máximo 20."},{"name":"Aumento de Deslocamento","description":"Seu Deslocamento aumenta em 3 metros."},{"name":"Correr em Terreno Difícil","description":"Ao executar a ação Correr no seu turno, Terreno Difícil não custa movimento adicional pelo resto deste turno."},{"name":"Movimentação Ágil","description":"Ataques de Oportunidade têm Desvantagem contra você."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.815Z"}'::jsonb),
+  ('tough', 'Vigoroso', 'origin', FALSE, NULL, '[{"description":"Seus Pontos de Vida máximos aumentam em um valor igual ao dobro do seu nível de personagem quando você obtém este talento. Sempre que você alcança um nível de personagem depois disso, seus Pontos de Vida máximos aumentam em 2 Pontos de Vida adicionais."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.795Z"}'::jsonb);
+
+
+INSERT INTO rpg.phb_spell (id, name, level, level_label, school, casting_time, range, components, duration, concentration, ritual, description, higher_levels, source_meta)
+VALUES
+  ('acalmar-emocoes', 'Acalmar Emoções', 2, '2º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Cada Humanoide em uma Esfera de 6 metros de raio centrada em um ponto à sua escolha no alcance da magia deve ser bem-sucedido em uma salvaguarda de Carisma ou é afetado por um dos seguintes efeitos
+(escolha um para cada criatura):
+A criatura tem Imunidade às condições Amedrontado e Enfeitiçado até que a magia termine. Se a criatura já estiver Amedrontada ou Enfeitiçada, essas condições são suprimidas pela duração da magia.
+A criatura se torna Indiferente às criaturas à sua escolha em relação às quais é Hostil. Essa indiferença encerra se o alvo sofrer dano ou testemunhar os aliados dela sofrendo dano. Quando a magia termina, a atitude da criatura volta ao normal.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.484Z"}'::jsonb),
+  ('acudir-os-moribundos', 'Acudir os Moribundos', 0, 'Truque', 'Necromancia', 'Ação', '4,5 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Escolha uma criatura no alcance da magia que tenha
+0 Pontos de Vida e não esteja morta. A criatura fica
+Estável.
+Aprimoramento de Truque. O alcance da magia dobra quando você atinge os níveis 5 (9 metros), 11 (18 metros) e 17 (36 metros).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.485Z"}'::jsonb),
+  ('alarme', 'Alarme', 1, '1º Círculo', 'Abjuração', '1 minuto ou Ritual', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um sino e um fio de prata","text":"V, S, M (um sino e um fio de prata)"}'::jsonb, '8 horas', FALSE, TRUE, 'Você define um alarme contra intrusão. Escolha uma porta, uma janela ou uma área no alcance da magia que não seja maior do que um Cubo de 6 metros de lados.
+Até que a magia termine, um alarme o avisa sempre que uma criatura tocar ou entrar na área protegida. Ao conjurar a magia, você pode designar criaturas que não disparam o alarme. Você também escolhe se o alarme é audível ou mental:
+Alarme Mental. Você é alertado por um bipe mental se estiver a menos de 1,5 quilômetro da área protegida.
+Este bipe o acorda se você estiver dormindo.
+Alarme Sonoro. O alarme produz o som de uma sineta por 10 segundos a até 18 metros da área protegida.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.486Z"}'::jsonb),
+  ('aliado-extraplanar', 'Aliado Extraplanar', 6, '6º Círculo', 'Invocação', '10 minutos', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você implora pela ajuda de uma entidade sobrenatural.
+Você deve conhecer o ser: um deus, um príncipe demônio ou algum outro ser de poder cósmico. Essa entidade envia um Celestial, um Elemental ou um Ínfero leal a ela para ajudá-lo, fazendo com que a criatura apareça em um espaço desocupado no alcance da magia. Se você
+souber o nome de uma criatura específica, você pode proferir esse nome quando conjurar a magia para solicitar essa criatura, embora você possa obter uma criatura diferente de qualquer modo (à escolha do Mestre).
+Quando a criatura aparece, ela não é obrigada a comportar-se de uma maneira específica. Você pode pedir que ela realize um serviço em troca de pagamento, mas ela não é obrigada a fazê-lo. A tarefa solicitada pode variar de simples (nos levar voando através do abismo ou nos ajudar a lutar em uma batalha) a complexa (espionar nossos inimigos ou nos proteger durante nossa incursão na masmorra). Você deve ser capaz de se comunicar com a criatura para negociar pelos serviços dela.
+O pagamento pode assumir várias formas. Um
+Celestial pode exigir uma doação considerável de ouro ou itens mágicos para um templo aliado, enquanto um
+Ínfero pode exigir um sacrifício vivo ou um presente na forma de um tesouro. Algumas criaturas podem trocar o serviço por uma missão realizada por você.
+Uma tarefa que pode ser medida em minutos requer um pagamento no valor de 100 PO por minuto. Uma tarefa medida em horas requer 1.000 PO por hora. Já uma tarefa medida em dias (até 10 dias) requer 10.000
+PO por dia. O Mestre pode ajustar esses pagamentos com base nas circunstâncias em que você conjurou a magia. Se a tarefa estiver alinhada com os interesses da criatura, o pagamento pode ser reduzido pela metade ou até mesmo dispensado. Tarefas não perigosas normalmente exigem apenas metade do pagamento sugerido, enquanto tarefas especialmente perigosas podem demandar um pagamento maior. Criaturas raramente aceitam tarefas que parecem suicidas.
+Depois que a criatura conclui a tarefa, ou quando a duração combinada do serviço acaba, a criatura retorna ao seu plano de origem após se reportar a você, se possível. Se você não conseguir chegar a um acordo sobre um preço pelo serviço da criatura, a criatura retorna imediatamente ao seu plano de origem.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.486Z"}'::jsonb),
+  ('aljava-veloz', 'Aljava Veloz', 5, '5º Círculo', 'Transmutação', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma Aljava no valor de 1 ou mais PO","text":"V, S, M (uma Aljava no valor de 1 ou mais PO)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Ao conjurar a magia e como uma Ação Bônus até que ela termine, você pode realizar dois ataques com uma arma que dispara Flechas ou Virotes, como um Arco
+Longo ou uma Besta Leve. A magia gera magicamente a munição necessária para cada ataque. Cada Flecha ou Virote criado pela magia causa dano equivalente ao de munição não mágica do seu tipo e se desintegra imediatamente após atingir ou errar o alvo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.487Z"}'::jsonb),
+  ('alterar-se', 'Alterar-se', 2, '2º Círculo', 'Transmutação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você altera sua forma física. Escolha uma das seguintes opções. Seus efeitos permanecem pela duração da magia, durante a qual você pode executar uma ação
+Usar Magia para substituir a opção escolhida por uma diferente.
+Adaptação Aquática. Você cria guelras e membranas entre os dedos. Você pode respirar debaixo d’água e recebe um Deslocamento de Natação igual ao seu
+Deslocamento.
+Armas Naturais. Você cria garras (Cortante), presas
+(Perfurante), chifres (Perfurante) ou cascos (Contundente). Ao usar seu Ataque Desarmado para causar dano com essa nova forma, ele causa 1d6 pontos de dano do tipo entre parênteses em vez de causar o dano normal para seu Ataque Desarmado, e você usa seu modificador de atributo de conjuração para as jogadas de ataque e dano em vez de usar Força.
+Mudar Aparência. Você altera sua aparência. Você
+decide sua aparência, incluindo altura, peso, traços faciais, som da voz, comprimento e cor do cabelo, entre outras características distintivas. Você pode parecer um membro de outra espécie, embora nenhuma de suas estatísticas mude. Você não pode parecer como uma criatura de um tamanho diferente, e sua forma básica permanece a mesma; se você é bípede, não pode usar essa magia para se tornar quadrúpede, por exemplo. Pela duração da magia, você pode executar uma ação Usar Magia para mudar sua aparência dessa maneira novamente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.487Z"}'::jsonb),
+  ('amigos', 'Amigos', 0, 'Truque', 'Encantamento', 'Ação', '3 metros', '{"verbal":false,"somatic":true,"material":true,"materialDescription":"um pouco de maquiagem","text":"S, M (um pouco de maquiagem)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você emana magicamente um sentimento de amizade em relação a uma criatura à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia. O alvo é bem-sucedido automaticamente se não for um Humanoide, se você estiver lutando contra ele ou se tiver conjurado esta magia nele nas últimas 24 horas.
+A magia encerra se o alvo sofrer dano ou se você
+realizar uma jogada de ataque, causar dano ou forçar alguém a realizar uma salvaguarda. Quando a magia termina, o alvo sabe que foi Enfeitiçado por você.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.488Z"}'::jsonb),
+  ('amizade-animal', 'Amizade Animal', 1, '1º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um bocado de comida","text":"V, S, M (um bocado de comida)"}'::jsonb, '24 horas', FALSE, FALSE, 'Escolha como alvo uma Fera à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia. Se você ou um de seus aliados causar dano ao alvo, a magia encerra.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.488Z"}'::jsonb),
+  ('ancora-planar', 'Âncora Planar', 5, '5º Círculo', 'Abjuração', '1 hora', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma joia no valor de 1.000 ou mais PO, que a magia consome","text":"V, S, M (uma joia no valor de 1.000 ou mais PO, que a magia consome)"}'::jsonb, '24 horas', FALSE, FALSE, 'Você tenta vincular um Celestial, um Elemental, um Feérico ou um Ínfero ao seu serviço. A criatura deve estar no alcance da magia durante todo o período de conjuração. Normalmente, a criatura é primeiro invocada para o centro da versão invertida da magia Círculo Mágico para prendê-la enquanto esta magia é conjurada. Ao concluir a conjuração, o alvo deve ser bem-sucedido em uma salvaguarda de Carisma ou é obrigado a atendê-
+-lo pela duração da magia. Se a criatura foi invocada ou criada por outra magia, a duração daquela magia é estendida para corresponder à duração desta magia.
+Uma criatura vinculada deve obedecer aos seus comandos da melhor forma possível. Você pode ordenar que a criatura o acompanhe em uma aventura, proteja um local ou entregue uma mensagem. Se a criatura for Hostil, ela se esforça para distorcer seus comandos para atingir seus próprios objetivos. Se a criatura realizar completamente seus comandos antes que a magia termine, ela viaja até você para relatar esse fato se você
+estiver no mesmo plano de existência. Se você estiver em um plano diferente, ele retorna ao lugar onde você
+a vinculou e permanece lá até que a magia termine.', 'Usando um Espaço de Magia de Círculo Superior. A
+duração aumenta com um espaço de magia 6º círculo
+(10 dias), 7º círculo (30 dias), 8º círculo (180 dias) e 9º
+círculo (366 dias).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.489Z"}'::jsonb),
+  ('animar-mortos', 'Animar Mortos', 3, '3º Círculo', 'Necromancia', '1 minuto', '3 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma gota de sangue, um pedaço de carne e uma pitada de pó de osso","text":"V, S, M (uma gota de sangue, um pedaço de carne e uma pitada de pó de osso)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Escolha uma pilha de ossos ou um cadáver de um
+Humanoide Médio ou Pequeno no alcance da magia.
+O alvo se torna um Morto-vivo: um Esqueleto se tiver escolhido ossos ou um Zumbi se tiver escolhido um cadáver (veja o apêndice B para os blocos de estatística).
+Em cada um dos seus turnos, você pode executar uma Ação Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 18 metros de você (se você
+controlar várias criaturas, pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Você decide qual ação a criatura realiza e para onde ela se move no próximo turno dela, ou pode emitir um comando geral, como proteger uma câmara ou um corredor. Se você não der nenhum comando, a criatura executa a ação Esquivar e move-se apenas para evitar dano. Uma vez dada uma ordem, a criatura continua a segui-la até que a tarefa seja concluída.
+A criatura fica sob seu controle por 24 horas, após as quais ela deixa de obedecer a qualquer comando que você tenha dado a ela. Para manter o controle da criatura por mais 24 horas, é necessário conjurar essa magia na criatura novamente antes que o período atual de 24 horas termine. Esse uso da magia reafirma seu controle sobre até quatro criaturas que você animou com essa magia em vez de animar uma nova criatura.', 'Usando um Espaço de Magia de Círculo Superior.
+Você anima ou reafirma o controle sobre duas criaturas Mortas-vivas adicionais para cada círculo de espaço de magia acima de 3. Cada uma das criaturas deve vir de um cadáver ou pilha de ossos diferente.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.489Z"}'::jsonb),
+  ('animar-objetos', 'Animar Objetos', 5, '5º Círculo', 'Transmutação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Objetos são animados ao seu comando. Escolha uma série de objetos não mágicos no alcance da magia que não estejam sendo usados ou carregados, não estejam fixados a uma superfície e não sejam Colossais. O
+número máximo de objetos é igual ao seu modificador de atributo de conjuração. Para este número, um tamanho Médio ou menor conta como um objeto, um alvo Grande conta como dois e um alvo Enorme conta como três.
+Cada alvo se anima, faz brotar pernas e se torna um
+Constructo que usa o bloco de estatísticas do Objeto
+Animado; esta criatura está sob seu controle até que a magia termine ou até que ela seja reduzida a 0 Pontos de Vida. Cada criatura que você anima com esta magia é uma aliada sua e de seus aliados. Em combate, ela compartilha a contagem de Iniciativa com você e tem o turno dela imediatamente após o seu.
+Até que a magia encerre, você pode executar uma
+Ação Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 150 metros de você (se você controlar várias criaturas, pode comandar quaisquer delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Se você não der nenhum comando, a criatura executa a ação Esquivar e se move apenas para evitar danos. Quando a criatura é reduzida a 0 Pontos de
+Vida, ela reverte para sua forma de objeto, e qualquer dano restante é transferido para essa forma.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano de Pancada da criatura aumenta em 1d4 (Médio ou menor), 1d6 (Grande) ou 1d12 (Enorme) para cada círculo de espaço de magia acima de 5.
+Um Braseiro Afetado pela
+Magia
+Animar Objetos
+DAVID AUDEN NASH
+Objetos Animados
+Construto Grande ou Menor, Sem Alinhamento
+CA 15
+PV 10 (Médio ou menor), 20 (Grande), 40 (Enorme)
+Deslocamento 9 m
+MOD SG MOD SG MOD SG
+For 16 +3 +3 Des 10 +0 +0 Con 10 +0 +0
+Int 3 –4 –4 Sab 3 –4 –4 Car 1 –5 –5
+Imunidades Psíquico, Venenoso; Amedrontado, Enfeitiçado,
+Envenenado, Exaustão, Paralisado
+Sentidos Visão às Cegas 9 m, Percepção Passiva 6
+Idiomas Compreende os idiomas que você conhece
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Ações
+Pancada. Jogada de Ataque Corpo a Corpo: Bônus igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano:
+Energético igual a 1d4 + 3 (Médio ou menor), 2d6 + 3 + seu modificador de atributo de conjuração (Grande) ou 2d12 + 3 +
+seu modificador de atributo de conjuração (Enorme).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.490Z"}'::jsonb),
+  ('antipatia-simpatia', 'Antipatia/Simpatia', 8, '8º Círculo', 'Encantamento', '1 hora', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma mistura de vinagre e mel","text":"V, S, M (uma mistura de vinagre e mel)"}'::jsonb, '10 dias', FALSE, FALSE, 'Ao conjurar a magia, decida se ela cria antipatia ou simpatia, e escolha como alvo uma criatura ou objeto que seja Enorme ou menor. Em seguida, especifique um tipo de criatura, como dragões vermelhos, goblins ou vampiros. Uma criatura do tipo escolhido realiza uma salvaguarda de Sabedoria quando estiver a até 36
+metros do alvo. Sua escolha entre antipatia ou simpatia determina o que acontece com uma criatura ao falhar nessa salvaguarda:
+Antipatia: A criatura tem a condição Amedrontado.
+A criatura Amedrontada deve usar o movimento nos turnos dela para se afastar o máximo possível do alvo,
+movendo-se pela rota mais segura.
+Simpatia: A criatura tem a condição Enfeitiçado. A
+criatura Enfeitiçada deve usar o movimento nos turnos dela para chegar o mais próximo possível do alvo, movendo-se pela rota mais segura. Se a criatura estiver a até
+1,5 metro do alvo, a criatura não pode se afastar voluntariamente. Se o alvo causar dano à criatura Enfeitiçada,
+essa criatura deve realizar uma salvaguarda de Sabedoria para encerrar o efeito, conforme descrito abaixo.
+Encerrando o Efeito. Se a criatura Amedrontada ou
+Enfeitiçada terminar o turno a mais de 36 metros de distância do alvo, a criatura realiza uma salvaguarda de
+Sabedoria. Em caso de sucesso, a criatura não é mais afetada pelo alvo e fica imune a ele por 1 minuto, após o qual pode ser afetada novamente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.490Z"}'::jsonb),
+  ('aprimorar-atributo', 'Aprimorar Atributo', 2, '2º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"pelo ou uma pena","text":"V, S, M (pelo ou uma pena)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você toca uma criatura e escolhe Força, Destreza, Inteligência, Sabedoria ou Carisma. Pela duração da magia,
+o alvo tem Vantagem nos testes de atributo usando o atributo escolhido.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 2. Você pode escolher um atributo diferente para cada alvo.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.491Z"}'::jsonb),
+  ('aprisionamento', 'Aprisionamento', 9, '9º Círculo', 'Abjuração', '1 minuto', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma estatueta do alvo no valor de 5.000 ou mais PO","text":"V, S, M (uma estatueta do alvo no valor de 5.000 ou mais PO)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Você cria uma restrição mágica para conter uma criatura à sua vista e no alcance da magia. O alvo deve realizar uma salvaguarda de Sabedoria. Em caso de sucesso, o alvo não é afetado e fica imune a esta magia pelas próximas 24 horas. Se falhar, o alvo é aprisionado. Enquanto estiver aprisionado, o alvo não precisa respirar, comer ou beber e não envelhece. Magias de
+Adivinhação não podem localizar ou perceber o alvo, e ele não pode se teleportar.
+Até que a magia termine, o alvo também é afetado por um dos seguintes efeitos à sua escolha:
+Acorrentar. Correntes firmemente enraizadas ao chão prendem o alvo no lugar. O alvo tem a condição
+Contido e não pode ser movido de forma alguma.
+Contenção Reduzida. O alvo encolhe para 2,5 cm de altura e fica preso dentro de uma pedra preciosa indestrutível ou um objeto semelhante. A luz pode passar pela pedra preciosa (permitindo que o alvo veja o que há fora e outras criaturas de fora possam vê-lo), mas nada mais pode passar por qualquer meio.
+Enterrar. O alvo é enterrado sob a terra em um globo oco de força mágica que é grande o suficiente para contê-lo. Nada pode passar para dentro ou para fora do globo.
+Prisão Cercada. O alvo está preso em um semiplano e está protegido contra teleporte e viagens planares. O
+semiplano pode ser um labirinto, uma gaiola, uma torre ou algo semelhante à sua escolha.
+Torpor. O alvo está Inconsciente e não pode ser despertado.
+Encerrando a Magia. Ao conjurar a magia, você
+define uma situação que a encerrará. Essa situação
+pode ser tão simples ou elaborada quanto você desejar,
+mas o Mestre deve concordar que existe uma grande probabilidade de isso ocorrer na próxima década. A
+situação deve ser uma ação observável, como alguém fazendo uma oferenda específica no templo do seu deus, salvando seu verdadeiro amor ou derrotando um monstro específico.
+Dissipar Magia só pode encerrar a magia se for conjurada com um espaço de magia de 9º círculo, tendo como alvo a prisão ou o componente usado para criá-la.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.491Z"}'::jsonb),
+  ('arca-secreta-de-leomund', 'Arca Secreta de Leomund', 4, '4º Círculo', 'Invocação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um baú de 1 m por 60 cm por 60 cm, construído com materiais raros no valor de 5.000 ou mais PO, e uma réplica minúscula do baú fabricada com os mesmos materiais no valor de 50 ou mais PO","text":"V, S, M (um baú de 1 m por 60 cm por 60 cm, construído com materiais raros no valor de 5.000 ou mais PO, e uma réplica minúscula do baú fabricada com os mesmos materiais no valor de 50 ou mais PO)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Você esconde um baú e todo o seu conteúdo no Plano
+Etéreo. Você deve tocar no baú e na réplica em miniatura que servem como componentes Materiais para a magia. O baú pode armazenar até 340 litros de material não vivo (1 m por 60 cm por 60 cm).
+Enquanto o baú permanecer no Plano Etéreo, você
+pode executar uma ação Usar Magia e tocar na réplica para recuperar o baú. Ele aparece em um espaço desocupado no chão a até 1,5 metro de você. Você pode enviar o baú de volta ao Plano Etéreo como uma ação
+Usar Magia para tocar o baú e a réplica.
+Após 60 dias, há uma chance cumulativa de 5% no final de cada dia de que a magia encerre. A magia também se encerra se você conjurá-la novamente ou se a réplica Minúscula for destruída. Se a magia encerrar e o baú maior estiver no Plano Etéreo, o baú permanece lá para você ou outra pessoa encontrar.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.492Z"}'::jsonb),
+  ('arma-elemental', 'Arma Elemental', 3, '3º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Uma arma não-mágica que você toca se torna uma arma mágica. Escolha um dos seguintes tipos de dano:
+Ácido, Elétrico, Gélido, Ígneo ou Trovejante. Pela duração da magia, a arma tem um bônus de +1 para jogadas de ataque e causa 1d4 pontos de dano adicional do tipo escolhido quando atinge.', 'Usando um Espaço de Magia de Círculo Superior. Se você usar um espaço de magia de 5º ou 6º círculo, o bônus nas jogadas de ataque aumenta para +2, e o dano adicional aumenta para 2d4. Se você usar um espaço de magia de 7º círculo ou superior, o bônus aumenta para +3 e o dano adicional aumenta para 3d4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.493Z"}'::jsonb),
+  ('arma-espiritual', 'Arma Espiritual', 2, '2º Círculo', 'Evocação', 'Ação Bônus', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria uma energia espectral flutuante que se assemelha a uma arma à sua escolha e permanece pela duração da magia.
+A energia aparece no alcance da magia em um espaço à sua escolha, e você pode realizar imediatamente um ataque mágico corpo a corpo contra uma criatura a até 1,5 metro dela. Em caso de acerto, o alvo sofre 1d8
+pontos de dano Energético mais o seu modificador de atributo de conjuração.
+Como uma Ação Bônus em seus turnos posteriores,
+você pode mover a energia até 6 metros e repetir o ataque contra uma criatura a até 1,5 metro dela.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.493Z"}'::jsonb),
+  ('arma-magica', 'Arma Mágica', 2, '2º Círculo', 'Transmutação', 'Ação Bônus', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 hora', FALSE, FALSE, 'Você toca uma arma não-mágica. Até que a magia encerre, essa arma se torna uma arma mágica com bônus de +1 para jogadas de ataque e dano. A magia encerra se você a conjurar novamente.', 'Usando um Espaço de Magia de Círculo Superior. O
+bônus aumenta para +2 com um espaço de magia de
+3º–5º círculo. O bônus aumenta para +3 com um espaço de magia de 6º círculo ou superior.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.493Z"}'::jsonb),
+  ('armadura-arcana', 'Armadura Arcana', 1, '1º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de couro curtido","text":"V, S, M (um pedaço de couro curtido)"}'::jsonb, '8 horas', FALSE, FALSE, 'Você toca uma criatura voluntária que não está usando armadura. Até que a magia termine, a CA base do alvo se torna 13 mais o modificador de Destreza dele. A
+magia se encerra se o alvo vestir uma armadura.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.494Z"}'::jsonb),
+  ('armadura-de-agathys', 'Armadura de Agathys', 1, '1º Círculo', 'Abjuração', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um caco de vidro azul","text":"V, S, M (um caco de vidro azul)"}'::jsonb, '1 hora', FALSE, FALSE, 'Um frio mágico protetor envolve você. Você recebe 5
+Pontos de Vida Temporários. Se uma criatura acertar você com uma jogada de ataque corpo a corpo antes que a magia termine, a criatura sofre 5 pontos de dano
+Gélido. A magia encerra se você não tiver Pontos de
+Vida Temporários.', 'Usando um Espaço de Magia de Círculo Superior. Os
+Pontos de Vida Temporários e o dano Gélido aumentam em 5 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.494Z"}'::jsonb),
+  ('arrombar', 'Arrombar', 2, '2º Círculo', 'Transmutação', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Escolha um objeto à sua vista e no alcance da magia. O
+objeto pode ser uma porta, uma caixa, um baú, um conjunto de grilhões, um cadeado ou outro objeto que contenha um meio mundano ou mágico que impeça o acesso.
+Um alvo mantido fechado por uma fechadura mundana ou que está preso ou barrado fica destrancado,
+desemperrado ou desobstruído. Se o objeto tiver várias fechaduras, apenas uma delas é destrancada.
+Se o alvo for mantido fechado por Tranca Arcana,
+essa magia é suprimida por 10 minutos, durante os quais o alvo pode ser aberto e fechado.
+Ao conjurar a magia, um estrondo, audível a até 90
+metros de distância, emana do alvo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.495Z"}'::jsonb),
+  ('arte-druidica', 'Arte Druídica', 0, 'Truque', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Sussurrando para os espíritos da natureza, você cria um dos seguintes efeitos no alcance da magia.
+Brincar com Fogo. Você acende ou apaga uma vela,
+uma tocha ou uma fogueira.
+Efeito Sensorial. Você cria um efeito sensorial inofensivo, como folhas caindo, fadas dançantes espectrais,
+uma brisa suave, o som de um animal ou o leve odor de gambá. O efeito deve caber em um Cubo de 1,5 metro de lados.
+Um Golias Clérigo conjura
+Arma Espiritual em batalha contra um Tríbulo Brutal.
+JUSTINE CRUZ
+Um sprite conjuraArte Druídica para fazer as flores florescerem.
+Florescimento. Você instantaneamente faz uma flor desabrochar, uma vagem se abrir ou um botão de folha se abrir.
+Sensor Climático. Você cria um efeito sensorial minúsculo e inofensivo que prevê qual será o clima no local onde você está pelas próximas 24 horas. O efeito pode se manifestar como uma esfera dourada para céu claro,
+uma nuvem para chuva, flocos de neve caindo para neve e assim por diante. Esse efeito persiste por 1 rodada.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.495Z"}'::jsonb),
+  ('assassino-fantasmagorico', 'Assassino Fantasmagórico', 4, '4º Círculo', 'Ilusão', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você entra nos pesadelos de uma criatura à sua vista e no alcance da magia e cria uma ilusão dos medos mais profundos dela, visíveis apenas para essa criatura. O
+alvo realiza uma salvaguarda de Sabedoria. Se falhar, o alvo sofre 4d10 pontos de dano Psíquico e tem Desvantagem em testes de atributo e jogadas de ataque pela duração da magia. Em caso de sucesso, o alvo sofre metade do dano e a magia encerra.
+Pela duração da magia, o alvo realiza uma salvaguarda de Sabedoria no final de cada um dos turnos dele.
+Se falhar, sofre dano Psíquico novamente. Em caso de sucesso, a magia encerra.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d10 para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.496Z"}'::jsonb),
+  ('augurio', 'Augúrio', 2, '2º Círculo', 'Adivinhação', '1 minuto ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"varetas, ossos, cartas ou símbolos semelhantes especialmente marcados no valor de 25 ou mais PO","text":"V, S, M (varetas, ossos, cartas ou símbolos semelhantes especialmente marcados no valor de 25 ou mais PO)"}'::jsonb, 'Instantânea', FALSE, TRUE, 'Você recebe um presságio de uma entidade sobrenatural a respeito dos resultados de um curso de ação que você planeja realizar nos próximos 30 minutos. O
+Mestre escolhe o presságio da tabela Presságios.
+Presságios
+Presságios Para Resultados Que Serão…
+Prosperidade Bons
+Infortúnio Maus
+Prosperidade e Infortúnio Bons e ruins
+Nada Nem bons, nem ruins
+A magia não leva em conta circunstâncias, como outras magias, que podem alterar os resultados.
+Se você conjurar a magia mais de uma vez antes de terminar um Descanso Longo, há uma chance cumulativa de 25% para cada conjuração após a primeira de que você não receba resposta.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.497Z"}'::jsonb),
+  ('aumentar-reduzir', 'Aumentar/Reduzir', 2, '2º Círculo', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de ferro em pó","text":"V, S, M (uma pitada de ferro em pó)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Pela duração da magia, você amplia ou reduz uma criatura, ou objeto, à sua vista e no alcance da magia
+(veja o efeito escolhido abaixo). Um objeto à vista não deve ser usado nem transportado. Se o alvo for uma criatura involuntária, ele pode realizar uma salvaguarda de Constituição. Em caso de sucesso, a magia não surte efeito.
+Tudo o que uma criatura estiver usando e carregando muda de tamanho com ela. Qualquer item que cair retorna ao tamanho normal de uma só vez. Uma arma ou munição arremessada retorna ao tamanho normal imediatamente após atingir ou errar um alvo.
+Aumentar. O tamanho do alvo aumenta em uma categoria — de Médio para Grande, por exemplo. O
+alvo também tem Vantagem em testes de Força e salvaguardas de Força. Os ataques do alvo com suas armas ampliadas ou Ataques Desarmados causam 1d4 pontos de dano adicionais em caso de acerto.
+Reduzir. O tamanho do alvo diminui em uma categoria — de Médio para Pequeno, por exemplo. O
+alvo também tem Desvantagem em testes de Força e salvaguardas de Força. Os ataques do alvo com suas armas reduzidas ou Ataques Desarmados causam 1d4
+pontos de dano a menos em caso de acerto (isso não pode reduzir o dano abaixo de 1).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.498Z"}'::jsonb),
+  ('aura-de-pureza', 'Aura de Pureza', 4, '4º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma aura irradia de você em uma Emanação de 9 metros pela duração da magia. Enquanto estiver na aura,
+você e seus aliados têm Resistência a dano Venenoso e
+Vantagem nas salvaguardas para evitar ou encerrar efeitos que incluem a condição Amedrontado, Atordoado,
+Cego, Enfeitiçado, Envenenado, Paralisado ou Surdo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.498Z"}'::jsonb),
+  ('aura-de-vida', 'Aura de Vida', 4, '4º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma aura irradia de você em uma Emanação de 9 metros pela duração da magia. Enquanto estiver na aura,
+você e seus aliados têm Resistência a Dano Necrótico,
+e seus Pontos de Vida máximos não podem ser reduzidos. Se um aliado com 0 Pontos de Vida começar o turno na aura, esse aliado recupera 1 Ponto de Vida.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.499Z"}'::jsonb),
+  ('aura-de-vitalidade', 'Aura de Vitalidade', 3, '3º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma aura irradia de você em uma Emanação de 9 metros pela duração da magia. Quando você cria a aura e no início de cada um dos seus turnos enquanto ela persiste, você pode restaurar 2d6 Pontos de Vida em uma criatura dentro dela.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.499Z"}'::jsonb),
+  ('aura-magica-de-nystul', 'Aura Mágica de Nystul', 2, '2º Círculo', 'Ilusão', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pequeno quadrado de seda","text":"V, S, M (um pequeno quadrado de seda)"}'::jsonb, '24 horas', FALSE, FALSE, 'Com um toque, você coloca uma ilusão em uma criatura voluntária ou em um objeto que não esteja sendo usado ou carregado. Uma criatura adquire o efeito
+Máscara descrito abaixo, e um objeto adquire o efeito
+Falsa Aura descrito abaixo. O efeito permanece pela duração da magia. Se você conjurar a magia na mesma criatura ou objeto todos os dias por 30 dias, a ilusão dura até ser dissipada.
+Falsa Aura (Objeto). Você muda a forma como o alvo aparece para magias e efeitos mágicos que detectam auras mágicas, como Detectar Magia. Você pode realizar um objeto não mágico parecer mágico, realizar um item mágico parecer não mágico ou alterar a aura do objeto para parecer pertencer a uma escola de magia que você escolher.
+Máscara (Criatura). Escolha um tipo de criatura diferente do tipo real do alvo. Magias e outros efeitos mágicos tratam o alvo como se fosse uma criatura do tipo escolhido.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.500Z"}'::jsonb),
+  ('aura-sagrada', 'Aura Sagrada', 8, '8º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um relicário no valor de 1.000 ou mais PO","text":"V, S, M (um relicário no valor de 1.000 ou mais PO)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Pela duração, você emite uma aura em uma Emanação de 9 metros. Enquanto estão dentro da aura, criaturas
+à sua escolha têm Vantagem em todas as salvaguardas,
+enquanto as outras têm Desvantagem nas jogadas de ataque contra elas. Além disso, se um Ínfero ou um Morto-Vivo atinge uma criatura afetada em uma jogada de ataque corpo a corpo, o atacante deve ser bem-sucedido em uma salvaguarda de Constituição ou fica Cego até o final do próximo turno dele.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.500Z"}'::jsonb),
+  ('auxilio', 'Auxílio', 2, '2º Círculo', 'Abjuração', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma tira de pano branco","text":"V, S, M (uma tira de pano branco)"}'::jsonb, '8 horas', FALSE, FALSE, 'Escolha até três criaturas no alcance da magia. Os
+Pontos de Vida máximos e os Pontos de Vida atuais de cada alvo aumentam em 5 pela duração da magia.', 'Usando um Espaço de Magia de Círculo Superior. Os
+Pontos de Vida de cada alvo aumentam em 5 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.500Z"}'::jsonb),
+  ('badalar-funebre', 'Badalar Fúnebre', 0, 'Truque', 'Necromancia', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você aponta para uma criatura à sua vista e no alcance da magia, então um único toque de um badalar doloroso é audível a até 3 metros do alvo. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou sofre 1d8 pontos de dano Necrótico. Caso o alvo tenha
+perdido algum de seus Pontos de Vida, em vez de 1d8,
+ele sofre 1d12 pontos de dano Necrótico.
+Aprimoramento de Truque. O dano aumenta em um dado quando você atinge os níveis 5 (2d8 ou 2d12), 11
+(3d8 ou 3d12) e 17 (4d8 ou 4d12).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.501Z"}'::jsonb),
+  ('banimento', 'Banimento', 4, '4º Círculo', 'Abjuração', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pentagrama","text":"V, S, M (um pentagrama)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma criatura à sua vista e no alcance da magia deve ser bem-sucedida em uma salvaguarda de Carisma ou é transportada para um semiplano inofensivo pela duração da magia. Enquanto estiver lá, o alvo tem a condição Incapacitado. Quando a magia encerra, o alvo reaparece no espaço que deixou ou no espaço desocupado mais próximo, se o primeiro espaço estiver ocupado.
+Se o alvo for uma Aberração, Celestial, Elemental,
+Feérico ou Ínfero, o alvo não retorna se a magia durar
+1 minuto. Em vez disso, o alvo é transportado para um local aleatório em um plano (à escolha do Mestre)
+associado ao tipo da criatura.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.501Z"}'::jsonb),
+  ('banquete-de-herois', 'Banquete de Heróis', 6, '6º Círculo', 'Invocação', '10 minutos', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma tigela incrustada de pedras preciosas no valor de 1.000 ou mais PO, que a magia consome","text":"V, S, M (uma tigela incrustada de pedras preciosas no valor de 1.000 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você conjura um banquete que aparece em uma superfície em um Cubo desocupado de 3 metros de lado próximo a você. O banquete leva 1 hora para ser consumido e desaparece no final dessa duração, e os efeitos benéficos não aparecem até que essa hora passe. Até doze criaturas podem participar do banquete.
+Uma criatura que partilha do banquete recebe vários benefícios, que duram 24 horas. A criatura tem
+Resistência a dano Venenoso e Imunidade às condições
+Amedrontado e Envenenado. Seus Pontos de Vida máximos também aumentam em 2d10 e recebe o mesmo valor de Pontos de Vida.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.502Z"}'::jsonb),
+  ('barreira-de-laminas', 'Barreira de Lâminas', 6, '6º Círculo', 'Evocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você cria uma barreira de lâminas rodopiantes formadas de energia mágica. A barreira aparece no alcance da magia e permanece pela duração. Você cria uma barreira reta de até 30 metros de comprimento, 6
+metros de altura e 1,5 metro de espessura, ou uma barreira circular de até 18 metros de diâmetro, 6 metros de altura e 1,5 metro de espessura. A barreira oferece
+Cobertura de Três Quartos e seu espaço é considerado
+Terreno Difícil.
+Qualquer criatura no espaço da barreira realiza uma salvaguarda de Destreza, sofrendo 6d10 pontos de dano Energético se falhar, ou metade desse dano em caso de sucesso. Uma criatura também realiza essa salvaguarda se entrar no espaço da barreira ou terminar seu turno lá. Uma criatura realiza essa salvaguarda apenas uma vez por turno.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.502Z"}'::jsonb),
+  ('bencao', 'Bênção', 1, '1º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um Símbolo Sagrado no valor de 5 ou mais PO","text":"V, S, M (um Símbolo Sagrado no valor de 5 ou mais PO)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você abençoa até três criaturas no alcance da magia.
+Sempre que um alvo realiza uma jogada de ataque ou uma salvaguarda antes que a magia termine, o alvo adiciona 1d4 à jogada de ataque ou salvaguarda.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.502Z"}'::jsonb),
+  ('boca-encantada', 'Boca Encantada', 2, '2º Círculo', 'Ilusão', '1 minuto ou Ritual', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"poeira de jade no valor de 10 ou mais PO, que a magia consome","text":"V, S, M (poeira de jade no valor de 10 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada', FALSE, TRUE, 'Você implanta uma mensagem em um objeto que esteja no alcance da magia. Essa mensagem é revelada quando uma circunstância de disparo ocorrer. Escolha um objeto à sua vista e que não esteja sendo usado ou carregado por outra criatura. Fale, então, a mensagem,
+que deve possuir 25 palavras ou menos, embora ela possa ser emitida ao longo de um período de até 10
+minutos. Por fim, determine a circunstância de disparo para magia revelar a mensagem.
+Quando tal circunstância ocorrer, uma boca encantada aparece no objeto e recita a mensagem com a sua voz e no mesmo volume que você falou. Se o objeto escolhido tiver uma boca ou algo que se assemelhe (por exemplo, a boca de uma estátua), a boca encantada se sobrepõe para parecer que as palavras saem da boca do próprio objeto. Ao conjurar a magia, você determina se ela se encerra após entregar a mensagem ou se permanece para repetir o conteúdo sempre que a circunstância de disparo ocorrer.
+A circunstância de disparo pode ser tão abrangente ou específica quanto você quiser, mas deve ser baseada em condições visuais ou auditivas que ocorram a até
+9 metros do objeto. Por exemplo, você pode instruir a boca a falar sempre que uma criatura se aproxime a até
+9 metros do objeto, ou quando um sino de prata soar a até 9 metros de distância do objeto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.503Z"}'::jsonb),
+  ('bola-de-fogo', 'Bola de Fogo', 3, '3º Círculo', 'Evocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma bola de guano de morcego e enxofre","text":"V, S, M (uma bola de guano de morcego e enxofre)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma faixa brilhante emerge de você até um ponto à
+sua escolha no alcance da magia e, em seguida, desabrocha com um estrondo baixo em uma explosão de fogo. Cada criatura em uma Esfera de 6 metros de raio centrada nesse ponto realiza uma salvaguarda de
+Destreza, sofrendo 8d6 pontos de dano Ígneo se falhar,
+ou metade desse dano em caso de sucesso.
+Objetos inflamáveis na área que não estão sendo usados ou carregados entram em combustão.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.503Z"}'::jsonb),
+  ('bola-de-fogo-adiavel', 'Bola de Fogo Adiável', 7, '7º Círculo', 'Evocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma bola de guano de morcego e enxofre","text":"V, S, M (uma bola de guano de morcego e enxofre)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Um feixe de luz amarela dispara de você, depois se condensa em um ponto escolhido no alcance da magia como um grânulo brilhante pela duração da magia.
+Quando a magia termina, o grânulo explode, e cada criatura em uma Esfera de 6 metros de raio centrada nesse ponto realiza uma salvaguarda de Destreza. Se falhar, uma criatura sofre dano Ígneo igual ao dano total acumulado, ou metade desse dano em caso de sucesso.
+O dano base da magia é 12d6, e o dano aumenta em 1d6
+sempre que seu turno termina e a magia não se encerra.
+Se uma criatura tocar o grânulo brilhante antes da magia terminar, ela realiza uma salvaguarda de Destreza. Se falhar, a magia se encerra, fazendo com que o grânulo exploda. Em caso de sucesso, a criatura pode arremessar o grânulo até 12 metros. Se o arremesso atingir o espaço de uma criatura ou colidir com um objeto sólido, a magia se encerra e o grânulo explode.
+Quando o grânulo explode, objetos inflamáveis na explosão que não estão sendo usados ou carregados entram em combustão.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano base aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 7.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.504Z"}'::jsonb),
+  ('bolha-acida', 'Bolha Ácida', 0, 'Truque', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você cria uma bolha ácida em um ponto no alcance da magia, onde ela explode em uma Esfera de 1,5 metro de raio. Cada criatura nessa Esfera deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre 1d6 pontos de dano Ácido.
+Aprimoramento de Truque. O dano aumenta em 1d6
+quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.504Z"}'::jsonb),
+  ('bom-fruto', 'Bom Fruto', 1, '1º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um ramo de visco","text":"V, S, M (um ramo de visco)"}'::jsonb, '24 horas', FALSE, FALSE, 'Dez frutos aparecem em sua mão e são infundidos magicamente pela duração da magia. Uma criatura pode executar uma Ação Bônus para comer um fruto. Comer um fruto restaura 1 Ponto de Vida e fornece alimento suficiente para sustentar uma criatura por um dia. Frutos não comidos desaparecem quando a magia termina.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.504Z"}'::jsonb),
+  ('bordao-mistico', 'Bordão Místico', 0, 'Truque', 'Transmutação', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um ramo de visco","text":"V, S, M (um ramo de visco)"}'::jsonb, '1 minuto', FALSE, FALSE, 'Um Cajado ou Clava que você está segurando é imbuído com o poder da natureza. Pela duração da magia,
+você pode usar seu atributo de conjuração em vez de
+Força para as jogadas de ataque e dano de ataques corpo a corpo com essa arma, e o dado de dano da arma se torna um d8. Se o ataque causar dano, ele pode ser de dano Energético ou do tipo de dano normal da arma
+(à sua escolha).
+Um elfo Mago demonstra o potencial de resolução de problema da magia
+Bola de Fogo.
+YUHONG DING
+A magia encerra se você a conjurar novamente ou se soltar a arma.
+Aprimoramento de Truque. O dado de dano muda quando você atinge os níveis 5 (1d10), 11 (1d12) e 17 (2d6).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.505Z"}'::jsonb),
+  ('bracos-de-hadar', 'Braços de Hadar', 1, '1º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Clamando por Hadar, você faz com que tentáculos irrompam em você. Cada criatura em uma Emanação de 3 metros originada em você realiza uma salvaguarda de Força. Se falhar, um alvo sofre 2d6 pontos de dano
+Necrótico e não pode executar Reações até o início do próximo turno dele. Em caso de sucesso, um alvo sofre apenas metade do dano.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.505Z"}'::jsonb),
+  ('caldeirao-borbulhante-de-tasha', 'Caldeirão Borbulhante de Tasha', 6, '6º Círculo', 'Invocação', 'Ação', '1,5 metro', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma colher de mexer caldeirão dourada no valor de 500 ou mais PO","text":"V, S, M (uma colher de mexer caldeirão dourada no valor de 500 ou mais PO)"}'::jsonb, '10 minutos', FALSE, FALSE, 'Você conjura um caldeirão com pés de garra cheio de líquido borbulhante. O caldeirão aparece em um espaço desocupado no chão a até 1,5 metro de você
+e permanece pela duração da magia. O caldeirão não pode ser movido e desaparece quando a magia termina,
+junto com o líquido borbulhante dentro dele.
+O líquido no caldeirão copia as propriedades de uma poção Comum ou Incomum à sua escolha (como uma
+Poção de Cura). Como uma Ação Bônus, você ou um aliado pode alcançar o caldeirão e retirar dele uma poção desse tipo. A poção está contida em um frasco que desaparece quando a poção é consumida. O caldeirão pode produzir um número dessas poções igual ao seu modificador de atributo de conjuração (mínimo 1).
+Quando a última dessas poções é retirada do caldeirão,
+o caldeirão desaparece e a magia termina.
+Poções obtidas do caldeirão que não são consumidas desaparecem quando você conjura esta magia novamente.
+Um Golias Bruxo convoca a
+Armadura de
+Agathys e os
+Braços de Hadar para combater inimigos das profundezas.
+TUAN DUONG CHU, LINDA LITHEN', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.506Z"}'::jsonb),
+  ('caminhar-no-vento', 'Caminhar no Vento', 6, '6º Círculo', 'Transmutação', '1 minuto', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma vela","text":"V, S, M (uma vela)"}'::jsonb, '8 horas', FALSE, FALSE, 'Você e até dez criaturas voluntárias à sua escolha no alcance da magia assumem formas gasosas pela duração da magia, aparecendo como fiapos de nuvem.
+Enquanto estiver nesta forma de nuvem, um alvo tem um Deslocamento de Voo de 90 metros e pode pairar;
+tem Imunidade à condição Caído; e tem Resistência a dano Contundente, Cortante e Perfurante. As únicas ações que um alvo pode executar nesta forma são a ação Correr ou Usar Magia para começar a reverter à
+sua forma normal. Reverter leva 1 minuto, durante o qual o alvo tem a condição Atordoado. Até que a magia termine, o alvo pode voltar à forma de nuvem, o que também requer uma ação Usar Magia seguida de uma transformação de 1 minuto.
+Se um alvo estiver em forma de nuvem e voando quando o efeito terminar, ele desce 18 metros por rodada por 1 minuto até pousar, o que faz com segurança.
+Se não conseguir pousar após 1 minuto, ele cai pela distância restante.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.506Z"}'::jsonb),
+  ('caminhar-sobre-as-aguas', 'Caminhar Sobre as Águas', 3, '3º Círculo', 'Transmutação', 'Ação ou Ritual', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de cortiça","text":"V, S, M (um pedaço de cortiça)"}'::jsonb, '1 hora', FALSE, TRUE, 'Esta magia concede a capacidade de se mover através de qualquer superfície líquida — como ácido, água,
+areia movediça, lama, lava ou neve — como se fosse um solo sólido inofensivo (criaturas que cruzam a lava derretida ainda podem sofrer dano devido ao calor). Até dez criaturas voluntárias à sua escolha no alcance da magia recebem essa habilidade pela duração da magia.
+Um alvo afetado deve executar uma Ação Bônus para passar da superfície do líquido para dentro dele e vice-versa, mas, se o alvo cair no líquido, ele atravessa a superfície e entra no líquido abaixo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.507Z"}'::jsonb),
+  ('campo-antimagia', 'Campo Antimagia', 8, '8º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"raspas de ferro","text":"V, S, M (raspas de ferro)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'A lendária bruxa Tasha usa sua magia, oCaldeirão Borbulhante de Tasha, para produzir uma poção mágica.
+Uma aura de antimagia envolve você em uma Emanação de 3 metros. Ninguém pode conjurar magias,
+executar a ação Usar Magia ou criar outros efeitos mágicos dentro da aura, e esses efeitos não podem ter como alvo ou afetar qualquer coisa dentro dela. As propriedades mágicas dos itens mágicos não funcionam dentro da aura ou em qualquer coisa dentro dela.
+Áreas de efeito criadas por magias ou outros efeitos mágicos não podem se estender para dentro da aura, e ninguém pode se teleportar para dentro ou para fora dela ou usar viagens planares para lá. Os portais se fecham temporariamente enquanto estão na aura.
+Magias em andamento, exceto aquelas conjuradas por um Artefato ou por uma divindade, são suprimidas na área. Enquanto um efeito é suprimido, ele não funciona, mas o tempo que ele gasta suprimido conta para sua duração
+Dissipar Magia não tem efeito sobre a aura, e as auras criadas por diferentes magias de Campo Antimagia não se anulam.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.507Z"}'::jsonb),
+  ('cao-fiel-de-mordenkainen', 'Cão Fiel de Mordenkainen', 4, '4º Círculo', 'Invocação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um apito de prata","text":"V, S, M (um apito de prata)"}'::jsonb, '8 horas', FALSE, FALSE, 'Você conjura um cão de guarda fantasmagórico em um espaço desocupado à sua vista e no alcance da magia.
+O cão permanece pela duração magia ou até que vocês dois estejam separados por mais de 90 metros.
+Ninguém além de você pode ver o cão, e ele é intangível e invulnerável. Quando uma criatura de tamanho
+Pequeno ou maior se aproxima a 9 metros dele sem antes falar a senha que você especificou ao conjurar essa magia, o cão começa a latir alto. O cão possui Visão
+Verdadeira com alcance de 9 metros.
+No início de cada um dos seus turnos, o cão tenta morder um inimigo a até 1,5 metro dele. Esse inimigo deve ser bem-sucedido em uma salvaguarda de Destreza ou sofre 4d8 pontos de dano Energético.
+Nos seus turnos subsequentes, você pode executar uma ação Usar Magia para mover o cão até 9 metros.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.508Z"}'::jsonb),
+  ('carcere-de-energia', 'Cárcere de Energia', 7, '7º Círculo', 'Evocação', 'Ação', '30 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"rubi em pó no valor de 1.500 ou mais PO, que a magia consome","text":"V, S, M (rubi em pó no valor de 1.500 ou mais PO, que a magia consome)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Uma prisão imóvel, invisível e em forma de Cubo composta de força energética surge em torno de uma área
+à sua escolha no alcance da magia. A prisão pode ser uma jaula ou uma caixa sólida, à sua escolha.
+Uma prisão na forma de uma jaula pode ter até 6 metros de lado e é formada com barras de 1,5 centímetro de diâmetro com espaços de 1,5 centímetro entre elas.
+Uma prisão na forma de caixa pode ter até 3 metros de lado, criando uma barreira sólida que impede que qualquer matéria passe por ela e bloqueia quaisquer magias conjuradas para dentro ou para fora da área.
+Ao conjurar a magia, qualquer criatura que esteja completamente na área da jaula fica presa. Criaturas apenas parcialmente dentro da área, ou aquelas grandes demais para caber dentro dela, são empurradas para longe do centro da área até que estejam completamente fora dela.
+Uma criatura na jaula não pode deixá-la por meios não mágicos. Se a criatura tentar usar teleporte ou viagem interplanar para sair, ela deve primeiro realizar uma salvaguarda de Carisma. Em caso de sucesso, a criatura pode usar essa magia para sair da jaula. Se falhar, a criatura não sai da jaula e desperdiça a magia ou o efeito. A jaula também se estende para o Plano
+Etéreo, bloqueando viagens etéreas.
+Esta magia não pode ser dissipada por Dissipar Magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.508Z"}'::jsonb),
+  ('cativar', 'Cativar', 2, '2º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você tece uma sequência de palavras perturbadoras,
+fazendo com que criaturas à sua escolha à sua vista e no alcance da magia realizem uma salvaguarda de
+Sabedoria. Qualquer criatura contra a qual você ou seus companheiros estejam lutando é automaticamente bem-sucedida nesta salvaguarda. Se falhar, um alvo tem uma penalidade de −10 nos testes de Sabedoria (Percepção) e Percepção Passiva até que a magia termine.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.508Z"}'::jsonb),
+  ('cegueira-surdez', 'Cegueira/Surdez', 2, '2º Círculo', 'Transmutação', 'Ação', '36 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '1 minuto', FALSE, FALSE, 'Uma criatura à sua vista e no alcance da magia deve ser bem-sucedida em uma salvaguarda de Constituição,
+ou ela tem a condição Cego ou Surdo (à sua escolha)
+pela duração da magia. O alvo repete a salvaguarda no final de cada um dos turnos dele, encerrando a magia em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.509Z"}'::jsonb),
+  ('celeridade', 'Celeridade', 3, '3º Círculo', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma lasca de raiz de alcaçuz","text":"V, S, M (uma lasca de raiz de alcaçuz)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Escolha uma criatura voluntária à sua vista e no alcance da magia. Até que a magia termine, o deslocamento do alvo é dobrado, e ele recebe um bônus de +2 na
+Classe de Armadura, tem Vantagem em salvaguardas de Destreza e recebe uma ação adicional em cada um de seus turnos. Essa ação pode ser utilizada apenas para executar a ação Atacar (apenas um ataque), Correr, Desengajar, Esconder ou Usar Objeto.
+Quando a magia termina, o alvo fica Incapacitado e tem Deslocamento 0 até o final do próximo turno dele,
+quando uma onda de letargia passa por ele.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.509Z"}'::jsonb),
+  ('chama-continua', 'Chama Contínua', 2, '2º Círculo', 'Evocação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"rubi em pó no valor de 50 ou mais PO, que a magia consome","text":"V, S, M (rubi em pó no valor de 50 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Uma chama brota de um objeto que você toca. O efeito conjura Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros. Ela se parece uma chama comum,
+mas não cria calor e não consome combustível. A
+chama pode ser coberta ou escondida, mas não abafada ou extinta.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.510Z"}'::jsonb),
+  ('chama-sagrada', 'Chama Sagrada', 0, 'Truque', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Um brilho semelhante a uma chama desce sobre uma criatura à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Destreza ou sofre 1d8 pontos de dano Radiante. O alvo não recebe nenhum benefício de Cobertura Parcial ou Cobertura de Três Quartos para esta salvaguarda.
+Aprimoramento de Truque. O dano aumenta em 1d8
+quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.510Z"}'::jsonb),
+  ('chicote-de-espinhos', 'Chicote de Espinhos', 0, 'Truque', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"o caule de uma planta espinhosa","text":"V, S, M (o caule de uma planta espinhosa)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você cria um chicote semelhante a uma videira coberto de espinhos que ataca ao seu comando em direção a uma criatura no alcance da magia. Realize um ataque mágico corpo a corpo contra o alvo. Em caso de acerto, o alvo sofre 1d6 pontos de dano Perfurante e, se for
+Grande ou menor, você pode puxá-lo até 3 metros mais perto de você.
+Aprimoramento de Truque. O dano aumenta em 1d6
+quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.511Z"}'::jsonb),
+  ('chuva-de-meteoros', 'Chuva de Meteoros', 9, '9º Círculo', 'Evocação', 'Ação', '1,5 km', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Orbes flamejantes caem do céu em quatro pontos distintos à sua vista e no alcance da magia. Cada criatura em uma Esfera de 12 metros de raio centrada em cada um desses pontos realiza uma salvaguarda de Destreza.
+Uma criatura sofre 20d6 pontos de dano Ígneo e 20d6
+pontos de dano Contundente se falhar, ou metade desse dano em caso de sucesso. Uma criatura na área de mais de uma esfera de fogo é afetada apenas uma vez.
+Um objeto não mágico que não esteja sendo usado ou carregado também sofre o dano se estiver na área da magia, e começa a queimar se for inflamável.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.511Z"}'::jsonb),
+  ('circulo-da-morte', 'Círculo da Morte', 6, '6º Círculo', 'Necromancia', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"o pó de uma pérola negra esmagada no valor de 500 ou mais PO","text":"V, S, M (o pó de uma pérola negra esmagada no valor de 500 ou mais PO)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma Esfera de 18 metros de raio de energia negativa parte de um ponto à sua escolha no alcance da magia.
+Cada criatura nessa área realiza uma salvaguarda de
+Constituição, sofrendo 8d8 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 2d8 para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.512Z"}'::jsonb),
+  ('circulo-de-poder', 'Círculo de Poder', 5, '5º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma aura irradia de você em uma Emanação de 9 metros pela duração da magia. Enquanto estiver na aura,
+você e seus aliados têm Vantagem em salvaguardas contra magias e outros efeitos mágicos. Quando uma
+criatura afetada realiza uma salvaguarda contra uma magia ou efeito mágico que permite que sofra apenas metade do dano, ela não sofre dano em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.513Z"}'::jsonb),
+  ('circulo-de-teleporte', 'Círculo de Teleporte', 5, '5º Círculo', 'Invocação', '1 minuto', '3 metros', '{"verbal":true,"somatic":false,"material":true,"materialDescription":"tintas raras no valor de 50 ou mais PO, que a magia consome","text":"V, M (tintas raras no valor de 50 ou mais PO, que a magia consome)"}'::jsonb, '1 rodada', FALSE, FALSE, 'Ao conjurar a magia, você desenha um círculo de 1,5
+metro de raio no chão inscrito com símbolos que ligam sua localização a um círculo de teleporte permanente à
+sua escolha, cuja sequência de símbolos você conhece e que está no mesmo plano de existência que você. Um portal cintilante se abre dentro do círculo que você desenhou e permanece aberto até o final do seu próximo turno. Qualquer criatura que entre no portal aparece instantaneamente a 1,5 metro do círculo de destino ou no espaço desocupado mais próximo, se esse espaço estiver ocupado.
+Muitos dos principais templos, guildas e outros lugares importantes têm círculos de teleporte permanentes. Cada círculo inclui uma sequência de símbolos única — uma sequência de runas dispostas em um determinado padrão.
+Ao adquirir a capacidade de conjurar essa magia pela primeira vez, você aprende as sequências de símbolos para dois destinos no Plano Material, escolhidos pelo
+Mestre. Durante suas aventuras, é possível aprender sequências adicionais. Você pode memorizar um novo símbolo após estudá-lo por 1 minuto.
+Você pode criar um círculo de teleporte permanente conjurando essa magia no mesmo local todos os dias por 365 dias.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.514Z"}'::jsonb),
+  ('circulo-magico', 'Círculo Mágico', 3, '3º Círculo', 'Abjuração', '1 minuto', '3 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"sal e prata em pó no valor de 100 ou mais PO, que a magia consome","text":"V, S, M (sal e prata em pó no valor de 100 ou mais PO, que a magia consome)"}'::jsonb, '1 hora', FALSE, FALSE, 'Você cria um Cilindro de energia mágica com 3 metros de raio e 6 metros de altura, centrado em um ponto visível e ao alcance no chão. Runas brilhantes surgem onde o Cilindro toca o chão ou outra superfície.
+Escolha um ou mais dos seguintes tipos de criaturas:
+Celestiais, Elementais, Feéricos, Ínferos ou Mortos-Vivos. O círculo afeta uma criatura do tipo escolhido das seguintes maneiras:
+A criatura não pode entrar voluntariamente no Cilindro por meios não mágicos. Se a criatura tentar usar teleporte ou viagem interplanar para fazer isso, ela deve primeiro ser bem-sucedida em uma salvaguarda de Carisma.
+A criatura tem Desvantagem nas jogadas de ataque contra alvos dentro do Cilindro.
+Alvos dentro do Cilindro não podem ser possuídos ou ter a condição Amedrontado ou Enfeitiçado pela criatura.
+Ao conjurar essa magia, você pode fazer com que ela funcione na direção inversa, impedindo que uma criatura do tipo especificado saia do Cilindro e protegendo alvos fora dele.', 'Usando um Espaço de Magia de Círculo Superior. A
+duração aumenta em 1 hora para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.514Z"}'::jsonb),
+  ('clarividencia', 'Clarividência', 3, '3º Círculo', 'Adivinhação', '10 minutos', '1,5 km', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um foco no valor de 100 ou mais PO, seja um chifre adornado com joias e usado para escutar, ou um olho de vidro usado para enxergar","text":"V, S, M (um foco no valor de 100 ou mais PO, seja um chifre adornado com joias e usado para escutar, ou um olho de vidro usado para enxergar)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você cria um sensor Invisível no alcance da magia em um local que lhe seja familiar (um lugar que você já viu ou visitou antes) ou em um local óbvio que não lhe seja familiar (como atrás de uma porta, em uma esquina ou em um bosque). O sensor não pode ser atacado e permanece no lugar pela duração da magia.
+Ao conjurar a magia, escolha ver ou ouvir. Você pode usar o sentido escolhido através do sensor como se estivesse em seu espaço. Como uma Ação Bônus, você
+pode alternar entre ver e ouvir.
+Uma criatura que veja o sensor (como uma criatura que se beneficia de Ver o Invisível ou Visão Verdadeira)
+enxerga uma esfera luminosa do tamanho do seu punho.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.515Z"}'::jsonb),
+  ('clone', 'Clone', 8, '8º Círculo', 'Necromancia', '1 hora', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um diamante no valor de 1.000 ou mais PO, que a magia consome, e um recipiente vedável no valor de 2.000 ou mais PO que seja grande o suficiente para conter a criatura sendo clonada","text":"V, S, M (um diamante no valor de 1.000 ou mais PO, que a magia consome, e um recipiente vedável no valor de 2.000 ou mais PO que seja grande o suficiente para conter a criatura sendo clonada)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você toca uma criatura ou pelo menos 2,5 centímetros cúbicos da carne dela. Uma duplicata inerte dessa criatura se forma dentro do recipiente usado na conjuração da magia e termina de crescer após 120 dias;
+você escolhe se o clone finalizado tem a mesma idade da criatura ou é mais nova. O clone permanece inerte e dura indefinidamente enquanto o recipiente o contém permanecer intacto.
+Se a criatura original morrer após o clone terminar de se formar, a alma da criatura é transferida para o clone se a alma estiver livre e disposta a retornar. O
+clone é fisicamente idêntico ao original e tem a mesma personalidade, memórias e habilidades, mas nenhum
+dos equipamentos do original. Os restos originais da criatura, se houver, tornam-se inertes e não podem ser revividos, uma vez que a alma da criatura está em outro lugar.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.515Z"}'::jsonb),
+  ('coluna-de-chamas', 'Coluna de Chamas', 5, '5º Círculo', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de enxofre","text":"V, S, M (uma pitada de enxofre)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma coluna vertical de fogo brilhante emerge de cima para baixo. Cada criatura em um Cilindro de 3 metros de raio e 12 metros de altura, centrada em um ponto no alcance da magia, realiza uma salvaguarda de Destreza, sofrendo 5d6 pontos de dano Ígneo e 5d6 pontos de dano Radiante se falhar, ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano Ígneo e o dano Radiante aumentam em 1d6 para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.516Z"}'::jsonb),
+  ('comando', 'Comando', 1, '1º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você profere uma palavra única de comando para uma criatura à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou segue o comando no próximo turno dele. Escolha o comando a partir destas opções:
+Abaixar. O alvo tem a condição Caído e, em seguida,
+termina o turno.
+Aproximar. O alvo se move em sua direção pela rota mais curta e direta, terminando o turno dele se ele se mover a até 1,5 metro de você.
+Fugir. O alvo usa o próprio turno se afastando de você pelos meios mais rápidos disponíveis.
+Largar. O alvo solta o que estiver segurando e, em seguida, termina o turno.
+Parar. No turno do alvo, ele não se move e não executa nenhuma ação ou Ação Bônus.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.517Z"}'::jsonb),
+  ('compreender-idiomas', 'Compreender Idiomas', 1, '1º Círculo', 'Adivinhação', 'Ação ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de fuligem e sal","text":"V, S, M (uma pitada de fuligem e sal)"}'::jsonb, '1 hora', FALSE, TRUE, 'Pela duração da magia, você entende o significado literal de qualquer idioma que ouça ou veja escrito. Você
+também entende qualquer escrita que veja, mas deve estar tocando a superfície na qual as palavras estão escritas. Leva cerca de 1 minuto para ler uma página de texto. Esta magia não decodifica símbolos ou mensagens secretas.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.517Z"}'::jsonb),
+  ('compulsao', 'Compulsão', 4, '4º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Cada criatura à sua escolha à sua vista e no alcance da magia deve ser bem-sucedida em uma salvaguarda de
+Sabedoria ou tem a condição Enfeitiçado até que a magia termine.
+Pela duração da magia, você pode executar uma Ação
+Bônus para designar uma direção que seja horizontal para você. Cada alvo Enfeitiçado deve usar o máximo possível do movimento dele para se mover nessa direção no turno dele, seguindo o caminho mais seguro.
+Após se mover desse modo, um alvo repete a salvaguarda, encerrando a magia em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.517Z"}'::jsonb),
+  ('comunhao', 'Comunhão', 5, '5º Círculo', 'Adivinhação', '1 minuto ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"incenso","text":"V, S, M (incenso)"}'::jsonb, '1 minuto', FALSE, TRUE, 'Você entra em contato com uma divindade ou um representante divino e realiza até três perguntas que podem ser respondidas com sim ou não. Você deve realizar suas perguntas antes que a magia termine. Você
+recebe uma resposta correta para cada pergunta.
+Os seres divinos não são necessariamente oniscientes, então você pode receber “indeterminado” como resposta se uma pergunta pertencer a informações que estão além do conhecimento da divindade. Em um caso em que uma resposta de uma palavra possa ser enganosa ou contrária aos interesses da divindade, o Mestre pode oferecer uma frase curta como resposta.
+Se você conjurar a magia mais de uma vez antes de terminar um Descanso Longo, há uma chance cumulativa de 25% para cada conjuração após a primeira de que você não receba resposta.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.518Z"}'::jsonb),
+  ('comunhao-com-a-natureza', 'Comunhão com a Natureza', 5, '5º Círculo', 'Adivinhação', '1 minuto ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, TRUE, 'Você comunga com os espíritos da natureza adquirindo conhecimento da área circundante. Ao ar livre, a magia lhe dá conhecimento da área a até 5 quilômetros de você. Em cavernas e outros ambientes subterrâneos naturais, o raio é limitado a 90 metros. A magia não funciona onde a natureza foi substituída por construções, como em castelos e povoados.
+Escolha três dos seguintes fatos; você aprende esses fatos no que se refere à área da magia:
+• Localização de povoados
+• Localização de portais para outros planos de existência
+• Localização de uma criatura de Nível de Desafio 10
+ou maior (à escolha do Mestre) que seja Celestial,
+Elemental, Feérico, Ínfero ou Morto-vivo
+• O tipo mais predominante de planta, mineral ou Fera
+(você escolhe sobre qual aprender)
+• Localização de corpos d’água
+Por exemplo, você pode determinar a localização de um monstro poderoso na área, os locais dos corpos d’água e os locais de quaisquer povoados.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.518Z"}'::jsonb),
+  ('cone-de-frio', 'Cone de Frio', 5, '5º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pequeno cone de cristal ou vidro","text":"V, S, M (um pequeno cone de cristal ou vidro)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você libera uma rajada de ar frio. Cada criatura em um Cone de 18 metros originado em você realiza uma salvaguarda de Constituição, sofrendo 8d8 pontos de dano Gélido se falhar, ou metade desse dano em caso de sucesso. Uma criatura morta por esta magia se torna uma estátua congelada até descongelar.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.519Z"}'::jsonb),
+  ('confusao', 'Confusão', 4, '4º Círculo', 'Encantamento', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"três cascas de nozes","text":"V, S, M (três cascas de nozes)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Cada criatura em uma Esfera de 3 metros de raio centrada em um ponto à sua escolha no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria, ou esse alvo não pode executar Ações Bônus ou
+Reações, e deve jogar 1d10 no início de cada um dos turnos dele para determinar o comportamento nesse turno, consultando a tabela abaixo.
+1d10 Comportamento para o Turno
+1 O alvo não executa uma ação e usa todo o deslocamento para se mover. Jogue 1d4 para a direção:
+1, norte; 2, leste; 3, sul; ou 4, oeste.
+2-6 O alvo não se move ou executa ações.
+7-8 O alvo não se move e executa a ação Atacar para realizar um ataque corpo a corpo contra uma criatura aleatória ao alcance. Se nenhuma estiver ao alcance, o alvo não executa nenhuma ação.
+9-10 O alvo escolhe o comportamento dele.
+Ao final de cada um dos turnos dele, um alvo afetado repete a salvaguarda, encerrando a magia em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+raio da Esfera aumenta em 1,5 metro para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.520Z"}'::jsonb),
+  ('consagrar', 'Consagrar', 5, '5º Círculo', 'Abjuração', '24 horas', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"incenso no valor de 1.000 ou mais PO, que a magia consome","text":"V, S, M (incenso no valor de 1.000 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Você toca um ponto e infunde uma área ao seu redor com poder sagrado ou profano. A área pode ter um raio de até 18 metros, e a magia falha se o raio incluir uma área já sob o efeito de Consagrar. A área afetada tem os seguintes efeitos.
+Vigília Consagrada. Escolha um tipo de criatura:
+Aberração, Celestial, Elemental, Feérico, Ínfero ou
+Morto-Vivo. Criaturas do tipo escolhido não podem entrar voluntariamente na área, e qualquer criatura que esteja possuída por elas, ou tem a condição Amedrontado ou Enfeitiçado por essas criaturas, não será considerada possuída, nem terá as condições Amedrontado ou Enfeitiçado enquanto enquanto estiver na área.
+Efeito Adicional. Você vincula um efeito adicional à
+área da lista abaixo:
+Coragem. Criaturas de qualquer tipo que você escolher não recebem a condição Amedrontado enquanto estiverem na área.
+Descanso Pacífico. Cadáveres enterrados na área não podem ser transformados em Mortos-vivos.
+Escuridão. Escuridão preenche a área. A luz normal,
+bem como a luz mágica criada por magias de um círculo inferior a esta magia, não pode iluminar a área.
+Idiomas. Criaturas de qualquer tipo que você escolher podem se comunicar com qualquer outra criatura na área,
+mesmo que não compartilhem um idioma em comum.
+Interferência Extradimensional. Criaturas de qualquer tipo que você escolher não podem entrar ou sair da área usando teleporte ou viagem interplanar.
+Luz do Dia. Luz Plena preenche a área. Escuridão mágica criada por magias de um círculo inferior a esta magia não pode extinguir a luz.
+Medo. Criaturas de qualquer tipo que você escolher tem a condição Amedrontado enquanto estiverem na área.
+Resistência. Criaturas de qualquer tipo que você escolher têm Resistência a um tipo de dano à sua escolha enquanto estiverem na área.
+Silêncio. Nenhum som pode emanar de dentro da área e nenhum som pode adentrá-la.
+Vulnerabilidade. Criaturas de qualquer tipo que você escolher têm Vulnerabilidade a um tipo de dano à
+sua escolha enquanto estiverem na área.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.520Z"}'::jsonb),
+  ('contagio', 'Contágio', 5, '5º Círculo', 'Necromancia', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '7 dias', FALSE, FALSE, 'Seu toque inflige um contágio mágico. O alvo deve ser bem-sucedido em uma salvaguarda de Constituição ou sofre 11d8 pontos de dano necrótico e tem a condição Envenenado. Além disso, escolha um atributo ao conjurar a magia. Enquanto estiver envenenado, o alvo tem Desvantagem em salvaguardas realizadas com o atributo escolhido.
+O alvo deve repetir a salvaguarda no final de cada um dos turnos até obter três sucessos ou fracassos. Se o alvo obtiver três sucessos, a magia encerra para o alvo. Se obter três fracassos, a magia permanece 7 dias sobre ele.
+Sempre que o alvo Envenenado receber um efeito que encerre a condição Envenenado, ele deve ser bem-
+-sucedido em uma salvaguarda de Constituição, ou a condição Envenenado não encerra nele.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.521Z"}'::jsonb),
+  ('contato-extraplanar', 'Contato Extraplanar', 5, '5º Círculo', 'Adivinhação', '1 minuto ou Ritual', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '1 minuto', FALSE, TRUE, 'Você entra em contato mentalmente com um semideus,
+com o espírito de um sábio morto há muito tempo ou com alguma outra entidade conhecedora de outro plano. Entrar em contato com essa inteligência sobrenatural pode fragmentar sua mente. Ao conjurar essa magia,
+realize uma salvaguarda de Inteligência CD 15.
+Em caso de sucesso, você pode realizar até cinco perguntas à entidade. Você deve realizar suas perguntas antes que a magia termine. O Mestre responde a cada pergunta com uma palavra, como “sim”, “não”,
+“talvez”, “nunca”, “irrelevante” ou “indeterminado” (se a entidade não souber a resposta à pergunta). Se a resposta com uma palavra for enganosa, o Mestre pode,
+em vez disso, oferecer uma frase curta como resposta.
+Se falhar, você sofre 6d6 pontos de dano Psíquico e tem a condição Incapacitado até completar um Descanso Longo. Uma magia Restauração Maior conjurada em você encerra esse efeito.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.521Z"}'::jsonb),
+  ('contingencia', 'Contingência', 6, '6º Círculo', 'Abjuração', '10 minutos', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma estatueta de si mesmo incrustada de pedras preciosas no valor de 1.500 ou mais PO","text":"V, S, M (uma estatueta de si mesmo incrustada de pedras preciosas no valor de 1.500 ou mais PO)"}'::jsonb, '10 dias', FALSE, FALSE, 'Escolha uma magia de 5º círculo ou inferior que você
+possa conjurar, que tenha um tempo de conjuração de uma ação e que possa ter você como alvo. Você
+conjura essa magia — chamada de magia contingente
+— como parte da conjuração de Contingência, gastando espaços de magia para ambas, mas a magia contingente não entra em efeito. Em vez disso, ela é ativada quando ocorre um determinado gatilho. Você descreve esse gatilho quando conjura as duas magias. Por exemplo,
+uma Contingência conjurada com Respirar na Água pode estipular que Respirar na Água é ativada quando você é envolvido por água ou um líquido semelhante.
+A magia contingente ativa-se imediatamente após o gatilho ocorrer pela primeira vez, quer você queira ou não, e então a Contingência termina.
+A magia contingente tem efeito apenas em você,
+mesmo que normalmente possa ter como alvo outros.
+Você pode usar apenas uma magia Contingência por vez. Se você conjurar esta magia novamente, o efeito de outra magia Contingência em você encerra. Além disso, a Contingência encerra em você se o componente material da magia não estiver em sua pessoa.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.522Z"}'::jsonb),
+  ('contramagia', 'Contramagia', 3, '3º Círculo', 'Abjuração', 'Reação, que você executa quando vê
+uma criatura a até 18 metros de você conjurando uma magia com componentes Verbais, Somáticos ou Materiais', '18 metros', '{"verbal":false,"somatic":true,"material":false,"materialDescription":null,"text":"S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você tenta interromper uma criatura no processo de conjurar uma magia. A criatura realiza uma salvaguarda de Constituição. Se falhar, a magia se dissipa sem efeito, e a ação, Ação Bônus ou Reação usada para conjurá-la é desperdiçada. Se a magia do alvo foi conjurada com um espaço de magia, o espaço de magia da criatura não é gasto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.522Z"}'::jsonb),
+  ('controlar-agua', 'Controlar Água', 4, '4º Círculo', 'Transmutação', 'Ação', '90 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma mistura de água e poeira","text":"V, S, M (uma mistura de água e poeira)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Até que a magia termine, você controla qualquer água dentro de uma área escolhida em um Cubo de até 30
+metros de lado, usando um dos seguintes efeitos. Como uma ação Usar Magia em seus turnos posteriores, você
+pode repetir o mesmo efeito ou escolher um diferente.
+Dividir Água. Você divide a água na área e cria uma trincheira. A trincheira se estende pela área da magia,
+e a água separada forma uma parede de cada lado. A
+trincheira permanece até que a magia termine ou você
+escolha um efeito diferente. A água então preenche lentamente a trincheira ao longo da próxima rodada até que o nível normal de água seja restaurado.
+Inundação. Você faz com que o nível de toda a água parada na área suba em até 6 metros. Se você escolher uma área em um grande corpo d’água, você cria uma onda de 6 metros de altura que viaja de um lado da área para o outro e depois quebra. Quaisquer veículos
+Enormes ou menores no caminho da onda são carregados com ela para o outro lado. Qualquer veículo Enorme ou menor atingido pela onda tem 25% de chance de emborcar.
+O nível da água permanece elevado até que a magia termine ou você escolha um efeito diferente. Se esse efeito produziu uma onda, a onda se repete no início do seu próximo turno enquanto o efeito de inundação permanecer.
+Redemoinho. Você faz com que um redemoinho se forme no centro da área, que deve ser pelo menos uma área quadrada de 15 metros de lados e 7,5 metros de profundidade. O redemoinho dura até que você escolha um efeito diferente ou a magia termine. O redemoinho tem 1,5 metro de largura na base, até 15 metros de largura no topo e 7,5 metros de altura. Qualquer criatura na água e a até 7,5 metros do redemoinho é puxada a 3
+metros em sua direção. Quando uma criatura entra no redemoinho pela primeira vez em um turno ou termina o turno lá, ela realiza uma salvaguarda de Força. Se falhar, a criatura sofre 2d8 pontos de dano Contundente.
+Em caso de sucesso, a criatura sofre metade do dano.
+Uma criatura só pode nadar para longe do redemoinho se primeiro usar uma ação para se afastar e for bem-sucedida em um teste de Força (Atletismo) contra a CD
+para evitar sua magia.
+Redirecionar Fluxo. Você faz com que a água corrente na área se mova na direção que você escolher,
+mesmo que a água tenha que fluir sobre obstáculos,
+paredes ou em outras direções improváveis. A água na área se move à medida que você a direciona, mas uma vez que ela se move além da área da magia, ela retoma seu fluxo com base no terreno. A água continua a se mover na direção que você escolheu até que a magia termine ou você escolha um efeito diferente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.523Z"}'::jsonb),
+  ('controlar-o-clima', 'Controlar o Clima', 8, '8º Círculo', 'Transmutação', '10 minutos', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um incenso aceso","text":"V, S, M (um incenso aceso)"}'::jsonb, 'Concentração, até 8 horas', TRUE, FALSE, 'Você assume o controle do clima a até 8 quilômetros de você pela duração da magia. Você deve estar ao ar livre para conjurar esta magia, e ela encerra se você for para áreas internas.
+Ao conjurar a magia, você altera a condição climática atual, determinada pelo Mestre. Você pode alterar a precipitação, a temperatura e o vento. Leva 1d4 x 10
+minutos para as novas condições do clima entrarem em vigor. Depois que elas se estabelecerem, você pode alterar as condições novamente. Quando a magia termina,
+o clima volta gradualmente ao normal.
+Ao alterar as condições meteorológicas, encontre uma condição atual nas tabelas a seguir e altere o estágio em um, para cima ou para baixo. Ao mudar o vento,
+você pode alterar a direção dele.
+Precipitação
+Estágio Condição
+1 Limpo
+2 Nuvens leves
+3 Nublado ou com neblina
+4 Chuva, granizo ou neve
+5 Chuva torrencial, tempestade de granizo ou nevasca
+Temperatura Vento
+Estágio Condição Estágio Condição
+1 Calor insuportável 1 Calmo
+2 Quente 2 Vento moderado
+3 Ameno 3 Vento forte
+4 Fresco 4 Vendaval
+5 Frio 5 Tempestade
+6 Frio extremo', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.523Z"}'::jsonb),
+  ('convocar-celestial', 'Convocar Celestial', 5, '5º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um relicário no valor de 500 ou mais PO","text":"V, S, M (um relicário no valor de 500 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Um Dragão de Latão conjura
+Controlar o
+Clima para salvar uma comunidade de uma tempestade destrutiva.
+ALEXANDRE HONORE
+Você invoca um Espírito Celestial. Ele se manifesta em uma forma angelical em um espaço desocupado
+à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Celestial. Ao conjurar a magia, escolha Defensor ou Vingador. Sua escolha determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+Espírito Celestial
+Celestial Grande, Neutro
+CA 11 + o círculo da magia + 2 (apenas Defensor)
+PV 40 + 10 para cada círculo de magia acima de 5
+Deslocamento 9 m, Voo 12 m
+MOD SG MOD SG MOD SG
+For 16 +3 +3 Des 14 +2 +2 Con 16 +3 +3
+Int 10 +0 +0 Sab 14 +2 +2 Car 16 +3 +3
+Resistências Radiante
+Imunidades Amedrontado, Enfeitiçado
+Sentidos Visão no Escuro 18 m, Percepção Passiva 12
+Idiomas Celestial, compreende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
+Arco Radiante (Apenas Vingador). Jogada de Ataque à
+Distância: Bônus é igual ao seu modificador de ataque mágico,
+alcance 180 m. Dano: 2d6 + 2 + o círculo da magia pontos de dano Radiante.
+Maça Radiante (Apenas Defensor). Jogada de Ataque Corpo a
+Corpo: Bônus é igual ao seu modificador de ataque mágico,
+alcance 1,5 m. Dano: 1d10 + 3 + o círculo da magia pontos de dano Radiante, e o espírito pode escolher a si mesmo ou outra criatura à vista dele a até 3 metros do alvo. A criatura escolhida obtém 1d10 Pontos de Vida Temporários.
+Toque Curativo (1/Dia). O espírito toca outra criatura. O alvo recupera Pontos de Vida iguais a 2d8 + o círculo da magia.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.523Z"}'::jsonb),
+  ('convocar-elemental', 'Convocar Elemental', 4, '4º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de 400 ou mais PO","text":"V, S, M (ar, uma pedra, cinzas e água dentro de um frasco incrustado de ouro no valor de 400 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Elemental. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Elemental. Ao conjurar a magia, escolha um elemento:
+Água, Ar, Fogo ou Terra. A criatura se assemelha a uma forma bípede envolta no elemento escolhido, o que determina certas características no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0
+Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+Espírito Celestial
+(Vingador)
+ERIC BELISE
+Espírito Elemental
+Elemental Médio, Neutro
+CA 11 + o círculo da magia
+PV 50 + 10 para cada círculo de magia acima de 4
+Deslocamento 12 m; Escavação 12 m (apenas Terra); Natação
+12 m (apenas Água); Voo 12 m (pairar; apenas Ar)
+MOD SG MOD SG MOD SG
+For 18 +4 +4 Des 15 +2 +2 Con 17 +3 +3
+Int 4 –3 –3 Sab 10 +0 +0 Car 16 +3 +3
+Resistências Ácido (apenas Água), Cortante e Perfurante
+(apenas Terra), Elétrico e Trovejante (apenas Ar)
+Imunidades Ígneo (somente Fogo), Venenoso; Envenenado,
+Exaustão, Paralisado, Petrificado
+Sentidos Visão no Escuro 18 m, Percepção Passiva 10
+Idiomas Primordial, compreende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Estado Amorfo (Apenas Água, Ar e Fogo). O espírito pode se mover por um espaço tão estreito quanto 2,5 centímetros de largura sem contá-lo como Terreno Difícil.
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques de Pancada igual à metade do círculo da magia (arredondado para baixo).
+Pancada. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d10 +
+4 + o círculo da magia pontos de dano Contundente (apenas
+Terra), Elétrico (apenas Ar), Gélido (apenas Água) ou Ígneo
+(apenas Fogo).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.524Z"}'::jsonb),
+  ('convocar-familiar', 'Convocar Familiar', 1, '1º Círculo', 'Invocação', '1 hora ou Ritual', '3 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"incenso queimando no valor de 10 ou mais PO, que a magia consome","text":"V, S, M (incenso queimando no valor de 10 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, TRUE, 'Você adquire o serviço de um familiar, um espírito que assume uma forma animal que você escolhe: Aranha,
+Coruja, Corvo, Doninha, Falcão, Gato, Lagarto, Morcego, Polvo, Rato, Sapo ou outra Fera que tenha um
+Nível de Desafio 0. Aparecendo em um espaço desocupado no alcance da magia, o familiar tem as estatísticas da forma escolhida (veja o apêndice B), embora seja um Celestial, Feérico ou Ínfero (à sua escolha) em vez de uma Fera. Seu familiar age independentemente de você, mas obedece aos seus comandos.
+Conexão Telepática. Enquanto seu familiar estiver a até 30 metros de você, você pode se comunicar telepaticamente com ele. Além disso, como uma Ação
+Bônus, você pode ver através dos olhos do familiar e ouvir o que ele ouve até o início do seu próximo turno,
+obtendo os benefícios de quaisquer sentidos especiais que ele tenha.
+Por fim, ao conjurar uma magia com um alcance de toque, seu familiar pode entregar o toque. Seu familiar deve estar a até 30 metros de você, e ele deve executar uma Reação para entregar o toque quando você conjurar a magia.
+Combate. O familiar é um aliado seu e de seus aliados. Ele joga a Iniciativa dele e age no turno dele.
+Um familiar não pode atacar, mas pode realizar outras ações normalmente.
+Desaparecimento do Familiar. Quando o familiar é reduzido a 0 Pontos de Vida, ele desaparece. Ele reaparece depois que você conjura esta magia novamente.
+Como uma ação Usar Magia, você pode descartar
+Espíritos invocados por
+Convocar
+Familiar assumem formas inspiradas pelos magos que os conjuram.
+BRIAN VALEZA
+temporariamente o familiar para uma mini dimensão.
+Como alternativa, você pode descartá-lo para sempre.
+Como uma ação Usar Magia enquanto está temporariamente descartado, você pode fazer com que ele reapareça em um espaço desocupado a até 9 metros de você. Sempre que o familiar é reduzido a 0 Pontos de
+Vida ou desaparece na mini dimensão, ele deixa para trás no espaço que ocupava qualquer coisa que estivesse vestindo ou carregando.
+Apenas um Familiar. Você não pode ter mais de um familiar ao mesmo tempo. Ao conjurar esta magia enquanto você tem um familiar, você faz com que ele adote uma nova forma elegível.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.524Z"}'::jsonb),
+  ('convocar-feerico', 'Convocar Feérico', 3, '3º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma flor dourada no valor de 300 ou mais PO","text":"V, S, M (uma flor dourada no valor de 300 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Feérico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Feérico. Ao conjurar a magia, escolha um humor: Alegre,
+Enfurecido ou Malandro. A criatura se assemelha a uma criatura Feérica à sua escolha definida pelo humor escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece se reduzida a 0 Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
+mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é neUm Guardião conjura
+Convocar Feérico,
+conjurando um Espírito Feérico enfurecido para enfrentar um Merrow saqueador.
+Espírito Feérico
+Feérico Pequeno, Neutro
+CA 12 + o círculo da magia
+PV 30 + 10 para cada círculo de magia acima de 3
+Deslocamento 9 m, Voo 9 m
+MOD SG MOD SG MOD SG
+For 13 +1 +1 Des 16 +3 +3 Con 14 +2 +2
+Int 14 +2 +2 Sab 11 +0 +0 Car 16 +3 +3
+Imunidades Enfeitiçado
+Sentidos Visão no Escuro 18 m, Percepção Passiva 10
+Idiomas Silvestre, compreende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques com Lâmina Feérica igual à metade do círculo da magia
+(arredondado para baixo).
+Lâmina Feérica. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano:
+2d6 + 3 + o círculo da magia pontos de dano Energético.
+Ações Bônus
+Passo Feérico. O espírito se teleporta magicamente até 9
+metros para um espaço desocupado à vista dele. Em seguida,
+ocorre um dos seguintes efeitos, com base no humor escolhido para o espírito:
+Alegre. Salvaguarda de Sabedoria: CD é igual a CD para evitar sua magia, uma criatura à vista do espírito e a até 3 metros dele. Falha: O alvo fica Enfeitiçado por você e pelo espírito por 1 minuto ou até que o alvo sofra qualquer dano.
+Enfurecido. O espírito tem Vantagem na próxima jogada de ataque que realizar antes do final deste turno.
+Malandro. O espírito preenche um Cubo de 3 metros de lado a até 1,5 metro dele com Escuridão mágica, que dura até o final do próximo turno dele.
+JOSEPH WESTON
+cessária). Se você não emitir nenhum, ela executa a ação
+Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.525Z"}'::jsonb),
+  ('convocar-montaria', 'Convocar Montaria', 2, '2º Círculo', 'Invocação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você convoca um ser sobrenatural que aparece como uma montaria leal em um espaço desocupado à sua escolha no alcance da magia. Essa criatura usa o bloco de estatísticas de Montaria Sobrenatural. Se você já tem uma montaria desta magia, a montaria é substituída pela nova.
+A montaria se assemelha a um animal grande e que se pode montar à sua escolha, como um alce, um camelo, um cavalo ou um lobo atroz. Sempre que conjurar a magia, escolha o tipo de criatura da montaria — Celestial, Feérico ou Ínfero — que determina certas características no bloco de estatísticas.
+Combate. A montaria é um aliado seu e de seus aliados. Em combate, ela compartilha sua contagem de
+Iniciativa e funciona como uma montaria controlada enquanto você a monta (conforme definido nas regras sobre combate montado). Se você tem a condição Incapacitado, a montaria age no turno dela imediatamente após o seu, de forma independente, concentrando-se em protegê-lo.
+Desaparecimento da Montaria. A montaria desaparece se é reduzida a 0 Pontos de Vida ou se você morrer.
+Quando desaparece, deixa para trás qualquer coisa que estivesse vestindo ou carregando. Se você conjurar esta magia novamente, você decide se invoca a montaria que desapareceu ou uma diferente.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.525Z"}'::jsonb),
+  ('convocar-relampagos', 'Convocar Relâmpagos', 3, '3º Círculo', 'Invocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma nuvem de tempestade aparece em um ponto no alcance da magia à sua vista acima de você. A nuvem tem a forma de um Cilindro com 3 metros de altura e um raio de 18 metros.
+Ao conjurar a magia, escolha um ponto à sua vista sob a nuvem. Um relâmpago é disparado da nuvem até aquele ponto. Cada criatura a até 1,5 metro desse ponto realiza uma salvaguarda de Destreza, sofrendo 3d10
+pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.
+Até que a magia termine, você pode executar uma ação Usar Magia para invocar relâmpagos desse modo novamente, escolhendo o mesmo ponto ou um diferente.
+Se o conjurador estiver ao ar livre durante uma tempestade ao conjurar esta magia, ele passa a controlar a tempestade existente em vez de criar uma nova. Nessas condições, o dano da magia é aumentado em 1d10.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano é aumentado em 1d10 pontos para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.525Z"}'::jsonb),
+  ('corda-extradimensional', 'Corda Extradimensional', 2, '2º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de corda","text":"V, S, M (um pedaço de corda)"}'::jsonb, '1 hora', FALSE, FALSE, 'Montaria Sobrenatural
+Celestial Grande, Feérico ou Ínfero (À Sua Escolha), Neutro
+CA 10 + 1 por círculo de magia
+PV 5 + 10 por círculo de magia (a montaria tem um número de
+Dados de Vida [d10s] igual ao círculo da magia)
+Deslocamento 18 m, Voo 18 m (requer magia de 4º círculo ou superior)
+MOD SG MOD SG MOD SG
+For 18 +4 +4 Des 12 +1 +1 Con 14 +2 +2
+Int 6 –2 –2 Sab 12 +1 +1 Car 8 –1 –1
+Sentidos Percepção Passiva 11
+Idiomas Telepatia 1,5 km (funciona apenas com você)
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Vínculo Vital. Ao recuperar Pontos de Vida de uma magia 1º
+círculo ou superior, a montaria recupera o mesmo número de
+Pontos de Vida se você estiver a até 1,5 metro dela.
+Ações
+Pancada Sobrenatural. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5
+m. Dano: 1d8 mais o círculo da magia de pontos de dano
+Radiante (Celestial), Psíquico (Feérico) ou Necrótico (Ínfero).
+Ações Bônus
+Derrubar Brilho (Apenas Ínfero; Recarrega após um Descanso
+Longo). Salvaguarda de Sabedoria: CD é igual a CD para evitar sua magia, uma criatura a até 18 metros à vista da montaria.
+Falha: O alvo tem a condição Amedrontado até o final do seu próximo turno.
+Passo Feérico (Apenas Feérico; Recarrega após um Descanso
+Longo). A montaria se teleporta, junto com seu cavaleiro,
+para um espaço desocupado à sua escolha a até 18 metros de distância de onde está.
+Toque Curativo (Apenas Celestial; Recarrega após um Descanso
+Longo). Uma criatura a até 1,5 metro da montaria recupera um número de Pontos de Vida igual a 2d8 mais o círculo da magia.
+Você toca uma corda. Uma extremidade dela paira para cima até que a corda fique perpendicular ao chão ou alcance um teto. Na extremidade superior da corda,
+um portal Invisível de 1 metro por 1,5 metro se abre para um espaço extradimensional que permanece até que a magia termine. Esse espaço pode ser alcançado escalando a corda, que pode ser puxada para dentro ou para fora dele.
+O espaço pode conter até oito criaturas Médias ou menores. Ataques, magias e outros efeitos não podem passar para dentro ou para fora do espaço, mas as criaturas dentro dele podem ver através do portal. Qualquer coisa dentro do espaço cai quando a magia termina.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.526Z"}'::jsonb),
+  ('cordao-de-flechas', 'Cordão de Flechas', 2, '2º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma trança ornamental","text":"V, S, M (uma trança ornamental)"}'::jsonb, '8 horas', FALSE, FALSE, 'Toque até quatro flechas ou virotes não mágicas e finque-os no chão em seu espaço. Até que a magia termine, a munição não pode ser retirada fisicamente.
+Sempre que uma criatura que não seja você entrar em um espaço a até 9 metros da munição pela primeira vez ou terminar o turno dela lá, uma das peças de munição voa para atingi-la. A criatura deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre 2d4 pontos de dano Perfurante. A munição é então destruída. A
+magia termina quando nenhuma munição permanecer fincada no chão.
+Ao conjurar esta magia, você pode designar quaisquer criaturas que escolher, e a magia as ignora.', 'Usando um Espaço de Magia de Círculo Superior. A
+quantidade de munição que pode ser afetada aumenta em dois para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.526Z"}'::jsonb),
+  ('coroa-da-loucura', 'Coroa da Loucura', 2, '2º Círculo', 'Encantamento', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma criatura à sua vista e no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia. A
+criatura é bem-sucedida automaticamente se não for
+Humanoide.
+Uma coroa espectral aparece na cabeça do alvo
+Enfeitiçado, e ele deve executar uma ação antes de se mover em cada um de seus turnos para realizar um ataque corpo a corpo contra uma criatura diferente dela própria que você escolher mentalmente. O alvo pode agir normalmente no turno dele se você não escolher nenhuma criatura ou se nenhuma criatura estiver ao alcance dele. O alvo repete a salvaguarda no final de cada um dos turnos dele, encerrando a magia em caso de sucesso.
+Nos seus turnos subsequentes, você deve executar a ação Usar Magia para manter o controle sobre o alvo,
+ou a magia encerra.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.527Z"}'::jsonb),
+  ('corrente-de-relampagos', 'Corrente de Relâmpagos', 6, '6º Círculo', 'Evocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"três alfinetes de prata","text":"V, S, M (três alfinetes de prata)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você lança um relâmpago em direção a um alvo à sua vista e no alcance da magia. Três relâmpagos então saltam desse alvo para até três outros alvos à sua escolha,
+cada um dos quais deve estar a até 9 metros do primeiro alvo. Um alvo pode ser uma criatura ou um objeto, e pode ser alvo de apenas um dos relâmpagos.
+Cada alvo realiza uma salvaguarda de Destreza,
+sofrendo 10d8 pontos de dano Elétrico se falhar, ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. Um raio adicional salta do primeiro alvo para outro alvo para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.527Z"}'::jsonb),
+  ('crescer-espinhos', 'Crescer Espinhos', 2, '2º Círculo', 'Transmutação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"sete espinhos","text":"V, S, M (sete espinhos)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Do solo, em uma Esfera de 6 metros de raio centrada em um ponto no alcance da magia, brotam estacas e espinhos duros. A área se torna Terreno Difícil pela duração da magia. Quando uma criatura se move para dentro ou na área da magia, ela sofre 2d4 pontos de dano Perfurante por cada 1,5 metro que percorre.
+A transformação do solo é camuflada para parecer natural. Qualquer criatura que não consiga ver a área quando a magia é conjurada deve executar uma ação
+Procurar e ser bem-sucedida em um teste de Sabedoria
+(Percepção ou Sobrevivência) contra a CD para evitar sua magia para reconhecer o terreno como perigoso antes de entrar nele.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.528Z"}'::jsonb),
+  ('crescimento-de-plantas', 'Crescimento de Plantas', 3, '3º Círculo', 'Transmutação', 'Ação (Crescimento Excessivo) ou 8
+horas (Fertilização)', '45 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Esta magia canaliza vitalidade para as plantas. O tempo de conjuração que você usa determina se a magia tem o efeito Crescimento Excessivo ou Fertilização, apresentados a seguir.
+Crescimento Excessivo. Escolha um ponto no alcance da magia. Todas as plantas normais em uma
+Esfera de 30 metros de raio centrada nesse ponto tornam-se espessas e crescem. Uma criatura que se move por essa área deve gastar 4 metros de deslocamento para cada 1 metro que se move. Você pode anular o efeito em uma ou mais áreas de qualquer tamanho dentro da área da magia.
+Fertilização. Todas as plantas em um raio de 800
+metros centradas em um ponto no alcance da magia ficam fertilizadas por 365 dias. As plantas produzem o dobro da quantidade normal de alimento quando colhidas. Elas podem se beneficiar de apenas um Crescimento de Plantas por ano.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.528Z"}'::jsonb),
+  ('criacao', 'Criação', 5, '5º Círculo', 'Ilusão', '1 minuto', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pincel","text":"V, S, M (um pincel)"}'::jsonb, 'Especial', FALSE, FALSE, 'Você puxa mechas de material obscuro do Sombral para criar um objeto no alcance da magia. É um objeto de matéria vegetal (tecido, corda, madeira e algo similar) ou matéria mineral (pedra, cristal, metal e algo similar). O objeto não deve ser maior que um Cubo de
+1,5 metro de lado, e deve ter a forma e ser de um material que você já viu.
+A duração da magia depende do material do objeto,
+conforme mostrado na tabela Materiais. Se o objeto for composto por vários materiais, use a duração mais curta. Usar qualquer objeto criado por esta magia como componente Material de outra magia faz com que a outra magia falhe.
+Materiais
+Materiais Duração
+Matéria vegetal 24 horas
+Rocha ou cristal 12 horas
+Metais preciosos 1 hora
+Pedras preciosas 10 minutos
+Adamantina ou mitral 1 minuto', 'Usando um Espaço de Magia de Círculo Superior. O
+Cubo aumenta em 1,5 metro de lado para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.529Z"}'::jsonb),
+  ('criar-chamas', 'Criar Chamas', 0, 'Truque', 'Invocação', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '10 minutos', FALSE, FALSE, 'Uma chama bruxuleante surge em sua mão e permanece lá pela duração da magia. Enquanto estiver lá, a chama não emite calor, não queima nada, e emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros.
+A magia se encerra se você a conjurar novamente.
+Até que a magia termine, você pode executar uma ação Usar Magia para arremessar a chama em uma criatura ou objeto a até 18 metros de você. Realize um ataque mágico à distância. Em caso de acerto, o alvo sofre 1d8 pontos de dano Ígneo.
+Aprimoramento de Truque. O dano aumenta em 1d8
+quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.530Z"}'::jsonb),
+  ('criar-comida-e-agua', 'Criar Comida e Água', 3, '3º Círculo', 'Invocação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você cria 20 quilos de comida e 120 litros de água potável no chão ou em recipientes no alcance da magia —
+ambos úteis para afastar os perigos da desnutrição e desidratação. A comida não é temperada, mas nutritiva e se parece com um alimento à sua escolha, e a água é limpa.
+A comida estraga após 24 horas se não for consumida.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.530Z"}'::jsonb),
+  ('criar-mortos-vivos', 'Criar Mortos-Vivos', 6, '6º Círculo', 'Necromancia', '1 minuto', '3 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pedra de ônix preto de 150 ou mais PO para cada cadáver","text":"V, S, M (uma pedra de ônix preto de 150 ou mais PO para cada cadáver)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você pode conjurar esta magia apenas à noite. Escolha até três cadáveres de Humanoides Médios ou Pequenos no alcance da magia. Cada um se torna um Carniçal sob seu controle (veja também o Livro dos Monstros para o bloco de estatísticas).
+Como uma Ação Bônus em cada um dos seus turnos,
+você pode comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 36 metros de você (se você controlar várias criaturas, pode comandar qualquer uma delas ao mesmo tempo, emitindo o mesmo comando para elas).
+Você decide qual ação a criatura executa e para onde ela se move no próximo turno dela, ou pode emitir um comando geral, como proteger um determinado lugar.
+Se você não der nenhum comando, a criatura executa a ação Esquivar e move-se apenas para evitar dano. Uma vez dada uma ordem, a criatura continua a seguir a ordem até que a tarefa seja concluída.
+A criatura fica sob seu controle por 24 horas, após as quais ela deixa de obedecer a qualquer comando que você tenha dado a ela. Para manter o controle da criatura por mais 24 horas, é necessário conjurar esta magia na criatura antes que o período atual de 24
+horas termine. Esse uso da magia reafirma seu controle sobre até três criaturas que você animou com essa magia em vez de animar novas.', 'Usando um Espaço de Magia de Círculo Superior. Se você usar um espaço de magia de 7º círculo, você pode animar ou reafirmar o controle sobre quatro Carniçais. Se você usar um espaço de magia de 8º círculo,
+você pode animar ou reafirmar o controle sobre dois
+Carneçais ou Inumanos ou cinco Carniçais. Se você
+usar um espaço de magia de 9º círculo, poderá animar ou reafirmar o controle sobre seis Carniçais, três Carneçais ou Inumanos, ou duas Múmias. Veja também o
+Livro dos Monstros para esses blocos de estatísticas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.531Z"}'::jsonb),
+  ('criar-ou-destruir-agua', 'Criar ou Destruir Água', 1, '1º Círculo', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma mistura de água e areia","text":"V, S, M (uma mistura de água e areia)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você faz uma das seguintes coisas:
+Criar Água. Você cria até 40 litros de água limpa no alcance da magia em um recipiente aberto. Como alternativa, a água cai como chuva em um Cubo de 9
+metros de lado no alcance da magia, extinguindo chamas expostas na área.
+Destruir Água. Você destrói até 40 litros de água em um recipiente aberto no alcance da magia. Como alternativa, você dispersa uma névoa em um Cubo de 9
+metros de lado no alcance da magia.', 'Usando um Espaço de Magia de Círculo Superior.
+Você cria ou destrói 40 litros adicionais de água, ou o tamanho do Cubo aumenta em 1,5 metro de lado, para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.531Z"}'::jsonb),
+  ('criar-passagem', 'Criar Passagem', 5, '5º Círculo', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de sementes de gergelim","text":"V, S, M (uma pitada de sementes de gergelim)"}'::jsonb, '1 hora', FALSE, FALSE, 'Uma passagem aparece em um ponto à sua vista em uma superfície de madeira, gesso ou pedra (como uma parede, teto ou piso) no alcance e pela duração da magia. Você escolhe as dimensões da abertura: até 1,5
+metro de largura, 2,5 metros de altura e 6 metros de profundidade. A passagem não cria instabilidade em uma estrutura ao seu redor.
+Quando a abertura desaparece, qualquer criatura ou objeto ainda na passagem criada pela magia é ejetado com segurança para um espaço desocupado mais próximo da superfície na qual você conjurou a magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.531Z"}'::jsonb),
+  ('cupula-antivida', 'Cúpula Antivida', 5, '5º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Uma aura estende-se de você em uma Emanação de
+3 metros pela duração da magia. A aura impede que criaturas que não sejam Constructos e Mortos-Vivos passem ou alcancem através dela. Uma criatura afetada pode conjurar magias ou realizar ataques com armas à
+Distância ou com Extensão através da barreira.
+Se você se mover de modo que uma criatura afetada seja forçada a atravessar a barreira, a magia encerra.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.532Z"}'::jsonb),
+  ('cura-completa', 'Cura Completa', 6, '6º Círculo', 'Abjuração', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Escolha uma criatura à sua vista e no alcance da magia.
+Uma energia positiva flui pelo alvo, restaurando 70
+Pontos de Vida. Esta magia também remove as condições Cego, Envenenado e Surdo do alvo.', 'Usando um Espaço de Magia de Círculo Superior. A
+cura aumenta em 10 para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.532Z"}'::jsonb),
+  ('cura-completa-em-massa', 'Cura Completa em Massa', 9, '9º Círculo', 'Abjuração', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma onda de energia curativa flui de você para as criaturas ao seu redor. Você restaura até 700 Pontos de Vida, divididos à sua escolha entre qualquer número de criaturas à sua vista e no alcance da magia. Criaturas curadas por esta magia também têm as condições
+Cego, Envenenado e Surdo removidas.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.533Z"}'::jsonb),
+  ('curar-ferimentos', 'Curar Ferimentos', 1, '1º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma criatura que você toca recupera um número de
+Pontos de Vida igual a 2d8 mais seu modificador de atributo de conjuração.', 'Usando um Espaço de Magia de Círculo Superior. A
+cura aumenta em 2d8 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.533Z"}'::jsonb),
+  ('curar-ferimentos-em-massa', 'Curar Ferimentos em Massa', 5, '5º Círculo', 'Abjuração', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma onda de energia curativa sai de um ponto à sua vista e no alcance da magia. Escolha até seis criaturas em uma Esfera de 9 metros de raio centrada nesse ponto. Cada alvo recupera Pontos de Vida iguais a 5d8
+mais o seu modificador de atributo de conjuração.', 'Usando um Espaço de Magia de Círculo Superior. A
+cura aumenta em 1d8 para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.534Z"}'::jsonb),
+  ('danacao', 'Danação', 1, '1º Círculo', 'Encantamento', 'Ação Bônus', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"o olho petrificado de uma salamandra","text":"V, S, M (o olho petrificado de uma salamandra)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você coloca uma maldição em uma criatura à sua vista e no alcance da magia. Até que a magia termine, você
+causa 1d6 pontos de dano Necrótico adicional ao alvo sempre que o acertar com uma jogada de ataque. Além disso, escolha um atributo ao conjurar a magia. O alvo tem Desvantagem nos testes de atributo realizados com o atributo escolhido.
+Se o alvo é reduzido a 0 Pontos de Vida antes que esta magia termine, você pode executar uma ação
+Bônus em um turno posterior para amaldiçoar uma nova criatura.', 'Usando um Espaço de Magia de Círculo Superior.
+Sua Concentração pode durar mais com um espaço de magia de 2º círculo (em até 4 horas), 3º–4º círculo
+(em até 8 horas) ou 5º círculo ou superior (em até 24
+horas).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.534Z"}'::jsonb),
+  ('danca-irresistivel-de-otto', 'Dança Irresistível de Otto', 6, '6º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma criatura à sua vista e no alcance da magia deve realizar uma salvaguarda de Sabedoria. Em caso de sucesso, o alvo dança comicamente até o final do próximo turno dele, durante o qual ele deve gastar todo o movimento para dançar no mesmo lugar.
+Se falhar, o alvo tem a condição Enfeitiçado pela duração da magia. Enquanto Enfeitiçado, o alvo dança comicamente, deve usar todo o seu movimento para dançar no mesmo lugar e tem Desvantagem em salvaguardas de Destreza e jogadas de ataque, e outras criaturas têm Vantagem em jogadas de ataque contra ele. Em cada um dos turnos do alvo, ele pode executar uma ação para se recompor e repetir a salvaguarda,
+encerrando a magia em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.535Z"}'::jsonb),
+  ('de-carne-para-pedra', 'De Carne para Pedra', 6, '6º Círculo', 'Transmutação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pena de cocatriz","text":"V, S, M (uma pena de cocatriz)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você tenta transformar uma criatura à sua vista e no alcance da magia em pedra. O alvo realiza uma salvaguarda de Constituição. Se falhar, ele tem a condição
+Contido pela duração da magia. Em uma salvaguarda bem-sucedida, o Deslocamento dele é 0 até o início do seu próximo turno. Constructos são bem-sucedidos automaticamente na salvaguarda.
+Um alvo Contido realiza outra salvaguarda de
+Constituição no final de cada um dos turnos dele. Em caso de sucesso por três vezes contra esta magia, ela se encerra. Se falhar por três vezes, ele é transformado em pedra e tem a condição Petrificado pela duração da magia. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo alcance três de um tipo.
+Se você mantiver sua Concentração nesta magia por toda a duração possível, o alvo tem a condição Petrificado até que a condição seja encerrada por Restauração
+Maior ou efeito mágico semelhante.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.535Z"}'::jsonb),
+  ('dedo-da-morte', 'Dedo da Morte', 7, '7º Círculo', 'Necromancia', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você libera energia negativa através de uma criatura
+à sua vista e no alcance da magia. O alvo realiza uma salvaguarda de Constituição, sofrendo 7d8 + 30 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso.
+Um Humanoide morto por esta magia levanta-se no início do seu próximo turno como um Zumbi (veja o apêndice B) que segue suas ordens verbais.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.536Z"}'::jsonb),
+  ('defensor-da-fe', 'Defensor da Fé', 4, '4º Círculo', 'Invocação', 'Ação', '9 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '8 horas', FALSE, FALSE, 'Um defensor espectral Grande aparece e paira pela duração da magia em um espaço desocupado à sua vista e no alcance da magia. O defensor ocupa esse espaço e não pode ser atingido, e aparece em uma forma apropriada para sua divindade ou panteão.
+Qualquer inimigo que se mova para um espaço a até
+3 metros do defensor pela primeira vez em um turno ou inicie o turno lá realiza uma salvaguarda de Destreza, sofrendo 20 pontos de dano Radiante se falhar, ou metade desse dano em caso de sucesso. O defensor desaparece quando causa um total de 60 pontos de dano.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.536Z"}'::jsonb),
+  ('desejo', 'Desejo', 9, '9º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Desejo é a magia mais poderosa que um mortal pode conjurar. Ao simplesmente falar em voz alta, você pode alterar a própria realidade.
+O uso básico dessa magia é duplicar qualquer outra magia de 8º círculo ou inferior. Ao usá-la dessa forma,
+você não precisa atender a nenhum requisito para conjurar essa magia, incluindo Componentes caros. A
+magia simplesmente surte efeito.
+Como alternativa, você pode criar um dos seguintes efeitos à sua escolha:
+Aprendizado Repentino. Você substitui um dos seus talentos por outro talento para o qual seja elegível.
+Você perde todos os benefícios do talento antigo e obtém os benefícios do novo. Não é possível substituir um talento que seja pré-requisito para qualquer um dos seus outros talentos ou características.
+Criação de Objeto. Você cria um objeto no valor de até 25.000 PO que não seja um item mágico. O objeto pode ter no máximo 90 metros em qualquer dimensão e aparece em um espaço desocupado à sua vista, no chão.
+Imunidade à Magia. Você concede a até dez criaturas à sua vista imunidade a uma única magia ou outro efeito mágico por 8 horas.
+Refazer Jogada. Você desfaz um único evento recente, forçando uma nova jogada de qualquer jogada de dado realizada no último turno (incluindo o seu último turno). A realidade se remodela para acomodar o novo resultado. Por exemplo, uma magia Desejo pode desfazer uma falha na salvaguarda de um aliado ou um
+Acerto Crítico de um inimigo. Você pode forçar refazer a jogada com Vantagem ou Desvantagem, e escolher se usa o novo resultado ou a jogada original.
+Reformar a Realidade. Você pode expressar um desejo que não se encaixe nos outros efeitos. Para isso,
+declare seu desejo ao Mestre da maneira mais clara
+Um pequenino Clérigo conjura o
+Defensor da Fé para afastar um worg faminto.
+IRINA NORDSOL
+possível. O Mestre possui total liberdade para decidir o que acontece; quanto maior o desejo, maior a chance de algo dar errado. A magia pode falhar, o efeito desejado pode ser apenas parcialmente alcançado ou você
+pode enfrentar consequências inesperadas devido à
+forma como formulou seu desejo. Por exemplo, desejar que um vilão esteja morto pode levá-lo a um futuro em que o vilão já não está vivo, removendo o seu personagem do jogo. Desejar um item mágico Lendário ou um
+Artefato pode transportá-lo imediatamente ao local do atual proprietário. Se o desejo concedido afetar uma comunidade, região ou o mundo, é provável que você
+atraia inimigos poderosos. Se o desejo impactar uma divindade, os servos dela podem intervir rapidamente para impedir ou encorajar você a formular o desejo de uma determinada maneira. Se o desejo ameaçar o multiverso, a Cidade de Sigil ou a Senhora da Dor,
+você terá uma visão dela por um instante; ela balança a cabeça e o desejo falha.
+Resistência. Você concede a até dez criaturas à sua vista Resistência a um tipo de dano à sua escolha. Essa
+Resistência é permanente.
+Saúde Instantânea. Você permite a si mesmo e a até vinte criaturas à sua vista recuperar todos os Pontos de Vida, além de encerrar todos os efeitos sobre elas listados na magia Restauração Maior.
+O estresse de conjurar Desejo para produzir qualquer efeito além de duplicar outra magia enfraquece você.
+Após suportar esse estresse, sempre que conjurar uma magia até completar um Descanso Longo, você sofre
+1d10 pontos de dano Necrótico por círculo da magia.
+Esse dano não pode ser reduzido ou evitado de nenhuma maneira. Além disso, seu valor de Força se torna
+3 por 2d4 dias. Para cada um desses dias em que você
+descanse e realize apenas atividades leves, o tempo de recuperação diminui em 2 dias. Por fim, há 33% de chance de que você nunca mais consiga conjurar Desejo se sofrer esse estresse.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.537Z"}'::jsonb),
+  ('desintegrar', 'Desintegrar', 6, '6º Círculo', 'Transmutação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pedra-ímã e poeira","text":"V, S, M (uma pedra-ímã e poeira)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você dispara um raio verde em um alvo à sua vista e no alcance da magia. O alvo pode ser uma criatura, um objeto não mágico ou uma criação de energia mágica,
+como a muralha criada por Muralha de Energia.
+Uma criatura alvo desta magia realiza uma salvaguarda de Destreza. Se falhar, o alvo sofre 10d6 + 40
+pontos de dano Energético. Se esse dano reduz o alvo a 0 Pontos de Vida, ele e tudo o que não é mágico que está usando e carregando são desintegrados em pó cinza. O alvo só pode ser revivido por uma magia Desejo ou Ressurreição Verdadeira.
+Esta magia desintegra automaticamente um objeto não mágico Grande ou menor, ou uma criação de energia mágica. Se tal alvo for Enorme ou maior, esta magia desintegra uma porção de um Cubo de 3 metros de lado dele.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 3d6 para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.537Z"}'::jsonb),
+  ('despedacar', 'Despedaçar', 2, '2º Círculo', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma lasca de mica","text":"V, S, M (uma lasca de mica)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Um barulho alto irrompe de um ponto à sua escolha no alcance da magia. Cada criatura em uma esfera com raio de 3 metros centrada nesse ponto realiza uma salvaguarda de Constituição, sofrendo 3d8 pontos de dano Trovejante se falhar, ou metade desse dano em caso de sucesso. Um Constructo tem Desvantagem na salvaguarda.
+Um objeto não mágico que não esteja sendo usado ou carregado também sofre o dano se estiver na área da magia.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.537Z"}'::jsonb),
+  ('despertar', 'Despertar', 5, '5º Círculo', 'Transmutação', '8 horas', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma ágata no valor de 1.000 ou mais PO, que a magia consome","text":"V, S, M (uma ágata no valor de 1.000 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você passa o tempo de conjuração traçando caminhos mágicos em uma pedra preciosa e, em seguida, toca o alvo. O alvo deve ser uma criatura do tipo Fera ou
+Planta com uma Inteligência de 3 ou menos, ou uma planta natural que não seja uma criatura. O alvo obtém um valor de Inteligência de 10 e a capacidade de falar um idioma que você conhece. Se o alvo for uma planta natural, ele se torna uma criatura do tipo Planta e recebe a capacidade de mover seus membros, raízes, videiras, trepadeiras e assim por diante, e obtém sentidos semelhantes aos de um humano. O Mestre escolhe as estatísticas apropriadas para a Planta desperta, como as estatísticas do Arbusto Desperto ou da Árvore
+Desperta no Livro dos Monstros.
+O alvo desperto tem a condição Enfeitiçado por 30
+dias ou até que você ou seus aliados lhe causem dano.
+Quando essa condição termina, a criatura despertada decide qual atitude tem em relação a você.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.538Z"}'::jsonb),
+  ('despistar', 'Despistar', 5, '5º Círculo', 'Ilusão', 'Ação', 'Pessoal', '{"verbal":false,"somatic":true,"material":false,"materialDescription":null,"text":"S"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você tem a condição Invisível ao mesmo tempo que uma cópia ilusória sua aparece onde você está. A cópia permanece pela duração da magia, mas a invisibilidade termina imediatamente após você realizar uma jogada de ataque, causar dano ou conjurar uma magia.
+Com uma ação Usar Magia, você pode mover a cópia ilusória até duas vezes o seu Deslocamento e fazer com que ela gesticule, fale e se comporte da forma que você
+desejar. Ela é intangível e invulnerável.
+Você pode ver através dos olhos dela e ouvir pelos ouvidos dela, como se estivesse onde ela está.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.538Z"}'::jsonb),
+  ('destruicao-atordoante', 'Destruição Atordoante', 4, '4º Círculo', 'Encantamento', 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma
+Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'O alvo sofre 4d6 pontos de dano Psíquico adicionais do ataque e deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Atordoado até o final do seu próximo turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano adicional aumenta em 1d6 para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.539Z"}'::jsonb),
+  ('destruicao-banidora', 'Destruição Banidora', 5, '5º Círculo', 'Invocação', 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma
+Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'O alvo atingido pela jogada de ataque sofre um adicional de 5d10 pontos de dano Energético do ataque. Se o ataque reduzir o alvo a 50 Pontos de Vida ou menos,
+o alvo deve ser bem-sucedido em uma salvaguarda de
+Carisma ou é transportado para um semiplano inofensivo pela duração da magia. Enquanto estiver lá,
+o alvo tem a condição Incapacitado. Quando a magia termina, o alvo reaparece no espaço que deixou ou no espaço desocupado mais próximo se esse espaço estiver ocupado.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.539Z"}'::jsonb),
+  ('destruicao-cauterizante', 'Destruição Cauterizante', 1, '1º Círculo', 'Evocação', 'Ação Bônus, que você realiza imediatamente após acertar um alvo com uma arma Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '1 minuto', FALSE, FALSE, 'Ao acertar o alvo, o ataque causa 1d6 pontos de dano
+Ígneo adicional. No início de cada turno do alvo, até que a magia termine, ele sofre 1d6 pontos de dano
+Ígneo e, então, realiza uma salvaguarda de Constituição. Se falhar, a magia continua; se for bem-sucedido, a magia se encerra.', 'Usando um Espaço de Magia de Círculo Superior.
+Todo dano aumenta em 1d6 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.540Z"}'::jsonb),
+  ('destruicao-cegante', 'Destruição Cegante', 3, '3º Círculo', 'Evocação', 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma
+Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '1 minuto', FALSE, FALSE, 'O alvo atingido pelo ataque sofre 3d8 pontos de dano
+Radiante adicionais e tem a condição Cego até que a magia termine. No final de cada um dos turnos dele,
+o alvo Cego realiza uma salvaguarda de Constituição,
+encerrando a magia em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano adicional aumenta em 1d8 para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.540Z"}'::jsonb),
+  ('destruicao-colerica', 'Destruição Colérica', 1, '1º Círculo', 'Necromancia', 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma
+Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '1 minuto', FALSE, FALSE, 'O alvo sofre 1d6 pontos de dano Necrótico adicionais do ataque e deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Amedrontado até que a magia termine. No final de cada um dos turnos dele, o alvo Amedrontado repete a salvaguarda, encerrando a magia em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.540Z"}'::jsonb),
+  ('destruicao-divina', 'Destruição Divina', 1, '1º Círculo', 'Evocação', 'Ação Bônus, que você realiza imediatamente após acertar um alvo com uma arma Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'O alvo sofre 2d8 pontos de dano Radiante adicionais do ataque. O dano aumenta em 1d8 se o alvo for um
+Ínfero ou um Morto-vivo.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.541Z"}'::jsonb),
+  ('destruicao-estrondosa', 'Destruição Estrondosa', 1, '1º Círculo', 'Evocação', 'Ação Bônus, que você realiza imediatamente após acertar um alvo com uma arma Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Seu ataque soa como um trovão audível a até 90
+metros de você, e o alvo sofre 2d6 pontos de dano
+Trovejante adicionais do ataque. Além disso, se o alvo for uma criatura, ele deve ser bem-sucedido em uma salvaguarda de Força ou é empurrado 3 metros para longe de você e tem a condição Caído.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.541Z"}'::jsonb),
+  ('destruicao-radiante', 'Destruição Radiante', 2, '2º Círculo', 'Transmutação', 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma
+Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'O alvo atingido pelo ataque sofre um adicional de 2d6
+pontos de dano Radiante. Até que a magia termine, o alvo emite Luz Plena em um raio de 1,5 metro, e jogadas de ataque contra ele têm Vantagem e ele não pode se beneficiar da condição Invisível.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 2.
+Uma anã Paladina fortalece sua arma com
+Destruição Divina, desencadeando a ira sagrada em ínferos Mezzoloths.
+BRYAN SOLA', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.542Z"}'::jsonb),
+  ('detectar-magia', 'Detectar Magia', 1, '1º Círculo', 'Adivinhação', 'Ação ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, TRUE, 'Pela duração da magia, você sente a presença de efeitos mágicos a até 9 metros de você. Se você sentir tais efeitos, pode executar a ação Usar Magia para ver uma aura fraca ao redor de qualquer criatura ou objeto visível na área que contém a magia, e se um efeito foi criado por uma magia, você descobre a escola dessa magia.
+A magia é bloqueada por 30 centímetros de pedra,
+terra ou madeira, 2,5 centímetros de metal ou uma folha fina de chumbo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.542Z"}'::jsonb),
+  ('detectar-o-bem-e-o-mal', 'Detectar o Bem e o Mal', 1, '1º Círculo', 'Adivinhação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Pela duração da magia, você sente a localização de qualquer Aberração, Celestial, Elemental, Feérico,
+Ínfero ou Morto-Vivo a até 9 metros de você. Você
+também sente se a magia Consagrar está ativa lá e, em caso afirmativo, onde.
+A magia é bloqueada por 30 centímetros de pedra,
+terra ou madeira, 2,5 centímetros de metal ou uma folha fina de chumbo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.542Z"}'::jsonb),
+  ('detectar-pensamentos', 'Detectar Pensamentos', 2, '2º Círculo', 'Adivinhação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"1 Peça de Cobre","text":"V, S, M (1 Peça de Cobre)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você ativa um dos efeitos abaixo. Até que a magia termine, você pode ativar qualquer um dos efeitos como uma ação Usar Magia em seus turnos posteriores.
+Sentir Pensamentos. Você sente a presença de pensamentos a até 9 metros de você que pertencem a criaturas que conhecem idiomas ou são telepáticas. Você
+não lê os pensamentos, mas sabe o que uma criatura presente está pensando.
+A magia é bloqueada por 30 centímetros de pedra,
+terra ou madeira, 2,5 centímetros de metal ou uma folha fina de chumbo.
+Ler Pensamentos. Escolha uma criatura à sua vista a até 9 metros de você ou uma criatura a até 9 metros de você que você tenha detectado com a opção Sentir Pensamentos. Você agora descobre o que mais se destaca no pensamento do alvo. Se o alvo não souber nenhum idioma e não for telepático, você não descobre nada.
+Como uma ação Usar Magia em seu próximo turno,
+você pode tentar sondar mais profundamente a mente do alvo. Se você investigar mais profundamente, o alvo realiza uma salvaguarda de Sabedoria. Se falhar, você
+descobre o raciocínio, as emoções e algo que paira na mente dele (como preocupação, amor ou ódio). Em caso de sucesso, a magia encerra. De qualquer forma,
+o alvo sabe que você está sondando a mente dele e, até que você desvie sua atenção da mente do alvo, o alvo pode executar uma ação no turno dele para realizar um teste de Inteligência (Arcanismo) contra a CD para evitar sua magia, encerrando a magia em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.543Z"}'::jsonb),
+  ('detectar-veneno-e-doenca', 'Detectar Veneno e Doença', 1, '1º Círculo', 'Adivinhação', 'Ação ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma folha de teixo","text":"V, S, M (uma folha de teixo)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, TRUE, 'Pela duração da magia, você sente a localização de venenos, criaturas venenosas ou peçonhentas e contágios mágicos a até 9 metros de você. Você sente o tipo de veneno, criatura ou contágio em cada caso.
+A magia é bloqueada por 30 centímetros de pedra,
+terra ou madeira, 2,5 centímetros de metal ou uma folha fina de chumbo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.543Z"}'::jsonb),
+  ('disco-flutuante-de-tenser', 'Disco Flutuante de Tenser', 1, '1º Círculo', 'Invocação', 'Ação ou Ritual', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma gota de mercúrio","text":"V, S, M (uma gota de mercúrio)"}'::jsonb, '1 hora', FALSE, TRUE, 'Esta magia cria um disco circular horizontal formado de energia com 1 metro de diâmetro e 2,5 centímetros de altura, que flutua a 1 metro do chão em um espaço desocupado à sua escolha, à sua vista e no alcance da magia. O disco permanece pela duração da magia e pode carregar até 225 quilos. Se mais peso for colocado sobre ele, a magia se encerra e tudo no disco cai no chão.
+O disco fica imóvel enquanto você estiver a até 6
+metros dele. Se você se mover a mais de 6 metros de distância dele, o disco segue você, permanecendo a até
+6 metros de distância. Ele pode atravessar terrenos irregulares, subir ou descer escadas, declives e afins,
+mas não pode atravessar uma mudança de elevação de
+3 metros ou mais. Por exemplo, o disco não pode se mover através de um fosso de 3 metros de profundidade, nem poderia deixar tal fosso se fosse criado no fundo dele.
+Se você se mover a mais de 30 metros do disco (normalmente porque ele não pode se mover em torno de um obstáculo para segui-lo), a magia encerra.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.544Z"}'::jsonb),
+  ('disfarcar-se', 'Disfarçar-se', 1, '1º Círculo', 'Ilusão', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 hora', FALSE, FALSE, 'Você faz com que você mesmo — incluindo suas roupas,
+armaduras, armas e outros pertences — pareça diferente até que a magia termine. Você pode parecer 30 centímetros mais baixo ou mais alto e pode parecer mais pesado ou mais leve. Você deve adotar uma forma que tenha a mesma disposição básica de membros que você.
+Caso contrário, a extensão da ilusão depende de você.
+As mudanças causadas por esta magia falham em uma inspeção física. Por exemplo, se você usar esta magia para adicionar um chapéu ao seu traje, objetos passarão através do chapéu, e qualquer um que o tocar não sentirá nada.
+Para descobrir se você está disfarçado, uma criatura deve executar a ação Analisar para inspecionar sua aparência e ser bem-sucedido em um teste de Inteligência (Investigação) contra a CD para evitar sua magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.544Z"}'::jsonb),
+  ('dissipar-magia', 'Dissipar Magia', 3, '3º Círculo', 'Abjuração', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Escolha uma criatura, objeto ou efeito mágico no alcance da magia. Qualquer magia ativa de 3º círculo ou inferior no alvo é encerrada. Para cada magia ativa de
+4º círculo ou superior no alvo, realize um teste de atributo usando seu atributo de conjuração (CD 10 mais o círculo da magia alvo). Se falhar, a magia continua; se for bem-sucedido, a magia se encerra.', 'Usando um Espaço de Magia de Círculo Superior.
+Você encerra automaticamente uma magia no alvo se o círculo da magia for igual ou inferior ao círculo do espaço de magia que você usa.
+Um Mago Vermelho de Thay ordena que servos esqueléticos empilhem tesouros no disco do
+Disco Flutuante de Tenser.
+RALPH HORSLEY', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.544Z"}'::jsonb),
+  ('dissipar-o-bem-e-o-mal', 'Dissipar o Bem e o Mal', 5, '5º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"prata e ferro em pó","text":"V, S, M (prata e ferro em pó)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Pela duração da magia, Celestiais, Elementais, Feéricos,
+Ínferos e Mortos-Vivos têm Desvantagem em jogadas de ataque contra você. Você pode encerrar a magia mais cedo usando uma das seguintes funções especiais.
+Exorcizar. Como uma ação Usar Magia, você tem como alvo uma criatura a sua vista a até 1,5 metro de você e que seja um dos tipos de criatura acima. O alvo deve ser bem-sucedido em uma salvaguarda de Carisma ou é enviado de volta ao seu plano de origem, se ainda não estiver lá. Se não estiverem em seu plano de origem, Feéricos são enviados para Faéria e Mortos-Vivos são enviadas para o Sombral.
+Quebrar Encantamento. Como uma ação Usar Magia,
+toque uma criatura que esteja possuída ou sob os efeitos de Amedrontado ou Enfeitiçado por uma ou mais das criaturas mencionadas. O alvo deixa de estar possuído, Amedrontado ou Enfeitiçado por elas.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.545Z"}'::jsonb),
+  ('dominar-fera', 'Dominar Fera', 4, '4º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma Fera à sua vista e no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia.
+O alvo tem Vantagem na salvaguarda se você ou seus aliados estiverem lutando contra ele. Sempre que o alvo sofre dano, ele repete a salvaguarda, encerrando a magia em caso de sucesso.
+Você tem um vínculo telepático com o alvo Enfeitiçado enquanto vocês dois estão no mesmo plano de existência. No seu turno, você pode usar este vínculo para emitir comandos para o alvo (nenhuma ação é necessária), como “Ataque essa criatura”, “Mova-se para lá”
+ou “Busque aquele objeto”. O alvo faz o possível para obedecer no turno dele. Se ele concluir um pedido e não receber mais instruções de você, ele age e se move como quiser, concentrando-se em se proteger.
+Você pode ordenar o alvo a executar uma Reação,
+mas deve executar sua própria Reação para tanto.
+JAVIER CHARRO', 'Usando um Espaço de Magia de Círculo Superior. Sua
+Concentração pode durar mais com um espaço de magia de 5º círculo (em até 10 minutos), 6º círculo (em até 1 hora) ou 7º círculo ou superior (em até 8 horas).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.545Z"}'::jsonb),
+  ('dominar-monstro', 'Dominar Monstro', 8, '8º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Uma criatura à sua vista e no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia.
+O alvo tem Vantagem na salvaguarda se você ou seus aliados estiverem lutando contra ele. Sempre que o alvo sofre dano, ele repete a salvaguarda, encerrando a magia em caso de sucesso.
+Você tem um vínculo telepático com o alvo Enfeitiçado enquanto vocês dois estão no mesmo plano de existência. No seu turno, você pode usar este vínculo para emitir comandos para o alvo (nenhuma ação é necessária), como “Ataque essa criatura”, “Mova-se para lá”
+ou “Busque aquele objeto”. O alvo faz o possível para obedecer no turno dele. Se ele concluir um pedido e não receber mais instruções de você, ele age e se move como quiser, concentrando-se em se proteger.
+Você pode ordenar o alvo a executar uma Reação,
+mas deve executar sua própria Reação para tanto.', 'Usando um Espaço de Magia de Círculo Superior.
+Sua Concentração pode durar mais com um espaço de magia de 9º círculo (em até 8 horas).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.546Z"}'::jsonb),
+  ('dominar-pessoa', 'Dominar Pessoa', 5, '5º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Um humanoide à sua vista e no alcance da magia deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia.
+O alvo tem Vantagem na salvaguarda se você ou seus aliados estiverem lutando contra ele. Sempre que o alvo sofre dano, ele repete a salvaguarda, encerrando a magia em caso de sucesso.
+Você tem um vínculo telepático com o alvo Enfeitiçado enquanto vocês dois estão no mesmo plano de existência. No seu turno, você pode usar este vínculo para emitir comandos para o alvo (nenhuma ação é necessária), como “Ataque essa criatura”, “Mova-se para lá”
+ou “Busque aquele objeto”. O alvo faz o possível para obedecer no turno dele. Se ele concluir um pedido e não receber mais instruções de você, ele age e se move como quiser, concentrando-se em se proteger.
+Você pode ordenar o alvo a executar uma Reação,
+mas deve executar sua própria Reação para tanto.', 'Usando um Espaço de Magia de Círculo Superior.
+Sua Concentração pode durar mais com um espaço de magia de 6º círculo (até 10 minutos), 7º círculo (até 1
+hora) ou 8º círculo ou superior (até 8 horas).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.547Z"}'::jsonb),
+  ('duelo-compelido', 'Duelo Compelido', 1, '1º Círculo', 'Encantamento', 'Ação Bônus', '9 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você tenta obrigar uma criatura a um duelo. Uma criatura à sua vista e no alcance da magia realiza uma salvaguarda de Sabedoria. Se falhar, o alvo tem Desvantagem nas jogadas de ataque contra criaturas que não sejam você, e não pode se mover voluntariamente para um espaço a mais de 9 metros de você.
+A magia encerra se você realizar uma jogada de ataque contra uma criatura que não seja o alvo, se você
+conjurar uma magia em um inimigo que não seja o alvo,
+se um aliado seu causar dano ao alvo ou se você terminar seu turno a mais de 9 metros de distância do alvo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.547Z"}'::jsonb),
+  ('elementalismo', 'Elementalismo', 0, 'Truque', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você exerce controle sobre os elementos, criando um dos seguintes efeitos no alcance da magia.
+Convocar Água. Você cria um jato de névoa fria que umedece levemente criaturas e objetos em um Cubo de
+1,5 metro de lado. Como alternativa, você cria 1 xícara de água limpa em um recipiente aberto ou em uma superfície, e a água evapora em 1 minuto.
+Convocar Brisa. Você cria uma brisa forte o suficiente para ondular um tecido, mexer poeira, farfalhar folhas e fechar portas e persianas abertas, tudo em um
+Cubo de 1,5 metro de lado. Portas e persianas que estiverem sendo mantidas abertas por alguém ou alguma força não são afetadas.
+Convocar Fogo. Você cria uma fina nuvem de brasas inofensivas e fumaça colorida e perfumada em um
+Cubo de 1,5 metro de lados. Você escolhe a cor e o perfume, e as brasas podem acender velas, tochas ou lâmpadas nessa área. O cheiro da fumaça permanece por 1 minuto.
+Convocar Terra. Você cria uma fina camada de poeira ou areia que cobre superfícies em uma área quadrada de 1,5 metro de lado, ou faz com que uma única palavra apareça em sua caligrafia em um pedaço de terra ou areia.
+Esculpir Elemento. Você faz com que terra, areia,
+fogo, fumaça, névoa ou água que caiba em um Cubo de
+30 centímetros de lado assuma uma forma rudimentar
+(como a de uma criatura) por 1 hora.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.548Z"}'::jsonb),
+  ('emaranhar', 'Emaranhar', 1, '1º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Plantas agarradoras brotam do chão em um quadrado de 6 metros de lado no alcance da magia. Pela duração da magia, essas plantas transformam o terreno em Terreno Difícil. Elas desaparecem quando a magia termina.
+Cada criatura (exceto você) na área quando você
+conjura a magia deve ser bem-sucedida em uma salvaguarda de Força ou tem a condição Contido até que a magia termine. Uma criatura Contida pode executar uma ação para realizar um teste de Força (Atletismo)
+contra a CD para evitar sua magia. Em caso de sucesso,
+ela se liberta das plantas agarradoras e não está mais
+Contida por elas.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.548Z"}'::jsonb),
+  ('encarnacao-fantasmagorica', 'Encarnação Fantasmagórica', 9, '9º Círculo', 'Ilusão', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você tenta criar terrores ilusórios na mente dos outros.
+Cada criatura à sua escolha em uma Esfera de 9 metros de raio centrada em um ponto no alcance da magia realiza uma salvaguarda de Sabedoria. Se falhar, um alvo sofre 10d10 pontos de dano Psíquico e tem a condição Amedrontado pela duração da magia. Em caso de sucesso, um alvo recebe apenas metade do dano.
+Um alvo Amedrontado realiza uma salvaguarda de
+Sabedoria no final de cada um dos turnos dele. Se falhar, sofre 5d10 pontos de dano Psíquico. Em caso de sucesso, a magia se encerra naquele alvo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.548Z"}'::jsonb),
+  ('encontrar-armadilhas', 'Encontrar Armadilhas', 2, '2º Círculo', 'Adivinhação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você sente qualquer armadilha à sua vista e no alcance da magia. Uma armadilha, para o propósito desta magia, inclui qualquer objeto ou mecanismo que tenha sido criado para causar dano ou outro perigo. Assim,
+a magia sentiria a magia Alarme ou Glifo de Proteção ou uma armadilha mecânica, mas não revelaria uma fraqueza natural no chão, um teto instável ou um sumidouro escondido.
+Um draconato Druida usa
+Emaranhar para conter gnolls em frenesi.
+BRIAN VALEZA
+Esta magia revela que uma armadilha está presente,
+mas não sua localização. Você aprende a natureza geral do perigo representado por uma armadilha que sente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.549Z"}'::jsonb),
+  ('encontrar-o-caminho', 'Encontrar o Caminho', 6, '6º Círculo', 'Adivinhação', '1 minuto', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um conjunto de ferramentas de adivinhação — como cartas ou runas — no valor de 100 ou mais PO","text":"V, S, M (um conjunto de ferramentas de adivinhação — como cartas ou runas — no valor de 100 ou mais PO)"}'::jsonb, 'Concentração, até 1 dia', TRUE, FALSE, 'Você sente magicamente a rota física mais direta para um local que você nomeia. Você deve estar familiarizado com o local, e a magia falha se você declarar um destino em outro plano de existência, um destino em movimento (como uma fortaleza móvel) ou um destino inespecífico (como “o covil de um dragão verde”).
+Enquanto durar a magia, desde que você esteja no mesmo plano de existência do destino, você sabe a que distância ele está e em que direção se encontra. Sempre que se depara com uma escolha de caminhos ao longo do trajeto, você sabe qual é o caminho mais direto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.549Z"}'::jsonb),
+  ('enfeiticar-monstro', 'Enfeitiçar Monstro', 4, '4º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 hora', FALSE, FALSE, 'Uma criatura à sua vista e no alcance da magia realiza uma salvaguarda de Sabedoria. Ela tem Vantagem se você ou seus aliados estiverem lutando contra ela. Se falhar, o alvo tem a condição Enfeitiçado até que a magia termine ou até que você ou seus aliados causem dano a ele. A criatura Enfeitiçada é Amigável a você.
+Quando a magia termina, o alvo sabe que foi Enfeitiçado por você.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.550Z"}'::jsonb),
+  ('enfeiticar-pessoa', 'Enfeitiçar Pessoa', 1, '1º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 hora', FALSE, FALSE, 'Um Humanoide à sua vista e no alcance da magia realiza uma salvaguarda de Sabedoria. Ele tem Vantagem se você ou seus aliados estiverem lutando contra ele.
+Se falhar, o alvo tem a condição Enfeitiçado até que a magia termine ou até que você ou seus aliados causem dano a ele. A criatura Enfeitiçada é Amigável a você.
+Quando a magia termina, o alvo sabe que foi Enfeitiçado por você.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.550Z"}'::jsonb),
+  ('escalada-de-aranha', 'Escalada de Aranha', 2, '2º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma gota de betume e uma aranha","text":"V, S, M (uma gota de betume e uma aranha)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Até que a magia termine, uma criatura voluntária que você tocar adquire a capacidade de se mover por superfícies verticais e ao longo de tetos, deixando as mãos livres. O alvo também adquire um Deslocamento de Escalada igual ao Deslocamento dele.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.550Z"}'::jsonb),
+  ('escrita-ilusoria', 'Escrita Ilusória', 1, '1º Círculo', 'Ilusão', '1 minuto ou Ritual', 'Toque', '{"verbal":false,"somatic":true,"material":true,"materialDescription":"tinta no valor de 10 ou mais PO, que a magia consome","text":"S, M (tinta no valor de 10 ou mais PO, que a magia consome)"}'::jsonb, '10 dias', FALSE, TRUE, 'Você escreve em pergaminho, papel ou outro material apropriado e o imbuí com uma ilusão que permanece pela duração. Para você e quaisquer criaturas que escolher ao conjurar a magia, a escrita parece normal,
+como se estivesse escrita por sua mão, e transmite o significado de sua intenção no momento em que o texto foi redigido. Para os demais, as palavras aparecem como se estivessem em um alfabeto desconhecido ou mágico, tornando-se ininteligíveis. Se preferir, a ilusão pode alterar o significado, a caligrafia e o idioma do texto, embora você deva conhecer o idioma.
+Se a magia for dissipada, o texto original e a ilusão desaparecem.
+Uma criatura que possui Visão Verdadeira pode ler a mensagem oculta.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.551Z"}'::jsonb),
+  ('escudo-arcano', 'Escudo Arcano', 1, '1º Círculo', 'Abjuração', 'Reação, que você executa quando é atingido por uma jogada de ataque ou é alvo da magia
+Mísseis Mágicos', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 rodada', FALSE, FALSE, 'Uma barreira imperceptível de energia mágica o protege. Até o início do seu próximo turno, você recebe um bônus de +5 na CA, incluindo contra o ataque que ativou a magia, e não sofre dano de Mísseis Mágicos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.551Z"}'::jsonb),
+  ('escudo-ardente', 'Escudo Ardente', 4, '4º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de fósforo ou um vaga-lume","text":"V, S, M (um pouco de fósforo ou um vaga-lume)"}'::jsonb, '10 minutos', FALSE, FALSE, 'Chamas finas envolvem seu corpo pela duração da magia, emitindo Luz Plena em um raio de 3 metros e
+Meia-luz por mais 3 metros.
+As chamas fornecem um escudo quente ou frio,
+como você escolher. O escudo quente concede a você
+Resistência a dano Gélido, e o escudo frio concede a você Resistência a dano Ígneo.
+Além disso, sempre que uma criatura a até 1,5 metro de você o atinge com uma jogada de ataque corpo a corpo, o escudo irrompe em chamas. O atacante sofre
+2d8 pontos de dano Ígneo de um escudo quente ou
+2d8 pontos de dano Gélido de um escudo frio.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.552Z"}'::jsonb),
+  ('escudo-da-fe', 'Escudo da Fé', 1, '1º Círculo', 'Abjuração', 'Ação Bônus', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pergaminho de oração","text":"V, S, M (um pergaminho de oração)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Um campo cintilante envolve uma criatura à sua escolha no alcance da magia, concedendo um bônus de +2
+na CA pela duração da magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.552Z"}'::jsonb),
+  ('escuridao', 'Escuridão', 2, '2º Círculo', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":true,"materialDescription":"pelo de morcego e um pedaço de carvão","text":"V, M (pelo de morcego e um pedaço de carvão)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Pela duração da magia, uma Escuridão mágica se espalha a partir de um ponto no alcance da magia e preenche uma Esfera de 4,5 metros de raio. Visão no escuro não pode ver através dela, e luz não mágica não pode iluminá-la.
+Como alternativa, você conjura a magia em um objeto que não esteja sendo usado ou carregado, fazendo com que a Escuridão preencha uma Emanação de 4,5 metros originada desse objeto. Cobrir esse objeto com algo opaco, como uma tigela ou elmo, bloqueia a Escuridão.
+Se qualquer área desta magia se sobrepuser a uma área de Luz Plena ou Meia-luz criada por uma magia de 2º círculo ou inferior, essa outra magia é dissipada.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.552Z"}'::jsonb),
+  ('esfera-congelante-de-otiluke', 'Esfera Congelante de Otiluke', 6, '6º Círculo', 'Evocação', 'Ação', '90 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma esfera de cristal em miniatura","text":"V, S, M (uma esfera de cristal em miniatura)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Um globo gelado se estende de você até um ponto à
+sua escolha no alcance da magia, onde explode em uma
+Esfera de 18 metros de raio. Cada criatura nessa área realiza uma salvaguarda de Constituição, sofrendo
+10d6 pontos de dano Gélido se falhar ou metade desse dano em caso de sucesso.
+Se o globo atingir um corpo d’água, ele congela a água a uma profundidade de 15 centímetros sobre uma área de 9 metros quadrados. Esse gelo dura 1 minuto.
+Criaturas que estavam nadando na superfície da água congelada estão presas no gelo e têm a condição Contido. Uma criatura presa pode executar uma ação para realizar um teste de Força (Atletismo) contra a CD
+para evitar sua magia para se libertar.
+Você pode escolher não disparar o globo após completar a conjuração da magia. Se você fizer isso,
+um globo do tamanho de uma bala de funda, gelado ao toque, aparece em sua mão. A qualquer momento, você
+ou uma criatura a quem você dá o globo pode arremessá-lo (até um alcance de 12 metros) ou arremessá-lo com uma funda (até o alcance normal da funda). Ele se estilhaça com o impacto, com o mesmo efeito que uma conjuração normal da magia. Você também pode baixar o globo sem quebrá-lo. Após 1 minuto, se o globo ainda não se estilhaçou, ele explode.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.553Z"}'::jsonb),
+  ('esfera-flamejante', 'Esfera Flamejante', 2, '2º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma bola de cera","text":"V, S, M (uma bola de cera)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria uma esfera de fogo de 1,5 metro de diâmetro em um espaço desocupado no chão no alcance e pela duração da magia. Qualquer criatura que termine o turno a até 1,5 metro da esfera realiza uma salvaguarda de Destreza, sofrendo 2d6 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.
+Como uma Ação Bônus, você pode mover a esfera até 9 metros, rolando-a pelo chão. Se você mover a esfera para o espaço de uma criatura, essa criatura realiza a salvaguarda contra a esfera, e a esfera para de se mover durante o turno.
+Ao mover a esfera, você pode direcioná-la sobre barreiras de até 1,5 metro de altura e saltar sobre poços de até 3 metros de largura. Objetos inflamáveis que não
+estão sendo usados ou carregados entram em combustão se tocados pela esfera, e ela emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.553Z"}'::jsonb),
+  ('esfera-resiliente-de-otiluke', 'Esfera Resiliente de Otiluke', 4, '4º Círculo', 'Abjuração', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma esfera de vidro","text":"V, S, M (uma esfera de vidro)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma Esfera cintilante envolve uma criatura ou objeto
+Grande ou menor no alcance da magia. Uma criatura involuntária deve ser bem-sucedida em uma salvaguarda de Destreza ou é envolta pela duração da magia.
+Nada — nem objetos físicos, energia ou outros efeitos de magia — pode atravessar a barreira, para dentro ou para fora, embora uma criatura na Esfera possa respirar lá. A Esfera é imune a todos os tipos de dano, e uma criatura ou objeto dentro dela não pode ser danificado por ataques ou efeitos provenientes de fora, nem uma criatura dentro da Esfera pode causar dano a qualquer coisa fora dela.
+A Esfera não tem peso e é grande o suficiente para conter a criatura ou objeto em seu interior. Uma criatura envolta pode executar uma ação para empurrar-se contra as paredes da Esfera e, assim, rolar a Esfera a até metade do Deslocamento da criatura. Da mesma forma,
+o globo pode ser pego e movido por outras criaturas.
+Uma magia Desintegrar que tenha o globo como alvo o destrói sem prejudicar nada em seu interior.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.554Z"}'::jsonb),
+  ('esfera-vitriolica', 'Esfera Vitriólica', 4, '4º Círculo', 'Evocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma gota de bile","text":"V, S, M (uma gota de bile)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você aponta para um local no alcance da magia, e uma bola de ácido brilhante de 30 centímetros de diâmetro se espalha lá e explode em uma Esfera de 6 metros de raio. Cada criatura nessa área realiza uma salvaguarda de Destreza. Se falhar, uma criatura sofre 10d4 pontos de dano Ácido e outros 5d4 pontos de dano Ácido no final do próximo turno dela. Em caso de sucesso, uma criatura recebe apenas metade do dano inicial.', 'Usando um Espaço de Magia de Círculo Superior.
+O dano inicial aumenta em 2d4 para cada círculo de espaço de magia acima de 4.
+Um tiferino Feiticeiro libera a
+Esfera Vitriólica em nóticos.
+IGNATIUS BUDI', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.554Z"}'::jsonb),
+  ('espada-de-mordenkainen', 'Espada de Mordenkainen', 7, '7º Círculo', 'Evocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma espada em miniatura no valor de 250 ou mais PO","text":"V, S, M (uma espada em miniatura no valor de 250 ou mais PO)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria uma espada espectral que fica suspensa no alcance da magia. Ela permanece pela duração da magia.
+Quando a espada aparece, você realiza um ataque mágico corpo a corpo contra um alvo a até 1,5 metro da espada. Em um acerto, o alvo sofre um dano Energético igual a 4d12 mais o seu modificador de atributo de conjuração.
+Nos turnos seguintes, você pode executar uma Ação
+Bônus para mover a espada até 9 metros para um ponto à sua vista e repetir o ataque contra o mesmo alvo ou um diferente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.555Z"}'::jsonb),
+  ('espinho-mental', 'Espinho Mental', 2, '2º Círculo', 'Adivinhação', 'Ação', '36 metros', '{"verbal":false,"somatic":true,"material":false,"materialDescription":null,"text":"S"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você crava um espinho de energia psíquica na mente de uma criatura à sua vista e no alcance da magia. O
+alvo realiza uma salvaguarda de Sabedoria, sofrendo
+3d8 pontos de dano Psíquico se falhar ou metade desse dano em caso de sucesso. Se falhar na salvaguarda,
+você também sempre sabe a localização do alvo até que a magia termine, mas apenas enquanto ambos estiverem no mesmo plano de existência. Enquanto você
+tiver essa informação, o alvo não pode se esconder de você, e se tem a condição Invisível, não obtém nenhum benefício dela contra você.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.555Z"}'::jsonb),
+  ('esquentar-metal', 'Esquentar Metal', 2, '2º Círculo', 'Transmutação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de ferro e uma chama","text":"V, S, M (um pedaço de ferro e uma chama)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Escolha um objeto de metal fabricado, como uma arma ou uma armadura de metal pesada ou média, à sua vista e no alcance da magia. Você faz com que o objeto brilhe em brasa. Qualquer criatura em contato físico com o objeto sofre 2d8 pontos de dano ígneo quando você conjura a magia. Enquanto a magia durar, você
+pode executar uma ação Bônus em cada um dos seus turnos subsequentes para causar esse dano novamente,
+desde que o objeto esteja no alcance da magia.
+Se uma criatura estiver segurando ou usando o objeto e sofrer dano, ela deve ser bem-sucedida em uma salvaguarda de Constituição ou soltar o objeto, se puder. Se não soltar o objeto, ela tem Desvantagem em jogadas de ataque e testes de atributo até o início do seu próximo turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.555Z"}'::jsonb),
+  ('estatica-sinaptica', 'Estática Sináptica', 5, '5º Círculo', 'Encantamento', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você faz com que a energia psíquica entre em erupção em um ponto no alcance da magia. Cada criatura em uma Esfera de 6 metros de raio centrada nesse ponto realiza uma salvaguarda de Inteligência, sofrendo 8d6
+pontos de dano Psíquico se falhar, ou metade desse dano em caso de sucesso.
+Se falhar, um alvo também tem pensamentos confusos por 1 minuto. Durante esse tempo, ele subtrai 1d6
+de todas as suas jogadas de ataque e testes de atributo,
+bem como quaisquer salvaguardas de Constituição para manter a Concentração. A criatura realiza uma salvaguarda de Inteligência no final de cada um dos turnos dela, encerrando o efeito sobre si em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.556Z"}'::jsonb),
+  ('explosao-elemental', 'Explosão Elemental', 0, 'Truque', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você dispara energia arcana contra uma criatura ou objeto no alcance da magia. Realize uma jogada de ataque à distância contra o alvo. Em caso de acerto, o alvo sofre 1d8 pontos de dano de um tipo à sua escolha: Ácido, Elétrico, Gélido, Ígneo, Psíquico, Trovejante ou Venenoso.
+Se você tirar um 8 no d8 para esta magia, pode jogar outro d8 e adicionar ao dano. Ao conjurar essa magia,
+o número máximo de d8 adicionais que você pode somar ao dano da magia é igual ao seu modificador de atributo de conjuração.
+Aprimoramento de Truque. O dano aumenta em 1d8
+quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.556Z"}'::jsonb),
+  ('explosao-solar', 'Explosão Solar', 8, '8º Círculo', 'Evocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de pedra solar","text":"V, S, M (um pedaço de pedra solar)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Luz solar brilhante lampeja em uma Esfera de 18
+metros de raio centrada em um ponto à sua escolha no alcance da magia. Cada criatura na Esfera realiza uma salvaguarda de Constituição. Se falhar, uma criatura sofre 12d6 pontos de dano Radiante e tem a condição
+Cego por 1 minuto. Em caso de sucesso, ela sofre apenas metade do dano.
+Uma criatura Cega por esta magia realiza outra salvaguarda de Constituição no final de cada um dos turnos dela, encerrando o efeito em caso de sucesso.
+Esta magia dissipa Escuridão criada por qualquer magia em sua área.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.557Z"}'::jsonb),
+  ('fabricar', 'Fabricar', 4, '4º Círculo', 'Transmutação', '10 minutos', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você converte matérias-primas em produtos do mesmo material. Por exemplo, você pode fabricar uma ponte de madeira a partir de um grupo de árvores, uma corda a partir de um pedaço de cânhamo ou roupas a partir de linho ou lã.
+Escolha as matérias-primas à sua vista e no alcance da magia. Você pode fabricar um objeto Grande ou menor (que caiba em um Cubo de 3 metros de lado ou oito Cubos de 1,5 metro de lado conectados) com uma quantidade suficiente de material. Contudo, se você
+estiver trabalhando com metal, pedra ou outra substância mineral, o objeto fabricado não pode ser maior do que Médio (que caiba em um Cubo de 1,5 metro de lado). A qualidade de quaisquer objetos fabricados é baseada na qualidade das matérias-primas.
+Criaturas e itens mágicos não podem ser criados por esta magia. Você também não pode usá-la para criar itens que exijam um alto grau de habilidade — como armas e armaduras — a menos que você tenha proficiência com o tipo de Ferramentas de Artesão usadas para criar tais objetos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.557Z"}'::jsonb),
+  ('faca-de-gelo', 'Faca de Gelo', 1, '1º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":false,"somatic":true,"material":true,"materialDescription":"uma gota de água ou um pedaço de gelo","text":"S, M (uma gota de água ou um pedaço de gelo)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você cria um fragmento de gelo e o arremessa em uma criatura no alcance da magia. Realize um ataque mágico à distância contra o alvo. Se o ataque for bem-sucedido, o alvo sofre 1d10 pontos de dano Perfurante.
+Independentemente de ter acertado ou não, o fragmento explode. O alvo e cada criatura a até 1,5 metro dele devem ser bem-sucedidos em uma salvaguarda de
+Destreza ou sofrem 2d6 pontos de dano Gélido.', 'Usando um Espaço de Magia de Círculo Superior.
+O dano Gélido aumenta em 1d6 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.557Z"}'::jsonb),
+  ('fagulha-estelar', 'Fagulha Estelar', 0, 'Truque', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você lança uma faísca de luz em uma criatura ou objeto no alcance da magia. Realize um ataque mágico
+à distância contra o alvo. Em caso de acerto, o alvo sofre 1d8 pontos de dano Radiante e, até o final do seu próximo turno, emite Meia-luz em um raio de 3 metros e não pode se beneficiar da condição Invisível.
+Aprimoramento de Truque. O dano aumenta em 1d8
+quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.558Z"}'::jsonb),
+  ('falar-com-animais', 'Falar com Animais', 1, '1º Círculo', 'Adivinhação', 'Ação ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '10 minutos', FALSE, TRUE, 'Pela duração da magia, você pode compreender e se comunicar verbalmente com Feras, e pode usar com elas qualquer uma das opções de perícia da ação
+Influenciar.
+A maioria das Feras oferece pouca informação sobre assuntos que não estejam diretamente ligados à sobrevivência ou ao companheirismo mas, no mínimo, uma
+Fera pode fornecer informações sobre áreas vizinhas e monstros, incluindo o que percebeu no último dia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.558Z"}'::jsonb),
+  ('falar-com-mortos', 'Falar com Mortos', 3, '3º Círculo', 'Necromancia', 'Ação', '3 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um incenso aceso","text":"V, S, M (um incenso aceso)"}'::jsonb, '10 minutos', FALSE, FALSE, 'Você confere uma aparência de vida a um cadáver à
+sua escolha que esteja no alcance da magia, permitindo que ele responda às perguntas que você fizer. O cadáver precisa ter boca, e a magia falha se a criatura morta era um Morto-Vivo quando pereceu ou se foi o alvo desta magia nos últimos 10 dias.
+Até que a magia termine, você pode fazer até cinco perguntas ao cadáver. O cadáver sabe apenas o que sabia em vida, incluindo os idiomas que conhecia. As respostas geralmente são breves, enigmáticas ou repetitivas, e o cadáver não tem obrigação de oferecer uma resposta verdadeira se você for hostil a ele ou se ele o reconhecer como um inimigo. Esta magia não devolve a alma da criatura ao corpo dela, apenas o espírito animado. Assim, o cadáver não pode aprender novas informações, não compreende nada do que aconteceu desde que morreu e não pode discorrer sobre eventos futuros.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.558Z"}'::jsonb),
+  ('falar-com-plantas', 'Falar com Plantas', 3, '3º Círculo', 'Transmutação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '10 minutos', FALSE, FALSE, 'Você imbuí plantas em uma Emanação imóvel de 9
+metros com razão e intelecto limitado, permitindo que elas se comuniquem com você e sigam seus comandos simples. Você pode questionar as plantas sobre eventos na área da magia nas últimas 24 horas, obtendo informações sobre criaturas que passaram, clima e outras circunstâncias.
+Além disso, você pode transformar Terreno Difícil causado pelo crescimento vegetal (como moitas e vegetação densa) em terreno comum pela duração da magia. Como alternativa, você pode transformar terreno comum onde há plantas em Terreno Difícil, também pela duração da magia.
+A magia não permite que as plantas se desloquem,
+mas elas podem mover seus galhos, cipós e caules para você.
+Caso haja uma criatura do tipo Planta na área, você
+pode se comunicar com ela como se compartilhassem um idioma em comum.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.558Z"}'::jsonb),
+  ('favor-divino', 'Favor Divino', 1, '1º Círculo', 'Transmutação', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 minuto', FALSE, FALSE, 'Até que a magia termine, seus ataques com armas causam
+1d4 pontos de dano Radiante adicionais em um acerto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.559Z"}'::jsonb),
+  ('flecha-acida-de-melf', 'Flecha Ácida de Melf', 2, '2º Círculo', 'Evocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"folha de ruibarbo em pó","text":"V, S, M (folha de ruibarbo em pó)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma flecha verde brilhante dispara em direção a um alvo no alcance da magia, explodindo em um borrifo de ácido. Realize um ataque mágico à distância contra o alvo. Em caso de acerto, o alvo sofre 4d4 pontos de dano Ácido e 2d4 pontos de dano Ácido no final do próximo turno dele. Se falhar, a flecha respinga ácido no alvo, causando somente metade do dano inicial.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano (inicial e posterior) aumenta em 1d4 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.559Z"}'::jsonb),
+  ('flecha-relampago', 'Flecha Relâmpago', 3, '3º Círculo', 'Transmutação', 'Ação Bônus, que você realiza imediatamente após atingir ou errar um alvo com um ataque à distância usando uma arma', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Um Druida humano usa
+Falar com
+Animais para conversar com seu melhor amigo urso.
+JESPER EJSING
+Quando seu ataque atinge ou erra o alvo, a arma ou munição que você está usando se transforma em um relâmpago. Em vez de sofrer qualquer dano ou outros efeitos do ataque, o alvo sofre 4d8 pontos de dano Elétrico em um acerto ou metade desse dano em um erro.
+Cada criatura em um raio de 3 metros do alvo deve então realizar uma salvaguarda de Destreza, sofrendo
+2d8 pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.
+A arma ou munição retorna então à sua forma normal.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano para ambos os efeitos da magia aumenta em 1d8
+para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.559Z"}'::jsonb),
+  ('fogo-das-fadas', 'Fogo das Fadas', 1, '1º Círculo', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Objetos em um Cubo de 6 metros de lado no alcance da magia são delineados por luz azul, verde ou violeta
+(à sua escolha). Cada criatura no Cubo também é delineada se falhar em uma salvaguarda de Destreza. Pela duração da magia, objetos e criaturas afetadas emitem
+Meia-Luz em um raio de 3 metros e não podem se beneficiar da condição Invisível.
+Jogadas de ataque contra uma criatura ou objeto afetado têm Vantagem se o atacante puder vê-la.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.560Z"}'::jsonb),
+  ('fome-de-hadar', 'Fome de Hadar', 3, '3º Círculo', 'Invocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um tentáculo em conserva","text":"V, S, M (um tentáculo em conserva)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você abre uma porta de entrada para o Reino Distante,
+uma região infestada de horrores indizíveis. Uma Esfera de Escuridão de 6 metros de raio aparece, centrada em um ponto no alcance e pela duração da magia. A
+Esfera é considerada Terreno Difícil, e está cheia de sussurros estranhos e sons de sucção que podem ser ouvidos a até 9 metros de distância. Nenhuma luz, seja mágica ou não, pode iluminar a área, e criaturas totalmente dentro da área têm a condição Cego.
+Qualquer criatura que comece seu turno na área sofre 2d6 pontos de dano Gélido. Qualquer criatura que termine seu turno na área deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre 2d6 pontos de dano Ácido enquanto tentáculos esbranquiçados de outro mundo se esfregam nela.
+O ousado Mago Melf mira em um troll furioso com a
+Flecha
+Ácida de Melf.
+MARTIN MOTTET', 'Usando um Espaço de Magia de Círculo Superior. O
+dano Ácido ou Gélido (à sua escolha) aumenta em 1d6
+para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.560Z"}'::jsonb),
+  ('fonte-do-luar', 'Fonte do Luar', 4, '4º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma luz fria envolve seu corpo pela duração da magia,
+emitindo Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros.
+Até que a magia termine, você tem Resistência a dano Radiante e seus ataques corpo a corpo causam
+2d6 pontos de dano Radiante adicionais em caso de acerto.
+Além disso, imediatamente após sofrer dano de uma criatura à sua vista a até 18 metros de si, você pode executar uma Reação para forçar a criatura a realizar uma salvaguarda de Constituição. Se falhar, a criatura tem a condição Cego até o final do seu próximo turno.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.560Z"}'::jsonb),
+  ('forca-espectral', 'Força Espectral', 2, '2º Círculo', 'Ilusão', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de lã","text":"V, S, M (um pouco de lã)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você tenta criar uma ilusão na mente de uma criatura
+à sua vista e no alcance da magia. O alvo realiza uma salvaguarda de Inteligência. Se falhar, você cria um objeto, criatura ou outro fenômeno espectral que não seja maior do que um cubo de 3 metros de lado e que seja perceptível apenas para o alvo pela duração da magia.
+O espectro inclui som, temperatura e outros estímulos.
+O alvo pode executar uma ação Analisar para examinar o espectro com um teste de Inteligência (Investigação) contra a CD para evitar sua magia. Em caso de sucesso, o alvo percebe que o espectro é uma ilusão e a magia se encerra.
+Enquanto afetado pela magia, o alvo trata o espectro como se fosse real e racionaliza quaisquer resultados ilógicos da interação com ele. Por exemplo, um alvo que esteja tentando atravessar uma ponte espectral e sobreviva à queda acredita na existência da ponte e tenta achar alguma explicação para a própria queda.
+Um Aasimar Bruxo expõe inimigos à
+Fome de Hadar, que tudo consome.
+JOSEPH WESTON
+Um alvo afetado pode até sofrer dano da ilusão se o espectro representar uma criatura ou risco. Em cada um dos seus turnos, tal espectro pode causar 2d8
+pontos de dano Psíquico ao alvo se estiver na área do espectro ou a até 1,5 metro do espectro. O alvo percebe o dano como um tipo apropriado para a ilusão.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.561Z"}'::jsonb),
+  ('forma-eterea', 'Forma Etérea', 7, '7º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Até 8 horas', FALSE, FALSE, 'Você entra nas regiões de fronteira do Plano Etéreo,
+onde ele se sobrepõe ao seu plano atual.
+Você permanece na Fronteira Etérea pela duração da magia. Durante esse período, você pode se mover em qualquer direção. Se você se mover para cima ou para baixo, cada metro de movimento custa um metro adicional. Você pode ver o plano que você deixou, que parece cinza, e você não pode ver nada lá a mais de 18
+metros de distância.
+Enquanto estiver no Plano Etéreo, você pode afetar e ser afetado apenas por criaturas, objetos e efeitos nesse plano. Criaturas que não estão no Plano Etéreo não podem perceber ou interagir com você, a menos que uma característica lhes dê a capacidade de fazê-lo.
+Quando a magia termina, você retorna ao plano que deixou no local que corresponde ao seu espaço na Fronteira Etérea. Se você aparecer em um espaço ocupado, você é direcionado para o espaço desocupado mais próximo e sofre dano Energético igual a 10 pontos para cada 1,5 metro que é movido.
+Esta magia se encerra instantaneamente se você a conjurar enquanto estiver no Plano Etéreo ou em um plano que não faz fronteira com ele, como um dos
+Planos Externos.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher até três criaturas voluntárias
+(incluindo você) para cada círculo de espaço de magia acima de 7. As criaturas devem estar a até 3 metros de você quando você conjurar a magia.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.561Z"}'::jsonb),
+  ('forma-gasosa', 'Forma Gasosa', 3, '3º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de gaze","text":"V, S, M (um pouco de gaze)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Uma criatura voluntária que você toca multimorfa-se,
+junto com tudo o que está vestindo e carregando, em uma nuvem de neblina durante a duração da magia. A
+magia se encerra no alvo se ele for reduzido a 0 Pontos de Vida ou se executar uma ação Usar Magia para encerrá-la.
+Enquanto estiver nesta forma, o único método de movimento do alvo é um Deslocamento de Voo de 3
+metros, e ele pode pairar. O alvo pode entrar e ocupar o espaço de outra criatura. O alvo tem Resistência a dano Contundente, Cortante e Perfurante; tem Imunidade à condição Caído; e tem Vantagem em salvaguardas de Força, Destreza e Constituição. O alvo pode passar por aberturas estreitas, mas considera líquidos como se fossem superfícies sólidas.
+O alvo não pode falar ou manipular objetos, e qualquer objeto que ele estava carregando ou segurando não pode ser derrubado, usado ou interagido de outra forma.
+Por fim, o alvo não pode atacar ou conjurar magias.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.561Z"}'::jsonb),
+  ('formas-animais', 'Formas Animais', 8, '8º Círculo', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '24 horas', FALSE, FALSE, 'Escolha qualquer número de criaturas voluntárias à
+vista e no alcance da magia. Cada alvo se multimorfa em uma Fera Grande ou menor à sua escolha e que tenha um Nível de Desafio igual ou inferior a 4. Você
+pode escolher uma forma diferente para cada alvo. Em turnos posteriores, você pode executar uma ação Usar
+Magia para transformar os alvos novamente.
+As estatísticas de jogo de um alvo são substituídas pelas estatísticas da Fera escolhida, mas o alvo mantém seu tipo de criatura, Pontos de Vida, Dados de Pontos de Vida, alinhamento, capacidade de comunicação, e valores de atributo de Inteligência, Sabedoria e Carisma. As ações do alvo são limitadas pela anatomia da forma da Fera, e ele não pode conjurar magias. O equipamento do alvo se funde com a nova forma, e o alvo não pode usar nenhum desses equipamentos enquanto estiver nesta forma.
+O alvo adquire um número de Pontos de Vida Temporários igual aos Pontos de Vida da primeira forma que assume. Esses Pontos de Vida Temporários desaparecem, caso ainda restem, quando a magia terminar. A
+transformação permanece pela duração da magia, até que o alvo encerre voluntariamente a transformação com uma Ação Bônus.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.562Z"}'::jsonb),
+  ('gargalhada-nefasta-de-tasha', 'Gargalhada Nefasta de Tasha', 1, '1º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma torta e uma pena","text":"V, S, M (uma torta e uma pena)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma criatura à sua escolha à sua vista e no alcance da magia realiza uma salvaguarda de Sabedoria. Se falhar,
+ela está com as condições Caído e Incapacitado pela duração da magia. Durante esse tempo, ela ri incontrolavelmente se for capaz de rir, e não pode encerrar a condição Caído por si só.
+No final de cada um dos turnos dela e cada vez que sofrer dano, a criatura realiza outra salvaguarda de
+Sabedoria. O alvo tem Vantagem na salvaguarda se a salvaguarda for acionada por dano. Em caso de sucesso, a magia encerra.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.563Z"}'::jsonb),
+  ('glifo-de-protecao', 'Glifo de Proteção', 3, '3º Círculo', 'Abjuração', '1 hora', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um diamante em pó no valor de 200 ou mais PO, que a magia consome","text":"V, S, M (um diamante em pó no valor de 200 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada ou acionada', FALSE, FALSE, 'Você inscreve um glifo que mais tarde aciona um efeito mágico. Você o inscreve em uma superfície (como uma mesa ou uma seção de piso no chão) ou dentro de um objeto que pode ser fechado (como um livro ou baú)
+para ocultar o glifo. O glifo pode cobrir uma área não superior a 3 metros de diâmetro. Se a superfície ou objeto for movido a mais de 3 metros de onde você
+conjurou esta magia, o glifo é quebrado e a magia encerra sem ser acionada.
+O glifo é quase imperceptível e requer um teste bem-
+-sucedido de Sabedoria (Percepção) contra a CD para evitar sua magia para ser notado.
+Quando inscreve o glifo, você define o gatilho dele e escolhe se ele é uma runa explosiva ou um glifo de magia, conforme explicado abaixo.
+Defina o Gatilho. Você decide o que aciona o glifo quando conjura a magia. Para glifos inscritos em uma superfície, os gatilhos comuns incluem tocar ou pisar no glifo, remover outro objeto que o cubra ou se aproximar a uma certa distância dele. Para glifos inscritos em um objeto, os gatilhos comuns incluem abrir esse objeto ou ver o glifo. Uma vez que um glifo é acionado,
+esta magia se encerra.
+Você pode ajustar o gatilho para que apenas criaturas de certos tipos o ativem (por exemplo, o glifo pode ser definido para afetar Aberrações). Você também pode definir condições para criaturas que não acionam o glifo, como aquelas que dizem uma determinada senha.
+Runa Explosiva. Quando acionado, o glifo irrompe com energia mágica em uma Esfera de 6 metros de raio centrada no glifo. Cada criatura na área realiza uma salvaguarda de Destreza. Se falhar, uma criatura sofre
+5d8 pontos de dano Ácido, Elétrico, Gélido, Ígneo ou
+Trovejante (à sua escolha ao criar o glifo), ou metade desse dano em caso de sucesso.
+Glifo de Magia. Você pode armazenar uma magia preparada de 3º círculo ou inferior no glifo, conjurando-a como parte da criação do glifo. A magia deve ter como alvo uma única criatura ou uma área. A magia que está sendo armazenada não tem efeito imediato quando conjurada desse modo.
+Quando o glifo é acionado, a magia armazenada entra em efeito. Se a magia tiver um alvo, ela tem como alvo a criatura que acionou o glifo. Se a magia afetar uma área, a área está centrada nessa criatura. Se a magia invocar criaturas hostis ou criar objetos ou armadilhas prejudiciais, elas aparecem o mais próximo possível do intruso e o atacam. Se a magia exigir Concentração, ela dura até o final da duração total da magia.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano de uma runa explosiva aumenta em 1d8 para cada círculo de espaço de magia acima de 3. Se você criar um glifo de magia, você pode armazenar qualquer magia de até o mesmo círculo que o espaço de magia que você usa para o Glifo de Proteção.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.563Z"}'::jsonb),
+  ('globo-de-invulnerabilidade', 'Globo de Invulnerabilidade', 6, '6º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma conta de vidro","text":"V, S, M (uma conta de vidro)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma barreira imóvel e cintilante aparece em uma
+Emanação de 3 metros ao seu redor e permanece pela duração da magia.
+Qualquer magia de 5º círculo ou inferior conjurada de fora da barreira não pode afetar nada dentro dela.
+Tal magia pode ter como alvo criaturas e objetos dentro da barreira, mas a magia não tem efeito sobre eles.
+Da mesma forma, a área dentro da barreira é excluída das áreas de efeito criadas por tais magias.', 'Usando um Espaço de Magia de Círculo Superior. A
+barreira bloqueia magias de 1º círculo ou superior para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.564Z"}'::jsonb),
+  ('golpe-certeiro', 'Golpe Certeiro', 0, 'Truque', 'Adivinhação', 'Ação', 'Pessoal', '{"verbal":false,"somatic":true,"material":true,"materialDescription":"uma arma com a qual você tem proficiência e que vale 1 ou mais PC","text":"S, M (uma arma com a qual você tem proficiência e que vale 1 ou mais PC)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Guiado pelo lampejo de uma intuição mágica, você
+realiza um ataque com a arma usada na conjuração da magia. O ataque usa seu atributo de conjuração para as jogadas de ataque e dano em vez de usar Força ou Destreza. Se o ataque causar dano, ele pode ser Radiante ou do tipo de dano normal da arma (à sua escolha).
+Aprimoramento de Truque. Seja o dano Radiante ou o tipo de dano normal da arma, o ataque causa dano Radiante adicional quando você atinge os níveis 5 (1d6),
+11 (2d6) e 17 (3d6).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.564Z"}'::jsonb),
+  ('golpe-constritor', 'Golpe Constritor', 1, '1º Círculo', 'Invocação', 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Ao acertar o alvo, vinhas agarradoras aparecem nele e ele realiza uma salvaguarda de Força. Uma criatura
+Grande ou maior tem Vantagem nesta salvaguarda. Se falhar, o alvo está com a condição Contido até que a magia termine. Em caso de sucesso, as videiras murcham e a magia se encerra.
+Enquanto Contido desse modo, o alvo sofre 1d6
+pontos de dano Perfurante no início de cada um dos turnos dele. O alvo ou uma criatura ao alcance dele pode executar uma ação para realizar um teste de Força (Atletismo) contra a CD para evitar sua magia. Em caso de sucesso, as videiras desaparecem.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.565Z"}'::jsonb),
+  ('golpe-de-arco', 'Golpe de Arço', 5, '5º Círculo', 'Invocação', 'Ação', '9 metros', '{"verbal":false,"somatic":true,"material":true,"materialDescription":"uma arma Corpo a Corpo que vale 1 ou mais PP","text":"S, M (uma arma Corpo a Corpo que vale 1 ou mais PP)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você brande a arma usada na conjuração e então desaparece para atacar com rapidez. Escolha até cinco criaturas à sua vista e no alcance da magia. Realize um ataque mágico corpo a corpo contra cada alvo. Em caso de acerto, o alvo sofre 6d10 pontos de dano Energético.
+Você então se teleporta para um espaço desocupado
+à sua vista a até 1,5 metro de um dos alvos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.565Z"}'::jsonb),
+  ('graxa', 'Graxa', 1, '1º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de banha de porco ou manteiga","text":"V, S, M (um pouco de banha de porco ou manteiga)"}'::jsonb, '1 minuto', FALSE, FALSE, 'Uma graxa não inflamável cobre o solo em um quadrado de 3 metros de lados centrado em um ponto no alcance da magia e o transforma em Terreno Difícil pela duração da magia.
+Quando a graxa aparece, cada criatura em pé e na área da magia deve ser bem-sucedida em uma salvaguarda de Destreza ou tem a condição Caído. Uma criatura que entra na área ou termina o turno nela também deve ser bem-sucedida nessa salvaguarda ou fica Caída.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.566Z"}'::jsonb),
+  ('guardioes-espirituais', 'Guardiões Espirituais', 3, '3º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pergaminho de oração","text":"V, S, M (um pergaminho de oração)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Espíritos protetores voam ao seu redor em uma Emanação de 4,5 metros pela duração da magia. Se você
+for bom ou neutro, a forma espectral deles parece angelical ou feérica (à sua escolha). Se você é mau, eles parecem ínferos.
+Ao conjurar esta magia, você pode escolher criaturas que não serão afetadas. O Deslocamento de quaisquer outras criaturas é reduzido pela metade na Emanação.
+Sempre que a Emanação entrar no espaço de uma criatura ou uma criatura entrar na Emanação, ou terminar seu turno nela, ela deve realizar uma salvaguarda de
+Sabedoria. Se falhar, a criatura sofre 3d8 pontos de dano Radiante (se você for bom ou neutro) ou 3d8
+pontos de dano Necrótico (se for mau). Em caso de sucesso, a criatura sofre metade do dano. Cada criatura realiza essa salvaguarda apenas uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.566Z"}'::jsonb),
+  ('heroismo', 'Heroísmo', 1, '1º Círculo', 'Encantamento', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você toca uma criatura voluntária que se torna imbuída de bravura. Até que a magia termine, a criatura é imune à condição Amedrontado e recebe Pontos de
+Vida Temporários igual ao seu modificador de atributo de conjuração no início de cada um dos turnos dela.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.566Z"}'::jsonb),
+  ('identificar', 'Identificar', 1, '1º Círculo', 'Adivinhação', '1 minuto ou Ritual', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pérola no valor de 100 ou mais PO","text":"V, S, M (uma pérola no valor de 100 ou mais PO)"}'::jsonb, 'Instantânea', FALSE, TRUE, 'Você toca um objeto durante a conjuração da magia.
+Se for um item mágico ou algum outro objeto mágico,
+você descobre suas propriedades e como usá-las, se ele requer Sintonização e quantas cargas possui, se houver. Você também descobre se alguma magia está afetando o item e quais são elas. Se o item foi criado por uma magia, você identifica o nome dessa magia.
+Se em vez disso você tocar uma criatura durante a conjuração, você descobre quais magias a estão afetando, caso estejam.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.567Z"}'::jsonb),
+  ('ilusao-menor', 'Ilusão Menor', 0, 'Truque', 'Ilusão', 'Ação', '9 metros', '{"verbal":false,"somatic":true,"material":true,"materialDescription":"um pouco de lã","text":"S, M (um pouco de lã)"}'::jsonb, '1 minuto', FALSE, FALSE, 'Você cria um som ou uma imagem de um objeto no alcance da magia que permanece pela duração da magia.
+Veja as descrições abaixo para os efeitos de cada um. A
+ilusão encerra se você conjurar essa magia novamente.
+Se uma criatura executar uma ação Analisar para examinar o som ou a imagem, ela pode determinar que é uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra a CD para evitar sua magia.
+Se a criatura perceber a ilusão pelo que ela realmente é, a ilusão se torna tênue para essa criatura.
+Som. Se você criar um som, o volume pode variar de um sussurro a um grito. Pode ser sua voz, a voz de outra pessoa, o rugido de um leão, o bater de tambores ou qualquer outro som que você escolher. O som continua ininterrupto pela duração da magia, ou você pode criar sons distintos em diferentes momentos antes que a magia termine.
+Imagem. Se você criar a imagem de um objeto —
+como uma cadeira, pegadas enlameadas ou um pequeno baú — ela não pode ter dimensões superiores a um cubo de 1,5 metro de lados. A imagem não pode gerar som, luz, cheiro ou qualquer outro efeito sensorial. A
+interação física com a imagem demonstra que se trata de uma ilusão, pois os objetos podem atravessá-la.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.567Z"}'::jsonb),
+  ('ilusao-programada', 'Ilusão Programada', 6, '6º Círculo', 'Ilusão', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"pó de jade no valor de 25 ou mais PO","text":"V, S, M (pó de jade no valor de 25 ou mais PO)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Você cria a ilusão de um objeto, criatura ou outro fenômeno visível no alcance da magia, ativada por um gatilho específico. A ilusão permanece imperceptível até o gatilho ocorrer. Ela não pode ser maior que um
+Cubo de 9 metros de lado. Ao conjurar a magia, você
+define o comportamento da ilusão e os sons que ela emite, com duração máxima de 5 minutos.
+Quando o gatilho especificado ocorre, a ilusão aparece e age conforme você a descreveu. Após a conclusão,
+ela desaparece e permanece inativa por 10 minutos,
+podendo ser ativada novamente depois desse período.
+O gatilho pode ser tão geral ou detalhado quanto você desejar, mas deve se basear em fenômenos visuais ou audíveis que ocorram a até 9 metros da área. Por exemplo, você pode criar uma ilusão de si mesmo que aparece para alertar aqueles que tentarem abrir uma porta com armadilha.
+Interação física com a imagem revela sua natureza ilusória, já que objetos podem atravessá-la. Uma criatura que executa a ação Analisar para examinar a imagem pode determinar que se trata de uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra a CD para evitar sua magia. Se uma criatura perceber a ilusão, ela pode ver através da imagem, e qualquer som que a ilusão emita parece vago para essa criatura.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.568Z"}'::jsonb),
+  ('imagem-maior', 'Imagem Maior', 3, '3º Círculo', 'Ilusão', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de lã","text":"V, S, M (um pouco de lã)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você cria a imagem de um objeto, uma criatura ou algum outro fenômeno visível que não seja maior do que um Cubo de 6 metros. A imagem aparece em um local
+à sua vista e no alcance da magia e permanece pela duração. A imagem parece real, incluindo sons, cheiros e temperatura apropriados para a coisa representada,
+mas não pode causar danos ou condições.
+Se você estiver dentro do alcance da imagem, pode usar a ação Usar Magia para movê-la para outro ponto no alcance da magia. Durante essa movimentação, você
+pode alterar sua aparência para que os movimentos pareçam naturais. Por exemplo, ao mover a imagem de uma criatura, pode fazê-la parecer que está andando.
+Além disso, você pode fazer com que a imagem emita sons diferentes em momentos distintos, como continuar uma conversa.
+A interação física com a imagem revela que ela é uma ilusão, pois as coisas podem passar por ela. Uma
+Um conjurador pode usar
+Ilusão
+Programada para fazer com que um cão de guarda apareça e peça gentilmente para que intrusos saiam.
+JUSTINE CRUZ
+criatura que executa uma ação Analisar para examinar a imagem pode determinar que ela é uma ilusão com um teste bem-sucedido de Inteligência (Investigação)
+contra a CD para evitar sua magia. Se uma criatura perceber a ilusão pelo que ela é, ela pode ver através da imagem, e suas outras qualidades sensoriais tornam-se fracas para a criatura.', 'Usando um Espaço de Magia de Círculo Superior. A
+magia dura até ser dissipada, sem exigir Concentração,
+se conjurada com um espaço de magia de 4º círculo ou superior.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.568Z"}'::jsonb),
+  ('imagem-silenciosa', 'Imagem Silenciosa', 1, '1º Círculo', 'Ilusão', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de lã","text":"V, S, M (um pouco de lã)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você cria a imagem de um objeto, uma criatura ou algum outro fenômeno visível que não seja maior do que um Cubo de 4,5 metros de lado. A imagem aparece em um local pela duração e no alcance da magia. A
+imagem é puramente visual; não é acompanhada por som, cheiro ou outros efeitos sensoriais.
+Como uma ação Usar Magia, você pode mover a imagem para qualquer ponto no alcance da magia. À
+medida que a imagem muda de local, você pode alterar a aparência da imagem para que os movimentos dela pareçam naturais para a imagem. Por exemplo, se você
+criar a imagem de uma criatura e movê-la, pode alterá-
+-la para que pareça estar andando.
+A interação física com a imagem revela que ela é uma ilusão, pois as coisas podem passar por ela. Uma criatura que executa uma ação Analisar para examinar a imagem pode determinar que ela é uma ilusão com um teste bem-sucedido de Inteligência (Investigação)
+contra a CD para evitar sua magia. Se uma criatura perceber a ilusão pelo que ela é, a criatura pode ver através da imagem.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.569Z"}'::jsonb),
+  ('indetectavel', 'Indetectável', 3, '3º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de poeira de diamante no valor de 25 ou mais PO, que a magia consome","text":"V, S, M (uma pitada de poeira de diamante no valor de 25 ou mais PO, que a magia consome)"}'::jsonb, '8 horas', FALSE, FALSE, 'Pela duração da magia, você protege um alvo que tocar contra magias de Adivinhação. O alvo pode ser uma criatura voluntária, um local ou um objeto que não exceda 3 metros em qualquer dimensão. O alvo não pode ser afetado por nenhuma magia de Adivinhação nem percebido através de sensores mágicos de vidência.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.569Z"}'::jsonb),
+  ('infligir-ferimentos', 'Infligir Ferimentos', 1, '1º Círculo', 'Necromancia', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma criatura que você tocar realiza uma salvaguarda de Constituição, sofrendo 2d10 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d10 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.570Z"}'::jsonb),
+  ('inseto-gigante', 'Inseto Gigante', 4, '4º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você invoca uma aranha, centopeia ou vespa gigante
+(escolhida ao conjurar a magia). Ela se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Inseto Gigante. A
+forma escolhida determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
+mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação
+Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.570Z"}'::jsonb),
+  ('inverter-a-gravidade', 'Inverter a Gravidade', 7, '7º Círculo', 'Transmutação', 'Ação', '30 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pedra-ímã e raspas de ferro","text":"V, S, M (uma pedra-ímã e raspas de ferro)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Esta magia inverte a gravidade em um Cilindro de 15 metros de raio e 30 metros de altura, centrado em um ponto ao alcance da magia. Todas as criaturas e objetos na área que não estão fixos ao chão são levados para cima até o topo do Cilindro. Uma criatura pode realizar uma salvaguarda de Destreza para agarrar um objeto fixo que possa alcançar, evitando assim a queda ascendente.
+Se um teto ou objeto ancorado for encontrado nessa subida, criaturas e objetos colidem com ele como em uma queda normal. Se chegarem ao topo do Cilindro sem colidir com nada, pairam lá pela duração da magia. Quando a magia termina, criaturas e objetos afetados caem.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.571Z"}'::jsonb),
+  ('invisibilidade', 'Invisibilidade', 2, '2º Círculo', 'Ilusão', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um cílio envolto em goma arábica","text":"V, S, M (um cílio envolto em goma arábica)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Uma criatura que você toca tem a condição Invisível até que a magia termine. A magia se encerra antes se o alvo realizar uma jogada de ataque, causar dano ou conjurar uma magia.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.571Z"}'::jsonb),
+  ('invisibilidade-maior', 'Invisibilidade Maior', 4, '4º Círculo', 'Ilusão', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma criatura que você toca tem a condição Invisível até que a magia termine.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.572Z"}'::jsonb),
+  ('invocacao-instantanea-de-drawmij', 'Invocação Instantânea de Drawmij', 6, '6º Círculo', 'Invocação', '1 minuto ou Ritual', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma safira no valor de 1.000 ou mais PO","text":"V, S, M (uma safira no valor de 1.000 ou mais PO)"}'::jsonb, 'Até ser dissipada', FALSE, TRUE, 'Você toca a safira usada na conjuração e um objeto pesando 3 quilos ou menos, cuja dimensão mais longa é de 2 metros ou menos. A magia deixa uma marca invisível nesse objeto e inscreve invisivelmente o nome do objeto na safira. Cada vez que você conjura essa magia, deve usar uma safira diferente.
+Depois disso, você pode executar uma ação Usar
+Magia para proferir o nome do objeto e esmagar a safira. O objeto aparece instantaneamente em sua mão,
+independentemente das distâncias físicas ou planares, e a magia termina.
+Se outra criatura estiver segurando ou carregando o objeto, esmagar a safira não a transporta, mas, em vez disso, você descobre quem é essa criatura e onde ela está localizada no momento.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.572Z"}'::jsonb),
+  ('invocar-aberracao', 'Invocar Aberração', 4, '4º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de 400 ou mais PO","text":"V, S, M (um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de 400 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Inseto Gigante
+Fera Grande, Sem Alinhamento
+CA 11 + o círculo da magia
+PV 30 + 10 para cada círculo de magia acima do 4
+Deslocamento 12 m, Escalada 12 m, Voo 12 m (apenas Vespa)
+MOD SG MOD SG MOD SG
+For 17 +3 +3 Des 13 +1 +1 Con 15 +2 +2
+Int 4 –3 –3 Sab 3 –3 –3 Car 14 +2 +2
+Sentidos: Visão no Escuro 18 m, Percepção Passiva 12
+Idiomas Compreende os idiomas que você conhece
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Escalada de Aranha. O inseto pode escalar superfícies difíceis,
+inclusive ao longo de tetos, sem precisar realizar um teste de atributo.
+Ações
+Ataques Múltiplos. O inseto realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
+Punição Venenosa. Jogada de Ataque Corpo a Corpo. Bônus é igual ao seu modificador de ataque mágico, alcance 3 m.
+Dano: 1d6 + 3 mais o círculo da magia em pontos de dano
+Perfurante mais 1d4 pontos de dano Venenoso.
+Raio de Teia (Apenas Aranha). Jogada de Ataque à Distância.
+Bônus é igual ao seu modificador de ataque mágico, alcance
+18 m. Dano: 1d10 + 3 mais o círculo da magia em pontos de dano Contundente, e o Deslocamento do alvo é reduzido a 0
+até o início do próximo turno do inseto.
+Ações Bônus
+Cuspe Venenoso (Apenas Centopeia). Salvaguarda de
+Constituição. Sua CD para evitar magia, uma criatura à vista do inseto a até 3 metros. Falha: O alvo tem a condição
+Envenenado até o início do próximo turno do inseto.
+Você invoca um Espírito Aberrante. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Aberrante. Ao conjurar a magia, escolha entre Devorador de Mentes, Pseudo-observador ou Slaad. A criatura se assemelha a uma Aberração desse tipo, o que determina certos detalhes no bloco de estatísticas da criatura.
+A criatura desaparece ao ser reduzida a 0 Pontos de
+Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.573Z"}'::jsonb),
+  ('invocar-animais', 'Invocar Animais', 3, '3º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos da natureza que aparecem como um grande bando de animais espectrais e intangíveis em um espaço desocupado à sua vista e no alcance da magia. O bando permanece pela duração da magia e você escolhe a forma animal dos espíritos, como lobos,
+serpentes ou pássaros.
+Você tem Vantagem em salvaguardas de Força enquanto estiver a até 1,5 metro do bando e, quando se mover no seu turno, também pode mover o bando até
+9 metros para um espaço desocupado à sua vista.
+Sempre que o bando se mover até 3 metros de uma criatura à sua vista ou quando uma criatura à sua vista entrar ou terminar seu turno a até 3 metros do bando,
+você pode forçá-la a realizar uma salvaguarda de Destreza. Se falhar, a criatura sofre 3d10 pontos de dano
+Cortante. Cada criatura só realiza essa salvaguarda uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d10 para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.573Z"}'::jsonb),
+  ('invocar-barragem', 'Invocar Barragem', 3, '3º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP","text":"V, S, M (uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Espírito Aberrante (Pseudo-observador)
+Espírito Aberrante
+Aberração Média, Neutra
+CA 11 + o círculo da magia
+PV 40 + 10 para cada círculo de magia acima de 4
+Deslocamento 9 m; Voo 9 m (pairar; apenas Pseudoobservador)
+MOD SG MOD SG MOD SG
+For 16 +3 +3 Des 10 +0 +0 Con 15 +2 +2
+Int 16 +3 +3 Sab 10 +0 +0 Car 6 –2 –2
+Imunidades Psíquico
+Sentidos Visão no Escuro 18 m, Percepção Passiva 10
+Idiomas Dialeto Obscuro, entende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Aura Sussurrante (Apenas Devorador de Mentes). No início de cada turno do espírito, ele emite energia psiônica se não tem a condição Incapacitado. Salvaguarda de Sabedoria: CD é igual a
+CD para evitar sua magia, cada criatura (exceto você) a até 1,5
+metro do espírito. Falha: 2d6 pontos de dano Psíquico.
+Regeneração (Apenas Slaad). O espírito recupera 5 Pontos de
+Vida no início do turno dele se tiver pelo menos 1 Ponto de Vida.
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
+Garras (Apenas Slaad). Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m.
+Dano: 1d10 + 3 mais o círculo da magia em pontos de dano
+Cortante, e o alvo não pode recuperar Pontos de Vida até o início do próximo turno do espírito.
+Pancada Psíquica (Apenas Devorador de Mentes). Jogada de
+Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Psíquico.
+Raio Ocular (Somente Pseudo-observador). Jogada de Ataque à
+Distância: Bônus é igual ao seu modificador de ataque mágico,
+alcance 45 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Psíquico.
+JUSTINE CRUZ
+Você brande a arma usada para conjurar a magia e invoca armas espectrais semelhantes (ou munição apropriada para a arma) que são lançadas adiante e depois desaparecem. Cada criatura à sua escolha à sua vista em um Cone de 18 metros realiza uma salvaguarda de
+Destreza, sofrendo 5d8 pontos de dano Energético se falhar, ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.574Z"}'::jsonb),
+  ('invocar-celestial', 'Invocar Celestial', 7, '7º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito dos Planos Superiores, que se manifesta como um pilar de luz em um Cilindro de
+3 metros de raio e 12 metros de altura centrado em um ponto no alcance da magia. Para cada criatura à sua vista no Cilindro, escolha qual dessas luzes brilha sobre ela:
+Luz Curativa. O alvo recupera Pontos de Vida iguais a 4d12 mais seu modificador de atributo de conjuração.
+Luz Ardente. O alvo realiza uma salvaguarda de
+Destreza, sofrendo 6d12 pontos de dano Radiante se falhar, ou metade desse dano em caso de sucesso.
+Até que a magia termine, Luz Plena preenche o Cilindro e, quando você se mover no seu turno, também pode mover o Cilindro até 9 metros.
+Sempre que o Cilindro se mover para o espaço de uma criatura à sua vista e sempre que uma criatura à
+sua vista entrar no Cilindro ou terminar seu turno lá,
+você pode envolvê-lo com uma das luzes. Uma criatura pode ser afetada por esta magia apenas uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. A
+cura e o dano aumentam em 1d12 para cada círculo de espaço de magia acima de 7.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.574Z"}'::jsonb),
+  ('invocar-constructo', 'Invocar Constructo', 4, '4º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um cofre no valor de 400 ou mais PO","text":"V, S, M (um cofre no valor de 400 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca o espírito de um Construto. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito do
+Constructo. Ao conjurar a magia, escolha um material:
+Argila, Metal ou Pedra. A criatura se assemelha a uma estátua animada (você determina a aparência) composto do material escolhido, que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+Espírito do Constructo
+Constructo Médio, Neutro
+CA 13 + o círculo da magia
+PV 40 + 15 para cada círculo de magia acima de 4
+Deslocamento 9 m
+MOD SG MOD SG MOD SG
+For 18 +4 +4 Des 10 +0 +0 Con 18 +4 +4
+Int 14 +2 +2 Sab 11 +0 +0 Car 5 –3 –3
+Resistências Venenoso
+Imunidades Amedrontado, Enfeitiçado, Envenenado, Exaustão,
+Paralisado
+Sentidos Visão no Escuro 18 m, Percepção Passiva 10
+Idiomas Compreende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Corpo Aquecido (Apenas Metal). Uma criatura que atinge o espírito com um ataque corpo a corpo ou que inicia seu turno imobilizando o espírito sofre 1d10 pontos de dano Ígneo.
+Letargia Empedernida (Apenas Pedra). Quando uma criatura começa o turno dela a até 3 metros do espírito, o espírito pode atacá-la com energia mágica se o espírito puder vêla. Salvaguarda de Sabedoria: CD é igual a CD para evitar sua magia. Falha: Até o início do próximo turno do espírito,
+o alvo não pode realizar Ataques de Oportunidade e seu
+Deslocamento é reduzido pela metade.
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques de Pancada igual à metade do círculo da magia (arredondado para baixo).
+Pancada. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 + 4 +
+o círculo da magia pontos de dano Contundente.
+Reações
+Reação Violenta (Apenas Argila). Gatilho: O espírito sofre dano de uma criatura. Reação: O espírito realiza um ataque de Pancada contra essa criatura, se possível, ou o espírito se move até metade do seu Deslocamento em direção a essa criatura sem provocar Ataques de Oportunidade.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.575Z"}'::jsonb),
+  ('invocar-dragao', 'Invocar Dragão', 5, '5º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um objeto com a imagem de um dragão gravado nele no valor de 500 ou mais PO","text":"V, S, M (um objeto com a imagem de um dragão gravado nele no valor de 500 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Dracônico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Dracônico. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.575Z"}'::jsonb),
+  ('invocar-elementais-menores', 'Invocar Elementais Menores', 4, '4º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Espírito do Constructo (Pedra)
+Espírito
+Dracônico
+(Frio)
+Espírito Dracônico
+Dragão Grande, Neutro
+CA 14 + o círculo da magia
+PV 50 + 10 para cada círculo de magia acima de 5
+Deslocamento 9 m, Natação 9 m; Voo 18 m
+MOD SG MOD SG MOD SG
+For 19 +4 +4 Des 14 +2 +2 Con 17 +3 +3
+Int 10 +0 +0 Sab 14 +2 +2 Car 14 +2 +2
+Resistências Ácido, Elétrico, Gélido, Ígneo, Venenoso
+Imunidades Amedrontado, Enfeitiçado, Envenenado
+Sentidos Visão às Cegas 9 m, Visão no Escuro 18 m, Percepção
+Passiva 12
+Idiomas Dracônico, compreende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Resistências Compartilhadas. Ao invocar o espírito, escolha uma das resistências dele. Você tem Resistência ao tipo de dano escolhido até que a magia termine.
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques de Dilacerar igual à metade do círculo da magia (arredondado para baixo) e usa o Ataque de Sopro.
+Ataque de Sopro. Salvaguarda de Destreza: CD é igual a CD
+para evitar sua magia, cada criatura em um Cone de 9 metros.
+Falha: 2d6 pontos de dano de um tipo ao qual o espírito tem
+Resistência (à sua escolha quando você conjura a magia).
+Sucesso: Metade do dano.
+Dilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 3 m. Dano: 1d6 + 4
++ o círculo da magia pontos de dano Perfurante.
+HECTOR ORTIZ, POLAR ENGINE
+Você conjura espíritos dos Planos Elementais que voam ao seu redor em uma Emanação de 4,5 metros pela duração da magia. Até que a magia termine,
+qualquer ataque que você realizar causa 2d8 pontos de dano adicional quando você atinge uma criatura na Emanação. Este dano é Ácido, Elétrico, Gélido ou
+Ígneo (à sua escolha quando realizar o ataque).
+Além disso, o terreno da Emanação é Terreno Difícil para seus inimigos.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.576Z"}'::jsonb),
+  ('invocar-elemental', 'Invocar Elemental', 5, '5º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito Grande e intangível dos Planos Elementais que aparece em um espaço desocupado no alcance da magia. Escolha o elemento do espírito,
+que determina o tipo de dano que ele causa: água (Gélido), ar (Elétrico), fogo (Ígneo) ou terra (Trovejante). O
+espírito permanece pela duração da magia.
+Sempre que uma criatura à sua vista entrar no espaço do espírito ou iniciar o turno a até 1,5 metro do espírito, você pode forçá-la a realizar uma salvaguarda de Destreza se o espírito não tiver nenhuma criatura
+Contida. Se falhar, o alvo sofre 8d8 pontos de dano do tipo do espírito, e tem a condição Contido até que a magia termine. No início de cada um dos turnos do alvo Contido, ele repete a salvaguarda. Se falhar, o alvo sofre 4d8 pontos de dano do tipo do espírito. Em caso de sucesso, o alvo não é Contido pelo espírito.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.576Z"}'::jsonb),
+  ('invocar-feerico', 'Invocar Feérico', 6, '6º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito Médio de Faéria em um espaço desocupado à sua vista e no alcance da magia.
+O espírito permanece pela duração da magia e se assemelha a uma criatura Feérica à sua escolha. Quando o espírito aparece, você pode realizar um ataque mágico corpo a corpo contra uma criatura a até 1,5 metro dele.
+Em caso de acerto, o alvo sofre dano Psíquico igual a
+3d12 mais o seu modificador de atributo de conjuração,
+e o alvo tem a condição Amedrontado até o início do seu próximo turno, com você e o espírito como a fonte do medo.
+Como uma Ação Bônus em seus turnos posteriores,
+você pode teleportar o espírito para um espaço desocupado à sua vista a até 9 metros do espaço restante e realizar o ataque contra uma criatura a até 1,5 metro dele.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d12 para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.577Z"}'::jsonb),
+  ('invocar-fera', 'Invocar Fera', 2, '2º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pluma, tufo de pele e rabo de peixe dentro de uma bolota dourada no valor de 200 ou mais PO","text":"V, S, M (uma pluma, tufo de pele e rabo de peixe dentro de uma bolota dourada no valor de 200 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Bestial. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Bestial.
+Ao conjurar a magia, escolha um ambiente: Água, Ar ou Terra. A criatura se assemelha a um animal à sua escolha que é nativo do ambiente escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
+mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação
+Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.577Z"}'::jsonb),
+  ('invocar-infero', 'Invocar Ínfero', 6, '6º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um frasco com sangue no valor de 600 ou mais PO","text":"V, S, M (um frasco com sangue no valor de 600 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Ínfero. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Ínfero. Ao conjurar a magia, escolha Demônio, Diabo ou Yugoloth.
+A criatura se assemelha a um Ínfero do tipo escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
+mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação
+Esquivar e usa o movimento dela para evitar o perigo.
+Espírito Ínfero
+Ínfero Grande, Neutro
+CA 12 + o círculo da magia
+PV 50 (apenas Demônio) ou 40 (apenas Diabo) ou 60 (apenas
+Yugoloth) + 15 para cada círculo de magia acima de 6
+Deslocamento 12 m; Escalada 12 m (apenas Demônio); Voo
+18 m (apenas Diabo)
+MOD SG MOD SG MOD SG
+For 13 +1 +1 Des 16 +3 +3 Con 16 +2 +2
+Int 10 +0 +0 Sab 10 +0 +0 Car 16 +3 +3
+Resistências Ígneo
+Imunidades Venenoso; Envenenado
+Sentidos Visão no Escuro 18 m, Percepção Passiva 10
+Idiomas Abissal, Infernal, Telepatia 18 m
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Espasmos da Morte (Apenas Demônio). Quando o espírito é reduzido a 0 Pontos de Vida ou a magia terminar, o espírito explode. Salvaguarda de Destreza: CD é igual a CD para evitar sua magia, cada criatura em uma Emanação de 3 metros originada a partir do espírito. Falha: 2d10 mais o círculo da magia em pontos de dano Ígneo. Sucesso: Metade do dano.
+Resistência à Magia. O espírito tem Vantagem em salvaguardas contra magias e outros efeitos mágicos.
+Visão Diabólica (Apenas Diabo). Escuridão Mágica não impede a Visão no Escuro do espírito.
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
+Arremesso de Chamas (Apenas Diabo). Jogada de Ataque à
+Distância: Bônus é igual ao seu modificador de ataque mágico,
+alcance 1,5 m ou alcance 45 m. Dano: 2d6 + 3 mais o círculo da magia em pontos de dano pontos de dano Ígneo.
+Garras (Apenas Yugoloth). Jogada de Ataque Corpo a Corpo:
+Bônus é igual ao seu modificador de ataque mágico, alcance
+1,5 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Cortante. Imediatamente após o ataque acertar ou errar,
+o espírito pode se teleportar até 9 metros para um espaço desocupado à vista dele.
+Mordida (Apenas Demônio). Jogada de Ataque Corpo a Corpo:
+Bônus é igual ao seu modificador de ataque mágico, alcance
+1,5 m. Dano: 1d12 + 3 mais o círculo da magia em pontos de dano Necrótico.
+Espírito Ínfero (Diabo)
+Espírito Bestial
+Fera Pequena, Neutra
+CA 11 + o círculo da magia
+PV 20 (apenas Ar) ou 30 (apenas Água e Terra) + 5 para cada círculo de magia acima de 2
+Deslocamento 9 m; Escalada 9 m (Apenas Terra); Natação 9 m
+(Apenas água); Voo 18 m (Apenas Ar)
+MOD SG MOD SG MOD SG
+For 13 +1 +1 Des 16 +3 +3 Con 15 +2 +2
+Int 10 +0 +0 Sab 10 +0 +0 Car 16 +3 +3
+Sentidos: Visão no Escuro 18 m, Percepção Passiva 12
+Idiomas: Compreende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Respirar na Água (Apenas Água). O espírito só pode respirar debaixo d’água.
+Sobrevoo (Apenas Ar). O espírito não provoca Ataques de
+Oportunidade quando voa para fora do alcance de um inimigo.
+Táticas de Grupo (Apenas Água e Terra). O espírito tem
+Vantagem em uma jogada de ataque contra uma criatura se pelo menos um dos aliados do espírito estiver a até 1,5 metro da criatura e o aliado não tem a condição Incapacitado.
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques de Dilacerar igual à metade do círculo da magia (arredondado para baixo).
+Dilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 +
+4 mais o círculo da magia em pontos de dano Perfurante.
+ALEXANDRE HONORE', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.578Z"}'::jsonb),
+  ('invocar-morto-vivo', 'Invocar Morto-Vivo', 3, '3º Círculo', 'Necromancia', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um crânio dourado no valor de 300 ou mais PO","text":"V, S, M (um crânio dourado no valor de 300 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Morto-Vivo. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Morto-
+-vivo. Ao conjurar a magia, escolha a forma da criatura: Esquelético, Fantasmagórico ou Pútrido. O espírito se assemelha a uma criatura Morta-viva com a forma escolhida, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+CA 11 + o círculo da magia
+PV 30 (apenas Fantasmagórico e Pútrido) ou 20 (apenas
+Esquelético) + 10 para cada círculo de magia acima de 3
+Deslocamento 9 m; Voo 12 m (pairar; apenas Fantasmagórico)
+MOD SG MOD SG MOD SG
+For 12 +1 +1 Des 16 +3 +3 Con 15 +2 +2
+Int 4 –3 –3 Sab 10 +0 +0 Car 9 –1 –1
+Imunidades Necrótico, Venenoso; Amedrontado, Envenenado,
+Exaustão, Paralisado
+Sentidos Visão no Escuro 18 m, Percepção Passiva 10
+Idiomas Compreende os idiomas que você fala
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Aura Purulenta (Apenas Pútrido). Salvaguarda de Constituição:
+CD é igual a CD para evitar sua magia, qualquer criatura
+(exceto você) que inicie o turno dentro de uma Emanação de
+1,5 metro originada a partir do espírito. Falha: A criatura tem a condição Envenenado até o início de seu próximo turno.
+Passagem Incorpórea (Apenas Fantasmagórico). O espírito pode se mover através de outras criaturas e objetos como se fossem Terreno Difícil. Se ele terminar o turno dentro de um objeto, ele é desviado para o espaço desocupado mais próximo e sofre 1d10 pontos de dano Energético por cada 1,5
+metro percorrido.
+Ações
+Ataques Múltiplos. O espírito realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
+Garra Podre (Apenas Pútrido). Jogada de Ataque Corpo a Corpo:
+Bônus é igual ao seu modificador de ataque mágico, alcance
+1,5 m. Dano: 1d6 + 3 mais o círculo da magia em pontos de dano Cortante. Se o alvo tem a condição Envenenado, ele tem a condição Paralisado até o final do próximo turno dele.
+Raio da Cova (Somente Esquelético). Jogada de Ataque à
+Distância: Bônus é igual ao seu modificador de ataque mágico,
+alcance 45 m. Dano: 2d4 + 3 mais o círculo da magia em pontos de dano Necrótico.
+Toque Mortal (Apenas Fantasmagórico). Jogada de Ataque
+Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Necrótico, e o alvo tem a condição
+Amedrontado até o final do próximo turno dele.
+Espírito Morto-Vivo
+Morto-vivo Médio, Neutro
+Espírito Morto-vivo
+(Fantasmagórico)
+JUSTIN SWEET', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.578Z"}'::jsonb),
+  ('invocar-saraivada', 'Invocar Saraivada', 5, '5º Círculo', 'Invocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma arma Corpo a Corpo ou à Distância no valor de 1 ou mais PP","text":"V, S, M (uma arma Corpo a Corpo ou à Distância no valor de 1 ou mais PP)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você brande a arma usada para conjurar a magia e escolhe um ponto no alcance da magia. Centenas de armas espectrais similares (ou munição apropriada para a arma) caem em uma saraivada e depois desaparecem.
+Cada criatura à sua escolha à sua vista em um Cilindro de 12 metros de raio e 6 metros de altura, centrada nesse ponto, realiza uma salvaguarda de Destreza. Uma criatura sofre 8d8 pontos de dano Energético se falhar,
+ou metade desse dano em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.579Z"}'::jsonb),
+  ('invocar-seres-da-floresta', 'Invocar Seres da Floresta', 4, '4º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos da natureza que voam ao seu redor em uma Emanação de 3 metros pela duração da magia. Quando a Emanação invade o espaço de uma criatura à sua vista, ou quando uma criatura à sua vista entra ou termina o turno na Emanação, você pode forçá-la a realizar uma salvaguarda de Sabedoria. Se falhar, a criatura sofre 5d8 pontos de dano Energético ou metade desse dano se tiver sucesso. A criatura realiza essa salvaguarda apenas uma vez por turno.
+Além disso, você pode executar a ação Desengajar como uma Ação Bônus pela duração da magia.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.580Z"}'::jsonb),
+  ('labirinto', 'Labirinto', 8, '8º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você bane uma criatura à sua vista e no alcance da magia para um semiplano labiríntico. O alvo permanece lá pela duração ou até escapar do labirinto.
+O alvo pode executar uma ação Analisar para tentar escapar. Quando isso acontece, ele realiza um teste de
+Inteligência (Investigação) CD 20. Em caso de sucesso,
+ele escapa e a magia se encerra.
+Quando a magia termina, o alvo reaparece no espaço que deixou ou, se esse espaço estiver ocupado, no espaço desocupado mais próximo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.580Z"}'::jsonb),
+  ('lamina-flamejante', 'Lâmina Flamejante', 2, '2º Círculo', 'Evocação', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma folha de sumagre","text":"V, S, M (uma folha de sumagre)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você evoca uma lâmina flamejante em sua mão livre.
+A lâmina é semelhante em tamanho e forma a uma cimitarra e permanece pela duração da magia. Se você
+soltar a lâmina, ela desaparece, mas você pode evocá-la novamente como uma Ação Bônus.
+Como uma ação Usar Magia, você pode realizar um ataque mágico corpo a corpo com a lâmina flamejante.
+Em caso de acerto, o alvo sofre 3d6 pontos de dano Ígneo mais o seu modificador de atributo de conjuração.
+A lâmina flamejante emite Luz Plena em um raio de
+3 metros e Meia-luz por mais 3 metros.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.581Z"}'::jsonb),
+  ('lendas-e-historias', 'Lendas e Histórias', 5, '5º Círculo', 'Adivinhação', '10 minutos', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"incenso no valor de 250 ou mais PO, que a magia consome, e quatro tiras de marfim no valor de 50 ou mais PO cada","text":"V, S, M (incenso no valor de 250 ou mais PO, que a magia consome, e quatro tiras de marfim no valor de 50 ou mais PO cada)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Nomeie ou descreva uma pessoa, lugar ou objeto famoso. A magia traz à sua mente um breve resumo do conhecimento significativo sobre essa coisa famosa,
+conforme descrito pelo Mestre.
+O conhecimento pode incluir detalhes significativos,
+revelações intrigantes ou até mesmo informações secretas que nunca foram amplamente divulgadas. Quanto mais você já sabe sobre o assunto, mais precisas e detalhadas se tornam as informações que recebe. Essas informações são exatas, mas podem ser expressas em linguagem figurada ou poesia, conforme determinado pelo Mestre. Se a coisa famosa que você escolheu não for realmente famosa, você ouve notas musicais tristes tocadas em um trombone, e a magia falha.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.581Z"}'::jsonb),
+  ('lentidao', 'Lentidão', 3, '3º Círculo', 'Transmutação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma gota de melaço","text":"V, S, M (uma gota de melaço)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você altera a passagem do tempo em torno de até seis criaturas à sua escolha em um Cubo de 12 metros de lado no alcance da magia. Cada alvo deve ser bem-su-
+cedido em uma salvaguarda de Sabedoria ou é afetado por esta magia pela sua duração.
+O Deslocamento de um alvo afetado é reduzido pela metade, sofre uma penalidade de −2 em salvaguardas de Destreza e na CA e não pode executar Reações. Nos turnos do alvo, ele pode executar uma ação ou uma
+Ação Bônus, não ambas, e pode realizar apenas um ataque se executar a ação Atacar. Se conjurar uma magia com um componente Somático, há uma chance de 25%
+da magia falhar como resultado do alvo fazer os gestos da magia muito lentamente.
+Um alvo afetado repete a salvaguarda no final de cada um dos turnos dele, encerrando a magia em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.582Z"}'::jsonb),
+  ('leque-cromatico', 'Leque Cromático', 1, '1º Círculo', 'Ilusão', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de areia colorida","text":"V, S, M (uma pitada de areia colorida)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você lança uma série deslumbrante de luzes ofuscantes e coloridas. Cada criatura em um Cone de 4,5 metros originado em você deve ser bem-sucedida em uma salvaguarda de Constituição ou tem a condição Cego até o final do seu próximo turno.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.582Z"}'::jsonb),
+  ('levitacao', 'Levitação', 2, '2º Círculo', 'Transmutação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma mola de metal","text":"V, S, M (uma mola de metal)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma criatura ou objeto solto à sua escolha, à sua vista e no alcance da magia sobe verticalmente até 6 metros e permanece suspenso pela duração. A magia pode levitar um objeto que pesa até 200 quilos. Uma criatura involuntária que seja bem-sucedida em uma salvaguarda de Constituição não é afetada.
+O alvo pode se mover apenas empurrando ou puxando um objeto ou superfície fixa ao alcance dele
+(como uma parede ou um teto), o que permite que ele se mova como se estivesse escalando. No seu turno,
+você pode mudar a altitude do alvo em até 6 metros em qualquer direção. Se você for o alvo, pode se mover para cima ou para baixo como parte de seu movimento. Caso contrário, você pode executar uma ação Usar
+Magia para mover o alvo, que deve permanecer no alcance da magia.
+Quando a magia termina, o alvo flutua suavemente até o chão se ainda estiver no alto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.582Z"}'::jsonb),
+  ('ligacao-telepatica-de-rary', 'Ligação Telepática de Rary', 5, '5º Círculo', 'Adivinhação', 'Ação ou Ritual', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"dois ovos","text":"V, S, M (dois ovos)"}'::jsonb, '1 hora', FALSE, TRUE, 'Você cria uma ligação telepática entre até oito criaturas voluntárias à sua escolha no alcance da magia,
+vinculando psiquicamente cada criatura a todas as outras pela duração da magia. Criaturas que não podem se comunicar em nenhum idioma não são afetadas por esta magia.
+Até que a magia termine, os alvos podem se comunicar telepaticamente através da ligação, mesmo que não compartilhem um idioma. A comunicação é possível a qualquer distância, embora não possa se estender para outros planos de existência.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.583Z"}'::jsonb),
+  ('limpar-a-mente', 'Limpar a Mente', 8, '8º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '24 horas', FALSE, FALSE, 'Até que a magia termine, uma criatura voluntária que você toca adquire Imunidade a dano Psíquico e
+à condição Enfeitiçado. O alvo também fica imune a qualquer coisa que possa detectar suas emoções ou alinhamento, ler seus pensamentos, detectar magicamente sua localização, e nenhuma magia — nem mesmo Desejo — pode obter informações sobre o alvo,
+observá-lo remotamente ou controlar sua mente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.583Z"}'::jsonb),
+  ('linguas', 'Línguas', 3, '3º Círculo', 'Adivinhação', 'Ação', 'Toque', '{"verbal":true,"somatic":false,"material":true,"materialDescription":"um zigurate em miniatura","text":"V, M (um zigurate em miniatura)"}'::jsonb, '1 hora', FALSE, FALSE, 'Esta magia concede à criatura que você toca a capacidade de entender qualquer idioma falado ou com língua de sinais que ela ouça ou veja. Além disso, quando o alvo se comunica falando ou usando sinais, qualquer criatura que conheça pelo menos um idioma pode entendê-lo se essa criatura puder ouvir as palavras ou ver os sinais.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.584Z"}'::jsonb),
+  ('localizar-animais-ou-plantas', 'Localizar Animais ou Plantas', 2, '2º Círculo', 'Adivinhação', 'Ação ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"pelo de um cão de caça","text":"V, S, M (pelo de um cão de caça)"}'::jsonb, 'Instantânea', FALSE, TRUE, 'Descreva ou nomeie uma criatura do tipo Fera, Planta ou planta não mágica. Você descobre a direção e a distância até a criatura ou planta mais próxima desse tipo a até 8 quilômetros, se houver alguma presente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.584Z"}'::jsonb),
+  ('localizar-criatura', 'Localizar Criatura', 4, '4º Círculo', 'Adivinhação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"pelo de um cão de caça","text":"V, S, M (pelo de um cão de caça)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Descreva ou nomeie uma criatura que você conheça bem. Você descobre a direção e a localização da criatura se ela estiver a até 300 metros de distância. Se a criatura estiver se movendo, você sabe em que direção.
+A magia pode localizar uma criatura específica que você conheça ou a criatura mais próxima de um tipo específico (como um humano ou um unicórnio) se você tiver visto tal criatura de perto — a até 9 metros
+— ao menos uma vez. Se a criatura que você descreveu ou nomeou estiver em uma forma diferente, como sob os efeitos de uma magia De Carne para Pedra ou Polimorfia, esta magia não localiza a criatura.
+Esta magia não pode localizar uma criatura se qualquer espessura de chumbo bloquear um caminho direto entre você e a criatura.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.584Z"}'::jsonb),
+  ('localizar-objeto', 'Localizar Objeto', 2, '2º Círculo', 'Adivinhação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um galho bifurcado","text":"V, S, M (um galho bifurcado)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Descreva ou nomeie um objeto que você conheça bem.
+Você descobre a direção e a localização do objeto se ele estiver a até 300 metros de você. Se o objeto estiver se movendo, você sabe em que direção.
+A magia pode localizar um objeto específico que você conheça se você o tiver visto de perto — a até 9
+metros — ao menos uma vez. Se preferir, a magia pode localizar o objeto mais próximo de um tipo específico,
+como um certo tipo de traje, joias, mobília, ferramentas ou armas.
+Esta magia não pode localizar um objeto se qualquer espessura de chumbo bloquear um caminho direto entre você e o objeto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.585Z"}'::jsonb),
+  ('loquacidade', 'Loquacidade', 8, '8º Círculo', 'Encantamento', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '1 hora', FALSE, FALSE, 'Até que a magia termine, ao realizar um teste de
+Carisma, você pode substituir o número que você tirou por um 15. Além disso, não importa o que você diga, a magia que determinaria se você está dizendo a verdade indica que você está sendo verdadeiro.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.585Z"}'::jsonb),
+  ('lufada-de-vento', 'Lufada de Vento', 2, '2º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"a semente de um legume","text":"V, S, M (a semente de um legume)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você sopra uma Linha com um vento forte de 18
+metros de comprimento e 3 metros de largura em uma direção à sua escolha pela duração da magia. Cada criatura na Linha deve ser bem-sucedida em uma salvaguarda de Força ou é empurrada 4,5 metros para longe de você em uma direção seguindo a Linha. Uma criatura que termine o turno na Linha deve realizar a mesma salvaguarda.
+Qualquer criatura na Linha deve gastar 3 metros de movimento para cada 1,5 metro que se move ao se aproximar de você.
+A lufada dispersa gás ou vapor e extingue velas e chamas desprotegidas similares na área. Isso faz com que as chamas protegidas, como as de lanternas, dancem descontroladamente e possuem 50% de chance de serem extinguidas.
+Como uma Ação Bônus em seus turnos posteriores,
+você pode alterar a direção da Linha soprada por você.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.585Z"}'::jsonb),
+  ('luz', 'Luz', 0, 'Truque', 'Evocação', 'Ação', 'Toque', '{"verbal":true,"somatic":false,"material":true,"materialDescription":"um vaga-lume ou musgo fosforescente","text":"V, M (um vaga-lume ou musgo fosforescente)"}'::jsonb, '1 hora', FALSE, FALSE, 'Você toca em um objeto Grande ou menor que não está sendo usado ou carregado por outra pessoa. Até que a magia termine, o objeto emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros. A luz pode ter a cor que você desejar.
+Cobrir o objeto com algo opaco bloqueia a luz. A
+magia se encerra se você a conjurar novamente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.586Z"}'::jsonb),
+  ('luz-do-dia', 'Luz do Dia', 3, '3º Círculo', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 hora', FALSE, FALSE, 'Pela duração da magia, a luz do sol se espalha de um ponto no alcance da magia e preenche uma Esfera de
+18 metros de raio. A área da luz do sol é Luz Plena e emite Meia-luz por mais 18 metros.
+Como alternativa, você conjura a magia em um objeto que não esteja sendo usado ou carregado, fazendo com que a luz do sol preencha uma Emanação de 18 metros originada desse objeto. Cobrir esse objeto com algo opaco, como uma tigela ou elmo, bloqueia a luz do sol.
+Se qualquer área desta magia se sobrepuser a uma área de Escuridão criada por uma magia de 3º círculo ou inferior, essa outra magia é dissipada.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.586Z"}'::jsonb),
+  ('luzes-dancantes', 'Luzes Dançantes', 0, 'Truque', 'Ilusão', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de fósforo","text":"V, S, M (um pouco de fósforo)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria até quatro luzes do tamanho de tochas no alcance da magia, fazendo com que elas pareçam tochas,
+lanternas ou esferas brilhantes que pairam pela duração da magia. Como alternativa, você combina as quatro luzes em uma forma Média, brilhante, a qual é vagamente humanoide. Seja qual for a forma que você escolher,
+cada luz emite Meia-luz em um raio de 3 metros.
+Como uma Ação Bônus, você pode mover as luzes até 18 metros para um espaço no alcance da magia.
+Uma luz deve estar a até 6 metros de outra luz criada por esta magia, e uma luz desaparece se ultrapassar o alcance da magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.587Z"}'::jsonb),
+  ('malogro', 'Malogro', 4, '4º Círculo', 'Necromancia', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Um elfo Clérigo usa a magia
+Luz do Dia para trazer a luz do amanhecer para uma corte de vampiros.
+Uma criatura à sua vista e no alcance da magia realiza uma salvaguarda de Constituição, sofrendo 8d8 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso. Uma criatura do tipo Planta falha automaticamente na salvaguarda.
+Como alternativa, escolha como alvo uma planta não mágica que não seja uma criatura, como uma árvore ou um arbusto. Ela não realiza uma salvaguarda; ela simplesmente murcha e morre.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.587Z"}'::jsonb),
+  ('mansao-magnifica-de-mordenkainen', 'Mansão Magnífica de Mordenkainen', 7, '7º Círculo', 'Invocação', '1 minuto', '90 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma porta em miniatura no valor de 15 ou mais PO","text":"V, S, M (uma porta em miniatura no valor de 15 ou mais PO)"}'::jsonb, '24 horas', FALSE, FALSE, 'Você conjura uma porta cintilante no alcance da magia que permanece por toda a duração da magia. A porta leva a uma moradia extradimensional e tem 1,5 metro de largura e 3 metros de altura. Você e qualquer criatura que você designe ao conjurar a magia podem entrar na residência extradimensional enquanto a porta permanecer aberta. Você pode abri-la ou fechá-la (nenhuma ação é necessária) se estiver a até 9
+metros de distância dela. Quando fechada, a porta é imperceptível.
+Além da porta, há um magnífico saguão com várias câmaras ao fundo. A atmosfera da moradia é limpa,
+fresca e aquecida.
+Você pode criar qualquer projeto que desejar para a moradia, mas ela não pode exceder 50 Cubos contíguos de 3 metros de lado. O local é mobiliado e decorado à
+sua escolha. Contém comida suficiente para servir um banquete de nove pratos para até 100 pessoas. Mobílias e outros objetos criados por essa magia se dissipam em fumaça se removidos dela.
+Uma equipe de 100 servos quase transparentes atende a todos que entrarem. Você determina a aparência desses servos e as vestes deles. Eles são invulneráveis e obedecem aos seus comandos. Cada servo pode realizar tarefas que um humano poderia realizar, mas eles não podem atacar ou realizar qualquer ação que cause dano direto a outra criatura. Assim, os servos podem buscar coisas, limpar, remendar, dobrar roupas,
+acender fogos, servir comida, servir vinho, entre outras atividades. Os servos não podem deixar a moradia.
+Quando a magia termina, qualquer criatura ou objeto deixado no espaço extradimensional é expulso para os espaços desocupados mais próximos à entrada.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.587Z"}'::jsonb),
+  ('manto-do-cruzado', 'Manto do Cruzado', 3, '3º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você irradia uma aura mágica em uma Emanação de 9
+metros. Enquanto estiver na aura, você e seus aliados causam 1d4 pontos de dano Radiante adicionais ao atingir com uma arma ou um Ataque Desarmado.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.588Z"}'::jsonb),
+  ('mao-de-bigby', 'Mão de Bigby', 5, '5º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma casca de ovo e uma luva","text":"V, S, M (uma casca de ovo e uma luva)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria uma mão Grande de energia mágica cintilante em um espaço desocupado à sua vista e no alcance da magia. A mão permanece pela duração da magia e se move ao seu comando, imitando os movimentos da sua própria mão.
+A mão é um objeto que tem CA 20 e Pontos de Vida iguais aos seus Pontos de Vida máximos. Se a mão é reduzida a 0 Pontos de Vida, a magia encerra. A mão não ocupa um espaço.
+Ao conjurar a magia e como uma Ação Bônus em seus turnos posteriores, você pode mover a mão até 18
+metros e causar um dos seguintes efeitos:
+Mão Esmagadora. A mão tenta imobilizar uma criatura Enorme ou menor a até 1,5 metro dela. O alvo deve ser bem-sucedido em uma salvaguarda de Destreza ou tem a condição Imobilizado, com uma CD para escapar igual à CD para evitar sua magia. Enquanto a mão imobiliza o alvo, você pode executar uma ação
+Bônus para fazer com que a mão o esmague, causando ao alvo 4d6 pontos de dano Contundente mais seu modificador de atributo de conjuração.
+Mão Interposta. A mão concede a você Cobertura
+Parcial contra ataques e outros efeitos originados do espaço da mão ou que passem por ele. Além disso, o espaço da mão conta como Terreno Difícil para seus inimigos.
+Mão Vigorosa. A mão tenta empurrar uma criatura
+Enorme ou menor a até 1,5 metro dela. O alvo deve ser bem-sucedido em uma salvaguarda de Força, ou a mão empurra o alvo até 1,5 metro mais 1,5 metro multiplicado pelo valor de seu modificador de atributo de conjuração. A mão se move com o alvo, permanecendo a até 1,5 metro dele.
+Punho Cerrado. A mão atinge um alvo a até 1,5
+metro dela. Realize um ataque mágico corpo a corpo.
+BRIAN VALEZA
+Em caso de acerto, o alvo sofre 5d8 pontos de dano
+Energético.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano do Punho Cerrado aumenta em 2d8 e o dano da
+Mão Esmagadora aumenta em 2d6 para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.588Z"}'::jsonb),
+  ('maos-flamejantes', 'Mãos Flamejantes', 1, '1º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma fina camada de chamas parte de você. Cada criatura em um Cone de 4,5 metros realiza uma salvaguarda de Destreza, sofrendo 3d6 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.
+Objetos inflamáveis no Cone que não estão sendo usados ou carregados entram em combustão.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.588Z"}'::jsonb),
+  ('maos-magicas', 'Mãos Mágicas', 0, 'Truque', 'Invocação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 minuto', FALSE, FALSE, 'Uma mão espectral flutuante aparece em um ponto que você escolher no alcance da magia. A mão permanece pela duração. A mão desaparece se estiver a mais de 9 metros de você ou se você conjurar esta magia novamente.
+Ao conjurar a magia, você pode usar a mão para manipular um objeto, abrir uma porta ou um recipiente destrancado, guardar ou recolher itens de recipientes abertos, ou despejar o conteúdo de um frasco.
+Como uma ação Usar Magia em seus próximos turnos, você pode controlar a mão novamente. Como parte dessa ação, você pode mover a mão até 9 metros.
+A mão não pode atacar, ativar itens mágicos ou carregar mais de 5 quilos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.588Z"}'::jsonb),
+  ('marca-do-predador', 'Marca do Predador', 1, '1º Círculo', 'Adivinhação', 'Ação Bônus', '27 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você marca magicamente como sua presa uma criatura
+à sua vista e no alcance da magia. Até que a magia termine, você causa 1d6 pontos de dano Energético adicionais ao alvo sempre que o acertar com uma jogada de ataque. Você também tem Vantagem em qualquer teste de Sabedoria (Percepção ou Sobrevivência) que realizar para encontrá-lo.
+Se o alvo é reduzido a 0 Pontos de Vida antes que esta magia termine, você pode executar uma ação
+Bônus para mover a marca para uma nova criatura à
+sua vista e no alcance da magia.', 'Usando um Espaço de Magia de Círculo Superior.
+Sua Concentração pode durar mais com um espaço de magia de 3º–4º círculo (em até 8 horas) ou 5º círculo ou superior (em até 24 horas).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.589Z"}'::jsonb),
+  ('mau-olhado', 'Mau Olhado', 6, '6º Círculo', 'Necromancia', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Pela duração da magia, seus olhos se tornam um vazio escuro. Uma criatura à sua escolha à sua vista e a até
+18 metros de você deve ser bem-sucedida em uma salvaguarda de Sabedoria ou é afetada por um dos seguintes efeitos à sua escolha pela duração da magia.
+Em cada um dos seus turnos até que a magia termine, você pode executar uma ação Usar Magia para atingir outra criatura, mas não pode atingir uma criatura novamente se ela tiver sido bem-sucedida em uma salvaguarda contra a conjuração desta magia.
+Adoecer. O alvo tem a condição Envenenado.
+Adormecer. O alvo tem a condição Inconsciente. Ele acorda se sofrer algum dano ou se outra criatura executar uma ação para sacudi-la.
+Apavorar. O alvo tem a condição Amedrontado. Em cada um dos turnos dele, o alvo Amedrontado deve executar a ação Correr e se afastar de você pela rota mais segura e curta disponível. Se o alvo se mover para um espaço a pelo menos 18 metros de distância de você
+onde não possa vê-lo, esse efeito encerra.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.589Z"}'::jsonb),
+  ('medo', 'Medo', 3, '3º Círculo', 'Ilusão', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pena branca","text":"V, S, M (uma pena branca)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Cada criatura em um Cone de 9 metros deve ser bem-
+-sucedida em uma salvaguarda de Sabedoria ou larga o que estiver segurando e tem a condição Amedrontado pela duração da magia.
+Uma criatura Amedrontada executa a ação Correr e se afasta de você pela rota mais segura em cada um dos turnos dela, a menos que não haja para onde se mover.
+Se a criatura encerrar o turno dela em um espaço onde não tenha linha de visão para você, a criatura realiza uma salvaguarda de Sabedoria. Em caso de sucesso, a magia encerra naquela criatura.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.589Z"}'::jsonb),
+  ('mensageiro-animal', 'Mensageiro Animal', 2, '2º Círculo', 'Encantamento', 'Ação ou Ritual', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um bocado de comida","text":"V, S, M (um bocado de comida)"}'::jsonb, '24 horas', FALSE, TRUE, 'Uma Besta Minúscula à sua escolha à sua vista e no alcance da magia deve ser bem-sucedida em uma salvaguarda de Carisma, ou ela tenta entregar uma mensagem por você (se o Nível de Desafio do alvo não for 0, ele é automaticamente bem-sucedido). Você
+especifica um local que visitou e um destinatário que corresponda a uma descrição geral, como “uma pessoa vestida com o uniforme da guarda da cidade” ou “um anão ruivo usando um chapéu pontudo”. Você também comunica uma mensagem de até vinte e cinco palavras.
+A Fera viaja pela duração da magia em direção ao local especificado, cobrindo cerca de 40 quilômetros a cada
+24 horas ou 80 quilômetros se a Fera puder voar.
+Quando a Fera chega, ela entrega sua mensagem à
+criatura que você descreveu, imitando sua comunicação. Se a Fera não chegar ao seu destino antes que a magia termine, a mensagem é perdida e a Besta retorna para onde você conjurou a magia.', 'Usando um Espaço de Magia de Círculo Superior. A
+duração da magia aumenta em 48 horas para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.590Z"}'::jsonb),
+  ('mensagem', 'Mensagem', 0, 'Truque', 'Transmutação', 'Ação', '36 metros', '{"verbal":false,"somatic":true,"material":true,"materialDescription":"um fio de cobre","text":"S, M (um fio de cobre)"}'::jsonb, '1 rodada', FALSE, FALSE, 'Você aponta para uma criatura no alcance da magia e sussurra uma mensagem. Somente o alvo ouve a mensagem e pode responder em um sussurro que apenas você consegue ouvir.
+Você pode conjurar essa magia através de objetos sólidos se estiver familiarizado com o alvo e souber que ele está além da barreira. Silêncio mágico, 30 centímetros de pedra, metal ou madeira, ou uma fina folha de chumbo bloqueiam a magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.590Z"}'::jsonb),
+  ('mesclar-se-as-rochas', 'Mesclar-se às Rochas', 3, '3º Círculo', 'Transmutação', 'Ação ou Ritual', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '8 horas', FALSE, TRUE, 'Você adentra em um objeto ou superfície rochosa grande o suficiente para caber completamente seu corpo, fundindo a si e seu equipamento com a pedra pela duração. Você deve tocar a pedra para fazer isso.
+Nada da sua presença permanece visível ou detectável por sentidos não mágicos.
+Enquanto estiver fundido com a rocha, você não pode ver o que ocorre fora dela, e quaisquer testes de Sabedoria (Percepção) que você realize para ouvir sons fora dela são realizados com Desvantagem. Você
+permanece ciente da passagem do tempo e pode conjurar magias em si mesmo enquanto está fundido
+à pedra. Você pode usar 1,5 metro de movimento para sair da rocha onde entrou, o que encerra a magia. Caso contrário, você não pode se mover.
+Danos físicos menores à rocha não o afetam, mas a destruição parcial ou mudança na forma dela (a ponto de você não caber mais nela) o expulsa e causa
+6d6 pontos de dano Energético a você. A destruição completa da rocha (ou a transmutação dela em outra substância) o expulsa e causa 50 pontos de dano
+Energético.
+Se expulso, você é movido para o espaço desocupado mais próximo de onde entrou e tem a condição Caído.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.590Z"}'::jsonb),
+  ('metamorfose', 'Metamorfose', 9, '9º Círculo', 'Transmutação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma argola de jade no valor de 1.500 ou mais PO","text":"V, S, M (uma argola de jade no valor de 1.500 ou mais PO)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você se multimorfa em outra criatura pela duração da magia ou até executar uma ação Usar Magia para se multimorfa em uma criatura diferente. A nova forma deve ser de uma criatura com um Nível de Desafio igual ou inferior ao seu nível ou ao seu Nível de Desafio. Você deve ter visto esse tipo de criatura antes, e ela não pode ser um Constructo ou um Morto-vivo.
+Ao conjurar esta magia, você recebe um número de
+Pontos de Vida Temporários igual aos Pontos de Vida da primeira forma na qual você se transforma. Esses
+Pontos de Vida Temporários desaparecem, caso ainda restem, quando a magia terminar.
+As suas estatísticas de jogo são substituídas pelo bloco de estatísticas da nova forma, mas você mantém seu tipo de criatura, alinhamento, personalidade, valores de Inteligência, Sabedoria e Carisma, Pontos de Vida,
+Dados de Vida, proficiências e capacidade de comunicação. Se você possuir a característica Conjuração,
+também a mantém.
+Ao se multimorfar, você decide se seu equipamento cai no chão ou se altera em tamanho e forma para se ajustar à nova forma enquanto você a mantém.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.591Z"}'::jsonb),
+  ('miragem-arcana', 'Miragem Arcana', 7, '7º Círculo', 'Ilusão', '10 minutos', 'À sua vista', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '10 dias', FALSE, FALSE, 'Você faz com que o terreno em uma área de até 2,5
+quilômetros quadrados pareça, soe, cheire e até mesmo seja sentido como algum outro tipo de terreno. Campos abertos ou uma estrada podem ser transformados em um pântano, colina, fenda ou qualquer outro tipo de terreno irregular ou intransitável. Um lago pode ser formado para parecer um prado gramado, um precipício como uma suave encosta ou uma ravina cheia de pedras como uma estrada larga e lisa.
+Da mesma forma, você pode alterar a aparência de estruturas ou adicioná-las onde não há nenhuma presente. A magia não disfarça, oculta ou adiciona criaturas.
+A ilusão inclui elementos audíveis, visuais, táteis e olfativos, podendo transformar terreno desimpedido em
+Terreno Difícil (ou vice-versa) ou, de outra forma, dificultar o movimento pela área. Qualquer parte do terreno ilusório (como uma pedra ou um galho) que for removida da área da magia desaparece imediatamente.
+Criaturas com Visão Verdadeira podem ver através da ilusão e discernir a verdadeira forma do terreno; no entanto, todos os outros elementos da ilusão permanecem, de modo que, embora a criatura esteja ciente da ilusão, ainda pode interagir fisicamente com ela.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.591Z"}'::jsonb),
+  ('missao', 'Missão', 5, '5º Círculo', 'Encantamento', '1 minuto', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '30 dias', FALSE, FALSE, 'Você dá um comando verbal a uma criatura à sua vista no alcance da magia, ordenando que ela realize algum serviço ou não realize uma ação ou um curso de atividade conforme você decidir. O alvo deve ser bem-
+-sucedido em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia. O alvo é bem-sucedido automaticamente se não conseguir entender seu comando.
+Enquanto Enfeitiçada, a criatura sofre 5d10 pontos de dano Psíquico se agir de maneira diretamente contrária ao seu comando. Ela não sofre esse dano mais do que uma vez por dia.
+Você pode dar qualquer comando à sua escolha,
+exceto uma atividade que resultaria em morte certa. Se você der um comando suicida, a magia se encerra.
+Uma magia Desejo, Remover Maldição ou Restauração
+Maior encerra esta magia.', 'Usando um Espaço de Magia de Círculo Superior. Se você usar um espaço de magia de 7º ou 8º círculo, a duração é de 365 dias. Se você usar um espaço de magia de 9º círculo, a magia dura até que seja encerrada por uma das magias mencionadas acima.
+Magos rivais usam
+Metamorfose para se transformar em um Observador e um Beír durante um duelo mágico.
+MICHAEL BROUSSARD', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.591Z"}'::jsonb),
+  ('misseis-magicos', 'Mísseis Mágicos', 1, '1º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você cria três dardos brilhantes feitos de pura energia mágica. Cada dardo acerta uma criatura à sua escolha,
+à sua vista e no alcance da magia. Um dardo causa 1d4
++ 1 pontos de dano Energético ao alvo. Os dardos acertam ao mesmo tempo, e você pode direcioná-los para uma mesma criatura ou várias.', 'Usando um Espaço de Magia de Círculo Superior. A
+magia cria um dardo adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.592Z"}'::jsonb),
+  ('modificar-memoria', 'Modificar Memória', 5, '5º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você tenta remodelar as memórias de outra criatura.
+Uma criatura à sua vista e no alcance da magia realiza uma salvaguarda de Sabedoria. Se você estiver lutando contra a criatura, ela tem Vantagem na salvaguarda. Se falhar na salvaguarda, o alvo tem a condição Enfeitiçado pela duração da magia. Enquanto estiver Enfeitiçado desse modo, o alvo também tem a condição Incapacitado e fica sem perceber o que acontece ao seu redor,
+embora possa ouvir você. Se sofrer qualquer dano ou for alvo de outra magia, a magia se encerra, e nenhuma memória é modificada.
+Enquanto essa magia durar, você pode manipular a memória do alvo sobre um evento que ele tenha vivenciado nas últimas 24 horas e que tenha durado no máximo 10 minutos. Você pode eliminar permanentemente toda a memória do evento, permitir que o alvo recorde o evento com total clareza, alterar os detalhes da memória do evento ou criar uma memória de outro evento.
+Você deve falar com o alvo para descrever como as memórias dele serão afetadas, e ele deve conseguir entender seu idioma para as memórias modificadas criarem raízes. A mente do alvo preenche qualquer lacuna dos detalhes da sua descrição. Se a magia encerrar antes que você termine de descrever as memórias modificadas, a memória da criatura não é alterada.
+Caso contrário, as memórias modificadas se consolidam quando a magia termina.
+Um Mago humano afasta o perigo com a
+Armadura Arcana e os raios infalíveis dos
+Mísseis Mágicos.
+AARON J RILEY
+Uma memória modificada não afeta necessariamente o comportamento de uma criatura, especialmente se a memória contradiz as inclinações naturais, o alinhamento ou as crenças da criatura. Uma memória modificada ilógica, como uma falsa memória de quanto a criatura gostava de nadar em ácido, é descartada como um pesadelo. O Mestre pode considerar uma memória modificada absurda demais para afetar uma criatura.
+Uma magia Remover Maldição ou Restauração Maior conjurada sobre o alvo restaura a memória verdadeira da criatura.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode alterar as memórias do alvo em relação a um evento que ocorreu há até 7 dias (espaço de magia de 6º círculo), 30 dias (espaço de magia de 7º círculo), 365 dias (espaço de magia de 8º círculo) ou em qualquer momento do passado da criatura (espaço de magia de 9º círculo).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.592Z"}'::jsonb),
+  ('moldar-rochas', 'Moldar Rochas', 4, '4º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"argila mole","text":"V, S, M (argila mole)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você toca um objeto de pedra de tamanho Médio ou menor, ou uma seção de pedra com no máximo 1,5
+metro em qualquer dimensão e o molda na forma que desejar. Por exemplo, você pode moldar uma rocha grande em uma arma, estátua ou baú, ou criar uma pequena passagem por uma parede com até 1,5 metro de espessura. Também é possível moldar uma porta de pedra ou seu batente para selar a porta. O objeto criado pode ter até duas dobradiças e uma fechadura, mas detalhes mecânicos mais finos não são possíveis.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.592Z"}'::jsonb),
+  ('molestia', 'Moléstia', 6, '6º Círculo', 'Necromancia', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você libera magia virulenta em uma criatura à sua vista e no alcance da magia. O alvo deve realizar uma salvaguarda de Constituição. Se falhar, sofre 14d6 de dano Necrótico e seus Pontos de Vida máximos são reduzidos em um valor igual ao dano sofrido. Em caso de sucesso, sofre apenas metade do dano. Esta magia não pode reduzir os Pontos de Vida máximos de um alvo abaixo de 1.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.593Z"}'::jsonb),
+  ('montaria-fantasmagorica', 'Montaria Fantasmagórica', 3, '3º Círculo', 'Ilusão', '1 minuto ou Ritual', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 hora', FALSE, TRUE, 'Uma criatura Grande, quase real e semelhante a um cavalo aparece no chão em um espaço desocupado
+à sua escolha no alcance da magia. Você decide a aparência da criatura e ela é equipada com uma sela,
+rédea e freio. Qualquer equipamento criado pela magia desaparece em uma nuvem de fumaça se for carregado a mais de 3 metros de distância da montaria.
+Pela duração da magia, você ou uma criatura à sua escolha pode usar a montaria. A montaria usa o bloco de estatísticas do Cavalo de Montaria (veja também o apêndice B), exceto que ele tem um Deslocamento de 30 metros e pode viajar 20 quilômetros em uma hora. Quando a magia termina, a montaria desaparece gradualmente, dando ao cavaleiro 1 minuto para desmontar. A magia se encerra se a montaria sofrer algum dano.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.593Z"}'::jsonb),
+  ('mover-terra', 'Mover Terra', 6, '6º Círculo', 'Transmutação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pá em miniatura","text":"V, S, M (uma pá em miniatura)"}'::jsonb, 'Concentração, até 2 horas', TRUE, FALSE, 'Escolha uma área de terreno no alcance da magia, com até 12 metros de lados. Você pode remodelar terra,
+areia ou argila na área da maneira que desejar pela duração. Você pode aumentar ou diminuir a elevação da área, criar ou preencher uma trincheira, erguer ou aplanar uma parede, ou formar um pilar. A extensão dessas mudanças não pode exceder metade da maior dimensão da área. Por exemplo, se você afetar um quadrado de 12 metros, pode criar um pilar de até 6
+metros de altura, aumentar ou diminuir a elevação do quadrado em até 6 metros, cavar uma trincheira de até
+6 metros de profundidade, e assim por diante. Essas mudanças demoram 10 minutos para serem concluídas.
+Como a transformação do terreno ocorre lentamente,
+criaturas na área geralmente não ficam presas ou feridas pelo movimento do solo.
+Ao final de cada 10 minutos que gastar se concentrando na magia, você pode escolher uma nova área de terreno para afetar.
+Essa magia não pode manipular pedra natural ou construção de pedra. Rochas e estruturas se ajustam para acomodar o novo terreno. Se a forma que você
+moldar o terreno tornar uma estrutura instável, ela pode desmoronar.
+Da mesma forma, essa magia não afeta diretamente o crescimento de plantas. A terra movida carrega qualquer planta junto com ela.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.593Z"}'::jsonb),
+  ('movimentacao-livre', 'Movimentação Livre', 4, '4º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma alça de couro","text":"V, S, M (uma alça de couro)"}'::jsonb, '1 hora', FALSE, FALSE, 'Você toca uma criatura voluntária. Pela duração da magia, o movimento do alvo não é afetado por Terreno
+Difícil, e magias e outros efeitos mágicos não podem reduzir o Deslocamento do alvo nem fazer com que ele tenha as condições Contido ou Paralisado. O alvo também tem um Deslocamento de Natação igual ao
+Deslocamento de caminhada.
+Além disso, o alvo pode gastar 1,5 metro de movimento para escapar automaticamente de restrições não mágicas, como grilhões ou uma criatura impondo a condição Imobilizado.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.593Z"}'::jsonb),
+  ('muralha-de-energia', 'Muralha de Energia', 5, '5º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um caco de vidro","text":"V, S, M (um caco de vidro)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma muralha de energia invisível surge em um ponto
+à sua escolha no alcance da magia. A muralha aparece em qualquer direção que você escolher, como uma barreira horizontal, vertical ou inclinação. Pode flutuar livremente ou repousar sobre uma superfície sólida.
+Você pode moldá-la em um domo hemisférico ou em um globo com um raio de até 3 metros, ou em uma superfície plana composta por dez painéis de 3 metros de lados. Cada painel deve ser contíguo a outro painel.
+De qualquer forma, a parede tem 6 milímetros de espessura e permanece pela duração da magia. Ao surgir,
+se a muralha passar por um espaço ocupado por uma criatura, a criatura é empurrada para um dos lados da muralha (à sua escolha).
+Nada pode passar fisicamente pela muralha. Ela é imune a todo tipo de dano e não pode ser anulada por
+Dissipar Magia. Entretanto, a magia Desintegrar a destrói instantaneamente. A muralha também se estende para o Plano Etéreo, e bloqueia viagens etéreas através dela.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.594Z"}'::jsonb),
+  ('muralha-de-espinhos', 'Muralha de Espinhos', 6, '6º Círculo', 'Invocação', 'Uma ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um punhado de espinhos","text":"V, S, M (um punhado de espinhos)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você cria uma muralha com um emaranhado de espinhos que parecem agulhas. A muralha aparece em uma superfície sólida, à sua vista e no alcance da magia e permanece pela duração. É possível escolher entre uma muralha de até 18 metros de comprimento, 3 metros de altura e 1,5 metro de espessura ou um círculo que tenha até 6 metros de diâmetro, 6 metros de altura e
+1,5 metro de espessura. A muralha bloqueia a linha de visão.
+Quando a muralha aparece, cada criatura na área dela realiza uma salvaguarda de Destreza, sofrendo
+7d8 pontos de dano Perfurante se falhar, ou metade desse dano em caso de sucesso.
+Uma criatura pode se mover através da parede,
+embora lenta e dolorosamente. Para cada 1,5 metro que uma criatura atravessa a parede, ela deve gastar 6
+metros de movimento. Além disso, a primeira vez que uma criatura entra em um espaço na muralha ou termina o turno dela lá, a criatura realiza uma salvaguarda de Destreza, sofrendo 7d8 pontos de dano Cortante se falhar ou metade desse dano em caso de sucesso.
+Uma criatura realiza essa salvaguarda apenas uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior.
+Ambos os tipos de dano aumentam em 1d8 para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.594Z"}'::jsonb),
+  ('muralha-de-fogo', 'Muralha de Fogo', 4, '4º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de carvão","text":"V, S, M (um pedaço de carvão)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria uma muralha de fogo em uma superfície sólida no alcance da magia. Você pode construir uma parede de até 18 metros de comprimento, 6 metros de altura e 30 centímetros de espessura, ou uma parede circular de até 6 metros de diâmetro, 6 metros de altura e 30 metros de espessura. A parede é opaca e permanece pela duração da magia
+Quando a muralha aparece, cada criatura na área dela realiza uma salvaguarda de Destreza, sofrendo
+5d8 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.
+Um lado da muralha, escolhido por você quando conjura esta magia, causa 5d8 pontos de dano Ígneo a cada criatura que termina o turno nela até de 3 metros desse lado ou dentro da muralha. Uma criatura sofre o mesmo dano quando entra na muralha pela primeira vez em termina o turno dela lá. O outro lado da parede não causa dano.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 pontos para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.595Z"}'::jsonb),
+  ('muralha-de-gelo', 'Muralha de Gelo', 6, '6º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de quartzo","text":"V, S, M (um pedaço de quartzo)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você cria uma muralha de gelo em uma superfície sólida no alcance da magia. Você pode moldá-la em uma cúpula hemisférica, em um globo com um raio de até 3 metros ou em uma superfície plana composta por dez painéis de 3 metros de lados. Cada painel deve ser contíguo a outro painel. De qualquer forma, a parede tem 30 centímetros de espessura e permanece pela duração da magia.
+Ao surgir, se a muralha ocupar um espaço de uma criatura, a criatura é empurrada para um dos lados e deve realizar uma salvaguarda de Destreza. Se falhar,
+sofre 10d6 pontos de dano Gélido ou metade desse dano em caso de sucesso.
+A muralha é um objeto que pode ser danificado e,
+portanto, rompido. Tem CA 12 e 30 Pontos de Vida por painel, e tem Imunidade dano Gélido, Psíquico e
+Venenoso e Vulnerabilidade a dano Ígneo. Reduzir uma seção de 3 metros da muralha a 0 Pontos de Vida a destrói e deixa para trás uma camada de ar gélido no espaço que a muralha ocupava.
+Uma criatura que se move através da camada de ar gélido pela primeira vez em um turno realiza uma salvaguarda de Constituição, sofrendo 5d6 pontos de dano Gélido se falhar, ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano que a muralha causa quando aparece aumenta em 2d6 e o dano ao passar pela camada de ar gélido aumenta em 1d6 para cada círculo de espaço de magia acima de 6.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.595Z"}'::jsonb),
+  ('muralha-de-pedra', 'Muralha de Pedra', 5, '5º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um cubo de granito","text":"V, S, M (um cubo de granito)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma muralha não-mágica, constituída de pedra maciça,
+surge em um ponto à sua vista e no alcance da magia.
+Ela tem 15 centímetros de espessura e é composta de
+10 painéis de 3 metros de lados. Cada painel deve ser contíguo ao outro. Se preferir, você pode criar painéis de 3 por 6 metros que têm apenas 7,5 centímetros de espessura.
+Ao surgir, se a muralha passar por um espaço ocupado por uma criatura, esta última é empurrada para um dos lados da muralha (à sua escolha). Se uma criatura estiver cercada por todos os lados pela muralha (ou pela muralha e outra superfície sólida), essa criatura realiza uma salvaguarda de Destreza. Em caso de sucesso, ela pode usar a Reação dela para mover-se até o máximo do Deslocamento, de modo que não esteja mais cercada pela muralha.
+A muralha pode ter qualquer forma que você desejar,
+apesar de não poder ocupar o mesmo espaço que uma criatura ou objeto. Ela não precisa ser vertical ou se apoiar inteiramente em uma fundação sólida. Entretanto, necessita se fundir e ser solidamente suportada por rochas já existentes. Assim, é possível usar esta magia para criar uma ponte sobre um abismo ou criar uma rampa. Se for criado algo de amplitude superior a 6 metros de comprimento, é necessário dividir pela metade o tamanho de cada painel, para criar suportes.
+É possível fazer com que a muralha tenha, de forma bruta, ameias, parapeitos etc.
+A muralha é um objeto de pedra que pode ser danificado e rompido. Cada painel tem CA 15 e 30 Pontos de Vida para cada 2,5 centímetros de espessura e tem
+Imunidade dano Gélido, Psíquico e Venenoso. Reduzir um painel a 0 Ponto de Vida o destrói e pode fazer com que painéis conectados entrem em colapso, a critério do Mestre.
+Se você mantiver sua Concentração nesta magia por toda a duração, a muralha se torna permanente e não pode ser dissipada. Caso contrário, a muralha desaparece quando a magia termina.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.596Z"}'::jsonb),
+  ('muralha-de-vento', 'Muralha de Vento', 3, '3º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um leque e uma pena","text":"V, S, M (um leque e uma pena)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma muralha de vento forte sobe do chão em um ponto à sua escolha no alcance da magia. Você pode realizar uma parede de até 15 metros de comprimento,
+4,5 metros de altura e 30 centímetros de espessura.
+Você pode moldar a parede da maneira que quiser,
+desde que ela faça um caminho contínuo ao longo do chão. A muralha permanece pela duração da magia.
+Quando a muralha surge, cada criatura na área dela realiza uma salvaguarda de Força, sofrendo 4d8 pontos de dano Contundente se falhar, ou metade desse dano em caso de sucesso.
+O vento forte mantém névoa, fumaça e outros gases afastados. Criaturas ou objetos Pequenos ou menores não podem atravessar a muralha. Materiais soltos e leves que entrem na muralha são lançados para cima.
+Flechas, virotes e outros projéteis comuns disparados contra alvos atrás da muralha são desviados para cima e erram automaticamente. Pedras arremessadas por
+Gigantes ou máquinas de cerco, assim como projéteis semelhantes, não são afetados. Criaturas em forma gasosa não conseguem atravessar a muralha.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.597Z"}'::jsonb),
+  ('muralha-prismatica', 'Muralha Prismática', 9, '9º Círculo', 'Abjuração', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '10 minutos', FALSE, FALSE, 'Uma superfície cintilante e multicolorida forma uma parede vertical opaca de até 27 metros de comprimento, 9 metros de altura e 2,5 centímetros de espessura centrada em um ponto no alcance da magia. Como alternativa, você molda a parede em um globo de até 9
+metros de diâmetro centrado em um ponto no alcance da magia. A parede permanece pela duração. Se você
+posicionar a parede em um espaço ocupado por uma criatura, a magia encerra instantaneamente sem efeito.
+A parede emite Luz Plena por 30 metros e Meia-luz por mais 30 metros. Você e as criaturas que você escolher ao conjurar a magia podem passar e ficar perto da muralha sem sofrer dano. Se outra criatura que possa ver a parede se mover a até 6 metros dela ou começar o turno nela, a criatura deve ser bem-sucedida em uma salvaguarda de Constituição ou tem a condição Cego por 1 minuto.
+A parede possui sete camadas, cada uma de uma cor diferente. Uma criatura que atravessa ou entra na parede passa uma camada por vez e deve realizar uma salvaguarda de Destreza ou é afetada pelas propriedades da camada, conforme descrito na tabela Camadas
+Prismáticas.
+A parede tem CA 10 e pode ser destruída uma camada por vez, em ordem do vermelho ao violeta, por meios específicos para cada camada. Se uma camada for destruída, ela desaparece pela duração da magia.
+Campo Antimagia não tem efeito na parede, e Dissipar
+Magia pode afetar apenas a camada violeta.
+Camadas Prismáticas
+Ordem Efeitos
+1 Vermelho. Se falhar: 12d6 pontos de dano Ígneo. Em caso de sucesso: metade do dano. Efeitos Adicionais:
+Ataques à distância não mágicos não podem atravessar esta camada, que é destruída se sofrer ao menos 25 pontos de dano Gélido.
+2 Laranja. Se falhar: 12d6 pontos de dano Ácido. Em caso de sucesso: metade do dano. Efeitos Adicionais:
+Ataques mágicos à distância não podem passar por esta camada, que é destruída por um vento forte
+(como o criado por Lufada de Vento).
+3 Amarelo. Se falhar: 12d6 pontos de dano Elétrico. Em caso de sucesso: metade do dano. Efeitos Adicionais: A
+camada é destruída se sofrer ao menos 60 pontos de dano Energético.
+4 Verde. Se falhar: 12d6 pontos de dano Venenoso. Em caso de sucesso: metade do dano. Efeitos Adicionais:
+Uma magia Criar Passagem ou outra magia de círculo igual ou superior, que possa abrir um portal em uma superfície sólida, destrói esta camada.
+5 Azul. Se falhar: 12d6 pontos de dano Gélido. Em caso de sucesso: metade do dano. Efeitos Adicionais: A
+camada é destruída se sofrer ao menos 25 pontos de dano Ígneo.
+6 Anil. Se falhar: O alvo tem a condição Contido e realiza uma salvaguarda de Constituição no final de cada um dos turnos dele. Se bem-sucedido três vezes, a condição encerra. Se falhar três vezes, ele tem a condição Petrificado até ser liberado por um efeito como a magia Restauração Maior. Os sucessos e fracassos não precisam ser consecutivos;
+acompanhe ambos até que o alvo alcance três de um tipo. Efeitos Adicionais: Magias não podem ser conjuradas através desta camada, que é destruída pela Luz Plena conjurada pela magia Luz do Dia.
+Ordem Efeitos
+7 Violeta. Se falhar: O alvo tem a condição Cego e realiza uma salvaguarda de Sabedoria no início do seu próximo turno. Em caso de sucesso a condição encerra. Se falhar, a condição encerra e a criatura se teleporta para outro plano de existência (à escolha do
+Mestre). Efeitos Adicionais: Esta camada é destruída por Dissipar Magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.598Z"}'::jsonb),
+  ('nevasca', 'Nevasca', 3, '3º Círculo', 'Invocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um guarda-chuva em miniatura","text":"V, S, M (um guarda-chuva em miniatura)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Até que a magia termine, granizo cai em um Cilindro de 12 metros de altura e 6 metros de raio centrado em um ponto à sua escolha no alcance da magia. A área está Totalmente Obscurecida e as chamas expostas na área são apagadas.
+O Solo no Cilindro é Terreno Difícil. Quando uma criatura entra no Cilindro pela primeira vez em um turno ou começa o turno dela nele, deve ser bem-sucedida em uma salvaguarda de Destreza ou está Caída e perde a Concentração.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.599Z"}'::jsonb),
+  ('nevoa-mortal', 'Névoa Mortal', 5, '5º Círculo', 'Invocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você cria uma Esfera de 6 metros de raio constituída de uma névoa amarelo esverdeada centrada em um ponto no alcance da magia. A névoa permanece pela duração da magia ou até que um vento forte
+(como o criado pela magia Lufada de Vento) a disperse,
+encerrando a magia. A área da névoa é Totalmente
+Obscurecida.
+Cada criatura na Esfera realiza uma salvaguarda de
+Constituição, sofrendo 5d8 pontos de dano Venenoso se falhar, ou metade desse dano em caso de sucesso.
+Uma criatura deve realizar essa salvaguarda quando a Esfera se mover para seu espaço e quando entrar na
+Esfera ou terminar o turno dela nela. Uma criatura realiza essa salvaguarda apenas uma vez por turno.
+A Esfera se afasta 3 metros de você no início de cada um dos seus turnos.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.601Z"}'::jsonb),
+  ('nevoa-obscurecente', 'Névoa Obscurecente', 1, '1º Círculo', 'Invocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você cria uma Esfera de névoa de 6 metros de raio centrada em um ponto no alcance da magia. A Esfera é
+Totalmente Obscurecida. Ela permanece pela duração da magia ou até que um vento forte (como um criado por Lufada de Vento) a disperse.', 'Usando um Espaço de Magia de Círculo Superior. O
+raio da névoa aumenta em 6 metros para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.602Z"}'::jsonb),
+  ('nuvem-de-adagas', 'Nuvem de Adagas', 2, '2º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um caco de vidro","text":"V, S, M (um caco de vidro)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você conjura adagas rodopiantes em um Cubo de 1,5
+metro de lado centrado em um ponto no alcance da magia. Cada criatura nessa área sofre 4d4 pontos de dano Cortante. Uma criatura também sofre esse dano se entrar no Cubo, terminar o turno nele ou se o Cubo se mover para o espaço dela. Uma criatura sofre esse dano apenas uma vez por turno.
+Nos seus turnos subsequentes, você pode executar uma ação Usar Magia para teleportar o Cubo até 9 metros.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 2d4 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.602Z"}'::jsonb),
+  ('nuvem-fetida', 'Nuvem Fétida', 3, '3º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um ovo podre","text":"V, S, M (um ovo podre)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria uma Esfera de 6 metros de raio de gás amarelo nauseante centrada em um ponto no alcance da magia. A nuvem é Totalmente Obscurecida. A nuvem permanece no ar pela duração da magia ou até que um vento forte (como o criado por Lufada de Vento) a disperse.
+Cada criatura que começa seu turno na Esfera deve ser bem-sucedida em uma salvaguarda de Constituição ou tem a condição Envenenado até o final do turno atual. Enquanto Envenenada desse modo, a criatura não pode executar uma ação ou uma Ação Bônus.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.602Z"}'::jsonb),
+  ('nuvem-incendiaria', 'Nuvem Incendiária', 8, '8º Círculo', 'Invocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma nuvem rodopiante de brasas e fumaça preenche uma Esfera de 6 metros de raio centrada em um ponto no alcance da magia. A área da nuvem é Totalmente
+Obscurecida. Ela permanece pela duração ou até que um vento forte (como o criado pela Lufada de Vento) a disperse.
+Quando a nuvem aparece, cada criatura dentro dela realiza uma salvaguarda de Destreza e, se falhar, sofre
+10d8 pontos de dano Ígneo, ou metade desse dano em caso de sucesso. Uma criatura também deve realizar essa salvaguarda quando a Esfera se mover para seu espaço e quando terminar seu turno nela. Uma criatura realiza essa salvaguarda apenas uma vez por turno.
+A nuvem se afasta 3 metros de você na direção que você escolher no início de cada um dos seus turnos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.603Z"}'::jsonb),
+  ('olho-arcano', 'Olho Arcano', 4, '4º Círculo', 'Adivinhação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de pele de morcego","text":"V, S, M (um pouco de pele de morcego)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você cria um olho invisível e invulnerável no alcance da magia que fica pairando pela duração. Você recebe mentalmente do olho informações visuais, que pode ver em todas as direções. Ele também tem Visão no
+Escuro com um alcance de 9 metros.
+Como uma Ação Bônus, você pode mover o olho até
+9 metros em qualquer direção. Uma barreira sólida bloqueia o movimento do olho, mas o olho pode passar por uma abertura de até 2,5 centímetros de diâmetro.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.603Z"}'::jsonb),
+  ('onda-destrutiva', 'Onda Destrutiva', 5, '5º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma energia destrutiva ondula a partir de você em uma Emanação de 9 metros. Cada criatura à sua escolha na Emanação realiza uma salvaguarda de Constituição. Se falhar, um alvo sofre 5d6 pontos de dano
+Trovejante e 5d6 pontos de dano Necrótico ou Radiante (à sua escolha) e tem a condição Caído. Em caso de sucesso, um alvo recebe apenas metade do dano.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.603Z"}'::jsonb),
+  ('onda-trovejante', 'Onda Trovejante', 1, '1º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você libera uma onda de energia estrondosa. Cada criatura em um Cubo de 4,5 metros originado em você
+realiza uma salvaguarda de Constituição. Se falhar,
+uma criatura sofre 2d8 pontos de dano Trovejante e é empurrada a 3 metros de distância de você. Em caso de sucesso, uma criatura sofre apenas metade do dano.
+Além disso, objetos soltos que estão totalmente dentro do Cubo são empurrados 3 metros para longe de você, e um estrondo trovejante é audível a até 90 metros.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.603Z"}'::jsonb),
+  ('oracao-de-cura', 'Oração de Cura', 2, '2º Círculo', 'Abjuração', '10 minutos', '9 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Até cinco criaturas à sua escolha que permanecerem no alcance da magia por toda a conjuração obtêm os benefícios de um Descanso Curto e recuperam 2d8 Pontos de Vida. Uma criatura não pode ser afetada por esta magia novamente até ela completar um Descanso Longo.', 'Usando um Espaço de Magia de Círculo Superior. A
+cura aumenta em 1d8 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.604Z"}'::jsonb),
+  ('orbe-cromatico', 'Orbe Cromático', 1, '1º Círculo', 'Evocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um diamante no valor de 50 ou mais PO","text":"V, S, M (um diamante no valor de 50 ou mais PO)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você arremessa um orbe de energia em um alvo no alcance da magia. Escolha Ácido, Elétrico, Gélido,
+Ígneo, Trovejante ou Venenoso para o tipo de orbe que você criar e, em seguida, realize um ataque mágico à
+distância contra o alvo. Em caso de acerto, o alvo sofre
+3d8 pontos de dano do tipo escolhido.
+Se você jogar o mesmo número em dois ou mais dos dados d8, o orbe salta para outro alvo à sua escolha dentro de 9 metros do alvo. Realize uma jogada de ataque contra o novo alvo e realize uma nova jogada de dano. A esfera não pode saltar novamente, a menos que você conjure a magia usando um espaço de magia de 2º círculo ou superior.', 'Usando um Espaço de Magia de Círculo Superior.
+O dano aumenta em 1d8 para cada círculo de espaço de magia acima de 1. O orbe pode saltar um número máximo de vezes igual ao círculo do espaço de magia utilizado, e uma criatura pode ser atingida apenas uma vez por cada conjuração desta magia.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.604Z"}'::jsonb),
+  ('orientacao', 'Orientação', 0, 'Truque', 'Adivinhação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você toca uma criatura voluntária e escolhe uma perícia. Até que a magia termine, a criatura adiciona 1d4 a qualquer teste de atributo usando a perícia escolhida.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.604Z"}'::jsonb),
+  ('padrao-hipnotico', 'Padrão Hipnótico', 3, '3º Círculo', 'Ilusão', 'Ação', '36 metros', '{"verbal":false,"somatic":true,"material":true,"materialDescription":"uma pitada de confete","text":"S, M (uma pitada de confete)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria um padrão distorcido de cores em um cubo de 9 metros de lado no alcance da magia. O padrão aparece por um momento e desaparece. Cada criatura na área, que pode ver o padrão, deve ser bem-sucedida em uma salvaguarda de Sabedoria ou tem a condição
+Enfeitiçado pela duração. Enquanto Enfeitiçado, a criatura tem a condição Incapacitado e Deslocamento 0.
+A magia se encerra para uma criatura afetada se ela sofrer algum dano ou se outra pessoa executar uma ação para sacudi-la, removendo-a de seu estupor.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.605Z"}'::jsonb),
+  ('palavra-curativa', 'Palavra Curativa', 1, '1º Círculo', 'Abjuração', 'Ação Bônus', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma criatura à sua escolha, à sua vista e no alcance da magia recupera Pontos de Vida iguais a 2d4 mais seu modificador de atributo de conjuração.', 'Usando um Espaço de Magia de Círculo Superior. A
+cura aumenta em 2d4 para cada círculo de espaço de magia acima de 1.
+Um humano Feiticeiro repreende carniçais com a energia imprevisível do
+Orbe Cromático.
+ZUZANNA WUZYK', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.605Z"}'::jsonb),
+  ('palavra-curativa-em-massa', 'Palavra Curativa em Massa', 3, '3º Círculo', 'Abjuração', 'Ação Bônus', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Até seis criaturas à sua escolha, à sua vista e no alcance da magia, recuperam Pontos de Vida iguais a 2d4 mais o seu modificador de atributo de conjuração.', 'Usando um Espaço de Magia de Círculo Superior. A
+cura aumenta em 1d4 para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.605Z"}'::jsonb),
+  ('palavra-de-poder-atordoar', 'Palavra de Poder: Atordoar', 8, '8º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você domina a mente de uma criatura à sua vista e no alcance da magia. Se o alvo tiver 150 Pontos de Vida ou menos, ele tem a condição Atordoado. Caso contrário, o
+Deslocamento dele é 0 até o início do seu próximo turno.
+O alvo Atordoado realiza uma salvaguarda de Constituição no final de cada um dos turnos dele, encerrando a condição em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.606Z"}'::jsonb),
+  ('palavra-de-poder-fortificar', 'Palavra de Poder: Fortificar', 7, '7º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você fortalece até seis criaturas à sua vista e no alcance da magia. A magia concede 120 Pontos de Vida Temporários, que você divide entre os alvos da magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.606Z"}'::jsonb),
+  ('palavra-de-poder-matar', 'Palavra de Poder: Matar', 9, '9º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você obriga uma criatura à sua vista e no alcance da magia a morrer. Se o alvo tiver 100 Pontos de Vida ou menos, ele morre. Caso contrário, sofre 12d12 pontos de dano Psíquico.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.606Z"}'::jsonb),
+  ('palavra-de-poder-salvar', 'Palavra de Poder: Salvar', 9, '9º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma onda de energia curativa percorre uma criatura
+à sua vista e no alcance da magia. O alvo recupera todos os Pontos de Vida. Se a criatura tem a condição
+Amedrontado, Atordoado, Enfeitiçado, Envenenado ou
+Paralisado, a condição encerra. Se a criatura tem a condição Caído, ela pode usar sua Reação para se levantar.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.607Z"}'::jsonb),
+  ('palavra-de-radiancia', 'Palavra de Radiância', 0, 'Truque', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":true,"materialDescription":"um símbolo com um raio de sol","text":"V, M (um símbolo com um raio de sol)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma radiância ardente irrompe de você em uma Emanação de 1,5 metro. Cada criatura à sua escolha à sua vista nela deve ser bem-sucedida em uma salvaguarda de Constituição ou sofre 1d6 pontos de dano Radiante.
+Aprimoramento de Truque. O dano aumenta em 1d6
+quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.607Z"}'::jsonb),
+  ('palavra-de-regresso', 'Palavra de Regresso', 6, '6º Círculo', 'Invocação', 'Ação', '1,5 metro', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você e até cinco criaturas voluntárias a até 1,5 metro de você se teleportam instantaneamente para um santuário previamente designado. Você e quaisquer criaturas que se teleportem com você aparecem no espaço desocupado mais próximo do local designado quando você preparou seu santuário (veja abaixo). Se você conjurar esta magia sem primeiro preparar um santuário, a magia não tem efeito.
+Você deve designar um local, como um templo, como um santuário, conjurando esta magia lá.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.607Z"}'::jsonb),
+  ('palavra-sagrada', 'Palavra Sagrada', 7, '7º Círculo', 'Evocação', 'Ação Bônus', '9 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você pronuncia uma palavra imbuída de poder dos
+Planos Superiores. Cada criatura à sua escolha no alcance da magia realiza uma salvaguarda de Carisma.
+Se falhar, um alvo com 50 Pontos de Vida ou menos sofre um efeito com base nos Pontos de Vida atuais dele, conforme mostrado na tabela Efeitos de Palavra
+Sagrada. Independentemente dos Pontos de Vida, um alvo Celestial, Elemental, Feérico ou Ínfero que falhar na salvaguarda é forçado a voltar ao seu plano de origem (se ainda não estiver lá) e não pode retornar ao plano atual por 24 horas por qualquer meio que não seja uma magia Desejo.
+Efeitos de Palavra Sagrada
+Pontos de Vida Efeito
+0–20 O alvo morre.
+21–30 O alvo está com as condições Atordoado,
+Cego e Surdo por 1 hora.
+31–40 O alvo está com as condições Cego e Surdo por 10 minutos.
+41–50 O alvo tem a condição Surdo por 1 minuto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.607Z"}'::jsonb),
+  ('paralisar-monstro', 'Paralisar Monstro', 5, '5º Círculo', 'Encantamento', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço reto de ferro","text":"V, S, M (um pedaço reto de ferro)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Escolha uma criatura à sua vista e no alcance da magia.
+O alvo deve ser bem-sucedido em uma salvaguarda de
+Sabedoria ou tem a condição Paralisado pela duração da magia. No final de cada um dos turnos do alvo, ele realiza uma nova salvaguarda, encerrando a magia em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.608Z"}'::jsonb),
+  ('paralisar-pessoa', 'Paralisar Pessoa', 2, '2º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço reto de ferro","text":"V, S, M (um pedaço reto de ferro)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Escolha um Humanoide à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Paralisado pela duração da magia. No final de cada um dos turnos dele,
+o alvo realiza uma nova salvaguarda, encerrando a magia em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher um Humanoide adicional para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.608Z"}'::jsonb),
+  ('parar-o-tempo', 'Parar o Tempo', 9, '9º Círculo', 'Transmutação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você interrompe brevemente o fluxo do tempo para todos, menos para si. O tempo não passa para outras criaturas, enquanto você faz 1d4 +1 turnos consecutivos, durante os quais você pode usar ações e se mover normalmente.
+Esta magia encerra se uma das ações que você usar durante este período, ou quaisquer efeitos que você
+criar durante ela, afetar uma criatura que não seja você
+ou um objeto que esteja sendo usado ou carregado por alguém que não seja você. Além disso, a magia encerra se você se mover para um lugar a mais de 300 metros do local onde a conjurou.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.608Z"}'::jsonb),
+  ('passo-arboreo', 'Passo Arbóreo', 5, '5º Círculo', 'Invocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você adquire a capacidade de entrar em uma árvore e se mover de dentro dela para dentro de outra árvore do mesmo tipo a até 150 metros. Ambas as árvores devem ser vivas e pelo menos do mesmo tamanho que você. Você deve usar 1,5 metro de movimento para entrar em uma árvore. Você sabe instantaneamente a localização de todas as outras árvores do mesmo tipo a até 150 metros e, como parte do movimento usado para entrar na árvore, pode tanto passar por uma dessas árvores quanto sair da árvore em que você está.
+Você aparece em um local à sua escolha a até 1,5 metro da árvore-destino, usando outro 1,5 metro de movimento. Se você não tiver mais nenhum movimento,
+aparece a menos de 1,5 metro da árvore em que entrou.
+Você pode usar essa habilidade de transporte apenas uma vez em cada um dos seus turnos. Você deve terminar cada turno fora de uma árvore.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.609Z"}'::jsonb),
+  ('passo-nebuloso', 'Passo Nebuloso', 2, '2º Círculo', 'Invocação', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Brevemente cercado por uma névoa prateada, você se teleporta até 9 metros para um espaço desocupado à
+sua vista.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.609Z"}'::jsonb),
+  ('passo-sem-rastro', 'Passo Sem Rastro', 2, '2º Círculo', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"cinzas de ramo de visco queimado","text":"V, S, M (cinzas de ramo de visco queimado)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você irradia uma aura de ocultação em uma Emanação de 9 metros pela duração da magia. Enquanto estiver na aura, você e cada criatura escolhida têm um bônus de +10 em testes de Destreza (Furtividade) e não deixam rastros.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.610Z"}'::jsonb),
+  ('passos-largos', 'Passos Largos', 1, '1º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de poeira","text":"V, S, M (uma pitada de poeira)"}'::jsonb, '1 hora', FALSE, FALSE, 'Você toca uma criatura. O Deslocamento do alvo aumenta em 3 metros até que a magia termine.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.610Z"}'::jsonb),
+  ('pele-casca', 'Pele-Casca', 2, '2º Círculo', 'Transmutação', 'Ação Bônus', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um punhado de casca de árvore","text":"V, S, M (um punhado de casca de árvore)"}'::jsonb, '1 hora', FALSE, FALSE, 'Você toca uma criatura voluntária. Até que a magia termine, a pele do alvo assume uma aparência de casca de árvore, e o alvo tem uma Classe de Armadura de 17
+se sua CA for menor que isso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.610Z"}'::jsonb),
+  ('pele-rocha', 'Pele-Rocha', 4, '4º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"poeira de diamante no valor de 100 ou mais PO, que a magia consome","text":"V, S, M (poeira de diamante no valor de 100 ou mais PO, que a magia consome)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Até que a magia termine, uma criatura voluntária que você toque tem Resistência a dano Contundente, Cortante e Perfurante.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.611Z"}'::jsonb),
+  ('pequeno-refugio-de-leomund', 'Pequeno Refúgio de Leomund', 3, '3º Círculo', 'Evocação', '1 minuto ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma conta de cristal","text":"V, S, M (uma conta de cristal)"}'::jsonb, '8 horas', FALSE, TRUE, 'Uma Emanação de 3 metros surge ao seu redor e permanece estacionária pela duração. A magia falha quando você a conjura se a Emanação não for grande o suficiente para envolver totalmente todas as criaturas em sua área.
+Criaturas e objetos dentro da Emanação quando você conjura a magia podem se mover livremente através dela. Todas as outras criaturas e objetos são impedidos de atravessá-la. Magias de 3º círculo ou inferior não podem ser conjuradas através dela, e os efeitos dessas magias não podem se estender para dentro dela.
+A atmosfera no interior da Emanação é confortável e seca, independentemente do clima externo. Até que a magia termine, você pode determinar se no interior há
+Meia-luz ou Escuridão (nenhuma ação é necessária). A
+Emanação é opaca por fora e de qualquer cor que você
+escolher, mas é transparente por dentro.
+A magia encerra se você sair da Emanação ou se a conjurar novamente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.611Z"}'::jsonb),
+  ('perdicao', 'Perdição', 1, '1º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma gota de sangue","text":"V, S, M (uma gota de sangue)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Até três criaturas à sua escolha à sua vista e no alcance da magia devem realizar uma salvaguarda de Carisma.
+Sempre que um alvo que falhar nesta salvaguarda realizar uma jogada de ataque ou uma salvaguarda antes da magia terminar, o alvo deve subtrair 1d4 da jogada de ataque ou salvaguarda.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.611Z"}'::jsonb),
+  ('piscar', 'Piscar', 3, '3º Círculo', 'Transmutação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 minuto', FALSE, FALSE, 'Jogue 1d6 no final de cada um dos seus turnos pela duração da magia. Em um resultado de 4−6, você
+desaparece do seu plano de existência atual e aparece no Plano Etéreo (a magia termina instantaneamente se você já estiver nesse plano). Enquanto estiver no Plano
+Etéreo, você pode ver o plano que você deixou, que aparece em tons de cinza, mas você não pode ver nada nele a mais de 18 metros de distância. Você só pode afetar e ser afetado por criaturas que estejam no Plano
+Etéreo, e criaturas no outro plano não podem percebê-
+-lo, a menos que tenham uma habilidade específica que lhes permita perceber coisas no Plano Etéreo.
+Você retorna ao outro plano no início do seu próximo turno e quando a magia termina se você estiver no
+Plano Etéreo. Você retorna a um espaço desocupado à
+sua escolha à sua vista e a até 3 metros do espaço que deixou. Se nenhum espaço desocupado estiver disponível dentro desse intervalo, você aparece no espaço desocupado mais próximo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.612Z"}'::jsonb),
+  ('polimorfia', 'Polimorfia', 4, '4º Círculo', 'Transmutação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um casulo de lagarta","text":"V, S, M (um casulo de lagarta)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você tenta transformar uma criatura à sua vista e no alcance da magia em uma Fera. O alvo deve ser bem-
+-sucedido em uma salvaguarda de Sabedoria ou se multimorfa em uma Fera pela duração da magia. Essa forma pode ser qualquer Fera com Nível de Desafio igual ou menor que o do alvo (ou igual ao seu nível se não tiver Nível de Desafio). As estatísticas do alvo são substituídas pelas da Fera escolhida, mas o alvo mantém seu alinhamento, personalidade, tipo de criatura, Pontos de Vida e Dados de Pontos de Vida.
+Veja também o apêndice B para amostras dos blocos de estatísticas das Feras.
+O alvo recebe um número de Pontos de Vida Temporários igual aos Pontos de Vida da forma de Fera.
+A magia se encerra no alvo se ele não tiver Pontos de Vida Temporários restantes. Esses Pontos de Vida
+Temporários desaparecem, caso ainda restem, quando a magia terminar.
+O alvo é limitado às ações que pode realizar pela anatomia de sua nova forma, e não pode falar ou conjurar magias.
+O equipamento do alvo se funde com a nova forma.
+A criatura não pode usar ou se beneficiar de nenhum desses equipamentos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.613Z"}'::jsonb),
+  ('polimorfia-total', 'Polimorfia Total', 9, '9º Círculo', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma porção de mercúrio, uma dose de goma arábica e um fiapo de fumaça","text":"V, S, M (uma porção de mercúrio, uma dose de goma arábica e um fiapo de fumaça)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Escolha uma criatura ou objeto não mágico à sua vista e no alcance da magia. A criatura se multimorfa para uma criatura diferente, um objeto não mágico, ou o objeto se multimorfa para uma criatura (o objeto não pode estar sendo usado nem carregado). A transformação permanece pela duração da magia ou até que o alvo morra ou seja destruído, mas se você mantiver a Concentração nesta magia pela duração completa, a magia permanece até ser dissipada.
+Uma criatura involuntária pode realizar uma salvaguarda de Sabedoria e, se for bem-sucedida, não é afetada por esta magia.
+Criatura em Criatura. Se você transformar uma criatura em outro tipo de criatura, a nova forma pode ser qualquer tipo que você escolher que tenha um Nível de
+Desafio igual ou menor do que o Nível de Desafio ou nível do alvo. As estatísticas de jogo do alvo são substituídas pelo bloco de estatísticas da nova forma, mas ele mantém seus Pontos de Vida, Dados de Pontos de Vida e alinhamento.
+O alvo recebe um número de Pontos de Vida Temporários igual aos Pontos de Vida da nova forma. Esses
+Pontos de Vida Temporários desaparecem, caso ainda restem, quando a magia terminar.
+O alvo é limitado às ações que pode realizar pela anatomia de sua nova forma, e não pode falar ou conjurar magias.
+O equipamento do alvo se funde com a nova forma.
+A criatura não pode usar ou se beneficiar de nenhum desses equipamentos.
+Objeto em Criatura. Você pode transformar um objeto em qualquer tipo de criatura, desde que o tamanho da criatura não seja maior que o tamanho do objeto e a criatura tenha um Nível de Desafio de 9 ou menor. A
+criatura é Amigável a você e seus aliados. Em combate,
+ela age imediatamente após o seu turno e obedece aos seus comandos.
+Se a magia durar mais de uma hora, você não controla mais a criatura. Ela pode permanecer Amigável a você, dependendo de como você a tratou.
+Criatura em Objeto. Se você transformar uma criatura em um objeto, ela se transforma junto com o que quer que esteja vestindo e carregando nessa forma,
+desde que o tamanho do objeto não seja maior do que o tamanho da criatura. As estatísticas da criatura se tornam as do objeto, ela não tem memórias do período que passou em forma de objeto e volta ao normal após a magia terminar.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.613Z"}'::jsonb),
+  ('porta-dimensional', 'Porta Dimensional', 4, '4º Círculo', 'Invocação', 'Ação', '150 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você se teleporta para um local no alcance da magia.
+Você chega exatamente ao local desejado. Pode ser um lugar que você pode ver, um que você pode visualizar ou um que você pode descrever indicando distância e direção, como “60 metros para baixo” ou “90 metros para cima em direção ao noroeste em um ângulo de 45 graus”.
+Você também pode teleportar uma criatura voluntária. A criatura deve estar a até 1,5 metro de você quando você se teleporta, e ela se teleporta para um espaço a até 1,5 metro do seu espaço de destino.
+Se você, a outra criatura ou ambas chegarem a um espaço ocupado por uma criatura, ou completamente preenchido por um ou mais objetos, você e qualquer criatura viajando com você sofre 4d6 pontos de dano
+Energético, e o teleporte falha.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.614Z"}'::jsonb),
+  ('portais-arcanos', 'Portais Arcanos', 6, '6º Círculo', 'Invocação', 'Ação', '150 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você cria portais de teleporte vinculados. Escolha dois espaços grandes e desocupados no chão à sua vista, um espaço no alcance da magia e o outro a até 3 metros de você. Um portal circular se abre em cada um desses espaços e permanece pela duração da magia.
+Os portais são anéis brilhantes bidimensionais cheios de névoa que bloqueiam a visão. Eles pairam a centímetros do chão e são perpendiculares a ele.
+Um portal fica aberto apenas de um lado (à sua escolha). Qualquer coisa que entre no lado aberto de um portal sai do lado aberto do outro portal como se os dois fossem adjacentes um ao outro. Como uma Ação
+Bônus, você pode alterar a face dos lados abertos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.614Z"}'::jsonb),
+  ('portal', 'Portal', 9, '9º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um diamante no valor de 5.000 ou mais PO","text":"V, S, M (um diamante no valor de 5.000 ou mais PO)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você conjura um portal que liga um espaço desocupado à sua vista e no alcance da magia a um local preciso em um plano de existência diferente. O portal é uma abertura circular, que você pode criar com 1,5
+a 6 metros de diâmetro. Você pode orientar o portal em qualquer direção que escolher. O portal permanece pela duração da magia e o destino para o qual ele leva é visível através dele.
+O portal tem uma frente e um verso em cada plano onde aparece. Se deslocar pelo portal só é possível movendo-se pela frente. Qualquer coisa que o faça é instantaneamente transportada para o outro plano, aparecendo no espaço desocupado mais próximo do portal.
+Divindades e outros governantes dos planos podem impedir que portais criados por esta magia se abram em sua presença ou em qualquer lugar dentro de seus domínios.
+Ao conjurar esta magia, você pode proferir o nome de uma criatura específica (não funciona com um pseudônimo, título ou apelido). Se essa criatura estiver
+em um plano diferente daquele em que você está, o portal se abre ao lado da criatura nomeada e a transporta para o espaço desocupado mais próximo do seu lado do portal. Você não recebe nenhum poder especial sobre a criatura, e ela é livre para agir conforme o
+Mestre julgar apropriado. Ela pode ir embora, atacar você ou ajudá-lo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.615Z"}'::jsonb),
+  ('praga-de-insetos', 'Praga de Insetos', 5, '5º Círculo', 'Invocação', 'Ação', '90 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um gafanhoto","text":"V, S, M (um gafanhoto)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Um enxame de gafanhotos preenche uma Esfera de 6
+metros de raio centrada em um ponto à sua escolha no alcance da magia. A Esfera permanece pela duração, e sua área é Parcialmente Obscurecida e Terreno Difícil.
+Quando o enxame aparece, cada criatura dentro dele realiza uma salvaguarda de Constituição, sofrendo
+4d10 pontos de dano Perfurante se falhar, ou metade desse dano em caso de sucesso. Uma criatura também realiza essa salvaguarda quando entra na área da magia pela primeira vez em um turno ou encerra o turno nela. Uma criatura realiza essa salvaguarda apenas uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d10 para cada círculo de espaço de magia acima de 5.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.615Z"}'::jsonb),
+  ('presenca-regia-de-yolande', 'Presença Régia de Yolande', 5, '5º Círculo', 'Encantamento', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma tiara em miniatura","text":"V, S, M (uma tiara em miniatura)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você se envolve com uma majestade sobrenatural em uma Emanação de 3 metros. Sempre que a Emanação entra no espaço de uma criatura à sua vista, ou quando uma criatura à sua vista entra na Emanação ou termina seu turno nela, você pode forçar essa criatura a realizar uma salvaguarda de Sabedoria. Se falhar, o alvo sofre 4d6 pontos de dano Psíquico e tem a condição Caído, e você pode empurrá-lo até 3 metros para longe de você. Em caso de sucesso, o alvo sofre apenas metade do dano. Uma criatura realiza essa salvaguarda apenas uma vez por turno.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.616Z"}'::jsonb),
+  ('pressagio', 'Presságio', 4, '4º Círculo', 'Adivinhação', 'Ação ou Ritual', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"incenso no valor de 25 ou mais PO, que a magia consome","text":"V, S, M (incenso no valor de 25 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, TRUE, 'Esta magia coloca você em contato com um deus ou com os servos de um deus. Você faz uma pergunta sobre um objetivo, evento ou atividade específica que ocorrerá em até 7 dias. O Mestre oferece uma resposta verdadeira, que pode ser uma frase curta ou uma rima enigmática. A magia não leva em conta circunstâncias que podem alterar a resposta, como a conjuração de outras magias.
+Se você conjurar a magia mais de uma vez antes de completar um Descanso Longo, há uma chance cumulativa de 25% para cada conjuração após a primeira de que você não receba resposta.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.616Z"}'::jsonb),
+  ('prestidigitacao-arcana', 'Prestidigitação Arcana', 0, 'Truque', 'Transmutação', 'Ação', '3 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Até 1 hora', FALSE, FALSE, 'Você cria um efeito mágico no alcance da magia.
+Escolha o efeito entre as opções abaixo. Se conjurar esta magia várias vezes, você pode ter até três de seus efeitos não instantâneos ativos ao mesmo tempo.
+Brincar com Fogo. Você instantaneamente acende ou apaga uma vela, uma tocha ou uma pequena fogueira.
+Criação Menor. Você cria uma bugiganga não mágica,
+sem valor monetário e incapaz de causar dano, ou uma imagem ilusória, sendo que ambas devem caber na sua mão. Ela dura até o final do seu próximo turno.
+Efeito Sensorial. Você cria um efeito sensorial instantâneo e inofensivo, como uma chuva de faíscas, um sopro de vento, notas musicais suaves ou um odor estranho.
+Limpar ou Sujar. Você limpa ou suja instantaneamente um objeto com menos de 30 centímetros cúbicos.
+Marca Mágica. Você faz aparecer uma cor, uma pequena marca ou um símbolo em um objeto ou superfície por 1 hora.
+Sensação Ideal. Você esfria, aquece ou dá sabor a um material não vivo com menos de 30 centímetros cúbicos por 1 hora.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.617Z"}'::jsonb),
+  ('proibicao', 'Proibição', 6, '6º Círculo', 'Abjuração', '10 minutos ou Ritual', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"rubi em pó no valor de 1.000 ou mais PO","text":"V, S, M (rubi em pó no valor de 1.000 ou mais PO)"}'::jsonb, '1 dia', FALSE, TRUE, 'Você cria uma proteção contra viagens mágicas que protege até 3.700 metros quadrados de espaço a uma altura de 9 metros acima do chão. Pela duração da magia, as criaturas não podem se teleportar para a área ou usar portais, como aqueles criados pela magia Portal,
+para entrar na área. A magia bloqueia a área contra viagens planares e, portanto, impede que criaturas acessem a área pelo Plano Astral, Plano Etéreo, Faéria,
+Sombral ou pela magia Transição Planar.
+Além disso, a magia causa dano aos tipos de criaturas,
+entre um ou mais, que você escolhe ao conjurá-la: Aberrações, Celestiais, Elementais, Feéricos, Ínferos e Mortos-
+-Vivos. Quando uma criatura de um dos tipos escolhidos entra pela primeira vez na área da magia ou termina seu turno nela, sofre 5d10 pontos de dano Necrótico ou
+Radiante (à sua escolha ao conjurar esta magia).
+Você pode definir uma senha ao conjurar a magia.
+Uma criatura que profere a senha ao entrar na área não sofre dano da magia.
+A área da magia não pode se sobrepor à área de outra magia Proibição. Se você conjurar Proibição todos os dias por 30 dias no mesmo local, a magia permanece até ser dissipada e os componentes Materiais são consumidos na última conjuração.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.617Z"}'::jsonb),
+  ('projecao-astral', 'Projeção Astral', 9, '9º Círculo', 'Necromancia', '1 hora', '3 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"para cada um dos alvos da magia, um zircão no valor de 1.000 ou mais PO e uma barra de prata no valor de 100 ou mais PO, que a magia consome","text":"V, S, M (para cada um dos alvos da magia, um zircão no valor de 1.000 ou mais PO e uma barra de prata no valor de 100 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Você e até oito criaturas voluntárias no alcance da magia projetam seus corpos astrais no Plano Astral (a magia se encerra instantaneamente se você já estiver nesse plano).
+O corpo de cada alvo é deixado para trás em um estado de animação suspensa; ele tem a condição Inconsciente,
+não precisa comer ou respirar e não envelhece.
+A forma astral de um alvo se assemelha ao seu corpo em quase todos os aspectos, replicando suas estatísticas de jogo e pertences. A principal diferença é a adição de um cordão prateado que se arrasta entre as omoplatas da forma astral. O cordão desaparece de vista após 30 centímetros. Se o cordão for cortado —
+algo que só pode acontecer quando um efeito especificamente declarar isto — tanto o corpo quanto a forma astral do alvo morrem.
+A forma astral de um alvo pode viajar pelo Plano
+Astral. No momento em que uma forma astral deixa aquele plano, o corpo e os pertences do alvo viajam ao longo do cordão prateado, fazendo com que o alvo reentre em seu corpo no novo plano.
+Qualquer dano ou efeito aplicável a uma forma astral não afeta o corpo do alvo e vice-versa. Se o corpo ou a forma astral de um alvo for reduzido a 0 Pontos de
+Vida, a magia se encerra para esse alvo. A magia se encerra para todos os alvos se você executar uma ação
+Usar Magia para descartá-la.
+Quando a magia termina para um alvo que não está morto, o alvo reaparece em seu corpo e sai do estado de animação suspensa.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.618Z"}'::jsonb),
+  ('projetar-imagem', 'Projetar Imagem', 7, '7º Círculo', 'Ilusão', 'Ação', '800 quilômetros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma estatueta de si mesmo no valor de 5 ou mais PO","text":"V, S, M (uma estatueta de si mesmo no valor de 5 ou mais PO)"}'::jsonb, 'Concentração, até 1 dia', TRUE, FALSE, 'Você cria uma cópia ilusória de si mesmo que dura enquanto a magia estiver ativa. A cópia pode surgir em qualquer lugar que você já tenha visto e que esteja no alcance da magia, ignorando obstáculos. A ilusão se parece e soa como você, mas é intangível. Se a ilusão sofrer qualquer dano, ela desaparece e a magia se encerra.
+Você pode ver através dos olhos da ilusão e ouvir através dos ouvidos dela, como se você estivesse no espaço dela. Com uma ação Usar Magia, você pode movê-la até 18 metros e fazer com que ela gesticule, fale e se comporte da maneira que desejar. Ela imita seus maneirismos perfeitamente.
+Interação física com a imagem revela sua natureza ilusória, já que objetos podem atravessá-la. Uma criatura que executa a ação Analisar para examinar a imagem pode determinar que se trata de uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra a CD para evitar sua magia. Se uma criatura perceber a ilusão, ela pode ver através da imagem, e qualquer som que a ilusão emita parece vago para essa criatura.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.618Z"}'::jsonb),
+  ('protecao-contra-a-morte', 'Proteção Contra a Morte', 4, '4º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '8 horas', FALSE, FALSE, 'Você toca uma criatura e concede a ela uma medida de proteção contra a morte. Na primeira vez que o alvo é reduzido a 0 Pontos de Vida antes que a magia termine, em vez disso o alvo fica com 1 Ponto de Vida e a magia termina.
+Se a magia ainda estiver ativa quando o alvo for submetido a um efeito que o mate instantaneamente sem causar dano, esse efeito é negado contra o alvo e a magia se encerra.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.618Z"}'::jsonb),
+  ('protecao-contra-energia', 'Proteção Contra Energia', 3, '3º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Pela duração da magia, a criatura voluntária que você
+tocar tem Resistência a um tipo de dano à sua escolha:
+Ácido, Elétrico, Gélido, Ígneo ou Trovejante.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.619Z"}'::jsonb),
+  ('protecao-contra-laminas', 'Proteção Contra Lâminas', 0, 'Truque', 'Abjuração', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Sempre que uma criatura realizar uma jogada de ataque contra você antes que a magia termine, o atacante subtrai 1d4 da jogada de ataque.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.619Z"}'::jsonb),
+  ('protecao-contra-o-bem-e-o-mal', 'Proteção Contra o Bem e o Mal', 1, '1º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pote de Água Benta no valor de 25 ou mais PO, que a magia consome","text":"V, S, M (um pote de Água Benta no valor de 25 ou mais PO, que a magia consome)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Até que a magia termine, uma criatura voluntária que você tocar está protegida contra criaturas que são
+Aberrações, Celestiais, Elementais, Feéricos, Ínferos ou
+Mortos-Vivos. A proteção concede vários benefícios.
+Criaturas desses tipos têm Desvantagem em jogadas de ataque contra o alvo. O alvo também não pode ser possuído por essas criaturas nem adquirir as condições de Amedrontado ou Enfeitiçado por elas. Se o alvo já estiver possuído, Amedrontado ou Enfeitiçado por uma dessas criaturas, ele tem Vantagem em qualquer nova salvaguarda contra o efeito relevante.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.619Z"}'::jsonb),
+  ('protecao-contra-veneno', 'Proteção Contra Veneno', 2, '2º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 hora', FALSE, FALSE, 'Você toca uma criatura e encerra nela a condição Envenenado. Pela duração da magia, o alvo tem Vantagem nas salvaguardas para evitar ou encerrar a condição
+Envenenado e tem Resiste a dano Venenoso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.620Z"}'::jsonb),
+  ('proteger-fortaleza', 'Proteger Fortaleza', 6, '6º Círculo', 'Abjuração', '1 hora', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um cetro de prata no valor de 10 ou mais PO","text":"V, S, M (um cetro de prata no valor de 10 ou mais PO)"}'::jsonb, '24 horas', FALSE, FALSE, 'Você cria uma proteção que protege até 225 metros quadrados de espaço. A área protegida pode ter até 6
+metros de altura e você a molda como um quadrado de 15 metros de lado, cem quadrados de 1,5 metro de lado que são contíguos ou vinte e cinco quadrados de 3
+metros de lado que são contíguos.
+Ao conjurar esta magia, você pode especificar indivíduos que não são afetados pelos efeitos da magia.
+Você também pode especificar uma senha que, quando proferida em voz alta a até 1,5 metro da área protegida,
+torne o orador imune aos efeitos da magia.
+A magia cria os efeitos abaixo dentro da área protegida. Dissipar Magia não tem efeito sobre Proteger Fortaleza em si, mas cada um dos seguintes efeitos pode ser dissipado. Se todos os quatro forem dissipados, Proteger
+Fortaleza se encerra. Se você conjurar a magia todos os dias por 365 dias na mesma área, a magia permanece até que todos os seus efeitos sejam dissipados.
+Corredores. A névoa preenche todos os corredores protegidos, tornando a área Totalmente Obscurecida.
+Além disso, em cada interseção ou passagem ramificada que oferece uma escolha de direção, há uma chance de 50% de que uma criatura diferente de você acredite que está indo na direção oposta à que escolheu.
+Escadas. Teias preenchem todas as escadas na área protegida de cima para baixo, como na magia Teia.
+Esses fios voltam a crescer em 10 minutos se forem destruídos enquanto Proteger Fortaleza durar.
+Portas. Todas as portas da área protegida estão magicamente trancadas, como se estivessem seladas pela magia Tranca Arcana. Além disso, você pode cobrir até dez portas com uma ilusão para fazê-las parecer seções simples de parede.
+Outro Efeito Mágico. Coloque um dos seguintes efeitos mágicos dentro da área protegida:
+• Luzes Dançantes em quatro corredores, com um padrão simples que as luzes repetem enquanto durar
+Proteger Fortaleza
+• Boca Encantada em dois locais
+• Nuvem Fétida em dois locais (os vapores retornam dentro de 10 minutos se dispersos enquanto Proteger
+Fortaleza durar)
+• Lufada de Vento em um corredor ou sala (o vento sopra continuamente enquanto a magia durar)
+• Sugestão em um quadrado de 1,5 metro de lados;
+qualquer criatura que entre nesse quadrado recebe a sugestão mentalmente', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.620Z"}'::jsonb),
+  ('purificar-alimentos-e-bebidas', 'Purificar Alimentos e Bebidas', 1, '1º Círculo', 'Transmutação', 'Ação ou Ritual', '3 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, TRUE, 'Você remove veneno e podridão de alimentos e bebidas não mágicos em uma Esfera de 1,5 metro de raio centrada em um ponto no alcance da magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.620Z"}'::jsonb),
+  ('queda-suave', 'Queda Suave', 1, '1º Círculo', 'Transmutação', 'Reação, que você executa quando você
+ou uma criatura à sua vista a até 18 metros de você entra em queda', '18 metros', '{"verbal":true,"somatic":false,"material":true,"materialDescription":"uma pequena pena ou pedaço de penugem","text":"V, M (uma pequena pena ou pedaço de penugem)"}'::jsonb, '1 minuto', FALSE, FALSE, 'Escolha até cinco criaturas em queda no alcance da magia. A taxa de queda de cada uma diminui para 18
+metros por rodada até que a magia termine. Se uma criatura pousar antes do fim da magia, não sofre dano da queda e a magia se encerra para ela.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.621Z"}'::jsonb),
+  ('raio-ardente', 'Raio Ardente', 2, '2º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você dispara três raios flamejantes. Você pode dispará-los em um ou vários alvos no alcance da magia. Realize um ataque mágico à distância para cada raio. Em caso de acerto, o alvo sofre 2d6 pontos de dano Ígneo.', 'Usando um Espaço de Magia de Círculo Superior.
+Você cria um raio adicional para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.621Z"}'::jsonb),
+  ('raio-de-bruxa', 'Raio de Bruxa', 1, '1º Círculo', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um galho atingido por um raio","text":"V, S, M (um galho atingido por um raio)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Um feixe de energia crepitante é lançado em direção a uma criatura no alcance da magia, formando um arco sustentado de relâmpago entre você e o alvo. Realize um ataque mágico à distância contra ele. Em caso de acerto, o alvo sofre 2d12 pontos de dano Elétrico.
+Em cada um dos seus turnos posteriores, você pode executar uma ação Bônus para causar 1d12 pontos de dano Elétrico automaticamente ao alvo, mesmo que o primeiro ataque tenha falhado.
+A magia encerra se o alvo estiver fora do alcance da magia ou se tiver Cobertura Total em relação a você.', 'Usando um Espaço de Magia de Círculo Superior.
+O dano inicial aumenta em 1d12 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.621Z"}'::jsonb),
+  ('raio-de-fogo', 'Raio de Fogo', 0, 'Truque', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você arremessa uma partícula de fogo em uma criatura ou objeto no alcance da magia. Realize um ataque mágico à distância contra o alvo. Em caso de acerto, o alvo sofre 1d10 pontos de dano Ígneo.
+Um objeto inflamável atingido por esta magia entra em combustão se não estiver sendo usado ou carregado.
+Aprimoramento de Truque. O dano aumenta em 1d10
+quando você atinge os níveis 5 (2d10), 11 (3d10) e 17 (4d10).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.622Z"}'::jsonb),
+  ('raio-de-gelo', 'Raio de Gelo', 0, 'Truque', 'Evocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Um feixe congelante de luz azul-esbranquiçada parte em direção a uma criatura no alcance da magia. Realize um ataque mágico à distância contra o alvo. Se acertar, a criatura sofre 1d8 pontos de dano Gélido e seu
+Deslocamento é reduzido em 3 metros até o início do seu próximo turno.
+Aprimoramento de Truque. O dano aumenta em 1d8
+quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.622Z"}'::jsonb),
+  ('raio-do-enfraquecimento', 'Raio do Enfraquecimento', 2, '2º Círculo', 'Necromancia', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Um feixe de energia enfraquecedora parte de você em direção a uma criatura no alcance da magia. A criatura deve realizar uma salvaguarda de Constituição.
+Em caso de sucesso, a criatura tem Desvantagem na próxima jogada de ataque que realizar até o início do seu próximo turno.
+Se falhar, a criatura tem Desvantagem em Testes de
+D20 baseados em Força pela duração da magia. Nesse período, ela também subtrai 1d8 de todas as jogadas de dano que fizer. A criatura repete a salvaguarda no final de cada um dos turnos dela, encerrando a magia sobre si em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.622Z"}'::jsonb),
+  ('raio-guia', 'Raio Guia', 1, '1º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 rodada', FALSE, FALSE, 'Você lança um raio de luz em direção a uma criatura no alcance da magia. Realize um ataque mágico à distância contra o alvo. Em caso de acerto, ele sofre 4d6
+pontos de dano Radiante, e a próxima jogada de ataque realizado contra ele antes do final do seu próximo turno tem Vantagem.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.623Z"}'::jsonb),
+  ('raio-lunar', 'Raio Lunar', 2, '2º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma folha de dama-da-noite","text":"V, S, M (uma folha de dama-da-noite)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Um feixe prateado de luz pálida brilha em um Cilindro com 1,5 metro de raio e 12 metros de altura, centrado em um ponto no alcance da magia. Até que a magia termine, Meia-luz preenche o Cilindro, e você pode executar uma ação Usar Magia nos turnos subsequentes para mover o Cilindro até 18 metros.
+Quando o Cilindro surge, cada criatura em seu interior deve realizar uma salvaguarda de Constituição.
+Em caso de falha, a criatura sofre 2d10 pontos de dano
+Radiante e, se estiver multimorfada (como resultado da magia Polimorfia, por exemplo), reverte-se à sua forma verdadeira e não pode se multimorfar novamente até sair do Cilindro. Em caso de sucesso, a criatura recebe apenas metade do dano. Uma criatura também realiza essa salvaguarda quando a área da magia se move para o espaço dela, quando ela entra na área da magia ou quando encerra o próprio turno nela. A criatura realiza essa salvaguarda apenas uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d10 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.623Z"}'::jsonb),
+  ('raio-mistico', 'Raio Místico', 0, 'Truque', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você emite um feixe de energia crepitante. Realize um ataque mágico à distância contra uma criatura ou objeto no alcance da magia. Em caso de acerto, o alvo sofre
+1d10 pontos de dano Energético.
+Aprimoramento de Truque. A magia cria dois feixes no nível 5, três feixes no nível 11 e quatro feixes no nível 17. Você pode direcionar os feixes para o mesmo alvo ou para alvos diferentes. Realize uma jogada de ataque separada para cada feixe.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.623Z"}'::jsonb),
+  ('raio-nauseante', 'Raio Nauseante', 1, '1º Círculo', 'Necromancia', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você dispara um raio esverdeado em uma criatura no alcance da magia. Realize um ataque mágico à distância contra o alvo. Em caso de acerto, o alvo sofre 2d8 pontos de dano Venenoso e tem a condição Envenenado até o final do seu próximo turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d8 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.624Z"}'::jsonb),
+  ('raio-solar', 'Raio Solar', 6, '6º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma lupa","text":"V, S, M (uma lupa)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você lança um feixe de luz em uma linha de 1,5 metro de largura e 18 metros de comprimento. Cada criatura na
+Linha realiza uma salvaguarda de Constituição. Se falhar, uma criatura sofre 6d8 pontos de dano Radiante e tem a condição Cego até o início do seu próximo turno.
+Em caso de sucesso, ela sofre apenas metade do dano.
+Até que a magia termine, você pode executar uma ação
+Usar Magia para criar uma nova Linha de radiância.
+Pela duração da magia, uma fagulha de radiância brilha acima de você. Ela emite Luz Plena em um raio de 9 metros e Meia-luz por mais 9 metros. Essa luz é a luz do sol.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.624Z"}'::jsonb),
+  ('rajada-de-veneno', 'Rajada de Veneno', 0, 'Truque', 'Necromancia', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você projeta uma névoa tóxica em uma criatura no alcance da magia. Realize um ataque mágico à distância contra o alvo. Em caso de acerto, o alvo sofre 1d12
+pontos de dano Venenoso.
+Aprimoramento de Truque. O dano aumenta em 1d12
+quando você atinge os níveis 5 (2d12), 11 (3d12) e 17 (4d12).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.624Z"}'::jsonb),
+  ('rajada-prismatica', 'Rajada Prismática', 7, '7º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Oito raios luminosos partem de você em um Cone de
+18 metros. Cada criatura no Cone realiza uma salvaguarda de Destreza. Para cada alvo, jogue 1d8 para determinar qual raio colorido o afeta, consultando a tabela Raios Prismáticos.
+Raios Prismáticos
+1d8 Raio
+1 Vermelho. Se falhar: 12d6 pontos de dano Ígneo. Em caso de sucesso: metade do dano.
+2 Laranja. Se falhar: 12d6 pontos de dano Ácido. Em caso de sucesso: metade do dano.
+3 Amarelo. Se falhar: 12d6 pontos de dano Elétrico. Em caso de sucesso: metade do dano.
+4 Verde. Se falhar: 12d6 pontos de dano Venenoso. Em caso de sucesso: metade do dano.
+5 Azul. Se falhar: 12d6 pontos de dano Gélido. Em caso de sucesso: metade do dano.
+6 Anil. Se falhar: O alvo tem a condição Contido e realiza uma salvaguarda de Constituição no final de cada um dos turnos dele. Se bem-sucedido três vezes,
+a condição encerra. Se falhar três vezes, ele tem a condição Petrificado até ser liberado por um efeito como a magia Restauração Maior. Os sucessos e fracassos não precisam ser consecutivos; acompanhe ambos até que o alvo alcance três de um tipo.
+7 Violeta. Se falhar: O alvo tem a condição Cego e realiza uma salvaguarda de Sabedoria no início do seu próximo turno. Em uma salvaguarda bem-sucedida,
+a condição encerra. Se falhar, a condição encerra e a criatura se teleporta para outro plano de existência (à
+escolha do Mestre).
+8 Especial. O alvo é atingido por dois raios. Jogue duas vezes, jogando novamente quaisquer 8.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.625Z"}'::jsonb),
+  ('receptaculo-arcano', 'Receptáculo Arcano', 6, '6º Círculo', 'Necromancia', '1 minuto', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma gema, cristal ou relicário no valor de 500 ou mais PO","text":"V, S, M (uma gema, cristal ou relicário no valor de 500 ou mais PO)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Seu corpo entra em um estado catatônico enquanto sua alma se desprende dele e adentra o receptáculo que você utilizou como componente Material da magia.
+Enquanto sua alma habita o receptáculo, você percebe os arredores como se estivesse no espaço ocupado por ele. Você não pode se mover ou usar Reações. A única ação que pode realizar é projetar sua alma a até 30
+metros do receptáculo, seja retornando ao seu corpo vivo (e encerrando a magia) ou tentando possuir um corpo Humanoide.
+Você pode tentar possuir qualquer criatura Humanoide a até 30 metros do seu alcance e que esteja à sua vista (criaturas protegidas pela magia Círculo Mágico ou
+Proteção contra o Bem e o Mal não podem ser possuídas).
+O alvo deve realizar uma salvaguarda de Carisma.
+Se falhar, a sua alma projeta-se do receptáculo para dentro do corpo do alvo, expulsando a alma dele, que agora fica aprisionada no receptáculo. Em caso de sucesso, o alvo resiste aos seus esforços para possuí-lo,
+e você não pode tentar novamente por 24 horas.
+Uma vez que possua o corpo de uma criatura, você
+a controla. Seus Pontos de Vida, Dados de Vida, Força,
+Destreza, Constituição, Deslocamento e sentidos são substituídos pelos da criatura. Por outro lado, você
+mantém suas estatísticas de jogo.
+Enquanto isso, a alma da criatura possuída pode perceber a partir do receptáculo usando seus próprios sentidos, mas ela não pode se mover e está Incapacitada.
+Enquanto estiver possuindo um corpo, você pode usar uma de suas ações para retornar do corpo do hospedeiro para o receptáculo, desde que este esteja a até
+30 metros de distância, devolvendo a alma do hospedeiro ao corpo dela. Se o corpo do hospedeiro morrer enquanto você estiver nele, a criatura morre e você deve realizar uma salvaguarda de Carisma contra a CD do seu próprio atributo de conjuração. Em caso de sucesso,
+e se o receptáculo estiver a até 30 metros de distância,
+sua alma retorna a ele. Caso contrário, você morre.
+Se o receptáculo for destruído ou a magia terminar,
+sua alma retorna imediatamente ao seu corpo. Se o seu corpo estiver a mais de 30 metros de distância ou se ele estiver morto quando sua alma tentar retornar,
+você morre. Se a alma de outra criatura estiver no receptáculo quando ele for destruído, ela retorna ao corpo dela se este estiver vivo e a até 30 metros de distância. Caso contrário, a criatura morre.
+Quando a magia termina, o receptáculo é destruído.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.625Z"}'::jsonb),
+  ('reencarnar', 'Reencarnar', 5, '5º Círculo', 'Necromancia', '1 hora', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"óleos raros no valor de 1.000 ou mais PO, que a magia consome","text":"V, S, M (óleos raros no valor de 1.000 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você toca um Humanoide morto ou parte dele. Se a criatura estiver morta há, no máximo, 10 dias, a magia cria um novo corpo para ela e chama a alma para habitar esse corpo. Jogue 1d10 e consulte a tabela abaixo para determinar a espécie do novo corpo ou o Mestre escolhe outra espécie jogável.
+1d10 Espécies 1d10 Espécies
+1 Aasimar 6 Golias
+2 Draconato 7 Pequenino
+3 Anão 8 Humano
+4 Elfo 9 Orc
+5 Gnomo 10 Tiferino
+A criatura reencarnada faz quaisquer escolhas que a descrição de sua nova espécie oferece e mantém as memórias de sua vida anterior. Ela conserva as capacidades que possuía em sua forma original, mas perde os traços da espécie anterior e adquire os traços da nova espécie.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.625Z"}'::jsonb),
+  ('reflexos', 'Reflexos', 2, '2º Círculo', 'Ilusão', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 minuto', FALSE, FALSE, 'Um anão teve um encontro infeliz com o raio anil da
+Rajada Prismática.
+RANDALL MACKEY
+Três cópias ilusórias suas aparecem em seu espaço. Até que a magia termine, as cópias se movem com você e imitam suas ações, mudando de posição de forma que seja impossível rastrear qual imagem é a verdadeira.
+Cada vez que uma criatura atinge você com uma jogada de ataque pela duração da magia, jogue um d6
+para cada uma das cópias restantes. Se qualquer um dos d6s resultar em 3 ou mais, uma das cópias é atingida em seu lugar e é destruída. As cópias ignoram todos os outros danos e efeitos. A magia se encerra quando as três cópias são destruídas.
+Uma criatura não é afetada por esta magia se tem a condição Cego, ou se possuir Visão às Cegas ou Visão
+Verdadeira.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.626Z"}'::jsonb),
+  ('refugiar', 'Refugiar', 7, '7º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"poeira de uma pedra preciosa no valor de 5.000 ou mais PO, que a magia consome","text":"V, S, M (poeira de uma pedra preciosa no valor de 5.000 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Com um toque, você magicamente oculta um objeto ou uma criatura voluntária. Pela duração da magia, o alvo tem a condição Invisível, não pode ser alvo de magias de Adivinhação, detectado por magia ou observado remotamente por meios mágicos.
+Se o alvo for uma criatura, ela entra em um estado de animação suspensa, tem a condição Inconsciente,
+não envelhece e não necessita de alimento, água ou ar.
+Você pode definir uma condição para que a magia encerre previamente. A condição pode ser qualquer coisa
+à sua escolha, mas deve ocorrer ou ser visível em um raio de 1,5 quilômetro do alvo. Exemplos incluem “após
+1.000 anos” ou “quando o tarrasque despertar”. A magia também encerra se o alvo sofrer qualquer dano.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.626Z"}'::jsonb),
+  ('regeneracao', 'Regeneração', 7, '7º Círculo', 'Transmutação', '1 minuto', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma conta de oração","text":"V, S, M (uma conta de oração)"}'::jsonb, '1 hora', FALSE, FALSE, 'Uma criatura que você toca recupera 4d8 + 15 Pontos de Vida. Pela duração da magia, o alvo recupera 1
+Ponto de Vida no início de cada um dos turnos dele, e quaisquer partes do corpo cortadas voltam a crescer após 2 minutos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.626Z"}'::jsonb),
+  ('relampago', 'Relâmpago', 3, '3º Círculo', 'Evocação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de pelo e um cajado de cristal","text":"V, S, M (um pouco de pelo e um cajado de cristal)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Um relâmpago formando uma Linha de 30 metros de comprimento e 1,5 metro de largura dispara a partir de você em uma direção à sua escolha. Cada criatura na
+Linha realiza uma salvaguarda de Destreza, sofrendo
+8d6 pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.627Z"}'::jsonb),
+  ('remeter', 'Remeter', 3, '3º Círculo', 'Adivinhação', 'Ação', 'Ilimitado', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um fio de cobre","text":"V, S, M (um fio de cobre)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você envia uma mensagem curta de 25 palavras ou menos para uma criatura que você já encontrou ou que foi descrita a você por alguém que a tenha conhecido.
+O alvo ouve a mensagem na mente, reconhece você
+como remetente se o conhecer e pode responder da mesma forma imediatamente. A magia permite que o alvo compreenda o significado da sua mensagem.
+Você pode enviar a mensagem através de qualquer distância e até para outros planos de existência, mas se o alvo estiver em um plano diferente do seu, há uma chance de 5% de que a mensagem não chegue. Você
+sabe se a entrega falha.
+Ao receber sua mensagem, a criatura pode bloquear sua capacidade de contactá-la novamente com essa magia por 8 horas. Se você tentar enviar outra mensagem durante esse período, descobre que está bloqueado e a magia falha.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.627Z"}'::jsonb),
+  ('remover-maldicao', 'Remover Maldição', 3, '3º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Ao seu toque, todas as maldições que afetam uma criatura ou objeto se encerram. Se o objeto for um item mágico amaldiçoado, a maldição permanece, mas a magia quebra a Sintonização do dono com o objeto,
+permitindo que ele seja removido ou descartado.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.627Z"}'::jsonb),
+  ('reparar', 'Reparar', 0, 'Truque', 'Transmutação', '1 minuto', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"duas pedras-ímã","text":"V, S, M (duas pedras-ímã)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Essa magia repara uma única ruptura ou rasgo em um objeto que você tocar, como um elo de corrente quebrado, partes de uma chave partida, uma capa rasgada ou um odre furado. Se a ruptura ou rasgo não ultrapassar 30 centímetros em qualquer dimensão, ela é reparada sem deixar vestígios do dano anterior.
+Essa magia pode reparar fisicamente um item mágico, mas não pode restaurar a magia de tal objeto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.628Z"}'::jsonb),
+  ('repouso-tranquilo', 'Repouso Tranquilo', 2, '2º Círculo', 'Necromancia', 'Ação ou Ritual', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"2 Peças de Cobre, que a magia consome","text":"V, S, M (2 Peças de Cobre, que a magia consome)"}'::jsonb, '10 dias', FALSE, TRUE, 'Você toca um cadáver ou outros restos mortais. Pela duração da magia, o alvo é protegido da decomposição e não pode se tornar um Morto-Vivo.
+A magia também estende efetivamente o limite de tempo para ressuscitar o alvo dos mortos, uma vez que os dias passados sob a influência desta magia não contam contra o limite de tempo de magias como Reviver os Mortos.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.628Z"}'::jsonb),
+  ('repreensao-diabolica', 'Repreensão Diabólica', 1, '1º Círculo', 'Evocação', 'Reação, que você realiza ao receber dano de uma criatura à sua vista e a até 18 metros de você', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'A criatura que lhe causou dano é momentaneamente cercada por chamas verdes. Ela realiza uma salvaguarda de Destreza, sofrendo 2d10 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d10 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.629Z"}'::jsonb),
+  ('resistencia', 'Resistência', 0, 'Truque', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você toca uma criatura voluntária e escolhe um tipo de dano: Ácido, Contundente, Cortante, Elétrico, Gélido,
+Ígneo, Necrótico, Perfurante, Radiante, Trovejante ou Venenoso. Quando a criatura sofre dano do tipo escolhido antes que a magia termine, a criatura reduz o dano total sofrido em 1d4 pontos. Uma criatura pode se beneficiar desta magia apenas uma vez por turno.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.629Z"}'::jsonb),
+  ('respirar-na-agua', 'Respirar na Água', 3, '3º Círculo', 'Transmutação', 'Ação ou Ritual', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de junco","text":"V, S, M (um pedaço de junco)"}'::jsonb, '24 horas', FALSE, TRUE, 'Esta magia concede a até dez criaturas voluntárias
+à sua escolha no alcance da magia a capacidade de respirar debaixo d’água até que a magia termine. As criaturas afetadas também mantêm seu modo normal de respiração.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.630Z"}'::jsonb),
+  ('ressurreicao', 'Ressurreição', 7, '7º Círculo', 'Necromancia', '1 hora', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um diamante no valor de 1.000 ou mais PO, que a magia consome","text":"V, S, M (um diamante no valor de 1.000 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Com um toque, você revive uma criatura morta há no máximo um século, que não faleceu de velhice nem era um Morto-Vivo.
+Magias como
+Caminhar Sobre as Águas e
+Respirar na Água auxiliam viagens a reinos aquáticos.
+ANDREW MAR
+A criatura retorna à vida com todos os seus Pontos de Vida, e a magia neutraliza quaisquer venenos que a afetavam na hora da morte, fecha feridas letais e restaura partes do corpo ausentes.
+Voltar à vida é um processo difícil. O alvo sofre uma penalidade de −4 em Testes de D20. Sempre que o alvo completar um Descanso Longo, a penalidade é reduzida em 1 até se tornar 0.
+Conjurar essa magia para reviver uma criatura morta há 365 dias ou mais sobrecarrega você. Até completar um Descanso Longo, você não pode conjurar magias novamente e tem Desvantagem nos Testes de D20.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.630Z"}'::jsonb),
+  ('ressurreicao-verdadeira', 'Ressurreição Verdadeira', 9, '9º Círculo', 'Necromancia', '1 hora', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"diamantes no valor de 25.000 ou mais PO, que a magia consome","text":"V, S, M (diamantes no valor de 25.000 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você toca uma criatura morta há no máximo 200 anos e que morreu por qualquer motivo, exceto velhice. A criatura retorna à vida com todos os seus Pontos de Vida.
+Esta magia fecha todas as feridas, neutraliza qualquer veneno, cura todos os contágios mágicos e elimina quaisquer maldições afetando a criatura quando ela morreu. A magia substitui órgãos e membros danificados ou ausentes. Se a criatura era Morto-Vivo, ela é restaurada à sua forma não Morta-Viva.
+A magia pode criar um novo corpo se o original não existir mais; nesse caso, você deve pronunciar o nome da criatura. A criatura então aparece em um espaço desocupado à sua escolha, a até 3 metros de você.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.631Z"}'::jsonb),
+  ('restauracao-maior', 'Restauração Maior', 5, '5º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"poeira de diamante no valor de 100 ou mais PO, que a magia consome","text":"V, S, M (poeira de diamante no valor de 100 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você toca uma criatura e magicamente remove um dos seguintes efeitos:
+• 1 nível de Exaustão
+• A condição Enfeitiçado ou Petrificado
+• Uma maldição, incluindo a Sintonização do alvo com um item mágico amaldiçoado
+• Qualquer redução em um dos valores de atributo do alvo
+• Qualquer redução nos Pontos de Vida máximos do alvo', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.631Z"}'::jsonb),
+  ('restauracao-menor', 'Restauração Menor', 2, '2º Círculo', 'Abjuração', 'Ação Bônus', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você toca uma criatura e remove uma condição: Cego,
+Envenenado, Paralisado ou Surdo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.632Z"}'::jsonb),
+  ('retirada-acelerada', 'Retirada Acelerada', 1, '1º Círculo', 'Transmutação', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você executa a ação Correr e, até que a magia termine,
+pode executar essa ação novamente como uma Ação
+Bônus.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.632Z"}'::jsonb),
+  ('reviver-os-mortos', 'Reviver os Mortos', 5, '5º Círculo', 'Necromancia', '1 hora', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um diamante no valor de 500 ou mais PO, que a magia consome","text":"V, S, M (um diamante no valor de 500 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Com um toque, você revive uma criatura morta, se tiver falecido há no máximo 10 dias e não era um Morto-Vivo quando morreu.
+A criatura retorna à vida com 1 Ponto de Vida. Esta magia também neutraliza quaisquer venenos que afetavam a criatura no momento da morte.
+Esta magia fecha todas as feridas fatais, mas não restaura membros ou partes do corpo faltantes. Se a criatura estiver sem partes do corpo ou órgãos essenciais para sua sobrevivência — como a cabeça, por exemplo — a magia falha automaticamente.
+Voltar à vida é um processo difícil. O alvo sofre uma penalidade de −4 em Testes de D20. Sempre que o alvo completar um Descanso Longo, a penalidade é reduzida em 1 até se tornar 0.
+MARTIN MOTTET, POLAR ENGINE', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.632Z"}'::jsonb),
+  ('revivificar', 'Revivificar', 3, '3º Círculo', 'Necromancia', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um diamante no valor de 300 ou mais PO, que a magia consome","text":"V, S, M (um diamante no valor de 300 ou mais PO, que a magia consome)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você toca uma criatura que morreu no último minuto.
+Essa criatura revive com 1 Ponto de Vida. Esta magia não pode reviver uma criatura que morreu de velhice,
+nem restaura partes do corpo ausentes.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.633Z"}'::jsonb),
+  ('rogar-maldicao', 'Rogar Maldição', 3, '3º Círculo', 'Necromancia', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você toca uma criatura, que deve ser bem-sucedida em uma salvaguarda de Sabedoria ou fica amaldiçoada pela duração da magia. Até que a maldição termine, o alvo sofre um dos seguintes efeitos à sua escolha:
+• Escolha um atributo. O alvo tem Desvantagem em testes de atributo e salvaguardas realizadas com esse atributo.
+• O alvo tem Desvantagem em jogadas de ataque contra você.
+• Em combate, o alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria no início de cada um dos turnos dele ou ele é forçado a executar a ação Esquivar neste turno.
+• Se você causar dano ao alvo com uma jogada de ataque ou uma magia, o alvo sofre 1d8 pontos de dano
+Necrótico adicionais.', 'Usando um Espaço de Magia de Círculo Superior. Se você conjurar esta magia usando um espaço de magia de 4º círculo, você pode manter a Concentração nela por até 10 minutos. Se você usar um espaço de magia de 5º círculo ou superior, a magia não requer Concentração, e a duração se torna 8 horas (espaço de 5º e 6º
+círculo) ou 24 horas (espaço de 7º ou 8º círculo). Se você usar um espaço de magia de 9º círculo, a magia permanece até ser dissipada.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.633Z"}'::jsonb),
+  ('salto', 'Salto', 1, '1º Círculo', 'Transmutação', 'Ação Bônus', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"perna traseira de um gafanhoto","text":"V, S, M (perna traseira de um gafanhoto)"}'::jsonb, '1 minuto', FALSE, FALSE, 'Você toca uma criatura voluntária. Uma vez em cada um dos turnos dela até que a magia encerre, essa criatura pode saltar até 9 metros gastando 3 metros de movimento.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.633Z"}'::jsonb),
+  ('santuario', 'Santuário', 1, '1º Círculo', 'Abjuração', 'Ação Bônus', '9 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"o caco de um espelho","text":"V, S, M (o caco de um espelho)"}'::jsonb, '1 minuto', FALSE, FALSE, 'Você protege uma criatura no alcance da magia. Até que a magia termine, qualquer criatura que tenha como alvo a criatura protegida com uma jogada de ataque ou uma magia que cause dano deve ser bem-
+-sucedida em uma salvaguarda de Sabedoria, ou deve escolher um novo alvo ou perder o ataque ou a magia.
+Esta magia não protege contra áreas de efeito. A magia se encerra se a criatura protegida realizar uma jogada de ataque, conjurar uma magia ou causar dano.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.634Z"}'::jsonb),
+  ('santuario-particular-de-mordenkainen', 'Santuário Particular de Mordenkainen', 4, '4º Círculo', 'Abjuração', '10 minutos', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma folha fina de chumbo","text":"V, S, M (uma folha fina de chumbo)"}'::jsonb, '24 horas', FALSE, FALSE, 'Você torna uma área no alcance da magia magicamente segura. A área é um Cubo que pode ter de 1,5 metro a 30 metros de lado. A magia permanece pela duração.
+Ao conjurar a magia, você determina o tipo de proteção que a magia oferece, escolhendo qualquer uma das seguintes propriedades:
+• O som não pode atravessar a barreira na borda da área protegida.
+• A barreira da área protegida aparece escura e enevoada, impedindo a visão (incluindo Visão no Escuro)
+através dela.
+• Sensores criados por magias de Adivinhação não podem aparecer dentro da área protegida nem atravessar a barreira em seu perímetro.
+• Criaturas na área não podem ser alvo de magias de
+Adivinhação.
+• Nada pode se teleportar para dentro ou fora da área protegida.
+• Viagens planares são bloqueadas dentro da área protegida.
+Conjurar essa magia no mesmo local todos os dias por 365 dias faz com que a magia dure até ser dissipada.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode aumentar o tamanho do Cubo em 30 metros para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.634Z"}'::jsonb),
+  ('saraivada-de-espinhos', 'Saraivada de Espinhos', 1, '1º Círculo', 'Invocação', 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com um ataque com arma à Distância', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Ao atingir uma criatura, essa magia faz surgir uma chuva de espinhos a partir da sua arma à distância ou munição. O alvo e cada criatura em um raio de 1,5
+metro devem realizar uma salvaguarda de Destreza,
+sofrendo 1d10 pontos de dano perfurante se falharem ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d10 para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.634Z"}'::jsonb),
+  ('semiplano', 'Semiplano', 8, '8º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":false,"somatic":true,"material":false,"materialDescription":null,"text":"S"}'::jsonb, '1 hora', FALSE, FALSE, 'Você cria uma porta Média de sombras em uma superfície sólida e plana à sua vista e no alcance da magia. Essa porta pode ser aberta e fechada, levando a uma sala vazia de 9 metros em cada dimensão, feita de madeira ou pedra à sua escolha, em semiplano.
+Quando a magia termina, a porta desaparece e os objetos dentro do semiplano permanecem nele. Qualquer criatura dentro dele também permanece nele, a menos que escolha passar pela porta enquanto ela desaparece,
+saindo com a condição Caído e nos espaços desocupados mais próximos do espaço que a porta ocupava anteriormente.
+Ao conjurar esta magia, você pode criar um novo semiplano ou conectar a porta de sombras a um semiplano que você criou em uma conjuração anterior desta magia.
+Além disso, se souber a natureza e o conteúdo de um semiplano criado por outra criatura com esta magia, você
+pode conectar a porta de sombras a esse semiplano.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.635Z"}'::jsonb),
+  ('sentido-feral', 'Sentido Feral', 2, '2º Círculo', 'Adivinhação', 'Ação ou Ritual', 'Toque', '{"verbal":false,"somatic":true,"material":false,"materialDescription":null,"text":"S"}'::jsonb, 'Concentração, até 1 hora', TRUE, TRUE, 'Você toca uma Fera voluntária. Pela duração da magia,
+você pode perceber através dos sentidos da Fera, bem como dos seus próprios. Ao perceber através dos sentidos da Fera, você se beneficia de quaisquer sentidos especiais que ela tenha.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.635Z"}'::jsonb),
+  ('servo-invisivel', 'Servo Invisível', 1, '1º Círculo', 'Invocação', 'Ação ou Ritual', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pedaço de barbante e de madeira","text":"V, S, M (um pedaço de barbante e de madeira)"}'::jsonb, '1 hora', FALSE, TRUE, 'Esta magia cria uma força Invisível, sem mente, disforme e Média que executa tarefas simples ao seu comando até que a magia termine. O servo nasce em um espaço desocupado no chão no alcance da magia. Ele tem
+CA 10, 1 Ponto de Vida e Força 2, e não pode atacar. Se ele é reduzido a 0 Pontos de Vida, a magia encerra.
+Uma vez em cada um de seus turnos como uma Ação
+Bônus, você pode comandar mentalmente o servo a se mover até 4,5 metros e interagir com um objeto. O
+servo pode realizar tarefas simples que um humano poderia fazer, como buscar coisas, limpar, consertar,
+dobrar roupas, acender fogueiras, servir comida e bebidas. Depois de dar o comando, o servo executa a tarefa da melhor forma possível até que conclua a tarefa e,
+em seguida, aguarda seu próximo comando.
+Ao ordenar ao servo que realize uma tarefa que o mova a mais de 18 metros de distância de você, a magia se encerra.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.635Z"}'::jsonb),
+  ('sexto-sentido', 'Sexto Sentido', 9, '9º Círculo', 'Adivinhação', '1 minuto', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pena de beija-flor","text":"V, S, M (uma pena de beija-flor)"}'::jsonb, '8 horas', FALSE, FALSE, 'Você toca uma criatura voluntária e concede a ela a capacidade de ver o futuro imediato. Pela duração da magia, o alvo tem Vantagem em Testes de D20, enquanto outras criaturas têm Desvantagem em jogadas de ataque contra ele. A magia se encerra se você a conjurar novamente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.636Z"}'::jsonb),
+  ('silencio', 'Silêncio', 2, '2º Círculo', 'Ilusão', 'Ação ou Ritual', '36 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, TRUE, 'Pela duração da magia, nenhum som pode ser criado dentro ou passar através de uma esfera com raio de 6
+metros centrada em um ponto à sua escolha no alcance da magia. Qualquer criatura ou objeto totalmente dentro da esfera é imune a dano Trovejante, e as criaturas têm a condição Surdo enquanto estiverem totalmente dentro dela. É impossível conjurar uma magia que incluia um componente Verbal neste local.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.636Z"}'::jsonb),
+  ('simbolo', 'Símbolo', 7, '7º Círculo', 'Abjuração', '1 minuto', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um diamante em pó no valor de 1.000 ou mais PO, que a magia consome","text":"V, S, M (um diamante em pó no valor de 1.000 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada ou acionada', FALSE, FALSE, 'Você inscreve um glifo prejudicial em uma superfície
+(como uma seção do chão ou parede) ou dentro de um objeto que pode ser fechado (como um livro ou baú). O
+glifo pode cobrir uma área não superior a 3 metros de diâmetro. Se você escolher um objeto, ele deve permanecer no lugar; se for movido a mais de 3 metros de onde você conjurou esta magia, o glifo é quebrado e a magia se encerra sem ser acionada.
+O glifo é quase imperceptível e requer um teste bem-
+-sucedido de Sabedoria (Percepção) contra a CD para evitar sua magia para ser notado.
+Quando inscreve o glifo, você define seu gatilho e escolhe qual efeito o símbolo possui: Atordoamento,
+Discórdia, Dor, Medo, Morte ou Sono. Cada um é explicado abaixo.
+Defina o Gatilho. Você decide o que aciona o glifo quando conjura a magia. Para glifos inscritos em uma superfície, os gatilhos comuns incluem tocar ou ficar em pé sobre o glifo, remover outro objeto que o cubra,
+aproximar-se a uma certa distância ou manipular o objeto que o contém. Para glifos inscritos em um objeto, os gatilhos comuns incluem abrir esse objeto ou ver o glifo. Você pode ajustar o gatilho para que apenas criaturas de certos tipos o ativem (por exemplo,
+o glifo pode ser definido para afetar Aberrações). Você
+também pode definir condições para criaturas que não acionam o glifo, como aquelas que dizem uma determinada senha.
+Uma vez acionado, o glifo brilha, preenchendo uma
+Esfera de 18 metros de raio com Meia-Luz por 10
+minutos, após os quais a magia termina. Cada criatura na Esfera quando o glifo é ativado é alvo de seu efeito,
+assim como uma criatura que entra na Esfera pela primeira vez em um turno ou termina o turno nela. Uma criatura é atingida apenas uma vez por turno.
+Atordoamento. Cada alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição
+Atordoado por 1 minuto.
+Discórdia. Cada alvo realiza uma salvaguarda de
+Sabedoria. Se falhar, um alvo discute com outras criaturas por 1 minuto. Durante esse tempo, é incapaz de se comunicar efetivamente e tem Desvantagem em jogadas de ataque e testes de atributo.
+Dor. Cada alvo deve ser bem-sucedido em uma salvaguarda de Constituição ou tem a condição Incapacitado por 1 minuto.
+Medo. Cada alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Amedrontado por 1 minuto. Enquanto Amedrontado, o alvo deve se mover pelo menos 9 metros para longe do glifo em cada um dos turnos dele, se possível.
+Morte. Cada alvo realiza uma salvaguarda de Constituição, sofrendo 10d10 pontos de dano Necrótico se falhar, ou metade desse dano em caso de sucesso.
+Sono. Cada alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Inconsciente por 10 minutos. Uma criatura desperta se sofrer dano ou se alguém executar uma ação para sacudi-la.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.636Z"}'::jsonb),
+  ('similaridade', 'Similaridade', 5, '5º Círculo', 'Ilusão', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '8 horas', FALSE, FALSE, 'Você dá uma aparência ilusória a cada criatura à sua escolha à sua vista e no alcance da magia. Um alvo involuntário pode realizar uma salvaguarda de Carisma e, se for bem-sucedido, não é afetado por esta magia.
+Você pode dar a mesma aparência ou aparências diferentes aos alvos. A magia pode alterar a aparência dos corpos e equipamentos dos alvos, fazendo com que cada criatura pareça até 30 centímetros mais alta ou mais baixa e mais pesada ou mais leve. A nova aparência deve manter os aspectos básicos de membros do corpo do alvo, mas o restante da ilusão fica a seu critério. Os efeitos permanecem pela duração da magia.
+As mudanças causadas por esta magia falham mediante uma inspeção física. Por exemplo, se você usar a magia para adicionar um chapéu ao traje de uma criatura, objetos passam através do chapéu.
+Uma criatura que executa a ação Analisar para examinar um alvo pode realizar um teste de Inteligência (Investigação) contra a CD para evitar sua magia. Em caso de sucesso, a criatura percebe que o alvo está disfarçado.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.637Z"}'::jsonb),
+  ('simulacro', 'Simulacro', 7, '7º Círculo', 'Ilusão', '12 horas', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"rubi em pó no valor de 1.500 ou mais PO, que a magia consome","text":"V, S, M (rubi em pó no valor de 1.500 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Você cria uma duplicata ilusória de uma Fera ou
+Humanoide que esteja a até 3 metros de você durante toda a conjuração da magia. Você encerra a conjuração tocando tanto a criatura quanto uma pilha de gelo ou neve do mesmo tamanho da criatura, e a pilha se transforma na duplicata, que é uma criatura. A duplicata utiliza as estatísticas da criatura original no momento da conjuração, exceto que ela é um Constructo, seus
+Pontos de Vida máximos são reduzidos pela metade e ela não pode conjurar esta magia.
+A duplicata é Amigável a você e às criaturas que você
+escolher. Ele obedece aos seus comandos e age no seu
+turno durante o combate e não pode adquirir níveis,
+nem realizar Descansos Curtos ou Longos.
+Se a duplicata sofrer dano, a única forma de restaurar seus Pontos de Vida é repará-la durante um Descanso
+Longo, no qual você deve gastar componentes no valor de 100 PO por Ponto de Vida restaurado e deve permanecer a até 1,5 metro de você para ser reparada.
+A duplicata dura até ser reduzida a 0 Pontos de Vida,
+momento em que ela retorna a ser neve e derrete. Se você conjurar esta magia novamente, qualquer duplicata criada anteriormente por esta magia é destruída instantaneamente.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.637Z"}'::jsonb),
+  ('simular-morte', 'Simular Morte', 3, '3º Círculo', 'Necromancia', 'Ação ou Ritual', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de terra de cemitério","text":"V, S, M (uma pitada de terra de cemitério)"}'::jsonb, '1 hora', FALSE, TRUE, 'Você toca uma criatura voluntária e a coloca em um estado cataléptico que é indistinguível da morte.
+Pela duração da magia, o alvo parece morto em uma inspeção externa e para magias usadas para determinar a situação do alvo. O alvo está com as condições Cego e Incapacitado, e o Deslocamento dele é 0.
+O alvo também tem Resistência a todos os tipos de dano, exceto dano Psíquico, e tem Imunidade à condição Envenenado.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.638Z"}'::jsonb),
+  ('sinal-de-esperanca', 'Sinal de Esperança', 3, '3º Círculo', 'Abjuração', 'Ação', '9 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Escolha qualquer número de criaturas no alcance da magia. Pela duração da magia, cada alvo tem Vantagem em salvaguardas de Sabedoria e Salvaguarda contra
+Morte e recupera o número de Pontos de Vida máximos possíveis de qualquer cura.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.638Z"}'::jsonb),
+  ('sonho', 'Sonho', 5, '5º Círculo', 'Ilusão', '1 minuto', 'Especial', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um punhado de areia","text":"V, S, M (um punhado de areia)"}'::jsonb, '8 horas', FALSE, FALSE, 'Você tem como alvo uma criatura que você conhece no mesmo plano de existência. Você ou uma criatura voluntária que você toca entra em um estado de transe para agir como um mensageiro dos sonhos. Enquanto estiver em transe, o mensageiro está Incapacitado e tem Deslocamento 0.
+Se o alvo estiver dormindo, o mensageiro aparece nos sonhos do alvo e pode conversar com ele enquanto ele permanecer dormindo, pela duração da magia.
+O mensageiro também pode moldar o ambiente do sonho, criando paisagens, objetos e outras imagens. O
+mensageiro pode emergir do transe a qualquer momento, encerrando a magia. O alvo se lembra do sonho perfeitamente ao acordar.
+Se o alvo estiver acordado quando você conjurar a magia, o mensageiro sabe disso e pode encerrar o transe (e a magia) ou esperar que o alvo durma, momento em que o mensageiro entra nos sonhos do alvo.
+Você pode tornar o mensageiro aterrorizante para o alvo. Se você fizer isso, o mensageiro pode entregar uma mensagem de no máximo dez palavras e, em seguida, o alvo realiza uma salvaguarda de Sabedoria.
+Se falhar, o alvo não recebe nenhum benefício do descanso e sofre 3d6 pontos de dano Psíquico quando acordar.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.638Z"}'::jsonb),
+  ('sono', 'Sono', 1, '1º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de areia ou pétalas de rosa","text":"V, S, M (uma pitada de areia ou pétalas de rosa)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Cada criatura à sua escolha em uma Esfera de 1,5 metro de raio centrada em um ponto no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria ou tem a condição Incapacitado até o final do próximo turno dela, quando deve repetir a salvaguarda.
+Se o alvo falhar na segunda salvaguarda, ele tem a condição Inconsciente pela duração da magia. A magia encerra em um alvo se ele sofrer dano ou se alguém a até 1,5 metro dele executar uma ação para sacudi-lo,
+liberando-o do efeito da magia.
+Criaturas que não dormem, como elfos, ou que têm
+Imunidade à condição Exaustão, são automaticamente bem-sucedidas nas salvaguardas contra esta magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.639Z"}'::jsonb),
+  ('sopro-de-dragao', 'Sopro de Dragão', 2, '2º Círculo', 'Transmutação', 'Ação Bônus', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pimenta","text":"V, S, M (uma pimenta)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você toca uma criatura voluntária e escolhe Ácido,
+Elétrico, Gélido, Ígneo ou Venenoso. Até que a magia termine, o alvo pode executar uma ação Usar Magia para exalar um Cone de 4,5 metros. Cada criatura nessa área realiza uma salvaguarda de Destreza, sofrendo
+3d6 pontos de dano do tipo escolhido se falhar, ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.639Z"}'::jsonb),
+  ('sugestao', 'Sugestão', 2, '2º Círculo', 'Encantamento', 'Ação', '9 metros', '{"verbal":true,"somatic":false,"material":true,"materialDescription":"uma gota de mel","text":"V, M (uma gota de mel)"}'::jsonb, 'Concentração, até 8 horas', TRUE, FALSE, 'Você sugere um curso de ação — descrito em no máximo 25 palavras — para uma criatura à sua vista e no alcance da magia e que possa ouvi-lo e entendê-lo.
+A sugestão deve parecer razoável e não envolver nada que obviamente cause dano ao alvo ou aos aliados dele.
+Por exemplo, você poderia dizer: “Pegue a chave do cofre do tesouro do culto e a traga para mim” ou “Pare de lutar, saia desta biblioteca em paz e não volte”.
+O alvo deve ser bem-sucedido em uma salvaguarda de
+Sabedoria ou tem a condição Enfeitiçado pela duração da magia ou até que você ou seus aliados causem dano a ele. O alvo Enfeitiçado executa a sugestão da melhor forma possível. A atividade sugerida pode durar enquanto a magia estiver ativa, mas se puder ser concluída mais rapidamente, a magia se encerra ao finalizá-la.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.639Z"}'::jsonb),
+  ('sugestao-em-massa', 'Sugestão em Massa', 6, '6º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":true,"materialDescription":"a língua de uma cobra","text":"V, M (a língua de uma cobra)"}'::jsonb, '24 horas', FALSE, FALSE, 'Você sugere um curso de ação — descrito em não mais de 25 palavras — para até doze criaturas à sua vista e no alcance da magia que possam ouvi-lo e entendê-lo.
+A sugestão deve parecer acessível e não envolver nada que obviamente cause dano a qualquer um dos alvos ou seus aliados. Por exemplo, você poderia dizer: “Caminhe até a aldeia por essa estrada e auxilie os aldeões a realizar a colheita até o pôr do sol” ou dizer: “Agora não é hora para violência. Larguem as armas e dancem! Parem em uma hora”.
+Cada alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia ou até que você ou seus aliados causem dano ao alvo. Cada alvo Enfeitiçado cumpre a sugestão com o melhor de sua capacidade. A atividade sugerida pode continuar por toda a duração da magia,
+mas se a atividade sugerida puder ser concluída em um tempo mais curto, a magia encerra para um alvo que a complete.', 'Usando um Espaço de Magia de Círculo Superior. A
+duração é maior com um espaço de magia 7º círculo
+(10 dias), 8º círculo (30 dias) ou 9º círculo (366 dias).', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.640Z"}'::jsonb),
+  ('suplicio', 'Suplício', 8, '8º Círculo', 'Encantamento', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um chaveiro sem chaves","text":"V, S, M (um chaveiro sem chaves)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você sobrecarrega a mente de uma criatura à sua vista e no alcance da magia. O alvo realiza uma salvaguarda de Inteligência.
+Se falhar, o alvo sofre 10d12 pontos de dano Psíquico e não pode conjurar magias ou executar a ação
+Usar Magia. Ao final de cada 30 dias, o alvo repete a salvaguarda, encerrando o efeito em caso de sucesso.
+O efeito também pode ser encerrado pela magia Cura
+Completa, Desejo ou Restauração Maior.
+Em uma salvaguarda bem-sucedida, o alvo recebe apenas metade do dano.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.640Z"}'::jsonb),
+  ('sussurros-dissonantes', 'Sussurros Dissonantes', 1, '1º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma criatura à sua escolha à sua vista no alcance da magia escuta uma melodia dissonante na mente. O alvo deve realizar uma salvaguarda de Sabedoria. Se falhar,
+sofre 3d6 pontos de dano Psíquico e deve usar imediatamente a Reação, se disponível, para se mover o mais longe possível de você, usando a rota mais segura. Em caso de sucesso, o alvo sofre apenas metade do dano.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.640Z"}'::jsonb),
+  ('talho-mental', 'Talho Mental', 0, 'Truque', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, '1 rodada', FALSE, FALSE, 'Você tenta fragmentar temporariamente a mente de uma criatura à sua vista e no alcance da magia. O alvo deve ser bem-sucedido em uma salvaguarda de Inteligência ou sofre 1d6 pontos de dano Psíquico e subtrai
+1d4 da próxima salvaguarda que realizar antes do final do seu próximo turno.
+Aprimoramento de Truque. O dano aumenta em 1d6
+quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.641Z"}'::jsonb),
+  ('taumaturgia', 'Taumaturgia', 0, 'Truque', 'Transmutação', 'Ação', '9 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Até 1 minuto', FALSE, FALSE, 'Você conjura uma pequena maravilha mágica no alcance da magia, criando um dos efeitos abaixo. Se usar esta magia várias vezes, pode ter até três efeitos de 1
+minuto ativos simultaneamente.
+Manipular Fogo. Você faz com que as chamas pisquem,
+iluminem, escureçam ou mudem de cor por 1 minuto.
+Mão Invisível. Você faz instantaneamente com que uma porta ou janela destrancada se abra ou se feche.
+Olhos Alterados. Você altera a aparência dos seus olhos por 1 minuto.
+Som Fantasmagórico. Você cria um som instantâneo que se origina em um ponto à sua escolha no alcance da magia, como um estrondo de trovão, o grito de um corvo ou sussurros sinistros.
+Voz Retumbante. Sua voz aumenta até três vezes mais do que o normal por 1 minuto. Pela duração da magia, você tem Vantagem em testes de Carisma
+(Intimidação).
+Tremores. Você causa tremores inofensivos no chão por 1 minuto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.641Z"}'::jsonb),
+  ('teia', 'Teia', 2, '2º Círculo', 'Invocação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um pouco de teia de aranha","text":"V, S, M (um pouco de teia de aranha)"}'::jsonb, 'Concentração, até 1 hora', TRUE, FALSE, 'Você conjura uma massa de teias pegajosas em um ponto no alcance da magia. As teias enchem um
+Cubo de 6 metros de lado pela duração da magia, são
+Terreno Difícil e a área dentro delas é Parcialmente
+Obscurecida.
+Se as teias não estiverem sustentadas entre duas massas sólidas (como paredes ou árvores) ou em camadas no chão, parede ou teto, a teia colapsa sobre si mesma e a magia se encerra no início do seu próximo turno. As teias em camadas sobre uma superfície plana têm uma profundidade de 1,5 metro.
+A primeira vez que uma criatura entra nas teias em um turno ou começa o turno nelas, deve ser bem-sucedida em uma salvaguarda de Destreza ou tem a condição Contido enquanto está nas teias ou até se libertar.
+Uma criatura Contida pelas teias pode executar uma ação para realizar um teste de Força (Atletismo) contra a CD para evitar sua magia. Em caso de sucesso, a criatura não está mais Contida.
+As teias são inflamáveis. Qualquer Cubo de 1,5
+metro de lado com teias expostas ao fogo queima em 1
+rodada, causando 2d4 pontos de dano Ígneo a qualquer criatura que inicie seu turno no fogo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.641Z"}'::jsonb),
+  ('telecinese', 'Telecinese', 5, '5º Círculo', 'Transmutação', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você adquire a capacidade de mover ou manipular criaturas ou objetos através do pensamento. Ao conjurar a magia e como uma ação Usar Magia em seus turnos posteriores antes que a magia termine, você
+pode exercer sua vontade sobre uma criatura ou objeto
+à sua vista e no alcance da magia, causando o efeito apropriado abaixo. Você pode afetar o mesmo alvo rodada após rodada ou escolher um novo a qualquer momento. Se você trocar de alvo, o alvo anterior não é mais afetado pela magia.
+Criatura. Você pode tentar mover uma criatura Enorme ou menor. O alvo deve ser bem-sucedido em uma salvaguarda de Força, ou você move o alvo até 9 metros em qualquer direção no alcance da magia. Até o final do seu próximo turno, a criatura tem a condição Contido e, se você a levantar no ar, ela fica suspensa, entra em queda no final do seu próximo turno, a menos que você
+use essa opção novamente e ela falhe na salvaguarda.
+Objeto. Você pode tentar mover um objeto Enorme ou menor. Se o objeto não estiver sendo usado ou carregado, você o move automaticamente até 9 metros em qualquer direção no alcance da magia.
+Se o objeto estiver sendo usado ou carregado por uma criatura, essa criatura deve ser bem-sucedida em uma salvaguarda de Força, ou você empurra o objeto para longe e o move até 9 metros em qualquer direção no alcance da magia.
+Você pode exercer um controle preciso sobre objetos com sua pegada telecinética, como manipular uma ferramenta simples, abrir uma porta ou um recipiente,
+guardar ou retirar um item de um recipiente aberto, ou despejar o conteúdo de um frasco.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.642Z"}'::jsonb),
+  ('telepatia', 'Telepatia', 8, '8º Círculo', 'Adivinhação', 'Ação', 'Ilimitado', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um par de anéis de prata interligados","text":"V, S, M (um par de anéis de prata interligados)"}'::jsonb, '24 horas', FALSE, FALSE, 'Você cria um elo telepático entre você e uma criatura voluntária com a qual está familiarizado. A criatura pode estar em qualquer lugar no mesmo plano de existência que você. A magia encerra se você ou o alvo não estiverem mais no mesmo plano.
+Até que a magia termine, você e o alvo podem compartilhar instantaneamente palavras, imagens, sons e outras mensagens sensoriais entre si através do elo,
+e o alvo o reconhece como a criatura com a qual está se comunicando. A magia permite que uma criatura compreenda o significado de suas palavras e quaisquer mensagens sensoriais que você enviar a ela.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.642Z"}'::jsonb),
+  ('teleporte', 'Teleporte', 7, '7º Círculo', 'Invocação', 'Ação', '3 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Esta magia transporta instantaneamente você e até oito criaturas voluntárias ou um único objeto à sua vista e no alcance da magia, para um destino à sua escolha. Se você escolher um objeto, ele deve ser Grande ou menor e não pode estar sendo segurado ou carregado por uma criatura involuntária.
+O destino que você escolheu deve ser de seu conhecimento e deve estar no mesmo plano de existência que você. Sua familiaridade com o destino determina se você chega lá com sucesso. O Mestre joga 1d100 e consulta a tabela Resultado do Teleporte e as explicações posteriores.
+Resultado do Teleporte
+Familiaridade Azar
+Área
+Similar
+Fora do Alvo
+No
+Alvo
+Círculo permanente — — — 01–100
+Objeto associado — — — 01–100
+Muito familiar 01–05 06–13 14–24 25–100
+Visto casualmente 01–33 34–43 44–53 54–100
+Visto uma vez ou descrito
+01–43 44–53 54–73 74–100
+Destino falso 01–50 51–100 — —
+Familiaridade. Aqui estão os significados dos termos na coluna Familiaridade da tabela:
+• “Círculo permanente” significa um círculo de teleporte permanente cuja sequência de símbolos você conhece.
+• “Objeto associado” significa que você possui um objeto retirado do destino desejado nos últimos seis meses, como um livro da biblioteca de um mago.
+• “Muito familiar” é um lugar que você visitou com frequência, um lugar que você estudou cuidadosamente ou um lugar à sua vista ao conjurar a magia.
+• “Visto casualmente” é um lugar que você já viu mais de uma vez, mas com o qual não está muito familiarizado.
+• “Visto uma vez ou descrito” é um lugar que você já viu uma vez, possivelmente usando magia, ou um lugar que você conhece através da descrição de outra pessoa, talvez através de um mapa.
+• “Destino falso” é um lugar que não existe. Talvez você
+tenha tentado visualizar o santuário de um inimigo,
+mas em vez disso viu uma ilusão, ou está tentando se teleportar para um local que não existe mais.
+Azar. A natureza imprevisível da magia resulta em uma jornada difícil. Cada criatura se teleportando (ou o objeto alvo) sofre 3d10 pontos de dano Energético, e o Mestre joga novamente a tabela para ver onde você
+parou (mais de um azar pode acontecer, causando dano a cada vez).
+Área Similar. Você e seu grupo (ou o objeto de destino) aparecem em uma área diferente que é visual ou tematicamente semelhante à área de destino. Você aparece no lugar semelhante mais próximo. Se você estiver indo para seu laboratório, por exemplo, pode aparecer no laboratório de outra pessoa na mesma cidade.
+Fora do Alvo. Você e seu grupo (ou o objeto alvo)
+aparecem a 2d12 x 1,5 quilômetros da distância do destino em uma direção aleatória. Jogue 1d8 para a direção: 1, leste; 2, sudeste; 3, sul; 4, sudoeste; 5, oeste;
+6, noroeste; 7, norte; ou 8, nordeste.
+No Alvo. Você e seu grupo (ou o objeto alvo) aparecem onde você pretendia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.643Z"}'::jsonb),
+  ('tempestade-da-vinganca', 'Tempestade da Vingança', 9, '9º Círculo', 'Invocação', 'Ação', '1,5 km', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Uma nuvem de tempestade agitada se forma, centrada pela duração em um ponto no alcance da magia, se espalhando para um raio de 90 metros. Cada criatura sob a nuvem quando ela aparecer deve ser bem-sucedida em uma salvaguarda de Constituição ou sofre 2d6
+pontos de dano Trovejante e tem a condição Surdo pela duração da magia.
+No início de cada um dos seus turnos posteriores, a tempestade produz efeitos diferentes, conforme detalhado abaixo:
+Turno 2: Chuva ácida cai. Cada criatura e objeto sob a nuvem sofre 4d6 pontos de dano Ácido.
+Turno 3: Você convoca seis relâmpagos da nuvem para atingir seis criaturas ou objetos diferentes abaixo dela. Cada alvo realiza uma salvaguarda de Destreza,
+sofrendo 10d6 pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.
+Turno 4: Chuva de pedras de granizo. Cada criatura sob a nuvem sofre 2d6 pontos de dano Contundente.
+Turnos 5-10: Rajadas de vento e chuva gelada surgem sob a nuvem. Cada criatura na área sofre 1d6 pontos de dano Gélido. Até que a magia termine, a área é Terreno
+Difícil e está Totalmente Obscurecida, ataques à distância com armas são impossíveis nela e ventos fortes sopram por toda a área.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.643Z"}'::jsonb),
+  ('tempestade-de-fogo', 'Tempestade de Fogo', 7, '7º Círculo', 'Evocação', 'Ação', '45 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Uma tempestade de fogo aparece no alcance da magia.
+A área da tempestade consiste em até dez cubos de 3
+metros, que você organiza como preferir. Cada Cubo deve ser contíguo a pelo menos um outro Cubo. Cada criatura na área realiza uma salvaguarda de Destreza,
+sofrendo 7d10 pontos de dano Ígneo se falhar, ou metade desse dano em caso de sucesso.
+Objetos inflamáveis na área que não estão sendo usados ou carregados entram em combustão.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.643Z"}'::jsonb),
+  ('tempestade-glacial', 'Tempestade Glacial', 4, '4º Círculo', 'Evocação', 'Ação', '90 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma luva","text":"V, S, M (uma luva)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Granizo cai em um Cilindro de 6 metros de raio e 12
+metros de altura, centrado em um ponto no alcance da magia. Cada criatura no Cilindro realiza uma salvaguarda de Destreza. Se falhar, uma criatura sofre 2d10
+pontos de dano Contundente e 4d6 pontos de dano
+Gélido, ou metade desse dano em caso de sucesso.
+Pedras de granizo transformam o solo no Cilindro em Terreno Difícil até o final do seu próximo turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano Contundente aumenta em 1d10 para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.644Z"}'::jsonb),
+  ('tempestade-radiante-de-jallarzi', 'Tempestade Radiante de Jallarzi', 5, '5º Círculo', 'Evocação', 'Ação', '36 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de fósforo","text":"V, S, M (uma pitada de fósforo)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você desencadeia uma tempestade de luz intermitente e trovões furiosos em um Cilindro de 3 metros de raio e 12 metros de altura centrado em um ponto à sua vista e no alcance da magia. Enquanto estiverem nesta área,
+criaturas têm as condições Cego e Surdo, e não podem conjurar magias com um componente Verbal.
+Quando a tempestade aparece, cada criatura dentro dela realiza uma salvaguarda de Constituição, sofrendo
+2d10 pontos de dano Radiante e 2d10 pontos de dano
+Trovejante se falhar, ou metade desse dano em caso de sucesso. Uma criatura também realiza essa salvaguarda quando entra na área da magia pela primeira vez em um turno ou termina o turno dela nela. Uma criatura realiza essa salvaguarda apenas uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano Radiante e Trovejante aumentam em 1d10 para cada círculo de espaço de magia acima de 5.
+Com sua magia
+Tempestade Radiante de Jallarzi, a Bruxa
+Jallarzi faz vrocks se arrependerem de deixar o Abismo.
+JOSEPH WESTON', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.644Z"}'::jsonb),
+  ('tentaculos-negros-de-evard', 'Tentáculos Negros de Evard', 4, '4º Círculo', 'Invocação', 'Ação', '27 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um tentáculo","text":"V, S, M (um tentáculo)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Tentáculos pretos contorcendo-se enchem um quadrado de 6 metros de lados no chão à sua vista e no alcance da magia. Pela duração da magia, esses tentáculos transformam o terreno nessa área em Terreno Difícil.
+Cada criatura nessa área realiza uma salvaguarda de
+Força. Se falhar, ela sofre 3d6 pontos de dano Contundente e tem a condição Contido até que a magia termine. Uma criatura também realiza essa salvaguarda se entrar na área ou terminar o turno nela. Uma criatura realiza essa salvaguarda apenas uma vez por turno.
+Uma criatura Contida pode executar uma ação para realizar um teste de Força (Atletismo) contra a CD
+para evitar sua magia, encerrando a condição em si mesma em caso de sucesso.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.644Z"}'::jsonb),
+  ('terremoto', 'Terremoto', 8, '8º Círculo', 'Transmutação', 'Ação', '150 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma rocha rachada","text":"V, S, M (uma rocha rachada)"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Escolha um ponto no chão à sua vista e no alcance da magia. Pela duração da magia, um tremor intenso rasga o chão em um círculo de 30 metros de raio centrado neste ponto. O terreno é Terreno Difícil.
+Ao conjurar esta magia e no final de cada um dos seus turnos pela duração da magia, cada criatura no chão na área realiza uma salvaguarda de Destreza. Se falhar, uma criatura tem a condição Caído e a Concentração dela é quebrada.
+Você também pode causar os efeitos abaixo.
+Estruturas. O tremor causa 50 pontos de dano Contundente em qualquer estrutura em contato com o chão na área quando você conjura a magia e no final de cada um dos seus turnos até que a magia termine. Se uma estrutura é reduzida a 0 Pontos de Vida, ela desaba.
+Uma criatura a uma distância de uma estrutura desabando igual à metade da altura da estrutura realiza uma salvaguarda de Destreza. Se falhar, a criatura sofre 12d6 pontos de dano Contundente, tem a condição Caído e é soterrada pelos escombros, exigindo um teste de Força (Atletismo) CD 20 como uma ação para escapar. Em caso de sucesso, a criatura recebe apenas metade do dano.
+Fissuras. Um total de 1d6 fissuras se abrem na área da magia ao final do turno que você a conjura. Você
+escolhe os locais das fissuras, que não podem estar sob estruturas. Cada fissura tem 1d10 × 3 metros de profundidade e 3 metros de largura, e se estende de uma borda da área da magia para outra borda. Uma criatura no mesmo espaço que uma fissura deve ser bem-sucedida em uma salvaguarda de Destreza ou cai na fissura.
+Uma criatura bem-sucedida se move com a borda da fissura à medida que ela se abre.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.645Z"}'::jsonb),
+  ('terreno-alucinatorio', 'Terreno Alucinatório', 4, '4º Círculo', 'Ilusão', '10 minutos', '90 metros', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um cogumelo","text":"V, S, M (um cogumelo)"}'::jsonb, '24 horas', FALSE, FALSE, 'Você cria um terreno natural em um cubo de 45 metros de comprimento que possui a aparência, o som e o cheiro de outro tipo de terreno natural. Assim, campos abertos ou uma estrada podem ser moldados para se assemelhar a um pântano, colina, fenda ou algum outro terreno difícil ou intransitável. Uma lagoa pode ser formada para parecer um prado verdejante, um precipício como uma encosta suave ou um barranco pedregoso como uma estrada larga e plana. Criaturas, estruturas e equipamentos manufaturados dentro da área não são alterados.
+As características táteis do terreno permanecem inalteradas, portanto, é provável que as criaturas que entram na área percebam a ilusão. Se a diferença não for evidente ao toque, uma criatura que examina a ilusão pode executar a ação Analisar para realizar um teste de Inteligência (Investigação) contra a CD para evitar sua magia, a fim de não acreditar nela. Se uma criatura perceber que o terreno é ilusório, ela vê uma imagem vaga sobreposta ao terreno real.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.645Z"}'::jsonb),
+  ('toque-chocante', 'Toque Chocante', 0, 'Truque', 'Evocação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Raios saltam de você em direção a uma criatura que você tenta tocar. Realize uma jogada de ataque mágico corpo a corpo contra o alvo. Em caso de acerto, o alvo sofre 1d8 pontos de dano Elétrico e não pode realizar
+Ataques de Oportunidade até o início do próximo turno dele.
+Aprimoramento de Truque. O dano aumenta em 1d8
+quando você atinge os níveis 5 (2d8), 11 (3d8) e 17 (4d8).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.646Z"}'::jsonb),
+  ('toque-necrotico', 'Toque Necrótico', 0, 'Truque', 'Necromancia', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Canalizando o frio da sepultura, realize um ataque mágico corpo a corpo contra um alvo no alcance da magia. Em caso de acerto, o alvo sofre 1d10 pontos de dano Necrótico e não pode recuperar Pontos de Vida até o final do seu próximo turno.
+Aprimoramento de Truque. O dano aumenta em 1d10
+quando você atinge os níveis 5 (2d10), 11 (3d10) e 17 (4d10).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.647Z"}'::jsonb),
+  ('toque-vampirico', 'Toque Vampírico', 3, '3º Círculo', 'Necromancia', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'O toque da sua mão envolta em sombras pode sugar a força vital dos outros para curar suas feridas. Realize um ataque mágico corpo a corpo contra uma criatura no alcance da magia. Em caso de acerto, o alvo sofre
+3d6 pontos de dano Necrótico e você recupera Pontos de Vida iguais à metade da quantidade do dano Necrótico causado.
+Até que a magia termine, você pode realizar o ataque novamente em cada um dos seus turnos como uma ação Usar Magia, atingindo a mesma criatura ou uma diferente.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.648Z"}'::jsonb),
+  ('tranca-arcana', 'Tranca Arcana', 2, '2º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"pó de ouro no valor de 25 ou mais PO, que a magia consome","text":"V, S, M (pó de ouro no valor de 25 ou mais PO, que a magia consome)"}'::jsonb, 'Até ser dissipada', FALSE, FALSE, 'Você toca uma porta, janela, portão, contêiner ou escotilha fechada e a tranca magicamente pela duração da magia. Esta fechadura não pode ser destrancada por nenhum meio não mágico. Você e quaisquer criaturas que você designar ao conjurar a magia podem abrir e fechar o objeto apesar da tranca. Você também pode definir uma senha que, quando proferida a até 1,5 metro do objeto, o destranca por 1 minuto.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.648Z"}'::jsonb),
+  ('transicao-planar', 'Transição Planar', 7, '7º Círculo', 'Invocação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma haste de metal bifurcada no valor de 250 ou mais PO e sintonizada a um plano de existência","text":"V, S, M (uma haste de metal bifurcada no valor de 250 ou mais PO e sintonizada a um plano de existência)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você e até oito criaturas voluntárias que dão as mãos em um círculo são transportadas para um plano de existência diferente. Você pode especificar um destino-alvo em termos gerais, como a Cidade de Latão no Plano Elemental do Fogo ou o palácio de Dispater no segundo nível dos Nove Infernos, e você aparece dentro ou perto desse destino, conforme determinado pelo Mestre.
+Como alternativa, se você souber a sequência de símbolos de um círculo de teleporte em outro plano de existência, esta magia pode levá-lo a esse círculo. Se o círculo de teleporte for pequeno demais para caber todas as criaturas que você transportou, elas aparecem nos espaços desocupados mais próximos ao círculo.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.648Z"}'::jsonb),
+  ('transporte-via-plantas', 'Transporte via Plantas', 6, '6º Círculo', 'Invocação', 'Ação', '3 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '1 minuto', FALSE, FALSE, 'Esta magia cria um elo mágico entre uma planta inanimada Grande ou maior no alcance da magia e outra planta, a qualquer distância, no mesmo plano de existência. Você deve ter visto ou tocado na planta-alvo pelo menos uma vez antes. Pela duração da magia,
+qualquer criatura pode entrar na planta-alvo e sair da planta-destino usando 1,5 metro de movimento.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.649Z"}'::jsonb),
+  ('trovao', 'Trovão', 0, 'Truque', 'Evocação', 'Ação', 'Pessoal', '{"verbal":false,"somatic":true,"material":false,"materialDescription":null,"text":"S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Cada criatura em uma Emanação de 1,5 metro originada em você deve ser bem-sucedida em uma salvaguarda de Constituição ou sofre 1d6 pontos de dano Trovejante. O som estrondoso da magia pode ser ouvido a até
+30 metros de distância.
+Aprimoramento de Truque. O dano aumenta em 1d6
+quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.649Z"}'::jsonb),
+  ('tsunami', 'Tsunami', 8, '8º Círculo', 'Invocação', '1 minuto', '1,5 km', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 6 rodadas', TRUE, FALSE, 'Uma muralha de água surge em um ponto à sua escolha no alcance da magia. Você pode fazer a muralha com até 90 metros de comprimento, 90 metros de altura e 15 metros de espessura. A muralha permanece pela duração da magia.
+Quando a muralha aparece, cada criatura na área realiza uma salvaguarda de Força, sofrendo 6d10 pontos de dano Contundente se falhar, ou metade desse dano em caso de sucesso.
+No início de cada um dos seus turnos após o aparecimento da muralha, ela se move 15 metros para longe de você, juntamente com quaisquer criaturas que estejam dentro dela. Qualquer criatura de tamanho Enorme ou menor dentro da muralha, ou cujo espaço a muralha adentre ao se mover, deve ser bem-sucedida em uma salvaguarda de Força ou sofre 5d10 pontos de dano
+Contundente. Uma criatura pode sofrer esse dano apenas uma vez por rodada. No final de cada turno, a altura da muralha é reduzida em 15 metros, e o dano que a muralha causa nas rodadas subsequentes é reduzido em 1d10. Quando a muralha atinge 0 metros de altura, a magia termina.
+Uma criatura apanhada pela muralha pode se mover nadando. No entanto, devido à força da onda, a criatura deve ser bem-sucedida em um teste de Força
+(Atletismo) contra a CD para evitar sua magia para se mover. Se falhar no teste, ela não pode se mover. Uma criatura que sair da muralha cai no chão.
+O Transporte via Plantas e
+Passo
+Arbóreo transformam as árvores em uma rede de transporte.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.650Z"}'::jsonb),
+  ('turvar', 'Turvar', 2, '2º Círculo', 'Ilusão', 'Ação', 'Pessoal', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Seu corpo fica desfocado. Pela duração da magia, qualquer criatura tem Desvantagem em jogadas de ataque contra você. Um atacante é imune a esse efeito se perceber você com Visão às Cegas ou Visão Verdadeira.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.650Z"}'::jsonb),
+  ('ver-o-invisivel', 'Ver o Invisível', 2, '2º Círculo', 'Adivinhação', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pitada de talco","text":"V, S, M (uma pitada de talco)"}'::jsonb, '1 hora', FALSE, FALSE, 'Pela duração da magia, você vê criaturas e objetos que têm a condição Invisível como se estivessem visíveis e pode ver o Plano Etéreo. Criaturas e objetos nele tem aparência fantasmagórica.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.650Z"}'::jsonb),
+  ('videncia', 'Vidência', 5, '5º Círculo', 'Adivinhação', '10 minutos', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um foco no valor de 1.000 ou mais PO, como uma bola de cristal, espelho ou fonte cheia de água","text":"V, S, M (um foco no valor de 1.000 ou mais PO, como uma bola de cristal, espelho ou fonte cheia de água)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você pode ver e ouvir uma criatura que você escolheu e que está no mesmo plano de existência que você.
+O alvo realiza uma salvaguarda de Sabedoria, que é modificada (veja as tabelas abaixo) por quão bem você
+conhece o alvo e o tipo de conexão física que você tem com ele. O alvo não sabe contra o que está realizando a salvaguarda, apenas que se sente desconfortável.
+Seu Conhecimento do Alvo É... Modificador
+De segunda mão (ouviu falar do alvo) +5
+De primeira mão (conhece o alvo) +0
+Amplo (conhece bem o alvo) –5
+Você Possui Algo do Alvo… Modificador
+Retrato ou outra imagem –2
+Roupa ou outra posse –4
+Parte do corpo, mecha de cabelo ou pedaço de unha
+–10
+Em caso de sucesso, o alvo não é afetado e você não pode usar esta magia nele novamente por 24 horas.
+Se falhar, a magia cria um sensor Invisível e intangível a até 3 metros do alvo. Você pode ver e ouvir através do sensor como se estivesse lá. O sensor se move com o alvo, permanecendo a 3 metros dele pela duração da magia. Se algo puder ver o sensor, ele aparece como uma esfera luminosa do tamanho do seu punho.
+Em vez de uma criatura, você pode escolher um local que viu. Ao fazer isso, o sensor aparece nesse local e não se move.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.651Z"}'::jsonb),
+  ('vigor-arcano', 'Vigor Arcano', 2, '2º Círculo', 'Abjuração', 'Ação Bônus', 'Pessoal', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você usa sua energia vital para se curar. Jogue um ou dois de seus Dados de Pontos de Vida não gastos e recupera um número de Pontos de Vida igual ao total do teste mais seu modificador de atributo de conjuração.
+Esses dados são, então, gastos.', 'Usando um Espaço de Magia de Círculo Superior. O
+número de Dados de Vida não gastos que você pode jogar aumenta em um para cada círculo de espaço de magia acima de 2.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.651Z"}'::jsonb),
+  ('vinculo-de-protecao', 'Vínculo de Proteção', 2, '2º Círculo', 'Abjuração', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"um par de anéis de platina no valor de 50 ou mais PO cada, que você e o alvo devem usar pela duração da magia","text":"V, S, M (um par de anéis de platina no valor de 50 ou mais PO cada, que você e o alvo devem usar pela duração da magia)"}'::jsonb, '1 hora', FALSE, FALSE, 'Você toca outra criatura voluntária e cria uma conexão mística entre você e o alvo até que a magia termine.
+Enquanto o alvo estiver a até 18 metros de você, ele obtém um bônus de +1 na CA e nas salvaguardas e tem
+Resistência a todos os tipos de dano. Além disso, cada vez que ele sofrer dano, você sofre a mesma quantidade de dano.
+A magia se encerra se você for reduzido a 0 Pontos de Vida, se você e o alvo ficarem a mais de 18 metros de distância ou se for conjurada novamente em qualquer uma das criaturas conectadas.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.651Z"}'::jsonb),
+  ('vinha-agarradora', 'Vinha Agarradora', 4, '4º Círculo', 'Invocação', 'Ação Bônus', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Você conjura uma vinha que brota de uma superfície em um espaço desocupado à sua vista e no alcance da magia. A vinha permanece pela duração da magia.
+Realize um ataque mágico corpo a corpo contra uma criatura a até 9 metros da vinha. Em caso de acerto,
+o alvo sofre 4d8 pontos de dano Contundente e é puxado até 9 metros em direção à vinha; se o alvo for
+Enorme ou menor, ele tem a condição Imobilizado (CD
+para escapar é igual à sua CD para evitar sua magia). A
+vinha pode imobilizar apenas uma criatura de cada vez,
+e você pode fazer com que a vinha libere uma criatura
+Imobilizada (nenhuma ação é necessária).
+Como uma Ação Bônus em seus turnos posteriores,
+você pode repetir o ataque contra uma criatura a até 9
+metros da vinha.', 'Usando um Espaço de Magia de Círculo Superior.
+O número de criaturas que a vinha pode imobilizar aumenta em um para cada círculo de espaço de magia acima de 4.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.652Z"}'::jsonb),
+  ('visao-da-verdade', 'Visão da Verdade', 6, '6º Círculo', 'Adivinhação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"cogumelo em pó no valor de 25 ou mais PO, que a magia consome","text":"V, S, M (cogumelo em pó no valor de 25 ou mais PO, que a magia consome)"}'::jsonb, '1 hora', FALSE, FALSE, 'Você toca uma criatura voluntária que recebe Visão
+Verdadeira com um alcance de 36 metros pela duração da magia.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.652Z"}'::jsonb),
+  ('visao-no-escuro', 'Visão no Escuro', 2, '2º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma cenoura seca","text":"V, S, M (uma cenoura seca)"}'::jsonb, '8 horas', FALSE, FALSE, 'Pela duração da magia, uma criatura voluntária que você
+tocar tem Visão no Escuro com um alcance de 45 metros.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.652Z"}'::jsonb),
+  ('vitalidade-vazia', 'Vitalidade Vazia', 1, '1º Círculo', 'Necromancia', 'Ação', 'Pessoal', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma gota de álcool","text":"V, S, M (uma gota de álcool)"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você obtém 2d4 + 4 Pontos de Vida Temporários.', 'Usando um Espaço de Magia de Círculo Superior.
+Você obtém 5 Pontos de Vida Temporários adicionais para cada círculo de espaço de magia acima de 1.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.653Z"}'::jsonb),
+  ('voo', 'Voo', 3, '3º Círculo', 'Transmutação', 'Ação', 'Toque', '{"verbal":true,"somatic":true,"material":true,"materialDescription":"uma pena","text":"V, S, M (uma pena)"}'::jsonb, 'Concentração, até 10 minutos', TRUE, FALSE, 'Você toca uma criatura voluntária. Pela duração da magia, o alvo ganha um Deslocamento de Voo de 18
+metros e pode pairar. Quando a magia termina, o alvo entra em queda se ainda estiver no alto, a menos que possa impedir a queda.', 'Usando um Espaço de Magia de Círculo Superior.
+Você pode escolher uma criatura adicional para cada círculo de espaço de magia acima de 3.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.653Z"}'::jsonb),
+  ('zombaria-perversa', 'Zombaria Perversa', 0, 'Truque', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":false,"material":false,"materialDescription":null,"text":"V"}'::jsonb, 'Instantânea', FALSE, FALSE, 'Você libera uma série de insultos carregados com encantamentos sutis em uma criatura que pode ouvir você e que esteja à sua vista e no alcance da magia. O
+alvo deve ser bem-sucedido em uma salvaguarda de
+Sabedoria ou sofre 1d6 pontos de dano Psíquico e tem
+Desvantagem na próxima jogada de ataque que realizar antes do final do próximo turno dele.
+Aprimoramento de Truque. O dano aumenta em 1d6
+quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.653Z"}'::jsonb),
+  ('zona-da-verdade', 'Zona da Verdade', 2, '2º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, '10 minutos', FALSE, FALSE, 'Você cria uma zona mágica que protege contra enganação em uma Esfera de 4,5 metros de raio centrada em um ponto no alcance da magia. Até que a magia termine, uma criatura que entra na área da magia pela primeira vez ou começa o turno dela nela realiza uma salvaguarda de Carisma. Se falhar, uma criatura não pode mentir deliberadamente enquanto estiver no raio de efeito. Você sabe se uma criatura é bem-sucedida ou falha nessa salvaguarda.
+Uma criatura afetada está ciente da magia e pode evitar responder a perguntas às quais responderia normalmente com uma mentira. Tal criatura pode ser evasiva, mas deve ser verdadeira.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.654Z"}'::jsonb);
+
+
+INSERT INTO rpg.phb_class (id, name, tagline, summary, description, primary_ability, primary_ability_id, hit_die, hit_points, saving_throw_ids, subclass_unlock_level, subclass_label, skill_choices, armor_training, weapon_proficiencies, starting_equipment, spellcasting, source_meta)
+VALUES
+  ('barbarian', 'Bárbaro', 'Combatente feroz da Fúria primitiva', 'Avance com Fúria e entre em combate corpo a corpo.', 'Bárbaros são combatentes poderosos,
+impulsionados por forças primitivas do multiverso que se manifestam com sua Fúria. Mais
+do que uma simples emoção — e não limitada à raiva — essa Fúria é a encarnação da ferocidade de um
+predador, da fúria de uma tempestade e da turbulência
+do mar.
+Alguns Bárbaros personificam sua Fúria como um
+espírito feroz ou um antepassado reverenciado. Outros
+a veem como uma conexão com a dor e o sofrimento
+do mundo, um emaranhado impessoal de magia selvagem ou uma expressão de seu eu mais profundo. Para
+cada Bárbaro, a Fúria é uma força que alimenta não
+apenas sua habilidade de combate, mas também seus
+reflexos aprimorados e sentidos ampliados.
+Bárbaros frequentemente servem como protetores
+e líderes em suas comunidades. Eles se entregam de
+cabeça no perigo para que aqueles sob sua proteção
+não precisem. Sua coragem diante do perigo torna os
+Bárbaros perfeitamente adequados para aventuras.', 'Força', 'forca'::rpg.ability_id, 'D12', '{"level1DieValue":12,"fixedHpPerLevel":7,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['forca'::rpg.ability_id, 'constituicao'::rpg.ability_id], 3, 'Trilha', '{"count":2,"skillIds":["athletics","intimidation","animal-handling","nature","perception","survival"]}'::jsonb, '{"light":true,"medium":true,"heavy":false,"shields":true}'::jsonb, '["Armas Simples","Armas Marciais"]'::jsonb, '{"options":[{"label":"A","items":[{"choice":"4 Machadinhas"},{"id":"greataxe"},{"id":"kit-de-aventureiro"},{"gold":15}]},{"label":"B","items":[{"gold":75}]}]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('bard', 'Bardo', 'Inspirador performista de música, dança e magia', 'Conjure magias que inspiram e curam aliados ou confundem inimigos.', 'Bardos são peritos em inspirar os outros,
+aliviar ferimentos, desanimar inimigos e criar
+ilusões. Eles acreditam que o multiverso foi trazido à
+existência por meio de palavras pronunciadas e que
+resquícios das Palavras de Criação ainda ressoam e
+brilham em todos os planos de existência. A magia dos
+Bardos tenta canalizar essas palavras, que transcendem
+qualquer idioma.
+Qualquer coisa pode inspirar uma nova canção ou
+história, o que faz com que os Bardos sejam fascinados
+por quase tudo. Eles se tornam mestres em muitas
+coisas, incluindo tocar música, realizar magia e fazer
+brincadeiras.
+A vida de um Bardo é passada viajando, coletando conhecimento, contando histórias e vivendo da
+gratidão dos ouvintes, como qualquer outro artista. No
+entanto, a profundidade de conhecimento e o domínio
+da magia distinguem os Bardos dos demais.', 'Carisma', 'carisma'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['destreza'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Colégio', '{"count":3,"from":"any"}'::jsonb, '{"light":true,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Armas Simples"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"choice":"2 Adagas"},{"choice":"Instrumento Musical (escolha)"},{"id":"kit-de-artista"},{"gold":19}]},{"label":"B","items":[{"gold":90}]}]}'::jsonb, '{"type":"full","ability":"Carisma","focus":"Instrumento Musical","ritual":false,"focusItemId":"instrumento-musical"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('warlock', 'Bruxo', 'Ocultista fortalecido com pactos sobrenaturais', 'Conjure magias derivadas de conhecimento oculto.', NULL, 'Carisma', 'carisma'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Patrono', '{"count":2,"skillIds":["arcana","deception","history","intimidation","investigation","nature","religion"]}'::jsonb, '{"light":true,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Armas Simples"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"id":"sickle"},{"choice":"2 Adagas"},{"id":"foco-arcano"},{"id":"livro"},{"id":"kit-de-erudito"},{"gold":15}]},{"label":"B","items":[{"gold":100}]}]}'::jsonb, '{"type":"pact","ability":"Carisma","focus":"Foco Arcano","ritual":false,"focusItemId":"foco-arcano"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('cleric', 'Clérigo', 'Campeão divino da magia sagrada', 'Invoque magia divina para curar, fortalecer e castigar.', NULL, 'Sabedoria', 'sabedoria'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Domínio', '{"count":2,"skillIds":["history","insight","medicine","persuasion","religion"]}'::jsonb, '{"light":true,"medium":true,"heavy":false,"shields":true}'::jsonb, '["Armas Simples"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"id":"shield"},{"id":"mace"},{"id":"kit-de-sacerdote"},{"id":"simbolo-sagrado"},{"gold":7}]},{"label":"B","items":[{"gold":110}]}]}'::jsonb, '{"type":"full","ability":"Sabedoria","focus":"Símbolo Sagrado","ritual":true,"focusItemId":"simbolo-sagrado"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('druid', 'Druida', 'Guardião da natureza e da magia primal', 'Canalize a magia da natureza para curar, moldar e controlar os elementos.', NULL, 'Sabedoria', 'sabedoria'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], 3, 'Círculo', '{"count":2,"skillIds":["arcana","animal-handling","insight","medicine","nature","perception","religion","survival"]}'::jsonb, '{"light":true,"medium":true,"heavy":false,"shields":true}'::jsonb, '["Armas Simples"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"id":"shield"},{"id":"sickle"},{"id":"foco-druidico"},{"gold":9}]},{"label":"B","items":[{"gold":50}]}]}'::jsonb, '{"type":"full","ability":"Sabedoria","focus":"Foco Druídico","ritual":true,"focusItemId":"foco-druidico"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('sorcerer', 'Feiticeiro', 'Conjurador de magia inata e instável', 'Use magia inerente ao seu ser, moldando o poder à sua vontade.', 'Feiticeiros são raros. Algumas linhagens familiares
+geram apenas um Feiticeiro por geração, enquanto,
+geralmente, esse dom aparece de forma inesperada.
+Aqueles que possuem esse poder logo percebem que
+não conseguem ficar ociosos. A magia de um Feiticeiro
+anseia por ser utilizada.', 'Carisma', 'carisma'::rpg.ability_id, 'D6', '{"level1DieValue":6,"fixedHpPerLevel":4,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['constituicao'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Feitiçaria', '{"count":2,"skillIds":["arcana","deception","intimidation","investigation","nature","religion"]}'::jsonb, '{"light":false,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Adagas","Dardos","Fundas","Bordões","Bestas Leves"]'::jsonb, '{"options":[{"label":"A","items":[{"choice":"2 Adagas"},{"id":"foco-arcano"},{"id":"kit-de-explorador-de-masmorras"},{"gold":28}]},{"label":"B","items":[{"gold":50}]}]}'::jsonb, '{"type":"full","ability":"Carisma","focus":"Foco Arcano","ritual":false,"focusItemId":"foco-arcano"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('ranger', 'Guardião', 'Patrulheiro marcial das fronteiras selvagens', 'Una proezas marciais, magia da natureza e habilidades de sobrevivência.', NULL, 'Destreza e Sabedoria', NULL, 'D10', '{"level1DieValue":10,"fixedHpPerLevel":6,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id], 3, 'Arquétipo', '{"count":3,"skillIds":["animal-handling","athletics","insight","investigation","nature","perception","stealth","survival"]}'::jsonb, '{"light":true,"medium":true,"heavy":false,"shields":true}'::jsonb, '["Armas Simples","Armas Marciais"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"choice":"2 Adagas"},{"id":"longbow"},{"id":"aljava"},{"id":"kit-de-aventureiro"},{"gold":7}]},{"label":"B","items":[{"gold":150}]}]}'::jsonb, '{"type":"half","ability":"Sabedoria","focus":"Foco Druídico","ritual":false,"focusItemId":"foco-druidico"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('fighter', 'Guerreiro', 'Mestre de armas e armaduras', 'Domine todas as armas e armaduras.', NULL, 'Força ou Destreza', NULL, 'D10', '{"level1DieValue":10,"fixedHpPerLevel":6,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['forca'::rpg.ability_id, 'constituicao'::rpg.ability_id], 3, 'Arquétipo', '{"count":2,"skillIds":["acrobatics","animal-handling","athletics","history","insight","intimidation","perception","survival"]}'::jsonb, '{"light":true,"medium":true,"heavy":true,"shields":true}'::jsonb, '["Armas Simples","Armas Marciais"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"chain-mail"},{"id":"longsword"},{"id":"shield"},{"id":"light-crossbow"},{"id":"aljava"},{"id":"kit-de-aventureiro"},{"gold":4}]},{"label":"B","items":[{"gold":155}]}]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('rogue', 'Ladino', 'Especialista furtivo e mortal', 'Desfira Ataques Furtivos mortais enquanto evita danos através da furtividade.', NULL, 'Destreza', 'destreza'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['destreza'::rpg.ability_id, 'inteligencia'::rpg.ability_id], 3, 'Arquétipo', '{"count":4,"skillIds":["acrobatics","athletics","deception","insight","intimidation","investigation","perception","persuasion","stealth"]}'::jsonb, '{"light":true,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Armas Simples","Bestas de Mão","Espada Longa","Rapieira","Espada Curta"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"choice":"2 Adagas"},{"id":"shortsword"},{"id":"longsword"},{"id":"kit-de-assaltante"},{"id":"kit-de-aventureiro"},{"gold":8}]},{"label":"B","items":[{"gold":100}]}]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('wizard', 'Mago', 'Estudioso da magia arcana', 'Estude magia arcana e domine magias para todos os propósitos.', 'Magos são reconhecidos por seu estudo
+aprofundado da magia. Eles conjuram magias
+explosivas, raios, ilusões e transformações
+notáveis, além de invocar criaturas de outros planos,
+prever o futuro e criar barreiras protetoras. Suas
+magias mais poderosas podem transformar substâncias,
+invocar meteoros ou abrir portais para outros mundos.
+Geralmente, os Magos adotam uma abordagem acadêmica, explorando os fundamentos teóricos e categorizando magias em escolas. Figuras renomadas como
+Bigby, Tasha, Mordenkainen e Yolande contribuíram
+para a criação de magias icônicas reconhecidas por
+todo o multiverso.
+O máximo que um Mago pode vivenciar de maneira
+comum é atuar como sábio ou mentor. Muitos oferecem serviços como conselheiros, servem em forças
+militares ou se envolvem com o crime ou a dominação.
+Entretanto, a busca pelo conhecimento leva até os
+magos mais cautelosos a abandonar a segurança de
+suas bibliotecas e laboratórios em busca de ruínas
+decadentes e cidades perdidas. A maioria acredita que
+civilizações antigas guardavam segredos de magia que
+poderiam conceder um poder maior do que o disponível na atualidade.', 'Inteligência', 'inteligencia'::rpg.ability_id, 'D6', '{"level1DieValue":6,"fixedHpPerLevel":4,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], 3, 'Tradição', '{"count":2,"skillIds":["arcana","history","investigation","medicine","nature","religion"]}'::jsonb, '{"light":false,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Adagas","Dardos","Fundas","Bordões","Bestas Leves"]'::jsonb, '{"options":[{"label":"A","items":[{"choice":"2 Adagas"},{"id":"foco-arcano"},{"id":"kit-de-erudito"},{"id":"kit-de-aventureiro"},{"gold":5}]},{"label":"B","items":[{"gold":55}]}]}'::jsonb, '{"type":"full","ability":"Inteligência","focus":"Foco Arcano","ritual":true,"focusItemId":"foco-arcano"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('monk', 'Monge', 'Artista marcial de velocidade e precisão', 'Entre e saia do combate corpo a corpo com velocidade e precisão.', NULL, 'Destreza e Sabedoria', NULL, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id], 3, 'Tradição', '{"count":2,"skillIds":["acrobatics","athletics","history","insight","religion","stealth"]}'::jsonb, '{"light":false,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Armas Simples","Armas Marciais (leves)"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"shortsword"},{"id":"dart","quantity":10},{"id":"kit-de-aventureiro"},{"gold":5}]},{"label":"B","items":[{"gold":50}]}]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('paladin', 'Paladino', 'Guerreiro sagrado vinculado a um juramento', 'Destrua inimigos e proteja aliados com poder divino e marcial.', 'Paladinos são unidos por seus juramentos de combater as forças da aniquilação e
+da corrupção. Seja diante do altar de um deus,
+em uma clareira sagrada diante de espíritos da natureza ou em momentos de desespero e tristeza com os
+mortos como as únicas testemunhas, o juramento de
+um Paladino é um vínculo poderoso. Ele transforma
+um combatente devoto em um campeão abençoado.
+Paladinos treinam para dominar armas e armaduras,
+mas suas habilidades marciais são superadas pelo poder
+mágico que possuem: curar feridos, punir inimigos e
+proteger os indefesos e aqueles que lutam ao seu lado.
+A vida de um Paladino é, quase por definição, uma
+vida de aventura, pois eles estão na linha de frente da
+luta cósmica contra a aniquilação. Guerreiros são raros
+nos exércitos de um mundo, e ainda menos indivíduos
+podem reivindicar a vocação de um Paladino. Ao receber esse chamado, essas pessoas abençoadas abandonam suas ocupações anteriores para empunhar armas
+e magia.', 'Força e Carisma', NULL, 'D10', '{"level1DieValue":10,"fixedHpPerLevel":6,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Juramento', '{"count":2,"skillIds":["athletics","insight","intimidation","medicine","persuasion","religion"]}'::jsonb, '{"light":true,"medium":true,"heavy":true,"shields":true}'::jsonb, '["Armas Simples","Armas Marciais"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"chain-mail"},{"id":"longsword"},{"id":"shield"},{"choice":"6 Azagaias"},{"id":"kit-de-sacerdote"},{"id":"simbolo-sagrado"},{"gold":7}]},{"label":"B","items":[{"gold":150}]}]}'::jsonb, '{"type":"half","ability":"Carisma","focus":"Símbolo Sagrado","ritual":false,"focusItemId":"simbolo-sagrado"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb);
+
+
+INSERT INTO rpg.phb_class_progression (class_id, level, proficiency_bonus, cantrips, prepared_spells, spell_slots, channel_divinity)
+VALUES
+  ('bard', 1, 2, 2, 4, '{"1":2}'::jsonb, NULL),
+  ('bard', 2, 2, 2, 5, '{"1":3}'::jsonb, NULL),
+  ('bard', 3, 2, 2, 6, '{"1":4,"2":2}'::jsonb, NULL),
+  ('bard', 4, 2, 3, 7, '{"1":4,"2":3}'::jsonb, NULL),
+  ('bard', 5, 3, 3, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
+  ('bard', 6, 3, 3, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
+  ('bard', 7, 3, 3, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
+  ('bard', 8, 3, 3, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
+  ('bard', 9, 4, 3, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
+  ('bard', 10, 4, 4, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
+  ('bard', 11, 4, 4, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
+  ('bard', 12, 4, 4, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
+  ('bard', 13, 5, 4, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
+  ('bard', 14, 5, 4, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
+  ('bard', 15, 5, 4, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
+  ('bard', 16, 5, 4, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
+  ('bard', 17, 6, 4, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('bard', 18, 6, 4, 20, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('bard', 19, 6, 4, 21, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('bard', 20, 6, 4, 22, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, NULL),
+  ('warlock', 1, 2, 2, 2, NULL, NULL),
+  ('warlock', 2, 2, 2, 3, NULL, NULL),
+  ('warlock', 3, 2, 2, 4, NULL, NULL),
+  ('warlock', 4, 2, 3, 5, NULL, NULL),
+  ('warlock', 5, 3, 3, 6, NULL, NULL),
+  ('warlock', 6, 3, 3, 7, NULL, NULL),
+  ('warlock', 7, 3, 3, 8, NULL, NULL),
+  ('warlock', 8, 3, 3, 9, NULL, NULL),
+  ('warlock', 9, 4, 3, 10, NULL, NULL),
+  ('warlock', 10, 4, 4, 10, NULL, NULL),
+  ('warlock', 11, 4, 4, 11, NULL, NULL),
+  ('warlock', 12, 4, 4, 11, NULL, NULL),
+  ('warlock', 13, 5, 4, 12, NULL, NULL),
+  ('warlock', 14, 5, 4, 12, NULL, NULL),
+  ('warlock', 15, 5, 4, 13, NULL, NULL),
+  ('warlock', 16, 5, 4, 13, NULL, NULL),
+  ('warlock', 17, 6, 4, 14, NULL, NULL),
+  ('warlock', 18, 6, 4, 14, NULL, NULL),
+  ('warlock', 19, 6, 4, 15, NULL, NULL),
+  ('warlock', 20, 6, 4, 15, NULL, NULL),
+  ('cleric', 1, 2, 3, 4, '{"1":2}'::jsonb, 0),
+  ('cleric', 2, 2, 3, 5, '{"1":3}'::jsonb, 2),
+  ('cleric', 3, 2, 3, 6, '{"1":4,"2":2}'::jsonb, 2),
+  ('cleric', 4, 2, 4, 7, '{"1":4,"2":3}'::jsonb, 2),
+  ('cleric', 5, 3, 4, 9, '{"1":4,"2":3,"3":2}'::jsonb, 2),
+  ('cleric', 6, 3, 4, 10, '{"1":4,"2":3,"3":3}'::jsonb, 3),
+  ('cleric', 7, 3, 4, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, 3),
+  ('cleric', 8, 3, 4, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, 3),
+  ('cleric', 9, 4, 4, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, 3),
+  ('cleric', 10, 4, 5, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, 3),
+  ('cleric', 11, 4, 5, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, 3),
+  ('cleric', 12, 4, 5, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, 3),
+  ('cleric', 13, 5, 5, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, 3),
+  ('cleric', 14, 5, 5, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, 3),
+  ('cleric', 15, 5, 5, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, 3),
+  ('cleric', 16, 5, 5, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, 3),
+  ('cleric', 17, 6, 5, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, 3),
+  ('cleric', 18, 6, 5, 20, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, 4),
+  ('cleric', 19, 6, 5, 21, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, 4),
+  ('cleric', 20, 6, 5, 22, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, 4),
+  ('druid', 1, 2, 2, 4, '{"1":2}'::jsonb, NULL),
+  ('druid', 2, 2, 2, 5, '{"1":3}'::jsonb, NULL),
+  ('druid', 3, 2, 2, 6, '{"1":4,"2":2}'::jsonb, NULL),
+  ('druid', 4, 2, 3, 7, '{"1":4,"2":3}'::jsonb, NULL),
+  ('druid', 5, 3, 3, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
+  ('druid', 6, 3, 3, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
+  ('druid', 7, 3, 3, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
+  ('druid', 8, 3, 3, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
+  ('druid', 9, 4, 3, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
+  ('druid', 10, 4, 4, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
+  ('druid', 11, 4, 4, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
+  ('druid', 12, 4, 4, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
+  ('druid', 13, 5, 4, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
+  ('druid', 14, 5, 4, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
+  ('druid', 15, 5, 4, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
+  ('druid', 16, 5, 4, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
+  ('druid', 17, 6, 4, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('druid', 18, 6, 4, 20, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('druid', 19, 6, 4, 21, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('druid', 20, 6, 4, 22, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, NULL),
+  ('sorcerer', 1, 2, 4, 2, '{"1":2}'::jsonb, NULL),
+  ('sorcerer', 2, 2, 4, 4, '{"1":3}'::jsonb, NULL),
+  ('sorcerer', 3, 2, 4, 6, '{"1":4,"2":2}'::jsonb, NULL),
+  ('sorcerer', 4, 2, 5, 7, '{"1":4,"2":3}'::jsonb, NULL),
+  ('sorcerer', 5, 3, 5, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
+  ('sorcerer', 6, 3, 5, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
+  ('sorcerer', 7, 3, 5, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
+  ('sorcerer', 8, 3, 5, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
+  ('sorcerer', 9, 4, 5, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
+  ('sorcerer', 10, 4, 6, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
+  ('sorcerer', 11, 4, 6, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
+  ('sorcerer', 12, 4, 6, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
+  ('sorcerer', 13, 5, 6, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
+  ('sorcerer', 14, 5, 6, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
+  ('sorcerer', 15, 5, 6, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
+  ('sorcerer', 16, 5, 6, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
+  ('sorcerer', 17, 6, 6, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('sorcerer', 18, 6, 6, 20, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('sorcerer', 19, 6, 6, 21, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('sorcerer', 20, 6, 6, 22, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, NULL),
+  ('ranger', 1, 2, NULL, 2, '{"1":2}'::jsonb, NULL),
+  ('ranger', 2, 2, NULL, 3, '{"1":2}'::jsonb, NULL),
+  ('ranger', 3, 2, NULL, 4, '{"1":3}'::jsonb, NULL),
+  ('ranger', 4, 2, NULL, 5, '{"1":3}'::jsonb, NULL),
+  ('ranger', 5, 3, NULL, 6, '{"1":4,"2":2}'::jsonb, NULL),
+  ('ranger', 6, 3, NULL, 6, '{"1":4,"2":2}'::jsonb, NULL),
+  ('ranger', 7, 3, NULL, 7, '{"1":4,"2":3}'::jsonb, NULL),
+  ('ranger', 8, 3, NULL, 7, '{"1":4,"2":3}'::jsonb, NULL),
+  ('ranger', 9, 4, NULL, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
+  ('ranger', 10, 4, NULL, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
+  ('ranger', 11, 4, NULL, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
+  ('ranger', 12, 4, NULL, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
+  ('ranger', 13, 5, NULL, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
+  ('ranger', 14, 5, NULL, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
+  ('ranger', 15, 5, NULL, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
+  ('ranger', 16, 5, NULL, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
+  ('ranger', 17, 6, NULL, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
+  ('ranger', 18, 6, NULL, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
+  ('ranger', 19, 6, NULL, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
+  ('ranger', 20, 6, NULL, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
+  ('wizard', 1, 2, 3, 4, '{"1":2}'::jsonb, NULL),
+  ('wizard', 2, 2, 3, 5, '{"1":3}'::jsonb, NULL),
+  ('wizard', 3, 2, 3, 6, '{"1":4,"2":2}'::jsonb, NULL),
+  ('wizard', 4, 2, 4, 7, '{"1":4,"2":3}'::jsonb, NULL),
+  ('wizard', 5, 3, 4, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
+  ('wizard', 6, 3, 4, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
+  ('wizard', 7, 3, 4, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
+  ('wizard', 8, 3, 4, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
+  ('wizard', 9, 4, 4, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
+  ('wizard', 10, 4, 5, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
+  ('wizard', 11, 4, 5, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
+  ('wizard', 12, 4, 5, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
+  ('wizard', 13, 5, 5, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
+  ('wizard', 14, 5, 5, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
+  ('wizard', 15, 5, 5, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
+  ('wizard', 16, 5, 5, 21, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
+  ('wizard', 17, 6, 5, 22, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('wizard', 18, 6, 5, 23, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('wizard', 19, 6, 5, 24, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, NULL),
+  ('wizard', 20, 6, 5, 25, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, NULL),
+  ('paladin', 1, 2, NULL, 2, '{"1":2}'::jsonb, 0),
+  ('paladin', 2, 2, NULL, 3, '{"1":2}'::jsonb, 0),
+  ('paladin', 3, 2, NULL, 4, '{"1":3}'::jsonb, 2),
+  ('paladin', 4, 2, NULL, 5, '{"1":3}'::jsonb, 2),
+  ('paladin', 5, 3, NULL, 6, '{"1":4,"2":2}'::jsonb, 2),
+  ('paladin', 6, 3, NULL, 6, '{"1":4,"2":2}'::jsonb, 2),
+  ('paladin', 7, 3, NULL, 7, '{"1":4,"2":3}'::jsonb, 2),
+  ('paladin', 8, 3, NULL, 7, '{"1":4,"2":3}'::jsonb, 2),
+  ('paladin', 9, 4, NULL, 9, '{"1":4,"2":3,"3":2}'::jsonb, 2),
+  ('paladin', 10, 4, NULL, 9, '{"1":4,"2":3,"3":2}'::jsonb, 2),
+  ('paladin', 11, 4, NULL, 10, '{"1":4,"2":3,"3":3}'::jsonb, 3),
+  ('paladin', 12, 4, NULL, 10, '{"1":4,"2":3,"3":3}'::jsonb, 3),
+  ('paladin', 13, 5, NULL, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, 3),
+  ('paladin', 14, 5, NULL, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, 3),
+  ('paladin', 15, 5, NULL, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, 3),
+  ('paladin', 16, 5, NULL, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, 3),
+  ('paladin', 17, 6, NULL, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, 3),
+  ('paladin', 18, 6, NULL, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, 3),
+  ('paladin', 19, 6, NULL, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, 3),
+  ('paladin', 20, 6, NULL, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, 3);
+
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 1, 'Fúria', 'Você pode se imbuir com um poder primitivo chamado
+Fúria, uma força que lhe concede força e resiliência
+extraordinárias. Você pode entrar em Fúria como uma
+Ação Bônus, desde que não esteja vestindo armadura
+Pesada.
+Você pode entrar em Fúria o número de vezes
+indicado na coluna Fúrias da tabela Características de
+Bárbaro para seu nível de Bárbaro. Você recupera um
+uso gasto ao completar um Descanso Curto, e restaura
+todos os usos gastos ao completar um Descanso Longo.
+Enquanto ativa, sua Fúria segue as regras abaixo.
+Resistência a Dano. Você tem Resistência a dano
+Contundente, Cortante e Perfurante.
+Dano da Fúria. Quando você realiza um ataque com
+Força — seja com uma arma ou um Ataque Desarmado — e causar dano ao alvo, você recebe um bônus no
+dano, que aumenta conforme você adquire níveis como
+Bárbaro, conforme mostrado na coluna Dano da Fúria
+da tabela Características de Bárbaro.
+Vantagem com Força. Você tem Vantagem em testes
+de Força e salvaguardas de Força.
+Sem Concentração ou Magias. Você não pode manter
+a Concentração e não pode conjurar magias.
+Duração. A Fúria dura até o final do seu próximo
+turno, e encerra se você vestir armadura Pesada ou
+ter a condição Incapacitado. Se sua Fúria ainda estiver
+ativa no próximo turno, você pode estendê-la por mais
+um turno ao realizar uma das seguintes ações:
+• Realizar uma jogada de ataque contra um inimigo.
+• Forçar um inimigo a realizar uma salvaguarda.
+• Executar uma Ação Bônus para estender sua Fúria.
+Cada vez que a Fúria é estendida, ela permanece até
+o final do seu próximo turno. Você pode manter uma
+Fúria por até 10 minutos.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 1, 'Defesa sem Armadura', 'Enquanto você não estiver vestindo nenhuma armadura, sua Classe de Armadura base é igual a 10 mais seus
+modificadores de Destreza e Constituição. Você pode
+usar um Escudo e ainda receber este benefício.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você utilize
+as propriedades de maestria com dois tipos de armas
+Corpo a Corpo Simples ou Marciais à sua escolha,
+como Machados Grandes e Machadinhas. Sempre que 
+completar um Descanso Longo, você pode praticar
+movimentos com armas e alterar uma dessas escolhas
+de armas.
+Ao alcançar certos níveis de Bárbaro, você adquire a
+habilidade de usar as propriedades de maestria de mais
+tipos de armas, conforme mostrado na coluna Maestria
+em Armas da tabela Características de Bárbaro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 2, 'Ataque Imprudente', 'Você pode descartar toda preocupação com a defesa
+para atacar com ferocidade intensificada. Ao realizar
+sua primeira jogada de ataque no seu turno, você
+pode decidir atacar de forma imprudente. Fazer isso
+lhe concede Vantagem em jogadas de ataque usando
+Força até o início do seu próximo turno, mas jogadas
+de ataque contra você também têm Vantagem durante
+esse tempo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 2, 'Sentido de Perigo', 'Você adquire uma sensibilidade extraordinária de
+quando as coisas não estão como deveriam, o que lhe
+dá um benefício ao desviar de perigos. Você tem Vantagem em salvaguardas de Destreza, a menos que tenha a
+condição Incapacitado.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 3, 'Conhecimento Primordial', 'Você adquire proficiência em outra perícia à sua escolha da lista de perícias disponíveis para Bárbaros no
+nível 1.
+Além disso, enquanto sua Fúria estiver ativa, você
+pode canalizar poder primitivo ao tentar realizar certas
+tarefas. Sempre que realizar um teste de atributo usando uma das seguintes perícias, pode realizá-lo como um
+teste de Força, mesmo que normalmente utilize outro
+atributo: Acrobacia, Furtividade, Intimidação, Percepção ou Sobrevivência. Quando você usa essa habilidade, sua Força representa o poder primitivo fluindo em
+você, refinando sua agilidade, postura e sentidos.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 3, 'Subclasse de Bárbaro', 'Você adquire uma subclasse de Bárbaro à sua escolha.
+As subclasses Trilha da Árvore do Mundo, Trilha do
+Berserker, Trilha do Coração Selvagem e Trilha do
+Fanático estão detalhadas após a descrição desta classe.
+Uma subclasse é uma especialização que lhe concede
+características em determinados níveis de Bárbaro.
+Durante toda sua jornada, você adquire cada característica da sua subclasse que corresponda ao seu nível
+de Bárbaro ou inferior.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para
+o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Bárbaro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 5, 'Movimento Rápido', 'Seu Deslocamento aumenta em 3 metros enquanto
+você não estiver usando Armadura Pesada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 7, 'Bote Instintivo', 'Como parte da Ação Bônus que você realiza para
+entrar em Fúria, você pode se mover até metade do
+seu Deslocamento.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 7, 'Instintos Primitivos', 'Seus instintos estão tão apurados que você tem Vantagem nas jogadas de Iniciativa.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 9, 'Golpe Brutal', 'Se você usar Ataque Imprudente, pode renunciar à
+Vantagem em uma jogada de ataque com Força à sua
+escolha no seu turno. A jogada de ataque escolhida
+não deve ter Desvantagem. Se a jogada de ataque atingir o alvo, este sofre 1d10 pontos de dano adicional do
+mesmo tipo causado pela arma ou Ataque Desarmado,
+e você pode causar um efeito de Golpe Brutal à sua
+escolha.
+Você tem as seguintes opções de efeito.
+Golpe Debilitador. O Deslocamento do alvo é
+reduzido em 4,5 metros até o início do seu próximo
+turno. Um alvo pode ser afetado por apenas um Golpe
+Debilitador de cada vez — o mais recente.
+Golpe Poderoso. O alvo é empurrado 4,5 metros
+diretamente para longe de você. Em seguida, você
+pode se mover até metade do seu Deslocamento diretamente em direção ao alvo sem provocar Ataques de
+Oportunidade.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 11, 'Fúria Implacável', 'Sua Fúria pode mantê-lo lutando, apesar de ferimentos
+graves. Se você atingir 0 Pontos de Vida enquanto sua
+Fúria estiver ativa e não morrer imediatamente, você
+pode realizar uma salvaguarda de Constituição CD 10.
+Em caso de sucesso, seus Pontos de Vida mudam para
+um número igual a duas vezes seu nível de Bárbaro.
+A cada vez que usar essa característica após a primeira, a CD aumenta em 5. Ao completar um Descanso
+Curto ou Longo, a CD volta para 10.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 13, 'Golpe Brutal Fortalecido', 'Você aperfeiçoou novas formas de atacar com ferocidade. Os seguintes efeitos agora estão entre suas
+opções de Golpe Brutal.
+Golpe Atordoante. O alvo tem Desvantagem na
+próxima salvaguarda que realizar e não pode realizar
+Ataques de Oportunidade até o início do seu próximo
+turno.
+Golpe Destruidor. Antes do início do seu próximo
+turno, a próxima jogada de ataque realizada por outra
+criatura contra o alvo recebe um bônus de +5. Uma
+jogada de ataque só pode receber um bônus de Golpe
+Destruidor por vez.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 15, 'Fúria Persistente', 'Ao jogar Iniciativa, você pode recuperar todos os usos
+gastos de Fúria. Após recuperar a Fúria deste modo,
+você não pode fazê-lo novamente até completar um
+Descanso Longo.
+Além disso, sua Fúria é tão feroz que agora dura 10
+minutos sem a necessidade de estender a duração de
+rodada em rodada. Sua Fúria encerra se você estiver
+com a condição Inconsciente (não apenas Incapacitado) ou vestir armadura Pesada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 17, 'Golpe Brutal Fortalecido', 'O dano adicional de seu Golpe Brutal aumenta para
+2d10 pontos. Além disso, você pode usar dois efeitos
+diferentes de Golpe Brutal sempre que utilizar esta
+característica.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 18, 'Força Indomável', 'Se o total de seu teste de Força ou de sua salvaguarda
+de Força for menor que seu valor de Força, você pode
+usar esse valor no lugar do resultado total.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 19, 'Dádiva Épica', 'Você adquire um talento Dádiva Épica (veja o capítulo
+5) ou outro talento à sua escolha para o qual atenda
+os pré-requisitos. A Dádiva do Ataque Irresistível é
+recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 20, 'Campeão Primitivo', 'Você incorpora o poder primitivo. Seus valores de
+Força e Constituição aumentam em 4, até um máximo
+de 25.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 1, 'Inspiração de Bardo', 'Você pode inspirar outros sobrenaturalmente por
+meio de palavras, música ou dança. Essa inspiração é
+representada pelo seu dado de Inspiração de Bardo,
+que é um d6.
+Usando Inspiração de Bardo. Como uma Ação Bônus,
+você pode inspirar outra criatura a até 18 metros de
+você que possa vê-lo ou ouvi-lo. Essa criatura recebe
+um de seus dados de Inspiração de Bardo. Uma criatura pode ter apenas um dado de Inspiração de Bardo de
+cada vez.
+Uma vez, dentro da próxima uma hora, após a criatura falhar em um Teste de D20, ela pode jogar o dado
+de Inspiração de Bardo e adicionar o resultado ao D20,
+transformando potencialmente a falha em sucesso.
+O dado de Inspiração de Bardo é gasto quando for
+jogado.
+Quantidade de Usos. Você pode conceder um dado de
+Inspiração de Bardo um número de vezes igual ao seu
+modificador de Carisma (mínimo de uma vez), e você
+restaura todos os usos gastos ao completar um Descanso Longo.
+Em Níveis Superiores. Seu dado de Inspiração de Bardo muda quando você atinge certos níveis de Bardo,
+conforme mostrado na coluna Dados de Inspiração da
+tabela Características de Bardo. O dado se torna um d8
+no nível 5, um d10 no nível 10 e um d12 no nível 15.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 1, 'Conjuração', 'Você aprendeu a conjurar magias através de suas artes
+bárdicas. Veja o capítulo 7 para as regras sobre conjuração de magias. As informações abaixo detalham
+como você utiliza essas regras com as magias de Bardo,
+explicadas na lista de magias de Bardo mais adiante na
+descrição da classe.
+Truques. Você conhece dois truques à sua escolha
+da lista de magias de Bardo. Luzes Dançantes e Zombaria
+Perversa são recomendadas.
+Sempre que você alcança um nível de Bardo, pode
+substituir um dos seus truques por outro truque à sua
+escolha da lista de magias de Bardo.
+Ao atingir os níveis 4 e 10, você aprende mais um
+truque à sua escolha da lista de magias de Bardo, conforme mostrado na coluna Truques da tabela Características de Bardo.
+Espaços de Magia. A tabela Características de Bardo
+mostra quantos espaços de magia você tem para conjurar suas magias de 1º círculo ou superior. Você restaura
+todos os espaços gastos quando completa um Descanso
+Longo.
+Magias Preparadas de 1º Círculo ou Superior. Você
+prepara a lista de magias de 1º círculo ou superior que
+estão disponíveis para você conjurar com esta característica. Para começar, escolha quatro magias de 1º
+círculo da lista de magias de Bardo. Enfeitiçar Pessoa,
+Leque Cromático, Palavra Curativa e Sussurros Dissonantes são recomendadas.
+O número de magias em sua lista aumenta à medida
+que você alcança níveis de Bardo, conforme mostrado
+na coluna Magias Preparadas da tabela Características
+de Bardo. Sempre que esse número aumentar, escolha magias adicionais da lista de magias de Bardo até
+que o número de magias em sua lista corresponda ao
+número da tabela. As magias escolhidas devem ser de
+um círculo para o qual você possui espaços de magia.
+Por exemplo, se você é um Bardo de nível 3, sua lista de
+magias preparadas pode incluir seis magias de 1º ou 2º
+círculo em qualquer combinação.
+Se outra característica de Bardo lhe der magias que
+você sempre tem preparadas, essas magias não contam
+para o número de magias que você pode preparar com
+esta característica, mas essas magias, de outra forma,
+contam como magias de Bardo para você.
+Mudando Suas Magias Preparadas. Sempre que você
+obtém um nível de Bardo, pode substituir uma magia
+em sua lista por outra magia de Bardo para a qual você
+tem espaços de magia.
+Atributo de Conjuração. Carisma é seu atributo de
+conjuração para suas magias de Bardo.
+Foco de Conjuração. Você pode usar um Instrumento
+Musical como Foco de Conjuração para suas magias de
+Bardo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 2, 'Especialista', 'Você obtém Especialização (veja o glossário de regras)
+em duas de suas perícias, à sua escolha, nas quais já
+seja proficiente. Atuação e Persuasão são recomendadas se você tiver proficiência nelas.
+No nível 9 de Bardo, você obtém Especialização em
+mais duas perícias nas quais já seja proficiente à sua
+escolha.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 2, 'Pau pra Toda Obra', 'Você pode adicionar metade do seu Bônus de Proficiência (arredondado para baixo) a qualquer teste
+de atributo que realizar que use uma perícia à qual
+não possua proficiência e que não use seu Bônus de
+Proficiência.
+Por exemplo, se você realizar um teste de Força
+(Atletismo) e não tiver proficiência em Atletismo, pode
+adicionar metade do seu Bônus de Proficiência ao
+teste.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 3, 'Subclasse de Bardo', 'Você adquire uma subclasse de Bardo à sua escolha. As
+subclasses Colégio da Bravura, Colégio da Dança, Colégio do Conhecimento e Colégio do Glamour estão detalhadas após a descrição desta classe. Uma subclasse é
+uma especialização que lhe concede características em
+determinados níveis de Bardo. Durante toda sua jornada, você adquire cada característica de sua subclasse
+que corresponda ao seu nível de Bardo ou inferior.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para
+o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Bardo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 5, 'Fonte de Inspiração', 'Você agora restaura todos os seus usos gastos de Inspiração de Bardo quando completa um Descanso Curto
+ou Longo.
+Além disso, você pode gastar um espaço de magia
+(nenhuma ação necessária) para recuperar um uso
+gasto de Inspiração de Bardo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 7, 'Contra-Encantamento', 'Você pode usar notas musicais ou palavras de poder
+para interromper efeitos que influenciam a mente. Se
+você ou uma criatura a até 9 metros de você falhar em
+uma salvaguarda contra um efeito que aplica as condições Amedrontado ou Enfeitiçado, você pode executar
+uma Reação para jogar novamente a salvaguarda, e a
+nova jogada tem Vantagem.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 10, 'Segredos Mágicos', 'Você aprendeu segredos de várias tradições mágicas.
+Sempre que você alcançar um nível de Bardo (incluindo este nível) e o número de Magias Preparadas na
+tabela Características de Bardo aumentar, você pode
+escolher qualquer uma das novas magias preparadas
+da lista de magias de Bardo, Clérigo, Druida e Mago,
+e as magias escolhidas contam como magias de Bardo
+para você (veja a seção de cada classe para a respectiva
+lista de magias). Além disso, sempre que você substituir
+uma magia preparada para esta classe, pode trocá-la
+por uma magia dessas listas.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 18, 'Inspiração Superior', 'Quando você jogar Iniciativa, recupera usos gastos de
+Inspiração de Bardo até ter dois, se tiver menos do que
+isso.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 19, 'Dádiva Épica', 'Você adquire um talento Dádiva Épica (veja o capítulo
+5) ou outro talento à sua escolha para o qual atenda
+os pré-requisitos. A Dádiva da Recordação de Magia é
+recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 20, 'Palavras de Criação', 'Você dominou duas das Palavras de Criação: as palavras de vida e morte. Portanto, você sempre tem as
+magias Palavra de Poder: Matar e Palavra de Poder: Salvar
+preparadas. Quando você conjura qualquer uma dessas
+magias, pode escolher uma segunda criatura que está a
+até 3 metros do primeiro alvo.
+O Repertório do Bardo
+Seu Bardo bate um tambor enquanto entoa os feitos
+de heróis antigos? Dedilha um alaúde enquanto canta
+canções românticas? Realiza árias de poder comovente?
+Recita monólogos dramáticos de tragédias clássicas?
+Usa o ritmo de uma dança folclórica para coordenar o
+movimento dos aliados em batalha? Compõe poemas
+curtos e ousados?
+Ao interpretar um Bardo, considere o estilo de
+apresentação artística que você prefere, os humores
+que pode evocar e os temas que inspiram suas próprias
+criações. Seus poemas são inspirados por momentos de
+beleza natural ou são reflexões sombrias sobre o luto?
+Você prefere hinos elevados ou canções animadas de
+taberna? É atraído por lamentos pelos que pereceram
+ou por celebrações de alegria? Dança baladas alegres ou
+realiza coreografias interpretativas elaboradas? Foca em
+um estilo de apresentação ou busca dominar todos?
+Um Bardo Molda Inspiração e
+Imaginação em Magia.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 1, 'Invocações Místicas', 'Você descobriu Invocações Místicas, fragmentos de
+conhecimento proibido que lhe conferem uma habilidade mágica permanente ou outros ensinamentos.
+Você recebe uma invocação à sua escolha, como Pacto
+do Tomo. As invocações são descritas na seção “Opções de Invocações Místicas” mais adiante na descrição
+desta classe.
+Pré-requisitos. Se uma invocação tiver um pré-requisito, você deve atendê-lo para aprender essa invocação.
+Por exemplo, se uma invocação exigir que você seja um
+Bruxo de nível 5 ou superior, você pode selecionar a
+invocação quando alcançar o nível 5 de Bruxo.
+Substituindo e Recebendo outras Invocações. Ao
+alcançar um nível de Bruxo, você pode substituir uma
+de suas invocações por outra para a qual se qualifica.
+Você não pode substituir uma invocação se ela for um
+pré-requisito para outra invocação que você tenha.
+Ao alcançar certos níveis de Bruxo, você adquire
+mais invocações à sua escolha, conforme mostrado na
+coluna Invocações da tabela Características de Bruxo.
+Você não pode escolher a mesma invocação mais de
+uma vez, a menos que a descrição da invocação indique
+o contrário.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 1, 'Magia de Pacto', 'Por meio de uma cerimônia oculta, você realizou um
+pacto com uma entidade misteriosa para obter poderes
+mágicos. Essa voz nas sombras é enigmática, mas a dádiva concedida por ela é clara: a habilidade de conjurar
+magias. Veja o capítulo 7 para as regras de conjuração.
+As informações a seguir explicam como aplicar essas
+regras às magias de Bruxo, que estão listadas mais
+adiante na descrição da classe.
+Truques. Você conhece dois truques de Bruxo
+à sua escolha. Prestidigitação Arcana e Raio Místico
+são recomendados. Ao alcançar um nível de Bruxo, 
+você pode substituir um dos seus truques dessa
+característica por outro truque de Bruxo à sua escolha.
+Ao atingir os níveis 4 e 10 de Bruxo, você aprende
+mais um truque de Bruxo à sua escolha, conforme
+detalhado na coluna Truques da tabela Características
+de Bruxo.
+Espaços de Magia. A tabela Características de Bruxo
+mostra quantos espaços de magia você tem para
+conjurar suas magias de Bruxo de 1º a 5º círculo. A
+tabela também mostra o círculo desses espaços, todos
+do mesmo círculo. Você restaura todos os espaços
+de Magia de Pacto gastos ao completar um Descanso
+Curto ou Longo.
+Por exemplo, quando você é um Bruxo de nível 5,
+você tem dois espaços de magia de 3º círculo. Para
+conjurar a magia Raio de Bruxa de 1º círculo, você deve
+gastar um desses espaços e conjurá-la como uma magia
+de 3º círculo.
+Magias Preparadas de 1º Círculo ou Superior. Você
+prepara a lista de magias de 1º círculo ou superior
+que estão disponíveis para você conjurar com essa
+característica. Para começar, escolha duas magias de
+Bruxo de 1º círculo. Danação e Enfeitiçar Pessoa são
+recomendadas.
+O número de magias em sua lista aumenta à medida
+que você alcança níveis de Bruxo, conforme mostrado
+na coluna Magias Preparadas da tabela Características
+de Bruxo. Quando esse número aumentar, escolha magias adicionais de Bruxo até que o número de magias
+em sua lista corresponda ao número da tabela. As magias escolhidas devem ser de um círculo não superior
+mostrado na coluna círculo do Espaço da tabela para o
+seu nível. Quando você atinge o nível 6, por exemplo,
+você aprende uma nova magia de Bruxo, que pode ser
+de 1º a 3º círculo.
+Se outra característica de Bruxo lhe concede magias
+sempre preparadas, elas não contam para o número de
+magias que você pode preparar com essa característica,
+mas ainda são consideradas magias de Bruxo para você.
+Mudando Suas Magias Preparadas. Sempre que você
+ganha um nível de Bruxo, pode substituir uma magia
+da sua lista por outra magia de Bruxo de um nível
+elegível.
+Atributo de Conjuração. Carisma é o atributo de
+conjuração para suas magias de Bruxo.
+Foco de Conjuração. Você pode usar um Foco Arcano
+como um Foco de Conjuração para suas magias de
+Bruxo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 2, 'Astúcia Mágica', 'Ao final de um rito esotérico que você pode realizar
+por 1 minuto, você recupera os espaços de magia das
+Magias de Pacto gastos em um número igual à metade
+da sua quantidade máxima (arredondado para cima).
+Você pode usar esta característica novamente após
+completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 3, 'Subclasse de Bruxo', 'Você adquire uma subclasse de Bruxo à sua escolha.
+As subclasses Patrono Arquifada, Patrono Celestial,
+Patrono Grande Antigo e Patrono Ínfero estão detalhadas após a descrição desta classe. Uma subclasse é
+uma especialidade que concede a você características
+em determinados níveis de Bruxo. Durante toda sua
+jornada, você adquire cada uma das características de
+sua subclasse de seu nível de Bruxo ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para
+o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Bruxo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 9, 'Contatar Patrono', 'No passado, você entrava em contato com seu patrono
+por meio de intermediários. Agora, você pode se comunicar diretamente com ele. Você sempre tem a magia Contato Extraplanar preparada. Com esta característica, você
+pode conjurar a magia sem gastar um espaço de magia
+para entrar em contato com seu patrono, e você é bem-sucedido automaticamente na salvaguarda da magia.
+Você pode conjurar a magia com esta característica
+novamente após completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 11, 'Arcana Mística', 'Seu patrono lhe concede um segredo mágico chamado
+arcanum. Escolha uma magia de Bruxo de 6º círculo
+com este arcanum.
+Você pode conjurar sua magia arcanum uma vez sem
+gastar um espaço de magia, e novamente desta forma
+após completar um Descanso Longo.
+Conforme mostrado na tabela Características de
+Bruxo, você recebe outra magia de Bruxo à sua escolha
+que pode ser conjurada deste modo ao atingir os níveis
+de Bruxo 13 (magia de 7º círculo), 15 (magia de 8º círculo) e 17 (magia de 9º círculo). Você restaura todos os
+usos da sua Arcana Mística ao completar um Descanso
+Longo.
+Ao alcançar um nível de Bruxo, você pode substituir
+uma de suas magias de arcanum por outra magia de
+Bruxo do mesmo círculo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+ou outro talento à sua escolha para o qual se qualifica.
+O talento Dádiva do Destino é recomendado.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 20, 'Mestre Místico', 'Ao usar sua característica Astúcia Mágica, você restaura todos os seus espaços de magia gastos das suas
+Magias de Pacto.
+Opções de Invocações Místicas
+As opções de Invocações Místicas aparecem em ordem
+alfabética.
+Armadura de Sombras
+Você pode conjurar Armadura Arcana em si sem gastar
+um espaço de magia.
+Explosão Agonizante
+Pré-requisitos: Bruxo Nível 2 ou superior, um Truque de
+Bruxo que Cause Dano
+Escolha um dos seus truques conhecidos de Bruxo que
+cause dano. Você pode adicionar seu modificador de
+Carisma às jogadas de dano dessa magia.
+Repetível. Você pode adquirir esta invocação mais
+de uma vez, escolhendo um truque elegível diferente a
+cada vez.
+Explosão Repulsiva
+Pré-requisitos: Bruxo Nível 2 ou superior, um Truque de
+Bruxo que Cause Dano com uma Jogada de Ataque
+Escolha um dos seus truques conhecidos de Bruxo que
+exija uma jogada de ataque. Ao atingir uma criatura
+Grande ou menor com esse truque, você pode empurrá-la até 3 metros para longe de você.
+Repetível. Você pode adquirir esta invocação mais
+de uma vez, escolhendo um truque elegível diferente a
+cada vez.
+Investimento do Mestre da Corrente
+Pré-requisitos: Bruxo Nível 5 ou superior, Pacto da Corrente
+Ao conjurar Convocar Familiar, você infunde o familiar
+invocado com uma dose de seu poder místico, concedendo à criatura os seguintes benefícios.
+Aéreo ou Aquático. O familiar obtém um Deslocamento de Voo ou um Deslocamento de Natação (à sua
+escolha) de 12 metros.
+Ataque Rápido. Como uma Ação Bônus, você pode
+ordenar o familiar a executar a ação Atacar.
+CD para Evitar sua Magia. Se o familiar forçar uma
+criatura a realizar uma salvaguarda, ela usa a CD para
+evitar sua magia.
+Dano Necrótico ou Radiante. Sempre que o familiar
+causar dano Contundente, Cortante ou Perfurante,
+você pode substituir o dano por Necrótico ou Radiante.
+Resistência. Quando o familiar sofre dano, você pode
+executar uma Reação para conceder Resistência contra
+esse dano.
+Lamento das Sepulturas
+Pré-requisito: Bruxo Nível 7 ou superior
+Você pode conjurar Falar com Mortos sem gastar um
+espaço de magia.
+Lâmina Devoradora
+Pré-requisito: Bruxo Nível 12 ou superior, Lâmina
+Sedenta
+O Ataque Extra da sua invocação Lâmina Sedenta
+concede dois ataques extras em vez de um.
+Lâmina Sedenta
+Pré-requisitos: Bruxo Nível 5 ou superior, Pacto da Lâmina
+Você adquire a característica Ataque Extra apenas
+para sua arma de pacto e você pode atacar duas vezes
+com ela, em vez de uma, quando executar a ação Atacar no seu turno.
+
+Lança Mística
+Pré-requisitos: Bruxo Nível 2 ou superior, um Truque de
+Bruxo que Cause Dano
+Escolha um dos seus truques conhecidos de Bruxo que
+cause dano e tenha um alcance de 3 metros ou mais.
+Ao conjurar essa magia, seu alcance aumenta em um
+número de metros igual a 9 vezes o seu nível de Bruxo.
+Repetível. Você pode adquirir esta invocação mais
+de uma vez, escolhendo um truque elegível diferente a
+cada vez.
+Lições dos Grandes Antigos
+Pré-requisito: Bruxo Nível 2 ou superior
+Você recebeu conhecimento de uma entidade antiga do
+multiverso, permitindo que você obtenha um talento
+de Origem à sua escolha.
+Repetível. Você pode adquirir esta invocação mais de
+uma vez, escolhendo um talento de Origem diferente
+cada vez.
+Máscara das Muitas Faces
+Pré-requisito: Bruxo Nível 2 ou superior
+Você pode conjurar Disfarçar-se sem gastar um espaço
+de magia.
+Mente Mística
+Você tem Vantagem em salvaguardas de Constituição
+que realiza para manter a Concentração.
+Mestre das Infindáveis Formas
+Pré-requisito: Bruxo Nível 5 ou superior
+Você pode conjurar Alterar-se sem gastar um espaço de
+magia.
+Olhar de Duas Mentes
+Pré-requisito: Bruxo Nível 5 ou superior
+Como uma Ação Bônus, você pode tocar uma criatura
+voluntária e perceber através de seus sentidos até o
+final do seu próximo turno. Enquanto a criatura estiver
+no mesmo plano de existência que você, você pode executar uma Ação Bônus nos turnos subsequentes para
+manter essa conexão, estendendo a duração até o final
+do seu próximo turno. A conexão encerra se você não
+a mantiver deste modo.
+Ao perceber através dos sentidos da outra criatura,
+você se beneficia de quaisquer sentidos especiais possuídos por ela e pode conjurar magias como se estivesse em seu espaço ou no espaço da outra criatura se
+vocês dois estiverem a até 18 metros um do outro.
+Pacto da Corrente
+Você aprende a magia Convocar Familiar e pode conjurá-la como uma ação Usar Magia sem gastar um espaço
+de magia.
+Ao conjurar a magia, você escolhe uma das formas
+normais para o seu familiar ou uma das seguintes formas especiais: Cobra Peçonhenta, Diabrete, Esfinge
+Maravilhosa, Esqueleto, Pseudodragão, Quasit,
+Slaad Girino, Sprite (veja o apêndice B para o bloco
+de estatísticas do familiar).
+Além disso, ao executar ação Atacar, você pode
+renunciar a um de seus próprios ataques para permitir
+que seu familiar realize um ataque próprio como uma
+Reação dele.
+Pacto da Lâmina
+Como uma Ação Bônus, você pode conjurar uma arma
+de pacto em sua mão — uma arma Corpo a Corpo
+Simples ou Marcial à sua escolha com a qual você se
+vincula — ou cria um vínculo com uma arma mágica
+que você toca; você não pode se vincular a uma arma
+mágica se outra pessoa estiver sintonizada ou outro
+Bruxo tiver vínculo com ela. Até que o vínculo encerre,
+você tem proficiência com a arma e pode usá-la como
+Foco de Conjuração.
+Ao atacar com a arma vinculada, você pode usar seu
+modificador de Carisma para as jogadas de ataque e
+dano em vez de usar Força ou Destreza; e você pode
+causar dano Necrótico, Psíquico ou Radiante ou o tipo
+de dano normal da arma.
+Seu vínculo com a arma encerra se você executar a
+Ação Bônus desta característica novamente, se a arma
+estiver a mais de 1,5 metro de você por 1 minuto ou
+mais, ou se você morrer. Uma arma conjurada desaparece quando o vínculo encerra.
+Pacto do Tomo
+Ao costurar fios de sombra, você conjura um livro em
+sua mão ao final de um Descanso Curto ou Longo. Este
+Livro das Sombras (você determina a aparência dele)
+contém magia mística que só você pode acessar, concedendo-lhe os benefícios abaixo. O livro desaparece se
+você conjurar outro livro com essa característica ou se
+você morrer.
+Truques e Rituais. Quando o livro surgir, escolha três
+truques e duas magias de 1º círculo que tenham o marcador Ritual. As magias podem ser da lista de magias
+de qualquer classe e devem ser magias que você ainda
+não tem preparadas. Enquanto o livro estiver com
+você, você tem as magias escolhidas preparadas e elas
+funcionam como magias de Bruxo para você.
+Foco de Conjuração. Você pode usar o livro como um
+Foco de Conjuração.
+Passo Ascendente
+Pré-requisito: Bruxo Nível 5 ou superior
+Você pode conjurar Levitação em si sem gastar um
+espaço de magia.
+Presente das Profundezas
+Pré-requisito: Bruxo Nível 5 ou superior
+Você pode respirar debaixo d’água e obter um Deslocamento de Natação igual ao seu Deslocamento.
+
+Você também pode conjurar Respirar na Água uma
+vez sem gastar um espaço de magia e novamente sempre que completar um Descanso Longo.
+Presente dos Protetores
+Pré-requisitos: Bruxo Nível 9 ou superior, Pacto do Tomo
+Uma nova página aparece em seu Livro das Sombras
+quando você o conjura. Com sua permissão, uma
+criatura pode executar uma ação para escrever o nome
+dela nesta página, que pode conter um número de
+nomes igual ao seu modificador de Carisma (mínimo
+de um nome).
+Quando qualquer criatura cujo nome está na página
+é reduzida a 0 Pontos de Vida, mas não morta imediatamente, a criatura magicamente tem 1 Ponto de Vida.
+Uma vez que essa magia é acionada, nenhuma criatura pode se beneficiar dela até que você complete um
+Descanso Longo.
+Como uma ação Usar Magia, você pode apagar um
+nome na página tocando nele.
+Punição Mística
+Pré-requisitos: Bruxo Nível 5 ou superior, Pacto da Lâmina
+Uma vez por turno, ao atingir uma criatura com sua
+arma de pacto, você pode gastar um espaço de Magia
+de Pacto para causar 1d8 pontos de dano Energético
+adicionais ao alvo, mais 1d8 por círculo do espaço de
+magia, e pode impor ao alvo a condição Caído se ele for
+Enorme ou menor.
+Salto Sobrenatural
+Pré-requisito: Bruxo Nível 2 ou superior
+Você pode conjurar Salto em si sem gastar um espaço
+de magia.
+Sorvedouro de Vida
+Pré-requisitos: Bruxo Nível 9 ou superior, Pacto da Lâmina
+Uma vez por turno, ao atingir uma criatura com sua
+arma de pacto, você pode causar à criatura 1d6 pontos
+de dano Necrótico, Psíquico ou Radiante adicionais (à
+sua escolha) e você pode gastar um de seus Dados de
+Pontos de Vida para jogá-lo e recuperar um número de
+Pontos de Vida igual ao resultado mais seu modificador
+de Constituição (mínimo de 1 Ponto de Vida).
+Uno com as Sombras
+Pré-requisito: Bruxo Nível 5 ou superior
+Enquanto estiver em uma área de Meia-luz ou Escuridão, você pode conjurar Invisibilidade em si sem gastar
+um espaço de magia.
+Vigor Ínfero
+Pré-requisito: Bruxo Nível 2 ou superior
+Você pode conjurar Vitalidade Vazia em si sem gastar
+um espaço de magia. Ao conjurar a magia com essa
+característica, você não joga o dado para os Pontos
+de Vida Temporários, pois recebe automaticamente o
+número máximo no dado.
+Visão da Bruxa
+Pré-requisito: Bruxo Nível 15 ou superior
+Você tem Visão Verdadeira com um alcance de 9 metros.
+Visão Diabólica
+Pré-requisito: Bruxo Nível 2 ou superior
+Você pode ver normalmente em Meia-luz e Escuridão
+— mágicas e não mágicas — a até 36 metros de você.
+Visões de Reinos Distantes
+Pré-requisito: Bruxo Nível 9 ou superior
+Você pode conjurar Olho Arcano sem gastar um espaço
+de magia.
+Visões Nebulosas
+Pré-requisito: Bruxo Nível 2 ou superior
+Você pode conjurar Imagem Silenciosa sem gastar um
+espaço de magia.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 1, 'Conjuração', 'Você aprendeu a conjurar magias por meio de oração
+e meditação. Veja o capítulo 7 para as regras sobre
+conjuração de magias. As informações abaixo detalham como você usa essas regras com as magias de
+Clérigo, explicadas na lista de magias de Clérigo mais
+adiante na descrição da classe.
+Truques. Você conhece três truques à sua escolha
+da lista de magias de Clérigo. Chama Sagrada, Orientação e Taumaturgia são recomendados.
+Sempre que você alcança um nível de Clérigo, pode
+substituir um dos seus truques por outro truque à sua
+escolha da lista de magias de Clérigo.
+Quando alcançar os níveis 4 e 10 de Clérigo, você
+aprende mais um truque à sua escolha da lista de
+magias de Clérigo, conforme mostrado na coluna
+Truques da tabela Características de Clérigo.
+Espaços de Magia. A tabela Características de Clérigo mostra quantos espaços de magia você tem para
+conjurar suas magias de 1º círculo ou superior. Você
+recupera todos os espaços gastos quando completa
+um Descanso Longo.
+Magias Preparadas de 1º Círculo ou Superior. Você
+prepara a lista de magias de nível 1º circulo ou superior que estão disponíveis para você conjurar com
+essa característica. Para começar, escolha quatro
+magias de 1º círculo da lista de magias de Clérigo.
+Bênção, Curar Ferimentos, Escudo da Fé e Raio Guia são
+recomendadas.
+O número de magias em sua lista aumenta à medida
+que você alcança níveis de Clérigo, conforme mostrado na coluna Magias Preparadas da tabela Características de Clérigo. Sempre que esse número aumentar, escolha magias adicionais da lista de magias de
+Clérigo até que o número de magias em sua lista seja
+o mesmo do número da tabela. As magias escolhidas
+devem ser de um círculo para o qual você possui
+espaços de magia. Por exemplo, se você é um Clérigo de nível 3, sua lista de magias preparadas pode
+incluir seis magias de 1º ou 2º círculo em qualquer
+combinação.
+Se outra característica de Clérigo lhe der magias
+que você sempre tem preparadas, essas magias não
+contam para o número de magias que você pode preparar com esta característica, mas que contam como
+magias de Clérigo para você.
+Mudando Suas Magias Preparadas. Sempre que
+completar um Descanso Longo, você pode definir
+sua lista de magias preparadas, substituindo qualquer
+uma das magias por outras magias de Clérigo para as
+quais você tem espaços de magia.
+Atributo de Conjuração. Sabedoria é seu atributo de
+conjuração para suas magias de Clérigo.
+Foco de Conjuração. Você pode usar um Símbolo Sagrado como um Foco de Conjuração para suas magias
+de Clérigo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 1, 'Ordem Divina', 'Você se dedicou a um dos seguintes papéis sagrados à
+sua escolha.
+Protetor. Treinado para a batalha, você adquire
+proficiência com armas Marciais e treinamento com
+Armadura Pesada.
+Taumaturgo. Você conhece um truque adicional da
+lista de magias de Clérigo. Além disso, sua conexão
+mística com o divino lhe dá um bônus em seus testes
+de Inteligência (Arcanismo ou Religião). O bônus é
+igual ao seu modificador de Sabedoria (mínimo de +1).') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 2, 'Canalizar Divindade', 'Você pode canalizar energia divina diretamente dos
+Planos Externos para alimentar efeitos mágicos. Você
+começa com dois desses efeitos: Centelha Divina e Expulsar Mortos-Vivos, cada um descrito a seguir. Cada
+vez que você usar o Canalizar Divindade desta classe,
+escolha qual efeito de Canalizar Divindade deseja
+realizar. Você obtém opções adicionais de efeitos em
+níveis mais altos de Clérigo.
+Você pode usar o Canalizar Divindade desta classe
+duas vezes. Você recupera um uso gasto ao completar
+um Descanso Curto e todos os usos gastos ao completar um Descanso Longo. Você adquire usos adicionais
+ao atingir certos níveis de Clérigo, conforme mostrado na coluna Canalizar Divindade da tabela Características de Clérigo.
+Se um efeito de Canalizar Divindade exigir uma
+salvaguarda, a CD é igual a CD para evitar magia da
+característica Conjuração desta classe.
+Centelha Divina. Como uma ação Usar Magia, você
+expõe seu Símbolo Sagrado para outra criatura à sua
+vista a até 9 metros e canaliza energia divina nela.
+Jogue 1d8 e adicione seu modificador de Sabedoria.
+Você pode restaurar Pontos de Vida da criatura igual
+ao resultado total ou forçar a criatura a realizar uma
+salvaguarda de Constituição. Se falhar, a criatura sofre dano Necrótico ou Radiante (à sua escolha) igual
+ao total. Em caso de sucesso, a criatura recebe metade
+do dano (arredondado para baixo).
+Você joga um d8 adicional quando atinge os níveis
+de 7 (2d8), 13 (3d8) e 18 (4d8) de Clérigo.
+Expulsar Mortos-Vivos. Como uma ação Usar Magia,
+você mostra seu Símbolo Sagrado e repreende criaturas Mortas-Vivas. Cada Morto-Vivo à sua escolha
+a até 9 metros de você deve realizar uma salvaguarda
+de Sabedoria. Se a criatura falhar, ela está com as condições Amedrontado e Incapacitado por 1 minuto.
+Pela duração da canalização, ela tenta se mover o mais
+longe possível de você nos turnos dela. Este efeito se
+encerra na criatura se ela sofrer algum dano, se você
+está com a condição Incapacitado ou se você morrer.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 3, 'Subclasse de Clérigo', 'Você adquire uma subclasse de Clérigo à sua escolha.
+Uma subclasse é uma especialização que lhe concede
+características em determinados níveis de Clérigo. As
+subclasses Domínio da Guerra, Domínio da Luz, Domínio da Trapaça e Domínio da Vida estão detalhadas
+após a descrição desta classe. Para o resto de sua jornada, você recebe cada uma das características de sua
+subclasse que são de seu nível de Clérigo ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo (veja o capítulo 5) ou outro talento à sua escolha
+para o qual atenda os pré-requisitos. Você adquire
+essa característica novamente nos níveis 8, 12 e 16 de
+Clérigo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 5, 'Fulminar Mortos-Vivos', 'Ao usar Expulsar Mortos-Vivos, você pode jogar
+uma quantidade de d8s igual ao seu modificador de
+Sabedoria (mínimo de 1d8) e somar os resultados
+jogados. Cada Morto-Vivo que falhar na salvaguarda
+sofre dano Radiante igual ao resultado da soma dos
+dados jogados. Esse dano não encerra o efeito de
+Expulsar Mortos-Vivos.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 7, 'Golpes Abençoados', 'Você se infunde de poder divino em combate. Você
+adquire uma das seguintes opções à sua escolha (se
+você já tiver qualquer uma dessas opções de uma
+subclasse de Clérigo em um livro antigo de D&D, use
+apenas a opção escolhida para esta característica).
+Conjuração Poderosa. Adicione seu modificador de
+Sabedoria ao dano causado com qualquer truque de
+Clérigo.
+Golpe Divino. Uma vez em cada um dos seus turnos,
+quando você atinge uma criatura com uma jogada de
+ataque usando uma arma, você pode causar ao alvo
+1d8 pontos de dano Necrótico ou Radiante (à sua
+escolha) adicionais.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 10, 'Intervenção Divina', 'Você pode convocar sua divindade ou panteão para
+intervir em seu nome. Como uma ação Usar Magia,
+escolha qualquer magia de Clérigo de 5º círculo ou
+inferior que não exija uma Reação para ser conjurada.
+Como parte da mesma ação, você conjura essa magia
+sem gastar espaço de magia ou precisar de componentes Materiais. Você não pode usar essa característica
+novamente até completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 14, 'Golpes Abençoados Aprimorados', 'A opção que você escolheu para Golpes Abençoados
+fica mais poderosa.
+Conjuração Poderosa. Quando conjurar um truque
+de Clérigo e causar dano a uma criatura com ele, você
+pode conferir vitalidade a si ou a outra criatura a até
+18 metros de você, concedendo um número de Pontos
+de Vida Temporários igual ao dobro do seu modificador de Sabedoria.
+Golpe Divino. O dano adicional de seu Golpe Divino
+aumenta para 2d8.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo
+5) ou outro talento à sua escolha para o qual se qualifica. Dádiva do Destino é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 20, 'Intervenção Divina Maior', 'Você pode convocar uma intervenção divina ainda mais poderosa. Quando usar sua característica
+Intervenção Divina, você pode escolher Desejo como
+opção de magia. Se fizer isso, não pode usar Intervenção Divina novamente até completar 2d4 Descansos
+Longos.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 1, 'Conjuração', 'Você aprendeu a conjurar magias através do estudo
+das forças místicas da natureza. Veja o capítulo 7
+para as regras de conjuração. As informações abaixo
+detalham como você usa essas regras com magias de
+Druida, que aparecem na lista de magias de Druida
+mais adiante na descrição da classe.
+Truques. Você conhece dois truques à sua escolha da
+lista de magias de Druida. Arte Druídica e Criar Chamas
+são recomendadas.
+Sempre que você alcança um nível de Druida, pode
+substituir um de seus truques por outro truque à sua
+escolha da lista de magias de Druida.
+Ao atingir os níveis 4 e 10 de Druida, você aprende
+mais um truque à sua escolha da lista de magias de
+Druida, conforme mostrado na coluna Truques da
+tabela Características de Druida.
+Espaços de Magia. A tabela Características de Druida
+mostra quantos espaços de magia você tem para conjurar suas magias de 1º círculo ou superior. Você restaura todos os espaços gastos ao completar um Descanso
+Longo.
+Magias Preparadas de 1º Círculo ou Superior. Você
+prepara a lista de magias de 1º círculo ou superior que
+estão disponíveis para você conjurar com esta característica. Para começar, escolha quatro magias de 1º
+círculo da lista de magias de Druida. Amizade Animal,
+Curar Ferimentos, Fogo das Fadas e Onda Trovejante são
+recomendadas.
+O número de magias em sua lista aumenta à medida
+que você alcança níveis de Druida, conforme mostrado
+na coluna Magias Preparadas da tabela Características
+de Druida. Sempre que esse número aumentar, escolha magias adicionais da lista de magias de Druida até
+que o número de magias em sua lista corresponda ao
+número da tabela. As magias escolhidas devem ser de
+um círculo para o qual você possui espaços de magia.
+Por exemplo, se você é um Druida de nível 3, sua lista
+de magias preparadas pode incluir seis magias de 1º ou
+2º círculo em qualquer combinação.
+Se outra característica de Druida lhe der magias que
+você sempre tem preparadas, essas magias não contam
+para o número de magias que você pode preparar com 
+esta característica, mas essas magias, de outra forma,
+contam como magias de Druida para você.
+Mudando Suas Magias Preparadas. Sempre que completar um Descanso Longo, você pode mudar sua lista
+de magias preparadas, substituindo qualquer uma das
+magias por outras magias de Druida para as quais você
+tem espaços de magia.
+Atributo de Conjuração. Sabedoria é seu atributo de
+conjuração para suas magias de Druida.
+Foco de Conjuração. Você pode usar um Foco Druídico como um Foco de Conjuração para suas magias de
+Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 1, 'Idioma Druídico', 'Você domina Druídico, o idioma secreto dos Druidas.
+Ao aprender esse idioma antigo, você também adquiriu
+a habilidade mágica de se comunicar com animais; você
+sempre tem a magia Falar com Animais preparada.
+Você pode usar Druídico para deixar mensagens
+ocultas. Você e outros que conhecem Druídico identificam automaticamente tal mensagem. Outros podem
+perceber a presença da mensagem com um teste de
+Inteligência (Investigação) CD 15, mas não podem
+decifrá-la sem magia.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 1, 'Ordem Primal', 'Você se dedicou a uma das seguintes funções sagradas
+à sua escolha.
+Protetor. Treinado para a batalha, você adquire
+proficiência com armas Marciais e treinamento com
+armadura Média.
+Xamã. Você conhece um truque adicional da lista de
+magias de Druida. Além disso, sua conexão mística com
+a natureza lhe concede um bônus em seus testes de
+Inteligência (Arcanismo ou Natureza). O bônus é igual
+ao seu modificador de Sabedoria (bônus mínimo de +1).') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 2, 'Companheiro Selvagem', 'Você pode invocar um espírito da natureza que assume
+a forma de um animal para auxiliá-lo. Como uma ação
+Usar Magia, você pode gastar um espaço de magia ou
+um uso de Forma Selvagem para conjurar a magia
+Convocar Familiar sem componentes Materiais.
+Ao conjurar a magia deste modo, o familiar é uma
+criatura Feérica e desaparece ao completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 2, 'Forma Selvagem', 'O poder da natureza permite que você assuma a forma
+de um animal. Como uma Ação Bônus, você multimorfa para uma forma Animal que você aprendeu com
+esta característica (veja “Formas Conhecidas”, abaixo). Você fica nessa forma por um número de horas
+igual à metade do seu nível de Druida, até usar Forma
+Selvagem novamente, ter a condição Incapacitado ou
+morrer. Você também pode sair da forma antes como
+uma Ação Bônus.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 3, 'Subclasse de Druida', 'Você adquire uma subclasse de Druida à sua escolha.
+As subclasses Círculo da Lua, Círculo da Terra, Círculo
+das Estrelas e Círculo do Mar são detalhadas a seguir
+neste capítulo. Uma subclasse é uma especialidade que
+lhe concede características em determinados níveis de
+Druida. Durante toda sua carreira, você recebe cada
+uma das características de sua subclasse que são de seu
+nível de Druida ou inferior.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para
+o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 5, 'Ressurgimento Selvagem', 'Uma vez em cada um de seus turnos, se você não tiver
+mais usos de Forma Selvagem, pode recuperar um
+uso gastando um espaço de magia (nenhuma ação é
+necessária).
+Além disso, você pode gastar um uso de Forma Selvagem (nenhuma ação é necessária) para recuperar um
+espaço de magia de 1º círculo, mas não pode fazê-lo
+novamente até completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 7, 'Fúria Elemental', 'O poder dos elementos flui através de você. Você recebe uma das seguintes opções à sua escolha.
+Ataque Primal. Uma vez em cada um dos seus turnos,
+ao atingir uma criatura com uma jogada de ataque
+usando uma arma ou um ataque da forma Animal em
+Forma Selvagem, pode causar 1d8 pontos de dano
+Elétrico, Gélido, Ígneo ou Trovejante (à sua escolha
+quando você atinge) adicional ao alvo.
+Conjuração Poderosa. Adicione seu modificador de
+Sabedoria ao dano causado com qualquer truque de
+Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 15, 'Fúria Elemental Aprimorada', 'A opção que você escolheu para Fúria Elemental fica
+mais poderosa, conforme detalhado abaixo.
+Ataque Primal. O dano adicional de seu Ataque Primal aumenta para 2d8.
+Conjuração Poderosa. Ao conjurar um truque de
+Druida com um alcance de 3 metros ou mais, o alcance
+da magia aumenta para 90 metros.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 18, 'Magias Bestiais', 'Ao usar Forma Selvagem, você pode conjurar magias
+na forma Animal, exceto magias que tenham um com-
+
+ponente Material com um custo especificado ou que
+consuma seu componente Material.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+ou outro talento à sua escolha para o qual se qualifica.
+Dádiva da Viagem Dimensional é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 20, 'Arquidruida', 'A vitalidade da natureza floresce constantemente dentro de você, concedendo-lhe os seguintes benefícios.
+Forma Selvagem Eterna. Sempre que você joga Iniciativa e não tem mais usos de Forma Selvagem, você
+recupera um uso gasto dela.
+Natureza Xamânica. Você pode converter usos de
+Forma Selvagem em um espaço de magia (nenhuma
+ação é necessária). Escolha um número de seus usos
+não gastos de Forma Selvagem e transforme-os em
+um único espaço de magia, com cada uso contribuindo
+com espaços de magia de 2º círculo. Por exemplo, se
+você transformar dois usos de Forma Selvagem, você
+produz um espaço de magia de 4º círculo. Após usar
+este benefício, você não pode fazê-lo novamente até
+completar um Descanso Longo.
+Longevidade. A magia primitiva que você utiliza permite que você envelheça mais lentamente: para cada
+dez anos que passam, seu corpo envelhece apenas um.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 1, 'Conjuração', 'Através da sua magia inata, você pode conjurar magias.
+Veja o capítulo 7 para as regras sobre conjuração de
+magias. As informações abaixo detalham como você
+usa essas regras com magias de Feiticeiro, que aparecem na lista de magias de Feiticeiro mais adiante na
+descrição da classe.
+Truques. Você conhece quatro truques de Feiticeiro
+à sua escolha. Explosão Elemental, Luz, Prestidigitação Arcana e Toque Chocante são recomendados. Ao alcançar
+um nível de Feiticeiro, você pode substituir um dos
+seus truques dessa característica por outro truque de
+Feiticeiro à sua escolha.
+Ao atingir os níveis 4 e 10 de Feiticeiro, você aprende
+mais um truque de Feiticeiro à sua escolha, conforme
+detalhado na coluna Truques da tabela Características
+de Feiticeiro.
+Espaços de Magia. A tabela Características de Feiticeiro mostra quantos espaços de magia você tem para
+conjurar suas magias de 1º círculo ou superior. Você
+restaura todos os espaços gastos ao completar um
+Descanso Longo.
+Magias Preparadas de 1º Círculo ou Superior. Você
+prepara a lista de magias de 1º círculo ou superior que
+estão disponíveis para você conjurar com essa característica. Para começar, escolha duas magias de Feiticeiro
+de 1º círculo. Detectar Magia e Mãos Flamejantes são
+recomendadas.
+O número de magias em sua lista aumenta à medida que você atinge níveis de Feiticeiro, conforme
+mostrado na coluna Magias Preparadas da tabela
+Características de Feiticeiro. Sempre que esse número
+aumentar, escolha magias adicionais da lista de magias
+de Feiticeiro até que o número de magias em sua lista
+corresponda ao número da tabela. As magias escolhidas devem ser de um círculo para o qual você possui
+espaços de magia. Por exemplo, se você é um Feiticeiro
+de nível 3, sua lista de magias preparadas pode incluir
+seis magias de Feiticeiro de 1º ou 2º círculo em qualquer combinação.
+Se outra característica de Feiticeiro lhe concede
+magias sempre preparadas, elas não contam para o
+número de magias que você pode preparar com essa
+característica, mas ainda são consideradas magias de
+Feiticeiro para você.
+Mudando Suas Magias Preparadas. Sempre que você
+obtém um nível de Feiticeiro, pode substituir uma
+magia em sua lista por outra magia de Feiticeiro para a
+qual você tem espaços de magia.
+Atributo de Conjuração. Carisma é seu atributo de
+conjuração para suas magias de Feiticeiro.
+Foco de Conjuração. Você pode usar um Foco Arcano
+como um Foco de Conjuração para suas magias de
+Feiticeiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 1, 'Feitiçaria Inata', 'Um evento em seu passado deixou uma marca permanente em você, lhe infundindo magia latente. Como
+uma Ação Bônus, você pode liberar essa magia por
+1 minuto, durante o qual você adquire os seguintes
+benefícios:
+A CD para evitar suas magias de Feiticeiro aumenta
+em 1.
+Você tem Vantagem nas jogadas de ataque das magias de Feiticeiro que conjurar.
+Você pode usar essa característica duas vezes e restaura todos os usos gastos ao completar um Descanso
+Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 2, 'Fonte de Magia', 'Você pode aproveitar a fonte de magia dentro de si.
+Essa fonte é representada por Pontos de Feitiçaria,
+que permitem que você crie uma variedade de efeitos
+mágicos.
+Você tem 2 Pontos de Feitiçaria e adquire mais à medida que atinge níveis mais altos, conforme detalhado
+na coluna Pontos de Feitiçaria da tabela Características
+de Feiticeiro. Você não pode ter mais Pontos de Feitiçaria do que o número mostrado na tabela para o seu
+nível e restaura todos os Pontos de Feitiçaria gastos ao
+completar um Descanso Longo.
+Você pode usar seus Pontos de Feitiçaria para abastecer as opções abaixo, juntamente com outras características, como Metamagia, que usam esses pontos.
+Convertendo Espaços de Magia em Pontos de Feitiçaria. Você pode gastar um espaço de magia para receber
+um número de Pontos de Feitiçaria igual ao círculo do
+espaço (nenhuma ação é necessária).
+Criando Espaços de Magia. Como uma Ação Bônus,
+você pode transformar Pontos de Feitiçaria não gastos
+em um espaço de magia. A tabela Criando Espaços de
+Magia mostra o custo de criar um espaço de magia
+de um determinado círculo e lista o nível mínimo de
+Feiticeiro que você deve ter para criar um espaço. Você
+pode criar um espaço de magia não superior ao 5º
+círculo.
+Qualquer espaço de magia que você criar com essa
+característica desaparece ao completar um Descanso
+Longo.
+Criando Espaços de Magia
+Círculo de Espaço de Magia Custo de Ponto de Feitiçaria Nível Mín. de Feiticeiro
+1 2 2
+2 3 3
+3 5 5
+4 6 7
+5 7 9') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 2, 'Metamagia', 'Sua magia flui de dentro para fora, permitindo que
+você ajuste suas magias conforme necessário. Você
+adquire duas opções de Metamagia à sua escolha em
+“Opções de Metamagia”, que são apresentadas mais
+adiante na descrição desta classe. Essas opções podem
+ser usadas para modificar temporariamente as magias
+que conjura, consumindo a quantidade correspondente
+de Pontos de Feitiçaria.
+Você pode usar apenas uma opção de Metamagia
+em uma magia ao conjurá-la, a menos que indicado de
+outra forma em uma dessas opções.
+Ao atingir um nível de Feiticeiro, você pode substituir
+uma de suas opções de Metamagia por uma que não
+conhece. Você adquire mais duas opções no nível 10 de
+Feiticeiro e mais duas opções no nível 17 de Feiticeiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 3, 'Subclasse de Feiticeiro', 'Você adquire uma subclasse de Feiticeiro à sua escolha.
+As subclasses Feitiçaria Aberrante, Feitiçaria Dracônica, Feitiçaria Mecânica, Feitiçaria Selvagem estão detalhadas após a descrição desta classe. Uma subclasse
+é uma especialidade que concede a você características
+em determinados níveis de Feiticeiro. Durante toda sua
+jornada, você adquire cada uma das características de
+sua subclasse de seu nível de Feiticeiro ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para o
+qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Feiticeiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 5, 'Restauração Feiticeira', 'Ao completar um Descanso Curto, você pode recuperar
+os Pontos de Feitiçaria gastos, mas não mais do que um
+número igual à metade do seu nível de Feiticeiro (arredondado para baixo). Você só pode usar esta característica novamente após completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 7, 'Feitiçaria Encarnada', 'Quando não houver mais usos de Feitiçaria Inata, você
+pode usá-la se gastar 2 Pontos de Feitiçaria ao executar
+a Ação Bônus para ativá-la.
+Além disso, enquanto sua característica Feitiçaria
+Inata estiver ativa, você pode usar até duas de suas
+opções de Metamagia em cada magia conjurada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+ou outro talento à sua escolha para o qual se qualifica.
+Dádiva da Viagem Dimensional é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 20, 'Apoteose Arcana', 'Enquanto sua característica Feitiçaria Inata estiver
+ativa, você pode usar uma opção de Metamagia em
+cada um de seus turnos sem gastar Pontos de Feitiçaria
+com ela.
+Opções de Metamagia
+As seguintes opções estão disponíveis para sua característica Metamagia. As opções são apresentadas em
+ordem alfabética.
+Magia Acelerada
+Custo: 2 Pontos de Feitiçaria
+Ao conjurar uma magia que tenha um tempo de
+conjuração de uma ação, você pode gastar 2 Pontos
+de Feitiçaria para alterar o tempo de conjuração para
+uma Ação Bônus para esta conjuração. Você não pode
+modificar uma magia deste modo se já conjurou uma
+magia de 1º círculo ou superior no turno atual, nem
+pode conjurar uma magia de 1º círculo ou superior
+neste turno após modificar uma magia deste modo.
+Magia Agravada
+Custo: 2 Pontos de Feitiçaria
+Ao conjurar uma magia que força uma criatura a
+realizar uma salvaguarda, você pode gastar 2 Pontos de
+Feitiçaria para conceder a um alvo da magia Desvantagem em salvaguardas contra a magia.
+Magia Buscadora
+Custo: 1 Ponto de Feitiçaria
+Ao realizar uma jogada de ataque com uma magia e
+errar, você pode gastar 1 Ponto de Feitiçaria para jogar
+novamente o d20 e deve usar o novo resultado.
+
+Você pode usar Magia Buscadora mesmo que já tenha usado uma opção diferente de Metamagia durante
+a conjuração da magia.
+Magia Cautelosa
+Custo: 1 Ponto de Feitiçaria
+Ao conjurar uma magia que força outras criaturas a
+realizar uma salvaguarda, você pode proteger algumas dessas criaturas da força total da magia. Para
+isso, gaste 1 Ponto de Feitiçaria e escolha um número
+dessas criaturas igual até seu modificador de Carisma
+(mínimo de uma criatura). Uma criatura escolhida é
+automaticamente bem-sucedida na salvaguarda contra
+a magia, e não sofre dano se normalmente sofreria
+metade do dano em caso de sucesso.
+Magia Distante
+Custo: 1 Ponto de Feitiçaria
+Ao conjurar uma magia que tenha um alcance de pelo
+menos 1,5 metro, você pode gastar 1 Ponto de Feitiçaria para dobrar o alcance da magia. Ou quando você
+conjura uma magia que tem um alcance de Toque, você
+pode gastar 1 Ponto de Feitiçaria para que o alcance da
+magia seja 9 metros.
+Magia Duplicada
+Custo: 1 Ponto de Feitiçaria
+Ao conjurar uma magia, como Enfeitiçar Pessoa, que
+pode ser conjurada com um espaço de magia de círculo
+superior para atingir uma criatura adicional, você pode
+gastar 1 Ponto de Feitiçaria para aumentar o círculo
+efetivo da magia em 1.
+Magia Persistente
+Custo: 1 Ponto de Feitiçaria
+Ao conjurar uma magia que tenha uma duração de 1
+minuto ou mais, você pode gastar 1 Ponto de Feitiçaria para dobrar sua duração para até o máximo de 24
+horas.
+Se a magia afetada exigir Concentração, você tem
+Vantagem em qualquer salvaguarda que realizar para
+manter essa Concentração.
+Magia Potencializada
+Custo: 1 Ponto de Feitiçaria
+Ao jogar dano para uma magia, você pode gastar 1 Ponto de Feitiçaria para jogar novamente um número de
+dados de dano igual a até seu modificador de Carisma
+(mínimo de um), e deve usar os novos resultados.
+Você pode usar Magia Potencializada mesmo que
+já tenha usado uma opção diferente de Metamagia
+durante a conjuração da magia.
+Magia Sutil
+Custo: 1 Ponto de Feitiçaria
+Ao conjurar uma magia, você pode gastar 1 Ponto de
+Feitiçaria para conjurá-la sem quaisquer componentes
+Verbais, Somáticos ou Materiais, exceto componentes
+Materiais consumidos pela magia ou que têm um custo
+detalhado na magia.
+Magia Transmutada
+Custo: 1 Ponto de Feitiçaria
+Ao conjurar uma magia que cause um tipo de dano da
+lista a seguir, você pode gastar 1 Ponto de Feitiçaria
+para alterar esse tipo de dano para um dos outros tipos
+listados: Ácido, Elétrico, Gélido, Ígneo, Trovejante,
+Venenoso.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 1, 'Conjuração', 'Você aprendeu a canalizar a essência mágica da natureza para conjurar magias. Veja o capítulo 7 para as
+regras sobre conjuração de magias. As informações
+abaixo detalham como você usa essas regras com as
+magias de Guardião, explicadas na lista de magias de
+Guardião mais adiante na descrição da classe.
+Espaços de Magia. A tabela Características de Guardião mostra quantos espaços de magia você tem para
+conjurar suas magias de 1º círculo ou superior. Você
+restaura todos os espaços gastos ao completar um
+Descanso Longo.
+Magias Preparadas de 1º Círculo ou Superior. Você
+prepara a lista de magias de 1º círculo ou superior que
+estão disponíveis para você conjurar com esta característica. Para começar, escolha duas magias de Guardião
+de 1º círculo. Curar Ferimentos e Golpe Constritor são
+recomendadas.
+O número de magias em sua lista aumenta à medida que você atinge níveis de Guardião, conforme
+mostrado na coluna Magias Preparadas da tabela
+Características de Guardião. Sempre que esse número
+aumentar, escolha magias adicionais da lista de magias
+de Guardião até que o número de magias em sua lista
+corresponda ao número da tabela. As magias escolhidas devem ser de um círculo para o qual você possui
+espaços de magia. Por exemplo, se você é um Guardião
+de nível 5, sua lista de magias preparadas pode incluir
+seis magias de Guardião de 1º ou 2º círculo em qualquer combinação.
+Se outra característica de Guardião lhe der magias
+que você sempre tem preparadas, essas magias não
+contam para o número de magias que você pode preparar com esta característica, mas essas magias, de outra
+forma, contam como magias de Guardião para você.
+Mudando Suas Magias Preparadas. Sempre que completar um Descanso Longo, você pode substituir uma
+magia em sua lista por outra magia de Guardião para a
+qual você tem espaços de magia.
+Atributo de Conjuração. Sabedoria é seu atributo de
+conjuração para suas magias de Guardião.
+Foco de Conjuração. Você pode usar um Foco Druídico como um Foco de Conjuração para suas magias de
+Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 1, 'Inimigo Favorito', 'Você sempre tem a magia Marca do Predador preparada.
+Você pode conjurá-la duas vezes sem gastar um espaço
+de magia, e você restaura todos os usos gastos desta
+característica ao completar um Descanso Longo.
+O número de vezes que você pode conjurar a magia
+sem um espaço de magia aumenta ao atingir certos
+níveis de Guardião, conforme mostrado na coluna Inimigo Favorito da tabela Características de Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use
+as propriedades de maestria de dois tipos de armas à
+sua escolha com as quais você tem proficiência, como
+Arcos Longos e Espadas Curtas.
+Sempre que completar um Descanso Longo, você
+pode alterar os tipos de armas que escolheu. Por exemplo, você pode mudar para usar as propriedades de
+maestria de Cimitarras e Espadas Longas.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 2, 'Estilo de Luta', 'Você adquire um talento Estilo de Luta à sua escolha
+(veja também o capítulo 5). Em vez de escolher um
+desses talentos, você pode escolher a opção abaixo.
+Combatente Druídico. Você aprende dois truques
+de Druida à sua escolha. Fagulha Estelar e Orientação
+são recomendados. Os truques escolhidos contam
+como magias de Guardião para você, e Sabedoria é
+seu atributo de conjuração para eles. Sempre que
+você atingir um nível de Guardião, pode substituir um
+desses truques por outro truque de Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 2, 'Explorador Hábil', 'Graças às suas viagens, você adquire os seguintes
+benefícios.
+Especialista. Escolha uma perícia na qual você tenha
+proficiência, mas não seja Especialista. Você obtém
+Especialização nessa perícia.
+Idiomas. Você conhece dois idiomas à sua escolha da
+tabela de idiomas no capítulo 2.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 3, 'Subclasse de Guardião', 'Você adquire uma subclasse de Guardião à sua escolha.
+As subclasses Andarilho Feérico, Caçador, Senhor das
+Feras e Vigilante das Sombras estão detalhadas após a
+descrição desta classe. Uma subclasse é uma especialidade que concede a você características em determinados níveis de Guardião. Durante toda sua jornada, você
+adquire cada uma das características de sua subclasse
+de seu nível de Guardião ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo (veja o capítulo 5) ou outro talento à sua escolha
+para o qual atenda os pré-requisitos. Você adquire
+essa característica novamente nos níveis 8, 12 e 16 de
+Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 6, 'Errante', 'Seu Deslocamento aumenta em 3 metros enquanto
+você não estiver usando Armadura Pesada. Você também tem um Deslocamento de Escalada e um Deslocamento de Natação igual ao seu Deslocamento.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 9, 'Especialista', 'Escolha duas perícias nas quais você tem proficiência,
+mas não seja Especialista. Você obtém Especialização
+nessas perícias.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 10, 'Incansável', 'As forças primordiais agora ajudam a impulsioná-lo em
+suas jornadas, concedendo-lhe os seguintes benefícios.
+Pontos de Vida Temporários. Como uma ação Usar
+Magia, você pode conceder a si um número de Pontos
+de Vida Temporários igual a 1d8 mais seu modificador
+de Sabedoria (mínimo de 1). Você pode usar essa ação
+um número de vezes igual ao seu modificador de Sabedoria (mínimo de uma vez) e restaura todos os usos
+gastos ao completar um Descanso Longo.
+Redução de Exaustão. Sempre que completar um
+Descanso Curto, seu nível de Exaustão, se houver,
+reduz em 1.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 13, 'Predador Implacável', 'Sofrer dano não quebra sua Concentração da Marca do
+Predador.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 14, 'Véu da Natureza', 'Você invoca espíritos da natureza para se esconder magicamente. Como uma Ação Bônus, você pode conceder a si a condição Invisível até o final do seu próximo
+turno.
+Você pode usar essa característica um número de vezes igual ao seu modificador de Sabedoria (mínimo de
+uma vez) e restaura todos os usos gastos ao completar
+um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 17, 'Caçador Preciso', 'Você tem Vantagem em jogadas de ataque contra a
+criatura marcada pela sua Marca do Predador.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 18, 'Sentidos Selvagens', 'Sua conexão com as forças da natureza lhe concede
+Visão às Cegas com um alcance de 9 metros.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+ou outro talento à sua escolha para o qual se qualifica.
+Dádiva da Viagem Dimensional é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 20, 'Matador de Inimigos Favoritos', 'O dado de dano da sua Marca do Predador é um d10 em
+vez de um d6.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 1, 'Estilo de Luta', 'Você aprimorou suas proezas marciais e tem um
+talento de Estilo de Luta à sua escolha (veja também o
+capítulo 5).
+Sempre que atinge um nível de Guerreiro, você pode
+substituir o talento que escolheu por um talento diferente de Estilo de Luta.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você utilize
+as propriedades de maestria com três tipos de armas
+Simples ou Marciais à sua escolha. Sempre que completar um Descanso Longo, você pode praticar movimentos
+com armas e alterar uma dessas escolhas de armas.
+Ao alcançar certos níveis de Guerreiro, você adquire a
+habilidade de usar as propriedades de maestria de mais
+tipos de armas, conforme mostrado na coluna Maestria
+em Armas da tabela Características de Guerreiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 1, 'Recuperar Fôlego', 'Você tem uma reserva limitada de resistência física e
+mental que pode usar. Como uma Ação Bônus, você
+pode usá-la para recuperar Pontos de Vida iguais a
+1d10 mais seu nível de Guerreiro.
+Você pode usar essa característica duas vezes. Você
+recupera um uso gasto quando completa um Descanso
+Curto e restaura todos os usos gastos quando completa
+um Descanso Longo.
+Ao atingir certos níveis de Guerreiro, você adquire
+mais usos dessa característica, conforme mostrado na
+coluna Recuperar Fôlego da tabela Características de
+Guerreiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 2, 'Mente Tática', 'Você tem uma mente para táticas dentro e fora do
+campo de batalha. Ao falhar em um teste de atributo,
+você pode gastar um uso de seu Recuperar Fôlego
+para tentar alcançar a vitória. Em vez de recuperar
+Pontos de Vida, você joga 1d10 e adiciona o resultado
+ao teste de atributo, potencialmente transformando-o
+em sucesso. Se o teste ainda assim falhar, esse uso do
+Recuperar Fôlego não é gasto.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 2, 'Surto de Ação', 'Você pode se esforçar além de seus limites normais por
+um momento. No seu turno, você pode executar uma
+ação adicional, exceto a ação Usar Magia.
+Após usar esta característica, você não pode usá-la
+novamente até completar um Descanso Curto ou Longo. A partir do nível 17, você pode usá-lo duas vezes antes de um descanso, mas apenas uma vez em um turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 3, 'Subclasse de Guerreiro', 'Você adquire uma subclasse de Guerreiro à sua escolha. As subclasses Campeão, Cavaleiro Místico, Combatente Psíquico e Mestre da Batalha estão detalhadas
+após a descrição desta classe. Uma subclasse é uma
+especialidade que concede a você características em
+determinados níveis de Guerreiro. Pelo resto de sua
+jornada, você adquire cada uma das características de
+sua subclasse de seu nível de Guerreiro ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para o
+qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 6, 8, 12, 14 e 16 de Guerreiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 5, 'Ajuste Tático', 'Sempre que executar uma Ação Bônus para seu Recuperar Fôlego, você pode mover-se até metade do seu
+Deslocamento sem provocar Ataques de Oportunidade.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 9, 'Indomável', 'Ao falhar em uma salvaguarda, você pode jogá-la
+novamente adicionando um bônus igual ao seu nível de
+Guerreiro. Você deve usar o novo resultado e não pode
+usar essa característica novamente até completar um
+Descanso Longo.
+A partir do nível 13, você pode usar essa característica
+duas vezes antes de um Descanso Longo e três vezes
+antes de um Descanso Longo ao atingir o nível 17.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 9, 'Mestre Tático', 'Ao atacar com uma arma cuja propriedade de maestria
+você pode usar, você pode substituir essa propriedade
+pela propriedade Empurrar, Drenar ou Lentidão para
+esse ataque.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 11, 'Dois Ataques Extras', 'Você pode atacar três vezes, em vez de uma, sempre
+que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 13, 'Ataques Estudados', 'Você estuda seus oponentes e aprende com cada ataque que realiza. Se você realizar uma jogada de ataque
+contra uma criatura e errar, você tem Vantagem em
+sua próxima jogada de ataque contra essa criatura
+antes do final do seu próximo turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+ou outro talento à sua escolha para o qual se qualifica.
+Dádiva da Proeza em Combate é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 20, 'Três Ataques Extras', 'Você pode atacar quatro vezes, em vez de uma, sempre
+que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 1, 'Ataque Furtivo', 'Você sabe atacar sutilmente, explorando a distração
+do inimigo. Uma vez por turno, ao atingir uma criatura
+com uma jogada de ataque em que tem Vantagem com
+uma arma com Acuidade ou uma arma à Distância,
+você pode causar 1d6 pontos de dano adicional do tipo
+de dano da arma.
+Você não precisa ter Vantagem na jogada de ataque
+se pelo menos um de seus aliados estiver a até 1,5 metro do alvo, e o aliado não tem a condição Incapacitado
+e você não tem Desvantagem na jogada de ataque.
+O dano adicional aumenta à medida que você adquire níveis de Ladino, conforme mostrado na coluna
+Ataque Furtivo da tabela Características de Ladino.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 1, 'Especialista', 'Você obtém Especialização (veja o glossário de regras)
+em duas de suas perícias, à sua escolha, nas quais já
+seja proficiente. Furtividade e Prestidigitação são recomendadas se você tiver proficiência nelas.
+No nível 6 de Ladino, você obtém Especialização em
+mais duas perícias nas quais já seja proficiente à sua
+escolha.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 1, 'Gíria do Ladrão', 'Você aprendeu vários idiomas nas comunidades onde
+usou seus talentos gatunos. Você conhece a Gíria dos
+Ladrões e outro idioma à sua escolha, que você escolhe
+nas tabelas de idiomas no capítulo 2.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use
+as propriedades de maestria de dois tipos de armas à
+sua escolha com as quais você tem proficiência, como
+Adagas e Arcos Curtos.
+Ao completar um Descanso Longo, você pode alterar
+os tipos de armas que escolheu. Por exemplo, você
+pode trocar para as propriedades de maestria de Cimitarras e Espadas Curtas.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 2, 'Ação Ardilosa', 'Seu pensamento rápido e agilidade permitem que você
+se mova e aja rapidamente. No seu turno, você pode
+executar uma das seguintes ações como uma Ação
+Bônus: Correr, Desengajar ou Esconder.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 3, 'Mira Firme', 'Como uma Ação Bônus, você concede a si mesmo
+Vantagem em sua próxima jogada de ataque no turno
+atual. Você pode usar esta característica somente se
+não tiver se movido durante este turno e, após usá-la,
+seu Deslocamento é 0 até o final do turno atual.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 3, 'Subclasse de Ladino', 'Você adquire uma subclasse de Ladino à sua escolha.
+As subclasses Adaga Espiritual, Assassino, Ladrão e
+Trapaceiro Arcano estão detalhadas após a descrição
+desta classe. Uma subclasse é uma especialidade que
+concede a você características em determinados níveis
+de Ladino. Durante toda sua jornada, você adquire
+cada uma das características de sua subclasse de seu
+nível de Ladino ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para
+o qual atende os pré-requisitos. Você adquire essa
+característica novamente nos níveis 8, 10, 12 e 16 de
+Ladino.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 5, 'Golpe Astuto', 'Você encontrou maneiras astutas de aplicar seu Ataque
+Furtivo. Ao causar dano com ele, você pode adicionar
+um dos seguintes efeitos de Golpe Astuto, cada um
+com um custo em dados que deve ser subtraído do
+dano total do Ataque Furtivo. Remova o dado antes de
+jogar, e o efeito ocorre imediatamente após o dano. Por
+exemplo, ao escolher o efeito Envenenar, retire 1d6 de
+dano do Ataque Furtivo antes de jogá-lo.
+Se um efeito de Golpe Astuto exigir uma salvaguarda, a CD é igual a 8 mais seu modificador de Destreza e
+Bônus de Proficiência.
+Envenenar (Custo: 1d6). Você adiciona uma toxina ao
+seu ataque, forçando o alvo a realizar uma salvaguarda de Constituição. Se falhar, o alvo tem a condição
+Envenenado por 1 minuto. No final de cada um dos
+turnos do alvo Envenenado, ele repete a salvaguarda,
+encerrando o efeito em si em caso de sucesso.
+Para usar esse efeito, você deve ter um Kit de Veneno
+com você.
+Retirada (Custo: 1d6). Imediatamente após o ataque,
+você se move até metade do seu Deslocamento sem
+provocar Ataques de Oportunidade.
+Tropeço (Custo: 1d6). Se o alvo for Grande ou menor,
+ele deve ser bem-sucedido em uma salvaguarda de
+Destreza ou tem a condição Caído.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 5, 'Esquiva Sobrenatural', 'Quando um atacante à sua vista o atinge com uma
+jogada de ataque, você pode executar uma Reação para
+reduzir o dano pela metade do ataque (arredondado
+para baixo).') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 7, 'Evasão', 'Você pode se esquivar com agilidade do caminho de
+certos perigos. Ao ser alvo de um efeito que permita
+uma salvaguarda de Destreza para receber apenas metade do dano, você não sofre dano se for bem-sucedido na salvaguarda e sofre metade do dano se falhar.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 7, 'Talento Confiável', 'Ao realizar um teste de atributo que lhe permita
+adicionar seu bônus de proficiência em uma perícia ou
+ferramenta, você pode tratar uma jogada de d20 igual
+a 9 ou menos como se fosse 10.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 11, 'Golpe Astuto Aprimorado', 'Você pode usar até dois efeitos de Golpe Astuto ao
+causar dano de Ataque Furtivo, pagando o custo do
+dado por cada efeito.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 14, 'Golpes Sujos', 'Você praticou novas maneiras de usar seu Ataque
+Furtivo de forma engenhosa. Os seguintes efeitos agora
+estão entre suas opções de Golpe Astuto.
+Aturdir (Custo: 2d6). O alvo deve ser bem-sucedido
+em uma salvaguarda de Constituição ou, no próximo
+turno, pode apenas se mover, executar uma ação ou
+uma Ação Bônus.
+Nocaute (Custo: 6d6). O alvo deve ser bem-sucedido
+em uma salvaguarda de Constituição ou tem a condição Inconsciente por 1 minuto ou até sofrer qualquer
+dano. O alvo Inconsciente repete a salvaguarda no final
+de cada um dos turnos dele, encerrando o efeito em
+caso de sucesso.
+Obscurecer (Custo: 3d6). O alvo deve ser bem-sucedido em uma salvaguarda de Destreza, ou tem a condição Cego até o final do próximo turno dele.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 15, 'Mente Escorregadia', 'Sua mente astuta é excepcionalmente difícil de controlar. Você adquire proficiência em salvaguardas de
+Sabedoria e Carisma.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 18, 'Elusivo', 'Você é tão evasivo que os atacantes raramente conseguem vantagem. Nenhuma jogada de ataque pode
+ter Vantagem contra você, a menos que você tenha a
+condição Incapacitado.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+ou outro talento à sua escolha para o qual se qualifica.
+A Dádiva do Espírito da Noite é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 20, 'Golpe de Sorte', 'Você tem uma vocação maravilhosa para ter sucesso
+quando necessário. Se você falhar em um Teste de
+D20, pode transformar o resultado em um 20.
+Após usar essa característica, você não pode usá-
+-la novamente até completar um Descanso Curto ou
+Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 1, 'Adepto de Ritual', 'Você pode conjurar qualquer magia como um Ritual se
+essa magia tiver o marcador Ritual e a magia estiver em
+seu livro de magias. Você não precisa ter a magia preparada, mas deve ler o livro para conjurar uma magia
+deste modo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 1, 'Conjuração', 'Como estudante de magia arcana, você aprendeu a
+conjurar magias. Veja o capítulo 7 para as regras sobre
+conjuração de magias. As informações abaixo detalham
+como você usa essas regras com magias de Mago, que
+aparecem na lista de magias de Mago mais adiante na
+descrição da classe.
+Truques. Você conhece três truques de Mago à
+sua escolha. Luz, Mãos Mágicas e Raio de Gelo são
+recomendados. Ao completar um Descanso Longo,
+você pode substituir um dos seus truques dessa
+característica por outro truque de Mago à sua escolha.
+Ao atingir os níveis 4 e 10 de Mago, você aprende
+mais um truque de Mago à sua escolha, conforme
+detalhado na coluna Truques da tabela Características
+de Mago.
+Livro de Magias. Seu aprendizado de mago culminou
+na criação de um livro único: seu livro de magias. É
+um objeto Minúsculo que pesa 1,5 quilo, contém 100
+páginas e pode ser lido apenas por você ou por alguém
+que conjure Identificar. Você determina a aparência
+e os materiais do livro, como um tomo com bordas
+douradas ou uma coleção de pergaminhos amarrados
+com barbante.
+O livro contém as magias de 1º círculo ou superior
+que você conhece. Ele começa com seis magias de
+mago 1º círculo à sua escolha. Armadura Arcana, Detectar Magia, Mísseis Mágicos, Onda Trovejante, Queda Suave
+e Sono são recomendadas.
+Ao atingir um nível de Mago após o primeiro, adicione duas magias de Mago à sua escolha ao seu livro de
+magias. Cada uma dessas magias deve ser de um círculo
+para o qual você tenha espaços de magia, conforme detalhado na tabela Características de Mago. As magias
+são o ponto culminante da pesquisa arcana que você
+faz regularmente.
+Espaços de Magia. A tabela Características de Mago
+mostra quantos espaços de magia você tem para conjurar
+suas magias de 1º círculo ou superior. Você restaura todos
+os espaços gastos ao completar um Descanso Longo.
+Magias Preparadas de 1º Círculo ou Superior. Você
+prepara a lista de magias de 1º círculo ou superior que
+estão disponíveis para você conjurar com essa característica. Para isso, escolha quatro magias do seu livro de
+magias. As magias escolhidas devem ser de um círculo
+para o qual você tenha espaços de magia.
+O número de magias em sua lista aumenta à medida
+que você alcança níveis de Mago, conforme detalhado
+na coluna Magias Preparadas da tabela Características
+de Mago. Sempre que esse número aumentar, escolha
+magias adicionais de Mago até que o número de magias em sua lista corresponda ao número na tabela. As
+magias escolhidas devem ser de um círculo para o qual
+você possua espaços de magia. Por exemplo, se você
+é um Mago de nível 3, sua lista de magias preparadas,
+escolhidas do seu livro de magias, pode incluir seis magias de 1º ou 2º círculo, em qualquer combinação.
+Se outra característica de Mago lhe conceder magias
+que você sempre tem preparadas, essas magias não
+contam para o número de magias que você pode preparar com esta característica, mas essas magias, de outra
+forma, contam como magias de Mago para você.
+Mudando Suas Magias Preparadas. Ao completar um
+Descanso Longo, você pode alterar sua lista de magias
+preparadas, substituindo qualquer uma das magias por
+outras do seu livro de magias.
+Atributo de Conjuração. Inteligência é seu atributo de
+conjuração para suas magias de Mago.
+Foco de Conjuração. Você pode usar um Foco Arcano
+ou seu livro de magias como um Foco de Conjuração
+para suas magias de Mago.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 1, 'Recuperação Arcana', 'Você pode recuperar um pouco de sua energia mágica estudando seu livro de magias. Ao completar um
+Descanso Curto, você pode escolher recuperar espaços
+de magia gastos. Os espaços de magia podem ter um
+círculo combinado igual a não mais da metade do seu
+nível de Mago (arredondado para cima), e nenhum
+dos espaços pode ser de 6º círculo ou superior. Por
+exemplo, se você é um Mago de nível 4, pode recuperar um valor de até dois círculos de espaços de magia,
+recuperando um espaço de magia de 2º círculo ou dois
+espaços de magia de 1º círculo.
+Você pode usar esta característica novamente após
+completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 2, 'Acadêmico', 'Enquanto estudava magia, você também se especializou em outro campo de estudo. Escolha uma das
+seguintes perícias nas quais você tem proficiência: Arcanismo, História, Investigação, Medicina, Natureza ou
+Religião. Você tem Especialização na perícia escolhida.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 3, 'Subclasse de Mago', 'Você adquire uma subclasse de Mago à sua escolha. As
+subclasses Abjurador, Adivinhador, Evocador e Ilusionista estão detalhadas após a descrição desta classe.Uma
+subclasse é uma especialidade que concede a você características em determinados níveis de Mago. Durante
+toda sua jornada, você adquire cada uma das características de sua subclasse de seu nível de Mago ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para
+o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Mago.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 5, 'Memorizar Magia', 'Ao completar um Descanso Curto, você pode estudar
+seu livro de magias e substituir uma das magias de
+Mago de 1º círculo ou superior que você preparou para
+sua característica Conjuração por outra magia de 1º
+círculo ou superior do livro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 18, 'Maestria de Magias', 'Você alcançou tal domínio sobre certas magias que
+pode conjurá-las à vontade. Escolha uma magia de 1º e
+uma de 2º círculo em seu livro de magias que tenham
+um tempo de conjuração de uma ação. Você sempre
+tem essas magias preparadas, e pode conjurá-las em
+seu círculo mais baixo sem gastar um espaço de magia.
+Para conjurar qualquer uma delas em um círculo superior, você deve gastar um espaço de magia.
+Ao completar um Descanso Longo, você pode estudar seu livro de magias e substituir uma dessas magias
+por uma magia elegível do mesmo círculo do livro.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+ou outro talento à sua escolha para o qual se qualifica.
+Dádiva da Recordação de Magia é recomendado.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 20, 'Assinatura Mágica', 'Escolha duas magias de 3º círculo em seu livro de magias como suas assinaturas mágicas. Você sempre tem
+essas magias preparadas e pode conjurá-las, cada uma
+delas, uma vez no 3º círculo sem gastar um espaço de
+magia. Ao realizar isso, você não pode conjurá-las deste
+modo novamente até completar um Descanso Curto ou
+Longo. Para conjurar uma das magias em um círculo
+superior, você deve gastar um espaço de magia.
+Expandindo e Substituindo um Livro de Magias
+As magias que você adiciona ao seu livro de magias à
+medida que avança de nível refletem sua pesquisa mágica
+em andamento. Durante suas aventuras, você pode
+encontrar outras magias que podem ser incorporadas
+ao livro, como uma magia de Mago em um Pergaminho
+Mágico, que você pode copiar para o livro de magias.
+Copiando uma Magia para o Livro. Ao encontrar uma
+magia de Mago de 1º círculo ou superior, você pode
+copiá-la para o seu livro de magias se for de um círculo
+que você possa preparar e se tiver tempo para copiá-la.
+Para cada círculo de magia, a transcrição leva 2 horas e
+custa 50 PO. Depois disso, você pode preparar a magia
+como as outras magias em seu livro de magias.
+Copiando o Livro. Você pode copiar uma magia do
+seu livro de magias para outro livro. Isso é como copiar
+uma nova magia em seu livro de magias, mas mais
+rápido, já que você já sabe como conjurá-la. Você precisa
+gastar apenas 1 hora e 10 PO para cada círculo de magia
+copiada.
+Se você perder seu livro de magias, você pode usar
+o mesmo procedimento para transcrever as magias
+de Mago que preparou em um novo livro de magias.
+Preencher o restante do novo livro exige que você
+encontre novas magias para fazê-lo. Por esse motivo,
+muitos magos mantêm um livro de magias reserva.
+A rainha élfica Yolande
+impressiona um dragão
+vermelho com sua magia,
+Presença Régia de Yolande.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 1, 'Artes Marciais', 'Sua prática de artes marciais lhe confere domínio de
+estilos de combate que usam seu Ataque Desarmado e
+armas de Monge, que incluem:
+• Armas Simples Corpo a Corpo
+• Armas Marciais Corpo a Corpo que tem a propriedade Leve
+Você adquire os seguintes benefícios enquanto estiver
+desarmado ou empunhando apenas armas de Monge
+e não estiver vestindo armadura ou empunhando um
+Escudo.
+Ataque Desarmado Adicional. Você pode realizar um
+Ataque Desarmado como uma Ação Bônus.
+Dado de Artes Marciais. Você pode jogar 1d6 ao
+invés do dano normal de seu Ataque Desarmado ou
+armas de Monge. Este dado muda à medida que você
+atinge níveis de Monge, conforme detalhado na coluna
+Artes Marciais da tabela Características de Monge.
+Ataques com Destreza. Você pode usar seu modificador de Destreza em vez de seu modificador de Força
+para as jogadas de ataque e dano de seus Ataques
+Desarmados e armas de Monge. Além disso, quando você usa a opção Empurrar ou Imobilizar do seu
+Ataque Desarmado, você pode usar seu modificador
+de Destreza em vez de seu modificador de Força para
+determinar a CD da salvaguarda.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 1, 'Defesa sem Armadura', 'Enquanto você não estiver vestindo armadura ou
+empunhando um Escudo, sua Classe de Armadura
+base é igual a 10 mais seus modificadores de Destreza
+e Sabedoria.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 2, 'Foco do Monge', 'Seu foco e treinamento marcial permitem que você
+aproveite uma reserva de energia extraordinária
+dentro de si. Essa energia é representada por Pontos
+de Foco. Seu nível de Monge determina o número de
+pontos que você tem, conforme detalhado na coluna
+Pontos de Foco da tabela Características de Monge.
+Você pode gastar esses pontos para melhorar ou
+impulsionar certas características de Monge. Você
+começa aprendendo três dessas características: Defesa
+Paciente, Passo do Vento e Torrente de Golpes, cada
+uma das quais é detalhada abaixo.
+Ao gastar um Ponto de Foco, ele não está disponível.
+Você restaura todos os usos gastos ao completar um
+Descanso Curto ou Longo.
+Algumas características que usam Pontos de Foco
+exigem que seu alvo realize uma salvaguarda. A CD
+da salvaguarda é igual a 8 mais seu modificador de
+Sabedoria e seu Bônus de Proficiência.
+Defesa Paciente. Você pode executar a ação Desengajar como uma Ação Bônus. Como alternativa, você
+pode gastar 1 Ponto de Foco para executar as ações
+Desengajar e Esquivar como uma Ação Bônus.
+Passo do Vento. Você pode executar a ação Correr
+como uma Ação Bônus. Como alternativa, você pode
+gastar 1 Ponto de Foco para executar as ações Desengajar e Correr como uma Ação Bônus, e sua distância
+de salto é dobrada durante o turno.
+Torrente de Golpes. Você pode gastar 1 Ponto de
+Foco para realizar dois Ataques Desarmados como
+uma Ação Bônus.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 2, 'Metabolismo Incomum', 'Ao jogar Iniciativa, você pode restaurar todos os
+Pontos de Foco gastos. Ao realizar isso, jogue seu dado
+de Artes Marciais e recupere um número de Pontos de
+Vida igual ao seu nível de Monge mais o valor jogado.
+Após usar essa característica, você não pode usá-la
+novamente até completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 2, 'Movimento sem Armadura', 'Seu Deslocamento aumenta em 3 metros enquanto
+você não vestir armadura ou empunhar um Escudo.
+Esse bônus aumenta quando você atinge certos níveis
+de Monge, conforme detalhado na tabela Características de Monge.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 3, 'Defletir Ataques', 'Ao ser atingido devido uma jogada de ataque e o dano
+dessa jogada incluir dano Contundente, Cortante ou
+Perfurante, você pode executar uma Reação para reduzir o dano total do ataque. A redução é igual a 1d10
+mais seu modificador de Destreza e nível de Monge.
+Ao reduzir o dano a 0, você pode gastar 1 Ponto de
+Foco para redirecionar parte da força do ataque. Para
+isso, escolha uma criatura à vista a até 1,5 metro de
+você se o ataque for corpo a corpo, ou a até 18 metros
+se for à distância e sem Cobertura Total. Essa criatura
+deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre dano igual a duas jogadas de seu dado de Artes Marciais mais seu modificador de Destreza. O dano é do mesmo tipo causado pelo ataque.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 3, 'Subclasse de Monge', 'Você adquire uma subclasse de Monge à sua escolha.
+As subclasses Combatente da Mão Espalmada, Combatente da Misericórdia, Combatente das Sombras e
+Combatente dos Elementos estão detalhadas após a
+descrição desta classe. Uma subclasse é uma especialidade que concede a você características em determinados níveis de Monge. Durante toda sua jornada,
+você adquire cada uma das características de sua
+subclasse de seu nível de Monge ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para
+o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Monge.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 4, 'Queda Lenta', 'Você pode executar uma Reação ao estar em queda
+para reduzir qualquer dano recebido da queda em um
+valor igual a cinco vezes seu nível de Monge.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 5, 'Golpe Atordoante', 'Uma vez por turno, ao acertar uma criatura com uma
+arma de Monge ou um Ataque Desarmado, você pode
+gastar 1 Ponto de Foco para tentar um golpe atordoante. O alvo deve realizar uma salvaguarda de Constituição. Se falhar, o alvo tem a condição Atordoado até
+o início do seu próximo turno. Em caso de sucesso, o
+Deslocamento do alvo é reduzido pela metade até o
+início do seu próximo turno, e a próxima jogada de ataque realizada contra o alvo antes disso tem Vantagem.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 6, 'Golpes Potencializados', 'Ao causar dano com seu Ataque Desarmado, você
+escolhe entre causar dano Energético ou seu tipo de
+dano normal.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 7, 'Evasão', 'Ao ser alvo de um efeito que permita uma salvaguarda
+de Destreza para receber apenas metade do dano, você
+não recebe dano em caso de sucesso e sofre apenas
+metade do dano se falhar.
+Você não se beneficia dessa característica se tem a
+condição Incapacitado.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 9, 'Movimento Acrobático', 'Enquanto não vestir armadura ou empunhar um
+Escudo, você adquire a capacidade de se mover no seu
+turno ao longo de superfícies verticais e por líquidos
+sem entrar em queda durante o movimento.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 10, 'Foco Aprimorado', 'Sua Defesa Paciente, Passo do Vento e Torrente de
+Golpes adquirem os seguintes benefícios.
+Defesa Paciente. Ao gastar um Ponto de Foco para
+usar Defesa Paciente, você adquire um número de
+Pontos de Vida Temporários igual a duas jogadas de
+seus dados de Artes Marciais.
+Passo do Vento. Ao gastar um Ponto de Foco para
+usar Passo do Vento, você pode escolher uma criatura voluntária a até 1,5 metro de si que seja Grande
+ou menor. Você move a criatura com você até o final
+do seu turno. O movimento da criatura não provoca
+Ataques de Oportunidade.
+Torrente de Golpes. Você pode gastar 1 Ponto de
+Foco para usar Torrente de Golpes e realizar três Ataques Desarmados em vez de dois.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 10, 'Restauro Pessoal', 'Por pura força de vontade, você pode remover
+uma das seguintes condições de si no final de cada
+um dos seus turnos: Amedrontado, Enfeitiçado ou
+Envenenado.
+Além disso, você não sofre níveis de Exaustão por
+não se alimentar e se hidratar.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 13, 'Defletir Energia', 'Agora você pode usar sua característica Defletir
+Ataques contra ataques que causam qualquer tipo
+de dano, não apenas Contundente, Cortante ou
+Perfurante.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 14, 'Sobrevivente Disciplinado', 'Sua disciplina física e mental lhe concede proficiência
+em todas as salvaguardas.
+Além disso, ao realizar uma salvaguarda e falhar,
+você pode gastar 1 Ponto de Foco para jogar novamente, e deve usar o novo resultado.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 15, 'Foco Perfeito', 'Ao jogar Iniciativa e não usar Metabolismo Incomum,
+você recupera Pontos de Foco gastos até ter 4, se tiver
+3 ou menos.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 18, 'Defesa Superior', 'No início do seu turno, você pode gastar 3 Pontos de
+Foco para se fortalecer contra danos por 1 minuto ou
+até ter a condição Incapacitado. Durante esse período,
+você tem Resistência a todos os tipos de dano, exceto
+Energético.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo
+5) ou outro talento à sua escolha para o qual se qualifica. Dádiva do Ataque Irresistível é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 20, 'Corpo e Mente', 'Você auto aperfeiçoou seu corpo e mente a novos patamares. Seus valores de Destreza e Sabedoria aumentam em 4, até no máximo 25.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 1, 'Conjuração', 'Você aprendeu a conjurar magias por meio de oração
+e meditação. Veja o capítulo 7 para as regras sobre
+conjuração de magias. As informações abaixo detalham
+como você usa essas regras com as magias de Paladino,
+explicadas na lista de magias de Paladino mais adiante
+na descrição da classe.
+Espaços de Magia. A tabela Características de Paladino mostra quantos espaços de magia você tem para
+conjurar suas magias de 1º círculo ou superior. Você
+restaura todos os espaços gastos ao completar um
+Descanso Longo.
+Magias Preparadas de 1º Círculo ou Superior. Você
+prepara a lista de magias de 1º círculo ou superior que
+estão disponíveis para você conjurar com essa característica. Para começar, escolha duas magias de Paladino
+de 1º círculo. Destruição Cauterizante e Heroísmo são
+recomendadas.
+O número de magias em sua lista aumenta à medida
+que você atinge níveis de Paladino, conforme mostrado
+na coluna Magias Preparadas da tabela Características
+de Paladino. Sempre que esse número aumentar, escolha magias adicionais da lista de magias de Paladino até
+que o número de magias em sua lista corresponda ao
+número da tabela. As magias escolhidas devem ser de
+um círculo para o qual você possui espaços de magia.
+Por exemplo, se você é um Paladino de nível 5, sua lista
+de magias preparadas pode incluir seis magias de Paladino de 1º ou 2º círculo em qualquer combinação.
+Se outra característica de Paladino lhe der magias
+que você sempre tem preparadas, essas magias não
+contam para o número de magias que você pode preparar com esta característica, mas essas magias, de outra
+forma, contam como magias de Paladino para você.
+Mudando Suas Magias Preparadas. Sempre que completar um Descanso Longo, você pode substituir uma
+magia em sua lista por outra magia de Paladino para a
+qual você tem espaços de magia.
+Atributo de Conjuração. Carisma é seu atributo de
+conjuração para suas magias de Paladino.
+Foco de Conjuração. Você pode usar um Símbolo Sagrado como um Foco de Conjuração para suas magias
+de Paladino.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use as
+propriedades de maestria de dois tipos de armas à sua
+escolha com as quais você tem proficiência, como Azagaia e Espadas Longas.
+Sempre que completar um Descanso Longo, você
+pode alterar os tipos de armas que escolheu. Por exemplo, você pode mudar para usar as propriedades de
+maestria de Alabardas e Manguais.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 1, 'Mãos Consagradas', 'Seu toque abençoado pode aliviar feridas. Você tem
+uma reserva de poder de cura que reabastece ao
+completar um Descanso Longo. Com essa reserva, você
+pode recuperar um número total de Pontos de Vida
+igual a cinco vezes seu nível de Paladino.
+Como uma Ação Bônus, você toca uma criatura (que
+pode ser você mesmo) e extrair poder dessa reserva de
+cura para restaurar um número de Pontos de Vida para
+essa criatura, até o valor máximo restante na reserva.
+Você também pode gastar 5 Pontos de Vida dessa
+reserva de poder de cura para remover a condição
+Envenenado da criatura; esses pontos não restauram
+Pontos de Vida da criatura.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 2, 'Destruição do Paladino', 'Você sempre tem a magia Destruição Divina preparada.
+Além disso, você pode conjurá-la sem gastar um espaço
+de magia, não podendo conjurá-la dessa forma novamente antes de completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 2, 'Estilo de Luta', 'Você adquire um talento Estilo de Luta à sua escolha
+(veja também o capítulo 5). Em vez de escolher um
+desses talentos, você pode escolher a opção abaixo.
+Combatente Abençoado. Você aprende dois truques
+de Clérigo à sua escolha. Chama Sagrada e Orientação
+são recomendados. Os truques escolhidos contam
+como magias de Paladino para você, e Carisma é o
+atributo de conjuração para elas. Sempre que você
+atinge um nível de Paladino, pode substituir um desses
+truques por outro truque de Clérigo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 3, 'Canalizar Divindade', 'Você pode canalizar energia divina diretamente dos
+Planos Externos, usando-a para causar efeitos mágicos.
+Você começa com um desses efeitos: Sentido Divino,
+descrito abaixo. Outras características de Paladino dão
+opções adicionais de efeito de Canalizar Divindade.
+Cada vez que você usa Canalizar Divindade desta classe, você escolhe qual efeito desta classe usar.
+Você pode usar Canalizar Divindade desta classe
+duas vezes e três vezes a partir do nível 11 de Paladino.
+Você recupera um uso gasto ao completar um Descanso Curto, e restaura todos os usos gastos ao completar
+um Descanso Longo.
+Se um efeito de Canalizar Divindade exigir uma
+salvaguarda, a CD é igual a CD para evitar magias da
+característica Conjuração desta classe.
+Sentido Divino. Como uma Ação Bônus, você pode
+abrir sua consciência para detectar Celestiais, Ínferos e
+Mortos-Vivos. Pelos próximos 10 minutos ou até você
+ter a condição Incapacitado, você sabe a localização de
+qualquer criatura desse tipo a até 18 metros de você
+e conhece o tipo de criatura. Dentro do mesmo raio,
+você também detecta a presença de qualquer lugar ou
+objeto que tenha sido consagrado ou profanado, como
+na magia Consagrar.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 3, 'Subclasse de Paladino', 'Você adquire uma subclasse de Paladino à sua escolha. As subclasses Juramento da Devoção, Juramento
+da Glória, Juramento de Vingança e Juramento dos
+Anciões estão detalhadas após a descrição desta classe.
+Uma subclasse é uma especialidade que lhe concede
+características em determinados níveis de Paladino.
+Durante toda sua jornada, você recebe cada uma das
+características de sua subclasse de seu nível de Paladino ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+(veja o capítulo 5) ou outro talento à sua escolha para o
+qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Paladino.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 5, 'Montaria Fiel', 'Você pode pedir auxílio de uma montaria sobrenatural.
+Você sempre tem a magia Convocar Montaria preparada.
+Você também pode conjurar a magia uma vez sem
+gastar um espaço de magia, e restaura a capacidade de
+fazê-lo ao completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 6, 'Aura de Proteção', 'Você irradia uma aura protetora e invisível em uma
+Emanação de 3 metros que se origina em você. A
+aura fica inativa em você, caso tenha a condição
+Incapacitado.
+Você e seus aliados na aura adquirem um bônus
+em salvaguardas igual ao seu modificador de Carisma
+(bônus mínimo de +1).
+Se outro Paladino estiver presente, uma criatura
+pode se beneficiar de apenas uma Aura de Proteção de
+cada vez; a criatura escolhe qual aura recebe enquanto
+estiver nela.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 9, 'Repudiar Inimigos', 'Como uma ação Usar Magia, você pode fazer um uso
+de Canalizar Divindade para subjugar inimigos com
+temor. Ao apresentar seu Símbolo Sagrado ou arma,
+você pode escolher um número de criaturas igual ao
+seu modificador de Carisma (no mínimo uma criatura)
+à sua vista e a até 18 metros de você. Cada alvo deve
+ser bem-sucedido em uma salvaguarda de Sabedoria
+ou tem a condição Amedrontado por 1 minuto ou até
+sofrer qualquer dano. Enquanto Amedrontado deste
+modo, um alvo pode realizar apenas uma das opções
+seguintes nos turnos dele: mover-se, executar uma
+ação ou executar uma Ação Bônus.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 10, 'Aura de Coragem', 'Você e seus aliados têm Imunidade à condição Amedrontado enquanto estiverem em sua Aura de Proteção. Se um aliado Amedrontado entrar na aura, essa
+condição não tem efeito sobre esse aliado enquanto ele
+estiver na aura.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 11, 'Golpes Radiantes', 'Seus golpes agora imbuem poder sobrenatural. Ao
+atingir alvo com uma jogada de ataque usando uma
+arma Corpo a Corpo ou um Ataque Desarmado, o alvo
+sofre 1d8 pontos de dano Radiante adicionais.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 14, 'Toque Restaurador', 'Ao usar Mãos Consagradas em uma criatura, você
+também pode remover uma ou mais das seguintes
+condições da criatura: Amedrontado, Atordoado, Cego,
+Enfeitiçado, Paralisado ou Surdo. Você deve gastar
+5 Pontos de Vida da reserva de cura de Mãos Consagradas para cada uma dessas condições que deseja
+remover; esses pontos não restauram Pontos de Vida
+para a criatura.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 18, 'Aura Expandida', 'Sua Aura de Proteção agora é uma Emanação de 9
+metros.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+ou outro talento à sua escolha para o qual se qualifica.
+Dádiva da Visão Verdadeira é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+INSERT INTO rpg.phb_class_skill_pool (class_id, skill_id)
+VALUES
+  ('barbarian', 'athletics'),
+  ('barbarian', 'intimidation'),
+  ('barbarian', 'animal-handling'),
+  ('barbarian', 'nature'),
+  ('barbarian', 'perception'),
+  ('barbarian', 'survival'),
+  ('warlock', 'arcana'),
+  ('warlock', 'deception'),
+  ('warlock', 'history'),
+  ('warlock', 'intimidation'),
+  ('warlock', 'investigation'),
+  ('warlock', 'nature'),
+  ('warlock', 'religion'),
+  ('cleric', 'history'),
+  ('cleric', 'insight'),
+  ('cleric', 'medicine'),
+  ('cleric', 'persuasion'),
+  ('cleric', 'religion'),
+  ('druid', 'arcana'),
+  ('druid', 'animal-handling'),
+  ('druid', 'insight'),
+  ('druid', 'medicine'),
+  ('druid', 'nature'),
+  ('druid', 'perception'),
+  ('druid', 'religion'),
+  ('druid', 'survival'),
+  ('sorcerer', 'arcana'),
+  ('sorcerer', 'deception'),
+  ('sorcerer', 'intimidation'),
+  ('sorcerer', 'investigation'),
+  ('sorcerer', 'nature'),
+  ('sorcerer', 'religion'),
+  ('ranger', 'animal-handling'),
+  ('ranger', 'athletics'),
+  ('ranger', 'insight'),
+  ('ranger', 'investigation'),
+  ('ranger', 'nature'),
+  ('ranger', 'perception'),
+  ('ranger', 'stealth'),
+  ('ranger', 'survival'),
+  ('fighter', 'acrobatics'),
+  ('fighter', 'animal-handling'),
+  ('fighter', 'athletics'),
+  ('fighter', 'history'),
+  ('fighter', 'insight'),
+  ('fighter', 'intimidation'),
+  ('fighter', 'perception'),
+  ('fighter', 'survival'),
+  ('rogue', 'acrobatics'),
+  ('rogue', 'athletics'),
+  ('rogue', 'deception'),
+  ('rogue', 'insight'),
+  ('rogue', 'intimidation'),
+  ('rogue', 'investigation'),
+  ('rogue', 'perception'),
+  ('rogue', 'persuasion'),
+  ('rogue', 'stealth'),
+  ('wizard', 'arcana'),
+  ('wizard', 'history'),
+  ('wizard', 'investigation'),
+  ('wizard', 'medicine'),
+  ('wizard', 'nature'),
+  ('wizard', 'religion'),
+  ('monk', 'acrobatics'),
+  ('monk', 'athletics'),
+  ('monk', 'history'),
+  ('monk', 'insight'),
+  ('monk', 'religion'),
+  ('monk', 'stealth'),
+  ('paladin', 'athletics'),
+  ('paladin', 'insight'),
+  ('paladin', 'intimidation'),
+  ('paladin', 'medicine'),
+  ('paladin', 'persuasion'),
+  ('paladin', 'religion');
+
+
+INSERT INTO rpg.phb_spell_class (spell_id, class_id)
+VALUES
+  ('amigos', 'bard'),
+  ('fagulha-estelar', 'bard'),
+  ('golpe-certeiro', 'bard'),
+  ('ilusao-menor', 'bard'),
+  ('luz', 'bard'),
+  ('luzes-dancantes', 'bard'),
+  ('maos-magicas', 'bard'),
+  ('mensagem', 'bard'),
+  ('prestidigitacao-arcana', 'bard'),
+  ('protecao-contra-laminas', 'bard'),
+  ('reparar', 'bard'),
+  ('trovao', 'bard'),
+  ('zombaria-perversa', 'bard'),
+  ('amizade-animal', 'bard'),
+  ('comando', 'bard'),
+  ('compreender-idiomas', 'bard'),
+  ('curar-ferimentos', 'bard'),
+  ('detectar-magia', 'bard'),
+  ('disfarcar-se', 'bard'),
+  ('enfeiticar-pessoa', 'bard'),
+  ('escrita-ilusoria', 'bard'),
+  ('falar-com-animais', 'bard'),
+  ('fogo-das-fadas', 'bard'),
+  ('gargalhada-nefasta-de-tasha', 'bard'),
+  ('heroismo', 'bard'),
+  ('identificar', 'bard'),
+  ('imagem-silenciosa', 'bard'),
+  ('leque-cromatico', 'bard'),
+  ('onda-trovejante', 'bard'),
+  ('palavra-curativa', 'bard'),
+  ('passos-largos', 'bard'),
+  ('perdicao', 'bard'),
+  ('queda-suave', 'bard'),
+  ('servo-invisivel', 'bard'),
+  ('sono', 'bard'),
+  ('sussurros-dissonantes', 'bard'),
+  ('acalmar-emocoes', 'bard'),
+  ('aprimorar-atributo', 'bard'),
+  ('arrombar', 'bard'),
+  ('aumentar-reduzir', 'bard'),
+  ('auxilio', 'bard'),
+  ('boca-encantada', 'bard'),
+  ('cativar', 'bard'),
+  ('cegueira-surdez', 'bard'),
+  ('coroa-da-loucura', 'bard'),
+  ('despedacar', 'bard'),
+  ('detectar-pensamentos', 'bard'),
+  ('esquentar-metal', 'bard'),
+  ('forca-espectral', 'bard'),
+  ('invisibilidade', 'bard'),
+  ('localizar-animais-ou-plantas', 'bard'),
+  ('localizar-objeto', 'bard'),
+  ('mensageiro-animal', 'bard'),
+  ('nuvem-de-adagas', 'bard'),
+  ('paralisar-pessoa', 'bard'),
+  ('reflexos', 'bard'),
+  ('restauracao-menor', 'bard'),
+  ('silencio', 'bard'),
+  ('sugestao', 'bard'),
+  ('ver-o-invisivel', 'bard'),
+  ('zona-da-verdade', 'bard'),
+  ('clarividencia', 'bard'),
+  ('crescimento-de-plantas', 'bard'),
+  ('dissipar-magia', 'bard'),
+  ('falar-com-mortos', 'bard'),
+  ('falar-com-plantas', 'bard'),
+  ('glifo-de-protecao', 'bard'),
+  ('imagem-maior', 'bard'),
+  ('indetectavel', 'bard'),
+  ('lentidao', 'bard'),
+  ('linguas', 'bard'),
+  ('medo', 'bard'),
+  ('nuvem-fetida', 'bard'),
+  ('padrao-hipnotico', 'bard'),
+  ('palavra-curativa-em-massa', 'bard'),
+  ('pequeno-refugio-de-leomund', 'bard'),
+  ('remeter', 'bard'),
+  ('rogar-maldicao', 'bard'),
+  ('simular-morte', 'bard'),
+  ('assassino-fantasmagorico', 'bard'),
+  ('compulsao', 'bard'),
+  ('confusao', 'bard'),
+  ('enfeiticar-monstro', 'bard'),
+  ('fonte-do-luar', 'bard'),
+  ('invisibilidade-maior', 'bard'),
+  ('localizar-criatura', 'bard'),
+  ('movimentacao-livre', 'bard'),
+  ('polimorfia', 'bard'),
+  ('porta-dimensional', 'bard'),
+  ('terreno-alucinatorio', 'bard'),
+  ('ancora-planar', 'bard'),
+  ('animar-objetos', 'bard'),
+  ('circulo-de-teleporte', 'bard'),
+  ('curar-ferimentos-em-massa', 'bard'),
+  ('despertar', 'bard'),
+  ('despistar', 'bard'),
+  ('dominar-pessoa', 'bard'),
+  ('estatica-sinaptica', 'bard'),
+  ('lendas-e-historias', 'bard'),
+  ('ligacao-telepatica-de-rary', 'bard'),
+  ('missao', 'bard'),
+  ('modificar-memoria', 'bard'),
+  ('paralisar-monstro', 'bard'),
+  ('presenca-regia-de-yolande', 'bard'),
+  ('restauracao-maior', 'bard'),
+  ('reviver-os-mortos', 'bard'),
+  ('similaridade', 'bard'),
+  ('sonho', 'bard'),
+  ('videncia', 'bard'),
+  ('banquete-de-herois', 'bard'),
+  ('danca-irresistivel-de-otto', 'bard'),
+  ('encontrar-o-caminho', 'bard'),
+  ('ilusao-programada', 'bard'),
+  ('mau-olhado', 'bard'),
+  ('proteger-fortaleza', 'bard'),
+  ('sugestao-em-massa', 'bard'),
+  ('visao-da-verdade', 'bard'),
+  ('carcere-de-energia', 'bard'),
+  ('espada-de-mordenkainen', 'bard'),
+  ('forma-eterea', 'bard'),
+  ('mansao-magnifica-de-mordenkainen', 'bard'),
+  ('miragem-arcana', 'bard'),
+  ('palavra-de-poder-fortificar', 'bard'),
+  ('projetar-imagem', 'bard'),
+  ('rajada-prismatica', 'bard'),
+  ('regeneracao', 'bard'),
+  ('ressurreicao', 'bard'),
+  ('simbolo', 'bard'),
+  ('teleporte', 'bard'),
+  ('antipatia-simpatia', 'bard'),
+  ('dominar-monstro', 'bard'),
+  ('limpar-a-mente', 'bard'),
+  ('loquacidade', 'bard'),
+  ('palavra-de-poder-atordoar', 'bard'),
+  ('suplicio', 'bard'),
+  ('muralha-prismatica', 'bard'),
+  ('palavra-de-poder-matar', 'bard'),
+  ('palavra-de-poder-salvar', 'bard'),
+  ('polimorfia-total', 'bard'),
+  ('sexto-sentido', 'bard'),
+  ('acudir-os-moribundos', 'cleric'),
+  ('badalar-funebre', 'cleric'),
+  ('chama-sagrada', 'cleric'),
+  ('luz', 'cleric'),
+  ('orientacao', 'cleric'),
+  ('palavra-de-radiancia', 'cleric'),
+  ('reparar', 'cleric'),
+  ('resistencia', 'cleric'),
+  ('taumaturgia', 'cleric'),
+  ('bencao', 'cleric'),
+  ('comando', 'cleric'),
+  ('criar-ou-destruir-agua', 'cleric'),
+  ('curar-ferimentos', 'cleric'),
+  ('detectar-magia', 'cleric'),
+  ('detectar-o-bem-e-o-mal', 'cleric'),
+  ('detectar-veneno-e-doenca', 'cleric'),
+  ('escudo-da-fe', 'cleric'),
+  ('infligir-ferimentos', 'cleric'),
+  ('palavra-curativa', 'cleric'),
+  ('perdicao', 'cleric'),
+  ('protecao-contra-o-bem-e-o-mal', 'cleric'),
+  ('purificar-alimentos-e-bebidas', 'cleric'),
+  ('raio-guia', 'cleric'),
+  ('santuario', 'cleric'),
+  ('acalmar-emocoes', 'cleric'),
+  ('aprimorar-atributo', 'cleric'),
+  ('arma-espiritual', 'cleric'),
+  ('augurio', 'cleric'),
+  ('auxilio', 'cleric'),
+  ('cegueira-surdez', 'cleric'),
+  ('chama-continua', 'cleric'),
+  ('encontrar-armadilhas', 'cleric'),
+  ('localizar-objeto', 'cleric'),
+  ('oracao-de-cura', 'cleric'),
+  ('paralisar-pessoa', 'cleric'),
+  ('protecao-contra-veneno', 'cleric'),
+  ('repouso-tranquilo', 'cleric'),
+  ('restauracao-menor', 'cleric'),
+  ('silencio', 'cleric'),
+  ('vinculo-de-protecao', 'cleric'),
+  ('zona-da-verdade', 'cleric'),
+  ('animar-mortos', 'cleric'),
+  ('aura-de-vitalidade', 'cleric'),
+  ('caminhar-sobre-as-aguas', 'cleric'),
+  ('circulo-magico', 'cleric'),
+  ('clarividencia', 'cleric'),
+  ('criar-comida-e-agua', 'cleric'),
+  ('dissipar-magia', 'cleric'),
+  ('falar-com-mortos', 'cleric'),
+  ('glifo-de-protecao', 'cleric'),
+  ('guardioes-espirituais', 'cleric'),
+  ('linguas', 'cleric'),
+  ('luz-do-dia', 'cleric'),
+  ('mesclar-se-as-rochas', 'cleric'),
+  ('palavra-curativa-em-massa', 'cleric'),
+  ('protecao-contra-energia', 'cleric'),
+  ('remeter', 'cleric'),
+  ('remover-maldicao', 'cleric'),
+  ('revivificar', 'cleric'),
+  ('rogar-maldicao', 'cleric'),
+  ('simular-morte', 'cleric'),
+  ('sinal-de-esperanca', 'cleric'),
+  ('aura-de-pureza', 'cleric'),
+  ('aura-de-vida', 'cleric'),
+  ('banimento', 'cleric'),
+  ('controlar-agua', 'cleric'),
+  ('defensor-da-fe', 'cleric'),
+  ('localizar-criatura', 'cleric'),
+  ('moldar-rochas', 'cleric'),
+  ('movimentacao-livre', 'cleric'),
+  ('pressagio', 'cleric'),
+  ('protecao-contra-a-morte', 'cleric'),
+  ('ancora-planar', 'cleric'),
+  ('circulo-de-poder', 'cleric'),
+  ('coluna-de-chamas', 'cleric'),
+  ('comunhao', 'cleric'),
+  ('consagrar', 'cleric'),
+  ('contagio', 'cleric'),
+  ('convocar-celestial', 'cleric'),
+  ('curar-ferimentos-em-massa', 'cleric'),
+  ('dissipar-o-bem-e-o-mal', 'cleric'),
+  ('lendas-e-historias', 'cleric'),
+  ('missao', 'cleric'),
+  ('praga-de-insetos', 'cleric'),
+  ('restauracao-maior', 'cleric'),
+  ('reviver-os-mortos', 'cleric'),
+  ('videncia', 'cleric'),
+  ('aliado-extraplanar', 'cleric'),
+  ('banquete-de-herois', 'cleric'),
+  ('barreira-de-laminas', 'cleric'),
+  ('criar-mortos-vivos', 'cleric'),
+  ('cura-completa', 'cleric'),
+  ('encontrar-o-caminho', 'cleric'),
+  ('molestia', 'cleric'),
+  ('palavra-de-regresso', 'cleric'),
+  ('proibicao', 'cleric'),
+  ('raio-solar', 'cleric'),
+  ('visao-da-verdade', 'cleric'),
+  ('forma-eterea', 'cleric'),
+  ('invocar-celestial', 'cleric'),
+  ('palavra-de-poder-fortificar', 'cleric'),
+  ('palavra-sagrada', 'cleric'),
+  ('regeneracao', 'cleric'),
+  ('ressurreicao', 'cleric'),
+  ('simbolo', 'cleric'),
+  ('tempestade-de-fogo', 'cleric'),
+  ('transicao-planar', 'cleric'),
+  ('aura-sagrada', 'cleric'),
+  ('campo-antimagia', 'cleric'),
+  ('controlar-o-clima', 'cleric'),
+  ('explosao-solar', 'cleric'),
+  ('terremoto', 'cleric'),
+  ('cura-completa-em-massa', 'cleric'),
+  ('palavra-de-poder-salvar', 'cleric'),
+  ('portal', 'cleric'),
+  ('projecao-astral', 'cleric'),
+  ('ressurreicao-verdadeira', 'cleric'),
+  ('acudir-os-moribundos', 'druid'),
+  ('arte-druidica', 'druid'),
+  ('bordao-mistico', 'druid'),
+  ('chicote-de-espinhos', 'druid'),
+  ('criar-chamas', 'druid'),
+  ('elementalismo', 'druid'),
+  ('fagulha-estelar', 'druid'),
+  ('mensagem', 'druid'),
+  ('orientacao', 'druid'),
+  ('rajada-de-veneno', 'druid'),
+  ('reparar', 'druid'),
+  ('resistencia', 'druid'),
+  ('trovao', 'druid'),
+  ('amizade-animal', 'druid'),
+  ('bom-fruto', 'druid'),
+  ('criar-ou-destruir-agua', 'druid'),
+  ('curar-ferimentos', 'druid'),
+  ('detectar-magia', 'druid'),
+  ('detectar-veneno-e-doenca', 'druid'),
+  ('emaranhar', 'druid'),
+  ('enfeiticar-pessoa', 'druid'),
+  ('faca-de-gelo', 'druid'),
+  ('falar-com-animais', 'druid'),
+  ('fogo-das-fadas', 'druid'),
+  ('nevoa-obscurecente', 'druid'),
+  ('onda-trovejante', 'druid'),
+  ('palavra-curativa', 'druid'),
+  ('passos-largos', 'druid'),
+  ('protecao-contra-o-bem-e-o-mal', 'druid'),
+  ('purificar-alimentos-e-bebidas', 'druid'),
+  ('salto', 'druid'),
+  ('aprimorar-atributo', 'druid'),
+  ('augurio', 'druid'),
+  ('aumentar-reduzir', 'druid'),
+  ('auxilio', 'druid'),
+  ('chama-continua', 'druid'),
+  ('crescer-espinhos', 'druid'),
+  ('encontrar-armadilhas', 'druid'),
+  ('esfera-flamejante', 'druid'),
+  ('esquentar-metal', 'druid'),
+  ('invocar-fera', 'druid'),
+  ('lamina-flamejante', 'druid'),
+  ('localizar-animais-ou-plantas', 'druid'),
+  ('localizar-objeto', 'druid'),
+  ('lufada-de-vento', 'druid'),
+  ('mensageiro-animal', 'druid'),
+  ('paralisar-pessoa', 'druid'),
+  ('passo-sem-rastro', 'druid'),
+  ('pele-casca', 'druid'),
+  ('protecao-contra-veneno', 'druid'),
+  ('raio-lunar', 'druid'),
+  ('restauracao-menor', 'druid'),
+  ('sentido-feral', 'druid'),
+  ('visao-no-escuro', 'druid'),
+  ('arma-elemental', 'druid'),
+  ('aura-de-vitalidade', 'druid'),
+  ('caminhar-sobre-as-aguas', 'druid'),
+  ('convocar-feerico', 'druid'),
+  ('convocar-relampagos', 'druid'),
+  ('crescimento-de-plantas', 'druid'),
+  ('dissipar-magia', 'druid'),
+  ('falar-com-plantas', 'druid'),
+  ('invocar-animais', 'druid'),
+  ('luz-do-dia', 'druid'),
+  ('mesclar-se-as-rochas', 'druid'),
+  ('muralha-de-vento', 'druid'),
+  ('nevasca', 'druid'),
+  ('protecao-contra-energia', 'druid'),
+  ('respirar-na-agua', 'druid'),
+  ('revivificar', 'druid'),
+  ('simular-morte', 'druid'),
+  ('confusao', 'druid'),
+  ('controlar-agua', 'druid'),
+  ('convocar-elemental', 'druid'),
+  ('dominar-fera', 'druid'),
+  ('enfeiticar-monstro', 'druid'),
+  ('escudo-ardente', 'druid'),
+  ('fonte-do-luar', 'druid'),
+  ('inseto-gigante', 'druid'),
+  ('invocar-elementais-menores', 'druid'),
+  ('invocar-seres-da-floresta', 'druid'),
+  ('localizar-criatura', 'druid'),
+  ('malogro', 'druid'),
+  ('moldar-rochas', 'druid'),
+  ('movimentacao-livre', 'druid'),
+  ('muralha-de-fogo', 'druid'),
+  ('pele-rocha', 'druid'),
+  ('polimorfia', 'druid'),
+  ('pressagio', 'druid'),
+  ('tempestade-glacial', 'druid'),
+  ('terreno-alucinatorio', 'druid'),
+  ('vinha-agarradora', 'druid'),
+  ('ancora-planar', 'druid'),
+  ('comunhao-com-a-natureza', 'druid'),
+  ('cone-de-frio', 'druid'),
+  ('contagio', 'druid'),
+  ('cupula-antivida', 'druid'),
+  ('curar-ferimentos-em-massa', 'druid'),
+  ('despertar', 'druid'),
+  ('invocar-elemental', 'druid'),
+  ('missao', 'druid'),
+  ('muralha-de-pedra', 'druid'),
+  ('passo-arboreo', 'druid'),
+  ('praga-de-insetos', 'druid'),
+  ('reencarnar', 'druid'),
+  ('restauracao-maior', 'druid'),
+  ('videncia', 'druid'),
+  ('banquete-de-herois', 'druid'),
+  ('caminhar-no-vento', 'druid'),
+  ('cura-completa', 'druid'),
+  ('de-carne-para-pedra', 'druid'),
+  ('encontrar-o-caminho', 'druid'),
+  ('invocar-feerico', 'druid'),
+  ('mover-terra', 'druid'),
+  ('muralha-de-espinhos', 'druid'),
+  ('raio-solar', 'druid'),
+  ('transporte-via-plantas', 'druid'),
+  ('inverter-a-gravidade', 'druid'),
+  ('miragem-arcana', 'druid'),
+  ('regeneracao', 'druid'),
+  ('simbolo', 'druid'),
+  ('tempestade-de-fogo', 'druid'),
+  ('transicao-planar', 'druid'),
+  ('antipatia-simpatia', 'druid'),
+  ('controlar-o-clima', 'druid'),
+  ('explosao-solar', 'druid'),
+  ('formas-animais', 'druid'),
+  ('nuvem-incendiaria', 'druid'),
+  ('suplicio', 'druid'),
+  ('terremoto', 'druid'),
+  ('tsunami', 'druid'),
+  ('metamorfose', 'druid'),
+  ('ressurreicao-verdadeira', 'druid'),
+  ('sexto-sentido', 'druid'),
+  ('tempestade-da-vinganca', 'druid'),
+  ('bencao', 'paladin'),
+  ('comando', 'paladin'),
+  ('curar-ferimentos', 'paladin'),
+  ('destruicao-cauterizante', 'paladin'),
+  ('destruicao-colerica', 'paladin'),
+  ('destruicao-divina', 'paladin'),
+  ('destruicao-estrondosa', 'paladin'),
+  ('detectar-magia', 'paladin'),
+  ('detectar-o-bem-e-o-mal', 'paladin'),
+  ('detectar-veneno-e-doenca', 'paladin'),
+  ('duelo-compelido', 'paladin'),
+  ('escudo-da-fe', 'paladin'),
+  ('favor-divino', 'paladin'),
+  ('heroismo', 'paladin'),
+  ('protecao-contra-o-bem-e-o-mal', 'paladin'),
+  ('purificar-alimentos-e-bebidas', 'paladin'),
+  ('arma-magica', 'paladin'),
+  ('auxilio', 'paladin'),
+  ('convocar-montaria', 'paladin'),
+  ('destruicao-radiante', 'paladin'),
+  ('localizar-objeto', 'paladin'),
+  ('oracao-de-cura', 'paladin'),
+  ('protecao-contra-veneno', 'paladin'),
+  ('repouso-tranquilo', 'paladin'),
+  ('restauracao-menor', 'paladin'),
+  ('vinculo-de-protecao', 'paladin'),
+  ('zona-da-verdade', 'paladin'),
+  ('arma-elemental', 'paladin'),
+  ('aura-de-vitalidade', 'paladin'),
+  ('circulo-magico', 'paladin'),
+  ('criar-comida-e-agua', 'paladin'),
+  ('destruicao-cegante', 'paladin'),
+  ('dissipar-magia', 'paladin'),
+  ('luz-do-dia', 'paladin'),
+  ('manto-do-cruzado', 'paladin'),
+  ('remover-maldicao', 'paladin'),
+  ('revivificar', 'paladin'),
+  ('aura-de-pureza', 'paladin'),
+  ('aura-de-vida', 'paladin'),
+  ('banimento', 'paladin'),
+  ('destruicao-atordoante', 'paladin'),
+  ('localizar-criatura', 'paladin'),
+  ('protecao-contra-a-morte', 'paladin'),
+  ('circulo-de-poder', 'paladin'),
+  ('convocar-celestial', 'paladin'),
+  ('destruicao-banidora', 'paladin'),
+  ('dissipar-o-bem-e-o-mal', 'paladin'),
+  ('missao', 'paladin'),
+  ('onda-destrutiva', 'paladin'),
+  ('restauracao-maior', 'paladin'),
+  ('reviver-os-mortos', 'paladin'),
+  ('alarme', 'ranger'),
+  ('amizade-animal', 'ranger'),
+  ('bom-fruto', 'ranger'),
+  ('curar-ferimentos', 'ranger'),
+  ('detectar-magia', 'ranger'),
+  ('detectar-veneno-e-doenca', 'ranger'),
+  ('emaranhar', 'ranger'),
+  ('falar-com-animais', 'ranger'),
+  ('golpe-constritor', 'ranger'),
+  ('marca-do-predador', 'ranger'),
+  ('nevoa-obscurecente', 'ranger'),
+  ('passos-largos', 'ranger'),
+  ('salto', 'ranger'),
+  ('saraivada-de-espinhos', 'ranger'),
+  ('aprimorar-atributo', 'ranger'),
+  ('arma-magica', 'ranger'),
+  ('auxilio', 'ranger'),
+  ('cordao-de-flechas', 'ranger'),
+  ('crescer-espinhos', 'ranger'),
+  ('encontrar-armadilhas', 'ranger'),
+  ('invocar-fera', 'ranger'),
+  ('localizar-animais-ou-plantas', 'ranger'),
+  ('localizar-objeto', 'ranger'),
+  ('lufada-de-vento', 'ranger'),
+  ('mensageiro-animal', 'ranger'),
+  ('passo-sem-rastro', 'ranger'),
+  ('pele-casca', 'ranger'),
+  ('protecao-contra-veneno', 'ranger'),
+  ('restauracao-menor', 'ranger'),
+  ('sentido-feral', 'ranger'),
+  ('silencio', 'ranger'),
+  ('visao-no-escuro', 'ranger'),
+  ('arma-elemental', 'ranger'),
+  ('caminhar-sobre-as-aguas', 'ranger'),
+  ('convocar-feerico', 'ranger'),
+  ('crescimento-de-plantas', 'ranger'),
+  ('dissipar-magia', 'ranger'),
+  ('falar-com-plantas', 'ranger'),
+  ('flecha-relampago', 'ranger'),
+  ('indetectavel', 'ranger'),
+  ('invocar-animais', 'ranger'),
+  ('invocar-barragem', 'ranger'),
+  ('luz-do-dia', 'ranger'),
+  ('mesclar-se-as-rochas', 'ranger'),
+  ('muralha-de-vento', 'ranger'),
+  ('protecao-contra-energia', 'ranger'),
+  ('respirar-na-agua', 'ranger'),
+  ('revivificar', 'ranger'),
+  ('convocar-elemental', 'ranger'),
+  ('dominar-fera', 'ranger'),
+  ('invocar-seres-da-floresta', 'ranger'),
+  ('localizar-criatura', 'ranger'),
+  ('movimentacao-livre', 'ranger'),
+  ('pele-rocha', 'ranger'),
+  ('vinha-agarradora', 'ranger'),
+  ('aljava-veloz', 'ranger'),
+  ('comunhao-com-a-natureza', 'ranger'),
+  ('golpe-de-arco', 'ranger'),
+  ('invocar-saraivada', 'ranger'),
+  ('passo-arboreo', 'ranger'),
+  ('restauracao-maior', 'ranger'),
+  ('amigos', 'sorcerer'),
+  ('bolha-acida', 'sorcerer'),
+  ('elementalismo', 'sorcerer'),
+  ('explosao-elemental', 'sorcerer'),
+  ('golpe-certeiro', 'sorcerer'),
+  ('ilusao-menor', 'sorcerer'),
+  ('luz', 'sorcerer'),
+  ('luzes-dancantes', 'sorcerer'),
+  ('maos-magicas', 'sorcerer'),
+  ('mensagem', 'sorcerer'),
+  ('prestidigitacao-arcana', 'sorcerer'),
+  ('protecao-contra-laminas', 'sorcerer'),
+  ('raio-de-fogo', 'sorcerer'),
+  ('raio-de-gelo', 'sorcerer'),
+  ('rajada-de-veneno', 'sorcerer'),
+  ('reparar', 'sorcerer'),
+  ('talho-mental', 'sorcerer'),
+  ('toque-chocante', 'sorcerer'),
+  ('toque-necrotico', 'sorcerer'),
+  ('trovao', 'sorcerer'),
+  ('armadura-arcana', 'sorcerer'),
+  ('compreender-idiomas', 'sorcerer'),
+  ('detectar-magia', 'sorcerer'),
+  ('disfarcar-se', 'sorcerer'),
+  ('enfeiticar-pessoa', 'sorcerer'),
+  ('escudo-arcano', 'sorcerer'),
+  ('faca-de-gelo', 'sorcerer'),
+  ('graxa', 'sorcerer'),
+  ('imagem-silenciosa', 'sorcerer'),
+  ('leque-cromatico', 'sorcerer'),
+  ('maos-flamejantes', 'sorcerer'),
+  ('misseis-magicos', 'sorcerer'),
+  ('nevoa-obscurecente', 'sorcerer'),
+  ('onda-trovejante', 'sorcerer'),
+  ('orbe-cromatico', 'sorcerer'),
+  ('queda-suave', 'sorcerer'),
+  ('raio-de-bruxa', 'sorcerer'),
+  ('raio-nauseante', 'sorcerer'),
+  ('retirada-acelerada', 'sorcerer'),
+  ('salto', 'sorcerer'),
+  ('sono', 'sorcerer'),
+  ('vitalidade-vazia', 'sorcerer'),
+  ('alterar-se', 'sorcerer'),
+  ('aprimorar-atributo', 'sorcerer'),
+  ('arma-magica', 'sorcerer'),
+  ('arrombar', 'sorcerer'),
+  ('aumentar-reduzir', 'sorcerer'),
+  ('cegueira-surdez', 'sorcerer'),
+  ('coroa-da-loucura', 'sorcerer'),
+  ('despedacar', 'sorcerer'),
+  ('detectar-pensamentos', 'sorcerer'),
+  ('escalada-de-aranha', 'sorcerer'),
+  ('escuridao', 'sorcerer'),
+  ('esfera-flamejante', 'sorcerer'),
+  ('espinho-mental', 'sorcerer'),
+  ('forca-espectral', 'sorcerer'),
+  ('invisibilidade', 'sorcerer'),
+  ('lamina-flamejante', 'sorcerer'),
+  ('levitacao', 'sorcerer'),
+  ('lufada-de-vento', 'sorcerer'),
+  ('nuvem-de-adagas', 'sorcerer'),
+  ('paralisar-pessoa', 'sorcerer'),
+  ('passo-nebuloso', 'sorcerer'),
+  ('raio-ardente', 'sorcerer'),
+  ('reflexos', 'sorcerer'),
+  ('sopro-de-dragao', 'sorcerer'),
+  ('sugestao', 'sorcerer'),
+  ('teia', 'sorcerer'),
+  ('turvar', 'sorcerer'),
+  ('ver-o-invisivel', 'sorcerer'),
+  ('vigor-arcano', 'sorcerer'),
+  ('visao-no-escuro', 'sorcerer'),
+  ('bola-de-fogo', 'sorcerer'),
+  ('caminhar-sobre-as-aguas', 'sorcerer'),
+  ('celeridade', 'sorcerer'),
+  ('clarividencia', 'sorcerer'),
+  ('contramagia', 'sorcerer'),
+  ('dissipar-magia', 'sorcerer'),
+  ('forma-gasosa', 'sorcerer'),
+  ('imagem-maior', 'sorcerer'),
+  ('lentidao', 'sorcerer'),
+  ('linguas', 'sorcerer'),
+  ('luz-do-dia', 'sorcerer'),
+  ('medo', 'sorcerer'),
+  ('nevasca', 'sorcerer'),
+  ('nuvem-fetida', 'sorcerer'),
+  ('padrao-hipnotico', 'sorcerer'),
+  ('piscar', 'sorcerer'),
+  ('protecao-contra-energia', 'sorcerer'),
+  ('relampago', 'sorcerer'),
+  ('respirar-na-agua', 'sorcerer'),
+  ('toque-vampirico', 'sorcerer'),
+  ('voo', 'sorcerer'),
+  ('banimento', 'sorcerer'),
+  ('confusao', 'sorcerer'),
+  ('dominar-fera', 'sorcerer'),
+  ('enfeiticar-monstro', 'sorcerer'),
+  ('escudo-ardente', 'sorcerer'),
+  ('esfera-vitriolica', 'sorcerer'),
+  ('invisibilidade-maior', 'sorcerer'),
+  ('malogro', 'sorcerer'),
+  ('muralha-de-fogo', 'sorcerer'),
+  ('pele-rocha', 'sorcerer'),
+  ('polimorfia', 'sorcerer'),
+  ('porta-dimensional', 'sorcerer'),
+  ('tempestade-glacial', 'sorcerer'),
+  ('animar-objetos', 'sorcerer'),
+  ('circulo-de-teleporte', 'sorcerer'),
+  ('cone-de-frio', 'sorcerer'),
+  ('criacao', 'sorcerer'),
+  ('dominar-pessoa', 'sorcerer'),
+  ('estatica-sinaptica', 'sorcerer'),
+  ('mao-de-bigby', 'sorcerer'),
+  ('muralha-de-pedra', 'sorcerer'),
+  ('nevoa-mortal', 'sorcerer'),
+  ('paralisar-monstro', 'sorcerer'),
+  ('praga-de-insetos', 'sorcerer'),
+  ('similaridade', 'sorcerer'),
+  ('telecinese', 'sorcerer'),
+  ('circulo-da-morte', 'sorcerer'),
+  ('corrente-de-relampagos', 'sorcerer'),
+  ('de-carne-para-pedra', 'sorcerer'),
+  ('desintegrar', 'sorcerer'),
+  ('esfera-congelante-de-otiluke', 'sorcerer'),
+  ('globo-de-invulnerabilidade', 'sorcerer'),
+  ('mau-olhado', 'sorcerer'),
+  ('mover-terra', 'sorcerer'),
+  ('portais-arcanos', 'sorcerer'),
+  ('raio-solar', 'sorcerer'),
+  ('sugestao-em-massa', 'sorcerer'),
+  ('visao-da-verdade', 'sorcerer'),
+  ('bola-de-fogo-adiavel', 'sorcerer'),
+  ('dedo-da-morte', 'sorcerer'),
+  ('forma-eterea', 'sorcerer'),
+  ('inverter-a-gravidade', 'sorcerer'),
+  ('rajada-prismatica', 'sorcerer'),
+  ('teleporte', 'sorcerer'),
+  ('tempestade-de-fogo', 'sorcerer'),
+  ('transicao-planar', 'sorcerer'),
+  ('dominar-monstro', 'sorcerer'),
+  ('explosao-solar', 'sorcerer'),
+  ('nuvem-incendiaria', 'sorcerer'),
+  ('palavra-de-poder-atordoar', 'sorcerer'),
+  ('semiplano', 'sorcerer'),
+  ('terremoto', 'sorcerer'),
+  ('chuva-de-meteoros', 'sorcerer'),
+  ('desejo', 'sorcerer'),
+  ('palavra-de-poder-matar', 'sorcerer'),
+  ('parar-o-tempo', 'sorcerer'),
+  ('portal', 'sorcerer'),
+  ('amigos', 'warlock'),
+  ('badalar-funebre', 'warlock'),
+  ('golpe-certeiro', 'warlock'),
+  ('ilusao-menor', 'warlock'),
+  ('maos-magicas', 'warlock'),
+  ('prestidigitacao-arcana', 'warlock'),
+  ('protecao-contra-laminas', 'warlock'),
+  ('raio-mistico', 'warlock'),
+  ('rajada-de-veneno', 'warlock'),
+  ('talho-mental', 'warlock'),
+  ('toque-necrotico', 'warlock'),
+  ('trovao', 'warlock'),
+  ('armadura-de-agathys', 'warlock'),
+  ('bracos-de-hadar', 'warlock'),
+  ('compreender-idiomas', 'warlock'),
+  ('danacao', 'warlock'),
+  ('detectar-magia', 'warlock'),
+  ('enfeiticar-pessoa', 'warlock'),
+  ('escrita-ilusoria', 'warlock'),
+  ('falar-com-animais', 'warlock'),
+  ('gargalhada-nefasta-de-tasha', 'warlock'),
+  ('perdicao', 'warlock'),
+  ('protecao-contra-o-bem-e-o-mal', 'warlock'),
+  ('raio-de-bruxa', 'warlock'),
+  ('repreensao-diabolica', 'warlock'),
+  ('retirada-acelerada', 'warlock'),
+  ('servo-invisivel', 'warlock'),
+  ('cativar', 'warlock'),
+  ('coroa-da-loucura', 'warlock'),
+  ('escalada-de-aranha', 'warlock'),
+  ('escuridao', 'warlock'),
+  ('espinho-mental', 'warlock'),
+  ('invisibilidade', 'warlock'),
+  ('nuvem-de-adagas', 'warlock'),
+  ('paralisar-pessoa', 'warlock'),
+  ('passo-nebuloso', 'warlock'),
+  ('raio-do-enfraquecimento', 'warlock'),
+  ('reflexos', 'warlock'),
+  ('sugestao', 'warlock'),
+  ('circulo-magico', 'warlock'),
+  ('contramagia', 'warlock'),
+  ('convocar-feerico', 'warlock'),
+  ('dissipar-magia', 'warlock'),
+  ('fome-de-hadar', 'warlock'),
+  ('forma-gasosa', 'warlock'),
+  ('imagem-maior', 'warlock'),
+  ('invocar-morto-vivo', 'warlock'),
+  ('linguas', 'warlock'),
+  ('medo', 'warlock'),
+  ('padrao-hipnotico', 'warlock'),
+  ('remover-maldicao', 'warlock'),
+  ('toque-vampirico', 'warlock'),
+  ('voo', 'warlock'),
+  ('banimento', 'warlock'),
+  ('enfeiticar-monstro', 'warlock'),
+  ('invocar-aberracao', 'warlock'),
+  ('malogro', 'warlock'),
+  ('porta-dimensional', 'warlock'),
+  ('terreno-alucinatorio', 'warlock'),
+  ('ancora-planar', 'warlock'),
+  ('circulo-de-teleporte', 'warlock'),
+  ('contato-extraplanar', 'warlock'),
+  ('despistar', 'warlock'),
+  ('estatica-sinaptica', 'warlock'),
+  ('paralisar-monstro', 'warlock'),
+  ('sonho', 'warlock'),
+  ('tempestade-radiante-de-jallarzi', 'warlock'),
+  ('videncia', 'warlock'),
+  ('caldeirao-borbulhante-de-tasha', 'warlock'),
+  ('circulo-da-morte', 'warlock'),
+  ('criar-mortos-vivos', 'warlock'),
+  ('invocar-infero', 'warlock'),
+  ('mau-olhado', 'warlock'),
+  ('portais-arcanos', 'warlock'),
+  ('visao-da-verdade', 'warlock'),
+  ('carcere-de-energia', 'warlock'),
+  ('dedo-da-morte', 'warlock'),
+  ('forma-eterea', 'warlock'),
+  ('transicao-planar', 'warlock'),
+  ('dominar-monstro', 'warlock'),
+  ('loquacidade', 'warlock'),
+  ('palavra-de-poder-atordoar', 'warlock'),
+  ('semiplano', 'warlock'),
+  ('suplicio', 'warlock'),
+  ('aprisionamento', 'warlock'),
+  ('encarnacao-fantasmagorica', 'warlock'),
+  ('palavra-de-poder-matar', 'warlock'),
+  ('polimorfia-total', 'warlock'),
+  ('portal', 'warlock'),
+  ('projecao-astral', 'warlock'),
+  ('sexto-sentido', 'warlock'),
+  ('amigos', 'wizard'),
+  ('badalar-funebre', 'wizard'),
+  ('bolha-acida', 'wizard'),
+  ('elementalismo', 'wizard'),
+  ('golpe-certeiro', 'wizard'),
+  ('ilusao-menor', 'wizard'),
+  ('luz', 'wizard'),
+  ('luzes-dancantes', 'wizard'),
+  ('maos-magicas', 'wizard'),
+  ('mensagem', 'wizard'),
+  ('prestidigitacao-arcana', 'wizard'),
+  ('protecao-contra-laminas', 'wizard'),
+  ('raio-de-fogo', 'wizard'),
+  ('raio-de-gelo', 'wizard'),
+  ('rajada-de-veneno', 'wizard'),
+  ('reparar', 'wizard'),
+  ('talho-mental', 'wizard'),
+  ('toque-chocante', 'wizard'),
+  ('toque-necrotico', 'wizard'),
+  ('trovao', 'wizard'),
+  ('alarme', 'wizard'),
+  ('armadura-arcana', 'wizard'),
+  ('compreender-idiomas', 'wizard'),
+  ('convocar-familiar', 'wizard'),
+  ('detectar-magia', 'wizard'),
+  ('disco-flutuante-de-tenser', 'wizard'),
+  ('disfarcar-se', 'wizard'),
+  ('enfeiticar-pessoa', 'wizard'),
+  ('escrita-ilusoria', 'wizard'),
+  ('escudo-arcano', 'wizard'),
+  ('faca-de-gelo', 'wizard'),
+  ('gargalhada-nefasta-de-tasha', 'wizard'),
+  ('graxa', 'wizard'),
+  ('identificar', 'wizard'),
+  ('imagem-silenciosa', 'wizard'),
+  ('leque-cromatico', 'wizard'),
+  ('maos-flamejantes', 'wizard'),
+  ('misseis-magicos', 'wizard'),
+  ('nevoa-obscurecente', 'wizard'),
+  ('onda-trovejante', 'wizard'),
+  ('orbe-cromatico', 'wizard'),
+  ('passos-largos', 'wizard'),
+  ('protecao-contra-o-bem-e-o-mal', 'wizard'),
+  ('queda-suave', 'wizard'),
+  ('raio-de-bruxa', 'wizard'),
+  ('raio-nauseante', 'wizard'),
+  ('retirada-acelerada', 'wizard'),
+  ('salto', 'wizard'),
+  ('servo-invisivel', 'wizard'),
+  ('sono', 'wizard'),
+  ('vitalidade-vazia', 'wizard'),
+  ('alterar-se', 'wizard'),
+  ('aprimorar-atributo', 'wizard'),
+  ('arma-magica', 'wizard'),
+  ('arrombar', 'wizard'),
+  ('augurio', 'wizard'),
+  ('aumentar-reduzir', 'wizard'),
+  ('aura-magica-de-nystul', 'wizard'),
+  ('boca-encantada', 'wizard'),
+  ('cegueira-surdez', 'wizard'),
+  ('chama-continua', 'wizard'),
+  ('corda-extradimensional', 'wizard'),
+  ('coroa-da-loucura', 'wizard'),
+  ('despedacar', 'wizard'),
+  ('detectar-pensamentos', 'wizard'),
+  ('escalada-de-aranha', 'wizard'),
+  ('escuridao', 'wizard'),
+  ('esfera-flamejante', 'wizard'),
+  ('espinho-mental', 'wizard'),
+  ('flecha-acida-de-melf', 'wizard'),
+  ('forca-espectral', 'wizard'),
+  ('invisibilidade', 'wizard'),
+  ('levitacao', 'wizard'),
+  ('localizar-objeto', 'wizard'),
+  ('lufada-de-vento', 'wizard'),
+  ('nuvem-de-adagas', 'wizard'),
+  ('paralisar-pessoa', 'wizard'),
+  ('passo-nebuloso', 'wizard'),
+  ('raio-ardente', 'wizard'),
+  ('raio-do-enfraquecimento', 'wizard'),
+  ('reflexos', 'wizard'),
+  ('repouso-tranquilo', 'wizard'),
+  ('sopro-de-dragao', 'wizard'),
+  ('sugestao', 'wizard'),
+  ('teia', 'wizard'),
+  ('tranca-arcana', 'wizard'),
+  ('turvar', 'wizard'),
+  ('ver-o-invisivel', 'wizard'),
+  ('vigor-arcano', 'wizard'),
+  ('visao-no-escuro', 'wizard'),
+  ('animar-mortos', 'wizard'),
+  ('bola-de-fogo', 'wizard'),
+  ('celeridade', 'wizard'),
+  ('circulo-magico', 'wizard'),
+  ('clarividencia', 'wizard'),
+  ('contramagia', 'wizard'),
+  ('convocar-feerico', 'wizard'),
+  ('dissipar-magia', 'wizard'),
+  ('falar-com-mortos', 'wizard'),
+  ('forma-gasosa', 'wizard'),
+  ('glifo-de-protecao', 'wizard'),
+  ('imagem-maior', 'wizard'),
+  ('indetectavel', 'wizard'),
+  ('invocar-morto-vivo', 'wizard'),
+  ('lentidao', 'wizard'),
+  ('linguas', 'wizard'),
+  ('medo', 'wizard'),
+  ('montaria-fantasmagorica', 'wizard'),
+  ('nevasca', 'wizard'),
+  ('nuvem-fetida', 'wizard'),
+  ('padrao-hipnotico', 'wizard'),
+  ('pequeno-refugio-de-leomund', 'wizard'),
+  ('piscar', 'wizard'),
+  ('protecao-contra-energia', 'wizard'),
+  ('relampago', 'wizard'),
+  ('remeter', 'wizard'),
+  ('remover-maldicao', 'wizard'),
+  ('respirar-na-agua', 'wizard'),
+  ('rogar-maldicao', 'wizard'),
+  ('simular-morte', 'wizard'),
+  ('toque-vampirico', 'wizard'),
+  ('voo', 'wizard'),
+  ('arca-secreta-de-leomund', 'wizard'),
+  ('assassino-fantasmagorico', 'wizard'),
+  ('banimento', 'wizard'),
+  ('cao-fiel-de-mordenkainen', 'wizard'),
+  ('confusao', 'wizard'),
+  ('controlar-agua', 'wizard'),
+  ('convocar-elemental', 'wizard'),
+  ('enfeiticar-monstro', 'wizard'),
+  ('escudo-ardente', 'wizard'),
+  ('esfera-resiliente-de-otiluke', 'wizard'),
+  ('esfera-vitriolica', 'wizard'),
+  ('fabricar', 'wizard'),
+  ('invisibilidade-maior', 'wizard'),
+  ('invocar-aberracao', 'wizard'),
+  ('invocar-constructo', 'wizard'),
+  ('invocar-elementais-menores', 'wizard'),
+  ('localizar-criatura', 'wizard'),
+  ('malogro', 'wizard'),
+  ('moldar-rochas', 'wizard'),
+  ('muralha-de-fogo', 'wizard'),
+  ('olho-arcano', 'wizard'),
+  ('pele-rocha', 'wizard'),
+  ('polimorfia', 'wizard'),
+  ('porta-dimensional', 'wizard'),
+  ('pressagio', 'wizard'),
+  ('santuario-particular-de-mordenkainen', 'wizard'),
+  ('tempestade-glacial', 'wizard'),
+  ('tentaculos-negros-de-evard', 'wizard'),
+  ('terreno-alucinatorio', 'wizard'),
+  ('ancora-planar', 'wizard'),
+  ('animar-objetos', 'wizard'),
+  ('circulo-de-poder', 'wizard'),
+  ('circulo-de-teleporte', 'wizard'),
+  ('cone-de-frio', 'wizard'),
+  ('contato-extraplanar', 'wizard'),
+  ('criacao', 'wizard'),
+  ('criar-passagem', 'wizard'),
+  ('despistar', 'wizard'),
+  ('dominar-pessoa', 'wizard'),
+  ('estatica-sinaptica', 'wizard'),
+  ('golpe-de-arco', 'wizard'),
+  ('invocar-dragao', 'wizard'),
+  ('invocar-elemental', 'wizard'),
+  ('lendas-e-historias', 'wizard'),
+  ('ligacao-telepatica-de-rary', 'wizard'),
+  ('mao-de-bigby', 'wizard'),
+  ('missao', 'wizard'),
+  ('modificar-memoria', 'wizard'),
+  ('muralha-de-energia', 'wizard'),
+  ('muralha-de-pedra', 'wizard'),
+  ('nevoa-mortal', 'wizard'),
+  ('paralisar-monstro', 'wizard'),
+  ('presenca-regia-de-yolande', 'wizard'),
+  ('similaridade', 'wizard'),
+  ('sonho', 'wizard'),
+  ('telecinese', 'wizard'),
+  ('tempestade-radiante-de-jallarzi', 'wizard'),
+  ('videncia', 'wizard'),
+  ('caldeirao-borbulhante-de-tasha', 'wizard'),
+  ('circulo-da-morte', 'wizard'),
+  ('contingencia', 'wizard'),
+  ('corrente-de-relampagos', 'wizard'),
+  ('criar-mortos-vivos', 'wizard'),
+  ('danca-irresistivel-de-otto', 'wizard'),
+  ('de-carne-para-pedra', 'wizard'),
+  ('desintegrar', 'wizard'),
+  ('esfera-congelante-de-otiluke', 'wizard'),
+  ('globo-de-invulnerabilidade', 'wizard'),
+  ('ilusao-programada', 'wizard'),
+  ('invocacao-instantanea-de-drawmij', 'wizard'),
+  ('invocar-infero', 'wizard'),
+  ('mau-olhado', 'wizard'),
+  ('mover-terra', 'wizard'),
+  ('muralha-de-gelo', 'wizard'),
+  ('portais-arcanos', 'wizard'),
+  ('proteger-fortaleza', 'wizard'),
+  ('raio-solar', 'wizard'),
+  ('receptaculo-arcano', 'wizard'),
+  ('sugestao-em-massa', 'wizard'),
+  ('visao-da-verdade', 'wizard'),
+  ('bola-de-fogo-adiavel', 'wizard'),
+  ('carcere-de-energia', 'wizard'),
+  ('dedo-da-morte', 'wizard'),
+  ('espada-de-mordenkainen', 'wizard'),
+  ('forma-eterea', 'wizard'),
+  ('inverter-a-gravidade', 'wizard'),
+  ('mansao-magnifica-de-mordenkainen', 'wizard'),
+  ('miragem-arcana', 'wizard'),
+  ('projetar-imagem', 'wizard'),
+  ('rajada-prismatica', 'wizard'),
+  ('refugiar', 'wizard'),
+  ('simbolo', 'wizard'),
+  ('simulacro', 'wizard'),
+  ('teleporte', 'wizard'),
+  ('transicao-planar', 'wizard'),
+  ('antipatia-simpatia', 'wizard'),
+  ('campo-antimagia', 'wizard'),
+  ('clone', 'wizard'),
+  ('controlar-o-clima', 'wizard'),
+  ('dominar-monstro', 'wizard'),
+  ('explosao-solar', 'wizard'),
+  ('labirinto', 'wizard'),
+  ('limpar-a-mente', 'wizard'),
+  ('nuvem-incendiaria', 'wizard'),
+  ('palavra-de-poder-atordoar', 'wizard'),
+  ('semiplano', 'wizard'),
+  ('suplicio', 'wizard'),
+  ('telepatia', 'wizard'),
+  ('aprisionamento', 'wizard'),
+  ('chuva-de-meteoros', 'wizard'),
+  ('desejo', 'wizard'),
+  ('encarnacao-fantasmagorica', 'wizard'),
+  ('metamorfose', 'wizard'),
+  ('muralha-prismatica', 'wizard'),
+  ('palavra-de-poder-matar', 'wizard'),
+  ('parar-o-tempo', 'wizard'),
+  ('polimorfia-total', 'wizard'),
+  ('portal', 'wizard'),
+  ('projecao-astral', 'wizard'),
+  ('sexto-sentido', 'wizard')
+ON CONFLICT (spell_id, class_id) DO NOTHING;
+
+
+INSERT INTO rpg.phb_subclass (id, class_id, name, tagline, summary, description, prepared_spell_source_key, prepared_spells_by_level, prepared_spells_by_terrain, source_meta)
+VALUES
+  ('world-tree', 'barbarian', 'Trilha da Árvore do Mundo', 'Entrelace as Raízes e Ramos do Multiverso', 'Acessar a vitalidade cósmica.', 'Bárbaros que seguem a Trilha da Árvore do Mundo
+conectam-se à árvore cósmica Yggdrasil por meio de
+sua Fúria. Essa árvore cresce entre os Planos Externos,
+ligando-os entre si e ao Plano Material. Esses Bárbaros extraem a magia da árvore para obter vitalidade e
+viajar entre dimensões.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('berserker', 'barbarian', 'Trilha do Berserker', 'Canalize sua Fúria em um Frenesi Violento', 'Liberar violência bruta.', 'Bárbaros que seguem a Trilha do Berserker direcionam
+sua Fúria principalmente para a violência. Essa trilha
+é de um frenesi desenfreado, e eles se deleitam no
+caos da batalha ao permitir que sua Fúria os domine e
+fortaleça.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('wild-heart', 'barbarian', 'Trilha do Coração Selvagem', 'Ande em Comunhão com o Mundo Animal', 'Manifestar seu instinto animal.', 'Bárbaros que seguem a Trilha do Coração Selvagem
+se consideram parentes dos animais. Esses Bárbaros
+aprendem meios mágicos de se comunicar com os
+animais, e sua Fúria intensifica essa conexão com eles,
+preenchendo-os com poder sobrenatural.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('zealot', 'barbarian', 'Trilha do Fanático', 'Fúria em Êxtase com um Deus', 'Enfurecer-se em união com um deus.', 'Bárbaros que seguem a Trilha do Fanático recebem
+bênçãos de um deus ou panteão. Esses Bárbaros experimentam sua Fúria como um episódio extático de
+união divina que os infunde com poder. Frequentemente, são aliados de sacerdotes e outros seguidores de sua
+divindade ou panteão.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('valor', 'bard', 'Colégio da Bravura', 'Cante os Feitos dos Heróis Antigos', 'Brandir armas com magias.', 'Os Bardos do Colégio da Bravura são narradores ousados cujas histórias preservam a memória dos grandes
+heróis do passado. Eles cantam os feitos dos poderosos em salões suntuosos ou para multidões reunidas
+em torno de grandes fogueiras. Esses Bardos viajam
+para testemunhar grandes eventos em primeira mão e
+garantir que a lembrança desses acontecimentos não
+desapareça. Com suas canções, eles inspiram novas
+gerações a alcançar os mesmos feitos grandiosos dos
+heróis de outrora.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('dance', 'bard', 'Colégio da Dança', 'Mova-se em Harmonia com o Cosmos', 'Aproveitar a agilidade no combate.', 'Bardos do Colégio da Dança entendem que as Palavras de Criação transcendem a fala e a canção; elas se
+manifestam nos movimentos dos corpos celestes e nos
+gestos das menores criaturas. Esses Bardos buscam
+uma harmonia com o turbilhão do cosmos, enfatizando
+agilidade, velocidade e graça.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('lore', 'bard', 'Colégio do Conhecimento', 'Explore as Profundezas do Conhecimento Mágico', 'Colecionar saberes e segredos mágicos.', 'Bardos do Colégio do Conhecimento colecionam magias e segredos de fontes diversas, como tomos acadêmicos, ritos místicos e contos populares. Os membros
+do colégio reúnem-se em bibliotecas e universidades
+para compartilhar seu conhecimento uns com os
+outros. Eles também participam de festivais ou eventos
+de estado, onde podem expor corrupção, desvendar
+mentiras e satirizar figuras de autoridade que se acham
+importantes.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('glamour', 'bard', 'Colégio do Glamour', 'Teça Magia Feérica Fascinante', 'Tecer a magia fascinante de Faéria.', 'O Colégio do Glamour remonta à magia encantadora
+de Faéria. Bardos que estudam essa magia entrelaçam
+fios de beleza e terror em suas canções e histórias, e os
+mais poderosos entre eles podem se envolver em uma
+majestade sobrenatural. Suas apresentações despertam
+um anseio nostálgico por uma inocência esquecida,
+evocam memórias inconscientes de medos antigos e
+tocam as emoções até dos ouvintes mais insensíveis.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('archfey', 'warlock', 'Patrono Arquifada', 'Faça um pacto com um senhor das fadas', 'Teleportar-se e manipular magia feérica.', 'Seu pacto é fundamentado no poder de Faéria. Ao escolher essa subclasse, você pode realizar um pacto com
+uma Arquifada, como o Príncipe do Gelo, a Rainha do
+Ar e das Trevas, Titânia da Corte de Verão ou uma megera antiga. Outra opção é invocar um espectro Feérico, criando uma rede de favores e dívidas. Em qualquer
+caso, seu patrono tende a ser enigmático e excêntrico.', 'archfey-pact', '{"3":["acalmar-emocoes","fogo-das-fadas","forca-espectral","passo-nebuloso","sono"],"5":["crescimento-de-plantas","piscar"],"7":["dominar-fera","invisibilidade-maior"],"9":["dominar-pessoa","similaridade"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('celestial', 'warlock', 'Patrono Celestial', 'Faça um pacto com um ser celestial', 'Curar com magia celestial.', 'Seu pacto é fundamentado nos Planos Superiores,
+os reinos da felicidade eterna. Você pode firmar um
+acordo com um empiriano, um couatl, uma esfinge, um
+unicórnio ou outra entidade celestial, ou invocar vários
+desses seres enquanto persegue objetivos que se alinham aos deles. O pacto permite que você experimente
+uma fração da luz sagrada que ilumina o multiverso.', 'celestial-pact', '{"3":["auxilio","chama-sagrada","curar-ferimentos","luz","raio-guia","restauracao-menor"],"5":["luz-do-dia","revivificar"],"7":["defensor-da-fe","muralha-de-fogo"],"9":["convocar-celestial","restauracao-maior"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('great-old-one', 'warlock', 'Patrono O Grande Antigo', 'Faça um pacto com uma entidade do Reino Distante', 'Mergulhar em conhecimentos proibidos.', 'Ao escolher esta subclasse, você pode se conectar a
+uma entidade indescritível do Reino Distante ou a um
+deus ancestral, como Tharizdun, o Deus Acorrentado;
+Zargon, o Retornador; Hadar, a Fome Sombria; ou
+Grande Cthulhu. Ou você pode invocar várias entidades
+sem se prender a uma. As motivações desses seres
+são incompreensíveis, e o Grande Antigo pode ser indiferente à sua existência. No entanto, os segredos que
+você aprendeu permitem que aproveite sua estranha
+magia.', 'great-old-one-pact', '{"3":["detectar-pensamentos","forca-espectral","gargalhada-nefasta-de-tasha","sussurros-dissonantes"],"5":["clarividencia","fome-de-hadar"],"7":["confusao","invocar-aberracao"],"9":["modificar-memoria","telecinese"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('fiend', 'warlock', 'Patrono Ínfero', 'Faça um pacto com um poder infernal', 'Invocar poderes sinistros.', 'Seu pacto se fundamenta nos Planos Inferiores, reinos
+de perdição. Você pode negociar com um lorde demônio como Demogorgon ou Orcus; um arquidiabo como
+Asmodeus; ou um Diabo do Fosso, balor, yugoloth ou
+uma poderosa megera da noite. Os objetivos desse patrono são malignos — visam à corrupção ou destruição
+de tudo, inclusive você — e seu caminho é determinado
+pelo seu esforço em se opor a esses objetivos.', 'fiend-pact', '{"3":["comando","maos-flamejantes","raio-ardente","sugestao"],"5":["bola-de-fogo","nuvem-fetida"],"7":["escudo-ardente","muralha-de-fogo"],"9":["missao","praga-de-insetos"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('life', 'cleric', 'Domínio da Vida', 'Preserve a força vital', 'Ser um mestre da cura.', 'O Domínio da Vida se concentra na energia positiva que ajuda a sustentar toda a vida no multiverso.
+Os clérigos que acessam este domínio são mestres
+da cura, usando essa força vital para curar muitas
+feridas.
+A existência deste domínio repousa na energia
+positiva que o envolve, atraindo Clérigos de várias
+tradições religiosas. Está especialmente conectado
+a divindades agrícolas, deuses da cura e resistência,
+além de entidades do lar e da comunidade. Ordens religiosas voltadas para a cura também buscam a magia
+deste domínio.', 'life-domain', '{"3":["auxilio","bencao","curar-ferimentos","restauracao-menor"],"5":["palavra-curativa-em-massa","revivificar"],"7":["aura-de-vida","protecao-contra-a-morte"],"9":["curar-ferimentos-em-massa","restauracao-maior"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('light', 'cleric', 'Domínio da Luz', 'Empunhe luz ardente', 'Empunhar luz ardente e protetora.', 'O Domínio da Luz destaca o poder divino de gerar
+labaredas e revelação. Seus Clérigos, almas iluminadas, possuem a visão clara de suas divindades, encarregados de afastar mentiras e dissipar as trevas.
+Este domínio está ligado a deuses da verdade, vigilância, beleza, percepção e renovação. Alguns desses
+deuses são identificados com o sol ou como condutores de carruagens que guiam o sol pelo céu. Outros
+atuam como sentinelas contra o engano, enquanto
+algumas divindades da beleza e da arte ensinam que a
+arte é um caminho para o aprimoramento da alma.', 'light-domain', '{"3":["fogo-das-fadas","maos-flamejantes","raio-ardente","ver-o-invisivel"],"5":["bola-de-fogo","luz-do-dia"],"7":["muralha-de-fogo","olho-arcano"],"9":["coluna-de-chamas","videncia"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('trickery', 'cleric', 'Domínio da Trapaça', 'Engane e confunda', 'Atormentar inimigos com artimanhas.', 'O Domínio da Trapaça fornece magias de enganação,
+ilusão e furtividade. Os Clérigos que usam essa magia
+são uma força disruptiva no mundo, perfurando o
+orgulho, zombando de tiranos, libertando cativos e
+desprezando tradições vazias. Eles preferem estratagemas e brincadeiras ao confronto direto.
+Os deuses da trapaça são instigadores e trapaceiros
+que desafiam a ordem entre deuses e mortais. Eles
+personificam a mudança e a agitação social, sendo
+patronos de ladrões, vigaristas, apostadores, rebeldes
+e libertadores. Ordens religiosas secretas, especialmente as que buscam minar governos ou hierarquias
+opressivas, também se apoiam no poder do Domínio
+da Trapaça.', 'trickery-domain', '{"3":["disfarcar-se","enfeiticar-pessoa","invisibilidade","passo-sem-rastro"],"5":["indetectavel","padrao-hipnotico"],"7":["confusao","porta-dimensional"],"9":["dominar-pessoa","modificar-memoria"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('war', 'cleric', 'Domínio da Guerra', 'Inspire bravura marcial', 'Inspirar bravura e punir inimigos.', 'A guerra se manifesta de diversas formas, capaz de
+transformar pessoas comuns em heróis. Pode ser
+aterrorizante, com crueldades e covardias ofuscando
+atos de bravura e coragem. Os Clérigos do Domínio
+da Guerra se destacam em batalhas, inspirando outros
+a lutar pelo bem ou convertendo atos de violência em
+orações.
+Os Deuses do Domínio da Guerra observam e
+recompensam os guerreiros por suas conquistas. Eles
+incluem deuses de honra e cavalheirismo, assim como
+de destruição e pilhagem. Outros deuses da guerra
+adotam uma postura neutra, apoiando a belicosidade
+em todas as suas formas e incentivando os combatentes em todas as situações.', 'war-domain', '{"3":["arma-espiritual","arma-magica","escudo-da-fe","raio-guia"],"5":["guardioes-espirituais","manto-do-cruzado"],"7":["escudo-ardente","movimentacao-livre"],"9":["golpe-de-arco","paralisar-monstro"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('land', 'druid', 'Círculo da Terra', 'Canalize a magia do ambiente', 'Aproveitar a magia do ambiente.', 'O Círculo da Terra é composto por místicos e sábios
+que preservam conhecimentos e rituais ancestrais.
+Esses Druidas se reúnem em círculos sagrados de
+árvores ou pedras para sussurrar segredos primordiais
+em druídico. Os membros mais sábios do círculo atuam
+como sumos sacerdotes de suas comunidades.', 'land-circle', NULL, '{"arid":{"3":["maos-flamejantes","turvar","raio-de-fogo"],"5":["bola-de-fogo","muralha-de-fogo"],"7":["malogro","muralha-de-pedra"],"9":["coluna-de-chamas","videncia"]},"polar":{"3":["nevoa-obscurecente","paralisar-pessoa","raio-de-gelo"],"5":["nevasca","lentidao"],"7":["cone-de-frio","tempestade-glacial"],"9":["comunhao-com-a-natureza","passo-arboreo"]},"temperate":{"3":["passo-nebuloso","toque-chocante","sono"],"5":["relampago","crescimento-de-plantas"],"7":["movimentacao-livre","moldar-rochas"],"9":["comunhao-com-a-natureza","muralha-de-pedra"]},"tropical":{"3":["bolha-acida","rajada-de-veneno","teia"],"5":["nuvem-fetida","polimorfia"],"7":["praga-de-insetos","muralha-de-espinhos"],"9":["nevoa-mortal","passo-arboreo"]}}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('moon', 'druid', 'Círculo da Lua', 'Adote formas animais poderosas', 'Adotar formas de animais poderosos.', 'Druidas do Círculo da Lua canalizam a magia lunar
+para se transformarem. A ordem se reúne sob a lua
+para compartilhar informações e realizar rituais.
+Assim como a lua é mutável, um Druida desse círculo
+pode espreitar como um grande felino em uma noite,
+sobrevoar as copas das árvores como uma águia no
+dia seguinte e, depois, atravessar a vegetação como um
+urso para afastar um monstro invasor. A vida selvagem
+corre no sangue do Druida.', 'moon-circle', '{"3":["curar-ferimentos","fagulha-estelar","raio-lunar"],"5":["invocar-animais"],"7":["fonte-do-luar"],"9":["curar-ferimentos-em-massa"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('stars', 'druid', 'Círculo das Estrelas', 'Obtenha poderes em forma estelar', 'Obter poderes em uma forma estelar.', 'O Círculo das Estrelas segue os padrões celestiais desde tempos imemoriais, descobrindo segredos ocultos
+entre as constelações. Ao compreender esses segredos,
+os druidas deste círculo buscam dominar os poderes do
+cosmos.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('sea', 'druid', 'Círculo do Mar', 'Canalize marés e tempestades', 'Canalizar marés e tempestades.', 'Druidas do Círculo do Mar canalizam as forças
+tempestuosas dos oceanos e das tormentas. Alguns se
+veem como encarnações da ira da natureza, buscando
+vingança contra aqueles que destroem o meio ambiente. Outros procuram uma unidade mística com a
+natureza ao sintonizarem-se com o fluxo e refluxo das
+marés, seguindo a correnteza e as ondas, ouvindo os
+sussurros e rugidos indecifráveis dos ventos.', 'sea-circle', '{"3":["despedacar","lufada-de-vento","nevoa-obscurecente","onda-trovejante","raio-de-gelo"],"5":["relampago","respirar-na-agua"],"7":["controlar-agua","tempestade-glacial"],"9":["invocar-elemental","paralisar-monstro"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('aberrant', 'sorcerer', 'Feitiçaria Aberrante', 'Use estranha magia psiônica', 'Usar estranha magia psiônica.', 'Uma influência alienígena envolveu sua mente, concedendo-lhe poder psiônico. Agora, você pode tocar
+outras mentes e moldar o mundo ao seu redor. Esse
+poder brilhará em você como um farol de esperança
+para os outros? Ou você será um terror para aqueles
+que sentirem o impacto de sua mente?
+Talvez um vento psíquico do Plano Astral tenha carregado energia psiônica para você, ou você tenha sido
+exposto à influência deformadora do Reino Distante.
+Também é possível que um devorador de mentes girino
+tenha sido implantado em você, mas sua transformação
+em um devorador de mentes nunca ocorreu; agora o
+poder psiônico do girino é seu. Independente de como
+você adquiriu esse poder, sua mente está em chamas
+com ele.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('draconic', 'sorcerer', 'Feitiçaria Dracônica', 'Emane a magia dos dragões', 'Emanar a magia dos dragões.', 'Sua magia inata provém da dádiva de um dragão.
+Talvez um dragão antigo, que estava à beira da morte,
+tenha legado parte de seu poder mágico a você ou a um
+de seus antepassados. Você pode ter absorvido a magia
+de um local impregnado com o poder dos dragões. Ou
+talvez tenha manuseado um tesouro retirado do covil
+de um dragão, repleto de poder dracônico. Ou quem
+sabe você tenha um dragão como ancestral.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('clockwork', 'sorcerer', 'Feitiçaria Mecânica', 'Aproveite forças cósmicas da ordem', 'Aproveitar forças cósmicas da ordem.', 'A força cósmica da ordem o envolveu em magia. Esse
+poder provém de Mecanos ou de um reino semelhante
+— um plano de existência moldado inteiramente pela eficiência de um relógio. Você ou alguém de sua linhagem
+pode ter se envolvido nas maquinações dos modrons, os
+seres ordenados que habitam Mecanos. Talvez seu antepassado tenha até participado da Grande Marcha dos
+Modrons. Seja qual for sua origem, o poder da ordem
+pode parecer estranho para os outros, mas, para você,
+ele é parte de um sistema vasto e glorioso.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('wild-magic', 'sorcerer', 'Feitiçaria Selvagem', 'Libere magia caótica', 'Liberar magia caótica.', 'Sua magia inata provém das forças do caos que
+sustentam a ordem da criação. Você ou um antepassado pode ter sido exposto à magia bruta, talvez
+através de um portal planar que levava ao Limbo ou
+aos Planos Elementais. Pode ser que você tenha sido
+abençoado por um ser feérico ou marcado por um
+demônio. Ou sua magia pode ser um acaso sem causa
+aparente. Seja qual for a origem, essa magia se agita
+dentro de você, aguardando uma oportunidade de se
+manifestar.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('fey-wanderer', 'ranger', 'Andarilho Feérico', 'Manifeste a alegria e a fúria feérica', 'Manifestar a alegria e a fúria feérica.', 'Uma mística feérica o envolve, graças à bênção de uma
+arquifada ou a um local em Faéria que o transformou.
+Agora, como um Andarilho Feérico, você possui magia
+feérica. Sua risada alegre ilumina os corações dos oprimidos, enquanto suas habilidades marciais infundem
+terror em seus inimigos, pois a alegria dos feéricos é
+imensa e sua fúria, temível.', 'fey-wanderer-spells', '{"3":["enfeiticar-pessoa"],"5":["passo-nebuloso"],"9":["convocar-feerico"],"13":["porta-dimensional"],"17":["despistar"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('hunter', 'ranger', 'Caçador', 'Proteja a natureza com versatilidade marcial', 'Proteger a natureza com versatilidade marcial.', 'Você persegue presas nos ermos e em outros lugares,
+usando suas habilidades como Caçador para proteger
+a natureza e as pessoas em todos os lugares de forças
+que as destruiriam.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('beast-master', 'ranger', 'Senhor das Feras', 'Forme um laço com uma fera primitiva', 'Formar um laço com uma fera primitiva.', 'Um Senhor das Feras forma um vínculo místico com
+um animal especial, com base em magia primal e uma
+profunda conexão com o mundo natural.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('gloom-stalker', 'ranger', 'Vigilante das Sombras', 'Persiga inimigos nas trevas', 'Perseguir inimigos que se escondem nas trevas.', 'Vigilantes das Sombras estão nos lugares mais sombrios, empunhando magia extraída do Sombral para
+combater inimigos que se escondem na escuridão.', 'gloom-stalker-spells', '{"3":["disfarcar-se"],"5":["corda-extradimensional"],"9":["medo"],"13":["invisibilidade-maior"],"17":["similaridade"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('champion', 'fighter', 'Campeão', 'Busque o auge da proeza no combate', 'Buscar o auge da proeza no combate.', 'Um Campeão foca no desenvolvimento de habilidades marciais em sua busca incessante pela vitória. Ele
+combina treino rigoroso com excelência física para
+suportar golpes devastadores, enfrentar perigos e
+conquistar a glória. Seja em competições esportivas ou
+batalhas sangrentas, os Campeões lutam pela coroa do
+vencedor.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('eldritch-knight', 'fighter', 'Cavaleiro Místico', 'Aprenda magias que auxiliem no combate', 'Aprender magias que auxiliem no combate.', 'Cavaleiros Místicos unem habilidades marciais de
+Guerreiros a um estudo aprofundado da magia, que
+não só complementa suas técnicas de combate como
+também oferece proteção adicional à armadura e
+permite enfrentar múltiplos inimigos simultaneamente
+com magia explosiva.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('psi-warrior', 'fighter', 'Combatente Psíquico', 'Aumente os ataques com poder psiônico', 'Aumentar os ataques com poder psiônico.', 'Combatentes Psíquicos despertam o poder de suas
+mentes para aprimorar suas habilidades físicas, infundindo ataques com energia psiônica, usando telecinesia
+e criando barreiras de força mental.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('battle-master', 'fighter', 'Mestre da Batalha', 'Use manobras de combate especiais', 'Usar manobras de combate especiais.', 'Os Mestres da Batalha são estudantes da arte do
+combate, aprendendo técnicas marciais transmitidas
+por gerações. Os mais bem-sucedidos equilibram suas
+habilidades marciais cuidadosamente aprimoradas com
+estudos acadêmicos em história, teoria e artes.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('soulknife', 'rogue', 'Adaga Espiritual', 'Golpeie inimigos com lâminas psíquicas', 'Golpear inimigos com lâminas psíquicas.', 'psiônicas podem ter se manifestado, revelando todo
+o seu potencial sob estresse em aventuras. Ou então,
+você pode ter buscado uma ordem de adeptos psíquicos, dedicando anos a aprender a manifestar seu poder.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('assassin', 'rogue', 'Assassino', 'Realize emboscadas e envenenamentos', 'Realizar emboscadas e envenenamentos.', 'O treinamento de um Assassino se concentra em usar
+furtividade, veneno e disfarce para eliminar inimigos
+com eficiência mortal. Enquanto alguns Ladinos que
+seguem este caminho são assassinos contratados, espiões ou caçadores de recompensas, as capacidades desta
+subclasse são igualmente úteis para aventureiros que
+enfrentam uma variedade de inimigos monstruosos.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('thief', 'rogue', 'Ladrão', 'Domine infiltração e caça ao tesouro', 'Dominar infiltração e caça ao tesouro.', 'Uma mistura de ladrão, caçador de tesouros e explorador, você é o resumo de um aventureiro. Além de
+melhorar sua agilidade e furtividade, você obtém habilidades úteis para adentrar em ruínas e obter o máximo
+benefício dos itens mágicos que encontrar lá.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('arcane-trickster', 'rogue', 'Trapaceiro Arcano', 'Melhore a furtividade com magia', 'Melhorar a furtividade com magia.', 'Alguns Ladinos aprimoram suas habilidades de furtividade e agilidade com magia, aprendendo truques que
+os auxiliam em seu ofício. Alguns Trapaceiros Arcanos
+utilizam seus talentos para furtos ou assaltos, enquanto outros se dedicam a travessuras.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('abjurer', 'wizard', 'Abjurador', 'Proteja aliados e banir inimigos', 'Proteger aliados e banir inimigos.', 'Seu estudo da magia concentra-se em magias de
+bloqueio, banimento e proteção, eliminando efeitos
+nocivos, repelindo influências malignas e defendendo
+os fracos. Abjuradores são chamados para exorcizar
+espíritos malignos, proteger locais contra espionagem
+mágica e fechar portais para outros planos de existência. Grupos de aventureiros valorizam os Abjuradores por sua proteção contra diversas magias hostis e
+ataques.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('diviner', 'wizard', 'Adivinhador', 'Aprenda os segredos do multiverso', 'Aprender os segredos do multiverso.', 'A orientação de um Adivinhador é buscada por quem
+deseja entender melhor o passado, presente e futuro.
+Como Adivinhador, você se empenha em desvendar
+os véus do espaço, tempo e consciência, dominando
+magias de discernimento, visão remota, conhecimento
+sobrenatural e previsão.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('evoker', 'wizard', 'Evocador', 'Crie efeitos explosivos', 'Criar efeitos explosivos.', 'Seus estudos se concentram em magia que cria poderosos efeitos elementais, como frio intenso, chamas
+abrasadoras, trovões ensurdecedores, relâmpagos
+crepitantes e ácido corrosivo. Alguns Evocadores
+atuam em forças militares, servindo como artilharia
+para atacar exércitos à distância. Outros utilizam seus
+poderes para proteção, enquanto alguns buscam benefício pessoal.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('illusionist', 'wizard', 'Ilusionista', 'Teça magias de ilusão', 'Tecer magias de ilusão.', 'Você se especializa em magia que deslumbra os sentidos e engana a mente, e as ilusões que você cria fazem
+o impossível parecer real.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('elements', 'monk', 'Combatente dos Elementos', 'Maneje poder elemental', 'Manejar poder elemental.', 'Os Combatentes dos Elementos aproveitam o poder
+dos Planos Elementais. Utilizando-se de seu foco
+sobrenatural, eles dominam momentaneamente a
+energia do Caos Elemental para se fortalecer dentro e
+fora de batalha.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('open-hand', 'monk', 'Combatente da Mão Espalmada', 'Domine o combate desarmado', 'Dominar o combate desarmado.', 'Os Combatentes da Mão Espalmada são mestres do
+combate desarmado. Eles aprendem técnicas para
+empurrar e derrubar seus oponentes e manipular sua
+própria energia para se proteger de danos.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('mercy', 'monk', 'Combatente da Misericórdia', 'Cure ou fira com um toque', 'Curar ou ferir com um toque.', 'Os Combatentes da Misericórdia controlam a força
+vital dos outros. Esses monges errantes atuam como
+curandeiros, mas eliminam rapidamente seus inimigos.
+Geralmente, usam máscaras, surgindo como portadores sem rosto da vida e da morte.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('shadow', 'monk', 'Combatente das Sombras', 'Utilize sombras em estratagemas', 'Utilizar sombras em estratagemas.', 'Combatentes das Sombras praticam furtividade e
+subterfúgios, aproveitando o poder do Sombral. Eles
+estão em casa na escuridão, capazes de atraí-la ao seu
+redor para se esconder, pular de sombra em sombra e
+assumir uma forma fantasmagórica.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('ancients', 'paladin', 'Juramento dos Anciões', 'Preserve a vida, a alegria e a natureza', 'Preservar a vida, a alegria e a natureza.', 'O Juramento dos Anciões remonta aos primeiros elfos.
+Os Paladinos que o assumem, valorizam a luz e as
+belezas vivificantes do mundo mais do que princípios
+de honra, coragem e justiça. Para refletir seu compromisso com a preservação da vida e da luz, costumam
+adornar suas armaduras e roupas com imagens de
+elementos em crescimento, como folhas, chifres ou flores.
+Esses Paladinos compartilham os seguintes
+princípios:
+• Acenda a luz da esperança.
+• Proteja a vida.
+• Encante-se com a arte e a alegria.', 'ancients-oath', '{"3":["falar-com-animais","golpe-constritor"],"5":["passo-nebuloso","raio-lunar"],"9":["crescimento-de-plantas","protecao-contra-energia"],"13":["pele-rocha","tempestade-glacial"],"17":["comunhao-com-a-natureza","passo-arboreo"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('devotion', 'paladin', 'Juramento da Devoção', 'Comporte-se como os anjos da justiça', 'Comportar-se como os anjos da justiça.', 'O Juramento da Devoção vincula um Paladino aos
+ideais mais elevados de justiça, virtude e ordem. Paladinos que assumem este juramento comportam-se com
+honra e integridade, protegendo os inocentes e punindo
+os malfeitores com a força sagrada de suas armas.', 'devotion-oath', '{"3":["escudo-da-fe","protecao-contra-o-bem-e-o-mal"],"5":["auxilio","zona-da-verdade"],"9":["dissipar-magia","sinal-de-esperanca"],"13":["defensor-da-fe","movimentacao-livre"],"17":["coluna-de-chamas","comunhao"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('glory', 'paladin', 'Juramento da Glória', 'Alcance os picos do heroísmo', 'Alcançar os picos do heroísmo.', 'Os paladinos que fazem o Juramento de Glória acreditam que eles e seus companheiros estão destinados à
+glória por meio de atos heroicos. Treinam com afinco
+e encorajam seus companheiros, sempre prontos para
+atender ao chamado do destino.
+Esses Paladinos compartilham os seguintes
+princípios:
+• Esforce-se para ser conhecido por seus atos.
+• Enfrente as dificuldades com coragem.
+• Inspire os outros a buscar a glória.', 'glory-oath', '{"3":["heroismo","raio-guia"],"5":["aprimorar-atributo","arma-magica"],"9":["celeridade","protecao-contra-energia"],"13":["compulsao","movimentacao-livre"],"17":["lendas-e-historias","presenca-regia-de-yolande"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+  ('vengeance', 'paladin', 'Juramento da Vingança', 'Persiga os malfeitores', 'Perseguir os malfeitores.', 'O Juramento de Vingança é um compromisso solene de
+punir quem comete graves atos imorais. Paladinos levantam-se para corrigir as injustiças em momentos de
+massacres de aldeões indefesos por exércitos malignos,
+tiranos que desafiam a vontade dos deuses, guildas de
+ladrões que se tornam violentas demais ou a invasão de
+dragões no campo.
+Esses Paladinos compartilham os seguintes
+princípios:
+• Não mostre misericórdia aos ímpios.
+• Combata a injustiça e suas causas.
+• Ajude os vitimados pela injustiça.', 'vengeance-oath', '{"3":["marca-do-predador","perdicao"],"5":["paralisar-pessoa","passo-nebuloso"],"9":["celeridade","protecao-contra-energia"],"13":["banimento","porta-dimensional"],"17":["paralisar-monstro","videncia"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb);
+
+
+INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain_id)
+VALUES
+  ('archfey', 3, 'acalmar-emocoes', ''),
+  ('archfey', 3, 'fogo-das-fadas', ''),
+  ('archfey', 3, 'forca-espectral', ''),
+  ('archfey', 3, 'passo-nebuloso', ''),
+  ('archfey', 3, 'sono', ''),
+  ('archfey', 5, 'crescimento-de-plantas', ''),
+  ('archfey', 5, 'piscar', ''),
+  ('archfey', 7, 'dominar-fera', ''),
+  ('archfey', 7, 'invisibilidade-maior', ''),
+  ('archfey', 9, 'dominar-pessoa', ''),
+  ('archfey', 9, 'similaridade', ''),
+  ('celestial', 3, 'auxilio', ''),
+  ('celestial', 3, 'chama-sagrada', ''),
+  ('celestial', 3, 'curar-ferimentos', ''),
+  ('celestial', 3, 'luz', ''),
+  ('celestial', 3, 'raio-guia', ''),
+  ('celestial', 3, 'restauracao-menor', ''),
+  ('celestial', 5, 'luz-do-dia', ''),
+  ('celestial', 5, 'revivificar', ''),
+  ('celestial', 7, 'defensor-da-fe', ''),
+  ('celestial', 7, 'muralha-de-fogo', ''),
+  ('celestial', 9, 'convocar-celestial', ''),
+  ('celestial', 9, 'restauracao-maior', ''),
+  ('great-old-one', 3, 'detectar-pensamentos', ''),
+  ('great-old-one', 3, 'forca-espectral', ''),
+  ('great-old-one', 3, 'gargalhada-nefasta-de-tasha', ''),
+  ('great-old-one', 3, 'sussurros-dissonantes', ''),
+  ('great-old-one', 5, 'clarividencia', ''),
+  ('great-old-one', 5, 'fome-de-hadar', ''),
+  ('great-old-one', 7, 'confusao', ''),
+  ('great-old-one', 7, 'invocar-aberracao', ''),
+  ('great-old-one', 9, 'modificar-memoria', ''),
+  ('great-old-one', 9, 'telecinese', ''),
+  ('fiend', 3, 'comando', ''),
+  ('fiend', 3, 'maos-flamejantes', ''),
+  ('fiend', 3, 'raio-ardente', ''),
+  ('fiend', 3, 'sugestao', ''),
+  ('fiend', 5, 'bola-de-fogo', ''),
+  ('fiend', 5, 'nuvem-fetida', ''),
+  ('fiend', 7, 'escudo-ardente', ''),
+  ('fiend', 7, 'muralha-de-fogo', ''),
+  ('fiend', 9, 'missao', ''),
+  ('fiend', 9, 'praga-de-insetos', ''),
+  ('life', 3, 'auxilio', ''),
+  ('life', 3, 'bencao', ''),
+  ('life', 3, 'curar-ferimentos', ''),
+  ('life', 3, 'restauracao-menor', ''),
+  ('life', 5, 'palavra-curativa-em-massa', ''),
+  ('life', 5, 'revivificar', ''),
+  ('life', 7, 'aura-de-vida', ''),
+  ('life', 7, 'protecao-contra-a-morte', ''),
+  ('life', 9, 'curar-ferimentos-em-massa', ''),
+  ('life', 9, 'restauracao-maior', ''),
+  ('light', 3, 'fogo-das-fadas', ''),
+  ('light', 3, 'maos-flamejantes', ''),
+  ('light', 3, 'raio-ardente', ''),
+  ('light', 3, 'ver-o-invisivel', ''),
+  ('light', 5, 'bola-de-fogo', ''),
+  ('light', 5, 'luz-do-dia', ''),
+  ('light', 7, 'muralha-de-fogo', ''),
+  ('light', 7, 'olho-arcano', ''),
+  ('light', 9, 'coluna-de-chamas', ''),
+  ('light', 9, 'videncia', ''),
+  ('trickery', 3, 'disfarcar-se', ''),
+  ('trickery', 3, 'enfeiticar-pessoa', ''),
+  ('trickery', 3, 'invisibilidade', ''),
+  ('trickery', 3, 'passo-sem-rastro', ''),
+  ('trickery', 5, 'indetectavel', ''),
+  ('trickery', 5, 'padrao-hipnotico', ''),
+  ('trickery', 7, 'confusao', ''),
+  ('trickery', 7, 'porta-dimensional', ''),
+  ('trickery', 9, 'dominar-pessoa', ''),
+  ('trickery', 9, 'modificar-memoria', ''),
+  ('war', 3, 'arma-espiritual', ''),
+  ('war', 3, 'arma-magica', ''),
+  ('war', 3, 'escudo-da-fe', ''),
+  ('war', 3, 'raio-guia', ''),
+  ('war', 5, 'guardioes-espirituais', ''),
+  ('war', 5, 'manto-do-cruzado', ''),
+  ('war', 7, 'escudo-ardente', ''),
+  ('war', 7, 'movimentacao-livre', ''),
+  ('war', 9, 'golpe-de-arco', ''),
+  ('war', 9, 'paralisar-monstro', ''),
+  ('land', 3, 'maos-flamejantes', 'arid'),
+  ('land', 3, 'turvar', 'arid'),
+  ('land', 3, 'raio-de-fogo', 'arid'),
+  ('land', 5, 'bola-de-fogo', 'arid'),
+  ('land', 5, 'muralha-de-fogo', 'arid'),
+  ('land', 7, 'malogro', 'arid'),
+  ('land', 7, 'muralha-de-pedra', 'arid'),
+  ('land', 9, 'coluna-de-chamas', 'arid'),
+  ('land', 9, 'videncia', 'arid'),
+  ('land', 3, 'nevoa-obscurecente', 'polar'),
+  ('land', 3, 'paralisar-pessoa', 'polar'),
+  ('land', 3, 'raio-de-gelo', 'polar'),
+  ('land', 5, 'nevasca', 'polar'),
+  ('land', 5, 'lentidao', 'polar'),
+  ('land', 7, 'cone-de-frio', 'polar'),
+  ('land', 7, 'tempestade-glacial', 'polar'),
+  ('land', 9, 'comunhao-com-a-natureza', 'polar'),
+  ('land', 9, 'passo-arboreo', 'polar'),
+  ('land', 3, 'passo-nebuloso', 'temperate'),
+  ('land', 3, 'toque-chocante', 'temperate'),
+  ('land', 3, 'sono', 'temperate'),
+  ('land', 5, 'relampago', 'temperate'),
+  ('land', 5, 'crescimento-de-plantas', 'temperate'),
+  ('land', 7, 'movimentacao-livre', 'temperate'),
+  ('land', 7, 'moldar-rochas', 'temperate'),
+  ('land', 9, 'comunhao-com-a-natureza', 'temperate'),
+  ('land', 9, 'muralha-de-pedra', 'temperate'),
+  ('land', 3, 'bolha-acida', 'tropical'),
+  ('land', 3, 'rajada-de-veneno', 'tropical'),
+  ('land', 3, 'teia', 'tropical'),
+  ('land', 5, 'nuvem-fetida', 'tropical'),
+  ('land', 5, 'polimorfia', 'tropical'),
+  ('land', 7, 'praga-de-insetos', 'tropical'),
+  ('land', 7, 'muralha-de-espinhos', 'tropical'),
+  ('land', 9, 'nevoa-mortal', 'tropical'),
+  ('land', 9, 'passo-arboreo', 'tropical'),
+  ('moon', 3, 'curar-ferimentos', ''),
+  ('moon', 3, 'fagulha-estelar', ''),
+  ('moon', 3, 'raio-lunar', ''),
+  ('moon', 5, 'invocar-animais', ''),
+  ('moon', 7, 'fonte-do-luar', ''),
+  ('moon', 9, 'curar-ferimentos-em-massa', ''),
+  ('sea', 3, 'despedacar', ''),
+  ('sea', 3, 'lufada-de-vento', ''),
+  ('sea', 3, 'nevoa-obscurecente', ''),
+  ('sea', 3, 'onda-trovejante', ''),
+  ('sea', 3, 'raio-de-gelo', ''),
+  ('sea', 5, 'relampago', ''),
+  ('sea', 5, 'respirar-na-agua', ''),
+  ('sea', 7, 'controlar-agua', ''),
+  ('sea', 7, 'tempestade-glacial', ''),
+  ('sea', 9, 'invocar-elemental', ''),
+  ('sea', 9, 'paralisar-monstro', ''),
+  ('fey-wanderer', 3, 'enfeiticar-pessoa', ''),
+  ('fey-wanderer', 5, 'passo-nebuloso', ''),
+  ('fey-wanderer', 9, 'convocar-feerico', ''),
+  ('fey-wanderer', 13, 'porta-dimensional', ''),
+  ('fey-wanderer', 17, 'despistar', ''),
+  ('gloom-stalker', 3, 'disfarcar-se', ''),
+  ('gloom-stalker', 5, 'corda-extradimensional', ''),
+  ('gloom-stalker', 9, 'medo', ''),
+  ('gloom-stalker', 13, 'invisibilidade-maior', ''),
+  ('gloom-stalker', 17, 'similaridade', ''),
+  ('ancients', 3, 'falar-com-animais', ''),
+  ('ancients', 3, 'golpe-constritor', ''),
+  ('ancients', 5, 'passo-nebuloso', ''),
+  ('ancients', 5, 'raio-lunar', ''),
+  ('ancients', 9, 'crescimento-de-plantas', ''),
+  ('ancients', 9, 'protecao-contra-energia', ''),
+  ('ancients', 13, 'pele-rocha', ''),
+  ('ancients', 13, 'tempestade-glacial', ''),
+  ('ancients', 17, 'comunhao-com-a-natureza', ''),
+  ('ancients', 17, 'passo-arboreo', ''),
+  ('devotion', 3, 'escudo-da-fe', ''),
+  ('devotion', 3, 'protecao-contra-o-bem-e-o-mal', ''),
+  ('devotion', 5, 'auxilio', ''),
+  ('devotion', 5, 'zona-da-verdade', ''),
+  ('devotion', 9, 'dissipar-magia', ''),
+  ('devotion', 9, 'sinal-de-esperanca', ''),
+  ('devotion', 13, 'defensor-da-fe', ''),
+  ('devotion', 13, 'movimentacao-livre', ''),
+  ('devotion', 17, 'coluna-de-chamas', ''),
+  ('devotion', 17, 'comunhao', ''),
+  ('glory', 3, 'heroismo', ''),
+  ('glory', 3, 'raio-guia', ''),
+  ('glory', 5, 'aprimorar-atributo', ''),
+  ('glory', 5, 'arma-magica', ''),
+  ('glory', 9, 'celeridade', ''),
+  ('glory', 9, 'protecao-contra-energia', ''),
+  ('glory', 13, 'compulsao', ''),
+  ('glory', 13, 'movimentacao-livre', ''),
+  ('glory', 17, 'lendas-e-historias', ''),
+  ('glory', 17, 'presenca-regia-de-yolande', ''),
+  ('vengeance', 3, 'marca-do-predador', ''),
+  ('vengeance', 3, 'perdicao', ''),
+  ('vengeance', 5, 'paralisar-pessoa', ''),
+  ('vengeance', 5, 'passo-nebuloso', ''),
+  ('vengeance', 9, 'celeridade', ''),
+  ('vengeance', 9, 'protecao-contra-energia', ''),
+  ('vengeance', 13, 'banimento', ''),
+  ('vengeance', 13, 'porta-dimensional', ''),
+  ('vengeance', 17, 'paralisar-monstro', ''),
+  ('vengeance', 17, 'videncia', '')
+ON CONFLICT (subclass_id, unlock_level, spell_id, terrain_id) DO NOTHING;
+
+
+INSERT INTO rpg.phb_species (id, name, creature_type, size, speed, description, source_meta)
+VALUES
+  ('aasimar', 'Aasimar', 'Humanoide', 'Médio (cerca de 1,20-2,10 metros de altura) ou Pequeno (cerca de 0,60-1,20 metro de altura), escolhido ao selecionar esta espécie', '9 metros', 'Aasimar (pronuncia-se AH-sih-mar) são mortais que carregam uma centelha dos Planos Superiores dentro de suas almas. Sejam descendentes de um ser angelical ou infundido com poder celestial, eles podem impulsionar essa centelha para trazer luz, cura e fúria celestial. Um aasimar pode surgir entre qualquer população de mortais. Eles se parecem com seus pais, mas vivem até 160 anos e têm características que sugerem sua herança celestial, como sardas metálicas, olhos luminosos, uma auréola ou a cor da pele de um anjo (prata, verde opalescente ou vermelho acobreado). Essas características começam sutis e se tornam óbvias quando o aasimar aprende a revelar sua natureza celestial completa.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('dwarf', 'Anão', 'Humanoide', 'Médio (cerca de 1,20-1,50 metro de altura)', '9 metros', 'Anões foram criados da terra nos tempos antigos por uma divindade da forja, conhecida por diversos nomes como Moradin e Reorx. Esse deus conferiu aos anões uma afinidade por pedra, metal e pela vida subterrânea, além de torná-los resilientes como as montanhas, com uma expectativa de vida de cerca de 350 anos. Baixos e frequentemente barbudos, os anões originais esculpiram cidades e fortalezas nas montanhas e sob a terra. Suas lendas mais antigas relatam conflitos com monstros tanto do topo das montanhas quanto da Umbraeterna, sejam eles gigantes imponentes ou horrores subterrâneos. Motivados por essas histórias, anões de diversas culturas costumam cantar sobre proezas valentes — especialmente sobre os pequenos superando os poderosos. Em alguns mundos do multiverso, os primeiros povoados de anões foram erguidos em colinas ou montanhas, e as famílias que descendem desses locais são conhecidas como anões da colina ou anões da montanha. Os cenários de Greyhawk e Dragonlance incluem essas comunidades.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('dragonborn', 'Draconato', 'Humanoide', 'Médio (cerca de 1,50-2,10 metros de altura)', '9 metros', 'Os ancestrais dos draconatos nasceram dos ovos de dragões cromáticos e metálicos. Uma narrativa diz que esses ovos foram abençoados pelos deuses dracônicos Bahamut e Tiamat, que desejavam criar seres à sua imagem no multiverso. Outra versão afirma que os dragões geraram o primeiro draconato sem a intervenção divina. Independentemente da origem, os draconatos estabeleceram lares no Plano Material. Os draconatos parecem dragões bípedes sem asas — escamosos, de olhos brilhantes, com ossos grossos e chifres na cabeça — e sua coloração e outras características lembram seus ancestrais dracônicos.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('elf', 'Elfo', 'Humanoide', 'Médio (cerca de 1,50-1,80 metro de altura)', '9 metros', 'Criados por Corellon, os primeiros elfos podiam mudar de forma à vontade. Essa habilidade foi perdida quando Corellon os amaldiçoou por conspirarem com Lolth, que falhou em usurpar seu domínio. Após a queda de Lolth no Abismo, a maioria dos elfos a renunciou e recebeu o perdão de Corellon, mas o que ele havia tomado deles se perdeu para sempre. Impossibilitados de mudar de forma à vontade, os elfos recuaram para Faéria, onde sua tristeza aumentou sob a influência daquele plano. Com o tempo, a curiosidade levou muitos a explorar outros planos de existência, incluindo mundos do Plano Material. Elfos possuem orelhas pontudas e não têm pelos faciais ou corporais. Vivem cerca de 750 anos e não dormem, mas entram em transe para descansar, mantendo a consciência do ambiente enquanto revisitam memórias e meditações. Um ambiente transforma sutilmente os elfos depois que eles o habitam por um milênio ou mais, e lhes concede certos tipos de magia. Altos elfos, drow e elfos silvestres são exemplos de elfos transformados assim. Altos elfos receberam magia das encruzilhadas entre Faéria e o Plano Material. Em alguns mundos, esses elfos são conhecidos por outros nomes, como elfos solares ou lunares em Reinos Esquecidos, Silvanesti e Qualinesti em Dragonlance, e Aereni em Eberron. Drow. Os drow normalmente residem em Umbraeterna, que os moldou. Embora alguns indivíduos e sociedades drow evitem essa região, eles ainda carregam sua magia. No cenário de Eberron, os drow habitam florestas tropicais e ruínas ciclópicas no continente de Xen’drik. Elfos silvestres. Elfos silvestres, também conhecidos como elfos selvagens, elfos verdes e elfos dos bosques, carregam a magia das florestas primitivas. Grugach são elfos silvestres reclusos de Greyhawk, enquanto Kagonesti e Tairnadal são elfos silvestres de Dragonlance e Eberron, respectivamente.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('gnome', 'Gnomo', 'Humanoide', 'Pequeno (cerca de 0,90-1,20 metro de altura)', '9 metros', 'Gnomos são seres mágicos criados por deuses da invenção, ilusões e vida subterrânea. Raramente vistos por outros, devido à sua natureza reservada e à tendência de viver em florestas e tocas, os gnomos compensaram sua estatura com inteligência, confundindo predadores com armadilhas e túneis labirínticos. Aprenderam magia de deuses como Garl Brilhouro- -Resplandecente, Baervan Passagresteandante e Baravar Capasombriomanto, que os visitaram disfarçados. Isso resultou nas linhagens de gnomos do bosque e gnomos das rochas. Os gnomos são um povo pequeno com olhos grandes e orelhas pontudas, que vivem cerca de 425 anos. Muitos gnomos gostam da sensação de um teto sobre a cabeça, mesmo que esse “teto” não seja nada mais do que um chapéu.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('goliath', 'Golias', 'Humanoide', 'Médio (cerca de 2,10-2,40 metros de altura)', '10,5 metros', 'Os golias, que se destacam pela altura, são descendentes distantes de gigantes. Cada um deles possui as bênçãos dos antigos gigantes, manifestadas em diversos dons sobrenaturais, como o crescimento rápido e a habilidade de alcançar temporariamente a estatura de seus parentes gigantes. Os golias possuem características físicas que refletem a aparência de gigantes em suas linhagens familiares. Alguns têm o aspecto de gigantes da pedra, enquanto outros se assemelham a gigantes do fogo. Apesar de suas origens, os golias traçaram seu próprio caminho no multiverso, livres dos conflitos internos que devastaram os gigantes por séculos, e almejam alcançar alturas superiores às de seus ancestrais.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('human', 'Humano', 'Humanoide', 'Médio (cerca de 1,20-2,10 metros de altura) ou Pequeno (cerca de 0,60-1,20 metro de altura), escolhido ao selecionar esta espécie', '9 metros', 'Presentes em todo o multiverso, os humanos são variados e numerosos, buscando alcançar o máximo em seus anos de vida. Sua ambição e habilidade são admiradas, respeitadas e temidas em muitos mundos. Os humanos são tão diversos em aparência quanto as populações da Terra e adoram muitos deuses. Embora os estudiosos debatem a origem da humanidade, acredita-se que uma das primeiras reuniões humanas ocorreu em Sigil, a cidade em forma de toro no centro do multiverso, onde nasceu o idioma Comum. A partir desse ponto, os humanos se espalharam por todo o multiverso, levando ao cosmopolitismo da Cidade das Portas.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('orc', 'Orc', 'Humanoide', 'Médio (cerca de 1,80-2,10 metros de altura)', '9 metros', 'Os orcs atribuem sua origem a Gruumsh, um poderoso deus que percorria os vastos espaços do Plano Material. Ele dotou seus filhos com habilidades para explorar planícies, cavernas e mares agitados, enfrentando os monstros que ali habitam. Mesmo ao se devotar a outros deuses, os orcs mantêm os dons de Gruumsh: resistência, determinação e a habilidade de enxergar na escuridão. Orcs são, em média, altos e robustos, com pele cinza, orelhas pontiagudas e caninos inferiores proeminentes como pequenas presas. Em muitos mundos, orcs jovens aprendem sobre as grandes jornadas e desafios enfrentados por seus ancestrais. Inspirados por essas histórias, muitos se questionam quando Gruumsh os chamará para igualar os feitos heroicos do passado e se serão dignos de sua bênção. Outros, no entanto, preferem deixar esses contos para trás e buscar seu próprio caminho.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('halfling', 'Pequenino', 'Humanoide', 'Pequeno (cerca de 0,60-0,90 metro de altura)', '9 metros', 'Guiados por deuses que valorizam a vida, o lar e a lareira, os pequeninos buscam paraísos bucólicos onde família e comunidade moldam suas vidas. Apesar disso, muitos têm um espírito aventureiro, embarcando em jornadas de descoberta que lhes permitem explorar o mundo e fazer novos amigos. Seu tamanho, semelhante ao de uma criança humana, os ajuda a passar despercebidos nas multidões e a se espremer em espaços apertados. Quem já conviveu com pequeninos, especialmente os mais aventureiros, viu provavelmente a “sorte dos pequeninos” em ação. Quando estão em perigo, uma força invisível parece intervir em seu favor. Muitos acreditam nessa sorte e a atribuem a deuses benevolentes como Yondalla, Brandobaris e Charmalaine. Esse dom pode também contribuir para a sua longevidade, que é de cerca de 150 anos. As comunidades de pequeninos têm diversas formas. Para cada condado isolado em uma região intocada, existe um sindicato do crime como o Clã Boromar em Eberron ou uma gangue territorial como as de Dark Sun. Pequeninos que habitam o subsolo são chamados de austeros ou robustos, enquanto os nômades e os que convivem com humanos e outras criaturas altas são conhecidos como pés-ligeiros ou companheiros-altos.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
+  ('tiefling', 'Tiferino', 'Humanoide', 'Médio (cerca de 1,20-2,10 metros de altura) ou Pequeno (cerca de 0,90-1,20 metro de altura), escolhido ao selecionar esta espécie.', '9 metros', 'Os tiferinos nascem nos Planos Inferiores ou têm ancestrais que se originaram lá. Estão ligados por sangue a um diabo, demônio ou outro Ínfero. Essa conexão representa o legado ínfero do tiferino, prometendo poder, mas não influi em sua perspectiva moral. Um tiferino decide aceitar ou lamentar seu legado ínfero. Os três legados são descritos a seguir. Abissal. A entropia do Abismo, o caos do Pandemônio e o desespero do Cárceri atraem os tiferinos com legado abissal. Chifres, pelos, presas e aromas peculiares são características comuns desses tiferinos, que em sua maioria possuem sangue demoníaco correndo em suas veias. Ctônico. Os tiferinos com o legado ctônico sentem não apenas o puxão de Cárceri, mas também a ganância de Gehenna e a escuridão do Hades. Alguns aparentam ser cadavéricos, enquanto outros possuem a beleza sobrenatural de um súcubo ou características físicas comuns a uma megera da noite, um yugoloth ou outro ancestral ínfero Neutro e Mau. Infernal. O legado infernal liga os tiferinos não apenas à Gehenna, mas também aos Nove Infernos e aos intensos campos de batalha de Aqueronte. Características físicas comuns incluem chifres, espinhos, caudas, olhos dourados e um leve odor de enxofre ou fumaça, sendo que a maioria desses tiferinos têm ancestrais diabólicos.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb);
+
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Resistência Celestial', 'Você tem Resistência a dano Necrótico e Radiante.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Mãos Curativas', 'Você executa uma ação Usar Magia, toca uma criatura e joga um número de d4s igual ao seu Bônus de Proficiência. A criatura restaura número de Pontos de Vida igual ao total jogado. Após usar esse traço, você não pode usá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Portador da Luz', 'Você conhece o truque Luz. Carisma é seu atributo de conjuração para isso.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Revelação Celestial', 'No nível 3 de personagem, você pode se transformar como uma Ação Bônus usando uma das opções abaixo (escolha a opção cada vez que você se transformar). A transformação se mantém por 1 minuto ou até você a encerrar (nenhuma ação é necessária). Uma vez que você se transforma, não pode fazê-lo novamente até completar um Descanso Longo. Uma vez em cada um dos seus turnos, até que a transformação termine, você pode infligir dano adicional a um alvo ao causar dano a ele com um ataque ou uma magia. O dano adicional é igual ao seu Bônus de Proficiência, e o tipo de dano adicional é Necrótico para Manto Necrótico ou Radiante para Asas Celestiais e Transfiguração Radiante. Aqui estão as opções de transformação: Asas Celestiais. Duas asas espectrais brotam em suas costas temporariamente. Até que a transformação se encerre, você tem um Deslocamento de Voo igual ao seu Deslocamento. Manto Necrótico. Seus olhos se tornam brevemente poças de escuridão, e asas que não voam brotam em suas costas temporariamente. Criaturas que não sejam seus aliados a até 3 metros de você devem ser bem-sucedidas em uma salvaguarda de Carisma (CD 8 + seu modificador de Carisma e seu Bônus de Proficiência) ou têm a condição Amedrontado até o final do seu próximo turno. Transfiguração Radiante. Luz abrasadora irradia temporariamente de seus olhos e boca. Pela duração da transformação, você emite Luz Plena em um raio de 3 metros e Meia-luz por mais 3 metros, e no fim de cada um de seus turnos, cada criatura a até 3 metros de você sofre dano Radiante igual ao seu Bônus de Proficiência.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dwarf', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 36 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dwarf', 'Resistência a Toxinas', 'Você tem Resistência a Dano Venenoso. Você também tem Vantagem nas salvaguardas que realizar para evitar ou encerrar a condição Envenenado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dwarf', 'Tenacidade Anã', 'Seus Pontos de Vida máximos aumentam em 1, e novamente em 1, sempre que você atinge um nível de personagem.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dwarf', 'Conhecimento de Pedras', 'Como uma Ação Bônus, você adquire Sismiconsciência com um alcance de 18 metros por 10 minutos. Você deve estar em, ou tocar, uma superfície de pedra para usar a Sismiconsciência. A pedra pode ser natural ou trabalhada. Você pode usar essa Ação Bônus um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Herança Dracônica', 'Sua linhagem deriva de um progenitor dracônico. Escolha o tipo de dragão da tabela Herança Dracônica. Sua escolha afeta suas características de Ataque de Sopro e Resistência a Dano, bem como sua aparência.', '{"title":"Herança Dracônica","columns":["Dragão","Tipo de Dano"],"rows":[{"id":"blue","legacy":"Azul","level1":"Elétrico"},{"id":"black","legacy":"Negro","level1":"Ácido"},{"id":"white","legacy":"Branco","level1":"Gélido"},{"id":"gold","legacy":"Ouro","level1":"Ígneo"},{"id":"bronze","legacy":"Bronze","level1":"Elétrico"},{"id":"silver","legacy":"Prata","level1":"Gélido"},{"id":"copper","legacy":"Cobre","level1":"Ácido"},{"id":"green","legacy":"Verde","level1":"Venenoso"},{"id":"brass","legacy":"Latão","level1":"Ígneo"},{"id":"red","legacy":"Vermelho","level1":"Ígneo"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Ataque de Sopro', 'Ao executar a ação Atacar no seu turno, você pode substituir um de seus ataques por uma emissão de energia mágica em um Cone de 4,5 metros ou em uma Linha de 9 metros de comprimento e 1,5 metros de largura (escolha a forma a cada vez). Cada criatura nessa área deve realizar uma salvaguarda de Destreza (CD 8 + seu modificador de Constituição e seu Bônus de Proficiência). Se falhar, uma criatura sofre 1d10 pontos de dano do tipo determinado por seu traço Herança Dracônica. Em caso de sucesso, uma criatura sofre metade do dano. Esse dano aumenta em 1d10 quando você atinge os níveis de personagem 5 (2d10), 11 (3d10) e 17 (4d10). Você pode usar esse Ataque de Sopro um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Resistência a Dano', 'Você tem Resistência ao tipo de dano determinado por seu traço Herança Dracônica.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Voo Dracônico', 'No nível 5 do personagem, você pode canalizar magia dracônica para beneficiar de um voo temporário. Como uma Ação Bônus, você cria asas espectrais nas costas que duram 10 minutos ou até que você as retraia (nenhuma ação é necessária) ou tem a condição Incapacitado. Pela duração, você tem um Deslocamento de Voo igual ao seu Deslocamento. Suas asas parecem feitas da mesma energia que o seu Ataque de Sopro. Após usar esse traço, você não pode usá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Linhagem Élfica', 'Você é de uma linhagem que lhe concede habilidades sobrenaturais. Escolha uma linhagem da tabela Linhagem Élfica. Você adquire o benefício de nível 1 dessa linhagem. Ao atingir os níveis 3 e 5, você aprende uma magia de círculo superior, conforme indicado na tabela. Essa magia está sempre preparada e pode ser conjurada uma vez sem usar um espaço de magia, restaurando essa capacidade ao completar um Descanso Longo. Além disso, você pode conjurá-la usando qualquer espaço de magia apropriado que possua. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias que você conjura com este traço (escolha o atributo quando selecionar a linhagem).', '{"title":"Linhagem Élfica","columns":["Linhagem","Nível 1","Nível 3","Nível 5"],"rows":[{"id":"high-elf","legacy":"Alto Elfo","level1":"Você conhece o truque Prestidigitação Arcana. Sempre que completar um Descanso Longo, você pode substituir este truque por um truque diferente da lista de magias de Mago.","level3":"Detectar Magia","level5":"Passo Nebuloso"},{"id":"drow","legacy":"Drow","level1":"O alcance da sua Visão no Escuro aumenta para 36 metros. Você também conhece o truque Luzes Dançantes.","level3":"Fogo das Fadas","level5":"Escuridão"},{"id":"wood-elf","legacy":"Elfo Silvestre","level1":"Seu Deslocamento aumenta para 10,5 metros. Você também conhece o truque Arte Druídica.","level3":"Passos Largos","level5":"Passos Sem Rastro"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Ancestralidade Feérica', 'Você tem Vantagem ao realizar salvaguardas para evitar ou encerrar a condição Enfeitiçado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Sentidos Aguçados', 'Você tem proficiência na perícia Intuição, Percepção ou Sobrevivência.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Transe', 'Você pode completar um Descanso Longo em 4 horas ao meditar, sem a necessidade de dormir, mantendo a consciência, e magia não pode forçá-lo a dormir.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('gnome', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('gnome', 'Astúcia de Gnomo', 'Você tem Vantagem em salvaguardas de Inteligência, Sabedoria e Carisma.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('gnome', 'Linhagem Gnômica', 'Você pertence a uma linhagem que lhe confere habilidades sobrenaturais. Escolha uma das seguintes opções; sua escolha determina se Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias desse traço (escolha o atributo quando selecionar a linhagem): Gnomo das Rochas. Você conhece os truques Prestidigitação Arcana e Reparar. Além disso, você pode gastar 10 minutos conjurando Prestidigitação Arcana para fabricar um dispositivo mecânico minúsculo (CA 5, 1 PV), como um brinquedo, isqueiro mecânico ou caixa de música. Ao fabricar o dispositivo, você determina a função dele escolhendo um efeito de Prestidigitação Arcana; o dispositivo produz esse efeito sempre que você ou outra criatura executa uma Ação Bônus para ativá-lo com um toque. Se o efeito escolhido tiver opções possíveis, você escolhe uma dessas opções para o dispositivo ao fabricá-lo. Por exemplo, se você escolher o efeito de Brincar com Fogo da magia, você determina se o dispositivo acende ou extingue fogo; o dispositivo não faz ambas as coisas. Você pode ter três desses dispositivos ao mesmo tempo, e cada um se desfaz 8 horas após ser fabricado ou quando você o desmonta com um toque como uma ação Usar Objeto. Gnomo do Bosque. Você conhece o truque Ilusão Menor. Você também sempre tem a magia Falar com Animais preparada. É possível conjurá-la sem um espaço de magia um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo. Você também pode usar qualquer espaço de magia que tiver para conjurá-la.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('goliath', 'Ancestralidade Gigante', 'Você é descendente de Gigantes. Escolha um dos seguintes benefícios — um benefício sobrenatural de sua ancestralidade; você pode usar o benefício escolhido um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo: Arrepio do Gelo (Gigante do Gelo). Ao atingir um alvo com uma jogada de ataque e causar dano a ele, você também pode infligir 1d6 pontos de dano Gélido a esse alvo e reduzir o Deslocamento dele em 3 metros até o início do seu próximo turno. Queimadura de Fogo (Gigante de Fogo). Ao atingir um alvo com uma jogada de ataque e causar dano a ele, você também pode causar 1d10 pontos de dano Ígneo a esse alvo. Resistência da Pedra (Gigante da Pedra). Ao sofrer dano, pode executar uma Reação para jogar 1d12. Adicione seu modificador de Constituição ao número obtido e reduza o dano desse total. Salto da Nuvem (Gigante das Nuvens). Como uma Ação Bônus, você se teleporta magicamente até 9 metros para um espaço desocupado à sua vista. Tombo da Colina (Gigante da Colina). Ao atingir uma criatura Grande ou menor com uma jogada de ataque e causar dano a ela, você pode impor a esse alvo a condição Caído. Trovão da Tempestade (Gigante da Tempestade). Ao sofrer dano de uma criatura a até 18 metros de você, você pode executar uma Reação para causar 1d8 pontos de dano Trovejante a essa criatura.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('goliath', 'Forma Grande', 'A partir do nível 5 de personagem, você pode alterar seu tamanho para Grande como uma Ação Bônus se estiver em um espaço grande o suficiente. Essa transformação se mantém por 10 minutos ou até que você a encerrar (nenhuma ação é necessária). Pela duração, você tem Vantagem em testes de Força, e seu Deslocamento aumenta em 3 metros. Após usar este traço, você não pode utilizá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('goliath', 'Porte Poderoso', 'Você tem Vantagem em qualquer teste de atributo que realizar para encerrar a condição Imobilizado. Você também conta como um tamanho maior ao determinar sua capacidade de carga.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('human', 'Eficiente', 'Você adquire Inspiração Heroica sempre que completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('human', 'Hábil', 'Você adquire proficiência em uma perícia à sua escolha.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('human', 'Versátil', 'Você adquire um talento de Origem à sua escolha (veja o capítulo 5). Habilidoso é recomendado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('orc', 'Pico de Adrenalina', 'Você pode executar a ação Correr como uma Ação Bônus. Ao executar isso, você adquire um número de Pontos de Vida Temporários igual ao seu Bônus de Proficiência. Você pode usar este traço um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Curto ou Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('orc', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 36 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('orc', 'Vigor Implacável', 'Ao ser reduzido a 0 Pontos de Vida, mas não morto imediatamente, você fica com 1 Ponto de Vida. Após usar este traço, você não pode fazê-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('halfling', 'Corajoso', 'Você tem Vantagem nas salvaguardas que realizar para evitar ou encerrar a condição Amedrontado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('halfling', 'Agilidade Pequenina', 'Você pode se mover pelo espaço de qualquer criatura que seja um tamanho maior que você, mas você não pode parar no mesmo espaço.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('halfling', 'Sorte', 'Ao tirar 1 no D20 de um Teste de D20, você pode jogar novamente o dado e deve usar a nova jogada.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('halfling', 'Furtividade Natural', 'Você pode executar a ação Esconder mesmo quando estiver encoberto apenas por uma criatura que seja pelo menos um tamanho maior que você.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('tiefling', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('tiefling', 'Legado Ínfero', 'Você é o portador de um legado que lhe confere poderes sobrenaturais. Escolha um legado da tabela Legados Ínferos. Você adquire o benefício de nível 1 do legado escolhido. Ao atingir os níveis de personagem 3 e 5, você aprende magias de círculo superior, conforme indicado na tabela. Essas magias estão sempre preparadas e podem ser conjuradas uma vez sem usar um espaço de magia, sendo restauradas quando completa um Descanso Longo. Além disso, você pode conjurá-las utilizando qualquer espaço de magia que possua do círculo correspondente. Atributos como Inteligência, Sabedoria ou Carisma servem como seu atributo de conjuração para essas magias (escolha um atributo ao selecionar o legado).', '{"title":"Legados Ínferos","columns":["Legado","Nível 1","Nível 3","Nível 5"],"rows":[{"id":"abyssal","legacy":"Abissal","level1":"Você tem Resistência a dano Venenoso. Você também conhece o truque Rajada de Veneno.","level3":"Raio Nauseante","level5":"Paralisar Pessoa"},{"id":"chthonic","legacy":"Ctônico","level1":"Você tem Resistência a dano Necrótico. Você também conhece o truque Toque Necrótico.","level3":"Vitalidade Vazia","level5":"Raio do Enfraquecimento"},{"id":"infernal","legacy":"Infernal","level1":"Você tem Resistência a dano Ígneo. Você também conhece o truque Raio de Fogo.","level3":"Repreensão Diabólica","level5":"Escuridão"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('tiefling', 'Presença Sobrenatural', 'Você conhece o truque Taumaturgia. Ao conjurar com este traço, a magia usa o mesmo atributo de conjuração que você usa para sua Característica Legado Ínfero.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+
+INSERT INTO rpg.phb_background (id, name, description, feat_id, ability_options, equipment, source_meta)
+VALUES
+  ('acolyte', 'Acólito', 'Você se dedicou ao serviço em um templo, localizado em uma aldeia ou em um bosque sagrado, onde realizava ritos em homenagem a um deus ou panteão. Sob a orientação de um sacerdote, você estudou religião e, graças à sua devoção, aprendeu a canalizar um pouco do poder divino para o seu local de culto e para as pessoas que ali oravam.', 'magic-initiate', ARRAY['inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"suprimentos-de-caligrafo"},{"id":"livro"},{"id":"simbolo-sagrado"},{"id":"pergaminho"},{"id":"tunica"}],"gold":8}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('wanderer', 'Andarilho', 'Você cresceu nas ruas cercado por rejeitados igualmente malfadados, alguns deles amigos e outros rivais. Você dormia onde podia e fazia bicos por comida. Às vezes, quando a fome se tornava insuportável, você recorria ao furto. Ainda assim, você nunca perdeu seu orgulho e nunca abandonou a esperança. O destino ainda não terminou com você.', 'lucky', ARRAY['destreza'::rpg.ability_id, 'sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"2 Adagas"},{"id":"ferramentas-de-ladrao"},{"choice":"Kit de Jogos (qualquer um)"},{"choice":"2 Algibeiras"},{"id":"roupas-viagem"},{"id":"saco-de-dormir"}],"gold":16}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('artisan', 'Artesão', 'Você começou a limpar o chão e esfregar balcões na oficina de um artesão por alguns trocados por dia assim que ficou forte o suficiente para carregar um balde. Ao se tornar aprendiz, aprendeu a fabricar artesanatos básicos e a lidar com clientes exigentes, desenvolvendo também um olhar aguçado para detalhes.', 'artisan', ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id, 'inteligencia'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"Ferramentas de Artesão (a mesma que acima)"},{"choice":"2 Algibeiras"},{"id":"roupas-viagem"}],"gold":32}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('entertainer', 'Artista', 'Você passou a juventude em feiras e festivais itinerantes, fazendo bicos para músicos e acrobatas em troca de aulas. Aprendeu a andar na corda bamba, tocar alaúde de um jeito distinto e recitar poesia com dicção impecável. Até hoje, prospera com aplausos e anseia pelo palco.', 'musician', ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"Instrumento Musical (o mesmo que acima)"},{"id":"espelho"},{"choice":"2 Fantasias"},{"id":"perfume"},{"id":"roupas-viagem"}],"gold":11}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('charlatan', 'Charlatão', 'Assim que você atingiu a idade para pedir uma cerveja, escolheu seu banquinho favorito em cada taverna a quinze quilômetros de onde nasceu. Ao percorrer o circuito de bares e botequins, aprendeu a lidar com os infelizes em busca de mentiras reconfortantes — talvez uma poção falsa ou registros de ancestralidade forjados.', 'skilled', ARRAY['destreza'::rpg.ability_id, 'constituicao'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"kit-de-falsificacao"},{"id":"roupas-fantasia"},{"id":"roupas-finas"}],"gold":15}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('criminal', 'Criminoso', 'Você sobrevivia em becos escuros, furtando pessoas ou assaltando lojas. Talvez fizesse parte de uma pequena gangue de criminosos que se protegiam mutuamente, ou fosse um lobo solitário, enfrentando a guilda dos ladrões locais e os criminosos mais temíveis.', 'alert', ARRAY['destreza'::rpg.ability_id, 'constituicao'::rpg.ability_id, 'inteligencia'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"2 Adagas"},{"id":"ferramentas-de-ladrao"},{"choice":"2 Algibeiras"},{"id":"pe-de-cabra"},{"id":"roupas-viagem"}],"gold":16}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('hermit', 'Eremita', 'Você passou seus primeiros anos isolado em uma cabana ou mosteiro localizado bem além dos arredores do povoado mais próximo. Naqueles dias, seus únicos companheiros eram as criaturas da floresta e aqueles que ocasionalmente faziam uma visita para trazer suprimentos e notícias do mundo externo. A solidão permitia que você passasse muitas horas ponderando os mistérios da criação.', 'healer', ARRAY['constituicao'::rpg.ability_id, 'sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"quarterstaff"},{"id":"kit-de-herbalismo"},{"id":"lampada"},{"id":"livro"},{"id":"oleo"},{"id":"roupas-viagem"},{"id":"saco-de-dormir"}],"gold":16}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('scribe', 'Escriba', 'Você passou anos de formação em um scriptorium, um mosteiro dedicado à preservação do conhecimento ou uma agência governamental, onde aprendeu a escrever com uma mão firme e produzir textos finamente escritos. Talvez você tenha escrito documentos governamentais ou copiado tomos de literatura. Você pode ter alguma habilidade como escritor de poesia, narrativa ou pesquisa acadêmica. Acima de tudo, você tem uma atenção cuidadosa aos detalhes, o que lhe ajuda a evitar a introdução de erros aos documentos que você copia e cria.', 'skilled', ARRAY['destreza'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"suprimentos-de-caligrafo"},{"id":"lampada"},{"id":"oleo"},{"id":"pergaminho"},{"id":"roupas-finas"}],"gold":23}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('farmer', 'Fazendeiro', 'Você cresceu perto da terra. Os anos cuidando de animais e cultivando a terra o recompensaram com paciência e boa saúde. Você tem um grande apreço pela generosidade da natureza, juntamente com um respeito saudável pela ira dela.', 'tough', ARRAY['forca'::rpg.ability_id, 'constituicao'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"sickle"},{"id":"ferramentas-de-carpinteiro"},{"id":"kit-de-curandeiro"},{"id":"balde"},{"id":"pa"}],"gold":30}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('guard', 'Guarda', 'Seus pés doem quando você se lembra das incontáveis horas que passou em seu posto na torre. Você foi treinado para manter um olho atento para o que ocorria do lado fora da muralha, observando saqueadores vasculhando a floresta próxima, e seu outro olho voltado para dentro da muralha, procurando por assaltantes e encrenqueiros.', 'alert', ARRAY['forca'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"spear"},{"id":"light-crossbow"},{"choice":"20 Virotes"},{"choice":"Kit de Jogo (o mesmo que acima)"},{"id":"aljava"},{"id":"grilhoes"},{"id":"lanterna-coberta"},{"id":"roupas-viagem"}],"gold":12}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('guide', 'Guia', 'Você cresceu ao ar livre, longe de terras povoadas. Sua casa ficava em qualquer lugar que você escolhesse para estender seu saco de dormir. Há maravilhas na natureza — monstros estranhos, florestas e riachos intocados, ruínas imensas de grandes salões outrora pisados por gigantes — e você aprendeu a se defender enquanto as explorava. De tempos em tempos, você guiava sacerdotes da natureza amigáveis que o instruíam nos fundamentos de canalizar a magia da natureza.', 'magic-initiate', ARRAY['destreza'::rpg.ability_id, 'constituicao'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"shortbow"},{"choice":"20 Flechas"},{"id":"ferramentas-de-cartografo"},{"id":"aljava"},{"id":"roupas-viagem"},{"id":"saco-de-dormir"},{"id":"tenda"}],"gold":3}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('sailor', 'Marinheiro', 'Você viveu como um marinheiro, com o vento nas costas e os conveses balançando sob seus pés. Você já se sentou em bancos de bar em mais portos de escala do que consegue se lembrar, enfrentou grandes tempestades e trocou histórias com pessoas que vivem sob as ondas.', 'tavern-brawler', ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"dagger"},{"id":"ferramentas-de-navegador"},{"id":"corda"},{"id":"roupas-viagem"}],"gold":20}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('merchant', 'Mercador', 'Você foi aprendiz de um comerciante, mestre de caravanas ou lojista, aprendendo os fundamentos do comércio. Com ele, viajou bastante e ganhou a vida comprando e vendendo as matérias-primas que os artesãos precisam para praticar seu ofício, ou trabalhos acabados de tais artesãos. Você pode ter transportado mercadorias de um lugar para outro (por navio, carroça ou caravana) ou comprado de comerciantes viajantes e vendido em sua própria loja.', 'lucky', ARRAY['constituicao'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"ferramentas-de-navegador"},{"choice":"2 Algibeiras"},{"id":"roupas-viagem"}],"gold":22}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('noble', 'Nobre', 'Você foi criado em um castelo, cercado por riqueza, poder e privilégio. Sua família de aristocratas menores garantiu que você recebesse uma educação de primeira categoria, com conteúdos que você apreciava e outros dos quais se ressentia. Seu tempo no castelo, especialmente as muitas horas que passou observando sua família na corte, também lhe ensinou muito sobre liderança.', 'skilled', ARRAY['forca'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"Kit de Jogos (o mesmo que acima)"},{"id":"perfume"},{"id":"roupas-finas"}],"gold":29}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('sage', 'Sábio', 'Você passou seus anos de formação viajando entre mansões e mosteiros, realizando vários bicos e serviços em troca de acesso às bibliotecas desses locais. Suas noites se resumiram a estudar livros e pergaminhos, aprendendo a sabedoria do multiverso — até mesmo os rudimentos da magia — e, agora, sua mente anseia por mais.', 'magic-initiate', ARRAY['constituicao'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"quarterstaff"},{"id":"suprimentos-de-caligrafo"},{"id":"livro"},{"id":"pergaminho"},{"id":"tunica"}],"gold":8}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
+  ('soldier', 'Soldado', 'Você começou a treinar para a guerra assim que atingiu a idade adulta e tem poucas lembranças preciosas da vida antes de pegar em armas. A batalha está em seu sangue. Às vezes, você se pega realizando reflexivamente os exercícios básicos de luta que aprendeu primeiro. Por fim, você coloca esse treinamento em prática no campo de batalha, protegendo o reino por meio da guerra.', 'savage-attacker', ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id, 'constituicao'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"spear"},{"id":"shortbow"},{"choice":"20 Flechas"},{"id":"kit-de-curandeiro"},{"choice":"Kit de Jogo (o mesmo que acima)"},{"id":"aljava"},{"id":"roupas-viagem"}],"gold":14}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb);
+
+
+INSERT INTO rpg.phb_background_skill (background_id, skill_id)
+VALUES
+  ('acolyte', 'insight'),
+  ('acolyte', 'religion'),
+  ('wanderer', 'stealth'),
+  ('wanderer', 'insight'),
+  ('artisan', 'investigation'),
+  ('artisan', 'persuasion'),
+  ('entertainer', 'acrobatics'),
+  ('entertainer', 'performance'),
+  ('charlatan', 'deception'),
+  ('charlatan', 'sleight-of-hand'),
+  ('criminal', 'stealth'),
+  ('criminal', 'sleight-of-hand'),
+  ('hermit', 'medicine'),
+  ('hermit', 'religion'),
+  ('scribe', 'investigation'),
+  ('scribe', 'perception'),
+  ('farmer', 'animal-handling'),
+  ('farmer', 'nature'),
+  ('guard', 'athletics'),
+  ('guard', 'perception'),
+  ('guide', 'stealth'),
+  ('guide', 'survival'),
+  ('sailor', 'acrobatics'),
+  ('sailor', 'perception'),
+  ('merchant', 'animal-handling'),
+  ('merchant', 'persuasion'),
+  ('noble', 'history'),
+  ('noble', 'persuasion'),
+  ('sage', 'arcana'),
+  ('sage', 'history'),
+  ('soldier', 'athletics'),
+  ('soldier', 'intimidation');
+
+
+INSERT INTO rpg.phb_item (id, item_type, name, cost, weight, description, properties)
+VALUES
+  ('dagger', 'weapon'::rpg.item_type, 'Adaga', '{"text":"2 PO"}'::jsonb, '0,5 kg', NULL, '{"propertyIds":["finesse","thrown","light"],"masteryId":"nick","range":{"normal":6,"max":18}}'::jsonb),
+  ('javelin', 'weapon'::rpg.item_type, 'Azagaia', '{"text":"5 PP"}'::jsonb, '1 kg', NULL, '{"propertyIds":["thrown"],"masteryId":"slow","range":{"normal":9,"max":36}}'::jsonb),
+  ('quarterstaff', 'weapon'::rpg.item_type, 'Cajado', '{"text":"2 PP"}'::jsonb, '2 kg', NULL, '{"propertyIds":["versatile"],"masteryId":"topple"}'::jsonb),
+  ('club', 'weapon'::rpg.item_type, 'Clava', '{"text":"1 PP"}'::jsonb, '1 kg', NULL, '{"propertyIds":["light"],"masteryId":"slow"}'::jsonb),
+  ('greatclub', 'weapon'::rpg.item_type, 'Clava Grande', '{"text":"2 PP"}'::jsonb, '5 kg', NULL, '{"propertyIds":["two-handed"],"masteryId":"push"}'::jsonb),
+  ('sickle', 'weapon'::rpg.item_type, 'Foice', '{"text":"1 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["light"],"masteryId":"nick"}'::jsonb),
+  ('spear', 'weapon'::rpg.item_type, 'Lança', '{"text":"1 PO"}'::jsonb, '1,5 kg', NULL, '{"propertyIds":["thrown","versatile"],"masteryId":"sap","range":{"normal":6,"max":18}}'::jsonb),
+  ('mace', 'weapon'::rpg.item_type, 'Maça', '{"text":"5 PO"}'::jsonb, '2 kg', NULL, '{"propertyIds":[],"masteryId":"sap"}'::jsonb),
+  ('handaxe', 'weapon'::rpg.item_type, 'Machadinha', '{"text":"5 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["thrown","light"],"masteryId":"vex","range":{"normal":6,"max":18}}'::jsonb),
+  ('light-hammer', 'weapon'::rpg.item_type, 'Martelo Leve', '{"text":"2 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["thrown","light"],"masteryId":"nick","range":{"normal":6,"max":18}}'::jsonb),
+  ('shortbow', 'weapon'::rpg.item_type, 'Arco Curto', '{"text":"25 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["two-handed","ammunition"],"masteryId":"vex","range":{"normal":24,"max":96}}'::jsonb),
+  ('light-crossbow', 'weapon'::rpg.item_type, 'Besta Leve', '{"text":"25 PO"}'::jsonb, '2,5 kg', NULL, '{"propertyIds":["two-handed","ammunition","loading"],"masteryId":"slow","range":{"normal":24,"max":96}}'::jsonb),
+  ('dart', 'weapon'::rpg.item_type, 'Dardo', '{"text":"5 PC"}'::jsonb, '150 g', NULL, '{"propertyIds":["finesse","thrown"],"masteryId":"vex","range":{"normal":6,"max":18}}'::jsonb),
+  ('sling', 'weapon'::rpg.item_type, 'Funda', '{"text":"1 PP"}'::jsonb, '—', NULL, '{"propertyIds":["ammunition"],"masteryId":"slow","range":{"normal":9,"max":36}}'::jsonb),
+  ('halberd', 'weapon'::rpg.item_type, 'Alabarda', '{"text":"20 PO"}'::jsonb, '3 kg', NULL, '{"propertyIds":["two-handed","reach","heavy"],"masteryId":"cleave"}'::jsonb),
+  ('whip', 'weapon'::rpg.item_type, 'Chicote', '{"text":"2 PO"}'::jsonb, '1,5 kg', NULL, '{"propertyIds":["finesse","reach"],"masteryId":"slow"}'::jsonb),
+  ('scimitar', 'weapon'::rpg.item_type, 'Cimitarra', '{"text":"25 PO"}'::jsonb, '1,5 kg', NULL, '{"propertyIds":["finesse","light"],"masteryId":"nick"}'::jsonb),
+  ('shortsword', 'weapon'::rpg.item_type, 'Espada Curta', '{"text":"10 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["finesse","light"],"masteryId":"vex"}'::jsonb),
+  ('greatsword', 'weapon'::rpg.item_type, 'Espada Grande', '{"text":"50 PO"}'::jsonb, '3 kg', NULL, '{"propertyIds":["two-handed","heavy"],"masteryId":"graze"}'::jsonb),
+  ('longsword', 'weapon'::rpg.item_type, 'Espada Longa', '{"text":"15 PO"}'::jsonb, '1,5 kg', NULL, '{"propertyIds":["versatile"],"masteryId":"sap"}'::jsonb),
+  ('glaive', 'weapon'::rpg.item_type, 'Glaive', '{"text":"20 PO"}'::jsonb, '3 kg', NULL, '{"propertyIds":["two-handed","reach","heavy"],"masteryId":"graze"}'::jsonb),
+  ('lance', 'weapon'::rpg.item_type, 'Lança de Montaria', '{"text":"10 PO"}'::jsonb, '3 kg', NULL, '{"propertyIds":["two-handed","reach","heavy"],"masteryId":"topple"}'::jsonb),
+  ('pike', 'weapon'::rpg.item_type, 'Lança Longa', '{"text":"5 PO"}'::jsonb, '9 kg', NULL, '{"propertyIds":["two-handed","reach","heavy"],"masteryId":"push"}'::jsonb),
+  ('morningstar', 'weapon'::rpg.item_type, 'Maça Estrela', '{"text":"15 PO"}'::jsonb, '2 kg', NULL, '{"propertyIds":[],"masteryId":"sap"}'::jsonb),
+  ('battleaxe', 'weapon'::rpg.item_type, 'Machado de Batalha', '{"text":"10 PO"}'::jsonb, '2,5 kg', NULL, '{"propertyIds":["versatile"],"masteryId":"topple"}'::jsonb),
+  ('greataxe', 'weapon'::rpg.item_type, 'Machado Grande', '{"text":"30 PO"}'::jsonb, '3,5 kg', NULL, '{"propertyIds":["two-handed","heavy"],"masteryId":"cleave"}'::jsonb),
+  ('maul', 'weapon'::rpg.item_type, 'Malho', '{"text":"10 PO"}'::jsonb, '5 kg', NULL, '{"propertyIds":["two-handed","heavy"],"masteryId":"topple"}'::jsonb),
+  ('flail', 'weapon'::rpg.item_type, 'Mangual', '{"text":"10 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":[],"masteryId":"sap"}'::jsonb),
+  ('warhammer', 'weapon'::rpg.item_type, 'Martelo de Guerra', '{"text":"15 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["versatile"],"masteryId":"push"}'::jsonb),
+  ('war-pick', 'weapon'::rpg.item_type, 'Picareta de Guerra', '{"text":"5 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["versatile"],"masteryId":"sap"}'::jsonb),
+  ('rapier', 'weapon'::rpg.item_type, 'Rapieira', '{"text":"25 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["finesse"],"masteryId":"vex"}'::jsonb),
+  ('trident', 'weapon'::rpg.item_type, 'Tridente', '{"text":"5 PO"}'::jsonb, '2 kg', NULL, '{"propertyIds":["thrown","versatile"],"masteryId":"topple","range":{"normal":6,"max":18}}'::jsonb),
+  ('longbow', 'weapon'::rpg.item_type, 'Arco Longo', '{"text":"50 PO"}'::jsonb, '1 kg', NULL, '{"propertyIds":["two-handed","ammunition","heavy"],"masteryId":"slow","range":{"normal":45,"max":180}}'::jsonb),
+  ('hand-crossbow', 'weapon'::rpg.item_type, 'Besta de Mão', '{"text":"75 PO"}'::jsonb, '1,5 kg', NULL, '{"propertyIds":["light","ammunition","loading"],"masteryId":"vex","range":{"normal":9,"max":36}}'::jsonb),
+  ('heavy-crossbow', 'weapon'::rpg.item_type, 'Besta Pesada', '{"text":"50 PO"}'::jsonb, '9 kg', NULL, '{"propertyIds":["two-handed","ammunition","heavy","loading"],"masteryId":"push","range":{"normal":30,"max":120}}'::jsonb),
+  ('musket', 'weapon'::rpg.item_type, 'Mosquete', '{"text":"500 PO"}'::jsonb, '5 kg', NULL, '{"propertyIds":["two-handed","ammunition","loading"],"masteryId":"slow","range":{"normal":12,"max":36}}'::jsonb),
+  ('pistol', 'weapon'::rpg.item_type, 'Pistola', '{"text":"250 PO"}'::jsonb, '1,5 kg', NULL, '{"propertyIds":["ammunition","loading"],"masteryId":"vex","range":{"normal":9,"max":27}}'::jsonb),
+  ('blowgun', 'weapon'::rpg.item_type, 'Zarabatana', '{"text":"10 PO"}'::jsonb, '0,5 kg', NULL, '{"propertyIds":["ammunition","loading"],"masteryId":"vex"}'::jsonb),
+  ('padded', 'armor'::rpg.item_type, 'Acolchoada', '{"text":"5 PO"}'::jsonb, '4 kg', NULL, '{"acFormula":{"type":"dex-plus-base","base":11},"propertyIds":["stealth-disadvantage"]}'::jsonb),
+  ('leather', 'armor'::rpg.item_type, 'Couro', '{"text":"10 PO"}'::jsonb, '5 kg', NULL, '{"acFormula":{"type":"dex-plus-base","base":11},"propertyIds":[]}'::jsonb),
+  ('studded-leather', 'armor'::rpg.item_type, 'Couro Batido', '{"text":"45 PO"}'::jsonb, '6,5 kg', NULL, '{"acFormula":{"type":"dex-plus-base","base":12},"propertyIds":[]}'::jsonb),
+  ('hide', 'armor'::rpg.item_type, 'Gibão de Peles', '{"text":"10 PO"}'::jsonb, '6 kg', NULL, '{"acFormula":{"type":"dex-plus-base","base":12,"dexMax":2},"propertyIds":[]}'::jsonb),
+  ('chain-shirt', 'armor'::rpg.item_type, 'Cota de Malha Parcial', '{"text":"50 PO"}'::jsonb, '10 kg', NULL, '{"acFormula":{"type":"dex-plus-base","base":13,"dexMax":2},"propertyIds":[]}'::jsonb),
+  ('scale-mail', 'armor'::rpg.item_type, 'Loriga de Escamas', '{"text":"50 PO"}'::jsonb, '22 kg', NULL, '{"acFormula":{"type":"dex-plus-base","base":14,"dexMax":2},"propertyIds":["stealth-disadvantage"]}'::jsonb),
+  ('breastplate', 'armor'::rpg.item_type, 'Couraça Peitoral', '{"text":"400 PO"}'::jsonb, '10 kg', NULL, '{"acFormula":{"type":"dex-plus-base","base":14,"dexMax":2},"propertyIds":[]}'::jsonb),
+  ('half-plate', 'armor'::rpg.item_type, 'Placas Parcial', '{"text":"750 PO"}'::jsonb, '20 kg', NULL, '{"acFormula":{"type":"dex-plus-base","base":15,"dexMax":2},"propertyIds":["stealth-disadvantage"]}'::jsonb),
+  ('ring-mail', 'armor'::rpg.item_type, 'Cota de Anéis', '{"text":"30 PO"}'::jsonb, '20 kg', NULL, '{"acFormula":{"type":"fixed","base":14},"propertyIds":["stealth-disadvantage"]}'::jsonb),
+  ('chain-mail', 'armor'::rpg.item_type, 'Cota de Malha', '{"text":"75 PO"}'::jsonb, '27 kg', NULL, '{"acFormula":{"type":"fixed","base":16},"propertyIds":["stealth-disadvantage","strength-requirement"]}'::jsonb),
+  ('splint', 'armor'::rpg.item_type, 'Armadura de Talas', '{"text":"200 PO"}'::jsonb, '30 kg', NULL, '{"acFormula":{"type":"fixed","base":17},"propertyIds":["stealth-disadvantage","strength-requirement"]}'::jsonb),
+  ('plate', 'armor'::rpg.item_type, 'Placas', '{"text":"1.500 PO"}'::jsonb, '32 kg', NULL, '{"acFormula":{"type":"fixed","base":18},"propertyIds":["stealth-disadvantage","strength-requirement"]}'::jsonb),
+  ('shield', 'armor'::rpg.item_type, 'Escudo', '{"text":"10 PO"}'::jsonb, '3 kg', NULL, '{"acFormula":{"type":"shield-bonus","bonus":2},"propertyIds":["shield-ac-bonus"]}'::jsonb),
+  ('acido', 'gear'::rpg.item_type, 'Ácido', '{"text":"25 PO"}'::jsonb, '0,5 kg', 'Ao executar a ação Atacar, você pode substituir um', NULL),
+  ('agua-benta', 'gear'::rpg.item_type, 'Água Benta', '{"text":"25 PO"}'::jsonb, '0,5 kg', 'Ao executar a ação Atacar, você pode substituir um de', NULL),
+  ('algibeira', 'gear'::rpg.item_type, 'Algibeira', '{"text":"5 PP"}'::jsonb, '0,5 kg', 'Uma Algibeira comporta até 3 kg em um volume de 6', NULL),
+  ('aljava', 'gear'::rpg.item_type, 'Aljava', '{"text":"1 PO"}'::jsonb, '0,5 kg', 'Uma Aljava armazena até 20 Flechas.', NULL),
+  ('antitoxina', 'gear'::rpg.item_type, 'Antitoxina', '{"text":"50 PO"}'::jsonb, '—', 'Como uma Ação Bônus, você pode beber um frasco de', NULL),
+  ('apito-sinalizador', 'gear'::rpg.item_type, 'Apito Sinalizador', '{"text":"5 PC"}'::jsonb, '—', 'Quando soprado como uma ação Usar Objeto, um', NULL),
+  ('ariete-portavel', 'gear'::rpg.item_type, 'Aríete Portável', '{"text":"4 PO"}'::jsonb, '16,5 kg', 'Você pode usar um Aríete Portável para arrombar', NULL),
+  ('armadilha-de-caca', 'gear'::rpg.item_type, 'Armadilha de Caça', '{"text":"5 PO"}'::jsonb, '12,5 kg', 'Como uma ação Usar Objeto, você pode armar uma', NULL),
+  ('arpeu', 'gear'::rpg.item_type, 'Arpéu', '{"text":"2 PO"}'::jsonb, '2 kg', 'Como uma ação Usar Objeto, você pode arremessar um', NULL),
+  ('balde', 'gear'::rpg.item_type, 'Balde', '{"text":"5 PC"}'::jsonb, '1 kg', 'Um Balde armazena até 0,3 metro cúbico de conteúdo.', NULL),
+  ('baliza', 'gear'::rpg.item_type, 'Baliza', '{"text":"5 PC"}'::jsonb, '3,5 kg', 'Uma Baliza tem 3 metros de comprimento. Você pode', NULL),
+  ('barril', 'gear'::rpg.item_type, 'Barril', '{"text":"2 PO"}'::jsonb, '35 kg', 'Um Barril armazena até 160 litros de líquido ou até', NULL),
+  ('bau', 'gear'::rpg.item_type, 'Baú', '{"text":"5 PO"}'::jsonb, '12,5 kg', 'Um Baú armazena até 0,35 metros cúbicos (ou 350', NULL),
+  ('bolsa-de-componentes', 'gear'::rpg.item_type, 'Bolsa de Componentes', '{"text":"25 PO"}'::jsonb, '1 kg', 'Uma Bolsa de Componentes é à prova d’água e cheia', NULL),
+  ('cadeado', 'gear'::rpg.item_type, 'Cadeado', '{"text":"10 PO"}'::jsonb, '0,5 kg', 'Um Cadeado vem com uma chave. Sem a chave, uma', NULL),
+  ('caixa-para-fogo', 'gear'::rpg.item_type, 'Caixa para Fogo', '{"text":"5 PP"}'::jsonb, '0,5 kg', 'Uma Caixa para Fogo é um pequeno recipiente contendo pedra de sílex, aço contra fogo e material muito', NULL),
+  ('caneta-tinteiro', 'gear'::rpg.item_type, 'Caneta Tinteiro', '{"text":"2 PC"}'::jsonb, '—', 'Usando Tinta, uma Caneta Tinteiro é usada para escrever ou desenhar.', NULL),
+  ('cantil-cheio', 'gear'::rpg.item_type, 'Cantil (cheio)', '{"text":"2 PP"}'::jsonb, '2,5 kg', 'Um Cantil comporta até 2 litros. Se você não beber', NULL),
+  ('cesta', 'gear'::rpg.item_type, 'Cesta', '{"text":"4 PP"}'::jsonb, '1 kg', 'Uma Cesta armazena até 20 quilos dentro de 60 centímetros cúbicos.', NULL),
+  ('cobertor', 'gear'::rpg.item_type, 'Cobertor', '{"text":"5 PP"}'::jsonb, '1,5 kg', 'Enquanto estiver envolto em um cobertor, você tem', NULL),
+  ('corda', 'gear'::rpg.item_type, 'Corda', '{"text":"1 PO"}'::jsonb, '2,5 kg', 'Como uma ação Usar Objeto, você pode dar um nó em', NULL),
+  ('cordao', 'gear'::rpg.item_type, 'Cordão', '{"text":"1 PP"}'::jsonb, '—', 'Um cordão tem 3 metros de comprimento. Você pode', NULL),
+  ('corrente', 'gear'::rpg.item_type, 'Corrente', '{"text":"5 PO"}'::jsonb, '5 kg', 'Como uma ação Usar Objeto, você pode enrolar uma', NULL),
+  ('escada', 'gear'::rpg.item_type, 'Escada', '{"text":"1 PP"}'::jsonb, '12,5 kg', 'Uma Escada tem 3 metros de altura. Você deve escalar', NULL),
+  ('esferas-de-metal', 'gear'::rpg.item_type, 'Esferas de Metal', '{"text":"1 PO"}'::jsonb, '1 kg (saco)', 'Como uma ação Usar Objeto, você pode derramar', NULL),
+  ('espelho', 'gear'::rpg.item_type, 'Espelho', '{"text":"5 PO"}'::jsonb, '250 g', 'Um espelho de aço portátil é prático tanto para uso', NULL),
+  ('estacas-de-ferro', 'gear'::rpg.item_type, 'Estacas de Ferro', '{"text":"1 PO"}'::jsonb, '2,5 kg', 'Estacas de Ferro vêm em pacotes de dez. Como uma', NULL),
+  ('estojo-mapa-ou-pergaminho', 'gear'::rpg.item_type, 'Estojo, Mapa ou Pergaminho', '{"text":"1 PO"}'::jsonb, '0,5 kg', 'Um Estojo de Mapa ou Pergaminho armazena até 10', NULL),
+  ('estojo-virote-de-besta', 'gear'::rpg.item_type, 'Estojo, Virote de Besta', '{"text":"1 PO"}'::jsonb, '0,5 kg', 'Um Estojo de Virotes de Besta armazena até 20', NULL),
+  ('estrepes', 'gear'::rpg.item_type, 'Estrepes', '{"text":"1 PO"}'::jsonb, '1 kg (saco)', 'Como uma ação Usar Objeto, você pode espalhar', NULL),
+  ('foco-arcano', 'focus'::rpg.item_type, 'Foco Arcano', '{"text":"Varia"}'::jsonb, 'Varia', 'Um Foco Arcano assume uma das formas na tabela', NULL),
+  ('foco-druidico', 'focus'::rpg.item_type, 'Foco Druídico', '{"text":"Varia"}'::jsonb, 'Varia', 'Um Foco Druídico assume uma das formas apresentadas na tabela Foco Druídico e é esculpido, amarrado', NULL),
+  ('fogo-alquimico', 'gear'::rpg.item_type, 'Fogo Alquímico', '{"text":"50 PO"}'::jsonb, '0,5 kg', 'Ao executar a ação Atacar, você pode substituir um de', NULL),
+  ('frasco', 'gear'::rpg.item_type, 'Frasco', '{"text":"1 PO"}'::jsonb, '—', 'Um Frasco armazena até 150 mililitros.', NULL),
+  ('garrafa-de-vidro-1-litro', 'gear'::rpg.item_type, 'Garrafa de Vidro (1 litro)', '{"text":"2 PO"}'::jsonb, '1 kg', 'Uma Garrafa de Vidro armazena até 1 litro.', NULL),
+  ('grilhoes', 'gear'::rpg.item_type, 'Grilhões', '{"text":"2 PO"}'::jsonb, '3 kg', 'Como uma ação Usar Objeto, você pode usar Grilhões', NULL),
+  ('jarro-4-litros', 'gear'::rpg.item_type, 'Jarro (4 litros)', '{"text":"2 PC"}'::jsonb, '2 kg', 'Um Jarro armazena até 4 litros.', NULL),
+  ('kit-de-artista', 'gear'::rpg.item_type, 'Kit de Artista', '{"text":"40 PO"}'::jsonb, '29 kg', 'Um Kit de Artista contém os seguintes itens: Caixa', NULL),
+  ('kit-de-assaltante', 'gear'::rpg.item_type, 'Kit de Assaltante', '{"text":"16 PO"}'::jsonb, '21 kg', 'Um Kit de Assaltante contém os seguintes itens: Caixa', NULL),
+  ('kit-de-aventureiro', 'gear'::rpg.item_type, 'Kit de Aventureiro', '{"text":"10 PO"}'::jsonb, '27,5 kg', 'Um Kit de Aventureiro contém os seguintes itens: Caixa para Fogo, Cantil, Corda, Mochila, 2 potes de Óleo,', NULL),
+  ('kit-de-curandeiro', 'gear'::rpg.item_type, 'Kit de Curandeiro', '{"text":"5 PO"}'::jsonb, '1,5 kg', 'Um Kit de Curandeiro tem dez usos. Como uma ação', NULL),
+  ('kit-de-diplomata', 'gear'::rpg.item_type, 'Kit de Diplomata', '{"text":"39 PO"}'::jsonb, '19,5 kg', 'Um Kit de Diplomata contém os seguintes itens: Baú,', NULL),
+  ('kit-de-erudito', 'gear'::rpg.item_type, 'Kit de Erudito', '{"text":"40 PO"}'::jsonb, '11 kg', 'Um Kit de Erudito contém os seguintes itens: Caixa', NULL),
+  ('kit-de-escalada', 'gear'::rpg.item_type, 'Kit de Escalada', '{"text":"25 PO"}'::jsonb, '6 kg', 'Um Kit de Escalada inclui arnês, luvas, pítons e ponteiras de bota. Como uma ação Usar Objeto, você pode', NULL),
+  ('kit-de-explorador-de-masmorras', 'gear'::rpg.item_type, 'Kit de Explorador de Masmorras', '{"text":"12 PO"}'::jsonb, '27,5 kg', 'Um Kit de Explorador de Masmorras contém os', NULL),
+  ('kit-de-sacerdote', 'gear'::rpg.item_type, 'Kit de Sacerdote', '{"text":"33 PO"}'::jsonb, '14,5 kg', 'Um Kit de Sacerdote contém os seguintes itens: Água', NULL),
+  ('lampada', 'gear'::rpg.item_type, 'Lâmpada', '{"text":"5 PP"}'::jsonb, '0,5 kg', 'Uma Lâmpada usa Óleo para combustão para emitir', NULL),
+  ('lanterna-coberta', 'gear'::rpg.item_type, 'Lanterna Coberta', '{"text":"5 PO"}'::jsonb, '1 kg', 'Uma Lanterna Coberta usa Óleo para combustão para', NULL),
+  ('lanterna-foca-facho', 'gear'::rpg.item_type, 'Lanterna Foca-facho', '{"text":"10 PO"}'::jsonb, '1 kg', 'Uma Lanterna Foca-Facho usa Óleo como combustão', NULL),
+  ('livro', 'gear'::rpg.item_type, 'Livro', '{"text":"25 PO"}'::jsonb, '2,5 kg', 'Um livro contém texto de ficção ou não-ficção. Se você', NULL),
+  ('luneta', 'gear'::rpg.item_type, 'Luneta', '{"text":"1.000 PO"}'::jsonb, '0,5 kg', 'Objetos vistos através de uma Luneta são ampliados', NULL),
+  ('lupa', 'gear'::rpg.item_type, 'Lupa', '{"text":"100 PO"}'::jsonb, '—', 'Uma Lupa concede Vantagem em qualquer teste de', NULL),
+  ('mapa', 'gear'::rpg.item_type, 'Mapa', '{"text":"1 PO"}'::jsonb, '—', 'Se consultar um mapa detalhado, você obtém um', NULL),
+  ('mochila', 'gear'::rpg.item_type, 'Mochila', '{"text":"2 PO"}'::jsonb, '2,5 kg', 'Uma Mochila armazena até 15 quilos dentro de 30', NULL),
+  ('municao', 'gear'::rpg.item_type, 'Munição', '{"text":"Varia"}'::jsonb, 'Varia', 'Munição é exigida por uma arma que tenha a propriedade Munição. A descrição de uma arma detalha o tipo', NULL),
+  ('oleo', 'gear'::rpg.item_type, 'Óleo', '{"text":"1 PP"}'::jsonb, '0,5 kg', 'Você pode cobrir uma criatura, objeto ou área com', NULL),
+  ('pa', 'gear'::rpg.item_type, 'Pá', '{"text":"2 PO"}'::jsonb, '2,5 kg', 'Trabalhando por 1 hora, você pode usar uma Pá para', NULL),
+  ('papel', 'gear'::rpg.item_type, 'Papel', '{"text":"2 PP"}'::jsonb, '—', 'Uma folha de papel pode comportar cerca de 250 palavras escritas à mão.', NULL),
+  ('pe-de-cabra', 'gear'::rpg.item_type, 'Pé de Cabra', '{"text":"2 PO"}'::jsonb, '2,5 kg', 'Usar um Pé de Cabra concede a você Vantagem em', NULL),
+  ('perfume', 'gear'::rpg.item_type, 'Perfume', '{"text":"5 PO"}'::jsonb, '—', 'O perfume vem em um frasco de 120 mililitros. Por 1', NULL),
+  ('pergaminho', 'gear'::rpg.item_type, 'Pergaminho', '{"text":"1 PP"}'::jsonb, '—', 'Uma folha de pergaminho pode comportar cerca de', NULL),
+  ('pergaminho-magico-1-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (1º Círculo)', '{"text":"50 PO"}'::jsonb, '—', 'Uma folha de pergaminho pode comportar cerca de', NULL),
+  ('pergaminho-magico-truque', 'gear'::rpg.item_type, 'Pergaminho Mágico (Truque)', '{"text":"30 PO"}'::jsonb, '—', 'Uma folha de pergaminho pode comportar cerca de', NULL),
+  ('pocao-de-cura', 'gear'::rpg.item_type, 'Poção de Cura', '{"text":"50 PO"}'::jsonb, '250 g', 'Esta poção é um item mágico. Como uma Ação Bônus,', NULL),
+  ('pote', 'gear'::rpg.item_type, 'Pote', '{"text":"2 PC"}'::jsonb, '0,5 kg', 'Um Frasco armazena até meio litro.', NULL),
+  ('pote-ferro', 'gear'::rpg.item_type, 'Pote, Ferro', '{"text":"2 PO"}'::jsonb, '5 kg', 'Um Frasco armazena até meio litro.', NULL),
+  ('racoes', 'gear'::rpg.item_type, 'Rações', '{"text":"5 PP"}'::jsonb, '1 kg', 'As rações consistem em alimentos prontos para viagem, incluindo biscoito duro, carne seca, frutas secas e', NULL),
+  ('rede', 'gear'::rpg.item_type, 'Rede', '{"text":"1 PO"}'::jsonb, '1,5 kg', 'Ao executar a ação Atacar, você pode substituir um', NULL),
+  ('roldana-e-polias', 'gear'::rpg.item_type, 'Roldana e Polias', '{"text":"1 PO"}'::jsonb, '2,5 kg', 'Roldana e Polias permitem içar até quatro vezes o peso', NULL),
+  ('roupas-fantasia', 'gear'::rpg.item_type, 'Roupas, Fantasia', '{"text":"5 PO"}'::jsonb, '2 kg', 'Roupas Finas são feitas de tecidos caros e adornadas', NULL),
+  ('roupas-finas', 'gear'::rpg.item_type, 'Roupas, Finas', '{"text":"15 PO"}'::jsonb, '3 kg', 'Roupas Finas são feitas de tecidos caros e adornadas', NULL),
+  ('roupas-viagem', 'gear'::rpg.item_type, 'Roupas, Viagem', '{"text":"2 PO"}'::jsonb, '2 kg', 'Roupas de Viagem são roupas resistentes projetadas', NULL),
+  ('saca', 'gear'::rpg.item_type, 'Saca', '{"text":"1 PC"}'::jsonb, '250 g', 'Uma Saca armazena até 15 kg dentro de 30 centímetros cúbicos.', NULL),
+  ('saco-de-dormir', 'gear'::rpg.item_type, 'Saco de Dormir', '{"text":"1 PO"}'::jsonb, '3,5 kg', 'Um Saco de Dormir acomoda uma criatura Pequena', NULL),
+  ('simbolo-sagrado', 'gear'::rpg.item_type, 'Símbolo Sagrado', '{"text":"Varia"}'::jsonb, 'Varia', 'Um Símbolo Sagrado assume uma das formas na tabela', NULL),
+  ('sino', 'gear'::rpg.item_type, 'Sino', '{"text":"1 PO"}'::jsonb, '—', 'Quando tocado como uma ação Usar Objeto, um Sino', NULL),
+  ('tenda', 'gear'::rpg.item_type, 'Tenda', '{"text":"2 PO"}'::jsonb, '10 kg', 'Uma Tenda acomoda para dormir até duas criaturas', NULL),
+  ('tinta', 'gear'::rpg.item_type, 'Tinta', '{"text":"10 PO"}'::jsonb, '—', 'A tinta vem em uma garrafa de 30 mililitros, que', NULL),
+  ('tocha', 'gear'::rpg.item_type, 'Tocha', '{"text":"1 PC"}'::jsonb, '0,5 kg', 'Uma Tocha entra em combustão por 1 hora, emitindo', NULL),
+  ('vela', 'gear'::rpg.item_type, 'Vela', '{"text":"1 PC"}'::jsonb, '—', 'Por 1 hora, uma Vela acesa emite Luz Plena em um raio', NULL),
+  ('tunica', 'gear'::rpg.item_type, 'Túnica', '{"text":"1 PO"}'::jsonb, '2 kg', 'Uma Túnica tem significado vocacional ou cerimonial.', NULL),
+  ('veneno-basico', 'gear'::rpg.item_type, 'Veneno Básico', '{"text":"100 PO"}'::jsonb, '—', 'Como uma Ação Bônus, você pode usar um frasco', NULL),
+  ('ferramentas-de-carpinteiro', 'tool'::rpg.item_type, 'Ferramentas de Carpinteiro', '{"text":"8 PO"}'::jsonb, '3 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-cartografo', 'tool'::rpg.item_type, 'Ferramentas de Cartógrafo', '{"text":"15 PO"}'::jsonb, '3 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-coureiro', 'tool'::rpg.item_type, 'Ferramentas de Coureiro', '{"text":"5 PO"}'::jsonb, '2,5 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-entalhador', 'tool'::rpg.item_type, 'Ferramentas de Entalhador', '{"text":"1 PO"}'::jsonb, '2,5 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-ferreiro', 'tool'::rpg.item_type, 'Ferramentas de Ferreiro', '{"text":"20 PO"}'::jsonb, '4 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-funileiro', 'tool'::rpg.item_type, 'Ferramentas de Funileiro', '{"text":"50 PO"}'::jsonb, '5 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-joalheiro', 'tool'::rpg.item_type, 'Ferramentas de Joalheiro', '{"text":"25 PO"}'::jsonb, '1 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-oleiro', 'tool'::rpg.item_type, 'Ferramentas de Oleiro', '{"text":"10 PO"}'::jsonb, '1,5 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-pedreiro', 'tool'::rpg.item_type, 'Ferramentas de Pedreiro', '{"text":"10 PO"}'::jsonb, '4 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-sapateiro', 'tool'::rpg.item_type, 'Ferramentas de Sapateiro', '{"text":"5 PO"}'::jsonb, '2,5 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-tecelao', 'tool'::rpg.item_type, 'Ferramentas de Tecelão', '{"text":"1 PO"}'::jsonb, '2,5 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-vidreiro', 'tool'::rpg.item_type, 'Ferramentas de Vidreiro', '{"text":"30 PO"}'::jsonb, '2,5 kg', NULL, '{}'::jsonb),
+  ('suprimentos-de-alquimista', 'tool'::rpg.item_type, 'Suprimentos de Alquimista', '{"text":"50 PO"}'::jsonb, '4 kg', NULL, '{}'::jsonb),
+  ('suprimentos-de-caligrafo', 'tool'::rpg.item_type, 'Suprimentos de Calígrafo', '{"text":"10 PO"}'::jsonb, '2,5 kg', NULL, '{}'::jsonb),
+  ('suprimentos-de-cervejeiro', 'tool'::rpg.item_type, 'Suprimentos de Cervejeiro', '{"text":"20 PO"}'::jsonb, '4,5 kg', NULL, '{}'::jsonb),
+  ('suprimentos-de-pintor', 'tool'::rpg.item_type, 'Suprimentos de Pintor', '{"text":"10 PO"}'::jsonb, '2,5 kg', NULL, '{}'::jsonb),
+  ('utensilios-de-cozinheiro', 'tool'::rpg.item_type, 'Utensílios de Cozinheiro', '{"text":"1 PO"}'::jsonb, '4 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-ladrao', 'tool'::rpg.item_type, 'Ferramentas de Ladrão', '{"text":"25 PO"}'::jsonb, '0,5 kg', NULL, '{}'::jsonb),
+  ('ferramentas-de-navegador', 'tool'::rpg.item_type, 'Ferramentas de Navegador', '{"text":"25 PO"}'::jsonb, '1 kg', NULL, '{}'::jsonb),
+  ('instrumento-musical', 'tool'::rpg.item_type, 'Instrumento Musical', '{"text":"Varia"}'::jsonb, 'Varia', NULL, '{}'::jsonb),
+  ('kit-de-disfarce', 'tool'::rpg.item_type, 'Kit de Disfarce', '{"text":"25 PO"}'::jsonb, '1,5 kg', NULL, '{}'::jsonb),
+  ('kit-de-falsificacao', 'tool'::rpg.item_type, 'Kit de Falsificação', '{"text":"15 PO"}'::jsonb, '2,5 kg', NULL, '{}'::jsonb),
+  ('kit-de-herbalismo', 'tool'::rpg.item_type, 'Kit de Herbalismo', '{"text":"5 PO"}'::jsonb, '1,5 kg', NULL, '{}'::jsonb),
+  ('kit-de-jogos', 'tool'::rpg.item_type, 'Kit de Jogos', '{"text":"Varia"}'::jsonb, '—', NULL, '{}'::jsonb),
+  ('kit-de-veneno', 'tool'::rpg.item_type, 'Kit de Veneno', '{"text":"50 PO"}'::jsonb, '1 kg', NULL, '{}'::jsonb);
+
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('dagger', 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('javelin', 'simple', '1d6', 'Perfurante', ARRAY['thrown']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('quarterstaff', 'simple', '1d6', 'Contundente', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('club', 'simple', '1d4', 'Contundente', ARRAY['light']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greatclub', 'simple', '1d8', 'Contundente', ARRAY['two-handed']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('sickle', 'simple', '1d4', 'Cortante', ARRAY['light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('spear', 'simple', '1d6', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('mace', 'simple', '1d6', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('handaxe', 'simple', '1d6', 'Cortante', ARRAY['thrown', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('light-hammer', 'simple', '1d4', 'Contundente', ARRAY['thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('shortbow', 'simple', '1d6', 'Perfurante', ARRAY['two-handed', 'ammunition']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('light-crossbow', 'simple', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('dart', 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('sling', 'simple', '1d4', 'Contundente', ARRAY['ammunition']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('halberd', 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('whip', 'martial', '1d4', 'Cortante', ARRAY['finesse', 'reach']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('scimitar', 'martial', '1d6', 'Cortante', ARRAY['finesse', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('shortsword', 'martial', '1d6', 'Perfurante', ARRAY['finesse', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greatsword', 'martial', '2d6', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('longsword', 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('glaive', 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('lance', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('pike', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('morningstar', 'martial', '1d8', 'Perfurante', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('battleaxe', 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greataxe', 'martial', '1d12', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('maul', 'martial', '2d6', 'Contundente', ARRAY['two-handed', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('flail', 'martial', '1d8', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('warhammer', 'martial', '1d8', 'Contundente', ARRAY['versatile']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('war-pick', 'martial', '1d8', 'Perfurante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('rapier', 'martial', '1d8', 'Perfurante', ARRAY['finesse']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('trident', 'martial', '1d8', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('longbow', 'martial', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('hand-crossbow', 'martial', '1d6', 'Perfurante', ARRAY['light', 'ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('heavy-crossbow', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy', 'loading']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('musket', 'martial', '1d12', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('pistol', 'martial', '1d10', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('blowgun', 'martial', '1', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('padded', 'light', 11, '11 + modificador de Des', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('leather', 'light', 11, '11 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('studded-leather', 'light', 12, '12 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('hide', 'medium', 12, '12 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-shirt', 'medium', 13, '13 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('scale-mail', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('breastplate', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('half-plate', 'medium', 15, '15 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('ring-mail', 'heavy', 14, '14', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-mail', 'heavy', 16, '16', 13, TRUE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('splint', 'heavy', 17, '17', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('plate', 'heavy', 18, '18', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('shield', 'shield', NULL, '+2', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-carpinteiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-cartografo', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-coureiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-entalhador', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-ferreiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-funileiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-joalheiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-oleiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-pedreiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-sapateiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-tecelao', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-vidreiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('suprimentos-de-alquimista', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('suprimentos-de-caligrafo', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('suprimentos-de-cervejeiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('suprimentos-de-pintor', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('utensilios-de-cozinheiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-ladrao', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-navegador', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('instrumento-musical', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-disfarce', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-falsificacao', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-herbalismo', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-jogos', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-veneno', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_character_level (level, proficiency_bonus, xp_threshold)
+VALUES
+  (1, 2, 0),
+  (2, 2, 300),
+  (3, 2, 900),
+  (4, 2, 2700),
+  (5, 3, 6500),
+  (6, 3, 14000),
+  (7, 3, 23000),
+  (8, 3, 34000),
+  (9, 4, 48000),
+  (10, 4, 64000),
+  (11, 4, 85000),
+  (12, 4, 100000),
+  (13, 5, 120000),
+  (14, 5, 140000),
+  (15, 5, 165000),
+  (16, 5, 195000),
+  (17, 6, 225000),
+  (18, 6, 265000),
+  (19, 6, 305000),
+  (20, 6, 355000)
+ON CONFLICT (level) DO UPDATE SET proficiency_bonus = EXCLUDED.proficiency_bonus, xp_threshold = EXCLUDED.xp_threshold;
+
+
+COMMIT;
