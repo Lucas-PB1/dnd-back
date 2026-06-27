@@ -1,5 +1,5 @@
 /**
- * Valida database/schema.sql — PostgreSQL v2.
+ * Valida database/schema.sql — PostgreSQL v3.
  */
 import fs from "fs";
 import path from "path";
@@ -34,6 +34,17 @@ const REQUIRED_TABLES = [
   "phb_armor",
   "phb_tool",
   "phb_character_level",
+  "phb_ability_generation_method",
+  "phb_background_boost_option",
+  "phb_druid_land_terrain",
+  "phb_resource_definition",
+  "phb_spell_source",
+  "phb_species_option_def",
+  "phb_species_option_value",
+  "phb_class_option_def",
+  "phb_class_option_value",
+  "phb_weapon_property_link",
+  "phb_class_fighting_style",
   "player_character",
   "player_character_language",
   "player_character_skill",
@@ -51,18 +62,22 @@ const REQUIRED_TABLES = [
 
 const FORBIDDEN = [
   /\bCREATE TABLE IF NOT EXISTS rpg\.character\b/i,
-  /\bCREATE TABLE IF NOT EXISTS character\b/i,
+  /player_character_resource[\s\S]{0,120}resource_key/i,
   /character_class_level/i,
 ];
 
 const REQUIRED_PATTERNS = [
   [/CREATE SCHEMA IF NOT EXISTS rpg/i, "schema rpg"],
-  [/CREATE TYPE rpg\.ability_id/i, "ENUM ability_id"],
-  [/sheet\s+JSONB NOT NULL/i, "coluna sheet JSONB"],
-  [/player_character_resource/i, "tabela player_character_resource"],
-  [/EXECUTE FUNCTION rpg\.set_updated_at/i, "trigger updated_at"],
-  [/v_player_character_summary/i, "view v_player_character_summary"],
-  [/sem multiclasse/i, "documentação classe única"],
+  [/phb_resource_definition/i, "catálogo recursos"],
+  [/phb_spell_source/i, "catálogo fontes magia"],
+  [/resource_id.*REFERENCES rpg\.phb_resource_definition/i, "FK resource_id"],
+  [/source_id.*REFERENCES rpg\.phb_spell_source/i, "FK source_id"],
+  [/validate_pc_subclass/i, "trigger subclasse"],
+  [/idx_pc_equip_one_slot/i, "índice slot equipado"],
+  [/v_character_resources/i, "view v_character_resources"],
+  [/v_character_spells/i, "view v_character_spells"],
+  [/apply_sheet_to_character/i, "sync sheet→projeções"],
+  [/rebuild_sheet_from_projections/i, "sync projeções→sheet"],
 ];
 
 let errors = 0;
@@ -86,7 +101,7 @@ for (const table of REQUIRED_TABLES) {
 
 for (const pattern of FORBIDDEN) {
   if (pattern.test(sql)) {
-    fail(`padrão proibido (v1/multiclasse): ${pattern}`);
+    fail(`padrão proibido (legado): ${pattern}`);
   }
 }
 
@@ -102,6 +117,6 @@ if (errors) {
 }
 
 console.log(
-  `✓ PostgreSQL v2 — ${REQUIRED_TABLES.length} tabelas, ENUMs, sheet JSONB, trigger, 2 views`
+  `✓ PostgreSQL v3 — ${REQUIRED_TABLES.length} tabelas, FKs tipadas, triggers, 4 views`
 );
 process.exit(0);

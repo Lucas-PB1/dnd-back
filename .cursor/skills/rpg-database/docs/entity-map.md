@@ -1,6 +1,8 @@
-# Mapa JSON → PostgreSQL v2
+# Mapa JSON → PostgreSQL v3
 
 Schema: `rpg` | SGBD: **PostgreSQL 14+**
+
+Diagrama completo: [er-diagram.md](er-diagram.md)
 
 ## Camadas
 

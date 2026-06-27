@@ -1,8 +1,10 @@
--- PHB seed — PostgreSQL v2
+-- PHB seed — PostgreSQL v3
 
 -- Gerado por: npm run generate:seed-phb
 
 BEGIN;
+
+SELECT set_config('rpg.skip_sync', '1', true);
 
 
 -- Limpa catálogo (personagens devem ser reimportados depois)
@@ -42,6 +44,17 @@ TRUNCATE TABLE
   rpg.phb_skill,
   rpg.phb_language,
   rpg.phb_alignment,
+  rpg.phb_class_fighting_style,
+  rpg.phb_weapon_property_link,
+  rpg.phb_class_option_value,
+  rpg.phb_class_option_def,
+  rpg.phb_species_option_value,
+  rpg.phb_species_option_def,
+  rpg.phb_spell_source,
+  rpg.phb_resource_definition,
+  rpg.phb_druid_land_terrain,
+  rpg.phb_background_boost_option,
+  rpg.phb_ability_generation_method,
   rpg.phb_character_level
 CASCADE;
 
@@ -104,20 +117,20 @@ VALUES
   ('survival', 'Sobrevivência', 'sabedoria'::rpg.ability_id, 'Seguir rastros, procurar alimentos, encontrar uma trilha ou evitar perigos naturais.');
 
 
-INSERT INTO rpg.phb_fighting_style (id, name, description, classes)
+INSERT INTO rpg.phb_fighting_style (id, name, description)
 VALUES
-  ('archery', 'Arquearia', 'Você recebe um bônus de +2 nas jogadas de ataque com armas à Distância.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('blind-fighting', 'Luta às Cegas', 'Você tem Visão às Cegas com um alcance de 3 metros.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('defense', 'Defensivo', 'Enquanto estiver usando armadura Leve, Média ou Pesada, você recebe um bônus de +1 na Classe de Armadura.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('dueling', 'Duelismo', 'Quando você segura uma arma Corpo a Corpo em uma mão e nenhuma outra arma, você recebe um bônus de +2 nas jogadas de dano desta arma.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('great-weapon-fighting', 'Combate com Armas Grandes', 'Quando você joga dano para um ataque que realiza com uma arma Corpo a Corpo que está empunhando com as duas mãos, pode tratar qualquer 1 ou 2 em um dado de dano como um 3. A arma deve ter a propriedade Duas Mãos ou Versátil para obter este benefício.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('interception', 'Interceptação', 'Quando uma criatura à sua vista atinge outra criatura a até 1,5 metro de você com uma jogada de ataque, você pode executar uma Reação para reduzir o dano causado ao alvo em 1d10 mais seu Bônus de Proficiência. Você deve estar segurando um Escudo ou uma arma Simples ou Marcial para executar esta Reação.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('protection', 'Protetivo', 'Quando uma criatura à sua vista ataca um alvo que não é você e que está a até 1,5 metro de distância, você pode executar uma Reação para interpor seu Escudo, se o estiver segurando. Isso impõe Desvantagem na jogada de ataque que acionou a reação e em todas as jogadas contra o alvo até o início do seu próximo turno, enquanto você estiver a até 1,5 metro do alvo.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('thrown-weapon-fighting', 'Combate com Armas de Arremesso', 'Quando você atinge com uma jogada de ataque à distância usando uma arma com a propriedade Arremesso, você obtém um bônus de +2 na jogada de dano.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('two-weapon-fighting', 'Combate com Duas Armas', 'Quando você realiza um ataque adicional como resultado de usar uma arma com a propriedade Leve, você pode adicionar seu modificador de atributo ao dano desse ataque, se já não estiver adicionando-o ao dano.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('unarmed-fighting', 'Combate Desarmado', 'Quando você atinge com seu Ataque Desarmado e causa dano, pode causar dano Contundente igual a 1d6 mais seu modificador de Força em vez do dano normal de um Ataque Desarmado. Se você não estiver segurando nenhuma arma ou Escudo quando realizar a jogada de ataque, o d6 se torna um d8. No início de cada um dos seus turnos, você pode causar 1d4 pontos de dano Contundente a uma criatura Imobilizada por você.', ARRAY['fighter', 'paladin', 'ranger']::text[]),
-  ('blessed-warrior', 'Combatente Abençoado', 'Estilo de luta alternativo do Paladino (PHB 2024).', ARRAY['paladin']::text[]),
-  ('druidic-warrior', 'Combatente Druídico', 'Estilo de luta alternativo do Guardião (PHB 2024).', ARRAY['ranger']::text[]);
+  ('archery', 'Arquearia', 'Você recebe um bônus de +2 nas jogadas de ataque com armas à Distância.'),
+  ('blind-fighting', 'Luta às Cegas', 'Você tem Visão às Cegas com um alcance de 3 metros.'),
+  ('defense', 'Defensivo', 'Enquanto estiver usando armadura Leve, Média ou Pesada, você recebe um bônus de +1 na Classe de Armadura.'),
+  ('dueling', 'Duelismo', 'Quando você segura uma arma Corpo a Corpo em uma mão e nenhuma outra arma, você recebe um bônus de +2 nas jogadas de dano desta arma.'),
+  ('great-weapon-fighting', 'Combate com Armas Grandes', 'Quando você joga dano para um ataque que realiza com uma arma Corpo a Corpo que está empunhando com as duas mãos, pode tratar qualquer 1 ou 2 em um dado de dano como um 3. A arma deve ter a propriedade Duas Mãos ou Versátil para obter este benefício.'),
+  ('interception', 'Interceptação', 'Quando uma criatura à sua vista atinge outra criatura a até 1,5 metro de você com uma jogada de ataque, você pode executar uma Reação para reduzir o dano causado ao alvo em 1d10 mais seu Bônus de Proficiência. Você deve estar segurando um Escudo ou uma arma Simples ou Marcial para executar esta Reação.'),
+  ('protection', 'Protetivo', 'Quando uma criatura à sua vista ataca um alvo que não é você e que está a até 1,5 metro de distância, você pode executar uma Reação para interpor seu Escudo, se o estiver segurando. Isso impõe Desvantagem na jogada de ataque que acionou a reação e em todas as jogadas contra o alvo até o início do seu próximo turno, enquanto você estiver a até 1,5 metro do alvo.'),
+  ('thrown-weapon-fighting', 'Combate com Armas de Arremesso', 'Quando você atinge com uma jogada de ataque à distância usando uma arma com a propriedade Arremesso, você obtém um bônus de +2 na jogada de dano.'),
+  ('two-weapon-fighting', 'Combate com Duas Armas', 'Quando você realiza um ataque adicional como resultado de usar uma arma com a propriedade Leve, você pode adicionar seu modificador de atributo ao dano desse ataque, se já não estiver adicionando-o ao dano.'),
+  ('unarmed-fighting', 'Combate Desarmado', 'Quando você atinge com seu Ataque Desarmado e causa dano, pode causar dano Contundente igual a 1d6 mais seu modificador de Força em vez do dano normal de um Ataque Desarmado. Se você não estiver segurando nenhuma arma ou Escudo quando realizar a jogada de ataque, o d6 se torna um d8. No início de cada um dos seus turnos, você pode causar 1d4 pontos de dano Contundente a uma criatura Imobilizada por você.'),
+  ('blessed-warrior', 'Combatente Abençoado', 'Estilo de luta alternativo do Paladino (PHB 2024).'),
+  ('druidic-warrior', 'Combatente Druídico', 'Estilo de luta alternativo do Guardião (PHB 2024).');
 
 
 INSERT INTO rpg.phb_weapon_property (id, name, description)
@@ -6844,79 +6857,219 @@ VALUES
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('dagger', 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dagger', 'finesse') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dagger', 'thrown') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dagger', 'light') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('javelin', 'simple', '1d6', 'Perfurante', ARRAY['thrown']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('javelin', 'thrown') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('quarterstaff', 'simple', '1d6', 'Contundente', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('quarterstaff', 'versatile') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('club', 'simple', '1d4', 'Contundente', ARRAY['light']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('club', 'light') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greatclub', 'simple', '1d8', 'Contundente', ARRAY['two-handed']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greatclub', 'two-handed') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('sickle', 'simple', '1d4', 'Cortante', ARRAY['light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('sickle', 'light') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('spear', 'simple', '1d6', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('spear', 'thrown') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('spear', 'versatile') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('mace', 'simple', '1d6', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('handaxe', 'simple', '1d6', 'Cortante', ARRAY['thrown', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('handaxe', 'thrown') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('handaxe', 'light') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('light-hammer', 'simple', '1d4', 'Contundente', ARRAY['thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-hammer', 'thrown') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-hammer', 'light') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('shortbow', 'simple', '1d6', 'Perfurante', ARRAY['two-handed', 'ammunition']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('shortbow', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('shortbow', 'ammunition') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('light-crossbow', 'simple', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-crossbow', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-crossbow', 'ammunition') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-crossbow', 'loading') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('dart', 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dart', 'finesse') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dart', 'thrown') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('sling', 'simple', '1d4', 'Contundente', ARRAY['ammunition']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('sling', 'ammunition') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('halberd', 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('halberd', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('halberd', 'reach') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('halberd', 'heavy') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('whip', 'martial', '1d4', 'Cortante', ARRAY['finesse', 'reach']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('whip', 'finesse') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('whip', 'reach') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('scimitar', 'martial', '1d6', 'Cortante', ARRAY['finesse', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('scimitar', 'finesse') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('scimitar', 'light') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('shortsword', 'martial', '1d6', 'Perfurante', ARRAY['finesse', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('shortsword', 'finesse') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('shortsword', 'light') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greatsword', 'martial', '2d6', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greatsword', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greatsword', 'heavy') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('longsword', 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('longsword', 'versatile') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('glaive', 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('glaive', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('glaive', 'reach') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('glaive', 'heavy') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('lance', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('lance', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('lance', 'reach') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('lance', 'heavy') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('pike', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pike', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pike', 'reach') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pike', 'heavy') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('morningstar', 'martial', '1d8', 'Perfurante', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('battleaxe', 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('battleaxe', 'versatile') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greataxe', 'martial', '1d12', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greataxe', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greataxe', 'heavy') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('maul', 'martial', '2d6', 'Contundente', ARRAY['two-handed', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('maul', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('maul', 'heavy') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('flail', 'martial', '1d8', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('warhammer', 'martial', '1d8', 'Contundente', ARRAY['versatile']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('warhammer', 'versatile') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('war-pick', 'martial', '1d8', 'Perfurante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('war-pick', 'versatile') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('rapier', 'martial', '1d8', 'Perfurante', ARRAY['finesse']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('rapier', 'finesse') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('trident', 'martial', '1d8', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('trident', 'thrown') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('trident', 'versatile') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('longbow', 'martial', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('longbow', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('longbow', 'ammunition') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('longbow', 'heavy') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('hand-crossbow', 'martial', '1d6', 'Perfurante', ARRAY['light', 'ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('hand-crossbow', 'light') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('hand-crossbow', 'ammunition') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('hand-crossbow', 'loading') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('heavy-crossbow', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy', 'loading']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('heavy-crossbow', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('heavy-crossbow', 'ammunition') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('heavy-crossbow', 'heavy') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('heavy-crossbow', 'loading') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('musket', 'martial', '1d12', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('musket', 'two-handed') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('musket', 'ammunition') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('musket', 'loading') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('pistol', 'martial', '1d10', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pistol', 'ammunition') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pistol', 'loading') ON CONFLICT DO NOTHING;
+
 INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('blowgun', 'martial', '1', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('blowgun', 'ammunition') ON CONFLICT DO NOTHING;
+
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('blowgun', 'loading') ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('padded', 'light', 11, '11 + modificador de Des', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
@@ -7018,5 +7171,175 @@ VALUES
   (20, 6, 355000)
 ON CONFLICT (level) DO UPDATE SET proficiency_bonus = EXCLUDED.proficiency_bonus, xp_threshold = EXCLUDED.xp_threshold;
 
+
+INSERT INTO rpg.phb_ability_generation_method (id, name, description)
+VALUES
+  ('standard-array', 'Conjunto Padrão', 'Use os seis valores fixos abaixo e atribua a Força, Destreza, Constituição, Inteligência, Sabedoria e Carisma.'),
+  ('roll', 'Geração Aleatória', 'Jogue 4d6, descarte o menor dado e some os três restantes. Repita seis vezes.'),
+  ('point-buy', 'Custo de Pontos', '27 pontos para distribuir entre os seis atributos, conforme a tabela de custos.');
+
+
+INSERT INTO rpg.phb_background_boost_option (id, label)
+VALUES
+  ('two-and-one', '+2 em um e +1 em outro (entre os três do antecedente)'),
+  ('three-plus-one', '+1 em cada um dos três atributos do antecedente');
+
+
+INSERT INTO rpg.phb_druid_land_terrain (id, label)
+VALUES
+  ('arid', 'arid'),
+  ('polar', 'polar'),
+  ('temperate', 'temperate'),
+  ('tropical', 'tropical');
+
+
+INSERT INTO rpg.phb_resource_definition (id, name, scope, species_id, class_id, min_level)
+VALUES
+  ('breathWeapon', 'Sopro Dracônico', 'species'::rpg.resource_scope, 'dragonborn', NULL, 1),
+  ('dragonFlight', 'Voo Dracônico', 'species'::rpg.resource_scope, 'dragonborn', NULL, 5),
+  ('giantAncestry', 'Ancestralidade Gigante', 'species'::rpg.resource_scope, 'goliath', NULL, 1),
+  ('largeForm', 'Forma Grande', 'species'::rpg.resource_scope, 'goliath', NULL, 5),
+  ('adrenalineSurge', 'Surto de Adrenalina', 'species'::rpg.resource_scope, 'orc', NULL, 1),
+  ('relentlessEndurance', 'Persistência Implacável', 'species'::rpg.resource_scope, 'orc', NULL, 1),
+  ('healingHands', 'Mãos Curativas', 'species'::rpg.resource_scope, 'aasimar', NULL, 1),
+  ('celestialRevelation', 'Revelação Celestial', 'species'::rpg.resource_scope, 'aasimar', NULL, 3),
+  ('stonecunning', 'Percepção de Pedra', 'species'::rpg.resource_scope, 'dwarf', NULL, 1),
+  ('rage', 'Fúria', 'class'::rpg.resource_scope, NULL, 'barbarian', 1),
+  ('channelDivinity', 'Canalizar Divindade', 'class'::rpg.resource_scope, NULL, 'cleric', 1),
+  ('focusPoints', 'Pontos de Foco', 'class'::rpg.resource_scope, NULL, 'monk', 1);
+
+
+INSERT INTO rpg.phb_spell_source (id, label, origin_type, class_id, subclass_id, species_id, feat_id)
+VALUES
+  ('class', 'Lista de classe', 'class'::rpg.spell_source_origin, NULL, NULL, NULL, NULL),
+  ('magic-initiate', 'Iniciado em Magia', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, 'magic-initiate'),
+  ('elf-lineage', 'Linhagem Élfica', 'species'::rpg.spell_source_origin, NULL, NULL, 'elf', NULL),
+  ('infernal-legacy', 'Legado Ínfero', 'species'::rpg.spell_source_origin, NULL, NULL, 'tiefling', NULL),
+  ('tiefling-presence', 'Presença Tiferina', 'species'::rpg.spell_source_origin, NULL, NULL, 'tiefling', NULL),
+  ('gnome-lineage', 'Linhagem Gnômica', 'species'::rpg.spell_source_origin, NULL, NULL, 'gnome', NULL),
+  ('aasimar-light', 'Luz Aasimar', 'species'::rpg.spell_source_origin, NULL, NULL, 'aasimar', NULL),
+  ('life-domain', 'Domínio da Vida', 'subclass'::rpg.spell_source_origin, 'cleric', 'life', NULL, NULL),
+  ('light-domain', 'Domínio da Luz', 'subclass'::rpg.spell_source_origin, 'cleric', 'light', NULL, NULL),
+  ('trickery-domain', 'Domínio da Trapaça', 'subclass'::rpg.spell_source_origin, 'cleric', 'trickery', NULL, NULL),
+  ('war-domain', 'Domínio da Guerra', 'subclass'::rpg.spell_source_origin, 'cleric', 'war', NULL, NULL),
+  ('land-circle', 'Círculo da Terra', 'subclass'::rpg.spell_source_origin, 'druid', 'land', NULL, NULL),
+  ('moon-circle', 'Círculo da Lua', 'subclass'::rpg.spell_source_origin, 'druid', 'moon', NULL, NULL),
+  ('sea-circle', 'Círculo do Mar', 'subclass'::rpg.spell_source_origin, 'druid', 'sea', NULL, NULL),
+  ('ancients-oath', 'Juramento dos Anciões', 'subclass'::rpg.spell_source_origin, 'paladin', 'ancients', NULL, NULL),
+  ('devotion-oath', 'Juramento da Devoção', 'subclass'::rpg.spell_source_origin, 'paladin', 'devotion', NULL, NULL),
+  ('glory-oath', 'Juramento da Glória', 'subclass'::rpg.spell_source_origin, 'paladin', 'glory', NULL, NULL),
+  ('vengeance-oath', 'Juramento da Vingança', 'subclass'::rpg.spell_source_origin, 'paladin', 'vengeance', NULL, NULL),
+  ('fey-wanderer-spells', 'Andarilho Feérico', 'subclass'::rpg.spell_source_origin, 'ranger', 'fey-wanderer', NULL, NULL),
+  ('gloom-stalker-spells', 'Vigilante das Sombras', 'subclass'::rpg.spell_source_origin, 'ranger', 'gloom-stalker', NULL, NULL),
+  ('archfey-pact', 'Patrono Arquifada', 'subclass'::rpg.spell_source_origin, 'warlock', 'archfey', NULL, NULL),
+  ('celestial-pact', 'Patrono Celestial', 'subclass'::rpg.spell_source_origin, 'warlock', 'celestial', NULL, NULL),
+  ('fiend-pact', 'Patrono Ínfero', 'subclass'::rpg.spell_source_origin, 'warlock', 'fiend', NULL, NULL),
+  ('great-old-one-pact', 'Patrono O Grande Antigo', 'subclass'::rpg.spell_source_origin, 'warlock', 'great-old-one', NULL, NULL);
+
+
+INSERT INTO rpg.phb_species_option_def (species_id, option_key, value_type)
+VALUES
+  ('elf', 'lineageId', 'catalog'::rpg.option_value_type),
+  ('elf', 'keenSensesSkillId', 'skill'::rpg.option_value_type),
+  ('tiefling', 'infernalLegacyId', 'catalog'::rpg.option_value_type),
+  ('tiefling', 'infernalCastingAbilityId', 'ability'::rpg.option_value_type),
+  ('gnome', 'gnomeLineageId', 'catalog'::rpg.option_value_type),
+  ('gnome', 'gnomeCastingAbilityId', 'ability'::rpg.option_value_type),
+  ('dragonborn', 'dragonAncestryId', 'catalog'::rpg.option_value_type),
+  ('goliath', 'giantAncestryId', 'catalog'::rpg.option_value_type),
+  ('aasimar', 'aasimarRevelationId', 'catalog'::rpg.option_value_type);
+
+
+INSERT INTO rpg.phb_species_option_value (species_id, option_key, value_id, label)
+VALUES
+  ('elf', 'lineageId', 'high-elf', 'high-elf'),
+  ('elf', 'lineageId', 'drow', 'drow'),
+  ('elf', 'lineageId', 'wood-elf', 'wood-elf'),
+  ('tiefling', 'infernalLegacyId', 'abyssal', 'abyssal'),
+  ('tiefling', 'infernalLegacyId', 'chthonic', 'chthonic'),
+  ('tiefling', 'infernalLegacyId', 'infernal', 'infernal'),
+  ('gnome', 'gnomeLineageId', 'rock-gnome', 'rock-gnome'),
+  ('gnome', 'gnomeLineageId', 'forest-gnome', 'forest-gnome'),
+  ('dragonborn', 'dragonAncestryId', 'blue', 'blue'),
+  ('dragonborn', 'dragonAncestryId', 'black', 'black'),
+  ('dragonborn', 'dragonAncestryId', 'white', 'white'),
+  ('dragonborn', 'dragonAncestryId', 'gold', 'gold'),
+  ('dragonborn', 'dragonAncestryId', 'bronze', 'bronze'),
+  ('dragonborn', 'dragonAncestryId', 'silver', 'silver'),
+  ('dragonborn', 'dragonAncestryId', 'copper', 'copper'),
+  ('dragonborn', 'dragonAncestryId', 'green', 'green'),
+  ('dragonborn', 'dragonAncestryId', 'brass', 'brass'),
+  ('dragonborn', 'dragonAncestryId', 'red', 'red'),
+  ('goliath', 'giantAncestryId', 'ice', 'ice'),
+  ('goliath', 'giantAncestryId', 'fire', 'fire'),
+  ('goliath', 'giantAncestryId', 'stone', 'stone'),
+  ('goliath', 'giantAncestryId', 'cloud', 'cloud'),
+  ('goliath', 'giantAncestryId', 'hill', 'hill'),
+  ('goliath', 'giantAncestryId', 'storm', 'storm'),
+  ('aasimar', 'aasimarRevelationId', 'celestial-wings', 'celestial-wings'),
+  ('aasimar', 'aasimarRevelationId', 'necrotic-shroud', 'necrotic-shroud'),
+  ('aasimar', 'aasimarRevelationId', 'radiant-consumption', 'radiant-consumption');
+
+
+INSERT INTO rpg.phb_class_option_def (class_id, option_key, value_type)
+VALUES
+  ('cleric', 'divineOrder', 'catalog'::rpg.option_value_type),
+  ('cleric', 'skillIds', 'skill_list'::rpg.option_value_type),
+  ('fighter', 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
+  ('paladin', 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
+  ('ranger', 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
+  ('druid', 'landTerrainId', 'terrain'::rpg.option_value_type),
+  ('barbarian', 'skillIds', 'skill_list'::rpg.option_value_type),
+  ('bard', 'skillIds', 'skill_list'::rpg.option_value_type),
+  ('rogue', 'skillIds', 'skill_list'::rpg.option_value_type),
+  ('wizard', 'skillIds', 'skill_list'::rpg.option_value_type),
+  ('sorcerer', 'skillIds', 'skill_list'::rpg.option_value_type),
+  ('warlock', 'skillIds', 'skill_list'::rpg.option_value_type),
+  ('monk', 'skillIds', 'skill_list'::rpg.option_value_type);
+
+
+INSERT INTO rpg.phb_class_option_value (class_id, option_key, value_id, label)
+VALUES
+  ('cleric', 'divineOrder', 'protector', 'Protetor'),
+  ('cleric', 'divineOrder', 'thaumaturge', 'Taumaturgo');
+
+
+INSERT INTO rpg.phb_class_fighting_style (class_id, fighting_style_id)
+VALUES
+  ('fighter', 'archery'),
+  ('fighter', 'blind-fighting'),
+  ('fighter', 'defense'),
+  ('fighter', 'dueling'),
+  ('fighter', 'great-weapon-fighting'),
+  ('fighter', 'interception'),
+  ('fighter', 'protection'),
+  ('fighter', 'thrown-weapon-fighting'),
+  ('fighter', 'two-weapon-fighting'),
+  ('fighter', 'unarmed-fighting'),
+  ('paladin', 'archery'),
+  ('paladin', 'blind-fighting'),
+  ('paladin', 'defense'),
+  ('paladin', 'dueling'),
+  ('paladin', 'great-weapon-fighting'),
+  ('paladin', 'interception'),
+  ('paladin', 'protection'),
+  ('paladin', 'thrown-weapon-fighting'),
+  ('paladin', 'two-weapon-fighting'),
+  ('paladin', 'unarmed-fighting'),
+  ('paladin', 'blessed-warrior'),
+  ('ranger', 'archery'),
+  ('ranger', 'blind-fighting'),
+  ('ranger', 'defense'),
+  ('ranger', 'dueling'),
+  ('ranger', 'great-weapon-fighting'),
+  ('ranger', 'interception'),
+  ('ranger', 'protection'),
+  ('ranger', 'thrown-weapon-fighting'),
+  ('ranger', 'two-weapon-fighting'),
+  ('ranger', 'unarmed-fighting'),
+  ('ranger', 'druidic-warrior');
+
+
+SELECT set_config('rpg.skip_sync', '0', true);
 
 COMMIT;

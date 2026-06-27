@@ -1,5 +1,5 @@
 /**
- * Regenera database/schema.sql — PostgreSQL v2 (híbrido).
+ * Regenera database/schema.sql — PostgreSQL v3 (híbrido + FKs tipadas).
  */
 import fs from "fs";
 import path from "path";
@@ -9,9 +9,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const outFile = path.join(root, "database", "schema.sql");
 
-const SQL = `-- RPG PHB 2024 — PostgreSQL v2 (híbrido)
+const SQL = `-- RPG PHB 2024 — PostgreSQL v3 (híbrido + relações tipadas)
 -- Gerado por: npm run generate:sql-schema
--- Schema: rpg | Catálogo phb_* + player_character (sheet JSONB + projeções)
+-- Docs: .cursor/skills/rpg-database/docs/er-diagram.md
 -- Classe única por personagem — sem multiclasse
 
 CREATE SCHEMA IF NOT EXISTS rpg;
@@ -48,6 +48,17 @@ DO $$ BEGIN CREATE TYPE rpg.item_type AS ENUM (
   'weapon','armor','gear','tool','focus','other'
 ); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
+DO $$ BEGIN CREATE TYPE rpg.resource_scope AS ENUM ('species','class');
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+DO $$ BEGIN CREATE TYPE rpg.spell_source_origin AS ENUM (
+  'class','subclass','species','feat'
+); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
+DO $$ BEGIN CREATE TYPE rpg.option_value_type AS ENUM (
+  'catalog','skill','ability','fighting_style','terrain','skill_list','json'
+); EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+
 -- =============================================================================
 -- EDIÇÃO / CATÁLOGO PHB
 -- =============================================================================
@@ -80,7 +91,7 @@ CREATE TABLE IF NOT EXISTS rpg.phb_skill (
 );
 
 CREATE TABLE IF NOT EXISTS rpg.phb_fighting_style (
-  id TEXT PRIMARY KEY, name TEXT NOT NULL, description TEXT NOT NULL, classes TEXT[]
+  id TEXT PRIMARY KEY, name TEXT NOT NULL, description TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS rpg.phb_weapon_property (
@@ -213,6 +224,91 @@ CREATE TABLE IF NOT EXISTS rpg.phb_character_level (
 );
 
 -- =============================================================================
+-- CATÁLOGO v3 — recursos, magias, opções, junctions
+-- =============================================================================
+
+CREATE TABLE IF NOT EXISTS rpg.phb_ability_generation_method (
+  id TEXT PRIMARY KEY, name TEXT NOT NULL, description TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_background_boost_option (
+  id TEXT PRIMARY KEY, label TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_druid_land_terrain (
+  id TEXT PRIMARY KEY, label TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_resource_definition (
+  id          TEXT PRIMARY KEY,
+  name        TEXT NOT NULL,
+  scope       rpg.resource_scope NOT NULL,
+  species_id  TEXT REFERENCES rpg.phb_species(id),
+  class_id    TEXT REFERENCES rpg.phb_class(id),
+  min_level   INTEGER NOT NULL DEFAULT 1 CHECK (min_level BETWEEN 1 AND 20),
+  CONSTRAINT prd_scope_fk CHECK (
+    (scope = 'species' AND species_id IS NOT NULL AND class_id IS NULL) OR
+    (scope = 'class' AND class_id IS NOT NULL AND species_id IS NULL)
+  )
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_spell_source (
+  id           TEXT PRIMARY KEY,
+  label        TEXT NOT NULL,
+  origin_type  rpg.spell_source_origin NOT NULL,
+  class_id     TEXT REFERENCES rpg.phb_class(id),
+  subclass_id  TEXT REFERENCES rpg.phb_subclass(id),
+  species_id   TEXT REFERENCES rpg.phb_species(id),
+  feat_id      TEXT REFERENCES rpg.phb_feat(id)
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_species_option_def (
+  species_id  TEXT NOT NULL REFERENCES rpg.phb_species(id) ON DELETE CASCADE,
+  option_key  TEXT NOT NULL,
+  value_type  rpg.option_value_type NOT NULL,
+  PRIMARY KEY (species_id, option_key)
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_species_option_value (
+  species_id  TEXT NOT NULL,
+  option_key  TEXT NOT NULL,
+  value_id    TEXT NOT NULL,
+  label       TEXT NOT NULL,
+  PRIMARY KEY (species_id, option_key, value_id),
+  FOREIGN KEY (species_id, option_key)
+    REFERENCES rpg.phb_species_option_def(species_id, option_key) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_class_option_def (
+  class_id    TEXT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
+  option_key  TEXT NOT NULL,
+  value_type  rpg.option_value_type NOT NULL,
+  PRIMARY KEY (class_id, option_key)
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_class_option_value (
+  class_id    TEXT NOT NULL,
+  option_key  TEXT NOT NULL,
+  value_id    TEXT NOT NULL,
+  label       TEXT NOT NULL,
+  PRIMARY KEY (class_id, option_key, value_id),
+  FOREIGN KEY (class_id, option_key)
+    REFERENCES rpg.phb_class_option_def(class_id, option_key) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_weapon_property_link (
+  weapon_id   TEXT NOT NULL REFERENCES rpg.phb_weapon(item_id) ON DELETE CASCADE,
+  property_id TEXT NOT NULL REFERENCES rpg.phb_weapon_property(id) ON DELETE CASCADE,
+  PRIMARY KEY (weapon_id, property_id)
+);
+
+CREATE TABLE IF NOT EXISTS rpg.phb_class_fighting_style (
+  class_id          TEXT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
+  fighting_style_id TEXT NOT NULL REFERENCES rpg.phb_fighting_style(id) ON DELETE CASCADE,
+  PRIMARY KEY (class_id, fighting_style_id)
+);
+
+-- =============================================================================
 -- FICHA — player_character (híbrido)
 -- =============================================================================
 
@@ -227,6 +323,8 @@ CREATE TABLE IF NOT EXISTS rpg.player_character (
   class_id            TEXT NOT NULL REFERENCES rpg.phb_class(id),
   subclass_id         TEXT REFERENCES rpg.phb_subclass(id),
   alignment_id        TEXT NOT NULL REFERENCES rpg.phb_alignment(id),
+  ability_method_id   TEXT NOT NULL REFERENCES rpg.phb_ability_generation_method(id),
+  background_boost_id TEXT REFERENCES rpg.phb_background_boost_option(id),
   ability_generation  JSONB NOT NULL,
   forca               INTEGER NOT NULL CHECK (forca BETWEEN 1 AND 30),
   destreza            INTEGER NOT NULL CHECK (destreza BETWEEN 1 AND 30),
@@ -301,8 +399,8 @@ CREATE TABLE IF NOT EXISTS rpg.player_character_spell_list (
   character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   spell_id     TEXT NOT NULL REFERENCES rpg.phb_spell(id),
   list_type    rpg.spell_list_type NOT NULL,
-  source_key   TEXT NOT NULL,
-  PRIMARY KEY (character_id, spell_id, list_type, source_key)
+  source_id    TEXT NOT NULL REFERENCES rpg.phb_spell_source(id),
+  PRIMARY KEY (character_id, spell_id, list_type, source_id)
 );
 
 CREATE TABLE IF NOT EXISTS rpg.player_character_spell_slot (
@@ -316,25 +414,43 @@ CREATE TABLE IF NOT EXISTS rpg.player_character_spell_slot (
 
 CREATE TABLE IF NOT EXISTS rpg.player_character_resource (
   character_id  TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  resource_key  TEXT NOT NULL,
+  resource_id   TEXT NOT NULL REFERENCES rpg.phb_resource_definition(id),
   max_value     INTEGER NOT NULL CHECK (max_value >= 0),
   remaining     INTEGER NOT NULL CHECK (remaining >= 0),
-  PRIMARY KEY (character_id, resource_key),
+  PRIMARY KEY (character_id, resource_id),
   CONSTRAINT pcr_remaining_lte_max CHECK (remaining <= max_value)
 );
 
 CREATE TABLE IF NOT EXISTS rpg.player_character_species_option (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  option_key   TEXT NOT NULL,
-  option_value TEXT NOT NULL,
-  PRIMARY KEY (character_id, option_key)
+  character_id       TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
+  species_id         TEXT NOT NULL REFERENCES rpg.phb_species(id),
+  option_key         TEXT NOT NULL,
+  catalog_value_id   TEXT,
+  skill_id           TEXT REFERENCES rpg.phb_skill(id),
+  ability_id         rpg.ability_id,
+  json_value         JSONB,
+  PRIMARY KEY (character_id, option_key),
+  FOREIGN KEY (species_id, option_key, catalog_value_id)
+    REFERENCES rpg.phb_species_option_value(species_id, option_key, value_id),
+  CONSTRAINT pso_has_value CHECK (
+    num_nonnulls(catalog_value_id, skill_id, ability_id, json_value) >= 1
+  )
 );
 
 CREATE TABLE IF NOT EXISTS rpg.player_character_class_option (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  option_key   TEXT NOT NULL,
-  option_value TEXT NOT NULL,
-  PRIMARY KEY (character_id, option_key)
+  character_id       TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
+  class_id           TEXT NOT NULL REFERENCES rpg.phb_class(id),
+  option_key         TEXT NOT NULL,
+  catalog_value_id   TEXT,
+  fighting_style_id  TEXT REFERENCES rpg.phb_fighting_style(id),
+  terrain_id         TEXT REFERENCES rpg.phb_druid_land_terrain(id),
+  json_value         JSONB,
+  PRIMARY KEY (character_id, option_key),
+  FOREIGN KEY (class_id, option_key, catalog_value_id)
+    REFERENCES rpg.phb_class_option_value(class_id, option_key, value_id),
+  CONSTRAINT pco_has_value CHECK (
+    num_nonnulls(catalog_value_id, fighting_style_id, terrain_id, json_value) >= 1
+  )
 );
 
 -- =============================================================================
@@ -353,6 +469,50 @@ DROP TRIGGER IF EXISTS trg_player_character_updated ON rpg.player_character;
 CREATE TRIGGER trg_player_character_updated
   BEFORE UPDATE ON rpg.player_character
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
+
+-- =============================================================================
+-- INTEGRIDADE v3 — triggers
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION rpg.validate_pc_subclass()
+RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.subclass_id IS NOT NULL THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM rpg.phb_subclass sb
+      WHERE sb.id = NEW.subclass_id AND sb.class_id = NEW.class_id
+    ) THEN
+      RAISE EXCEPTION 'subclasse % não pertence à classe %', NEW.subclass_id, NEW.class_id;
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION rpg.validate_pc_subclass_level()
+RETURNS TRIGGER AS $$
+DECLARE
+  unlock INTEGER;
+BEGIN
+  IF NEW.subclass_id IS NOT NULL THEN
+    SELECT subclass_unlock_level INTO unlock FROM rpg.phb_class WHERE id = NEW.class_id;
+    IF NEW.level < unlock THEN
+      RAISE EXCEPTION 'nível % insuficiente para subclasse (desbloqueio %)', NEW.level, unlock;
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trg_pc_subclass ON rpg.player_character;
+CREATE TRIGGER trg_pc_subclass
+  BEFORE INSERT OR UPDATE OF subclass_id, class_id ON rpg.player_character
+  FOR EACH ROW EXECUTE FUNCTION rpg.validate_pc_subclass();
+
+DROP TRIGGER IF EXISTS trg_pc_subclass_level ON rpg.player_character;
+CREATE TRIGGER trg_pc_subclass_level
+  BEFORE INSERT OR UPDATE OF subclass_id, class_id, level ON rpg.player_character
+  FOR EACH ROW EXECUTE FUNCTION rpg.validate_pc_subclass_level();
 
 -- =============================================================================
 -- VIEWS
@@ -378,6 +538,25 @@ JOIN rpg.phb_class cl ON cl.id = pc.class_id
 JOIN rpg.phb_background bg ON bg.id = pc.background_id
 LEFT JOIN rpg.phb_subclass sb ON sb.id = pc.subclass_id;
 
+CREATE OR REPLACE VIEW rpg.v_character_resources AS
+SELECT
+  pc.id AS character_id, pc.name AS character_name,
+  rd.id AS resource_id, rd.name AS resource_name, rd.scope,
+  pcr.max_value, pcr.remaining
+FROM rpg.player_character pc
+JOIN rpg.player_character_resource pcr ON pcr.character_id = pc.id
+JOIN rpg.phb_resource_definition rd ON rd.id = pcr.resource_id;
+
+CREATE OR REPLACE VIEW rpg.v_character_spells AS
+SELECT
+  pc.id AS character_id, pc.name AS character_name,
+  ss.id AS source_id, ss.label AS source_label,
+  psl.list_type, s.id AS spell_id, s.name AS spell_name, s.level AS spell_level
+FROM rpg.player_character pc
+JOIN rpg.player_character_spell_list psl ON psl.character_id = pc.id
+JOIN rpg.phb_spell_source ss ON ss.id = psl.source_id
+JOIN rpg.phb_spell s ON s.id = psl.spell_id;
+
 -- =============================================================================
 -- ÍNDICES
 -- =============================================================================
@@ -391,12 +570,23 @@ CREATE INDEX IF NOT EXISTS idx_spell_class ON rpg.phb_spell_class(class_id);
 CREATE INDEX IF NOT EXISTS idx_spell_level ON rpg.phb_spell(level);
 CREATE INDEX IF NOT EXISTS idx_pc_spell_list ON rpg.player_character_spell_list(character_id);
 CREATE INDEX IF NOT EXISTS idx_pc_resource ON rpg.player_character_resource(character_id);
+CREATE INDEX IF NOT EXISTS idx_pc_spell_source ON rpg.player_character_spell_list(source_id);
+CREATE INDEX IF NOT EXISTS idx_pc_resource_def ON rpg.player_character_resource(resource_id);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_pc_equip_one_slot
+  ON rpg.player_character_equipment (character_id, slot)
+  WHERE equipped = TRUE AND slot IS NOT NULL;
 
-COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — PostgreSQL v2 híbrido';
+COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — PostgreSQL v3 híbrido';
 COMMENT ON TABLE rpg.player_character IS 'Ficha: sheet JSONB canônico + projeções; classe única (sem multiclasse)';
 COMMENT ON COLUMN rpg.player_character.sheet IS 'JSON idêntico a data/characters/{id}.json (round-trip)';
 `;
 
+const syncSql = fs.readFileSync(
+  path.join(__dirname, "lib", "character-sync.sql"),
+  "utf8"
+);
+const fullSql = `${SQL}\n${syncSql}`;
+
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
-fs.writeFileSync(outFile, SQL, "utf8");
-console.log(`✓ ${path.relative(root, outFile)} — PostgreSQL v2 (${SQL.split("\n").length} linhas)`);
+fs.writeFileSync(outFile, fullSql, "utf8");
+console.log(`✓ ${path.relative(root, outFile)} — PostgreSQL v3 (${fullSql.split("\n").length} linhas)`);

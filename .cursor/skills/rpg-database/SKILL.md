@@ -6,7 +6,7 @@ description: >-
   seed, tabelas, FKs, ou migrar fichas/PHB para SQL.
 ---
 
-# RPG Database (PostgreSQL v2)
+# RPG Database (PostgreSQL v3)
 
 Modelo **híbrido PostgreSQL**: catálogo `rpg.phb_*` + ficha `rpg.player_character` com **`sheet JSONB` canônico** e projeções normalizadas. Classe única — sem multiclasse.
 
@@ -33,7 +33,7 @@ psql -U postgres -d rpg -f database/seed-all.sql
 
 ## Docs
 
-- [entity-map.md](docs/entity-map.md) — JSON → tabelas v2
+- [er-diagram.md](docs/er-diagram.md) — diagrama ER v3
 - [validation-rules.md](docs/validation-rules.md) — checklist
 - [sql-conventions.md](docs/sql-conventions.md) — PostgreSQL
 

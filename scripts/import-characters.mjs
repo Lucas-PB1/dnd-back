@@ -15,9 +15,54 @@ const manifestFile = path.join(root, "database", "seed-manifest.json");
 const characters = loadCharacters(root);
 const lines = [];
 
-lines.push(`-- Personagens — PostgreSQL v2`);
+function mapSpeciesOption(doc, optionKey, optionValue) {
+  const row = {
+    character_id: sqlStr(doc.id),
+    species_id: sqlStr(doc.speciesId),
+    option_key: sqlStr(optionKey),
+    catalog_value_id: "NULL",
+    skill_id: "NULL",
+    ability_id: "NULL",
+    json_value: "NULL",
+  };
+  if (optionKey.endsWith("SkillId")) {
+    row.skill_id = sqlStr(optionValue);
+  } else if (optionKey.endsWith("CastingAbilityId")) {
+    row.ability_id = `${sqlStr(optionValue)}::rpg.ability_id`;
+  } else if (Array.isArray(optionValue)) {
+    row.json_value = sqlJson(optionValue);
+  } else {
+    row.catalog_value_id = sqlStr(optionValue);
+  }
+  return row;
+}
+
+function mapClassOption(doc, optionKey, optionValue) {
+  const row = {
+    character_id: sqlStr(doc.id),
+    class_id: sqlStr(doc.classId),
+    option_key: sqlStr(optionKey),
+    catalog_value_id: "NULL",
+    fighting_style_id: "NULL",
+    terrain_id: "NULL",
+    json_value: "NULL",
+  };
+  if (optionKey === "fightingStyleId") {
+    row.fighting_style_id = sqlStr(optionValue);
+  } else if (optionKey === "landTerrainId") {
+    row.terrain_id = sqlStr(optionValue);
+  } else if (Array.isArray(optionValue)) {
+    row.json_value = sqlJson(optionValue);
+  } else {
+    row.catalog_value_id = sqlStr(optionValue);
+  }
+  return row;
+}
+
+lines.push(`-- Personagens — PostgreSQL v3`);
 lines.push(`-- Gerado por: npm run generate:seed-characters`);
 lines.push(`BEGIN;`);
+lines.push(`SELECT set_config('rpg.skip_sync', '1', true);`);
 
 lines.push(`
 TRUNCATE TABLE
@@ -66,6 +111,10 @@ for (const doc of characters) {
     class_id: sqlStr(doc.classId),
     subclass_id: doc.subclassId ? sqlStr(doc.subclassId) : "NULL",
     alignment_id: sqlStr(doc.alignmentId),
+    ability_method_id: sqlStr(doc.abilityGeneration.methodId),
+    background_boost_id: doc.abilityGeneration.backgroundBoostId
+      ? sqlStr(doc.abilityGeneration.backgroundBoostId)
+      : "NULL",
     ability_generation: sqlJson(doc.abilityGeneration),
     forca: sqlInt(ab.forca),
     destreza: sqlInt(ab.destreza),
@@ -147,7 +196,7 @@ for (const doc of characters) {
             character_id: sqlStr(doc.id),
             spell_id: sqlStr(spellId),
             list_type: `${sqlStr(listType === "cantrips" ? "cantrip" : "prepared")}::rpg.spell_list_type`,
-            source_key: sqlStr(sourceKey),
+            source_id: sqlStr(sourceKey),
           });
         }
       }
@@ -166,30 +215,18 @@ for (const doc of characters) {
   for (const [resourceKey, val] of Object.entries(doc.resources ?? {})) {
     resourceRows.push({
       character_id: sqlStr(doc.id),
-      resource_key: sqlStr(resourceKey),
+      resource_id: sqlStr(resourceKey),
       max_value: sqlInt(val.max),
       remaining: sqlInt(val.remaining),
     });
   }
 
   for (const [optionKey, optionValue] of Object.entries(doc.speciesChoices ?? {})) {
-    speciesOptRows.push({
-      character_id: sqlStr(doc.id),
-      option_key: sqlStr(optionKey),
-      option_value: sqlStr(
-        typeof optionValue === "string" ? optionValue : JSON.stringify(optionValue)
-      ),
-    });
+    speciesOptRows.push(mapSpeciesOption(doc, optionKey, optionValue));
   }
 
   for (const [optionKey, optionValue] of Object.entries(doc.classChoices ?? {})) {
-    classOptRows.push({
-      character_id: sqlStr(doc.id),
-      option_key: sqlStr(optionKey),
-      option_value: sqlStr(
-        typeof optionValue === "string" ? optionValue : JSON.stringify(optionValue)
-      ),
-    });
+    classOptRows.push(mapClassOption(doc, optionKey, optionValue));
   }
 }
 
@@ -206,6 +243,8 @@ lines.push(
       "class_id",
       "subclass_id",
       "alignment_id",
+      "ability_method_id",
+      "background_boost_id",
       "ability_generation",
       "forca",
       "destreza",
@@ -267,7 +306,7 @@ if (spellListRows.length) {
   lines.push(
     batchInsert(
       "rpg.player_character_spell_list",
-      ["character_id", "spell_id", "list_type", "source_key"],
+      ["character_id", "spell_id", "list_type", "source_id"],
       spellListRows
     )
   );
@@ -285,7 +324,7 @@ if (resourceRows.length) {
   lines.push(
     batchInsert(
       "rpg.player_character_resource",
-      ["character_id", "resource_key", "max_value", "remaining"],
+      ["character_id", "resource_id", "max_value", "remaining"],
       resourceRows
     )
   );
@@ -294,7 +333,15 @@ if (speciesOptRows.length) {
   lines.push(
     batchInsert(
       "rpg.player_character_species_option",
-      ["character_id", "option_key", "option_value"],
+      [
+        "character_id",
+        "species_id",
+        "option_key",
+        "catalog_value_id",
+        "skill_id",
+        "ability_id",
+        "json_value",
+      ],
       speciesOptRows
     )
   );
@@ -303,12 +350,21 @@ if (classOptRows.length) {
   lines.push(
     batchInsert(
       "rpg.player_character_class_option",
-      ["character_id", "option_key", "option_value"],
+      [
+        "character_id",
+        "class_id",
+        "option_key",
+        "catalog_value_id",
+        "fighting_style_id",
+        "terrain_id",
+        "json_value",
+      ],
       classOptRows
     )
   );
 }
 
+lines.push("SELECT set_config('rpg.skip_sync', '0', true);");
 lines.push("COMMIT;");
 
 const sql = `${lines.filter(Boolean).join("\n\n")}\n`;

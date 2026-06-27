@@ -14,6 +14,18 @@ import {
   sqlTextArray,
 } from "./lib/sql-escape.mjs";
 import { loadPhbCatalog } from "./lib/phb-loader.mjs";
+import {
+  buildAbilityGenerationMethods,
+  buildBackgroundBoostOptions,
+  buildClassFightingStyles,
+  buildClassOptionDefs,
+  buildClassOptionValues,
+  buildDruidLandTerrains,
+  buildResourceDefinitions,
+  buildSpeciesOptionDefs,
+  buildSpeciesOptionValues,
+  buildSpellSources,
+} from "./lib/catalog-definitions.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -23,9 +35,10 @@ const manifestFile = path.join(root, "database", "seed-manifest.json");
 const catalog = loadPhbCatalog(root);
 const lines = [];
 
-lines.push(`-- PHB seed — PostgreSQL v2`);
+lines.push(`-- PHB seed — PostgreSQL v3`);
 lines.push(`-- Gerado por: npm run generate:seed-phb`);
 lines.push(`BEGIN;`);
+lines.push(`SELECT set_config('rpg.skip_sync', '1', true);`);
 lines.push(`
 -- Limpa catálogo (personagens devem ser reimportados depois)
 TRUNCATE TABLE
@@ -64,6 +77,17 @@ TRUNCATE TABLE
   rpg.phb_skill,
   rpg.phb_language,
   rpg.phb_alignment,
+  rpg.phb_class_fighting_style,
+  rpg.phb_weapon_property_link,
+  rpg.phb_class_option_value,
+  rpg.phb_class_option_def,
+  rpg.phb_species_option_value,
+  rpg.phb_species_option_def,
+  rpg.phb_spell_source,
+  rpg.phb_resource_definition,
+  rpg.phb_druid_land_terrain,
+  rpg.phb_background_boost_option,
+  rpg.phb_ability_generation_method,
   rpg.phb_character_level
 CASCADE;
 `);
@@ -115,12 +139,11 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_fighting_style",
-    ["id", "name", "description", "classes"],
+    ["id", "name", "description"],
     catalog.fightingStyles.map((fs) => ({
       id: sqlStr(fs.id),
       name: sqlStr(fs.name),
       description: sqlStr(fs.description),
-      classes: sqlTextArray(fs.classes),
     }))
   )
 );
@@ -420,6 +443,11 @@ for (const i of catalog.items.filter((x) => x.weapon)) {
   lines.push(
     `INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES (${sqlStr(i.id)}, ${sqlStr(w.category)}, ${sqlStr(w.damage)}, ${sqlStr(w.damageType)}, ${sqlTextArray(w.propertyIds)}, ${sqlStr(w.masteryId)}) ON CONFLICT (item_id) DO NOTHING;`
   );
+  for (const pid of w.propertyIds ?? []) {
+    lines.push(
+      `INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES (${sqlStr(i.id)}, ${sqlStr(pid)}) ON CONFLICT DO NOTHING;`
+    );
+  }
 }
 
 for (const i of catalog.items.filter((x) => x.armor)) {
@@ -450,6 +478,140 @@ lines.push(
   )
 );
 
+const v3 = {
+  resources: buildResourceDefinitions(),
+  spellSources: buildSpellSources(),
+  speciesOptionDefs: buildSpeciesOptionDefs(),
+  speciesOptionValues: buildSpeciesOptionValues(),
+  classOptionDefs: buildClassOptionDefs(),
+  classOptionValues: buildClassOptionValues(),
+  abilityMethods: buildAbilityGenerationMethods(),
+  backgroundBoosts: buildBackgroundBoostOptions(),
+  terrains: buildDruidLandTerrains(),
+  classFightingStyles: buildClassFightingStyles(),
+};
+
+lines.push(
+  batchInsert(
+    "rpg.phb_ability_generation_method",
+    ["id", "name", "description"],
+    v3.abilityMethods.map((m) => ({
+      id: sqlStr(m.id),
+      name: sqlStr(m.name),
+      description: sqlStr(m.description),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_background_boost_option",
+    ["id", "label"],
+    v3.backgroundBoosts.map((b) => ({ id: sqlStr(b.id), label: sqlStr(b.label) }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_druid_land_terrain",
+    ["id", "label"],
+    v3.terrains.map((t) => ({ id: sqlStr(t.id), label: sqlStr(t.label) }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_resource_definition",
+    ["id", "name", "scope", "species_id", "class_id", "min_level"],
+    v3.resources.map((r) => ({
+      id: sqlStr(r.id),
+      name: sqlStr(r.name),
+      scope: `${sqlStr(r.scope)}::rpg.resource_scope`,
+      species_id: r.speciesId ? sqlStr(r.speciesId) : "NULL",
+      class_id: r.classId ? sqlStr(r.classId) : "NULL",
+      min_level: sqlInt(r.minLevel),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_spell_source",
+    ["id", "label", "origin_type", "class_id", "subclass_id", "species_id", "feat_id"],
+    v3.spellSources.map((s) => ({
+      id: sqlStr(s.id),
+      label: sqlStr(s.label),
+      origin_type: `${sqlStr(s.originType)}::rpg.spell_source_origin`,
+      class_id: s.classId ? sqlStr(s.classId) : "NULL",
+      subclass_id: s.subclassId ? sqlStr(s.subclassId) : "NULL",
+      species_id: s.speciesId ? sqlStr(s.speciesId) : "NULL",
+      feat_id: s.featId ? sqlStr(s.featId) : "NULL",
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_species_option_def",
+    ["species_id", "option_key", "value_type"],
+    v3.speciesOptionDefs.map((d) => ({
+      species_id: sqlStr(d.speciesId),
+      option_key: sqlStr(d.optionKey),
+      value_type: `${sqlStr(d.valueType)}::rpg.option_value_type`,
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_species_option_value",
+    ["species_id", "option_key", "value_id", "label"],
+    v3.speciesOptionValues.map((v) => ({
+      species_id: sqlStr(v.speciesId),
+      option_key: sqlStr(v.optionKey),
+      value_id: sqlStr(v.valueId),
+      label: sqlStr(v.label),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_class_option_def",
+    ["class_id", "option_key", "value_type"],
+    v3.classOptionDefs.map((d) => ({
+      class_id: sqlStr(d.classId),
+      option_key: sqlStr(d.optionKey),
+      value_type: `${sqlStr(d.valueType)}::rpg.option_value_type`,
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_class_option_value",
+    ["class_id", "option_key", "value_id", "label"],
+    v3.classOptionValues.map((v) => ({
+      class_id: sqlStr(v.classId),
+      option_key: sqlStr(v.optionKey),
+      value_id: sqlStr(v.valueId),
+      label: sqlStr(v.label),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_class_fighting_style",
+    ["class_id", "fighting_style_id"],
+    v3.classFightingStyles.map((r) => ({
+      class_id: sqlStr(r.classId),
+      fighting_style_id: sqlStr(r.fightingStyleId),
+    }))
+  )
+);
+
+lines.push("SELECT set_config('rpg.skip_sync', '0', true);");
 lines.push("COMMIT;");
 
 const sql = `${lines.filter(Boolean).join("\n\n")}\n`;
