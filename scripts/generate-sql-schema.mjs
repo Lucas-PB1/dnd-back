@@ -243,10 +243,16 @@ CREATE TABLE rpg.phb_subclass (
   tagline TEXT,
   summary TEXT,
   description TEXT,
-  prepared_spell_source_key TEXT,
-  prepared_spells_by_level JSONB,
-  prepared_spells_by_terrain JSONB,
-  source_meta JSONB
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
+);
+
+CREATE TABLE rpg.phb_subclass_feature (
+  id BIGSERIAL PRIMARY KEY,
+  subclass_id BIGINT NOT NULL REFERENCES rpg.phb_subclass(id) ON DELETE CASCADE,
+  level INTEGER NOT NULL CHECK (level >= 1),
+  name TEXT NOT NULL,
+  description TEXT NOT NULL,
+  UNIQUE (subclass_id, level, name)
 );
 
 CREATE TABLE rpg.phb_species (
@@ -372,11 +378,13 @@ CREATE TABLE rpg.phb_spell_class (
 );
 
 CREATE TABLE rpg.phb_subclass_prepared_spell (
+  id BIGSERIAL PRIMARY KEY,
   subclass_id BIGINT NOT NULL REFERENCES rpg.phb_subclass(id) ON DELETE CASCADE,
   unlock_level INTEGER NOT NULL CHECK (unlock_level >= 1),
   spell_id BIGINT NOT NULL REFERENCES rpg.phb_spell(id) ON DELETE CASCADE,
-  terrain_slug TEXT NOT NULL DEFAULT '',
-  PRIMARY KEY (subclass_id, unlock_level, spell_id, terrain_slug)
+  terrain_id BIGINT REFERENCES rpg.phb_druid_land_terrain(id) ON DELETE CASCADE,
+  CONSTRAINT uq_subclass_prepared_spell
+    UNIQUE NULLS NOT DISTINCT (subclass_id, unlock_level, spell_id, terrain_id)
 );
 
 CREATE TABLE rpg.phb_elf_lineage (
@@ -522,9 +530,16 @@ CREATE TABLE rpg.phb_armor (
   stealth_disadvantage BOOLEAN NOT NULL DEFAULT FALSE
 );
 
+CREATE TABLE rpg.phb_tool_category (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0
+);
+
 CREATE TABLE rpg.phb_tool (
   item_id BIGINT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
-  category TEXT,
+  category_id BIGINT NOT NULL REFERENCES rpg.phb_tool_category(id),
   use_description TEXT
 );
 
@@ -607,6 +622,37 @@ FROM rpg.phb_spell s
 JOIN rpg.phb_spell_school sch ON sch.id = s.school_id
 LEFT JOIN rpg.phb_source_citation sc ON sc.id = s.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id;
+
+CREATE OR REPLACE VIEW rpg.v_phb_subclass AS
+SELECT
+  s.slug AS subclass_slug,
+  s.name AS subclass_name,
+  c.slug AS class_slug,
+  c.name AS class_name,
+  s.tagline,
+  s.summary,
+  cit.chapter AS source_chapter,
+  e.slug AS edition_slug,
+  ss.slug AS spell_source_slug,
+  ss.label AS spell_source_label
+FROM rpg.phb_subclass s
+JOIN rpg.phb_class c ON c.id = s.class_id
+LEFT JOIN rpg.phb_source_citation cit ON cit.id = s.source_citation_id
+LEFT JOIN rpg.phb_edition e ON e.id = cit.edition_id
+LEFT JOIN rpg.phb_spell_source ss ON ss.subclass_id = s.id;
+
+CREATE OR REPLACE VIEW rpg.v_phb_subclass_prepared_spell AS
+SELECT
+  s.slug AS subclass_slug,
+  ps.unlock_level,
+  sp.slug AS spell_slug,
+  sp.name AS spell_name,
+  t.slug AS terrain_slug,
+  t.label AS terrain_label
+FROM rpg.phb_subclass_prepared_spell ps
+JOIN rpg.phb_subclass s ON s.id = ps.subclass_id
+JOIN rpg.phb_spell sp ON sp.id = ps.spell_id
+LEFT JOIN rpg.phb_druid_land_terrain t ON t.id = ps.terrain_id;
 
 CREATE OR REPLACE VIEW rpg.v_phb_armor AS
 SELECT
@@ -806,6 +852,10 @@ CREATE INDEX idx_phb_elf_lineage_spells ON rpg.phb_elf_lineage(spell_level3_id, 
 CREATE INDEX idx_phb_feat_category ON rpg.phb_feat(category_id);
 CREATE INDEX idx_phb_feat_source ON rpg.phb_feat(source_citation_id);
 CREATE INDEX idx_phb_feat_benefit_feat ON rpg.phb_feat_benefit(feat_id);
+CREATE INDEX idx_phb_subclass_class ON rpg.phb_subclass(class_id);
+CREATE INDEX idx_phb_subclass_source ON rpg.phb_subclass(source_citation_id);
+CREATE INDEX idx_phb_subclass_feature_sub ON rpg.phb_subclass_feature(subclass_id);
+CREATE INDEX idx_subclass_prep_spell ON rpg.phb_subclass_prepared_spell(subclass_id);
 CREATE INDEX idx_phb_spell_school ON rpg.phb_spell(school_id);
 CREATE INDEX idx_phb_spell_source ON rpg.phb_spell(source_citation_id);
 CREATE INDEX idx_phb_spell_slug ON rpg.phb_spell(slug);
@@ -817,6 +867,7 @@ CREATE INDEX idx_phb_skill_ability ON rpg.phb_skill(ability_id);
 CREATE INDEX idx_phb_class_hit_die ON rpg.phb_class(hit_die_id);
 CREATE INDEX idx_phb_class_source ON rpg.phb_class(source_citation_id);
 CREATE INDEX idx_phb_armor_category ON rpg.phb_armor(category_id);
+CREATE INDEX idx_phb_tool_category ON rpg.phb_tool(category_id);
 
 COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — catálogo v4 (BIGINT + slug)';
 COMMENT ON COLUMN rpg.phb_spell.slug IS 'Identificador canônico do JSON/API; imutável na prática';

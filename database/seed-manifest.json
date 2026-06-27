@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T23:35:55.107Z",
+  "generatedAt": "2026-06-27T23:46:34.294Z",
   "phb": {
     "alignments": 9,
     "abilities": 6,
@@ -10,6 +10,7 @@
     "spells": 391,
     "classes": 12,
     "subclasses": 48,
+    "subclassFeatures": 240,
     "species": 10,
     "backgrounds": 16,
     "sourceCitations": 4,
@@ -17,6 +18,7 @@
     "backgroundStartingItems": 81,
     "items": 158,
     "armorCategories": 4,
+    "toolCategories": 6,
     "spellClassLinks": 987,
     "subclassPreparedSpells": 186
   },

@@ -11,6 +11,7 @@ import { FEAT_CATEGORIES } from "./feat-categories.mjs";
 import { CLASS_SPELL_SLOT_PATTERN } from "./spell-slot-patterns.mjs";
 import { collectSourceCitations, sourceCitationSlug } from "./source-citations.mjs";
 import { SPELL_SCHOOL_SLUG_BY_NAME, SPELL_SCHOOLS } from "./spell-schools.mjs";
+import { TOOL_CATEGORIES, toolCategorySlug } from "./tool-categories.mjs";
 
 const ABILITY_PT = {
   Força: "forca",
@@ -105,9 +106,30 @@ export function loadPhbCatalog(root) {
     sourceCitationSlug: sourceCitationSlug(c.source),
     spellSlotPatternSlug: CLASS_SPELL_SLOT_PATTERN[c.id] ?? null,
   }));
-  const subclasses = index.classes.flatMap(({ subclasses: subs }) =>
+  const subclassesRaw = index.classes.flatMap(({ subclasses: subs }) =>
     subs.map(({ file }) => readJson(path.join(phb, file)))
   );
+  const subclasses = subclassesRaw.map((s) => ({
+    id: s.id,
+    classId: s.classId,
+    name: s.name,
+    tagline: s.tagline ?? null,
+    summary: s.summary ?? null,
+    description: s.description ?? null,
+    sourceCitationSlug: sourceCitationSlug(s.source),
+  }));
+
+  const subclassFeatures = [];
+  for (const sub of subclassesRaw) {
+    for (const feat of sub.features ?? []) {
+      subclassFeatures.push({
+        subclassId: sub.id,
+        level: feat.level,
+        name: feat.name,
+        description: feat.description,
+      });
+    }
+  }
 
   const speciesIndex = readJson(path.join(phb, "species/index.json"));
   const species = speciesIndex.species.map(({ file }) =>
@@ -178,7 +200,7 @@ export function loadPhbCatalog(root) {
   }
 
   const subclassPreparedSpells = [];
-  for (const sub of subclasses) {
+  for (const sub of subclassesRaw) {
     if (sub.preparedSpellsByLevel) {
       for (const [lvl, spellIds] of Object.entries(sub.preparedSpellsByLevel)) {
         for (const spellId of spellIds) {
@@ -270,9 +292,16 @@ export function loadPhbCatalog(root) {
       name: t.name,
       cost: t.cost ? { text: t.cost } : null,
       weight: t.weight ?? null,
-      description: t.useDescription ?? t.description ?? null,
-      properties: { category: t.category },
-      tool: { category: t.category, useDescription: t.useDescription ?? t.description ?? null },
+      description: t.useObject ?? t.description ?? null,
+      properties: {
+        attribute: t.attribute ?? null,
+        crafting: t.crafting ?? null,
+        variants: t.variants ?? null,
+      },
+      tool: {
+        categoryId: toolCategorySlug(t.id),
+        useDescription: t.useObject ?? null,
+      },
     });
   }
 
@@ -382,7 +411,13 @@ export function loadPhbCatalog(root) {
     };
   });
 
-  const sourceCitations = collectSourceCitations(backgrounds, classesRaw, featsRaw, spellsRaw);
+  const sourceCitations = collectSourceCitations(
+    backgrounds,
+    classesRaw,
+    featsRaw,
+    spellsRaw,
+    subclassesRaw
+  );
 
   const classSavingThrows = [];
   for (const cls of classes) {
@@ -410,6 +445,7 @@ export function loadPhbCatalog(root) {
     classSpellcasting: classCatalog.classSpellcasting,
     weaponProfTerms: classCatalog.weaponProfTerms,
     subclasses,
+    subclassFeatures,
     species,
     backgrounds: backgroundsNorm,
     backgroundSkills,
@@ -420,6 +456,7 @@ export function loadPhbCatalog(root) {
     classSavingThrows,
     items,
     armorCategories,
+    toolCategories: TOOL_CATEGORIES,
     weaponProperties,
     fightingStyles,
     characterLevels,
@@ -440,6 +477,7 @@ export function loadPhbCatalog(root) {
       spells: spells.length,
       classes: classes.length,
       subclasses: subclasses.length,
+      subclassFeatures: subclassFeatures.length,
       species: species.length,
       backgrounds: backgrounds.length,
       sourceCitations: sourceCitations.length,
@@ -447,6 +485,7 @@ export function loadPhbCatalog(root) {
       backgroundStartingItems: backgroundStartingItems.length,
       items: items.length,
       armorCategories: armorCategories.length,
+      toolCategories: TOOL_CATEGORIES.length,
       spellClassLinks: spellClassLinks.length,
       subclassPreparedSpells: subclassPreparedSpells.length,
     },

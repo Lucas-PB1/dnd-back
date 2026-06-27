@@ -33,6 +33,7 @@ const REQUIRED_TABLES = [
   "phb_class_skill_pool",
   "phb_spell_class",
   "phb_subclass",
+  "phb_subclass_feature",
   "phb_subclass_prepared_spell",
   "phb_species",
   "phb_species_trait",
@@ -55,6 +56,7 @@ const REQUIRED_TABLES = [
   "phb_weapon",
   "phb_armor_category",
   "phb_armor",
+  "phb_tool_category",
   "phb_tool",
   "phb_character_level",
   "phb_ability_generation_method",
@@ -79,12 +81,17 @@ const FORBIDDEN = [
   /phb_feat[\s\S]{0,300}benefits JSONB/i,
   /phb_feat[\s\S]{0,300}source_meta JSONB/i,
   /phb_feat[\s\S]{0,200}category TEXT/i,
+  /CREATE TABLE rpg\.phb_tool[\s\S]{0,200}\bcategory TEXT/i,
   /phb_class_option_def/i,
   /phb_class_option_value/i,
   /phb_species_trait[\s\S]{0,200}trait_table JSONB/i,
   /phb_spell[\s\S]{0,400}components JSONB/i,
   /phb_spell[\s\S]{0,300}source_meta JSONB/i,
   /phb_spell[\s\S]{0,250}\bschool TEXT/i,
+  /CREATE TABLE rpg\.phb_subclass[\s\S]{0,300}source_meta JSONB/i,
+  /CREATE TABLE rpg\.phb_subclass[\s\S]{0,300}prepared_spells_by_level JSONB/i,
+  /CREATE TABLE rpg\.phb_subclass[\s\S]{0,200}prepared_spell_source_key/i,
+  /CREATE TABLE rpg\.phb_subclass_prepared_spell[\s\S]{0,200}terrain_slug TEXT/i,
 ];
 
 const REQUIRED_PATTERNS = [
@@ -107,7 +114,10 @@ const REQUIRED_PATTERNS = [
   [/v_phb_class_skill_choice/i, "view v_phb_class_skill_choice"],
   [/phb_feat_benefit/i, "benefícios de talento normalizados"],
   [/phb_divine_order/i, "ordem divina do clérigo"],
+  [/v_phb_subclass/i, "view v_phb_subclass"],
   [/v_phb_spell/i, "view v_phb_spell"],
+  [/phb_subclass_feature/i, "características de subclasse normalizadas"],
+  [/v_phb_subclass_prepared_spell/i, "view v_phb_subclass_prepared_spell"],
   [/phb_spell_school/i, "escolas de magia normalizadas"],
   [/school_id/i, "FK escola de magia"],
   [/phb_elf_lineage/i, "linhagens élficas normalizadas"],
@@ -151,6 +161,6 @@ if (errors) {
 }
 
 console.log(
-  `✓ PostgreSQL v4 — ${REQUIRED_TABLES.length} tabelas catálogo, BIGINT+slug, 10 views`
+  `✓ PostgreSQL v4 — ${REQUIRED_TABLES.length} tabelas catálogo, BIGINT+slug, 12 views`
 );
 process.exit(0);

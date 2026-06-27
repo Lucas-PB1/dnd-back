@@ -48,6 +48,7 @@ lines.push(`BEGIN;`);
 lines.push(`
 TRUNCATE TABLE
   rpg.phb_subclass_prepared_spell,
+  rpg.phb_subclass_feature,
   rpg.phb_spell_class,
   rpg.phb_class_skill_pool,
   rpg.phb_class_feature,
@@ -69,6 +70,7 @@ TRUNCATE TABLE
   rpg.phb_elf_lineage,
   rpg.phb_tool,
   rpg.phb_armor,
+  rpg.phb_tool_category,
   rpg.phb_armor_category,
   rpg.phb_weapon,
   rpg.phb_weapon_property_link,
@@ -187,6 +189,19 @@ lines.push(
       slug: sqlStr(c.id),
       name: sqlStr(c.name),
       don_doff: sqlStr(c.donDoff ?? null),
+      sort_order: String(c.sortOrder ?? 0),
+    }))
+  )
+);
+
+// tool categories (antes de phb_tool)
+lines.push(
+  batchInsert(
+    "rpg.phb_tool_category",
+    ["slug", "name", "sort_order"],
+    catalog.toolCategories.map((c) => ({
+      slug: sqlStr(c.slug),
+      name: sqlStr(c.name),
       sort_order: String(c.sortOrder ?? 0),
     }))
   )
@@ -514,22 +529,24 @@ lines.push(
   )
 );
 
+// terrenos druida (FK em magias preparadas por subclasse)
+lines.push(
+  batchInsert(
+    "rpg.phb_druid_land_terrain",
+    ["slug", "label"],
+    buildDruidLandTerrains().map((t) => ({
+      slug: sqlStr(t.id),
+      label: sqlStr(t.label),
+    })),
+    { conflict: "(slug)" }
+  )
+);
+
 // subclasses
 lines.push(
   batchInsert(
     "rpg.phb_subclass",
-    [
-      "slug",
-      "class_id",
-      "name",
-      "tagline",
-      "summary",
-      "description",
-      "prepared_spell_source_key",
-      "prepared_spells_by_level",
-      "prepared_spells_by_terrain",
-      "source_meta",
-    ],
+    ["slug", "class_id", "name", "tagline", "summary", "description", "source_citation_id"],
     catalog.subclasses.map((s) => ({
       slug: sqlStr(s.id),
       class_id: sqlRef("phb_class", s.classId),
@@ -537,26 +554,31 @@ lines.push(
       tagline: sqlStr(s.tagline ?? null),
       summary: sqlStr(s.summary ?? null),
       description: sqlStr(s.description ?? null),
-      prepared_spell_source_key: sqlStr(s.preparedSpellSourceKey ?? null),
-      prepared_spells_by_level: sqlJson(s.preparedSpellsByLevel ?? null),
-      prepared_spells_by_terrain: sqlJson(s.preparedSpellsByTerrain ?? null),
-      source_meta: sqlJson(s.source ?? null),
+      source_citation_id: s.sourceCitationSlug
+        ? sqlRef("phb_source_citation", s.sourceCitationSlug)
+        : "NULL",
     }))
   )
 );
+
+for (const f of catalog.subclassFeatures) {
+  lines.push(
+    `INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES (${sqlRef("phb_subclass", f.subclassId)}, ${sqlInt(f.level)}, ${sqlStr(f.name)}, ${sqlStr(f.description)}) ON CONFLICT (subclass_id, level, name) DO NOTHING;`
+  );
+}
 
 // subclass prepared spells
 lines.push(
   batchInsert(
     "rpg.phb_subclass_prepared_spell",
-    ["subclass_id", "unlock_level", "spell_id", "terrain_slug"],
+    ["subclass_id", "unlock_level", "spell_id", "terrain_id"],
     catalog.subclassPreparedSpells.map((r) => ({
       subclass_id: sqlRef("phb_subclass", r.subclassId),
       unlock_level: sqlInt(r.unlockLevel),
       spell_id: sqlRef("phb_spell", r.spellId),
-      terrain_slug: sqlStr(r.terrainId ?? ""),
+      terrain_id: r.terrainId ? sqlRef("phb_druid_land_terrain", r.terrainId) : "NULL",
     })),
-    { conflict: "(subclass_id, unlock_level, spell_id, terrain_slug)" }
+    { conflict: "ON CONSTRAINT uq_subclass_prepared_spell" }
   )
 );
 
@@ -665,7 +687,7 @@ for (const i of catalog.items.filter((x) => x.armor)) {
 for (const i of catalog.items.filter((x) => x.tool)) {
   const t = i.tool;
   lines.push(
-    `INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES (${sqlRef("phb_item", i.id)}, ${sqlStr(t.category)}, ${sqlStr(t.useDescription)}) ON CONFLICT (item_id) DO NOTHING;`
+    `INSERT INTO rpg.phb_tool (item_id, category_id, use_description) VALUES (${sqlRef("phb_item", i.id)}, ${sqlRef("phb_tool_category", t.categoryId)}, ${sqlStr(t.useDescription)}) ON CONFLICT (item_id) DO NOTHING;`
   );
 }
 
@@ -838,14 +860,6 @@ lines.push(
     "rpg.phb_background_boost_option",
     ["slug", "label"],
     v3.backgroundBoosts.map((b) => ({ slug: sqlStr(b.id), label: sqlStr(b.label) }))
-  )
-);
-
-lines.push(
-  batchInsert(
-    "rpg.phb_druid_land_terrain",
-    ["slug", "label"],
-    v3.terrains.map((t) => ({ slug: sqlStr(t.id), label: sqlStr(t.label) }))
   )
 );
 
