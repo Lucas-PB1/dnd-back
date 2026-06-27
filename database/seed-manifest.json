@@ -1,29 +1,26 @@
 {
-  "generatedAt": "2026-06-27T21:15:01.210Z",
+  "generatedAt": "2026-06-27T23:03:23.292Z",
   "phb": {
     "alignments": 9,
+    "abilities": 6,
     "languages": 19,
     "skills": 18,
     "feats": 75,
+    "featBenefits": 190,
     "spells": 391,
     "classes": 12,
     "subclasses": 48,
     "species": 10,
     "backgrounds": 16,
+    "sourceCitations": 3,
+    "backgroundStartingPackages": 16,
+    "backgroundStartingItems": 81,
     "items": 158,
     "armorCategories": 4,
     "spellClassLinks": 987,
     "subclassPreparedSpells": 186
   },
   "files": {
-    "seedPhb": "database\\seed-phb.sql",
-    "seedCharacters": "database\\seed-characters.sql"
-  },
-  "characters": {
-    "count": 298,
-    "languages": 894,
-    "skills": 1584,
-    "spellLists": 3901,
-    "resources": 360
+    "seedPhb": "database\\seed-phb.sql"
   }
 }

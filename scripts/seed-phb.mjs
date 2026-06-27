@@ -6,14 +6,21 @@ import path from "path";
 import { fileURLToPath } from "url";
 import {
   batchInsert,
-  sqlAbilityArray,
   sqlBool,
   sqlInt,
+  sqlIntArray,
   sqlJson,
+  sqlBackgroundPackageRef,
+  sqlClassPackageRef,
+  sqlRef,
   sqlStr,
   sqlTextArray,
+  sqlTimestamp,
 } from "./lib/sql-escape.mjs";
-import { loadPhbCatalog } from "./lib/phb-loader.mjs";
+import {
+  buildSpellSlotByLevelRows,
+  SPELL_SLOT_PATTERNS,
+} from "./lib/spell-slot-patterns.mjs";
 import {
   buildAbilityGenerationMethods,
   buildBackgroundBoostOptions,
@@ -26,6 +33,7 @@ import {
   buildSpeciesOptionValues,
   buildSpellSources,
 } from "./lib/catalog-definitions.mjs";
+import { loadPhbCatalog } from "./lib/phb-loader.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -35,51 +43,53 @@ const manifestFile = path.join(root, "database", "seed-manifest.json");
 const catalog = loadPhbCatalog(root);
 const lines = [];
 
-lines.push(`-- PHB seed — PostgreSQL v3`);
+lines.push(`-- PHB seed — PostgreSQL v4 (slug → id interno)`);
 lines.push(`-- Gerado por: npm run generate:seed-phb`);
 lines.push(`BEGIN;`);
-lines.push(`SELECT set_config('rpg.skip_sync', '1', true);`);
 lines.push(`
--- Limpa catálogo (personagens devem ser reimportados depois)
 TRUNCATE TABLE
-  rpg.player_character_class_option,
-  rpg.player_character_species_option,
-  rpg.player_character_resource,
-  rpg.player_character_spell_slot,
-  rpg.player_character_spell_list,
-  rpg.player_character_expertise,
-  rpg.player_character_weapon_mastery,
-  rpg.player_character_equipment,
-  rpg.player_character_feat,
-  rpg.player_character_saving_throw,
-  rpg.player_character_skill,
-  rpg.player_character_language,
-  rpg.player_character,
   rpg.phb_subclass_prepared_spell,
   rpg.phb_spell_class,
   rpg.phb_class_skill_pool,
   rpg.phb_class_feature,
+  rpg.phb_class_starting_item,
+  rpg.phb_class_starting_package,
+  rpg.phb_class_spellcasting,
+  rpg.phb_class_weapon_proficiency,
+  rpg.phb_class_armor_training,
+  rpg.phb_class_primary_ability,
+  rpg.phb_class_saving_throw,
   rpg.phb_class_progression,
+  rpg.phb_background_starting_item,
+  rpg.phb_background_starting_package,
+  rpg.phb_background_ability_option,
   rpg.phb_background_skill,
   rpg.phb_species_trait,
   rpg.phb_tool,
   rpg.phb_armor,
   rpg.phb_armor_category,
   rpg.phb_weapon,
+  rpg.phb_weapon_property_link,
   rpg.phb_item,
   rpg.phb_subclass,
   rpg.phb_class,
+  rpg.phb_spell_slot_by_level,
+  rpg.phb_spell_slot_pattern,
   rpg.phb_background,
   rpg.phb_species,
   rpg.phb_spell,
+  rpg.phb_feat_benefit,
   rpg.phb_feat,
+  rpg.phb_feat_category,
   rpg.phb_weapon_property,
   rpg.phb_fighting_style,
   rpg.phb_skill,
+  rpg.phb_ability,
   rpg.phb_language,
   rpg.phb_alignment,
+  rpg.phb_source_citation,
+  rpg.phb_weapon_proficiency,
   rpg.phb_class_fighting_style,
-  rpg.phb_weapon_property_link,
   rpg.phb_class_option_value,
   rpg.phb_class_option_def,
   rpg.phb_species_option_value,
@@ -90,19 +100,32 @@ TRUNCATE TABLE
   rpg.phb_background_boost_option,
   rpg.phb_ability_generation_method,
   rpg.phb_character_level
-CASCADE;
+RESTART IDENTITY CASCADE;
 `);
 
 // alignments
 lines.push(
   batchInsert(
     "rpg.phb_alignment",
-    ["id", "name", "abbreviation", "description"],
+    ["slug", "name", "abbreviation", "description"],
     catalog.alignments.map((a) => ({
-      id: sqlStr(a.id),
+      slug: sqlStr(a.id),
       name: sqlStr(a.name),
       abbreviation: sqlStr(a.abbreviation ?? null),
       description: sqlStr(a.description ?? null),
+    }))
+  )
+);
+
+// abilities (antes de perícias e classes)
+lines.push(
+  batchInsert(
+    "rpg.phb_ability",
+    ["slug", "name", "sort_order"],
+    catalog.abilities.map((a) => ({
+      slug: sqlStr(a.id),
+      name: sqlStr(a.name),
+      sort_order: String(a.sortOrder ?? 0),
     }))
   )
 );
@@ -111,9 +134,9 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_language",
-    ["id", "name", "script", "typical_speakers", "is_rare"],
+    ["slug", "name", "script", "typical_speakers", "is_rare"],
     catalog.languages.map((l) => ({
-      id: sqlStr(l.id),
+      slug: sqlStr(l.id),
       name: sqlStr(l.name),
       script: sqlStr(l.script ?? null),
       typical_speakers: sqlStr(l.origin ?? l.typicalSpeakers ?? null),
@@ -126,12 +149,43 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_skill",
-    ["id", "name", "ability_id", "description"],
+    ["slug", "name", "ability_id", "description"],
     catalog.skills.map((s) => ({
-      id: sqlStr(s.id),
+      slug: sqlStr(s.id),
       name: sqlStr(s.name),
-      ability_id: `${sqlStr(s.abilityId)}::rpg.ability_id`,
+      ability_id: sqlRef("phb_ability", s.abilityId),
       description: sqlStr(s.exampleUses ?? null),
+    }))
+  )
+);
+
+// source citations (antecedentes, classes, talentos)
+lines.push(
+  batchInsert(
+    "rpg.phb_source_citation",
+    ["slug", "edition_id", "chapter", "chapter_title", "pdf_path", "pdf_pages", "extracted_at"],
+    catalog.sourceCitations.map((c) => ({
+      slug: sqlStr(c.slug),
+      edition_id: sqlRef("phb_edition", c.editionSlug),
+      chapter: sqlInt(c.chapter),
+      chapter_title: sqlStr(c.chapterTitle),
+      pdf_path: sqlStr(c.pdfPath),
+      pdf_pages: sqlIntArray(c.pdfPages),
+      extracted_at: sqlTimestamp(c.extractedAt),
+    }))
+  )
+);
+
+// armor categories (antes de classes — FK treinamento de armadura)
+lines.push(
+  batchInsert(
+    "rpg.phb_armor_category",
+    ["slug", "name", "don_doff", "sort_order"],
+    catalog.armorCategories.map((c) => ({
+      slug: sqlStr(c.id),
+      name: sqlStr(c.name),
+      don_doff: sqlStr(c.donDoff ?? null),
+      sort_order: String(c.sortOrder ?? 0),
     }))
   )
 );
@@ -140,9 +194,9 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_fighting_style",
-    ["id", "name", "description"],
+    ["slug", "name", "description"],
     catalog.fightingStyles.map((fs) => ({
-      id: sqlStr(fs.id),
+      slug: sqlStr(fs.id),
       name: sqlStr(fs.name),
       description: sqlStr(fs.description),
     }))
@@ -153,11 +207,25 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_weapon_property",
-    ["id", "name", "description"],
+    ["slug", "name", "description"],
     catalog.weaponProperties.map((p) => ({
-      id: sqlStr(p.id),
+      slug: sqlStr(p.id),
       name: sqlStr(p.name),
       description: sqlStr(p.description),
+    }))
+  )
+);
+
+// categorias de talento
+lines.push(
+  batchInsert(
+    "rpg.phb_feat_category",
+    ["slug", "name", "type_label", "sort_order"],
+    catalog.featCategories.map((c) => ({
+      slug: sqlStr(c.slug),
+      name: sqlStr(c.name),
+      type_label: sqlStr(c.typeLabel),
+      sort_order: String(c.sortOrder),
     }))
   )
 );
@@ -166,15 +234,29 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_feat",
-    ["id", "name", "category", "repeatable", "prerequisite", "benefits", "source_meta"],
+    ["slug", "name", "category_id", "repeatable", "prerequisite", "source_citation_id"],
     catalog.feats.map((f) => ({
-      id: sqlStr(f.id),
+      slug: sqlStr(f.id),
       name: sqlStr(f.name),
-      category: sqlStr(f.category),
+      category_id: sqlRef("phb_feat_category", f.categorySlug),
       repeatable: sqlBool(f.repeatable),
       prerequisite: sqlStr(f.prerequisite ?? null),
-      benefits: sqlJson(f.benefits ?? null),
-      source_meta: sqlJson(f.source ?? null),
+      source_citation_id: f.sourceCitationSlug
+        ? sqlRef("phb_source_citation", f.sourceCitationSlug)
+        : "NULL",
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_feat_benefit",
+    ["feat_id", "sort_order", "name", "description"],
+    catalog.featBenefits.map((b) => ({
+      feat_id: sqlRef("phb_feat", b.featId),
+      sort_order: sqlInt(b.sortOrder),
+      name: sqlStr(b.name),
+      description: sqlStr(b.description),
     }))
   )
 );
@@ -184,7 +266,7 @@ lines.push(
   batchInsert(
     "rpg.phb_spell",
     [
-      "id",
+      "slug",
       "name",
       "level",
       "level_label",
@@ -200,7 +282,7 @@ lines.push(
       "source_meta",
     ],
     catalog.spells.map((s) => ({
-      id: sqlStr(s.id),
+      slug: sqlStr(s.id),
       name: sqlStr(s.name),
       level: sqlInt(s.level),
       level_label: sqlStr(s.levelLabel),
@@ -218,51 +300,136 @@ lines.push(
   )
 );
 
+// padrões de espelhos de magia (full / half / pact)
+lines.push(
+  batchInsert(
+    "rpg.phb_spell_slot_pattern",
+    ["slug", "name", "description"],
+    SPELL_SLOT_PATTERNS.map((p) => ({
+      slug: sqlStr(p.slug),
+      name: sqlStr(p.name),
+      description: sqlStr(p.description),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_spell_slot_by_level",
+    ["pattern_id", "level", "circle", "slot_count"],
+    buildSpellSlotByLevelRows().map((r) => ({
+      pattern_id: sqlRef("phb_spell_slot_pattern", r.patternSlug),
+      level: sqlInt(r.level),
+      circle: sqlInt(r.circle),
+      slot_count: sqlInt(r.slotCount),
+    }))
+  )
+);
+
 // classes
+lines.push(
+  batchInsert(
+    "rpg.phb_weapon_proficiency",
+    ["slug", "label"],
+    catalog.weaponProfTerms.map((t) => ({
+      slug: sqlStr(t.slug),
+      label: sqlStr(t.label),
+    }))
+  )
+);
+
 lines.push(
   batchInsert(
     "rpg.phb_class",
     [
-      "id",
+      "slug",
       "name",
       "tagline",
       "summary",
       "description",
-      "primary_ability",
-      "primary_ability_id",
-      "hit_die",
-      "hit_points",
-      "saving_throw_ids",
+      "primary_ability_label",
+      "primary_ability_operator",
+      "hit_die_id",
+      "hp_level1_die_value",
+      "hp_fixed_per_level",
+      "hp_minimum_gain_per_level",
+      "hp_constitution_mod_applies",
       "subclass_unlock_level",
       "subclass_label",
-      "skill_choices",
-      "armor_training",
-      "weapon_proficiencies",
-      "starting_equipment",
-      "spellcasting",
-      "source_meta",
+      "skill_choice_count",
+      "skill_choice_from",
+      "source_citation_id",
+      "spell_slot_pattern_id",
     ],
     catalog.classes.map((c) => ({
-      id: sqlStr(c.id),
+      slug: sqlStr(c.id),
       name: sqlStr(c.name),
       tagline: sqlStr(c.tagline ?? null),
       summary: sqlStr(c.summary ?? null),
       description: sqlStr(c.description ?? null),
-      primary_ability: sqlStr(c.primaryAbility ?? null),
-      primary_ability_id: c.primaryAbilityId
-        ? `${sqlStr(c.primaryAbilityId)}::rpg.ability_id`
-        : "NULL",
-      hit_die: sqlStr(c.hitDie),
-      hit_points: sqlJson(c.hitPoints ?? null),
-      saving_throw_ids: sqlAbilityArray(c.savingThrowIds),
+      primary_ability_label: sqlStr(c.primaryAbility ?? null),
+      primary_ability_operator: sqlStr(c.primaryAbilityOperator),
+      hit_die_id: sqlRef("phb_hit_die", c.hitDieSlug),
+      hp_level1_die_value: sqlInt(c.hpLevel1DieValue),
+      hp_fixed_per_level: sqlInt(c.hpFixedPerLevel),
+      hp_minimum_gain_per_level: sqlInt(c.hpMinimumGainPerLevel),
+      hp_constitution_mod_applies: sqlBool(c.hpConstitutionModApplies),
       subclass_unlock_level: sqlInt(c.subclassUnlockLevel ?? 3),
       subclass_label: sqlStr(c.subclassLabel ?? null),
-      skill_choices: sqlJson(c.skillChoices ?? null),
-      armor_training: sqlJson(c.armorTraining ?? null),
-      weapon_proficiencies: sqlJson(c.weaponProficiencies ?? null),
-      starting_equipment: sqlJson(c.startingEquipment ?? null),
-      spellcasting: sqlJson(c.spellcasting ?? null),
-      source_meta: sqlJson(c.source ?? null),
+      skill_choice_count: sqlInt(c.skillChoiceCount),
+      skill_choice_from: sqlStr(c.skillChoiceFrom),
+      source_citation_id: c.sourceCitationSlug
+        ? sqlRef("phb_source_citation", c.sourceCitationSlug)
+        : "NULL",
+      spell_slot_pattern_id: c.spellSlotPatternSlug
+        ? sqlRef("phb_spell_slot_pattern", c.spellSlotPatternSlug)
+        : "NULL",
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_class_primary_ability",
+    ["class_id", "ability_id", "sort_order"],
+    catalog.classPrimaryAbilities.map((r) => ({
+      class_id: sqlRef("phb_class", r.classId),
+      ability_id: sqlRef("phb_ability", r.abilityId),
+      sort_order: String(r.sortOrder),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_class_armor_training",
+    ["class_id", "category_id"],
+    catalog.classArmorTraining.map((r) => ({
+      class_id: sqlRef("phb_class", r.classId),
+      category_id: sqlRef("phb_armor_category", r.categorySlug),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_class_weapon_proficiency",
+    ["class_id", "proficiency_id"],
+    catalog.classWeaponProficiencies.map((r) => ({
+      class_id: sqlRef("phb_class", r.classId),
+      proficiency_id: sqlRef("phb_weapon_proficiency", r.proficiencySlug),
+    }))
+  )
+);
+
+// class saving throws
+lines.push(
+  batchInsert(
+    "rpg.phb_class_saving_throw",
+    ["class_id", "ability_id"],
+    catalog.classSavingThrows.map((r) => ({
+      class_id: sqlRef("phb_class", r.classId),
+      ability_id: sqlRef("phb_ability", r.abilityId),
     }))
   )
 );
@@ -277,16 +444,14 @@ lines.push(
       "proficiency_bonus",
       "cantrips",
       "prepared_spells",
-      "spell_slots",
       "channel_divinity",
     ],
     catalog.classProgression.map((r) => ({
-      class_id: sqlStr(r.classId),
+      class_id: sqlRef("phb_class", r.classId),
       level: sqlInt(r.level),
       proficiency_bonus: sqlInt(r.proficiencyBonus),
       cantrips: sqlInt(r.cantrips),
       prepared_spells: sqlInt(r.preparedSpells),
-      spell_slots: sqlJson(r.spellSlots),
       channel_divinity: sqlInt(r.channelDivinity),
     }))
   )
@@ -295,7 +460,7 @@ lines.push(
 // class features — insert individually (BIGSERIAL id)
 for (const f of catalog.classFeatures) {
   lines.push(
-    `INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES (${sqlStr(f.classId)}, ${sqlInt(f.level)}, ${sqlStr(f.name)}, ${sqlStr(f.description)}) ON CONFLICT (class_id, level, name) DO NOTHING;`
+    `INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES (${sqlRef("phb_class", f.classId)}, ${sqlInt(f.level)}, ${sqlStr(f.name)}, ${sqlStr(f.description)}) ON CONFLICT (class_id, level, name) DO NOTHING;`
   );
 }
 
@@ -305,8 +470,8 @@ lines.push(
     "rpg.phb_class_skill_pool",
     ["class_id", "skill_id"],
     catalog.classSkillPools.map((r) => ({
-      class_id: sqlStr(r.classId),
-      skill_id: sqlStr(r.skillId),
+      class_id: sqlRef("phb_class", r.classId),
+      skill_id: sqlRef("phb_skill", r.skillId),
     }))
   )
 );
@@ -317,8 +482,8 @@ lines.push(
     "rpg.phb_spell_class",
     ["spell_id", "class_id"],
     catalog.spellClassLinks.map((r) => ({
-      spell_id: sqlStr(r.spellId),
-      class_id: sqlStr(r.classId),
+      spell_id: sqlRef("phb_spell", r.spellId),
+      class_id: sqlRef("phb_class", r.classId),
     })),
     { conflict: "(spell_id, class_id)" }
   )
@@ -329,7 +494,7 @@ lines.push(
   batchInsert(
     "rpg.phb_subclass",
     [
-      "id",
+      "slug",
       "class_id",
       "name",
       "tagline",
@@ -341,8 +506,8 @@ lines.push(
       "source_meta",
     ],
     catalog.subclasses.map((s) => ({
-      id: sqlStr(s.id),
-      class_id: sqlStr(s.classId),
+      slug: sqlStr(s.id),
+      class_id: sqlRef("phb_class", s.classId),
       name: sqlStr(s.name),
       tagline: sqlStr(s.tagline ?? null),
       summary: sqlStr(s.summary ?? null),
@@ -359,14 +524,14 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_subclass_prepared_spell",
-    ["subclass_id", "unlock_level", "spell_id", "terrain_id"],
+    ["subclass_id", "unlock_level", "spell_id", "terrain_slug"],
     catalog.subclassPreparedSpells.map((r) => ({
-      subclass_id: sqlStr(r.subclassId),
+      subclass_id: sqlRef("phb_subclass", r.subclassId),
       unlock_level: sqlInt(r.unlockLevel),
-      spell_id: sqlStr(r.spellId),
-      terrain_id: sqlStr(r.terrainId ?? ""),
+      spell_id: sqlRef("phb_spell", r.spellId),
+      terrain_slug: sqlStr(r.terrainId ?? ""),
     })),
-    { conflict: "(subclass_id, unlock_level, spell_id, terrain_id)" }
+    { conflict: "(subclass_id, unlock_level, spell_id, terrain_slug)" }
   )
 );
 
@@ -374,9 +539,9 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_species",
-    ["id", "name", "creature_type", "size", "speed", "description", "source_meta"],
+    ["slug", "name", "creature_type", "size", "speed", "description", "source_meta"],
     catalog.species.map((s) => ({
-      id: sqlStr(s.id),
+      slug: sqlStr(s.id),
       name: sqlStr(s.name),
       creature_type: sqlStr(s.creatureType),
       size: sqlStr(s.size),
@@ -390,59 +555,17 @@ lines.push(
 // species traits
 for (const t of catalog.speciesTraits) {
   lines.push(
-    `INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES (${sqlStr(t.speciesId)}, ${sqlStr(t.name)}, ${sqlStr(t.description)}, ${sqlJson(t.traitTable)}) ON CONFLICT (species_id, name) DO NOTHING;`
+    `INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES (${sqlRef("phb_species", t.speciesId)}, ${sqlStr(t.name)}, ${sqlStr(t.description)}, ${sqlJson(t.traitTable)}) ON CONFLICT (species_id, name) DO NOTHING;`
   );
 }
-
-// backgrounds
-lines.push(
-  batchInsert(
-    "rpg.phb_background",
-    ["id", "name", "description", "feat_id", "ability_options", "equipment", "source_meta"],
-    catalog.backgrounds.map((b) => ({
-      id: sqlStr(b.id),
-      name: sqlStr(b.name),
-      description: sqlStr(b.description ?? null),
-      feat_id: sqlStr(b.featId),
-      ability_options: sqlAbilityArray(b.abilityOptions),
-      equipment: sqlJson(b.equipment ?? null),
-      source_meta: sqlJson(b.source ?? null),
-    }))
-  )
-);
-
-lines.push(
-  batchInsert(
-    "rpg.phb_background_skill",
-    ["background_id", "skill_id"],
-    catalog.backgroundSkills.map((r) => ({
-      background_id: sqlStr(r.backgroundId),
-      skill_id: sqlStr(r.skillId),
-    }))
-  )
-);
-
-// armor categories (rules.json)
-lines.push(
-  batchInsert(
-    "rpg.phb_armor_category",
-    ["id", "name", "don_doff", "sort_order"],
-    catalog.armorCategories.map((c) => ({
-      id: sqlStr(c.id),
-      name: sqlStr(c.name),
-      don_doff: sqlStr(c.donDoff ?? null),
-      sort_order: String(c.sortOrder ?? 0),
-    }))
-  )
-);
 
 // items
 lines.push(
   batchInsert(
     "rpg.phb_item",
-    ["id", "item_type", "name", "cost", "weight", "description", "properties"],
+    ["slug", "item_type", "name", "cost", "weight", "description", "properties"],
     catalog.items.map((i) => ({
-      id: sqlStr(i.id),
+      slug: sqlStr(i.id),
       item_type: `${sqlStr(i.itemType)}::rpg.item_type`,
       name: sqlStr(i.name),
       cost: sqlJson(i.cost),
@@ -456,11 +579,11 @@ lines.push(
 for (const i of catalog.items.filter((x) => x.weapon)) {
   const w = i.weapon;
   lines.push(
-    `INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES (${sqlStr(i.id)}, ${sqlStr(w.category)}, ${sqlStr(w.damage)}, ${sqlStr(w.damageType)}, ${sqlTextArray(w.propertyIds)}, ${sqlStr(w.masteryId)}) ON CONFLICT (item_id) DO NOTHING;`
+    `INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES (${sqlRef("phb_item", i.id)}, ${sqlStr(w.category)}, ${sqlStr(w.damage)}, ${sqlStr(w.damageType)}, ${sqlTextArray(w.propertyIds)}, ${sqlStr(w.masteryId)}) ON CONFLICT (item_id) DO NOTHING;`
   );
   for (const pid of w.propertyIds ?? []) {
     lines.push(
-      `INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES (${sqlStr(i.id)}, ${sqlStr(pid)}) ON CONFLICT DO NOTHING;`
+      `INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES (${sqlRef("phb_item", i.id)}, ${sqlRef("phb_weapon_property", pid)}) ON CONFLICT DO NOTHING;`
     );
   }
 }
@@ -468,16 +591,142 @@ for (const i of catalog.items.filter((x) => x.weapon)) {
 for (const i of catalog.items.filter((x) => x.armor)) {
   const a = i.armor;
   lines.push(
-    `INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES (${sqlStr(i.id)}, ${sqlStr(a.categoryId)}, ${sqlInt(a.acBase)}, ${sqlStr(a.acFormula)}, ${sqlInt(a.strengthReq)}, ${sqlBool(a.stealthDisadvantage)}) ON CONFLICT (item_id) DO NOTHING;`
+    `INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES (${sqlRef("phb_item", i.id)}, ${sqlRef("phb_armor_category", a.categoryId)}, ${sqlInt(a.acBase)}, ${sqlStr(a.acFormula)}, ${sqlInt(a.strengthReq)}, ${sqlBool(a.stealthDisadvantage)}) ON CONFLICT (item_id) DO NOTHING;`
   );
 }
 
 for (const i of catalog.items.filter((x) => x.tool)) {
   const t = i.tool;
   lines.push(
-    `INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES (${sqlStr(i.id)}, ${sqlStr(t.category)}, ${sqlStr(t.useDescription)}) ON CONFLICT (item_id) DO NOTHING;`
+    `INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES (${sqlRef("phb_item", i.id)}, ${sqlStr(t.category)}, ${sqlStr(t.useDescription)}) ON CONFLICT (item_id) DO NOTHING;`
   );
 }
+
+// backgrounds (FK em itens e citação de origem)
+lines.push(
+  batchInsert(
+    "rpg.phb_background",
+    [
+      "slug",
+      "name",
+      "description",
+      "feat_id",
+      "source_citation_id",
+      "equipment_gold_option",
+      "tool_proficiency_description",
+      "tool_proficiency_kind",
+      "tool_item_id",
+    ],
+    catalog.backgrounds.map((b) => ({
+      slug: sqlStr(b.id),
+      name: sqlStr(b.name),
+      description: sqlStr(b.description ?? null),
+      feat_id: sqlRef("phb_feat", b.featId),
+      source_citation_id: b.sourceCitationSlug
+        ? sqlRef("phb_source_citation", b.sourceCitationSlug)
+        : "NULL",
+      equipment_gold_option: sqlInt(b.equipmentGoldOption),
+      tool_proficiency_description: sqlStr(b.toolProficiencyDescription),
+      tool_proficiency_kind: sqlStr(b.toolProficiencyKind),
+      tool_item_id: b.toolItemId ? sqlRef("phb_item", b.toolItemId) : "NULL",
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_background_ability_option",
+    ["background_id", "ability_id", "sort_order"],
+    catalog.backgroundAbilityOptions.map((r) => ({
+      background_id: sqlRef("phb_background", r.backgroundId),
+      ability_id: sqlRef("phb_ability", r.abilityId),
+      sort_order: String(r.sortOrder),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_background_skill",
+    ["background_id", "skill_id"],
+    catalog.backgroundSkills.map((r) => ({
+      background_id: sqlRef("phb_background", r.backgroundId),
+      skill_id: sqlRef("phb_skill", r.skillId),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_background_starting_package",
+    ["background_id", "slug", "label", "gold", "sort_order"],
+    catalog.backgroundStartingPackages.map((r) => ({
+      background_id: sqlRef("phb_background", r.backgroundId),
+      slug: sqlStr(r.packageSlug),
+      label: sqlStr(r.label),
+      gold: sqlInt(r.gold),
+      sort_order: String(r.sortOrder),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_background_starting_item",
+    ["package_id", "item_id", "choice_text", "quantity", "sort_order"],
+    catalog.backgroundStartingItems.map((r) => ({
+      package_id: sqlBackgroundPackageRef(r.backgroundId, r.packageSlug),
+      item_id: r.itemId ? sqlRef("phb_item", r.itemId) : "NULL",
+      choice_text: sqlStr(r.choiceText),
+      quantity: sqlInt(r.quantity),
+      sort_order: String(r.sortOrder),
+    }))
+  )
+);
+
+// classe — conjuração e equipamento inicial (FK em itens)
+lines.push(
+  batchInsert(
+    "rpg.phb_class_spellcasting",
+    ["class_id", "casting_type", "ability_id", "focus_label", "focus_item_id", "ritual"],
+    catalog.classSpellcasting.map((r) => ({
+      class_id: sqlRef("phb_class", r.classId),
+      casting_type: sqlStr(r.castingType),
+      ability_id: r.abilityId ? sqlRef("phb_ability", r.abilityId) : "NULL",
+      focus_label: sqlStr(r.focusLabel),
+      focus_item_id: r.focusItemId ? sqlRef("phb_item", r.focusItemId) : "NULL",
+      ritual: sqlBool(r.ritual),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_class_starting_package",
+    ["class_id", "slug", "label", "sort_order"],
+    catalog.classStartingPackages.map((r) => ({
+      class_id: sqlRef("phb_class", r.classId),
+      slug: sqlStr(r.packageSlug),
+      label: sqlStr(r.label),
+      sort_order: String(r.sortOrder),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_class_starting_item",
+    ["package_id", "item_id", "choice_text", "gold_amount", "quantity", "sort_order"],
+    catalog.classStartingItems.map((r) => ({
+      package_id: sqlClassPackageRef(r.classId, r.packageSlug),
+      item_id: r.itemId ? sqlRef("phb_item", r.itemId) : "NULL",
+      choice_text: sqlStr(r.choiceText),
+      gold_amount: sqlInt(r.goldAmount),
+      quantity: sqlInt(r.quantity),
+      sort_order: String(r.sortOrder),
+    }))
+  )
+);
 
 // character levels
 lines.push(
@@ -509,9 +758,9 @@ const v3 = {
 lines.push(
   batchInsert(
     "rpg.phb_ability_generation_method",
-    ["id", "name", "description"],
+    ["slug", "name", "description"],
     v3.abilityMethods.map((m) => ({
-      id: sqlStr(m.id),
+      slug: sqlStr(m.id),
       name: sqlStr(m.name),
       description: sqlStr(m.description),
     }))
@@ -521,29 +770,29 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_background_boost_option",
-    ["id", "label"],
-    v3.backgroundBoosts.map((b) => ({ id: sqlStr(b.id), label: sqlStr(b.label) }))
+    ["slug", "label"],
+    v3.backgroundBoosts.map((b) => ({ slug: sqlStr(b.id), label: sqlStr(b.label) }))
   )
 );
 
 lines.push(
   batchInsert(
     "rpg.phb_druid_land_terrain",
-    ["id", "label"],
-    v3.terrains.map((t) => ({ id: sqlStr(t.id), label: sqlStr(t.label) }))
+    ["slug", "label"],
+    v3.terrains.map((t) => ({ slug: sqlStr(t.id), label: sqlStr(t.label) }))
   )
 );
 
 lines.push(
   batchInsert(
     "rpg.phb_resource_definition",
-    ["id", "name", "scope", "species_id", "class_id", "min_level"],
+    ["slug", "name", "scope", "species_id", "class_id", "min_level"],
     v3.resources.map((r) => ({
-      id: sqlStr(r.id),
+      slug: sqlStr(r.id),
       name: sqlStr(r.name),
       scope: `${sqlStr(r.scope)}::rpg.resource_scope`,
-      species_id: r.speciesId ? sqlStr(r.speciesId) : "NULL",
-      class_id: r.classId ? sqlStr(r.classId) : "NULL",
+      species_id: r.speciesId ? sqlRef("phb_species", r.speciesId) : "NULL",
+      class_id: r.classId ? sqlRef("phb_class", r.classId) : "NULL",
       min_level: sqlInt(r.minLevel),
     }))
   )
@@ -552,15 +801,15 @@ lines.push(
 lines.push(
   batchInsert(
     "rpg.phb_spell_source",
-    ["id", "label", "origin_type", "class_id", "subclass_id", "species_id", "feat_id"],
+    ["slug", "label", "origin_type", "class_id", "subclass_id", "species_id", "feat_id"],
     v3.spellSources.map((s) => ({
-      id: sqlStr(s.id),
+      slug: sqlStr(s.id),
       label: sqlStr(s.label),
       origin_type: `${sqlStr(s.originType)}::rpg.spell_source_origin`,
-      class_id: s.classId ? sqlStr(s.classId) : "NULL",
-      subclass_id: s.subclassId ? sqlStr(s.subclassId) : "NULL",
-      species_id: s.speciesId ? sqlStr(s.speciesId) : "NULL",
-      feat_id: s.featId ? sqlStr(s.featId) : "NULL",
+      class_id: s.classId ? sqlRef("phb_class", s.classId) : "NULL",
+      subclass_id: s.subclassId ? sqlRef("phb_subclass", s.subclassId) : "NULL",
+      species_id: s.speciesId ? sqlRef("phb_species", s.speciesId) : "NULL",
+      feat_id: s.featId ? sqlRef("phb_feat", s.featId) : "NULL",
     }))
   )
 );
@@ -570,7 +819,7 @@ lines.push(
     "rpg.phb_species_option_def",
     ["species_id", "option_key", "value_type"],
     v3.speciesOptionDefs.map((d) => ({
-      species_id: sqlStr(d.speciesId),
+      species_id: sqlRef("phb_species", d.speciesId),
       option_key: sqlStr(d.optionKey),
       value_type: `${sqlStr(d.valueType)}::rpg.option_value_type`,
     }))
@@ -582,7 +831,7 @@ lines.push(
     "rpg.phb_species_option_value",
     ["species_id", "option_key", "value_id", "label"],
     v3.speciesOptionValues.map((v) => ({
-      species_id: sqlStr(v.speciesId),
+      species_id: sqlRef("phb_species", v.speciesId),
       option_key: sqlStr(v.optionKey),
       value_id: sqlStr(v.valueId),
       label: sqlStr(v.label),
@@ -595,7 +844,7 @@ lines.push(
     "rpg.phb_class_option_def",
     ["class_id", "option_key", "value_type"],
     v3.classOptionDefs.map((d) => ({
-      class_id: sqlStr(d.classId),
+      class_id: sqlRef("phb_class", d.classId),
       option_key: sqlStr(d.optionKey),
       value_type: `${sqlStr(d.valueType)}::rpg.option_value_type`,
     }))
@@ -607,7 +856,7 @@ lines.push(
     "rpg.phb_class_option_value",
     ["class_id", "option_key", "value_id", "label"],
     v3.classOptionValues.map((v) => ({
-      class_id: sqlStr(v.classId),
+      class_id: sqlRef("phb_class", v.classId),
       option_key: sqlStr(v.optionKey),
       value_id: sqlStr(v.valueId),
       label: sqlStr(v.label),
@@ -620,13 +869,12 @@ lines.push(
     "rpg.phb_class_fighting_style",
     ["class_id", "fighting_style_id"],
     v3.classFightingStyles.map((r) => ({
-      class_id: sqlStr(r.classId),
-      fighting_style_id: sqlStr(r.fightingStyleId),
+      class_id: sqlRef("phb_class", r.classId),
+      fighting_style_id: sqlRef("phb_fighting_style", r.fightingStyleId),
     }))
   )
 );
 
-lines.push("SELECT set_config('rpg.skip_sync', '0', true);");
 lines.push("COMMIT;");
 
 const sql = `${lines.filter(Boolean).join("\n\n")}\n`;

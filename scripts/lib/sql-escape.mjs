@@ -27,9 +27,34 @@ export function sqlTextArray(values) {
   return `ARRAY[${values.map(sqlStr).join(", ")}]::text[]`;
 }
 
-export function sqlAbilityArray(values) {
+export function sqlIntArray(values) {
   if (!values?.length) return "NULL";
-  return `ARRAY[${values.map((v) => `${sqlStr(v)}::rpg.ability_id`).join(", ")}]`;
+  return `ARRAY[${values.map((v) => sqlInt(v)).join(", ")}]::integer[]`;
+}
+
+export function sqlTimestamp(value) {
+  if (value === null || value === undefined) return "NULL";
+  return `${sqlStr(value)}::timestamptz`;
+}
+
+/** Subquery: id interno a partir do slug canônico (JSON/API). */
+export function sqlRef(table, slug) {
+  if (slug === null || slug === undefined || slug === "") return "NULL";
+  return `(SELECT id FROM rpg.${table} WHERE slug = ${sqlStr(slug)})`;
+}
+
+/** Pacote de equipamento inicial da classe. */
+export function sqlClassPackageRef(classSlug, packageSlug) {
+  return `(SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = ${sqlStr(classSlug)} AND p.slug = ${sqlStr(packageSlug)})`;
+}
+
+/** Pacote de equipamento inicial do antecedente. */
+export function sqlBackgroundPackageRef(backgroundSlug, packageSlug) {
+  return `(SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = ${sqlStr(backgroundSlug)} AND p.slug = ${sqlStr(packageSlug)})`;
 }
 
 /** Gera INSERT em lote com ON CONFLICT opcional. */

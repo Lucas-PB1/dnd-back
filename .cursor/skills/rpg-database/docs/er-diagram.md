@@ -1,6 +1,6 @@
-# Diagrama ER — PostgreSQL v3
+# Diagrama ER — PostgreSQL v4
 
-Schema: `rpg` | Classe única | Híbrido: `sheet` JSONB + projeções com FKs tipadas
+Schema: `rpg` | Catálogo PHB com **id BIGINT** + **slug** (JSON/API) | Personagens: fora do schema (redesign pendente)
 
 ## Visão em camadas
 

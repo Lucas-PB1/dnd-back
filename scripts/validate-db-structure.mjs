@@ -1,5 +1,5 @@
 /**
- * Valida database/schema.sql — PostgreSQL v3.
+ * Valida database/schema.sql — PostgreSQL v4 (catálogo BIGINT + slug).
  */
 import fs from "fs";
 import path from "path";
@@ -11,13 +11,21 @@ const sqlFile = path.join(root, "database", "schema.sql");
 
 const REQUIRED_TABLES = [
   "phb_edition",
+  "phb_source_citation",
+  "phb_ability",
   "phb_alignment",
   "phb_language",
   "phb_skill",
   "phb_fighting_style",
   "phb_weapon_property",
+  "phb_feat_category",
   "phb_feat",
+  "phb_feat_benefit",
   "phb_spell",
+  "phb_hit_die",
+  "phb_weapon_proficiency",
+  "phb_spell_slot_pattern",
+  "phb_spell_slot_by_level",
   "phb_class",
   "phb_class_progression",
   "phb_class_feature",
@@ -29,6 +37,16 @@ const REQUIRED_TABLES = [
   "phb_species_trait",
   "phb_background",
   "phb_background_skill",
+  "phb_background_ability_option",
+  "phb_background_starting_package",
+  "phb_background_starting_item",
+  "phb_class_primary_ability",
+  "phb_class_armor_training",
+  "phb_class_weapon_proficiency",
+  "phb_class_spellcasting",
+  "phb_class_starting_package",
+  "phb_class_starting_item",
+  "phb_class_saving_throw",
   "phb_item",
   "phb_weapon",
   "phb_armor_category",
@@ -46,41 +64,39 @@ const REQUIRED_TABLES = [
   "phb_class_option_value",
   "phb_weapon_property_link",
   "phb_class_fighting_style",
-  "player_character",
-  "player_character_language",
-  "player_character_skill",
-  "player_character_saving_throw",
-  "player_character_feat",
-  "player_character_equipment",
-  "player_character_weapon_mastery",
-  "player_character_expertise",
-  "player_character_spell_list",
-  "player_character_spell_slot",
-  "player_character_resource",
-  "player_character_species_option",
-  "player_character_class_option",
 ];
 
 const FORBIDDEN = [
   /\bCREATE TABLE IF NOT EXISTS rpg\.character\b/i,
-  /player_character_resource[\s\S]{0,120}resource_key/i,
+  /\bCREATE TABLE[\s\S]{0,80}rpg\.player_character\b/i,
   /character_class_level/i,
+  /CREATE TYPE rpg\.ability_id AS ENUM/i,
+  /phb_class[\s\S]{0,400}skill_choices JSONB/i,
+  /phb_class_progression[\s\S]{0,200}spell_slots JSONB/i,
+  /phb_feat[\s\S]{0,300}benefits JSONB/i,
+  /phb_feat[\s\S]{0,300}source_meta JSONB/i,
+  /phb_feat[\s\S]{0,200}category TEXT/i,
 ];
 
 const REQUIRED_PATTERNS = [
-  [/CREATE SCHEMA IF NOT EXISTS rpg/i, "schema rpg"],
+  [/DROP SCHEMA IF EXISTS rpg CASCADE/i, "reset schema"],
+  [/slug TEXT NOT NULL UNIQUE/i, "coluna slug UNIQUE"],
+  [/id BIGSERIAL PRIMARY KEY/i, "PK BIGSERIAL"],
   [/phb_resource_definition/i, "catálogo recursos"],
   [/phb_spell_source/i, "catálogo fontes magia"],
-  [/phb_armor_category/i, "catálogo categorias armadura"],
-  [/resource_id.*REFERENCES rpg\.phb_resource_definition/i, "FK resource_id"],
-  [/source_id.*REFERENCES rpg\.phb_spell_source/i, "FK source_id"],
-  [/validate_pc_subclass/i, "trigger subclasse"],
-  [/idx_pc_equip_one_slot/i, "índice slot equipado"],
-  [/v_character_resources/i, "view v_character_resources"],
-  [/v_character_spells/i, "view v_character_spells"],
+  [/phb_ability/i, "catálogo atributos"],
+  [/phb_source_citation/i, "citações de origem"],
+  [/phb_background_starting_item/i, "equipamento inicial antecedente"],
+  [/v_phb_class_equipment/i, "view v_phb_class_equipment"],
+  [/v_phb_background_equipment/i, "view v_phb_background_equipment"],
+  [/phb_class_saving_throw/i, "salvaguardas de classe"],
+  [/v_phb_background/i, "view v_phb_background"],
   [/v_phb_armor/i, "view v_phb_armor"],
-  [/apply_sheet_to_character/i, "sync sheet→projeções"],
-  [/rebuild_sheet_from_projections/i, "sync projeções→sheet"],
+  [/v_spell_by_class/i, "view v_spell_by_class"],
+  [/v_class_spell_slots/i, "view v_class_spell_slots"],
+  [/v_phb_feat/i, "view v_phb_feat"],
+  [/phb_feat_benefit/i, "benefícios de talento normalizados"],
+  [/spell_slot_pattern_id/i, "FK padrão de espelhos na classe"],
 ];
 
 let errors = 0;
@@ -97,7 +113,7 @@ if (!fs.existsSync(sqlFile)) {
 const sql = fs.readFileSync(sqlFile, "utf8");
 
 for (const table of REQUIRED_TABLES) {
-  if (!new RegExp(`CREATE TABLE IF NOT EXISTS rpg\\.${table}\\b`, "i").test(sql)) {
+  if (!new RegExp(`CREATE TABLE rpg\\.${table}\\b`, "i").test(sql)) {
     fail(`tabela ausente: rpg.${table}`);
   }
 }
@@ -120,6 +136,6 @@ if (errors) {
 }
 
 console.log(
-  `✓ PostgreSQL v3 — ${REQUIRED_TABLES.length} tabelas, FKs tipadas, triggers, 5 views`
+  `✓ PostgreSQL v4 — ${REQUIRED_TABLES.length} tabelas catálogo, BIGINT+slug, 7 views`
 );
 process.exit(0);

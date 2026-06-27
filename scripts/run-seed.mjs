@@ -52,10 +52,11 @@ async function runWithPg() {
     const counts = await client.query(`
       SELECT
         (SELECT COUNT(*)::int FROM rpg.phb_spell) AS spells,
-        (SELECT COUNT(*)::int FROM rpg.player_character) AS characters
+        (SELECT COUNT(*)::int FROM rpg.phb_class) AS classes,
+        (SELECT COUNT(*)::int FROM rpg.phb_item) AS items
     `);
     console.log(
-      `✓ Seed aplicado — ${counts.rows[0].spells} magias, ${counts.rows[0].characters} personagens`
+      `✓ Seed aplicado — ${counts.rows[0].spells} magias, ${counts.rows[0].classes} classes, ${counts.rows[0].items} itens`
     );
     return true;
   } finally {
@@ -97,7 +98,7 @@ function runWithPsql() {
       "rpg",
       "-t",
       "-c",
-      "SELECT (SELECT COUNT(*) FROM rpg.phb_spell) || ' magias, ' || (SELECT COUNT(*) FROM rpg.player_character) || ' personagens'",
+      "SELECT (SELECT COUNT(*) FROM rpg.phb_spell) || ' magias, ' || (SELECT COUNT(*) FROM rpg.phb_class) || ' classes'",
     ],
     { env, encoding: "utf8" }
   );

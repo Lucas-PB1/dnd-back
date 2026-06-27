@@ -2,6 +2,10 @@
 import fs from "fs";
 import path from "path";
 import { CLASS_PROGRESSION } from "../class-progression-data.mjs";
+import { extractClassCatalog } from "./class-normalize.mjs";
+import { FEAT_CATEGORIES } from "./feat-categories.mjs";
+import { CLASS_SPELL_SLOT_PATTERN } from "./spell-slot-patterns.mjs";
+import { collectSourceCitations, sourceCitationSlug } from "./source-citations.mjs";
 
 const ABILITY_PT = {
   Força: "forca",
@@ -35,18 +39,47 @@ export function loadPhbCatalog(root) {
 
   const alignments = readJson(path.join(phb, "creation/alignments.json")).alignments;
   const languages = readJson(path.join(phb, "creation/languages.json")).languages;
+  const skillsIndex = readJson(path.join(phb, "skills/index.json"));
+  const abilities = skillsIndex.abilities.map((a, i) => ({ ...a, sortOrder: i + 1 }));
   const skills = listJson(path.join(phb, "skills"))
     .filter((f) => !f.includes(`${path.sep}rules${path.sep}`) && !f.endsWith(`${path.sep}index.json`))
     .map((f) => readJson(f));
 
   const featsIndex = readJson(path.join(phb, "feats/index.json")).feats;
-  const feats = featsIndex.map(({ id }) => readJson(path.join(phb, "feats", `${id}.json`)));
+  const featsRaw = featsIndex.map(({ id }) => readJson(path.join(phb, "feats", `${id}.json`)));
+  const feats = featsRaw.map((f) => ({
+    id: f.id,
+    name: f.name,
+    categorySlug: f.category,
+    repeatable: f.repeatable,
+    prerequisite: f.prerequisite ?? null,
+    sourceCitationSlug: sourceCitationSlug(f.source),
+  }));
+
+  const featBenefits = [];
+  for (const f of featsRaw) {
+    for (let i = 0; i < (f.benefits ?? []).length; i++) {
+      const b = f.benefits[i];
+      featBenefits.push({
+        featId: f.id,
+        sortOrder: i + 1,
+        name: b.name ?? null,
+        description: b.description,
+      });
+    }
+  }
 
   const spellIndex = readJson(path.join(phb, "spells/index.json"));
   const spells = spellIndex.spells.map(({ file }) => readJson(path.join(phb, "spells", file)));
 
   const index = readJson(path.join(phb, "index.json"));
-  const classes = index.classes.map(({ file }) => readJson(path.join(phb, file)));
+  const classesRaw = index.classes.map(({ file }) => readJson(path.join(phb, file)));
+  const classCatalog = extractClassCatalog(classesRaw);
+  const classes = classCatalog.classesNorm.map((c) => ({
+    ...c,
+    sourceCitationSlug: sourceCitationSlug(c.source),
+    spellSlotPatternSlug: CLASS_SPELL_SLOT_PATTERN[c.id] ?? null,
+  }));
   const subclasses = index.classes.flatMap(({ subclasses: subs }) =>
     subs.map(({ file }) => readJson(path.join(phb, file)))
   );
@@ -243,7 +276,6 @@ export function loadPhbCatalog(root) {
           proficiencyBonus: row.proficiencyBonus,
           cantrips: row.cantrips ?? null,
           preparedSpells: row.preparedSpells ?? null,
-          spellSlots: row.spellSlots ?? null,
           channelDivinity: row.channelDivinity ?? null,
         });
       }
@@ -263,28 +295,101 @@ export function loadPhbCatalog(root) {
   }
 
   const backgroundSkills = [];
+  const backgroundAbilityOptions = [];
+  const backgroundStartingPackages = [];
+  const backgroundStartingItems = [];
   const backgroundsNorm = backgrounds.map((bg) => {
+    const abilitySlugs = (bg.abilityOptions ?? []).map((name) => ABILITY_PT[name] ?? name);
+    abilitySlugs.forEach((abilityId, sortOrder) => {
+      backgroundAbilityOptions.push({
+        backgroundId: bg.id,
+        abilityId,
+        sortOrder: sortOrder + 1,
+      });
+    });
     for (const skillId of bg.skillIds ?? []) {
       backgroundSkills.push({ backgroundId: bg.id, skillId });
     }
+    for (const [pkgIndex, pkg] of (bg.equipment?.packages ?? []).entries()) {
+      backgroundStartingPackages.push({
+        backgroundId: bg.id,
+        packageSlug: pkg.id,
+        label: pkg.label,
+        gold: pkg.gold ?? null,
+        sortOrder: pkgIndex + 1,
+      });
+      let itemOrder = 0;
+      for (const entry of pkg.items ?? []) {
+        itemOrder += 1;
+        if (entry.id) {
+          backgroundStartingItems.push({
+            backgroundId: bg.id,
+            packageSlug: pkg.id,
+            itemId: entry.id,
+            quantity: entry.quantity ?? 1,
+            choiceText: null,
+            sortOrder: itemOrder,
+          });
+        } else if (entry.choice) {
+          backgroundStartingItems.push({
+            backgroundId: bg.id,
+            packageSlug: pkg.id,
+            itemId: null,
+            quantity: 1,
+            choiceText: entry.choice,
+            sortOrder: itemOrder,
+          });
+        }
+      }
+    }
+    const tool = bg.toolProficiency ?? {};
     return {
       ...bg,
-      abilityOptions: (bg.abilityOptions ?? []).map((name) => ABILITY_PT[name] ?? name),
+      abilityOptions: abilitySlugs,
       featId: bg.feat?.id ?? null,
+      sourceCitationSlug: sourceCitationSlug(bg.source),
+      equipmentGoldOption: bg.equipment?.goldOption ?? null,
+      toolProficiencyDescription: tool.description ?? null,
+      toolProficiencyKind: tool.kind ?? null,
+      toolItemId: tool.itemId ?? null,
     };
   });
 
+  const sourceCitations = collectSourceCitations(backgrounds, classesRaw, featsRaw);
+
+  const classSavingThrows = [];
+  for (const cls of classes) {
+    for (const abilityId of cls.savingThrowIds ?? []) {
+      classSavingThrows.push({ classId: cls.id, abilityId });
+    }
+  }
+
   return {
     alignments,
+    abilities,
     languages,
     skills,
     feats,
+    featBenefits,
+    featCategories: FEAT_CATEGORIES,
     spells,
     classes,
+    classPrimaryAbilities: classCatalog.classPrimaryAbilities,
+    classArmorTraining: classCatalog.classArmorTraining,
+    classWeaponProficiencies: classCatalog.classWeaponProficiencies,
+    classStartingPackages: classCatalog.classStartingPackages,
+    classStartingItems: classCatalog.classStartingItems,
+    classSpellcasting: classCatalog.classSpellcasting,
+    weaponProfTerms: classCatalog.weaponProfTerms,
     subclasses,
     species,
     backgrounds: backgroundsNorm,
     backgroundSkills,
+    backgroundAbilityOptions,
+    backgroundStartingPackages,
+    backgroundStartingItems,
+    sourceCitations,
+    classSavingThrows,
     items,
     armorCategories,
     weaponProperties,
@@ -298,14 +403,19 @@ export function loadPhbCatalog(root) {
     speciesTraits,
     counts: {
       alignments: alignments.length,
+      abilities: abilities.length,
       languages: languages.length,
       skills: skills.length,
       feats: feats.length,
+      featBenefits: featBenefits.length,
       spells: spells.length,
       classes: classes.length,
       subclasses: subclasses.length,
       species: species.length,
       backgrounds: backgrounds.length,
+      sourceCitations: sourceCitations.length,
+      backgroundStartingPackages: backgroundStartingPackages.length,
+      backgroundStartingItems: backgroundStartingItems.length,
       items: items.length,
       armorCategories: armorCategories.length,
       spellClassLinks: spellClassLinks.length,

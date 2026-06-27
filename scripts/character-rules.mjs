@@ -5,6 +5,10 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { CLASS_PROGRESSION } from "./class-progression-data.mjs";
+import {
+  CLASS_SPELL_SLOT_PATTERN,
+  spellSlotsForPattern,
+} from "./lib/spell-slot-patterns.mjs";
 import { abilityMod, expectedMaxHp, expectedMaxHpForCharacter, speciesHpBonus, toughFeatHpBonus } from "./hp-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -108,12 +112,9 @@ export function expectedPreparedCount(classId, level) {
 }
 
 export function expectedSpellSlots(classId, level) {
-  const row = CLASS_PROGRESSION[classId]?.levels[level - 1];
-  if (!row) return null;
-  if (classId === "warlock") {
-    return row.pactSlots ? { [String(row.pactSlotLevel)]: row.pactSlots } : null;
-  }
-  return row.spellSlots ?? null;
+  const patternSlug = CLASS_SPELL_SLOT_PATTERN[classId];
+  if (!patternSlug) return null;
+  return spellSlotsForPattern(patternSlug, level);
 }
 
 export function expectedChannelDivinity(classId, level) {

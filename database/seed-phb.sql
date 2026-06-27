@@ -1,52 +1,53 @@
--- PHB seed — PostgreSQL v3
+-- PHB seed — PostgreSQL v4 (slug → id interno)
 
 -- Gerado por: npm run generate:seed-phb
 
 BEGIN;
 
-SELECT set_config('rpg.skip_sync', '1', true);
 
-
--- Limpa catálogo (personagens devem ser reimportados depois)
 TRUNCATE TABLE
-  rpg.player_character_class_option,
-  rpg.player_character_species_option,
-  rpg.player_character_resource,
-  rpg.player_character_spell_slot,
-  rpg.player_character_spell_list,
-  rpg.player_character_expertise,
-  rpg.player_character_weapon_mastery,
-  rpg.player_character_equipment,
-  rpg.player_character_feat,
-  rpg.player_character_saving_throw,
-  rpg.player_character_skill,
-  rpg.player_character_language,
-  rpg.player_character,
   rpg.phb_subclass_prepared_spell,
   rpg.phb_spell_class,
   rpg.phb_class_skill_pool,
   rpg.phb_class_feature,
+  rpg.phb_class_starting_item,
+  rpg.phb_class_starting_package,
+  rpg.phb_class_spellcasting,
+  rpg.phb_class_weapon_proficiency,
+  rpg.phb_class_armor_training,
+  rpg.phb_class_primary_ability,
+  rpg.phb_class_saving_throw,
   rpg.phb_class_progression,
+  rpg.phb_background_starting_item,
+  rpg.phb_background_starting_package,
+  rpg.phb_background_ability_option,
   rpg.phb_background_skill,
   rpg.phb_species_trait,
   rpg.phb_tool,
   rpg.phb_armor,
   rpg.phb_armor_category,
   rpg.phb_weapon,
+  rpg.phb_weapon_property_link,
   rpg.phb_item,
   rpg.phb_subclass,
   rpg.phb_class,
+  rpg.phb_spell_slot_by_level,
+  rpg.phb_spell_slot_pattern,
   rpg.phb_background,
   rpg.phb_species,
   rpg.phb_spell,
+  rpg.phb_feat_benefit,
   rpg.phb_feat,
+  rpg.phb_feat_category,
   rpg.phb_weapon_property,
   rpg.phb_fighting_style,
   rpg.phb_skill,
+  rpg.phb_ability,
   rpg.phb_language,
   rpg.phb_alignment,
+  rpg.phb_source_citation,
+  rpg.phb_weapon_proficiency,
   rpg.phb_class_fighting_style,
-  rpg.phb_weapon_property_link,
   rpg.phb_class_option_value,
   rpg.phb_class_option_def,
   rpg.phb_species_option_value,
@@ -57,10 +58,10 @@ TRUNCATE TABLE
   rpg.phb_background_boost_option,
   rpg.phb_ability_generation_method,
   rpg.phb_character_level
-CASCADE;
+RESTART IDENTITY CASCADE;
 
 
-INSERT INTO rpg.phb_alignment (id, name, abbreviation, description)
+INSERT INTO rpg.phb_alignment (slug, name, abbreviation, description)
 VALUES
   ('lawful-good', 'Ordeiro e Bom', 'OB', 'Criaturas Ordeiras e Boas se esforçam para fazer a coisa certa, conforme esperado pela sociedade.'),
   ('neutral-good', 'Neutro e Bom', 'NB', 'Criaturas Neutras e Boas fazem o melhor que podem, trabalhando dentro das regras, mas sem se sentir obrigadas por elas.'),
@@ -73,7 +74,17 @@ VALUES
   ('chaotic-evil', 'Caótico e Mau', 'CM', 'Criaturas Caóticas e Más agem com violência arbitrária, impulsionadas pelo ódio ou pela sede de sangue.');
 
 
-INSERT INTO rpg.phb_language (id, name, script, typical_speakers, is_rare)
+INSERT INTO rpg.phb_ability (slug, name, sort_order)
+VALUES
+  ('forca', 'Força', 1),
+  ('destreza', 'Destreza', 2),
+  ('constituicao', 'Constituição', 3),
+  ('inteligencia', 'Inteligência', 4),
+  ('sabedoria', 'Sabedoria', 5),
+  ('carisma', 'Carisma', 6);
+
+
+INSERT INTO rpg.phb_language (slug, name, script, typical_speakers, is_rare)
 VALUES
   ('common', 'Comum', NULL, NULL, FALSE),
   ('sign-language', 'Língua de Sinais Comum', NULL, NULL, FALSE),
@@ -96,29 +107,44 @@ VALUES
   ('undercommon', 'Subcomum', NULL, NULL, TRUE);
 
 
-INSERT INTO rpg.phb_skill (id, name, ability_id, description)
+INSERT INTO rpg.phb_skill (slug, name, ability_id, description)
 VALUES
-  ('acrobatics', 'Acrobacia', 'destreza'::rpg.ability_id, 'Manter-se em pé em uma situação complicada ou realizar uma acrobacia.'),
-  ('animal-handling', 'Lidar com Animais', 'sabedoria'::rpg.ability_id, 'Acalmar ou treinar um animal, ou fazer com que ele se comporte de uma determinada maneira.'),
-  ('arcana', 'Arcanismo', 'inteligencia'::rpg.ability_id, 'Recordar conhecimentos sobre magias, itens mágicos e planos de existência.'),
-  ('athletics', 'Atletismo', 'forca'::rpg.ability_id, 'Pular mais longe do que o normal, manter-se à tona em águas agitadas ou quebrar algo.'),
-  ('deception', 'Enganação', 'carisma'::rpg.ability_id, 'Contar uma mentira convincente ou usar um disfarce de forma convincente.'),
-  ('history', 'História', 'inteligencia'::rpg.ability_id, 'Relembrar fatos sobre eventos históricos, pessoas, nações e culturas.'),
-  ('insight', 'Intuição', 'sabedoria'::rpg.ability_id, 'Perceber o humor e as intenções de uma pessoa.'),
-  ('intimidation', 'Intimidação', 'carisma'::rpg.ability_id, 'Atemorizar ou ameaçar alguém para que faça o que você quer.'),
-  ('investigation', 'Investigação', 'inteligencia'::rpg.ability_id, 'Encontrar informações obscuras em livros ou deduzir como algo funciona.'),
-  ('medicine', 'Medicina', 'sabedoria'::rpg.ability_id, 'Diagnosticar uma doença ou determinar o que matou uma pessoa que morreu recentemente.'),
-  ('nature', 'Natureza', 'inteligencia'::rpg.ability_id, 'Relembrar fatos sobre o terreno, as plantas, os animais e o clima.'),
-  ('perception', 'Percepção', 'sabedoria'::rpg.ability_id, 'Usando uma combinação de sentidos, notar algo que é fácil de passar despercebido.'),
-  ('performance', 'Atuação', 'carisma'::rpg.ability_id, 'Atuar, contar uma história, tocar música ou dançar.'),
-  ('persuasion', 'Persuasão', 'carisma'::rpg.ability_id, 'Convencer alguém de algo de forma honesta e graciosa.'),
-  ('religion', 'Religião', 'inteligencia'::rpg.ability_id, 'Relembrar fatos sobre deuses, rituais religiosos e símbolos sagrados.'),
-  ('sleight-of-hand', 'Prestidigitação', 'destreza'::rpg.ability_id, 'Furtar um bolso, ocultar um objeto portátil ou fazer truque com as mãos.'),
-  ('stealth', 'Furtividade', 'destreza'::rpg.ability_id, 'Evitar ser notado movendo-se silenciosamente e se escondendo atrás de objetos.'),
-  ('survival', 'Sobrevivência', 'sabedoria'::rpg.ability_id, 'Seguir rastros, procurar alimentos, encontrar uma trilha ou evitar perigos naturais.');
+  ('acrobatics', 'Acrobacia', (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 'Manter-se em pé em uma situação complicada ou realizar uma acrobacia.'),
+  ('animal-handling', 'Lidar com Animais', (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 'Acalmar ou treinar um animal, ou fazer com que ele se comporte de uma determinada maneira.'),
+  ('arcana', 'Arcanismo', (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 'Recordar conhecimentos sobre magias, itens mágicos e planos de existência.'),
+  ('athletics', 'Atletismo', (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 'Pular mais longe do que o normal, manter-se à tona em águas agitadas ou quebrar algo.'),
+  ('deception', 'Enganação', (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 'Contar uma mentira convincente ou usar um disfarce de forma convincente.'),
+  ('history', 'História', (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 'Relembrar fatos sobre eventos históricos, pessoas, nações e culturas.'),
+  ('insight', 'Intuição', (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 'Perceber o humor e as intenções de uma pessoa.'),
+  ('intimidation', 'Intimidação', (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 'Atemorizar ou ameaçar alguém para que faça o que você quer.'),
+  ('investigation', 'Investigação', (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 'Encontrar informações obscuras em livros ou deduzir como algo funciona.'),
+  ('medicine', 'Medicina', (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 'Diagnosticar uma doença ou determinar o que matou uma pessoa que morreu recentemente.'),
+  ('nature', 'Natureza', (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 'Relembrar fatos sobre o terreno, as plantas, os animais e o clima.'),
+  ('perception', 'Percepção', (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 'Usando uma combinação de sentidos, notar algo que é fácil de passar despercebido.'),
+  ('performance', 'Atuação', (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 'Atuar, contar uma história, tocar música ou dançar.'),
+  ('persuasion', 'Persuasão', (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 'Convencer alguém de algo de forma honesta e graciosa.'),
+  ('religion', 'Religião', (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 'Relembrar fatos sobre deuses, rituais religiosos e símbolos sagrados.'),
+  ('sleight-of-hand', 'Prestidigitação', (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 'Furtar um bolso, ocultar um objeto portátil ou fazer truque com as mãos.'),
+  ('stealth', 'Furtividade', (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 'Evitar ser notado movendo-se silenciosamente e se escondendo atrás de objetos.'),
+  ('survival', 'Sobrevivência', (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 'Seguir rastros, procurar alimentos, encontrar uma trilha ou evitar perigos naturais.');
 
 
-INSERT INTO rpg.phb_fighting_style (id, name, description)
+INSERT INTO rpg.phb_source_citation (slug, edition_id, chapter, chapter_title, pdf_path, pdf_pages, extracted_at)
+VALUES
+  ('phb-2024-pt:ch4:177-185', (SELECT id FROM rpg.phb_edition WHERE slug = 'phb-2024-pt'), 4, 'Origens dos Personagens', 'doc/livro-jogador.pdf', ARRAY[177, 185]::integer[], '2026-06-25T23:29:50.537Z'::timestamptz),
+  ('phb-2024-pt:ch3:55-182', (SELECT id FROM rpg.phb_edition WHERE slug = 'phb-2024-pt'), 3, 'Classes de Personagem', 'doc/livro-jogador.pdf', ARRAY[55, 182]::integer[], '2026-06-25T01:13:29.372Z'::timestamptz),
+  ('phb-2024-pt:ch5:205-217', (SELECT id FROM rpg.phb_edition WHERE slug = 'phb-2024-pt'), 5, 'Talentos', 'doc/livro-jogador.pdf', ARRAY[205, 217]::integer[], '2026-06-25T01:46:09.796Z'::timestamptz);
+
+
+INSERT INTO rpg.phb_armor_category (slug, name, don_doff, sort_order)
+VALUES
+  ('light', 'Armadura Leve', '1 Minuto para Vestir ou Despir', 1),
+  ('medium', 'Armadura Média', '5 Minutos para Vestir e 1 Minuto para Despir', 2),
+  ('heavy', 'Armadura Pesada', '10 Minutos para Vestir e 5 Minutos para Despir', 3),
+  ('shield', 'Escudo', 'Ação Usar Objeto para Equipar ou Desequipar', 4);
+
+
+INSERT INTO rpg.phb_fighting_style (slug, name, description)
 VALUES
   ('archery', 'Arquearia', 'Você recebe um bônus de +2 nas jogadas de ataque com armas à Distância.'),
   ('blind-fighting', 'Luta às Cegas', 'Você tem Visão às Cegas com um alcance de 3 metros.'),
@@ -134,7 +160,7 @@ VALUES
   ('druidic-warrior', 'Combatente Druídico', 'Estilo de luta alternativo do Guardião (PHB 2024).');
 
 
-INSERT INTO rpg.phb_weapon_property (id, name, description)
+INSERT INTO rpg.phb_weapon_property (slug, name, description)
 VALUES
   ('finesse', 'Acuidade', 'Ao realizar um ataque com uma arma que possui Acuidade, utilize seu modificador de Força ou Destreza, à sua escolha, para as jogadas de ataque e dano. Você deve aplicar o mesmo modificador em ambas as jogadas.'),
   ('light', 'Leve', 'Quando você executa a ação Atacar em seu turno e usa uma arma Leve, pode realizar um ataque adicional com uma Ação Bônus mais tarde no mesmo turno. Esse ataque adicional deve ser realizado com uma arma Leve diferente, e você não adiciona seu modificador de atributo ao dano do ataque adicional, a menos que esse modificador seja negativo.'),
@@ -148,86 +174,298 @@ VALUES
   ('versatile', 'Versátil', 'Uma arma Versátil pode ser usada com uma ou duas mãos. Um valor de dano entre parênteses aparece com a propriedade. A arma causa esse dano quando usada com as duas mãos ao realizar um ataque corpo a corpo.');
 
 
-INSERT INTO rpg.phb_feat (id, name, category, repeatable, prerequisite, benefits, source_meta)
+INSERT INTO rpg.phb_feat_category (slug, name, type_label, sort_order)
 VALUES
-  ('elemental-adept', 'Adepto Elemental', 'general', TRUE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Domínio Elemental","description":"Escolha um dos seguintes tipos de dano: Ácido, Elétrico, Gélido, Ígneo ou Trovejante. Magias que você conjura ignoram a Resistência a dano do tipo escolhido. Além disso, ao jogar dano para uma magia que causa dano deste tipo, você pode tratar qualquer 1 em um dado de dano como um 2."},{"name":"Repetível","description":"Repetível. Você pode adquirir este talento mais de uma vez, mas deve escolher um tipo de dano diferente a cada vez para Domínio Elemental."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.796Z"}'::jsonb),
-  ('charger', 'Agressor', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Corrida Aprimorada","description":"Quando você executa a ação Correr, seu Deslocamento aumenta em 3 metros para esta ação."},{"name":"Ataque em Investida","description":"Se você se mover pelo menos 3 metros em linha reta em direção a um alvo imediatamente antes de atingi-lo com uma jogada de ataque corpo a corpo como parte da ação Atacar, escolha um dos seguintes efeitos: obter um bônus de +1d8 na jogada de dano do ataque ou empurrar o alvo até 3 metros se ele não for um tamanho maior que você. Você pode usar esse benefício apenas uma vez em cada um dos seus turnos."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.797Z"}'::jsonb),
-  ('alert', 'Alerta', 'origin', FALSE, NULL, '[{"name":"Proficiência em Iniciativa","description":"Quando você joga Iniciativa, pode adicionar seu Bônus de Proficiência à jogada."},{"name":"Troca de Iniciativa","description":"Imediatamente após jogar Iniciativa, você pode trocar sua Iniciativa com a Iniciativa de um aliado voluntário no mesmo combate. Não é possível fazer a troca se você ou o aliado tem a condição Incapacitado."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.789Z"}'::jsonb),
-  ('observant', 'Analítico', 'general', FALSE, 'Nível 4 ou superior, Inteligência ou Sabedoria 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência ou Sabedoria em 1, até no máximo 20."},{"name":"Observador Atento","description":"Escolha uma das seguintes perícias: Intuição, Investigação ou Percepção. Se não tiver proficiência na perícia escolhida, você a adquire; se já for proficiente, adquire Especialização."},{"name":"Pesquisa Rápida","description":"Você pode executar a ação Procurar como uma Ação Bônus."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.797Z"}'::jsonb),
-  ('archery', 'Arquearia', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Você recebe um bônus de +2 nas jogadas de ataque com armas à Distância."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.816Z"}'::jsonb),
-  ('artisan', 'Artifista', 'origin', FALSE, NULL, '[{"name":"Proficiência com Ferramentas","description":"Você adquire proficiência com três Ferramentas de Artesão diferentes à sua escolha na tabela Fabricação Rápida."},{"name":"Desconto","description":"Sempre que você compra um item não mágico, recebe um desconto de 20% nele."},{"name":"Fabricação Rápida","description":"Quando completa um Descanso Longo, você pode fabricar uma peça de equipamento da tabela Fabricação Rápida, se tiver as Ferramentas de Artesão associadas a esse item e tenha proficiência com essas ferramentas. O item permanece até que você complete outro Descanso Longo, momento em que o item se desfaz. Fabricação Rápida\n\nFerramentas de Artesão | Itens de Fabricação\nFerramentas de Carpinteiro | Escada, Tocha \nFerramentas de Coureiro | Algibeira, Estojo \nFerramentas de Entalhador | Cajado, Clava, Clava Grande \nFerramentas de Ferreiro | Arpéu, Balde, Esferas de Metal, Estrepes, Panela de Ferro \nFerramentas de Funileiro | Pederneira, Pá, Sino \nFerramentas de Oleiro | Jarro, Lâmpada \nFerramentas de Pedreiro | Roldana e Polias \nFerramentas de Tecelão | Cesta, Corda, Rede, Tenda"}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.790Z"}'::jsonb),
-  ('savage-attacker', 'Atacante Selvagem', 'origin', FALSE, NULL, '[{"description":"Uma vez por turno, quando você atinge um alvo com uma arma, pode jogar os dados de dano da arma duas vezes e usar qualquer uma das jogadas contra o alvo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.790Z"}'::jsonb),
-  ('spell-sniper', 'Atirador Arcano', 'general', FALSE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Ignorar Cobertura","description":"Jogadas de ataque com magias ignoram Cobertura Parcial e Cobertura de Três Quartos."},{"name":"Conjuração à Queima-Roupa","description":"Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com magias."},{"name":"Alcance Aumentado","description":"Ao conjurar uma magia que tem um alcance de pelo menos 3 metros e exija realizar uma jogada de ataque, você pode aumentar o alcance da magia em 18 metros."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.798Z"}'::jsonb),
-  ('athlete', 'Atleta', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Deslocamento de Escalada","description":"Você adquire Deslocamento de Escalada igual ao seu Deslocamento."},{"name":"Levantar","description":"Quando você tem a condição Caído, pode se reerguer com apenas 1,5 metro de movimento."},{"name":"Saltar","description":"Você pode realizar um Salto em Distância ou Salto em Altura correndo após mover-se apenas 1,5 metro."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.798Z"}'::jsonb),
-  ('actor', 'Ator', 'general', FALSE, 'Nível 4 ou superior, Carisma 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Carisma em 1, até no máximo 20."},{"name":"Personificação","description":"Enquanto está disfarçado como uma pessoa real ou fictícia, você tem Vantagem em testes de Carisma (Atuação ou Enganação) para convencer os outros de que você é essa pessoa."},{"name":"Mimetismo","description":"Você pode imitar os sons de outras criaturas, incluindo a fala. Uma criatura que ouve a imitação deve ser bem-sucedida em um teste de Sabedoria (Intuição) para determinar que o efeito é falso (CD 8 mais seu modificador de Carisma e seu Bônus de Proficiência)."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.799Z"}'::jsonb),
-  ('ability-score-improvement', 'Aumento no Valor de Atributo', 'general', TRUE, 'Nível 4 ou superior', '[{"description":"Aumente um valor de atributo à sua escolha em 2, ou aumente dois valores de atributo à sua escolha em 1. Este talento não pode aumentar um valor de atributo acima de 20."},{"name":"Repetível","description":"Você pode adquirir este talento mais de uma vez."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.799Z"}'::jsonb),
-  ('chef', 'Chef', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Constituição ou Sabedoria em 1, até no máximo 20."},{"name":"Utensílios de Cozinheiro","description":"Você adquire proficiência com Utensílios de Cozinheiro se ainda não o tiver."},{"name":"Refeição Satisfatória","description":"Como parte de um Descanso Curto, você pode cozinhar alimentos especiais se tiver ingredientes e Utensílios de Cozinheiro à mão. Você pode preparar comida suficiente para um número de criaturas igual a 4 mais seu Bônus de Proficiência. No final do Descanso Curto, qualquer criatura que comer a comida e gastar um ou mais Dados de Vida para recuperar Pontos de Vida recupera 1d8 Pontos de Vida adicionais."},{"name":"Guloseimas Revigorantes","description":"Com 1 hora de trabalho ou quando completar um Descanso Longo, você pode cozinhar um número de guloseimas igual ao seu Bônus de Proficiência se tiver ingredientes e Utensílios de Cozinheiro à mão. Essas guloseimas especiais permanecem por 8 horas após serem feitas. Uma criatura pode executar uma Ação Bônus para comer uma dessas guloseimas e obter um número de Pontos de Vida Temporários igual ao seu Bônus de Proficiência."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.800Z"}'::jsonb),
-  ('thrown-weapon-fighting', 'Combate com Armas de Arremesso', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você atinge com uma jogada de ataque à distância usando uma arma com a propriedade Arremesso, você obtém um bônus de +2 na jogada de dano."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.816Z"}'::jsonb),
-  ('great-weapon-fighting', 'Combate com Armas Grandes', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você joga dano para um ataque que realiza com uma arma Corpo a Corpo que está empunhando com as duas mãos, pode tratar qualquer 1 ou 2 em um dado de dano como um 3. A arma deve ter a propriedade Duas Mãos ou Versátil para obter este benefício."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.817Z"}'::jsonb),
-  ('two-weapon-fighting', 'Combate com Duas Armas', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você realiza um ataque adicional como resultado de usar uma arma com a propriedade Leve, você pode adicionar seu modificador de atributo ao dano desse ataque, se já não estiver adicionando-o ao dano."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.817Z"}'::jsonb),
-  ('unarmed-fighting', 'Combate Desarmado', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você atinge com seu Ataque Desarmado e causa dano, pode causar dano Contundente igual a 1d6 mais seu modificador de Força em vez do dano normal de um Ataque Desarmado. Se você não estiver segurando nenhuma arma ou Escudo quando realizar a jogada de ataque, o d6 se torna um d8. No início de cada um dos seus turnos, você pode causar 1d4 pontos de dano Contundente a uma criatura Imobilizada por você."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.817Z"}'::jsonb),
-  ('mounted-combatant', 'Combatente Montado', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força, Destreza ou Sabedoria em 1, até no máximo 20."},{"name":"Golpe Montado","description":"Enquanto estiver montado, você tem Vantagem em jogadas de ataque contra qualquer criatura desmontada a até 1,5 metro de sua montaria que seja pelo menos um tamanho menor que a montaria."},{"name":"Pulo Lateral","description":"Se sua montaria for submetida a um efeito que lhe permita realizar uma salvaguarda de Destreza para sofrer apenas metade do dano, ela não sofre dano em caso de sucesso, e apenas metade do dano se falhar. Para que sua montaria obtenha esse benefício, você deve estar montando-a, e nenhum de vocês pode ter a condição Incapacitado."},{"name":"Redirecionar Ataque","description":"Enquanto estiver montado, você pode forçar um ataque que atinge sua montaria a atingi-lo se você não tem a condição Incapacitado."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.800Z"}'::jsonb),
-  ('war-caster', 'Conjurador Bélico', 'general', FALSE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Concentração","description":"Você tem Vantagem em salvaguardas de Constituição que realiza para manter a Concentração."},{"name":"Magia Reativa","description":"Quando uma criatura provocar um Ataque de Oportunidade a você ao sair do seu alcance, você pode executar uma Reação para conjurar uma magia contra a criatura, em vez de realizar o Ataque de Oportunidade. A magia deve ter um tempo de conjuração de uma ação e deve ter como alvo apenas aquela criatura."},{"name":"Componentes Somáticos","description":"Você pode realizar os componentes somáticos de magias mesmo quando estiver com armas ou um Escudo em uma ou ambas as mãos."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.801Z"}'::jsonb),
-  ('ritual-caster', 'Conjurador Ritualista', 'general', FALSE, 'Nível 4 ou superior, Inteligência, Sabedoria ou Carisma 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Magias Rituais","description":"Escolha um número de magias de 1º círculo igual ao seu Bônus de Proficiência que tem o marcador Ritual. Você tem essas magias sempre preparadas e pode conjurá-las com qualquer espaço de magia que tiver. O atributo de conjuração das magias é o atributo aumentado por este talento. Sempre que seu Bônus de Proficiência aumentar depois disso, você pode adicionar uma magia de 1º círculo com o marcador Ritual às magias sempre preparadas com esta característica."},{"name":"Ritual Rápido","description":"Com este benefício, você pode conjurar uma magia Ritual que tem preparada usando seu tempo de conjuração normal, em vez do tempo prolon- gado para um Ritual. Realizar isso não requer um espaço de magia. Após conjurar a magia desse modo, você não pode usar esse benefício novamente até completar um Descanso Longo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.801Z"}'::jsonb),
-  ('healer', 'Curandeiro', 'origin', FALSE, NULL, '[{"name":"Médico de Combate","description":"Caso tenha um Kit de Curandeiro, você pode gastar um uso e cuidar de uma criatura a até 1,5 metro de você como uma ação Usar Objeto. Essa criatura pode gastar um dos Dados de Pontos de Vida dela e você joga esse dado. A criatura recupera um número de Pontos de Vida igual à jogada mais o seu Bônus de Proficiência."},{"name":"Cura Garantida","description":"Sempre que jogar um dado para determinar o número de Pontos de Vida que você recupera com uma magia ou com o benefício do talento Médico de Combate, você pode jogar novamente o dado se o resultado for 1, e você deve usar a nova jogada."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.790Z"}'::jsonb),
-  ('boon-of-fortitude', 'Dádiva da Fortitude', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Saúde Fortalecida","description":"Seus Pontos de Vida máximos aumentam em 40. Além disso, sempre que você recuperar Pontos de Vida, pode recuperar Pontos de Vida adicionais iguais ao seu modificador de Constituição. Após recuperar esses Pontos de Vida adicionais, você não pode fazer isso novamente até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.820Z"}'::jsonb),
-  ('boon-of-combat-prowess', 'Dádiva da Proeza em Combate', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Pontaria Inigualável","description":"Quando você erra uma jogada de ataque, em vez disso você acerta. Após usar este benefício, você não pode utilizá-lo novamente até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.820Z"}'::jsonb),
-  ('boon-of-skill-proficiency', 'Dádiva da Proficiência em Perícia', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Assecla Completo","description":"Você adquire proficiência em todas as perícias."},{"name":"Especialização","description":"Escolha uma perícia na qual você tenha proficiência, mas não tenha Especialização. Você obtém Especialização nessa perícia."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.820Z"}'::jsonb),
-  ('boon-of-spell-recall', 'Dádiva da Recordação de Magia', 'epic-boon', FALSE, 'Nível 19 ou superior, Característica de Conjuração', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 30."},{"name":"Conjuração Livre","description":"Sempre que você conjurar uma magia com um espaço de magia de 1º a 4º círculo, jogue 1d4. Se o resultado que você tirar for o mesmo que o círculo do espaço, o espaço não é gasto."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.821Z"}'::jsonb),
-  ('boon-of-recovery', 'Dádiva da Recuperação', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Até a Morte","description":"Quando você for reduzido a 0 Pontos de Vida, pode escolher ficar com 1 Ponto de Vida e recuperar um número de Pontos de Vida igual à metade dos seus Pontos de Vida máximos. Após usar esse benefício, você não pode usá-lo novamente até completar um Descanso Longo."},{"name":"Recuperar Vitalidade","description":"Você tem uma reserva de dez d10s. Como uma Ação Bônus, você pode gastar dados da reserva, jogá-los e recuperar um número de Pontos de Vida igual ao total do resultado. Você restaura todos os dados gastos quando você completa um Descanso Longo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.821Z"}'::jsonb),
-  ('boon-of-energy-resistance', 'Dádiva da Resistência à Energia', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Resistências à Energia","description":"Você obtém Resistência a dois dos seguintes tipos de dano à sua escolha: Ácido, Elétrico, Gélido, Ígneo, Necrótico, Psíquico, Radiante, Trovejante ou Venenoso. Sempre que completar um Descanso Longo, você pode mudar suas escolhas."},{"name":"Redirecionamento de Energia","description":"Ao sofrer dano de um dos tipos escolhidos para o benefício Resistências à Energia, você pode executar uma Reação para direcionar o dano do mesmo tipo para outra criatura à sua vista a até 18 metros de você que não esteja sob Cobertura Total. Se você fizer isso, essa criatura deve ser bem-sucedida em uma salvaguarda de Destreza (CD 8 mais seu modificador de Constituição e seu Bônus de Proficiência) ou sofre dano igual a 2d12 mais seu modificador de Constituição."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.821Z"}'::jsonb),
-  ('boon-of-speed', 'Dádiva da Velocidade', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Artista de Fuga","description":"Como uma Ação Bônus, você pode executar a ação Desengajar, que também encerra a condição Imobilizado em você."},{"name":"Agilidade","description":"Seu Deslocamento aumenta em 9 metros."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.822Z"}'::jsonb),
-  ('boon-of-dimensional-travel', 'Dádiva da Viagem Dimensional', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Passos Fugazes","description":"Imediatamente após executar a ação Atacar ou Usar Magia, você pode se teleportar até 9 metros para um espaço desocupado à sua vista."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.822Z"}'::jsonb),
-  ('boon-of-truesight', 'Dádiva da Visão Verdadeira', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Visão Verdadeira","description":"Você tem Visão Verdadeira com um alcance de 18 metros."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.822Z"}'::jsonb),
-  ('boon-of-irresistible-offense', 'Dádiva do Ataque Irresistível', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 30."},{"name":"Superar Defesas","description":"O dano Contundente, Cortante e Perfurante que você causa sempre ignora Resistência."},{"name":"Golpe Devastador","description":"Quando você tira 20 no d20 para uma jogada de ataque, pode causar dano adicional ao alvo igual ao valor do atributo aumentado por este talento. O tipo de dano adicional é o mesmo do ataque."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.823Z"}'::jsonb),
-  ('boon-of-fate', 'Dádiva do Destino', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Aprimorar Destino","description":"Quando você ou outra criatura a até 18 metros de você for bem-sucedida ou falhar em um Teste D20, você pode jogar 2d4 e aplicar os resultados como bônus ou penalidade na jogada de d20. Após usar este benefício, você não pode utilizá-lo novamente até jogar Iniciativa ou completar um Descanso Curto ou Longo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.823Z"}'::jsonb),
-  ('boon-of-the-night-spirit', 'Dádiva do Espírito da Noite', 'epic-boon', FALSE, 'Nível 19 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 30."},{"name":"Fundir-se com Sombras","description":"Enquanto estiver em Meia- -luz ou Escuridão, você pode se conceder a condição Invisível como uma Ação Bônus. A condição encerra imediatamente após você executar uma ação, uma Ação Bônus ou uma Reação."},{"name":"Forma Sombria","description":"Enquanto estiver em Meia-luz ou Escuridão, você tem Resistência a todos os danos, exceto Psíquico e Radiante."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.823Z"}'::jsonb),
-  ('defense', 'Defensivo', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Enquanto estiver usando armadura Leve, Média ou Pesada, você recebe um bônus de +1 na Classe de Armadura."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.818Z"}'::jsonb),
-  ('dueling', 'Duelismo', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando você segura uma arma Corpo a Corpo em uma mão e nenhuma outra arma, você recebe um bônus de +2 nas jogadas de dano desta arma."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.818Z"}'::jsonb),
-  ('defensive-duelist', 'Duelista Defensivo', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza em 1, até no máximo 20."},{"name":"Aparar","description":"Se estiver segurando uma arma de Acuidade e outra criatura acertar você com um ataque corpo a corpo, você pode executar uma Reação para adicionar seu Bônus de Proficiência à sua Classe de Armadura, potencialmente fazendo com que o ataque erre. Você obtém este bônus na sua CA contra ataques corpo a corpo até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.802Z"}'::jsonb),
-  ('poisoner', 'Envenenador', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza ou Inteligência em 1, até no máximo 20."},{"name":"Veneno Potente","description":"Ao realizar uma jogada de dano que causa dano Venenoso, você ignora Resistência a dano Venenoso."},{"name":"Preparar Veneno","description":"Você adquire proficiência com o Kit de Veneno. Com 1 hora de trabalho usando esse kit e gastando 50 PO em materiais, você pode fabricar um número de doses de veneno igual ao seu Bônus de Proficiência. Como uma Ação Bônus, você pode aplicar uma dose de veneno a uma arma ou peça de munição. Uma vez aplicado, o veneno retém sua potência por 1 minuto ou até você causar dano com o item envenenado, o que for mais curto. Ao sofrer dano do item envenenado, uma criatura deve ser bem-sucedida em uma salvaguarda de Constituição (CD 8 mais o modificador do atributo aumentado por este talento e seu Bônus de Proficiência) ou sofre 2d8 pontos de dano Venenoso e está com a condição Envenenado até o final do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.802Z"}'::jsonb),
-  ('crusher', 'Esmagador', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Constituição em 1, até no máximo 20."},{"name":"Empurrar","description":"Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Contundente, você pode movê-la 1,5 metro para um espaço desocupado se o alvo não for um tamanho maior que você."},{"name":"Crítico Melhorado","description":"Ao obter um Acerto Crítico que causa dano Contundente a uma criatura, jogadas de ataque contra essa criatura tem Vantagem até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.802Z"}'::jsonb),
-  ('dual-wielder', 'Especialista Ambidestro', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Combate com Duas Armas Aprimorado","description":"Quando você executa a ação Atacar no seu turno com uma arma que tenha a propriedade Leve, pode realizar um ataque adicional como uma Ação Bônus no mesmo turno com uma arma diferente, que deve ser uma arma Corpo a Corpo que não possua a propriedade Duas Mãos. Você não pode adicionar o seu modificador de atributo ao dano do ataque adicional, a menos que o modificador seja negativo."},{"name":"Saque Rápido","description":"Você pode desembainhar ou embainhar duas armas que não possuam a propriedade Duas Mãos quando normalmente poderia desembainhar ou embainhar apenas uma."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.803Z"}'::jsonb),
-  ('lightly-armored', 'Especialista em Armaduras Leves', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Treinamento com Armadura","description":"Você obtém treinamento com Armadura Leve e Escudos."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.803Z"}'::jsonb),
-  ('moderately-armored', 'Especialista em Armaduras Médias', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Armadura Leve', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Treinamento com Armadura","description":"Você obtém treinamento com Armadura Média."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.804Z"}'::jsonb),
-  ('heavily-armored', 'Especialista em Armaduras Pesadas', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Armadura Média', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Constituição ou Força em 1, até no máximo 20."},{"name":"Treinamento com Armadura","description":"Você adquire treinamento com Armadura Pesada."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.804Z"}'::jsonb),
-  ('crossbow-expert', 'Especialista em Besta', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza em 1, até no máximo 20."},{"name":"Ignorar Recarga","description":"Você ignora a propriedade Recarga da Besta de Mão, Besta Leve e Besta Pesada (todas chamadas de bestas em outras partes deste talento). Se estiver segurando uma dessas bestas, você pode carregar uma peça de munição nela mesmo sem ter uma mão livre."},{"name":"Disparo à Queima-Roupa","description":"Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com bestas."},{"name":"Combate com Duas Armas","description":"Ao realizar o ataque adicional da propriedade Leve, você pode adicionar seu modificador de atributo ao dano do ataque adicional se esse ataque for com uma besta que tenha a propriedade Leve e você ainda não estiver adicionando esse modificador ao dano."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.804Z"}'::jsonb),
-  ('skill-expert', 'Especialista em Perícia', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente um valor de atributo à sua escolha em 1, até no máximo 20."},{"name":"Proficiência em Perícia","description":"Você adquire proficiência em uma perícia à sua escolha."},{"name":"Especialização","description":"Escolha uma perícia na qual você tenha proficiência, mas não seja Especialização. Você obtém Especialização nessa perícia."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.805Z"}'::jsonb),
-  ('mage-slayer', 'Exterminador de Conjuradores', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Quebrador de Concentração","description":"Quando você causa dano a uma criatura que está se concentrando em uma magia, ela tem Desvantagem na salvaguarda que realiza para manter a Concentração."},{"name":"Resguardo Mental","description":"Se falhar em uma salvaguarda de Inteligência, Sabedoria ou Carisma, em vez disso você escolhe ser bem-sucedido. Após usar esse benefício, você não pode usá-lo novamente até completar um Descanso Curto ou Longo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.805Z"}'::jsonb),
-  ('skilled', 'Habilidoso', 'origin', TRUE, NULL, '[{"description":"Você adquire proficiência em qualquer combinação de três perícias ou ferramentas à sua escolha."},{"name":"Repetível","description":"Você pode adquirir este talento mais de uma vez."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.791Z"}'::jsonb),
-  ('grappler', 'Imobilizador', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Socar e Imobilizar","description":"Quando você atinge uma criatura com um Ataque Desarmado como parte da ação Atacar no seu turno, pode usar as opções Dano e Imobilizar apenas uma vez por turno."},{"name":"Vantagem no Ataque","description":"Você tem Vantagem em jogadas de ataque contra uma criatura Imobilizada por você."},{"name":"Imobilizador Veloz","description":"Você não precisa gastar movimento adicional para se mover enquanto estiver imobilizando uma criatura Imobilizada, desde que ela seja do seu tamanho ou menor."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.806Z"}'::jsonb),
-  ('magic-initiate', 'Iniciado em Magia', 'origin', TRUE, NULL, '[{"name":"Dois Truques","description":"Você aprende dois truques à sua escolha na lista de magias de Clérigo, Druida ou Mago. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias deste talento (escolha quando selecionar este talento)."},{"name":"Magia de 1º Círculo","description":"Escolha uma magia de 1º círculo da mesma lista que você selecionou para os truques deste talento. Você tem essa magia sempre preparada. Você pode conjurá-la uma vez sem um espaço de magia, e você restaura a capacidade de conjurá-la dessa maneira quando completa um Descanso Longo. Você também pode conjurar a magia usando qualquer espaço de magia que tiver."},{"name":"Substituição de Magia","description":"Sempre que você alcança um novo nível, pode substituir uma das magias que escolheu para este talento por uma magia diferente do mesmo círculo da lista de magias escolhida."},{"name":"Repetível","description":"Repetível. Você pode adquirir este talento mais de uma vez, mas deve escolher uma lista de magias diferente a cada vez."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.791Z"}'::jsonb),
-  ('interception', 'Interceptação', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando uma criatura à sua vista atinge outra criatura a até 1,5 metro de você com uma jogada de ataque, você pode executar uma Reação para reduzir o dano causado ao alvo em 1d10 mais seu Bônus de Proficiência. Você deve estar segurando um Escudo ou uma arma Simples ou Marcial para executar esta Reação."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.818Z"}'::jsonb),
-  ('inspiring-leader', 'Líder Inspirador', 'general', FALSE, 'Nível 4 ou superior, Sabedoria ou Carisma 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Atuação Encorajadora","description":"Ao completar um Descanso Curto ou Longo, você pode fazer uma atuação encorajadora: um discurso, música ou dança. Ao realizar isso, escolha até seis aliados (você pode se incluir) a até 9 metros de você que presenciaram a atuação. Criaturas escolhidas recebem Pontos de Vida Temporários iguais ao seu nível de personagem mais o modificador do atributo que você aumentou com este talento."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.806Z"}'::jsonb),
-  ('blind-fighting', 'Luta às Cegas', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Você tem Visão às Cegas com um alcance de 3 metros."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.819Z"}'::jsonb),
-  ('keen-mind', 'Mente Aguçada', 'general', FALSE, 'Nível 4 ou superior, Inteligência 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência em 1, até no máximo 20."},{"name":"Conhecimento Vasto","description":"Escolha uma das seguintes perícias: Arcanismo, História, Investigação, Natureza ou Religião. Se não tiver proficiência na perícia escolhida, você a adquire; se já for proficiente, adquire Especialização."},{"name":"Análise Rápida","description":"Você pode executar a ação Analisar como uma Ação Bônus."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.807Z"}'::jsonb),
-  ('weapon-master', 'Mestre das Armas', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Propriedade de Maestria","description":"Seu treinamento com armas permite que você use a propriedade de maestria de um tipo de arma Simples ou Marcial à sua escolha, desde que você tenha proficiência com ela. Sempre que completar um Descanso Longo, você pode trocar o tipo de arma por outro elegível."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.807Z"}'::jsonb),
-  ('medium-armor-master', 'Mestre em Armaduras Médias', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Armadura Média', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Portador Ágil","description":"Enquanto estiver usando armadura Média, você pode adicionar 3, em vez de 2, à sua CA se tiver um valor de Destreza 16 ou superior."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.807Z"}'::jsonb),
-  ('heavy-armor-master', 'Mestre em Armaduras Pesadas', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Armadura Pesada', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Constituição em 1, até no máximo 20."},{"name":"Redução de Dano","description":"Quando você é atingido por um ataque enquanto está vestido com uma armadura Pesada, qualquer dano Contundente, Cortante e Perfurante causado a você por esse ataque é reduzido em uma quantidade de pontos igual ao seu Bônus de Proficiência."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.808Z"}'::jsonb),
-  ('polearm-master', 'Mestre em Armas de Haste', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Golpe de Haste","description":"Como uma ação, imediatamente após atacar com um Cajado, Lança ou uma arma que tenha a propriedade Extensão e Pesado, você pode executar uma Ação Bônus para realizar um ataque corpo a corpo com a extremidade oposta da arma. A arma causa dano Contundente, e o dado de dano da arma para este ataque é um d4."},{"name":"Golpe Reativo","description":"Ao empunhar um Cajado, Lança ou uma arma que tenha as propriedades Extensão e Pesado, você pode executar uma Reação para realizar um ataque corpo a corpo com essa arma contra uma criatura que entra no seu alcance."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.808Z"}'::jsonb),
-  ('great-weapon-master', 'Mestre em Armas Grandes', 'general', FALSE, 'Nível 4 ou superior, Força 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força em 1, até no máximo 20."},{"name":"Maestria em Armas Pesadas","description":"Quando você atinge uma criatura com uma arma que tem a propriedade Pesada como parte da ação Atacar no seu turno, você pode causar dano adicional ao alvo com a arma. O dano adicional é igual ao seu Bônus de Proficiência."},{"name":"Cortar","description":"Imediatamente após obter um Acerto Crítico ou reduzir uma criatura a 0 Pontos de Vida com uma arma Corpo a Corpo, você pode realizar um ataque com a mesma arma como uma Ação Bônus."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.809Z"}'::jsonb),
-  ('shield-master', 'Mestre em Escudos', 'general', FALSE, 'Nível 4 ou superior, Treinamento com Escudo', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força em 1, até no máximo 20."},{"name":"Golpe de Escudo","description":"Ao atacar uma criatura a até 1,5 metro de você como parte da ação Atacar e atingir com uma arma Corpo a Corpo, você pode atacar imediatamente o alvo com seu Escudo se ele estiver equipado, forçando o alvo a realizar uma salvaguarda de Força (CD 8 mais seu modificador de Força e seu Bônus de Proficiência). Se falhar, você empurra o alvo a 1,5 metro de você ou impõe a ele a condição Caído (à sua escolha). Você pode usar esse benefício apenas uma vez em cada um dos seus turnos."},{"name":"Interpor Escudo","description":"Se você for submetido a um efeito que lhe permita realizar uma salvaguarda de Destreza para sofrer apenas metade do dano, pode usar uma Reação para não sofrer dano se você for bem-sucedido na salvaguarda e estiver segurando um Escudo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.809Z"}'::jsonb),
-  ('sharpshooter', 'Mestre-Atirador', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza em 1, até no máximo 20."},{"name":"Ignorar Cobertura","description":"Seus ataques à distância com armas ignoram Cobertura Parcial e Cobertura de Três Quartos."},{"name":"Disparo à Queima-Roupa","description":"Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com armas à Distância."},{"name":"Tiro Longo","description":"Atacar com alcance máximo não impõe Desvantagem em suas jogadas de ataque com armas à Distância."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.809Z"}'::jsonb),
-  ('musician', 'Músico', 'origin', FALSE, NULL, '[{"name":"Treinamento em Instrumentos","description":"Você adquire proficiência com três Instrumentos Musicais à sua escolha."},{"name":"Canção Encorajadora","description":"Ao completar um Descanso Curto ou Longo, você pode tocar uma música em um Instrumento Musical com o qual tem proficiência e conceder Inspiração Heroica a aliados que ouvem a música. O número de aliados que você pode afetar desse modo é igual ao seu Bônus de Proficiência."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.792Z"}'::jsonb),
-  ('piercer', 'Perfurador', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Punção","description":"Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Perfurante, pode jogar novamente um dos dados de dano do ataque, e você deve usar a nova jogada."},{"name":"Crítico Melhorado","description":"Ao obter um Acerto Crítico que causa dano Perfurante a uma criatura, você pode jogar um dado de dano adicional ao determinar o dano Perfurante adicional que o alvo sofre."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.810Z"}'::jsonb),
-  ('protection', 'Protetivo', 'fighting-style', FALSE, 'Característica de Estilo de Luta', '[{"description":"Quando uma criatura à sua vista ataca um alvo que não é você e que está a até 1,5 metro de distância, você pode executar uma Reação para interpor seu Escudo, se o estiver segurando. Isso impõe Desvantagem na jogada de ataque que acionou a reação e em todas as jogadas contra o alvo até o início do seu próximo turno, enquanto você estiver a até 1,5 metro do alvo."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.819Z"}'::jsonb),
-  ('resilient', 'Resiliente', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Escolha um atributo no qual você não tenha proficiência em salvaguarda. Aumente o valor de atributo escolhido em 1, até no máximo 20."},{"name":"Proficiência em Salvaguarda","description":"Você adquire proficiência em salvaguardas com o atributo escolhido."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.811Z"}'::jsonb),
-  ('durable', 'Resistente', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Constituição em 1, até no máximo 20."},{"name":"Desafie a Morte","description":"Você tem Vantagem em Salvaguardas Contra Morte."},{"name":"Recuperação Rápida","description":"Como uma Ação Bônus, você pode gastar um de seus Dados de Pontos de Vida, jogar o dado e recuperar um número de Pontos de Vida igual ao resultado."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.811Z"}'::jsonb),
-  ('sentinel', 'Sentinela', 'general', FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Diligente","description":"Imediatamente após uma criatura em até 1,5 metro de você executar a ação Desengajar ou atingir um alvo diferente de você com um ataque, você pode realizar um Ataque de Oportunidade contra essa criatura."},{"name":"Deter","description":"Ao atingir uma criatura com um Ataque de Oportunidade, o Deslocamento da criatura se torna 0 pelo resto do turno atual."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.812Z"}'::jsonb),
-  ('stealthy', 'Sorrateiro', 'general', FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza em 1, até no máximo 20."},{"name":"Visão às Cegas","description":"Você tem Visão às Cegas com um alcance de 3 metros."},{"name":"Névoa de Guerra","description":"Você explora as distrações da batalha e tem Vantagem em qualquer teste de Destreza (Furtividade) que realiza como parte da ação Esconder durante o combate."},{"name":"Atirador","description":"Se você realizar uma jogada de ataque enquanto estiver escondido e errar a jogada, realizar a jogada de ataque não revela sua localização."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.812Z"}'::jsonb),
-  ('lucky', 'Sortudo', 'origin', FALSE, NULL, '[{"name":"Pontos de Sorte","description":"Você tem um número de Pontos de Sorte igual ao seu Bônus de Proficiência e pode gastar os pontos nos benefícios abaixo. Você restaura seus Pontos de Sorte gastos quando completa um Descanso Longo."},{"name":"Vantagem","description":"Quando você joga um d20 para um Teste de D20, pode gastar 1 Ponto de Sorte para ter Vantagem na jogada."},{"name":"Desvantagem","description":"Quando uma criatura jogar um d20 para uma jogada de ataque contra você, você pode gastar 1 Ponto de Sorte para impor Desvantagem nessa jogada."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.793Z"}'::jsonb),
-  ('slasher', 'Talhador', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Debilitar","description":"Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Cortante, você pode reduzir o Deslocamento dessa criatura em 3 metros até o início do seu próximo turno."},{"name":"Crítico Melhorado","description":"Ao obter um Acerto Crítico que causa dano Cortante a uma criatura, ela tem Desvantagem nas jogadas de ataque até o início do seu próximo turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.813Z"}'::jsonb),
-  ('telekinetic', 'Telecinético', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Telecinese Menor","description":"Você aprende a magia Mãos Mágicas. Você pode conjurá-la sem componentes Verbais ou Somáticos, pode usar a mão espectral Invisível e o alcance dela e a distância que ela pode estar de você aumentam em 9 metros ao conjurá-la. O atributo de conjuração da magia é o atributo aumentado por este talento."},{"name":"Empurrão Telecinético","description":"Como uma Ação Bônus, você pode empurrar telecinéticamente uma criatura à sua vista a até 9 metros de você. Ao realizar isso, o alvo deve ser bem-sucedido em uma salvaguarda de Força (CD 8 mais o modificador de atributo do aumento por este talento e seu Bônus de Proficiência) ou é movido 1,5 metro na sua direção ou para longe de você."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.813Z"}'::jsonb),
-  ('telepathic', 'Telepático', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Enunciado Telepático","description":"Você pode falar telepaticamente com qualquer criatura à sua vista a até 18 metros de você. Seus enunciados telepáticos estão em um idioma que você conhece, e a criatura só o entende se souber esse idioma. Sua comunicação não dá à criatura a capacidade de responder a você telepaticamente."},{"name":"Detectar Pensamentos","description":"Você tem a magia Detectar Pensamentos sempre preparada. Você pode conjurá-la sem um espaço de magia ou componentes de magia, não podendo conjurá-la dessa forma novamente antes de completar um Descanso Longo. Além disso, pode conjurá-la gastando o espaço de magia que você tem do círculo apropriado. Seu atributo de conjuração para a magia é o atributo aumentado por este talento."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.813Z"}'::jsonb),
-  ('shadow-touched', 'Tocado pela Sombra', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Magia Sombria","description":"Escolha uma magia de 1º círculo da escola de magia Ilusão ou Necromancia. Você tem essa magia e Invisibilidade sempre preparadas, podendo conjurá-las sem gastar espaço de magia. Após usar uma delas desse modo, você não pode conjurá-la assim novamente até completar um Descanso Longo. Também é possível conjurar estas magias utilizando espaços de magia de círculos apropriados. O atributo de conjuração das magias é o aprimorado por este talento."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.814Z"}'::jsonb),
-  ('fey-touched', 'Tocado pelas Fadas', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20."},{"name":"Magia Feérica","description":"Escolha uma magia de 1º círculo da escola de magia Adivinhação ou Encantamento. Você tem sempre essa magia e Passo Nebuloso preparadas, podendo conjurá-las sem gastar espaço de magia. Após usar uma delas desse modo, você não pode conjurá-la assim novamente até completar um Descanso Longo. Também é possível conjurar essas magias utilizando espaços de magia de círculos apropriados. O atributo de conjuração das magias é o aprimorado por este talento."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.814Z"}'::jsonb),
-  ('martial-weapon-training', 'Treinamento com Armas Marciais', 'general', FALSE, 'Nível 4 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Força ou Destreza em 1, até no máximo 20."},{"name":"Proficiência com Armas","description":"Você adquire proficiência com armas Marciais."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.815Z"}'::jsonb),
-  ('tavern-brawler', 'Valentão de Taverna', 'origin', FALSE, NULL, '[{"name":"Ataque Desarmado Aprimorado","description":"Quando você atinge com seu Ataque Desarmado e causar dano, pode causar dano Contundente igual a 1d4 pontos mais seu modificador de Força em vez do dano normal de um Ataque Desarmado."},{"name":"Dano Garantido","description":"Sempre que você joga um dado de dano para seu Ataque Desarmado, pode jogar novamente o dado se o resultado for 1, e deve usar a nova jogada."},{"name":"Armamento Improvisado","description":"Você tem proficiência com armas improvisadas."},{"name":"Empurrar","description":"Quando você atinge uma criatura com um Ataque Desarmado como parte da ação Atacar no seu turno, pode causar dano ao alvo e também empurrá- -lo 1,5 metro para longe de você. Você pode usar esse benefício apenas uma vez por turno."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.793Z"}'::jsonb),
-  ('mobile', 'Velocista', 'general', FALSE, 'Nível 4 ou superior, Destreza ou Constituição 13 ou superior', '[{"name":"Aumento no Valor de Atributo","description":"Aumente seu valor de Destreza ou Constituição em 1, até no máximo 20."},{"name":"Aumento de Deslocamento","description":"Seu Deslocamento aumenta em 3 metros."},{"name":"Correr em Terreno Difícil","description":"Ao executar a ação Correr no seu turno, Terreno Difícil não custa movimento adicional pelo resto deste turno."},{"name":"Movimentação Ágil","description":"Ataques de Oportunidade têm Desvantagem contra você."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.815Z"}'::jsonb),
-  ('tough', 'Vigoroso', 'origin', FALSE, NULL, '[{"description":"Seus Pontos de Vida máximos aumentam em um valor igual ao dobro do seu nível de personagem quando você obtém este talento. Sempre que você alcança um nível de personagem depois disso, seus Pontos de Vida máximos aumentam em 2 Pontos de Vida adicionais."}]'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":5,"chapterTitle":"Talentos","pdfPath":"doc/livro-jogador.pdf","pdfPages":[205,217],"extractedAt":"2026-06-25T01:46:09.795Z"}'::jsonb);
+  ('origin', 'Origem', 'Talento de Origem', 1),
+  ('general', 'Geral', 'Talento Geral', 2),
+  ('fighting-style', 'Estilo de Luta', 'Talento de Estilo de Luta', 3),
+  ('epic-boon', 'Dádiva Épica', 'Talento de Dádiva Épica', 4);
 
 
-INSERT INTO rpg.phb_spell (id, name, level, level_label, school, casting_time, range, components, duration, concentration, ritual, description, higher_levels, source_meta)
+INSERT INTO rpg.phb_feat (slug, name, category_id, repeatable, prerequisite, source_citation_id)
+VALUES
+  ('elemental-adept', 'Adepto Elemental', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), TRUE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('charger', 'Agressor', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('alert', 'Alerta', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('observant', 'Analítico', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Inteligência ou Sabedoria 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('archery', 'Arquearia', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('artisan', 'Artifista', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('savage-attacker', 'Atacante Selvagem', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('spell-sniper', 'Atirador Arcano', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('athlete', 'Atleta', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('actor', 'Ator', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Carisma 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('ability-score-improvement', 'Aumento no Valor de Atributo', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), TRUE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('chef', 'Chef', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('thrown-weapon-fighting', 'Combate com Armas de Arremesso', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('great-weapon-fighting', 'Combate com Armas Grandes', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('two-weapon-fighting', 'Combate com Duas Armas', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('unarmed-fighting', 'Combate Desarmado', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('mounted-combatant', 'Combatente Montado', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('war-caster', 'Conjurador Bélico', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('ritual-caster', 'Conjurador Ritualista', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Inteligência, Sabedoria ou Carisma 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('healer', 'Curandeiro', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-fortitude', 'Dádiva da Fortitude', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-combat-prowess', 'Dádiva da Proeza em Combate', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-skill-proficiency', 'Dádiva da Proficiência em Perícia', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-spell-recall', 'Dádiva da Recordação de Magia', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior, Característica de Conjuração', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-recovery', 'Dádiva da Recuperação', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-energy-resistance', 'Dádiva da Resistência à Energia', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-speed', 'Dádiva da Velocidade', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-dimensional-travel', 'Dádiva da Viagem Dimensional', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-truesight', 'Dádiva da Visão Verdadeira', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-irresistible-offense', 'Dádiva do Ataque Irresistível', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-fate', 'Dádiva do Destino', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('boon-of-the-night-spirit', 'Dádiva do Espírito da Noite', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'epic-boon'), FALSE, 'Nível 19 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('defense', 'Defensivo', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('dueling', 'Duelismo', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('defensive-duelist', 'Duelista Defensivo', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('poisoner', 'Envenenador', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('crusher', 'Esmagador', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('dual-wielder', 'Especialista Ambidestro', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('lightly-armored', 'Especialista em Armaduras Leves', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('moderately-armored', 'Especialista em Armaduras Médias', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Treinamento com Armadura Leve', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('heavily-armored', 'Especialista em Armaduras Pesadas', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Treinamento com Armadura Média', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('crossbow-expert', 'Especialista em Besta', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('skill-expert', 'Especialista em Perícia', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('mage-slayer', 'Exterminador de Conjuradores', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('skilled', 'Habilidoso', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), TRUE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('grappler', 'Imobilizador', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('magic-initiate', 'Iniciado em Magia', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), TRUE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('interception', 'Interceptação', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('inspiring-leader', 'Líder Inspirador', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Sabedoria ou Carisma 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('blind-fighting', 'Luta às Cegas', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('keen-mind', 'Mente Aguçada', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Inteligência 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('weapon-master', 'Mestre das Armas', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('medium-armor-master', 'Mestre em Armaduras Médias', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Treinamento com Armadura Média', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('heavy-armor-master', 'Mestre em Armaduras Pesadas', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Treinamento com Armadura Pesada', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('polearm-master', 'Mestre em Armas de Haste', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('great-weapon-master', 'Mestre em Armas Grandes', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Força 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('shield-master', 'Mestre em Escudos', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Treinamento com Escudo', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('sharpshooter', 'Mestre-Atirador', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('musician', 'Músico', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('piercer', 'Perfurador', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('protection', 'Protetivo', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('resilient', 'Resiliente', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('durable', 'Resistente', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('sentinel', 'Sentinela', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('stealthy', 'Sorrateiro', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('lucky', 'Sortudo', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('slasher', 'Talhador', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('telekinetic', 'Telecinético', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('telepathic', 'Telepático', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('shadow-touched', 'Tocado pela Sombra', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('fey-touched', 'Tocado pelas Fadas', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('martial-weapon-training', 'Treinamento com Armas Marciais', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('tavern-brawler', 'Valentão de Taverna', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('mobile', 'Velocista', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Destreza ou Constituição 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('tough', 'Vigoroso', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217'));
+
+
+INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
+VALUES
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'elemental-adept'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'elemental-adept'), 2, 'Domínio Elemental', 'Escolha um dos seguintes tipos de dano: Ácido, Elétrico, Gélido, Ígneo ou Trovejante. Magias que você conjura ignoram a Resistência a dano do tipo escolhido. Além disso, ao jogar dano para uma magia que causa dano deste tipo, você pode tratar qualquer 1 em um dado de dano como um 2.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'elemental-adept'), 3, 'Repetível', 'Repetível. Você pode adquirir este talento mais de uma vez, mas deve escolher um tipo de dano diferente a cada vez para Domínio Elemental.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'charger'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'charger'), 2, 'Corrida Aprimorada', 'Quando você executa a ação Correr, seu Deslocamento aumenta em 3 metros para esta ação.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'charger'), 3, 'Ataque em Investida', 'Se você se mover pelo menos 3 metros em linha reta em direção a um alvo imediatamente antes de atingi-lo com uma jogada de ataque corpo a corpo como parte da ação Atacar, escolha um dos seguintes efeitos: obter um bônus de +1d8 na jogada de dano do ataque ou empurrar o alvo até 3 metros se ele não for um tamanho maior que você. Você pode usar esse benefício apenas uma vez em cada um dos seus turnos.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'alert'), 1, 'Proficiência em Iniciativa', 'Quando você joga Iniciativa, pode adicionar seu Bônus de Proficiência à jogada.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'alert'), 2, 'Troca de Iniciativa', 'Imediatamente após jogar Iniciativa, você pode trocar sua Iniciativa com a Iniciativa de um aliado voluntário no mesmo combate. Não é possível fazer a troca se você ou o aliado tem a condição Incapacitado.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'observant'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência ou Sabedoria em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'observant'), 2, 'Observador Atento', 'Escolha uma das seguintes perícias: Intuição, Investigação ou Percepção. Se não tiver proficiência na perícia escolhida, você a adquire; se já for proficiente, adquire Especialização.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'observant'), 3, 'Pesquisa Rápida', 'Você pode executar a ação Procurar como uma Ação Bônus.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'archery'), 1, NULL, 'Você recebe um bônus de +2 nas jogadas de ataque com armas à Distância.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'artisan'), 1, 'Proficiência com Ferramentas', 'Você adquire proficiência com três Ferramentas de Artesão diferentes à sua escolha na tabela Fabricação Rápida.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'artisan'), 2, 'Desconto', 'Sempre que você compra um item não mágico, recebe um desconto de 20% nele.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'artisan'), 3, 'Fabricação Rápida', 'Quando completa um Descanso Longo, você pode fabricar uma peça de equipamento da tabela Fabricação Rápida, se tiver as Ferramentas de Artesão associadas a esse item e tenha proficiência com essas ferramentas. O item permanece até que você complete outro Descanso Longo, momento em que o item se desfaz. Fabricação Rápida
+
+Ferramentas de Artesão | Itens de Fabricação
+Ferramentas de Carpinteiro | Escada, Tocha 
+Ferramentas de Coureiro | Algibeira, Estojo 
+Ferramentas de Entalhador | Cajado, Clava, Clava Grande 
+Ferramentas de Ferreiro | Arpéu, Balde, Esferas de Metal, Estrepes, Panela de Ferro 
+Ferramentas de Funileiro | Pederneira, Pá, Sino 
+Ferramentas de Oleiro | Jarro, Lâmpada 
+Ferramentas de Pedreiro | Roldana e Polias 
+Ferramentas de Tecelão | Cesta, Corda, Rede, Tenda'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'savage-attacker'), 1, NULL, 'Uma vez por turno, quando você atinge um alvo com uma arma, pode jogar os dados de dano da arma duas vezes e usar qualquer uma das jogadas contra o alvo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'spell-sniper'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'spell-sniper'), 2, 'Ignorar Cobertura', 'Jogadas de ataque com magias ignoram Cobertura Parcial e Cobertura de Três Quartos.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'spell-sniper'), 3, 'Conjuração à Queima-Roupa', 'Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com magias.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'spell-sniper'), 4, 'Alcance Aumentado', 'Ao conjurar uma magia que tem um alcance de pelo menos 3 metros e exija realizar uma jogada de ataque, você pode aumentar o alcance da magia em 18 metros.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'athlete'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'athlete'), 2, 'Deslocamento de Escalada', 'Você adquire Deslocamento de Escalada igual ao seu Deslocamento.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'athlete'), 3, 'Levantar', 'Quando você tem a condição Caído, pode se reerguer com apenas 1,5 metro de movimento.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'athlete'), 4, 'Saltar', 'Você pode realizar um Salto em Distância ou Salto em Altura correndo após mover-se apenas 1,5 metro.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'actor'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'actor'), 2, 'Personificação', 'Enquanto está disfarçado como uma pessoa real ou fictícia, você tem Vantagem em testes de Carisma (Atuação ou Enganação) para convencer os outros de que você é essa pessoa.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'actor'), 3, 'Mimetismo', 'Você pode imitar os sons de outras criaturas, incluindo a fala. Uma criatura que ouve a imitação deve ser bem-sucedida em um teste de Sabedoria (Intuição) para determinar que o efeito é falso (CD 8 mais seu modificador de Carisma e seu Bônus de Proficiência).'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'ability-score-improvement'), 1, NULL, 'Aumente um valor de atributo à sua escolha em 2, ou aumente dois valores de atributo à sua escolha em 1. Este talento não pode aumentar um valor de atributo acima de 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'ability-score-improvement'), 2, 'Repetível', 'Você pode adquirir este talento mais de uma vez.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'chef'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Constituição ou Sabedoria em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'chef'), 2, 'Utensílios de Cozinheiro', 'Você adquire proficiência com Utensílios de Cozinheiro se ainda não o tiver.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'chef'), 3, 'Refeição Satisfatória', 'Como parte de um Descanso Curto, você pode cozinhar alimentos especiais se tiver ingredientes e Utensílios de Cozinheiro à mão. Você pode preparar comida suficiente para um número de criaturas igual a 4 mais seu Bônus de Proficiência. No final do Descanso Curto, qualquer criatura que comer a comida e gastar um ou mais Dados de Vida para recuperar Pontos de Vida recupera 1d8 Pontos de Vida adicionais.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'chef'), 4, 'Guloseimas Revigorantes', 'Com 1 hora de trabalho ou quando completar um Descanso Longo, você pode cozinhar um número de guloseimas igual ao seu Bônus de Proficiência se tiver ingredientes e Utensílios de Cozinheiro à mão. Essas guloseimas especiais permanecem por 8 horas após serem feitas. Uma criatura pode executar uma Ação Bônus para comer uma dessas guloseimas e obter um número de Pontos de Vida Temporários igual ao seu Bônus de Proficiência.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'thrown-weapon-fighting'), 1, NULL, 'Quando você atinge com uma jogada de ataque à distância usando uma arma com a propriedade Arremesso, você obtém um bônus de +2 na jogada de dano.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'great-weapon-fighting'), 1, NULL, 'Quando você joga dano para um ataque que realiza com uma arma Corpo a Corpo que está empunhando com as duas mãos, pode tratar qualquer 1 ou 2 em um dado de dano como um 3. A arma deve ter a propriedade Duas Mãos ou Versátil para obter este benefício.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'two-weapon-fighting'), 1, NULL, 'Quando você realiza um ataque adicional como resultado de usar uma arma com a propriedade Leve, você pode adicionar seu modificador de atributo ao dano desse ataque, se já não estiver adicionando-o ao dano.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'unarmed-fighting'), 1, NULL, 'Quando você atinge com seu Ataque Desarmado e causa dano, pode causar dano Contundente igual a 1d6 mais seu modificador de Força em vez do dano normal de um Ataque Desarmado. Se você não estiver segurando nenhuma arma ou Escudo quando realizar a jogada de ataque, o d6 se torna um d8. No início de cada um dos seus turnos, você pode causar 1d4 pontos de dano Contundente a uma criatura Imobilizada por você.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mounted-combatant'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força, Destreza ou Sabedoria em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mounted-combatant'), 2, 'Golpe Montado', 'Enquanto estiver montado, você tem Vantagem em jogadas de ataque contra qualquer criatura desmontada a até 1,5 metro de sua montaria que seja pelo menos um tamanho menor que a montaria.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mounted-combatant'), 3, 'Pulo Lateral', 'Se sua montaria for submetida a um efeito que lhe permita realizar uma salvaguarda de Destreza para sofrer apenas metade do dano, ela não sofre dano em caso de sucesso, e apenas metade do dano se falhar. Para que sua montaria obtenha esse benefício, você deve estar montando-a, e nenhum de vocês pode ter a condição Incapacitado.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mounted-combatant'), 4, 'Redirecionar Ataque', 'Enquanto estiver montado, você pode forçar um ataque que atinge sua montaria a atingi-lo se você não tem a condição Incapacitado.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'war-caster'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'war-caster'), 2, 'Concentração', 'Você tem Vantagem em salvaguardas de Constituição que realiza para manter a Concentração.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'war-caster'), 3, 'Magia Reativa', 'Quando uma criatura provocar um Ataque de Oportunidade a você ao sair do seu alcance, você pode executar uma Reação para conjurar uma magia contra a criatura, em vez de realizar o Ataque de Oportunidade. A magia deve ter um tempo de conjuração de uma ação e deve ter como alvo apenas aquela criatura.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'war-caster'), 4, 'Componentes Somáticos', 'Você pode realizar os componentes somáticos de magias mesmo quando estiver com armas ou um Escudo em uma ou ambas as mãos.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'ritual-caster'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'ritual-caster'), 2, 'Magias Rituais', 'Escolha um número de magias de 1º círculo igual ao seu Bônus de Proficiência que tem o marcador Ritual. Você tem essas magias sempre preparadas e pode conjurá-las com qualquer espaço de magia que tiver. O atributo de conjuração das magias é o atributo aumentado por este talento. Sempre que seu Bônus de Proficiência aumentar depois disso, você pode adicionar uma magia de 1º círculo com o marcador Ritual às magias sempre preparadas com esta característica.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'ritual-caster'), 3, 'Ritual Rápido', 'Com este benefício, você pode conjurar uma magia Ritual que tem preparada usando seu tempo de conjuração normal, em vez do tempo prolon- gado para um Ritual. Realizar isso não requer um espaço de magia. Após conjurar a magia desse modo, você não pode usar esse benefício novamente até completar um Descanso Longo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'healer'), 1, 'Médico de Combate', 'Caso tenha um Kit de Curandeiro, você pode gastar um uso e cuidar de uma criatura a até 1,5 metro de você como uma ação Usar Objeto. Essa criatura pode gastar um dos Dados de Pontos de Vida dela e você joga esse dado. A criatura recupera um número de Pontos de Vida igual à jogada mais o seu Bônus de Proficiência.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'healer'), 2, 'Cura Garantida', 'Sempre que jogar um dado para determinar o número de Pontos de Vida que você recupera com uma magia ou com o benefício do talento Médico de Combate, você pode jogar novamente o dado se o resultado for 1, e você deve usar a nova jogada.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-fortitude'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-fortitude'), 2, 'Saúde Fortalecida', 'Seus Pontos de Vida máximos aumentam em 40. Além disso, sempre que você recuperar Pontos de Vida, pode recuperar Pontos de Vida adicionais iguais ao seu modificador de Constituição. Após recuperar esses Pontos de Vida adicionais, você não pode fazer isso novamente até o início do seu próximo turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-combat-prowess'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-combat-prowess'), 2, 'Pontaria Inigualável', 'Quando você erra uma jogada de ataque, em vez disso você acerta. Após usar este benefício, você não pode utilizá-lo novamente até o início do seu próximo turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-skill-proficiency'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-skill-proficiency'), 2, 'Assecla Completo', 'Você adquire proficiência em todas as perícias.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-skill-proficiency'), 3, 'Especialização', 'Escolha uma perícia na qual você tenha proficiência, mas não tenha Especialização. Você obtém Especialização nessa perícia.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-spell-recall'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-spell-recall'), 2, 'Conjuração Livre', 'Sempre que você conjurar uma magia com um espaço de magia de 1º a 4º círculo, jogue 1d4. Se o resultado que você tirar for o mesmo que o círculo do espaço, o espaço não é gasto.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'), 2, 'Até a Morte', 'Quando você for reduzido a 0 Pontos de Vida, pode escolher ficar com 1 Ponto de Vida e recuperar um número de Pontos de Vida igual à metade dos seus Pontos de Vida máximos. Após usar esse benefício, você não pode usá-lo novamente até completar um Descanso Longo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'), 3, 'Recuperar Vitalidade', 'Você tem uma reserva de dez d10s. Como uma Ação Bônus, você pode gastar dados da reserva, jogá-los e recuperar um número de Pontos de Vida igual ao total do resultado. Você restaura todos os dados gastos quando você completa um Descanso Longo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-energy-resistance'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-energy-resistance'), 2, 'Resistências à Energia', 'Você obtém Resistência a dois dos seguintes tipos de dano à sua escolha: Ácido, Elétrico, Gélido, Ígneo, Necrótico, Psíquico, Radiante, Trovejante ou Venenoso. Sempre que completar um Descanso Longo, você pode mudar suas escolhas.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-energy-resistance'), 3, 'Redirecionamento de Energia', 'Ao sofrer dano de um dos tipos escolhidos para o benefício Resistências à Energia, você pode executar uma Reação para direcionar o dano do mesmo tipo para outra criatura à sua vista a até 18 metros de você que não esteja sob Cobertura Total. Se você fizer isso, essa criatura deve ser bem-sucedida em uma salvaguarda de Destreza (CD 8 mais seu modificador de Constituição e seu Bônus de Proficiência) ou sofre dano igual a 2d12 mais seu modificador de Constituição.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-speed'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-speed'), 2, 'Artista de Fuga', 'Como uma Ação Bônus, você pode executar a ação Desengajar, que também encerra a condição Imobilizado em você.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-speed'), 3, 'Agilidade', 'Seu Deslocamento aumenta em 9 metros.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-dimensional-travel'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-dimensional-travel'), 2, 'Passos Fugazes', 'Imediatamente após executar a ação Atacar ou Usar Magia, você pode se teleportar até 9 metros para um espaço desocupado à sua vista.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-truesight'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-truesight'), 2, 'Visão Verdadeira', 'Você tem Visão Verdadeira com um alcance de 18 metros.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-irresistible-offense'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-irresistible-offense'), 2, 'Superar Defesas', 'O dano Contundente, Cortante e Perfurante que você causa sempre ignora Resistência.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-irresistible-offense'), 3, 'Golpe Devastador', 'Quando você tira 20 no d20 para uma jogada de ataque, pode causar dano adicional ao alvo igual ao valor do atributo aumentado por este talento. O tipo de dano adicional é o mesmo do ataque.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-fate'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-fate'), 2, 'Aprimorar Destino', 'Quando você ou outra criatura a até 18 metros de você for bem-sucedida ou falhar em um Teste D20, você pode jogar 2d4 e aplicar os resultados como bônus ou penalidade na jogada de d20. Após usar este benefício, você não pode utilizá-lo novamente até jogar Iniciativa ou completar um Descanso Curto ou Longo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-the-night-spirit'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 30.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-the-night-spirit'), 2, 'Fundir-se com Sombras', 'Enquanto estiver em Meia- -luz ou Escuridão, você pode se conceder a condição Invisível como uma Ação Bônus. A condição encerra imediatamente após você executar uma ação, uma Ação Bônus ou uma Reação.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-the-night-spirit'), 3, 'Forma Sombria', 'Enquanto estiver em Meia-luz ou Escuridão, você tem Resistência a todos os danos, exceto Psíquico e Radiante.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'defense'), 1, NULL, 'Enquanto estiver usando armadura Leve, Média ou Pesada, você recebe um bônus de +1 na Classe de Armadura.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'dueling'), 1, NULL, 'Quando você segura uma arma Corpo a Corpo em uma mão e nenhuma outra arma, você recebe um bônus de +2 nas jogadas de dano desta arma.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'defensive-duelist'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'defensive-duelist'), 2, 'Aparar', 'Se estiver segurando uma arma de Acuidade e outra criatura acertar você com um ataque corpo a corpo, você pode executar uma Reação para adicionar seu Bônus de Proficiência à sua Classe de Armadura, potencialmente fazendo com que o ataque erre. Você obtém este bônus na sua CA contra ataques corpo a corpo até o início do seu próximo turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'poisoner'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Destreza ou Inteligência em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'poisoner'), 2, 'Veneno Potente', 'Ao realizar uma jogada de dano que causa dano Venenoso, você ignora Resistência a dano Venenoso.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'poisoner'), 3, 'Preparar Veneno', 'Você adquire proficiência com o Kit de Veneno. Com 1 hora de trabalho usando esse kit e gastando 50 PO em materiais, você pode fabricar um número de doses de veneno igual ao seu Bônus de Proficiência. Como uma Ação Bônus, você pode aplicar uma dose de veneno a uma arma ou peça de munição. Uma vez aplicado, o veneno retém sua potência por 1 minuto ou até você causar dano com o item envenenado, o que for mais curto. Ao sofrer dano do item envenenado, uma criatura deve ser bem-sucedida em uma salvaguarda de Constituição (CD 8 mais o modificador do atributo aumentado por este talento e seu Bônus de Proficiência) ou sofre 2d8 pontos de dano Venenoso e está com a condição Envenenado até o final do seu próximo turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'crusher'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Constituição em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'crusher'), 2, 'Empurrar', 'Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Contundente, você pode movê-la 1,5 metro para um espaço desocupado se o alvo não for um tamanho maior que você.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'crusher'), 3, 'Crítico Melhorado', 'Ao obter um Acerto Crítico que causa dano Contundente a uma criatura, jogadas de ataque contra essa criatura tem Vantagem até o início do seu próximo turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'dual-wielder'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'dual-wielder'), 2, 'Combate com Duas Armas Aprimorado', 'Quando você executa a ação Atacar no seu turno com uma arma que tenha a propriedade Leve, pode realizar um ataque adicional como uma Ação Bônus no mesmo turno com uma arma diferente, que deve ser uma arma Corpo a Corpo que não possua a propriedade Duas Mãos. Você não pode adicionar o seu modificador de atributo ao dano do ataque adicional, a menos que o modificador seja negativo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'dual-wielder'), 3, 'Saque Rápido', 'Você pode desembainhar ou embainhar duas armas que não possuam a propriedade Duas Mãos quando normalmente poderia desembainhar ou embainhar apenas uma.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'lightly-armored'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'lightly-armored'), 2, 'Treinamento com Armadura', 'Você obtém treinamento com Armadura Leve e Escudos.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'moderately-armored'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'moderately-armored'), 2, 'Treinamento com Armadura', 'Você obtém treinamento com Armadura Média.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'heavily-armored'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Constituição ou Força em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'heavily-armored'), 2, 'Treinamento com Armadura', 'Você adquire treinamento com Armadura Pesada.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'crossbow-expert'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'crossbow-expert'), 2, 'Ignorar Recarga', 'Você ignora a propriedade Recarga da Besta de Mão, Besta Leve e Besta Pesada (todas chamadas de bestas em outras partes deste talento). Se estiver segurando uma dessas bestas, você pode carregar uma peça de munição nela mesmo sem ter uma mão livre.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'crossbow-expert'), 3, 'Disparo à Queima-Roupa', 'Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com bestas.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'crossbow-expert'), 4, 'Combate com Duas Armas', 'Ao realizar o ataque adicional da propriedade Leve, você pode adicionar seu modificador de atributo ao dano do ataque adicional se esse ataque for com uma besta que tenha a propriedade Leve e você ainda não estiver adicionando esse modificador ao dano.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'skill-expert'), 1, 'Aumento no Valor de Atributo', 'Aumente um valor de atributo à sua escolha em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'skill-expert'), 2, 'Proficiência em Perícia', 'Você adquire proficiência em uma perícia à sua escolha.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'skill-expert'), 3, 'Especialização', 'Escolha uma perícia na qual você tenha proficiência, mas não seja Especialização. Você obtém Especialização nessa perícia.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mage-slayer'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mage-slayer'), 2, 'Quebrador de Concentração', 'Quando você causa dano a uma criatura que está se concentrando em uma magia, ela tem Desvantagem na salvaguarda que realiza para manter a Concentração.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mage-slayer'), 3, 'Resguardo Mental', 'Se falhar em uma salvaguarda de Inteligência, Sabedoria ou Carisma, em vez disso você escolhe ser bem-sucedido. Após usar esse benefício, você não pode usá-lo novamente até completar um Descanso Curto ou Longo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), 1, NULL, 'Você adquire proficiência em qualquer combinação de três perícias ou ferramentas à sua escolha.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), 2, 'Repetível', 'Você pode adquirir este talento mais de uma vez.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'grappler'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'grappler'), 2, 'Socar e Imobilizar', 'Quando você atinge uma criatura com um Ataque Desarmado como parte da ação Atacar no seu turno, pode usar as opções Dano e Imobilizar apenas uma vez por turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'grappler'), 3, 'Vantagem no Ataque', 'Você tem Vantagem em jogadas de ataque contra uma criatura Imobilizada por você.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'grappler'), 4, 'Imobilizador Veloz', 'Você não precisa gastar movimento adicional para se mover enquanto estiver imobilizando uma criatura Imobilizada, desde que ela seja do seu tamanho ou menor.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 1, 'Dois Truques', 'Você aprende dois truques à sua escolha na lista de magias de Clérigo, Druida ou Mago. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias deste talento (escolha quando selecionar este talento).'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 2, 'Magia de 1º Círculo', 'Escolha uma magia de 1º círculo da mesma lista que você selecionou para os truques deste talento. Você tem essa magia sempre preparada. Você pode conjurá-la uma vez sem um espaço de magia, e você restaura a capacidade de conjurá-la dessa maneira quando completa um Descanso Longo. Você também pode conjurar a magia usando qualquer espaço de magia que tiver.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 3, 'Substituição de Magia', 'Sempre que você alcança um novo nível, pode substituir uma das magias que escolheu para este talento por uma magia diferente do mesmo círculo da lista de magias escolhida.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 4, 'Repetível', 'Repetível. Você pode adquirir este talento mais de uma vez, mas deve escolher uma lista de magias diferente a cada vez.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'interception'), 1, NULL, 'Quando uma criatura à sua vista atinge outra criatura a até 1,5 metro de você com uma jogada de ataque, você pode executar uma Reação para reduzir o dano causado ao alvo em 1d10 mais seu Bônus de Proficiência. Você deve estar segurando um Escudo ou uma arma Simples ou Marcial para executar esta Reação.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'inspiring-leader'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'inspiring-leader'), 2, 'Atuação Encorajadora', 'Ao completar um Descanso Curto ou Longo, você pode fazer uma atuação encorajadora: um discurso, música ou dança. Ao realizar isso, escolha até seis aliados (você pode se incluir) a até 9 metros de você que presenciaram a atuação. Criaturas escolhidas recebem Pontos de Vida Temporários iguais ao seu nível de personagem mais o modificador do atributo que você aumentou com este talento.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'blind-fighting'), 1, NULL, 'Você tem Visão às Cegas com um alcance de 3 metros.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'keen-mind'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'keen-mind'), 2, 'Conhecimento Vasto', 'Escolha uma das seguintes perícias: Arcanismo, História, Investigação, Natureza ou Religião. Se não tiver proficiência na perícia escolhida, você a adquire; se já for proficiente, adquire Especialização.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'keen-mind'), 3, 'Análise Rápida', 'Você pode executar a ação Analisar como uma Ação Bônus.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'weapon-master'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'weapon-master'), 2, 'Propriedade de Maestria', 'Seu treinamento com armas permite que você use a propriedade de maestria de um tipo de arma Simples ou Marcial à sua escolha, desde que você tenha proficiência com ela. Sempre que completar um Descanso Longo, você pode trocar o tipo de arma por outro elegível.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'medium-armor-master'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'medium-armor-master'), 2, 'Portador Ágil', 'Enquanto estiver usando armadura Média, você pode adicionar 3, em vez de 2, à sua CA se tiver um valor de Destreza 16 ou superior.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'heavy-armor-master'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Constituição em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'heavy-armor-master'), 2, 'Redução de Dano', 'Quando você é atingido por um ataque enquanto está vestido com uma armadura Pesada, qualquer dano Contundente, Cortante e Perfurante causado a você por esse ataque é reduzido em uma quantidade de pontos igual ao seu Bônus de Proficiência.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'polearm-master'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'polearm-master'), 2, 'Golpe de Haste', 'Como uma ação, imediatamente após atacar com um Cajado, Lança ou uma arma que tenha a propriedade Extensão e Pesado, você pode executar uma Ação Bônus para realizar um ataque corpo a corpo com a extremidade oposta da arma. A arma causa dano Contundente, e o dado de dano da arma para este ataque é um d4.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'polearm-master'), 3, 'Golpe Reativo', 'Ao empunhar um Cajado, Lança ou uma arma que tenha as propriedades Extensão e Pesado, você pode executar uma Reação para realizar um ataque corpo a corpo com essa arma contra uma criatura que entra no seu alcance.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'great-weapon-master'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'great-weapon-master'), 2, 'Maestria em Armas Pesadas', 'Quando você atinge uma criatura com uma arma que tem a propriedade Pesada como parte da ação Atacar no seu turno, você pode causar dano adicional ao alvo com a arma. O dano adicional é igual ao seu Bônus de Proficiência.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'great-weapon-master'), 3, 'Cortar', 'Imediatamente após obter um Acerto Crítico ou reduzir uma criatura a 0 Pontos de Vida com uma arma Corpo a Corpo, você pode realizar um ataque com a mesma arma como uma Ação Bônus.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'shield-master'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'shield-master'), 2, 'Golpe de Escudo', 'Ao atacar uma criatura a até 1,5 metro de você como parte da ação Atacar e atingir com uma arma Corpo a Corpo, você pode atacar imediatamente o alvo com seu Escudo se ele estiver equipado, forçando o alvo a realizar uma salvaguarda de Força (CD 8 mais seu modificador de Força e seu Bônus de Proficiência). Se falhar, você empurra o alvo a 1,5 metro de você ou impõe a ele a condição Caído (à sua escolha). Você pode usar esse benefício apenas uma vez em cada um dos seus turnos.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'shield-master'), 3, 'Interpor Escudo', 'Se você for submetido a um efeito que lhe permita realizar uma salvaguarda de Destreza para sofrer apenas metade do dano, pode usar uma Reação para não sofrer dano se você for bem-sucedido na salvaguarda e estiver segurando um Escudo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'sharpshooter'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'sharpshooter'), 2, 'Ignorar Cobertura', 'Seus ataques à distância com armas ignoram Cobertura Parcial e Cobertura de Três Quartos.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'sharpshooter'), 3, 'Disparo à Queima-Roupa', 'Estar a 1,5 metro de um inimigo não impõe Desvantagem em suas jogadas de ataque com armas à Distância.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'sharpshooter'), 4, 'Tiro Longo', 'Atacar com alcance máximo não impõe Desvantagem em suas jogadas de ataque com armas à Distância.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'musician'), 1, 'Treinamento em Instrumentos', 'Você adquire proficiência com três Instrumentos Musicais à sua escolha.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'musician'), 2, 'Canção Encorajadora', 'Ao completar um Descanso Curto ou Longo, você pode tocar uma música em um Instrumento Musical com o qual tem proficiência e conceder Inspiração Heroica a aliados que ouvem a música. O número de aliados que você pode afetar desse modo é igual ao seu Bônus de Proficiência.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'piercer'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'piercer'), 2, 'Punção', 'Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Perfurante, pode jogar novamente um dos dados de dano do ataque, e você deve usar a nova jogada.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'piercer'), 3, 'Crítico Melhorado', 'Ao obter um Acerto Crítico que causa dano Perfurante a uma criatura, você pode jogar um dado de dano adicional ao determinar o dano Perfurante adicional que o alvo sofre.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'protection'), 1, NULL, 'Quando uma criatura à sua vista ataca um alvo que não é você e que está a até 1,5 metro de distância, você pode executar uma Reação para interpor seu Escudo, se o estiver segurando. Isso impõe Desvantagem na jogada de ataque que acionou a reação e em todas as jogadas contra o alvo até o início do seu próximo turno, enquanto você estiver a até 1,5 metro do alvo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'resilient'), 1, 'Aumento no Valor de Atributo', 'Escolha um atributo no qual você não tenha proficiência em salvaguarda. Aumente o valor de atributo escolhido em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'resilient'), 2, 'Proficiência em Salvaguarda', 'Você adquire proficiência em salvaguardas com o atributo escolhido.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'durable'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Constituição em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'durable'), 2, 'Desafie a Morte', 'Você tem Vantagem em Salvaguardas Contra Morte.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'durable'), 3, 'Recuperação Rápida', 'Como uma Ação Bônus, você pode gastar um de seus Dados de Pontos de Vida, jogar o dado e recuperar um número de Pontos de Vida igual ao resultado.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'sentinel'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'sentinel'), 2, 'Diligente', 'Imediatamente após uma criatura em até 1,5 metro de você executar a ação Desengajar ou atingir um alvo diferente de você com um ataque, você pode realizar um Ataque de Oportunidade contra essa criatura.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'sentinel'), 3, 'Deter', 'Ao atingir uma criatura com um Ataque de Oportunidade, o Deslocamento da criatura se torna 0 pelo resto do turno atual.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'stealthy'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'stealthy'), 2, 'Visão às Cegas', 'Você tem Visão às Cegas com um alcance de 3 metros.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'stealthy'), 3, 'Névoa de Guerra', 'Você explora as distrações da batalha e tem Vantagem em qualquer teste de Destreza (Furtividade) que realiza como parte da ação Esconder durante o combate.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'stealthy'), 4, 'Atirador', 'Se você realizar uma jogada de ataque enquanto estiver escondido e errar a jogada, realizar a jogada de ataque não revela sua localização.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'lucky'), 1, 'Pontos de Sorte', 'Você tem um número de Pontos de Sorte igual ao seu Bônus de Proficiência e pode gastar os pontos nos benefícios abaixo. Você restaura seus Pontos de Sorte gastos quando completa um Descanso Longo.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'lucky'), 2, 'Vantagem', 'Quando você joga um d20 para um Teste de D20, pode gastar 1 Ponto de Sorte para ter Vantagem na jogada.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'lucky'), 3, 'Desvantagem', 'Quando uma criatura jogar um d20 para uma jogada de ataque contra você, você pode gastar 1 Ponto de Sorte para impor Desvantagem nessa jogada.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'slasher'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'slasher'), 2, 'Debilitar', 'Uma vez por turno, quando você atinge uma criatura com um ataque que causa dano Cortante, você pode reduzir o Deslocamento dessa criatura em 3 metros até o início do seu próximo turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'slasher'), 3, 'Crítico Melhorado', 'Ao obter um Acerto Crítico que causa dano Cortante a uma criatura, ela tem Desvantagem nas jogadas de ataque até o início do seu próximo turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'telekinetic'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'telekinetic'), 2, 'Telecinese Menor', 'Você aprende a magia Mãos Mágicas. Você pode conjurá-la sem componentes Verbais ou Somáticos, pode usar a mão espectral Invisível e o alcance dela e a distância que ela pode estar de você aumentam em 9 metros ao conjurá-la. O atributo de conjuração da magia é o atributo aumentado por este talento.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'telekinetic'), 3, 'Empurrão Telecinético', 'Como uma Ação Bônus, você pode empurrar telecinéticamente uma criatura à sua vista a até 9 metros de você. Ao realizar isso, o alvo deve ser bem-sucedido em uma salvaguarda de Força (CD 8 mais o modificador de atributo do aumento por este talento e seu Bônus de Proficiência) ou é movido 1,5 metro na sua direção ou para longe de você.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'telepathic'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'telepathic'), 2, 'Enunciado Telepático', 'Você pode falar telepaticamente com qualquer criatura à sua vista a até 18 metros de você. Seus enunciados telepáticos estão em um idioma que você conhece, e a criatura só o entende se souber esse idioma. Sua comunicação não dá à criatura a capacidade de responder a você telepaticamente.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'telepathic'), 3, 'Detectar Pensamentos', 'Você tem a magia Detectar Pensamentos sempre preparada. Você pode conjurá-la sem um espaço de magia ou componentes de magia, não podendo conjurá-la dessa forma novamente antes de completar um Descanso Longo. Além disso, pode conjurá-la gastando o espaço de magia que você tem do círculo apropriado. Seu atributo de conjuração para a magia é o atributo aumentado por este talento.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'shadow-touched'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'shadow-touched'), 2, 'Magia Sombria', 'Escolha uma magia de 1º círculo da escola de magia Ilusão ou Necromancia. Você tem essa magia e Invisibilidade sempre preparadas, podendo conjurá-las sem gastar espaço de magia. Após usar uma delas desse modo, você não pode conjurá-la assim novamente até completar um Descanso Longo. Também é possível conjurar estas magias utilizando espaços de magia de círculos apropriados. O atributo de conjuração das magias é o aprimorado por este talento.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'fey-touched'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Inteligência, Sabedoria ou Carisma em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'fey-touched'), 2, 'Magia Feérica', 'Escolha uma magia de 1º círculo da escola de magia Adivinhação ou Encantamento. Você tem sempre essa magia e Passo Nebuloso preparadas, podendo conjurá-las sem gastar espaço de magia. Após usar uma delas desse modo, você não pode conjurá-la assim novamente até completar um Descanso Longo. Também é possível conjurar essas magias utilizando espaços de magia de círculos apropriados. O atributo de conjuração das magias é o aprimorado por este talento.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'martial-weapon-training'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Força ou Destreza em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'martial-weapon-training'), 2, 'Proficiência com Armas', 'Você adquire proficiência com armas Marciais.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'tavern-brawler'), 1, 'Ataque Desarmado Aprimorado', 'Quando você atinge com seu Ataque Desarmado e causar dano, pode causar dano Contundente igual a 1d4 pontos mais seu modificador de Força em vez do dano normal de um Ataque Desarmado.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'tavern-brawler'), 2, 'Dano Garantido', 'Sempre que você joga um dado de dano para seu Ataque Desarmado, pode jogar novamente o dado se o resultado for 1, e deve usar a nova jogada.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'tavern-brawler'), 3, 'Armamento Improvisado', 'Você tem proficiência com armas improvisadas.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'tavern-brawler'), 4, 'Empurrar', 'Quando você atinge uma criatura com um Ataque Desarmado como parte da ação Atacar no seu turno, pode causar dano ao alvo e também empurrá- -lo 1,5 metro para longe de você. Você pode usar esse benefício apenas uma vez por turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mobile'), 1, 'Aumento no Valor de Atributo', 'Aumente seu valor de Destreza ou Constituição em 1, até no máximo 20.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mobile'), 2, 'Aumento de Deslocamento', 'Seu Deslocamento aumenta em 3 metros.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mobile'), 3, 'Correr em Terreno Difícil', 'Ao executar a ação Correr no seu turno, Terreno Difícil não custa movimento adicional pelo resto deste turno.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'mobile'), 4, 'Movimentação Ágil', 'Ataques de Oportunidade têm Desvantagem contra você.'),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'tough'), 1, NULL, 'Seus Pontos de Vida máximos aumentam em um valor igual ao dobro do seu nível de personagem quando você obtém este talento. Sempre que você alcança um nível de personagem depois disso, seus Pontos de Vida máximos aumentam em 2 Pontos de Vida adicionais.');
+
+
+INSERT INTO rpg.phb_spell (slug, name, level, level_label, school, casting_time, range, components, duration, concentration, ritual, description, higher_levels, source_meta)
 VALUES
   ('acalmar-emocoes', 'Acalmar Emoções', 2, '2º Círculo', 'Encantamento', 'Ação', '18 metros', '{"verbal":true,"somatic":true,"material":false,"materialDescription":null,"text":"V, S"}'::jsonb, 'Concentração, até 1 minuto', TRUE, FALSE, 'Cada Humanoide em uma Esfera de 6 metros de raio centrada em um ponto à sua escolha no alcance da magia deve ser bem-sucedido em uma salvaguarda de Carisma ou é afetado por um dos seguintes efeitos
 (escolha um para cada criatura):
@@ -2721,7 +2959,222 @@ quando você atinge os níveis 5 (2d6), 11 (3d6) e 17 (4d6).', NULL, '{"book":"L
 Uma criatura afetada está ciente da magia e pode evitar responder a perguntas às quais responderia normalmente com uma mentira. Tal criatura pode ser evasiva, mas deve ser verdadeira.', NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":7,"chapterTitle":"Magias","pdfPath":"doc/livro-jogador.pdf","pdfPages":[241,349],"extractedAt":"2026-06-25T01:53:01.654Z"}'::jsonb);
 
 
-INSERT INTO rpg.phb_class (id, name, tagline, summary, description, primary_ability, primary_ability_id, hit_die, hit_points, saving_throw_ids, subclass_unlock_level, subclass_label, skill_choices, armor_training, weapon_proficiencies, starting_equipment, spellcasting, source_meta)
+INSERT INTO rpg.phb_spell_slot_pattern (slug, name, description)
+VALUES
+  ('full', 'Conjurador pleno', 'Tabela de espelhos de magia plena (PHB 2024).'),
+  ('half', 'Conjurador parcial', 'Meio conjurador — Paladino, Guardião.'),
+  ('pact', 'Magia de pacto', 'Espelhos de pacto do Bruxo (nível do espelho + quantidade).');
+
+
+INSERT INTO rpg.phb_spell_slot_by_level (pattern_id, level, circle, slot_count)
+VALUES
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 1, 1, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 2, 1, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 3, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 3, 2, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 4, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 4, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 5, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 5, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 5, 3, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 6, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 6, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 6, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 7, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 7, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 7, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 7, 4, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 8, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 8, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 8, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 8, 4, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 9, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 9, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 9, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 9, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 9, 5, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 10, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 10, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 10, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 10, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 10, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 11, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 11, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 11, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 11, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 11, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 11, 6, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 12, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 12, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 12, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 12, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 12, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 12, 6, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 13, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 13, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 13, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 13, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 13, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 13, 6, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 13, 7, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 14, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 14, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 14, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 14, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 14, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 14, 6, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 14, 7, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 15, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 15, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 15, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 15, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 15, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 15, 6, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 15, 7, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 15, 8, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 16, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 16, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 16, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 16, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 16, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 16, 6, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 16, 7, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 16, 8, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 6, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 7, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 8, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 17, 9, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 6, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 7, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 8, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 18, 9, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 6, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 7, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 8, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 19, 9, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 6, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 7, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 8, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full'), 20, 9, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 1, 1, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 2, 1, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 3, 1, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 4, 1, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 5, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 5, 2, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 6, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 6, 2, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 7, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 7, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 8, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 8, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 9, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 9, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 9, 3, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 10, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 10, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 10, 3, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 11, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 11, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 11, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 12, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 12, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 12, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 13, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 13, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 13, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 13, 4, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 14, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 14, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 14, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 14, 4, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 15, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 15, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 15, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 15, 4, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 16, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 16, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 16, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 16, 4, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 17, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 17, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 17, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 17, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 17, 5, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 18, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 18, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 18, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 18, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 18, 5, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 19, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 19, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 19, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 19, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 19, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 20, 1, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 20, 2, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 20, 3, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 20, 4, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'), 20, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 1, 1, 1),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 2, 1, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 3, 2, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 4, 2, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 5, 3, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 6, 3, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 7, 4, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 8, 4, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 9, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 10, 5, 2),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 11, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 12, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 13, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 14, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 15, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 16, 5, 3),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 17, 5, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 18, 5, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 19, 5, 4),
+  ((SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact'), 20, 5, 4);
+
+
+INSERT INTO rpg.phb_weapon_proficiency (slug, label)
+VALUES
+  ('armas-simples', 'Armas Simples'),
+  ('armas-marciais', 'Armas Marciais'),
+  ('adagas', 'Adagas'),
+  ('dardos', 'Dardos'),
+  ('fundas', 'Fundas'),
+  ('bordoes', 'Bordões'),
+  ('bestas-leves', 'Bestas Leves'),
+  ('bestas-de-mao', 'Bestas de Mão'),
+  ('espada-longa', 'Espada Longa'),
+  ('rapieira', 'Rapieira'),
+  ('espada-curta', 'Espada Curta'),
+  ('armas-marciais-leves', 'Armas Marciais (leves)');
+
+
+INSERT INTO rpg.phb_class (slug, name, tagline, summary, description, primary_ability_label, primary_ability_operator, hit_die_id, hp_level1_die_value, hp_fixed_per_level, hp_minimum_gain_per_level, hp_constitution_mod_applies, subclass_unlock_level, subclass_label, skill_choice_count, skill_choice_from, source_citation_id, spell_slot_pattern_id)
 VALUES
   ('barbarian', 'Bárbaro', 'Combatente feroz da Fúria primitiva', 'Avance com Fúria e entre em combate corpo a corpo.', 'Bárbaros são combatentes poderosos,
 impulsionados por forças primitivas do multiverso que se manifestam com sua Fúria. Mais
@@ -2739,7 +3192,7 @@ Bárbaros frequentemente servem como protetores
 e líderes em suas comunidades. Eles se entregam de
 cabeça no perigo para que aqueles sob sua proteção
 não precisem. Sua coragem diante do perigo torna os
-Bárbaros perfeitamente adequados para aventuras.', 'Força', 'forca'::rpg.ability_id, 'D12', '{"level1DieValue":12,"fixedHpPerLevel":7,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['forca'::rpg.ability_id, 'constituicao'::rpg.ability_id], 3, 'Trilha', '{"count":2,"skillIds":["athletics","intimidation","animal-handling","nature","perception","survival"]}'::jsonb, '{"light":true,"medium":true,"heavy":false,"shields":true}'::jsonb, '["Armas Simples","Armas Marciais"]'::jsonb, '{"options":[{"label":"A","items":[{"choice":"4 Machadinhas"},{"id":"greataxe"},{"id":"kit-de-aventureiro"},{"gold":15}]},{"label":"B","items":[{"gold":75}]}]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+Bárbaros perfeitamente adequados para aventuras.', 'Força', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd12'), 12, 7, 1, TRUE, 3, 'Trilha', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
   ('bard', 'Bardo', 'Inspirador performista de música, dança e magia', 'Conjure magias que inspiram e curam aliados ou confundem inimigos.', 'Bardos são peritos em inspirar os outros,
 aliviar ferimentos, desanimar inimigos e criar
 ilusões. Eles acreditam que o multiverso foi trazido à
@@ -2756,19 +3209,19 @@ brincadeiras.
 A vida de um Bardo é passada viajando, coletando conhecimento, contando histórias e vivendo da
 gratidão dos ouvintes, como qualquer outro artista. No
 entanto, a profundidade de conhecimento e o domínio
-da magia distinguem os Bardos dos demais.', 'Carisma', 'carisma'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['destreza'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Colégio', '{"count":3,"from":"any"}'::jsonb, '{"light":true,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Armas Simples"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"choice":"2 Adagas"},{"choice":"Instrumento Musical (escolha)"},{"id":"kit-de-artista"},{"gold":19}]},{"label":"B","items":[{"gold":90}]}]}'::jsonb, '{"type":"full","ability":"Carisma","focus":"Instrumento Musical","ritual":false,"focusItemId":"instrumento-musical"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('warlock', 'Bruxo', 'Ocultista fortalecido com pactos sobrenaturais', 'Conjure magias derivadas de conhecimento oculto.', NULL, 'Carisma', 'carisma'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Patrono', '{"count":2,"skillIds":["arcana","deception","history","intimidation","investigation","nature","religion"]}'::jsonb, '{"light":true,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Armas Simples"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"id":"sickle"},{"choice":"2 Adagas"},{"id":"foco-arcano"},{"id":"livro"},{"id":"kit-de-erudito"},{"gold":15}]},{"label":"B","items":[{"gold":100}]}]}'::jsonb, '{"type":"pact","ability":"Carisma","focus":"Foco Arcano","ritual":false,"focusItemId":"foco-arcano"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('cleric', 'Clérigo', 'Campeão divino da magia sagrada', 'Invoque magia divina para curar, fortalecer e castigar.', NULL, 'Sabedoria', 'sabedoria'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Domínio', '{"count":2,"skillIds":["history","insight","medicine","persuasion","religion"]}'::jsonb, '{"light":true,"medium":true,"heavy":false,"shields":true}'::jsonb, '["Armas Simples"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"id":"shield"},{"id":"mace"},{"id":"kit-de-sacerdote"},{"id":"simbolo-sagrado"},{"gold":7}]},{"label":"B","items":[{"gold":110}]}]}'::jsonb, '{"type":"full","ability":"Sabedoria","focus":"Símbolo Sagrado","ritual":true,"focusItemId":"simbolo-sagrado"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('druid', 'Druida', 'Guardião da natureza e da magia primal', 'Canalize a magia da natureza para curar, moldar e controlar os elementos.', NULL, 'Sabedoria', 'sabedoria'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], 3, 'Círculo', '{"count":2,"skillIds":["arcana","animal-handling","insight","medicine","nature","perception","religion","survival"]}'::jsonb, '{"light":true,"medium":true,"heavy":false,"shields":true}'::jsonb, '["Armas Simples"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"id":"shield"},{"id":"sickle"},{"id":"foco-druidico"},{"gold":9}]},{"label":"B","items":[{"gold":50}]}]}'::jsonb, '{"type":"full","ability":"Sabedoria","focus":"Foco Druídico","ritual":true,"focusItemId":"foco-druidico"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+da magia distinguem os Bardos dos demais.', 'Carisma', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd8'), 8, 5, 1, TRUE, 3, 'Colégio', 3, 'any', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full')),
+  ('warlock', 'Bruxo', 'Ocultista fortalecido com pactos sobrenaturais', 'Conjure magias derivadas de conhecimento oculto.', NULL, 'Carisma', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd8'), 8, 5, 1, TRUE, 3, 'Patrono', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'pact')),
+  ('cleric', 'Clérigo', 'Campeão divino da magia sagrada', 'Invoque magia divina para curar, fortalecer e castigar.', NULL, 'Sabedoria', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd8'), 8, 5, 1, TRUE, 3, 'Domínio', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full')),
+  ('druid', 'Druida', 'Guardião da natureza e da magia primal', 'Canalize a magia da natureza para curar, moldar e controlar os elementos.', NULL, 'Sabedoria', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd8'), 8, 5, 1, TRUE, 3, 'Círculo', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full')),
   ('sorcerer', 'Feiticeiro', 'Conjurador de magia inata e instável', 'Use magia inerente ao seu ser, moldando o poder à sua vontade.', 'Feiticeiros são raros. Algumas linhagens familiares
 geram apenas um Feiticeiro por geração, enquanto,
 geralmente, esse dom aparece de forma inesperada.
 Aqueles que possuem esse poder logo percebem que
 não conseguem ficar ociosos. A magia de um Feiticeiro
-anseia por ser utilizada.', 'Carisma', 'carisma'::rpg.ability_id, 'D6', '{"level1DieValue":6,"fixedHpPerLevel":4,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['constituicao'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Feitiçaria', '{"count":2,"skillIds":["arcana","deception","intimidation","investigation","nature","religion"]}'::jsonb, '{"light":false,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Adagas","Dardos","Fundas","Bordões","Bestas Leves"]'::jsonb, '{"options":[{"label":"A","items":[{"choice":"2 Adagas"},{"id":"foco-arcano"},{"id":"kit-de-explorador-de-masmorras"},{"gold":28}]},{"label":"B","items":[{"gold":50}]}]}'::jsonb, '{"type":"full","ability":"Carisma","focus":"Foco Arcano","ritual":false,"focusItemId":"foco-arcano"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('ranger', 'Guardião', 'Patrulheiro marcial das fronteiras selvagens', 'Una proezas marciais, magia da natureza e habilidades de sobrevivência.', NULL, 'Destreza e Sabedoria', NULL, 'D10', '{"level1DieValue":10,"fixedHpPerLevel":6,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id], 3, 'Arquétipo', '{"count":3,"skillIds":["animal-handling","athletics","insight","investigation","nature","perception","stealth","survival"]}'::jsonb, '{"light":true,"medium":true,"heavy":false,"shields":true}'::jsonb, '["Armas Simples","Armas Marciais"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"choice":"2 Adagas"},{"id":"longbow"},{"id":"aljava"},{"id":"kit-de-aventureiro"},{"gold":7}]},{"label":"B","items":[{"gold":150}]}]}'::jsonb, '{"type":"half","ability":"Sabedoria","focus":"Foco Druídico","ritual":false,"focusItemId":"foco-druidico"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('fighter', 'Guerreiro', 'Mestre de armas e armaduras', 'Domine todas as armas e armaduras.', NULL, 'Força ou Destreza', NULL, 'D10', '{"level1DieValue":10,"fixedHpPerLevel":6,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['forca'::rpg.ability_id, 'constituicao'::rpg.ability_id], 3, 'Arquétipo', '{"count":2,"skillIds":["acrobatics","animal-handling","athletics","history","insight","intimidation","perception","survival"]}'::jsonb, '{"light":true,"medium":true,"heavy":true,"shields":true}'::jsonb, '["Armas Simples","Armas Marciais"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"chain-mail"},{"id":"longsword"},{"id":"shield"},{"id":"light-crossbow"},{"id":"aljava"},{"id":"kit-de-aventureiro"},{"gold":4}]},{"label":"B","items":[{"gold":155}]}]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('rogue', 'Ladino', 'Especialista furtivo e mortal', 'Desfira Ataques Furtivos mortais enquanto evita danos através da furtividade.', NULL, 'Destreza', 'destreza'::rpg.ability_id, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['destreza'::rpg.ability_id, 'inteligencia'::rpg.ability_id], 3, 'Arquétipo', '{"count":4,"skillIds":["acrobatics","athletics","deception","insight","intimidation","investigation","perception","persuasion","stealth"]}'::jsonb, '{"light":true,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Armas Simples","Bestas de Mão","Espada Longa","Rapieira","Espada Curta"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"leather"},{"choice":"2 Adagas"},{"id":"shortsword"},{"id":"longsword"},{"id":"kit-de-assaltante"},{"id":"kit-de-aventureiro"},{"gold":8}]},{"label":"B","items":[{"gold":100}]}]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+anseia por ser utilizada.', 'Carisma', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd6'), 6, 4, 1, TRUE, 3, 'Feitiçaria', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full')),
+  ('ranger', 'Guardião', 'Patrulheiro marcial das fronteiras selvagens', 'Una proezas marciais, magia da natureza e habilidades de sobrevivência.', NULL, 'Destreza e Sabedoria', 'and', (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd10'), 10, 6, 1, TRUE, 3, 'Arquétipo', 3, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half')),
+  ('fighter', 'Guerreiro', 'Mestre de armas e armaduras', 'Domine todas as armas e armaduras.', NULL, 'Força ou Destreza', 'or', (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd10'), 10, 6, 1, TRUE, 3, 'Arquétipo', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
+  ('rogue', 'Ladino', 'Especialista furtivo e mortal', 'Desfira Ataques Furtivos mortais enquanto evita danos através da furtividade.', NULL, 'Destreza', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd8'), 8, 5, 1, TRUE, 3, 'Arquétipo', 4, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
   ('wizard', 'Mago', 'Estudioso da magia arcana', 'Estude magia arcana e domine magias para todos os propósitos.', 'Magos são reconhecidos por seu estudo
 aprofundado da magia. Eles conjuram magias
 explosivas, raios, ilusões e transformações
@@ -2788,8 +3241,8 @@ magos mais cautelosos a abandonar a segurança de
 suas bibliotecas e laboratórios em busca de ruínas
 decadentes e cidades perdidas. A maioria acredita que
 civilizações antigas guardavam segredos de magia que
-poderiam conceder um poder maior do que o disponível na atualidade.', 'Inteligência', 'inteligencia'::rpg.ability_id, 'D6', '{"level1DieValue":6,"fixedHpPerLevel":4,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], 3, 'Tradição', '{"count":2,"skillIds":["arcana","history","investigation","medicine","nature","religion"]}'::jsonb, '{"light":false,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Adagas","Dardos","Fundas","Bordões","Bestas Leves"]'::jsonb, '{"options":[{"label":"A","items":[{"choice":"2 Adagas"},{"id":"foco-arcano"},{"id":"kit-de-erudito"},{"id":"kit-de-aventureiro"},{"gold":5}]},{"label":"B","items":[{"gold":55}]}]}'::jsonb, '{"type":"full","ability":"Inteligência","focus":"Foco Arcano","ritual":true,"focusItemId":"foco-arcano"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('monk', 'Monge', 'Artista marcial de velocidade e precisão', 'Entre e saia do combate corpo a corpo com velocidade e precisão.', NULL, 'Destreza e Sabedoria', NULL, 'D8', '{"level1DieValue":8,"fixedHpPerLevel":5,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id], 3, 'Tradição', '{"count":2,"skillIds":["acrobatics","athletics","history","insight","religion","stealth"]}'::jsonb, '{"light":false,"medium":false,"heavy":false,"shields":false}'::jsonb, '["Armas Simples","Armas Marciais (leves)"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"shortsword"},{"id":"dart","quantity":10},{"id":"kit-de-aventureiro"},{"gold":5}]},{"label":"B","items":[{"gold":50}]}]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
+poderiam conceder um poder maior do que o disponível na atualidade.', 'Inteligência', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd6'), 6, 4, 1, TRUE, 3, 'Tradição', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full')),
+  ('monk', 'Monge', 'Artista marcial de velocidade e precisão', 'Entre e saia do combate corpo a corpo com velocidade e precisão.', NULL, 'Destreza e Sabedoria', 'and', (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd8'), 8, 5, 1, TRUE, 3, 'Tradição', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
   ('paladin', 'Paladino', 'Guerreiro sagrado vinculado a um juramento', 'Destrua inimigos e proteja aliados com poder divino e marcial.', 'Paladinos são unidos por seus juramentos de combater as forças da aniquilação e
 da corrupção. Seja diante do altar de um deus,
 em uma clareira sagrada diante de espíritos da natureza ou em momentos de desespero e tristeza com os
@@ -2805,174 +3258,282 @@ vida de aventura, pois eles estão na linha de frente da
 luta cósmica contra a aniquilação. Guerreiros são raros
 nos exércitos de um mundo, e ainda menos indivíduos
 podem reivindicar a vocação de um Paladino. Ao receber esse chamado, essas pessoas abençoadas abandonam suas ocupações anteriores para empunhar armas
-e magia.', 'Força e Carisma', NULL, 'D10', '{"level1DieValue":10,"fixedHpPerLevel":6,"minimumGainPerLevel":1,"constitutionModApplies":true}'::jsonb, ARRAY['sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], 3, 'Juramento', '{"count":2,"skillIds":["athletics","insight","intimidation","medicine","persuasion","religion"]}'::jsonb, '{"light":true,"medium":true,"heavy":true,"shields":true}'::jsonb, '["Armas Simples","Armas Marciais"]'::jsonb, '{"options":[{"label":"A","items":[{"id":"chain-mail"},{"id":"longsword"},{"id":"shield"},{"choice":"6 Azagaias"},{"id":"kit-de-sacerdote"},{"id":"simbolo-sagrado"},{"gold":7}]},{"label":"B","items":[{"gold":150}]}]}'::jsonb, '{"type":"half","ability":"Carisma","focus":"Símbolo Sagrado","ritual":false,"focusItemId":"simbolo-sagrado"}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb);
+e magia.', 'Força e Carisma', 'and', (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd10'), 10, 6, 1, TRUE, 3, 'Juramento', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'));
 
 
-INSERT INTO rpg.phb_class_progression (class_id, level, proficiency_bonus, cantrips, prepared_spells, spell_slots, channel_divinity)
+INSERT INTO rpg.phb_class_primary_ability (class_id, ability_id, sort_order)
 VALUES
-  ('bard', 1, 2, 2, 4, '{"1":2}'::jsonb, NULL),
-  ('bard', 2, 2, 2, 5, '{"1":3}'::jsonb, NULL),
-  ('bard', 3, 2, 2, 6, '{"1":4,"2":2}'::jsonb, NULL),
-  ('bard', 4, 2, 3, 7, '{"1":4,"2":3}'::jsonb, NULL),
-  ('bard', 5, 3, 3, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
-  ('bard', 6, 3, 3, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
-  ('bard', 7, 3, 3, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
-  ('bard', 8, 3, 3, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
-  ('bard', 9, 4, 3, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
-  ('bard', 10, 4, 4, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
-  ('bard', 11, 4, 4, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
-  ('bard', 12, 4, 4, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
-  ('bard', 13, 5, 4, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
-  ('bard', 14, 5, 4, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
-  ('bard', 15, 5, 4, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
-  ('bard', 16, 5, 4, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
-  ('bard', 17, 6, 4, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('bard', 18, 6, 4, 20, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('bard', 19, 6, 4, 21, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('bard', 20, 6, 4, 22, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, NULL),
-  ('warlock', 1, 2, 2, 2, NULL, NULL),
-  ('warlock', 2, 2, 2, 3, NULL, NULL),
-  ('warlock', 3, 2, 2, 4, NULL, NULL),
-  ('warlock', 4, 2, 3, 5, NULL, NULL),
-  ('warlock', 5, 3, 3, 6, NULL, NULL),
-  ('warlock', 6, 3, 3, 7, NULL, NULL),
-  ('warlock', 7, 3, 3, 8, NULL, NULL),
-  ('warlock', 8, 3, 3, 9, NULL, NULL),
-  ('warlock', 9, 4, 3, 10, NULL, NULL),
-  ('warlock', 10, 4, 4, 10, NULL, NULL),
-  ('warlock', 11, 4, 4, 11, NULL, NULL),
-  ('warlock', 12, 4, 4, 11, NULL, NULL),
-  ('warlock', 13, 5, 4, 12, NULL, NULL),
-  ('warlock', 14, 5, 4, 12, NULL, NULL),
-  ('warlock', 15, 5, 4, 13, NULL, NULL),
-  ('warlock', 16, 5, 4, 13, NULL, NULL),
-  ('warlock', 17, 6, 4, 14, NULL, NULL),
-  ('warlock', 18, 6, 4, 14, NULL, NULL),
-  ('warlock', 19, 6, 4, 15, NULL, NULL),
-  ('warlock', 20, 6, 4, 15, NULL, NULL),
-  ('cleric', 1, 2, 3, 4, '{"1":2}'::jsonb, 0),
-  ('cleric', 2, 2, 3, 5, '{"1":3}'::jsonb, 2),
-  ('cleric', 3, 2, 3, 6, '{"1":4,"2":2}'::jsonb, 2),
-  ('cleric', 4, 2, 4, 7, '{"1":4,"2":3}'::jsonb, 2),
-  ('cleric', 5, 3, 4, 9, '{"1":4,"2":3,"3":2}'::jsonb, 2),
-  ('cleric', 6, 3, 4, 10, '{"1":4,"2":3,"3":3}'::jsonb, 3),
-  ('cleric', 7, 3, 4, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, 3),
-  ('cleric', 8, 3, 4, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, 3),
-  ('cleric', 9, 4, 4, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, 3),
-  ('cleric', 10, 4, 5, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, 3),
-  ('cleric', 11, 4, 5, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, 3),
-  ('cleric', 12, 4, 5, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, 3),
-  ('cleric', 13, 5, 5, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, 3),
-  ('cleric', 14, 5, 5, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, 3),
-  ('cleric', 15, 5, 5, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, 3),
-  ('cleric', 16, 5, 5, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, 3),
-  ('cleric', 17, 6, 5, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, 3),
-  ('cleric', 18, 6, 5, 20, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, 4),
-  ('cleric', 19, 6, 5, 21, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, 4),
-  ('cleric', 20, 6, 5, 22, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, 4),
-  ('druid', 1, 2, 2, 4, '{"1":2}'::jsonb, NULL),
-  ('druid', 2, 2, 2, 5, '{"1":3}'::jsonb, NULL),
-  ('druid', 3, 2, 2, 6, '{"1":4,"2":2}'::jsonb, NULL),
-  ('druid', 4, 2, 3, 7, '{"1":4,"2":3}'::jsonb, NULL),
-  ('druid', 5, 3, 3, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
-  ('druid', 6, 3, 3, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
-  ('druid', 7, 3, 3, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
-  ('druid', 8, 3, 3, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
-  ('druid', 9, 4, 3, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
-  ('druid', 10, 4, 4, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
-  ('druid', 11, 4, 4, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
-  ('druid', 12, 4, 4, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
-  ('druid', 13, 5, 4, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
-  ('druid', 14, 5, 4, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
-  ('druid', 15, 5, 4, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
-  ('druid', 16, 5, 4, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
-  ('druid', 17, 6, 4, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('druid', 18, 6, 4, 20, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('druid', 19, 6, 4, 21, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('druid', 20, 6, 4, 22, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, NULL),
-  ('sorcerer', 1, 2, 4, 2, '{"1":2}'::jsonb, NULL),
-  ('sorcerer', 2, 2, 4, 4, '{"1":3}'::jsonb, NULL),
-  ('sorcerer', 3, 2, 4, 6, '{"1":4,"2":2}'::jsonb, NULL),
-  ('sorcerer', 4, 2, 5, 7, '{"1":4,"2":3}'::jsonb, NULL),
-  ('sorcerer', 5, 3, 5, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
-  ('sorcerer', 6, 3, 5, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
-  ('sorcerer', 7, 3, 5, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
-  ('sorcerer', 8, 3, 5, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
-  ('sorcerer', 9, 4, 5, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
-  ('sorcerer', 10, 4, 6, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
-  ('sorcerer', 11, 4, 6, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
-  ('sorcerer', 12, 4, 6, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
-  ('sorcerer', 13, 5, 6, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
-  ('sorcerer', 14, 5, 6, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
-  ('sorcerer', 15, 5, 6, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
-  ('sorcerer', 16, 5, 6, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
-  ('sorcerer', 17, 6, 6, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('sorcerer', 18, 6, 6, 20, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('sorcerer', 19, 6, 6, 21, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('sorcerer', 20, 6, 6, 22, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, NULL),
-  ('ranger', 1, 2, NULL, 2, '{"1":2}'::jsonb, NULL),
-  ('ranger', 2, 2, NULL, 3, '{"1":2}'::jsonb, NULL),
-  ('ranger', 3, 2, NULL, 4, '{"1":3}'::jsonb, NULL),
-  ('ranger', 4, 2, NULL, 5, '{"1":3}'::jsonb, NULL),
-  ('ranger', 5, 3, NULL, 6, '{"1":4,"2":2}'::jsonb, NULL),
-  ('ranger', 6, 3, NULL, 6, '{"1":4,"2":2}'::jsonb, NULL),
-  ('ranger', 7, 3, NULL, 7, '{"1":4,"2":3}'::jsonb, NULL),
-  ('ranger', 8, 3, NULL, 7, '{"1":4,"2":3}'::jsonb, NULL),
-  ('ranger', 9, 4, NULL, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
-  ('ranger', 10, 4, NULL, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
-  ('ranger', 11, 4, NULL, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
-  ('ranger', 12, 4, NULL, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
-  ('ranger', 13, 5, NULL, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
-  ('ranger', 14, 5, NULL, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
-  ('ranger', 15, 5, NULL, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
-  ('ranger', 16, 5, NULL, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
-  ('ranger', 17, 6, NULL, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
-  ('ranger', 18, 6, NULL, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
-  ('ranger', 19, 6, NULL, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
-  ('ranger', 20, 6, NULL, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
-  ('wizard', 1, 2, 3, 4, '{"1":2}'::jsonb, NULL),
-  ('wizard', 2, 2, 3, 5, '{"1":3}'::jsonb, NULL),
-  ('wizard', 3, 2, 3, 6, '{"1":4,"2":2}'::jsonb, NULL),
-  ('wizard', 4, 2, 4, 7, '{"1":4,"2":3}'::jsonb, NULL),
-  ('wizard', 5, 3, 4, 9, '{"1":4,"2":3,"3":2}'::jsonb, NULL),
-  ('wizard', 6, 3, 4, 10, '{"1":4,"2":3,"3":3}'::jsonb, NULL),
-  ('wizard', 7, 3, 4, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, NULL),
-  ('wizard', 8, 3, 4, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, NULL),
-  ('wizard', 9, 4, 4, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, NULL),
-  ('wizard', 10, 4, 5, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, NULL),
-  ('wizard', 11, 4, 5, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
-  ('wizard', 12, 4, 5, 16, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1}'::jsonb, NULL),
-  ('wizard', 13, 5, 5, 17, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
-  ('wizard', 14, 5, 5, 18, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1}'::jsonb, NULL),
-  ('wizard', 15, 5, 5, 19, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
-  ('wizard', 16, 5, 5, 21, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1}'::jsonb, NULL),
-  ('wizard', 17, 6, 5, 22, '{"1":4,"2":3,"3":3,"4":3,"5":2,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('wizard', 18, 6, 5, 23, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":1,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('wizard', 19, 6, 5, 24, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":1,"8":1,"9":1}'::jsonb, NULL),
-  ('wizard', 20, 6, 5, 25, '{"1":4,"2":3,"3":3,"4":3,"5":3,"6":2,"7":2,"8":1,"9":1}'::jsonb, NULL),
-  ('paladin', 1, 2, NULL, 2, '{"1":2}'::jsonb, 0),
-  ('paladin', 2, 2, NULL, 3, '{"1":2}'::jsonb, 0),
-  ('paladin', 3, 2, NULL, 4, '{"1":3}'::jsonb, 2),
-  ('paladin', 4, 2, NULL, 5, '{"1":3}'::jsonb, 2),
-  ('paladin', 5, 3, NULL, 6, '{"1":4,"2":2}'::jsonb, 2),
-  ('paladin', 6, 3, NULL, 6, '{"1":4,"2":2}'::jsonb, 2),
-  ('paladin', 7, 3, NULL, 7, '{"1":4,"2":3}'::jsonb, 2),
-  ('paladin', 8, 3, NULL, 7, '{"1":4,"2":3}'::jsonb, 2),
-  ('paladin', 9, 4, NULL, 9, '{"1":4,"2":3,"3":2}'::jsonb, 2),
-  ('paladin', 10, 4, NULL, 9, '{"1":4,"2":3,"3":2}'::jsonb, 2),
-  ('paladin', 11, 4, NULL, 10, '{"1":4,"2":3,"3":3}'::jsonb, 3),
-  ('paladin', 12, 4, NULL, 10, '{"1":4,"2":3,"3":3}'::jsonb, 3),
-  ('paladin', 13, 5, NULL, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, 3),
-  ('paladin', 14, 5, NULL, 11, '{"1":4,"2":3,"3":3,"4":1}'::jsonb, 3),
-  ('paladin', 15, 5, NULL, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, 3),
-  ('paladin', 16, 5, NULL, 12, '{"1":4,"2":3,"3":3,"4":2}'::jsonb, 3),
-  ('paladin', 17, 6, NULL, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, 3),
-  ('paladin', 18, 6, NULL, 14, '{"1":4,"2":3,"3":3,"4":3,"5":1}'::jsonb, 3),
-  ('paladin', 19, 6, NULL, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, 3),
-  ('paladin', 20, 6, NULL, 15, '{"1":4,"2":3,"3":3,"4":3,"5":2}'::jsonb, 3);
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 2);
 
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 1, 'Fúria', 'Você pode se imbuir com um poder primitivo chamado
+INSERT INTO rpg.phb_class_armor_training (class_id, category_id)
+VALUES
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'shield')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'shield')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'shield')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'shield')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'heavy')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'shield')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'heavy')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'shield'));
+
+
+INSERT INTO rpg.phb_class_weapon_proficiency (class_id, proficiency_id)
+VALUES
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-marciais')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'adagas')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'dardos')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'fundas')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'bordoes')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'bestas-leves')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-marciais')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-marciais')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'bestas-de-mao')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'espada-longa')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'rapieira')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'espada-curta')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'adagas')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'dardos')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'fundas')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'bordoes')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'bestas-leves')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-marciais-leves')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-marciais'));
+
+
+INSERT INTO rpg.phb_class_saving_throw (class_id, ability_id)
+VALUES
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'));
+
+
+INSERT INTO rpg.phb_class_progression (class_id, level, proficiency_bonus, cantrips, prepared_spells, channel_divinity)
+VALUES
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 1, 2, 2, 4, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 2, 2, 2, 5, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 3, 2, 2, 6, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 4, 2, 3, 7, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 5, 3, 3, 9, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 6, 3, 3, 10, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 7, 3, 3, 11, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 8, 3, 3, 12, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 9, 4, 3, 14, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 10, 4, 4, 15, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 11, 4, 4, 16, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 12, 4, 4, 16, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 13, 5, 4, 17, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 14, 5, 4, 17, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 15, 5, 4, 18, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 16, 5, 4, 18, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 17, 6, 4, 19, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 18, 6, 4, 20, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 19, 6, 4, 21, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 20, 6, 4, 22, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 1, 2, 2, 2, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 2, 2, 2, 3, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 3, 2, 2, 4, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 4, 2, 3, 5, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 5, 3, 3, 6, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 6, 3, 3, 7, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 7, 3, 3, 8, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 8, 3, 3, 9, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 9, 4, 3, 10, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 10, 4, 4, 10, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 11, 4, 4, 11, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 12, 4, 4, 11, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 13, 5, 4, 12, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 14, 5, 4, 12, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 15, 5, 4, 13, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 16, 5, 4, 13, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 17, 6, 4, 14, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 18, 6, 4, 14, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 19, 6, 4, 15, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 20, 6, 4, 15, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 1, 2, 3, 4, 0),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 2, 2, 3, 5, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 3, 2, 3, 6, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 4, 2, 4, 7, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 5, 3, 4, 9, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 6, 3, 4, 10, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 7, 3, 4, 11, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 8, 3, 4, 12, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 9, 4, 4, 14, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 10, 4, 5, 15, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 11, 4, 5, 16, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 12, 4, 5, 16, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 13, 5, 5, 17, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 14, 5, 5, 17, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 15, 5, 5, 18, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 16, 5, 5, 18, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 17, 6, 5, 19, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 18, 6, 5, 20, 4),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 19, 6, 5, 21, 4),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 20, 6, 5, 22, 4),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 1, 2, 2, 4, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 2, 2, 2, 5, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 3, 2, 2, 6, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 4, 2, 3, 7, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 5, 3, 3, 9, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 6, 3, 3, 10, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 7, 3, 3, 11, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 8, 3, 3, 12, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 9, 4, 3, 14, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 10, 4, 4, 15, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 11, 4, 4, 16, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 12, 4, 4, 16, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 13, 5, 4, 17, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 14, 5, 4, 17, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 15, 5, 4, 18, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 16, 5, 4, 18, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 17, 6, 4, 19, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 18, 6, 4, 20, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 19, 6, 4, 21, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 20, 6, 4, 22, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 1, 2, 4, 2, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 2, 2, 4, 4, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 3, 2, 4, 6, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 4, 2, 5, 7, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 5, 3, 5, 9, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 6, 3, 5, 10, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 7, 3, 5, 11, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 8, 3, 5, 12, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 9, 4, 5, 14, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 10, 4, 6, 15, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 11, 4, 6, 16, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 12, 4, 6, 16, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 13, 5, 6, 17, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 14, 5, 6, 17, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 15, 5, 6, 18, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 16, 5, 6, 18, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 17, 6, 6, 19, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 18, 6, 6, 20, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 19, 6, 6, 21, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 20, 6, 6, 22, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 1, 2, NULL, 2, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 2, 2, NULL, 3, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 3, 2, NULL, 4, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 4, 2, NULL, 5, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 5, 3, NULL, 6, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 6, 3, NULL, 6, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 7, 3, NULL, 7, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 8, 3, NULL, 7, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 9, 4, NULL, 9, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 10, 4, NULL, 9, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 11, 4, NULL, 10, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 12, 4, NULL, 10, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 13, 5, NULL, 11, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 14, 5, NULL, 11, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 15, 5, NULL, 12, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 16, 5, NULL, 12, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 17, 6, NULL, 14, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 18, 6, NULL, 14, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 19, 6, NULL, 15, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 20, 6, NULL, 15, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 1, 2, 3, 4, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 2, 2, 3, 5, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 3, 2, 3, 6, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 4, 2, 4, 7, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 5, 3, 4, 9, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 6, 3, 4, 10, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 7, 3, 4, 11, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 8, 3, 4, 12, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 9, 4, 4, 14, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 10, 4, 5, 15, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 11, 4, 5, 16, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 12, 4, 5, 16, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 13, 5, 5, 17, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 14, 5, 5, 18, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 15, 5, 5, 19, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 16, 5, 5, 21, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 17, 6, 5, 22, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 18, 6, 5, 23, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 19, 6, 5, 24, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 20, 6, 5, 25, NULL),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 1, 2, NULL, 2, 0),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 2, 2, NULL, 3, 0),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 3, 2, NULL, 4, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 4, 2, NULL, 5, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 5, 3, NULL, 6, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 6, 3, NULL, 6, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 7, 3, NULL, 7, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 8, 3, NULL, 7, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 9, 4, NULL, 9, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 10, 4, NULL, 9, 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 11, 4, NULL, 10, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 12, 4, NULL, 10, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 13, 5, NULL, 11, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 14, 5, NULL, 11, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 15, 5, NULL, 12, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 16, 5, NULL, 12, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 17, 6, NULL, 14, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 18, 6, NULL, 14, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 19, 6, NULL, 15, 3),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 20, 6, NULL, 15, 3);
+
+
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 1, 'Fúria', 'Você pode se imbuir com um poder primitivo chamado
 Fúria, uma força que lhe concede força e resiliência
 extraordinárias. Você pode entrar em Fúria como uma
 Ação Bônus, desde que não esteja vestindo armadura
@@ -3006,11 +3567,11 @@ Cada vez que a Fúria é estendida, ela permanece até
 o final do seu próximo turno. Você pode manter uma
 Fúria por até 10 minutos.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 1, 'Defesa sem Armadura', 'Enquanto você não estiver vestindo nenhuma armadura, sua Classe de Armadura base é igual a 10 mais seus
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 1, 'Defesa sem Armadura', 'Enquanto você não estiver vestindo nenhuma armadura, sua Classe de Armadura base é igual a 10 mais seus
 modificadores de Destreza e Constituição. Você pode
 usar um Escudo e ainda receber este benefício.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você utilize
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você utilize
 as propriedades de maestria com dois tipos de armas
 Corpo a Corpo Simples ou Marciais à sua escolha,
 como Machados Grandes e Machadinhas. Sempre que 
@@ -3022,7 +3583,7 @@ habilidade de usar as propriedades de maestria de mais
 tipos de armas, conforme mostrado na coluna Maestria
 em Armas da tabela Características de Bárbaro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 2, 'Ataque Imprudente', 'Você pode descartar toda preocupação com a defesa
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 2, 'Ataque Imprudente', 'Você pode descartar toda preocupação com a defesa
 para atacar com ferocidade intensificada. Ao realizar
 sua primeira jogada de ataque no seu turno, você
 pode decidir atacar de forma imprudente. Fazer isso
@@ -3031,12 +3592,12 @@ Força até o início do seu próximo turno, mas jogadas
 de ataque contra você também têm Vantagem durante
 esse tempo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 2, 'Sentido de Perigo', 'Você adquire uma sensibilidade extraordinária de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 2, 'Sentido de Perigo', 'Você adquire uma sensibilidade extraordinária de
 quando as coisas não estão como deveriam, o que lhe
 dá um benefício ao desviar de perigos. Você tem Vantagem em salvaguardas de Destreza, a menos que tenha a
 condição Incapacitado.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 3, 'Conhecimento Primordial', 'Você adquire proficiência em outra perícia à sua escolha da lista de perícias disponíveis para Bárbaros no
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 3, 'Conhecimento Primordial', 'Você adquire proficiência em outra perícia à sua escolha da lista de perícias disponíveis para Bárbaros no
 nível 1.
 Além disso, enquanto sua Fúria estiver ativa, você
 pode canalizar poder primitivo ao tentar realizar certas
@@ -3045,7 +3606,7 @@ teste de Força, mesmo que normalmente utilize outro
 atributo: Acrobacia, Furtividade, Intimidação, Percepção ou Sobrevivência. Quando você usa essa habilidade, sua Força representa o poder primitivo fluindo em
 você, refinando sua agilidade, postura e sentidos.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 3, 'Subclasse de Bárbaro', 'Você adquire uma subclasse de Bárbaro à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 3, 'Subclasse de Bárbaro', 'Você adquire uma subclasse de Bárbaro à sua escolha.
 As subclasses Trilha da Árvore do Mundo, Trilha do
 Berserker, Trilha do Coração Selvagem e Trilha do
 Fanático estão detalhadas após a descrição desta classe.
@@ -3054,23 +3615,23 @@ características em determinados níveis de Bárbaro.
 Durante toda sua jornada, você adquire cada característica da sua subclasse que corresponda ao seu nível
 de Bárbaro ou inferior.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para
 o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Bárbaro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
 que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 5, 'Movimento Rápido', 'Seu Deslocamento aumenta em 3 metros enquanto
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 5, 'Movimento Rápido', 'Seu Deslocamento aumenta em 3 metros enquanto
 você não estiver usando Armadura Pesada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 7, 'Bote Instintivo', 'Como parte da Ação Bônus que você realiza para
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 7, 'Bote Instintivo', 'Como parte da Ação Bônus que você realiza para
 entrar em Fúria, você pode se mover até metade do
 seu Deslocamento.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 7, 'Instintos Primitivos', 'Seus instintos estão tão apurados que você tem Vantagem nas jogadas de Iniciativa.') ON CONFLICT (class_id, level, name) DO NOTHING;
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 7, 'Instintos Primitivos', 'Seus instintos estão tão apurados que você tem Vantagem nas jogadas de Iniciativa.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 9, 'Golpe Brutal', 'Se você usar Ataque Imprudente, pode renunciar à
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 9, 'Golpe Brutal', 'Se você usar Ataque Imprudente, pode renunciar à
 Vantagem em uma jogada de ataque com Força à sua
 escolha no seu turno. A jogada de ataque escolhida
 não deve ter Desvantagem. Se a jogada de ataque atingir o alvo, este sofre 1d10 pontos de dano adicional do
@@ -3087,7 +3648,7 @@ diretamente para longe de você. Em seguida, você
 pode se mover até metade do seu Deslocamento diretamente em direção ao alvo sem provocar Ataques de
 Oportunidade.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 11, 'Fúria Implacável', 'Sua Fúria pode mantê-lo lutando, apesar de ferimentos
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 11, 'Fúria Implacável', 'Sua Fúria pode mantê-lo lutando, apesar de ferimentos
 graves. Se você atingir 0 Pontos de Vida enquanto sua
 Fúria estiver ativa e não morrer imediatamente, você
 pode realizar uma salvaguarda de Constituição CD 10.
@@ -3096,7 +3657,7 @@ um número igual a duas vezes seu nível de Bárbaro.
 A cada vez que usar essa característica após a primeira, a CD aumenta em 5. Ao completar um Descanso
 Curto ou Longo, a CD volta para 10.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 13, 'Golpe Brutal Fortalecido', 'Você aperfeiçoou novas formas de atacar com ferocidade. Os seguintes efeitos agora estão entre suas
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 13, 'Golpe Brutal Fortalecido', 'Você aperfeiçoou novas formas de atacar com ferocidade. Os seguintes efeitos agora estão entre suas
 opções de Golpe Brutal.
 Golpe Atordoante. O alvo tem Desvantagem na
 próxima salvaguarda que realizar e não pode realizar
@@ -3108,7 +3669,7 @@ criatura contra o alvo recebe um bônus de +5. Uma
 jogada de ataque só pode receber um bônus de Golpe
 Destruidor por vez.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 15, 'Fúria Persistente', 'Ao jogar Iniciativa, você pode recuperar todos os usos
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 15, 'Fúria Persistente', 'Ao jogar Iniciativa, você pode recuperar todos os usos
 gastos de Fúria. Após recuperar a Fúria deste modo,
 você não pode fazê-lo novamente até completar um
 Descanso Longo.
@@ -3117,25 +3678,25 @@ minutos sem a necessidade de estender a duração de
 rodada em rodada. Sua Fúria encerra se você estiver
 com a condição Inconsciente (não apenas Incapacitado) ou vestir armadura Pesada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 17, 'Golpe Brutal Fortalecido', 'O dano adicional de seu Golpe Brutal aumenta para
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 17, 'Golpe Brutal Fortalecido', 'O dano adicional de seu Golpe Brutal aumenta para
 2d10 pontos. Além disso, você pode usar dois efeitos
 diferentes de Golpe Brutal sempre que utilizar esta
 característica.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 18, 'Força Indomável', 'Se o total de seu teste de Força ou de sua salvaguarda
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 18, 'Força Indomável', 'Se o total de seu teste de Força ou de sua salvaguarda
 de Força for menor que seu valor de Força, você pode
 usar esse valor no lugar do resultado total.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 19, 'Dádiva Épica', 'Você adquire um talento Dádiva Épica (veja o capítulo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 19, 'Dádiva Épica', 'Você adquire um talento Dádiva Épica (veja o capítulo
 5) ou outro talento à sua escolha para o qual atenda
 os pré-requisitos. A Dádiva do Ataque Irresistível é
 recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('barbarian', 20, 'Campeão Primitivo', 'Você incorpora o poder primitivo. Seus valores de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 20, 'Campeão Primitivo', 'Você incorpora o poder primitivo. Seus valores de
 Força e Constituição aumentam em 4, até um máximo
 de 25.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 1, 'Inspiração de Bardo', 'Você pode inspirar outros sobrenaturalmente por
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 1, 'Inspiração de Bardo', 'Você pode inspirar outros sobrenaturalmente por
 meio de palavras, música ou dança. Essa inspiração é
 representada pelo seu dado de Inspiração de Bardo,
 que é um d6.
@@ -3158,7 +3719,7 @@ conforme mostrado na coluna Dados de Inspiração da
 tabela Características de Bardo. O dado se torna um d8
 no nível 5, um d10 no nível 10 e um d12 no nível 15.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 1, 'Conjuração', 'Você aprendeu a conjurar magias através de suas artes
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 1, 'Conjuração', 'Você aprendeu a conjurar magias através de suas artes
 bárdicas. Veja o capítulo 7 para as regras sobre conjuração de magias. As informações abaixo detalham
 como você utiliza essas regras com as magias de Bardo,
 explicadas na lista de magias de Bardo mais adiante na
@@ -3205,14 +3766,14 @@ Foco de Conjuração. Você pode usar um Instrumento
 Musical como Foco de Conjuração para suas magias de
 Bardo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 2, 'Especialista', 'Você obtém Especialização (veja o glossário de regras)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 2, 'Especialista', 'Você obtém Especialização (veja o glossário de regras)
 em duas de suas perícias, à sua escolha, nas quais já
 seja proficiente. Atuação e Persuasão são recomendadas se você tiver proficiência nelas.
 No nível 9 de Bardo, você obtém Especialização em
 mais duas perícias nas quais já seja proficiente à sua
 escolha.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 2, 'Pau pra Toda Obra', 'Você pode adicionar metade do seu Bônus de Proficiência (arredondado para baixo) a qualquer teste
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 2, 'Pau pra Toda Obra', 'Você pode adicionar metade do seu Bônus de Proficiência (arredondado para baixo) a qualquer teste
 de atributo que realizar que use uma perícia à qual
 não possua proficiência e que não use seu Bônus de
 Proficiência.
@@ -3221,30 +3782,30 @@ Por exemplo, se você realizar um teste de Força
 adicionar metade do seu Bônus de Proficiência ao
 teste.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 3, 'Subclasse de Bardo', 'Você adquire uma subclasse de Bardo à sua escolha. As
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 3, 'Subclasse de Bardo', 'Você adquire uma subclasse de Bardo à sua escolha. As
 subclasses Colégio da Bravura, Colégio da Dança, Colégio do Conhecimento e Colégio do Glamour estão detalhadas após a descrição desta classe. Uma subclasse é
 uma especialização que lhe concede características em
 determinados níveis de Bardo. Durante toda sua jornada, você adquire cada característica de sua subclasse
 que corresponda ao seu nível de Bardo ou inferior.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para
 o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Bardo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 5, 'Fonte de Inspiração', 'Você agora restaura todos os seus usos gastos de Inspiração de Bardo quando completa um Descanso Curto
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 5, 'Fonte de Inspiração', 'Você agora restaura todos os seus usos gastos de Inspiração de Bardo quando completa um Descanso Curto
 ou Longo.
 Além disso, você pode gastar um espaço de magia
 (nenhuma ação necessária) para recuperar um uso
 gasto de Inspiração de Bardo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 7, 'Contra-Encantamento', 'Você pode usar notas musicais ou palavras de poder
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 7, 'Contra-Encantamento', 'Você pode usar notas musicais ou palavras de poder
 para interromper efeitos que influenciam a mente. Se
 você ou uma criatura a até 9 metros de você falhar em
 uma salvaguarda contra um efeito que aplica as condições Amedrontado ou Enfeitiçado, você pode executar
 uma Reação para jogar novamente a salvaguarda, e a
 nova jogada tem Vantagem.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 10, 'Segredos Mágicos', 'Você aprendeu segredos de várias tradições mágicas.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 10, 'Segredos Mágicos', 'Você aprendeu segredos de várias tradições mágicas.
 Sempre que você alcançar um nível de Bardo (incluindo este nível) e o número de Magias Preparadas na
 tabela Características de Bardo aumentar, você pode
 escolher qualquer uma das novas magias preparadas
@@ -3255,16 +3816,16 @@ lista de magias). Além disso, sempre que você substituir
 uma magia preparada para esta classe, pode trocá-la
 por uma magia dessas listas.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 18, 'Inspiração Superior', 'Quando você jogar Iniciativa, recupera usos gastos de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 18, 'Inspiração Superior', 'Quando você jogar Iniciativa, recupera usos gastos de
 Inspiração de Bardo até ter dois, se tiver menos do que
 isso.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 19, 'Dádiva Épica', 'Você adquire um talento Dádiva Épica (veja o capítulo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 19, 'Dádiva Épica', 'Você adquire um talento Dádiva Épica (veja o capítulo
 5) ou outro talento à sua escolha para o qual atenda
 os pré-requisitos. A Dádiva da Recordação de Magia é
 recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('bard', 20, 'Palavras de Criação', 'Você dominou duas das Palavras de Criação: as palavras de vida e morte. Portanto, você sempre tem as
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 20, 'Palavras de Criação', 'Você dominou duas das Palavras de Criação: as palavras de vida e morte. Portanto, você sempre tem as
 magias Palavra de Poder: Matar e Palavra de Poder: Salvar
 preparadas. Quando você conjura qualquer uma dessas
 magias, pode escolher uma segunda criatura que está a
@@ -3290,7 +3851,7 @@ um estilo de apresentação ou busca dominar todos?
 Um Bardo Molda Inspiração e
 Imaginação em Magia.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 1, 'Invocações Místicas', 'Você descobriu Invocações Místicas, fragmentos de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 1, 'Invocações Místicas', 'Você descobriu Invocações Místicas, fragmentos de
 conhecimento proibido que lhe conferem uma habilidade mágica permanente ou outros ensinamentos.
 Você recebe uma invocação à sua escolha, como Pacto
 do Tomo. As invocações são descritas na seção “Opções de Invocações Místicas” mais adiante na descrição
@@ -3311,7 +3872,7 @@ Você não pode escolher a mesma invocação mais de
 uma vez, a menos que a descrição da invocação indique
 o contrário.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 1, 'Magia de Pacto', 'Por meio de uma cerimônia oculta, você realizou um
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 1, 'Magia de Pacto', 'Por meio de uma cerimônia oculta, você realizou um
 pacto com uma entidade misteriosa para obter poderes
 mágicos. Essa voz nas sombras é enigmática, mas a dádiva concedida por ela é clara: a habilidade de conjurar
 magias. Veja o capítulo 7 para as regras de conjuração.
@@ -3368,14 +3929,14 @@ Foco de Conjuração. Você pode usar um Foco Arcano
 como um Foco de Conjuração para suas magias de
 Bruxo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 2, 'Astúcia Mágica', 'Ao final de um rito esotérico que você pode realizar
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 2, 'Astúcia Mágica', 'Ao final de um rito esotérico que você pode realizar
 por 1 minuto, você recupera os espaços de magia das
 Magias de Pacto gastos em um número igual à metade
 da sua quantidade máxima (arredondado para cima).
 Você pode usar esta característica novamente após
 completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 3, 'Subclasse de Bruxo', 'Você adquire uma subclasse de Bruxo à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 3, 'Subclasse de Bruxo', 'Você adquire uma subclasse de Bruxo à sua escolha.
 As subclasses Patrono Arquifada, Patrono Celestial,
 Patrono Grande Antigo e Patrono Ínfero estão detalhadas após a descrição desta classe. Uma subclasse é
 uma especialidade que concede a você características
@@ -3383,18 +3944,18 @@ em determinados níveis de Bruxo. Durante toda sua
 jornada, você adquire cada uma das características de
 sua subclasse de seu nível de Bruxo ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para
 o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Bruxo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 9, 'Contatar Patrono', 'No passado, você entrava em contato com seu patrono
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 9, 'Contatar Patrono', 'No passado, você entrava em contato com seu patrono
 por meio de intermediários. Agora, você pode se comunicar diretamente com ele. Você sempre tem a magia Contato Extraplanar preparada. Com esta característica, você
 pode conjurar a magia sem gastar um espaço de magia
 para entrar em contato com seu patrono, e você é bem-sucedido automaticamente na salvaguarda da magia.
 Você pode conjurar a magia com esta característica
 novamente após completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 11, 'Arcana Mística', 'Seu patrono lhe concede um segredo mágico chamado
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 11, 'Arcana Mística', 'Seu patrono lhe concede um segredo mágico chamado
 arcanum. Escolha uma magia de Bruxo de 6º círculo
 com este arcanum.
 Você pode conjurar sua magia arcanum uma vez sem
@@ -3410,11 +3971,11 @@ Ao alcançar um nível de Bruxo, você pode substituir
 uma de suas magias de arcanum por outra magia de
 Bruxo do mesmo círculo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
 ou outro talento à sua escolha para o qual se qualifica.
 O talento Dádiva do Destino é recomendado.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('warlock', 20, 'Mestre Místico', 'Ao usar sua característica Astúcia Mágica, você restaura todos os seus espaços de magia gastos das suas
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 20, 'Mestre Místico', 'Ao usar sua característica Astúcia Mágica, você restaura todos os seus espaços de magia gastos das suas
 Magias de Pacto.
 Opções de Invocações Místicas
 As opções de Invocações Místicas aparecem em ordem
@@ -3631,7 +4192,7 @@ Pré-requisito: Bruxo Nível 2 ou superior
 Você pode conjurar Imagem Silenciosa sem gastar um
 espaço de magia.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 1, 'Conjuração', 'Você aprendeu a conjurar magias por meio de oração
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 1, 'Conjuração', 'Você aprendeu a conjurar magias por meio de oração
 e meditação. Veja o capítulo 7 para as regras sobre
 conjuração de magias. As informações abaixo detalham como você usa essas regras com as magias de
 Clérigo, explicadas na lista de magias de Clérigo mais
@@ -3677,7 +4238,7 @@ conjuração para suas magias de Clérigo.
 Foco de Conjuração. Você pode usar um Símbolo Sagrado como um Foco de Conjuração para suas magias
 de Clérigo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 1, 'Ordem Divina', 'Você se dedicou a um dos seguintes papéis sagrados à
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 1, 'Ordem Divina', 'Você se dedicou a um dos seguintes papéis sagrados à
 sua escolha.
 Protetor. Treinado para a batalha, você adquire
 proficiência com armas Marciais e treinamento com
@@ -3688,7 +4249,7 @@ mística com o divino lhe dá um bônus em seus testes
 de Inteligência (Arcanismo ou Religião). O bônus é
 igual ao seu modificador de Sabedoria (mínimo de +1).') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 2, 'Canalizar Divindade', 'Você pode canalizar energia divina diretamente dos
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 2, 'Canalizar Divindade', 'Você pode canalizar energia divina diretamente dos
 Planos Externos para alimentar efeitos mágicos. Você
 começa com dois desses efeitos: Centelha Divina e Expulsar Mortos-Vivos, cada um descrito a seguir. Cada
 vez que você usar o Canalizar Divindade desta classe,
@@ -3722,19 +4283,19 @@ longe possível de você nos turnos dela. Este efeito se
 encerra na criatura se ela sofrer algum dano, se você
 está com a condição Incapacitado ou se você morrer.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 3, 'Subclasse de Clérigo', 'Você adquire uma subclasse de Clérigo à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 3, 'Subclasse de Clérigo', 'Você adquire uma subclasse de Clérigo à sua escolha.
 Uma subclasse é uma especialização que lhe concede
 características em determinados níveis de Clérigo. As
 subclasses Domínio da Guerra, Domínio da Luz, Domínio da Trapaça e Domínio da Vida estão detalhadas
 após a descrição desta classe. Para o resto de sua jornada, você recebe cada uma das características de sua
 subclasse que são de seu nível de Clérigo ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo (veja o capítulo 5) ou outro talento à sua escolha
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo (veja o capítulo 5) ou outro talento à sua escolha
 para o qual atenda os pré-requisitos. Você adquire
 essa característica novamente nos níveis 8, 12 e 16 de
 Clérigo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 5, 'Fulminar Mortos-Vivos', 'Ao usar Expulsar Mortos-Vivos, você pode jogar
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 5, 'Fulminar Mortos-Vivos', 'Ao usar Expulsar Mortos-Vivos, você pode jogar
 uma quantidade de d8s igual ao seu modificador de
 Sabedoria (mínimo de 1d8) e somar os resultados
 jogados. Cada Morto-Vivo que falhar na salvaguarda
@@ -3742,7 +4303,7 @@ sofre dano Radiante igual ao resultado da soma dos
 dados jogados. Esse dano não encerra o efeito de
 Expulsar Mortos-Vivos.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 7, 'Golpes Abençoados', 'Você se infunde de poder divino em combate. Você
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 7, 'Golpes Abençoados', 'Você se infunde de poder divino em combate. Você
 adquire uma das seguintes opções à sua escolha (se
 você já tiver qualquer uma dessas opções de uma
 subclasse de Clérigo em um livro antigo de D&D, use
@@ -3756,7 +4317,7 @@ ataque usando uma arma, você pode causar ao alvo
 1d8 pontos de dano Necrótico ou Radiante (à sua
 escolha) adicionais.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 10, 'Intervenção Divina', 'Você pode convocar sua divindade ou panteão para
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 10, 'Intervenção Divina', 'Você pode convocar sua divindade ou panteão para
 intervir em seu nome. Como uma ação Usar Magia,
 escolha qualquer magia de Clérigo de 5º círculo ou
 inferior que não exija uma Reação para ser conjurada.
@@ -3764,7 +4325,7 @@ Como parte da mesma ação, você conjura essa magia
 sem gastar espaço de magia ou precisar de componentes Materiais. Você não pode usar essa característica
 novamente até completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 14, 'Golpes Abençoados Aprimorados', 'A opção que você escolheu para Golpes Abençoados
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 14, 'Golpes Abençoados Aprimorados', 'A opção que você escolheu para Golpes Abençoados
 fica mais poderosa.
 Conjuração Poderosa. Quando conjurar um truque
 de Clérigo e causar dano a uma criatura com ele, você
@@ -3774,15 +4335,15 @@ de Vida Temporários igual ao dobro do seu modificador de Sabedoria.
 Golpe Divino. O dano adicional de seu Golpe Divino
 aumenta para 2d8.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo
 5) ou outro talento à sua escolha para o qual se qualifica. Dádiva do Destino é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('cleric', 20, 'Intervenção Divina Maior', 'Você pode convocar uma intervenção divina ainda mais poderosa. Quando usar sua característica
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 20, 'Intervenção Divina Maior', 'Você pode convocar uma intervenção divina ainda mais poderosa. Quando usar sua característica
 Intervenção Divina, você pode escolher Desejo como
 opção de magia. Se fizer isso, não pode usar Intervenção Divina novamente até completar 2d4 Descansos
 Longos.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 1, 'Conjuração', 'Você aprendeu a conjurar magias através do estudo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 1, 'Conjuração', 'Você aprendeu a conjurar magias através do estudo
 das forças místicas da natureza. Veja o capítulo 7
 para as regras de conjuração. As informações abaixo
 detalham como você usa essas regras com magias de
@@ -3831,7 +4392,7 @@ conjuração para suas magias de Druida.
 Foco de Conjuração. Você pode usar um Foco Druídico como um Foco de Conjuração para suas magias de
 Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 1, 'Idioma Druídico', 'Você domina Druídico, o idioma secreto dos Druidas.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 1, 'Idioma Druídico', 'Você domina Druídico, o idioma secreto dos Druidas.
 Ao aprender esse idioma antigo, você também adquiriu
 a habilidade mágica de se comunicar com animais; você
 sempre tem a magia Falar com Animais preparada.
@@ -3841,7 +4402,7 @@ perceber a presença da mensagem com um teste de
 Inteligência (Investigação) CD 15, mas não podem
 decifrá-la sem magia.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 1, 'Ordem Primal', 'Você se dedicou a uma das seguintes funções sagradas
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 1, 'Ordem Primal', 'Você se dedicou a uma das seguintes funções sagradas
 à sua escolha.
 Protetor. Treinado para a batalha, você adquire
 proficiência com armas Marciais e treinamento com
@@ -3852,7 +4413,7 @@ a natureza lhe concede um bônus em seus testes de
 Inteligência (Arcanismo ou Natureza). O bônus é igual
 ao seu modificador de Sabedoria (bônus mínimo de +1).') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 2, 'Companheiro Selvagem', 'Você pode invocar um espírito da natureza que assume
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 2, 'Companheiro Selvagem', 'Você pode invocar um espírito da natureza que assume
 a forma de um animal para auxiliá-lo. Como uma ação
 Usar Magia, você pode gastar um espaço de magia ou
 um uso de Forma Selvagem para conjurar a magia
@@ -3860,7 +4421,7 @@ Convocar Familiar sem componentes Materiais.
 Ao conjurar a magia deste modo, o familiar é uma
 criatura Feérica e desaparece ao completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 2, 'Forma Selvagem', 'O poder da natureza permite que você assuma a forma
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 2, 'Forma Selvagem', 'O poder da natureza permite que você assuma a forma
 de um animal. Como uma Ação Bônus, você multimorfa para uma forma Animal que você aprendeu com
 esta característica (veja “Formas Conhecidas”, abaixo). Você fica nessa forma por um número de horas
 igual à metade do seu nível de Druida, até usar Forma
@@ -3868,7 +4429,7 @@ Selvagem novamente, ter a condição Incapacitado ou
 morrer. Você também pode sair da forma antes como
 uma Ação Bônus.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 3, 'Subclasse de Druida', 'Você adquire uma subclasse de Druida à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 3, 'Subclasse de Druida', 'Você adquire uma subclasse de Druida à sua escolha.
 As subclasses Círculo da Lua, Círculo da Terra, Círculo
 das Estrelas e Círculo do Mar são detalhadas a seguir
 neste capítulo. Uma subclasse é uma especialidade que
@@ -3877,11 +4438,11 @@ Druida. Durante toda sua carreira, você recebe cada
 uma das características de sua subclasse que são de seu
 nível de Druida ou inferior.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para
 o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 5, 'Ressurgimento Selvagem', 'Uma vez em cada um de seus turnos, se você não tiver
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 5, 'Ressurgimento Selvagem', 'Uma vez em cada um de seus turnos, se você não tiver
 mais usos de Forma Selvagem, pode recuperar um
 uso gastando um espaço de magia (nenhuma ação é
 necessária).
@@ -3889,7 +4450,7 @@ Além disso, você pode gastar um uso de Forma Selvagem (nenhuma ação é neces
 espaço de magia de 1º círculo, mas não pode fazê-lo
 novamente até completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 7, 'Fúria Elemental', 'O poder dos elementos flui através de você. Você recebe uma das seguintes opções à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 7, 'Fúria Elemental', 'O poder dos elementos flui através de você. Você recebe uma das seguintes opções à sua escolha.
 Ataque Primal. Uma vez em cada um dos seus turnos,
 ao atingir uma criatura com uma jogada de ataque
 usando uma arma ou um ataque da forma Animal em
@@ -3900,24 +4461,24 @@ Conjuração Poderosa. Adicione seu modificador de
 Sabedoria ao dano causado com qualquer truque de
 Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 15, 'Fúria Elemental Aprimorada', 'A opção que você escolheu para Fúria Elemental fica
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 15, 'Fúria Elemental Aprimorada', 'A opção que você escolheu para Fúria Elemental fica
 mais poderosa, conforme detalhado abaixo.
 Ataque Primal. O dano adicional de seu Ataque Primal aumenta para 2d8.
 Conjuração Poderosa. Ao conjurar um truque de
 Druida com um alcance de 3 metros ou mais, o alcance
 da magia aumenta para 90 metros.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 18, 'Magias Bestiais', 'Ao usar Forma Selvagem, você pode conjurar magias
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 18, 'Magias Bestiais', 'Ao usar Forma Selvagem, você pode conjurar magias
 na forma Animal, exceto magias que tenham um com-
 
 ponente Material com um custo especificado ou que
 consuma seu componente Material.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
 ou outro talento à sua escolha para o qual se qualifica.
 Dádiva da Viagem Dimensional é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('druid', 20, 'Arquidruida', 'A vitalidade da natureza floresce constantemente dentro de você, concedendo-lhe os seguintes benefícios.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 20, 'Arquidruida', 'A vitalidade da natureza floresce constantemente dentro de você, concedendo-lhe os seguintes benefícios.
 Forma Selvagem Eterna. Sempre que você joga Iniciativa e não tem mais usos de Forma Selvagem, você
 recupera um uso gasto dela.
 Natureza Xamânica. Você pode converter usos de
@@ -3933,7 +4494,7 @@ completar um Descanso Longo.
 Longevidade. A magia primitiva que você utiliza permite que você envelheça mais lentamente: para cada
 dez anos que passam, seu corpo envelhece apenas um.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 1, 'Conjuração', 'Através da sua magia inata, você pode conjurar magias.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 1, 'Conjuração', 'Através da sua magia inata, você pode conjurar magias.
 Veja o capítulo 7 para as regras sobre conjuração de
 magias. As informações abaixo detalham como você
 usa essas regras com magias de Feiticeiro, que aparecem na lista de magias de Feiticeiro mais adiante na
@@ -3980,7 +4541,7 @@ Foco de Conjuração. Você pode usar um Foco Arcano
 como um Foco de Conjuração para suas magias de
 Feiticeiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 1, 'Feitiçaria Inata', 'Um evento em seu passado deixou uma marca permanente em você, lhe infundindo magia latente. Como
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 1, 'Feitiçaria Inata', 'Um evento em seu passado deixou uma marca permanente em você, lhe infundindo magia latente. Como
 uma Ação Bônus, você pode liberar essa magia por
 1 minuto, durante o qual você adquire os seguintes
 benefícios:
@@ -3990,7 +4551,7 @@ Você tem Vantagem nas jogadas de ataque das magias de Feiticeiro que conjurar.
 Você pode usar essa característica duas vezes e restaura todos os usos gastos ao completar um Descanso
 Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 2, 'Fonte de Magia', 'Você pode aproveitar a fonte de magia dentro de si.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 2, 'Fonte de Magia', 'Você pode aproveitar a fonte de magia dentro de si.
 Essa fonte é representada por Pontos de Feitiçaria,
 que permitem que você crie uma variedade de efeitos
 mágicos.
@@ -4022,7 +4583,7 @@ Círculo de Espaço de Magia Custo de Ponto de Feitiçaria Nível Mín. de Feiti
 4 6 7
 5 7 9') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 2, 'Metamagia', 'Sua magia flui de dentro para fora, permitindo que
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 2, 'Metamagia', 'Sua magia flui de dentro para fora, permitindo que
 você ajuste suas magias conforme necessário. Você
 adquire duas opções de Metamagia à sua escolha em
 “Opções de Metamagia”, que são apresentadas mais
@@ -4038,33 +4599,33 @@ uma de suas opções de Metamagia por uma que não
 conhece. Você adquire mais duas opções no nível 10 de
 Feiticeiro e mais duas opções no nível 17 de Feiticeiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 3, 'Subclasse de Feiticeiro', 'Você adquire uma subclasse de Feiticeiro à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 3, 'Subclasse de Feiticeiro', 'Você adquire uma subclasse de Feiticeiro à sua escolha.
 As subclasses Feitiçaria Aberrante, Feitiçaria Dracônica, Feitiçaria Mecânica, Feitiçaria Selvagem estão detalhadas após a descrição desta classe. Uma subclasse
 é uma especialidade que concede a você características
 em determinados níveis de Feiticeiro. Durante toda sua
 jornada, você adquire cada uma das características de
 sua subclasse de seu nível de Feiticeiro ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para o
 qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Feiticeiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 5, 'Restauração Feiticeira', 'Ao completar um Descanso Curto, você pode recuperar
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 5, 'Restauração Feiticeira', 'Ao completar um Descanso Curto, você pode recuperar
 os Pontos de Feitiçaria gastos, mas não mais do que um
 número igual à metade do seu nível de Feiticeiro (arredondado para baixo). Você só pode usar esta característica novamente após completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 7, 'Feitiçaria Encarnada', 'Quando não houver mais usos de Feitiçaria Inata, você
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 7, 'Feitiçaria Encarnada', 'Quando não houver mais usos de Feitiçaria Inata, você
 pode usá-la se gastar 2 Pontos de Feitiçaria ao executar
 a Ação Bônus para ativá-la.
 Além disso, enquanto sua característica Feitiçaria
 Inata estiver ativa, você pode usar até duas de suas
 opções de Metamagia em cada magia conjurada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
 ou outro talento à sua escolha para o qual se qualifica.
 Dádiva da Viagem Dimensional é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('sorcerer', 20, 'Apoteose Arcana', 'Enquanto sua característica Feitiçaria Inata estiver
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 20, 'Apoteose Arcana', 'Enquanto sua característica Feitiçaria Inata estiver
 ativa, você pode usar uma opção de Metamagia em
 cada um de seus turnos sem gastar Pontos de Feitiçaria
 com ela.
@@ -4149,7 +4710,7 @@ para alterar esse tipo de dano para um dos outros tipos
 listados: Ácido, Elétrico, Gélido, Ígneo, Trovejante,
 Venenoso.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 1, 'Conjuração', 'Você aprendeu a canalizar a essência mágica da natureza para conjurar magias. Veja o capítulo 7 para as
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 1, 'Conjuração', 'Você aprendeu a canalizar a essência mágica da natureza para conjurar magias. Veja o capítulo 7 para as
 regras sobre conjuração de magias. As informações
 abaixo detalham como você usa essas regras com as
 magias de Guardião, explicadas na lista de magias de
@@ -4184,7 +4745,7 @@ conjuração para suas magias de Guardião.
 Foco de Conjuração. Você pode usar um Foco Druídico como um Foco de Conjuração para suas magias de
 Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 1, 'Inimigo Favorito', 'Você sempre tem a magia Marca do Predador preparada.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 1, 'Inimigo Favorito', 'Você sempre tem a magia Marca do Predador preparada.
 Você pode conjurá-la duas vezes sem gastar um espaço
 de magia, e você restaura todos os usos gastos desta
 característica ao completar um Descanso Longo.
@@ -4192,7 +4753,7 @@ O número de vezes que você pode conjurar a magia
 sem um espaço de magia aumenta ao atingir certos
 níveis de Guardião, conforme mostrado na coluna Inimigo Favorito da tabela Características de Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use
 as propriedades de maestria de dois tipos de armas à
 sua escolha com as quais você tem proficiência, como
 Arcos Longos e Espadas Curtas.
@@ -4200,7 +4761,7 @@ Sempre que completar um Descanso Longo, você
 pode alterar os tipos de armas que escolheu. Por exemplo, você pode mudar para usar as propriedades de
 maestria de Cimitarras e Espadas Longas.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 2, 'Estilo de Luta', 'Você adquire um talento Estilo de Luta à sua escolha
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 2, 'Estilo de Luta', 'Você adquire um talento Estilo de Luta à sua escolha
 (veja também o capítulo 5). Em vez de escolher um
 desses talentos, você pode escolher a opção abaixo.
 Combatente Druídico. Você aprende dois truques
@@ -4211,7 +4772,7 @@ seu atributo de conjuração para eles. Sempre que
 você atingir um nível de Guardião, pode substituir um
 desses truques por outro truque de Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 2, 'Explorador Hábil', 'Graças às suas viagens, você adquire os seguintes
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 2, 'Explorador Hábil', 'Graças às suas viagens, você adquire os seguintes
 benefícios.
 Especialista. Escolha uma perícia na qual você tenha
 proficiência, mas não seja Especialista. Você obtém
@@ -4219,29 +4780,29 @@ Especialização nessa perícia.
 Idiomas. Você conhece dois idiomas à sua escolha da
 tabela de idiomas no capítulo 2.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 3, 'Subclasse de Guardião', 'Você adquire uma subclasse de Guardião à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 3, 'Subclasse de Guardião', 'Você adquire uma subclasse de Guardião à sua escolha.
 As subclasses Andarilho Feérico, Caçador, Senhor das
 Feras e Vigilante das Sombras estão detalhadas após a
 descrição desta classe. Uma subclasse é uma especialidade que concede a você características em determinados níveis de Guardião. Durante toda sua jornada, você
 adquire cada uma das características de sua subclasse
 de seu nível de Guardião ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo (veja o capítulo 5) ou outro talento à sua escolha
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo (veja o capítulo 5) ou outro talento à sua escolha
 para o qual atenda os pré-requisitos. Você adquire
 essa característica novamente nos níveis 8, 12 e 16 de
 Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
 que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 6, 'Errante', 'Seu Deslocamento aumenta em 3 metros enquanto
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 6, 'Errante', 'Seu Deslocamento aumenta em 3 metros enquanto
 você não estiver usando Armadura Pesada. Você também tem um Deslocamento de Escalada e um Deslocamento de Natação igual ao seu Deslocamento.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 9, 'Especialista', 'Escolha duas perícias nas quais você tem proficiência,
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 9, 'Especialista', 'Escolha duas perícias nas quais você tem proficiência,
 mas não seja Especialista. Você obtém Especialização
 nessas perícias.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 10, 'Incansável', 'As forças primordiais agora ajudam a impulsioná-lo em
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 10, 'Incansável', 'As forças primordiais agora ajudam a impulsioná-lo em
 suas jornadas, concedendo-lhe os seguintes benefícios.
 Pontos de Vida Temporários. Como uma ação Usar
 Magia, você pode conceder a si um número de Pontos
@@ -4253,35 +4814,35 @@ Redução de Exaustão. Sempre que completar um
 Descanso Curto, seu nível de Exaustão, se houver,
 reduz em 1.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 13, 'Predador Implacável', 'Sofrer dano não quebra sua Concentração da Marca do
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 13, 'Predador Implacável', 'Sofrer dano não quebra sua Concentração da Marca do
 Predador.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 14, 'Véu da Natureza', 'Você invoca espíritos da natureza para se esconder magicamente. Como uma Ação Bônus, você pode conceder a si a condição Invisível até o final do seu próximo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 14, 'Véu da Natureza', 'Você invoca espíritos da natureza para se esconder magicamente. Como uma Ação Bônus, você pode conceder a si a condição Invisível até o final do seu próximo
 turno.
 Você pode usar essa característica um número de vezes igual ao seu modificador de Sabedoria (mínimo de
 uma vez) e restaura todos os usos gastos ao completar
 um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 17, 'Caçador Preciso', 'Você tem Vantagem em jogadas de ataque contra a
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 17, 'Caçador Preciso', 'Você tem Vantagem em jogadas de ataque contra a
 criatura marcada pela sua Marca do Predador.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 18, 'Sentidos Selvagens', 'Sua conexão com as forças da natureza lhe concede
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 18, 'Sentidos Selvagens', 'Sua conexão com as forças da natureza lhe concede
 Visão às Cegas com um alcance de 9 metros.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
 ou outro talento à sua escolha para o qual se qualifica.
 Dádiva da Viagem Dimensional é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('ranger', 20, 'Matador de Inimigos Favoritos', 'O dado de dano da sua Marca do Predador é um d10 em
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 20, 'Matador de Inimigos Favoritos', 'O dado de dano da sua Marca do Predador é um d10 em
 vez de um d6.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 1, 'Estilo de Luta', 'Você aprimorou suas proezas marciais e tem um
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 1, 'Estilo de Luta', 'Você aprimorou suas proezas marciais e tem um
 talento de Estilo de Luta à sua escolha (veja também o
 capítulo 5).
 Sempre que atinge um nível de Guerreiro, você pode
 substituir o talento que escolheu por um talento diferente de Estilo de Luta.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você utilize
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você utilize
 as propriedades de maestria com três tipos de armas
 Simples ou Marciais à sua escolha. Sempre que completar um Descanso Longo, você pode praticar movimentos
 com armas e alterar uma dessas escolhas de armas.
@@ -4290,7 +4851,7 @@ habilidade de usar as propriedades de maestria de mais
 tipos de armas, conforme mostrado na coluna Maestria
 em Armas da tabela Características de Guerreiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 1, 'Recuperar Fôlego', 'Você tem uma reserva limitada de resistência física e
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 1, 'Recuperar Fôlego', 'Você tem uma reserva limitada de resistência física e
 mental que pode usar. Como uma Ação Bônus, você
 pode usá-la para recuperar Pontos de Vida iguais a
 1d10 mais seu nível de Guerreiro.
@@ -4303,7 +4864,7 @@ mais usos dessa característica, conforme mostrado na
 coluna Recuperar Fôlego da tabela Características de
 Guerreiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 2, 'Mente Tática', 'Você tem uma mente para táticas dentro e fora do
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 2, 'Mente Tática', 'Você tem uma mente para táticas dentro e fora do
 campo de batalha. Ao falhar em um teste de atributo,
 você pode gastar um uso de seu Recuperar Fôlego
 para tentar alcançar a vitória. Em vez de recuperar
@@ -4312,30 +4873,30 @@ ao teste de atributo, potencialmente transformando-o
 em sucesso. Se o teste ainda assim falhar, esse uso do
 Recuperar Fôlego não é gasto.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 2, 'Surto de Ação', 'Você pode se esforçar além de seus limites normais por
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 2, 'Surto de Ação', 'Você pode se esforçar além de seus limites normais por
 um momento. No seu turno, você pode executar uma
 ação adicional, exceto a ação Usar Magia.
 Após usar esta característica, você não pode usá-la
 novamente até completar um Descanso Curto ou Longo. A partir do nível 17, você pode usá-lo duas vezes antes de um descanso, mas apenas uma vez em um turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 3, 'Subclasse de Guerreiro', 'Você adquire uma subclasse de Guerreiro à sua escolha. As subclasses Campeão, Cavaleiro Místico, Combatente Psíquico e Mestre da Batalha estão detalhadas
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 3, 'Subclasse de Guerreiro', 'Você adquire uma subclasse de Guerreiro à sua escolha. As subclasses Campeão, Cavaleiro Místico, Combatente Psíquico e Mestre da Batalha estão detalhadas
 após a descrição desta classe. Uma subclasse é uma
 especialidade que concede a você características em
 determinados níveis de Guerreiro. Pelo resto de sua
 jornada, você adquire cada uma das características de
 sua subclasse de seu nível de Guerreiro ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para o
 qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 6, 8, 12, 14 e 16 de Guerreiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 5, 'Ajuste Tático', 'Sempre que executar uma Ação Bônus para seu Recuperar Fôlego, você pode mover-se até metade do seu
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 5, 'Ajuste Tático', 'Sempre que executar uma Ação Bônus para seu Recuperar Fôlego, você pode mover-se até metade do seu
 Deslocamento sem provocar Ataques de Oportunidade.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
 que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 9, 'Indomável', 'Ao falhar em uma salvaguarda, você pode jogá-la
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 9, 'Indomável', 'Ao falhar em uma salvaguarda, você pode jogá-la
 novamente adicionando um bônus igual ao seu nível de
 Guerreiro. Você deve usar o novo resultado e não pode
 usar essa característica novamente até completar um
@@ -4344,27 +4905,27 @@ A partir do nível 13, você pode usar essa característica
 duas vezes antes de um Descanso Longo e três vezes
 antes de um Descanso Longo ao atingir o nível 17.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 9, 'Mestre Tático', 'Ao atacar com uma arma cuja propriedade de maestria
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 9, 'Mestre Tático', 'Ao atacar com uma arma cuja propriedade de maestria
 você pode usar, você pode substituir essa propriedade
 pela propriedade Empurrar, Drenar ou Lentidão para
 esse ataque.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 11, 'Dois Ataques Extras', 'Você pode atacar três vezes, em vez de uma, sempre
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 11, 'Dois Ataques Extras', 'Você pode atacar três vezes, em vez de uma, sempre
 que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 13, 'Ataques Estudados', 'Você estuda seus oponentes e aprende com cada ataque que realiza. Se você realizar uma jogada de ataque
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 13, 'Ataques Estudados', 'Você estuda seus oponentes e aprende com cada ataque que realiza. Se você realizar uma jogada de ataque
 contra uma criatura e errar, você tem Vantagem em
 sua próxima jogada de ataque contra essa criatura
 antes do final do seu próximo turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
 ou outro talento à sua escolha para o qual se qualifica.
 Dádiva da Proeza em Combate é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('fighter', 20, 'Três Ataques Extras', 'Você pode atacar quatro vezes, em vez de uma, sempre
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 20, 'Três Ataques Extras', 'Você pode atacar quatro vezes, em vez de uma, sempre
 que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 1, 'Ataque Furtivo', 'Você sabe atacar sutilmente, explorando a distração
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 1, 'Ataque Furtivo', 'Você sabe atacar sutilmente, explorando a distração
 do inimigo. Uma vez por turno, ao atingir uma criatura
 com uma jogada de ataque em que tem Vantagem com
 uma arma com Acuidade ou uma arma à Distância,
@@ -4376,19 +4937,19 @@ e você não tem Desvantagem na jogada de ataque.
 O dano adicional aumenta à medida que você adquire níveis de Ladino, conforme mostrado na coluna
 Ataque Furtivo da tabela Características de Ladino.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 1, 'Especialista', 'Você obtém Especialização (veja o glossário de regras)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 1, 'Especialista', 'Você obtém Especialização (veja o glossário de regras)
 em duas de suas perícias, à sua escolha, nas quais já
 seja proficiente. Furtividade e Prestidigitação são recomendadas se você tiver proficiência nelas.
 No nível 6 de Ladino, você obtém Especialização em
 mais duas perícias nas quais já seja proficiente à sua
 escolha.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 1, 'Gíria do Ladrão', 'Você aprendeu vários idiomas nas comunidades onde
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 1, 'Gíria do Ladrão', 'Você aprendeu vários idiomas nas comunidades onde
 usou seus talentos gatunos. Você conhece a Gíria dos
 Ladrões e outro idioma à sua escolha, que você escolhe
 nas tabelas de idiomas no capítulo 2.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use
 as propriedades de maestria de dois tipos de armas à
 sua escolha com as quais você tem proficiência, como
 Adagas e Arcos Curtos.
@@ -4396,18 +4957,18 @@ Ao completar um Descanso Longo, você pode alterar
 os tipos de armas que escolheu. Por exemplo, você
 pode trocar para as propriedades de maestria de Cimitarras e Espadas Curtas.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 2, 'Ação Ardilosa', 'Seu pensamento rápido e agilidade permitem que você
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 2, 'Ação Ardilosa', 'Seu pensamento rápido e agilidade permitem que você
 se mova e aja rapidamente. No seu turno, você pode
 executar uma das seguintes ações como uma Ação
 Bônus: Correr, Desengajar ou Esconder.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 3, 'Mira Firme', 'Como uma Ação Bônus, você concede a si mesmo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 3, 'Mira Firme', 'Como uma Ação Bônus, você concede a si mesmo
 Vantagem em sua próxima jogada de ataque no turno
 atual. Você pode usar esta característica somente se
 não tiver se movido durante este turno e, após usá-la,
 seu Deslocamento é 0 até o final do turno atual.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 3, 'Subclasse de Ladino', 'Você adquire uma subclasse de Ladino à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 3, 'Subclasse de Ladino', 'Você adquire uma subclasse de Ladino à sua escolha.
 As subclasses Adaga Espiritual, Assassino, Ladrão e
 Trapaceiro Arcano estão detalhadas após a descrição
 desta classe. Uma subclasse é uma especialidade que
@@ -4416,13 +4977,13 @@ de Ladino. Durante toda sua jornada, você adquire
 cada uma das características de sua subclasse de seu
 nível de Ladino ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para
 o qual atende os pré-requisitos. Você adquire essa
 característica novamente nos níveis 8, 10, 12 e 16 de
 Ladino.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 5, 'Golpe Astuto', 'Você encontrou maneiras astutas de aplicar seu Ataque
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 5, 'Golpe Astuto', 'Você encontrou maneiras astutas de aplicar seu Ataque
 Furtivo. Ao causar dano com ele, você pode adicionar
 um dos seguintes efeitos de Golpe Astuto, cada um
 com um custo em dados que deve ser subtraído do
@@ -4446,25 +5007,25 @@ Tropeço (Custo: 1d6). Se o alvo for Grande ou menor,
 ele deve ser bem-sucedido em uma salvaguarda de
 Destreza ou tem a condição Caído.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 5, 'Esquiva Sobrenatural', 'Quando um atacante à sua vista o atinge com uma
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 5, 'Esquiva Sobrenatural', 'Quando um atacante à sua vista o atinge com uma
 jogada de ataque, você pode executar uma Reação para
 reduzir o dano pela metade do ataque (arredondado
 para baixo).') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 7, 'Evasão', 'Você pode se esquivar com agilidade do caminho de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 7, 'Evasão', 'Você pode se esquivar com agilidade do caminho de
 certos perigos. Ao ser alvo de um efeito que permita
 uma salvaguarda de Destreza para receber apenas metade do dano, você não sofre dano se for bem-sucedido na salvaguarda e sofre metade do dano se falhar.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 7, 'Talento Confiável', 'Ao realizar um teste de atributo que lhe permita
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 7, 'Talento Confiável', 'Ao realizar um teste de atributo que lhe permita
 adicionar seu bônus de proficiência em uma perícia ou
 ferramenta, você pode tratar uma jogada de d20 igual
 a 9 ou menos como se fosse 10.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 11, 'Golpe Astuto Aprimorado', 'Você pode usar até dois efeitos de Golpe Astuto ao
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 11, 'Golpe Astuto Aprimorado', 'Você pode usar até dois efeitos de Golpe Astuto ao
 causar dano de Ataque Furtivo, pagando o custo do
 dado por cada efeito.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 14, 'Golpes Sujos', 'Você praticou novas maneiras de usar seu Ataque
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 14, 'Golpes Sujos', 'Você praticou novas maneiras de usar seu Ataque
 Furtivo de forma engenhosa. Os seguintes efeitos agora
 estão entre suas opções de Golpe Astuto.
 Aturdir (Custo: 2d6). O alvo deve ser bem-sucedido
@@ -4478,30 +5039,30 @@ de cada um dos turnos dele, encerrando o efeito em
 caso de sucesso.
 Obscurecer (Custo: 3d6). O alvo deve ser bem-sucedido em uma salvaguarda de Destreza, ou tem a condição Cego até o final do próximo turno dele.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 15, 'Mente Escorregadia', 'Sua mente astuta é excepcionalmente difícil de controlar. Você adquire proficiência em salvaguardas de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 15, 'Mente Escorregadia', 'Sua mente astuta é excepcionalmente difícil de controlar. Você adquire proficiência em salvaguardas de
 Sabedoria e Carisma.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 18, 'Elusivo', 'Você é tão evasivo que os atacantes raramente conseguem vantagem. Nenhuma jogada de ataque pode
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 18, 'Elusivo', 'Você é tão evasivo que os atacantes raramente conseguem vantagem. Nenhuma jogada de ataque pode
 ter Vantagem contra você, a menos que você tenha a
 condição Incapacitado.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
 ou outro talento à sua escolha para o qual se qualifica.
 A Dádiva do Espírito da Noite é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('rogue', 20, 'Golpe de Sorte', 'Você tem uma vocação maravilhosa para ter sucesso
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 20, 'Golpe de Sorte', 'Você tem uma vocação maravilhosa para ter sucesso
 quando necessário. Se você falhar em um Teste de
 D20, pode transformar o resultado em um 20.
 Após usar essa característica, você não pode usá-
 -la novamente até completar um Descanso Curto ou
 Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 1, 'Adepto de Ritual', 'Você pode conjurar qualquer magia como um Ritual se
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 1, 'Adepto de Ritual', 'Você pode conjurar qualquer magia como um Ritual se
 essa magia tiver o marcador Ritual e a magia estiver em
 seu livro de magias. Você não precisa ter a magia preparada, mas deve ler o livro para conjurar uma magia
 deste modo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 1, 'Conjuração', 'Como estudante de magia arcana, você aprendeu a
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 1, 'Conjuração', 'Como estudante de magia arcana, você aprendeu a
 conjurar magias. Veja o capítulo 7 para as regras sobre
 conjuração de magias. As informações abaixo detalham
 como você usa essas regras com magias de Mago, que
@@ -4565,7 +5126,7 @@ Foco de Conjuração. Você pode usar um Foco Arcano
 ou seu livro de magias como um Foco de Conjuração
 para suas magias de Mago.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 1, 'Recuperação Arcana', 'Você pode recuperar um pouco de sua energia mágica estudando seu livro de magias. Ao completar um
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 1, 'Recuperação Arcana', 'Você pode recuperar um pouco de sua energia mágica estudando seu livro de magias. Ao completar um
 Descanso Curto, você pode escolher recuperar espaços
 de magia gastos. Os espaços de magia podem ter um
 círculo combinado igual a não mais da metade do seu
@@ -4577,26 +5138,26 @@ espaços de magia de 1º círculo.
 Você pode usar esta característica novamente após
 completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 2, 'Acadêmico', 'Enquanto estudava magia, você também se especializou em outro campo de estudo. Escolha uma das
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 2, 'Acadêmico', 'Enquanto estudava magia, você também se especializou em outro campo de estudo. Escolha uma das
 seguintes perícias nas quais você tem proficiência: Arcanismo, História, Investigação, Medicina, Natureza ou
 Religião. Você tem Especialização na perícia escolhida.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 3, 'Subclasse de Mago', 'Você adquire uma subclasse de Mago à sua escolha. As
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 3, 'Subclasse de Mago', 'Você adquire uma subclasse de Mago à sua escolha. As
 subclasses Abjurador, Adivinhador, Evocador e Ilusionista estão detalhadas após a descrição desta classe.Uma
 subclasse é uma especialidade que concede a você características em determinados níveis de Mago. Durante
 toda sua jornada, você adquire cada uma das características de sua subclasse de seu nível de Mago ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para
 o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Mago.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 5, 'Memorizar Magia', 'Ao completar um Descanso Curto, você pode estudar
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 5, 'Memorizar Magia', 'Ao completar um Descanso Curto, você pode estudar
 seu livro de magias e substituir uma das magias de
 Mago de 1º círculo ou superior que você preparou para
 sua característica Conjuração por outra magia de 1º
 círculo ou superior do livro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 18, 'Maestria de Magias', 'Você alcançou tal domínio sobre certas magias que
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 18, 'Maestria de Magias', 'Você alcançou tal domínio sobre certas magias que
 pode conjurá-las à vontade. Escolha uma magia de 1º e
 uma de 2º círculo em seu livro de magias que tenham
 um tempo de conjuração de uma ação. Você sempre
@@ -4606,11 +5167,11 @@ Para conjurar qualquer uma delas em um círculo superior, você deve gastar um e
 Ao completar um Descanso Longo, você pode estudar seu livro de magias e substituir uma dessas magias
 por uma magia elegível do mesmo círculo do livro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
 ou outro talento à sua escolha para o qual se qualifica.
 Dádiva da Recordação de Magia é recomendado.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('wizard', 20, 'Assinatura Mágica', 'Escolha duas magias de 3º círculo em seu livro de magias como suas assinaturas mágicas. Você sempre tem
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 20, 'Assinatura Mágica', 'Escolha duas magias de 3º círculo em seu livro de magias como suas assinaturas mágicas. Você sempre tem
 essas magias preparadas e pode conjurá-las, cada uma
 delas, uma vez no 3º círculo sem gastar um espaço de
 magia. Ao realizar isso, você não pode conjurá-las deste
@@ -4648,7 +5209,7 @@ impressiona um dragão
 vermelho com sua magia,
 Presença Régia de Yolande.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 1, 'Artes Marciais', 'Sua prática de artes marciais lhe confere domínio de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 1, 'Artes Marciais', 'Sua prática de artes marciais lhe confere domínio de
 estilos de combate que usam seu Ataque Desarmado e
 armas de Monge, que incluem:
 • Armas Simples Corpo a Corpo
@@ -4671,12 +5232,12 @@ Ataque Desarmado, você pode usar seu modificador
 de Destreza em vez de seu modificador de Força para
 determinar a CD da salvaguarda.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 1, 'Defesa sem Armadura', 'Enquanto você não estiver vestindo armadura ou
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 1, 'Defesa sem Armadura', 'Enquanto você não estiver vestindo armadura ou
 empunhando um Escudo, sua Classe de Armadura
 base é igual a 10 mais seus modificadores de Destreza
 e Sabedoria.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 2, 'Foco do Monge', 'Seu foco e treinamento marcial permitem que você
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 2, 'Foco do Monge', 'Seu foco e treinamento marcial permitem que você
 aproveite uma reserva de energia extraordinária
 dentro de si. Essa energia é representada por Pontos
 de Foco. Seu nível de Monge determina o número de
@@ -4705,19 +5266,19 @@ Torrente de Golpes. Você pode gastar 1 Ponto de
 Foco para realizar dois Ataques Desarmados como
 uma Ação Bônus.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 2, 'Metabolismo Incomum', 'Ao jogar Iniciativa, você pode restaurar todos os
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 2, 'Metabolismo Incomum', 'Ao jogar Iniciativa, você pode restaurar todos os
 Pontos de Foco gastos. Ao realizar isso, jogue seu dado
 de Artes Marciais e recupere um número de Pontos de
 Vida igual ao seu nível de Monge mais o valor jogado.
 Após usar essa característica, você não pode usá-la
 novamente até completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 2, 'Movimento sem Armadura', 'Seu Deslocamento aumenta em 3 metros enquanto
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 2, 'Movimento sem Armadura', 'Seu Deslocamento aumenta em 3 metros enquanto
 você não vestir armadura ou empunhar um Escudo.
 Esse bônus aumenta quando você atinge certos níveis
 de Monge, conforme detalhado na tabela Características de Monge.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 3, 'Defletir Ataques', 'Ao ser atingido devido uma jogada de ataque e o dano
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 3, 'Defletir Ataques', 'Ao ser atingido devido uma jogada de ataque e o dano
 dessa jogada incluir dano Contundente, Cortante ou
 Perfurante, você pode executar uma Reação para reduzir o dano total do ataque. A redução é igual a 1d10
 mais seu modificador de Destreza e nível de Monge.
@@ -4728,48 +5289,48 @@ você se o ataque for corpo a corpo, ou a até 18 metros
 se for à distância e sem Cobertura Total. Essa criatura
 deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre dano igual a duas jogadas de seu dado de Artes Marciais mais seu modificador de Destreza. O dano é do mesmo tipo causado pelo ataque.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 3, 'Subclasse de Monge', 'Você adquire uma subclasse de Monge à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 3, 'Subclasse de Monge', 'Você adquire uma subclasse de Monge à sua escolha.
 As subclasses Combatente da Mão Espalmada, Combatente da Misericórdia, Combatente das Sombras e
 Combatente dos Elementos estão detalhadas após a
 descrição desta classe. Uma subclasse é uma especialidade que concede a você características em determinados níveis de Monge. Durante toda sua jornada,
 você adquire cada uma das características de sua
 subclasse de seu nível de Monge ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para
 o qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Monge.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 4, 'Queda Lenta', 'Você pode executar uma Reação ao estar em queda
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 4, 'Queda Lenta', 'Você pode executar uma Reação ao estar em queda
 para reduzir qualquer dano recebido da queda em um
 valor igual a cinco vezes seu nível de Monge.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
 que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 5, 'Golpe Atordoante', 'Uma vez por turno, ao acertar uma criatura com uma
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 5, 'Golpe Atordoante', 'Uma vez por turno, ao acertar uma criatura com uma
 arma de Monge ou um Ataque Desarmado, você pode
 gastar 1 Ponto de Foco para tentar um golpe atordoante. O alvo deve realizar uma salvaguarda de Constituição. Se falhar, o alvo tem a condição Atordoado até
 o início do seu próximo turno. Em caso de sucesso, o
 Deslocamento do alvo é reduzido pela metade até o
 início do seu próximo turno, e a próxima jogada de ataque realizada contra o alvo antes disso tem Vantagem.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 6, 'Golpes Potencializados', 'Ao causar dano com seu Ataque Desarmado, você
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 6, 'Golpes Potencializados', 'Ao causar dano com seu Ataque Desarmado, você
 escolhe entre causar dano Energético ou seu tipo de
 dano normal.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 7, 'Evasão', 'Ao ser alvo de um efeito que permita uma salvaguarda
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 7, 'Evasão', 'Ao ser alvo de um efeito que permita uma salvaguarda
 de Destreza para receber apenas metade do dano, você
 não recebe dano em caso de sucesso e sofre apenas
 metade do dano se falhar.
 Você não se beneficia dessa característica se tem a
 condição Incapacitado.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 9, 'Movimento Acrobático', 'Enquanto não vestir armadura ou empunhar um
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 9, 'Movimento Acrobático', 'Enquanto não vestir armadura ou empunhar um
 Escudo, você adquire a capacidade de se mover no seu
 turno ao longo de superfícies verticais e por líquidos
 sem entrar em queda durante o movimento.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 10, 'Foco Aprimorado', 'Sua Defesa Paciente, Passo do Vento e Torrente de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 10, 'Foco Aprimorado', 'Sua Defesa Paciente, Passo do Vento e Torrente de
 Golpes adquirem os seguintes benefícios.
 Defesa Paciente. Ao gastar um Ponto de Foco para
 usar Defesa Paciente, você adquire um número de
@@ -4783,39 +5344,39 @@ Ataques de Oportunidade.
 Torrente de Golpes. Você pode gastar 1 Ponto de
 Foco para usar Torrente de Golpes e realizar três Ataques Desarmados em vez de dois.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 10, 'Restauro Pessoal', 'Por pura força de vontade, você pode remover
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 10, 'Restauro Pessoal', 'Por pura força de vontade, você pode remover
 uma das seguintes condições de si no final de cada
 um dos seus turnos: Amedrontado, Enfeitiçado ou
 Envenenado.
 Além disso, você não sofre níveis de Exaustão por
 não se alimentar e se hidratar.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 13, 'Defletir Energia', 'Agora você pode usar sua característica Defletir
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 13, 'Defletir Energia', 'Agora você pode usar sua característica Defletir
 Ataques contra ataques que causam qualquer tipo
 de dano, não apenas Contundente, Cortante ou
 Perfurante.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 14, 'Sobrevivente Disciplinado', 'Sua disciplina física e mental lhe concede proficiência
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 14, 'Sobrevivente Disciplinado', 'Sua disciplina física e mental lhe concede proficiência
 em todas as salvaguardas.
 Além disso, ao realizar uma salvaguarda e falhar,
 você pode gastar 1 Ponto de Foco para jogar novamente, e deve usar o novo resultado.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 15, 'Foco Perfeito', 'Ao jogar Iniciativa e não usar Metabolismo Incomum,
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 15, 'Foco Perfeito', 'Ao jogar Iniciativa e não usar Metabolismo Incomum,
 você recupera Pontos de Foco gastos até ter 4, se tiver
 3 ou menos.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 18, 'Defesa Superior', 'No início do seu turno, você pode gastar 3 Pontos de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 18, 'Defesa Superior', 'No início do seu turno, você pode gastar 3 Pontos de
 Foco para se fortalecer contra danos por 1 minuto ou
 até ter a condição Incapacitado. Durante esse período,
 você tem Resistência a todos os tipos de dano, exceto
 Energético.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo
 5) ou outro talento à sua escolha para o qual se qualifica. Dádiva do Ataque Irresistível é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('monk', 20, 'Corpo e Mente', 'Você auto aperfeiçoou seu corpo e mente a novos patamares. Seus valores de Destreza e Sabedoria aumentam em 4, até no máximo 25.') ON CONFLICT (class_id, level, name) DO NOTHING;
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 20, 'Corpo e Mente', 'Você auto aperfeiçoou seu corpo e mente a novos patamares. Seus valores de Destreza e Sabedoria aumentam em 4, até no máximo 25.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 1, 'Conjuração', 'Você aprendeu a conjurar magias por meio de oração
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 1, 'Conjuração', 'Você aprendeu a conjurar magias por meio de oração
 e meditação. Veja o capítulo 7 para as regras sobre
 conjuração de magias. As informações abaixo detalham
 como você usa essas regras com as magias de Paladino,
@@ -4851,14 +5412,14 @@ conjuração para suas magias de Paladino.
 Foco de Conjuração. Você pode usar um Símbolo Sagrado como um Foco de Conjuração para suas magias
 de Paladino.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use as
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use as
 propriedades de maestria de dois tipos de armas à sua
 escolha com as quais você tem proficiência, como Azagaia e Espadas Longas.
 Sempre que completar um Descanso Longo, você
 pode alterar os tipos de armas que escolheu. Por exemplo, você pode mudar para usar as propriedades de
 maestria de Alabardas e Manguais.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 1, 'Mãos Consagradas', 'Seu toque abençoado pode aliviar feridas. Você tem
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 1, 'Mãos Consagradas', 'Seu toque abençoado pode aliviar feridas. Você tem
 uma reserva de poder de cura que reabastece ao
 completar um Descanso Longo. Com essa reserva, você
 pode recuperar um número total de Pontos de Vida
@@ -4872,11 +5433,11 @@ reserva de poder de cura para remover a condição
 Envenenado da criatura; esses pontos não restauram
 Pontos de Vida da criatura.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 2, 'Destruição do Paladino', 'Você sempre tem a magia Destruição Divina preparada.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 2, 'Destruição do Paladino', 'Você sempre tem a magia Destruição Divina preparada.
 Além disso, você pode conjurá-la sem gastar um espaço
 de magia, não podendo conjurá-la dessa forma novamente antes de completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 2, 'Estilo de Luta', 'Você adquire um talento Estilo de Luta à sua escolha
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 2, 'Estilo de Luta', 'Você adquire um talento Estilo de Luta à sua escolha
 (veja também o capítulo 5). Em vez de escolher um
 desses talentos, você pode escolher a opção abaixo.
 Combatente Abençoado. Você aprende dois truques
@@ -4887,7 +5448,7 @@ atributo de conjuração para elas. Sempre que você
 atinge um nível de Paladino, pode substituir um desses
 truques por outro truque de Clérigo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 3, 'Canalizar Divindade', 'Você pode canalizar energia divina diretamente dos
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 3, 'Canalizar Divindade', 'Você pode canalizar energia divina diretamente dos
 Planos Externos, usando-a para causar efeitos mágicos.
 Você começa com um desses efeitos: Sentido Divino,
 descrito abaixo. Outras características de Paladino dão
@@ -4910,7 +5471,7 @@ você também detecta a presença de qualquer lugar ou
 objeto que tenha sido consagrado ou profanado, como
 na magia Consagrar.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 3, 'Subclasse de Paladino', 'Você adquire uma subclasse de Paladino à sua escolha. As subclasses Juramento da Devoção, Juramento
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 3, 'Subclasse de Paladino', 'Você adquire uma subclasse de Paladino à sua escolha. As subclasses Juramento da Devoção, Juramento
 da Glória, Juramento de Vingança e Juramento dos
 Anciões estão detalhadas após a descrição desta classe.
 Uma subclasse é uma especialidade que lhe concede
@@ -4918,20 +5479,20 @@ características em determinados níveis de Paladino.
 Durante toda sua jornada, você recebe cada uma das
 características de sua subclasse de seu nível de Paladino ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo
 (veja o capítulo 5) ou outro talento à sua escolha para o
 qual atenda os pré-requisitos. Você adquire essa característica novamente nos níveis 8, 12 e 16 de Paladino.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
 que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 5, 'Montaria Fiel', 'Você pode pedir auxílio de uma montaria sobrenatural.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 5, 'Montaria Fiel', 'Você pode pedir auxílio de uma montaria sobrenatural.
 Você sempre tem a magia Convocar Montaria preparada.
 Você também pode conjurar a magia uma vez sem
 gastar um espaço de magia, e restaura a capacidade de
 fazê-lo ao completar um Descanso Longo.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 6, 'Aura de Proteção', 'Você irradia uma aura protetora e invisível em uma
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 6, 'Aura de Proteção', 'Você irradia uma aura protetora e invisível em uma
 Emanação de 3 metros que se origina em você. A
 aura fica inativa em você, caso tenha a condição
 Incapacitado.
@@ -4943,7 +5504,7 @@ pode se beneficiar de apenas uma Aura de Proteção de
 cada vez; a criatura escolhe qual aura recebe enquanto
 estiver nela.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 9, 'Repudiar Inimigos', 'Como uma ação Usar Magia, você pode fazer um uso
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 9, 'Repudiar Inimigos', 'Como uma ação Usar Magia, você pode fazer um uso
 de Canalizar Divindade para subjugar inimigos com
 temor. Ao apresentar seu Símbolo Sagrado ou arma,
 você pode escolher um número de criaturas igual ao
@@ -4956,16 +5517,16 @@ modo, um alvo pode realizar apenas uma das opções
 seguintes nos turnos dele: mover-se, executar uma
 ação ou executar uma Ação Bônus.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 10, 'Aura de Coragem', 'Você e seus aliados têm Imunidade à condição Amedrontado enquanto estiverem em sua Aura de Proteção. Se um aliado Amedrontado entrar na aura, essa
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 10, 'Aura de Coragem', 'Você e seus aliados têm Imunidade à condição Amedrontado enquanto estiverem em sua Aura de Proteção. Se um aliado Amedrontado entrar na aura, essa
 condição não tem efeito sobre esse aliado enquanto ele
 estiver na aura.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 11, 'Golpes Radiantes', 'Seus golpes agora imbuem poder sobrenatural. Ao
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 11, 'Golpes Radiantes', 'Seus golpes agora imbuem poder sobrenatural. Ao
 atingir alvo com uma jogada de ataque usando uma
 arma Corpo a Corpo ou um Ataque Desarmado, o alvo
 sofre 1d8 pontos de dano Radiante adicionais.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 14, 'Toque Restaurador', 'Ao usar Mãos Consagradas em uma criatura, você
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 14, 'Toque Restaurador', 'Ao usar Mãos Consagradas em uma criatura, você
 também pode remover uma ou mais das seguintes
 condições da criatura: Amedrontado, Atordoado, Cego,
 Enfeitiçado, Paralisado ou Surdo. Você deve gastar
@@ -4973,1106 +5534,1106 @@ Enfeitiçado, Paralisado ou Surdo. Você deve gastar
 remover; esses pontos não restauram Pontos de Vida
 para a criatura.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 18, 'Aura Expandida', 'Sua Aura de Proteção agora é uma Emanação de 9
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 18, 'Aura Expandida', 'Sua Aura de Proteção agora é uma Emanação de 9
 metros.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ('paladin', 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 19, 'Dádiva Épica', 'Você adquire o talento Dádiva Épica (veja o capítulo 5)
 ou outro talento à sua escolha para o qual se qualifica.
 Dádiva da Visão Verdadeira é recomendada.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_class_skill_pool (class_id, skill_id)
 VALUES
-  ('barbarian', 'athletics'),
-  ('barbarian', 'intimidation'),
-  ('barbarian', 'animal-handling'),
-  ('barbarian', 'nature'),
-  ('barbarian', 'perception'),
-  ('barbarian', 'survival'),
-  ('warlock', 'arcana'),
-  ('warlock', 'deception'),
-  ('warlock', 'history'),
-  ('warlock', 'intimidation'),
-  ('warlock', 'investigation'),
-  ('warlock', 'nature'),
-  ('warlock', 'religion'),
-  ('cleric', 'history'),
-  ('cleric', 'insight'),
-  ('cleric', 'medicine'),
-  ('cleric', 'persuasion'),
-  ('cleric', 'religion'),
-  ('druid', 'arcana'),
-  ('druid', 'animal-handling'),
-  ('druid', 'insight'),
-  ('druid', 'medicine'),
-  ('druid', 'nature'),
-  ('druid', 'perception'),
-  ('druid', 'religion'),
-  ('druid', 'survival'),
-  ('sorcerer', 'arcana'),
-  ('sorcerer', 'deception'),
-  ('sorcerer', 'intimidation'),
-  ('sorcerer', 'investigation'),
-  ('sorcerer', 'nature'),
-  ('sorcerer', 'religion'),
-  ('ranger', 'animal-handling'),
-  ('ranger', 'athletics'),
-  ('ranger', 'insight'),
-  ('ranger', 'investigation'),
-  ('ranger', 'nature'),
-  ('ranger', 'perception'),
-  ('ranger', 'stealth'),
-  ('ranger', 'survival'),
-  ('fighter', 'acrobatics'),
-  ('fighter', 'animal-handling'),
-  ('fighter', 'athletics'),
-  ('fighter', 'history'),
-  ('fighter', 'insight'),
-  ('fighter', 'intimidation'),
-  ('fighter', 'perception'),
-  ('fighter', 'survival'),
-  ('rogue', 'acrobatics'),
-  ('rogue', 'athletics'),
-  ('rogue', 'deception'),
-  ('rogue', 'insight'),
-  ('rogue', 'intimidation'),
-  ('rogue', 'investigation'),
-  ('rogue', 'perception'),
-  ('rogue', 'persuasion'),
-  ('rogue', 'stealth'),
-  ('wizard', 'arcana'),
-  ('wizard', 'history'),
-  ('wizard', 'investigation'),
-  ('wizard', 'medicine'),
-  ('wizard', 'nature'),
-  ('wizard', 'religion'),
-  ('monk', 'acrobatics'),
-  ('monk', 'athletics'),
-  ('monk', 'history'),
-  ('monk', 'insight'),
-  ('monk', 'religion'),
-  ('monk', 'stealth'),
-  ('paladin', 'athletics'),
-  ('paladin', 'insight'),
-  ('paladin', 'intimidation'),
-  ('paladin', 'medicine'),
-  ('paladin', 'persuasion'),
-  ('paladin', 'religion');
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_skill WHERE slug = 'intimidation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_skill WHERE slug = 'animal-handling')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_skill WHERE slug = 'nature')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_skill WHERE slug = 'survival')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_skill WHERE slug = 'arcana')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_skill WHERE slug = 'deception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_skill WHERE slug = 'intimidation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_skill WHERE slug = 'nature')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_skill WHERE slug = 'medicine')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_skill WHERE slug = 'arcana')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_skill WHERE slug = 'animal-handling')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_skill WHERE slug = 'medicine')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_skill WHERE slug = 'nature')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_skill WHERE slug = 'survival')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'arcana')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'deception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'intimidation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'nature')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_skill WHERE slug = 'animal-handling')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_skill WHERE slug = 'nature')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_skill WHERE slug = 'survival')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_skill WHERE slug = 'acrobatics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_skill WHERE slug = 'animal-handling')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_skill WHERE slug = 'intimidation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_skill WHERE slug = 'survival')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'acrobatics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'deception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'intimidation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'arcana')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'medicine')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'nature')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_skill WHERE slug = 'acrobatics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_skill WHERE slug = 'intimidation')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_skill WHERE slug = 'medicine')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion'));
 
 
 INSERT INTO rpg.phb_spell_class (spell_id, class_id)
 VALUES
-  ('amigos', 'bard'),
-  ('fagulha-estelar', 'bard'),
-  ('golpe-certeiro', 'bard'),
-  ('ilusao-menor', 'bard'),
-  ('luz', 'bard'),
-  ('luzes-dancantes', 'bard'),
-  ('maos-magicas', 'bard'),
-  ('mensagem', 'bard'),
-  ('prestidigitacao-arcana', 'bard'),
-  ('protecao-contra-laminas', 'bard'),
-  ('reparar', 'bard'),
-  ('trovao', 'bard'),
-  ('zombaria-perversa', 'bard'),
-  ('amizade-animal', 'bard'),
-  ('comando', 'bard'),
-  ('compreender-idiomas', 'bard'),
-  ('curar-ferimentos', 'bard'),
-  ('detectar-magia', 'bard'),
-  ('disfarcar-se', 'bard'),
-  ('enfeiticar-pessoa', 'bard'),
-  ('escrita-ilusoria', 'bard'),
-  ('falar-com-animais', 'bard'),
-  ('fogo-das-fadas', 'bard'),
-  ('gargalhada-nefasta-de-tasha', 'bard'),
-  ('heroismo', 'bard'),
-  ('identificar', 'bard'),
-  ('imagem-silenciosa', 'bard'),
-  ('leque-cromatico', 'bard'),
-  ('onda-trovejante', 'bard'),
-  ('palavra-curativa', 'bard'),
-  ('passos-largos', 'bard'),
-  ('perdicao', 'bard'),
-  ('queda-suave', 'bard'),
-  ('servo-invisivel', 'bard'),
-  ('sono', 'bard'),
-  ('sussurros-dissonantes', 'bard'),
-  ('acalmar-emocoes', 'bard'),
-  ('aprimorar-atributo', 'bard'),
-  ('arrombar', 'bard'),
-  ('aumentar-reduzir', 'bard'),
-  ('auxilio', 'bard'),
-  ('boca-encantada', 'bard'),
-  ('cativar', 'bard'),
-  ('cegueira-surdez', 'bard'),
-  ('coroa-da-loucura', 'bard'),
-  ('despedacar', 'bard'),
-  ('detectar-pensamentos', 'bard'),
-  ('esquentar-metal', 'bard'),
-  ('forca-espectral', 'bard'),
-  ('invisibilidade', 'bard'),
-  ('localizar-animais-ou-plantas', 'bard'),
-  ('localizar-objeto', 'bard'),
-  ('mensageiro-animal', 'bard'),
-  ('nuvem-de-adagas', 'bard'),
-  ('paralisar-pessoa', 'bard'),
-  ('reflexos', 'bard'),
-  ('restauracao-menor', 'bard'),
-  ('silencio', 'bard'),
-  ('sugestao', 'bard'),
-  ('ver-o-invisivel', 'bard'),
-  ('zona-da-verdade', 'bard'),
-  ('clarividencia', 'bard'),
-  ('crescimento-de-plantas', 'bard'),
-  ('dissipar-magia', 'bard'),
-  ('falar-com-mortos', 'bard'),
-  ('falar-com-plantas', 'bard'),
-  ('glifo-de-protecao', 'bard'),
-  ('imagem-maior', 'bard'),
-  ('indetectavel', 'bard'),
-  ('lentidao', 'bard'),
-  ('linguas', 'bard'),
-  ('medo', 'bard'),
-  ('nuvem-fetida', 'bard'),
-  ('padrao-hipnotico', 'bard'),
-  ('palavra-curativa-em-massa', 'bard'),
-  ('pequeno-refugio-de-leomund', 'bard'),
-  ('remeter', 'bard'),
-  ('rogar-maldicao', 'bard'),
-  ('simular-morte', 'bard'),
-  ('assassino-fantasmagorico', 'bard'),
-  ('compulsao', 'bard'),
-  ('confusao', 'bard'),
-  ('enfeiticar-monstro', 'bard'),
-  ('fonte-do-luar', 'bard'),
-  ('invisibilidade-maior', 'bard'),
-  ('localizar-criatura', 'bard'),
-  ('movimentacao-livre', 'bard'),
-  ('polimorfia', 'bard'),
-  ('porta-dimensional', 'bard'),
-  ('terreno-alucinatorio', 'bard'),
-  ('ancora-planar', 'bard'),
-  ('animar-objetos', 'bard'),
-  ('circulo-de-teleporte', 'bard'),
-  ('curar-ferimentos-em-massa', 'bard'),
-  ('despertar', 'bard'),
-  ('despistar', 'bard'),
-  ('dominar-pessoa', 'bard'),
-  ('estatica-sinaptica', 'bard'),
-  ('lendas-e-historias', 'bard'),
-  ('ligacao-telepatica-de-rary', 'bard'),
-  ('missao', 'bard'),
-  ('modificar-memoria', 'bard'),
-  ('paralisar-monstro', 'bard'),
-  ('presenca-regia-de-yolande', 'bard'),
-  ('restauracao-maior', 'bard'),
-  ('reviver-os-mortos', 'bard'),
-  ('similaridade', 'bard'),
-  ('sonho', 'bard'),
-  ('videncia', 'bard'),
-  ('banquete-de-herois', 'bard'),
-  ('danca-irresistivel-de-otto', 'bard'),
-  ('encontrar-o-caminho', 'bard'),
-  ('ilusao-programada', 'bard'),
-  ('mau-olhado', 'bard'),
-  ('proteger-fortaleza', 'bard'),
-  ('sugestao-em-massa', 'bard'),
-  ('visao-da-verdade', 'bard'),
-  ('carcere-de-energia', 'bard'),
-  ('espada-de-mordenkainen', 'bard'),
-  ('forma-eterea', 'bard'),
-  ('mansao-magnifica-de-mordenkainen', 'bard'),
-  ('miragem-arcana', 'bard'),
-  ('palavra-de-poder-fortificar', 'bard'),
-  ('projetar-imagem', 'bard'),
-  ('rajada-prismatica', 'bard'),
-  ('regeneracao', 'bard'),
-  ('ressurreicao', 'bard'),
-  ('simbolo', 'bard'),
-  ('teleporte', 'bard'),
-  ('antipatia-simpatia', 'bard'),
-  ('dominar-monstro', 'bard'),
-  ('limpar-a-mente', 'bard'),
-  ('loquacidade', 'bard'),
-  ('palavra-de-poder-atordoar', 'bard'),
-  ('suplicio', 'bard'),
-  ('muralha-prismatica', 'bard'),
-  ('palavra-de-poder-matar', 'bard'),
-  ('palavra-de-poder-salvar', 'bard'),
-  ('polimorfia-total', 'bard'),
-  ('sexto-sentido', 'bard'),
-  ('acudir-os-moribundos', 'cleric'),
-  ('badalar-funebre', 'cleric'),
-  ('chama-sagrada', 'cleric'),
-  ('luz', 'cleric'),
-  ('orientacao', 'cleric'),
-  ('palavra-de-radiancia', 'cleric'),
-  ('reparar', 'cleric'),
-  ('resistencia', 'cleric'),
-  ('taumaturgia', 'cleric'),
-  ('bencao', 'cleric'),
-  ('comando', 'cleric'),
-  ('criar-ou-destruir-agua', 'cleric'),
-  ('curar-ferimentos', 'cleric'),
-  ('detectar-magia', 'cleric'),
-  ('detectar-o-bem-e-o-mal', 'cleric'),
-  ('detectar-veneno-e-doenca', 'cleric'),
-  ('escudo-da-fe', 'cleric'),
-  ('infligir-ferimentos', 'cleric'),
-  ('palavra-curativa', 'cleric'),
-  ('perdicao', 'cleric'),
-  ('protecao-contra-o-bem-e-o-mal', 'cleric'),
-  ('purificar-alimentos-e-bebidas', 'cleric'),
-  ('raio-guia', 'cleric'),
-  ('santuario', 'cleric'),
-  ('acalmar-emocoes', 'cleric'),
-  ('aprimorar-atributo', 'cleric'),
-  ('arma-espiritual', 'cleric'),
-  ('augurio', 'cleric'),
-  ('auxilio', 'cleric'),
-  ('cegueira-surdez', 'cleric'),
-  ('chama-continua', 'cleric'),
-  ('encontrar-armadilhas', 'cleric'),
-  ('localizar-objeto', 'cleric'),
-  ('oracao-de-cura', 'cleric'),
-  ('paralisar-pessoa', 'cleric'),
-  ('protecao-contra-veneno', 'cleric'),
-  ('repouso-tranquilo', 'cleric'),
-  ('restauracao-menor', 'cleric'),
-  ('silencio', 'cleric'),
-  ('vinculo-de-protecao', 'cleric'),
-  ('zona-da-verdade', 'cleric'),
-  ('animar-mortos', 'cleric'),
-  ('aura-de-vitalidade', 'cleric'),
-  ('caminhar-sobre-as-aguas', 'cleric'),
-  ('circulo-magico', 'cleric'),
-  ('clarividencia', 'cleric'),
-  ('criar-comida-e-agua', 'cleric'),
-  ('dissipar-magia', 'cleric'),
-  ('falar-com-mortos', 'cleric'),
-  ('glifo-de-protecao', 'cleric'),
-  ('guardioes-espirituais', 'cleric'),
-  ('linguas', 'cleric'),
-  ('luz-do-dia', 'cleric'),
-  ('mesclar-se-as-rochas', 'cleric'),
-  ('palavra-curativa-em-massa', 'cleric'),
-  ('protecao-contra-energia', 'cleric'),
-  ('remeter', 'cleric'),
-  ('remover-maldicao', 'cleric'),
-  ('revivificar', 'cleric'),
-  ('rogar-maldicao', 'cleric'),
-  ('simular-morte', 'cleric'),
-  ('sinal-de-esperanca', 'cleric'),
-  ('aura-de-pureza', 'cleric'),
-  ('aura-de-vida', 'cleric'),
-  ('banimento', 'cleric'),
-  ('controlar-agua', 'cleric'),
-  ('defensor-da-fe', 'cleric'),
-  ('localizar-criatura', 'cleric'),
-  ('moldar-rochas', 'cleric'),
-  ('movimentacao-livre', 'cleric'),
-  ('pressagio', 'cleric'),
-  ('protecao-contra-a-morte', 'cleric'),
-  ('ancora-planar', 'cleric'),
-  ('circulo-de-poder', 'cleric'),
-  ('coluna-de-chamas', 'cleric'),
-  ('comunhao', 'cleric'),
-  ('consagrar', 'cleric'),
-  ('contagio', 'cleric'),
-  ('convocar-celestial', 'cleric'),
-  ('curar-ferimentos-em-massa', 'cleric'),
-  ('dissipar-o-bem-e-o-mal', 'cleric'),
-  ('lendas-e-historias', 'cleric'),
-  ('missao', 'cleric'),
-  ('praga-de-insetos', 'cleric'),
-  ('restauracao-maior', 'cleric'),
-  ('reviver-os-mortos', 'cleric'),
-  ('videncia', 'cleric'),
-  ('aliado-extraplanar', 'cleric'),
-  ('banquete-de-herois', 'cleric'),
-  ('barreira-de-laminas', 'cleric'),
-  ('criar-mortos-vivos', 'cleric'),
-  ('cura-completa', 'cleric'),
-  ('encontrar-o-caminho', 'cleric'),
-  ('molestia', 'cleric'),
-  ('palavra-de-regresso', 'cleric'),
-  ('proibicao', 'cleric'),
-  ('raio-solar', 'cleric'),
-  ('visao-da-verdade', 'cleric'),
-  ('forma-eterea', 'cleric'),
-  ('invocar-celestial', 'cleric'),
-  ('palavra-de-poder-fortificar', 'cleric'),
-  ('palavra-sagrada', 'cleric'),
-  ('regeneracao', 'cleric'),
-  ('ressurreicao', 'cleric'),
-  ('simbolo', 'cleric'),
-  ('tempestade-de-fogo', 'cleric'),
-  ('transicao-planar', 'cleric'),
-  ('aura-sagrada', 'cleric'),
-  ('campo-antimagia', 'cleric'),
-  ('controlar-o-clima', 'cleric'),
-  ('explosao-solar', 'cleric'),
-  ('terremoto', 'cleric'),
-  ('cura-completa-em-massa', 'cleric'),
-  ('palavra-de-poder-salvar', 'cleric'),
-  ('portal', 'cleric'),
-  ('projecao-astral', 'cleric'),
-  ('ressurreicao-verdadeira', 'cleric'),
-  ('acudir-os-moribundos', 'druid'),
-  ('arte-druidica', 'druid'),
-  ('bordao-mistico', 'druid'),
-  ('chicote-de-espinhos', 'druid'),
-  ('criar-chamas', 'druid'),
-  ('elementalismo', 'druid'),
-  ('fagulha-estelar', 'druid'),
-  ('mensagem', 'druid'),
-  ('orientacao', 'druid'),
-  ('rajada-de-veneno', 'druid'),
-  ('reparar', 'druid'),
-  ('resistencia', 'druid'),
-  ('trovao', 'druid'),
-  ('amizade-animal', 'druid'),
-  ('bom-fruto', 'druid'),
-  ('criar-ou-destruir-agua', 'druid'),
-  ('curar-ferimentos', 'druid'),
-  ('detectar-magia', 'druid'),
-  ('detectar-veneno-e-doenca', 'druid'),
-  ('emaranhar', 'druid'),
-  ('enfeiticar-pessoa', 'druid'),
-  ('faca-de-gelo', 'druid'),
-  ('falar-com-animais', 'druid'),
-  ('fogo-das-fadas', 'druid'),
-  ('nevoa-obscurecente', 'druid'),
-  ('onda-trovejante', 'druid'),
-  ('palavra-curativa', 'druid'),
-  ('passos-largos', 'druid'),
-  ('protecao-contra-o-bem-e-o-mal', 'druid'),
-  ('purificar-alimentos-e-bebidas', 'druid'),
-  ('salto', 'druid'),
-  ('aprimorar-atributo', 'druid'),
-  ('augurio', 'druid'),
-  ('aumentar-reduzir', 'druid'),
-  ('auxilio', 'druid'),
-  ('chama-continua', 'druid'),
-  ('crescer-espinhos', 'druid'),
-  ('encontrar-armadilhas', 'druid'),
-  ('esfera-flamejante', 'druid'),
-  ('esquentar-metal', 'druid'),
-  ('invocar-fera', 'druid'),
-  ('lamina-flamejante', 'druid'),
-  ('localizar-animais-ou-plantas', 'druid'),
-  ('localizar-objeto', 'druid'),
-  ('lufada-de-vento', 'druid'),
-  ('mensageiro-animal', 'druid'),
-  ('paralisar-pessoa', 'druid'),
-  ('passo-sem-rastro', 'druid'),
-  ('pele-casca', 'druid'),
-  ('protecao-contra-veneno', 'druid'),
-  ('raio-lunar', 'druid'),
-  ('restauracao-menor', 'druid'),
-  ('sentido-feral', 'druid'),
-  ('visao-no-escuro', 'druid'),
-  ('arma-elemental', 'druid'),
-  ('aura-de-vitalidade', 'druid'),
-  ('caminhar-sobre-as-aguas', 'druid'),
-  ('convocar-feerico', 'druid'),
-  ('convocar-relampagos', 'druid'),
-  ('crescimento-de-plantas', 'druid'),
-  ('dissipar-magia', 'druid'),
-  ('falar-com-plantas', 'druid'),
-  ('invocar-animais', 'druid'),
-  ('luz-do-dia', 'druid'),
-  ('mesclar-se-as-rochas', 'druid'),
-  ('muralha-de-vento', 'druid'),
-  ('nevasca', 'druid'),
-  ('protecao-contra-energia', 'druid'),
-  ('respirar-na-agua', 'druid'),
-  ('revivificar', 'druid'),
-  ('simular-morte', 'druid'),
-  ('confusao', 'druid'),
-  ('controlar-agua', 'druid'),
-  ('convocar-elemental', 'druid'),
-  ('dominar-fera', 'druid'),
-  ('enfeiticar-monstro', 'druid'),
-  ('escudo-ardente', 'druid'),
-  ('fonte-do-luar', 'druid'),
-  ('inseto-gigante', 'druid'),
-  ('invocar-elementais-menores', 'druid'),
-  ('invocar-seres-da-floresta', 'druid'),
-  ('localizar-criatura', 'druid'),
-  ('malogro', 'druid'),
-  ('moldar-rochas', 'druid'),
-  ('movimentacao-livre', 'druid'),
-  ('muralha-de-fogo', 'druid'),
-  ('pele-rocha', 'druid'),
-  ('polimorfia', 'druid'),
-  ('pressagio', 'druid'),
-  ('tempestade-glacial', 'druid'),
-  ('terreno-alucinatorio', 'druid'),
-  ('vinha-agarradora', 'druid'),
-  ('ancora-planar', 'druid'),
-  ('comunhao-com-a-natureza', 'druid'),
-  ('cone-de-frio', 'druid'),
-  ('contagio', 'druid'),
-  ('cupula-antivida', 'druid'),
-  ('curar-ferimentos-em-massa', 'druid'),
-  ('despertar', 'druid'),
-  ('invocar-elemental', 'druid'),
-  ('missao', 'druid'),
-  ('muralha-de-pedra', 'druid'),
-  ('passo-arboreo', 'druid'),
-  ('praga-de-insetos', 'druid'),
-  ('reencarnar', 'druid'),
-  ('restauracao-maior', 'druid'),
-  ('videncia', 'druid'),
-  ('banquete-de-herois', 'druid'),
-  ('caminhar-no-vento', 'druid'),
-  ('cura-completa', 'druid'),
-  ('de-carne-para-pedra', 'druid'),
-  ('encontrar-o-caminho', 'druid'),
-  ('invocar-feerico', 'druid'),
-  ('mover-terra', 'druid'),
-  ('muralha-de-espinhos', 'druid'),
-  ('raio-solar', 'druid'),
-  ('transporte-via-plantas', 'druid'),
-  ('inverter-a-gravidade', 'druid'),
-  ('miragem-arcana', 'druid'),
-  ('regeneracao', 'druid'),
-  ('simbolo', 'druid'),
-  ('tempestade-de-fogo', 'druid'),
-  ('transicao-planar', 'druid'),
-  ('antipatia-simpatia', 'druid'),
-  ('controlar-o-clima', 'druid'),
-  ('explosao-solar', 'druid'),
-  ('formas-animais', 'druid'),
-  ('nuvem-incendiaria', 'druid'),
-  ('suplicio', 'druid'),
-  ('terremoto', 'druid'),
-  ('tsunami', 'druid'),
-  ('metamorfose', 'druid'),
-  ('ressurreicao-verdadeira', 'druid'),
-  ('sexto-sentido', 'druid'),
-  ('tempestade-da-vinganca', 'druid'),
-  ('bencao', 'paladin'),
-  ('comando', 'paladin'),
-  ('curar-ferimentos', 'paladin'),
-  ('destruicao-cauterizante', 'paladin'),
-  ('destruicao-colerica', 'paladin'),
-  ('destruicao-divina', 'paladin'),
-  ('destruicao-estrondosa', 'paladin'),
-  ('detectar-magia', 'paladin'),
-  ('detectar-o-bem-e-o-mal', 'paladin'),
-  ('detectar-veneno-e-doenca', 'paladin'),
-  ('duelo-compelido', 'paladin'),
-  ('escudo-da-fe', 'paladin'),
-  ('favor-divino', 'paladin'),
-  ('heroismo', 'paladin'),
-  ('protecao-contra-o-bem-e-o-mal', 'paladin'),
-  ('purificar-alimentos-e-bebidas', 'paladin'),
-  ('arma-magica', 'paladin'),
-  ('auxilio', 'paladin'),
-  ('convocar-montaria', 'paladin'),
-  ('destruicao-radiante', 'paladin'),
-  ('localizar-objeto', 'paladin'),
-  ('oracao-de-cura', 'paladin'),
-  ('protecao-contra-veneno', 'paladin'),
-  ('repouso-tranquilo', 'paladin'),
-  ('restauracao-menor', 'paladin'),
-  ('vinculo-de-protecao', 'paladin'),
-  ('zona-da-verdade', 'paladin'),
-  ('arma-elemental', 'paladin'),
-  ('aura-de-vitalidade', 'paladin'),
-  ('circulo-magico', 'paladin'),
-  ('criar-comida-e-agua', 'paladin'),
-  ('destruicao-cegante', 'paladin'),
-  ('dissipar-magia', 'paladin'),
-  ('luz-do-dia', 'paladin'),
-  ('manto-do-cruzado', 'paladin'),
-  ('remover-maldicao', 'paladin'),
-  ('revivificar', 'paladin'),
-  ('aura-de-pureza', 'paladin'),
-  ('aura-de-vida', 'paladin'),
-  ('banimento', 'paladin'),
-  ('destruicao-atordoante', 'paladin'),
-  ('localizar-criatura', 'paladin'),
-  ('protecao-contra-a-morte', 'paladin'),
-  ('circulo-de-poder', 'paladin'),
-  ('convocar-celestial', 'paladin'),
-  ('destruicao-banidora', 'paladin'),
-  ('dissipar-o-bem-e-o-mal', 'paladin'),
-  ('missao', 'paladin'),
-  ('onda-destrutiva', 'paladin'),
-  ('restauracao-maior', 'paladin'),
-  ('reviver-os-mortos', 'paladin'),
-  ('alarme', 'ranger'),
-  ('amizade-animal', 'ranger'),
-  ('bom-fruto', 'ranger'),
-  ('curar-ferimentos', 'ranger'),
-  ('detectar-magia', 'ranger'),
-  ('detectar-veneno-e-doenca', 'ranger'),
-  ('emaranhar', 'ranger'),
-  ('falar-com-animais', 'ranger'),
-  ('golpe-constritor', 'ranger'),
-  ('marca-do-predador', 'ranger'),
-  ('nevoa-obscurecente', 'ranger'),
-  ('passos-largos', 'ranger'),
-  ('salto', 'ranger'),
-  ('saraivada-de-espinhos', 'ranger'),
-  ('aprimorar-atributo', 'ranger'),
-  ('arma-magica', 'ranger'),
-  ('auxilio', 'ranger'),
-  ('cordao-de-flechas', 'ranger'),
-  ('crescer-espinhos', 'ranger'),
-  ('encontrar-armadilhas', 'ranger'),
-  ('invocar-fera', 'ranger'),
-  ('localizar-animais-ou-plantas', 'ranger'),
-  ('localizar-objeto', 'ranger'),
-  ('lufada-de-vento', 'ranger'),
-  ('mensageiro-animal', 'ranger'),
-  ('passo-sem-rastro', 'ranger'),
-  ('pele-casca', 'ranger'),
-  ('protecao-contra-veneno', 'ranger'),
-  ('restauracao-menor', 'ranger'),
-  ('sentido-feral', 'ranger'),
-  ('silencio', 'ranger'),
-  ('visao-no-escuro', 'ranger'),
-  ('arma-elemental', 'ranger'),
-  ('caminhar-sobre-as-aguas', 'ranger'),
-  ('convocar-feerico', 'ranger'),
-  ('crescimento-de-plantas', 'ranger'),
-  ('dissipar-magia', 'ranger'),
-  ('falar-com-plantas', 'ranger'),
-  ('flecha-relampago', 'ranger'),
-  ('indetectavel', 'ranger'),
-  ('invocar-animais', 'ranger'),
-  ('invocar-barragem', 'ranger'),
-  ('luz-do-dia', 'ranger'),
-  ('mesclar-se-as-rochas', 'ranger'),
-  ('muralha-de-vento', 'ranger'),
-  ('protecao-contra-energia', 'ranger'),
-  ('respirar-na-agua', 'ranger'),
-  ('revivificar', 'ranger'),
-  ('convocar-elemental', 'ranger'),
-  ('dominar-fera', 'ranger'),
-  ('invocar-seres-da-floresta', 'ranger'),
-  ('localizar-criatura', 'ranger'),
-  ('movimentacao-livre', 'ranger'),
-  ('pele-rocha', 'ranger'),
-  ('vinha-agarradora', 'ranger'),
-  ('aljava-veloz', 'ranger'),
-  ('comunhao-com-a-natureza', 'ranger'),
-  ('golpe-de-arco', 'ranger'),
-  ('invocar-saraivada', 'ranger'),
-  ('passo-arboreo', 'ranger'),
-  ('restauracao-maior', 'ranger'),
-  ('amigos', 'sorcerer'),
-  ('bolha-acida', 'sorcerer'),
-  ('elementalismo', 'sorcerer'),
-  ('explosao-elemental', 'sorcerer'),
-  ('golpe-certeiro', 'sorcerer'),
-  ('ilusao-menor', 'sorcerer'),
-  ('luz', 'sorcerer'),
-  ('luzes-dancantes', 'sorcerer'),
-  ('maos-magicas', 'sorcerer'),
-  ('mensagem', 'sorcerer'),
-  ('prestidigitacao-arcana', 'sorcerer'),
-  ('protecao-contra-laminas', 'sorcerer'),
-  ('raio-de-fogo', 'sorcerer'),
-  ('raio-de-gelo', 'sorcerer'),
-  ('rajada-de-veneno', 'sorcerer'),
-  ('reparar', 'sorcerer'),
-  ('talho-mental', 'sorcerer'),
-  ('toque-chocante', 'sorcerer'),
-  ('toque-necrotico', 'sorcerer'),
-  ('trovao', 'sorcerer'),
-  ('armadura-arcana', 'sorcerer'),
-  ('compreender-idiomas', 'sorcerer'),
-  ('detectar-magia', 'sorcerer'),
-  ('disfarcar-se', 'sorcerer'),
-  ('enfeiticar-pessoa', 'sorcerer'),
-  ('escudo-arcano', 'sorcerer'),
-  ('faca-de-gelo', 'sorcerer'),
-  ('graxa', 'sorcerer'),
-  ('imagem-silenciosa', 'sorcerer'),
-  ('leque-cromatico', 'sorcerer'),
-  ('maos-flamejantes', 'sorcerer'),
-  ('misseis-magicos', 'sorcerer'),
-  ('nevoa-obscurecente', 'sorcerer'),
-  ('onda-trovejante', 'sorcerer'),
-  ('orbe-cromatico', 'sorcerer'),
-  ('queda-suave', 'sorcerer'),
-  ('raio-de-bruxa', 'sorcerer'),
-  ('raio-nauseante', 'sorcerer'),
-  ('retirada-acelerada', 'sorcerer'),
-  ('salto', 'sorcerer'),
-  ('sono', 'sorcerer'),
-  ('vitalidade-vazia', 'sorcerer'),
-  ('alterar-se', 'sorcerer'),
-  ('aprimorar-atributo', 'sorcerer'),
-  ('arma-magica', 'sorcerer'),
-  ('arrombar', 'sorcerer'),
-  ('aumentar-reduzir', 'sorcerer'),
-  ('cegueira-surdez', 'sorcerer'),
-  ('coroa-da-loucura', 'sorcerer'),
-  ('despedacar', 'sorcerer'),
-  ('detectar-pensamentos', 'sorcerer'),
-  ('escalada-de-aranha', 'sorcerer'),
-  ('escuridao', 'sorcerer'),
-  ('esfera-flamejante', 'sorcerer'),
-  ('espinho-mental', 'sorcerer'),
-  ('forca-espectral', 'sorcerer'),
-  ('invisibilidade', 'sorcerer'),
-  ('lamina-flamejante', 'sorcerer'),
-  ('levitacao', 'sorcerer'),
-  ('lufada-de-vento', 'sorcerer'),
-  ('nuvem-de-adagas', 'sorcerer'),
-  ('paralisar-pessoa', 'sorcerer'),
-  ('passo-nebuloso', 'sorcerer'),
-  ('raio-ardente', 'sorcerer'),
-  ('reflexos', 'sorcerer'),
-  ('sopro-de-dragao', 'sorcerer'),
-  ('sugestao', 'sorcerer'),
-  ('teia', 'sorcerer'),
-  ('turvar', 'sorcerer'),
-  ('ver-o-invisivel', 'sorcerer'),
-  ('vigor-arcano', 'sorcerer'),
-  ('visao-no-escuro', 'sorcerer'),
-  ('bola-de-fogo', 'sorcerer'),
-  ('caminhar-sobre-as-aguas', 'sorcerer'),
-  ('celeridade', 'sorcerer'),
-  ('clarividencia', 'sorcerer'),
-  ('contramagia', 'sorcerer'),
-  ('dissipar-magia', 'sorcerer'),
-  ('forma-gasosa', 'sorcerer'),
-  ('imagem-maior', 'sorcerer'),
-  ('lentidao', 'sorcerer'),
-  ('linguas', 'sorcerer'),
-  ('luz-do-dia', 'sorcerer'),
-  ('medo', 'sorcerer'),
-  ('nevasca', 'sorcerer'),
-  ('nuvem-fetida', 'sorcerer'),
-  ('padrao-hipnotico', 'sorcerer'),
-  ('piscar', 'sorcerer'),
-  ('protecao-contra-energia', 'sorcerer'),
-  ('relampago', 'sorcerer'),
-  ('respirar-na-agua', 'sorcerer'),
-  ('toque-vampirico', 'sorcerer'),
-  ('voo', 'sorcerer'),
-  ('banimento', 'sorcerer'),
-  ('confusao', 'sorcerer'),
-  ('dominar-fera', 'sorcerer'),
-  ('enfeiticar-monstro', 'sorcerer'),
-  ('escudo-ardente', 'sorcerer'),
-  ('esfera-vitriolica', 'sorcerer'),
-  ('invisibilidade-maior', 'sorcerer'),
-  ('malogro', 'sorcerer'),
-  ('muralha-de-fogo', 'sorcerer'),
-  ('pele-rocha', 'sorcerer'),
-  ('polimorfia', 'sorcerer'),
-  ('porta-dimensional', 'sorcerer'),
-  ('tempestade-glacial', 'sorcerer'),
-  ('animar-objetos', 'sorcerer'),
-  ('circulo-de-teleporte', 'sorcerer'),
-  ('cone-de-frio', 'sorcerer'),
-  ('criacao', 'sorcerer'),
-  ('dominar-pessoa', 'sorcerer'),
-  ('estatica-sinaptica', 'sorcerer'),
-  ('mao-de-bigby', 'sorcerer'),
-  ('muralha-de-pedra', 'sorcerer'),
-  ('nevoa-mortal', 'sorcerer'),
-  ('paralisar-monstro', 'sorcerer'),
-  ('praga-de-insetos', 'sorcerer'),
-  ('similaridade', 'sorcerer'),
-  ('telecinese', 'sorcerer'),
-  ('circulo-da-morte', 'sorcerer'),
-  ('corrente-de-relampagos', 'sorcerer'),
-  ('de-carne-para-pedra', 'sorcerer'),
-  ('desintegrar', 'sorcerer'),
-  ('esfera-congelante-de-otiluke', 'sorcerer'),
-  ('globo-de-invulnerabilidade', 'sorcerer'),
-  ('mau-olhado', 'sorcerer'),
-  ('mover-terra', 'sorcerer'),
-  ('portais-arcanos', 'sorcerer'),
-  ('raio-solar', 'sorcerer'),
-  ('sugestao-em-massa', 'sorcerer'),
-  ('visao-da-verdade', 'sorcerer'),
-  ('bola-de-fogo-adiavel', 'sorcerer'),
-  ('dedo-da-morte', 'sorcerer'),
-  ('forma-eterea', 'sorcerer'),
-  ('inverter-a-gravidade', 'sorcerer'),
-  ('rajada-prismatica', 'sorcerer'),
-  ('teleporte', 'sorcerer'),
-  ('tempestade-de-fogo', 'sorcerer'),
-  ('transicao-planar', 'sorcerer'),
-  ('dominar-monstro', 'sorcerer'),
-  ('explosao-solar', 'sorcerer'),
-  ('nuvem-incendiaria', 'sorcerer'),
-  ('palavra-de-poder-atordoar', 'sorcerer'),
-  ('semiplano', 'sorcerer'),
-  ('terremoto', 'sorcerer'),
-  ('chuva-de-meteoros', 'sorcerer'),
-  ('desejo', 'sorcerer'),
-  ('palavra-de-poder-matar', 'sorcerer'),
-  ('parar-o-tempo', 'sorcerer'),
-  ('portal', 'sorcerer'),
-  ('amigos', 'warlock'),
-  ('badalar-funebre', 'warlock'),
-  ('golpe-certeiro', 'warlock'),
-  ('ilusao-menor', 'warlock'),
-  ('maos-magicas', 'warlock'),
-  ('prestidigitacao-arcana', 'warlock'),
-  ('protecao-contra-laminas', 'warlock'),
-  ('raio-mistico', 'warlock'),
-  ('rajada-de-veneno', 'warlock'),
-  ('talho-mental', 'warlock'),
-  ('toque-necrotico', 'warlock'),
-  ('trovao', 'warlock'),
-  ('armadura-de-agathys', 'warlock'),
-  ('bracos-de-hadar', 'warlock'),
-  ('compreender-idiomas', 'warlock'),
-  ('danacao', 'warlock'),
-  ('detectar-magia', 'warlock'),
-  ('enfeiticar-pessoa', 'warlock'),
-  ('escrita-ilusoria', 'warlock'),
-  ('falar-com-animais', 'warlock'),
-  ('gargalhada-nefasta-de-tasha', 'warlock'),
-  ('perdicao', 'warlock'),
-  ('protecao-contra-o-bem-e-o-mal', 'warlock'),
-  ('raio-de-bruxa', 'warlock'),
-  ('repreensao-diabolica', 'warlock'),
-  ('retirada-acelerada', 'warlock'),
-  ('servo-invisivel', 'warlock'),
-  ('cativar', 'warlock'),
-  ('coroa-da-loucura', 'warlock'),
-  ('escalada-de-aranha', 'warlock'),
-  ('escuridao', 'warlock'),
-  ('espinho-mental', 'warlock'),
-  ('invisibilidade', 'warlock'),
-  ('nuvem-de-adagas', 'warlock'),
-  ('paralisar-pessoa', 'warlock'),
-  ('passo-nebuloso', 'warlock'),
-  ('raio-do-enfraquecimento', 'warlock'),
-  ('reflexos', 'warlock'),
-  ('sugestao', 'warlock'),
-  ('circulo-magico', 'warlock'),
-  ('contramagia', 'warlock'),
-  ('convocar-feerico', 'warlock'),
-  ('dissipar-magia', 'warlock'),
-  ('fome-de-hadar', 'warlock'),
-  ('forma-gasosa', 'warlock'),
-  ('imagem-maior', 'warlock'),
-  ('invocar-morto-vivo', 'warlock'),
-  ('linguas', 'warlock'),
-  ('medo', 'warlock'),
-  ('padrao-hipnotico', 'warlock'),
-  ('remover-maldicao', 'warlock'),
-  ('toque-vampirico', 'warlock'),
-  ('voo', 'warlock'),
-  ('banimento', 'warlock'),
-  ('enfeiticar-monstro', 'warlock'),
-  ('invocar-aberracao', 'warlock'),
-  ('malogro', 'warlock'),
-  ('porta-dimensional', 'warlock'),
-  ('terreno-alucinatorio', 'warlock'),
-  ('ancora-planar', 'warlock'),
-  ('circulo-de-teleporte', 'warlock'),
-  ('contato-extraplanar', 'warlock'),
-  ('despistar', 'warlock'),
-  ('estatica-sinaptica', 'warlock'),
-  ('paralisar-monstro', 'warlock'),
-  ('sonho', 'warlock'),
-  ('tempestade-radiante-de-jallarzi', 'warlock'),
-  ('videncia', 'warlock'),
-  ('caldeirao-borbulhante-de-tasha', 'warlock'),
-  ('circulo-da-morte', 'warlock'),
-  ('criar-mortos-vivos', 'warlock'),
-  ('invocar-infero', 'warlock'),
-  ('mau-olhado', 'warlock'),
-  ('portais-arcanos', 'warlock'),
-  ('visao-da-verdade', 'warlock'),
-  ('carcere-de-energia', 'warlock'),
-  ('dedo-da-morte', 'warlock'),
-  ('forma-eterea', 'warlock'),
-  ('transicao-planar', 'warlock'),
-  ('dominar-monstro', 'warlock'),
-  ('loquacidade', 'warlock'),
-  ('palavra-de-poder-atordoar', 'warlock'),
-  ('semiplano', 'warlock'),
-  ('suplicio', 'warlock'),
-  ('aprisionamento', 'warlock'),
-  ('encarnacao-fantasmagorica', 'warlock'),
-  ('palavra-de-poder-matar', 'warlock'),
-  ('polimorfia-total', 'warlock'),
-  ('portal', 'warlock'),
-  ('projecao-astral', 'warlock'),
-  ('sexto-sentido', 'warlock'),
-  ('amigos', 'wizard'),
-  ('badalar-funebre', 'wizard'),
-  ('bolha-acida', 'wizard'),
-  ('elementalismo', 'wizard'),
-  ('golpe-certeiro', 'wizard'),
-  ('ilusao-menor', 'wizard'),
-  ('luz', 'wizard'),
-  ('luzes-dancantes', 'wizard'),
-  ('maos-magicas', 'wizard'),
-  ('mensagem', 'wizard'),
-  ('prestidigitacao-arcana', 'wizard'),
-  ('protecao-contra-laminas', 'wizard'),
-  ('raio-de-fogo', 'wizard'),
-  ('raio-de-gelo', 'wizard'),
-  ('rajada-de-veneno', 'wizard'),
-  ('reparar', 'wizard'),
-  ('talho-mental', 'wizard'),
-  ('toque-chocante', 'wizard'),
-  ('toque-necrotico', 'wizard'),
-  ('trovao', 'wizard'),
-  ('alarme', 'wizard'),
-  ('armadura-arcana', 'wizard'),
-  ('compreender-idiomas', 'wizard'),
-  ('convocar-familiar', 'wizard'),
-  ('detectar-magia', 'wizard'),
-  ('disco-flutuante-de-tenser', 'wizard'),
-  ('disfarcar-se', 'wizard'),
-  ('enfeiticar-pessoa', 'wizard'),
-  ('escrita-ilusoria', 'wizard'),
-  ('escudo-arcano', 'wizard'),
-  ('faca-de-gelo', 'wizard'),
-  ('gargalhada-nefasta-de-tasha', 'wizard'),
-  ('graxa', 'wizard'),
-  ('identificar', 'wizard'),
-  ('imagem-silenciosa', 'wizard'),
-  ('leque-cromatico', 'wizard'),
-  ('maos-flamejantes', 'wizard'),
-  ('misseis-magicos', 'wizard'),
-  ('nevoa-obscurecente', 'wizard'),
-  ('onda-trovejante', 'wizard'),
-  ('orbe-cromatico', 'wizard'),
-  ('passos-largos', 'wizard'),
-  ('protecao-contra-o-bem-e-o-mal', 'wizard'),
-  ('queda-suave', 'wizard'),
-  ('raio-de-bruxa', 'wizard'),
-  ('raio-nauseante', 'wizard'),
-  ('retirada-acelerada', 'wizard'),
-  ('salto', 'wizard'),
-  ('servo-invisivel', 'wizard'),
-  ('sono', 'wizard'),
-  ('vitalidade-vazia', 'wizard'),
-  ('alterar-se', 'wizard'),
-  ('aprimorar-atributo', 'wizard'),
-  ('arma-magica', 'wizard'),
-  ('arrombar', 'wizard'),
-  ('augurio', 'wizard'),
-  ('aumentar-reduzir', 'wizard'),
-  ('aura-magica-de-nystul', 'wizard'),
-  ('boca-encantada', 'wizard'),
-  ('cegueira-surdez', 'wizard'),
-  ('chama-continua', 'wizard'),
-  ('corda-extradimensional', 'wizard'),
-  ('coroa-da-loucura', 'wizard'),
-  ('despedacar', 'wizard'),
-  ('detectar-pensamentos', 'wizard'),
-  ('escalada-de-aranha', 'wizard'),
-  ('escuridao', 'wizard'),
-  ('esfera-flamejante', 'wizard'),
-  ('espinho-mental', 'wizard'),
-  ('flecha-acida-de-melf', 'wizard'),
-  ('forca-espectral', 'wizard'),
-  ('invisibilidade', 'wizard'),
-  ('levitacao', 'wizard'),
-  ('localizar-objeto', 'wizard'),
-  ('lufada-de-vento', 'wizard'),
-  ('nuvem-de-adagas', 'wizard'),
-  ('paralisar-pessoa', 'wizard'),
-  ('passo-nebuloso', 'wizard'),
-  ('raio-ardente', 'wizard'),
-  ('raio-do-enfraquecimento', 'wizard'),
-  ('reflexos', 'wizard'),
-  ('repouso-tranquilo', 'wizard'),
-  ('sopro-de-dragao', 'wizard'),
-  ('sugestao', 'wizard'),
-  ('teia', 'wizard'),
-  ('tranca-arcana', 'wizard'),
-  ('turvar', 'wizard'),
-  ('ver-o-invisivel', 'wizard'),
-  ('vigor-arcano', 'wizard'),
-  ('visao-no-escuro', 'wizard'),
-  ('animar-mortos', 'wizard'),
-  ('bola-de-fogo', 'wizard'),
-  ('celeridade', 'wizard'),
-  ('circulo-magico', 'wizard'),
-  ('clarividencia', 'wizard'),
-  ('contramagia', 'wizard'),
-  ('convocar-feerico', 'wizard'),
-  ('dissipar-magia', 'wizard'),
-  ('falar-com-mortos', 'wizard'),
-  ('forma-gasosa', 'wizard'),
-  ('glifo-de-protecao', 'wizard'),
-  ('imagem-maior', 'wizard'),
-  ('indetectavel', 'wizard'),
-  ('invocar-morto-vivo', 'wizard'),
-  ('lentidao', 'wizard'),
-  ('linguas', 'wizard'),
-  ('medo', 'wizard'),
-  ('montaria-fantasmagorica', 'wizard'),
-  ('nevasca', 'wizard'),
-  ('nuvem-fetida', 'wizard'),
-  ('padrao-hipnotico', 'wizard'),
-  ('pequeno-refugio-de-leomund', 'wizard'),
-  ('piscar', 'wizard'),
-  ('protecao-contra-energia', 'wizard'),
-  ('relampago', 'wizard'),
-  ('remeter', 'wizard'),
-  ('remover-maldicao', 'wizard'),
-  ('respirar-na-agua', 'wizard'),
-  ('rogar-maldicao', 'wizard'),
-  ('simular-morte', 'wizard'),
-  ('toque-vampirico', 'wizard'),
-  ('voo', 'wizard'),
-  ('arca-secreta-de-leomund', 'wizard'),
-  ('assassino-fantasmagorico', 'wizard'),
-  ('banimento', 'wizard'),
-  ('cao-fiel-de-mordenkainen', 'wizard'),
-  ('confusao', 'wizard'),
-  ('controlar-agua', 'wizard'),
-  ('convocar-elemental', 'wizard'),
-  ('enfeiticar-monstro', 'wizard'),
-  ('escudo-ardente', 'wizard'),
-  ('esfera-resiliente-de-otiluke', 'wizard'),
-  ('esfera-vitriolica', 'wizard'),
-  ('fabricar', 'wizard'),
-  ('invisibilidade-maior', 'wizard'),
-  ('invocar-aberracao', 'wizard'),
-  ('invocar-constructo', 'wizard'),
-  ('invocar-elementais-menores', 'wizard'),
-  ('localizar-criatura', 'wizard'),
-  ('malogro', 'wizard'),
-  ('moldar-rochas', 'wizard'),
-  ('muralha-de-fogo', 'wizard'),
-  ('olho-arcano', 'wizard'),
-  ('pele-rocha', 'wizard'),
-  ('polimorfia', 'wizard'),
-  ('porta-dimensional', 'wizard'),
-  ('pressagio', 'wizard'),
-  ('santuario-particular-de-mordenkainen', 'wizard'),
-  ('tempestade-glacial', 'wizard'),
-  ('tentaculos-negros-de-evard', 'wizard'),
-  ('terreno-alucinatorio', 'wizard'),
-  ('ancora-planar', 'wizard'),
-  ('animar-objetos', 'wizard'),
-  ('circulo-de-poder', 'wizard'),
-  ('circulo-de-teleporte', 'wizard'),
-  ('cone-de-frio', 'wizard'),
-  ('contato-extraplanar', 'wizard'),
-  ('criacao', 'wizard'),
-  ('criar-passagem', 'wizard'),
-  ('despistar', 'wizard'),
-  ('dominar-pessoa', 'wizard'),
-  ('estatica-sinaptica', 'wizard'),
-  ('golpe-de-arco', 'wizard'),
-  ('invocar-dragao', 'wizard'),
-  ('invocar-elemental', 'wizard'),
-  ('lendas-e-historias', 'wizard'),
-  ('ligacao-telepatica-de-rary', 'wizard'),
-  ('mao-de-bigby', 'wizard'),
-  ('missao', 'wizard'),
-  ('modificar-memoria', 'wizard'),
-  ('muralha-de-energia', 'wizard'),
-  ('muralha-de-pedra', 'wizard'),
-  ('nevoa-mortal', 'wizard'),
-  ('paralisar-monstro', 'wizard'),
-  ('presenca-regia-de-yolande', 'wizard'),
-  ('similaridade', 'wizard'),
-  ('sonho', 'wizard'),
-  ('telecinese', 'wizard'),
-  ('tempestade-radiante-de-jallarzi', 'wizard'),
-  ('videncia', 'wizard'),
-  ('caldeirao-borbulhante-de-tasha', 'wizard'),
-  ('circulo-da-morte', 'wizard'),
-  ('contingencia', 'wizard'),
-  ('corrente-de-relampagos', 'wizard'),
-  ('criar-mortos-vivos', 'wizard'),
-  ('danca-irresistivel-de-otto', 'wizard'),
-  ('de-carne-para-pedra', 'wizard'),
-  ('desintegrar', 'wizard'),
-  ('esfera-congelante-de-otiluke', 'wizard'),
-  ('globo-de-invulnerabilidade', 'wizard'),
-  ('ilusao-programada', 'wizard'),
-  ('invocacao-instantanea-de-drawmij', 'wizard'),
-  ('invocar-infero', 'wizard'),
-  ('mau-olhado', 'wizard'),
-  ('mover-terra', 'wizard'),
-  ('muralha-de-gelo', 'wizard'),
-  ('portais-arcanos', 'wizard'),
-  ('proteger-fortaleza', 'wizard'),
-  ('raio-solar', 'wizard'),
-  ('receptaculo-arcano', 'wizard'),
-  ('sugestao-em-massa', 'wizard'),
-  ('visao-da-verdade', 'wizard'),
-  ('bola-de-fogo-adiavel', 'wizard'),
-  ('carcere-de-energia', 'wizard'),
-  ('dedo-da-morte', 'wizard'),
-  ('espada-de-mordenkainen', 'wizard'),
-  ('forma-eterea', 'wizard'),
-  ('inverter-a-gravidade', 'wizard'),
-  ('mansao-magnifica-de-mordenkainen', 'wizard'),
-  ('miragem-arcana', 'wizard'),
-  ('projetar-imagem', 'wizard'),
-  ('rajada-prismatica', 'wizard'),
-  ('refugiar', 'wizard'),
-  ('simbolo', 'wizard'),
-  ('simulacro', 'wizard'),
-  ('teleporte', 'wizard'),
-  ('transicao-planar', 'wizard'),
-  ('antipatia-simpatia', 'wizard'),
-  ('campo-antimagia', 'wizard'),
-  ('clone', 'wizard'),
-  ('controlar-o-clima', 'wizard'),
-  ('dominar-monstro', 'wizard'),
-  ('explosao-solar', 'wizard'),
-  ('labirinto', 'wizard'),
-  ('limpar-a-mente', 'wizard'),
-  ('nuvem-incendiaria', 'wizard'),
-  ('palavra-de-poder-atordoar', 'wizard'),
-  ('semiplano', 'wizard'),
-  ('suplicio', 'wizard'),
-  ('telepatia', 'wizard'),
-  ('aprisionamento', 'wizard'),
-  ('chuva-de-meteoros', 'wizard'),
-  ('desejo', 'wizard'),
-  ('encarnacao-fantasmagorica', 'wizard'),
-  ('metamorfose', 'wizard'),
-  ('muralha-prismatica', 'wizard'),
-  ('palavra-de-poder-matar', 'wizard'),
-  ('parar-o-tempo', 'wizard'),
-  ('polimorfia-total', 'wizard'),
-  ('portal', 'wizard'),
-  ('projecao-astral', 'wizard'),
-  ('sexto-sentido', 'wizard')
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'amigos'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'fagulha-estelar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-certeiro'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ilusao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luzes-dancantes'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'maos-magicas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mensagem'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'prestidigitacao-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-laminas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reparar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'trovao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'zombaria-perversa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'amizade-animal'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'comando'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'compreender-idiomas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'disfarcar-se'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escrita-ilusoria'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-animais'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'fogo-das-fadas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'gargalhada-nefasta-de-tasha'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'heroismo'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'identificar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'imagem-silenciosa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'leque-cromatico'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'onda-trovejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passos-largos'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'perdicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'queda-suave'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'servo-invisivel'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sono'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sussurros-dissonantes'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'acalmar-emocoes'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aprimorar-atributo'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arrombar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aumentar-reduzir'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'auxilio'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'boca-encantada'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cativar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cegueira-surdez'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'coroa-da-loucura'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'despedacar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-pensamentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esquentar-metal'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forca-espectral'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-animais-ou-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-objeto'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mensageiro-animal'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-de-adagas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reflexos'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'silencio'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sugestao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ver-o-invisivel'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'zona-da-verdade'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'clarividencia'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'crescimento-de-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-mortos'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'glifo-de-protecao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'imagem-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'indetectavel'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lentidao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'linguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'medo'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-fetida'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'padrao-hipnotico'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pequeno-refugio-de-leomund'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'remeter'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rogar-maldicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simular-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'assassino-fantasmagorico'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'compulsao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'confusao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'fonte-do-luar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-criatura'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'movimentacao-livre'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'polimorfia'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'porta-dimensional'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'terreno-alucinatorio'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ancora-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'animar-objetos'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-de-teleporte'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'despertar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'despistar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'estatica-sinaptica'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lendas-e-historias'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ligacao-telepatica-de-rary'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'missao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'modificar-memoria'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'presenca-regia-de-yolande'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reviver-os-mortos'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'similaridade'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sonho'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'videncia'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'banquete-de-herois'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'danca-irresistivel-de-otto'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'encontrar-o-caminho'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ilusao-programada'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mau-olhado'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'proteger-fortaleza'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sugestao-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-da-verdade'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'carcere-de-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'espada-de-mordenkainen'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forma-eterea'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mansao-magnifica-de-mordenkainen'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'miragem-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-fortificar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'projetar-imagem'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-prismatica'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'regeneracao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ressurreicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simbolo'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'teleporte'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'antipatia-simpatia'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'limpar-a-mente'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'loquacidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-atordoar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'suplicio'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-prismatica'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-matar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-salvar'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'polimorfia-total'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sexto-sentido'), (SELECT id FROM rpg.phb_class WHERE slug = 'bard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'acudir-os-moribundos'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'badalar-funebre'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'chama-sagrada'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'orientacao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-radiancia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reparar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'resistencia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'taumaturgia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bencao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'comando'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-ou-destruir-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-veneno-e-doenca'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-da-fe'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'infligir-ferimentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'perdicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'purificar-alimentos-e-bebidas'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-guia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'santuario'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'acalmar-emocoes'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aprimorar-atributo'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arma-espiritual'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'augurio'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'auxilio'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cegueira-surdez'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'chama-continua'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'encontrar-armadilhas'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-objeto'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'oracao-de-cura'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-veneno'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'repouso-tranquilo'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'silencio'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'vinculo-de-protecao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'zona-da-verdade'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'animar-mortos'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-de-vitalidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'caminhar-sobre-as-aguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-magico'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'clarividencia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-comida-e-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-mortos'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'glifo-de-protecao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'guardioes-espirituais'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'linguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz-do-dia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mesclar-se-as-rochas'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'remeter'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'remover-maldicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'revivificar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rogar-maldicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simular-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sinal-de-esperanca'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-de-pureza'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-de-vida'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'banimento'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'controlar-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'defensor-da-fe'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-criatura'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'moldar-rochas'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'movimentacao-livre'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pressagio'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-a-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ancora-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-de-poder'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'coluna-de-chamas'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'comunhao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'consagrar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'contagio'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-celestial'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lendas-e-historias'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'missao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'praga-de-insetos'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reviver-os-mortos'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'videncia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aliado-extraplanar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'banquete-de-herois'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'barreira-de-laminas'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-mortos-vivos'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cura-completa'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'encontrar-o-caminho'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'molestia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-regresso'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'proibicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-solar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-da-verdade'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forma-eterea'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-celestial'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-fortificar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-sagrada'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'regeneracao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ressurreicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simbolo'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'transicao-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-sagrada'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'campo-antimagia'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'controlar-o-clima'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'explosao-solar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'terremoto'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cura-completa-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-salvar'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'portal'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'projecao-astral'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ressurreicao-verdadeira'), (SELECT id FROM rpg.phb_class WHERE slug = 'cleric')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'acudir-os-moribundos'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arte-druidica'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bordao-mistico'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'chicote-de-espinhos'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-chamas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'elementalismo'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'fagulha-estelar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mensagem'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'orientacao'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-de-veneno'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reparar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'resistencia'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'trovao'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'amizade-animal'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bom-fruto'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-ou-destruir-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-veneno-e-doenca'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'emaranhar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'faca-de-gelo'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-animais'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'fogo-das-fadas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-obscurecente'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'onda-trovejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passos-largos'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'purificar-alimentos-e-bebidas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'salto'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aprimorar-atributo'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'augurio'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aumentar-reduzir'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'auxilio'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'chama-continua'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'crescer-espinhos'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'encontrar-armadilhas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esfera-flamejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esquentar-metal'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-fera'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lamina-flamejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-animais-ou-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-objeto'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lufada-de-vento'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mensageiro-animal'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passo-sem-rastro'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pele-casca'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-veneno'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-lunar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sentido-feral'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-no-escuro'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arma-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-de-vitalidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'caminhar-sobre-as-aguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-feerico'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-relampagos'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'crescimento-de-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-animais'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz-do-dia'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mesclar-se-as-rochas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-vento'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevasca'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'respirar-na-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'revivificar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simular-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'confusao'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'controlar-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-fera'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-ardente'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'fonte-do-luar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'inseto-gigante'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-elementais-menores'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-seres-da-floresta'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-criatura'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'malogro'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'moldar-rochas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'movimentacao-livre'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pele-rocha'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'polimorfia'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pressagio'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-glacial'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'terreno-alucinatorio'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'vinha-agarradora'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ancora-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'comunhao-com-a-natureza'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cone-de-frio'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'contagio'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cupula-antivida'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'despertar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'missao'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-pedra'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passo-arboreo'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'praga-de-insetos'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reencarnar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'videncia'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'banquete-de-herois'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'caminhar-no-vento'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cura-completa'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'de-carne-para-pedra'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'encontrar-o-caminho'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-feerico'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mover-terra'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-espinhos'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-solar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'transporte-via-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'inverter-a-gravidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'miragem-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'regeneracao'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simbolo'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'transicao-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'antipatia-simpatia'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'controlar-o-clima'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'explosao-solar'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'formas-animais'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-incendiaria'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'suplicio'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'terremoto'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tsunami'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'metamorfose'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ressurreicao-verdadeira'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sexto-sentido'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-da-vinganca'), (SELECT id FROM rpg.phb_class WHERE slug = 'druid')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bencao'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'comando'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'destruicao-cauterizante'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'destruicao-colerica'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'destruicao-divina'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'destruicao-estrondosa'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-veneno-e-doenca'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'duelo-compelido'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-da-fe'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'favor-divino'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'heroismo'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'purificar-alimentos-e-bebidas'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arma-magica'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'auxilio'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-montaria'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'destruicao-radiante'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-objeto'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'oracao-de-cura'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-veneno'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'repouso-tranquilo'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'vinculo-de-protecao'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'zona-da-verdade'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arma-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-de-vitalidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-magico'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-comida-e-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'destruicao-cegante'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz-do-dia'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'manto-do-cruzado'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'remover-maldicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'revivificar'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-de-pureza'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-de-vida'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'banimento'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'destruicao-atordoante'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-criatura'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-a-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-de-poder'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-celestial'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'destruicao-banidora'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'missao'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'onda-destrutiva'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reviver-os-mortos'), (SELECT id FROM rpg.phb_class WHERE slug = 'paladin')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'alarme'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'amizade-animal'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bom-fruto'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-veneno-e-doenca'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'emaranhar'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-animais'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-constritor'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'marca-do-predador'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-obscurecente'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passos-largos'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'salto'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'saraivada-de-espinhos'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aprimorar-atributo'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arma-magica'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'auxilio'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cordao-de-flechas'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'crescer-espinhos'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'encontrar-armadilhas'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-fera'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-animais-ou-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-objeto'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lufada-de-vento'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mensageiro-animal'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passo-sem-rastro'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pele-casca'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-veneno'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sentido-feral'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'silencio'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-no-escuro'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arma-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'caminhar-sobre-as-aguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-feerico'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'crescimento-de-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-plantas'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'flecha-relampago'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'indetectavel'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-animais'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-barragem'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz-do-dia'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mesclar-se-as-rochas'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-vento'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'respirar-na-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'revivificar'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-fera'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-seres-da-floresta'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-criatura'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'movimentacao-livre'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pele-rocha'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'vinha-agarradora'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aljava-veloz'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'comunhao-com-a-natureza'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-de-arco'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-saraivada'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passo-arboreo'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'amigos'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bolha-acida'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'elementalismo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'explosao-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-certeiro'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ilusao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luzes-dancantes'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'maos-magicas'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mensagem'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'prestidigitacao-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-laminas'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-gelo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-de-veneno'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reparar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'talho-mental'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'toque-chocante'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'toque-necrotico'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'trovao'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'armadura-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'compreender-idiomas'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'disfarcar-se'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-arcano'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'faca-de-gelo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'graxa'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'imagem-silenciosa'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'leque-cromatico'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'maos-flamejantes'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'misseis-magicos'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-obscurecente'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'onda-trovejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'orbe-cromatico'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'queda-suave'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-bruxa'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-nauseante'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'retirada-acelerada'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'salto'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sono'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'vitalidade-vazia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'alterar-se'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aprimorar-atributo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arma-magica'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arrombar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aumentar-reduzir'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cegueira-surdez'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'coroa-da-loucura'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'despedacar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-pensamentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escalada-de-aranha'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escuridao'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esfera-flamejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'espinho-mental'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forca-espectral'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lamina-flamejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'levitacao'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lufada-de-vento'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-de-adagas'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passo-nebuloso'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-ardente'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reflexos'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sopro-de-dragao'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sugestao'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'teia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'turvar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ver-o-invisivel'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'vigor-arcano'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-no-escuro'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bola-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'caminhar-sobre-as-aguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'celeridade'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'clarividencia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'contramagia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forma-gasosa'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'imagem-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lentidao'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'linguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz-do-dia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'medo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevasca'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-fetida'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'padrao-hipnotico'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'piscar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'relampago'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'respirar-na-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'toque-vampirico'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'voo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'banimento'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'confusao'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-fera'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-ardente'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esfera-vitriolica'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'malogro'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pele-rocha'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'polimorfia'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'porta-dimensional'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-glacial'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'animar-objetos'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-de-teleporte'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cone-de-frio'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criacao'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'estatica-sinaptica'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mao-de-bigby'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-pedra'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-mortal'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'praga-de-insetos'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'similaridade'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'telecinese'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-da-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'corrente-de-relampagos'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'de-carne-para-pedra'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'desintegrar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esfera-congelante-de-otiluke'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'globo-de-invulnerabilidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mau-olhado'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mover-terra'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'portais-arcanos'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-solar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sugestao-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-da-verdade'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bola-de-fogo-adiavel'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dedo-da-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forma-eterea'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'inverter-a-gravidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-prismatica'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'teleporte'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'transicao-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'explosao-solar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-incendiaria'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-atordoar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'semiplano'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'terremoto'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'chuva-de-meteoros'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'desejo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-matar'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'parar-o-tempo'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'portal'), (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'amigos'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'badalar-funebre'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-certeiro'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ilusao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'maos-magicas'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'prestidigitacao-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-laminas'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-mistico'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-de-veneno'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'talho-mental'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'toque-necrotico'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'trovao'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'armadura-de-agathys'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bracos-de-hadar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'compreender-idiomas'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'danacao'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escrita-ilusoria'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-animais'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'gargalhada-nefasta-de-tasha'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'perdicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-bruxa'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'repreensao-diabolica'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'retirada-acelerada'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'servo-invisivel'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cativar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'coroa-da-loucura'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escalada-de-aranha'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escuridao'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'espinho-mental'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-de-adagas'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passo-nebuloso'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-do-enfraquecimento'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reflexos'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sugestao'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-magico'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'contramagia'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-feerico'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'fome-de-hadar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forma-gasosa'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'imagem-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-morto-vivo'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'linguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'medo'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'padrao-hipnotico'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'remover-maldicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'toque-vampirico'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'voo'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'banimento'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-aberracao'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'malogro'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'porta-dimensional'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'terreno-alucinatorio'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ancora-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-de-teleporte'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'contato-extraplanar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'despistar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'estatica-sinaptica'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sonho'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-radiante-de-jallarzi'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'videncia'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'caldeirao-borbulhante-de-tasha'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-da-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-mortos-vivos'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-infero'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mau-olhado'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'portais-arcanos'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-da-verdade'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'carcere-de-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dedo-da-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forma-eterea'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'transicao-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'loquacidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-atordoar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'semiplano'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'suplicio'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aprisionamento'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'encarnacao-fantasmagorica'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-matar'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'polimorfia-total'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'portal'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'projecao-astral'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sexto-sentido'), (SELECT id FROM rpg.phb_class WHERE slug = 'warlock')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'amigos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'badalar-funebre'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bolha-acida'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'elementalismo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-certeiro'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ilusao-menor'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luz'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'luzes-dancantes'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'maos-magicas'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mensagem'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'prestidigitacao-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-laminas'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-gelo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-de-veneno'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reparar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'talho-mental'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'toque-chocante'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'toque-necrotico'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'trovao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'alarme'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'armadura-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'compreender-idiomas'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-familiar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'disco-flutuante-de-tenser'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'disfarcar-se'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escrita-ilusoria'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-arcano'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'faca-de-gelo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'gargalhada-nefasta-de-tasha'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'graxa'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'identificar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'imagem-silenciosa'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'leque-cromatico'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'maos-flamejantes'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'misseis-magicos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-obscurecente'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'onda-trovejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'orbe-cromatico'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passos-largos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-o-bem-e-o-mal'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'queda-suave'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-bruxa'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-nauseante'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'retirada-acelerada'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'salto'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'servo-invisivel'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sono'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'vitalidade-vazia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'alterar-se'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aprimorar-atributo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arma-magica'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arrombar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'augurio'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aumentar-reduzir'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aura-magica-de-nystul'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'boca-encantada'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cegueira-surdez'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'chama-continua'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'corda-extradimensional'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'coroa-da-loucura'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'despedacar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-pensamentos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escalada-de-aranha'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escuridao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esfera-flamejante'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'espinho-mental'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'flecha-acida-de-melf'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forca-espectral'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'levitacao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-objeto'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lufada-de-vento'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-de-adagas'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'passo-nebuloso'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-ardente'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-do-enfraquecimento'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'reflexos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'repouso-tranquilo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sopro-de-dragao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sugestao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'teia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tranca-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'turvar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ver-o-invisivel'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'vigor-arcano'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-no-escuro'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'animar-mortos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bola-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'celeridade'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-magico'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'clarividencia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'contramagia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-feerico'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-mortos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forma-gasosa'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'glifo-de-protecao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'imagem-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'indetectavel'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-morto-vivo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lentidao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'linguas'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'medo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'montaria-fantasmagorica'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevasca'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-fetida'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'padrao-hipnotico'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pequeno-refugio-de-leomund'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'piscar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'relampago'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'remeter'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'remover-maldicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'respirar-na-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rogar-maldicao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simular-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'toque-vampirico'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'voo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'arca-secreta-de-leomund'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'assassino-fantasmagorico'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'banimento'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cao-fiel-de-mordenkainen'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'confusao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'controlar-agua'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-ardente'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esfera-resiliente-de-otiluke'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esfera-vitriolica'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'fabricar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade-maior'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-aberracao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-constructo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-elementais-menores'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'localizar-criatura'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'malogro'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'moldar-rochas'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-fogo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'olho-arcano'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pele-rocha'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'polimorfia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'porta-dimensional'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'pressagio'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'santuario-particular-de-mordenkainen'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-glacial'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tentaculos-negros-de-evard'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'terreno-alucinatorio'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ancora-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'animar-objetos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-de-poder'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-de-teleporte'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'cone-de-frio'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'contato-extraplanar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criacao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-passagem'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'despistar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-pessoa'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'estatica-sinaptica'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-de-arco'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-dragao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-elemental'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'lendas-e-historias'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ligacao-telepatica-de-rary'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mao-de-bigby'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'missao'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'modificar-memoria'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-pedra'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-mortal'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'presenca-regia-de-yolande'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'similaridade'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sonho'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'telecinese'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-radiante-de-jallarzi'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'videncia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'caldeirao-borbulhante-de-tasha'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'circulo-da-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'contingencia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'corrente-de-relampagos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'criar-mortos-vivos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'danca-irresistivel-de-otto'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'de-carne-para-pedra'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'desintegrar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'esfera-congelante-de-otiluke'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'globo-de-invulnerabilidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'ilusao-programada'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocacao-instantanea-de-drawmij'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-infero'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mau-olhado'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mover-terra'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-gelo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'portais-arcanos'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'proteger-fortaleza'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'raio-solar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'receptaculo-arcano'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sugestao-em-massa'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'visao-da-verdade'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'bola-de-fogo-adiavel'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'carcere-de-energia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dedo-da-morte'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'espada-de-mordenkainen'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'forma-eterea'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'inverter-a-gravidade'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'mansao-magnifica-de-mordenkainen'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'miragem-arcana'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'projetar-imagem'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-prismatica'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'refugiar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simbolo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'simulacro'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'teleporte'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'transicao-planar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'antipatia-simpatia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'campo-antimagia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'clone'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'controlar-o-clima'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-monstro'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'explosao-solar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'labirinto'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'limpar-a-mente'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-incendiaria'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-atordoar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'semiplano'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'suplicio'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'telepatia'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'aprisionamento'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'chuva-de-meteoros'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'desejo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'encarnacao-fantasmagorica'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'metamorfose'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-prismatica'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-de-poder-matar'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'parar-o-tempo'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'polimorfia-total'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'portal'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'projecao-astral'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard')),
+  ((SELECT id FROM rpg.phb_spell WHERE slug = 'sexto-sentido'), (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'))
 ON CONFLICT (spell_id, class_id) DO NOTHING;
 
 
-INSERT INTO rpg.phb_subclass (id, class_id, name, tagline, summary, description, prepared_spell_source_key, prepared_spells_by_level, prepared_spells_by_terrain, source_meta)
+INSERT INTO rpg.phb_subclass (slug, class_id, name, tagline, summary, description, prepared_spell_source_key, prepared_spells_by_level, prepared_spells_by_terrain, source_meta)
 VALUES
-  ('world-tree', 'barbarian', 'Trilha da Árvore do Mundo', 'Entrelace as Raízes e Ramos do Multiverso', 'Acessar a vitalidade cósmica.', 'Bárbaros que seguem a Trilha da Árvore do Mundo
+  ('world-tree', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 'Trilha da Árvore do Mundo', 'Entrelace as Raízes e Ramos do Multiverso', 'Acessar a vitalidade cósmica.', 'Bárbaros que seguem a Trilha da Árvore do Mundo
 conectam-se à árvore cósmica Yggdrasil por meio de
 sua Fúria. Essa árvore cresce entre os Planos Externos,
 ligando-os entre si e ao Plano Material. Esses Bárbaros extraem a magia da árvore para obter vitalidade e
 viajar entre dimensões.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('berserker', 'barbarian', 'Trilha do Berserker', 'Canalize sua Fúria em um Frenesi Violento', 'Liberar violência bruta.', 'Bárbaros que seguem a Trilha do Berserker direcionam
+  ('berserker', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 'Trilha do Berserker', 'Canalize sua Fúria em um Frenesi Violento', 'Liberar violência bruta.', 'Bárbaros que seguem a Trilha do Berserker direcionam
 sua Fúria principalmente para a violência. Essa trilha
 é de um frenesi desenfreado, e eles se deleitam no
 caos da batalha ao permitir que sua Fúria os domine e
 fortaleça.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('wild-heart', 'barbarian', 'Trilha do Coração Selvagem', 'Ande em Comunhão com o Mundo Animal', 'Manifestar seu instinto animal.', 'Bárbaros que seguem a Trilha do Coração Selvagem
+  ('wild-heart', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 'Trilha do Coração Selvagem', 'Ande em Comunhão com o Mundo Animal', 'Manifestar seu instinto animal.', 'Bárbaros que seguem a Trilha do Coração Selvagem
 se consideram parentes dos animais. Esses Bárbaros
 aprendem meios mágicos de se comunicar com os
 animais, e sua Fúria intensifica essa conexão com eles,
 preenchendo-os com poder sobrenatural.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('zealot', 'barbarian', 'Trilha do Fanático', 'Fúria em Êxtase com um Deus', 'Enfurecer-se em união com um deus.', 'Bárbaros que seguem a Trilha do Fanático recebem
+  ('zealot', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 'Trilha do Fanático', 'Fúria em Êxtase com um Deus', 'Enfurecer-se em união com um deus.', 'Bárbaros que seguem a Trilha do Fanático recebem
 bênçãos de um deus ou panteão. Esses Bárbaros experimentam sua Fúria como um episódio extático de
 união divina que os infunde com poder. Frequentemente, são aliados de sacerdotes e outros seguidores de sua
 divindade ou panteão.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('valor', 'bard', 'Colégio da Bravura', 'Cante os Feitos dos Heróis Antigos', 'Brandir armas com magias.', 'Os Bardos do Colégio da Bravura são narradores ousados cujas histórias preservam a memória dos grandes
+  ('valor', (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'Colégio da Bravura', 'Cante os Feitos dos Heróis Antigos', 'Brandir armas com magias.', 'Os Bardos do Colégio da Bravura são narradores ousados cujas histórias preservam a memória dos grandes
 heróis do passado. Eles cantam os feitos dos poderosos em salões suntuosos ou para multidões reunidas
 em torno de grandes fogueiras. Esses Bardos viajam
 para testemunhar grandes eventos em primeira mão e
@@ -6080,19 +6641,19 @@ garantir que a lembrança desses acontecimentos não
 desapareça. Com suas canções, eles inspiram novas
 gerações a alcançar os mesmos feitos grandiosos dos
 heróis de outrora.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('dance', 'bard', 'Colégio da Dança', 'Mova-se em Harmonia com o Cosmos', 'Aproveitar a agilidade no combate.', 'Bardos do Colégio da Dança entendem que as Palavras de Criação transcendem a fala e a canção; elas se
+  ('dance', (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'Colégio da Dança', 'Mova-se em Harmonia com o Cosmos', 'Aproveitar a agilidade no combate.', 'Bardos do Colégio da Dança entendem que as Palavras de Criação transcendem a fala e a canção; elas se
 manifestam nos movimentos dos corpos celestes e nos
 gestos das menores criaturas. Esses Bardos buscam
 uma harmonia com o turbilhão do cosmos, enfatizando
 agilidade, velocidade e graça.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('lore', 'bard', 'Colégio do Conhecimento', 'Explore as Profundezas do Conhecimento Mágico', 'Colecionar saberes e segredos mágicos.', 'Bardos do Colégio do Conhecimento colecionam magias e segredos de fontes diversas, como tomos acadêmicos, ritos místicos e contos populares. Os membros
+  ('lore', (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'Colégio do Conhecimento', 'Explore as Profundezas do Conhecimento Mágico', 'Colecionar saberes e segredos mágicos.', 'Bardos do Colégio do Conhecimento colecionam magias e segredos de fontes diversas, como tomos acadêmicos, ritos místicos e contos populares. Os membros
 do colégio reúnem-se em bibliotecas e universidades
 para compartilhar seu conhecimento uns com os
 outros. Eles também participam de festivais ou eventos
 de estado, onde podem expor corrupção, desvendar
 mentiras e satirizar figuras de autoridade que se acham
 importantes.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('glamour', 'bard', 'Colégio do Glamour', 'Teça Magia Feérica Fascinante', 'Tecer a magia fascinante de Faéria.', 'O Colégio do Glamour remonta à magia encantadora
+  ('glamour', (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'Colégio do Glamour', 'Teça Magia Feérica Fascinante', 'Tecer a magia fascinante de Faéria.', 'O Colégio do Glamour remonta à magia encantadora
 de Faéria. Bardos que estudam essa magia entrelaçam
 fios de beleza e terror em suas canções e histórias, e os
 mais poderosos entre eles podem se envolver em uma
@@ -6100,17 +6661,17 @@ majestade sobrenatural. Suas apresentações despertam
 um anseio nostálgico por uma inocência esquecida,
 evocam memórias inconscientes de medos antigos e
 tocam as emoções até dos ouvintes mais insensíveis.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('archfey', 'warlock', 'Patrono Arquifada', 'Faça um pacto com um senhor das fadas', 'Teleportar-se e manipular magia feérica.', 'Seu pacto é fundamentado no poder de Faéria. Ao escolher essa subclasse, você pode realizar um pacto com
+  ('archfey', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 'Patrono Arquifada', 'Faça um pacto com um senhor das fadas', 'Teleportar-se e manipular magia feérica.', 'Seu pacto é fundamentado no poder de Faéria. Ao escolher essa subclasse, você pode realizar um pacto com
 uma Arquifada, como o Príncipe do Gelo, a Rainha do
 Ar e das Trevas, Titânia da Corte de Verão ou uma megera antiga. Outra opção é invocar um espectro Feérico, criando uma rede de favores e dívidas. Em qualquer
 caso, seu patrono tende a ser enigmático e excêntrico.', 'archfey-pact', '{"3":["acalmar-emocoes","fogo-das-fadas","forca-espectral","passo-nebuloso","sono"],"5":["crescimento-de-plantas","piscar"],"7":["dominar-fera","invisibilidade-maior"],"9":["dominar-pessoa","similaridade"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('celestial', 'warlock', 'Patrono Celestial', 'Faça um pacto com um ser celestial', 'Curar com magia celestial.', 'Seu pacto é fundamentado nos Planos Superiores,
+  ('celestial', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 'Patrono Celestial', 'Faça um pacto com um ser celestial', 'Curar com magia celestial.', 'Seu pacto é fundamentado nos Planos Superiores,
 os reinos da felicidade eterna. Você pode firmar um
 acordo com um empiriano, um couatl, uma esfinge, um
 unicórnio ou outra entidade celestial, ou invocar vários
 desses seres enquanto persegue objetivos que se alinham aos deles. O pacto permite que você experimente
 uma fração da luz sagrada que ilumina o multiverso.', 'celestial-pact', '{"3":["auxilio","chama-sagrada","curar-ferimentos","luz","raio-guia","restauracao-menor"],"5":["luz-do-dia","revivificar"],"7":["defensor-da-fe","muralha-de-fogo"],"9":["convocar-celestial","restauracao-maior"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('great-old-one', 'warlock', 'Patrono O Grande Antigo', 'Faça um pacto com uma entidade do Reino Distante', 'Mergulhar em conhecimentos proibidos.', 'Ao escolher esta subclasse, você pode se conectar a
+  ('great-old-one', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 'Patrono O Grande Antigo', 'Faça um pacto com uma entidade do Reino Distante', 'Mergulhar em conhecimentos proibidos.', 'Ao escolher esta subclasse, você pode se conectar a
 uma entidade indescritível do Reino Distante ou a um
 deus ancestral, como Tharizdun, o Deus Acorrentado;
 Zargon, o Retornador; Hadar, a Fome Sombria; ou
@@ -6119,13 +6680,13 @@ sem se prender a uma. As motivações desses seres
 são incompreensíveis, e o Grande Antigo pode ser indiferente à sua existência. No entanto, os segredos que
 você aprendeu permitem que aproveite sua estranha
 magia.', 'great-old-one-pact', '{"3":["detectar-pensamentos","forca-espectral","gargalhada-nefasta-de-tasha","sussurros-dissonantes"],"5":["clarividencia","fome-de-hadar"],"7":["confusao","invocar-aberracao"],"9":["modificar-memoria","telecinese"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('fiend', 'warlock', 'Patrono Ínfero', 'Faça um pacto com um poder infernal', 'Invocar poderes sinistros.', 'Seu pacto se fundamenta nos Planos Inferiores, reinos
+  ('fiend', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 'Patrono Ínfero', 'Faça um pacto com um poder infernal', 'Invocar poderes sinistros.', 'Seu pacto se fundamenta nos Planos Inferiores, reinos
 de perdição. Você pode negociar com um lorde demônio como Demogorgon ou Orcus; um arquidiabo como
 Asmodeus; ou um Diabo do Fosso, balor, yugoloth ou
 uma poderosa megera da noite. Os objetivos desse patrono são malignos — visam à corrupção ou destruição
 de tudo, inclusive você — e seu caminho é determinado
 pelo seu esforço em se opor a esses objetivos.', 'fiend-pact', '{"3":["comando","maos-flamejantes","raio-ardente","sugestao"],"5":["bola-de-fogo","nuvem-fetida"],"7":["escudo-ardente","muralha-de-fogo"],"9":["missao","praga-de-insetos"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('life', 'cleric', 'Domínio da Vida', 'Preserve a força vital', 'Ser um mestre da cura.', 'O Domínio da Vida se concentra na energia positiva que ajuda a sustentar toda a vida no multiverso.
+  ('life', (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'Domínio da Vida', 'Preserve a força vital', 'Ser um mestre da cura.', 'O Domínio da Vida se concentra na energia positiva que ajuda a sustentar toda a vida no multiverso.
 Os clérigos que acessam este domínio são mestres
 da cura, usando essa força vital para curar muitas
 feridas.
@@ -6135,14 +6696,14 @@ tradições religiosas. Está especialmente conectado
 a divindades agrícolas, deuses da cura e resistência,
 além de entidades do lar e da comunidade. Ordens religiosas voltadas para a cura também buscam a magia
 deste domínio.', 'life-domain', '{"3":["auxilio","bencao","curar-ferimentos","restauracao-menor"],"5":["palavra-curativa-em-massa","revivificar"],"7":["aura-de-vida","protecao-contra-a-morte"],"9":["curar-ferimentos-em-massa","restauracao-maior"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('light', 'cleric', 'Domínio da Luz', 'Empunhe luz ardente', 'Empunhar luz ardente e protetora.', 'O Domínio da Luz destaca o poder divino de gerar
+  ('light', (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'Domínio da Luz', 'Empunhe luz ardente', 'Empunhar luz ardente e protetora.', 'O Domínio da Luz destaca o poder divino de gerar
 labaredas e revelação. Seus Clérigos, almas iluminadas, possuem a visão clara de suas divindades, encarregados de afastar mentiras e dissipar as trevas.
 Este domínio está ligado a deuses da verdade, vigilância, beleza, percepção e renovação. Alguns desses
 deuses são identificados com o sol ou como condutores de carruagens que guiam o sol pelo céu. Outros
 atuam como sentinelas contra o engano, enquanto
 algumas divindades da beleza e da arte ensinam que a
 arte é um caminho para o aprimoramento da alma.', 'light-domain', '{"3":["fogo-das-fadas","maos-flamejantes","raio-ardente","ver-o-invisivel"],"5":["bola-de-fogo","luz-do-dia"],"7":["muralha-de-fogo","olho-arcano"],"9":["coluna-de-chamas","videncia"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('trickery', 'cleric', 'Domínio da Trapaça', 'Engane e confunda', 'Atormentar inimigos com artimanhas.', 'O Domínio da Trapaça fornece magias de enganação,
+  ('trickery', (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'Domínio da Trapaça', 'Engane e confunda', 'Atormentar inimigos com artimanhas.', 'O Domínio da Trapaça fornece magias de enganação,
 ilusão e furtividade. Os Clérigos que usam essa magia
 são uma força disruptiva no mundo, perfurando o
 orgulho, zombando de tiranos, libertando cativos e
@@ -6154,7 +6715,7 @@ patronos de ladrões, vigaristas, apostadores, rebeldes
 e libertadores. Ordens religiosas secretas, especialmente as que buscam minar governos ou hierarquias
 opressivas, também se apoiam no poder do Domínio
 da Trapaça.', 'trickery-domain', '{"3":["disfarcar-se","enfeiticar-pessoa","invisibilidade","passo-sem-rastro"],"5":["indetectavel","padrao-hipnotico"],"7":["confusao","porta-dimensional"],"9":["dominar-pessoa","modificar-memoria"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('war', 'cleric', 'Domínio da Guerra', 'Inspire bravura marcial', 'Inspirar bravura e punir inimigos.', 'A guerra se manifesta de diversas formas, capaz de
+  ('war', (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'Domínio da Guerra', 'Inspire bravura marcial', 'Inspirar bravura e punir inimigos.', 'A guerra se manifesta de diversas formas, capaz de
 transformar pessoas comuns em heróis. Pode ser
 aterrorizante, com crueldades e covardias ofuscando
 atos de bravura e coragem. Os Clérigos do Domínio
@@ -6167,13 +6728,13 @@ incluem deuses de honra e cavalheirismo, assim como
 de destruição e pilhagem. Outros deuses da guerra
 adotam uma postura neutra, apoiando a belicosidade
 em todas as suas formas e incentivando os combatentes em todas as situações.', 'war-domain', '{"3":["arma-espiritual","arma-magica","escudo-da-fe","raio-guia"],"5":["guardioes-espirituais","manto-do-cruzado"],"7":["escudo-ardente","movimentacao-livre"],"9":["golpe-de-arco","paralisar-monstro"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('land', 'druid', 'Círculo da Terra', 'Canalize a magia do ambiente', 'Aproveitar a magia do ambiente.', 'O Círculo da Terra é composto por místicos e sábios
+  ('land', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 'Círculo da Terra', 'Canalize a magia do ambiente', 'Aproveitar a magia do ambiente.', 'O Círculo da Terra é composto por místicos e sábios
 que preservam conhecimentos e rituais ancestrais.
 Esses Druidas se reúnem em círculos sagrados de
 árvores ou pedras para sussurrar segredos primordiais
 em druídico. Os membros mais sábios do círculo atuam
 como sumos sacerdotes de suas comunidades.', 'land-circle', NULL, '{"arid":{"3":["maos-flamejantes","turvar","raio-de-fogo"],"5":["bola-de-fogo","muralha-de-fogo"],"7":["malogro","muralha-de-pedra"],"9":["coluna-de-chamas","videncia"]},"polar":{"3":["nevoa-obscurecente","paralisar-pessoa","raio-de-gelo"],"5":["nevasca","lentidao"],"7":["cone-de-frio","tempestade-glacial"],"9":["comunhao-com-a-natureza","passo-arboreo"]},"temperate":{"3":["passo-nebuloso","toque-chocante","sono"],"5":["relampago","crescimento-de-plantas"],"7":["movimentacao-livre","moldar-rochas"],"9":["comunhao-com-a-natureza","muralha-de-pedra"]},"tropical":{"3":["bolha-acida","rajada-de-veneno","teia"],"5":["nuvem-fetida","polimorfia"],"7":["praga-de-insetos","muralha-de-espinhos"],"9":["nevoa-mortal","passo-arboreo"]}}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('moon', 'druid', 'Círculo da Lua', 'Adote formas animais poderosas', 'Adotar formas de animais poderosos.', 'Druidas do Círculo da Lua canalizam a magia lunar
+  ('moon', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 'Círculo da Lua', 'Adote formas animais poderosas', 'Adotar formas de animais poderosos.', 'Druidas do Círculo da Lua canalizam a magia lunar
 para se transformarem. A ordem se reúne sob a lua
 para compartilhar informações e realizar rituais.
 Assim como a lua é mutável, um Druida desse círculo
@@ -6182,18 +6743,18 @@ sobrevoar as copas das árvores como uma águia no
 dia seguinte e, depois, atravessar a vegetação como um
 urso para afastar um monstro invasor. A vida selvagem
 corre no sangue do Druida.', 'moon-circle', '{"3":["curar-ferimentos","fagulha-estelar","raio-lunar"],"5":["invocar-animais"],"7":["fonte-do-luar"],"9":["curar-ferimentos-em-massa"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('stars', 'druid', 'Círculo das Estrelas', 'Obtenha poderes em forma estelar', 'Obter poderes em uma forma estelar.', 'O Círculo das Estrelas segue os padrões celestiais desde tempos imemoriais, descobrindo segredos ocultos
+  ('stars', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 'Círculo das Estrelas', 'Obtenha poderes em forma estelar', 'Obter poderes em uma forma estelar.', 'O Círculo das Estrelas segue os padrões celestiais desde tempos imemoriais, descobrindo segredos ocultos
 entre as constelações. Ao compreender esses segredos,
 os druidas deste círculo buscam dominar os poderes do
 cosmos.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('sea', 'druid', 'Círculo do Mar', 'Canalize marés e tempestades', 'Canalizar marés e tempestades.', 'Druidas do Círculo do Mar canalizam as forças
+  ('sea', (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 'Círculo do Mar', 'Canalize marés e tempestades', 'Canalizar marés e tempestades.', 'Druidas do Círculo do Mar canalizam as forças
 tempestuosas dos oceanos e das tormentas. Alguns se
 veem como encarnações da ira da natureza, buscando
 vingança contra aqueles que destroem o meio ambiente. Outros procuram uma unidade mística com a
 natureza ao sintonizarem-se com o fluxo e refluxo das
 marés, seguindo a correnteza e as ondas, ouvindo os
 sussurros e rugidos indecifráveis dos ventos.', 'sea-circle', '{"3":["despedacar","lufada-de-vento","nevoa-obscurecente","onda-trovejante","raio-de-gelo"],"5":["relampago","respirar-na-agua"],"7":["controlar-agua","tempestade-glacial"],"9":["invocar-elemental","paralisar-monstro"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('aberrant', 'sorcerer', 'Feitiçaria Aberrante', 'Use estranha magia psiônica', 'Usar estranha magia psiônica.', 'Uma influência alienígena envolveu sua mente, concedendo-lhe poder psiônico. Agora, você pode tocar
+  ('aberrant', (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 'Feitiçaria Aberrante', 'Use estranha magia psiônica', 'Usar estranha magia psiônica.', 'Uma influência alienígena envolveu sua mente, concedendo-lhe poder psiônico. Agora, você pode tocar
 outras mentes e moldar o mundo ao seu redor. Esse
 poder brilhará em você como um farol de esperança
 para os outros? Ou você será um terror para aqueles
@@ -6206,7 +6767,7 @@ em um devorador de mentes nunca ocorreu; agora o
 poder psiônico do girino é seu. Independente de como
 você adquiriu esse poder, sua mente está em chamas
 com ele.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('draconic', 'sorcerer', 'Feitiçaria Dracônica', 'Emane a magia dos dragões', 'Emanar a magia dos dragões.', 'Sua magia inata provém da dádiva de um dragão.
+  ('draconic', (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 'Feitiçaria Dracônica', 'Emane a magia dos dragões', 'Emanar a magia dos dragões.', 'Sua magia inata provém da dádiva de um dragão.
 Talvez um dragão antigo, que estava à beira da morte,
 tenha legado parte de seu poder mágico a você ou a um
 de seus antepassados. Você pode ter absorvido a magia
@@ -6214,7 +6775,7 @@ de um local impregnado com o poder dos dragões. Ou
 talvez tenha manuseado um tesouro retirado do covil
 de um dragão, repleto de poder dracônico. Ou quem
 sabe você tenha um dragão como ancestral.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('clockwork', 'sorcerer', 'Feitiçaria Mecânica', 'Aproveite forças cósmicas da ordem', 'Aproveitar forças cósmicas da ordem.', 'A força cósmica da ordem o envolveu em magia. Esse
+  ('clockwork', (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 'Feitiçaria Mecânica', 'Aproveite forças cósmicas da ordem', 'Aproveitar forças cósmicas da ordem.', 'A força cósmica da ordem o envolveu em magia. Esse
 poder provém de Mecanos ou de um reino semelhante
 — um plano de existência moldado inteiramente pela eficiência de um relógio. Você ou alguém de sua linhagem
 pode ter se envolvido nas maquinações dos modrons, os
@@ -6222,7 +6783,7 @@ seres ordenados que habitam Mecanos. Talvez seu antepassado tenha até participa
 Modrons. Seja qual for sua origem, o poder da ordem
 pode parecer estranho para os outros, mas, para você,
 ele é parte de um sistema vasto e glorioso.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('wild-magic', 'sorcerer', 'Feitiçaria Selvagem', 'Libere magia caótica', 'Liberar magia caótica.', 'Sua magia inata provém das forças do caos que
+  ('wild-magic', (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 'Feitiçaria Selvagem', 'Libere magia caótica', 'Liberar magia caótica.', 'Sua magia inata provém das forças do caos que
 sustentam a ordem da criação. Você ou um antepassado pode ter sido exposto à magia bruta, talvez
 através de um portal planar que levava ao Limbo ou
 aos Planos Elementais. Pode ser que você tenha sido
@@ -6231,96 +6792,96 @@ demônio. Ou sua magia pode ser um acaso sem causa
 aparente. Seja qual for a origem, essa magia se agita
 dentro de você, aguardando uma oportunidade de se
 manifestar.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('fey-wanderer', 'ranger', 'Andarilho Feérico', 'Manifeste a alegria e a fúria feérica', 'Manifestar a alegria e a fúria feérica.', 'Uma mística feérica o envolve, graças à bênção de uma
+  ('fey-wanderer', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'Andarilho Feérico', 'Manifeste a alegria e a fúria feérica', 'Manifestar a alegria e a fúria feérica.', 'Uma mística feérica o envolve, graças à bênção de uma
 arquifada ou a um local em Faéria que o transformou.
 Agora, como um Andarilho Feérico, você possui magia
 feérica. Sua risada alegre ilumina os corações dos oprimidos, enquanto suas habilidades marciais infundem
 terror em seus inimigos, pois a alegria dos feéricos é
 imensa e sua fúria, temível.', 'fey-wanderer-spells', '{"3":["enfeiticar-pessoa"],"5":["passo-nebuloso"],"9":["convocar-feerico"],"13":["porta-dimensional"],"17":["despistar"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('hunter', 'ranger', 'Caçador', 'Proteja a natureza com versatilidade marcial', 'Proteger a natureza com versatilidade marcial.', 'Você persegue presas nos ermos e em outros lugares,
+  ('hunter', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'Caçador', 'Proteja a natureza com versatilidade marcial', 'Proteger a natureza com versatilidade marcial.', 'Você persegue presas nos ermos e em outros lugares,
 usando suas habilidades como Caçador para proteger
 a natureza e as pessoas em todos os lugares de forças
 que as destruiriam.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('beast-master', 'ranger', 'Senhor das Feras', 'Forme um laço com uma fera primitiva', 'Formar um laço com uma fera primitiva.', 'Um Senhor das Feras forma um vínculo místico com
+  ('beast-master', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'Senhor das Feras', 'Forme um laço com uma fera primitiva', 'Formar um laço com uma fera primitiva.', 'Um Senhor das Feras forma um vínculo místico com
 um animal especial, com base em magia primal e uma
 profunda conexão com o mundo natural.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('gloom-stalker', 'ranger', 'Vigilante das Sombras', 'Persiga inimigos nas trevas', 'Perseguir inimigos que se escondem nas trevas.', 'Vigilantes das Sombras estão nos lugares mais sombrios, empunhando magia extraída do Sombral para
+  ('gloom-stalker', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'Vigilante das Sombras', 'Persiga inimigos nas trevas', 'Perseguir inimigos que se escondem nas trevas.', 'Vigilantes das Sombras estão nos lugares mais sombrios, empunhando magia extraída do Sombral para
 combater inimigos que se escondem na escuridão.', 'gloom-stalker-spells', '{"3":["disfarcar-se"],"5":["corda-extradimensional"],"9":["medo"],"13":["invisibilidade-maior"],"17":["similaridade"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('champion', 'fighter', 'Campeão', 'Busque o auge da proeza no combate', 'Buscar o auge da proeza no combate.', 'Um Campeão foca no desenvolvimento de habilidades marciais em sua busca incessante pela vitória. Ele
+  ('champion', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'Campeão', 'Busque o auge da proeza no combate', 'Buscar o auge da proeza no combate.', 'Um Campeão foca no desenvolvimento de habilidades marciais em sua busca incessante pela vitória. Ele
 combina treino rigoroso com excelência física para
 suportar golpes devastadores, enfrentar perigos e
 conquistar a glória. Seja em competições esportivas ou
 batalhas sangrentas, os Campeões lutam pela coroa do
 vencedor.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('eldritch-knight', 'fighter', 'Cavaleiro Místico', 'Aprenda magias que auxiliem no combate', 'Aprender magias que auxiliem no combate.', 'Cavaleiros Místicos unem habilidades marciais de
+  ('eldritch-knight', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'Cavaleiro Místico', 'Aprenda magias que auxiliem no combate', 'Aprender magias que auxiliem no combate.', 'Cavaleiros Místicos unem habilidades marciais de
 Guerreiros a um estudo aprofundado da magia, que
 não só complementa suas técnicas de combate como
 também oferece proteção adicional à armadura e
 permite enfrentar múltiplos inimigos simultaneamente
 com magia explosiva.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('psi-warrior', 'fighter', 'Combatente Psíquico', 'Aumente os ataques com poder psiônico', 'Aumentar os ataques com poder psiônico.', 'Combatentes Psíquicos despertam o poder de suas
+  ('psi-warrior', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'Combatente Psíquico', 'Aumente os ataques com poder psiônico', 'Aumentar os ataques com poder psiônico.', 'Combatentes Psíquicos despertam o poder de suas
 mentes para aprimorar suas habilidades físicas, infundindo ataques com energia psiônica, usando telecinesia
 e criando barreiras de força mental.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('battle-master', 'fighter', 'Mestre da Batalha', 'Use manobras de combate especiais', 'Usar manobras de combate especiais.', 'Os Mestres da Batalha são estudantes da arte do
+  ('battle-master', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'Mestre da Batalha', 'Use manobras de combate especiais', 'Usar manobras de combate especiais.', 'Os Mestres da Batalha são estudantes da arte do
 combate, aprendendo técnicas marciais transmitidas
 por gerações. Os mais bem-sucedidos equilibram suas
 habilidades marciais cuidadosamente aprimoradas com
 estudos acadêmicos em história, teoria e artes.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('soulknife', 'rogue', 'Adaga Espiritual', 'Golpeie inimigos com lâminas psíquicas', 'Golpear inimigos com lâminas psíquicas.', 'psiônicas podem ter se manifestado, revelando todo
+  ('soulknife', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'Adaga Espiritual', 'Golpeie inimigos com lâminas psíquicas', 'Golpear inimigos com lâminas psíquicas.', 'psiônicas podem ter se manifestado, revelando todo
 o seu potencial sob estresse em aventuras. Ou então,
 você pode ter buscado uma ordem de adeptos psíquicos, dedicando anos a aprender a manifestar seu poder.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('assassin', 'rogue', 'Assassino', 'Realize emboscadas e envenenamentos', 'Realizar emboscadas e envenenamentos.', 'O treinamento de um Assassino se concentra em usar
+  ('assassin', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'Assassino', 'Realize emboscadas e envenenamentos', 'Realizar emboscadas e envenenamentos.', 'O treinamento de um Assassino se concentra em usar
 furtividade, veneno e disfarce para eliminar inimigos
 com eficiência mortal. Enquanto alguns Ladinos que
 seguem este caminho são assassinos contratados, espiões ou caçadores de recompensas, as capacidades desta
 subclasse são igualmente úteis para aventureiros que
 enfrentam uma variedade de inimigos monstruosos.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('thief', 'rogue', 'Ladrão', 'Domine infiltração e caça ao tesouro', 'Dominar infiltração e caça ao tesouro.', 'Uma mistura de ladrão, caçador de tesouros e explorador, você é o resumo de um aventureiro. Além de
+  ('thief', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'Ladrão', 'Domine infiltração e caça ao tesouro', 'Dominar infiltração e caça ao tesouro.', 'Uma mistura de ladrão, caçador de tesouros e explorador, você é o resumo de um aventureiro. Além de
 melhorar sua agilidade e furtividade, você obtém habilidades úteis para adentrar em ruínas e obter o máximo
 benefício dos itens mágicos que encontrar lá.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('arcane-trickster', 'rogue', 'Trapaceiro Arcano', 'Melhore a furtividade com magia', 'Melhorar a furtividade com magia.', 'Alguns Ladinos aprimoram suas habilidades de furtividade e agilidade com magia, aprendendo truques que
+  ('arcane-trickster', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'Trapaceiro Arcano', 'Melhore a furtividade com magia', 'Melhorar a furtividade com magia.', 'Alguns Ladinos aprimoram suas habilidades de furtividade e agilidade com magia, aprendendo truques que
 os auxiliam em seu ofício. Alguns Trapaceiros Arcanos
 utilizam seus talentos para furtos ou assaltos, enquanto outros se dedicam a travessuras.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('abjurer', 'wizard', 'Abjurador', 'Proteja aliados e banir inimigos', 'Proteger aliados e banir inimigos.', 'Seu estudo da magia concentra-se em magias de
+  ('abjurer', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'Abjurador', 'Proteja aliados e banir inimigos', 'Proteger aliados e banir inimigos.', 'Seu estudo da magia concentra-se em magias de
 bloqueio, banimento e proteção, eliminando efeitos
 nocivos, repelindo influências malignas e defendendo
 os fracos. Abjuradores são chamados para exorcizar
 espíritos malignos, proteger locais contra espionagem
 mágica e fechar portais para outros planos de existência. Grupos de aventureiros valorizam os Abjuradores por sua proteção contra diversas magias hostis e
 ataques.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('diviner', 'wizard', 'Adivinhador', 'Aprenda os segredos do multiverso', 'Aprender os segredos do multiverso.', 'A orientação de um Adivinhador é buscada por quem
+  ('diviner', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'Adivinhador', 'Aprenda os segredos do multiverso', 'Aprender os segredos do multiverso.', 'A orientação de um Adivinhador é buscada por quem
 deseja entender melhor o passado, presente e futuro.
 Como Adivinhador, você se empenha em desvendar
 os véus do espaço, tempo e consciência, dominando
 magias de discernimento, visão remota, conhecimento
 sobrenatural e previsão.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('evoker', 'wizard', 'Evocador', 'Crie efeitos explosivos', 'Criar efeitos explosivos.', 'Seus estudos se concentram em magia que cria poderosos efeitos elementais, como frio intenso, chamas
+  ('evoker', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'Evocador', 'Crie efeitos explosivos', 'Criar efeitos explosivos.', 'Seus estudos se concentram em magia que cria poderosos efeitos elementais, como frio intenso, chamas
 abrasadoras, trovões ensurdecedores, relâmpagos
 crepitantes e ácido corrosivo. Alguns Evocadores
 atuam em forças militares, servindo como artilharia
 para atacar exércitos à distância. Outros utilizam seus
 poderes para proteção, enquanto alguns buscam benefício pessoal.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('illusionist', 'wizard', 'Ilusionista', 'Teça magias de ilusão', 'Tecer magias de ilusão.', 'Você se especializa em magia que deslumbra os sentidos e engana a mente, e as ilusões que você cria fazem
+  ('illusionist', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'Ilusionista', 'Teça magias de ilusão', 'Tecer magias de ilusão.', 'Você se especializa em magia que deslumbra os sentidos e engana a mente, e as ilusões que você cria fazem
 o impossível parecer real.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('elements', 'monk', 'Combatente dos Elementos', 'Maneje poder elemental', 'Manejar poder elemental.', 'Os Combatentes dos Elementos aproveitam o poder
+  ('elements', (SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 'Combatente dos Elementos', 'Maneje poder elemental', 'Manejar poder elemental.', 'Os Combatentes dos Elementos aproveitam o poder
 dos Planos Elementais. Utilizando-se de seu foco
 sobrenatural, eles dominam momentaneamente a
 energia do Caos Elemental para se fortalecer dentro e
 fora de batalha.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('open-hand', 'monk', 'Combatente da Mão Espalmada', 'Domine o combate desarmado', 'Dominar o combate desarmado.', 'Os Combatentes da Mão Espalmada são mestres do
+  ('open-hand', (SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 'Combatente da Mão Espalmada', 'Domine o combate desarmado', 'Dominar o combate desarmado.', 'Os Combatentes da Mão Espalmada são mestres do
 combate desarmado. Eles aprendem técnicas para
 empurrar e derrubar seus oponentes e manipular sua
 própria energia para se proteger de danos.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('mercy', 'monk', 'Combatente da Misericórdia', 'Cure ou fira com um toque', 'Curar ou ferir com um toque.', 'Os Combatentes da Misericórdia controlam a força
+  ('mercy', (SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 'Combatente da Misericórdia', 'Cure ou fira com um toque', 'Curar ou ferir com um toque.', 'Os Combatentes da Misericórdia controlam a força
 vital dos outros. Esses monges errantes atuam como
 curandeiros, mas eliminam rapidamente seus inimigos.
 Geralmente, usam máscaras, surgindo como portadores sem rosto da vida e da morte.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('shadow', 'monk', 'Combatente das Sombras', 'Utilize sombras em estratagemas', 'Utilizar sombras em estratagemas.', 'Combatentes das Sombras praticam furtividade e
+  ('shadow', (SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 'Combatente das Sombras', 'Utilize sombras em estratagemas', 'Utilizar sombras em estratagemas.', 'Combatentes das Sombras praticam furtividade e
 subterfúgios, aproveitando o poder do Sombral. Eles
 estão em casa na escuridão, capazes de atraí-la ao seu
 redor para se esconder, pular de sombra em sombra e
 assumir uma forma fantasmagórica.', NULL, NULL, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('ancients', 'paladin', 'Juramento dos Anciões', 'Preserve a vida, a alegria e a natureza', 'Preservar a vida, a alegria e a natureza.', 'O Juramento dos Anciões remonta aos primeiros elfos.
+  ('ancients', (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 'Juramento dos Anciões', 'Preserve a vida, a alegria e a natureza', 'Preservar a vida, a alegria e a natureza.', 'O Juramento dos Anciões remonta aos primeiros elfos.
 Os Paladinos que o assumem, valorizam a luz e as
 belezas vivificantes do mundo mais do que princípios
 de honra, coragem e justiça. Para refletir seu compromisso com a preservação da vida e da luz, costumam
@@ -6331,11 +6892,11 @@ princípios:
 • Acenda a luz da esperança.
 • Proteja a vida.
 • Encante-se com a arte e a alegria.', 'ancients-oath', '{"3":["falar-com-animais","golpe-constritor"],"5":["passo-nebuloso","raio-lunar"],"9":["crescimento-de-plantas","protecao-contra-energia"],"13":["pele-rocha","tempestade-glacial"],"17":["comunhao-com-a-natureza","passo-arboreo"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('devotion', 'paladin', 'Juramento da Devoção', 'Comporte-se como os anjos da justiça', 'Comportar-se como os anjos da justiça.', 'O Juramento da Devoção vincula um Paladino aos
+  ('devotion', (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 'Juramento da Devoção', 'Comporte-se como os anjos da justiça', 'Comportar-se como os anjos da justiça.', 'O Juramento da Devoção vincula um Paladino aos
 ideais mais elevados de justiça, virtude e ordem. Paladinos que assumem este juramento comportam-se com
 honra e integridade, protegendo os inocentes e punindo
 os malfeitores com a força sagrada de suas armas.', 'devotion-oath', '{"3":["escudo-da-fe","protecao-contra-o-bem-e-o-mal"],"5":["auxilio","zona-da-verdade"],"9":["dissipar-magia","sinal-de-esperanca"],"13":["defensor-da-fe","movimentacao-livre"],"17":["coluna-de-chamas","comunhao"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('glory', 'paladin', 'Juramento da Glória', 'Alcance os picos do heroísmo', 'Alcançar os picos do heroísmo.', 'Os paladinos que fazem o Juramento de Glória acreditam que eles e seus companheiros estão destinados à
+  ('glory', (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 'Juramento da Glória', 'Alcance os picos do heroísmo', 'Alcançar os picos do heroísmo.', 'Os paladinos que fazem o Juramento de Glória acreditam que eles e seus companheiros estão destinados à
 glória por meio de atos heroicos. Treinam com afinco
 e encorajam seus companheiros, sempre prontos para
 atender ao chamado do destino.
@@ -6344,7 +6905,7 @@ princípios:
 • Esforce-se para ser conhecido por seus atos.
 • Enfrente as dificuldades com coragem.
 • Inspire os outros a buscar a glória.', 'glory-oath', '{"3":["heroismo","raio-guia"],"5":["aprimorar-atributo","arma-magica"],"9":["celeridade","protecao-contra-energia"],"13":["compulsao","movimentacao-livre"],"17":["lendas-e-historias","presenca-regia-de-yolande"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb),
-  ('vengeance', 'paladin', 'Juramento da Vingança', 'Persiga os malfeitores', 'Perseguir os malfeitores.', 'O Juramento de Vingança é um compromisso solene de
+  ('vengeance', (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 'Juramento da Vingança', 'Persiga os malfeitores', 'Perseguir os malfeitores.', 'O Juramento de Vingança é um compromisso solene de
 punir quem comete graves atos imorais. Paladinos levantam-se para corrigir as injustiças em momentos de
 massacres de aldeões indefesos por exércitos malignos,
 tiranos que desafiam a vontade dos deuses, guildas de
@@ -6357,198 +6918,198 @@ princípios:
 • Ajude os vitimados pela injustiça.', 'vengeance-oath', '{"3":["marca-do-predador","perdicao"],"5":["paralisar-pessoa","passo-nebuloso"],"9":["celeridade","protecao-contra-energia"],"13":["banimento","porta-dimensional"],"17":["paralisar-monstro","videncia"]}'::jsonb, NULL, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":3,"chapterTitle":"Classes de Personagem","pdfPath":"doc/livro-jogador.pdf","pdfPages":[55,182],"extractedAt":"2026-06-25T01:13:29.372Z"}'::jsonb);
 
 
-INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain_id)
+INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain_slug)
 VALUES
-  ('archfey', 3, 'acalmar-emocoes', ''),
-  ('archfey', 3, 'fogo-das-fadas', ''),
-  ('archfey', 3, 'forca-espectral', ''),
-  ('archfey', 3, 'passo-nebuloso', ''),
-  ('archfey', 3, 'sono', ''),
-  ('archfey', 5, 'crescimento-de-plantas', ''),
-  ('archfey', 5, 'piscar', ''),
-  ('archfey', 7, 'dominar-fera', ''),
-  ('archfey', 7, 'invisibilidade-maior', ''),
-  ('archfey', 9, 'dominar-pessoa', ''),
-  ('archfey', 9, 'similaridade', ''),
-  ('celestial', 3, 'auxilio', ''),
-  ('celestial', 3, 'chama-sagrada', ''),
-  ('celestial', 3, 'curar-ferimentos', ''),
-  ('celestial', 3, 'luz', ''),
-  ('celestial', 3, 'raio-guia', ''),
-  ('celestial', 3, 'restauracao-menor', ''),
-  ('celestial', 5, 'luz-do-dia', ''),
-  ('celestial', 5, 'revivificar', ''),
-  ('celestial', 7, 'defensor-da-fe', ''),
-  ('celestial', 7, 'muralha-de-fogo', ''),
-  ('celestial', 9, 'convocar-celestial', ''),
-  ('celestial', 9, 'restauracao-maior', ''),
-  ('great-old-one', 3, 'detectar-pensamentos', ''),
-  ('great-old-one', 3, 'forca-espectral', ''),
-  ('great-old-one', 3, 'gargalhada-nefasta-de-tasha', ''),
-  ('great-old-one', 3, 'sussurros-dissonantes', ''),
-  ('great-old-one', 5, 'clarividencia', ''),
-  ('great-old-one', 5, 'fome-de-hadar', ''),
-  ('great-old-one', 7, 'confusao', ''),
-  ('great-old-one', 7, 'invocar-aberracao', ''),
-  ('great-old-one', 9, 'modificar-memoria', ''),
-  ('great-old-one', 9, 'telecinese', ''),
-  ('fiend', 3, 'comando', ''),
-  ('fiend', 3, 'maos-flamejantes', ''),
-  ('fiend', 3, 'raio-ardente', ''),
-  ('fiend', 3, 'sugestao', ''),
-  ('fiend', 5, 'bola-de-fogo', ''),
-  ('fiend', 5, 'nuvem-fetida', ''),
-  ('fiend', 7, 'escudo-ardente', ''),
-  ('fiend', 7, 'muralha-de-fogo', ''),
-  ('fiend', 9, 'missao', ''),
-  ('fiend', 9, 'praga-de-insetos', ''),
-  ('life', 3, 'auxilio', ''),
-  ('life', 3, 'bencao', ''),
-  ('life', 3, 'curar-ferimentos', ''),
-  ('life', 3, 'restauracao-menor', ''),
-  ('life', 5, 'palavra-curativa-em-massa', ''),
-  ('life', 5, 'revivificar', ''),
-  ('life', 7, 'aura-de-vida', ''),
-  ('life', 7, 'protecao-contra-a-morte', ''),
-  ('life', 9, 'curar-ferimentos-em-massa', ''),
-  ('life', 9, 'restauracao-maior', ''),
-  ('light', 3, 'fogo-das-fadas', ''),
-  ('light', 3, 'maos-flamejantes', ''),
-  ('light', 3, 'raio-ardente', ''),
-  ('light', 3, 'ver-o-invisivel', ''),
-  ('light', 5, 'bola-de-fogo', ''),
-  ('light', 5, 'luz-do-dia', ''),
-  ('light', 7, 'muralha-de-fogo', ''),
-  ('light', 7, 'olho-arcano', ''),
-  ('light', 9, 'coluna-de-chamas', ''),
-  ('light', 9, 'videncia', ''),
-  ('trickery', 3, 'disfarcar-se', ''),
-  ('trickery', 3, 'enfeiticar-pessoa', ''),
-  ('trickery', 3, 'invisibilidade', ''),
-  ('trickery', 3, 'passo-sem-rastro', ''),
-  ('trickery', 5, 'indetectavel', ''),
-  ('trickery', 5, 'padrao-hipnotico', ''),
-  ('trickery', 7, 'confusao', ''),
-  ('trickery', 7, 'porta-dimensional', ''),
-  ('trickery', 9, 'dominar-pessoa', ''),
-  ('trickery', 9, 'modificar-memoria', ''),
-  ('war', 3, 'arma-espiritual', ''),
-  ('war', 3, 'arma-magica', ''),
-  ('war', 3, 'escudo-da-fe', ''),
-  ('war', 3, 'raio-guia', ''),
-  ('war', 5, 'guardioes-espirituais', ''),
-  ('war', 5, 'manto-do-cruzado', ''),
-  ('war', 7, 'escudo-ardente', ''),
-  ('war', 7, 'movimentacao-livre', ''),
-  ('war', 9, 'golpe-de-arco', ''),
-  ('war', 9, 'paralisar-monstro', ''),
-  ('land', 3, 'maos-flamejantes', 'arid'),
-  ('land', 3, 'turvar', 'arid'),
-  ('land', 3, 'raio-de-fogo', 'arid'),
-  ('land', 5, 'bola-de-fogo', 'arid'),
-  ('land', 5, 'muralha-de-fogo', 'arid'),
-  ('land', 7, 'malogro', 'arid'),
-  ('land', 7, 'muralha-de-pedra', 'arid'),
-  ('land', 9, 'coluna-de-chamas', 'arid'),
-  ('land', 9, 'videncia', 'arid'),
-  ('land', 3, 'nevoa-obscurecente', 'polar'),
-  ('land', 3, 'paralisar-pessoa', 'polar'),
-  ('land', 3, 'raio-de-gelo', 'polar'),
-  ('land', 5, 'nevasca', 'polar'),
-  ('land', 5, 'lentidao', 'polar'),
-  ('land', 7, 'cone-de-frio', 'polar'),
-  ('land', 7, 'tempestade-glacial', 'polar'),
-  ('land', 9, 'comunhao-com-a-natureza', 'polar'),
-  ('land', 9, 'passo-arboreo', 'polar'),
-  ('land', 3, 'passo-nebuloso', 'temperate'),
-  ('land', 3, 'toque-chocante', 'temperate'),
-  ('land', 3, 'sono', 'temperate'),
-  ('land', 5, 'relampago', 'temperate'),
-  ('land', 5, 'crescimento-de-plantas', 'temperate'),
-  ('land', 7, 'movimentacao-livre', 'temperate'),
-  ('land', 7, 'moldar-rochas', 'temperate'),
-  ('land', 9, 'comunhao-com-a-natureza', 'temperate'),
-  ('land', 9, 'muralha-de-pedra', 'temperate'),
-  ('land', 3, 'bolha-acida', 'tropical'),
-  ('land', 3, 'rajada-de-veneno', 'tropical'),
-  ('land', 3, 'teia', 'tropical'),
-  ('land', 5, 'nuvem-fetida', 'tropical'),
-  ('land', 5, 'polimorfia', 'tropical'),
-  ('land', 7, 'praga-de-insetos', 'tropical'),
-  ('land', 7, 'muralha-de-espinhos', 'tropical'),
-  ('land', 9, 'nevoa-mortal', 'tropical'),
-  ('land', 9, 'passo-arboreo', 'tropical'),
-  ('moon', 3, 'curar-ferimentos', ''),
-  ('moon', 3, 'fagulha-estelar', ''),
-  ('moon', 3, 'raio-lunar', ''),
-  ('moon', 5, 'invocar-animais', ''),
-  ('moon', 7, 'fonte-do-luar', ''),
-  ('moon', 9, 'curar-ferimentos-em-massa', ''),
-  ('sea', 3, 'despedacar', ''),
-  ('sea', 3, 'lufada-de-vento', ''),
-  ('sea', 3, 'nevoa-obscurecente', ''),
-  ('sea', 3, 'onda-trovejante', ''),
-  ('sea', 3, 'raio-de-gelo', ''),
-  ('sea', 5, 'relampago', ''),
-  ('sea', 5, 'respirar-na-agua', ''),
-  ('sea', 7, 'controlar-agua', ''),
-  ('sea', 7, 'tempestade-glacial', ''),
-  ('sea', 9, 'invocar-elemental', ''),
-  ('sea', 9, 'paralisar-monstro', ''),
-  ('fey-wanderer', 3, 'enfeiticar-pessoa', ''),
-  ('fey-wanderer', 5, 'passo-nebuloso', ''),
-  ('fey-wanderer', 9, 'convocar-feerico', ''),
-  ('fey-wanderer', 13, 'porta-dimensional', ''),
-  ('fey-wanderer', 17, 'despistar', ''),
-  ('gloom-stalker', 3, 'disfarcar-se', ''),
-  ('gloom-stalker', 5, 'corda-extradimensional', ''),
-  ('gloom-stalker', 9, 'medo', ''),
-  ('gloom-stalker', 13, 'invisibilidade-maior', ''),
-  ('gloom-stalker', 17, 'similaridade', ''),
-  ('ancients', 3, 'falar-com-animais', ''),
-  ('ancients', 3, 'golpe-constritor', ''),
-  ('ancients', 5, 'passo-nebuloso', ''),
-  ('ancients', 5, 'raio-lunar', ''),
-  ('ancients', 9, 'crescimento-de-plantas', ''),
-  ('ancients', 9, 'protecao-contra-energia', ''),
-  ('ancients', 13, 'pele-rocha', ''),
-  ('ancients', 13, 'tempestade-glacial', ''),
-  ('ancients', 17, 'comunhao-com-a-natureza', ''),
-  ('ancients', 17, 'passo-arboreo', ''),
-  ('devotion', 3, 'escudo-da-fe', ''),
-  ('devotion', 3, 'protecao-contra-o-bem-e-o-mal', ''),
-  ('devotion', 5, 'auxilio', ''),
-  ('devotion', 5, 'zona-da-verdade', ''),
-  ('devotion', 9, 'dissipar-magia', ''),
-  ('devotion', 9, 'sinal-de-esperanca', ''),
-  ('devotion', 13, 'defensor-da-fe', ''),
-  ('devotion', 13, 'movimentacao-livre', ''),
-  ('devotion', 17, 'coluna-de-chamas', ''),
-  ('devotion', 17, 'comunhao', ''),
-  ('glory', 3, 'heroismo', ''),
-  ('glory', 3, 'raio-guia', ''),
-  ('glory', 5, 'aprimorar-atributo', ''),
-  ('glory', 5, 'arma-magica', ''),
-  ('glory', 9, 'celeridade', ''),
-  ('glory', 9, 'protecao-contra-energia', ''),
-  ('glory', 13, 'compulsao', ''),
-  ('glory', 13, 'movimentacao-livre', ''),
-  ('glory', 17, 'lendas-e-historias', ''),
-  ('glory', 17, 'presenca-regia-de-yolande', ''),
-  ('vengeance', 3, 'marca-do-predador', ''),
-  ('vengeance', 3, 'perdicao', ''),
-  ('vengeance', 5, 'paralisar-pessoa', ''),
-  ('vengeance', 5, 'passo-nebuloso', ''),
-  ('vengeance', 9, 'celeridade', ''),
-  ('vengeance', 9, 'protecao-contra-energia', ''),
-  ('vengeance', 13, 'banimento', ''),
-  ('vengeance', 13, 'porta-dimensional', ''),
-  ('vengeance', 17, 'paralisar-monstro', ''),
-  ('vengeance', 17, 'videncia', '')
-ON CONFLICT (subclass_id, unlock_level, spell_id, terrain_id) DO NOTHING;
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'acalmar-emocoes'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'fogo-das-fadas'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'forca-espectral'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-nebuloso'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'sono'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'crescimento-de-plantas'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'piscar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-fera'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade-maior'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-pessoa'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'similaridade'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'auxilio'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'chama-sagrada'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'luz'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-guia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-menor'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'luz-do-dia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'revivificar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'defensor-da-fe'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-fogo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-celestial'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-maior'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'detectar-pensamentos'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'forca-espectral'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'gargalhada-nefasta-de-tasha'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'sussurros-dissonantes'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'clarividencia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'fome-de-hadar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'confusao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-aberracao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'modificar-memoria'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'telecinese'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'comando'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'maos-flamejantes'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-ardente'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'sugestao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'bola-de-fogo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-fetida'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-ardente'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-fogo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'missao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'praga-de-insetos'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'auxilio'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'bencao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-menor'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'palavra-curativa-em-massa'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'revivificar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'aura-de-vida'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-a-morte'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos-em-massa'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'restauracao-maior'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'fogo-das-fadas'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'maos-flamejantes'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-ardente'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'ver-o-invisivel'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'bola-de-fogo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'luz-do-dia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-fogo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'olho-arcano'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'coluna-de-chamas'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'videncia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'disfarcar-se'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-pessoa'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-sem-rastro'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'indetectavel'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'padrao-hipnotico'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'confusao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'porta-dimensional'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'dominar-pessoa'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'modificar-memoria'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'arma-espiritual'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'arma-magica'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-da-fe'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-guia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'guardioes-espirituais'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'manto-do-cruzado'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-ardente'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'movimentacao-livre'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-de-arco'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-monstro'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'maos-flamejantes'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'turvar'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-fogo'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'bola-de-fogo'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-fogo'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'malogro'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-pedra'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'coluna-de-chamas'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'videncia'), 'arid'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-obscurecente'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-gelo'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'nevasca'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'lentidao'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'cone-de-frio'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-glacial'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'comunhao-com-a-natureza'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-arboreo'), 'polar'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-nebuloso'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'toque-chocante'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'sono'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'relampago'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'crescimento-de-plantas'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'movimentacao-livre'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'moldar-rochas'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'comunhao-com-a-natureza'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-pedra'), 'temperate'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'bolha-acida'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'rajada-de-veneno'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'teia'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'nuvem-fetida'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'polimorfia'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'praga-de-insetos'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'muralha-de-espinhos'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-mortal'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-arboreo'), 'tropical'),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'fagulha-estelar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-lunar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-animais'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'fonte-do-luar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'curar-ferimentos-em-massa'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'despedacar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'lufada-de-vento'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'nevoa-obscurecente'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'onda-trovejante'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-de-gelo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'relampago'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'respirar-na-agua'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'controlar-agua'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 7, (SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-glacial'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'invocar-elemental'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-monstro'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'enfeiticar-pessoa'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-nebuloso'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'convocar-feerico'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'porta-dimensional'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'despistar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'disfarcar-se'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'corda-extradimensional'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'medo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'invisibilidade-maior'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'similaridade'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'falar-com-animais'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'golpe-constritor'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-nebuloso'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-lunar'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'crescimento-de-plantas'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-energia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'pele-rocha'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'tempestade-glacial'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'comunhao-com-a-natureza'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-arboreo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'escudo-da-fe'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-o-bem-e-o-mal'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'auxilio'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'zona-da-verdade'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'dissipar-magia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'sinal-de-esperanca'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'defensor-da-fe'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'movimentacao-livre'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'coluna-de-chamas'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'comunhao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'heroismo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'raio-guia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'aprimorar-atributo'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'arma-magica'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'celeridade'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-energia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'compulsao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'movimentacao-livre'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'lendas-e-historias'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'presenca-regia-de-yolande'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'marca-do-predador'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 3, (SELECT id FROM rpg.phb_spell WHERE slug = 'perdicao'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-pessoa'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 5, (SELECT id FROM rpg.phb_spell WHERE slug = 'passo-nebuloso'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'celeridade'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 9, (SELECT id FROM rpg.phb_spell WHERE slug = 'protecao-contra-energia'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'banimento'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 13, (SELECT id FROM rpg.phb_spell WHERE slug = 'porta-dimensional'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'paralisar-monstro'), ''),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), 17, (SELECT id FROM rpg.phb_spell WHERE slug = 'videncia'), '')
+ON CONFLICT (subclass_id, unlock_level, spell_id, terrain_slug) DO NOTHING;
 
 
-INSERT INTO rpg.phb_species (id, name, creature_type, size, speed, description, source_meta)
+INSERT INTO rpg.phb_species (slug, name, creature_type, size, speed, description, source_meta)
 VALUES
   ('aasimar', 'Aasimar', 'Humanoide', 'Médio (cerca de 1,20-2,10 metros de altura) ou Pequeno (cerca de 0,60-1,20 metro de altura), escolhido ao selecionar esta espécie', '9 metros', 'Aasimar (pronuncia-se AH-sih-mar) são mortais que carregam uma centelha dos Planos Superiores dentro de suas almas. Sejam descendentes de um ser angelical ou infundido com poder celestial, eles podem impulsionar essa centelha para trazer luz, cura e fúria celestial. Um aasimar pode surgir entre qualquer população de mortais. Eles se parecem com seus pais, mas vivem até 160 anos e têm características que sugerem sua herança celestial, como sardas metálicas, olhos luminosos, uma auréola ou a cor da pele de um anjo (prata, verde opalescente ou vermelho acobreado). Essas características começam sutis e se tornam óbvias quando o aasimar aprende a revelar sua natureza celestial completa.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
   ('dwarf', 'Anão', 'Humanoide', 'Médio (cerca de 1,20-1,50 metro de altura)', '9 metros', 'Anões foram criados da terra nos tempos antigos por uma divindade da forja, conhecida por diversos nomes como Moradin e Reorx. Esse deus conferiu aos anões uma afinidade por pedra, metal e pela vida subterrânea, além de torná-los resilientes como as montanhas, com uma expectativa de vida de cerca de 350 anos. Baixos e frequentemente barbudos, os anões originais esculpiram cidades e fortalezas nas montanhas e sob a terra. Suas lendas mais antigas relatam conflitos com monstros tanto do topo das montanhas quanto da Umbraeterna, sejam eles gigantes imponentes ou horrores subterrâneos. Motivados por essas histórias, anões de diversas culturas costumam cantar sobre proezas valentes — especialmente sobre os pequenos superando os poderosos. Em alguns mundos do multiverso, os primeiros povoados de anões foram erguidos em colinas ou montanhas, e as famílias que descendem desses locais são conhecidas como anões da colina ou anões da montanha. Os cenários de Greyhawk e Dragonlance incluem essas comunidades.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb),
@@ -6562,147 +7123,83 @@ VALUES
   ('tiefling', 'Tiferino', 'Humanoide', 'Médio (cerca de 1,20-2,10 metros de altura) ou Pequeno (cerca de 0,90-1,20 metro de altura), escolhido ao selecionar esta espécie.', '9 metros', 'Os tiferinos nascem nos Planos Inferiores ou têm ancestrais que se originaram lá. Estão ligados por sangue a um diabo, demônio ou outro Ínfero. Essa conexão representa o legado ínfero do tiferino, prometendo poder, mas não influi em sua perspectiva moral. Um tiferino decide aceitar ou lamentar seu legado ínfero. Os três legados são descritos a seguir. Abissal. A entropia do Abismo, o caos do Pandemônio e o desespero do Cárceri atraem os tiferinos com legado abissal. Chifres, pelos, presas e aromas peculiares são características comuns desses tiferinos, que em sua maioria possuem sangue demoníaco correndo em suas veias. Ctônico. Os tiferinos com o legado ctônico sentem não apenas o puxão de Cárceri, mas também a ganância de Gehenna e a escuridão do Hades. Alguns aparentam ser cadavéricos, enquanto outros possuem a beleza sobrenatural de um súcubo ou características físicas comuns a uma megera da noite, um yugoloth ou outro ancestral ínfero Neutro e Mau. Infernal. O legado infernal liga os tiferinos não apenas à Gehenna, mas também aos Nove Infernos e aos intensos campos de batalha de Aqueronte. Características físicas comuns incluem chifres, espinhos, caudas, olhos dourados e um leve odor de enxofre ou fumaça, sendo que a maioria desses tiferinos têm ancestrais diabólicos.', '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[192,203],"extractedAt":"2026-06-25T23:51:33.040Z"}'::jsonb);
 
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Resistência Celestial', 'Você tem Resistência a dano Necrótico e Radiante.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'Resistência Celestial', 'Você tem Resistência a dano Necrótico e Radiante.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Mãos Curativas', 'Você executa uma ação Usar Magia, toca uma criatura e joga um número de d4s igual ao seu Bônus de Proficiência. A criatura restaura número de Pontos de Vida igual ao total jogado. Após usar esse traço, você não pode usá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'Mãos Curativas', 'Você executa uma ação Usar Magia, toca uma criatura e joga um número de d4s igual ao seu Bônus de Proficiência. A criatura restaura número de Pontos de Vida igual ao total jogado. Após usar esse traço, você não pode usá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Portador da Luz', 'Você conhece o truque Luz. Carisma é seu atributo de conjuração para isso.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'Portador da Luz', 'Você conhece o truque Luz. Carisma é seu atributo de conjuração para isso.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('aasimar', 'Revelação Celestial', 'No nível 3 de personagem, você pode se transformar como uma Ação Bônus usando uma das opções abaixo (escolha a opção cada vez que você se transformar). A transformação se mantém por 1 minuto ou até você a encerrar (nenhuma ação é necessária). Uma vez que você se transforma, não pode fazê-lo novamente até completar um Descanso Longo. Uma vez em cada um dos seus turnos, até que a transformação termine, você pode infligir dano adicional a um alvo ao causar dano a ele com um ataque ou uma magia. O dano adicional é igual ao seu Bônus de Proficiência, e o tipo de dano adicional é Necrótico para Manto Necrótico ou Radiante para Asas Celestiais e Transfiguração Radiante. Aqui estão as opções de transformação: Asas Celestiais. Duas asas espectrais brotam em suas costas temporariamente. Até que a transformação se encerre, você tem um Deslocamento de Voo igual ao seu Deslocamento. Manto Necrótico. Seus olhos se tornam brevemente poças de escuridão, e asas que não voam brotam em suas costas temporariamente. Criaturas que não sejam seus aliados a até 3 metros de você devem ser bem-sucedidas em uma salvaguarda de Carisma (CD 8 + seu modificador de Carisma e seu Bônus de Proficiência) ou têm a condição Amedrontado até o final do seu próximo turno. Transfiguração Radiante. Luz abrasadora irradia temporariamente de seus olhos e boca. Pela duração da transformação, você emite Luz Plena em um raio de 3 metros e Meia-luz por mais 3 metros, e no fim de cada um de seus turnos, cada criatura a até 3 metros de você sofre dano Radiante igual ao seu Bônus de Proficiência.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'Revelação Celestial', 'No nível 3 de personagem, você pode se transformar como uma Ação Bônus usando uma das opções abaixo (escolha a opção cada vez que você se transformar). A transformação se mantém por 1 minuto ou até você a encerrar (nenhuma ação é necessária). Uma vez que você se transforma, não pode fazê-lo novamente até completar um Descanso Longo. Uma vez em cada um dos seus turnos, até que a transformação termine, você pode infligir dano adicional a um alvo ao causar dano a ele com um ataque ou uma magia. O dano adicional é igual ao seu Bônus de Proficiência, e o tipo de dano adicional é Necrótico para Manto Necrótico ou Radiante para Asas Celestiais e Transfiguração Radiante. Aqui estão as opções de transformação: Asas Celestiais. Duas asas espectrais brotam em suas costas temporariamente. Até que a transformação se encerre, você tem um Deslocamento de Voo igual ao seu Deslocamento. Manto Necrótico. Seus olhos se tornam brevemente poças de escuridão, e asas que não voam brotam em suas costas temporariamente. Criaturas que não sejam seus aliados a até 3 metros de você devem ser bem-sucedidas em uma salvaguarda de Carisma (CD 8 + seu modificador de Carisma e seu Bônus de Proficiência) ou têm a condição Amedrontado até o final do seu próximo turno. Transfiguração Radiante. Luz abrasadora irradia temporariamente de seus olhos e boca. Pela duração da transformação, você emite Luz Plena em um raio de 3 metros e Meia-luz por mais 3 metros, e no fim de cada um de seus turnos, cada criatura a até 3 metros de você sofre dano Radiante igual ao seu Bônus de Proficiência.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dwarf', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 36 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'), 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 36 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dwarf', 'Resistência a Toxinas', 'Você tem Resistência a Dano Venenoso. Você também tem Vantagem nas salvaguardas que realizar para evitar ou encerrar a condição Envenenado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'), 'Resistência a Toxinas', 'Você tem Resistência a Dano Venenoso. Você também tem Vantagem nas salvaguardas que realizar para evitar ou encerrar a condição Envenenado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dwarf', 'Tenacidade Anã', 'Seus Pontos de Vida máximos aumentam em 1, e novamente em 1, sempre que você atinge um nível de personagem.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'), 'Tenacidade Anã', 'Seus Pontos de Vida máximos aumentam em 1, e novamente em 1, sempre que você atinge um nível de personagem.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dwarf', 'Conhecimento de Pedras', 'Como uma Ação Bônus, você adquire Sismiconsciência com um alcance de 18 metros por 10 minutos. Você deve estar em, ou tocar, uma superfície de pedra para usar a Sismiconsciência. A pedra pode ser natural ou trabalhada. Você pode usar essa Ação Bônus um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'), 'Conhecimento de Pedras', 'Como uma Ação Bônus, você adquire Sismiconsciência com um alcance de 18 metros por 10 minutos. Você deve estar em, ou tocar, uma superfície de pedra para usar a Sismiconsciência. A pedra pode ser natural ou trabalhada. Você pode usar essa Ação Bônus um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Herança Dracônica', 'Sua linhagem deriva de um progenitor dracônico. Escolha o tipo de dragão da tabela Herança Dracônica. Sua escolha afeta suas características de Ataque de Sopro e Resistência a Dano, bem como sua aparência.', '{"title":"Herança Dracônica","columns":["Dragão","Tipo de Dano"],"rows":[{"id":"blue","legacy":"Azul","level1":"Elétrico"},{"id":"black","legacy":"Negro","level1":"Ácido"},{"id":"white","legacy":"Branco","level1":"Gélido"},{"id":"gold","legacy":"Ouro","level1":"Ígneo"},{"id":"bronze","legacy":"Bronze","level1":"Elétrico"},{"id":"silver","legacy":"Prata","level1":"Gélido"},{"id":"copper","legacy":"Cobre","level1":"Ácido"},{"id":"green","legacy":"Verde","level1":"Venenoso"},{"id":"brass","legacy":"Latão","level1":"Ígneo"},{"id":"red","legacy":"Vermelho","level1":"Ígneo"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'Herança Dracônica', 'Sua linhagem deriva de um progenitor dracônico. Escolha o tipo de dragão da tabela Herança Dracônica. Sua escolha afeta suas características de Ataque de Sopro e Resistência a Dano, bem como sua aparência.', '{"title":"Herança Dracônica","columns":["Dragão","Tipo de Dano"],"rows":[{"id":"blue","legacy":"Azul","level1":"Elétrico"},{"id":"black","legacy":"Negro","level1":"Ácido"},{"id":"white","legacy":"Branco","level1":"Gélido"},{"id":"gold","legacy":"Ouro","level1":"Ígneo"},{"id":"bronze","legacy":"Bronze","level1":"Elétrico"},{"id":"silver","legacy":"Prata","level1":"Gélido"},{"id":"copper","legacy":"Cobre","level1":"Ácido"},{"id":"green","legacy":"Verde","level1":"Venenoso"},{"id":"brass","legacy":"Latão","level1":"Ígneo"},{"id":"red","legacy":"Vermelho","level1":"Ígneo"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Ataque de Sopro', 'Ao executar a ação Atacar no seu turno, você pode substituir um de seus ataques por uma emissão de energia mágica em um Cone de 4,5 metros ou em uma Linha de 9 metros de comprimento e 1,5 metros de largura (escolha a forma a cada vez). Cada criatura nessa área deve realizar uma salvaguarda de Destreza (CD 8 + seu modificador de Constituição e seu Bônus de Proficiência). Se falhar, uma criatura sofre 1d10 pontos de dano do tipo determinado por seu traço Herança Dracônica. Em caso de sucesso, uma criatura sofre metade do dano. Esse dano aumenta em 1d10 quando você atinge os níveis de personagem 5 (2d10), 11 (3d10) e 17 (4d10). Você pode usar esse Ataque de Sopro um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'Ataque de Sopro', 'Ao executar a ação Atacar no seu turno, você pode substituir um de seus ataques por uma emissão de energia mágica em um Cone de 4,5 metros ou em uma Linha de 9 metros de comprimento e 1,5 metros de largura (escolha a forma a cada vez). Cada criatura nessa área deve realizar uma salvaguarda de Destreza (CD 8 + seu modificador de Constituição e seu Bônus de Proficiência). Se falhar, uma criatura sofre 1d10 pontos de dano do tipo determinado por seu traço Herança Dracônica. Em caso de sucesso, uma criatura sofre metade do dano. Esse dano aumenta em 1d10 quando você atinge os níveis de personagem 5 (2d10), 11 (3d10) e 17 (4d10). Você pode usar esse Ataque de Sopro um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Resistência a Dano', 'Você tem Resistência ao tipo de dano determinado por seu traço Herança Dracônica.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'Resistência a Dano', 'Você tem Resistência ao tipo de dano determinado por seu traço Herança Dracônica.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('dragonborn', 'Voo Dracônico', 'No nível 5 do personagem, você pode canalizar magia dracônica para beneficiar de um voo temporário. Como uma Ação Bônus, você cria asas espectrais nas costas que duram 10 minutos ou até que você as retraia (nenhuma ação é necessária) ou tem a condição Incapacitado. Pela duração, você tem um Deslocamento de Voo igual ao seu Deslocamento. Suas asas parecem feitas da mesma energia que o seu Ataque de Sopro. Após usar esse traço, você não pode usá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'Voo Dracônico', 'No nível 5 do personagem, você pode canalizar magia dracônica para beneficiar de um voo temporário. Como uma Ação Bônus, você cria asas espectrais nas costas que duram 10 minutos ou até que você as retraia (nenhuma ação é necessária) ou tem a condição Incapacitado. Pela duração, você tem um Deslocamento de Voo igual ao seu Deslocamento. Suas asas parecem feitas da mesma energia que o seu Ataque de Sopro. Após usar esse traço, você não pode usá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Linhagem Élfica', 'Você é de uma linhagem que lhe concede habilidades sobrenaturais. Escolha uma linhagem da tabela Linhagem Élfica. Você adquire o benefício de nível 1 dessa linhagem. Ao atingir os níveis 3 e 5, você aprende uma magia de círculo superior, conforme indicado na tabela. Essa magia está sempre preparada e pode ser conjurada uma vez sem usar um espaço de magia, restaurando essa capacidade ao completar um Descanso Longo. Além disso, você pode conjurá-la usando qualquer espaço de magia apropriado que possua. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias que você conjura com este traço (escolha o atributo quando selecionar a linhagem).', '{"title":"Linhagem Élfica","columns":["Linhagem","Nível 1","Nível 3","Nível 5"],"rows":[{"id":"high-elf","legacy":"Alto Elfo","level1":"Você conhece o truque Prestidigitação Arcana. Sempre que completar um Descanso Longo, você pode substituir este truque por um truque diferente da lista de magias de Mago.","level3":"Detectar Magia","level5":"Passo Nebuloso"},{"id":"drow","legacy":"Drow","level1":"O alcance da sua Visão no Escuro aumenta para 36 metros. Você também conhece o truque Luzes Dançantes.","level3":"Fogo das Fadas","level5":"Escuridão"},{"id":"wood-elf","legacy":"Elfo Silvestre","level1":"Seu Deslocamento aumenta para 10,5 metros. Você também conhece o truque Arte Druídica.","level3":"Passos Largos","level5":"Passos Sem Rastro"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'Linhagem Élfica', 'Você é de uma linhagem que lhe concede habilidades sobrenaturais. Escolha uma linhagem da tabela Linhagem Élfica. Você adquire o benefício de nível 1 dessa linhagem. Ao atingir os níveis 3 e 5, você aprende uma magia de círculo superior, conforme indicado na tabela. Essa magia está sempre preparada e pode ser conjurada uma vez sem usar um espaço de magia, restaurando essa capacidade ao completar um Descanso Longo. Além disso, você pode conjurá-la usando qualquer espaço de magia apropriado que possua. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias que você conjura com este traço (escolha o atributo quando selecionar a linhagem).', '{"title":"Linhagem Élfica","columns":["Linhagem","Nível 1","Nível 3","Nível 5"],"rows":[{"id":"high-elf","legacy":"Alto Elfo","level1":"Você conhece o truque Prestidigitação Arcana. Sempre que completar um Descanso Longo, você pode substituir este truque por um truque diferente da lista de magias de Mago.","level3":"Detectar Magia","level5":"Passo Nebuloso"},{"id":"drow","legacy":"Drow","level1":"O alcance da sua Visão no Escuro aumenta para 36 metros. Você também conhece o truque Luzes Dançantes.","level3":"Fogo das Fadas","level5":"Escuridão"},{"id":"wood-elf","legacy":"Elfo Silvestre","level1":"Seu Deslocamento aumenta para 10,5 metros. Você também conhece o truque Arte Druídica.","level3":"Passos Largos","level5":"Passos Sem Rastro"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Ancestralidade Feérica', 'Você tem Vantagem ao realizar salvaguardas para evitar ou encerrar a condição Enfeitiçado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'Ancestralidade Feérica', 'Você tem Vantagem ao realizar salvaguardas para evitar ou encerrar a condição Enfeitiçado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Sentidos Aguçados', 'Você tem proficiência na perícia Intuição, Percepção ou Sobrevivência.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'Sentidos Aguçados', 'Você tem proficiência na perícia Intuição, Percepção ou Sobrevivência.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('elf', 'Transe', 'Você pode completar um Descanso Longo em 4 horas ao meditar, sem a necessidade de dormir, mantendo a consciência, e magia não pode forçá-lo a dormir.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'Transe', 'Você pode completar um Descanso Longo em 4 horas ao meditar, sem a necessidade de dormir, mantendo a consciência, e magia não pode forçá-lo a dormir.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('gnome', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('gnome', 'Astúcia de Gnomo', 'Você tem Vantagem em salvaguardas de Inteligência, Sabedoria e Carisma.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), 'Astúcia de Gnomo', 'Você tem Vantagem em salvaguardas de Inteligência, Sabedoria e Carisma.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('gnome', 'Linhagem Gnômica', 'Você pertence a uma linhagem que lhe confere habilidades sobrenaturais. Escolha uma das seguintes opções; sua escolha determina se Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias desse traço (escolha o atributo quando selecionar a linhagem): Gnomo das Rochas. Você conhece os truques Prestidigitação Arcana e Reparar. Além disso, você pode gastar 10 minutos conjurando Prestidigitação Arcana para fabricar um dispositivo mecânico minúsculo (CA 5, 1 PV), como um brinquedo, isqueiro mecânico ou caixa de música. Ao fabricar o dispositivo, você determina a função dele escolhendo um efeito de Prestidigitação Arcana; o dispositivo produz esse efeito sempre que você ou outra criatura executa uma Ação Bônus para ativá-lo com um toque. Se o efeito escolhido tiver opções possíveis, você escolhe uma dessas opções para o dispositivo ao fabricá-lo. Por exemplo, se você escolher o efeito de Brincar com Fogo da magia, você determina se o dispositivo acende ou extingue fogo; o dispositivo não faz ambas as coisas. Você pode ter três desses dispositivos ao mesmo tempo, e cada um se desfaz 8 horas após ser fabricado ou quando você o desmonta com um toque como uma ação Usar Objeto. Gnomo do Bosque. Você conhece o truque Ilusão Menor. Você também sempre tem a magia Falar com Animais preparada. É possível conjurá-la sem um espaço de magia um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo. Você também pode usar qualquer espaço de magia que tiver para conjurá-la.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), 'Linhagem Gnômica', 'Você pertence a uma linhagem que lhe confere habilidades sobrenaturais. Escolha uma das seguintes opções; sua escolha determina se Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias desse traço (escolha o atributo quando selecionar a linhagem): Gnomo das Rochas. Você conhece os truques Prestidigitação Arcana e Reparar. Além disso, você pode gastar 10 minutos conjurando Prestidigitação Arcana para fabricar um dispositivo mecânico minúsculo (CA 5, 1 PV), como um brinquedo, isqueiro mecânico ou caixa de música. Ao fabricar o dispositivo, você determina a função dele escolhendo um efeito de Prestidigitação Arcana; o dispositivo produz esse efeito sempre que você ou outra criatura executa uma Ação Bônus para ativá-lo com um toque. Se o efeito escolhido tiver opções possíveis, você escolhe uma dessas opções para o dispositivo ao fabricá-lo. Por exemplo, se você escolher o efeito de Brincar com Fogo da magia, você determina se o dispositivo acende ou extingue fogo; o dispositivo não faz ambas as coisas. Você pode ter três desses dispositivos ao mesmo tempo, e cada um se desfaz 8 horas após ser fabricado ou quando você o desmonta com um toque como uma ação Usar Objeto. Gnomo do Bosque. Você conhece o truque Ilusão Menor. Você também sempre tem a magia Falar com Animais preparada. É possível conjurá-la sem um espaço de magia um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo. Você também pode usar qualquer espaço de magia que tiver para conjurá-la.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('goliath', 'Ancestralidade Gigante', 'Você é descendente de Gigantes. Escolha um dos seguintes benefícios — um benefício sobrenatural de sua ancestralidade; você pode usar o benefício escolhido um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo: Arrepio do Gelo (Gigante do Gelo). Ao atingir um alvo com uma jogada de ataque e causar dano a ele, você também pode infligir 1d6 pontos de dano Gélido a esse alvo e reduzir o Deslocamento dele em 3 metros até o início do seu próximo turno. Queimadura de Fogo (Gigante de Fogo). Ao atingir um alvo com uma jogada de ataque e causar dano a ele, você também pode causar 1d10 pontos de dano Ígneo a esse alvo. Resistência da Pedra (Gigante da Pedra). Ao sofrer dano, pode executar uma Reação para jogar 1d12. Adicione seu modificador de Constituição ao número obtido e reduza o dano desse total. Salto da Nuvem (Gigante das Nuvens). Como uma Ação Bônus, você se teleporta magicamente até 9 metros para um espaço desocupado à sua vista. Tombo da Colina (Gigante da Colina). Ao atingir uma criatura Grande ou menor com uma jogada de ataque e causar dano a ela, você pode impor a esse alvo a condição Caído. Trovão da Tempestade (Gigante da Tempestade). Ao sofrer dano de uma criatura a até 18 metros de você, você pode executar uma Reação para causar 1d8 pontos de dano Trovejante a essa criatura.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'Ancestralidade Gigante', 'Você é descendente de Gigantes. Escolha um dos seguintes benefícios — um benefício sobrenatural de sua ancestralidade; você pode usar o benefício escolhido um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Longo: Arrepio do Gelo (Gigante do Gelo). Ao atingir um alvo com uma jogada de ataque e causar dano a ele, você também pode infligir 1d6 pontos de dano Gélido a esse alvo e reduzir o Deslocamento dele em 3 metros até o início do seu próximo turno. Queimadura de Fogo (Gigante de Fogo). Ao atingir um alvo com uma jogada de ataque e causar dano a ele, você também pode causar 1d10 pontos de dano Ígneo a esse alvo. Resistência da Pedra (Gigante da Pedra). Ao sofrer dano, pode executar uma Reação para jogar 1d12. Adicione seu modificador de Constituição ao número obtido e reduza o dano desse total. Salto da Nuvem (Gigante das Nuvens). Como uma Ação Bônus, você se teleporta magicamente até 9 metros para um espaço desocupado à sua vista. Tombo da Colina (Gigante da Colina). Ao atingir uma criatura Grande ou menor com uma jogada de ataque e causar dano a ela, você pode impor a esse alvo a condição Caído. Trovão da Tempestade (Gigante da Tempestade). Ao sofrer dano de uma criatura a até 18 metros de você, você pode executar uma Reação para causar 1d8 pontos de dano Trovejante a essa criatura.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('goliath', 'Forma Grande', 'A partir do nível 5 de personagem, você pode alterar seu tamanho para Grande como uma Ação Bônus se estiver em um espaço grande o suficiente. Essa transformação se mantém por 10 minutos ou até que você a encerrar (nenhuma ação é necessária). Pela duração, você tem Vantagem em testes de Força, e seu Deslocamento aumenta em 3 metros. Após usar este traço, você não pode utilizá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'Forma Grande', 'A partir do nível 5 de personagem, você pode alterar seu tamanho para Grande como uma Ação Bônus se estiver em um espaço grande o suficiente. Essa transformação se mantém por 10 minutos ou até que você a encerrar (nenhuma ação é necessária). Pela duração, você tem Vantagem em testes de Força, e seu Deslocamento aumenta em 3 metros. Após usar este traço, você não pode utilizá-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('goliath', 'Porte Poderoso', 'Você tem Vantagem em qualquer teste de atributo que realizar para encerrar a condição Imobilizado. Você também conta como um tamanho maior ao determinar sua capacidade de carga.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'Porte Poderoso', 'Você tem Vantagem em qualquer teste de atributo que realizar para encerrar a condição Imobilizado. Você também conta como um tamanho maior ao determinar sua capacidade de carga.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('human', 'Eficiente', 'Você adquire Inspiração Heroica sempre que completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'human'), 'Eficiente', 'Você adquire Inspiração Heroica sempre que completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('human', 'Hábil', 'Você adquire proficiência em uma perícia à sua escolha.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'human'), 'Hábil', 'Você adquire proficiência em uma perícia à sua escolha.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('human', 'Versátil', 'Você adquire um talento de Origem à sua escolha (veja o capítulo 5). Habilidoso é recomendado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'human'), 'Versátil', 'Você adquire um talento de Origem à sua escolha (veja o capítulo 5). Habilidoso é recomendado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('orc', 'Pico de Adrenalina', 'Você pode executar a ação Correr como uma Ação Bônus. Ao executar isso, você adquire um número de Pontos de Vida Temporários igual ao seu Bônus de Proficiência. Você pode usar este traço um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Curto ou Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'orc'), 'Pico de Adrenalina', 'Você pode executar a ação Correr como uma Ação Bônus. Ao executar isso, você adquire um número de Pontos de Vida Temporários igual ao seu Bônus de Proficiência. Você pode usar este traço um número de vezes igual ao seu Bônus de Proficiência, e você restaura todos os usos gastos quando completa um Descanso Curto ou Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('orc', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 36 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'orc'), 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 36 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('orc', 'Vigor Implacável', 'Ao ser reduzido a 0 Pontos de Vida, mas não morto imediatamente, você fica com 1 Ponto de Vida. Após usar este traço, você não pode fazê-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'orc'), 'Vigor Implacável', 'Ao ser reduzido a 0 Pontos de Vida, mas não morto imediatamente, você fica com 1 Ponto de Vida. Após usar este traço, você não pode fazê-lo novamente até completar um Descanso Longo.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('halfling', 'Corajoso', 'Você tem Vantagem nas salvaguardas que realizar para evitar ou encerrar a condição Amedrontado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'halfling'), 'Corajoso', 'Você tem Vantagem nas salvaguardas que realizar para evitar ou encerrar a condição Amedrontado.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('halfling', 'Agilidade Pequenina', 'Você pode se mover pelo espaço de qualquer criatura que seja um tamanho maior que você, mas você não pode parar no mesmo espaço.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'halfling'), 'Agilidade Pequenina', 'Você pode se mover pelo espaço de qualquer criatura que seja um tamanho maior que você, mas você não pode parar no mesmo espaço.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('halfling', 'Sorte', 'Ao tirar 1 no D20 de um Teste de D20, você pode jogar novamente o dado e deve usar a nova jogada.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'halfling'), 'Sorte', 'Ao tirar 1 no D20 de um Teste de D20, você pode jogar novamente o dado e deve usar a nova jogada.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('halfling', 'Furtividade Natural', 'Você pode executar a ação Esconder mesmo quando estiver encoberto apenas por uma criatura que seja pelo menos um tamanho maior que você.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'halfling'), 'Furtividade Natural', 'Você pode executar a ação Esconder mesmo quando estiver encoberto apenas por uma criatura que seja pelo menos um tamanho maior que você.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('tiefling', 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'Visão no Escuro', 'Você tem Visão no Escuro com um alcance de 18 metros.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('tiefling', 'Legado Ínfero', 'Você é o portador de um legado que lhe confere poderes sobrenaturais. Escolha um legado da tabela Legados Ínferos. Você adquire o benefício de nível 1 do legado escolhido. Ao atingir os níveis de personagem 3 e 5, você aprende magias de círculo superior, conforme indicado na tabela. Essas magias estão sempre preparadas e podem ser conjuradas uma vez sem usar um espaço de magia, sendo restauradas quando completa um Descanso Longo. Além disso, você pode conjurá-las utilizando qualquer espaço de magia que possua do círculo correspondente. Atributos como Inteligência, Sabedoria ou Carisma servem como seu atributo de conjuração para essas magias (escolha um atributo ao selecionar o legado).', '{"title":"Legados Ínferos","columns":["Legado","Nível 1","Nível 3","Nível 5"],"rows":[{"id":"abyssal","legacy":"Abissal","level1":"Você tem Resistência a dano Venenoso. Você também conhece o truque Rajada de Veneno.","level3":"Raio Nauseante","level5":"Paralisar Pessoa"},{"id":"chthonic","legacy":"Ctônico","level1":"Você tem Resistência a dano Necrótico. Você também conhece o truque Toque Necrótico.","level3":"Vitalidade Vazia","level5":"Raio do Enfraquecimento"},{"id":"infernal","legacy":"Infernal","level1":"Você tem Resistência a dano Ígneo. Você também conhece o truque Raio de Fogo.","level3":"Repreensão Diabólica","level5":"Escuridão"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'Legado Ínfero', 'Você é o portador de um legado que lhe confere poderes sobrenaturais. Escolha um legado da tabela Legados Ínferos. Você adquire o benefício de nível 1 do legado escolhido. Ao atingir os níveis de personagem 3 e 5, você aprende magias de círculo superior, conforme indicado na tabela. Essas magias estão sempre preparadas e podem ser conjuradas uma vez sem usar um espaço de magia, sendo restauradas quando completa um Descanso Longo. Além disso, você pode conjurá-las utilizando qualquer espaço de magia que possua do círculo correspondente. Atributos como Inteligência, Sabedoria ou Carisma servem como seu atributo de conjuração para essas magias (escolha um atributo ao selecionar o legado).', '{"title":"Legados Ínferos","columns":["Legado","Nível 1","Nível 3","Nível 5"],"rows":[{"id":"abyssal","legacy":"Abissal","level1":"Você tem Resistência a dano Venenoso. Você também conhece o truque Rajada de Veneno.","level3":"Raio Nauseante","level5":"Paralisar Pessoa"},{"id":"chthonic","legacy":"Ctônico","level1":"Você tem Resistência a dano Necrótico. Você também conhece o truque Toque Necrótico.","level3":"Vitalidade Vazia","level5":"Raio do Enfraquecimento"},{"id":"infernal","legacy":"Infernal","level1":"Você tem Resistência a dano Ígneo. Você também conhece o truque Raio de Fogo.","level3":"Repreensão Diabólica","level5":"Escuridão"}]}'::jsonb) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ('tiefling', 'Presença Sobrenatural', 'Você conhece o truque Taumaturgia. Ao conjurar com este traço, a magia usa o mesmo atributo de conjuração que você usa para sua Característica Legado Ínfero.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
+INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'Presença Sobrenatural', 'Você conhece o truque Taumaturgia. Ao conjurar com este traço, a magia usa o mesmo atributo de conjuração que você usa para sua Característica Legado Ínfero.', NULL) ON CONFLICT (species_id, name) DO NOTHING;
 
-INSERT INTO rpg.phb_background (id, name, description, feat_id, ability_options, equipment, source_meta)
-VALUES
-  ('acolyte', 'Acólito', 'Você se dedicou ao serviço em um templo, localizado em uma aldeia ou em um bosque sagrado, onde realizava ritos em homenagem a um deus ou panteão. Sob a orientação de um sacerdote, você estudou religião e, graças à sua devoção, aprendeu a canalizar um pouco do poder divino para o seu local de culto e para as pessoas que ali oravam.', 'magic-initiate', ARRAY['inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"suprimentos-de-caligrafo"},{"id":"livro"},{"id":"simbolo-sagrado"},{"id":"pergaminho"},{"id":"tunica"}],"gold":8}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('wanderer', 'Andarilho', 'Você cresceu nas ruas cercado por rejeitados igualmente malfadados, alguns deles amigos e outros rivais. Você dormia onde podia e fazia bicos por comida. Às vezes, quando a fome se tornava insuportável, você recorria ao furto. Ainda assim, você nunca perdeu seu orgulho e nunca abandonou a esperança. O destino ainda não terminou com você.', 'lucky', ARRAY['destreza'::rpg.ability_id, 'sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"2 Adagas"},{"id":"ferramentas-de-ladrao"},{"choice":"Kit de Jogos (qualquer um)"},{"choice":"2 Algibeiras"},{"id":"roupas-viagem"},{"id":"saco-de-dormir"}],"gold":16}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('artisan', 'Artesão', 'Você começou a limpar o chão e esfregar balcões na oficina de um artesão por alguns trocados por dia assim que ficou forte o suficiente para carregar um balde. Ao se tornar aprendiz, aprendeu a fabricar artesanatos básicos e a lidar com clientes exigentes, desenvolvendo também um olhar aguçado para detalhes.', 'artisan', ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id, 'inteligencia'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"Ferramentas de Artesão (a mesma que acima)"},{"choice":"2 Algibeiras"},{"id":"roupas-viagem"}],"gold":32}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('entertainer', 'Artista', 'Você passou a juventude em feiras e festivais itinerantes, fazendo bicos para músicos e acrobatas em troca de aulas. Aprendeu a andar na corda bamba, tocar alaúde de um jeito distinto e recitar poesia com dicção impecável. Até hoje, prospera com aplausos e anseia pelo palco.', 'musician', ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"Instrumento Musical (o mesmo que acima)"},{"id":"espelho"},{"choice":"2 Fantasias"},{"id":"perfume"},{"id":"roupas-viagem"}],"gold":11}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('charlatan', 'Charlatão', 'Assim que você atingiu a idade para pedir uma cerveja, escolheu seu banquinho favorito em cada taverna a quinze quilômetros de onde nasceu. Ao percorrer o circuito de bares e botequins, aprendeu a lidar com os infelizes em busca de mentiras reconfortantes — talvez uma poção falsa ou registros de ancestralidade forjados.', 'skilled', ARRAY['destreza'::rpg.ability_id, 'constituicao'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"kit-de-falsificacao"},{"id":"roupas-fantasia"},{"id":"roupas-finas"}],"gold":15}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('criminal', 'Criminoso', 'Você sobrevivia em becos escuros, furtando pessoas ou assaltando lojas. Talvez fizesse parte de uma pequena gangue de criminosos que se protegiam mutuamente, ou fosse um lobo solitário, enfrentando a guilda dos ladrões locais e os criminosos mais temíveis.', 'alert', ARRAY['destreza'::rpg.ability_id, 'constituicao'::rpg.ability_id, 'inteligencia'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"2 Adagas"},{"id":"ferramentas-de-ladrao"},{"choice":"2 Algibeiras"},{"id":"pe-de-cabra"},{"id":"roupas-viagem"}],"gold":16}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('hermit', 'Eremita', 'Você passou seus primeiros anos isolado em uma cabana ou mosteiro localizado bem além dos arredores do povoado mais próximo. Naqueles dias, seus únicos companheiros eram as criaturas da floresta e aqueles que ocasionalmente faziam uma visita para trazer suprimentos e notícias do mundo externo. A solidão permitia que você passasse muitas horas ponderando os mistérios da criação.', 'healer', ARRAY['constituicao'::rpg.ability_id, 'sabedoria'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"quarterstaff"},{"id":"kit-de-herbalismo"},{"id":"lampada"},{"id":"livro"},{"id":"oleo"},{"id":"roupas-viagem"},{"id":"saco-de-dormir"}],"gold":16}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('scribe', 'Escriba', 'Você passou anos de formação em um scriptorium, um mosteiro dedicado à preservação do conhecimento ou uma agência governamental, onde aprendeu a escrever com uma mão firme e produzir textos finamente escritos. Talvez você tenha escrito documentos governamentais ou copiado tomos de literatura. Você pode ter alguma habilidade como escritor de poesia, narrativa ou pesquisa acadêmica. Acima de tudo, você tem uma atenção cuidadosa aos detalhes, o que lhe ajuda a evitar a introdução de erros aos documentos que você copia e cria.', 'skilled', ARRAY['destreza'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"suprimentos-de-caligrafo"},{"id":"lampada"},{"id":"oleo"},{"id":"pergaminho"},{"id":"roupas-finas"}],"gold":23}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('farmer', 'Fazendeiro', 'Você cresceu perto da terra. Os anos cuidando de animais e cultivando a terra o recompensaram com paciência e boa saúde. Você tem um grande apreço pela generosidade da natureza, juntamente com um respeito saudável pela ira dela.', 'tough', ARRAY['forca'::rpg.ability_id, 'constituicao'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"sickle"},{"id":"ferramentas-de-carpinteiro"},{"id":"kit-de-curandeiro"},{"id":"balde"},{"id":"pa"}],"gold":30}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('guard', 'Guarda', 'Seus pés doem quando você se lembra das incontáveis horas que passou em seu posto na torre. Você foi treinado para manter um olho atento para o que ocorria do lado fora da muralha, observando saqueadores vasculhando a floresta próxima, e seu outro olho voltado para dentro da muralha, procurando por assaltantes e encrenqueiros.', 'alert', ARRAY['forca'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"spear"},{"id":"light-crossbow"},{"choice":"20 Virotes"},{"choice":"Kit de Jogo (o mesmo que acima)"},{"id":"aljava"},{"id":"grilhoes"},{"id":"lanterna-coberta"},{"id":"roupas-viagem"}],"gold":12}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('guide', 'Guia', 'Você cresceu ao ar livre, longe de terras povoadas. Sua casa ficava em qualquer lugar que você escolhesse para estender seu saco de dormir. Há maravilhas na natureza — monstros estranhos, florestas e riachos intocados, ruínas imensas de grandes salões outrora pisados por gigantes — e você aprendeu a se defender enquanto as explorava. De tempos em tempos, você guiava sacerdotes da natureza amigáveis que o instruíam nos fundamentos de canalizar a magia da natureza.', 'magic-initiate', ARRAY['destreza'::rpg.ability_id, 'constituicao'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"shortbow"},{"choice":"20 Flechas"},{"id":"ferramentas-de-cartografo"},{"id":"aljava"},{"id":"roupas-viagem"},{"id":"saco-de-dormir"},{"id":"tenda"}],"gold":3}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('sailor', 'Marinheiro', 'Você viveu como um marinheiro, com o vento nas costas e os conveses balançando sob seus pés. Você já se sentou em bancos de bar em mais portos de escala do que consegue se lembrar, enfrentou grandes tempestades e trocou histórias com pessoas que vivem sob as ondas.', 'tavern-brawler', ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"dagger"},{"id":"ferramentas-de-navegador"},{"id":"corda"},{"id":"roupas-viagem"}],"gold":20}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('merchant', 'Mercador', 'Você foi aprendiz de um comerciante, mestre de caravanas ou lojista, aprendendo os fundamentos do comércio. Com ele, viajou bastante e ganhou a vida comprando e vendendo as matérias-primas que os artesãos precisam para praticar seu ofício, ou trabalhos acabados de tais artesãos. Você pode ter transportado mercadorias de um lugar para outro (por navio, carroça ou caravana) ou comprado de comerciantes viajantes e vendido em sua própria loja.', 'lucky', ARRAY['constituicao'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"ferramentas-de-navegador"},{"choice":"2 Algibeiras"},{"id":"roupas-viagem"}],"gold":22}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('noble', 'Nobre', 'Você foi criado em um castelo, cercado por riqueza, poder e privilégio. Sua família de aristocratas menores garantiu que você recebesse uma educação de primeira categoria, com conteúdos que você apreciava e outros dos quais se ressentia. Seu tempo no castelo, especialmente as muitas horas que passou observando sua família na corte, também lhe ensinou muito sobre liderança.', 'skilled', ARRAY['forca'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'carisma'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"choice":"Kit de Jogos (o mesmo que acima)"},{"id":"perfume"},{"id":"roupas-finas"}],"gold":29}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('sage', 'Sábio', 'Você passou seus anos de formação viajando entre mansões e mosteiros, realizando vários bicos e serviços em troca de acesso às bibliotecas desses locais. Suas noites se resumiram a estudar livros e pergaminhos, aprendendo a sabedoria do multiverso — até mesmo os rudimentos da magia — e, agora, sua mente anseia por mais.', 'magic-initiate', ARRAY['constituicao'::rpg.ability_id, 'inteligencia'::rpg.ability_id, 'sabedoria'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"quarterstaff"},{"id":"suprimentos-de-caligrafo"},{"id":"livro"},{"id":"pergaminho"},{"id":"tunica"}],"gold":8}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb),
-  ('soldier', 'Soldado', 'Você começou a treinar para a guerra assim que atingiu a idade adulta e tem poucas lembranças preciosas da vida antes de pegar em armas. A batalha está em seu sangue. Às vezes, você se pega realizando reflexivamente os exercícios básicos de luta que aprendeu primeiro. Por fim, você coloca esse treinamento em prática no campo de batalha, protegendo o reino por meio da guerra.', 'savage-attacker', ARRAY['forca'::rpg.ability_id, 'destreza'::rpg.ability_id, 'constituicao'::rpg.ability_id], '{"goldOption":50,"packages":[{"id":"a","label":"A","items":[{"id":"spear"},{"id":"shortbow"},{"choice":"20 Flechas"},{"id":"kit-de-curandeiro"},{"choice":"Kit de Jogo (o mesmo que acima)"},{"id":"aljava"},{"id":"roupas-viagem"}],"gold":14}]}'::jsonb, '{"book":"Livro do Jogador 2024","language":"pt-BR","chapter":4,"chapterTitle":"Origens dos Personagens","pdfPath":"doc/livro-jogador.pdf","pdfPages":[177,185],"extractedAt":"2026-06-25T23:29:50.537Z"}'::jsonb);
-
-
-INSERT INTO rpg.phb_background_skill (background_id, skill_id)
-VALUES
-  ('acolyte', 'insight'),
-  ('acolyte', 'religion'),
-  ('wanderer', 'stealth'),
-  ('wanderer', 'insight'),
-  ('artisan', 'investigation'),
-  ('artisan', 'persuasion'),
-  ('entertainer', 'acrobatics'),
-  ('entertainer', 'performance'),
-  ('charlatan', 'deception'),
-  ('charlatan', 'sleight-of-hand'),
-  ('criminal', 'stealth'),
-  ('criminal', 'sleight-of-hand'),
-  ('hermit', 'medicine'),
-  ('hermit', 'religion'),
-  ('scribe', 'investigation'),
-  ('scribe', 'perception'),
-  ('farmer', 'animal-handling'),
-  ('farmer', 'nature'),
-  ('guard', 'athletics'),
-  ('guard', 'perception'),
-  ('guide', 'stealth'),
-  ('guide', 'survival'),
-  ('sailor', 'acrobatics'),
-  ('sailor', 'perception'),
-  ('merchant', 'animal-handling'),
-  ('merchant', 'persuasion'),
-  ('noble', 'history'),
-  ('noble', 'persuasion'),
-  ('sage', 'arcana'),
-  ('sage', 'history'),
-  ('soldier', 'athletics'),
-  ('soldier', 'intimidation');
-
-
-INSERT INTO rpg.phb_armor_category (id, name, don_doff, sort_order)
-VALUES
-  ('light', 'Armadura Leve', '1 Minuto para Vestir ou Despir', 1),
-  ('medium', 'Armadura Média', '5 Minutos para Vestir e 1 Minuto para Despir', 2),
-  ('heavy', 'Armadura Pesada', '10 Minutos para Vestir e 5 Minutos para Despir', 3),
-  ('shield', 'Escudo', 'Ação Usar Objeto para Equipar ou Desequipar', 4);
-
-
-INSERT INTO rpg.phb_item (id, item_type, name, cost, weight, description, properties)
+INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, properties)
 VALUES
   ('dagger', 'weapon'::rpg.item_type, 'Adaga', '{"text":"2 PO"}'::jsonb, '0,5 kg', NULL, '{"propertyIds":["finesse","thrown","light"],"masteryId":"nick","range":{"normal":6,"max":18}}'::jsonb),
   ('javelin', 'weapon'::rpg.item_type, 'Azagaia', '{"text":"5 PP"}'::jsonb, '1 kg', NULL, '{"propertyIds":["thrown"],"masteryId":"slow","range":{"normal":9,"max":36}}'::jsonb),
@@ -6864,297 +7361,953 @@ VALUES
   ('kit-de-veneno', 'tool'::rpg.item_type, 'Kit de Veneno', '{"text":"50 PO"}'::jsonb, '1 kg', NULL, '{}'::jsonb);
 
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('dagger', 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dagger', 'finesse') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dagger', 'thrown') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dagger', 'light') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('javelin', 'simple', '1d6', 'Perfurante', ARRAY['thrown']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'javelin'), 'simple', '1d6', 'Perfurante', ARRAY['thrown']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('javelin', 'thrown') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'javelin'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('quarterstaff', 'simple', '1d6', 'Contundente', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'quarterstaff'), 'simple', '1d6', 'Contundente', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('quarterstaff', 'versatile') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'quarterstaff'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('club', 'simple', '1d4', 'Contundente', ARRAY['light']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'club'), 'simple', '1d4', 'Contundente', ARRAY['light']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('club', 'light') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'club'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greatclub', 'simple', '1d8', 'Contundente', ARRAY['two-handed']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatclub'), 'simple', '1d8', 'Contundente', ARRAY['two-handed']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greatclub', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatclub'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('sickle', 'simple', '1d4', 'Cortante', ARRAY['light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), 'simple', '1d4', 'Cortante', ARRAY['light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('sickle', 'light') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('spear', 'simple', '1d6', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'spear'), 'simple', '1d6', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('spear', 'thrown') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'spear'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('spear', 'versatile') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'spear'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('mace', 'simple', '1d6', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'mace'), 'simple', '1d6', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('handaxe', 'simple', '1d6', 'Cortante', ARRAY['thrown', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'handaxe'), 'simple', '1d6', 'Cortante', ARRAY['thrown', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('handaxe', 'thrown') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'handaxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('handaxe', 'light') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'handaxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('light-hammer', 'simple', '1d4', 'Contundente', ARRAY['thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-hammer'), 'simple', '1d4', 'Contundente', ARRAY['thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-hammer', 'thrown') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-hammer'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-hammer', 'light') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-hammer'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('shortbow', 'simple', '1d6', 'Perfurante', ARRAY['two-handed', 'ammunition']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), 'simple', '1d6', 'Perfurante', ARRAY['two-handed', 'ammunition']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('shortbow', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('shortbow', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('light-crossbow', 'simple', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), 'simple', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-crossbow', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-crossbow', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('light-crossbow', 'loading') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('dart', 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dart'), 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dart', 'finesse') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dart'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('dart', 'thrown') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dart'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('sling', 'simple', '1d4', 'Contundente', ARRAY['ammunition']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sling'), 'simple', '1d4', 'Contundente', ARRAY['ammunition']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('sling', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sling'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('halberd', 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'halberd'), 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('halberd', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'halberd'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('halberd', 'reach') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'halberd'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'reach')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('halberd', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'halberd'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('whip', 'martial', '1d4', 'Cortante', ARRAY['finesse', 'reach']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'whip'), 'martial', '1d4', 'Cortante', ARRAY['finesse', 'reach']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('whip', 'finesse') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'whip'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('whip', 'reach') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'whip'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'reach')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('scimitar', 'martial', '1d6', 'Cortante', ARRAY['finesse', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'scimitar'), 'martial', '1d6', 'Cortante', ARRAY['finesse', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('scimitar', 'finesse') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'scimitar'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('scimitar', 'light') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'scimitar'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('shortsword', 'martial', '1d6', 'Perfurante', ARRAY['finesse', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), 'martial', '1d6', 'Perfurante', ARRAY['finesse', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('shortsword', 'finesse') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('shortsword', 'light') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greatsword', 'martial', '2d6', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatsword'), 'martial', '2d6', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greatsword', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greatsword', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('longsword', 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longsword'), 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('longsword', 'versatile') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('glaive', 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'glaive'), 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('glaive', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'glaive'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('glaive', 'reach') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'glaive'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'reach')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('glaive', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'glaive'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('lance', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'lance'), 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('lance', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'lance'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('lance', 'reach') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'lance'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'reach')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('lance', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'lance'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('pike', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pike'), 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pike', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pike'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pike', 'reach') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pike'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'reach')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pike', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pike'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('morningstar', 'martial', '1d8', 'Perfurante', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'morningstar'), 'martial', '1d8', 'Perfurante', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('battleaxe', 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'battleaxe'), 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('battleaxe', 'versatile') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'battleaxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('greataxe', 'martial', '1d12', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), 'martial', '1d12', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greataxe', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('greataxe', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('maul', 'martial', '2d6', 'Contundente', ARRAY['two-handed', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'maul'), 'martial', '2d6', 'Contundente', ARRAY['two-handed', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('maul', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'maul'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('maul', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'maul'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('flail', 'martial', '1d8', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'flail'), 'martial', '1d8', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('warhammer', 'martial', '1d8', 'Contundente', ARRAY['versatile']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'warhammer'), 'martial', '1d8', 'Contundente', ARRAY['versatile']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('warhammer', 'versatile') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'warhammer'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('war-pick', 'martial', '1d8', 'Perfurante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'war-pick'), 'martial', '1d8', 'Perfurante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('war-pick', 'versatile') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'war-pick'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('rapier', 'martial', '1d8', 'Perfurante', ARRAY['finesse']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'rapier'), 'martial', '1d8', 'Perfurante', ARRAY['finesse']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('rapier', 'finesse') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'rapier'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('trident', 'martial', '1d8', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'trident'), 'martial', '1d8', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('trident', 'thrown') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'trident'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('trident', 'versatile') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'trident'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('longbow', 'martial', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), 'martial', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('longbow', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('longbow', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('longbow', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('hand-crossbow', 'martial', '1d6', 'Perfurante', ARRAY['light', 'ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hand-crossbow'), 'martial', '1d6', 'Perfurante', ARRAY['light', 'ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('hand-crossbow', 'light') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hand-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('hand-crossbow', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hand-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('hand-crossbow', 'loading') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hand-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('heavy-crossbow', 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy', 'loading']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy', 'loading']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('heavy-crossbow', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('heavy-crossbow', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('heavy-crossbow', 'heavy') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('heavy-crossbow', 'loading') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('musket', 'martial', '1d12', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'musket'), 'martial', '1d12', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('musket', 'two-handed') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'musket'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('musket', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'musket'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('musket', 'loading') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'musket'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('pistol', 'martial', '1d10', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pistol'), 'martial', '1d10', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pistol', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pistol'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('pistol', 'loading') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pistol'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ('blowgun', 'martial', '1', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'blowgun'), 'martial', '1', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('blowgun', 'ammunition') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'blowgun'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('blowgun', 'loading') ON CONFLICT DO NOTHING;
+INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'blowgun'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('padded', 'light', 11, '11 + modificador de Des', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'padded'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light'), 11, '11 + modificador de Des', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('leather', 'light', 11, '11 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'leather'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light'), 11, '11 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('studded-leather', 'light', 12, '12 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'studded-leather'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'light'), 12, '12 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('hide', 'medium', 12, '12 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hide'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium'), 12, '12 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-shirt', 'medium', 13, '13 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'chain-shirt'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium'), 13, '13 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('scale-mail', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'scale-mail'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium'), 14, '14 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('breastplate', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'breastplate'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium'), 14, '14 + Modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('half-plate', 'medium', 15, '15 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'half-plate'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'medium'), 15, '15 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('ring-mail', 'heavy', 14, '14', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ring-mail'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'heavy'), 14, '14', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-mail', 'heavy', 16, '16', 13, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'chain-mail'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'heavy'), 16, '16', 13, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('splint', 'heavy', 17, '17', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'splint'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'heavy'), 17, '17', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('plate', 'heavy', 18, '18', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'plate'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'heavy'), 18, '18', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('shield', 'shield', NULL, '+2', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shield'), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'shield'), NULL, '+2', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-carpinteiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-carpinteiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-cartografo', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-cartografo'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-coureiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-coureiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-entalhador', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-entalhador'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-ferreiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-ferreiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-funileiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-funileiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-joalheiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-joalheiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-oleiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-oleiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-pedreiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-pedreiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-sapateiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-sapateiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-tecelao', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-tecelao'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-vidreiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-vidreiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('suprimentos-de-alquimista', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-alquimista'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('suprimentos-de-caligrafo', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-caligrafo'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('suprimentos-de-cervejeiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-cervejeiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('suprimentos-de-pintor', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-pintor'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('utensilios-de-cozinheiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'utensilios-de-cozinheiro'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-ladrao', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-ladrao'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-navegador', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-navegador'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('instrumento-musical', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'instrumento-musical'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-disfarce', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-disfarce'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-falsificacao', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-falsificacao'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-herbalismo', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-herbalismo'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-jogos', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-jogos'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('kit-de-veneno', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-veneno'), NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_background (slug, name, description, feat_id, source_citation_id, equipment_gold_option, tool_proficiency_description, tool_proficiency_kind, tool_item_id)
+VALUES
+  ('acolyte', 'Acólito', 'Você se dedicou ao serviço em um templo, localizado em uma aldeia ou em um bosque sagrado, onde realizava ritos em homenagem a um deus ou panteão. Sob a orientação de um sacerdote, você estudou religião e, graças à sua devoção, aprendeu a canalizar um pouco do poder divino para o seu local de culto e para as pessoas que ali oravam.', (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Suprimentos de Calígrafo', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-caligrafo')),
+  ('wanderer', 'Andarilho', 'Você cresceu nas ruas cercado por rejeitados igualmente malfadados, alguns deles amigos e outros rivais. Você dormia onde podia e fazia bicos por comida. Às vezes, quando a fome se tornava insuportável, você recorria ao furto. Ainda assim, você nunca perdeu seu orgulho e nunca abandonou a esperança. O destino ainda não terminou com você.', (SELECT id FROM rpg.phb_feat WHERE slug = 'lucky'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Ferramentas de Ladrão', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-ladrao')),
+  ('artisan', 'Artesão', 'Você começou a limpar o chão e esfregar balcões na oficina de um artesão por alguns trocados por dia assim que ficou forte o suficiente para carregar um balde. Ao se tornar aprendiz, aprendeu a fabricar artesanatos básicos e a lidar com clientes exigentes, desenvolvendo também um olhar aguçado para detalhes.', (SELECT id FROM rpg.phb_feat WHERE slug = 'artisan'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Escolha um tipo de Ferramentas de Artesão (veja o capítulo 6)', 'choice', NULL),
+  ('entertainer', 'Artista', 'Você passou a juventude em feiras e festivais itinerantes, fazendo bicos para músicos e acrobatas em troca de aulas. Aprendeu a andar na corda bamba, tocar alaúde de um jeito distinto e recitar poesia com dicção impecável. Até hoje, prospera com aplausos e anseia pelo palco.', (SELECT id FROM rpg.phb_feat WHERE slug = 'musician'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Escolha um tipo de Instrumento Musical (veja o capítulo 6)', 'choice', NULL),
+  ('charlatan', 'Charlatão', 'Assim que você atingiu a idade para pedir uma cerveja, escolheu seu banquinho favorito em cada taverna a quinze quilômetros de onde nasceu. Ao percorrer o circuito de bares e botequins, aprendeu a lidar com os infelizes em busca de mentiras reconfortantes — talvez uma poção falsa ou registros de ancestralidade forjados.', (SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Kit de Falsificação', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-falsificacao')),
+  ('criminal', 'Criminoso', 'Você sobrevivia em becos escuros, furtando pessoas ou assaltando lojas. Talvez fizesse parte de uma pequena gangue de criminosos que se protegiam mutuamente, ou fosse um lobo solitário, enfrentando a guilda dos ladrões locais e os criminosos mais temíveis.', (SELECT id FROM rpg.phb_feat WHERE slug = 'alert'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Ferramentas de Ladrão', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-ladrao')),
+  ('hermit', 'Eremita', 'Você passou seus primeiros anos isolado em uma cabana ou mosteiro localizado bem além dos arredores do povoado mais próximo. Naqueles dias, seus únicos companheiros eram as criaturas da floresta e aqueles que ocasionalmente faziam uma visita para trazer suprimentos e notícias do mundo externo. A solidão permitia que você passasse muitas horas ponderando os mistérios da criação.', (SELECT id FROM rpg.phb_feat WHERE slug = 'healer'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Kit de Herbalismo', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-herbalismo')),
+  ('scribe', 'Escriba', 'Você passou anos de formação em um scriptorium, um mosteiro dedicado à preservação do conhecimento ou uma agência governamental, onde aprendeu a escrever com uma mão firme e produzir textos finamente escritos. Talvez você tenha escrito documentos governamentais ou copiado tomos de literatura. Você pode ter alguma habilidade como escritor de poesia, narrativa ou pesquisa acadêmica. Acima de tudo, você tem uma atenção cuidadosa aos detalhes, o que lhe ajuda a evitar a introdução de erros aos documentos que você copia e cria.', (SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Suprimentos de Calígrafo', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-caligrafo')),
+  ('farmer', 'Fazendeiro', 'Você cresceu perto da terra. Os anos cuidando de animais e cultivando a terra o recompensaram com paciência e boa saúde. Você tem um grande apreço pela generosidade da natureza, juntamente com um respeito saudável pela ira dela.', (SELECT id FROM rpg.phb_feat WHERE slug = 'tough'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Ferramentas de Carpinteiro', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-carpinteiro')),
+  ('guard', 'Guarda', 'Seus pés doem quando você se lembra das incontáveis horas que passou em seu posto na torre. Você foi treinado para manter um olho atento para o que ocorria do lado fora da muralha, observando saqueadores vasculhando a floresta próxima, e seu outro olho voltado para dentro da muralha, procurando por assaltantes e encrenqueiros.', (SELECT id FROM rpg.phb_feat WHERE slug = 'alert'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Escolha um tipo de Kit de Jogos (veja o capítulo 6)', 'choice', NULL),
+  ('guide', 'Guia', 'Você cresceu ao ar livre, longe de terras povoadas. Sua casa ficava em qualquer lugar que você escolhesse para estender seu saco de dormir. Há maravilhas na natureza — monstros estranhos, florestas e riachos intocados, ruínas imensas de grandes salões outrora pisados por gigantes — e você aprendeu a se defender enquanto as explorava. De tempos em tempos, você guiava sacerdotes da natureza amigáveis que o instruíam nos fundamentos de canalizar a magia da natureza.', (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Ferramentas de Cartógrafo', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-cartografo')),
+  ('sailor', 'Marinheiro', 'Você viveu como um marinheiro, com o vento nas costas e os conveses balançando sob seus pés. Você já se sentou em bancos de bar em mais portos de escala do que consegue se lembrar, enfrentou grandes tempestades e trocou histórias com pessoas que vivem sob as ondas.', (SELECT id FROM rpg.phb_feat WHERE slug = 'tavern-brawler'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Ferramentas de Navegador', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-navegador')),
+  ('merchant', 'Mercador', 'Você foi aprendiz de um comerciante, mestre de caravanas ou lojista, aprendendo os fundamentos do comércio. Com ele, viajou bastante e ganhou a vida comprando e vendendo as matérias-primas que os artesãos precisam para praticar seu ofício, ou trabalhos acabados de tais artesãos. Você pode ter transportado mercadorias de um lugar para outro (por navio, carroça ou caravana) ou comprado de comerciantes viajantes e vendido em sua própria loja.', (SELECT id FROM rpg.phb_feat WHERE slug = 'lucky'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Ferramentas de Navegador', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-navegador')),
+  ('noble', 'Nobre', 'Você foi criado em um castelo, cercado por riqueza, poder e privilégio. Sua família de aristocratas menores garantiu que você recebesse uma educação de primeira categoria, com conteúdos que você apreciava e outros dos quais se ressentia. Seu tempo no castelo, especialmente as muitas horas que passou observando sua família na corte, também lhe ensinou muito sobre liderança.', (SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Escolha um tipo de Kit de Jogos (veja o capítulo 6)', 'choice', NULL),
+  ('sage', 'Sábio', 'Você passou seus anos de formação viajando entre mansões e mosteiros, realizando vários bicos e serviços em troca de acesso às bibliotecas desses locais. Suas noites se resumiram a estudar livros e pergaminhos, aprendendo a sabedoria do multiverso — até mesmo os rudimentos da magia — e, agora, sua mente anseia por mais.', (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Suprimentos de Calígrafo', 'fixed', (SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-caligrafo')),
+  ('soldier', 'Soldado', 'Você começou a treinar para a guerra assim que atingiu a idade adulta e tem poucas lembranças preciosas da vida antes de pegar em armas. A batalha está em seu sangue. Às vezes, você se pega realizando reflexivamente os exercícios básicos de luta que aprendeu primeiro. Por fim, você coloca esse treinamento em prática no campo de batalha, protegendo o reino por meio da guerra.', (SELECT id FROM rpg.phb_feat WHERE slug = 'savage-attacker'), (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch4:177-185'), 50, 'Escolha um tipo de Kit de Jogos (veja o capítulo 6)', 'choice', NULL);
+
+
+INSERT INTO rpg.phb_background_ability_option (background_id, ability_id, sort_order)
+VALUES
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'acolyte'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'acolyte'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'acolyte'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'wanderer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'wanderer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'wanderer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'artisan'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'artisan'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'artisan'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'entertainer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'entertainer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'entertainer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'charlatan'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'charlatan'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'charlatan'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'criminal'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'criminal'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'criminal'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'hermit'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'hermit'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'hermit'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'scribe'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'scribe'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'scribe'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'farmer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'farmer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'farmer'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guard'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guide'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guide'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guide'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sailor'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sailor'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sailor'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'merchant'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'merchant'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'merchant'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'noble'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'noble'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'noble'), (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sage'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sage'), (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sage'), (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 3),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'soldier'), (SELECT id FROM rpg.phb_ability WHERE slug = 'forca'), 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'soldier'), (SELECT id FROM rpg.phb_ability WHERE slug = 'destreza'), 2),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'soldier'), (SELECT id FROM rpg.phb_ability WHERE slug = 'constituicao'), 3);
+
+
+INSERT INTO rpg.phb_background_skill (background_id, skill_id)
+VALUES
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'acolyte'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'acolyte'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'wanderer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'wanderer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'artisan'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'artisan'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'entertainer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'acrobatics')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'entertainer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'performance')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'charlatan'), (SELECT id FROM rpg.phb_skill WHERE slug = 'deception')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'charlatan'), (SELECT id FROM rpg.phb_skill WHERE slug = 'sleight-of-hand')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'criminal'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'criminal'), (SELECT id FROM rpg.phb_skill WHERE slug = 'sleight-of-hand')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'hermit'), (SELECT id FROM rpg.phb_skill WHERE slug = 'medicine')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'hermit'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'scribe'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'scribe'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'farmer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'animal-handling')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'farmer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'nature')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guide'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guide'), (SELECT id FROM rpg.phb_skill WHERE slug = 'survival')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sailor'), (SELECT id FROM rpg.phb_skill WHERE slug = 'acrobatics')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sailor'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'merchant'), (SELECT id FROM rpg.phb_skill WHERE slug = 'animal-handling')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'merchant'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'noble'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'noble'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sage'), (SELECT id FROM rpg.phb_skill WHERE slug = 'arcana')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sage'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'soldier'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'soldier'), (SELECT id FROM rpg.phb_skill WHERE slug = 'intimidation'));
+
+
+INSERT INTO rpg.phb_background_starting_package (background_id, slug, label, gold, sort_order)
+VALUES
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'acolyte'), 'a', 'A', 8, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'wanderer'), 'a', 'A', 16, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'artisan'), 'a', 'A', 32, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'entertainer'), 'a', 'A', 11, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'charlatan'), 'a', 'A', 15, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'criminal'), 'a', 'A', 16, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'hermit'), 'a', 'A', 16, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'scribe'), 'a', 'A', 23, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'farmer'), 'a', 'A', 30, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guard'), 'a', 'A', 12, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guide'), 'a', 'A', 3, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sailor'), 'a', 'A', 20, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'merchant'), 'a', 'A', 22, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'noble'), 'a', 'A', 29, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sage'), 'a', 'A', 8, 1),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'soldier'), 'a', 'A', 14, 1);
+
+
+INSERT INTO rpg.phb_background_starting_item (package_id, item_id, choice_text, quantity, sort_order)
+VALUES
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'acolyte' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-caligrafo'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'acolyte' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'livro'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'acolyte' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'simbolo-sagrado'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'acolyte' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'pergaminho'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'acolyte' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'tunica'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'wanderer' AND p.slug = 'a'), NULL, '2 Adagas', 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'wanderer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-ladrao'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'wanderer' AND p.slug = 'a'), NULL, 'Kit de Jogos (qualquer um)', 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'wanderer' AND p.slug = 'a'), NULL, '2 Algibeiras', 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'wanderer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'wanderer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'saco-de-dormir'), NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'artisan' AND p.slug = 'a'), NULL, 'Ferramentas de Artesão (a mesma que acima)', 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'artisan' AND p.slug = 'a'), NULL, '2 Algibeiras', 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'artisan' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'entertainer' AND p.slug = 'a'), NULL, 'Instrumento Musical (o mesmo que acima)', 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'entertainer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'espelho'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'entertainer' AND p.slug = 'a'), NULL, '2 Fantasias', 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'entertainer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'perfume'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'entertainer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'charlatan' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-falsificacao'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'charlatan' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-fantasia'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'charlatan' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-finas'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'criminal' AND p.slug = 'a'), NULL, '2 Adagas', 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'criminal' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-ladrao'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'criminal' AND p.slug = 'a'), NULL, '2 Algibeiras', 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'criminal' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'pe-de-cabra'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'criminal' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'hermit' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'quarterstaff'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'hermit' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-herbalismo'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'hermit' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'lampada'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'hermit' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'livro'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'hermit' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'oleo'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'hermit' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'hermit' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'saco-de-dormir'), NULL, 1, 7),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'scribe' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-caligrafo'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'scribe' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'lampada'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'scribe' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'oleo'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'scribe' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'pergaminho'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'scribe' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-finas'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'farmer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'farmer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-carpinteiro'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'farmer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-curandeiro'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'farmer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'balde'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'farmer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'pa'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'spear'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guard' AND p.slug = 'a'), NULL, '20 Virotes', 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guard' AND p.slug = 'a'), NULL, 'Kit de Jogo (o mesmo que acima)', 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'aljava'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'grilhoes'), NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'lanterna-coberta'), NULL, 1, 7),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 8),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guide' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guide' AND p.slug = 'a'), NULL, '20 Flechas', 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guide' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-cartografo'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guide' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'aljava'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guide' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guide' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'saco-de-dormir'), NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'guide' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'tenda'), NULL, 1, 7),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sailor' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sailor' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-navegador'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sailor' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'corda'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sailor' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'merchant' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-navegador'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'merchant' AND p.slug = 'a'), NULL, '2 Algibeiras', 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'merchant' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'noble' AND p.slug = 'a'), NULL, 'Kit de Jogos (o mesmo que acima)', 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'noble' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'perfume'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'noble' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-finas'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sage' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'quarterstaff'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sage' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'suprimentos-de-caligrafo'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sage' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'livro'), NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sage' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'pergaminho'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'sage' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'tunica'), NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'soldier' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'spear'), NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'soldier' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'soldier' AND p.slug = 'a'), NULL, '20 Flechas', 1, 3),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'soldier' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-curandeiro'), NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'soldier' AND p.slug = 'a'), NULL, 'Kit de Jogo (o mesmo que acima)', 1, 5),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'soldier' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'aljava'), NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_background_starting_package p
+    JOIN rpg.phb_background b ON b.id = p.background_id
+    WHERE b.slug = 'soldier' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 7);
+
+
+INSERT INTO rpg.phb_class_spellcasting (class_id, casting_type, ability_id, focus_label, focus_item_id, ritual)
+VALUES
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'full', (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 'Instrumento Musical', (SELECT id FROM rpg.phb_item WHERE slug = 'instrumento-musical'), FALSE),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 'pact', (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 'Foco Arcano', (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), FALSE),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'full', (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 'Símbolo Sagrado', (SELECT id FROM rpg.phb_item WHERE slug = 'simbolo-sagrado'), TRUE),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 'full', (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 'Foco Druídico', (SELECT id FROM rpg.phb_item WHERE slug = 'foco-druidico'), TRUE),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 'full', (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 'Foco Arcano', (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), FALSE),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'half', (SELECT id FROM rpg.phb_ability WHERE slug = 'sabedoria'), 'Foco Druídico', (SELECT id FROM rpg.phb_item WHERE slug = 'foco-druidico'), FALSE),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'full', (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'), 'Foco Arcano', (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), TRUE),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 'half', (SELECT id FROM rpg.phb_ability WHERE slug = 'carisma'), 'Símbolo Sagrado', (SELECT id FROM rpg.phb_item WHERE slug = 'simbolo-sagrado'), FALSE);
+
+
+INSERT INTO rpg.phb_class_starting_package (class_id, slug, label, sort_order)
+VALUES
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 'b', 'B', 2),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 'a', 'A', 1),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 'b', 'B', 2);
+
+
+INSERT INTO rpg.phb_class_starting_item (package_id, item_id, choice_text, gold_amount, quantity, sort_order)
+VALUES
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'barbarian' AND p.slug = 'a'), NULL, '4 Machadinhas', NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'barbarian' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), NULL, NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'barbarian' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-aventureiro'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'barbarian' AND p.slug = 'a'), NULL, NULL, 15, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'barbarian' AND p.slug = 'b'), NULL, NULL, 75, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'bard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'bard' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'bard' AND p.slug = 'a'), NULL, 'Instrumento Musical (escolha)', NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'bard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-artista'), NULL, NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'bard' AND p.slug = 'a'), NULL, NULL, 19, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'bard' AND p.slug = 'b'), NULL, NULL, 90, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'warlock' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'warlock' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), NULL, NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'warlock' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'warlock' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), NULL, NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'warlock' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'livro'), NULL, NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'warlock' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-erudito'), NULL, NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'warlock' AND p.slug = 'a'), NULL, NULL, 15, 1, 7),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'warlock' AND p.slug = 'b'), NULL, NULL, 100, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'cleric' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'cleric' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shield'), NULL, NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'cleric' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'mace'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'cleric' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-sacerdote'), NULL, NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'cleric' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'simbolo-sagrado'), NULL, NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'cleric' AND p.slug = 'a'), NULL, NULL, 7, 1, 6),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'cleric' AND p.slug = 'b'), NULL, NULL, 110, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'druid' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'druid' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shield'), NULL, NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'druid' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'druid' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'foco-druidico'), NULL, NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'druid' AND p.slug = 'a'), NULL, NULL, 9, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'druid' AND p.slug = 'b'), NULL, NULL, 50, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'sorcerer' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'sorcerer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), NULL, NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'sorcerer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-explorador-de-masmorras'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'sorcerer' AND p.slug = 'a'), NULL, NULL, 28, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'sorcerer' AND p.slug = 'b'), NULL, NULL, 50, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'ranger' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'ranger' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'ranger' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'ranger' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'aljava'), NULL, NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'ranger' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-aventureiro'), NULL, NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'ranger' AND p.slug = 'a'), NULL, NULL, 7, 1, 6),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'ranger' AND p.slug = 'b'), NULL, NULL, 150, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'fighter' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'chain-mail'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'fighter' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'longsword'), NULL, NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'fighter' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shield'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'fighter' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), NULL, NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'fighter' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'aljava'), NULL, NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'fighter' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-aventureiro'), NULL, NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'fighter' AND p.slug = 'a'), NULL, NULL, 4, 1, 7),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'fighter' AND p.slug = 'b'), NULL, NULL, 155, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'rogue' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'rogue' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'rogue' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'rogue' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'longsword'), NULL, NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'rogue' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-assaltante'), NULL, NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'rogue' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-aventureiro'), NULL, NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'rogue' AND p.slug = 'a'), NULL, NULL, 8, 1, 7),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'rogue' AND p.slug = 'b'), NULL, NULL, 100, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'wizard' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'wizard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), NULL, NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'wizard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-erudito'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'wizard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-aventureiro'), NULL, NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'wizard' AND p.slug = 'a'), NULL, NULL, 5, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'wizard' AND p.slug = 'b'), NULL, NULL, 55, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'monk' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'monk' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dart'), NULL, NULL, 10, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'monk' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-aventureiro'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'monk' AND p.slug = 'a'), NULL, NULL, 5, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'monk' AND p.slug = 'b'), NULL, NULL, 50, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'paladin' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'chain-mail'), NULL, NULL, 1, 1),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'paladin' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'longsword'), NULL, NULL, 1, 2),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'paladin' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shield'), NULL, NULL, 1, 3),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'paladin' AND p.slug = 'a'), NULL, '6 Azagaias', NULL, 1, 4),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'paladin' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-sacerdote'), NULL, NULL, 1, 5),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'paladin' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'simbolo-sagrado'), NULL, NULL, 1, 6),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'paladin' AND p.slug = 'a'), NULL, NULL, 7, 1, 7),
+  ((SELECT p.id FROM rpg.phb_class_starting_package p
+    JOIN rpg.phb_class c ON c.id = p.class_id
+    WHERE c.slug = 'paladin' AND p.slug = 'b'), NULL, NULL, 150, 1, 1);
+
 
 INSERT INTO rpg.phb_character_level (level, proficiency_bonus, xp_threshold)
 VALUES
@@ -7181,20 +8334,20 @@ VALUES
 ON CONFLICT (level) DO UPDATE SET proficiency_bonus = EXCLUDED.proficiency_bonus, xp_threshold = EXCLUDED.xp_threshold;
 
 
-INSERT INTO rpg.phb_ability_generation_method (id, name, description)
+INSERT INTO rpg.phb_ability_generation_method (slug, name, description)
 VALUES
   ('standard-array', 'Conjunto Padrão', 'Use os seis valores fixos abaixo e atribua a Força, Destreza, Constituição, Inteligência, Sabedoria e Carisma.'),
   ('roll', 'Geração Aleatória', 'Jogue 4d6, descarte o menor dado e some os três restantes. Repita seis vezes.'),
   ('point-buy', 'Custo de Pontos', '27 pontos para distribuir entre os seis atributos, conforme a tabela de custos.');
 
 
-INSERT INTO rpg.phb_background_boost_option (id, label)
+INSERT INTO rpg.phb_background_boost_option (slug, label)
 VALUES
   ('two-and-one', '+2 em um e +1 em outro (entre os três do antecedente)'),
   ('three-plus-one', '+1 em cada um dos três atributos do antecedente');
 
 
-INSERT INTO rpg.phb_druid_land_terrain (id, label)
+INSERT INTO rpg.phb_druid_land_terrain (slug, label)
 VALUES
   ('arid', 'arid'),
   ('polar', 'polar'),
@@ -7202,153 +8355,151 @@ VALUES
   ('tropical', 'tropical');
 
 
-INSERT INTO rpg.phb_resource_definition (id, name, scope, species_id, class_id, min_level)
+INSERT INTO rpg.phb_resource_definition (slug, name, scope, species_id, class_id, min_level)
 VALUES
-  ('breathWeapon', 'Sopro Dracônico', 'species'::rpg.resource_scope, 'dragonborn', NULL, 1),
-  ('dragonFlight', 'Voo Dracônico', 'species'::rpg.resource_scope, 'dragonborn', NULL, 5),
-  ('giantAncestry', 'Ancestralidade Gigante', 'species'::rpg.resource_scope, 'goliath', NULL, 1),
-  ('largeForm', 'Forma Grande', 'species'::rpg.resource_scope, 'goliath', NULL, 5),
-  ('adrenalineSurge', 'Surto de Adrenalina', 'species'::rpg.resource_scope, 'orc', NULL, 1),
-  ('relentlessEndurance', 'Persistência Implacável', 'species'::rpg.resource_scope, 'orc', NULL, 1),
-  ('healingHands', 'Mãos Curativas', 'species'::rpg.resource_scope, 'aasimar', NULL, 1),
-  ('celestialRevelation', 'Revelação Celestial', 'species'::rpg.resource_scope, 'aasimar', NULL, 3),
-  ('stonecunning', 'Percepção de Pedra', 'species'::rpg.resource_scope, 'dwarf', NULL, 1),
-  ('rage', 'Fúria', 'class'::rpg.resource_scope, NULL, 'barbarian', 1),
-  ('channelDivinity', 'Canalizar Divindade', 'class'::rpg.resource_scope, NULL, 'cleric', 1),
-  ('focusPoints', 'Pontos de Foco', 'class'::rpg.resource_scope, NULL, 'monk', 1);
+  ('breathWeapon', 'Sopro Dracônico', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), NULL, 1),
+  ('dragonFlight', 'Voo Dracônico', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), NULL, 5),
+  ('giantAncestry', 'Ancestralidade Gigante', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), NULL, 1),
+  ('largeForm', 'Forma Grande', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), NULL, 5),
+  ('adrenalineSurge', 'Surto de Adrenalina', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'orc'), NULL, 1),
+  ('relentlessEndurance', 'Persistência Implacável', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'orc'), NULL, 1),
+  ('healingHands', 'Mãos Curativas', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), NULL, 1),
+  ('celestialRevelation', 'Revelação Celestial', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), NULL, 3),
+  ('stonecunning', 'Percepção de Pedra', 'species'::rpg.resource_scope, (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'), NULL, 1),
+  ('rage', 'Fúria', 'class'::rpg.resource_scope, NULL, (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 1),
+  ('channelDivinity', 'Canalizar Divindade', 'class'::rpg.resource_scope, NULL, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 1),
+  ('focusPoints', 'Pontos de Foco', 'class'::rpg.resource_scope, NULL, (SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 1);
 
 
-INSERT INTO rpg.phb_spell_source (id, label, origin_type, class_id, subclass_id, species_id, feat_id)
+INSERT INTO rpg.phb_spell_source (slug, label, origin_type, class_id, subclass_id, species_id, feat_id)
 VALUES
   ('class', 'Lista de classe', 'class'::rpg.spell_source_origin, NULL, NULL, NULL, NULL),
-  ('magic-initiate', 'Iniciado em Magia', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, 'magic-initiate'),
-  ('elf-lineage', 'Linhagem Élfica', 'species'::rpg.spell_source_origin, NULL, NULL, 'elf', NULL),
-  ('infernal-legacy', 'Legado Ínfero', 'species'::rpg.spell_source_origin, NULL, NULL, 'tiefling', NULL),
-  ('tiefling-presence', 'Presença Tiferina', 'species'::rpg.spell_source_origin, NULL, NULL, 'tiefling', NULL),
-  ('gnome-lineage', 'Linhagem Gnômica', 'species'::rpg.spell_source_origin, NULL, NULL, 'gnome', NULL),
-  ('aasimar-light', 'Luz Aasimar', 'species'::rpg.spell_source_origin, NULL, NULL, 'aasimar', NULL),
-  ('life-domain', 'Domínio da Vida', 'subclass'::rpg.spell_source_origin, 'cleric', 'life', NULL, NULL),
-  ('light-domain', 'Domínio da Luz', 'subclass'::rpg.spell_source_origin, 'cleric', 'light', NULL, NULL),
-  ('trickery-domain', 'Domínio da Trapaça', 'subclass'::rpg.spell_source_origin, 'cleric', 'trickery', NULL, NULL),
-  ('war-domain', 'Domínio da Guerra', 'subclass'::rpg.spell_source_origin, 'cleric', 'war', NULL, NULL),
-  ('land-circle', 'Círculo da Terra', 'subclass'::rpg.spell_source_origin, 'druid', 'land', NULL, NULL),
-  ('moon-circle', 'Círculo da Lua', 'subclass'::rpg.spell_source_origin, 'druid', 'moon', NULL, NULL),
-  ('sea-circle', 'Círculo do Mar', 'subclass'::rpg.spell_source_origin, 'druid', 'sea', NULL, NULL),
-  ('ancients-oath', 'Juramento dos Anciões', 'subclass'::rpg.spell_source_origin, 'paladin', 'ancients', NULL, NULL),
-  ('devotion-oath', 'Juramento da Devoção', 'subclass'::rpg.spell_source_origin, 'paladin', 'devotion', NULL, NULL),
-  ('glory-oath', 'Juramento da Glória', 'subclass'::rpg.spell_source_origin, 'paladin', 'glory', NULL, NULL),
-  ('vengeance-oath', 'Juramento da Vingança', 'subclass'::rpg.spell_source_origin, 'paladin', 'vengeance', NULL, NULL),
-  ('fey-wanderer-spells', 'Andarilho Feérico', 'subclass'::rpg.spell_source_origin, 'ranger', 'fey-wanderer', NULL, NULL),
-  ('gloom-stalker-spells', 'Vigilante das Sombras', 'subclass'::rpg.spell_source_origin, 'ranger', 'gloom-stalker', NULL, NULL),
-  ('archfey-pact', 'Patrono Arquifada', 'subclass'::rpg.spell_source_origin, 'warlock', 'archfey', NULL, NULL),
-  ('celestial-pact', 'Patrono Celestial', 'subclass'::rpg.spell_source_origin, 'warlock', 'celestial', NULL, NULL),
-  ('fiend-pact', 'Patrono Ínfero', 'subclass'::rpg.spell_source_origin, 'warlock', 'fiend', NULL, NULL),
-  ('great-old-one-pact', 'Patrono O Grande Antigo', 'subclass'::rpg.spell_source_origin, 'warlock', 'great-old-one', NULL, NULL);
+  ('magic-initiate', 'Iniciado em Magia', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate')),
+  ('elf-lineage', 'Linhagem Élfica', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'elf'), NULL),
+  ('infernal-legacy', 'Legado Ínfero', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), NULL),
+  ('tiefling-presence', 'Presença Tiferina', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), NULL),
+  ('gnome-lineage', 'Linhagem Gnômica', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), NULL),
+  ('aasimar-light', 'Luz Aasimar', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), NULL),
+  ('life-domain', 'Domínio da Vida', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), NULL, NULL),
+  ('light-domain', 'Domínio da Luz', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), NULL, NULL),
+  ('trickery-domain', 'Domínio da Trapaça', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), NULL, NULL),
+  ('war-domain', 'Domínio da Guerra', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), NULL, NULL),
+  ('land-circle', 'Círculo da Terra', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), NULL, NULL),
+  ('moon-circle', 'Círculo da Lua', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'), NULL, NULL),
+  ('sea-circle', 'Círculo do Mar', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), NULL, NULL),
+  ('ancients-oath', 'Juramento dos Anciões', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), NULL, NULL),
+  ('devotion-oath', 'Juramento da Devoção', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), NULL, NULL),
+  ('glory-oath', 'Juramento da Glória', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), NULL, NULL),
+  ('vengeance-oath', 'Juramento da Vingança', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), NULL, NULL),
+  ('fey-wanderer-spells', 'Andarilho Feérico', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), NULL, NULL),
+  ('gloom-stalker-spells', 'Vigilante das Sombras', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), NULL, NULL),
+  ('archfey-pact', 'Patrono Arquifada', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), NULL, NULL),
+  ('celestial-pact', 'Patrono Celestial', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), NULL, NULL),
+  ('fiend-pact', 'Patrono Ínfero', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), NULL, NULL),
+  ('great-old-one-pact', 'Patrono O Grande Antigo', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), NULL, NULL);
 
 
 INSERT INTO rpg.phb_species_option_def (species_id, option_key, value_type)
 VALUES
-  ('elf', 'lineageId', 'catalog'::rpg.option_value_type),
-  ('elf', 'keenSensesSkillId', 'skill'::rpg.option_value_type),
-  ('tiefling', 'infernalLegacyId', 'catalog'::rpg.option_value_type),
-  ('tiefling', 'infernalCastingAbilityId', 'ability'::rpg.option_value_type),
-  ('gnome', 'gnomeLineageId', 'catalog'::rpg.option_value_type),
-  ('gnome', 'gnomeCastingAbilityId', 'ability'::rpg.option_value_type),
-  ('dragonborn', 'dragonAncestryId', 'catalog'::rpg.option_value_type),
-  ('goliath', 'giantAncestryId', 'catalog'::rpg.option_value_type),
-  ('aasimar', 'aasimarRevelationId', 'catalog'::rpg.option_value_type);
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'lineageId', 'catalog'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'keenSensesSkillId', 'skill'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'infernalLegacyId', 'catalog'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'infernalCastingAbilityId', 'ability'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), 'gnomeLineageId', 'catalog'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), 'gnomeCastingAbilityId', 'ability'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'catalog'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'giantAncestryId', 'catalog'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'aasimarRevelationId', 'catalog'::rpg.option_value_type);
 
 
 INSERT INTO rpg.phb_species_option_value (species_id, option_key, value_id, label)
 VALUES
-  ('elf', 'lineageId', 'high-elf', 'high-elf'),
-  ('elf', 'lineageId', 'drow', 'drow'),
-  ('elf', 'lineageId', 'wood-elf', 'wood-elf'),
-  ('tiefling', 'infernalLegacyId', 'abyssal', 'abyssal'),
-  ('tiefling', 'infernalLegacyId', 'chthonic', 'chthonic'),
-  ('tiefling', 'infernalLegacyId', 'infernal', 'infernal'),
-  ('gnome', 'gnomeLineageId', 'rock-gnome', 'rock-gnome'),
-  ('gnome', 'gnomeLineageId', 'forest-gnome', 'forest-gnome'),
-  ('dragonborn', 'dragonAncestryId', 'blue', 'blue'),
-  ('dragonborn', 'dragonAncestryId', 'black', 'black'),
-  ('dragonborn', 'dragonAncestryId', 'white', 'white'),
-  ('dragonborn', 'dragonAncestryId', 'gold', 'gold'),
-  ('dragonborn', 'dragonAncestryId', 'bronze', 'bronze'),
-  ('dragonborn', 'dragonAncestryId', 'silver', 'silver'),
-  ('dragonborn', 'dragonAncestryId', 'copper', 'copper'),
-  ('dragonborn', 'dragonAncestryId', 'green', 'green'),
-  ('dragonborn', 'dragonAncestryId', 'brass', 'brass'),
-  ('dragonborn', 'dragonAncestryId', 'red', 'red'),
-  ('goliath', 'giantAncestryId', 'ice', 'ice'),
-  ('goliath', 'giantAncestryId', 'fire', 'fire'),
-  ('goliath', 'giantAncestryId', 'stone', 'stone'),
-  ('goliath', 'giantAncestryId', 'cloud', 'cloud'),
-  ('goliath', 'giantAncestryId', 'hill', 'hill'),
-  ('goliath', 'giantAncestryId', 'storm', 'storm'),
-  ('aasimar', 'aasimarRevelationId', 'celestial-wings', 'celestial-wings'),
-  ('aasimar', 'aasimarRevelationId', 'necrotic-shroud', 'necrotic-shroud'),
-  ('aasimar', 'aasimarRevelationId', 'radiant-consumption', 'radiant-consumption');
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'lineageId', 'high-elf', 'high-elf'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'lineageId', 'drow', 'drow'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'elf'), 'lineageId', 'wood-elf', 'wood-elf'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'infernalLegacyId', 'abyssal', 'abyssal'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'infernalLegacyId', 'chthonic', 'chthonic'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), 'infernalLegacyId', 'infernal', 'infernal'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), 'gnomeLineageId', 'rock-gnome', 'rock-gnome'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), 'gnomeLineageId', 'forest-gnome', 'forest-gnome'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'blue', 'blue'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'black', 'black'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'white', 'white'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'gold', 'gold'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'bronze', 'bronze'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'silver', 'silver'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'copper', 'copper'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'green', 'green'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'brass', 'brass'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'dragonborn'), 'dragonAncestryId', 'red', 'red'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'giantAncestryId', 'ice', 'ice'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'giantAncestryId', 'fire', 'fire'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'giantAncestryId', 'stone', 'stone'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'giantAncestryId', 'cloud', 'cloud'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'giantAncestryId', 'hill', 'hill'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'goliath'), 'giantAncestryId', 'storm', 'storm'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'aasimarRevelationId', 'celestial-wings', 'celestial-wings'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'aasimarRevelationId', 'necrotic-shroud', 'necrotic-shroud'),
+  ((SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), 'aasimarRevelationId', 'radiant-consumption', 'radiant-consumption');
 
 
 INSERT INTO rpg.phb_class_option_def (class_id, option_key, value_type)
 VALUES
-  ('cleric', 'divineOrder', 'catalog'::rpg.option_value_type),
-  ('cleric', 'skillIds', 'skill_list'::rpg.option_value_type),
-  ('fighter', 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
-  ('paladin', 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
-  ('ranger', 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
-  ('druid', 'landTerrainId', 'terrain'::rpg.option_value_type),
-  ('barbarian', 'skillIds', 'skill_list'::rpg.option_value_type),
-  ('bard', 'skillIds', 'skill_list'::rpg.option_value_type),
-  ('rogue', 'skillIds', 'skill_list'::rpg.option_value_type),
-  ('wizard', 'skillIds', 'skill_list'::rpg.option_value_type),
-  ('sorcerer', 'skillIds', 'skill_list'::rpg.option_value_type),
-  ('warlock', 'skillIds', 'skill_list'::rpg.option_value_type),
-  ('monk', 'skillIds', 'skill_list'::rpg.option_value_type);
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'divineOrder', 'catalog'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'skillIds', 'skill_list'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 'fightingStyleId', 'fighting_style'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'druid'), 'landTerrainId', 'terrain'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), 'skillIds', 'skill_list'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'bard'), 'skillIds', 'skill_list'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), 'skillIds', 'skill_list'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), 'skillIds', 'skill_list'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), 'skillIds', 'skill_list'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), 'skillIds', 'skill_list'::rpg.option_value_type),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 'skillIds', 'skill_list'::rpg.option_value_type);
 
 
 INSERT INTO rpg.phb_class_option_value (class_id, option_key, value_id, label)
 VALUES
-  ('cleric', 'divineOrder', 'protector', 'Protetor'),
-  ('cleric', 'divineOrder', 'thaumaturge', 'Taumaturgo');
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'divineOrder', 'protector', 'Protetor'),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), 'divineOrder', 'thaumaturge', 'Taumaturgo');
 
 
 INSERT INTO rpg.phb_class_fighting_style (class_id, fighting_style_id)
 VALUES
-  ('fighter', 'archery'),
-  ('fighter', 'blind-fighting'),
-  ('fighter', 'defense'),
-  ('fighter', 'dueling'),
-  ('fighter', 'great-weapon-fighting'),
-  ('fighter', 'interception'),
-  ('fighter', 'protection'),
-  ('fighter', 'thrown-weapon-fighting'),
-  ('fighter', 'two-weapon-fighting'),
-  ('fighter', 'unarmed-fighting'),
-  ('paladin', 'archery'),
-  ('paladin', 'blind-fighting'),
-  ('paladin', 'defense'),
-  ('paladin', 'dueling'),
-  ('paladin', 'great-weapon-fighting'),
-  ('paladin', 'interception'),
-  ('paladin', 'protection'),
-  ('paladin', 'thrown-weapon-fighting'),
-  ('paladin', 'two-weapon-fighting'),
-  ('paladin', 'unarmed-fighting'),
-  ('paladin', 'blessed-warrior'),
-  ('ranger', 'archery'),
-  ('ranger', 'blind-fighting'),
-  ('ranger', 'defense'),
-  ('ranger', 'dueling'),
-  ('ranger', 'great-weapon-fighting'),
-  ('ranger', 'interception'),
-  ('ranger', 'protection'),
-  ('ranger', 'thrown-weapon-fighting'),
-  ('ranger', 'two-weapon-fighting'),
-  ('ranger', 'unarmed-fighting'),
-  ('ranger', 'druidic-warrior');
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'archery')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'blind-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'defense')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'dueling')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'great-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'interception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'protection')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'thrown-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'two-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'unarmed-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'archery')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'blind-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'defense')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'dueling')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'great-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'interception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'protection')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'thrown-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'two-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'unarmed-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'blessed-warrior')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'archery')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'blind-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'defense')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'dueling')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'great-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'interception')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'protection')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'thrown-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'two-weapon-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'unarmed-fighting')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_fighting_style WHERE slug = 'druidic-warrior'));
 
-
-SELECT set_config('rpg.skip_sync', '0', true);
 
 COMMIT;
