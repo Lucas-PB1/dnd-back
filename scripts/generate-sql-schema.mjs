@@ -205,12 +205,44 @@ CREATE TABLE IF NOT EXISTS rpg.phb_weapon (
   category TEXT, damage TEXT, damage_type TEXT, property_ids TEXT[], mastery_id TEXT
 );
 
+CREATE TABLE IF NOT EXISTS rpg.phb_armor_category (
+  id        TEXT PRIMARY KEY,
+  name      TEXT NOT NULL,
+  don_doff  TEXT,
+  sort_order INTEGER NOT NULL DEFAULT 0
+);
+
 CREATE TABLE IF NOT EXISTS rpg.phb_armor (
   item_id TEXT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
-  category TEXT NOT NULL, ac_base INTEGER CHECK (ac_base >= 0),
+  category_id TEXT NOT NULL REFERENCES rpg.phb_armor_category(id),
+  ac_base INTEGER CHECK (ac_base >= 0),
   ac_formula TEXT, strength_req INTEGER CHECK (strength_req >= 0),
   stealth_disadvantage BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+-- Legado: category TEXT → category_id FK (bancos criados antes da normalização)
+DO $migrate$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'rpg' AND table_name = 'phb_armor' AND column_name = 'category'
+  ) AND NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'rpg' AND table_name = 'phb_armor' AND column_name = 'category_id'
+  ) THEN
+    INSERT INTO rpg.phb_armor_category (id, name, don_doff, sort_order) VALUES
+      ('light', 'Armadura Leve', '1 Minuto para Vestir ou Despir', 1),
+      ('medium', 'Armadura Média', '5 Minutos para Vestir e 1 Minuto para Despir', 2),
+      ('heavy', 'Armadura Pesada', '10 Minutos para Vestir e 5 Minutos para Despir', 3),
+      ('shield', 'Escudo', 'Ação Usar Objeto para Equipar ou Desequipar', 4)
+    ON CONFLICT (id) DO NOTHING;
+    ALTER TABLE rpg.phb_armor ADD COLUMN category_id TEXT REFERENCES rpg.phb_armor_category(id);
+    UPDATE rpg.phb_armor SET category_id = category;
+    ALTER TABLE rpg.phb_armor ALTER COLUMN category_id SET NOT NULL;
+    ALTER TABLE rpg.phb_armor DROP COLUMN category;
+  END IF;
+END
+$migrate$;
 
 CREATE TABLE IF NOT EXISTS rpg.phb_tool (
   item_id TEXT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
@@ -557,6 +589,15 @@ JOIN rpg.player_character_spell_list psl ON psl.character_id = pc.id
 JOIN rpg.phb_spell_source ss ON ss.id = psl.source_id
 JOIN rpg.phb_spell s ON s.id = psl.spell_id;
 
+CREATE OR REPLACE VIEW rpg.v_phb_armor AS
+SELECT
+  a.item_id, i.name AS item_name,
+  c.id AS category_id, c.name AS category_name, c.don_doff,
+  a.ac_base, a.ac_formula, a.strength_req, a.stealth_disadvantage
+FROM rpg.phb_armor a
+JOIN rpg.phb_item i ON i.id = a.item_id
+JOIN rpg.phb_armor_category c ON c.id = a.category_id;
+
 -- =============================================================================
 -- ÍNDICES
 -- =============================================================================
@@ -572,6 +613,7 @@ CREATE INDEX IF NOT EXISTS idx_pc_spell_list ON rpg.player_character_spell_list(
 CREATE INDEX IF NOT EXISTS idx_pc_resource ON rpg.player_character_resource(character_id);
 CREATE INDEX IF NOT EXISTS idx_pc_spell_source ON rpg.player_character_spell_list(source_id);
 CREATE INDEX IF NOT EXISTS idx_pc_resource_def ON rpg.player_character_resource(resource_id);
+CREATE INDEX IF NOT EXISTS idx_phb_armor_category ON rpg.phb_armor(category_id);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_pc_equip_one_slot
   ON rpg.player_character_equipment (character_id, slot)
   WHERE equipped = TRUE AND slot IS NOT NULL;

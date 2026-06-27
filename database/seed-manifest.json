@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-27T21:07:33.172Z",
+  "generatedAt": "2026-06-27T21:15:01.210Z",
   "phb": {
     "alignments": 9,
     "languages": 19,
@@ -11,6 +11,7 @@
     "species": 10,
     "backgrounds": 16,
     "items": 158,
+    "armorCategories": 4,
     "spellClassLinks": 987,
     "subclassPreparedSpells": 186
   },

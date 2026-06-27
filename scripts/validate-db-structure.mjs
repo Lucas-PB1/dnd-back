@@ -31,6 +31,7 @@ const REQUIRED_TABLES = [
   "phb_background_skill",
   "phb_item",
   "phb_weapon",
+  "phb_armor_category",
   "phb_armor",
   "phb_tool",
   "phb_character_level",
@@ -70,12 +71,14 @@ const REQUIRED_PATTERNS = [
   [/CREATE SCHEMA IF NOT EXISTS rpg/i, "schema rpg"],
   [/phb_resource_definition/i, "catálogo recursos"],
   [/phb_spell_source/i, "catálogo fontes magia"],
+  [/phb_armor_category/i, "catálogo categorias armadura"],
   [/resource_id.*REFERENCES rpg\.phb_resource_definition/i, "FK resource_id"],
   [/source_id.*REFERENCES rpg\.phb_spell_source/i, "FK source_id"],
   [/validate_pc_subclass/i, "trigger subclasse"],
   [/idx_pc_equip_one_slot/i, "índice slot equipado"],
   [/v_character_resources/i, "view v_character_resources"],
   [/v_character_spells/i, "view v_character_spells"],
+  [/v_phb_armor/i, "view v_phb_armor"],
   [/apply_sheet_to_character/i, "sync sheet→projeções"],
   [/rebuild_sheet_from_projections/i, "sync projeções→sheet"],
 ];
@@ -117,6 +120,6 @@ if (errors) {
 }
 
 console.log(
-  `✓ PostgreSQL v3 — ${REQUIRED_TABLES.length} tabelas, FKs tipadas, triggers, 4 views`
+  `✓ PostgreSQL v3 — ${REQUIRED_TABLES.length} tabelas, FKs tipadas, triggers, 5 views`
 );
 process.exit(0);

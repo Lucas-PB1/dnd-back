@@ -31,6 +31,7 @@ TRUNCATE TABLE
   rpg.phb_species_trait,
   rpg.phb_tool,
   rpg.phb_armor,
+  rpg.phb_armor_category,
   rpg.phb_weapon,
   rpg.phb_item,
   rpg.phb_subclass,
@@ -6693,6 +6694,14 @@ VALUES
   ('soldier', 'intimidation');
 
 
+INSERT INTO rpg.phb_armor_category (id, name, don_doff, sort_order)
+VALUES
+  ('light', 'Armadura Leve', '1 Minuto para Vestir ou Despir', 1),
+  ('medium', 'Armadura Média', '5 Minutos para Vestir e 1 Minuto para Despir', 2),
+  ('heavy', 'Armadura Pesada', '10 Minutos para Vestir e 5 Minutos para Despir', 3),
+  ('shield', 'Escudo', 'Ação Usar Objeto para Equipar ou Desequipar', 4);
+
+
 INSERT INTO rpg.phb_item (id, item_type, name, cost, weight, description, properties)
 VALUES
   ('dagger', 'weapon'::rpg.item_type, 'Adaga', '{"text":"2 PO"}'::jsonb, '0,5 kg', NULL, '{"propertyIds":["finesse","thrown","light"],"masteryId":"nick","range":{"normal":6,"max":18}}'::jsonb),
@@ -7071,31 +7080,31 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('blowg
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('blowgun', 'loading') ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('padded', 'light', 11, '11 + modificador de Des', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('padded', 'light', 11, '11 + modificador de Des', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('leather', 'light', 11, '11 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('leather', 'light', 11, '11 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('studded-leather', 'light', 12, '12 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('studded-leather', 'light', 12, '12 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('hide', 'medium', 12, '12 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('hide', 'medium', 12, '12 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-shirt', 'medium', 13, '13 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-shirt', 'medium', 13, '13 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('scale-mail', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('scale-mail', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('breastplate', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('breastplate', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('half-plate', 'medium', 15, '15 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('half-plate', 'medium', 15, '15 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('ring-mail', 'heavy', 14, '14', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('ring-mail', 'heavy', 14, '14', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-mail', 'heavy', 16, '16', 13, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-mail', 'heavy', 16, '16', 13, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('splint', 'heavy', 17, '17', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('splint', 'heavy', 17, '17', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('plate', 'heavy', 18, '18', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('plate', 'heavy', 18, '18', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('shield', 'shield', NULL, '+2', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('shield', 'shield', NULL, '+2', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-carpinteiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 

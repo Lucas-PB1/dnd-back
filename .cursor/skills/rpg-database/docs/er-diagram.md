@@ -27,6 +27,7 @@ flowchart TB
     phb_subclass --> phb_subclass_prepared_spell
     phb_spell --> phb_subclass_prepared_spell
     phb_item --> phb_weapon
+    phb_armor_category --> phb_armor
     phb_item --> phb_armor
     phb_item --> phb_tool
     phb_weapon --> phb_weapon_property_link

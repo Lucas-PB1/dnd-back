@@ -198,12 +198,44 @@ CREATE TABLE IF NOT EXISTS rpg.phb_weapon (
   category TEXT, damage TEXT, damage_type TEXT, property_ids TEXT[], mastery_id TEXT
 );
 
+CREATE TABLE IF NOT EXISTS rpg.phb_armor_category (
+  id        TEXT PRIMARY KEY,
+  name      TEXT NOT NULL,
+  don_doff  TEXT,
+  sort_order INTEGER NOT NULL DEFAULT 0
+);
+
 CREATE TABLE IF NOT EXISTS rpg.phb_armor (
   item_id TEXT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
-  category TEXT NOT NULL, ac_base INTEGER CHECK (ac_base >= 0),
+  category_id TEXT NOT NULL REFERENCES rpg.phb_armor_category(id),
+  ac_base INTEGER CHECK (ac_base >= 0),
   ac_formula TEXT, strength_req INTEGER CHECK (strength_req >= 0),
   stealth_disadvantage BOOLEAN NOT NULL DEFAULT FALSE
 );
+
+-- Legado: category TEXT → category_id FK (bancos criados antes da normalização)
+DO $migrate$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'rpg' AND table_name = 'phb_armor' AND column_name = 'category'
+  ) AND NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'rpg' AND table_name = 'phb_armor' AND column_name = 'category_id'
+  ) THEN
+    INSERT INTO rpg.phb_armor_category (id, name, don_doff, sort_order) VALUES
+      ('light', 'Armadura Leve', '1 Minuto para Vestir ou Despir', 1),
+      ('medium', 'Armadura Média', '5 Minutos para Vestir e 1 Minuto para Despir', 2),
+      ('heavy', 'Armadura Pesada', '10 Minutos para Vestir e 5 Minutos para Despir', 3),
+      ('shield', 'Escudo', 'Ação Usar Objeto para Equipar ou Desequipar', 4)
+    ON CONFLICT (id) DO NOTHING;
+    ALTER TABLE rpg.phb_armor ADD COLUMN category_id TEXT REFERENCES rpg.phb_armor_category(id);
+    UPDATE rpg.phb_armor SET category_id = category;
+    ALTER TABLE rpg.phb_armor ALTER COLUMN category_id SET NOT NULL;
+    ALTER TABLE rpg.phb_armor DROP COLUMN category;
+  END IF;
+END
+$migrate$;
 
 CREATE TABLE IF NOT EXISTS rpg.phb_tool (
   item_id TEXT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
@@ -550,6 +582,15 @@ JOIN rpg.player_character_spell_list psl ON psl.character_id = pc.id
 JOIN rpg.phb_spell_source ss ON ss.id = psl.source_id
 JOIN rpg.phb_spell s ON s.id = psl.spell_id;
 
+CREATE OR REPLACE VIEW rpg.v_phb_armor AS
+SELECT
+  a.item_id, i.name AS item_name,
+  c.id AS category_id, c.name AS category_name, c.don_doff,
+  a.ac_base, a.ac_formula, a.strength_req, a.stealth_disadvantage
+FROM rpg.phb_armor a
+JOIN rpg.phb_item i ON i.id = a.item_id
+JOIN rpg.phb_armor_category c ON c.id = a.category_id;
+
 -- =============================================================================
 -- ÍNDICES
 -- =============================================================================
@@ -565,6 +606,7 @@ CREATE INDEX IF NOT EXISTS idx_pc_spell_list ON rpg.player_character_spell_list(
 CREATE INDEX IF NOT EXISTS idx_pc_resource ON rpg.player_character_resource(character_id);
 CREATE INDEX IF NOT EXISTS idx_pc_spell_source ON rpg.player_character_spell_list(source_id);
 CREATE INDEX IF NOT EXISTS idx_pc_resource_def ON rpg.player_character_resource(resource_id);
+CREATE INDEX IF NOT EXISTS idx_phb_armor_category ON rpg.phb_armor(category_id);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_pc_equip_one_slot
   ON rpg.player_character_equipment (character_id, slot)
   WHERE equipped = TRUE AND slot IS NOT NULL;
@@ -798,10 +840,10 @@ BEGIN
     GROUP BY source_id
   ) q;
 
-  SELECT COALESCE(jsonb_object_agg(circle::text, slots_max), '{}'::jsonb),
-         COALESCE(jsonb_object_agg(circle::text, slots_used), '{}'::jsonb)
+  SELECT COALESCE(jsonb_object_agg(ss.circle::text, ss.slots_max), '{}'::jsonb),
+         COALESCE(jsonb_object_agg(ss.circle::text, ss.slots_used), '{}'::jsonb)
   INTO slots_max, slots_used
-  FROM rpg.player_character_spell_slot WHERE character_id = p_id;
+  FROM rpg.player_character_spell_slot ss WHERE ss.character_id = p_id;
 
   SELECT COALESCE(jsonb_object_agg(resource_id,
     jsonb_build_object('max', max_value, 'remaining', remaining)), '{}'::jsonb)
@@ -943,7 +985,11 @@ BEGIN
   IF rpg.sync_skip() OR rpg.sync_active() THEN
     RETURN COALESCE(NEW, OLD);
   END IF;
-  cid := COALESCE(NEW.id, OLD.id, NEW.character_id, OLD.character_id);
+  IF TG_TABLE_NAME = 'player_character' THEN
+    cid := COALESCE(NEW.id, OLD.id);
+  ELSE
+    cid := COALESCE(NEW.character_id, OLD.character_id);
+  END IF;
   IF cid IS NOT NULL THEN
     PERFORM rpg.rebuild_sheet_from_projections(cid);
   END IF;
@@ -1020,6 +1066,7 @@ TRUNCATE TABLE
   rpg.phb_species_trait,
   rpg.phb_tool,
   rpg.phb_armor,
+  rpg.phb_armor_category,
   rpg.phb_weapon,
   rpg.phb_item,
   rpg.phb_subclass,
@@ -7682,6 +7729,14 @@ VALUES
   ('soldier', 'intimidation');
 
 
+INSERT INTO rpg.phb_armor_category (id, name, don_doff, sort_order)
+VALUES
+  ('light', 'Armadura Leve', '1 Minuto para Vestir ou Despir', 1),
+  ('medium', 'Armadura Média', '5 Minutos para Vestir e 1 Minuto para Despir', 2),
+  ('heavy', 'Armadura Pesada', '10 Minutos para Vestir e 5 Minutos para Despir', 3),
+  ('shield', 'Escudo', 'Ação Usar Objeto para Equipar ou Desequipar', 4);
+
+
 INSERT INTO rpg.phb_item (id, item_type, name, cost, weight, description, properties)
 VALUES
   ('dagger', 'weapon'::rpg.item_type, 'Adaga', '{"text":"2 PO"}'::jsonb, '0,5 kg', NULL, '{"propertyIds":["finesse","thrown","light"],"masteryId":"nick","range":{"normal":6,"max":18}}'::jsonb),
@@ -8060,31 +8115,31 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('blowg
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ('blowgun', 'loading') ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('padded', 'light', 11, '11 + modificador de Des', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('padded', 'light', 11, '11 + modificador de Des', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('leather', 'light', 11, '11 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('leather', 'light', 11, '11 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('studded-leather', 'light', 12, '12 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('studded-leather', 'light', 12, '12 + modificador de Des', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('hide', 'medium', 12, '12 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('hide', 'medium', 12, '12 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-shirt', 'medium', 13, '13 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-shirt', 'medium', 13, '13 + modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('scale-mail', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('scale-mail', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('breastplate', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('breastplate', 'medium', 14, '14 + Modificador de Des (máx. 2)', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('half-plate', 'medium', 15, '15 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('half-plate', 'medium', 15, '15 + Modificador de Des (máx. 2)', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('ring-mail', 'heavy', 14, '14', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('ring-mail', 'heavy', 14, '14', NULL, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-mail', 'heavy', 16, '16', 13, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('chain-mail', 'heavy', 16, '16', 13, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('splint', 'heavy', 17, '17', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('splint', 'heavy', 17, '17', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('plate', 'heavy', 18, '18', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('plate', 'heavy', 18, '18', 15, TRUE) ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('shield', 'shield', NULL, '+2', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES ('shield', 'shield', NULL, '+2', NULL, FALSE) ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_tool (item_id, category, use_description) VALUES ('ferramentas-de-carpinteiro', NULL, NULL) ON CONFLICT (item_id) DO NOTHING;
 

@@ -64,6 +64,7 @@ TRUNCATE TABLE
   rpg.phb_species_trait,
   rpg.phb_tool,
   rpg.phb_armor,
+  rpg.phb_armor_category,
   rpg.phb_weapon,
   rpg.phb_item,
   rpg.phb_subclass,
@@ -421,6 +422,20 @@ lines.push(
   )
 );
 
+// armor categories (rules.json)
+lines.push(
+  batchInsert(
+    "rpg.phb_armor_category",
+    ["id", "name", "don_doff", "sort_order"],
+    catalog.armorCategories.map((c) => ({
+      id: sqlStr(c.id),
+      name: sqlStr(c.name),
+      don_doff: sqlStr(c.donDoff ?? null),
+      sort_order: String(c.sortOrder ?? 0),
+    }))
+  )
+);
+
 // items
 lines.push(
   batchInsert(
@@ -453,7 +468,7 @@ for (const i of catalog.items.filter((x) => x.weapon)) {
 for (const i of catalog.items.filter((x) => x.armor)) {
   const a = i.armor;
   lines.push(
-    `INSERT INTO rpg.phb_armor (item_id, category, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES (${sqlStr(i.id)}, ${sqlStr(a.category)}, ${sqlInt(a.acBase)}, ${sqlStr(a.acFormula)}, ${sqlInt(a.strengthReq)}, ${sqlBool(a.stealthDisadvantage)}) ON CONFLICT (item_id) DO NOTHING;`
+    `INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage) VALUES (${sqlStr(i.id)}, ${sqlStr(a.categoryId)}, ${sqlInt(a.acBase)}, ${sqlStr(a.acFormula)}, ${sqlInt(a.strengthReq)}, ${sqlBool(a.stealthDisadvantage)}) ON CONFLICT (item_id) DO NOTHING;`
   );
 }
 

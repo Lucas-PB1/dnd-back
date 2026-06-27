@@ -63,6 +63,11 @@ export function loadPhbCatalog(root) {
 
   const weaponsDoc = readJson(path.join(phb, "weapons/weapons.json"));
   const armorDoc = readJson(path.join(phb, "armor/armor.json"));
+  const armorRules = readJson(path.join(phb, "armor/rules.json"));
+  const armorCategories = (armorRules.categories ?? []).map((c, i) => ({
+    ...c,
+    sortOrder: i + 1,
+  }));
   const gearDoc = readJson(path.join(phb, "equipment/gear/adventuring-gear.json"));
   const artisanTools = readJson(path.join(phb, "equipment/tools/artisan.json")).tools ?? [];
   const otherTools = readJson(path.join(phb, "equipment/tools/other.json")).tools ?? [];
@@ -178,7 +183,7 @@ export function loadPhbCatalog(root) {
       description: null,
       properties: { acFormula: a.acFormula, propertyIds: a.propertyIds },
       armor: {
-        category: a.category,
+        categoryId: a.category,
         acBase: a.acFormula?.base ?? null,
         acFormula: a.ac,
         strengthReq: parseStrengthReq(a.strength),
@@ -281,6 +286,7 @@ export function loadPhbCatalog(root) {
     backgrounds: backgroundsNorm,
     backgroundSkills,
     items,
+    armorCategories,
     weaponProperties,
     fightingStyles,
     characterLevels,
@@ -301,6 +307,7 @@ export function loadPhbCatalog(root) {
       species: species.length,
       backgrounds: backgrounds.length,
       items: items.length,
+      armorCategories: armorCategories.length,
       spellClassLinks: spellClassLinks.length,
       subclassPreparedSpells: subclassPreparedSpells.length,
     },
