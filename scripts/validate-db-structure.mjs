@@ -35,6 +35,9 @@ const REQUIRED_TABLES = [
   "phb_subclass_prepared_spell",
   "phb_species",
   "phb_species_trait",
+  "phb_elf_lineage",
+  "phb_infernal_legacy",
+  "phb_dragon_ancestry",
   "phb_background",
   "phb_background_skill",
   "phb_background_ability_option",
@@ -60,8 +63,7 @@ const REQUIRED_TABLES = [
   "phb_spell_source",
   "phb_species_option_def",
   "phb_species_option_value",
-  "phb_class_option_def",
-  "phb_class_option_value",
+  "phb_divine_order",
   "phb_weapon_property_link",
   "phb_class_fighting_style",
 ];
@@ -76,6 +78,9 @@ const FORBIDDEN = [
   /phb_feat[\s\S]{0,300}benefits JSONB/i,
   /phb_feat[\s\S]{0,300}source_meta JSONB/i,
   /phb_feat[\s\S]{0,200}category TEXT/i,
+  /phb_class_option_def/i,
+  /phb_class_option_value/i,
+  /phb_species_trait[\s\S]{0,200}trait_table JSONB/i,
 ];
 
 const REQUIRED_PATTERNS = [
@@ -95,7 +100,11 @@ const REQUIRED_PATTERNS = [
   [/v_spell_by_class/i, "view v_spell_by_class"],
   [/v_class_spell_slots/i, "view v_class_spell_slots"],
   [/v_phb_feat/i, "view v_phb_feat"],
+  [/v_phb_class_skill_choice/i, "view v_phb_class_skill_choice"],
   [/phb_feat_benefit/i, "benefícios de talento normalizados"],
+  [/phb_divine_order/i, "ordem divina do clérigo"],
+  [/v_phb_species_trait_choices/i, "view v_phb_species_trait_choices"],
+  [/phb_elf_lineage/i, "linhagens élficas normalizadas"],
   [/spell_slot_pattern_id/i, "FK padrão de espelhos na classe"],
 ];
 
@@ -136,6 +145,6 @@ if (errors) {
 }
 
 console.log(
-  `✓ PostgreSQL v4 — ${REQUIRED_TABLES.length} tabelas catálogo, BIGINT+slug, 7 views`
+  `✓ PostgreSQL v4 — ${REQUIRED_TABLES.length} tabelas catálogo, BIGINT+slug, 9 views`
 );
 process.exit(0);

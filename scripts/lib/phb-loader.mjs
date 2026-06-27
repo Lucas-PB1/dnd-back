@@ -3,6 +3,10 @@ import fs from "fs";
 import path from "path";
 import { CLASS_PROGRESSION } from "../class-progression-data.mjs";
 import { extractClassCatalog } from "./class-normalize.mjs";
+import {
+  buildSpeciesTraitCatalogs,
+  choiceKindForTrait,
+} from "./species-trait-catalogs.mjs";
 import { FEAT_CATEGORIES } from "./feat-categories.mjs";
 import { CLASS_SPELL_SLOT_PATTERN } from "./spell-slot-patterns.mjs";
 import { collectSourceCitations, sourceCitationSlug } from "./source-citations.mjs";
@@ -282,6 +286,8 @@ export function loadPhbCatalog(root) {
     }
   }
 
+  const speciesTraitCatalogs = buildSpeciesTraitCatalogs(species);
+
   const speciesTraits = [];
   for (const sp of species) {
     for (const trait of sp.traits ?? []) {
@@ -289,7 +295,7 @@ export function loadPhbCatalog(root) {
         speciesId: sp.id,
         name: trait.name,
         description: trait.description,
-        traitTable: trait.table ?? null,
+        choiceKind: choiceKindForTrait(sp.id, trait.name),
       });
     }
   }
@@ -401,6 +407,7 @@ export function loadPhbCatalog(root) {
     classFeatures,
     classSkillPools,
     speciesTraits,
+    speciesTraitCatalogs,
     counts: {
       alignments: alignments.length,
       abilities: abilities.length,

@@ -25,14 +25,13 @@ import {
   buildAbilityGenerationMethods,
   buildBackgroundBoostOptions,
   buildClassFightingStyles,
-  buildClassOptionDefs,
-  buildClassOptionValues,
   buildDruidLandTerrains,
   buildResourceDefinitions,
   buildSpeciesOptionDefs,
   buildSpeciesOptionValues,
   buildSpellSources,
 } from "./lib/catalog-definitions.mjs";
+import { CLERIC_DIVINE_ORDERS } from "./lib/divine-orders.mjs";
 import { loadPhbCatalog } from "./lib/phb-loader.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -65,6 +64,9 @@ TRUNCATE TABLE
   rpg.phb_background_ability_option,
   rpg.phb_background_skill,
   rpg.phb_species_trait,
+  rpg.phb_dragon_ancestry,
+  rpg.phb_infernal_legacy,
+  rpg.phb_elf_lineage,
   rpg.phb_tool,
   rpg.phb_armor,
   rpg.phb_armor_category,
@@ -90,12 +92,11 @@ TRUNCATE TABLE
   rpg.phb_source_citation,
   rpg.phb_weapon_proficiency,
   rpg.phb_class_fighting_style,
-  rpg.phb_class_option_value,
-  rpg.phb_class_option_def,
   rpg.phb_species_option_value,
   rpg.phb_species_option_def,
   rpg.phb_spell_source,
   rpg.phb_resource_definition,
+  rpg.phb_divine_order,
   rpg.phb_druid_land_terrain,
   rpg.phb_background_boost_option,
   rpg.phb_ability_generation_method,
@@ -552,10 +553,52 @@ lines.push(
   )
 );
 
+const c = catalog.speciesTraitCatalogs;
+
+lines.push(
+  batchInsert(
+    "rpg.phb_elf_lineage",
+    ["slug", "name", "level1_benefit", "spell_level3_id", "spell_level5_id"],
+    c.elfLineages.map((r) => ({
+      slug: sqlStr(r.slug),
+      name: sqlStr(r.name),
+      level1_benefit: sqlStr(r.level1Benefit),
+      spell_level3_id: r.spellLevel3Slug ? sqlRef("phb_spell", r.spellLevel3Slug) : "NULL",
+      spell_level5_id: r.spellLevel5Slug ? sqlRef("phb_spell", r.spellLevel5Slug) : "NULL",
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_infernal_legacy",
+    ["slug", "name", "level1_benefit", "spell_level3_id", "spell_level5_id"],
+    c.infernalLegacies.map((r) => ({
+      slug: sqlStr(r.slug),
+      name: sqlStr(r.name),
+      level1_benefit: sqlStr(r.level1Benefit),
+      spell_level3_id: r.spellLevel3Slug ? sqlRef("phb_spell", r.spellLevel3Slug) : "NULL",
+      spell_level5_id: r.spellLevel5Slug ? sqlRef("phb_spell", r.spellLevel5Slug) : "NULL",
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_dragon_ancestry",
+    ["slug", "name", "damage_type"],
+    c.dragonAncestries.map((r) => ({
+      slug: sqlStr(r.slug),
+      name: sqlStr(r.name),
+      damage_type: sqlStr(r.damageType),
+    }))
+  )
+);
+
 // species traits
 for (const t of catalog.speciesTraits) {
   lines.push(
-    `INSERT INTO rpg.phb_species_trait (species_id, name, description, trait_table) VALUES (${sqlRef("phb_species", t.speciesId)}, ${sqlStr(t.name)}, ${sqlStr(t.description)}, ${sqlJson(t.traitTable)}) ON CONFLICT (species_id, name) DO NOTHING;`
+    `INSERT INTO rpg.phb_species_trait (species_id, name, description, choice_kind) VALUES (${sqlRef("phb_species", t.speciesId)}, ${sqlStr(t.name)}, ${sqlStr(t.description)}, ${t.choiceKind ? `${sqlStr(t.choiceKind)}::rpg.species_choice_kind` : "NULL"}) ON CONFLICT (species_id, name) DO NOTHING;`
   );
 }
 
@@ -747,12 +790,11 @@ const v3 = {
   spellSources: buildSpellSources(),
   speciesOptionDefs: buildSpeciesOptionDefs(),
   speciesOptionValues: buildSpeciesOptionValues(),
-  classOptionDefs: buildClassOptionDefs(),
-  classOptionValues: buildClassOptionValues(),
   abilityMethods: buildAbilityGenerationMethods(),
   backgroundBoosts: buildBackgroundBoostOptions(),
   terrains: buildDruidLandTerrains(),
   classFightingStyles: buildClassFightingStyles(),
+  divineOrders: CLERIC_DIVINE_ORDERS,
 };
 
 lines.push(
@@ -841,25 +883,12 @@ lines.push(
 
 lines.push(
   batchInsert(
-    "rpg.phb_class_option_def",
-    ["class_id", "option_key", "value_type"],
-    v3.classOptionDefs.map((d) => ({
-      class_id: sqlRef("phb_class", d.classId),
-      option_key: sqlStr(d.optionKey),
-      value_type: `${sqlStr(d.valueType)}::rpg.option_value_type`,
-    }))
-  )
-);
-
-lines.push(
-  batchInsert(
-    "rpg.phb_class_option_value",
-    ["class_id", "option_key", "value_id", "label"],
-    v3.classOptionValues.map((v) => ({
-      class_id: sqlRef("phb_class", v.classId),
-      option_key: sqlStr(v.optionKey),
-      value_id: sqlStr(v.valueId),
-      label: sqlStr(v.label),
+    "rpg.phb_divine_order",
+    ["slug", "name", "description"],
+    v3.divineOrders.map((o) => ({
+      slug: sqlStr(o.slug),
+      name: sqlStr(o.name),
+      description: sqlStr(o.description),
     }))
   )
 );

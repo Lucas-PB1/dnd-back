@@ -36,6 +36,12 @@ CREATE TYPE rpg.option_value_type AS ENUM (
   'catalog','skill','ability','fighting_style','terrain','skill_list','json'
 );
 
+CREATE TYPE rpg.species_choice_kind AS ENUM (
+  'elf_lineage',
+  'infernal_legacy',
+  'dragon_ancestry'
+);
+
 -- =============================================================================
 -- CATÁLOGO PHB — entidades com id BIGSERIAL + slug UNIQUE
 -- =============================================================================
@@ -135,6 +141,13 @@ CREATE TABLE rpg.phb_feat_benefit (
   name TEXT,
   description TEXT NOT NULL,
   UNIQUE (feat_id, sort_order)
+);
+
+CREATE TABLE rpg.phb_divine_order (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL
 );
 
 CREATE TABLE rpg.phb_spell (
@@ -355,12 +368,37 @@ CREATE TABLE rpg.phb_subclass_prepared_spell (
   PRIMARY KEY (subclass_id, unlock_level, spell_id, terrain_slug)
 );
 
+CREATE TABLE rpg.phb_elf_lineage (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  level1_benefit TEXT NOT NULL,
+  spell_level3_id BIGINT REFERENCES rpg.phb_spell(id),
+  spell_level5_id BIGINT REFERENCES rpg.phb_spell(id)
+);
+
+CREATE TABLE rpg.phb_infernal_legacy (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  level1_benefit TEXT NOT NULL,
+  spell_level3_id BIGINT REFERENCES rpg.phb_spell(id),
+  spell_level5_id BIGINT REFERENCES rpg.phb_spell(id)
+);
+
+CREATE TABLE rpg.phb_dragon_ancestry (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  damage_type TEXT NOT NULL
+);
+
 CREATE TABLE rpg.phb_species_trait (
   id BIGSERIAL PRIMARY KEY,
   species_id BIGINT NOT NULL REFERENCES rpg.phb_species(id) ON DELETE CASCADE,
   name TEXT NOT NULL,
   description TEXT NOT NULL,
-  trait_table JSONB,
+  choice_kind rpg.species_choice_kind,
   UNIQUE (species_id, name)
 );
 
@@ -500,23 +538,6 @@ CREATE TABLE rpg.phb_species_option_value (
   PRIMARY KEY (species_id, option_key, value_id),
   FOREIGN KEY (species_id, option_key)
     REFERENCES rpg.phb_species_option_def(species_id, option_key) ON DELETE CASCADE
-);
-
-CREATE TABLE rpg.phb_class_option_def (
-  class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
-  option_key TEXT NOT NULL,
-  value_type rpg.option_value_type NOT NULL,
-  PRIMARY KEY (class_id, option_key)
-);
-
-CREATE TABLE rpg.phb_class_option_value (
-  class_id BIGINT NOT NULL,
-  option_key TEXT NOT NULL,
-  value_id TEXT NOT NULL,
-  label TEXT NOT NULL,
-  PRIMARY KEY (class_id, option_key, value_id),
-  FOREIGN KEY (class_id, option_key)
-    REFERENCES rpg.phb_class_option_def(class_id, option_key) ON DELETE CASCADE
 );
 
 CREATE TABLE rpg.phb_weapon_property_link (
@@ -663,6 +684,18 @@ LEFT JOIN rpg.phb_feat_benefit fb ON fb.feat_id = f.id
 GROUP BY f.id, f.slug, f.name, fc.slug, fc.name, fc.type_label, f.repeatable, f.prerequisite,
   sc.chapter, sc.chapter_title, e.slug;
 
+CREATE OR REPLACE VIEW rpg.v_phb_class_skill_choice AS
+SELECT
+  c.slug AS class_slug,
+  c.skill_choice_count,
+  c.skill_choice_from,
+  s.slug AS skill_slug,
+  s.name AS skill_name
+FROM rpg.phb_class c
+JOIN rpg.phb_class_skill_pool p ON p.class_id = c.id
+JOIN rpg.phb_skill s ON s.id = p.skill_id
+ORDER BY c.slug, s.slug;
+
 CREATE OR REPLACE VIEW rpg.v_class_spell_slots AS
 SELECT
   c.slug AS class_slug,
@@ -676,10 +709,59 @@ JOIN rpg.phb_class_progression cp ON cp.class_id = c.id
 JOIN rpg.phb_spell_slot_by_level ss ON ss.pattern_id = p.id AND ss.level = cp.level
 GROUP BY c.slug, cp.level, p.slug, p.name;
 
+CREATE OR REPLACE VIEW rpg.v_phb_species_trait_choices AS
+SELECT
+  sp.slug AS species_slug,
+  t.name AS trait_name,
+  t.choice_kind,
+  el.slug AS choice_slug,
+  el.name AS choice_name,
+  el.level1_benefit,
+  s3.slug AS spell_level3_slug,
+  s5.slug AS spell_level5_slug,
+  NULL::text AS damage_type
+FROM rpg.phb_species_trait t
+JOIN rpg.phb_species sp ON sp.id = t.species_id
+JOIN rpg.phb_elf_lineage el ON t.choice_kind = 'elf_lineage'
+LEFT JOIN rpg.phb_spell s3 ON s3.id = el.spell_level3_id
+LEFT JOIN rpg.phb_spell s5 ON s5.id = el.spell_level5_id
+UNION ALL
+SELECT
+  sp.slug,
+  t.name,
+  t.choice_kind,
+  il.slug,
+  il.name,
+  il.level1_benefit,
+  s3.slug,
+  s5.slug,
+  NULL::text
+FROM rpg.phb_species_trait t
+JOIN rpg.phb_species sp ON sp.id = t.species_id
+JOIN rpg.phb_infernal_legacy il ON t.choice_kind = 'infernal_legacy'
+LEFT JOIN rpg.phb_spell s3 ON s3.id = il.spell_level3_id
+LEFT JOIN rpg.phb_spell s5 ON s5.id = il.spell_level5_id
+UNION ALL
+SELECT
+  sp.slug,
+  t.name,
+  t.choice_kind,
+  da.slug,
+  da.name,
+  NULL::text,
+  NULL::text,
+  NULL::text,
+  da.damage_type
+FROM rpg.phb_species_trait t
+JOIN rpg.phb_species sp ON sp.id = t.species_id
+JOIN rpg.phb_dragon_ancestry da ON t.choice_kind = 'dragon_ancestry';
+
 -- =============================================================================
 -- ÍNDICES
 -- =============================================================================
 
+CREATE INDEX idx_phb_species_trait_choice ON rpg.phb_species_trait(choice_kind);
+CREATE INDEX idx_phb_elf_lineage_spells ON rpg.phb_elf_lineage(spell_level3_id, spell_level5_id);
 CREATE INDEX idx_phb_feat_category ON rpg.phb_feat(category_id);
 CREATE INDEX idx_phb_feat_source ON rpg.phb_feat(source_citation_id);
 CREATE INDEX idx_phb_feat_benefit_feat ON rpg.phb_feat_benefit(feat_id);

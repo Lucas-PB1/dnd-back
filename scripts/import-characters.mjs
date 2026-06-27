@@ -51,6 +51,8 @@ function mapClassOption(doc, optionKey, optionValue) {
     row.fighting_style_id = sqlStr(optionValue);
   } else if (optionKey === "landTerrainId") {
     row.terrain_id = sqlStr(optionValue);
+  } else if (optionKey === "divineOrder") {
+    row.catalog_value_id = sqlStr(optionValue);
   } else if (Array.isArray(optionValue)) {
     row.json_value = sqlJson(optionValue);
   } else {

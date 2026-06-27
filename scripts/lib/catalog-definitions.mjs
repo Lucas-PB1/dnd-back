@@ -123,31 +123,6 @@ export function buildSpeciesOptionValues() {
   return rows;
 }
 
-export function buildClassOptionDefs() {
-  return [
-    { classId: "cleric", optionKey: "divineOrder", valueType: "catalog" },
-    { classId: "cleric", optionKey: "skillIds", valueType: "skill_list" },
-    { classId: "fighter", optionKey: "fightingStyleId", valueType: "fighting_style" },
-    { classId: "paladin", optionKey: "fightingStyleId", valueType: "fighting_style" },
-    { classId: "ranger", optionKey: "fightingStyleId", valueType: "fighting_style" },
-    { classId: "druid", optionKey: "landTerrainId", valueType: "terrain" },
-    { classId: "barbarian", optionKey: "skillIds", valueType: "skill_list" },
-    { classId: "bard", optionKey: "skillIds", valueType: "skill_list" },
-    { classId: "rogue", optionKey: "skillIds", valueType: "skill_list" },
-    { classId: "wizard", optionKey: "skillIds", valueType: "skill_list" },
-    { classId: "sorcerer", optionKey: "skillIds", valueType: "skill_list" },
-    { classId: "warlock", optionKey: "skillIds", valueType: "skill_list" },
-    { classId: "monk", optionKey: "skillIds", valueType: "skill_list" },
-  ];
-}
-
-export function buildClassOptionValues() {
-  return [
-    { classId: "cleric", optionKey: "divineOrder", valueId: "protector", label: "Protetor" },
-    { classId: "cleric", optionKey: "divineOrder", valueId: "thaumaturge", label: "Taumaturgo" },
-  ];
-}
-
 export function buildAbilityGenerationMethods() {
   return readJson("creation/ability-generation.json").methods.map((m) => ({
     id: m.id,
