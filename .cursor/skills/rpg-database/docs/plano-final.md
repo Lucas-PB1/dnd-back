@@ -118,58 +118,47 @@ CREATE UNIQUE INDEX uq_resource_class ON rpg.phb_resource_definition (class_id, 
 
 ---
 
-### Fase 2 — Operação e migrations (1 semana)
+### Fase 2 — Operação e migrations ✅
 
 Objetivo: deploy seguro fora de dev local.
+
+- [x] **Separar DDL/DML** — `schema.sql` prod-safe; `dev-reset.sql` só dev; `seed-all.sql` composto
+- [x] **Migrations** — `database/migrations/001_initial_catalog.sql` + `npm run migrate:run`
+- [x] **Auditoria** — `created_at`/`updated_at` + `rpg.set_updated_at()` em 7 tabelas principais
+- [ ] **Multi-edição** — `edition_id` adiado até segundo livro de regras (decisão documentada)
 
 #### 2.1 Separar DDL de DML
 
 | Arquivo | Conteúdo | Quando rodar |
 |---------|----------|--------------|
-| `database/schema.sql` | DDL puro (sem `DROP SCHEMA` em prod) | Setup / migration |
+| `database/schema.sql` | DDL prod-safe (`CREATE SCHEMA IF NOT EXISTS`, sem DROP) | Referência / migration 001 |
+| `database/dev-reset.sql` | `DROP SCHEMA CASCADE` | **Somente dev** |
 | `database/seed-phb.sql` | DML catálogo | Após schema |
-| `database/seed-all.sql` | **Somente dev** — schema + seed destrutivo | `npm run seed:run` local |
+| `database/seed-all.sql` | dev-reset + schema + PHB | `npm run seed:run` local |
 
 #### 2.2 Migrations incrementais
 
-Adotar **Sqitch**, **Flyway** ou pasta `database/migrations/` com:
-
 ```
-001_initial_catalog.sql
-002_drop_weapon_property_ids.sql
-003_spell_source_checks.sql
-...
+database/migrations/
+  001_initial_catalog.sql   ← gerado (= schema.sql)
+  README.md
+  002_*.sql                 ← futuras alterações
 ```
 
-Regra: **nunca** `DROP SCHEMA CASCADE` fora de dev.
+```bash
+npm run migrate:run    # aplica pendentes, registra em rpg.schema_migration
+npm run seed:prod    # migrate + seed-phb (produção/staging)
+```
 
 #### 2.3 Timestamps de auditoria
 
-```sql
--- Função genérica
-CREATE OR REPLACE FUNCTION rpg.set_updated_at() RETURNS trigger AS $$
-BEGIN NEW.updated_at = NOW(); RETURN NEW; END;
-$$ LANGUAGE plpgsql;
+Tabelas: `phb_spell`, `phb_class`, `phb_subclass`, `phb_species`, `phb_background`, `phb_feat`, `phb_item`.
 
--- Em tabelas mutáveis (catálogo editável + futuras fichas)
-ALTER TABLE rpg.phb_spell ADD COLUMN created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
-ALTER TABLE rpg.phb_spell ADD COLUMN updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
--- + trigger em cada tabela editável
-```
+#### 2.4 Multi-edição — adiado
 
-#### 2.4 Multi-edição (decisão de produto)
+Estratégia A (`edition_id` por entidade) documentada para quando entrar SRD/homebrew.
 
-Escolher **uma** estratégia antes de escalar:
-
-| Estratégia | Prós | Contras |
-|------------|------|---------|
-| **A:** `edition_id` em toda entidade PHB | Coexistência limpa | Migration grande |
-| **B:** schema por edição (`rpg_phb2024`, `rpg_srd`) | Isolamento total | Duplicação |
-| **C:** slug prefixado (`phb24-fireball`) | Simples | Feio na API |
-
-**Recomendação:** estratégia A — adicionar `edition_id BIGINT NOT NULL REFERENCES phb_edition(id)` nas entidades principais na fase 2.
-
-**Critério de done:** alterar schema em prod via migration, sem perder dados.
+**Critério de done:** ✅ `migrate:run` + `seed:prod` aplicam catálogo sem DROP SCHEMA.
 
 ---
 

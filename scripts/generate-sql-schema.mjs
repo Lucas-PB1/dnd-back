@@ -9,16 +9,44 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const outFile = path.join(root, "database", "schema.sql");
 
-const SQL = `-- RPG PHB 2024 — PostgreSQL v4 (catálogo id BIGINT + slug)
+const PROD_HEADER = `-- RPG PHB 2024 — PostgreSQL v4 (DDL prod-safe — sem DROP SCHEMA)
 -- Gerado por: npm run generate:sql-schema
--- Docs: .cursor/skills/rpg-database/docs/er-diagram.md
--- Personagens: fora do schema até redesign (fichas eram só teste)
+-- Docs: .cursor/skills/rpg-database/docs/plano-final.md
+
+CREATE SCHEMA IF NOT EXISTS rpg;
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+`;
+
+const DEV_RESET = `-- DEV ONLY — apaga todo o schema rpg. Nunca rodar em produção/staging.
+-- Uso: composto em seed-all.sql ou psql -f database/dev-reset.sql
 
 DROP SCHEMA IF EXISTS rpg CASCADE;
 CREATE SCHEMA rpg;
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
--- =============================================================================
+`;
+
+const AUDIT_COLUMNS = `
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()`;
+
+const AUDIT_TABLES = [
+  "phb_spell",
+  "phb_class",
+  "phb_subclass",
+  "phb_species",
+  "phb_background",
+  "phb_feat",
+  "phb_item",
+];
+
+const AUDIT_TRIGGERS_SQL = AUDIT_TABLES.map(
+  (t) =>
+    `CREATE TRIGGER tr_${t}_updated_at BEFORE UPDATE ON rpg.${t} FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();`
+).join("\n");
+
+const SCHEMA_BODY = `-- =============================================================================
 -- TIPOS ENUM
 -- =============================================================================
 
@@ -135,7 +163,7 @@ CREATE TABLE rpg.phb_feat (
   category_id BIGINT NOT NULL REFERENCES rpg.phb_feat_category(id),
   repeatable BOOLEAN NOT NULL DEFAULT FALSE,
   prerequisite TEXT,
-  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),${AUDIT_COLUMNS}
 );
 
 CREATE TABLE rpg.phb_feat_benefit (
@@ -180,7 +208,7 @@ CREATE TABLE rpg.phb_spell (
   ritual BOOLEAN NOT NULL DEFAULT FALSE,
   description TEXT NOT NULL,
   higher_levels TEXT,
-  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),${AUDIT_COLUMNS}
 );
 
 CREATE TABLE rpg.phb_spell_slot_pattern (
@@ -236,7 +264,7 @@ CREATE TABLE rpg.phb_class (
   skill_choice_count INTEGER CHECK (skill_choice_count >= 1),
   skill_choice_from TEXT CHECK (skill_choice_from IN ('any')),
   spell_slot_pattern_id BIGINT REFERENCES rpg.phb_spell_slot_pattern(id),
-  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),${AUDIT_COLUMNS}
 );
 
 CREATE TABLE rpg.phb_subclass (
@@ -248,7 +276,7 @@ CREATE TABLE rpg.phb_subclass (
   summary TEXT,
   description TEXT,
   source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
-  UNIQUE (class_id, id)
+  UNIQUE (class_id, id),${AUDIT_COLUMNS}
 );
 
 CREATE TABLE rpg.phb_subclass_feature (
@@ -268,7 +296,7 @@ CREATE TABLE rpg.phb_species (
   size TEXT NOT NULL,
   speed TEXT NOT NULL,
   description TEXT NOT NULL,
-  source_meta JSONB
+  source_meta JSONB,${AUDIT_COLUMNS}
 );
 
 CREATE TABLE rpg.phb_item (
@@ -279,7 +307,7 @@ CREATE TABLE rpg.phb_item (
   cost JSONB,
   weight TEXT,
   description TEXT,
-  properties JSONB
+  properties JSONB,${AUDIT_COLUMNS}
 );
 
 CREATE TABLE rpg.phb_background (
@@ -292,7 +320,7 @@ CREATE TABLE rpg.phb_background (
   equipment_gold_option INTEGER CHECK (equipment_gold_option >= 0),
   tool_proficiency_description TEXT,
   tool_proficiency_kind TEXT CHECK (tool_proficiency_kind IN ('fixed', 'choice')),
-  tool_item_id BIGINT REFERENCES rpg.phb_item(id)
+  tool_item_id BIGINT REFERENCES rpg.phb_item(id),${AUDIT_COLUMNS}
 );
 
 CREATE TABLE rpg.phb_armor_category (
@@ -896,10 +924,32 @@ CREATE INDEX idx_phb_feat_name_trgm ON rpg.phb_feat USING gin (name gin_trgm_ops
 CREATE INDEX idx_phb_class_name_trgm ON rpg.phb_class USING gin (name gin_trgm_ops);
 CREATE INDEX idx_phb_item_name_trgm ON rpg.phb_item USING gin (name gin_trgm_ops);
 
+-- =============================================================================
+-- AUDITORIA (updated_at automático)
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION rpg.set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+${AUDIT_TRIGGERS_SQL}
+
 COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — catálogo v4 (BIGINT + slug)';
 COMMENT ON COLUMN rpg.phb_spell.slug IS 'Identificador canônico do JSON/API; imutável na prática';
 `;
 
+const migrationDir = path.join(root, "database", "migrations");
+const prodSql = PROD_HEADER + SCHEMA_BODY;
+
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
-fs.writeFileSync(outFile, SQL, "utf8");
-console.log(`✓ ${path.relative(root, outFile)} — PostgreSQL v4 (${SQL.split("\n").length} linhas)`);
+fs.mkdirSync(migrationDir, { recursive: true });
+fs.writeFileSync(outFile, prodSql, "utf8");
+fs.writeFileSync(path.join(migrationDir, "001_initial_catalog.sql"), prodSql, "utf8");
+fs.writeFileSync(path.join(root, "database", "dev-reset.sql"), DEV_RESET, "utf8");
+console.log(`✓ ${path.relative(root, outFile)} — PostgreSQL v4 (${prodSql.split("\n").length} linhas)`);
+console.log(`✓ ${path.relative(root, path.join(migrationDir, "001_initial_catalog.sql"))}`);
+console.log(`✓ ${path.relative(root, "database/dev-reset.sql")}`);

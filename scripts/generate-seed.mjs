@@ -1,6 +1,6 @@
 /**
- * Gera database/seed-all.sql (schema + PHB).
- * Personagens: fora do bootstrap até redesign.
+ * Gera database/seed-all.sql (dev-reset + schema + PHB).
+ * Produção: npm run migrate:run && npm run seed:prod
  */
 import fs from "fs";
 import path from "path";
@@ -20,12 +20,16 @@ function run(script) {
 
 run("seed-phb.mjs");
 
+const devReset = fs.readFileSync(path.join(root, "database/dev-reset.sql"), "utf8");
 const schema = fs.readFileSync(path.join(root, "database/schema.sql"), "utf8");
 const phb = fs.readFileSync(path.join(root, "database/seed-phb.sql"), "utf8");
 
-const all = `-- RPG — bootstrap catálogo PHB (schema v4 + seed)
+const all = `-- RPG — bootstrap DEV ONLY (dev-reset + schema + seed PHB)
 -- Gerado por: npm run generate:seed
--- Uso: psql -U postgres -d rpg -f database/seed-all.sql
+-- NUNCA rodar em produção — use npm run seed:prod
+-- Uso local: npm run seed:run
+
+${devReset}
 
 ${schema}
 

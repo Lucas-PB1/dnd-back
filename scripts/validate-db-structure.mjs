@@ -100,10 +100,11 @@ const FORBIDDEN = [
   /idx_phb_spell_slug/i,
   /idx_phb_class_slug/i,
   /idx_phb_item_slug/i,
+  /DROP SCHEMA IF EXISTS rpg CASCADE/i,
 ];
 
 const REQUIRED_PATTERNS = [
-  [/DROP SCHEMA IF EXISTS rpg CASCADE/i, "reset schema"],
+  [/CREATE SCHEMA IF NOT EXISTS rpg/i, "schema prod-safe"],
   [/slug TEXT NOT NULL UNIQUE/i, "coluna slug UNIQUE"],
   [/id BIGSERIAL PRIMARY KEY/i, "PK BIGSERIAL"],
   [/phb_resource_definition/i, "catálogo recursos"],
@@ -140,12 +141,40 @@ const REQUIRED_PATTERNS = [
   [/rpg\.casting_type/i, "ENUM tipo de conjuração"],
   [/uq_resource_species/i, "unicidade recurso por espécie"],
   [/class_list/i, "origem class_list para lista de classe"],
+  [/rpg\.set_updated_at/i, "função auditoria updated_at"],
+  [/created_at TIMESTAMPTZ/i, "colunas created_at"],
+  [/tr_phb_spell_updated_at/i, "trigger updated_at em phb_spell"],
 ];
 
 let errors = 0;
 function fail(msg) {
   console.error(`✗ ${msg}`);
   errors++;
+}
+
+const migrationFile = path.join(root, "database", "migrations", "001_initial_catalog.sql");
+const devResetFile = path.join(root, "database", "dev-reset.sql");
+
+if (!fs.existsSync(migrationFile)) {
+  fail("database/migrations/001_initial_catalog.sql ausente — rode npm run generate:sql-schema");
+}
+
+if (!fs.existsSync(devResetFile)) {
+  fail("database/dev-reset.sql ausente — rode npm run generate:sql-schema");
+}
+
+if (fs.existsSync(migrationFile)) {
+  const mig = fs.readFileSync(migrationFile, "utf8");
+  if (/^\s*DROP SCHEMA/im.test(mig)) {
+    fail("migration 001 não deve conter DROP SCHEMA");
+  }
+}
+
+if (fs.existsSync(devResetFile)) {
+  const dev = fs.readFileSync(devResetFile, "utf8");
+  if (!/DROP SCHEMA IF EXISTS rpg CASCADE/i.test(dev)) {
+    fail("dev-reset.sql deve conter DROP SCHEMA IF EXISTS rpg CASCADE");
+  }
 }
 
 if (!fs.existsSync(sqlFile)) {

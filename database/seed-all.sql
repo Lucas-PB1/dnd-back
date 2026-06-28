@@ -1,14 +1,22 @@
--- RPG — bootstrap catálogo PHB (schema v4 + seed)
+-- RPG — bootstrap DEV ONLY (dev-reset + schema + seed PHB)
 -- Gerado por: npm run generate:seed
--- Uso: psql -U postgres -d rpg -f database/seed-all.sql
+-- NUNCA rodar em produção — use npm run seed:prod
+-- Uso local: npm run seed:run
 
--- RPG PHB 2024 — PostgreSQL v4 (catálogo id BIGINT + slug)
--- Gerado por: npm run generate:sql-schema
--- Docs: .cursor/skills/rpg-database/docs/er-diagram.md
--- Personagens: fora do schema até redesign (fichas eram só teste)
+-- DEV ONLY — apaga todo o schema rpg. Nunca rodar em produção/staging.
+-- Uso: composto em seed-all.sql ou psql -f database/dev-reset.sql
 
 DROP SCHEMA IF EXISTS rpg CASCADE;
 CREATE SCHEMA rpg;
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+
+
+-- RPG PHB 2024 — PostgreSQL v4 (DDL prod-safe — sem DROP SCHEMA)
+-- Gerado por: npm run generate:sql-schema
+-- Docs: .cursor/skills/rpg-database/docs/plano-final.md
+
+CREATE SCHEMA IF NOT EXISTS rpg;
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
 -- =============================================================================
@@ -128,7 +136,9 @@ CREATE TABLE rpg.phb_feat (
   category_id BIGINT NOT NULL REFERENCES rpg.phb_feat_category(id),
   repeatable BOOLEAN NOT NULL DEFAULT FALSE,
   prerequisite TEXT,
-  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE rpg.phb_feat_benefit (
@@ -173,7 +183,9 @@ CREATE TABLE rpg.phb_spell (
   ritual BOOLEAN NOT NULL DEFAULT FALSE,
   description TEXT NOT NULL,
   higher_levels TEXT,
-  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE rpg.phb_spell_slot_pattern (
@@ -229,7 +241,9 @@ CREATE TABLE rpg.phb_class (
   skill_choice_count INTEGER CHECK (skill_choice_count >= 1),
   skill_choice_from TEXT CHECK (skill_choice_from IN ('any')),
   spell_slot_pattern_id BIGINT REFERENCES rpg.phb_spell_slot_pattern(id),
-  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE rpg.phb_subclass (
@@ -241,7 +255,9 @@ CREATE TABLE rpg.phb_subclass (
   summary TEXT,
   description TEXT,
   source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
-  UNIQUE (class_id, id)
+  UNIQUE (class_id, id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE rpg.phb_subclass_feature (
@@ -261,7 +277,9 @@ CREATE TABLE rpg.phb_species (
   size TEXT NOT NULL,
   speed TEXT NOT NULL,
   description TEXT NOT NULL,
-  source_meta JSONB
+  source_meta JSONB,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE rpg.phb_item (
@@ -272,7 +290,9 @@ CREATE TABLE rpg.phb_item (
   cost JSONB,
   weight TEXT,
   description TEXT,
-  properties JSONB
+  properties JSONB,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE rpg.phb_background (
@@ -285,7 +305,9 @@ CREATE TABLE rpg.phb_background (
   equipment_gold_option INTEGER CHECK (equipment_gold_option >= 0),
   tool_proficiency_description TEXT,
   tool_proficiency_kind TEXT CHECK (tool_proficiency_kind IN ('fixed', 'choice')),
-  tool_item_id BIGINT REFERENCES rpg.phb_item(id)
+  tool_item_id BIGINT REFERENCES rpg.phb_item(id),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE rpg.phb_armor_category (
@@ -888,6 +910,26 @@ CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_o
 CREATE INDEX idx_phb_feat_name_trgm ON rpg.phb_feat USING gin (name gin_trgm_ops);
 CREATE INDEX idx_phb_class_name_trgm ON rpg.phb_class USING gin (name gin_trgm_ops);
 CREATE INDEX idx_phb_item_name_trgm ON rpg.phb_item USING gin (name gin_trgm_ops);
+
+-- =============================================================================
+-- AUDITORIA (updated_at automático)
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION rpg.set_updated_at()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = NOW();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER tr_phb_spell_updated_at BEFORE UPDATE ON rpg.phb_spell FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
+CREATE TRIGGER tr_phb_class_updated_at BEFORE UPDATE ON rpg.phb_class FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
+CREATE TRIGGER tr_phb_subclass_updated_at BEFORE UPDATE ON rpg.phb_subclass FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
+CREATE TRIGGER tr_phb_species_updated_at BEFORE UPDATE ON rpg.phb_species FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
+CREATE TRIGGER tr_phb_background_updated_at BEFORE UPDATE ON rpg.phb_background FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
+CREATE TRIGGER tr_phb_feat_updated_at BEFORE UPDATE ON rpg.phb_feat FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
+CREATE TRIGGER tr_phb_item_updated_at BEFORE UPDATE ON rpg.phb_item FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
 COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — catálogo v4 (BIGINT + slug)';
 COMMENT ON COLUMN rpg.phb_spell.slug IS 'Identificador canônico do JSON/API; imutável na prática';

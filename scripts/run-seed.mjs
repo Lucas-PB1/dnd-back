@@ -49,6 +49,15 @@ async function runWithPg() {
   try {
     await client.connect();
     await client.query(sql);
+    await client.query(`
+      CREATE SCHEMA IF NOT EXISTS rpg;
+      CREATE TABLE IF NOT EXISTS rpg.schema_migration (
+        version    TEXT PRIMARY KEY,
+        applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+      );
+      INSERT INTO rpg.schema_migration (version) VALUES ('001_initial_catalog')
+      ON CONFLICT (version) DO NOTHING;
+    `);
     const counts = await client.query(`
       SELECT
         (SELECT COUNT(*)::int FROM rpg.phb_spell) AS spells,

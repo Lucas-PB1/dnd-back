@@ -63,7 +63,7 @@ npm run seed:run              # aplica no PostgreSQL local
 
 | Ambiente | Comando | Nota |
 |----------|---------|------|
-| Dev local | `npm run seed:run` | `DROP SCHEMA CASCADE` ok |
-| Staging/Prod | migrations incrementais | **Nunca** DROP SCHEMA |
+| Dev local | `npm run seed:run` | `dev-reset.sql` + schema + PHB |
+| Staging/Prod | `npm run migrate:run` → `npm run seed:prod` | **Nunca** DROP SCHEMA |
 
-Ver [plano-final.md § fase 2](plano-final.md#fase-2--operação-e-migrations-1-semana).
+Ver [plano-final.md § fase 2](plano-final.md#fase-2--operação-e-migrations-).

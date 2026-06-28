@@ -15,22 +15,31 @@ Camada de fichas (`player_character`): **fase 5** — ver [plano-final.md](docs/
 
 | Arquivo | Função |
 |---------|--------|
-| `database/schema.sql` | DDL catálogo v4 (gerado) |
+| `database/schema.sql` | DDL catálogo v4 prod-safe (gerado) |
+| `database/dev-reset.sql` | DROP SCHEMA — **somente dev** (gerado) |
+| `database/migrations/` | Migrations incrementais (`001_initial_catalog.sql`) |
 | `database/seed-phb.sql` | DML catálogo (gerado) |
 | `database/seed-all.sql` | Bootstrap dev: schema + PHB (gerado) |
 | `scripts/generate-sql-schema.mjs` | Regenera schema |
 | `scripts/seed-phb.mjs` | PHB → `seed-phb.sql` |
 | `scripts/generate-seed.mjs` | Combina em `seed-all.sql` |
 | `scripts/validate-db-structure.mjs` | Valida schema |
-| `scripts/validate-seed.mjs` | Valida seed |
+| `scripts/run-migrations.mjs` | Aplica migrations pendentes |
+| `scripts/run-seed-prod.mjs` | migrate + seed PHB (prod) |
 
 ## Workflow
 
 ```bash
 npm run fichas:all       # JSON válido (PHB + fichas)
-npm run db:all             # gera + valida schema
+npm run db:all             # gera + valida schema + migrations
 npm run seed:all           # gera + valida seed
-DATABASE_URL=... npm run seed:run   # aplica no PostgreSQL
+
+# Dev local (reset completo)
+npm run seed:run
+
+# Produção/staging (sem DROP SCHEMA)
+npm run migrate:run
+npm run seed:prod
 ```
 
 ## Docs
@@ -53,5 +62,4 @@ DATABASE_URL=... npm run seed:run   # aplica no PostgreSQL
 
 Ver [plano-final.md](docs/plano-final.md):
 
-- **Fase 2:** migrations incrementais, timestamps
 - **Fase 5:** `player_character` híbrido (sheet JSONB + projeções)
