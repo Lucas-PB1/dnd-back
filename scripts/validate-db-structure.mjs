@@ -70,11 +70,24 @@ const REQUIRED_TABLES = [
   "phb_divine_order",
   "phb_weapon_property_link",
   "phb_class_fighting_style",
+  "player_character",
+  "player_character_language",
+  "player_character_ability",
+  "player_character_skill",
+  "player_character_saving_throw",
+  "player_character_feat",
+  "player_character_equipment",
+  "player_character_weapon_mastery",
+  "player_character_expertise",
+  "player_character_spell_list",
+  "player_character_spell_slot",
+  "player_character_resource",
+  "player_character_species_option",
+  "player_character_class_option",
 ];
 
 const FORBIDDEN = [
   /\bCREATE TABLE IF NOT EXISTS rpg\.character\b/i,
-  /\bCREATE TABLE[\s\S]{0,80}rpg\.player_character\b/i,
   /character_class_level/i,
   /CREATE TYPE rpg\.ability_id AS ENUM/i,
   /phb_class[\s\S]{0,400}skill_choices JSONB/i,
@@ -100,6 +113,7 @@ const FORBIDDEN = [
   /idx_phb_spell_slug/i,
   /idx_phb_class_slug/i,
   /idx_phb_item_slug/i,
+  /CREATE TABLE rpg\.player_character[\s\S]{0,800}\bforca\s+INTEGER/i,
   /idx_spell_level\b/i,
   /^\s*DROP SCHEMA/im,
 ];
@@ -149,6 +163,13 @@ const REQUIRED_PATTERNS = [
   [/idx_class_skill_pool_skill/i, "índice inverso skill pool"],
   [/mv_spell_by_class/i, "materialized view magias por classe"],
   [/idx_mv_spell_by_class/i, "índice único MV spell_by_class"],
+  [/v_player_character_runtime/i, "view runtime combate"],
+  [/recalculate_character_ac/i, "recálculo CA por equipamento"],
+  [/sync_sheet_runtime/i, "sync runtime sheet"],
+  [/v_character_abilities/i, "view atributos personagem"],
+  [/player_character_ability/i, "atributos normalizados com FK phb_ability"],
+  [/validate_pc_subclass/i, "trigger validação subclasse"],
+  [/rpg\.skill_source/i, "ENUM skill_source"],
 ];
 
 let errors = 0;

@@ -2,20 +2,18 @@
 
 Roadmap completo: [plano-final.md](plano-final.md)
 
-## Validação JSON (fonte da verdade)
+## Validação PHB (JSON)
 
 ```bash
-npm run fichas:all          # pipeline completo PHB + fichas JSON
-npm run analyze:characters  # cobertura espécie/nível/traços
-npm run validate:db         # SQL alinhado ao catálogo v4
+npm run fichas:all          # pipeline PHB (criação, regras, perícias, armas, etc.)
+npm run validate:db         # SQL alinhado ao schema
 npm run seed:all            # gera + valida seed PHB
 ```
 
-### Por domínio
+### Por domínio (PHB)
 
 | Domínio | Schema(s) | Script npm |
 |---------|-----------|------------|
-| Fichas | `character.schema.json` | `validate:character` |
 | Referências cruzadas | — | `validate:references` |
 | Classes + progression | `class.schema.json` | `spellcasting:all` |
 | Subclasses | `subclass.schema.json` | `validate:subclasses` |
@@ -25,40 +23,35 @@ npm run seed:all            # gera + valida seed PHB
 | Criação | alignments, languages, ability-generation | `validate:creation` |
 | Regras core | hp-rules, proficiency-bonus, etc. | `validate:rules` |
 
-### Regras derivadas (fichas JSON)
+## Validação de fichas (PostgreSQL)
 
-Implementadas em `scripts/character-rules.mjs` — espelhar no SQL na fase 5:
+Personagens **não** usam JSON em disco — só banco.
 
-- PV: Tenacidade Anã, Tough, CON por nível
-- CA: defesa sem armadura (bárbaro/monge)
-- Perícias: humano Hábil, elfo Sentidos Aguçados, Habilidoso
-- Magias de espécie: elfo, tiferino, gnomo, aasimar
-- Recursos: Fúria, Pontos de Foco, Canalizar Divindade
-- **Classe única:** `validateSingleClass()` — sem `classLevels`
+```bash
+npm run characters:all    # gera seed + aplica + valida + audit dinâmico
+```
 
-## Validação SQL (catálogo v4)
+| Script | Verifica |
+|--------|----------|
+| `validate-characters-db.mjs` | 300 personagens, FKs, trigger subclasse |
+| `audit-character-dynamic.mjs` | sync HP/CA, recalc equipamento, view runtime |
 
-`scripts/validate-db-structure.mjs` verifica:
+Regras de jogo na geração de seed: `scripts/character-rules.mjs` + `scripts/lib/character-generator.mjs`.
 
-1. `database/schema.sql` existe
-2. 58 tabelas catálogo `phb_*`
-3. ENUMs v4, views, BIGINT+slug
-4. **Proibido:** tabela `character`, `player_character`, multiclasse, JSONB legado
+## Validação SQL (schema)
 
-`scripts/validate-seed.mjs` verifica:
+`scripts/validate-db-structure.mjs` — 74 tabelas, views, FKs, anti-regressão.
 
-1. `seed-phb.sql` e `seed-all.sql` existem
-2. INSERTs por slug (v4)
-3. Contagens batem com `seed-manifest.json`
-4. Seed PHB **não** referencia `player_character`
+`scripts/validate-seed.mjs` — seed PHB sem referência a `player_character`.
 
 ### Checklist manual pós-seed
 
 ```
 - [ ] SELECT COUNT(*) FROM rpg.phb_spell = 391
 - [ ] SELECT COUNT(*) FROM rpg.phb_class = 12
-- [ ] Views retornam dados (v_phb_class, v_spell_by_class)
-- [ ] Slugs idênticos aos JSON (lowercase, hífen, sem acento)
+- [ ] SELECT COUNT(*) FROM rpg.player_character = 300 (após seed:characters)
+- [ ] Views retornam dados (v_phb_class, v_player_character_runtime)
+- [ ] Slugs idênticos aos JSON PHB
 - [ ] Nenhum orphan FK
 ```
 

@@ -491,11 +491,3 @@ export function loadPhbCatalog(root) {
     },
   };
 }
-
-export function loadCharacters(root) {
-  const dir = path.join(root, "data/characters");
-  return fs
-    .readdirSync(dir)
-    .filter((f) => f.endsWith(".json"))
-    .map((f) => readJson(path.join(dir, f)));
-}

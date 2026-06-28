@@ -14,7 +14,7 @@ Atualizado: 2025-06-27 | Schema: `rpg` | PostgreSQL 14+
 | Catálogo PHB | **Pronto** | 58 tabelas `phb_*`, 6 ENUMs, 12 views |
 | Seed PHB | **Pronto** | `seed-phb.sql` + `seed-all.sql` (schema + dados) |
 | Pipeline | **Pronto** | JSON → `seed-phb.mjs` → SQL; validadores Node |
-| Fichas (`player_character`) | **Fora do schema** | Redesign pendente (fase 5) |
+| Fichas (`player_character`) | **Pronto (MVP)** | 12 tabelas + 3 views; 300 fichas importadas |
 
 ### Números do catálogo (manifest)
 
@@ -27,7 +27,7 @@ Atualizado: 2025-06-27 | Schema: `rpg` | PostgreSQL 14+
 1. **PK interna** `BIGSERIAL` + **slug UNIQUE** para API/JSON
 2. **Normalização** sobre JSONB (benefícios, slots, opções de espécie, propriedades de arma)
 3. **Views** como API SQL estável para a aplicação
-4. **Validação de regras de jogo** no Node (`npm run fichas:all`); integridade estrutural no PostgreSQL
+4. **Validação PHB** no Node (`npm run fichas:all`); **fichas** só no PostgreSQL (`npm run characters:all`)
 
 ---
 
@@ -41,10 +41,18 @@ Artefatos legados da camada v3 de fichas, incompatíveis com schema v4:
 | `scripts/import-characters.mjs` | Gerador do seed acima |
 | `scripts/validate-sync.mjs` | Testava sync `sheet ↔ projeções` sem schema |
 | `scripts/lib/character-sync.sql` | Funções/triggers de personagem sem tabelas |
-| `npm run generate:seed-characters` | Script npm obsoleto |
+| `npm run generate:seed-characters` | Obsoleto na v3 (recriado na fase 5) |
 | `npm run validate:sync` | Script npm obsoleto |
+| `data/characters/*.json` | Substituído por seed SQL + PostgreSQL |
+| `data/schema/character.schema.json` | Schema JSON de ficha removido |
+| `scripts/validate-character.mjs` | Validador JSON de fichas |
+| `scripts/generate-test-characters.mjs` | Gerador JSON local |
+| `scripts/analyze-characters.mjs` | Relatório sobre JSON |
+| `npm run validate:character` | Script npm obsoleto |
+| `npm run generate:test-characters` | Script npm obsoleto |
+| `npm run analyze:characters` | Script npm obsoleto |
 
-**Mantido:** `data/characters/*.json` e validadores JSON (`validate:character`, `fichas:all`) — fonte da verdade para quando a fase 5 for implementada.
+**Fichas (fase 5):** `import-characters.mjs` → `seed-characters.sql` → `run-seed-characters.mjs` → `validate-characters-db.mjs` + `audit:characters-dynamic`.
 
 ---
 
@@ -226,14 +234,18 @@ Migrar `phb_divine_order` → rows em `phb_class_option_value` para clérigo (`d
 
 ---
 
-### Fase 5 — Camada de fichas (`player_character`) — redesign
+### Fase 5 — Camada de fichas (`player_character`) — redesign ✅ (MVP)
 
 **Pré-requisito:** fases 0–2 concluídas.
+
+**Entregue:** schema + migration `003`, import SQL genérico, trigger `validate_pc_subclass`, sync runtime (HP/CA/recursos/slots), view `v_player_character_runtime`.
+
+**Adiado:** sync completo de criação (projeções ↔ sheet ao editar classe/equipamento estático); defesa sem armadura (bárbaro/monge) no recalc SQL.
 
 #### 5.1 Modelo híbrido (regra de ouro)
 
 ```
-sheet JSONB (canônico, round-trip com data/characters/{id}.json)
+sheet JSONB (espelho exportável; runtime em colunas + filhas)
     ↕ sync triggers
 projeções normalizadas (consultas, FKs, estado mutável)
 ```
@@ -253,13 +265,7 @@ CREATE TABLE rpg.player_character (
   alignment_id        BIGINT REFERENCES rpg.phb_alignment(id),
   ability_method_id   BIGINT REFERENCES rpg.phb_ability_generation_method(id),
   background_boost_id BIGINT REFERENCES rpg.phb_background_boost_option(id),
-  -- atributos projetados
-  forca               INTEGER NOT NULL CHECK (forca BETWEEN 1 AND 30),
-  destreza            INTEGER NOT NULL CHECK (destreza BETWEEN 1 AND 30),
-  constituicao        INTEGER NOT NULL CHECK (constituicao BETWEEN 1 AND 30),
-  inteligencia        INTEGER NOT NULL CHECK (inteligencia BETWEEN 1 AND 30),
-  sabedoria           INTEGER NOT NULL CHECK (sabedoria BETWEEN 1 AND 30),
-  carisma             INTEGER NOT NULL CHECK (carisma BETWEEN 1 AND 30),
+  -- atributos → player_character_ability (FK phb_ability)
   -- estado mutável
   hp_current          INTEGER NOT NULL DEFAULT 0,
   hp_max              INTEGER NOT NULL,
@@ -282,9 +288,10 @@ CREATE TABLE rpg.player_character (
 | Tabela | PK | FKs principais |
 |--------|-----|----------------|
 | `player_character_language` | `(character_id, language_id)` | → `phb_language` |
+| `player_character_ability` | `(character_id, ability_id)` | → `phb_ability`; coluna `score` |
 | `player_character_skill` | `(character_id, skill_id)` | → `phb_skill`; coluna `source` ENUM |
 | `player_character_saving_throw` | `(character_id, ability_id)` | → `phb_ability` |
-| `player_character_feat` | `(character_id, feat_id)` | → `phb_feat`; `options JSONB` |
+| `player_character_feat` | `(character_id, feat_id, source)` | → `phb_feat`; `options JSONB` — mesmo feat de background **e** species (ex.: Hábil) |
 | `player_character_equipment` | `id BIGSERIAL` | → `phb_item`; partial UNIQUE `(character_id, slot) WHERE equipped` |
 | `player_character_weapon_mastery` | `(character_id, weapon_id)` | → `phb_weapon` |
 | `player_character_expertise` | `(character_id, skill_id)` | → `phb_skill` |
@@ -333,25 +340,30 @@ CREATE INDEX idx_pc_name_trgm ON rpg.player_character USING gin (name gin_trgm_o
 #### 5.7 Views da ficha
 
 - `v_player_character_summary` — lista UI (nome, classe, nível, PV, CA)
+- `v_character_abilities` — atributos com slug/nome do catálogo
 - `v_character_resources` — recursos + labels do catálogo
 - `v_character_spells` — magias + fonte + nível
 
 #### 5.8 Pipeline de import
 
 ```
-data/characters/*.json
-  → scripts/import-characters.mjs (recriar)
-  → database/seed-characters.sql
-  → npm run seed:characters (separado do PHB)
+Catálogo PHB (data/phb) + blueprints em `character-generator.mjs`
+  → scripts/import-characters.mjs (`generate:seed-characters`)
+  → database/seed-characters.sql (pc-001…pc-300)
+  → npm run seed:characters
+  → npm run validate:characters-db && npm run audit:characters-dynamic
 ```
+
+Sem arquivos JSON de personagem — fonte da verdade é o PostgreSQL.
 
 **Classe única:** sem `character_class_level`; validar via `validateSingleClass()` no Node.
 
 #### 5.9 Critério de done fase 5
 
-- [ ] `npm run validate:sync` — round-trip `sheet ↔ projeções` para ficha `bjorn`
-- [ ] INSERT inválido (subclasse errada, nível 0) falha no PostgreSQL
-- [ ] 298 fichas importam sem erro
+- [x] INSERT inválido (subclasse errada) falha no PostgreSQL — `validate:characters-db`
+- [x] 300 fichas importam sem erro — `npm run characters:all`
+- [x] Sync runtime (HP, CA por equipamento, recursos, slots) — triggers + `audit:characters-dynamic`
+- [ ] Sync completo de criação (editar classe/perícias via sheet)
 
 ---
 
@@ -369,6 +381,9 @@ npm run seed:all        # generate:seed + validate:seed
 
 # Aplicar local
 DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/rpg npm run seed:run
+
+# Fichas (após catálogo)
+npm run characters:all
 ```
 
 ### Pós-migration manual
@@ -403,6 +418,10 @@ WHERE s.id IS NULL;
 | `scripts/validate-db-structure.mjs` | Valida schema |
 | `scripts/validate-seed.mjs` | Valida seed |
 | `scripts/run-seed.mjs` | Aplica via DATABASE_URL |
+| `database/seed-characters.sql` | DML fichas (gerado) |
+| `scripts/import-characters.mjs` | Fichas JSON → SQL |
+| `scripts/run-seed-characters.mjs` | Aplica seed de fichas |
+| `scripts/validate-characters-db.mjs` | Valida integridade das fichas |
 
 ---
 

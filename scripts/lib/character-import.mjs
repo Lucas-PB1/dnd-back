@@ -1,0 +1,249 @@
+/**
+ * Transforma JSON de ficha → linhas SQL (player_character + filhas).
+ */
+import {
+  batchInsert,
+  sqlBool,
+  sqlInt,
+  sqlJson,
+  sqlRef,
+  sqlStr,
+} from "./sql-escape.mjs";
+
+const EDITION_SLUG = "phb-2024-pt";
+
+const SPECIES_CATALOG_KEYS = new Set([
+  "lineageId",
+  "infernalLegacyId",
+  "gnomeLineageId",
+  "dragonAncestryId",
+  "giantAncestryId",
+  "aasimarRevelationId",
+]);
+
+const SPECIES_SKILL_KEYS = new Set(["keenSensesSkillId"]);
+const SPECIES_ABILITY_KEYS = new Set(["infernalCastingAbilityId", "gnomeCastingAbilityId"]);
+
+const EQUIPMENT_SOURCE = {
+  "class-starting": "class",
+  "background-starting": "background",
+  purchased: "purchase",
+  other: "other",
+};
+
+const EQUIPMENT_SLOT = {
+  mainHand: "main_hand",
+  offHand: "off_hand",
+  armor: "armor",
+  shield: "shield",
+  focus: "focus",
+  other: "other",
+};
+
+function mapEquipmentSource(source) {
+  return EQUIPMENT_SOURCE[source] ?? "other";
+}
+
+function mapEquipmentSlot(slot) {
+  if (!slot) return "NULL";
+  const mapped = EQUIPMENT_SLOT[slot] ?? slot.replace(/([A-Z])/g, "_$1").toLowerCase();
+  return `${sqlStr(mapped)}::rpg.equipment_slot`;
+}
+
+export function buildCharacterRows(char) {
+  const sheet = { ...char };
+  delete sheet.$schema;
+
+  const ag = char.abilityGeneration ?? {};
+  const hp = char.hp ?? {};
+  const ac = char.armorClass ?? {};
+
+  const main = {
+    id: sqlStr(char.id),
+    name: sqlStr(char.name),
+    level: sqlInt(char.level),
+    edition_id: sqlRef("phb_edition", EDITION_SLUG),
+    species_id: sqlRef("phb_species", char.speciesId),
+    background_id: sqlRef("phb_background", char.backgroundId),
+    class_id: sqlRef("phb_class", char.classId),
+    subclass_id: char.subclassId ? sqlRef("phb_subclass", char.subclassId) : "NULL",
+    alignment_id: char.alignmentId ? sqlRef("phb_alignment", char.alignmentId) : "NULL",
+    ability_method_id: ag.methodId
+      ? sqlRef("phb_ability_generation_method", ag.methodId)
+      : "NULL",
+    background_boost_id: ag.backgroundBoostId
+      ? sqlRef("phb_background_boost_option", ag.backgroundBoostId)
+      : "NULL",
+    hp_current: sqlInt(hp.current ?? 0),
+    hp_max: sqlInt(hp.max),
+    hp_temp: sqlInt(hp.temp ?? 0),
+    ac_total: sqlInt(ac.total),
+    ac_detail: sqlJson(ac),
+    passive_perception: sqlInt(char.passivePerception),
+    sheet: sqlJson(sheet),
+    ability_generation: sqlJson(char.abilityGeneration ?? null),
+    starting_packages: sqlJson(char.startingPackages ?? null),
+    notes: sqlStr(char.notes ?? null),
+  };
+
+  const abilities = Object.entries(char.abilities ?? {}).map(([slug, score]) => ({
+    character_id: sqlStr(char.id),
+    ability_id: sqlRef("phb_ability", slug),
+    score: sqlInt(score),
+  }));
+
+  const languages = (char.languageIds ?? []).map((langId) => ({
+    character_id: sqlStr(char.id),
+    language_id: sqlRef("phb_language", langId),
+  }));
+
+  const skills = (char.skillProficiencies ?? []).map((s) => ({
+    character_id: sqlStr(char.id),
+    skill_id: sqlRef("phb_skill", s.skillId),
+    source: `${sqlStr(s.source)}::rpg.skill_source`,
+  }));
+
+  const saves = (char.savingThrowProficiencies ?? []).map((ab) => ({
+    character_id: sqlStr(char.id),
+    ability_id: sqlRef("phb_ability", ab),
+  }));
+
+  const feats = (char.feats ?? []).map((f) => {
+    const { featId, source, ...opts } = f;
+    const options = Object.keys(opts).length ? opts : null;
+    return {
+      character_id: sqlStr(char.id),
+      feat_id: sqlRef("phb_feat", featId),
+      source: `${sqlStr(source)}::rpg.feat_source`,
+      options: sqlJson(options),
+    };
+  });
+
+  const equipment = (char.equipment ?? []).map((e) => ({
+    character_id: sqlStr(char.id),
+    item_id: sqlRef("phb_item", e.itemId),
+    quantity: sqlInt(e.quantity ?? 1),
+    source: `${sqlStr(mapEquipmentSource(e.source))}::rpg.equipment_source`,
+    equipped: sqlBool(Boolean(e.equipped)),
+    slot: mapEquipmentSlot(e.slot),
+  }));
+
+  const masteries = (char.weaponMasteryWeaponIds ?? []).map((weaponSlug) => ({
+    character_id: sqlStr(char.id),
+    weapon_id: sqlRef("phb_item", weaponSlug),
+  }));
+
+  const expertise = (char.expertise ?? []).map((skillId) => ({
+    character_id: sqlStr(char.id),
+    skill_id: sqlRef("phb_skill", skillId),
+  }));
+
+  const spellList = [];
+  const sc = char.spellcasting;
+  if (sc) {
+    for (const [sourceSlug, spellIds] of Object.entries(sc.cantrips ?? {})) {
+      for (const spellId of spellIds) {
+        spellList.push({
+          character_id: sqlStr(char.id),
+          spell_id: sqlRef("phb_spell", spellId),
+          list_type: "'known'::rpg.spell_list_type",
+          source_id: sqlRef("phb_spell_source", sourceSlug),
+        });
+      }
+    }
+    for (const [sourceSlug, spellIds] of Object.entries(sc.prepared ?? {})) {
+      for (const spellId of spellIds) {
+        spellList.push({
+          character_id: sqlStr(char.id),
+          spell_id: sqlRef("phb_spell", spellId),
+          list_type: "'prepared'::rpg.spell_list_type",
+          source_id: sqlRef("phb_spell_source", sourceSlug),
+        });
+      }
+    }
+  }
+
+  const spellSlots = [];
+  if (sc?.slotsMax) {
+    for (const [circle, max] of Object.entries(sc.slotsMax)) {
+      spellSlots.push({
+        character_id: sqlStr(char.id),
+        circle: sqlInt(circle),
+        slots_max: sqlInt(max),
+        slots_used: sqlInt(sc.slotsUsed?.[circle] ?? 0),
+      });
+    }
+  }
+
+  const resources = Object.entries(char.resources ?? {}).map(([key, val]) => ({
+    character_id: sqlStr(char.id),
+    resource_id: sqlRef("phb_resource_definition", key),
+    max_value: sqlInt(val.max),
+    remaining: sqlInt(val.remaining),
+  }));
+
+  const speciesOptions = [];
+  for (const [key, value] of Object.entries(char.speciesChoices ?? {})) {
+    const row = {
+      character_id: sqlStr(char.id),
+      species_id: sqlRef("phb_species", char.speciesId),
+      option_key: sqlStr(key),
+      catalog_value_id: "NULL",
+      skill_id: "NULL",
+      ability_id: "NULL",
+      json_value: "NULL",
+    };
+    if (SPECIES_CATALOG_KEYS.has(key)) {
+      row.catalog_value_id = sqlStr(value);
+    } else if (SPECIES_SKILL_KEYS.has(key)) {
+      row.skill_id = sqlRef("phb_skill", value);
+    } else if (SPECIES_ABILITY_KEYS.has(key)) {
+      row.ability_id = sqlRef("phb_ability", value);
+    } else {
+      row.json_value = sqlJson(value);
+    }
+    speciesOptions.push(row);
+  }
+
+  const classOptions = [];
+  for (const [key, value] of Object.entries(char.classChoices ?? {})) {
+    const row = {
+      character_id: sqlStr(char.id),
+      class_id: sqlRef("phb_class", char.classId),
+      option_key: sqlStr(key),
+      catalog_value_id: "NULL",
+      fighting_style_id: "NULL",
+      terrain_id: "NULL",
+      json_value: "NULL",
+    };
+    if (key === "divineOrder") {
+      row.catalog_value_id = sqlStr(value);
+    } else if (key === "fightingStyleId") {
+      row.fighting_style_id = sqlRef("phb_fighting_style", value);
+    } else if (key === "landTerrainId") {
+      row.terrain_id = sqlRef("phb_druid_land_terrain", value);
+    } else {
+      row.json_value = sqlJson(value);
+    }
+    classOptions.push(row);
+  }
+
+  return {
+    main,
+    abilities,
+    languages,
+    skills,
+    saves,
+    feats,
+    equipment,
+    masteries,
+    expertise,
+    spellList,
+    spellSlots,
+    resources,
+    speciesOptions,
+    classOptions,
+  };
+}
+
+export { batchInsert };

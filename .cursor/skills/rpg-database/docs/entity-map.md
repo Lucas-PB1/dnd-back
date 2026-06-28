@@ -9,8 +9,8 @@ Diagrama: [er-diagram.md](er-diagram.md) | Roadmap: [plano-final.md](plano-final
 | Camada | JSON | SQL |
 |--------|------|-----|
 | Catálogo | `data/phb/**` | `rpg.phb_*` (58 tabelas) |
-| Ficha | `data/characters/*.json` | **Fase 5** — `rpg.player_character` + filhas |
-| Regras | `data/schema/*.schema.json` | Validação Node (`npm run fichas:all`) |
+| Ficha | — (PostgreSQL) | `rpg.player_character` + filhas — seed `pc-001…pc-300` |
+| Regras PHB | `data/schema/*.schema.json` | Validação Node (`npm run fichas:all`) |
 
 ## Catálogo PHB
 
@@ -41,22 +41,26 @@ Diagrama: [er-diagram.md](er-diagram.md) | Roadmap: [plano-final.md](plano-final
 | ID interno | — | `id BIGSERIAL PRIMARY KEY` |
 | FKs | slug no JSON | `*_id BIGINT REFERENCES ...` |
 
-## Ficha de personagem (fase 5 — planejado)
+## Ficha de personagem
 
-| JSON | SQL previsto |
-|------|--------------|
+| JSON | SQL |
+|------|-----|
 | (documento inteiro) | `player_character.sheet` JSONB NOT NULL |
 | `id`, `name`, `level` | colunas + FKs indexadas |
-| `abilities` | `forca` … `carisma` |
-| `hp` | `hp_current`, `hp_max`, `hp_temp` |
-| `armorClass` | `ac_total` + `ac_detail` JSONB |
+| `abilities` | `player_character_ability` → `phb_ability` (PK composta) |
+| `hp` | `hp_current`, `hp_max`, `hp_temp` — **mutável em jogo** |
+| `armorClass` | `ac_total` + `ac_detail` — **recalcula** ao equipar/desequipar |
+| `resources.*.remaining` | `player_character_resource.remaining` |
+| `spellcasting.slotsUsed` | `player_character_spell_slot.slots_used` |
+
+**UI / API:** ler combate de `v_player_character_runtime`, não de `sheet->hp` ou `sheet->armorClass`. O `sheet` JSON espelha o runtime via triggers após cada UPDATE.
 | `resources` | `player_character_resource` |
 | `speciesChoices` | `player_character_species_option` |
 | `classChoices` | `player_character_class_option` |
 | `languageIds` | `player_character_language` |
 | `skillProficiencies` | `player_character_skill` |
 | `savingThrowProficiencies` | `player_character_saving_throw` |
-| `feats` | `player_character_feat` |
+| `feats` | `player_character_feat` — PK `(character_id, feat_id, source)` |
 | `spellcasting` | `player_character_spell_list` + `_spell_slot` |
 | `equipment` | `player_character_equipment` |
 | `weaponMasteryWeaponIds` | `player_character_weapon_mastery` |
@@ -72,13 +76,13 @@ Diagrama: [er-diagram.md](er-diagram.md) | Roadmap: [plano-final.md](plano-final
 - `rpg.option_value_type` — catalog, skill, ability, fighting_style, terrain, skill_list, json
 - `rpg.species_choice_kind` — elf_lineage, infernal_legacy, dragon_ancestry
 
-ENUMs da ficha (fase 5): `skill_source`, `feat_source`, `equipment_source`, `equipment_slot`, `spell_list_type`.
+ENUMs da ficha: `skill_source`, `feat_source`, `equipment_source`, `equipment_slot`, `spell_list_type`.
 
 ## Removido (legado)
 
 | v1/v2 | v4 |
 |-------|-----|
-| `character` | — (fase 5: `player_character`) |
+| `character` | `player_character` |
 | `benefits JSONB` em feat | `phb_feat_benefit` |
 | `property_ids TEXT[]` | `phb_weapon_property_link` |
 | `skill_choices JSONB` em class | `phb_class_skill_pool` |

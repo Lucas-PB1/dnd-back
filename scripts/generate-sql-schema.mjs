@@ -4,6 +4,60 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { PLAYER_CHARACTER_DDL } from "./lib/player-character-ddl.mjs";
+
+const PLAYER_CHARACTER_ABILITY_MIGRATION = `-- Fase 5.1 — atributos normalizados (FK phb_ability)
+
+CREATE TABLE IF NOT EXISTS rpg.player_character_ability (
+  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
+  ability_id   BIGINT NOT NULL REFERENCES rpg.phb_ability(id),
+  score        INTEGER NOT NULL CHECK (score BETWEEN 1 AND 30),
+  PRIMARY KEY (character_id, ability_id)
+);
+
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'rpg' AND table_name = 'player_character' AND column_name = 'forca'
+  ) THEN
+    INSERT INTO rpg.player_character_ability (character_id, ability_id, score)
+    SELECT pc.id, a.id, v.score
+    FROM rpg.player_character pc
+    CROSS JOIN LATERAL (
+      VALUES
+        ('forca', pc.forca),
+        ('destreza', pc.destreza),
+        ('constituicao', pc.constituicao),
+        ('inteligencia', pc.inteligencia),
+        ('sabedoria', pc.sabedoria),
+        ('carisma', pc.carisma)
+    ) AS v(slug, score)
+    JOIN rpg.phb_ability a ON a.slug = v.slug
+    ON CONFLICT (character_id, ability_id) DO UPDATE SET score = EXCLUDED.score;
+
+    ALTER TABLE rpg.player_character
+      DROP COLUMN forca,
+      DROP COLUMN destreza,
+      DROP COLUMN constituicao,
+      DROP COLUMN inteligencia,
+      DROP COLUMN sabedoria,
+      DROP COLUMN carisma;
+  END IF;
+END $$;
+
+CREATE OR REPLACE VIEW rpg.v_character_abilities AS
+SELECT
+  pc.id AS character_id,
+  pc.name AS character_name,
+  a.slug AS ability_slug,
+  a.name AS ability_name,
+  pca.score
+FROM rpg.player_character_ability pca
+JOIN rpg.player_character pc ON pc.id = pca.character_id
+JOIN rpg.phb_ability a ON a.id = pca.ability_id;
+`;
+
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -953,6 +1007,8 @@ $$ LANGUAGE plpgsql;
 
 ${AUDIT_TRIGGERS_SQL}
 
+${PLAYER_CHARACTER_DDL}
+
 COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — catálogo v4 (BIGINT + slug)';
 COMMENT ON COLUMN rpg.phb_spell.slug IS 'Identificador canônico do JSON/API; imutável na prática';
 `;
@@ -964,6 +1020,16 @@ fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.mkdirSync(migrationDir, { recursive: true });
 fs.writeFileSync(outFile, prodSql, "utf8");
 fs.writeFileSync(path.join(migrationDir, "001_initial_catalog.sql"), prodSql, "utf8");
+fs.writeFileSync(
+  path.join(migrationDir, "003_player_character.sql"),
+  `-- Fase 5 — camada de fichas\n\n${PLAYER_CHARACTER_DDL}`,
+  "utf8"
+);
+fs.writeFileSync(
+  path.join(migrationDir, "004_player_character_ability.sql"),
+  PLAYER_CHARACTER_ABILITY_MIGRATION,
+  "utf8"
+);
 fs.writeFileSync(path.join(root, "database", "dev-reset.sql"), DEV_RESET, "utf8");
 console.log(`✓ ${path.relative(root, outFile)} — PostgreSQL v4 (${prodSql.split("\n").length} linhas)`);
 console.log(`✓ ${path.relative(root, path.join(migrationDir, "001_initial_catalog.sql"))}`);
