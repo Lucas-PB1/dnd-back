@@ -4,7 +4,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { PLAYER_CHARACTER_DDL } from "./lib/player-character-ddl.mjs";
+import { PLAYER_CHARACTER_DDL, PLAYER_CHARACTER_RELATIONAL_MIGRATION, PLAYER_CHARACTER_AC_MIGRATION } from "./lib/player-character-ddl.mjs";
 
 const PLAYER_CHARACTER_ABILITY_MIGRATION = `-- Fase 5.1 — atributos normalizados (FK phb_ability)
 
@@ -1028,6 +1028,16 @@ fs.writeFileSync(
 fs.writeFileSync(
   path.join(migrationDir, "004_player_character_ability.sql"),
   PLAYER_CHARACTER_ABILITY_MIGRATION,
+  "utf8"
+);
+fs.writeFileSync(
+  path.join(migrationDir, "005_player_character_relational.sql"),
+  `-- Fase 5.2 — fichas 100% relacionais\n\n${PLAYER_CHARACTER_RELATIONAL_MIGRATION}`,
+  "utf8"
+);
+fs.writeFileSync(
+  path.join(migrationDir, "006_player_character_ac_columns.sql"),
+  `-- Fase 5.3 — CA normalizada\n\n${PLAYER_CHARACTER_AC_MIGRATION}`,
   "utf8"
 );
 fs.writeFileSync(path.join(root, "database", "dev-reset.sql"), DEV_RESET, "utf8");

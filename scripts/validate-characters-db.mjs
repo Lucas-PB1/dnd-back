@@ -26,15 +26,12 @@ try {
   await client.connect();
 
   const { rows: pc } = await client.query(
-    `SELECT id, name, level, passive_perception, sheet->>'passivePerception' AS sheet_pp
+    `SELECT id, name, level, passive_perception
      FROM rpg.player_character WHERE id = 'pc-001'`
   );
   if (!pc.length) fail("personagem pc-001 ausente");
-  else {
-    if (pc[0].name !== "Personagem 001") fail(`nome esperado genérico, encontrado ${pc[0].name}`);
-    if (Number(pc[0].passive_perception) !== Number(pc[0].sheet_pp)) {
-      fail(`pc-001 passive_perception ${pc[0].passive_perception} ≠ sheet ${pc[0].sheet_pp}`);
-    }
+  else if (pc[0].name !== "Personagem 001") {
+    fail(`nome esperado genérico, encontrado ${pc[0].name}`);
   }
 
   const { rows: cntRows } = await client.query(`SELECT COUNT(*)::int AS n FROM rpg.player_character`);
@@ -76,11 +73,24 @@ try {
   );
   if (abilitiesView[0].n !== 6) fail("v_character_abilities pc-001 deve ter 6 linhas");
 
+  const { rows: full } = await client.query(
+    `SELECT document->>'id' AS doc_id, document->'hp'->>'current' AS doc_hp
+     FROM rpg.v_player_character_full WHERE id = 'pc-001'`
+  );
+  if (!full.length) fail("v_player_character_full pc-001 ausente");
+  else if (full[0].doc_id !== "pc-001") fail("document.id diverge do personagem");
+
+  const { rows: legacyAcDetail } = await client.query(`
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'rpg' AND table_name = 'player_character' AND column_name = 'ac_detail'
+  `);
+  if (legacyAcDetail.length) fail("coluna ac_detail ainda existe — rode migration 006");
+
   try {
     await client.query(`
       INSERT INTO rpg.player_character (
         id, name, level, edition_id, species_id, background_id, class_id, subclass_id,
-        hp_max, ac_total, sheet
+        hp_max, ac_total
       ) VALUES (
         'bad-test', 'Bad', 1,
         (SELECT id FROM rpg.phb_edition WHERE slug = 'phb-2024-pt'),
@@ -88,7 +98,7 @@ try {
         (SELECT id FROM rpg.phb_background WHERE slug = 'soldier'),
         (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'),
         (SELECT id FROM rpg.phb_subclass WHERE slug = 'life'),
-        10, 10, '{}'::jsonb
+        10, 10
       )
     `);
     fail("INSERT com subclasse errada deveria falhar");

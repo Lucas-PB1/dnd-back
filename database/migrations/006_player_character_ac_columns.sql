@@ -1,221 +1,26 @@
-/** DDL PostgreSQL — camada de fichas (player_character). */
-export const PLAYER_CHARACTER_DDL = `
--- =============================================================================
--- FICHAS — player_character (relacional + runtime)
--- =============================================================================
+-- Fase 5.3 — CA normalizada
 
-CREATE TYPE rpg.skill_source AS ENUM (
-  'species','background','class','feat','other'
-);
+-- Fase 5.3 — ac_detail JSONB → colunas escalares
 
-CREATE TYPE rpg.feat_source AS ENUM (
-  'background','class','species','general','other'
-);
+ALTER TABLE rpg.player_character
+  ADD COLUMN IF NOT EXISTS ac_base INTEGER NOT NULL DEFAULT 10,
+  ADD COLUMN IF NOT EXISTS ac_dex_bonus INTEGER NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS ac_shield_bonus INTEGER NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS ac_fighting_style_bonus INTEGER NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS ac_other_bonus INTEGER NOT NULL DEFAULT 0;
 
-CREATE TYPE rpg.equipment_source AS ENUM (
-  'background','class','purchase','other'
-);
+UPDATE rpg.player_character
+SET
+  ac_base = COALESCE((ac_detail->>'base')::INTEGER, 10),
+  ac_dex_bonus = COALESCE((ac_detail->>'dexBonus')::INTEGER, 0),
+  ac_shield_bonus = COALESCE((ac_detail->>'shieldBonus')::INTEGER, 0),
+  ac_fighting_style_bonus = COALESCE((ac_detail->>'fightingStyleBonus')::INTEGER, 0),
+  ac_other_bonus = COALESCE((ac_detail->>'otherBonus')::INTEGER, 0)
+WHERE ac_detail IS NOT NULL;
 
-CREATE TYPE rpg.equipment_slot AS ENUM (
-  'main_hand','off_hand','armor','shield','focus','other'
-);
+DROP VIEW IF EXISTS rpg.v_player_character_full;
+DROP VIEW IF EXISTS rpg.v_player_character_runtime;
 
-CREATE TYPE rpg.spell_list_type AS ENUM ('known','prepared','always_prepared');
-
-CREATE TABLE rpg.player_character (
-  id                         TEXT PRIMARY KEY,
-  name                       TEXT NOT NULL,
-  level                      INTEGER NOT NULL CHECK (level BETWEEN 1 AND 20),
-  edition_id                 BIGINT NOT NULL REFERENCES rpg.phb_edition(id),
-  species_id                 BIGINT NOT NULL REFERENCES rpg.phb_species(id),
-  background_id              BIGINT NOT NULL REFERENCES rpg.phb_background(id),
-  class_id                   BIGINT NOT NULL REFERENCES rpg.phb_class(id),
-  subclass_id                BIGINT REFERENCES rpg.phb_subclass(id),
-  alignment_id               BIGINT REFERENCES rpg.phb_alignment(id),
-  ability_method_id          BIGINT REFERENCES rpg.phb_ability_generation_method(id),
-  background_boost_id        BIGINT REFERENCES rpg.phb_background_boost_option(id),
-  class_starting_option      TEXT,
-  background_starting_option TEXT,
-  hp_current                 INTEGER NOT NULL DEFAULT 0 CHECK (hp_current >= 0),
-  hp_max                     INTEGER NOT NULL CHECK (hp_max >= 1),
-  hp_temp                    INTEGER NOT NULL DEFAULT 0 CHECK (hp_temp >= 0),
-  ac_total                   INTEGER NOT NULL CHECK (ac_total >= 0),
-  ac_base                    INTEGER NOT NULL DEFAULT 10 CHECK (ac_base >= 0),
-  ac_dex_bonus               INTEGER NOT NULL DEFAULT 0,
-  ac_shield_bonus            INTEGER NOT NULL DEFAULT 0 CHECK (ac_shield_bonus >= 0),
-  ac_fighting_style_bonus    INTEGER NOT NULL DEFAULT 0,
-  ac_other_bonus             INTEGER NOT NULL DEFAULT 0,
-  passive_perception         INTEGER,
-  notes                      TEXT,
-  created_at                 TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at                 TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  CHECK (
-    ac_total = ac_base + ac_dex_bonus + ac_shield_bonus
-      + ac_fighting_style_bonus + ac_other_bonus
-  )
-);
-
-CREATE TABLE rpg.player_character_language (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  language_id  BIGINT NOT NULL REFERENCES rpg.phb_language(id),
-  PRIMARY KEY (character_id, language_id)
-);
-
-CREATE TABLE rpg.player_character_ability (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  ability_id   BIGINT NOT NULL REFERENCES rpg.phb_ability(id),
-  score        INTEGER NOT NULL CHECK (score BETWEEN 1 AND 30),
-  PRIMARY KEY (character_id, ability_id)
-);
-
-CREATE TABLE rpg.player_character_skill (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  skill_id     BIGINT NOT NULL REFERENCES rpg.phb_skill(id),
-  source       rpg.skill_source NOT NULL,
-  PRIMARY KEY (character_id, skill_id)
-);
-
-CREATE TABLE rpg.player_character_saving_throw (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  ability_id   BIGINT NOT NULL REFERENCES rpg.phb_ability(id),
-  PRIMARY KEY (character_id, ability_id)
-);
-
-CREATE TABLE rpg.player_character_feat (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  feat_id      BIGINT NOT NULL REFERENCES rpg.phb_feat(id),
-  source       rpg.feat_source NOT NULL,
-  options      JSONB,
-  PRIMARY KEY (character_id, feat_id, source)
-);
-
-CREATE TABLE rpg.player_character_equipment (
-  id           BIGSERIAL PRIMARY KEY,
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  item_id      BIGINT NOT NULL REFERENCES rpg.phb_item(id),
-  quantity     INTEGER NOT NULL DEFAULT 1 CHECK (quantity >= 1),
-  source       rpg.equipment_source NOT NULL,
-  equipped     BOOLEAN NOT NULL DEFAULT FALSE,
-  slot         rpg.equipment_slot
-);
-
-CREATE TABLE rpg.player_character_weapon_mastery (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  weapon_id    BIGINT NOT NULL REFERENCES rpg.phb_weapon(item_id),
-  PRIMARY KEY (character_id, weapon_id)
-);
-
-CREATE TABLE rpg.player_character_expertise (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  skill_id     BIGINT NOT NULL REFERENCES rpg.phb_skill(id),
-  PRIMARY KEY (character_id, skill_id)
-);
-
-CREATE TABLE rpg.player_character_spell_list (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  spell_id     BIGINT NOT NULL REFERENCES rpg.phb_spell(id),
-  list_type    rpg.spell_list_type NOT NULL,
-  source_id    BIGINT NOT NULL REFERENCES rpg.phb_spell_source(id),
-  PRIMARY KEY (character_id, spell_id, list_type, source_id)
-);
-
-CREATE TABLE rpg.player_character_spell_slot (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  circle       INTEGER NOT NULL CHECK (circle BETWEEN 1 AND 9),
-  slots_max    INTEGER NOT NULL CHECK (slots_max >= 0),
-  slots_used   INTEGER NOT NULL DEFAULT 0 CHECK (slots_used >= 0),
-  PRIMARY KEY (character_id, circle),
-  CHECK (slots_used <= slots_max)
-);
-
-CREATE TABLE rpg.player_character_resource (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  resource_id  BIGINT NOT NULL REFERENCES rpg.phb_resource_definition(id),
-  max_value    INTEGER NOT NULL CHECK (max_value >= 0),
-  remaining    INTEGER NOT NULL CHECK (remaining >= 0),
-  PRIMARY KEY (character_id, resource_id),
-  CHECK (remaining <= max_value)
-);
-
-CREATE TABLE rpg.player_character_species_option (
-  character_id      TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  species_id        BIGINT NOT NULL REFERENCES rpg.phb_species(id),
-  option_key        TEXT NOT NULL,
-  catalog_value_id  TEXT,
-  skill_id          BIGINT REFERENCES rpg.phb_skill(id),
-  ability_id        BIGINT REFERENCES rpg.phb_ability(id),
-  json_value        JSONB,
-  PRIMARY KEY (character_id, option_key),
-  CONSTRAINT pso_has_value CHECK (
-    catalog_value_id IS NOT NULL OR skill_id IS NOT NULL
-    OR ability_id IS NOT NULL OR json_value IS NOT NULL
-  )
-);
-
-CREATE TABLE rpg.player_character_class_option (
-  character_id       TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  class_id           BIGINT NOT NULL REFERENCES rpg.phb_class(id),
-  option_key         TEXT NOT NULL,
-  catalog_value_id   TEXT,
-  fighting_style_id  BIGINT REFERENCES rpg.phb_fighting_style(id),
-  terrain_id         BIGINT REFERENCES rpg.phb_druid_land_terrain(id),
-  json_value         JSONB,
-  PRIMARY KEY (character_id, option_key),
-  CONSTRAINT pco_has_value CHECK (
-    catalog_value_id IS NOT NULL OR fighting_style_id IS NOT NULL
-    OR terrain_id IS NOT NULL OR json_value IS NOT NULL
-  )
-);
-
-CREATE UNIQUE INDEX uq_pc_equipment_equipped_slot
-  ON rpg.player_character_equipment (character_id, slot)
-  WHERE equipped = TRUE AND slot IS NOT NULL;
-
-CREATE INDEX idx_pc_class_level ON rpg.player_character (class_id, level);
-CREATE INDEX idx_pc_species ON rpg.player_character (species_id);
-CREATE INDEX idx_pc_edition ON rpg.player_character (edition_id);
-CREATE INDEX idx_pc_name_trgm ON rpg.player_character USING gin (name gin_trgm_ops);
-
--- =============================================================================
--- INTEGRIDADE FICHAS
--- =============================================================================
-
-CREATE OR REPLACE FUNCTION rpg.validate_pc_subclass()
-RETURNS TRIGGER AS $$
-DECLARE
-  sub_class_id BIGINT;
-  unlock_level INTEGER;
-BEGIN
-  IF NEW.subclass_id IS NULL THEN
-    RETURN NEW;
-  END IF;
-  SELECT s.class_id, c.subclass_unlock_level
-    INTO sub_class_id, unlock_level
-  FROM rpg.phb_subclass s
-  JOIN rpg.phb_class c ON c.id = s.class_id
-  WHERE s.id = NEW.subclass_id;
-  IF sub_class_id IS NULL THEN
-    RAISE EXCEPTION 'subclass_id % inválida', NEW.subclass_id;
-  END IF;
-  IF sub_class_id <> NEW.class_id THEN
-    RAISE EXCEPTION 'subclasse não pertence à classe do personagem';
-  END IF;
-  IF NEW.level < unlock_level THEN
-    RAISE EXCEPTION 'nível % insuficiente para subclasse (desbloqueio %)', NEW.level, unlock_level;
-  END IF;
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER tr_validate_pc_subclass
-  BEFORE INSERT OR UPDATE ON rpg.player_character
-  FOR EACH ROW EXECUTE FUNCTION rpg.validate_pc_subclass();
-
-CREATE TRIGGER tr_player_character_updated_at
-  BEFORE UPDATE ON rpg.player_character
-  FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
-
--- =============================================================================
 -- RUNTIME — CA recalculada a partir de equipamento
 -- =============================================================================
 
@@ -320,6 +125,8 @@ CREATE TRIGGER tr_recalc_ac_on_equipment
   FOR EACH ROW EXECUTE FUNCTION rpg.trg_recalculate_ac_on_equipment();
 
 -- =============================================================================
+
+
 -- DOCUMENTO — monta JSON a partir das projeções (substitui sheet)
 -- =============================================================================
 
@@ -678,65 +485,7 @@ FROM rpg.player_character_spell_list ps
 JOIN rpg.player_character pc ON pc.id = ps.character_id
 JOIN rpg.phb_spell s ON s.id = ps.spell_id
 JOIN rpg.phb_spell_source ss ON ss.id = ps.source_id;
-`;
 
-const _docViewsIdx = PLAYER_CHARACTER_DDL.indexOf("-- DOCUMENTO");
-export const PLAYER_CHARACTER_RELATIONAL_MIGRATION = `-- Fase 5.2 — remove sheet JSONB; pacotes iniciais viram colunas; documento via view
-
-ALTER TABLE rpg.player_character
-  ADD COLUMN IF NOT EXISTS class_starting_option TEXT,
-  ADD COLUMN IF NOT EXISTS background_starting_option TEXT;
-
-UPDATE rpg.player_character
-SET
-  class_starting_option = COALESCE(class_starting_option, starting_packages->>'classOption'),
-  background_starting_option = COALESCE(background_starting_option, starting_packages->>'backgroundOption')
-WHERE starting_packages IS NOT NULL;
-
-DROP TRIGGER IF EXISTS tr_sync_sheet_runtime ON rpg.player_character;
-DROP TRIGGER IF EXISTS tr_sync_sheet_resource ON rpg.player_character_resource;
-DROP TRIGGER IF EXISTS tr_sync_sheet_spell_slot ON rpg.player_character_spell_slot;
-
-DROP FUNCTION IF EXISTS rpg.sync_sheet_runtime();
-DROP FUNCTION IF EXISTS rpg.sync_sheet_resource();
-DROP FUNCTION IF EXISTS rpg.sync_sheet_spell_slot();
-
-DROP INDEX IF EXISTS rpg.idx_pc_sheet;
-
-ALTER TABLE rpg.player_character
-  DROP COLUMN IF EXISTS sheet,
-  DROP COLUMN IF EXISTS ability_generation,
-  DROP COLUMN IF EXISTS starting_packages;
-
-${PLAYER_CHARACTER_DDL.slice(_docViewsIdx)}
-`;
-
-const _runtimeIdx = PLAYER_CHARACTER_DDL.indexOf("-- RUNTIME — CA recalculada");
-const _docIdx = PLAYER_CHARACTER_DDL.indexOf("-- DOCUMENTO");
-export const PLAYER_CHARACTER_AC_MIGRATION = `-- Fase 5.3 — ac_detail JSONB → colunas escalares
-
-ALTER TABLE rpg.player_character
-  ADD COLUMN IF NOT EXISTS ac_base INTEGER NOT NULL DEFAULT 10,
-  ADD COLUMN IF NOT EXISTS ac_dex_bonus INTEGER NOT NULL DEFAULT 0,
-  ADD COLUMN IF NOT EXISTS ac_shield_bonus INTEGER NOT NULL DEFAULT 0,
-  ADD COLUMN IF NOT EXISTS ac_fighting_style_bonus INTEGER NOT NULL DEFAULT 0,
-  ADD COLUMN IF NOT EXISTS ac_other_bonus INTEGER NOT NULL DEFAULT 0;
-
-UPDATE rpg.player_character
-SET
-  ac_base = COALESCE((ac_detail->>'base')::INTEGER, 10),
-  ac_dex_bonus = COALESCE((ac_detail->>'dexBonus')::INTEGER, 0),
-  ac_shield_bonus = COALESCE((ac_detail->>'shieldBonus')::INTEGER, 0),
-  ac_fighting_style_bonus = COALESCE((ac_detail->>'fightingStyleBonus')::INTEGER, 0),
-  ac_other_bonus = COALESCE((ac_detail->>'otherBonus')::INTEGER, 0)
-WHERE ac_detail IS NOT NULL;
-
-DROP VIEW IF EXISTS rpg.v_player_character_full;
-DROP VIEW IF EXISTS rpg.v_player_character_runtime;
-
-${PLAYER_CHARACTER_DDL.slice(_runtimeIdx, _docIdx)}
-
-${PLAYER_CHARACTER_DDL.slice(_docIdx)}
 
 ALTER TABLE rpg.player_character DROP COLUMN IF EXISTS ac_detail;
 
@@ -748,4 +497,3 @@ ALTER TABLE rpg.player_character
     ac_total = ac_base + ac_dex_bonus + ac_shield_bonus
       + ac_fighting_style_bonus + ac_other_bonus
   );
-`;

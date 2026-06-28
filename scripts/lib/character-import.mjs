@@ -51,12 +51,10 @@ function mapEquipmentSlot(slot) {
 }
 
 export function buildCharacterRows(char) {
-  const sheet = { ...char };
-  delete sheet.$schema;
-
   const ag = char.abilityGeneration ?? {};
   const hp = char.hp ?? {};
   const ac = char.armorClass ?? {};
+  const sp = char.startingPackages ?? {};
 
   const main = {
     id: sqlStr(char.id),
@@ -74,15 +72,18 @@ export function buildCharacterRows(char) {
     background_boost_id: ag.backgroundBoostId
       ? sqlRef("phb_background_boost_option", ag.backgroundBoostId)
       : "NULL",
+    class_starting_option: sqlStr(sp.classOption ?? null),
+    background_starting_option: sqlStr(sp.backgroundOption ?? null),
     hp_current: sqlInt(hp.current ?? 0),
     hp_max: sqlInt(hp.max),
     hp_temp: sqlInt(hp.temp ?? 0),
     ac_total: sqlInt(ac.total),
-    ac_detail: sqlJson(ac),
+    ac_base: sqlInt(ac.base ?? 10),
+    ac_dex_bonus: sqlInt(ac.dexBonus ?? 0),
+    ac_shield_bonus: sqlInt(ac.shieldBonus ?? 0),
+    ac_fighting_style_bonus: sqlInt(ac.fightingStyleBonus ?? 0),
+    ac_other_bonus: sqlInt(ac.otherBonus ?? 0),
     passive_perception: sqlInt(char.passivePerception),
-    sheet: sqlJson(sheet),
-    ability_generation: sqlJson(char.abilityGeneration ?? null),
-    starting_packages: sqlJson(char.startingPackages ?? null),
     notes: sqlStr(char.notes ?? null),
   };
 

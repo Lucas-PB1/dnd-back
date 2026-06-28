@@ -1,5 +1,5 @@
 /**
- * Audita modelo híbrido: projeções vs sheet + sync runtime.
+ * Audita runtime relacional: HP, CA e view de combate.
  */
 const url =
   process.env.DATABASE_URL ??
@@ -15,29 +15,22 @@ function fail(msg) {
   errors++;
 }
 
-const drift = await c.query(`
-  SELECT COUNT(*)::int AS n FROM rpg.player_character pc
-  WHERE pc.hp_current IS DISTINCT FROM (pc.sheet->'hp'->>'current')::int
-     OR pc.hp_max IS DISTINCT FROM (pc.sheet->'hp'->>'max')::int
-     OR pc.ac_total IS DISTINCT FROM (pc.sheet->'armorClass'->>'total')::int
-`);
-
-if (drift.rows[0].n > 0) fail(`${drift.rows[0].n} personagens com drift colunas ↔ sheet`);
-
 const before = await c.query(`
-  SELECT hp_current, ac_total, sheet->'hp'->>'current' AS sheet_hp
+  SELECT hp_current, ac_total
   FROM rpg.player_character WHERE id = 'pc-001'
 `);
 
 await c.query(`UPDATE rpg.player_character SET hp_current = 12 WHERE id = 'pc-001'`);
 
 const afterHp = await c.query(`
-  SELECT hp_current, sheet->'hp'->>'current' AS sheet_hp
-  FROM rpg.player_character WHERE id = 'pc-001'
+  SELECT pc.hp_current, (f.document->'hp'->>'current')::int AS doc_hp
+  FROM rpg.player_character pc
+  JOIN rpg.v_player_character_full f ON f.id = pc.id
+  WHERE pc.id = 'pc-001'
 `);
 
-if (Number(afterHp.rows[0].hp_current) !== 12 || Number(afterHp.rows[0].sheet_hp) !== 12) {
-  fail(`sync HP falhou: col=${afterHp.rows[0].hp_current} sheet=${afterHp.rows[0].sheet_hp}`);
+if (Number(afterHp.rows[0].hp_current) !== 12 || Number(afterHp.rows[0].doc_hp) !== 12) {
+  fail(`HP diverge: col=${afterHp.rows[0].hp_current} document=${afterHp.rows[0].doc_hp}`);
 }
 
 const acBefore = await c.query(`
@@ -51,7 +44,7 @@ await c.query(`
 `);
 
 const acAfter = await c.query(`
-  SELECT ac_total, ac_detail->>'shieldBonus' AS shield
+  SELECT ac_total, ac_shield_bonus AS shield
   FROM rpg.player_character WHERE id = 'pc-001'
 `);
 
@@ -67,7 +60,6 @@ const runtime = await c.query(`
 `);
 if (!runtime.rows.length) fail("v_player_character_runtime ausente");
 
-// restaurar pc-001
 await c.query(`UPDATE rpg.player_character SET hp_current = $1 WHERE id = 'pc-001'`, [
   before.rows[0].hp_current,
 ]);
@@ -84,5 +76,5 @@ if (errors) {
   process.exit(1);
 }
 
-console.log("✓ Auditoria dinâmica OK — sync HP, recalc CA, view runtime");
+console.log("✓ Auditoria dinâmica OK — HP relacional, recalc CA, views runtime/full");
 process.exit(0);

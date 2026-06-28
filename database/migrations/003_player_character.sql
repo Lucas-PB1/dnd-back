@@ -2,7 +2,7 @@
 
 
 -- =============================================================================
--- FICHAS — player_character (híbrido sheet JSONB + projeções)
+-- FICHAS — player_character (relacional + runtime)
 -- =============================================================================
 
 CREATE TYPE rpg.skill_source AS ENUM (
@@ -24,29 +24,36 @@ CREATE TYPE rpg.equipment_slot AS ENUM (
 CREATE TYPE rpg.spell_list_type AS ENUM ('known','prepared','always_prepared');
 
 CREATE TABLE rpg.player_character (
-  id                  TEXT PRIMARY KEY,
-  name                TEXT NOT NULL,
-  level               INTEGER NOT NULL CHECK (level BETWEEN 1 AND 20),
-  edition_id          BIGINT NOT NULL REFERENCES rpg.phb_edition(id),
-  species_id          BIGINT NOT NULL REFERENCES rpg.phb_species(id),
-  background_id       BIGINT NOT NULL REFERENCES rpg.phb_background(id),
-  class_id            BIGINT NOT NULL REFERENCES rpg.phb_class(id),
-  subclass_id         BIGINT REFERENCES rpg.phb_subclass(id),
-  alignment_id        BIGINT REFERENCES rpg.phb_alignment(id),
-  ability_method_id   BIGINT REFERENCES rpg.phb_ability_generation_method(id),
-  background_boost_id BIGINT REFERENCES rpg.phb_background_boost_option(id),
-  hp_current          INTEGER NOT NULL DEFAULT 0 CHECK (hp_current >= 0),
-  hp_max              INTEGER NOT NULL CHECK (hp_max >= 1),
-  hp_temp             INTEGER NOT NULL DEFAULT 0 CHECK (hp_temp >= 0),
-  ac_total            INTEGER NOT NULL CHECK (ac_total >= 0),
-  ac_detail           JSONB,
-  passive_perception  INTEGER,
-  sheet               JSONB NOT NULL,
-  ability_generation  JSONB,
-  starting_packages   JSONB,
-  notes               TEXT,
-  created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  id                         TEXT PRIMARY KEY,
+  name                       TEXT NOT NULL,
+  level                      INTEGER NOT NULL CHECK (level BETWEEN 1 AND 20),
+  edition_id                 BIGINT NOT NULL REFERENCES rpg.phb_edition(id),
+  species_id                 BIGINT NOT NULL REFERENCES rpg.phb_species(id),
+  background_id              BIGINT NOT NULL REFERENCES rpg.phb_background(id),
+  class_id                   BIGINT NOT NULL REFERENCES rpg.phb_class(id),
+  subclass_id                BIGINT REFERENCES rpg.phb_subclass(id),
+  alignment_id               BIGINT REFERENCES rpg.phb_alignment(id),
+  ability_method_id          BIGINT REFERENCES rpg.phb_ability_generation_method(id),
+  background_boost_id        BIGINT REFERENCES rpg.phb_background_boost_option(id),
+  class_starting_option      TEXT,
+  background_starting_option TEXT,
+  hp_current                 INTEGER NOT NULL DEFAULT 0 CHECK (hp_current >= 0),
+  hp_max                     INTEGER NOT NULL CHECK (hp_max >= 1),
+  hp_temp                    INTEGER NOT NULL DEFAULT 0 CHECK (hp_temp >= 0),
+  ac_total                   INTEGER NOT NULL CHECK (ac_total >= 0),
+  ac_base                    INTEGER NOT NULL DEFAULT 10 CHECK (ac_base >= 0),
+  ac_dex_bonus               INTEGER NOT NULL DEFAULT 0,
+  ac_shield_bonus            INTEGER NOT NULL DEFAULT 0 CHECK (ac_shield_bonus >= 0),
+  ac_fighting_style_bonus    INTEGER NOT NULL DEFAULT 0,
+  ac_other_bonus             INTEGER NOT NULL DEFAULT 0,
+  passive_perception         INTEGER,
+  notes                      TEXT,
+  created_at                 TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at                 TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  CHECK (
+    ac_total = ac_base + ac_dex_bonus + ac_shield_bonus
+      + ac_fighting_style_bonus + ac_other_bonus
+  )
 );
 
 CREATE TABLE rpg.player_character_language (
@@ -168,7 +175,6 @@ CREATE UNIQUE INDEX uq_pc_equipment_equipped_slot
 CREATE INDEX idx_pc_class_level ON rpg.player_character (class_id, level);
 CREATE INDEX idx_pc_species ON rpg.player_character (species_id);
 CREATE INDEX idx_pc_edition ON rpg.player_character (edition_id);
-CREATE INDEX idx_pc_sheet ON rpg.player_character USING gin (sheet jsonb_path_ops);
 CREATE INDEX idx_pc_name_trgm ON rpg.player_character USING gin (name gin_trgm_ops);
 
 -- =============================================================================
@@ -211,7 +217,7 @@ CREATE TRIGGER tr_player_character_updated_at
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
 -- =============================================================================
--- SYNC RUNTIME — projeções mutáveis ↔ sheet JSON
+-- RUNTIME — CA recalculada a partir de equipamento
 -- =============================================================================
 
 CREATE OR REPLACE FUNCTION rpg.skip_character_sync()
@@ -278,8 +284,8 @@ BEGIN
   END IF;
 
   SELECT
-    COALESCE((ac_detail->>'fightingStyleBonus')::INTEGER, 0),
-    COALESCE((ac_detail->>'otherBonus')::INTEGER, 0)
+    COALESCE(ac_fighting_style_bonus, 0),
+    COALESCE(ac_other_bonus, 0)
   INTO v_style_bonus, v_other_bonus
   FROM rpg.player_character
   WHERE id = p_character_id;
@@ -289,103 +295,12 @@ BEGIN
   UPDATE rpg.player_character
   SET
     ac_total = v_total,
-    ac_detail = jsonb_build_object(
-      'total', v_total,
-      'base', v_base,
-      'dexBonus', v_dex_bonus,
-      'shieldBonus', v_shield_bonus,
-      'fightingStyleBonus', v_style_bonus,
-      'otherBonus', v_other_bonus
-    )
+    ac_base = v_base,
+    ac_dex_bonus = v_dex_bonus,
+    ac_shield_bonus = v_shield_bonus
   WHERE id = p_character_id;
 END;
 $$ LANGUAGE plpgsql;
-
-CREATE OR REPLACE FUNCTION rpg.sync_sheet_runtime()
-RETURNS TRIGGER AS $$
-BEGIN
-  IF rpg.skip_character_sync() THEN
-    RETURN NEW;
-  END IF;
-
-  NEW.sheet := jsonb_set(NEW.sheet, '{hp,current}', to_jsonb(NEW.hp_current), true);
-  NEW.sheet := jsonb_set(NEW.sheet, '{hp,max}', to_jsonb(NEW.hp_max), true);
-  NEW.sheet := jsonb_set(NEW.sheet, '{hp,temp}', to_jsonb(NEW.hp_temp), true);
-  NEW.sheet := jsonb_set(NEW.sheet, '{passivePerception}', to_jsonb(NEW.passive_perception), true);
-
-  IF NEW.ac_detail IS NOT NULL THEN
-    NEW.sheet := jsonb_set(NEW.sheet, '{armorClass}', NEW.ac_detail || jsonb_build_object('total', NEW.ac_total), true);
-  ELSE
-    NEW.sheet := jsonb_set(NEW.sheet, '{armorClass,total}', to_jsonb(NEW.ac_total), true);
-  END IF;
-
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER tr_sync_sheet_runtime
-  BEFORE UPDATE OF hp_current, hp_max, hp_temp, ac_total, ac_detail, passive_perception
-  ON rpg.player_character
-  FOR EACH ROW EXECUTE FUNCTION rpg.sync_sheet_runtime();
-
-CREATE OR REPLACE FUNCTION rpg.sync_sheet_resource()
-RETURNS TRIGGER AS $$
-BEGIN
-  IF rpg.skip_character_sync() THEN
-    RETURN NEW;
-  END IF;
-
-  UPDATE rpg.player_character pc
-  SET sheet = jsonb_set(
-    jsonb_set(
-      pc.sheet,
-      ARRAY['resources', rd.slug, 'remaining'],
-      to_jsonb(NEW.remaining),
-      true
-    ),
-    ARRAY['resources', rd.slug, 'max'],
-    to_jsonb(NEW.max_value),
-    true
-  )
-  FROM rpg.phb_resource_definition rd
-  WHERE pc.id = NEW.character_id AND rd.id = NEW.resource_id;
-
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER tr_sync_sheet_resource
-  AFTER UPDATE OF remaining, max_value ON rpg.player_character_resource
-  FOR EACH ROW EXECUTE FUNCTION rpg.sync_sheet_resource();
-
-CREATE OR REPLACE FUNCTION rpg.sync_sheet_spell_slot()
-RETURNS TRIGGER AS $$
-BEGIN
-  IF rpg.skip_character_sync() THEN
-    RETURN NEW;
-  END IF;
-
-  UPDATE rpg.player_character
-  SET sheet = jsonb_set(
-    jsonb_set(
-      sheet,
-      ARRAY['spellcasting', 'slotsUsed', NEW.circle::TEXT],
-      to_jsonb(NEW.slots_used),
-      true
-    ),
-    ARRAY['spellcasting', 'slotsMax', NEW.circle::TEXT],
-    to_jsonb(NEW.slots_max),
-    true
-  )
-  WHERE id = NEW.character_id;
-
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER tr_sync_sheet_spell_slot
-  AFTER UPDATE OF slots_used, slots_max ON rpg.player_character_spell_slot
-  FOR EACH ROW EXECUTE FUNCTION rpg.sync_sheet_spell_slot();
 
 CREATE OR REPLACE FUNCTION rpg.trg_recalculate_ac_on_equipment()
 RETURNS TRIGGER AS $$
@@ -398,10 +313,249 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+DROP TRIGGER IF EXISTS tr_recalc_ac_on_equipment ON rpg.player_character_equipment;
+
 CREATE TRIGGER tr_recalc_ac_on_equipment
   AFTER INSERT OR UPDATE OF equipped, slot, item_id OR DELETE
   ON rpg.player_character_equipment
   FOR EACH ROW EXECUTE FUNCTION rpg.trg_recalculate_ac_on_equipment();
+
+-- =============================================================================
+-- DOCUMENTO — monta JSON a partir das projeções (substitui sheet)
+-- =============================================================================
+
+CREATE OR REPLACE FUNCTION rpg.character_document(p_id TEXT)
+RETURNS JSONB AS $$
+  SELECT jsonb_strip_nulls(jsonb_build_object(
+    'id', pc.id,
+    'name', pc.name,
+    'level', pc.level,
+    'speciesId', sp.slug,
+    'backgroundId', bg.slug,
+    'classId', cl.slug,
+    'subclassId', sb.slug,
+    'alignmentId', al.slug,
+    'abilityGeneration', CASE
+      WHEN agm.slug IS NOT NULL OR bbo.slug IS NOT NULL THEN jsonb_build_object(
+        'methodId', agm.slug,
+        'backgroundBoostId', bbo.slug
+      )
+    END,
+    'startingPackages', CASE
+      WHEN pc.class_starting_option IS NOT NULL OR pc.background_starting_option IS NOT NULL
+      THEN jsonb_build_object(
+        'classOption', pc.class_starting_option,
+        'backgroundOption', pc.background_starting_option
+      )
+    END,
+    'languageIds', langs.ids,
+    'abilities', ab.scores,
+    'skillProficiencies', sk.profs,
+    'savingThrowProficiencies', sv.slugs,
+    'feats', ft.list,
+    'equipment', eq.list,
+    'weaponMasteryWeaponIds', wm.ids,
+    'expertise', ex.ids,
+    'speciesChoices', so.choices,
+    'classChoices', co.choices,
+    'resources', res.map,
+    'spellcasting', sc.doc,
+    'hp', jsonb_build_object(
+      'current', pc.hp_current,
+      'max', pc.hp_max,
+      'temp', pc.hp_temp
+    ),
+    'armorClass', jsonb_strip_nulls(jsonb_build_object(
+      'total', pc.ac_total,
+      'base', pc.ac_base,
+      'dexBonus', pc.ac_dex_bonus,
+      'shieldBonus', NULLIF(pc.ac_shield_bonus, 0),
+      'fightingStyleBonus', NULLIF(pc.ac_fighting_style_bonus, 0),
+      'otherBonus', NULLIF(pc.ac_other_bonus, 0)
+    )),
+    'passivePerception', pc.passive_perception,
+    'notes', pc.notes
+  ))
+  FROM rpg.player_character pc
+  JOIN rpg.phb_species sp ON sp.id = pc.species_id
+  JOIN rpg.phb_background bg ON bg.id = pc.background_id
+  JOIN rpg.phb_class cl ON cl.id = pc.class_id
+  LEFT JOIN rpg.phb_subclass sb ON sb.id = pc.subclass_id
+  LEFT JOIN rpg.phb_alignment al ON al.id = pc.alignment_id
+  LEFT JOIN rpg.phb_ability_generation_method agm ON agm.id = pc.ability_method_id
+  LEFT JOIN rpg.phb_background_boost_option bbo ON bbo.id = pc.background_boost_id
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_agg(l.slug ORDER BY l.slug), '[]'::jsonb) AS ids
+    FROM rpg.player_character_language pcl
+    JOIN rpg.phb_language l ON l.id = pcl.language_id
+    WHERE pcl.character_id = pc.id
+  ) langs ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_object_agg(a.slug, pca.score), '{}'::jsonb) AS scores
+    FROM rpg.player_character_ability pca
+    JOIN rpg.phb_ability a ON a.id = pca.ability_id
+    WHERE pca.character_id = pc.id
+  ) ab ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_agg(
+      jsonb_build_object('skillId', s.slug, 'source', pcs.source)
+      ORDER BY s.slug
+    ), '[]'::jsonb) AS profs
+    FROM rpg.player_character_skill pcs
+    JOIN rpg.phb_skill s ON s.id = pcs.skill_id
+    WHERE pcs.character_id = pc.id
+  ) sk ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_agg(a.slug ORDER BY a.slug), '[]'::jsonb) AS slugs
+    FROM rpg.player_character_saving_throw pst
+    JOIN rpg.phb_ability a ON a.id = pst.ability_id
+    WHERE pst.character_id = pc.id
+  ) sv ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_agg(
+      jsonb_build_object('featId', f.slug, 'source', pcf.source) || COALESCE(pcf.options, '{}'::jsonb)
+      ORDER BY f.slug
+    ), '[]'::jsonb) AS list
+    FROM rpg.player_character_feat pcf
+    JOIN rpg.phb_feat f ON f.id = pcf.feat_id
+    WHERE pcf.character_id = pc.id
+  ) ft ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_agg(
+      jsonb_build_object(
+        'itemId', i.slug,
+        'quantity', pce.quantity,
+        'source', CASE pce.source
+          WHEN 'class' THEN 'class-starting'
+          WHEN 'background' THEN 'background-starting'
+          WHEN 'purchase' THEN 'purchased'
+          ELSE 'other'
+        END,
+        'equipped', pce.equipped,
+        'slot', CASE pce.slot
+          WHEN 'main_hand' THEN 'mainHand'
+          WHEN 'off_hand' THEN 'offHand'
+          ELSE pce.slot::text
+        END
+      ) ORDER BY pce.id
+    ), '[]'::jsonb) AS list
+    FROM rpg.player_character_equipment pce
+    JOIN rpg.phb_item i ON i.id = pce.item_id
+    WHERE pce.character_id = pc.id
+  ) eq ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_agg(i.slug ORDER BY i.slug), '[]'::jsonb) AS ids
+    FROM rpg.player_character_weapon_mastery pwm
+    JOIN rpg.phb_weapon w ON w.item_id = pwm.weapon_id
+    JOIN rpg.phb_item i ON i.id = w.item_id
+    WHERE pwm.character_id = pc.id
+  ) wm ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_agg(s.slug ORDER BY s.slug), '[]'::jsonb) AS ids
+    FROM rpg.player_character_expertise pex
+    JOIN rpg.phb_skill s ON s.id = pex.skill_id
+    WHERE pex.character_id = pc.id
+  ) ex ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_object_agg(
+      pso.option_key,
+      COALESCE(
+        to_jsonb(pso.catalog_value_id),
+        to_jsonb(sk.slug),
+        to_jsonb(ab.slug),
+        pso.json_value
+      )
+    ), '{}'::jsonb) AS choices
+    FROM rpg.player_character_species_option pso
+    LEFT JOIN rpg.phb_skill sk ON sk.id = pso.skill_id
+    LEFT JOIN rpg.phb_ability ab ON ab.id = pso.ability_id
+    WHERE pso.character_id = pc.id
+  ) so ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_object_agg(
+      pco.option_key,
+      COALESCE(
+        to_jsonb(pco.catalog_value_id),
+        to_jsonb(fs.slug),
+        to_jsonb(dt.slug),
+        pco.json_value
+      )
+    ), '{}'::jsonb) AS choices
+    FROM rpg.player_character_class_option pco
+    LEFT JOIN rpg.phb_fighting_style fs ON fs.id = pco.fighting_style_id
+    LEFT JOIN rpg.phb_druid_land_terrain dt ON dt.id = pco.terrain_id
+    WHERE pco.character_id = pc.id
+  ) co ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_object_agg(
+      rd.slug,
+      jsonb_build_object('max', pcr.max_value, 'remaining', pcr.remaining)
+    ), '{}'::jsonb) AS map
+    FROM rpg.player_character_resource pcr
+    JOIN rpg.phb_resource_definition rd ON rd.id = pcr.resource_id
+    WHERE pcr.character_id = pc.id
+  ) res ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT CASE
+      WHEN cantrips.doc = '{}'::jsonb
+        AND prepared.doc = '{}'::jsonb
+        AND slots_max.doc = '{}'::jsonb
+      THEN NULL
+      ELSE jsonb_strip_nulls(jsonb_build_object(
+        'cantrips', NULLIF(cantrips.doc, '{}'::jsonb),
+        'prepared', NULLIF(prepared.doc, '{}'::jsonb),
+        'slotsMax', NULLIF(slots_max.doc, '{}'::jsonb),
+        'slotsUsed', NULLIF(slots_used.doc, '{}'::jsonb)
+      ))
+    END AS doc
+    FROM (
+      SELECT COALESCE((
+        SELECT jsonb_object_agg(src_slug, spell_ids)
+        FROM (
+          SELECT ss.slug AS src_slug,
+                 jsonb_agg(s.slug ORDER BY s.slug) AS spell_ids
+          FROM rpg.player_character_spell_list psl
+          JOIN rpg.phb_spell s ON s.id = psl.spell_id
+          JOIN rpg.phb_spell_source ss ON ss.id = psl.source_id
+          WHERE psl.character_id = pc.id
+            AND psl.list_type = 'known'
+            AND s.level = 0
+          GROUP BY ss.slug
+        ) c
+      ), '{}'::jsonb) AS doc
+    ) cantrips
+    CROSS JOIN (
+      SELECT COALESCE((
+        SELECT jsonb_object_agg(src_slug, spell_ids)
+        FROM (
+          SELECT ss.slug AS src_slug,
+                 jsonb_agg(s.slug ORDER BY s.slug) AS spell_ids
+          FROM rpg.player_character_spell_list psl
+          JOIN rpg.phb_spell s ON s.id = psl.spell_id
+          JOIN rpg.phb_spell_source ss ON ss.id = psl.source_id
+          WHERE psl.character_id = pc.id
+            AND psl.list_type = 'prepared'
+          GROUP BY ss.slug
+        ) p
+      ), '{}'::jsonb) AS doc
+    ) prepared
+    CROSS JOIN (
+      SELECT COALESCE((
+        SELECT jsonb_object_agg(pss.circle::text, pss.slots_max)
+        FROM rpg.player_character_spell_slot pss
+        WHERE pss.character_id = pc.id
+      ), '{}'::jsonb) AS doc
+    ) slots_max
+    CROSS JOIN (
+      SELECT COALESCE((
+        SELECT jsonb_object_agg(pss.circle::text, pss.slots_used)
+        FROM rpg.player_character_spell_slot pss
+        WHERE pss.character_id = pc.id
+      ), '{}'::jsonb) AS doc
+    ) slots_used
+  ) sc ON TRUE
+  WHERE pc.id = p_id;
+$$ LANGUAGE sql STABLE;
 
 -- =============================================================================
 -- VIEWS FICHAS
@@ -441,7 +595,6 @@ JOIN rpg.phb_background bg ON bg.id = pc.background_id
 JOIN rpg.phb_class cl ON cl.id = pc.class_id
 LEFT JOIN rpg.phb_subclass sb ON sb.id = pc.subclass_id;
 
--- Estado de combate em tempo real — preferir esta view na UI (não ler sheet->hp/ac)
 CREATE OR REPLACE VIEW rpg.v_player_character_runtime AS
 SELECT
   pc.id,
@@ -451,13 +604,54 @@ SELECT
   pc.hp_max,
   pc.hp_temp,
   pc.ac_total,
-  pc.ac_detail,
+  pc.ac_base,
+  pc.ac_dex_bonus,
+  pc.ac_shield_bonus,
+  pc.ac_fighting_style_bonus,
+  pc.ac_other_bonus,
   pc.passive_perception,
   cl.slug AS class_slug,
   sp.slug AS species_slug
 FROM rpg.player_character pc
 JOIN rpg.phb_class cl ON cl.id = pc.class_id
 JOIN rpg.phb_species sp ON sp.id = pc.species_id;
+
+CREATE OR REPLACE VIEW rpg.v_player_character_full AS
+SELECT
+  pc.id,
+  pc.name,
+  pc.level,
+  e.slug AS edition_slug,
+  sp.slug AS species_slug,
+  bg.slug AS background_slug,
+  cl.slug AS class_slug,
+  sb.slug AS subclass_slug,
+  al.slug AS alignment_slug,
+  agm.slug AS ability_method_slug,
+  bbo.slug AS background_boost_slug,
+  pc.class_starting_option,
+  pc.background_starting_option,
+  pc.hp_current,
+  pc.hp_max,
+  pc.hp_temp,
+  pc.ac_total,
+  pc.ac_base,
+  pc.ac_dex_bonus,
+  pc.ac_shield_bonus,
+  pc.ac_fighting_style_bonus,
+  pc.ac_other_bonus,
+  pc.passive_perception,
+  pc.notes,
+  rpg.character_document(pc.id) AS document
+FROM rpg.player_character pc
+JOIN rpg.phb_edition e ON e.id = pc.edition_id
+JOIN rpg.phb_species sp ON sp.id = pc.species_id
+JOIN rpg.phb_background bg ON bg.id = pc.background_id
+JOIN rpg.phb_class cl ON cl.id = pc.class_id
+LEFT JOIN rpg.phb_subclass sb ON sb.id = pc.subclass_id
+LEFT JOIN rpg.phb_alignment al ON al.id = pc.alignment_id
+LEFT JOIN rpg.phb_ability_generation_method agm ON agm.id = pc.ability_method_id
+LEFT JOIN rpg.phb_background_boost_option bbo ON bbo.id = pc.background_boost_id;
 
 CREATE OR REPLACE VIEW rpg.v_character_resources AS
 SELECT
