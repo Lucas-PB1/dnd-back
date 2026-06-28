@@ -64,53 +64,46 @@ Objetivo: schema v4 consistente, sem redundâncias, doc alinhada.
 
 ---
 
-### Fase 1 — Integridade referencial (3–5 dias)
+### Fase 1 — Integridade referencial ✅
 
 Objetivo: o banco rejeita dados inválidos sem depender só do Node.
+
+- [x] CHECK polimórfico em `phb_spell_source` (`class_list`, `subclass`, `species`, `feat`)
+- [x] FK composta `spell_source_subclass_fk` + `UNIQUE (class_id, id)` em `phb_subclass`
+- [x] Tabela `phb_weapon_mastery` + FK em `phb_weapon.mastery_id`
+- [x] ENUMs `rpg.weapon_category`, `rpg.casting_type`
+- [x] Índices parciais `uq_resource_species`, `uq_resource_class`
 
 #### 1.1 `phb_spell_source` — CHECK polimórfico
 
 ```sql
-ALTER TABLE rpg.phb_spell_source ADD CONSTRAINT spell_source_origin_fk CHECK (
-  (origin_type = 'class'    AND class_id IS NOT NULL AND subclass_id IS NULL AND species_id IS NULL AND feat_id IS NULL)
+CONSTRAINT spell_source_origin_fk CHECK (
+  (origin_type = 'class_list' AND class_id IS NULL AND subclass_id IS NULL AND species_id IS NULL AND feat_id IS NULL)
   OR (origin_type = 'subclass' AND subclass_id IS NOT NULL AND class_id IS NOT NULL AND species_id IS NULL AND feat_id IS NULL)
   OR (origin_type = 'species'  AND species_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL)
   OR (origin_type = 'feat'     AND feat_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL AND species_id IS NULL)
 );
 ```
 
-**Nota:** a linha genérica `slug = 'class'` (todas FKs NULL) precisa ser repensada — ou vira FK para cada classe via tabela filha, ou vira meta-registro sem FK (documentar exceção).
+A linha `slug = 'class'` usa `origin_type = 'class_list'` (meta-registro para lista principal de magias da classe).
 
 #### 1.2 Subclasse ∈ classe
 
-Trigger ou FK composta:
-
 ```sql
--- Opção: UNIQUE (class_id, id) em phb_subclass + FK composta em spell_source
-ALTER TABLE rpg.phb_subclass ADD CONSTRAINT uq_subclass_class_id UNIQUE (class_id, id);
+UNIQUE (class_id, id)  -- em phb_subclass
+FOREIGN KEY (class_id, subclass_id) REFERENCES phb_subclass(class_id, id)  -- em phb_spell_source
 ```
 
-#### 1.3 `phb_weapon_mastery` — catálogo faltante
+#### 1.3 `phb_weapon_mastery`
 
-```sql
-CREATE TABLE rpg.phb_weapon_mastery (
-  id   BIGSERIAL PRIMARY KEY,
-  slug TEXT NOT NULL UNIQUE,
-  name TEXT NOT NULL,
-  description TEXT NOT NULL
-);
+8 maestrias seedadas de `data/phb/weapons/rules.json` (`vex`, `nick`, `topple`, …).
 
-ALTER TABLE rpg.phb_weapon
-  ADD COLUMN mastery_id BIGINT REFERENCES rpg.phb_weapon_mastery(id);
--- migrar TEXT → FK; dropar coluna TEXT antiga
-```
+#### 1.4 ENUMs
 
-#### 1.4 ENUMs para domínios finitos
-
-| Coluna atual | Ação |
-|--------------|------|
-| `phb_weapon.category` | `CREATE TYPE rpg.weapon_category AS ENUM ('simple','martial')` |
-| `phb_class_spellcasting.casting_type` | já tem CHECK — migrar para ENUM |
+| Coluna | Tipo |
+|--------|------|
+| `phb_weapon.category` | `rpg.weapon_category` |
+| `phb_class_spellcasting.casting_type` | `rpg.casting_type` |
 
 #### 1.5 `phb_resource_definition` — unicidade por escopo
 
@@ -121,7 +114,7 @@ CREATE UNIQUE INDEX uq_resource_class ON rpg.phb_resource_definition (class_id, 
   WHERE scope = 'class';
 ```
 
-**Critério de done:** tentar INSERT inválido em `phb_spell_source` falha no PostgreSQL.
+**Critério de done:** ✅ INSERT inválido em `phb_spell_source` falha no PostgreSQL.
 
 ---
 
@@ -449,7 +442,7 @@ Fase 5  →  player_character + sync + import
 |-------|-----------|
 | `DROP SCHEMA CASCADE` em prod | Fase 2 — migrations |
 | Doc desatualizada | Este documento + sync em cada PR de schema |
-| `phb_spell_source` genérico (`class` sem FK) | Redesign na fase 1 |
+| `phb_spell_source` genérico (`class` sem FK) | Resolvido: `class_list` na fase 1 |
 | Regras de jogo só no Node | Triggers na fase 5 |
 | Multi-edição incompleta | Decisão na fase 2 |
 

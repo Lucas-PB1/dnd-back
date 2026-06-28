@@ -23,6 +23,7 @@ Diagrama: [er-diagram.md](er-diagram.md) | Roadmap: [plano-final.md](plano-final
 | `spells/*.json` | `phb_spell`, `phb_spell_school`, `phb_spell_class` |
 | `feats/*.json` | `phb_feat`, `phb_feat_category`, `phb_feat_benefit` |
 | `weapons/*.json` | `phb_weapon`, `phb_weapon_property`, `phb_weapon_property_link` |
+| `phb_weapon_mastery` | `weapons/rules.json` → masteryProperties |
 | `armor/*.json` | `phb_armor`, `phb_armor_category` |
 | `tools/*.json` | `phb_tool`, `phb_tool_category` |
 | `items/*.json` | `phb_item` (supertipo) |
@@ -65,7 +66,9 @@ Diagrama: [er-diagram.md](er-diagram.md) | Roadmap: [plano-final.md](plano-final
 
 - `rpg.item_type` — weapon, armor, gear, tool, focus, other
 - `rpg.resource_scope` — species, class
-- `rpg.spell_source_origin` — class, subclass, species, feat
+- `rpg.spell_source_origin` — class_list, subclass, species, feat
+- `rpg.weapon_category` — simple, martial
+- `rpg.casting_type` — full, half, pact, none
 - `rpg.option_value_type` — catalog, skill, ability, fighting_style, terrain, skill_list, json
 - `rpg.species_choice_kind` — elf_lineage, infernal_legacy, dragon_ancestry
 

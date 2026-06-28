@@ -29,7 +29,7 @@ CREATE TYPE rpg.item_type AS ENUM (
 CREATE TYPE rpg.resource_scope AS ENUM ('species','class');
 
 CREATE TYPE rpg.spell_source_origin AS ENUM (
-  'class','subclass','species','feat'
+  'class_list','subclass','species','feat'
 );
 
 CREATE TYPE rpg.option_value_type AS ENUM (
@@ -41,6 +41,10 @@ CREATE TYPE rpg.species_choice_kind AS ENUM (
   'infernal_legacy',
   'dragon_ancestry'
 );
+
+CREATE TYPE rpg.weapon_category AS ENUM ('simple', 'martial');
+
+CREATE TYPE rpg.casting_type AS ENUM ('full', 'half', 'pact', 'none');
 
 -- =============================================================================
 -- CATÁLOGO PHB — entidades com id BIGSERIAL + slug UNIQUE
@@ -243,7 +247,8 @@ CREATE TABLE rpg.phb_subclass (
   tagline TEXT,
   summary TEXT,
   description TEXT,
-  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id)
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
+  UNIQUE (class_id, id)
 );
 
 CREATE TABLE rpg.phb_subclass_feature (
@@ -337,9 +342,17 @@ CREATE TABLE rpg.phb_spell_source (
   label TEXT NOT NULL,
   origin_type rpg.spell_source_origin NOT NULL,
   class_id BIGINT REFERENCES rpg.phb_class(id),
-  subclass_id BIGINT REFERENCES rpg.phb_subclass(id),
+  subclass_id BIGINT,
   species_id BIGINT REFERENCES rpg.phb_species(id),
-  feat_id BIGINT REFERENCES rpg.phb_feat(id)
+  feat_id BIGINT REFERENCES rpg.phb_feat(id),
+  CONSTRAINT spell_source_origin_fk CHECK (
+    (origin_type = 'class_list' AND class_id IS NULL AND subclass_id IS NULL AND species_id IS NULL AND feat_id IS NULL)
+    OR (origin_type = 'subclass' AND subclass_id IS NOT NULL AND class_id IS NOT NULL AND species_id IS NULL AND feat_id IS NULL)
+    OR (origin_type = 'species' AND species_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL)
+    OR (origin_type = 'feat' AND feat_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL AND species_id IS NULL)
+  ),
+  CONSTRAINT spell_source_subclass_fk
+    FOREIGN KEY (class_id, subclass_id) REFERENCES rpg.phb_subclass(class_id, id)
 );
 
 -- =============================================================================
@@ -483,7 +496,7 @@ CREATE TABLE rpg.phb_class_weapon_proficiency (
 
 CREATE TABLE rpg.phb_class_spellcasting (
   class_id BIGINT PRIMARY KEY REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
-  casting_type TEXT NOT NULL CHECK (casting_type IN ('full', 'half', 'pact', 'none')),
+  casting_type rpg.casting_type NOT NULL,
   ability_id BIGINT REFERENCES rpg.phb_ability(id),
   focus_label TEXT,
   focus_item_id BIGINT REFERENCES rpg.phb_item(id),
@@ -512,12 +525,19 @@ CREATE TABLE rpg.phb_class_starting_item (
   )
 );
 
+CREATE TABLE rpg.phb_weapon_mastery (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL
+);
+
 CREATE TABLE rpg.phb_weapon (
   item_id BIGINT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
-  category TEXT,
+  category rpg.weapon_category,
   damage TEXT,
   damage_type TEXT,
-  mastery_id TEXT
+  mastery_id BIGINT REFERENCES rpg.phb_weapon_mastery(id)
 );
 
 CREATE TABLE rpg.phb_armor (
@@ -864,6 +884,11 @@ CREATE INDEX idx_phb_class_hit_die ON rpg.phb_class(hit_die_id);
 CREATE INDEX idx_phb_class_source ON rpg.phb_class(source_citation_id);
 CREATE INDEX idx_phb_armor_category ON rpg.phb_armor(category_id);
 CREATE INDEX idx_phb_tool_category ON rpg.phb_tool(category_id);
+
+CREATE UNIQUE INDEX uq_resource_species ON rpg.phb_resource_definition (species_id, slug)
+  WHERE scope = 'species';
+CREATE UNIQUE INDEX uq_resource_class ON rpg.phb_resource_definition (class_id, slug)
+  WHERE scope = 'class';
 
 -- Autocomplete (pg_trgm)
 CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_ops);

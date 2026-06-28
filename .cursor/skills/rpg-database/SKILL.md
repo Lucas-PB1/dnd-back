@@ -53,6 +53,5 @@ DATABASE_URL=... npm run seed:run   # aplica no PostgreSQL
 
 Ver [plano-final.md](docs/plano-final.md):
 
-- **Fase 1:** CHECK constraints, `phb_weapon_mastery`, ENUMs
 - **Fase 2:** migrations incrementais, timestamps
 - **Fase 5:** `player_character` híbrido (sheet JSONB + projeções)

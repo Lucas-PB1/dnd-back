@@ -29,6 +29,7 @@ import {
   buildSpeciesOptionDefs,
   buildSpeciesOptionValues,
   buildSpellSources,
+  buildWeaponMasteries,
 } from "./lib/catalog-definitions.mjs";
 import { CLERIC_DIVINE_ORDERS } from "./lib/divine-orders.mjs";
 import { loadPhbCatalog } from "./lib/phb-loader.mjs";
@@ -72,6 +73,7 @@ TRUNCATE TABLE
   rpg.phb_tool_category,
   rpg.phb_armor_category,
   rpg.phb_weapon,
+  rpg.phb_weapon_mastery,
   rpg.phb_weapon_property_link,
   rpg.phb_item,
   rpg.phb_subclass,
@@ -228,6 +230,18 @@ lines.push(
       slug: sqlStr(p.id),
       name: sqlStr(p.name),
       description: sqlStr(p.description),
+    }))
+  )
+);
+
+lines.push(
+  batchInsert(
+    "rpg.phb_weapon_mastery",
+    ["slug", "name", "description"],
+    buildWeaponMasteries().map((m) => ({
+      slug: sqlStr(m.id),
+      name: sqlStr(m.name),
+      description: sqlStr(m.description),
     }))
   )
 );
@@ -667,7 +681,7 @@ lines.push(
 for (const i of catalog.items.filter((x) => x.weapon)) {
   const w = i.weapon;
   lines.push(
-    `INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES (${sqlRef("phb_item", i.id)}, ${sqlStr(w.category)}, ${sqlStr(w.damage)}, ${sqlStr(w.damageType)}, ${sqlStr(w.masteryId)}) ON CONFLICT (item_id) DO NOTHING;`
+    `INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES (${sqlRef("phb_item", i.id)}, ${w.category ? `${sqlStr(w.category)}::rpg.weapon_category` : "NULL"}, ${sqlStr(w.damage)}, ${sqlStr(w.damageType)}, ${w.masteryId ? sqlRef("phb_weapon_mastery", w.masteryId) : "NULL"}) ON CONFLICT (item_id) DO NOTHING;`
   );
   for (const pid of w.propertyIds ?? []) {
     lines.push(
@@ -779,7 +793,7 @@ lines.push(
     ["class_id", "casting_type", "ability_id", "focus_label", "focus_item_id", "ritual"],
     catalog.classSpellcasting.map((r) => ({
       class_id: sqlRef("phb_class", r.classId),
-      casting_type: sqlStr(r.castingType),
+      casting_type: `${sqlStr(r.castingType)}::rpg.casting_type`,
       ability_id: r.abilityId ? sqlRef("phb_ability", r.abilityId) : "NULL",
       focus_label: sqlStr(r.focusLabel),
       focus_item_id: r.focusItemId ? sqlRef("phb_item", r.focusItemId) : "NULL",

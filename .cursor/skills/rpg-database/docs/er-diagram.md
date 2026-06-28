@@ -38,6 +38,7 @@ flowchart TB
     phb_item --> phb_tool
     phb_armor_category --> phb_armor
     phb_tool_category --> phb_tool
+    phb_weapon_mastery --> phb_weapon
     phb_weapon --> phb_weapon_property_link
     phb_weapon_property --> phb_weapon_property_link
     phb_fighting_style --> phb_class_fighting_style

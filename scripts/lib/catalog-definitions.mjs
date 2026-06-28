@@ -60,7 +60,7 @@ export function buildResourceDefinitions() {
 
 export function buildSpellSources() {
   const sources = [
-    { id: "class", label: "Lista de classe", originType: "class" },
+    { id: "class", label: "Lista de classe", originType: "class_list" },
     { id: "magic-initiate", label: "Iniciado em Magia", originType: "feat", featId: "magic-initiate" },
     { id: "elf-lineage", label: "Linhagem Élfica", originType: "species", speciesId: "elf" },
     { id: "infernal-legacy", label: "Legado Ínfero", originType: "species", speciesId: "tiefling" },
@@ -158,4 +158,12 @@ export function buildClassFightingStyles() {
     }
   }
   return rows;
+}
+
+export function buildWeaponMasteries() {
+  return readJson("weapons/rules.json").masteryProperties.map((m) => ({
+    id: m.id,
+    name: m.name,
+    description: m.description,
+  }));
 }

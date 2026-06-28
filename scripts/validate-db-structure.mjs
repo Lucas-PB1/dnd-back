@@ -54,6 +54,7 @@ const REQUIRED_TABLES = [
   "phb_class_saving_throw",
   "phb_item",
   "phb_weapon",
+  "phb_weapon_mastery",
   "phb_armor_category",
   "phb_armor",
   "phb_tool_category",
@@ -93,6 +94,9 @@ const FORBIDDEN = [
   /CREATE TABLE rpg\.phb_subclass[\s\S]{0,200}prepared_spell_source_key/i,
   /CREATE TABLE rpg\.phb_subclass_prepared_spell[\s\S]{0,200}terrain_slug TEXT/i,
   /phb_weapon[\s\S]{0,200}property_ids/i,
+  /phb_weapon[\s\S]{0,200}mastery_id TEXT/i,
+  /phb_weapon[\s\S]{0,200}category TEXT/i,
+  /phb_class_spellcasting[\s\S]{0,200}casting_type TEXT/i,
   /idx_phb_spell_slug/i,
   /idx_phb_class_slug/i,
   /idx_phb_item_slug/i,
@@ -128,6 +132,14 @@ const REQUIRED_PATTERNS = [
   [/spell_slot_pattern_id/i, "FK padrão de espelhos na classe"],
   [/gin_trgm_ops/i, "índices GIN trgm para autocomplete"],
   [/phb_weapon_property_link/i, "propriedades de arma via junction"],
+  [/spell_source_origin_fk/i, "CHECK origem polimórfica spell_source"],
+  [/spell_source_subclass_fk/i, "FK composta subclass ∈ class"],
+  [/UNIQUE \(class_id, id\)/i, "subclass composta para FK"],
+  [/phb_weapon_mastery/i, "catálogo maestrias de arma"],
+  [/rpg\.weapon_category/i, "ENUM categoria de arma"],
+  [/rpg\.casting_type/i, "ENUM tipo de conjuração"],
+  [/uq_resource_species/i, "unicidade recurso por espécie"],
+  [/class_list/i, "origem class_list para lista de classe"],
 ];
 
 let errors = 0;
