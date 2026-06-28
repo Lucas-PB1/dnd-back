@@ -45,6 +45,7 @@ lines.push(`BEGIN;`);
 lines.push(`SELECT set_config('rpg.skip_sync', '1', true);`);
 lines.push(`
 TRUNCATE TABLE
+  rpg.player_character_class_skill,
   rpg.player_character_class_option,
   rpg.player_character_species_option,
   rpg.player_character_resource,
@@ -53,6 +54,7 @@ TRUNCATE TABLE
   rpg.player_character_expertise,
   rpg.player_character_weapon_mastery,
   rpg.player_character_equipment,
+  rpg.player_character_feat_magic_initiate,
   rpg.player_character_feat,
   rpg.player_character_saving_throw,
   rpg.player_character_skill,
@@ -69,6 +71,7 @@ const all = {
   skills: [],
   saves: [],
   feats: [],
+  featMagicInitiate: [],
   equipment: [],
   masteries: [],
   expertise: [],
@@ -77,6 +80,7 @@ const all = {
   resources: [],
   speciesOptions: [],
   classOptions: [],
+  classSkills: [],
 };
 
 for (const char of characters) {
@@ -87,6 +91,7 @@ for (const char of characters) {
   all.skills.push(...rows.skills);
   all.saves.push(...rows.saves);
   all.feats.push(...rows.feats);
+  all.featMagicInitiate.push(...rows.featMagicInitiate);
   all.equipment.push(...rows.equipment);
   all.masteries.push(...rows.masteries);
   all.expertise.push(...rows.expertise);
@@ -95,6 +100,7 @@ for (const char of characters) {
   all.resources.push(...rows.resources);
   all.speciesOptions.push(...rows.speciesOptions);
   all.classOptions.push(...rows.classOptions);
+  all.classSkills.push(...rows.classSkills);
 }
 
 lines.push(
@@ -152,7 +158,16 @@ if (all.saves.length) {
 }
 if (all.feats.length) {
   lines.push(
-    batchInsert("rpg.player_character_feat", ["character_id", "feat_id", "source", "options"], all.feats)
+    batchInsert("rpg.player_character_feat", ["character_id", "feat_id", "source"], all.feats)
+  );
+}
+if (all.featMagicInitiate.length) {
+  lines.push(
+    batchInsert(
+      "rpg.player_character_feat_magic_initiate",
+      ["character_id", "feat_id", "source", "spell_list_class_id", "casting_ability_id"],
+      all.featMagicInitiate
+    )
   );
 }
 if (all.equipment.length) {
@@ -227,9 +242,17 @@ if (all.classOptions.length) {
         "catalog_value_id",
         "fighting_style_id",
         "terrain_id",
-        "json_value",
       ],
       all.classOptions
+    )
+  );
+}
+if (all.classSkills.length) {
+  lines.push(
+    batchInsert(
+      "rpg.player_character_class_skill",
+      ["character_id", "skill_id"],
+      all.classSkills
     )
   );
 }

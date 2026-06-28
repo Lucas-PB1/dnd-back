@@ -17,6 +17,7 @@ import {
   expectedFocusPoints,
   expectedMaxHpForCharacter,
   expectedPassivePerception,
+  buildExpertise,
   expectedPreparedCount,
   expectedRageUses,
   expectedSpeciesResources,
@@ -1127,6 +1128,8 @@ function buildCharacter(bp) {
 
   doc.feats = buildFeats(enriched, bg);
   ensureElfKeenSenses(doc);
+  const expertise = buildExpertise(doc);
+  if (expertise.length) doc.expertise = expertise;
   const featIds = doc.feats.map((f) => f.featId);
   const masterySlots = expectedWeaponMasterySlots(enriched.classId, enriched.level, featIds);
   if (masterySlots > 0) {

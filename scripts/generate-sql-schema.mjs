@@ -4,7 +4,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { PLAYER_CHARACTER_DDL, PLAYER_CHARACTER_RELATIONAL_MIGRATION, PLAYER_CHARACTER_AC_MIGRATION } from "./lib/player-character-ddl.mjs";
+import { PLAYER_CHARACTER_DDL, PLAYER_CHARACTER_RELATIONAL_MIGRATION, PLAYER_CHARACTER_AC_MIGRATION, PLAYER_CHARACTER_CLASS_SKILL_MIGRATION, PLAYER_CHARACTER_FEAT_MIGRATION } from "./lib/player-character-ddl.mjs";
 
 const PLAYER_CHARACTER_ABILITY_MIGRATION = `-- Fase 5.1 — atributos normalizados (FK phb_ability)
 
@@ -1038,6 +1038,16 @@ fs.writeFileSync(
 fs.writeFileSync(
   path.join(migrationDir, "006_player_character_ac_columns.sql"),
   `-- Fase 5.3 — CA normalizada\n\n${PLAYER_CHARACTER_AC_MIGRATION}`,
+  "utf8"
+);
+fs.writeFileSync(
+  path.join(migrationDir, "007_player_character_class_skill.sql"),
+  `-- Fase 5.4 — opções de classe sem JSONB\n\n${PLAYER_CHARACTER_CLASS_SKILL_MIGRATION}`,
+  "utf8"
+);
+fs.writeFileSync(
+  path.join(migrationDir, "008_player_character_feat_magic_initiate.sql"),
+  `-- Fase 5.5 — feats sem JSONB\n\n${PLAYER_CHARACTER_FEAT_MIGRATION}`,
   "utf8"
 );
 fs.writeFileSync(path.join(root, "database", "dev-reset.sql"), DEV_RESET, "utf8");

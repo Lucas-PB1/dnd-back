@@ -1,31 +1,35 @@
--- Fase 5.2 — fichas 100% relacionais
+-- Fase 5.4 — opções de classe sem JSONB
 
--- Fase 5.2 — remove sheet JSONB; pacotes iniciais viram colunas; documento via view
+-- Fase 5.4 — skillIds de class_option → tabela de junção
 
-ALTER TABLE rpg.player_character
-  ADD COLUMN IF NOT EXISTS class_starting_option TEXT,
-  ADD COLUMN IF NOT EXISTS background_starting_option TEXT;
+CREATE TABLE IF NOT EXISTS rpg.player_character_class_skill (
+  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
+  skill_id     BIGINT NOT NULL REFERENCES rpg.phb_skill(id),
+  PRIMARY KEY (character_id, skill_id)
+);
 
-UPDATE rpg.player_character
-SET
-  class_starting_option = COALESCE(class_starting_option, starting_packages->>'classOption'),
-  background_starting_option = COALESCE(background_starting_option, starting_packages->>'backgroundOption')
-WHERE starting_packages IS NOT NULL;
+INSERT INTO rpg.player_character_class_skill (character_id, skill_id)
+SELECT pco.character_id, s.id
+FROM rpg.player_character_class_option pco
+CROSS JOIN LATERAL jsonb_array_elements_text(pco.json_value) AS elem(slug)
+JOIN rpg.phb_skill s ON s.slug = elem.slug
+WHERE pco.option_key = 'skillIds' AND pco.json_value IS NOT NULL
+ON CONFLICT DO NOTHING;
 
-DROP TRIGGER IF EXISTS tr_sync_sheet_runtime ON rpg.player_character;
-DROP TRIGGER IF EXISTS tr_sync_sheet_resource ON rpg.player_character_resource;
-DROP TRIGGER IF EXISTS tr_sync_sheet_spell_slot ON rpg.player_character_spell_slot;
+DELETE FROM rpg.player_character_class_option WHERE option_key = 'skillIds';
 
-DROP FUNCTION IF EXISTS rpg.sync_sheet_runtime();
-DROP FUNCTION IF EXISTS rpg.sync_sheet_resource();
-DROP FUNCTION IF EXISTS rpg.sync_sheet_spell_slot();
+ALTER TABLE rpg.player_character_class_option DROP COLUMN IF EXISTS json_value;
 
-DROP INDEX IF EXISTS rpg.idx_pc_sheet;
+ALTER TABLE rpg.player_character_class_option
+  DROP CONSTRAINT IF EXISTS pco_has_value;
 
-ALTER TABLE rpg.player_character
-  DROP COLUMN IF EXISTS sheet,
-  DROP COLUMN IF EXISTS ability_generation,
-  DROP COLUMN IF EXISTS starting_packages;
+ALTER TABLE rpg.player_character_class_option
+  ADD CONSTRAINT pco_has_value CHECK (
+    catalog_value_id IS NOT NULL OR fighting_style_id IS NOT NULL
+    OR terrain_id IS NOT NULL
+  );
+
+DROP VIEW IF EXISTS rpg.v_player_character_full;
 
 -- DOCUMENTO — monta JSON a partir das projeções (substitui sheet)
 -- =============================================================================

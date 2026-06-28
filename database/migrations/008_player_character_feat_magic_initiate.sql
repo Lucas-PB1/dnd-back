@@ -1,31 +1,37 @@
--- Fase 5.2 — fichas 100% relacionais
+-- Fase 5.5 — feats sem JSONB
 
--- Fase 5.2 — remove sheet JSONB; pacotes iniciais viram colunas; documento via view
+-- Fase 5.5 — feat options JSONB → tabela magic_initiate
 
-ALTER TABLE rpg.player_character
-  ADD COLUMN IF NOT EXISTS class_starting_option TEXT,
-  ADD COLUMN IF NOT EXISTS background_starting_option TEXT;
+CREATE TABLE IF NOT EXISTS rpg.player_character_feat_magic_initiate (
+  character_id        TEXT NOT NULL,
+  feat_id             BIGINT NOT NULL,
+  source              rpg.feat_source NOT NULL,
+  spell_list_class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id),
+  casting_ability_id  BIGINT NOT NULL REFERENCES rpg.phb_ability(id),
+  PRIMARY KEY (character_id, feat_id, source),
+  FOREIGN KEY (character_id, feat_id, source)
+    REFERENCES rpg.player_character_feat(character_id, feat_id, source)
+    ON DELETE CASCADE
+);
 
-UPDATE rpg.player_character
-SET
-  class_starting_option = COALESCE(class_starting_option, starting_packages->>'classOption'),
-  background_starting_option = COALESCE(background_starting_option, starting_packages->>'backgroundOption')
-WHERE starting_packages IS NOT NULL;
+INSERT INTO rpg.player_character_feat_magic_initiate (
+  character_id, feat_id, source, spell_list_class_id, casting_ability_id
+)
+SELECT
+  pcf.character_id,
+  pcf.feat_id,
+  pcf.source,
+  cl.id,
+  ab.id
+FROM rpg.player_character_feat pcf
+JOIN rpg.phb_class cl ON cl.slug = pcf.options->'magicInitiate'->>'spellListClassId'
+JOIN rpg.phb_ability ab ON ab.slug = pcf.options->'magicInitiate'->>'castingAbilityId'
+WHERE pcf.options->'magicInitiate' IS NOT NULL
+ON CONFLICT DO NOTHING;
 
-DROP TRIGGER IF EXISTS tr_sync_sheet_runtime ON rpg.player_character;
-DROP TRIGGER IF EXISTS tr_sync_sheet_resource ON rpg.player_character_resource;
-DROP TRIGGER IF EXISTS tr_sync_sheet_spell_slot ON rpg.player_character_spell_slot;
+ALTER TABLE rpg.player_character_feat DROP COLUMN IF EXISTS options;
 
-DROP FUNCTION IF EXISTS rpg.sync_sheet_runtime();
-DROP FUNCTION IF EXISTS rpg.sync_sheet_resource();
-DROP FUNCTION IF EXISTS rpg.sync_sheet_spell_slot();
-
-DROP INDEX IF EXISTS rpg.idx_pc_sheet;
-
-ALTER TABLE rpg.player_character
-  DROP COLUMN IF EXISTS sheet,
-  DROP COLUMN IF EXISTS ability_generation,
-  DROP COLUMN IF EXISTS starting_packages;
+DROP VIEW IF EXISTS rpg.v_player_character_full;
 
 -- DOCUMENTO — monta JSON a partir das projeções (substitui sheet)
 -- =============================================================================

@@ -101,6 +101,116 @@ export function expectedPassivePerception(doc) {
   return 10 + skillBonus;
 }
 
+/** Concessões de Especialização por classe (PHB 2024). */
+const CLASS_EXPERTISE_TIERS = {
+  rogue: [
+    { minLevel: 1, count: 2, preferred: ["stealth", "sleight-of-hand", "perception", "investigation"] },
+    { minLevel: 6, count: 2, preferred: ["deception", "insight", "acrobatics", "persuasion"] },
+  ],
+  bard: [
+    { minLevel: 2, count: 2, preferred: ["performance", "persuasion", "deception", "insight"] },
+    { minLevel: 9, count: 2, preferred: ["acrobatics", "perception", "intimidation", "history"] },
+  ],
+  ranger: [
+    { minLevel: 2, count: 1, preferred: ["survival", "nature", "perception", "stealth"] },
+    { minLevel: 9, count: 2, preferred: ["investigation", "animal-handling", "athletics", "insight"] },
+  ],
+  wizard: [
+    {
+      minLevel: 2,
+      count: 1,
+      pool: ["arcana", "history", "investigation", "medicine", "nature", "religion"],
+      preferred: ["arcana", "investigation", "history"],
+    },
+  ],
+};
+
+const FEAT_EXPERTISE = {
+  observant: { pool: ["insight", "investigation", "perception"], preferred: ["perception"] },
+  "keen-mind": {
+    pool: ["arcana", "history", "investigation", "nature", "religion"],
+    preferred: ["investigation"],
+  },
+  "skill-expert": { preferred: ["stealth", "perception", "arcana", "investigation"] },
+  "boon-of-skill-proficiency": { preferred: ["perception", "stealth", "arcana"] },
+};
+
+function hashSeed(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function pickExpertiseSkills({ proficient, count, pool = null, preferred = [], taken, seed = 0 }) {
+  const eligible = (pool ?? proficient).filter((id) => proficient.includes(id) && !taken.has(id));
+  if (!eligible.length || count <= 0) return [];
+
+  const ordered = [
+    ...preferred.filter((id) => eligible.includes(id)),
+    ...eligible.filter((id) => !preferred.includes(id)),
+  ];
+
+  const picked = [];
+  const offset = seed % ordered.length;
+  for (let i = 0; i < count; i++) {
+    let skill = null;
+    for (let j = 0; j < ordered.length; j++) {
+      const cand = ordered[(offset + i + j) % ordered.length];
+      if (!taken.has(cand) && !picked.includes(cand)) {
+        skill = cand;
+        break;
+      }
+    }
+    if (!skill) break;
+    picked.push(skill);
+  }
+  return picked;
+}
+
+/** Monta lista de perícias com Especialização (classe + talentos). */
+export function buildExpertise(doc) {
+  const proficient = [...new Set((doc.skillProficiencies ?? []).map((s) => s.skillId))];
+  const expertise = [];
+  const taken = new Set();
+  const seed = hashSeed(doc.id ?? "0");
+
+  function grant(count, { pool, preferred = [], seedOffset = 0 } = {}) {
+    for (const skillId of pickExpertiseSkills({
+      proficient,
+      count,
+      pool,
+      preferred,
+      taken,
+      seed: seed + seedOffset,
+    })) {
+      expertise.push(skillId);
+      taken.add(skillId);
+    }
+  }
+
+  for (const tier of CLASS_EXPERTISE_TIERS[doc.classId] ?? []) {
+    if (doc.level >= tier.minLevel) {
+      grant(tier.count, {
+        pool: tier.pool,
+        preferred: tier.preferred,
+        seedOffset: tier.minLevel,
+      });
+    }
+  }
+
+  for (const feat of doc.feats ?? []) {
+    const cfg = FEAT_EXPERTISE[feat.featId];
+    if (!cfg) continue;
+    grant(1, {
+      pool: cfg.pool,
+      preferred: cfg.preferred,
+      seedOffset: feat.featId.length,
+    });
+  }
+
+  return expertise;
+}
+
 export function expectedClassCantrips(classId, level) {
   const row = CLASS_PROGRESSION[classId]?.levels[level - 1];
   return row?.cantrips ?? null;

@@ -80,11 +80,46 @@ try {
   if (!full.length) fail("v_player_character_full pc-001 ausente");
   else if (full[0].doc_id !== "pc-001") fail("document.id diverge do personagem");
 
-  const { rows: legacyAcDetail } = await client.query(`
+  const { rows: legacyClassJson } = await client.query(`
     SELECT 1 FROM information_schema.columns
-    WHERE table_schema = 'rpg' AND table_name = 'player_character' AND column_name = 'ac_detail'
+    WHERE table_schema = 'rpg' AND table_name = 'player_character_class_option'
+      AND column_name = 'json_value'
   `);
-  if (legacyAcDetail.length) fail("coluna ac_detail ainda existe — rode migration 006");
+  if (legacyClassJson.length) fail("coluna json_value em class_option ainda existe — rode migration 007");
+
+  const { rows: legacyFeatOptions } = await client.query(`
+    SELECT 1 FROM information_schema.columns
+    WHERE table_schema = 'rpg' AND table_name = 'player_character_feat'
+      AND column_name = 'options'
+  `);
+  if (legacyFeatOptions.length) fail("coluna options em player_character_feat ainda existe — rode migration 008");
+
+  const { rows: miRows } = await client.query(`
+    SELECT 1 FROM rpg.player_character_feat_magic_initiate
+    JOIN rpg.player_character pc ON pc.id = character_id
+    WHERE pc.id = 'pc-003'
+  `);
+  if (!miRows.length) fail("pc-003 (guide/magic-initiate) sem linha em feat_magic_initiate");
+
+  const { rows: classSkillCnt } = await client.query(`
+    SELECT COUNT(*)::int AS n FROM rpg.player_character_class_skill WHERE character_id = 'pc-001'
+  `);
+  if (classSkillCnt[0].n < 1) fail("pc-001 sem perícias de classe em player_character_class_skill");
+
+  const { rows: rogueExp } = await client.query(`
+    SELECT COUNT(*)::int AS n
+    FROM rpg.player_character_expertise pex
+    JOIN rpg.player_character pc ON pc.id = pex.character_id
+    JOIN rpg.phb_class c ON c.id = pc.class_id AND c.slug = 'rogue'
+  `);
+  if (rogueExp[0].n < 2) fail("ladinos sem Especialização em player_character_expertise");
+
+  const { rows: pc009Exp } = await client.query(`
+    SELECT COUNT(*)::int AS n FROM rpg.player_character_expertise WHERE character_id = 'pc-009'
+  `);
+  if (pc009Exp[0].n !== 2) {
+    fail(`pc-009 (ladino) deveria ter 2 expertise, encontrado ${pc009Exp[0].n}`);
+  }
 
   try {
     await client.query(`

@@ -219,11 +219,49 @@ RETURNS JSONB AS $$
   ) sv ON TRUE
   LEFT JOIN LATERAL (
     SELECT COALESCE(jsonb_agg(
-      jsonb_build_object('featId', f.slug, 'source', pcf.source) || COALESCE(pcf.options, '{}'::jsonb)
+      jsonb_build_object('featId', f.slug, 'source', pcf.source)
+      || CASE
+        WHEN mi.character_id IS NOT NULL THEN jsonb_build_object(
+          'magicInitiate', jsonb_build_object(
+            'spellListClassId', mi_cl.slug,
+            'castingAbilityId', mi_ab.slug,
+            'cantripIds', mi_cantrips.ids,
+            'preparedSpellId', mi_prep.slug
+          )
+        )
+        ELSE '{}'::jsonb
+      END
       ORDER BY f.slug
     ), '[]'::jsonb) AS list
     FROM rpg.player_character_feat pcf
     JOIN rpg.phb_feat f ON f.id = pcf.feat_id
+    LEFT JOIN rpg.player_character_feat_magic_initiate mi
+      ON mi.character_id = pcf.character_id
+      AND mi.feat_id = pcf.feat_id
+      AND mi.source = pcf.source
+    LEFT JOIN rpg.phb_class mi_cl ON mi_cl.id = mi.spell_list_class_id
+    LEFT JOIN rpg.phb_ability mi_ab ON mi_ab.id = mi.casting_ability_id
+    LEFT JOIN LATERAL (
+      SELECT COALESCE(jsonb_agg(s.slug ORDER BY s.slug), '[]'::jsonb) AS ids
+      FROM rpg.player_character_spell_list psl
+      JOIN rpg.phb_spell s ON s.id = psl.spell_id
+      JOIN rpg.phb_spell_source ss ON ss.id = psl.source_id
+      WHERE psl.character_id = pcf.character_id
+        AND ss.slug = 'magic-initiate'
+        AND psl.list_type = 'known'
+        AND s.level = 0
+    ) mi_cantrips ON mi.character_id IS NOT NULL
+    LEFT JOIN LATERAL (
+      SELECT s.slug
+      FROM rpg.player_character_spell_list psl
+      JOIN rpg.phb_spell s ON s.id = psl.spell_id
+      JOIN rpg.phb_spell_source ss ON ss.id = psl.source_id
+      WHERE psl.character_id = pcf.character_id
+        AND ss.slug = 'magic-initiate'
+        AND psl.list_type = 'prepared'
+      ORDER BY s.slug
+      LIMIT 1
+    ) mi_prep ON mi.character_id IS NOT NULL
     WHERE pcf.character_id = pc.id
   ) ft ON TRUE
   LEFT JOIN LATERAL (
@@ -278,19 +316,31 @@ RETURNS JSONB AS $$
     WHERE pso.character_id = pc.id
   ) so ON TRUE
   LEFT JOIN LATERAL (
-    SELECT COALESCE(jsonb_object_agg(
-      pco.option_key,
-      COALESCE(
-        to_jsonb(pco.catalog_value_id),
-        to_jsonb(fs.slug),
-        to_jsonb(dt.slug),
-        pco.json_value
-      )
-    ), '{}'::jsonb) AS choices
-    FROM rpg.player_character_class_option pco
-    LEFT JOIN rpg.phb_fighting_style fs ON fs.id = pco.fighting_style_id
-    LEFT JOIN rpg.phb_druid_land_terrain dt ON dt.id = pco.terrain_id
-    WHERE pco.character_id = pc.id
+    SELECT COALESCE(opts.choices, '{}'::jsonb)
+      || CASE
+        WHEN sk.ids = '[]'::jsonb THEN '{}'::jsonb
+        ELSE jsonb_build_object('skillIds', sk.ids)
+      END AS choices
+    FROM (
+      SELECT COALESCE(jsonb_object_agg(
+        pco.option_key,
+        COALESCE(
+          to_jsonb(pco.catalog_value_id),
+          to_jsonb(fs.slug),
+          to_jsonb(dt.slug)
+        )
+      ), '{}'::jsonb) AS choices
+      FROM rpg.player_character_class_option pco
+      LEFT JOIN rpg.phb_fighting_style fs ON fs.id = pco.fighting_style_id
+      LEFT JOIN rpg.phb_druid_land_terrain dt ON dt.id = pco.terrain_id
+      WHERE pco.character_id = pc.id
+    ) opts
+    CROSS JOIN (
+      SELECT COALESCE(jsonb_agg(s.slug ORDER BY s.slug), '[]'::jsonb) AS ids
+      FROM rpg.player_character_class_skill pcs
+      JOIN rpg.phb_skill s ON s.id = pcs.skill_id
+      WHERE pcs.character_id = pc.id
+    ) sk
   ) co ON TRUE
   LEFT JOIN LATERAL (
     SELECT COALESCE(jsonb_object_agg(

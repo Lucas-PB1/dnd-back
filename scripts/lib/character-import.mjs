@@ -109,14 +109,25 @@ export function buildCharacterRows(char) {
     ability_id: sqlRef("phb_ability", ab),
   }));
 
+  const featMagicInitiate = [];
   const feats = (char.feats ?? []).map((f) => {
-    const { featId, source, ...opts } = f;
-    const options = Object.keys(opts).length ? opts : null;
+    const { featId, source, magicInitiate, ...rest } = f;
+    if (magicInitiate) {
+      featMagicInitiate.push({
+        character_id: sqlStr(char.id),
+        feat_id: sqlRef("phb_feat", featId),
+        source: `${sqlStr(source)}::rpg.feat_source`,
+        spell_list_class_id: sqlRef("phb_class", magicInitiate.spellListClassId),
+        casting_ability_id: sqlRef("phb_ability", magicInitiate.castingAbilityId),
+      });
+    }
+    if (Object.keys(rest).length) {
+      throw new Error(`feat ${featId} com opções não mapeadas: ${Object.keys(rest).join(", ")}`);
+    }
     return {
       character_id: sqlStr(char.id),
       feat_id: sqlRef("phb_feat", featId),
       source: `${sqlStr(source)}::rpg.feat_source`,
-      options: sqlJson(options),
     };
   });
 
@@ -207,7 +218,17 @@ export function buildCharacterRows(char) {
   }
 
   const classOptions = [];
+  const classSkills = [];
   for (const [key, value] of Object.entries(char.classChoices ?? {})) {
+    if (key === "skillIds") {
+      for (const skillId of value ?? []) {
+        classSkills.push({
+          character_id: sqlStr(char.id),
+          skill_id: sqlRef("phb_skill", skillId),
+        });
+      }
+      continue;
+    }
     const row = {
       character_id: sqlStr(char.id),
       class_id: sqlRef("phb_class", char.classId),
@@ -215,7 +236,6 @@ export function buildCharacterRows(char) {
       catalog_value_id: "NULL",
       fighting_style_id: "NULL",
       terrain_id: "NULL",
-      json_value: "NULL",
     };
     if (key === "divineOrder") {
       row.catalog_value_id = sqlStr(value);
@@ -224,7 +244,7 @@ export function buildCharacterRows(char) {
     } else if (key === "landTerrainId") {
       row.terrain_id = sqlRef("phb_druid_land_terrain", value);
     } else {
-      row.json_value = sqlJson(value);
+      throw new Error(`classChoices.${key} não mapeado para coluna relacional`);
     }
     classOptions.push(row);
   }
@@ -236,6 +256,7 @@ export function buildCharacterRows(char) {
     skills,
     saves,
     feats,
+    featMagicInitiate,
     equipment,
     masteries,
     expertise,
@@ -244,6 +265,7 @@ export function buildCharacterRows(char) {
     resources,
     speciesOptions,
     classOptions,
+    classSkills,
   };
 }
 

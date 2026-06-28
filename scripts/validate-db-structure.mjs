@@ -76,6 +76,7 @@ const REQUIRED_TABLES = [
   "player_character_skill",
   "player_character_saving_throw",
   "player_character_feat",
+  "player_character_feat_magic_initiate",
   "player_character_equipment",
   "player_character_weapon_mastery",
   "player_character_expertise",
@@ -84,6 +85,7 @@ const REQUIRED_TABLES = [
   "player_character_resource",
   "player_character_species_option",
   "player_character_class_option",
+  "player_character_class_skill",
 ];
 
 const FORBIDDEN = [
@@ -168,6 +170,7 @@ const REQUIRED_PATTERNS = [
   [/character_document/i, "função documento ficha"],
   [/recalculate_character_ac/i, "recálculo CA por equipamento"],
   [/v_character_abilities/i, "view atributos personagem"],
+  [/player_character_feat_magic_initiate/i, "iniciado em magia normalizado"],
   [/player_character_ability/i, "atributos normalizados com FK phb_ability"],
   [/validate_pc_subclass/i, "trigger validação subclasse"],
   [/rpg\.skill_source/i, "ENUM skill_source"],
