@@ -162,27 +162,36 @@ Estratégia A (`edition_id` por entidade) documentada para quando entrar SRD/hom
 
 ---
 
-### Fase 3 — Performance e consultas (quando UI exigir)
+### Fase 3 — Performance e consultas ✅
 
-Volume atual (~10k rows) não exige otimização. Implementar quando houver busca na UI:
+- [x] Índice composto `idx_phb_spell_level_school` (substitui `idx_spell_level`)
+- [x] Índice inverso `idx_class_skill_pool_skill`
+- [x] Índice filtro `idx_phb_item_type`
+- [x] GIN trgm em espécie, subclasse, antecedente (além de magia/talento/classe/item)
+- [x] `mv_spell_by_class` + índice único + `npm run refresh:views`
+- [x] Migration incremental `002_performance.sql`
+
+Consultas típicas:
 
 ```sql
--- Autocomplete (requer pg_trgm)
-CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_ops);
+-- Autocomplete magia
+SELECT slug, name FROM rpg.phb_spell
+WHERE name ILIKE '%fogo%' ORDER BY similarity(name, 'fogo') DESC LIMIT 10;
 
--- Filtro comum
-CREATE INDEX idx_phb_spell_level_school ON rpg.phb_spell (level, school_id);
+-- Filtro nível + escola
+SELECT slug, name FROM rpg.phb_spell
+WHERE level = 3 AND school_id = (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocation');
 
--- Consulta inversa
-CREATE INDEX idx_class_skill_pool_skill ON rpg.phb_class_skill_pool (skill_id);
+-- Magias por classe (hot path — MV)
+SELECT * FROM rpg.mv_spell_by_class WHERE class_slug = 'wizard' AND spell_level <= 3;
 
--- Hot path (opcional)
-CREATE MATERIALIZED VIEW rpg.mv_spell_by_class AS
-  SELECT * FROM rpg.v_spell_by_class;
-CREATE UNIQUE INDEX ON rpg.mv_spell_by_class (class_slug, spell_slug);
+-- Classes que oferecem Percepção
+SELECT c.slug, c.name FROM rpg.phb_class c
+JOIN rpg.phb_class_skill_pool p ON p.class_id = c.id
+WHERE p.skill_id = (SELECT id FROM rpg.phb_skill WHERE slug = 'perception');
 ```
 
-Refresh: `REFRESH MATERIALIZED VIEW CONCURRENTLY` após re-seed.
+Refresh após re-seed: automático em `seed:run` / `seed:prod`, ou `npm run refresh:views`.
 
 ---
 

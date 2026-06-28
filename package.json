@@ -24,6 +24,7 @@
     "seed:run": "node scripts/run-seed.mjs",
     "migrate:run": "node scripts/run-migrations.mjs",
     "seed:prod": "node scripts/run-seed-prod.mjs",
+    "refresh:views": "node scripts/refresh-views.mjs",
     "generate:skills": "node scripts/generate-skills.mjs",
     "validate:skills": "node scripts/validate-skills.mjs",
     "skills:all": "npm run generate:skills && npm run validate:skills",

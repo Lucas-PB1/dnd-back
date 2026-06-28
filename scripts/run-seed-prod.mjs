@@ -5,6 +5,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { spawnSync } from "child_process";
+import { refreshMaterializedViews } from "./lib/refresh-views.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -48,6 +49,10 @@ try {
   console.log(
     `✓ Catálogo PHB — ${counts.rows[0].spells} magias, ${counts.rows[0].classes} classes, ${counts.rows[0].items} itens`
   );
+  if (await refreshMaterializedViews(client)) {
+    const mv = await client.query("SELECT COUNT(*)::int AS n FROM rpg.mv_spell_by_class");
+    console.log(`✓ mv_spell_by_class — ${mv.rows[0].n} linhas`);
+  }
 } finally {
   await client.end();
 }

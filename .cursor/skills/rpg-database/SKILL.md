@@ -62,4 +62,5 @@ npm run seed:prod
 
 Ver [plano-final.md](docs/plano-final.md):
 
+- **Fase 4:** unificar opções de classe (opcional)
 - **Fase 5:** `player_character` híbrido (sheet JSONB + projeções)

@@ -7,7 +7,7 @@ Migrations incrementais do schema `rpg`. **Nunca** use `DROP SCHEMA` aqui.
 | Arquivo | Descrição |
 |---------|-----------|
 | `001_initial_catalog.sql` | Baseline v4 (gerado junto com `schema.sql`) |
-| `002_*.sql` | Alterações futuras (manual ou gerado) |
+| `002_performance.sql` | Índices de consulta + MV (incremental) |
 
 Registro de versões: `rpg.schema_migration`.
 
@@ -25,6 +25,9 @@ npm run seed:prod
 
 # Dev local: reset completo
 npm run seed:all && npm run seed:run
+
+# Atualizar MV após alteração manual de catálogo
+npm run refresh:views
 ```
 
 ## Regras

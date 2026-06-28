@@ -100,7 +100,8 @@ const FORBIDDEN = [
   /idx_phb_spell_slug/i,
   /idx_phb_class_slug/i,
   /idx_phb_item_slug/i,
-  /DROP SCHEMA IF EXISTS rpg CASCADE/i,
+  /idx_spell_level\b/i,
+  /^\s*DROP SCHEMA/im,
 ];
 
 const REQUIRED_PATTERNS = [
@@ -144,6 +145,10 @@ const REQUIRED_PATTERNS = [
   [/rpg\.set_updated_at/i, "função auditoria updated_at"],
   [/created_at TIMESTAMPTZ/i, "colunas created_at"],
   [/tr_phb_spell_updated_at/i, "trigger updated_at em phb_spell"],
+  [/idx_phb_spell_level_school/i, "índice composto level+school"],
+  [/idx_class_skill_pool_skill/i, "índice inverso skill pool"],
+  [/mv_spell_by_class/i, "materialized view magias por classe"],
+  [/idx_mv_spell_by_class/i, "índice único MV spell_by_class"],
 ];
 
 let errors = 0;

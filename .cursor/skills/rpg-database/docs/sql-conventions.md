@@ -50,8 +50,11 @@ npm run seed:run              # aplica no PostgreSQL local
 ### Atual (catálogo)
 
 - B-tree em FKs (`school_id`, `class_id`, `category_id`)
-- B-tree em filtros (`phb_spell.level`)
-- GIN trgm em `name` — autocomplete (`phb_spell`, `phb_feat`, `phb_class`, `phb_item`)
+- B-tree composto `(level, school_id)` em magias
+- B-tree inverso `phb_class_skill_pool(skill_id)`
+- B-tree filtro `phb_item(item_type)`
+- GIN trgm em `name` — magia, talento, classe, item, espécie, subclasse, antecedente
+- MV `mv_spell_by_class` — hot path listagem magias/classe (`npm run refresh:views`)
 
 ### Fase 5 (fichas)
 
