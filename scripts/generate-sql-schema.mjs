@@ -517,7 +517,6 @@ CREATE TABLE rpg.phb_weapon (
   category TEXT,
   damage TEXT,
   damage_type TEXT,
-  property_ids TEXT[],
   mastery_id TEXT
 );
 
@@ -858,9 +857,6 @@ CREATE INDEX idx_phb_subclass_feature_sub ON rpg.phb_subclass_feature(subclass_i
 CREATE INDEX idx_subclass_prep_spell ON rpg.phb_subclass_prepared_spell(subclass_id);
 CREATE INDEX idx_phb_spell_school ON rpg.phb_spell(school_id);
 CREATE INDEX idx_phb_spell_source ON rpg.phb_spell(source_citation_id);
-CREATE INDEX idx_phb_spell_slug ON rpg.phb_spell(slug);
-CREATE INDEX idx_phb_class_slug ON rpg.phb_class(slug);
-CREATE INDEX idx_phb_item_slug ON rpg.phb_item(slug);
 CREATE INDEX idx_spell_class ON rpg.phb_spell_class(class_id);
 CREATE INDEX idx_spell_level ON rpg.phb_spell(level);
 CREATE INDEX idx_phb_skill_ability ON rpg.phb_skill(ability_id);
@@ -868,6 +864,12 @@ CREATE INDEX idx_phb_class_hit_die ON rpg.phb_class(hit_die_id);
 CREATE INDEX idx_phb_class_source ON rpg.phb_class(source_citation_id);
 CREATE INDEX idx_phb_armor_category ON rpg.phb_armor(category_id);
 CREATE INDEX idx_phb_tool_category ON rpg.phb_tool(category_id);
+
+-- Autocomplete (pg_trgm)
+CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_ops);
+CREATE INDEX idx_phb_feat_name_trgm ON rpg.phb_feat USING gin (name gin_trgm_ops);
+CREATE INDEX idx_phb_class_name_trgm ON rpg.phb_class USING gin (name gin_trgm_ops);
+CREATE INDEX idx_phb_item_name_trgm ON rpg.phb_item USING gin (name gin_trgm_ops);
 
 COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — catálogo v4 (BIGINT + slug)';
 COMMENT ON COLUMN rpg.phb_spell.slug IS 'Identificador canônico do JSON/API; imutável na prática';

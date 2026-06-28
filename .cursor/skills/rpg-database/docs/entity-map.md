@@ -77,7 +77,7 @@ ENUMs da ficha (fase 5): `skill_source`, `feat_source`, `equipment_source`, `equ
 |-------|-----|
 | `character` | — (fase 5: `player_character`) |
 | `benefits JSONB` em feat | `phb_feat_benefit` |
-| `property_ids TEXT[]` | `phb_weapon_property_link` (remover coluna na fase 0) |
+| `property_ids TEXT[]` | `phb_weapon_property_link` |
 | `skill_choices JSONB` em class | `phb_class_skill_pool` |
 | `spell_slots JSONB` em progression | `phb_spell_slot_by_level` |
 | Multiclasse | Fora de escopo |

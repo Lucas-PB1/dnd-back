@@ -56,13 +56,9 @@ Objetivo: schema v4 consistente, sem redundâncias, doc alinhada.
 
 - [x] Remover artefatos legados de personagem (seção 2)
 - [x] Sincronizar documentação com v4
-- [ ] **Remover coluna `property_ids`** de `phb_weapon` — manter só `phb_weapon_property_link`
-  - Alterar `generate-sql-schema.mjs` e `seed-phb.mjs`
-  - Remover INSERT de `property_ids` no seed
-- [ ] **Remover índices redundantes** em colunas já `UNIQUE` (`idx_phb_spell_slug`, `idx_phb_class_slug`, `idx_phb_item_slug`)
-- [ ] **Usar ou remover `pg_trgm`** — decidir:
-  - **Opção A (recomendada):** criar índices GIN trgm em `phb_spell.name`, `phb_feat.name`, `phb_class.name`, `phb_item.name`
-  - **Opção B:** remover `CREATE EXTENSION pg_trgm` até precisar de busca
+- [x] **Remover coluna `property_ids`** de `phb_weapon` — manter só `phb_weapon_property_link`
+- [x] **Remover índices redundantes** em colunas já `UNIQUE` (`idx_phb_spell_slug`, `idx_phb_class_slug`, `idx_phb_item_slug`)
+- [x] **Índices GIN trgm** em `phb_spell.name`, `phb_feat.name`, `phb_class.name`, `phb_item.name`
 
 **Critério de done:** `npm run db:all && npm run seed:all` passam; zero referências a `player_character` no schema/seed.
 

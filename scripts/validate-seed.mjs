@@ -56,6 +56,10 @@ if (/player_character/i.test(phbSql)) {
   fail("seed PHB não deve referenciar player_character");
 }
 
+if (/property_ids/i.test(phbSql)) {
+  fail("seed PHB não deve usar property_ids (usar phb_weapon_property_link)");
+}
+
 if (manifest.phb?.spells !== catalog.counts.spells) {
   fail(`manifest spells ${manifest.phb?.spells} ≠ catálogo ${catalog.counts.spells}`);
 }

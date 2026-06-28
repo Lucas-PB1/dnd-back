@@ -9957,7 +9957,7 @@ ganhar o jogo (CD 20)', '{"attribute":"Sabedoria","crafting":null,"variants":"Da
   ('kit-de-veneno', 'tool'::rpg.item_type, 'Kit de Veneno', '{"text":"50 PO"}'::jsonb, '1 kg', 'Detectar um objeto envenenado (CD 10)', '{"attribute":"Inteligência","crafting":"Veneno Básico","variants":null}'::jsonb);
 
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), 'simple', '1d4', 'Perfurante', 'nick') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
@@ -9965,53 +9965,53 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'javelin'), 'simple', '1d6', 'Perfurante', ARRAY['thrown']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'javelin'), 'simple', '1d6', 'Perfurante', 'slow') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'javelin'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'quarterstaff'), 'simple', '1d6', 'Contundente', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'quarterstaff'), 'simple', '1d6', 'Contundente', 'topple') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'quarterstaff'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'club'), 'simple', '1d4', 'Contundente', ARRAY['light']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'club'), 'simple', '1d4', 'Contundente', 'slow') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'club'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatclub'), 'simple', '1d8', 'Contundente', ARRAY['two-handed']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatclub'), 'simple', '1d8', 'Contundente', 'push') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatclub'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), 'simple', '1d4', 'Cortante', ARRAY['light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), 'simple', '1d4', 'Cortante', 'nick') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'spear'), 'simple', '1d6', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'spear'), 'simple', '1d6', 'Perfurante', 'sap') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'spear'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'spear'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'mace'), 'simple', '1d6', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'mace'), 'simple', '1d6', 'Contundente', 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'handaxe'), 'simple', '1d6', 'Cortante', ARRAY['thrown', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'handaxe'), 'simple', '1d6', 'Cortante', 'vex') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'handaxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'handaxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-hammer'), 'simple', '1d4', 'Contundente', ARRAY['thrown', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-hammer'), 'simple', '1d4', 'Contundente', 'nick') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-hammer'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-hammer'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), 'simple', '1d6', 'Perfurante', ARRAY['two-handed', 'ammunition']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), 'simple', '1d6', 'Perfurante', 'vex') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), 'simple', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), 'simple', '1d8', 'Perfurante', 'slow') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
@@ -10019,17 +10019,17 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'light-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dart'), 'simple', '1d4', 'Perfurante', ARRAY['finesse', 'thrown']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dart'), 'simple', '1d4', 'Perfurante', 'vex') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dart'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'dart'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sling'), 'simple', '1d4', 'Contundente', ARRAY['ammunition']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sling'), 'simple', '1d4', 'Contundente', 'slow') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'sling'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'halberd'), 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'halberd'), 'martial', '1d10', 'Cortante', 'cleave') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'halberd'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
@@ -10037,35 +10037,35 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'halberd'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'whip'), 'martial', '1d4', 'Cortante', ARRAY['finesse', 'reach']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'whip'), 'martial', '1d4', 'Cortante', 'slow') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'whip'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'whip'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'reach')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'scimitar'), 'martial', '1d6', 'Cortante', ARRAY['finesse', 'light']::text[], 'nick') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'scimitar'), 'martial', '1d6', 'Cortante', 'nick') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'scimitar'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'scimitar'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), 'martial', '1d6', 'Perfurante', ARRAY['finesse', 'light']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), 'martial', '1d6', 'Perfurante', 'vex') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatsword'), 'martial', '2d6', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatsword'), 'martial', '2d6', 'Cortante', 'graze') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greatsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longsword'), 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longsword'), 'martial', '1d8', 'Cortante', 'sap') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longsword'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'glaive'), 'martial', '1d10', 'Cortante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'graze') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'glaive'), 'martial', '1d10', 'Cortante', 'graze') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'glaive'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
@@ -10073,7 +10073,7 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'glaive'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'lance'), 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'lance'), 'martial', '1d10', 'Perfurante', 'topple') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'lance'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
@@ -10081,7 +10081,7 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'lance'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pike'), 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'reach', 'heavy']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pike'), 'martial', '1d10', 'Perfurante', 'push') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pike'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
@@ -10089,45 +10089,45 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pike'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'morningstar'), 'martial', '1d8', 'Perfurante', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'morningstar'), 'martial', '1d8', 'Perfurante', 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'battleaxe'), 'martial', '1d8', 'Cortante', ARRAY['versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'battleaxe'), 'martial', '1d8', 'Cortante', 'topple') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'battleaxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), 'martial', '1d12', 'Cortante', ARRAY['two-handed', 'heavy']::text[], 'cleave') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), 'martial', '1d12', 'Cortante', 'cleave') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'maul'), 'martial', '2d6', 'Contundente', ARRAY['two-handed', 'heavy']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'maul'), 'martial', '2d6', 'Contundente', 'topple') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'maul'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'maul'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'flail'), 'martial', '1d8', 'Contundente', NULL, 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'flail'), 'martial', '1d8', 'Contundente', 'sap') ON CONFLICT (item_id) DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'warhammer'), 'martial', '1d8', 'Contundente', ARRAY['versatile']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'warhammer'), 'martial', '1d8', 'Contundente', 'push') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'warhammer'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'war-pick'), 'martial', '1d8', 'Perfurante', ARRAY['versatile']::text[], 'sap') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'war-pick'), 'martial', '1d8', 'Perfurante', 'sap') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'war-pick'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'rapier'), 'martial', '1d8', 'Perfurante', ARRAY['finesse']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'rapier'), 'martial', '1d8', 'Perfurante', 'vex') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'rapier'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'finesse')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'trident'), 'martial', '1d8', 'Perfurante', ARRAY['thrown', 'versatile']::text[], 'topple') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'trident'), 'martial', '1d8', 'Perfurante', 'topple') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'trident'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'thrown')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'trident'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'versatile')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), 'martial', '1d8', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), 'martial', '1d8', 'Perfurante', 'slow') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
@@ -10135,7 +10135,7 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'heavy')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hand-crossbow'), 'martial', '1d6', 'Perfurante', ARRAY['light', 'ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hand-crossbow'), 'martial', '1d6', 'Perfurante', 'vex') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hand-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'light')) ON CONFLICT DO NOTHING;
 
@@ -10143,7 +10143,7 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'hand-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), 'martial', '1d10', 'Perfurante', ARRAY['two-handed', 'ammunition', 'heavy', 'loading']::text[], 'push') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), 'martial', '1d10', 'Perfurante', 'push') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
@@ -10153,7 +10153,7 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'heavy-crossbow'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'musket'), 'martial', '1d12', 'Perfurante', ARRAY['two-handed', 'ammunition', 'loading']::text[], 'slow') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'musket'), 'martial', '1d12', 'Perfurante', 'slow') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'musket'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'two-handed')) ON CONFLICT DO NOTHING;
 
@@ -10161,13 +10161,13 @@ INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELEC
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'musket'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pistol'), 'martial', '1d10', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pistol'), 'martial', '1d10', 'Perfurante', 'vex') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pistol'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'pistol'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'loading')) ON CONFLICT DO NOTHING;
 
-INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'blowgun'), 'martial', '1', 'Perfurante', ARRAY['ammunition', 'loading']::text[], 'vex') ON CONFLICT (item_id) DO NOTHING;
+INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'blowgun'), 'martial', '1', 'Perfurante', 'vex') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_weapon_property_link (weapon_id, property_id) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'blowgun'), (SELECT id FROM rpg.phb_weapon_property WHERE slug = 'ammunition')) ON CONFLICT DO NOTHING;
 

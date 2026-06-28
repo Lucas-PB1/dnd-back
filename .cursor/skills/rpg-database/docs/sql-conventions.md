@@ -32,7 +32,7 @@ PostgreSQL **14+** (15+ recomendado para `UNIQUE NULLS NOT DISTINCT`), schema `r
 ## JSONB evitado (normalizado)
 
 - `phb_feat.benefits` → `phb_feat_benefit`
-- `phb_weapon.property_ids` → `phb_weapon_property_link` (coluna a remover na fase 0)
+- `phb_weapon.property_ids` → `phb_weapon_property_link`
 - `phb_class.skill_choices` → `phb_class_skill_pool`
 
 ## Comandos
@@ -51,11 +51,7 @@ npm run seed:run              # aplica no PostgreSQL local
 
 - B-tree em FKs (`school_id`, `class_id`, `category_id`)
 - B-tree em filtros (`phb_spell.level`)
-
-### Planejado (fase 0/3)
-
-- GIN trgm em `name` — autocomplete (`pg_trgm`)
-- Remover índices redundantes em colunas já `UNIQUE`
+- GIN trgm em `name` — autocomplete (`phb_spell`, `phb_feat`, `phb_class`, `phb_item`)
 
 ### Fase 5 (fichas)
 

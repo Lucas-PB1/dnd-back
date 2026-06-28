@@ -92,6 +92,10 @@ const FORBIDDEN = [
   /CREATE TABLE rpg\.phb_subclass[\s\S]{0,300}prepared_spells_by_level JSONB/i,
   /CREATE TABLE rpg\.phb_subclass[\s\S]{0,200}prepared_spell_source_key/i,
   /CREATE TABLE rpg\.phb_subclass_prepared_spell[\s\S]{0,200}terrain_slug TEXT/i,
+  /phb_weapon[\s\S]{0,200}property_ids/i,
+  /idx_phb_spell_slug/i,
+  /idx_phb_class_slug/i,
+  /idx_phb_item_slug/i,
 ];
 
 const REQUIRED_PATTERNS = [
@@ -122,6 +126,8 @@ const REQUIRED_PATTERNS = [
   [/school_id/i, "FK escola de magia"],
   [/phb_elf_lineage/i, "linhagens élficas normalizadas"],
   [/spell_slot_pattern_id/i, "FK padrão de espelhos na classe"],
+  [/gin_trgm_ops/i, "índices GIN trgm para autocomplete"],
+  [/phb_weapon_property_link/i, "propriedades de arma via junction"],
 ];
 
 let errors = 0;

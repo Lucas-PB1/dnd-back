@@ -14,7 +14,6 @@ import {
   sqlClassPackageRef,
   sqlRef,
   sqlStr,
-  sqlTextArray,
   sqlTimestamp,
 } from "./lib/sql-escape.mjs";
 import {
@@ -668,7 +667,7 @@ lines.push(
 for (const i of catalog.items.filter((x) => x.weapon)) {
   const w = i.weapon;
   lines.push(
-    `INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, property_ids, mastery_id) VALUES (${sqlRef("phb_item", i.id)}, ${sqlStr(w.category)}, ${sqlStr(w.damage)}, ${sqlStr(w.damageType)}, ${sqlTextArray(w.propertyIds)}, ${sqlStr(w.masteryId)}) ON CONFLICT (item_id) DO NOTHING;`
+    `INSERT INTO rpg.phb_weapon (item_id, category, damage, damage_type, mastery_id) VALUES (${sqlRef("phb_item", i.id)}, ${sqlStr(w.category)}, ${sqlStr(w.damage)}, ${sqlStr(w.damageType)}, ${sqlStr(w.masteryId)}) ON CONFLICT (item_id) DO NOTHING;`
   );
   for (const pid of w.propertyIds ?? []) {
     lines.push(
