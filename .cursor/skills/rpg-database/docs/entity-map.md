@@ -1,63 +1,83 @@
-# Mapa JSON → PostgreSQL v3
+# Mapa JSON → PostgreSQL v4
 
 Schema: `rpg` | SGBD: **PostgreSQL 14+**
 
-Diagrama completo: [er-diagram.md](er-diagram.md)
+Diagrama: [er-diagram.md](er-diagram.md) | Roadmap: [plano-final.md](plano-final.md)
 
 ## Camadas
 
 | Camada | JSON | SQL |
 |--------|------|-----|
-| Catálogo | `data/phb/**` | `rpg.phb_*` |
-| Ficha | `data/characters/*.json` | `rpg.player_character` + filhas |
-| Canônico round-trip | ficha inteira | `player_character.sheet` JSONB |
+| Catálogo | `data/phb/**` | `rpg.phb_*` (58 tabelas) |
+| Ficha | `data/characters/*.json` | **Fase 5** — `rpg.player_character` + filhas |
+| Regras | `data/schema/*.schema.json` | Validação Node (`npm run fichas:all`) |
 
-## Ficha híbrida
+## Catálogo PHB
 
-| JSON | SQL v2 |
-|------|--------|
+| JSON / domínio | Tabela(s) SQL |
+|----------------|---------------|
+| `classes/*.json` | `phb_class`, `phb_class_progression`, `phb_class_feature`, `phb_class_skill_pool`, `phb_class_spellcasting`, `phb_class_saving_throw`, `phb_class_primary_ability`, `phb_class_armor_training`, `phb_class_weapon_proficiency`, `phb_class_fighting_style`, `phb_class_starting_*` |
+| `subclasses/*.json` | `phb_subclass`, `phb_subclass_feature`, `phb_subclass_prepared_spell` |
+| `species/*.json` | `phb_species`, `phb_species_trait`, `phb_species_option_def`, `phb_species_option_value` |
+| `backgrounds/*.json` | `phb_background`, `phb_background_skill`, `phb_background_ability_option`, `phb_background_starting_*` |
+| `spells/*.json` | `phb_spell`, `phb_spell_school`, `phb_spell_class` |
+| `feats/*.json` | `phb_feat`, `phb_feat_category`, `phb_feat_benefit` |
+| `weapons/*.json` | `phb_weapon`, `phb_weapon_property`, `phb_weapon_property_link` |
+| `armor/*.json` | `phb_armor`, `phb_armor_category` |
+| `tools/*.json` | `phb_tool`, `phb_tool_category` |
+| `items/*.json` | `phb_item` (supertipo) |
+| Slots de magia | `phb_spell_slot_pattern`, `phb_spell_slot_by_level` |
+| Recursos | `phb_resource_definition` |
+| Fontes de magia | `phb_spell_source` |
+| Linhagens | `phb_elf_lineage`, `phb_infernal_legacy`, `phb_dragon_ancestry` |
+| Criação | `phb_alignment`, `phb_language`, `phb_ability`, `phb_skill`, `phb_ability_generation_method`, `phb_background_boost_option` |
+
+## Identidade v4
+
+| Conceito | JSON | SQL |
+|----------|------|-----|
+| ID público | `"id": "fireball"` | `slug TEXT UNIQUE` |
+| ID interno | — | `id BIGSERIAL PRIMARY KEY` |
+| FKs | slug no JSON | `*_id BIGINT REFERENCES ...` |
+
+## Ficha de personagem (fase 5 — planejado)
+
+| JSON | SQL previsto |
+|------|--------------|
 | (documento inteiro) | `player_character.sheet` JSONB NOT NULL |
 | `id`, `name`, `level` | colunas + FKs indexadas |
 | `abilities` | `forca` … `carisma` |
 | `hp` | `hp_current`, `hp_max`, `hp_temp` |
 | `armorClass` | `ac_total` + `ac_detail` JSONB |
-| `resources` | `player_character_resource` (key, max, remaining) |
-| `speciesChoices` | `player_character_species_option` (key, value) |
-| `classChoices` | `player_character_class_option` (key, value) |
+| `resources` | `player_character_resource` |
+| `speciesChoices` | `player_character_species_option` |
+| `classChoices` | `player_character_class_option` |
 | `languageIds` | `player_character_language` |
-| `skillProficiencies` | `player_character_skill` (ENUM source) |
+| `skillProficiencies` | `player_character_skill` |
 | `savingThrowProficiencies` | `player_character_saving_throw` |
-| `feats` | `player_character_feat` + `options` JSONB |
-| `spellcasting` | `player_character_spell_list` + `player_character_spell_slot` |
+| `feats` | `player_character_feat` |
+| `spellcasting` | `player_character_spell_list` + `_spell_slot` |
 | `equipment` | `player_character_equipment` |
-| `weaponMasteryWeaponIds` | `player_character_weapon_mastery` → `phb_weapon` |
+| `weaponMasteryWeaponIds` | `player_character_weapon_mastery` |
 | `expertise` | `player_character_expertise` |
 
-## Catálogo extra (v2)
+## ENUMs PostgreSQL (v4)
 
-| Tabela | PHB |
-|--------|-----|
-| `phb_edition` | versionamento regras |
-| `phb_fighting_style` | `classes/fighting-styles.json` |
-| `phb_weapon_property` | `weapons/properties.json` |
-| `phb_tool` | tools / kits (`kit-de-sacerdote`, etc.) |
+- `rpg.item_type` — weapon, armor, gear, tool, focus, other
+- `rpg.resource_scope` — species, class
+- `rpg.spell_source_origin` — class, subclass, species, feat
+- `rpg.option_value_type` — catalog, skill, ability, fighting_style, terrain, skill_list, json
+- `rpg.species_choice_kind` — elf_lineage, infernal_legacy, dragon_ancestry
 
-## Tipos PostgreSQL
+ENUMs da ficha (fase 5): `skill_source`, `feat_source`, `equipment_source`, `equipment_slot`, `spell_list_type`.
 
-- `rpg.ability_id`, `rpg.skill_source`, `rpg.feat_source`
-- `rpg.equipment_source`, `rpg.equipment_slot`, `rpg.spell_list_type`, `rpg.item_type`
+## Removido (legado)
 
-## Views
-
-- `rpg.v_spell_by_class` — listas por classe
-- `rpg.v_player_character_summary` — UI / relatórios
-
-## Removido (v1 → v2)
-
-| v1 | v2 |
-|----|-----|
-| `character` | `player_character` |
-| `resources` JSONB | `player_character_resource` |
-| `species_choices` JSONB | `player_character_species_option` |
-| `class_choices` JSONB | `player_character_class_option` |
-| `hp` / `armor_class` JSONB | colunas tipadas |
+| v1/v2 | v4 |
+|-------|-----|
+| `character` | — (fase 5: `player_character`) |
+| `benefits JSONB` em feat | `phb_feat_benefit` |
+| `property_ids TEXT[]` | `phb_weapon_property_link` (remover coluna na fase 0) |
+| `skill_choices JSONB` em class | `phb_class_skill_pool` |
+| `spell_slots JSONB` em progression | `phb_spell_slot_by_level` |
+| Multiclasse | Fora de escopo |

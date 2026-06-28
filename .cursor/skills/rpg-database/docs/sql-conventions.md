@@ -1,8 +1,10 @@
-# Convenções PostgreSQL
+# Convenções PostgreSQL v4
+
+Roadmap: [plano-final.md](plano-final.md)
 
 ## Alvo
 
-PostgreSQL **14+**, schema `rpg`, extensão `pg_trgm`.
+PostgreSQL **14+** (15+ recomendado para `UNIQUE NULLS NOT DISTINCT`), schema `rpg`.
 
 ## Nomenclatura
 
@@ -10,35 +12,62 @@ PostgreSQL **14+**, schema `rpg`, extensão `pg_trgm`.
 |------|--------|
 | Schema | `rpg` |
 | Catálogo | `phb_<entidade>` |
-| Ficha | `player_character`, `player_character_*` |
-| PK | slug TEXT (`barbarian`, `bjorn`) |
-| ENUMs | `rpg.skill_source`, etc. |
+| Ficha (fase 5) | `player_character`, `player_character_*` |
+| PK catálogo | `id BIGSERIAL` + `slug TEXT UNIQUE` |
+| PK ficha (fase 5) | `id TEXT` (slug do personagem) |
+| ENUMs | `rpg.<domínio>` (ex.: `rpg.item_type`) |
 
-## Modelo híbrido (regra de ouro)
+## Modelo catálogo (v4)
 
-1. **`sheet JSONB`** — fonte para round-trip com `data/characters/{id}.json`
-2. **Projeções normalizadas** — consultas, FKs, estado mutável (PV, slots, recursos)
-3. **Validação de regras** — continua no Node (`npm run fichas:all`)
+1. **Normalização** — preferir tabelas/colunas tipadas sobre JSONB
+2. **Slug estável** — identificador canônico para API e JSON
+3. **Views** — camada de leitura para a aplicação
+4. **JSONB residual** — só onde estrutura é irregular (`phb_item.cost`, `phb_species.source_meta`)
 
-## JSONB permitido
+## JSONB permitido (catálogo)
 
-- Catálogo: `benefits`, `source_meta`, `trait_table`, pacotes de equipamento
-- Ficha: `sheet`, `ac_detail`, `ability_generation`, `starting_packages`, `feat.options`
+- `phb_item.cost`, `phb_item.properties`
+- `phb_species.source_meta`
 
-## JSONB evitado na ficha
+## JSONB evitado (normalizado)
 
-- `resources`, `speciesChoices`, `classChoices`, `hp`, `armorClass` — use tabelas/colunas v2
+- `phb_feat.benefits` → `phb_feat_benefit`
+- `phb_weapon.property_ids` → `phb_weapon_property_link` (coluna a remover na fase 0)
+- `phb_class.skill_choices` → `phb_class_skill_pool`
 
 ## Comandos
 
 ```bash
-npm run generate:sql-schema
-npm run validate:db
-psql -U postgres -d rpg -f database/schema.sql
+npm run generate:sql-schema   # regenera database/schema.sql
+npm run validate:db           # valida estrutura
+npm run generate:seed-phb     # regenera seed PHB
+npm run seed:all              # schema + seed + validação
+npm run seed:run              # aplica no PostgreSQL local
 ```
 
 ## Índices
 
-- GIN em `sheet` (`jsonb_path_ops`) — busca no JSON
-- GIN trgm em `name` — autocomplete de personagem
-- B-tree em FKs (`species_id`, `class_id`, `level`)
+### Atual (catálogo)
+
+- B-tree em FKs (`school_id`, `class_id`, `category_id`)
+- B-tree em filtros (`phb_spell.level`)
+
+### Planejado (fase 0/3)
+
+- GIN trgm em `name` — autocomplete (`pg_trgm`)
+- Remover índices redundantes em colunas já `UNIQUE`
+
+### Fase 5 (fichas)
+
+- GIN `jsonb_path_ops` em `player_character.sheet`
+- GIN trgm em `player_character.name`
+- B-tree composto `(class_id, level)`, `(edition_id)`
+
+## Deploy
+
+| Ambiente | Comando | Nota |
+|----------|---------|------|
+| Dev local | `npm run seed:run` | `DROP SCHEMA CASCADE` ok |
+| Staging/Prod | migrations incrementais | **Nunca** DROP SCHEMA |
+
+Ver [plano-final.md § fase 2](plano-final.md#fase-2--operação-e-migrations-1-semana).

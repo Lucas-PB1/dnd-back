@@ -1,0 +1,476 @@
+# Plano final — Banco de dados PostgreSQL v4
+
+Documento canônico para fechar o catálogo PHB e preparar a camada de fichas.
+Atualizado: 2025-06-27 | Schema: `rpg` | PostgreSQL 14+
+
+---
+
+## 1. Estado atual
+
+### O que existe e funciona
+
+| Camada | Status | Detalhe |
+|--------|--------|---------|
+| Catálogo PHB | **Pronto** | 58 tabelas `phb_*`, 6 ENUMs, 12 views |
+| Seed PHB | **Pronto** | `seed-phb.sql` + `seed-all.sql` (schema + dados) |
+| Pipeline | **Pronto** | JSON → `seed-phb.mjs` → SQL; validadores Node |
+| Fichas (`player_character`) | **Fora do schema** | Redesign pendente (fase 5) |
+
+### Números do catálogo (manifest)
+
+- 391 magias, 12 classes, 48 subclasses
+- 10 espécies, 16 antecedentes, 75 talentos
+- 158 itens, 987 links magia-classe
+
+### Princípios v4
+
+1. **PK interna** `BIGSERIAL` + **slug UNIQUE** para API/JSON
+2. **Normalização** sobre JSONB (benefícios, slots, opções de espécie, propriedades de arma)
+3. **Views** como API SQL estável para a aplicação
+4. **Validação de regras de jogo** no Node (`npm run fichas:all`); integridade estrutural no PostgreSQL
+
+---
+
+## 2. Lixo removido (2025-06-27)
+
+Artefatos legados da camada v3 de fichas, incompatíveis com schema v4:
+
+| Removido | Motivo |
+|----------|--------|
+| `database/seed-characters.sql` | Referenciava tabelas inexistentes |
+| `scripts/import-characters.mjs` | Gerador do seed acima |
+| `scripts/validate-sync.mjs` | Testava sync `sheet ↔ projeções` sem schema |
+| `scripts/lib/character-sync.sql` | Funções/triggers de personagem sem tabelas |
+| `npm run generate:seed-characters` | Script npm obsoleto |
+| `npm run validate:sync` | Script npm obsoleto |
+
+**Mantido:** `data/characters/*.json` e validadores JSON (`validate:character`, `fichas:all`) — fonte da verdade para quando a fase 5 for implementada.
+
+---
+
+## 3. Roadmap de finalização
+
+### Fase 0 — Higiene imediata (1–2 dias)
+
+Objetivo: schema v4 consistente, sem redundâncias, doc alinhada.
+
+- [x] Remover artefatos legados de personagem (seção 2)
+- [x] Sincronizar documentação com v4
+- [ ] **Remover coluna `property_ids`** de `phb_weapon` — manter só `phb_weapon_property_link`
+  - Alterar `generate-sql-schema.mjs` e `seed-phb.mjs`
+  - Remover INSERT de `property_ids` no seed
+- [ ] **Remover índices redundantes** em colunas já `UNIQUE` (`idx_phb_spell_slug`, `idx_phb_class_slug`, `idx_phb_item_slug`)
+- [ ] **Usar ou remover `pg_trgm`** — decidir:
+  - **Opção A (recomendada):** criar índices GIN trgm em `phb_spell.name`, `phb_feat.name`, `phb_class.name`, `phb_item.name`
+  - **Opção B:** remover `CREATE EXTENSION pg_trgm` até precisar de busca
+
+**Critério de done:** `npm run db:all && npm run seed:all` passam; zero referências a `player_character` no schema/seed.
+
+---
+
+### Fase 1 — Integridade referencial (3–5 dias)
+
+Objetivo: o banco rejeita dados inválidos sem depender só do Node.
+
+#### 1.1 `phb_spell_source` — CHECK polimórfico
+
+```sql
+ALTER TABLE rpg.phb_spell_source ADD CONSTRAINT spell_source_origin_fk CHECK (
+  (origin_type = 'class'    AND class_id IS NOT NULL AND subclass_id IS NULL AND species_id IS NULL AND feat_id IS NULL)
+  OR (origin_type = 'subclass' AND subclass_id IS NOT NULL AND class_id IS NOT NULL AND species_id IS NULL AND feat_id IS NULL)
+  OR (origin_type = 'species'  AND species_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL)
+  OR (origin_type = 'feat'     AND feat_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL AND species_id IS NULL)
+);
+```
+
+**Nota:** a linha genérica `slug = 'class'` (todas FKs NULL) precisa ser repensada — ou vira FK para cada classe via tabela filha, ou vira meta-registro sem FK (documentar exceção).
+
+#### 1.2 Subclasse ∈ classe
+
+Trigger ou FK composta:
+
+```sql
+-- Opção: UNIQUE (class_id, id) em phb_subclass + FK composta em spell_source
+ALTER TABLE rpg.phb_subclass ADD CONSTRAINT uq_subclass_class_id UNIQUE (class_id, id);
+```
+
+#### 1.3 `phb_weapon_mastery` — catálogo faltante
+
+```sql
+CREATE TABLE rpg.phb_weapon_mastery (
+  id   BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  description TEXT NOT NULL
+);
+
+ALTER TABLE rpg.phb_weapon
+  ADD COLUMN mastery_id BIGINT REFERENCES rpg.phb_weapon_mastery(id);
+-- migrar TEXT → FK; dropar coluna TEXT antiga
+```
+
+#### 1.4 ENUMs para domínios finitos
+
+| Coluna atual | Ação |
+|--------------|------|
+| `phb_weapon.category` | `CREATE TYPE rpg.weapon_category AS ENUM ('simple','martial')` |
+| `phb_class_spellcasting.casting_type` | já tem CHECK — migrar para ENUM |
+
+#### 1.5 `phb_resource_definition` — unicidade por escopo
+
+```sql
+CREATE UNIQUE INDEX uq_resource_species ON rpg.phb_resource_definition (species_id, slug)
+  WHERE scope = 'species';
+CREATE UNIQUE INDEX uq_resource_class ON rpg.phb_resource_definition (class_id, slug)
+  WHERE scope = 'class';
+```
+
+**Critério de done:** tentar INSERT inválido em `phb_spell_source` falha no PostgreSQL.
+
+---
+
+### Fase 2 — Operação e migrations (1 semana)
+
+Objetivo: deploy seguro fora de dev local.
+
+#### 2.1 Separar DDL de DML
+
+| Arquivo | Conteúdo | Quando rodar |
+|---------|----------|--------------|
+| `database/schema.sql` | DDL puro (sem `DROP SCHEMA` em prod) | Setup / migration |
+| `database/seed-phb.sql` | DML catálogo | Após schema |
+| `database/seed-all.sql` | **Somente dev** — schema + seed destrutivo | `npm run seed:run` local |
+
+#### 2.2 Migrations incrementais
+
+Adotar **Sqitch**, **Flyway** ou pasta `database/migrations/` com:
+
+```
+001_initial_catalog.sql
+002_drop_weapon_property_ids.sql
+003_spell_source_checks.sql
+...
+```
+
+Regra: **nunca** `DROP SCHEMA CASCADE` fora de dev.
+
+#### 2.3 Timestamps de auditoria
+
+```sql
+-- Função genérica
+CREATE OR REPLACE FUNCTION rpg.set_updated_at() RETURNS trigger AS $$
+BEGIN NEW.updated_at = NOW(); RETURN NEW; END;
+$$ LANGUAGE plpgsql;
+
+-- Em tabelas mutáveis (catálogo editável + futuras fichas)
+ALTER TABLE rpg.phb_spell ADD COLUMN created_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+ALTER TABLE rpg.phb_spell ADD COLUMN updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW();
+-- + trigger em cada tabela editável
+```
+
+#### 2.4 Multi-edição (decisão de produto)
+
+Escolher **uma** estratégia antes de escalar:
+
+| Estratégia | Prós | Contras |
+|------------|------|---------|
+| **A:** `edition_id` em toda entidade PHB | Coexistência limpa | Migration grande |
+| **B:** schema por edição (`rpg_phb2024`, `rpg_srd`) | Isolamento total | Duplicação |
+| **C:** slug prefixado (`phb24-fireball`) | Simples | Feio na API |
+
+**Recomendação:** estratégia A — adicionar `edition_id BIGINT NOT NULL REFERENCES phb_edition(id)` nas entidades principais na fase 2.
+
+**Critério de done:** alterar schema em prod via migration, sem perder dados.
+
+---
+
+### Fase 3 — Performance e consultas (quando UI exigir)
+
+Volume atual (~10k rows) não exige otimização. Implementar quando houver busca na UI:
+
+```sql
+-- Autocomplete (requer pg_trgm)
+CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_ops);
+
+-- Filtro comum
+CREATE INDEX idx_phb_spell_level_school ON rpg.phb_spell (level, school_id);
+
+-- Consulta inversa
+CREATE INDEX idx_class_skill_pool_skill ON rpg.phb_class_skill_pool (skill_id);
+
+-- Hot path (opcional)
+CREATE MATERIALIZED VIEW rpg.mv_spell_by_class AS
+  SELECT * FROM rpg.v_spell_by_class;
+CREATE UNIQUE INDEX ON rpg.mv_spell_by_class (class_slug, spell_slug);
+```
+
+Refresh: `REFRESH MATERIALIZED VIEW CONCURRENTLY` após re-seed.
+
+---
+
+### Fase 4 — Opções de classe unificadas (refactor)
+
+Hoje espécie usa EAV genérico (`phb_species_option_def/value`) e classe usa tabelas ad hoc (`phb_divine_order`, `phb_class_fighting_style`, `phb_druid_land_terrain`).
+
+**Decisão:** unificar classe no padrão EAV ou documentar exceções permanentes.
+
+Se unificar:
+
+```sql
+CREATE TABLE rpg.phb_class_option_def (
+  class_id    BIGINT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
+  option_key  TEXT NOT NULL,
+  value_type  rpg.option_value_type NOT NULL,
+  PRIMARY KEY (class_id, option_key)
+);
+
+CREATE TABLE rpg.phb_class_option_value (
+  class_id    BIGINT NOT NULL,
+  option_key  TEXT NOT NULL,
+  value_id    TEXT NOT NULL,
+  label       TEXT NOT NULL,
+  PRIMARY KEY (class_id, option_key, value_id),
+  FOREIGN KEY (class_id, option_key)
+    REFERENCES rpg.phb_class_option_def(class_id, option_key) ON DELETE CASCADE
+);
+```
+
+Migrar `phb_divine_order` → rows em `phb_class_option_value` para clérigo (`divineOrder`).
+
+---
+
+### Fase 5 — Camada de fichas (`player_character`) — redesign
+
+**Pré-requisito:** fases 0–2 concluídas.
+
+#### 5.1 Modelo híbrido (regra de ouro)
+
+```
+sheet JSONB (canônico, round-trip com data/characters/{id}.json)
+    ↕ sync triggers
+projeções normalizadas (consultas, FKs, estado mutável)
+```
+
+#### 5.2 Tabela principal
+
+```sql
+CREATE TABLE rpg.player_character (
+  id                  TEXT PRIMARY KEY,          -- slug: 'bjorn'
+  name                TEXT NOT NULL,
+  level               INTEGER NOT NULL CHECK (level BETWEEN 1 AND 20),
+  edition_id          BIGINT NOT NULL REFERENCES rpg.phb_edition(id),
+  species_id          BIGINT NOT NULL REFERENCES rpg.phb_species(id),
+  background_id       BIGINT NOT NULL REFERENCES rpg.phb_background(id),
+  class_id            BIGINT NOT NULL REFERENCES rpg.phb_class(id),
+  subclass_id         BIGINT REFERENCES rpg.phb_subclass(id),
+  alignment_id        BIGINT REFERENCES rpg.phb_alignment(id),
+  ability_method_id   BIGINT REFERENCES rpg.phb_ability_generation_method(id),
+  background_boost_id BIGINT REFERENCES rpg.phb_background_boost_option(id),
+  -- atributos projetados
+  forca               INTEGER NOT NULL CHECK (forca BETWEEN 1 AND 30),
+  destreza            INTEGER NOT NULL CHECK (destreza BETWEEN 1 AND 30),
+  constituicao        INTEGER NOT NULL CHECK (constituicao BETWEEN 1 AND 30),
+  inteligencia        INTEGER NOT NULL CHECK (inteligencia BETWEEN 1 AND 30),
+  sabedoria           INTEGER NOT NULL CHECK (sabedoria BETWEEN 1 AND 30),
+  carisma             INTEGER NOT NULL CHECK (carisma BETWEEN 1 AND 30),
+  -- estado mutável
+  hp_current          INTEGER NOT NULL DEFAULT 0,
+  hp_max              INTEGER NOT NULL,
+  hp_temp             INTEGER NOT NULL DEFAULT 0,
+  ac_total            INTEGER NOT NULL,
+  ac_detail           JSONB,
+  passive_perception  INTEGER,
+  -- canônico
+  sheet               JSONB NOT NULL,
+  ability_generation  JSONB,
+  starting_packages   JSONB,
+  notes               TEXT,
+  created_at          TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at          TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+```
+
+#### 5.3 Tabelas filhas
+
+| Tabela | PK | FKs principais |
+|--------|-----|----------------|
+| `player_character_language` | `(character_id, language_id)` | → `phb_language` |
+| `player_character_skill` | `(character_id, skill_id)` | → `phb_skill`; coluna `source` ENUM |
+| `player_character_saving_throw` | `(character_id, ability_id)` | → `phb_ability` |
+| `player_character_feat` | `(character_id, feat_id)` | → `phb_feat`; `options JSONB` |
+| `player_character_equipment` | `id BIGSERIAL` | → `phb_item`; partial UNIQUE `(character_id, slot) WHERE equipped` |
+| `player_character_weapon_mastery` | `(character_id, weapon_id)` | → `phb_weapon` |
+| `player_character_expertise` | `(character_id, skill_id)` | → `phb_skill` |
+| `player_character_spell_list` | composta | → `phb_spell`, `phb_spell_source` |
+| `player_character_spell_slot` | `(character_id, circle)` | slots_max, slots_used |
+| `player_character_resource` | `(character_id, resource_id)` | → `phb_resource_definition` |
+| `player_character_species_option` | `(character_id, option_key)` | FK polimórfica tipada |
+| `player_character_class_option` | `(character_id, option_key)` | FK polimórfica tipada |
+
+#### 5.4 ENUMs da ficha
+
+```sql
+CREATE TYPE rpg.skill_source AS ENUM (
+  'species','background','class','feat','other'
+);
+CREATE TYPE rpg.feat_source AS ENUM ('background','class','species','other');
+CREATE TYPE rpg.equipment_source AS ENUM ('background','class','purchase','other');
+CREATE TYPE rpg.equipment_slot AS ENUM (
+  'main_hand','off_hand','armor','shield','focus','other'
+);
+CREATE TYPE rpg.spell_list_type AS ENUM ('known','prepared','always_prepared');
+```
+
+#### 5.5 Triggers de integridade
+
+| Trigger | Regra |
+|---------|-------|
+| `validate_pc_subclass` | `subclass.class_id = player_character.class_id` |
+| `validate_pc_subclass_level` | subclass só se `level >= class.subclass_unlock_level` |
+| `set_updated_at` | em `player_character` e filhas mutáveis |
+| `apply_sheet_to_character` | `sheet` → projeções (INSERT/UPDATE) |
+| `rebuild_sheet_from_projections` | projeções → `sheet` (UPDATE seletivo) |
+
+Usar `set_config('rpg.skip_sync', '1', true)` no seed para evitar loop.
+
+#### 5.6 Índices da ficha
+
+```sql
+CREATE INDEX idx_pc_class_level ON rpg.player_character (class_id, level);
+CREATE INDEX idx_pc_species ON rpg.player_character (species_id);
+CREATE INDEX idx_pc_edition ON rpg.player_character (edition_id);
+CREATE INDEX idx_pc_sheet ON rpg.player_character USING gin (sheet jsonb_path_ops);
+CREATE INDEX idx_pc_name_trgm ON rpg.player_character USING gin (name gin_trgm_ops);
+```
+
+#### 5.7 Views da ficha
+
+- `v_player_character_summary` — lista UI (nome, classe, nível, PV, CA)
+- `v_character_resources` — recursos + labels do catálogo
+- `v_character_spells` — magias + fonte + nível
+
+#### 5.8 Pipeline de import
+
+```
+data/characters/*.json
+  → scripts/import-characters.mjs (recriar)
+  → database/seed-characters.sql
+  → npm run seed:characters (separado do PHB)
+```
+
+**Classe única:** sem `character_class_level`; validar via `validateSingleClass()` no Node.
+
+#### 5.9 Critério de done fase 5
+
+- [ ] `npm run validate:sync` — round-trip `sheet ↔ projeções` para ficha `bjorn`
+- [ ] INSERT inválido (subclasse errada, nível 0) falha no PostgreSQL
+- [ ] 298 fichas importam sem erro
+
+---
+
+## 4. Checklist de validação contínua
+
+```bash
+# JSON (fonte da verdade)
+npm run fichas:all
+
+# Schema
+npm run db:all          # generate:sql-schema + validate:db
+
+# Seed
+npm run seed:all        # generate:seed + validate:seed
+
+# Aplicar local
+DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/rpg npm run seed:run
+```
+
+### Pós-migration manual
+
+```
+- [ ] Contagens batem com seed-manifest.json
+- [ ] Views retornam dados (SELECT * FROM rpg.v_phb_class LIMIT 1)
+- [ ] Slugs idênticos aos JSON (lowercase, hífen, sem acento)
+- [ ] Nenhum orphan FK (query abaixo retorna 0 rows)
+```
+
+```sql
+-- Orphans em spell_class
+SELECT sc.* FROM rpg.phb_spell_class sc
+LEFT JOIN rpg.phb_spell s ON s.id = sc.spell_id
+WHERE s.id IS NULL;
+```
+
+---
+
+## 5. Mapa de arquivos (v4)
+
+| Arquivo | Função |
+|---------|--------|
+| `database/schema.sql` | DDL catálogo (gerado) |
+| `database/seed-phb.sql` | DML catálogo (gerado) |
+| `database/seed-all.sql` | Bootstrap dev: schema + PHB (gerado) |
+| `database/seed-manifest.json` | Contagens para validação |
+| `scripts/generate-sql-schema.mjs` | Template DDL v4 |
+| `scripts/seed-phb.mjs` | PHB JSON → SQL |
+| `scripts/generate-seed.mjs` | Combina schema + seed-phb |
+| `scripts/validate-db-structure.mjs` | Valida schema |
+| `scripts/validate-seed.mjs` | Valida seed |
+| `scripts/run-seed.mjs` | Aplica via DATABASE_URL |
+
+---
+
+## 6. Ordem de execução recomendada
+
+```
+Fase 0  →  limpar redundâncias (property_ids, índices, pg_trgm)
+    ↓
+Fase 1  →  CHECK constraints, phb_weapon_mastery, ENUMs
+    ↓
+Fase 2  →  migrations, separar DDL/DML, timestamps
+    ↓
+Fase 3  →  índices de busca (quando UI precisar)
+    ↓
+Fase 4  →  unificar opções de classe (opcional)
+    ↓
+Fase 5  →  player_character + sync + import
+```
+
+---
+
+## 7. Notas de DBA
+
+### O que está bem feito
+
+- Normalização progressiva v2→v4 coerente
+- `UNIQUE NULLS NOT DISTINCT` em prepared spells (PG 15+)
+- EAV tipado para opções de espécie
+- Class table inheritance em itens (weapon/armor/tool)
+- Pipeline gerado + validador anti-regressão
+
+### Riscos remanescentes
+
+| Risco | Mitigação |
+|-------|-----------|
+| `DROP SCHEMA CASCADE` em prod | Fase 2 — migrations |
+| Doc desatualizada | Este documento + sync em cada PR de schema |
+| `phb_spell_source` genérico (`class` sem FK) | Redesign na fase 1 |
+| Regras de jogo só no Node | Triggers na fase 5 |
+| Multi-edição incompleta | Decisão na fase 2 |
+
+### Notas por fase
+
+| Fase | Nota DBA |
+|------|----------|
+| Catálogo atual | 7.5/10 |
+| Operacional (migrations) | 4/10 → meta 8/10 após fase 2 |
+| Integridade | 6.5/10 → meta 9/10 após fase 1 |
+| Pronto para produção | Após fases 0–2 (catálogo); fase 5 para app de mesa |
+
+---
+
+## 8. Referências
+
+- [er-diagram.md](er-diagram.md) — diagrama ER catálogo v4
+- [entity-map.md](entity-map.md) — mapa JSON → SQL
+- [validation-rules.md](validation-rules.md) — checklist de validação
+- [sql-conventions.md](sql-conventions.md) — convenções PostgreSQL
