@@ -1,6 +1,6 @@
 /**
  * Gera database/seed-characters.sql a partir do catálogo PHB (sem data/characters/*.json).
- * IDs: pc-001 … pc-300 | Nomes: Personagem 001 … Personagem 300
+ * IDs: pc-001 … pc-N | N = TARGET_CHARACTER_COUNT
  */
 import fs from "fs";
 import path from "path";
@@ -11,6 +11,7 @@ import {
   buildCharacter,
   TARGET_CHARACTER_COUNT,
 } from "./lib/character-generator.mjs";
+import { validateCharacterRules } from "./character-rules.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -37,6 +38,21 @@ const characters = blueprints.map((bp, i) => {
   return buildCharacter({ ...bp, id, name });
 });
 
+const ruleFailures = [];
+for (const char of characters) {
+  const result = validateCharacterRules(char);
+  if (!result.ok) {
+    ruleFailures.push({ id: char.id, ...result });
+  }
+}
+if (ruleFailures.length) {
+  console.error(`✗ ${ruleFailures.length} ficha(s) falharam validação de regras antes do SQL:`);
+  for (const f of ruleFailures.slice(0, 20)) {
+    console.error(`  ${f.id} [${f.validator}] ${f.reason}`);
+  }
+  process.exit(1);
+}
+
 const lines = [];
 lines.push(`-- Fichas — PostgreSQL v5 (player_character + filhas)`);
 lines.push(`-- Gerado por: npm run generate:seed-characters`);
@@ -45,6 +61,7 @@ lines.push(`BEGIN;`);
 lines.push(`SELECT set_config('rpg.skip_sync', '1', true);`);
 lines.push(`
 TRUNCATE TABLE
+  rpg.player_character_subclass_option,
   rpg.player_character_class_skill,
   rpg.player_character_class_option,
   rpg.player_character_species_option,
@@ -81,6 +98,7 @@ const all = {
   speciesOptions: [],
   classOptions: [],
   classSkills: [],
+  subclassOptions: [],
 };
 
 for (const char of characters) {
@@ -101,6 +119,7 @@ for (const char of characters) {
   all.speciesOptions.push(...rows.speciesOptions);
   all.classOptions.push(...rows.classOptions);
   all.classSkills.push(...rows.classSkills);
+  all.subclassOptions.push(...rows.subclassOptions);
 }
 
 lines.push(
@@ -253,6 +272,15 @@ if (all.classSkills.length) {
       "rpg.player_character_class_skill",
       ["character_id", "skill_id"],
       all.classSkills
+    )
+  );
+}
+if (all.subclassOptions.length) {
+  lines.push(
+    batchInsert(
+      "rpg.player_character_subclass_option",
+      ["character_id", "subclass_id", "option_key", "catalog_value_id", "ability_id"],
+      all.subclassOptions
     )
   );
 }

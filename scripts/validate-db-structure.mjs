@@ -35,6 +35,9 @@ const REQUIRED_TABLES = [
   "phb_subclass",
   "phb_subclass_feature",
   "phb_subclass_prepared_spell",
+  "phb_subclass_option_def",
+  "phb_subclass_option_value",
+  "phb_subclass_resource",
   "phb_species",
   "phb_species_trait",
   "phb_elf_lineage",
@@ -85,6 +88,7 @@ const REQUIRED_TABLES = [
   "player_character_resource",
   "player_character_species_option",
   "player_character_class_option",
+  "player_character_subclass_option",
   "player_character_class_skill",
 ];
 

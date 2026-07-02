@@ -24,11 +24,25 @@ import {
   expectedSpellSlots,
   expectedSubclassPrepared,
   expectedWeaponMasterySlots,
+  expectedSpellbookCount,
   isSpellcaster,
   loadBackground,
   loadClass,
   speciesSpellEntries,
 } from "../character-rules.mjs";
+import {
+  expectedThirdCasterCantrips,
+  expectedThirdCasterPrepared,
+  expectedThirdCasterSpellSlots,
+  isThirdCaster,
+  thirdCasterConfig,
+} from "../third-caster-progression-data.mjs";
+import {
+  defaultSubclassOptionValue,
+  optionsForSubclass,
+  resourcesForSubclass,
+  subclassResourceMax,
+} from "../subclass-mechanics-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..", "..");
@@ -130,6 +144,11 @@ const ELF_KEEN = ["insight", "perception", "survival"];
 const LAND_TERRAINS = ["arid", "polar", "temperate", "tropical"];
 
 const MI_BG_CLASS = { acolyte: "cleric", guide: "druid", sage: "wizard" };
+
+/** Antecedentes sem Iniciado em Magia automático (fichas de grade). */
+const SAFE_BACKGROUND_IDS = BG_INDEX.backgrounds
+  .filter((b) => !MI_BG_CLASS[b.id])
+  .map((b) => b.id);
 
 const CLASS_CONFIG = {
   barbarian: {
@@ -438,6 +457,7 @@ const CORE_BLUEPRINTS = [
     speciesId: "human",
     backgroundId: "guard",
     classId: "fighter",
+    subclassId: "champion",
     classChoices: {
       skillIds: ["athletics", "intimidation"],
       fightingStyleId: "great-weapon-fighting",
@@ -563,8 +583,79 @@ const CORE_BLUEPRINTS = [
   },
 ];
 
-/** Total alvo de fichas (core + matriz + sweeps + preservadas). */
-const TARGET_CHARACTER_COUNT = 300;
+/** Total alvo: core + grade classe×subclasse×nível. */
+const SUBCLASS_GRID_COUNT = PHB_INDEX.classes.reduce(
+  (n, c) => n + c.subclasses.length * SPECIES_LEVELS.length,
+  0
+);
+const TARGET_CHARACTER_COUNT = CORE_BLUEPRINTS.length + SUBCLASS_GRID_COUNT;
+
+function subclassLevelGridBlueprints(usedIds) {
+  const blueprints = [];
+  const speciesList = SPECIES_INDEX.species.map((s) => s.id);
+  let seed = 0;
+
+  for (const classEntry of PHB_INDEX.classes) {
+    const classId = classEntry.id;
+    const cfg = CLASS_CONFIG[classId];
+    const unlock = loadClass(classId).subclassUnlockLevel ?? 3;
+
+    for (const subclass of classEntry.subclasses) {
+      for (const level of SPECIES_LEVELS) {
+        seed += 1;
+        const id = `cs-${classId}-${subclass.id}-l${String(level).padStart(2, "0")}`;
+        if (usedIds.has(id)) continue;
+
+        const subclassId = level >= unlock ? subclass.id : null;
+        const speciesId = speciesList[seed % speciesList.length];
+        const classChoices = {
+          skillIds: pickClassSkills(classId, seed, loadClass(classId).skillChoices?.count ?? 0),
+        };
+
+        if (classId === "cleric") {
+          classChoices.divineOrder = seed % 2 === 0 ? "protector" : "thaumaturge";
+        }
+
+        const style = pickFightingStyle(classId, seed);
+        if (style) classChoices.fightingStyleId = style;
+
+        if (classId === "druid" && subclassId === "land") {
+          classChoices.landTerrainId = LAND_TERRAINS[seed % LAND_TERRAINS.length];
+        }
+
+        const bp = {
+          id,
+          name: `${classId}/${subclass.id} L${level}`,
+          level,
+          speciesId,
+          speciesChoices: defaultSpeciesChoices(speciesId, seed),
+          backgroundId: SAFE_BACKGROUND_IDS[seed % SAFE_BACKGROUND_IDS.length],
+          classId,
+          subclassId,
+          classChoices,
+          alignmentId: ALIGNMENTS[seed % ALIGNMENTS.length],
+          boostId: seed % 3 === 0 ? "two-and-one" : "three-plus-one",
+          priority: cfg.priority,
+          equip: cfg.equip,
+          mastery: cfg.mastery,
+          skipMagicInitiate: true,
+        };
+
+        if (style === "blessed-warrior") {
+          bp.blessedCantrips = pickBlessedCantrips("cleric");
+        } else if (style === "druidic-warrior") {
+          bp.blessedCantrips = pickBlessedCantrips("druid");
+        }
+
+        ensureLandTerrain(bp);
+        blueprints.push(bp);
+        usedIds.add(id);
+      }
+    }
+  }
+
+  return blueprints;
+}
 
 function autoMagicInitiate(backgroundId) {
   const spellListClassId = MI_BG_CLASS[backgroundId];
@@ -635,156 +726,9 @@ function defaultSpeciesChoices(speciesId, seed) {
   }
 }
 
-function matrixBlueprint(speciesId, level, matrixSeed, usedIds) {
-  const classEntry = PHB_INDEX.classes[matrixSeed % PHB_INDEX.classes.length];
-  const classId = classEntry.id;
-  const cfg = CLASS_CONFIG[classId];
-  const id = `sp-${speciesId}-l${String(level).padStart(2, "0")}`;
-  if (usedIds.has(id)) return null;
-
-  const unlock = loadClass(classId).subclassUnlockLevel ?? 3;
-  let subclassId = null;
-  if (level >= unlock && classEntry.subclasses.length) {
-    subclassId = classEntry.subclasses[(matrixSeed + level) % classEntry.subclasses.length].id;
-  }
-
-  const classChoices = {
-    skillIds: pickClassSkills(classId, matrixSeed, loadClass(classId).skillChoices?.count ?? 0),
-  };
-
-  if (classId === "cleric") {
-    classChoices.divineOrder = matrixSeed % 2 === 0 ? "protector" : "thaumaturge";
-  }
-
-  const style = pickFightingStyle(classId, matrixSeed);
-  if (style) classChoices.fightingStyleId = style;
-
-  if (classId === "druid" && subclassId === "land") {
-    classChoices.landTerrainId = LAND_TERRAINS[matrixSeed % LAND_TERRAINS.length];
-  }
-
-  const speciesChoices = defaultSpeciesChoices(speciesId, matrixSeed);
-
-  const bp = {
-    id,
-    name: `${speciesId} L${level}`,
-    level,
-    speciesId,
-    speciesChoices,
-    backgroundId: BG_INDEX.backgrounds[(matrixSeed * 5 + 2) % BG_INDEX.backgrounds.length].id,
-    classId,
-    subclassId,
-    classChoices,
-    alignmentId: ALIGNMENTS[matrixSeed % ALIGNMENTS.length],
-    boostId: matrixSeed % 3 === 0 ? "two-and-one" : "three-plus-one",
-    priority: cfg.priority,
-    equip: cfg.equip,
-    mastery: cfg.mastery,
-  };
-
-  if (style === "blessed-warrior") {
-    bp.blessedCantrips = pickBlessedCantrips("cleric");
-  } else if (style === "druidic-warrior") {
-    bp.blessedCantrips = pickBlessedCantrips("druid");
-  }
-
-  const mi = autoMagicInitiate(bp.backgroundId);
-  if (mi) bp.magicInitiate = mi;
-
-  ensureLandTerrain(bp);
-  return bp;
-}
-
-function ancestrySweepBlueprints(usedIds) {
-  const blueprints = [];
-  const sweepLevels = [1, 5, 17];
-  const sweeps = [
-    { speciesId: "elf", key: "lineageId", values: ELF_LINEAGES, prefix: "elf-lin" },
-    { speciesId: "tiefling", key: "infernalLegacyId", values: TIEFLING_LEGACIES, prefix: "tf-leg" },
-    { speciesId: "gnome", key: "gnomeLineageId", values: GNOME_LINEAGES, prefix: "gn-lin" },
-    { speciesId: "goliath", key: "giantAncestryId", values: GIANT_ANCESTRIES, prefix: "go-ant" },
-    { speciesId: "dragonborn", key: "dragonAncestryId", values: DRAGON_ANCESTRIES, prefix: "db-ant" },
-    { speciesId: "aasimar", key: "aasimarRevelationId", values: AASIMAR_REVELATIONS, prefix: "aa-rev" },
-  ];
-
-  for (const sweep of sweeps) {
-    for (const value of sweep.values) {
-      for (const level of sweepLevels) {
-        if (sweep.speciesId === "aasimar" && level < 3) continue;
-        const id = `sw-${sweep.prefix}-${value}-l${String(level).padStart(2, "0")}`;
-        if (usedIds.has(id)) continue;
-
-        const matrixSeed = id.length * 7 + level;
-        const classId = PHB_INDEX.classes[matrixSeed % PHB_INDEX.classes.length].id;
-        const cfg = CLASS_CONFIG[classId];
-        const classEntry = PHB_INDEX.classes.find((c) => c.id === classId);
-        const unlock = loadClass(classId).subclassUnlockLevel ?? 3;
-        let subclassId = null;
-        if (level >= unlock && classEntry.subclasses.length) {
-          subclassId = classEntry.subclasses[matrixSeed % classEntry.subclasses.length].id;
-        }
-
-        const speciesChoices = {
-          ...defaultSpeciesChoices(sweep.speciesId, matrixSeed),
-          [sweep.key]: value,
-        };
-        if (sweep.speciesId === "tiefling") {
-          speciesChoices.infernalLegacyId = value;
-          speciesChoices.infernalCastingAbilityId =
-            speciesChoices.infernalCastingAbilityId ?? "carisma";
-        }
-        if (sweep.speciesId === "gnome") {
-          speciesChoices.gnomeLineageId = value;
-          speciesChoices.gnomeCastingAbilityId = speciesChoices.gnomeCastingAbilityId ?? "inteligencia";
-        }
-        if (sweep.speciesId === "elf") {
-          speciesChoices.lineageId = value;
-          speciesChoices.keenSensesSkillId = speciesChoices.keenSensesSkillId ?? "perception";
-        }
-
-        blueprints.push({
-          id,
-          name: `${sweep.prefix} ${value} L${level}`,
-          level,
-          speciesId: sweep.speciesId,
-          speciesChoices,
-          backgroundId: BG_INDEX.backgrounds[matrixSeed % BG_INDEX.backgrounds.length].id,
-          classId,
-          subclassId,
-          classChoices: {
-            skillIds: pickClassSkills(classId, matrixSeed, loadClass(classId).skillChoices?.count ?? 0),
-          },
-          alignmentId: ALIGNMENTS[matrixSeed % ALIGNMENTS.length],
-          boostId: "three-plus-one",
-          priority: cfg.priority,
-          equip: cfg.equip,
-          mastery: cfg.mastery,
-        });
-        ensureLandTerrain(blueprints[blueprints.length - 1]);
-        usedIds.add(id);
-      }
-    }
-  }
-
-  return blueprints;
-}
-
-function speciesMatrixBlueprints(usedIds) {
-  const blueprints = [];
-  const speciesList = SPECIES_INDEX.species.map((s) => s.id);
-
-  for (const speciesId of speciesList) {
-    for (const level of SPECIES_LEVELS) {
-      const matrixSeed = speciesList.indexOf(speciesId) * 100 + level;
-      const bp = matrixBlueprint(speciesId, level, matrixSeed, usedIds);
-      if (bp) {
-        blueprints.push(bp);
-        usedIds.add(bp.id);
-      }
-    }
-  }
-
-  return blueprints;
+function resolveMagicInitiate(bp) {
+  if (bp.skipMagicInitiate) return bp.magicInitiate ?? null;
+  return bp.magicInitiate ?? autoMagicInitiate(bp.backgroundId);
 }
 
 function buildAllBlueprints() {
@@ -798,8 +742,7 @@ function buildAllBlueprints() {
     }
   }
 
-  blueprints.push(...speciesMatrixBlueprints(used));
-  blueprints.push(...ancestrySweepBlueprints(used));
+  blueprints.push(...subclassLevelGridBlueprints(used));
 
   return blueprints;
 }
@@ -832,22 +775,51 @@ function maxSpellLevel(slotsMax) {
   return keys.length ? Math.max(...keys) : 1;
 }
 
-function pickSpells(classId, level, extraCantrips = 0, excludeCantripIds = []) {
+function pickSpells(classId, level, extraCantrips = 0, excludeCantripIds = [], options = {}) {
   const list = loadSpellList(classId);
-  const slotsMax = expectedSpellSlots(classId, level) ?? {};
+  const thirdCfg = options.thirdCaster;
+  const slotsMax =
+    thirdCfg?.slotsMax ??
+    expectedSpellSlots(options.mainClassId ?? classId, level) ??
+    {};
   const maxLvl = maxSpellLevel(slotsMax);
-  const cantripCount = (expectedClassCantrips(classId, level) ?? 0) + extraCantrips;
-  const preparedCount = expectedPreparedCount(classId, level) ?? 0;
+  const cantripCount =
+    (thirdCfg?.cantripCount ??
+      expectedClassCantrips(options.mainClassId ?? classId, level) ??
+      0) + extraCantrips;
+  const preparedCount =
+    thirdCfg?.preparedCount ??
+    expectedPreparedCount(options.mainClassId ?? classId, level) ??
+    0;
+  const spellbookCount =
+    options.mainClassId === "wizard" || classId === "wizard"
+      ? expectedSpellbookCount("wizard", level)
+      : null;
 
   const cantripPool = (list.byLevel["0"] ?? [])
     .map((s) => s.id)
     .filter((id) => !excludeCantripIds.includes(id));
-  const cantripIds = cantripPool.slice(0, cantripCount);
-  const pool = [];
-  for (let l = 1; l <= maxLvl; l++) pool.push(...(list.byLevel[String(l)] ?? []));
-  const preparedIds = pool.slice(0, preparedCount).map((s) => s.id);
+  let cantripIds = cantripPool.slice(0, cantripCount);
 
-  return { cantripIds, preparedIds, slotsMax };
+  if (thirdCfg?.requiredCantrips?.length) {
+    const required = thirdCfg.requiredCantrips.filter((id) => cantripPool.includes(id));
+    const rest = cantripPool.filter((id) => !required.includes(id));
+    cantripIds = [...required, ...rest].slice(0, cantripCount);
+  }
+
+  const leveledPool = [];
+  for (let l = 1; l <= maxLvl; l++) leveledPool.push(...(list.byLevel[String(l)] ?? []).map((s) => s.id));
+
+  let spellbookIds = null;
+  let preparedIds;
+  if (spellbookCount != null) {
+    spellbookIds = leveledPool.slice(0, spellbookCount);
+    preparedIds = spellbookIds.slice(0, preparedCount);
+  } else {
+    preparedIds = leveledPool.slice(0, preparedCount);
+  }
+
+  return { cantripIds, preparedIds, spellbookIds, slotsMax };
 }
 
 function dedupeMagicInitiate(bp, cantripsSoFar) {
@@ -868,14 +840,20 @@ function dedupeMagicInitiate(bp, cantripsSoFar) {
 function buildSpellcasting(bp, abilities) {
   const cantrips = {};
   const prepared = {};
+  const spellbook = {};
   let slotsMax = {};
 
+  const third =
+    bp.subclassId && isThirdCaster(bp.classId, bp.subclassId, bp.level);
+
   const spellClass =
-    bp.classChoices?.fightingStyleId === "blessed-warrior"
-      ? "cleric"
-      : bp.classChoices?.fightingStyleId === "druidic-warrior"
-        ? "druid"
-        : bp.classId;
+    third
+      ? thirdCasterConfig(bp.classId, bp.subclassId).spellListClassId
+      : bp.classChoices?.fightingStyleId === "blessed-warrior"
+        ? "cleric"
+        : bp.classChoices?.fightingStyleId === "druidic-warrior"
+          ? "druid"
+          : bp.classId;
 
   let extraCantrips = 0;
   if (bp.classId === "cleric" && bp.classChoices?.divineOrder === "thaumaturge") {
@@ -887,11 +865,28 @@ function buildSpellcasting(bp, abilities) {
     const p = pickSpells(bp.classId, bp.level);
     prepared.class = p.preparedIds;
     slotsMax = p.slotsMax;
-  } else if (isSpellcaster(bp.classId, bp.level)) {
-    const speciesExclude = allSpeciesCantripIds(bp.speciesId, bp.speciesChoices ?? {}, bp.level);
-    const p = pickSpells(spellClass, bp.level, extraCantrips, speciesExclude);
+  } else if (third) {
+    const cfg = thirdCasterConfig(bp.classId, bp.subclassId);
+    const p = pickSpells(spellClass, bp.level, 0, [], {
+      mainClassId: bp.classId,
+      thirdCaster: {
+        cantripCount: expectedThirdCasterCantrips(bp.classId, bp.subclassId, bp.level),
+        preparedCount: expectedThirdCasterPrepared(bp.classId, bp.subclassId, bp.level),
+        slotsMax: expectedThirdCasterSpellSlots(bp.classId, bp.subclassId, bp.level),
+        requiredCantrips: cfg.requiredCantripIds ?? [],
+      },
+    });
     if (p.cantripIds.length) cantrips.class = p.cantripIds;
     if (p.preparedIds.length) prepared.class = p.preparedIds;
+    slotsMax = p.slotsMax;
+  } else if (isSpellcaster(bp.classId, bp.level, bp.subclassId)) {
+    const speciesExclude = allSpeciesCantripIds(bp.speciesId, bp.speciesChoices ?? {}, bp.level);
+    const p = pickSpells(spellClass, bp.level, extraCantrips, speciesExclude, {
+      mainClassId: bp.classId,
+    });
+    if (p.cantripIds.length) cantrips.class = p.cantripIds;
+    if (p.preparedIds.length) prepared.class = p.preparedIds;
+    if (p.spellbookIds?.length) spellbook.class = p.spellbookIds;
     slotsMax = p.slotsMax;
   }
 
@@ -922,21 +917,24 @@ function buildSpellcasting(bp, abilities) {
   const hasData =
     Object.keys(cantrips).length > 0 ||
     Object.keys(prepared).length > 0 ||
+    Object.keys(spellbook).length > 0 ||
     Object.keys(slotsMax).length > 0;
 
   if (!hasData) return undefined;
 
-  return {
+  const out = {
     cantrips,
     prepared,
     slotsMax,
     slotsUsed: Object.fromEntries(Object.keys(slotsMax).map((k) => [k, 0])),
   };
+  if (Object.keys(spellbook).length) out.spellbook = spellbook;
+  return out;
 }
 
 function buildFeats(bp, bg) {
   const feats = [{ featId: bg.feat.id, source: "background" }];
-  const mi = bp.magicInitiate ?? autoMagicInitiate(bp.backgroundId);
+  const mi = resolveMagicInitiate(bp);
   if (mi && bg.feat.id === "magic-initiate") {
     feats[0].magicInitiate = {
       spellListClassId: MI_BG_CLASS[bp.backgroundId],
@@ -1085,7 +1083,7 @@ function buildSkills(bp, bg, cls) {
 function buildCharacter(bp) {
   const bg = loadBackground(bp.backgroundId);
   const cls = loadClass(bp.classId);
-  const mi = bp.magicInitiate ?? autoMagicInitiate(bp.backgroundId);
+  const mi = resolveMagicInitiate(bp);
   const enriched = mi ? { ...bp, magicInitiate: mi } : bp;
   const abilities = assignAbilities(enriched.backgroundId, enriched.boostId, enriched.priority);
 
@@ -1158,6 +1156,23 @@ function buildCharacter(bp) {
 
   for (const [key, { max }] of Object.entries(expectedSpeciesResources(doc))) {
     doc.resources[key] = { max, remaining: max };
+  }
+
+  if (doc.subclassId && doc.level >= 3) {
+    const seed = (doc.id?.length ?? 0) + doc.level;
+    for (const res of resourcesForSubclass(doc.classId, doc.subclassId)) {
+      if (doc.level >= res.unlockLevel) {
+        const max = subclassResourceMax(res.maxFormula, doc, res.fixedMax);
+        doc.resources[res.slug] = { max, remaining: max };
+      }
+    }
+    const subclassChoices = { ...(doc.subclassChoices ?? {}) };
+    for (const opt of optionsForSubclass(doc.classId, doc.subclassId)) {
+      if (doc.level >= opt.unlockLevel && !subclassChoices[opt.optionKey]) {
+        subclassChoices[opt.optionKey] = defaultSubclassOptionValue(opt, seed + opt.optionKey.length);
+      }
+    }
+    if (Object.keys(subclassChoices).length) doc.subclassChoices = subclassChoices;
   }
 
   doc.hp.max = expectedMaxHpForCharacter(doc);

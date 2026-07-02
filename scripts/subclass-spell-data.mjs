@@ -186,4 +186,37 @@ export const SUBCLASS_SPELLS = {
       "17": ["similaridade"],
     },
   },
+  "sorcerer-draconic": {
+    preparedSpellSourceKey: "draconic-sorcery",
+    preparedSpellsByLevel: {
+      "3": ["alterar-se", "comando", "orbe-cromatico", "sopro-de-dragao"],
+      "5": ["medo", "voo"],
+      "7": ["enfeiticar-monstro", "olho-arcano"],
+      "9": ["invocar-dragao", "lendas-e-historias"],
+    },
+  },
+  "sorcerer-aberrant": {
+    preparedSpellSourceKey: "aberrant-sorcery",
+    preparedSpellsByLevel: {
+      "3": [
+        "acalmar-emocoes",
+        "bracos-de-hadar",
+        "detectar-pensamentos",
+        "sussurros-dissonantes",
+        "talho-mental",
+      ],
+      "5": ["fome-de-hadar", "remeter"],
+      "7": ["invocar-aberracao", "tentaculos-negros-de-evard"],
+      "9": ["ligacao-telepatica-de-rary", "telecinese"],
+    },
+  },
+  "sorcerer-clockwork": {
+    preparedSpellSourceKey: "clockwork-sorcery",
+    preparedSpellsByLevel: {
+      "3": ["alarme", "auxilio", "protecao-contra-o-bem-e-o-mal", "restauracao-menor"],
+      "5": ["dissipar-magia", "protecao-contra-energia"],
+      "7": ["invocar-constructo", "movimentacao-livre"],
+      "9": ["muralha-de-energia", "restauracao-maior"],
+    },
+  },
 };

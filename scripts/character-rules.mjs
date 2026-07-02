@@ -10,6 +10,18 @@ import {
   spellSlotsForPattern,
 } from "./lib/spell-slot-patterns.mjs";
 import { abilityMod, expectedMaxHp, expectedMaxHpForCharacter, speciesHpBonus, toughFeatHpBonus } from "./hp-data.mjs";
+import {
+  expectedThirdCasterCantrips,
+  expectedThirdCasterPrepared,
+  expectedThirdCasterSpellSlots,
+  isThirdCaster,
+  thirdCasterConfig,
+} from "./third-caster-progression-data.mjs";
+import {
+  optionsForSubclass,
+  resourcesForSubclass,
+  subclassResourceMax,
+} from "./subclass-mechanics-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -684,8 +696,239 @@ export function validateAbilityScores(doc) {
   return { ok: false, reason: `methodId desconhecido: ${methodId}` };
 }
 
-export function isSpellcaster(classId, level) {
+export function isSpellcaster(classId, level, subclassId = null) {
+  if (subclassId && isThirdCaster(classId, subclassId, level)) return true;
   return expectedClassCantrips(classId, level) != null || expectedPreparedCount(classId, level) != null;
+}
+
+/** Magias no livro de magias do Mago: 6 no nível 1, +2 por nível adicional. */
+export function expectedSpellbookCount(classId, level) {
+  if (classId !== "wizard" || level < 1) return null;
+  return 6 + 2 * (level - 1);
+}
+
+export function spellIdsFromSpellcasting(sc, listType, sourceKey = null) {
+  if (!sc) return [];
+  const bucket = listType === "known" ? sc.cantrips : listType === "spellbook" ? sc.spellbook : sc.prepared;
+  if (!bucket) return [];
+  if (sourceKey) return bucket[sourceKey] ?? [];
+  return Object.values(bucket).flat();
+}
+
+function countUnique(arr) {
+  return new Set(arr).size;
+}
+
+export function validateSubclassRequired(doc) {
+  const cls = loadClass(doc.classId);
+  const unlock = cls.subclassUnlockLevel ?? 3;
+  if (doc.level >= unlock && !doc.subclassId) {
+    return {
+      ok: false,
+      reason: `nível ${doc.level} exige subclasse (desbloqueio ${unlock})`,
+    };
+  }
+  return { ok: true };
+}
+
+export function validateSpellcasting(doc) {
+  const { classId, level, subclassId, spellcasting: sc } = doc;
+  const third = subclassId && isThirdCaster(classId, subclassId, level);
+
+  if (third) {
+    const cfg = thirdCasterConfig(classId, subclassId);
+    const expCantrips = expectedThirdCasterCantrips(classId, subclassId, level);
+    const expPrepared = expectedThirdCasterPrepared(classId, subclassId, level);
+    const expSlots = expectedThirdCasterSpellSlots(classId, subclassId, level);
+
+    if (!sc) {
+      return { ok: false, reason: `${subclassId} nível ${level} exige conjuração` };
+    }
+
+    const classCantrips = sc.cantrips?.class ?? [];
+    if (classCantrips.length !== expCantrips) {
+      return {
+        ok: false,
+        reason: `truques ${classCantrips.length}, esperado ${expCantrips} (${subclassId})`,
+      };
+    }
+    for (const req of cfg.requiredCantripIds ?? []) {
+      if (!classCantrips.includes(req)) {
+        return { ok: false, reason: `truque obrigatório ausente: ${req}` };
+      }
+    }
+
+    const classPrepared = sc.prepared?.class ?? [];
+    if (classPrepared.length !== expPrepared) {
+      return {
+        ok: false,
+        reason: `magias preparadas ${classPrepared.length}, esperado ${expPrepared} (${subclassId})`,
+      };
+    }
+
+    const slots = sc.slotsMax ?? {};
+    const expKeys = Object.keys(expSlots ?? {}).sort();
+    const gotKeys = Object.keys(slots).sort();
+    if (expKeys.join(",") !== gotKeys.join(",")) {
+      return { ok: false, reason: `slots ${gotKeys.join("/")}, esperado ${expKeys.join("/")}` };
+    }
+    for (const k of expKeys) {
+      if (slots[k] !== expSlots[k]) {
+        return { ok: false, reason: `slot círculo ${k}: ${slots[k]}, esperado ${expSlots[k]}` };
+      }
+    }
+    return { ok: true };
+  }
+
+  if (!isSpellcaster(classId, level)) {
+    if (sc?.cantrips?.class?.length || sc?.prepared?.class?.length || sc?.spellbook?.class?.length) {
+      return { ok: false, reason: "classe não conjuradora com magias de classe" };
+    }
+    return { ok: true };
+  }
+
+  if (!sc) return { ok: false, reason: "conjurador sem spellcasting" };
+
+  const expCantrips = expectedClassCantrips(classId, level);
+  let extraCantrips = 0;
+  if (classId === "cleric" && doc.classChoices?.divineOrder === "thaumaturge") {
+    extraCantrips = 1;
+  }
+  const classCantrips = sc.cantrips?.class ?? [];
+  if (expCantrips != null && classCantrips.length !== expCantrips + extraCantrips) {
+    return {
+      ok: false,
+      reason: `truques ${classCantrips.length}, esperado ${expCantrips + extraCantrips}`,
+    };
+  }
+
+  const expPrepared = expectedPreparedCount(classId, level);
+  const classPrepared = sc.prepared?.class ?? [];
+  if (expPrepared != null && classPrepared.length !== expPrepared) {
+    return {
+      ok: false,
+      reason: `magias preparadas ${classPrepared.length}, esperado ${expPrepared}`,
+    };
+  }
+
+  if (classId === "wizard") {
+    const expBook = expectedSpellbookCount(classId, level);
+    const bookIds = sc.spellbook?.class ?? [];
+    if (bookIds.length !== expBook) {
+      return {
+        ok: false,
+        reason: `livro de magias ${bookIds.length}, esperado ${expBook}`,
+      };
+    }
+    for (const id of classPrepared) {
+      if (!bookIds.includes(id)) {
+        return { ok: false, reason: `preparada ${id} não está no livro de magias` };
+      }
+    }
+  }
+
+  const expSlots = expectedSpellSlots(classId, level);
+  if (expSlots) {
+    const slots = sc.slotsMax ?? {};
+    for (const [circle, max] of Object.entries(expSlots)) {
+      if (slots[circle] !== max) {
+        return { ok: false, reason: `slot círculo ${circle}: ${slots[circle]}, esperado ${max}` };
+      }
+    }
+  }
+
+  return { ok: true };
+}
+
+export function validateSubclassSpells(doc) {
+  if (!doc.subclassId || doc.level < 3) return { ok: true };
+
+  const expected = expectedSubclassPrepared(
+    doc.classId,
+    doc.subclassId,
+    doc.level,
+    doc.classChoices ?? {}
+  );
+  if (!expected) return { ok: true };
+  if (expected.requiresTerrain && !doc.classChoices?.landTerrainId) {
+    return { ok: false, reason: "druida Círculo da Terra exige landTerrainId" };
+  }
+
+  const got = doc.spellcasting?.prepared?.[expected.sourceKey] ?? [];
+  const exp = expected.spellIds;
+  const missing = exp.filter((id) => !got.includes(id));
+  if (missing.length) {
+    return {
+      ok: false,
+      reason: `magias de subclasse ausentes (${expected.sourceKey}): ${missing.join(", ")}`,
+    };
+  }
+  return { ok: true };
+}
+
+export function validateSubclassMechanics(doc) {
+  if (!doc.subclassId || doc.level < 3) return { ok: true };
+
+  for (const res of resourcesForSubclass(doc.classId, doc.subclassId)) {
+    if (doc.level < res.unlockLevel) continue;
+    const expectedMax = subclassResourceMax(res.maxFormula, doc, res.fixedMax);
+    const got = doc.resources?.[res.slug];
+    if (!got) {
+      return { ok: false, reason: `recurso de subclasse ausente: ${res.slug}` };
+    }
+    if (got.max !== expectedMax) {
+      return {
+        ok: false,
+        reason: `recurso ${res.slug} max=${got.max}, esperado ${expectedMax}`,
+      };
+    }
+  }
+
+  for (const opt of optionsForSubclass(doc.classId, doc.subclassId)) {
+    if (doc.level < opt.unlockLevel) continue;
+    const val = doc.subclassChoices?.[opt.optionKey];
+    if (!val) {
+      return { ok: false, reason: `opção de subclasse ausente: ${opt.optionKey}` };
+    }
+    const allowed = opt.values.map((v) => v.valueId);
+    if (!allowed.includes(val)) {
+      return { ok: false, reason: `opção ${opt.optionKey}=${val} inválida` };
+    }
+  }
+
+  return { ok: true };
+}
+
+/** Executa todos os validadores de regras de jogo sobre uma ficha. */
+export function validateCharacterRules(doc) {
+  const checks = [
+    validateAbilityScores,
+    validateSpeciesChoices,
+    validateSingleClass,
+    validateSubclassRequired,
+    validateSubclassLevel,
+    validateSpeciesSpellcasting,
+    validateSpeciesResources,
+    validateWeaponMasteryChoices,
+    validateEquippedArmorTraining,
+    validateArmorClass,
+    validateFightingStyle,
+    validateSkillProficiencies,
+    validatePassivePerception,
+    validateStartingEquipment,
+    validateClassResources,
+    validateSpellcasting,
+    validateSubclassSpells,
+    validateSubclassMechanics,
+  ];
+
+  for (const fn of checks) {
+    const result = fn(doc);
+    if (!result.ok) {
+      return { ok: false, reason: result.reason, validator: fn.name };
+    }
+  }
+  return { ok: true };
 }
 
 export function allCantripIds(character) {

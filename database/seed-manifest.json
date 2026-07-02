@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-06-28T13:23:06.329Z",
+  "generatedAt": "2026-07-02T22:08:24.698Z",
   "phb": {
     "alignments": 9,
     "abilities": 6,
@@ -20,7 +20,7 @@
     "armorCategories": 4,
     "toolCategories": 6,
     "spellClassLinks": 987,
-    "subclassPreparedSpells": 186
+    "subclassPreparedSpells": 217
   },
   "files": {
     "seedPhb": "database\\seed-phb.sql"

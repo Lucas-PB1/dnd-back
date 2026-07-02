@@ -44,5 +44,26 @@
       "name": "Companheiro Dracônico",
       "description": "Você pode conjurar Invocar Dragão sem um componente Material. Além disso, pode conjurá-la uma vez sem\ngastar um espaço de magia, recuperando a capacidade\nde conjurá-la deste modo ao completar um Descanso\nLongo.\nAo começar a conjurar a magia, você pode modificá-\n-la para não exigir Concentração e a duração da magia\nse torna 1 minuto para esta conjuração."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "draconic-sorcery",
+  "preparedSpellsByLevel": {
+    "3": [
+      "alterar-se",
+      "comando",
+      "orbe-cromatico",
+      "sopro-de-dragao"
+    ],
+    "5": [
+      "medo",
+      "voo"
+    ],
+    "7": [
+      "enfeiticar-monstro",
+      "olho-arcano"
+    ],
+    "9": [
+      "invocar-dragao",
+      "lendas-e-historias"
+    ]
+  }
 }

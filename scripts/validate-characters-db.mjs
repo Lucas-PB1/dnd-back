@@ -1,6 +1,8 @@
 /**
  * Valida integridade das fichas no PostgreSQL.
  */
+import { TARGET_CHARACTER_COUNT } from "./lib/character-generator.mjs";
+
 const url =
   process.env.DATABASE_URL ??
   "postgresql://postgres:postgres@127.0.0.1:5432/rpg";
@@ -36,7 +38,9 @@ try {
 
   const { rows: cntRows } = await client.query(`SELECT COUNT(*)::int AS n FROM rpg.player_character`);
   characterCount = cntRows[0].n;
-  if (characterCount !== 300) fail(`esperado 300 personagens, encontrado ${characterCount}`);
+  if (characterCount !== TARGET_CHARACTER_COUNT) {
+    fail(`esperado ${TARGET_CHARACTER_COUNT} personagens, encontrado ${characterCount}`);
+  }
 
   const { rows: abilityCnt } = await client.query(`
     SELECT character_id, COUNT(*)::int AS n

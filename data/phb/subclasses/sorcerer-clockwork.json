@@ -44,5 +44,26 @@
       "name": "Cavalgada Mecânica",
       "description": "Você invoca momentaneamente espíritos de ordem\npara eliminar a desordem ao seu redor. Como uma\nação Usar Magia, você convoca os espíritos em um\nCubo de 9 metros de lado originado em você. Os espíritos se parecem com modrons ou outros Construtos à\nsua escolha. Os espíritos são intangíveis e invulneráveis\ne criam os efeitos a seguir no Cubo antes de desaparecerem. Você pode executar esta ação novamente após\ncompletar um Descanso Longo ou gastando 7 Pontos\nde Feitiçaria (nenhuma ação é necessária) para restaurar seu uso.\nCura. Os espíritos restauram até 100 Pontos de Vida,\ndivididos conforme você escolher entre qualquer número de criaturas à sua escolha no Cubo.\nDissipar. Cada magia de 6º círculo ou inferior encerra em criaturas e objetos à sua escolha no Cubo."
     }
-  ]
+  ],
+  "preparedSpellSourceKey": "clockwork-sorcery",
+  "preparedSpellsByLevel": {
+    "3": [
+      "alarme",
+      "auxilio",
+      "protecao-contra-o-bem-e-o-mal",
+      "restauracao-menor"
+    ],
+    "5": [
+      "dissipar-magia",
+      "protecao-contra-energia"
+    ],
+    "7": [
+      "invocar-constructo",
+      "movimentacao-livre"
+    ],
+    "9": [
+      "muralha-de-energia",
+      "restauracao-maior"
+    ]
+  }
 }

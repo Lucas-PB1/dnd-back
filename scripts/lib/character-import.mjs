@@ -173,6 +173,16 @@ export function buildCharacterRows(char) {
         });
       }
     }
+    for (const [sourceSlug, spellIds] of Object.entries(sc.spellbook ?? {})) {
+      for (const spellId of spellIds) {
+        spellList.push({
+          character_id: sqlStr(char.id),
+          spell_id: sqlRef("phb_spell", spellId),
+          list_type: "'known'::rpg.spell_list_type",
+          source_id: sqlRef("phb_spell_source", sourceSlug),
+        });
+      }
+    }
   }
 
   const spellSlots = [];
@@ -249,6 +259,19 @@ export function buildCharacterRows(char) {
     classOptions.push(row);
   }
 
+  const subclassOptions = [];
+  if (char.subclassId) {
+    for (const [key, value] of Object.entries(char.subclassChoices ?? {})) {
+      subclassOptions.push({
+        character_id: sqlStr(char.id),
+        subclass_id: sqlRef("phb_subclass", char.subclassId),
+        option_key: sqlStr(key),
+        catalog_value_id: sqlStr(value),
+        ability_id: "NULL",
+      });
+    }
+  }
+
   return {
     main,
     abilities,
@@ -266,6 +289,7 @@ export function buildCharacterRows(char) {
     speciesOptions,
     classOptions,
     classSkills,
+    subclassOptions,
   };
 }
 
