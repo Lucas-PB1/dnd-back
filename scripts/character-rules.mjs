@@ -11,12 +11,30 @@ import {
 } from "./lib/spell-slot-patterns.mjs";
 import { abilityMod, expectedMaxHp, expectedMaxHpForCharacter, speciesHpBonus, toughFeatHpBonus } from "./hp-data.mjs";
 import {
+  abilitiesWithoutAsi,
+  applyAsiBoost,
+  expectedClassFeatSlots,
+} from "./class-feat-progression-data.mjs";
+import {
+  ELEMENTAL_DAMAGE_TYPES,
+  GENERAL_FEAT_DEFS,
+  GENERAL_FEAT_ROTATION,
+  effectiveArmorTrainingWithFeats,
+  expectedGeneralFeatCantrips,
+  expectedGeneralFeatPrepared,
+} from "./general-feat-mechanics-data.mjs";
+import { checkFeatPrerequisites, proficiencyBonusAtLevel } from "./feat-prerequisites-data.mjs";
+import { sumAsiDeltas } from "./asi-mechanics.mjs";
+import {
   expectedThirdCasterCantrips,
   expectedThirdCasterPrepared,
   expectedThirdCasterSpellSlots,
   isThirdCaster,
   thirdCasterConfig,
 } from "./third-caster-progression-data.mjs";
+import {
+  MAGIC_INITIATE_BACKGROUND_CLASS,
+} from "./feat-mechanics-data.mjs";
 import {
   optionsForSubclass,
   resourcesForSubclass,
@@ -521,21 +539,9 @@ function classSkillPool(cls) {
   return [];
 }
 
-/** Treinamento de armadura efetivo (classe + ordem divina + subclasse). */
+/** Treinamento de armadura efetivo (classe + ordem divina + subclasse + talentos). */
 export function effectiveArmorTraining(doc) {
-  const cls = loadClass(doc.classId);
-  const training = { ...(cls.armorTraining ?? {}) };
-
-  if (doc.classId === "cleric" && doc.classChoices?.divineOrder === "protector") {
-    training.heavy = true;
-  }
-
-  if (doc.classId === "bard" && doc.subclassId === "valor" && doc.level >= 3) {
-    training.medium = true;
-    training.shields = true;
-  }
-
-  return training;
+  return effectiveArmorTrainingWithFeats(doc);
 }
 
 function unarmoredDefenseBonus(doc, armorItem, shieldItem) {
@@ -649,13 +655,12 @@ function validateRollBase(base) {
  * Retorna { ok: true } ou { ok: false, reason: string }.
  */
 export function validateAbilityScores(doc) {
-  const { abilities, abilityGeneration, backgroundId } = doc;
+  const { abilities, abilityGeneration, backgroundId, feats } = doc;
   const { methodId, backgroundBoostId } = abilityGeneration ?? {};
-  const maxScore = ABILITY_GENERATION.backgroundBoost.maxScore;
 
   for (const score of Object.values(abilities)) {
-    if (score < 1 || score > maxScore) {
-      return { ok: false, reason: `valor fora do intervalo 1–${maxScore}` };
+    if (score < 1 || score > 30) {
+      return { ok: false, reason: "valor fora do intervalo 1–30" };
     }
   }
 
@@ -668,7 +673,17 @@ export function validateAbilityScores(doc) {
     return { ok: false, reason: "antecedente sem três atributos elegíveis" };
   }
 
-  const baseResult = baseScoresFromBoost(abilities, allowedBoosts, backgroundBoostId);
+  const preAsi = abilitiesWithoutAsi(abilities, feats);
+  for (const score of Object.values(preAsi)) {
+    if (score < 1 || score > ABILITY_GENERATION.backgroundBoost.maxScore) {
+      return {
+        ok: false,
+        reason: `base pré-ASI fora do intervalo 1–${ABILITY_GENERATION.backgroundBoost.maxScore}`,
+      };
+    }
+  }
+
+  const baseResult = baseScoresFromBoost(preAsi, allowedBoosts, backgroundBoostId);
   const bases = Array.isArray(baseResult) ? baseResult : baseResult ? [baseResult] : [];
   if (!bases.length) {
     return { ok: false, reason: "combinação de bônus do antecedente inválida" };
@@ -681,19 +696,35 @@ export function validateAbilityScores(doc) {
     return false;
   };
 
-  if (bases.some(matchesMethod)) return { ok: true };
+  if (!bases.some(matchesMethod)) {
+    if (methodId === "standard-array") {
+      return { ok: false, reason: "base não corresponde ao conjunto padrão após remover bônus/ASI" };
+    }
+    if (methodId === "point-buy") {
+      return { ok: false, reason: "base não corresponde a ponto buy (27 pts, scores 8–15)" };
+    }
+    if (methodId === "roll") {
+      return { ok: false, reason: "base fora do intervalo 3–18 (4d6 descartando menor)" };
+    }
+    return { ok: false, reason: `methodId desconhecido: ${methodId}` };
+  }
 
-  if (methodId === "standard-array") {
-    return { ok: false, reason: "base não corresponde ao conjunto padrão após remover bônus" };
+  let expected = { ...preAsi };
+  for (const feat of feats ?? []) {
+    if (!feat.asi) continue;
+    const asi = { ...feat.asi };
+    expected = applyAsiBoost(expected, asi);
   }
-  if (methodId === "point-buy") {
-    return { ok: false, reason: "base não corresponde a ponto buy (27 pts, scores 8–15)" };
-  }
-  if (methodId === "roll") {
-    return { ok: false, reason: "base fora do intervalo 3–18 (4d6 descartando menor)" };
+  for (const id of ABILITY_IDS) {
+    if ((abilities[id] ?? 0) !== (expected[id] ?? 0)) {
+      return {
+        ok: false,
+        reason: `atributo ${id}=${abilities[id]}, esperado ${expected[id]} após ASI de talentos`,
+      };
+    }
   }
 
-  return { ok: false, reason: `methodId desconhecido: ${methodId}` };
+  return { ok: true };
 }
 
 export function isSpellcaster(classId, level, subclassId = null) {
@@ -899,6 +930,286 @@ export function validateSubclassMechanics(doc) {
   return { ok: true };
 }
 
+export function validateFeatRoster(doc) {
+  const bg = loadBackground(doc.backgroundId);
+  const feats = doc.feats ?? [];
+
+  const bgFeats = feats.filter((f) => f.source === "background");
+  if (bgFeats.length !== 1 || bgFeats[0].featId !== bg.feat.id) {
+    return {
+      ok: false,
+      reason: `antecedente ${doc.backgroundId} exige feat ${bg.feat.id}, encontrado: ${bgFeats.map((f) => f.featId).join(", ") || "nenhum"}`,
+    };
+  }
+  if ((bgFeats[0].unlockLevel ?? 1) !== 1) {
+    return { ok: false, reason: "feat de antecedente deve ter unlockLevel 1" };
+  }
+
+  const speciesFeats = feats.filter((f) => f.source === "species");
+  if (doc.speciesId === "human") {
+    if (speciesFeats.length !== 1 || speciesFeats[0].featId !== "skilled") {
+      return { ok: false, reason: "humano (Versátil) exige skilled com source species" };
+    }
+  } else if (speciesFeats.length > 0) {
+    return { ok: false, reason: "espécie não-humana não deve ter feat de species" };
+  }
+
+  const classFeats = feats.filter((f) => f.source === "class");
+  const generalFeats = feats.filter((f) => f.source === "general");
+  const expectedSlots = expectedClassFeatSlots(doc.classId, doc.level);
+  const asiLevels = expectedSlots.filter((s) => !s.epic).map((s) => s.unlockLevel);
+  const epicSlots = expectedSlots.filter((s) => s.epic);
+
+  if (classFeats.length + generalFeats.length !== expectedSlots.length) {
+    return {
+      ok: false,
+      reason: `progressão nível=${classFeats.length + generalFeats.length}, esperado ${expectedSlots.length} (ASI/talento geral + épico)`,
+    };
+  }
+
+  for (const gf of generalFeats) {
+    if (!asiLevels.includes(gf.unlockLevel)) {
+      return {
+        ok: false,
+        reason: `talento geral ${gf.featId} no nível ${gf.unlockLevel} não substitui slot de ASI`,
+      };
+    }
+    if (!GENERAL_FEAT_DEFS[gf.featId]) {
+      return { ok: false, reason: `talento geral ${gf.featId} sem mecânica implementada` };
+    }
+  }
+
+  const generalLevels = new Set(generalFeats.map((f) => f.unlockLevel));
+  const classAsi = classFeats.filter((f) => f.featId === "ability-score-improvement");
+  if (classAsi.length + generalFeats.length !== asiLevels.length) {
+    return {
+      ok: false,
+      reason: `slots ASI=${classAsi.length}+gerais ${generalFeats.length}, esperado ${asiLevels.length}`,
+    };
+  }
+
+  const sortedClass = [...classFeats].sort((a, b) => (a.unlockLevel ?? 1) - (b.unlockLevel ?? 1));
+  for (const exp of epicSlots) {
+    const got = sortedClass.find((f) => f.unlockLevel === exp.unlockLevel);
+    if (!got) return { ok: false, reason: `dádiva épica nível ${exp.unlockLevel} ausente` };
+    if (got.featId === "ability-score-improvement") {
+      return { ok: false, reason: `nível ${exp.unlockLevel} deve ser dádiva épica, não ASI` };
+    }
+    if (!got.asi || got.asi.mode !== "single+1") {
+      return { ok: false, reason: `dádiva épica ${got.featId} exige ASI +1` };
+    }
+  }
+
+  for (const unlockLevel of asiLevels) {
+    if (generalLevels.has(unlockLevel)) continue;
+    const got = classAsi.find((f) => f.unlockLevel === unlockLevel);
+    if (!got) {
+      return { ok: false, reason: `ASI nível ${unlockLevel} ausente` };
+    }
+    if (!got.asi) {
+      return { ok: false, reason: `ASI nível ${unlockLevel} sem objeto asi` };
+    }
+  }
+
+  const unexpected = feats.filter(
+    (f) => f.source !== "background" && f.source !== "species" && f.source !== "class" && f.source !== "general"
+  );
+  if (unexpected.length) {
+    return {
+      ok: false,
+      reason: `feats com source inesperada: ${unexpected.map((f) => `${f.featId}(${f.source})`).join(", ")}`,
+    };
+  }
+
+  return { ok: true };
+}
+
+function abilitiesBeforeFeat(doc, feat) {
+  const abilities = { ...doc.abilities };
+  const later = (doc.feats ?? []).filter((f) => (f.unlockLevel ?? 1) > (feat.unlockLevel ?? 1));
+  for (const [id, delta] of Object.entries(sumAsiDeltas(later))) {
+    abilities[id] = (abilities[id] ?? 0) - delta;
+  }
+  return abilities;
+}
+
+function prerequisiteContextForFeat(doc, feat) {
+  const unlock = feat.unlockLevel ?? 1;
+  const existingFeats = (doc.feats ?? []).filter(
+    (f) => f.source === "general" && (f.unlockLevel ?? 1) < unlock
+  );
+  return {
+    classId: doc.classId,
+    level: doc.level,
+    unlockLevel: unlock,
+    abilities: abilitiesBeforeFeat(doc, feat),
+    classSavingThrows: loadClass(doc.classId).savingThrowIds ?? [],
+    classChoices: doc.classChoices,
+    subclassId: doc.subclassId,
+    existingFeats,
+  };
+}
+
+export function validateFeatPrerequisites(doc) {
+  for (const feat of doc.feats ?? []) {
+    if (feat.source !== "general") continue;
+    const ctx = prerequisiteContextForFeat(doc, feat);
+    const result = checkFeatPrerequisites(feat.featId, ctx);
+    if (!result.ok) {
+      return { ok: false, reason: `${feat.featId}@${feat.unlockLevel}: ${result.reason}` };
+    }
+  }
+  return { ok: true };
+}
+
+export function validateGeneralFeats(doc) {
+  const sc = doc.spellcasting;
+
+  for (const feat of doc.feats ?? []) {
+    if (feat.source !== "general") continue;
+    const def = GENERAL_FEAT_DEFS[feat.featId];
+    if (!def) {
+      return { ok: false, reason: `talento geral ${feat.featId} não implementado` };
+    }
+    if (!feat.asi || feat.asi.mode !== "single+1") {
+      return { ok: false, reason: `${feat.featId} exige ASI +1` };
+    }
+
+    if (feat.featId === "resilient") {
+      if (!feat.resilient?.abilityId) {
+        return { ok: false, reason: "resilient sem resilient.abilityId" };
+      }
+      if (!doc.savingThrowProficiencies?.includes(feat.resilient.abilityId)) {
+        return {
+          ok: false,
+          reason: `resilient ${feat.resilient.abilityId} não está em savingThrowProficiencies`,
+        };
+      }
+    }
+
+    if (feat.featId === "elemental-adept") {
+      const typeId = feat.elementalAdept?.damageTypeId;
+      if (!typeId || !ELEMENTAL_DAMAGE_TYPES.includes(typeId)) {
+        return { ok: false, reason: `elemental-adept tipo inválido: ${typeId ?? "ausente"}` };
+      }
+    }
+
+    if (def.spells || def.ritualSpells) {
+      const expPrep = expectedGeneralFeatPrepared(feat);
+      const expCantrips = expectedGeneralFeatCantrips(feat);
+      const gotPrep = sc?.prepared?.[feat.featId] ?? [];
+      const gotCantrips = sc?.cantrips?.[feat.featId] ?? [];
+      if (expPrep.length && gotPrep.sort().join(",") !== [...expPrep].sort().join(",")) {
+        return {
+          ok: false,
+          reason: `${feat.featId} preparadas=${gotPrep.join(",")}, esperado ${expPrep.join(",")}`,
+        };
+      }
+      if (expCantrips.length && gotCantrips.sort().join(",") !== [...expCantrips].sort().join(",")) {
+        return {
+          ok: false,
+          reason: `${feat.featId} truques=${gotCantrips.join(",")}, esperado ${expCantrips.join(",")}`,
+        };
+      }
+      if (def.ritualSpells) {
+        const pb = proficiencyBonusAtLevel(feat.unlockLevel ?? doc.level) ?? 2;
+        if (expPrep.length !== pb) {
+          return {
+            ok: false,
+            reason: `${feat.featId} rituais=${expPrep.length}, esperado ${pb} (PB no nível ${feat.unlockLevel})`,
+          };
+        }
+      }
+      if ((expPrep.length || expCantrips.length) && !feat.castingAbilityId) {
+        return { ok: false, reason: `${feat.featId} sem castingAbilityId` };
+      }
+    }
+  }
+
+  return { ok: true };
+}
+
+export function validateMagicInitiate(doc) {
+  const hasFeat = (doc.feats ?? []).some((f) => f.featId === "magic-initiate");
+  const sc = doc.spellcasting;
+  const hasSpells =
+    (sc?.cantrips?.["magic-initiate"]?.length ?? 0) > 0 ||
+    (sc?.prepared?.["magic-initiate"]?.length ?? 0) > 0;
+
+  if (!hasFeat) {
+    if (hasSpells) return { ok: false, reason: "magias magic-initiate sem talento na ficha" };
+    return { ok: true };
+  }
+
+  const miFeat = (doc.feats ?? []).find((f) => f.featId === "magic-initiate");
+  if (miFeat.source !== "background") {
+    return { ok: false, reason: "magic-initiate deve vir do antecedente" };
+  }
+
+  const expectedList = MAGIC_INITIATE_BACKGROUND_CLASS[doc.backgroundId];
+  if (!expectedList) {
+    return { ok: false, reason: `antecedente ${doc.backgroundId} não concede Iniciado em Magia` };
+  }
+
+  const mi = miFeat.magicInitiate;
+  if (!mi) return { ok: false, reason: "feats[].magicInitiate ausente" };
+  if (mi.spellListClassId !== expectedList) {
+    return {
+      ok: false,
+      reason: `magicInitiate.spellListClassId=${mi.spellListClassId}, esperado ${expectedList}`,
+    };
+  }
+
+  const cantrips = sc?.cantrips?.["magic-initiate"] ?? [];
+  const prepared = sc?.prepared?.["magic-initiate"] ?? [];
+  if (cantrips.length !== 2) {
+    return { ok: false, reason: `MI truques=${cantrips.length}, esperado 2` };
+  }
+  if (prepared.length !== 1) {
+    return { ok: false, reason: `MI preparadas=${prepared.length}, esperado 1` };
+  }
+  if (prepared[0] !== mi.preparedSpellId) {
+    return {
+      ok: false,
+      reason: `MI preparada ${prepared[0]} ≠ magicInitiate.preparedSpellId ${mi.preparedSpellId}`,
+    };
+  }
+  for (const id of cantrips) {
+    if (!mi.cantripIds.includes(id)) {
+      return { ok: false, reason: `truque MI ${id} não está em magicInitiate.cantripIds` };
+    }
+  }
+
+  return { ok: true };
+}
+
+export function validateHp(doc) {
+  const expected = expectedMaxHpForCharacter(doc);
+  if (expected == null) return { ok: true };
+  if (doc.hp?.max !== expected) {
+    return { ok: false, reason: `HP max=${doc.hp?.max}, esperado ${expected} (inclui Vigoroso/espécie)` };
+  }
+  if (doc.hp?.current !== expected) {
+    return { ok: false, reason: `HP current=${doc.hp?.current}, esperado ${expected}` };
+  }
+  return { ok: true };
+}
+
+export function validateExpertiseList(doc) {
+  const expected = buildExpertise(doc);
+  const got = [...(doc.expertise ?? [])].sort();
+  const exp = [...expected].sort();
+  if (got.length !== exp.length) {
+    return { ok: false, reason: `expertise=${got.join(",")}, esperado ${exp.join(",")}` };
+  }
+  for (let i = 0; i < exp.length; i++) {
+    if (got[i] !== exp[i]) {
+      return { ok: false, reason: `expertise=${got.join(",")}, esperado ${exp.join(",")}` };
+    }
+  }
+  return { ok: true };
+}
+
 /** Executa todos os validadores de regras de jogo sobre uma ficha. */
 export function validateCharacterRules(doc) {
   const checks = [
@@ -909,6 +1220,12 @@ export function validateCharacterRules(doc) {
     validateSubclassLevel,
     validateSpeciesSpellcasting,
     validateSpeciesResources,
+    validateFeatRoster,
+    validateFeatPrerequisites,
+    validateGeneralFeats,
+    validateMagicInitiate,
+    validateHp,
+    validateExpertiseList,
     validateWeaponMasteryChoices,
     validateEquippedArmorTraining,
     validateArmorClass,

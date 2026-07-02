@@ -85,19 +85,41 @@ CREATE TABLE rpg.player_character_feat (
   character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   feat_id      BIGINT NOT NULL REFERENCES rpg.phb_feat(id),
   source       rpg.feat_source NOT NULL,
-  PRIMARY KEY (character_id, feat_id, source)
+  unlock_level INTEGER NOT NULL DEFAULT 1 CHECK (unlock_level >= 1 AND unlock_level <= 20),
+  PRIMARY KEY (character_id, feat_id, source, unlock_level)
 );
 
 CREATE TABLE rpg.player_character_feat_magic_initiate (
   character_id        TEXT NOT NULL,
   feat_id             BIGINT NOT NULL,
   source              rpg.feat_source NOT NULL,
+  unlock_level        INTEGER NOT NULL DEFAULT 1,
   spell_list_class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id),
   casting_ability_id  BIGINT NOT NULL REFERENCES rpg.phb_ability(id),
-  PRIMARY KEY (character_id, feat_id, source),
-  FOREIGN KEY (character_id, feat_id, source)
-    REFERENCES rpg.player_character_feat(character_id, feat_id, source)
+  PRIMARY KEY (character_id, feat_id, source, unlock_level),
+  FOREIGN KEY (character_id, feat_id, source, unlock_level)
+    REFERENCES rpg.player_character_feat(character_id, feat_id, source, unlock_level)
     ON DELETE CASCADE
+);
+
+CREATE TYPE rpg.feat_asi_mode AS ENUM ('single_plus_2', 'double_plus_1', 'single_plus_1');
+
+CREATE TABLE rpg.player_character_feat_asi (
+  character_id  TEXT NOT NULL,
+  feat_id       BIGINT NOT NULL,
+  source        rpg.feat_source NOT NULL,
+  unlock_level  INTEGER NOT NULL,
+  mode          rpg.feat_asi_mode NOT NULL,
+  ability_id_1  BIGINT NOT NULL REFERENCES rpg.phb_ability(id),
+  ability_id_2  BIGINT REFERENCES rpg.phb_ability(id),
+  PRIMARY KEY (character_id, feat_id, source, unlock_level),
+  FOREIGN KEY (character_id, feat_id, source, unlock_level)
+    REFERENCES rpg.player_character_feat(character_id, feat_id, source, unlock_level)
+    ON DELETE CASCADE,
+  CONSTRAINT player_character_feat_asi_ability_2_chk CHECK (
+    (mode = 'double_plus_1' AND ability_id_2 IS NOT NULL)
+    OR (mode <> 'double_plus_1' AND ability_id_2 IS NULL)
+  )
 );
 
 CREATE TABLE rpg.player_character_equipment (
@@ -428,7 +450,24 @@ RETURNS JSONB AS $$
   ) sv ON TRUE
   LEFT JOIN LATERAL (
     SELECT COALESCE(jsonb_agg(
-      jsonb_build_object('featId', f.slug, 'source', pcf.source)
+      jsonb_build_object('featId', f.slug, 'source', pcf.source, 'unlockLevel', pcf.unlock_level)
+      || CASE
+        WHEN asi.character_id IS NOT NULL THEN jsonb_build_object(
+          'asi', jsonb_build_object(
+            'mode', CASE asi.mode
+              WHEN 'single_plus_2' THEN 'single+2'
+              WHEN 'double_plus_1' THEN 'double+1'
+              WHEN 'single_plus_1' THEN 'single+1'
+            END,
+            'abilityIds', CASE asi.mode
+              WHEN 'double_plus_1' THEN jsonb_build_array(ab1.slug, ab2.slug)
+              ELSE jsonb_build_array(ab1.slug)
+            END,
+            'maxScore', CASE WHEN asi.mode = 'single_plus_1' THEN 30 ELSE 20 END
+          )
+        )
+        ELSE '{}'::jsonb
+      END
       || CASE
         WHEN mi.character_id IS NOT NULL THEN jsonb_build_object(
           'magicInitiate', jsonb_build_object(
@@ -440,14 +479,22 @@ RETURNS JSONB AS $$
         )
         ELSE '{}'::jsonb
       END
-      ORDER BY f.slug
+      ORDER BY pcf.unlock_level, f.slug
     ), '[]'::jsonb) AS list
     FROM rpg.player_character_feat pcf
     JOIN rpg.phb_feat f ON f.id = pcf.feat_id
+    LEFT JOIN rpg.player_character_feat_asi asi
+      ON asi.character_id = pcf.character_id
+      AND asi.feat_id = pcf.feat_id
+      AND asi.source = pcf.source
+      AND asi.unlock_level = pcf.unlock_level
+    LEFT JOIN rpg.phb_ability ab1 ON ab1.id = asi.ability_id_1
+    LEFT JOIN rpg.phb_ability ab2 ON ab2.id = asi.ability_id_2
     LEFT JOIN rpg.player_character_feat_magic_initiate mi
       ON mi.character_id = pcf.character_id
       AND mi.feat_id = pcf.feat_id
       AND mi.source = pcf.source
+      AND mi.unlock_level = pcf.unlock_level
     LEFT JOIN rpg.phb_class mi_cl ON mi_cl.id = mi.spell_list_class_id
     LEFT JOIN rpg.phb_ability mi_ab ON mi_ab.id = mi.casting_ability_id
     LEFT JOIN LATERAL (

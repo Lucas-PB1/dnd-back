@@ -79,6 +79,7 @@ const REQUIRED_TABLES = [
   "player_character_skill",
   "player_character_saving_throw",
   "player_character_feat",
+  "player_character_feat_asi",
   "player_character_feat_magic_initiate",
   "player_character_equipment",
   "player_character_weapon_mastery",

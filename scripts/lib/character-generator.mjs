@@ -43,6 +43,8 @@ import {
   resourcesForSubclass,
   subclassResourceMax,
 } from "../subclass-mechanics-data.mjs";
+import { buildClassProgressionFeats } from "../class-feat-progression-data.mjs";
+import { mergeGeneralFeatSpells } from "../general-feat-mechanics-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..", "..");
@@ -932,8 +934,14 @@ function buildSpellcasting(bp, abilities) {
   return out;
 }
 
-function buildFeats(bp, bg) {
-  const feats = [{ featId: bg.feat.id, source: "background" }];
+function hashSeed(str) {
+  let h = 0;
+  for (let i = 0; i < str.length; i++) h = (h * 31 + str.charCodeAt(i)) | 0;
+  return Math.abs(h);
+}
+
+function buildFeats(bp, bg, baseAbilities, cls) {
+  const feats = [{ featId: bg.feat.id, source: "background", unlockLevel: 1 }];
   const mi = resolveMagicInitiate(bp);
   if (mi && bg.feat.id === "magic-initiate") {
     feats[0].magicInitiate = {
@@ -942,9 +950,24 @@ function buildFeats(bp, bg) {
     };
   }
   if (bp.speciesId === "human") {
-    feats.push({ featId: "skilled", source: "species" });
+    feats.push({ featId: "skilled", source: "species", unlockLevel: 1 });
   }
-  return feats;
+
+  const { feats: classFeats, abilities, sideEffects } = buildClassProgressionFeats(
+    bp.classId,
+    bp.level,
+    bp.priority,
+    hashSeed(bp.id ?? "0"),
+    baseAbilities,
+    {
+      classSavingThrows: cls.savingThrowIds ?? [],
+      classChoices: bp.classChoices ?? {},
+      subclassId: bp.subclassId ?? null,
+    }
+  );
+  feats.push(...classFeats);
+
+  return { feats, abilities, sideEffects };
 }
 
 const MASTERY_FALLBACK = [
@@ -1085,7 +1108,7 @@ function buildCharacter(bp) {
   const cls = loadClass(bp.classId);
   const mi = resolveMagicInitiate(bp);
   const enriched = mi ? { ...bp, magicInitiate: mi } : bp;
-  const abilities = assignAbilities(enriched.backgroundId, enriched.boostId, enriched.priority);
+  const baseAbilities = assignAbilities(enriched.backgroundId, enriched.boostId, enriched.priority);
 
   const equipKey = typeof enriched.equip === "string" ? enriched.equip : null;
   const equipTemplate = equipKey ? EQUIP[equipKey] : enriched.equip;
@@ -1106,7 +1129,7 @@ function buildCharacter(bp) {
     alignmentId: enriched.alignmentId,
     abilityGeneration: { methodId: "standard-array", backgroundBoostId: enriched.boostId },
     languageIds: ["common", "dwarvish", "elvish"].slice(0, 3),
-    abilities,
+    abilities: baseAbilities,
     skillProficiencies: buildSkills(enriched, bg, cls),
     savingThrowProficiencies: cls.savingThrowIds,
     feats: [],
@@ -1121,10 +1144,22 @@ function buildCharacter(bp) {
   if (enriched.subclassId) doc.subclassId = enriched.subclassId;
   if (Object.keys(classChoices).length) doc.classChoices = classChoices;
 
-  const spellcasting = buildSpellcasting(enriched, abilities);
+  const spellcasting = buildSpellcasting(enriched, baseAbilities);
   if (spellcasting) doc.spellcasting = spellcasting;
 
-  doc.feats = buildFeats(enriched, bg);
+  const { feats, abilities, sideEffects } = buildFeats(enriched, bg, baseAbilities, cls);
+  doc.feats = feats;
+  doc.abilities = abilities;
+
+  for (const se of sideEffects ?? []) {
+    if (se.savingThrows?.length) {
+      doc.savingThrowProficiencies = [
+        ...new Set([...(doc.savingThrowProficiencies ?? []), ...se.savingThrows]),
+      ];
+    }
+  }
+
+  doc.spellcasting = mergeGeneralFeatSpells(doc.spellcasting, doc.feats);
   ensureElfKeenSenses(doc);
   const expertise = buildExpertise(doc);
   if (expertise.length) doc.expertise = expertise;

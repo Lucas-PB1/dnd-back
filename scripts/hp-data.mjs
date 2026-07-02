@@ -43,10 +43,22 @@ export function toughFeatHpBonus(level, toughFeatCount = 1) {
   return toughFeatCount > 0 ? 2 * level * toughFeatCount : 0;
 }
 
+/** Bônus fixo da Dádiva da Fortitude (+40 PV máx). */
+export function boonFortitudeHpBonus(featIds = []) {
+  const count = featIds.filter((id) => id === "boon-of-fortitude").length;
+  return count * 40;
+}
+
 /** PV máximos da ficha incluindo espécie e talentos. */
 export function expectedMaxHpForCharacter(doc) {
   const base = expectedMaxHp(doc.classId, doc.level, doc.abilities.constituicao);
   if (base == null) return null;
-  const toughCount = doc.feats?.filter((f) => f.featId === "tough").length ?? 0;
-  return base + speciesHpBonus(doc.speciesId, doc.level) + toughFeatHpBonus(doc.level, toughCount);
+  const featIds = (doc.feats ?? []).map((f) => f.featId);
+  const toughCount = featIds.filter((id) => id === "tough").length;
+  return (
+    base +
+    speciesHpBonus(doc.speciesId, doc.level) +
+    toughFeatHpBonus(doc.level, toughCount) +
+    boonFortitudeHpBonus(featIds)
+  );
 }

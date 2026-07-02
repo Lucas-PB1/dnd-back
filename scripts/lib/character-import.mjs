@@ -110,15 +110,34 @@ export function buildCharacterRows(char) {
   }));
 
   const featMagicInitiate = [];
+  const featAsi = [];
+  const ASI_MODE_SQL = {
+    "single+2": "single_plus_2",
+    "double+1": "double_plus_1",
+    "single+1": "single_plus_1",
+  };
+
   const feats = (char.feats ?? []).map((f) => {
-    const { featId, source, magicInitiate, ...rest } = f;
+    const { featId, source, unlockLevel = 1, magicInitiate, asi, featSpells, castingAbilityId, resilient, ritualCaster, elementalAdept, ...rest } = f;
     if (magicInitiate) {
       featMagicInitiate.push({
         character_id: sqlStr(char.id),
         feat_id: sqlRef("phb_feat", featId),
         source: `${sqlStr(source)}::rpg.feat_source`,
+        unlock_level: sqlInt(unlockLevel),
         spell_list_class_id: sqlRef("phb_class", magicInitiate.spellListClassId),
         casting_ability_id: sqlRef("phb_ability", magicInitiate.castingAbilityId),
+      });
+    }
+    if (asi) {
+      featAsi.push({
+        character_id: sqlStr(char.id),
+        feat_id: sqlRef("phb_feat", featId),
+        source: `${sqlStr(source)}::rpg.feat_source`,
+        unlock_level: sqlInt(unlockLevel),
+        mode: `${sqlStr(ASI_MODE_SQL[asi.mode])}::rpg.feat_asi_mode`,
+        ability_id_1: sqlRef("phb_ability", asi.abilityIds[0]),
+        ability_id_2: asi.abilityIds[1] ? sqlRef("phb_ability", asi.abilityIds[1]) : "NULL",
       });
     }
     if (Object.keys(rest).length) {
@@ -128,6 +147,7 @@ export function buildCharacterRows(char) {
       character_id: sqlStr(char.id),
       feat_id: sqlRef("phb_feat", featId),
       source: `${sqlStr(source)}::rpg.feat_source`,
+      unlock_level: sqlInt(unlockLevel),
     };
   });
 
@@ -280,6 +300,7 @@ export function buildCharacterRows(char) {
     saves,
     feats,
     featMagicInitiate,
+    featAsi,
     equipment,
     masteries,
     expertise,

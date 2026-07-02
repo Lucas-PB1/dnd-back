@@ -3,6 +3,15 @@
  * Chaves de nível = nível de classe em que a magia é desbloqueada.
  */
 export const SUBCLASS_SPELLS = {
+  "cleric-life": {
+    preparedSpellSourceKey: "life-domain",
+    preparedSpellsByLevel: {
+      "3": ["auxilio", "bencao", "curar-ferimentos", "restauracao-menor"],
+      "5": ["palavra-curativa-em-massa", "revivificar"],
+      "7": ["aura-de-vida", "protecao-contra-a-morte"],
+      "9": ["curar-ferimentos-em-massa", "restauracao-maior"],
+    },
+  },
   "cleric-light": {
     preparedSpellSourceKey: "light-domain",
     preparedSpellsByLevel: {

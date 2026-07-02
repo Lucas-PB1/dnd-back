@@ -71,6 +71,7 @@ TRUNCATE TABLE
   rpg.player_character_expertise,
   rpg.player_character_weapon_mastery,
   rpg.player_character_equipment,
+  rpg.player_character_feat_asi,
   rpg.player_character_feat_magic_initiate,
   rpg.player_character_feat,
   rpg.player_character_saving_throw,
@@ -88,6 +89,7 @@ const all = {
   skills: [],
   saves: [],
   feats: [],
+  featAsi: [],
   featMagicInitiate: [],
   equipment: [],
   masteries: [],
@@ -109,6 +111,7 @@ for (const char of characters) {
   all.skills.push(...rows.skills);
   all.saves.push(...rows.saves);
   all.feats.push(...rows.feats);
+  all.featAsi.push(...rows.featAsi);
   all.featMagicInitiate.push(...rows.featMagicInitiate);
   all.equipment.push(...rows.equipment);
   all.masteries.push(...rows.masteries);
@@ -177,14 +180,23 @@ if (all.saves.length) {
 }
 if (all.feats.length) {
   lines.push(
-    batchInsert("rpg.player_character_feat", ["character_id", "feat_id", "source"], all.feats)
+    batchInsert("rpg.player_character_feat", ["character_id", "feat_id", "source", "unlock_level"], all.feats)
+  );
+}
+if (all.featAsi.length) {
+  lines.push(
+    batchInsert(
+      "rpg.player_character_feat_asi",
+      ["character_id", "feat_id", "source", "unlock_level", "mode", "ability_id_1", "ability_id_2"],
+      all.featAsi
+    )
   );
 }
 if (all.featMagicInitiate.length) {
   lines.push(
     batchInsert(
       "rpg.player_character_feat_magic_initiate",
-      ["character_id", "feat_id", "source", "spell_list_class_id", "casting_ability_id"],
+      ["character_id", "feat_id", "source", "unlock_level", "spell_list_class_id", "casting_ability_id"],
       all.featMagicInitiate
     )
   );
