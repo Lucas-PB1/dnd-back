@@ -4,7 +4,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { applyGeneralFeat, tryPickGeneralFeat } from "./general-feat-mechanics-data.mjs";
+import { applyGeneralFeat, tryPickGeneralFeat, tryPickManualGeneralFeat } from "./general-feat-mechanics-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const phb = path.join(__dirname, "..", "data/phb");
@@ -84,6 +84,7 @@ export function buildClassProgressionFeats(classId, level, priority, seed, baseA
     classSavingThrows = [],
     classChoices = {},
     subclassId = null,
+    forcedGeneralFeatId = null,
   } = options;
   const feats = [];
   const sideEffects = [];
@@ -91,6 +92,7 @@ export function buildClassProgressionFeats(classId, level, priority, seed, baseA
   const existingFeats = [];
 
   for (const unlockLevel of asiUnlockLevels(classId, level)) {
+    const slotSeed = seed + unlockLevel;
     const pickCtx = {
       classId,
       level,
@@ -98,15 +100,21 @@ export function buildClassProgressionFeats(classId, level, priority, seed, baseA
       classChoices,
       classSavingThrows,
       unlockLevel,
-      seed: seed + unlockLevel,
+      seed: slotSeed,
       existingFeats,
       abilities,
     };
-    const generalId = tryPickGeneralFeat(pickCtx);
+    let generalId = forcedGeneralFeatId?.[unlockLevel] ?? null;
+    if (!generalId && slotSeed % 13 === 0) {
+      generalId = tryPickManualGeneralFeat(pickCtx);
+    }
+    if (!generalId && slotSeed % 9 === 0) {
+      generalId = tryPickGeneralFeat(pickCtx);
+    }
     if (generalId) {
       const applied = applyGeneralFeat(generalId, unlockLevel, abilities, priority, {
         classSavingThrows,
-        seed: seed + unlockLevel,
+        seed: slotSeed,
       });
       feats.push(applied.feat);
       abilities = applied.abilities;

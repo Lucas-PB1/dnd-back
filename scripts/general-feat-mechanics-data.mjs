@@ -235,7 +235,27 @@ export const GENERAL_FEAT_DEFS = {
   "inspiring-leader": {
     asiPool: ["sabedoria", "carisma"],
   },
+  observant: {
+    asiPool: ["inteligencia", "sabedoria"],
+  },
+  "keen-mind": {
+    asiFixed: "inteligencia",
+  },
+  "skill-expert": {
+    asiAny: true,
+  },
+  "weapon-master": {
+    asiPool: ["forca", "destreza"],
+  },
 };
+
+/** Talentos gerais escolhidos fora da rotação automática (~8% dos slots ASI). */
+export const MANUAL_GENERAL_FEAT_ROTATION = [
+  "observant",
+  "keen-mind",
+  "skill-expert",
+  "weapon-master",
+];
 
 const ALL_ABILITIES = ["forca", "destreza", "constituicao", "inteligencia", "sabedoria", "carisma"];
 
@@ -275,6 +295,16 @@ export function tryPickGeneralFeat(ctx) {
   return canTakeGeneralFeat(featId, ctx) ? featId : null;
 }
 
+/** Rotação manual — perícias, maestria extra, etc. (~8% dos slots). */
+export function tryPickManualGeneralFeat(ctx) {
+  const { seed } = ctx;
+  if (seed % 13 !== 0) return null;
+
+  const featId =
+    MANUAL_GENERAL_FEAT_ROTATION[Math.floor(seed / 13) % MANUAL_GENERAL_FEAT_ROTATION.length];
+  return canTakeGeneralFeat(featId, ctx) ? featId : null;
+}
+
 /**
  * Aplica um talento geral num slot de progressão (substitui ASI).
  * Retorna feat, abilities atualizados e efeitos colaterais.
@@ -297,6 +327,9 @@ export function applyGeneralFeat(featId, unlockLevel, abilities, priority, ctx) 
     feat.resilient = { abilityId };
   } else if (def.asiFixed) {
     asi = { mode: "single+1", abilityIds: [def.asiFixed] };
+  } else if (def.asiAny) {
+    const abilityId = pickFromPool(abilities, ALL_ABILITIES, seed);
+    asi = { mode: "single+1", abilityIds: [abilityId] };
   } else {
     const abilityId = pickFromPool(abilities, def.asiPool ?? priority, seed);
     asi = { mode: "single+1", abilityIds: [abilityId] };

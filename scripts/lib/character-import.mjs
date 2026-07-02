@@ -118,7 +118,7 @@ export function buildCharacterRows(char) {
   };
 
   const feats = (char.feats ?? []).map((f) => {
-    const { featId, source, unlockLevel = 1, magicInitiate, asi, featSpells, castingAbilityId, resilient, ritualCaster, elementalAdept, ...rest } = f;
+    const { featId, source, unlockLevel = 1, magicInitiate, asi, featSpells, castingAbilityId, resilient, ritualCaster, elementalAdept, featSkillChoice, skillExpert, ...rest } = f;
     if (magicInitiate) {
       featMagicInitiate.push({
         character_id: sqlStr(char.id),

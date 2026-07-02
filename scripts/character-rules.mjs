@@ -23,6 +23,12 @@ import {
   expectedGeneralFeatCantrips,
   expectedGeneralFeatPrepared,
 } from "./general-feat-mechanics-data.mjs";
+import {
+  applyFeatPassiveBenefits,
+  validateFeatSkillChoices,
+  validateShieldMaster,
+  validateToolProficiencies,
+} from "./feat-passive-benefits.mjs";
 import { checkFeatPrerequisites, proficiencyBonusAtLevel } from "./feat-prerequisites-data.mjs";
 import { sumAsiDeltas } from "./asi-mechanics.mjs";
 import {
@@ -229,6 +235,15 @@ export function buildExpertise(doc) {
   }
 
   for (const feat of doc.feats ?? []) {
+    if (feat.featId === "skill-expert" && feat.skillExpert?.expertiseSkillId) {
+      const skillId = feat.skillExpert.expertiseSkillId;
+      if (!taken.has(skillId)) {
+        expertise.push(skillId);
+        taken.add(skillId);
+      }
+      continue;
+    }
+
     const cfg = FEAT_EXPERTISE[feat.featId];
     if (!cfg) continue;
     grant(1, {
@@ -1228,6 +1243,9 @@ export function validateCharacterRules(doc) {
     validateExpertiseList,
     validateWeaponMasteryChoices,
     validateEquippedArmorTraining,
+    validateShieldMaster,
+    validateToolProficiencies,
+    validateFeatSkillChoices,
     validateArmorClass,
     validateFightingStyle,
     validateSkillProficiencies,

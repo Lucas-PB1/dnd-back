@@ -64,6 +64,10 @@ const GENERAL_FEAT_IDS = new Set([
   "actor",
   "chef",
   "inspiring-leader",
+  "observant",
+  "keen-mind",
+  "skill-expert",
+  "weapon-master",
 ]);
 
 function loadClassJson(classId) {

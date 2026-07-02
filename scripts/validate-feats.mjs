@@ -15,7 +15,12 @@ import {
   validateHp,
   validateMagicInitiate,
 } from "./character-rules.mjs";
-import { GENERAL_FEAT_ROTATION } from "./general-feat-mechanics-data.mjs";
+import {
+  validateFeatSkillChoices,
+  validateShieldMaster,
+  validateToolProficiencies,
+} from "./feat-passive-benefits.mjs";
+import { GENERAL_FEAT_ROTATION, MANUAL_GENERAL_FEAT_ROTATION } from "./general-feat-mechanics-data.mjs";
 import {
   allPhbFeatIds,
   catalogOnlyFeatIds,
@@ -63,6 +68,9 @@ const featValidators = [
   validateMagicInitiate,
   validateHp,
   validateExpertiseList,
+  validateFeatSkillChoices,
+  validateShieldMaster,
+  validateToolProficiencies,
 ];
 
 for (let i = 0; i < blueprints.length; i++) {
@@ -122,6 +130,16 @@ if (missingGeneral.length) {
   fail(`talentos gerais implementados sem ficha de teste: ${missingGeneral.join(", ")}`);
 } else {
   console.log(`  ✓ todos os ${GENERAL_FEAT_ROTATION.length} talentos gerais implementados aparecem em alguma ficha`);
+}
+
+const manualFeatSeen = new Set(
+  [...featCounts.entries()].filter(([id]) => MANUAL_GENERAL_FEAT_ROTATION.includes(id)).map(([id]) => id)
+);
+const missingManual = MANUAL_GENERAL_FEAT_ROTATION.filter((id) => !manualFeatSeen.has(id));
+if (missingManual.length) {
+  fail(`talentos gerais (rotação manual) sem ficha de teste: ${missingManual.join(", ")}`);
+} else {
+  console.log(`  ✓ todos os ${MANUAL_GENERAL_FEAT_ROTATION.length} talentos da rotação manual aparecem em alguma ficha`);
 }
 
 // —— PostgreSQL ——
