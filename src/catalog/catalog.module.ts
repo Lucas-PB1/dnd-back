@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CatalogLookupModule } from './catalog-lookup.module';
 import { ClassesModule } from './classes/classes.module';
+import { SubclassesModule } from './subclasses/subclasses.module';
 import { SpeciesModule } from './species/species.module';
 import { BackgroundsModule } from './backgrounds/backgrounds.module';
 import { SpellsModule } from './spells/spells.module';
@@ -14,6 +15,7 @@ import { ReferenceModule } from './reference/reference.module';
   imports: [
     CatalogLookupModule,
     ClassesModule,
+    SubclassesModule,
     SpeciesModule,
     BackgroundsModule,
     SpellsModule,

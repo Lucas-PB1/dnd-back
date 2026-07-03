@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { VPhbSubclass } from '../../../entities/views/v-phb-subclass.entity';
 import { CatalogLookupService } from '../../catalog-lookup.service';
 import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
-import { SubclassResponseDto } from '../dto/subclass-response.dto';
+import { SubclassResponseDto } from '../../subclasses/dto/subclass-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 
 @Injectable()

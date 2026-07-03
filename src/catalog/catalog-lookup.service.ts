@@ -46,6 +46,14 @@ export class CatalogLookupService {
     return row;
   }
 
+  async findSubclassOrFail(subclassSlug: string): Promise<VPhbSubclass> {
+    const row = await this.subclassesRepo.findOne({ where: { subclassSlug } });
+    if (!row) {
+      throw new NotFoundException(`Subclass '${subclassSlug}' not found`);
+    }
+    return row;
+  }
+
   async assertClassSlug(classSlug: string): Promise<void> {
     const exists = await this.classesRepo.findOne({ where: { classSlug } });
     if (!exists) {

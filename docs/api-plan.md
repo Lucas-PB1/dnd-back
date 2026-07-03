@@ -112,9 +112,9 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 | **species** | `GET /species/:slug/trait-choices` | `v_phb_species_trait_choices` | P2 | [x] |
 | **backgrounds** | `GET /backgrounds`, `GET /backgrounds/:slug` | `v_phb_background` | P0 | [x] |
 | **backgrounds** | `GET /backgrounds/:slug/equipment` | `v_phb_background_equipment` | P1 | [x] |
-| **subclasses** | `GET /subclasses/:slug` | `v_phb_subclass` | P1 | [ ] |
-| **subclasses** | `GET /subclasses/:slug/mechanics` | `v_phb_subclass_mechanics` | P2 | [ ] |
-| **subclasses** | `GET /subclasses/:slug/spells` | `v_phb_subclass_prepared_spell` | P2 | [ ] |
+| **subclasses** | `GET /subclasses/:slug` | `v_phb_subclass` | P1 | [x] |
+| **subclasses** | `GET /subclasses/:slug/mechanics` | `v_phb_subclass_mechanics` | P2 | [x] |
+| **subclasses** | `GET /subclasses/:slug/spells` | `v_phb_subclass_prepared_spell` | P2 | [x] |
 | **spells** | `GET /spells`, `GET /spells/:slug` | `v_phb_spell` | P1 | [x] |
 | **feats** | `GET /feats`, `GET /feats/:slug` | `v_phb_feat` | P2 | [x] |
 | **skills** | `GET /skills`, `GET /skills/:slug` | `phb_skill` + ability | P2 | [x] |

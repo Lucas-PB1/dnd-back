@@ -6,7 +6,7 @@ import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entit
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-choice.entity';
 import { ClassResponseDto } from './dto/class-response.dto';
-import { SubclassResponseDto } from './dto/subclass-response.dto';
+import { SubclassResponseDto } from '../subclasses/dto/subclass-response.dto';
 import { ClassSpellResponseDto } from './dto/class-spell-response.dto';
 import { ClassSpellSlotsResponseDto } from './dto/class-spell-slots-response.dto';
 import { ClassEquipmentResponseDto } from './dto/class-equipment-response.dto';

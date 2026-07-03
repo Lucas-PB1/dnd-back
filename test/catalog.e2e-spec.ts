@@ -69,6 +69,34 @@ describe('Catalog API (e2e)', () => {
         expect(res.body.path).toContain('/classes/invalid-slug');
       }));
 
+  it('GET /subclasses/champion', () =>
+    request(app.getHttpServer())
+      .get('/subclasses/champion')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.slug).toBe('champion');
+        expect(res.body.classSlug).toBe('fighter');
+      }));
+
+  it('GET /subclasses/invalid-slug returns 404', () =>
+    request(app.getHttpServer()).get('/subclasses/invalid-slug').expect(404));
+
+  it('GET /subclasses/champion/mechanics', () =>
+    request(app.getHttpServer())
+      .get('/subclasses/champion/mechanics')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBeGreaterThan(0);
+      }));
+
+  it('GET /subclasses/life/spells', () =>
+    request(app.getHttpServer())
+      .get('/subclasses/life/spells')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBeGreaterThan(0);
+      }));
+
   it('GET /species', () =>
     request(app.getHttpServer())
       .get('/species')
