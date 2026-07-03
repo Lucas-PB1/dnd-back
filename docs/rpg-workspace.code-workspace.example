@@ -1,0 +1,18 @@
+{
+  "folders": [
+    { "name": "rpg-api", "path": "rpg" },
+    { "name": "rpg-web", "path": "rpg-web" }
+  ],
+  "settings": {
+    "typescript.tsdk": "rpg-web/node_modules/typescript/lib",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "extensions": {
+    "recommendations": [
+      "dbaeumer.vscode-eslint",
+      "esbenp.prettier-vscode",
+      "bradlc.vscode-tailwindcss"
+    ]
+  }
+}

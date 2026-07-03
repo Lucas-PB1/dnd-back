@@ -13,7 +13,7 @@ Relacionados: [`api-plan.md`](api-plan.md) · [`game-advanced-plan.md`](game-adv
 | Repo | Papel |
 |------|-------|
 | **rpg** (este) | Postgres PHB + API NestJS + regras de ficha |
-| **rpg-web** (futuro) | Next.js — UI, wizard, ficha; **sem** duplicar regras PHB |
+| **rpg-web** (futuro) | Next.js — UI, wizard, ficha; **sem** duplicar regras PHB — ver [`rpg-web-plan.md`](rpg-web-plan.md) |
 
 ```mermaid
 flowchart LR
@@ -52,7 +52,7 @@ flowchart LR
 | Game — ficha PHB (API) | **100%** | CRUD + todas escolhas persistidas |
 | Game — domínio D&D | **~85%** | HP, PB, validações ficha; aggregate/VOs opcional |
 | Deploy API (Vercel) | — | Responsabilidade do time (fora do escopo atual) |
-| App Next.js (`rpg-web`) | **0%** | — |
+| App Next.js (`rpg-web`) | **0%** (plano ✅) | [`rpg-web-plan.md`](rpg-web-plan.md) |
 | Prod end-to-end | **0%** | — |
 
 **Última revisão:** 2026-07-03 — ficha PHB completa na API (Fase 4); RLS Supabase
@@ -69,7 +69,7 @@ flowchart LR
 | Regras D&D (HP, PB, validação) | **API** (`game/domain/`) | Client não recalcula |
 
 **Hoje:** compendium + **criador de ficha PHB completo** → viável via API.  
-Próximo passo natural: **Fase 5** (`rpg-web`).
+Próximo passo natural: **Fase 5** (`rpg-web`) — plano em [`rpg-web-plan.md`](rpg-web-plan.md).
 
 ---
 
@@ -137,7 +137,9 @@ Migrations: `090_player/P002`–`P004`. Validação: `CharacterSheetValidator`.
 
 ## Fase 5 — App Next.js (`rpg-web`)
 
-Repo separado. Skill: `.cursor/skills/api-consumer-next/`.
+**Plano mestre:** [`rpg-web-plan.md`](rpg-web-plan.md) — stack, UX/UI, skills Cursor, fases A–E, workspace multi-root.
+
+Repo separado (pasta irmã). Skill API: `.cursor/skills/api-consumer-next/` · Skills front: criar em `rpg-web/.cursor/skills/` (§8 do plano).
 
 ### 5.1 Setup
 
@@ -227,3 +229,4 @@ Repo separado. Skill: `.cursor/skills/api-consumer-next/`.
 | 2026-07-03 | Auth JWKS; CRUD fichas básico; HP/PB domain |
 | 2026-07-03 | Supabase remoto com schema `rpg` + seeds; scripts `db:*` |
 | 2026-07-03 | Ficha PHB completa: species, subclass options, feats, spells, equipment, languages, RLS |
+| 2026-07-03 | Game 7A–7C (level-up, inventário, mesa); modularização BC Game; plano `rpg-web` |

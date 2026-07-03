@@ -16,7 +16,7 @@ Documento de referência para rules, skills e implementação.
 | **API** | NestJS na Vercel | Serverless, zero-config Nest, escala por request |
 | **ORM** | TypeORM | Mapeamento `rpg.phb_*`, views, `synchronize: false` |
 | **Auth** | Supabase Auth | JWT; RLS no Postgres para dados de jogador |
-| **Frontend** | Next.js em **repo separado** | Este repo = SQL + API apenas |
+| **Frontend** | Next.js em **repo separado** [`rpg-web`](rpg-web-plan.md) | Este repo = SQL + API; plano UI em [`rpg-web-plan.md`](rpg-web-plan.md) |
 
 ## Diagrama
 
@@ -47,7 +47,7 @@ flowchart LR
 | Repo | Conteúdo |
 |------|----------|
 | **rpg** (este) | `database/`, `src/` Nest, `.cursor/` |
-| **rpg-web** (futuro) | Next.js, consome API, Supabase Auth client-side |
+| **rpg-web** (futuro) | Next.js — ver [`rpg-web-plan.md`](rpg-web-plan.md) |
 
 ## Conexões
 
