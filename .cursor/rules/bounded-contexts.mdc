@@ -1,0 +1,22 @@
+---
+description: Bounded contexts Catalog, Identity, Game — dependências e limites
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# Bounded contexts
+
+Doc: [`docs/architecture.md`](../../docs/architecture.md)
+
+| BC | Pasta | Responsabilidade |
+|----|-------|------------------|
+| **Catalog** | `src/catalog/` | PHB read-only, views |
+| **Identity** | `src/identity/` | JWT guards, Supabase Auth |
+| **Game** | `src/game/` | Fichas, campanhas (futuro) |
+
+## Limites
+
+- `catalog` **não** importa `game`
+- Regras de ficha **só** em `game/domain/`
+- Catálogo referenciado por **slug** na API; **id** só persistência interna
+- DDD tático (agregados, VOs) **apenas** no BC Game

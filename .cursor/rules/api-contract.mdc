@@ -1,0 +1,16 @@
+---
+description: Contrato API para frontend Next.js separado — CORS, slugs, JSON
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# Contrato API (frontend externo)
+
+Skill: `api-consumer-next`
+
+- Frontend em **repo separado** — este repo não contém Next.js
+- CORS: configurar `FRONTEND_URL` no Nest
+- URLs públicas usam **slug** (`/classes/fighter`), nunca id
+- Respostas JSON camelCase; erros `{ message, statusCode }`
+- Auth: frontend envia JWT Supabase; API valida (fase futura)
+- OpenAPI/Swagger opcional depois — manter DTOs alinhados

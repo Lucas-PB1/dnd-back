@@ -20,7 +20,9 @@ rpg/
 │   ├── migrations/          # 84 arquivos granulares
 │   └── seeds/               # 66 arquivos (PHB + subclass)
 ├── docs/
-│   └── data-model.md        # clusters, FKs, views
+│   ├── data-model.md        # clusters, FKs, views
+│   ├── infrastructure.md    # stack Supabase + Vercel
+│   └── architecture.md      # bounded contexts, CQRS, DDD
 ├── src/                     # NestJS API
 ├── .cursor/
 │   ├── rules/               # regras por contexto
@@ -52,6 +54,9 @@ Variáveis (`.env`):
 
 ```
 DATABASE_URL=postgresql://...:6543/postgres?pgbouncer=true
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_JWT_SECRET=
+FRONTEND_URL=http://localhost:3001
 PORT=3000
 ```
 
@@ -60,22 +65,28 @@ Endpoints piloto:
 - `GET /classes` — lista classes (`rpg.v_phb_class`)
 - `GET /classes/:slug` — detalhe por slug
 
-## Stack
+## Stack (decisão de infra)
+
+Documento completo: [`docs/infrastructure.md`](docs/infrastructure.md) · Arquitetura: [`docs/architecture.md`](docs/architecture.md)
 
 | Camada | Tecnologia |
 |--------|------------|
 | Dados | PostgreSQL 15+, schema `rpg` |
-| Hosting DB | Supabase (transaction pooler, porta 6543) |
-| API | NestJS + TypeORM |
-| Deploy API | Vercel (zero-config Nest, Fluid compute) |
+| DB + Auth | **Supabase** (pooler 6543, Supabase Auth, RLS futuro) |
+| API | NestJS + TypeORM — **modular monolith**, 3 bounded contexts |
+| Padrão | CQRS leve (views = read); DDD tático só em `game/` |
+| Deploy API | **Vercel** (serverless Nest) |
+| Frontend | **Next.js em repo separado** |
 
 ## Cursor — rules e skills
 
 | Tipo | Onde | Uso |
 |------|------|-----|
-| Rules | `.cursor/rules/*.mdc` | Padrões SQL, Nest, TypeORM, Vercel |
+| Rules | `.cursor/rules/*.mdc` | SQL, Nest, Supabase, Auth, Vercel, contrato API |
 | Skills | `.cursor/skills/*/SKILL.md` | Workflows detalhados |
 | Referências | `.cursor/skills/*/references/` | Specs por tema |
+| Infra | [`docs/infrastructure.md`](docs/infrastructure.md) | Stack Supabase + Vercel |
+| Arquitetura | [`docs/architecture.md`](docs/architecture.md) | BC, CQRS, DDD |
 
 Orquestrador: `.cursor/rules/00-orchestrator.mdc`
 

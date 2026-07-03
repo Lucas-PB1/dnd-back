@@ -1,0 +1,16 @@
+---
+description: BC Game — DDD tático, agregados e CQRS commands (fase futura)
+globs: src/game/**/*.ts
+alwaysApply: false
+---
+
+# Game domain (futuro)
+
+Skill: `cqrs-catalog-vs-game` · Doc: [`docs/architecture.md`](../../docs/architecture.md)
+
+- Agregado raiz: ex. `Character` — invariantes (nível, HP, atributos)
+- VOs: `Level`, `AbilityScores`, `HitPoints` — imutáveis, validação no construtor
+- Referência PHB: slug via `CatalogLookupService` — **não** duplicar tabelas phb_*
+- Commands: POST/PATCH em `application/`; queries podem usar projeções
+- `@UseGuards(SupabaseAuthGuard)` + RLS `auth.uid()`
+- Migrations TypeORM **separadas** do catálogo em `database/`

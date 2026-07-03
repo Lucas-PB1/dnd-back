@@ -6,8 +6,8 @@ alwaysApply: false
 
 # NestJS
 
-- Módulos por domínio: `catalog/classes`, `catalog/spells`, …
-- Controllers finos; lógica em services
-- DTOs com `class-validator`; respostas tipadas
-- Catálogo read-only: sem POST/PATCH/DELETE em `phb_*` sem aprovação
+- **BC Catalog:** `src/catalog/` — thin, read-only (rule `catalog-thin-layer`)
+- **BC Identity / Game:** `src/identity/`, `src/game/` — ver `docs/architecture.md`
+- Controllers finos; lógica em services (catalog) ou application handlers (game)
+- Catálogo: sem POST/PATCH/DELETE em `phb_*`
 - Config via `@nestjs/config`; `.env` nunca commitado
