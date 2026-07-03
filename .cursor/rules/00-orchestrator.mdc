@@ -1,0 +1,26 @@
+---
+description: Orquestra rules e skills do monorepo RPG (SQL + Nest + Vercel)
+alwaysApply: true
+---
+
+# Orquestrador RPG
+
+Monorepo: `database/` (catálogo SQL) + `src/` (NestJS read-only).
+
+## Roteamento
+
+| Contexto | Rules | Skills |
+|----------|-------|--------|
+| SQL / migrations / seeds | postgres-sql, supabase-sql, sql-clean-code, sql-oop-patterns, phb-data-model | postgres-apply-catalog, rpg-catalog-model |
+| Nest / TypeORM | nestjs-core, nestjs-typeorm, phb-data-model | typeorm-rpg-entities, nest-phb-api |
+| Deploy Vercel | nestjs-vercel, nestjs-core | nest-vercel-deploy |
+| Supabase / conexão | supabase-sql, nestjs-typeorm | supabase-connection |
+| Relações PHB | phb-data-model | rpg-catalog-model |
+
+## Princípios
+
+- `database/` é source of truth do catálogo; TypeORM `synchronize: false`
+- Novas tabelas runtime (ex. fichas) = migrations TypeORM separadas
+- API usa **slug** em URLs; catálogo `phb_*` é read-only
+- Responder em português; código segue idioma do arquivo existente
+- Skills: ler `SKILL.md` primeiro, depois `references/` relevante

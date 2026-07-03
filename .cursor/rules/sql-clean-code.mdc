@@ -1,0 +1,13 @@
+---
+description: SQL limpo — SOLID e DRY no catálogo
+globs: database/**/*.sql
+alwaysApply: false
+---
+
+# SQL Clean Code
+
+- **DRY:** reutilizar views; não duplicar joins
+- **SRP:** uma migration = uma tabela; um seed = uma tabela
+- **Naming:** `phb_<entidade>`, FKs `<entidade>_id`, junction `<a>_<b>`
+- Constraints CHECK e NOT NULL explícitos
+- Comentários só para regras de negócio não óbvias

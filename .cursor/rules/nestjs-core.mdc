@@ -1,0 +1,13 @@
+---
+description: Padrões NestJS — módulos, controllers, DTOs
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# NestJS
+
+- Módulos por domínio: `catalog/classes`, `catalog/spells`, …
+- Controllers finos; lógica em services
+- DTOs com `class-validator`; respostas tipadas
+- Catálogo read-only: sem POST/PATCH/DELETE em `phb_*` sem aprovação
+- Config via `@nestjs/config`; `.env` nunca commitado

@@ -1,0 +1,12 @@
+---
+description: Padrões OOP em SQL — herança, polimorfismo, composição
+globs: database/**/*.sql
+alwaysApply: false
+---
+
+# SQL OOP
+
+- **Herança:** `phb_item` → weapon/armor/tool (table-per-type)
+- **Polimorfismo:** `resource_scope`, `spell_source_origin`
+- **Encapsulamento:** views `v_phb_*` escondem joins
+- **Composição:** package → items (class/background starting)

@@ -1,0 +1,16 @@
+---
+description: Modelo de dados PHB — tabelas, FKs, slug vs id
+globs: database/**/*
+alwaysApply: false
+---
+
+# Modelo PHB
+
+63 tabelas `phb_*` no schema `rpg`. Ver `docs/data-model.md`.
+
+- **slug** em API/contratos; **id** em joins internos
+- Item base `phb_item`; subtipos weapon/armor/tool via `item_id` PK
+- FK composta: `phb_subclass(class_id, id)`
+- Polimorfismo: `phb_resource_definition` + `resource_scope`
+- Preferir views `v_phb_*` para queries de API
+- Catálogo read-only — seeds não são alterados pela app

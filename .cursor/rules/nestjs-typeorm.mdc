@@ -1,0 +1,13 @@
+---
+description: TypeORM — entities rpg.phb_*, views, Supabase pooler
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# TypeORM
+
+- `@Entity({ schema: 'rpg', name: 'phb_class' })`; colunas snake_case
+- `synchronize: false`; migrations TypeORM só para tabelas novas
+- Relations espelham FKs em `database/schema.sql`
+- Queries pesadas via `@ViewEntity` nas views `v_phb_*`
+- `DATABASE_URL` com Supabase pooler (6543); pool mínimo em serverless

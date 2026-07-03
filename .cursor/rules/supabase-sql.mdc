@@ -1,0 +1,13 @@
+---
+description: Supabase — pooler, RLS, extensões
+globs: database/**/*.sql,src/**/*
+alwaysApply: false
+---
+
+# Supabase
+
+- Postgres 15+; **transaction pooler** porta 6543 para TypeORM
+- `dev-reset.sql` só em dev — nunca em prod/staging
+- Habilitar `pg_trgm` no dashboard
+- RLS futuro: catálogo `phb_*` SELECT público; fichas com `auth.uid()`
+- `DATABASE_URL` e service role só no backend; nunca no client
