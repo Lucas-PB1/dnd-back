@@ -6,12 +6,14 @@ import { VPhbSubclass } from '../../entities/views/v-phb-subclass.entity';
 import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
 import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
+import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-choice.entity';
 import { PaginatedResponseDto, paginate } from '../../common/dto/pagination.dto';
 import { ClassResponseDto } from './dto/class-response.dto';
 import { SubclassResponseDto } from './dto/subclass-response.dto';
 import { ClassSpellResponseDto } from './dto/class-spell-response.dto';
 import { ClassSpellSlotsResponseDto } from './dto/class-spell-slots-response.dto';
 import { ClassEquipmentResponseDto } from './dto/class-equipment-response.dto';
+import { ClassSkillResponseDto } from './dto/class-skill-response.dto';
 
 @Injectable()
 export class ClassesService {
@@ -26,6 +28,8 @@ export class ClassesService {
     private readonly spellSlotsRepo: Repository<VClassSpellSlots>,
     @InjectRepository(VPhbClassEquipment)
     private readonly equipmentRepo: Repository<VPhbClassEquipment>,
+    @InjectRepository(VPhbClassSkillChoice)
+    private readonly skillsRepo: Repository<VPhbClassSkillChoice>,
   ) {}
 
   async findAll(page = 1, limit = 20): Promise<PaginatedResponseDto<ClassResponseDto>> {
@@ -108,6 +112,23 @@ export class ClassesService {
     return paginate(rows.map((row) => this.toEquipmentDto(row)), page, limit);
   }
 
+  async findSkillsByClassSlug(
+    classSlug: string,
+    page = 1,
+    limit = 20,
+  ): Promise<PaginatedResponseDto<ClassSkillResponseDto>> {
+    await this.assertClassExists(classSlug);
+
+    const rows = await this.skillsRepo.find({
+      where: { classSlug },
+      order: { skillName: 'ASC' },
+    });
+    if (rows.length === 0) {
+      throw new NotFoundException(`Class '${classSlug}' has no skill choices`);
+    }
+    return paginate(rows.map((row) => this.toClassSkillDto(row)), page, limit);
+  }
+
   private async assertClassExists(classSlug: string): Promise<void> {
     const exists = await this.classesRepo.findOne({ where: { classSlug } });
     if (!exists) {
@@ -176,6 +197,15 @@ export class ClassesService {
       quantity: row.quantity,
       choiceText: row.choiceText,
       goldAmount: row.goldAmount,
+    };
+  }
+
+  private toClassSkillDto(row: VPhbClassSkillChoice): ClassSkillResponseDto {
+    return {
+      slug: row.skillSlug,
+      name: row.skillName,
+      skillChoiceCount: row.skillChoiceCount,
+      skillChoiceFrom: row.skillChoiceFrom,
     };
   }
 }

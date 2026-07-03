@@ -61,6 +61,15 @@ export class ClassesController {
     return this.classesService.findEquipmentByClassSlug(slug, query.page, query.limit);
   }
 
+  @Get(':slug/skills')
+  @ApiOperation({ summary: 'Skill pool available to a class (paginated)' })
+  @ApiParam({ name: 'slug', example: 'fighter' })
+  @ApiOkResponse({ description: 'Paginated class skill list' })
+  @ApiNotFoundResponse({ description: 'Class not found or no skill pool' })
+  findSkills(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
+    return this.classesService.findSkillsByClassSlug(slug, query.page, query.limit);
+  }
+
   @Get(':slug')
   @ApiOperation({ summary: 'Get class by slug' })
   @ApiParam({ name: 'slug', example: 'fighter' })

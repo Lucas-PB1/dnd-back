@@ -8,6 +8,7 @@ import { VPhbSubclass } from '../../entities/views/v-phb-subclass.entity';
 import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
 import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
+import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-choice.entity';
 
 describe('ClassesService', () => {
   let service: ClassesService;
@@ -16,6 +17,7 @@ describe('ClassesService', () => {
   let spellsByClassRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'find'>>;
   let spellSlotsRepo: jest.Mocked<Pick<Repository<VClassSpellSlots>, 'find'>>;
   let equipmentRepo: jest.Mocked<Pick<Repository<VPhbClassEquipment>, 'find'>>;
+  let skillsRepo: jest.Mocked<Pick<Repository<VPhbClassSkillChoice>, 'find'>>;
 
   const sample: VPhbClass = {
     classSlug: 'fighter',
@@ -83,6 +85,7 @@ describe('ClassesService', () => {
     spellsByClassRepo = { find: jest.fn() };
     spellSlotsRepo = { find: jest.fn() };
     equipmentRepo = { find: jest.fn() };
+    skillsRepo = { find: jest.fn() };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ClassesService,
@@ -91,6 +94,7 @@ describe('ClassesService', () => {
         { provide: getRepositoryToken(VSpellByClass), useValue: spellsByClassRepo },
         { provide: getRepositoryToken(VClassSpellSlots), useValue: spellSlotsRepo },
         { provide: getRepositoryToken(VPhbClassEquipment), useValue: equipmentRepo },
+        { provide: getRepositoryToken(VPhbClassSkillChoice), useValue: skillsRepo },
       ],
     }).compile();
     service = module.get(ClassesService);
@@ -143,5 +147,20 @@ describe('ClassesService', () => {
     equipmentRepo.find.mockResolvedValue([sampleEquipment]);
     const result = await service.findEquipmentByClassSlug('fighter', 1, 20);
     expect(result.data[0].itemSlug).toBe('longsword');
+  });
+
+  it('findSkillsByClassSlug returns skills', async () => {
+    classesRepo.findOne.mockResolvedValue(sample);
+    skillsRepo.find.mockResolvedValue([
+      {
+        classSlug: 'fighter',
+        skillChoiceCount: 2,
+        skillChoiceFrom: null,
+        skillSlug: 'athletics',
+        skillName: 'Atletismo',
+      },
+    ]);
+    const result = await service.findSkillsByClassSlug('fighter', 1, 20);
+    expect(result.data[0].slug).toBe('athletics');
   });
 });

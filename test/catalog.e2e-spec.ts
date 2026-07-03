@@ -126,6 +126,50 @@ describe('Catalog API (e2e)', () => {
         expect(res.body.data.length).toBeGreaterThan(0);
       }));
 
+  it('GET /classes/fighter/skills', () =>
+    request(app.getHttpServer())
+      .get('/classes/fighter/skills')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBeGreaterThan(0);
+      }));
+
+  it('GET /feats/alert', () =>
+    request(app.getHttpServer()).get('/feats/alert').expect(200));
+
+  it('GET /skills/athletics', () =>
+    request(app.getHttpServer()).get('/skills/athletics').expect(200));
+
+  it('GET /abilities', () =>
+    request(app.getHttpServer())
+      .get('/abilities')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBe(6);
+      }));
+
+  it('GET /weapons/longsword', () =>
+    request(app.getHttpServer()).get('/weapons/longsword').expect(200));
+
+  it('GET /armor/leather', () =>
+    request(app.getHttpServer()).get('/armor/leather').expect(200));
+
+  it('GET /species/dwarf/traits', () =>
+    request(app.getHttpServer())
+      .get('/species/dwarf/traits')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBeGreaterThan(0);
+      }));
+
+  it('GET /species/elf/trait-choices', () =>
+    request(app.getHttpServer())
+      .get('/species/elf/trait-choices')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.data.length).toBeGreaterThan(0);
+      }));
+
   it('GET /backgrounds/invalid returns 404', () =>
     request(app.getHttpServer()).get('/backgrounds/invalid').expect(404));
 });
