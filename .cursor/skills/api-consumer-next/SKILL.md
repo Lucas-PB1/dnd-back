@@ -1,12 +1,19 @@
 ---
 name: api-consumer-next
-description: Contrato entre API Nest (repo rpg) e frontend Next.js (rpg-web) — CORS, slugs, JWT, env, plano mestre. Use ao integrar front, configurar CORS/FRONTEND_URL ou documentar endpoints.
+description: Contrato entre API Nest (repo dnd-api) e frontend Next.js (dnd-front) — CORS, slugs, JWT, env, plano mestre. Use ao integrar front, configurar CORS/FRONTEND_URL ou documentar endpoints.
 ---
 
-# API ↔ Next.js (`rpg-web`)
+# API ↔ Next.js (`dnd-front`)
 
-- **Plano mestre frontend:** [`docs/rpg-web-plan.md`](../../../docs/rpg-web-plan.md) (stack, UX, skills, fases)
+- **Plano mestre frontend:** [`docs/rpg-web-plan.md`](../../../docs/rpg-web-plan.md)
 - **Infra:** [`docs/infrastructure.md`](../../../docs/infrastructure.md)
+
+## Repos
+
+| Nome | Papel |
+|------|-------|
+| **dnd-api** | Este repo — Nest + Postgres |
+| **dnd-front** | Next.js — pasta irmã |
 
 ## Referências
 

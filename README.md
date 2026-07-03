@@ -1,6 +1,8 @@
-# RPG — Catálogo PHB 2024
+# dnd-api — Catálogo PHB 2024 + API NestJS
 
-Massa de dados PostgreSQL do **Player's Handbook 2024 (PT-BR)** + API NestJS read-only.
+Massa de dados PostgreSQL do **Player's Handbook 2024 (PT-BR)** + API NestJS.
+
+Frontend irmão: **dnd-front** (Next.js) — ver [`docs/rpg-web-plan.md`](docs/rpg-web-plan.md).
 
 ## O que é
 
@@ -13,7 +15,7 @@ Contagens: [`database/seed-manifest.json`](database/seed-manifest.json)
 ## Estrutura
 
 ```
-rpg/
+dnd-api/                     # este repo (renomear pasta `rpg` quando puder)
 ├── database/
 │   ├── schema.sql           # DDL completo
 │   ├── dev-reset.sql        # DROP SCHEMA (só dev)

@@ -1,8 +1,8 @@
 # Roadmap — produto e entrega
 
-Documento de acompanhamento do caminho até um **app consumidor 100% baseado na API** (repo `rpg-web` futuro).
+Documento de acompanhamento do caminho até um **app consumidor 100% baseado na API** (repo **dnd-front**).
 
-Relacionados: [`api-plan.md`](api-plan.md) · [`game-advanced-plan.md`](game-advanced-plan.md) · [`infrastructure.md`](infrastructure.md) · [`architecture.md`](architecture.md)
+Relacionados: [`api-plan.md`](api-plan.md) · [`game-advanced-plan.md`](game-advanced-plan.md) · [`infrastructure.md`](infrastructure.md) · [`architecture.md`](architecture.md) · [`rpg-web-plan.md`](rpg-web-plan.md) (plano **dnd-front**)
 
 **Como usar:** marque `[x]` ao concluir. Atualize a seção **Status geral** ao fechar cada marco.
 
@@ -12,17 +12,17 @@ Relacionados: [`api-plan.md`](api-plan.md) · [`game-advanced-plan.md`](game-adv
 
 | Repo | Papel |
 |------|-------|
-| **rpg** (este) | Postgres PHB + API NestJS + regras de ficha |
-| **rpg-web** (futuro) | Next.js — UI, wizard, ficha; **sem** duplicar regras PHB — ver [`rpg-web-plan.md`](rpg-web-plan.md) |
+| **dnd-api** (este) | Postgres PHB + API NestJS + regras de ficha |
+| **dnd-front** | Next.js — UI, wizard, ficha; **sem** duplicar regras PHB |
 
 ```mermaid
 flowchart LR
-  subgraph web [rpg-web]
+  subgraph web [dnd-front]
     UI[Next.js]
     AuthClient[Supabase Auth client]
   end
 
-  subgraph api [rpg API]
+  subgraph api [dnd-api]
     Nest[NestJS]
   end
 
@@ -52,7 +52,7 @@ flowchart LR
 | Game — ficha PHB (API) | **100%** | CRUD + todas escolhas persistidas |
 | Game — domínio D&D | **~85%** | HP, PB, validações ficha; aggregate/VOs opcional |
 | Deploy API (Vercel) | — | Responsabilidade do time (fora do escopo atual) |
-| App Next.js (`rpg-web`) | **0%** (plano ✅) | [`rpg-web-plan.md`](rpg-web-plan.md) |
+| **dnd-front** | **~15%** bootstrap | [`rpg-web-plan.md`](rpg-web-plan.md) · pasta irmã `dnd` → renomear **`dnd-front`** |
 | Prod end-to-end | **0%** | — |
 
 **Última revisão:** 2026-07-03 — ficha PHB completa na API (Fase 4); RLS Supabase
@@ -69,7 +69,7 @@ flowchart LR
 | Regras D&D (HP, PB, validação) | **API** (`game/domain/`) | Client não recalcula |
 
 **Hoje:** compendium + **criador de ficha PHB completo** → viável via API.  
-Próximo passo natural: **Fase 5** (`rpg-web`) — plano em [`rpg-web-plan.md`](rpg-web-plan.md).
+Próximo passo natural: **Fase 5** (**dnd-front**) — plano em [`rpg-web-plan.md`](rpg-web-plan.md).
 
 ---
 
@@ -137,9 +137,9 @@ Migrations: `090_player/P002`–`P004`. Validação: `CharacterSheetValidator`.
 
 ## Fase 5 — App Next.js (`rpg-web`)
 
-**Plano mestre:** [`rpg-web-plan.md`](rpg-web-plan.md) — stack, UX/UI, skills Cursor, fases A–E, workspace multi-root.
+**Plano mestre:** [`rpg-web-plan.md`](rpg-web-plan.md) — stack, UX/UI, skills, fases A–E.
 
-Repo separado (pasta irmã). Skill API: `.cursor/skills/api-consumer-next/` · Skills front: criar em `rpg-web/.cursor/skills/` (§8 do plano).
+Repo **dnd-front** (pasta irmã; renomear `dnd/` → `dnd-front/`). Skills front em `dnd-front/.cursor/skills/`.
 
 ### 5.1 Setup
 
