@@ -73,6 +73,12 @@ Endpoints (catálogo P0):
 | `GET /classes` | Lista classes (paginado: `{ data, meta }`) |
 | `GET /classes/:slug` | Detalhe por slug (ex.: `fighter`) |
 | `GET /classes/:slug/subclasses` | Subclasses da classe (paginado) |
+| `GET /classes/:slug/spells` | Magias da classe (`?maxLevel=0–9`) |
+| `GET /classes/:slug/spell-slots` | Tabela de slots por nível |
+| `GET /classes/:slug/equipment` | Equipamento inicial da classe |
+| `GET /spells` | Lista de magias (paginado, 391+) |
+| `GET /spells/:slug` | Detalhe da magia (ex.: `alarme`) |
+| `GET /backgrounds/:slug/equipment` | Equipamento inicial do antecedente |
 | `GET /species` | Lista espécies (paginado) |
 | `GET /species/:slug` | Detalhe por slug (ex.: `dwarf`) |
 | `GET /backgrounds` | Lista antecedentes (paginado) |

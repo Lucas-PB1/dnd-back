@@ -55,11 +55,11 @@ flowchart LR
 | P0 | `GET /species`, `/species/:slug` | Escolha de espécie | ✅ feito |
 | P0 | `GET /backgrounds`, `/backgrounds/:slug` | Antecedente | ✅ feito |
 | P0 | `GET /classes/:slug/subclasses` | Subclasse | ✅ feito |
-| P1 | `GET /spells`, `/spells/:slug` | Grimoire / detalhe |
-| P1 | `GET /classes/:slug/spells?maxLevel=` | Lista de magias por classe |
-| P1 | `GET /classes/:slug/spell-slots` | Tabela de slots |
-| P1 | `GET /backgrounds/:slug/equipment` | Equipamento inicial |
-| P1 | `GET /classes/:slug/equipment` | Equipamento inicial |
+| P1 | `GET /spells`, `/spells/:slug` | Grimoire / detalhe | ✅ feito |
+| P1 | `GET /classes/:slug/spells?maxLevel=` | Lista de magias por classe | ✅ feito |
+| P1 | `GET /classes/:slug/spell-slots` | Tabela de slots | ✅ feito |
+| P1 | `GET /backgrounds/:slug/equipment` | Equipamento inicial | ✅ feito |
+| P1 | `GET /classes/:slug/equipment` | Equipamento inicial | ✅ feito |
 | P2 | `GET /feats`, `/feats/:slug` | Talentos |
 | P2 | `GET /skills`, `/abilities` | Referência UI |
 | P2 | `GET /weapons`, `/armor` | Equipamento |
@@ -104,18 +104,18 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 |--------|-------|--------------|------------|--------|
 | **classes** | `GET /classes`, `GET /classes/:slug` | `v_phb_class` | P0 | [x] |
 | **classes** | `GET /classes/:slug/subclasses` | `v_phb_subclass` | P0 | [x] |
-| **classes** | `GET /classes/:slug/spell-slots` | `v_class_spell_slots` | P1 | [ ] |
-| **classes** | `GET /classes/:slug/spells` | `v_spell_by_class` | P1 | [ ] |
+| **classes** | `GET /classes/:slug/spell-slots` | `v_class_spell_slots` | P1 | [x] |
+| **classes** | `GET /classes/:slug/spells` | `v_spell_by_class` | P1 | [x] |
 | **classes** | `GET /classes/:slug/skills` | `v_phb_class_skill_choice` | P2 | [ ] |
-| **classes** | `GET /classes/:slug/equipment` | `v_phb_class_equipment` | P1 | [ ] |
+| **classes** | `GET /classes/:slug/equipment` | `v_phb_class_equipment` | P1 | [x] |
 | **species** | `GET /species`, `GET /species/:slug` | `phb_species` + traits view | P0 | [x] |
 | **species** | `GET /species/:slug/trait-choices` | `v_phb_species_trait_choices` | P2 | [ ] |
 | **backgrounds** | `GET /backgrounds`, `GET /backgrounds/:slug` | `v_phb_background` | P0 | [x] |
-| **backgrounds** | `GET /backgrounds/:slug/equipment` | `v_phb_background_equipment` | P1 | [ ] |
+| **backgrounds** | `GET /backgrounds/:slug/equipment` | `v_phb_background_equipment` | P1 | [x] |
 | **subclasses** | `GET /subclasses/:slug` | `v_phb_subclass` | P1 | [ ] |
 | **subclasses** | `GET /subclasses/:slug/mechanics` | `v_phb_subclass_mechanics` | P2 | [ ] |
 | **subclasses** | `GET /subclasses/:slug/spells` | `v_phb_subclass_prepared_spell` | P2 | [ ] |
-| **spells** | `GET /spells`, `GET /spells/:slug` | `v_phb_spell` | P1 | [ ] |
+| **spells** | `GET /spells`, `GET /spells/:slug` | `v_phb_spell` | P1 | [x] |
 | **feats** | `GET /feats`, `GET /feats/:slug` | `v_phb_feat` | P2 | [ ] |
 | **skills** | `GET /skills`, `GET /skills/:slug` | `phb_skill` + ability | P2 | [ ] |
 | **abilities** | `GET /abilities` | `phb_ability` | P2 | [ ] |
@@ -200,7 +200,7 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 - [x] `@ApiTags('catalog-*')` por controller
 - [x] `@ApiProperty()` em todos os response DTOs (P0)
 - [x] `@ApiParam({ name: 'slug' })` em rotas `:slug`
-- [~] `@ApiQuery` para paginação e filtros (`maxLevel`, `page`, `limit`)
+- [x] `@ApiQuery` para paginação e filtros (`maxLevel`, `page`, `limit`)
 - [x] `@ApiOkResponse({ type: *ResponseDto })`
 - [x] `@ApiNotFoundResponse()` nos GET `:slug`
 - [ ] Export OpenAPI JSON em CI (opcional) → `openapi.json`
@@ -318,10 +318,11 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 | Área | Progresso |
 |------|-----------|
 | Infra API (errors, swagger, health) | **100%** (fase 1) |
-| Catálogo P0 | **100%** (classes, species, backgrounds, subclasses) |
-| Catálogo P1–P2 | 0% |
-| Testes | **~45%** (unit P0 + E2E consolidado; CI/cov pendente) |
+| Catálogo P0 | **100%** |
+| Catálogo P1 | **100%** (spells, spell-slots, equipment nested) |
+| Catálogo P2 | 0% |
+| Testes | **~50%** (unit + E2E P0/P1; CI/cov pendente) |
 | Auth | 0% (deferido) |
 | Game | 0% |
 
-**Última revisão:** 2026-07-03 — fase 2 P0 completa (subclasses)
+**Última revisão:** 2026-07-03 — fase 3 P1 completa (spells + nested)

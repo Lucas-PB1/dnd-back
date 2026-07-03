@@ -83,6 +83,49 @@ describe('Catalog API (e2e)', () => {
   it('GET /backgrounds/acolyte', () =>
     request(app.getHttpServer()).get('/backgrounds/acolyte').expect(200));
 
+  it('GET /backgrounds/acolyte/equipment', () =>
+    request(app.getHttpServer())
+      .get('/backgrounds/acolyte/equipment')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.data.length).toBeGreaterThan(0);
+      }));
+
+  it('GET /spells returns paginated list', () =>
+    request(app.getHttpServer())
+      .get('/spells')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBeGreaterThanOrEqual(391);
+      }));
+
+  it('GET /spells/alarme', () =>
+    request(app.getHttpServer()).get('/spells/alarme').expect(200));
+
+  it('GET /classes/wizard/spells?maxLevel=1', () =>
+    request(app.getHttpServer())
+      .get('/classes/wizard/spells?maxLevel=1')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.data.every((s: { level: number }) => s.level <= 1)).toBe(true);
+      }));
+
+  it('GET /classes/wizard/spell-slots', () =>
+    request(app.getHttpServer())
+      .get('/classes/wizard/spell-slots')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBeGreaterThanOrEqual(20);
+      }));
+
+  it('GET /classes/fighter/equipment', () =>
+    request(app.getHttpServer())
+      .get('/classes/fighter/equipment')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.data.length).toBeGreaterThan(0);
+      }));
+
   it('GET /backgrounds/invalid returns 404', () =>
     request(app.getHttpServer()).get('/backgrounds/invalid').expect(404));
 });

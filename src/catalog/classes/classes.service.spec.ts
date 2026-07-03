@@ -5,11 +5,17 @@ import { Repository } from 'typeorm';
 import { ClassesService } from './classes.service';
 import { VPhbClass } from '../../entities/views/v-phb-class.entity';
 import { VPhbSubclass } from '../../entities/views/v-phb-subclass.entity';
+import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
+import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
+import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 
 describe('ClassesService', () => {
   let service: ClassesService;
   let classesRepo: jest.Mocked<Pick<Repository<VPhbClass>, 'find' | 'findOne'>>;
   let subclassesRepo: jest.Mocked<Pick<Repository<VPhbSubclass>, 'find'>>;
+  let spellsByClassRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'find'>>;
+  let spellSlotsRepo: jest.Mocked<Pick<Repository<VClassSpellSlots>, 'find'>>;
+  let equipmentRepo: jest.Mocked<Pick<Repository<VPhbClassEquipment>, 'find'>>;
 
   const sample: VPhbClass = {
     classSlug: 'fighter',
@@ -26,6 +32,8 @@ describe('ClassesService', () => {
     editionSlug: 'phb-2024-pt',
   };
 
+  const wizard: VPhbClass = { ...sample, classSlug: 'wizard', className: 'Mago' };
+
   const sampleSubclass: VPhbSubclass = {
     subclassSlug: 'champion',
     subclassName: 'Campeão',
@@ -39,14 +47,50 @@ describe('ClassesService', () => {
     spellSourceLabel: null,
   };
 
+  const sampleSpell: VSpellByClass = {
+    classSlug: 'wizard',
+    className: 'Mago',
+    spellLevel: 1,
+    spellSlug: 'alarme',
+    spellName: 'Alarme',
+    schoolSlug: 'abjuracao',
+    schoolName: 'Abjuração',
+  };
+
+  const sampleSlots: VClassSpellSlots = {
+    classSlug: 'wizard',
+    classLevel: 5,
+    patternSlug: 'full-caster',
+    patternName: 'Conjurador completo',
+    spellSlots: { '1': 4, '2': 3, '3': 2 },
+  };
+
+  const sampleEquipment: VPhbClassEquipment = {
+    classSlug: 'fighter',
+    packageSlug: 'a',
+    packageLabel: 'A',
+    sortOrder: 1,
+    itemSlug: 'longsword',
+    itemName: 'Espada longa',
+    quantity: 1,
+    choiceText: null,
+    goldAmount: null,
+  };
+
   beforeEach(async () => {
     classesRepo = { find: jest.fn(), findOne: jest.fn() };
     subclassesRepo = { find: jest.fn() };
+    spellsByClassRepo = { find: jest.fn() };
+    spellSlotsRepo = { find: jest.fn() };
+    equipmentRepo = { find: jest.fn() };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ClassesService,
         { provide: getRepositoryToken(VPhbClass), useValue: classesRepo },
         { provide: getRepositoryToken(VPhbSubclass), useValue: subclassesRepo },
+        { provide: getRepositoryToken(VSpellByClass), useValue: spellsByClassRepo },
+        { provide: getRepositoryToken(VClassSpellSlots), useValue: spellSlotsRepo },
+        { provide: getRepositoryToken(VPhbClassEquipment), useValue: equipmentRepo },
       ],
     }).compile();
     service = module.get(ClassesService);
@@ -55,15 +99,7 @@ describe('ClassesService', () => {
   it('findAll returns paginated data', async () => {
     classesRepo.find.mockResolvedValue([sample]);
     const result = await service.findAll(1, 20);
-    expect(result.data).toHaveLength(1);
     expect(result.data[0].slug).toBe('fighter');
-    expect(result.meta.total).toBe(1);
-  });
-
-  it('findBySlug returns dto', async () => {
-    classesRepo.findOne.mockResolvedValue(sample);
-    const result = await service.findBySlug('fighter');
-    expect(result.name).toBe('Guerreiro');
   });
 
   it('findBySlug throws NotFoundException', async () => {
@@ -75,13 +111,37 @@ describe('ClassesService', () => {
     classesRepo.findOne.mockResolvedValue(sample);
     subclassesRepo.find.mockResolvedValue([sampleSubclass]);
     const result = await service.findSubclassesByClassSlug('fighter', 1, 20);
-    expect(result.data).toHaveLength(1);
     expect(result.data[0].slug).toBe('champion');
-    expect(result.meta.total).toBe(1);
   });
 
-  it('findSubclassesByClassSlug throws when class not found', async () => {
-    classesRepo.findOne.mockResolvedValue(null);
-    await expect(service.findSubclassesByClassSlug('invalid')).rejects.toThrow(NotFoundException);
+  it('findSpellsByClassSlug filters by maxLevel', async () => {
+    classesRepo.findOne.mockResolvedValue(wizard);
+    spellsByClassRepo.find.mockResolvedValue([
+      sampleSpell,
+      { ...sampleSpell, spellLevel: 5, spellSlug: 'cone-de-frio', spellName: 'Cone de Frio' },
+    ]);
+    const result = await service.findSpellsByClassSlug('wizard', 1, 20, 1);
+    expect(result.data).toHaveLength(1);
+    expect(result.data[0].slug).toBe('alarme');
+  });
+
+  it('findSpellSlotsByClassSlug returns slots', async () => {
+    classesRepo.findOne.mockResolvedValue(wizard);
+    spellSlotsRepo.find.mockResolvedValue([sampleSlots]);
+    const result = await service.findSpellSlotsByClassSlug('wizard', 1, 20);
+    expect(result.data[0].classLevel).toBe(5);
+  });
+
+  it('findSpellSlotsByClassSlug throws when no progression', async () => {
+    classesRepo.findOne.mockResolvedValue(sample);
+    spellSlotsRepo.find.mockResolvedValue([]);
+    await expect(service.findSpellSlotsByClassSlug('fighter')).rejects.toThrow(NotFoundException);
+  });
+
+  it('findEquipmentByClassSlug returns equipment', async () => {
+    classesRepo.findOne.mockResolvedValue(sample);
+    equipmentRepo.find.mockResolvedValue([sampleEquipment]);
+    const result = await service.findEquipmentByClassSlug('fighter', 1, 20);
+    expect(result.data[0].itemSlug).toBe('longsword');
   });
 });

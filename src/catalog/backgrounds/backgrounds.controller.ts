@@ -22,6 +22,15 @@ export class BackgroundsController {
     return this.backgroundsService.findAll(query.page, query.limit);
   }
 
+  @Get(':slug/equipment')
+  @ApiOperation({ summary: 'Starting equipment for a background (paginated)' })
+  @ApiParam({ name: 'slug', example: 'acolyte' })
+  @ApiOkResponse({ description: 'Paginated starting equipment list' })
+  @ApiNotFoundResponse({ description: 'Background not found or no equipment data' })
+  findEquipment(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
+    return this.backgroundsService.findEquipmentByBackgroundSlug(slug, query.page, query.limit);
+  }
+
   @Get(':slug')
   @ApiOperation({ summary: 'Get background by slug' })
   @ApiParam({ name: 'slug', example: 'acolyte' })
