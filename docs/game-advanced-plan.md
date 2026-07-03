@@ -16,9 +16,9 @@ Complementa [`product-roadmap.md`](product-roadmap.md) (Fases 1–4 concluídas)
 | Preview de level-up | **7A** | ✅ |
 | Aplicar level-up (+1) com escolhas | **7A** | ✅ |
 | Inventário + equipado / mochila | **7B** | ✅ |
-| Slots de magia (gastos / short rest) | **7C** | pendente |
-| Concentração + condições | **7C** | pendente |
-| Conjurar / efeitos ativos | **7C** | pendente |
+| Slots de magia (gastos / short rest) | **7C** | ✅ |
+| Concentração + condições | **7C** | ✅ |
+| Conjurar / efeitos ativos | **7C** | ✅ (cast básico) |
 | Campanha / combate / iniciativa | **7D** | pendente |
 
 ---
@@ -87,13 +87,15 @@ player_character_state (
 )
 ```
 
-### Rotas (proposto)
+### Rotas
 
-- `GET/PATCH /characters/:id/state`
-- `POST /characters/:id/spells/cast` — gasta slot, concentração
-- `POST /characters/:id/rest` — short/long rest (recupera slots/HP)
+- [x] `GET/PATCH /characters/:id/state`
+- [x] `POST /characters/:id/spells/cast` — gasta slot, concentração
+- [x] `POST /characters/:id/rest` — short (noop slots) / long (recupera slots, HP, condições)
+- [x] Migration `P006_player_character_state` + seed `phb_condition`
+- [x] E2E state + cast + rest
 
-Catálogo: condições precisam de seed `phb_condition` (novo).
+Catálogo: condições em `rpg.phb_condition` (seed na migration).
 
 ---
 

@@ -5,7 +5,7 @@ import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
 import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
-import { CharacterSheetModule } from '../characters/character-sheet.module';
+import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { LevelUpService } from './domain/level-up.service';
 import { LevelUpPreviewQuery } from './application/level-up-preview.query';
 import { LevelUpHandler } from './application/level-up.handler';

@@ -4,7 +4,7 @@ Complementa [`architecture.md`](architecture.md) e [`game-advanced-plan.md`](gam
 
 ## Problema
 
-Tudo em `src/game/characters/` virou um **god module**:
+Tudo em `src/game/sheet/` (antes `characters/`) virou um **god module**:
 
 | Arquivo | Linhas | Papel |
 |---------|--------|-------|
@@ -22,7 +22,7 @@ Inventário, progression e **state (7C)** no mesmo módulo não escala. Campanha
 ```
 BC Game (modular monolith)
 ├── shared/           # ownership, repositório raiz player_character
-├── sheet/            # ficha PHB — pasta atual: `characters/`
+├── sheet/            # ficha PHB (CRUD + escolhas persistidas)
 ├── build/            # criação: roll abilities, generate (futuro)
 ├── progression/      # level-up, preview, ASI (futuro)
 ├── inventory/        # mochila + equipado
@@ -84,7 +84,7 @@ Todos os controllers usam `@Controller('characters')`:
 | **build** | `POST /characters/roll-abilities` |
 | **progression** | `GET/POST /characters/:id/level-up/*` |
 | **inventory** | `GET/POST/PATCH/DELETE /characters/:id/inventory/*` |
-| **session** (futuro) | `GET/PATCH /characters/:id/state`, `POST .../rest` |
+| **session** | `GET/PATCH /characters/:id/state`, `POST .../spells/cast`, `POST .../rest` |
 
 ## O que fica onde
 
@@ -107,8 +107,8 @@ Já está dividido — **12 módulos** (`classes/`, `spells/`, …). Game deve e
 - [x] `game/inventory` — extrair inventário
 - [x] `game/progression` — level-up
 - [x] `game/build` — roll abilities
-- [x] `game/sheet` — núcleo em `characters/` (`CharacterSheetModule`)
-- [ ] `game/session` — fase 7C
+- [x] `game/sheet` — `CharacterSheetModule` em `src/game/sheet/`
+- [x] `game/session` — fase 7C
 - [x] Remover legado `characters.service.ts` (já removido)
 
 **Última revisão:** 2026-07-03

@@ -229,6 +229,78 @@ describe('Characters API (e2e)', () => {
     expect(leveled.body.hitPointsMax).toBeGreaterThan(created.body.hitPointsMax);
   });
 
+  it('GET /characters/:id/state, cast, rest', async () => {
+    const created = await request(app.getHttpServer())
+      .post('/characters')
+      .set(auth())
+      .send({
+        name: 'Session Wizard',
+        classSlug: 'wizard',
+        speciesSlug: 'elf',
+        backgroundSlug: 'acolyte',
+        characterSpells: [
+          { spellSlug: 'alarme', listType: 'prepared' },
+          { spellSlug: 'amigos', listType: 'known' },
+        ],
+      })
+      .expect(201);
+
+    const id = created.body.id as string;
+
+    const initial = await request(app.getHttpServer())
+      .get(`/characters/${id}/state`)
+      .set(auth())
+      .expect(200);
+
+    expect(initial.body.spellSlotsMax['1']).toBe(2);
+    expect(initial.body.spellSlotsUsed).toEqual({});
+    expect(initial.body.spellSlotsRemaining['1']).toBe(2);
+
+    await request(app.getHttpServer())
+      .post(`/characters/${id}/spells/cast`)
+      .set(auth())
+      .send({ spellSlug: 'alarme' })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.slotLevelUsed).toBe(1);
+        expect(res.body.state.spellSlotsUsed['1']).toBe(1);
+        expect(res.body.state.spellSlotsRemaining['1']).toBe(1);
+      });
+
+    await request(app.getHttpServer())
+      .post(`/characters/${id}/spells/cast`)
+      .set(auth())
+      .send({ spellSlug: 'amigos' })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.slotLevelUsed).toBeNull();
+        expect(res.body.state.concentratingOn).toBe('amigos');
+      });
+
+    await request(app.getHttpServer())
+      .patch(`/characters/${id}/state`)
+      .set(auth())
+      .send({ conditions: ['poisoned'], tempHp: 3 })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.conditions).toEqual(['poisoned']);
+        expect(res.body.tempHp).toBe(3);
+      });
+
+    await request(app.getHttpServer())
+      .post(`/characters/${id}/rest`)
+      .set(auth())
+      .send({ type: 'long' })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.type).toBe('long');
+        expect(res.body.state.spellSlotsUsed).toEqual({});
+        expect(res.body.state.conditions).toEqual([]);
+        expect(res.body.state.tempHp).toBe(0);
+        expect(res.body.state.concentratingOn).toBeNull();
+      });
+  });
+
   it('inventory add, equip, unequip, remove', async () => {
     const created = await request(app.getHttpServer())
       .post('/characters')

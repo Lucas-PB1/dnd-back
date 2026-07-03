@@ -23,7 +23,7 @@ import { AuthUser } from '../../identity/auth-user';
 import { LevelUpPreviewQuery } from './application/level-up-preview.query';
 import { LevelUpHandler } from './application/level-up.handler';
 import { LevelUpDto, LevelUpPreviewDto } from './dto/level-up.dto';
-import { CharacterResponseDto } from '../characters/dto/character-response.dto';
+import { CharacterResponseDto } from '../sheet/dto/character-response.dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()

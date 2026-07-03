@@ -6,9 +6,9 @@ import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity'
 import { VSpellByClass } from '../../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
-import { CharacterDomainService } from '../../characters/domain/character-domain.service';
-import { hpGainPerLevel } from '../../characters/domain/hit-points.calc';
-import { abilityModifier } from '../../characters/domain/ability-modifier';
+import { CharacterDomainService } from '../../sheet/domain/character-domain.service';
+import { hpGainPerLevel } from '../../sheet/domain/hit-points.calc';
+import { abilityModifier } from '../../sheet/domain/ability-modifier';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 
 const ASI_FEAT_LEVELS = new Set([4, 8, 12, 16, 19]);

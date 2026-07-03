@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CharacterRepository } from '../../shared/infrastructure/character.repository';
-import { UpdateCharacterHandler } from '../../characters/application/update-character.handler';
+import { UpdateCharacterHandler } from '../../sheet/application/update-character.handler';
 import { LevelUpDto } from '../dto/level-up.dto';
-import { CharacterResponseDto } from '../../characters/dto/character-response.dto';
-import { UpdateCharacterDto } from '../../characters/dto/update-character.dto';
+import { CharacterResponseDto } from '../../sheet/dto/character-response.dto';
+import { UpdateCharacterDto } from '../../sheet/dto/update-character.dto';
 
 @Injectable()
 export class LevelUpHandler {

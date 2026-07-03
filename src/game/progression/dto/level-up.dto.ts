@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsOptional, ValidateNested } from 'class-validator';
-import { CharacterSheetInputDto } from '../../characters/dto/character-sheet.dto';
+import { CharacterSheetInputDto } from '../../sheet/dto/character-sheet.dto';
 
 /** Escolhas opcionais ao subir de nível (mesmos campos parciais da ficha). */
 export class LevelUpDto extends CharacterSheetInputDto {

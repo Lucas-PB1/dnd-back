@@ -31,6 +31,7 @@ import { GetCharacterQuery } from './application/get-character.query';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
+import { CharacterSpellLookup } from './application/character-spell-lookup';
 
 @Module({
   imports: [
@@ -68,8 +69,9 @@ import { DeleteCharacterHandler } from './application/delete-character.handler';
     CreateCharacterHandler,
     UpdateCharacterHandler,
     DeleteCharacterHandler,
+    CharacterSpellLookup,
   ],
-  exports: [CharacterDomainService, UpdateCharacterHandler],
+  exports: [CharacterDomainService, UpdateCharacterHandler, CharacterSpellLookup],
 })
 export class CharacterSheetModule {}
 
