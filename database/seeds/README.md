@@ -1,16 +1,16 @@
 # Seeds — catálogo PHB
 
-Dados de referência gerados a partir de `data/phb/`. **Não incluem fichas de personagem.**
+Dados gerados a partir de `data/phb/`. **Um arquivo por tabela.**
 
-| Arquivo | Conteúdo | Gerado por |
-|---------|----------|------------|
-| `001_phb.sql` | Catálogo completo (magias, classes, espécies, itens, …) | `seed-phb.mjs` |
-| `002_subclass_mechanics.sql` | Mecânicas de subclasse (recursos, opções, feature_kind) | `generate-seed-subclass-mechanics.mjs` |
+| Caminho | Conteúdo |
+|---------|----------|
+| `000_truncate.sql` | `TRUNCATE` global (ordem FK-safe) |
+| `phb/S###_<tabela>.sql` | `INSERT` do catálogo PHB |
+| `subclass/S###_<tabela>.sql` | Mecânicas de subclasse (`UPDATE`/`INSERT`) |
 
 ```bash
 npm run generate:seed    # regenera database/seeds/
-npm run seed:run         # dev-reset + migrations + seeds
-npm run seed:prod        # migrations + seeds (sem DROP)
+npm run seed:run         # dev-reset + migrations + seeds (1 transação)
 ```
 
 Metadados: `database/seed-manifest.json`

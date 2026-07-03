@@ -1,0 +1,38 @@
+-- Seed rpg.phb_spell_source
+-- Gerado automaticamente — não editar à mão
+
+INSERT INTO rpg.phb_spell_source (slug, label, origin_type, class_id, subclass_id, species_id, feat_id)
+VALUES
+  ('class', 'Lista de classe', 'class_list'::rpg.spell_source_origin, NULL, NULL, NULL, NULL),
+  ('spellbook', 'Livro de Magias', 'class_list'::rpg.spell_source_origin, NULL, NULL, NULL, NULL),
+  ('magic-initiate', 'Iniciado em Magia', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate')),
+  ('fey-touched', 'Tocado pelas Fadas', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, (SELECT id FROM rpg.phb_feat WHERE slug = 'fey-touched')),
+  ('shadow-touched', 'Tocado pela Sombra', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, (SELECT id FROM rpg.phb_feat WHERE slug = 'shadow-touched')),
+  ('telekinetic', 'Telecinético', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, (SELECT id FROM rpg.phb_feat WHERE slug = 'telekinetic')),
+  ('telepathic', 'Telepático', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, (SELECT id FROM rpg.phb_feat WHERE slug = 'telepathic')),
+  ('ritual-caster', 'Conjurador Ritualista', 'feat'::rpg.spell_source_origin, NULL, NULL, NULL, (SELECT id FROM rpg.phb_feat WHERE slug = 'ritual-caster')),
+  ('elf-lineage', 'Linhagem Élfica', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'elf'), NULL),
+  ('infernal-legacy', 'Legado Ínfero', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), NULL),
+  ('tiefling-presence', 'Presença Tiferina', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'tiefling'), NULL),
+  ('gnome-lineage', 'Linhagem Gnômica', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'gnome'), NULL),
+  ('aasimar-light', 'Luz Aasimar', 'species'::rpg.spell_source_origin, NULL, NULL, (SELECT id FROM rpg.phb_species WHERE slug = 'aasimar'), NULL),
+  ('life-domain', 'Domínio da Vida', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'life'), NULL, NULL),
+  ('light-domain', 'Domínio da Luz', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'light'), NULL, NULL),
+  ('trickery-domain', 'Domínio da Trapaça', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'), NULL, NULL),
+  ('war-domain', 'Domínio da Guerra', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'war'), NULL, NULL),
+  ('land-circle', 'Círculo da Terra', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'land'), NULL, NULL),
+  ('moon-circle', 'Círculo da Lua', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'moon'), NULL, NULL),
+  ('sea-circle', 'Círculo do Mar', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'druid'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'sea'), NULL, NULL),
+  ('ancients-oath', 'Juramento dos Anciões', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'ancients'), NULL, NULL),
+  ('devotion-oath', 'Juramento da Devoção', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'devotion'), NULL, NULL),
+  ('glory-oath', 'Juramento da Glória', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'glory'), NULL, NULL),
+  ('vengeance-oath', 'Juramento da Vingança', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'vengeance'), NULL, NULL),
+  ('fey-wanderer-spells', 'Andarilho Feérico', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), NULL, NULL),
+  ('gloom-stalker-spells', 'Vigilante das Sombras', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), NULL, NULL),
+  ('aberrant-sorcery', 'Feitiçaria Aberrante', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'aberrant'), NULL, NULL),
+  ('clockwork-sorcery', 'Feitiçaria Mecânica', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'clockwork'), NULL, NULL),
+  ('draconic-sorcery', 'Feitiçaria Dracônica', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'draconic'), NULL, NULL),
+  ('archfey-pact', 'Patrono Arquifada', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'archfey'), NULL, NULL),
+  ('celestial-pact', 'Patrono Celestial', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), NULL, NULL),
+  ('fiend-pact', 'Patrono Ínfero', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), NULL, NULL),
+  ('great-old-one-pact', 'Patrono O Grande Antigo', 'subclass'::rpg.spell_source_origin, (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one'), NULL, NULL);

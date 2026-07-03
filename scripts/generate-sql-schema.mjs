@@ -6,6 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { SUBCLASS_MECHANICS_TABLES_DDL, SUBCLASS_MECHANICS_VIEWS_DDL } from "./lib/subclass-mechanics-ddl.mjs";
 import { writeSplitMigrations } from "./generate-migrations.mjs";
+import { removeEmptyDirs } from "./lib/seed-writer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -996,6 +997,9 @@ fs.mkdirSync(path.dirname(outFile), { recursive: true });
 fs.writeFileSync(outFile, prodSql, "utf8");
 fs.writeFileSync(path.join(root, "database", "dev-reset.sql"), DEV_RESET, "utf8");
 
+const migrationDir = path.join(root, "database", "migrations");
+
 const migrationFiles = writeSplitMigrations(prodSql);
+removeEmptyDirs(migrationDir);
 console.log(`✓ ${path.relative(root, outFile)} — catálogo PHB (${prodSql.split("\n").length} linhas)`);
 console.log(`✓ ${migrationFiles.length} migrations granulares em database/migrations/`);

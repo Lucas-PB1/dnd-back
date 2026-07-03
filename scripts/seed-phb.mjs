@@ -33,19 +33,20 @@ import {
 } from "./lib/catalog-definitions.mjs";
 import { CLERIC_DIVINE_ORDERS } from "./lib/divine-orders.mjs";
 import { loadPhbCatalog } from "./lib/phb-loader.mjs";
+import {
+  writeSplitSeedGroup,
+  writeTruncateFile,
+} from "./lib/seed-writer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
-const outFile = path.join(root, "database", "seeds", "001_phb.sql");
+const seedsRoot = path.join(root, "database", "seeds");
 const manifestFile = path.join(root, "database", "seed-manifest.json");
 
 const catalog = loadPhbCatalog(root);
 const lines = [];
 
-lines.push(`-- PHB seed — PostgreSQL v4 (slug → id interno)`);
-lines.push(`-- Gerado por: npm run generate:seed-phb`);
-lines.push(`BEGIN;`);
-lines.push(`
+const TRUNCATE_SQL = `
 TRUNCATE TABLE
   rpg.phb_subclass_prepared_spell,
   rpg.phb_subclass_feature,
@@ -106,7 +107,7 @@ TRUNCATE TABLE
   rpg.phb_ability_generation_method,
   rpg.phb_character_level
 RESTART IDENTITY CASCADE;
-`);
+`.trim();
 
 // alignments
 lines.push(
@@ -959,20 +960,18 @@ lines.push(
   )
 );
 
-lines.push("COMMIT;");
-
 const sql = `${lines.filter(Boolean).join("\n\n")}\n`;
-fs.mkdirSync(path.dirname(outFile), { recursive: true });
-fs.writeFileSync(outFile, sql, "utf8");
+writeTruncateFile(seedsRoot, TRUNCATE_SQL);
+const { written } = writeSplitSeedGroup(sql, seedsRoot, { group: "phb", start: 10 });
 
 const manifest = {
   generatedAt: new Date().toISOString(),
   phb: catalog.counts,
-  files: { seedPhb: path.relative(root, outFile) },
+  seedFiles: written.length + 1,
 };
 fs.writeFileSync(manifestFile, `${JSON.stringify(manifest, null, 2)}\n`, "utf8");
 
-console.log(`✓ ${path.relative(root, outFile)} (${sql.split("\n").length} linhas)`);
+console.log(`✓ ${written.length} seeds PHB em database/seeds/phb/ (+ 000_truncate.sql)`);
 for (const [k, v] of Object.entries(catalog.counts)) {
   console.log(`  ${k}: ${v}`);
 }

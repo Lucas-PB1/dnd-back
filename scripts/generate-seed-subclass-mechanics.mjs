@@ -1,6 +1,5 @@
 /**
- * Gera database/seed-subclass-mechanics.sql a partir de subclass-mechanics-data.mjs
- * e dos traços já presentes no catálogo (data/phb/subclasses/*.json — somente leitura).
+ * Gera seeds de mecânicas de subclasse em database/seeds/subclass/ (1 arquivo por tabela).
  */
 import fs from "fs";
 import path from "path";
@@ -8,18 +7,17 @@ import { fileURLToPath } from "url";
 import { SUBCLASS_SPELLS } from "./subclass-spell-data.mjs";
 import { SUBCLASS_OPTIONS, SUBCLASS_RESOURCES, inferFeatureKind, subclassKey } from "./subclass-mechanics-data.mjs";
 import { sqlStr, sqlInt } from "./lib/sql-escape.mjs";
+import { writeSplitSeedGroup } from "./lib/seed-writer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
+const seedsRoot = path.join(root, "database", "seeds");
 const phb = path.join(root, "data/phb");
-const outFile = path.join(root, "database", "seeds", "002_subclass_mechanics.sql");
 
 const index = JSON.parse(fs.readFileSync(path.join(phb, "index.json"), "utf8"));
 const subclassesDir = path.join(phb, "subclasses");
 
 const lines = [];
-lines.push("-- Mecânicas de subclasse — gerado por npm run generate:seed-subclass-mechanics");
-lines.push("BEGIN;");
 
 const spellSubclassKeys = new Set(
   Object.keys(SUBCLASS_SPELLS).map((k) => {
@@ -162,8 +160,6 @@ for (const [fileKey, spellData] of Object.entries(SUBCLASS_SPELLS)) {
   }
 }
 
-lines.push("COMMIT;");
-lines.push("");
-
-fs.writeFileSync(outFile, lines.join("\n"), "utf8");
-console.log(`✓ ${path.relative(root, outFile)} — mecânicas de subclasse`);
+const sql = `${lines.filter(Boolean).join("\n")}\n`;
+const { written } = writeSplitSeedGroup(sql, seedsRoot, { group: "subclass", start: 10 });
+console.log(`✓ ${written.length} seeds subclass em database/seeds/subclass/`);

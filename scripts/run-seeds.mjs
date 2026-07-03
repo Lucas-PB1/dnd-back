@@ -1,10 +1,11 @@
 /**
- * Aplica seeds em database/seeds/ (ordem lexicográfica).
+ * Aplica seeds em database/seeds/ (ordem lexicográfica, recursiva, uma transação).
  */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { refreshMaterializedViews } from "./lib/refresh-views.mjs";
+import { collectSeedFiles } from "./lib/seed-writer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -18,19 +19,23 @@ export async function applySeeds(client) {
   if (!fs.existsSync(seedsDir)) {
     throw new Error("database/seeds/ ausente — rode npm run generate:seed");
   }
-  const files = fs
-    .readdirSync(seedsDir)
-    .filter((f) => f.endsWith(".sql"))
-    .sort();
-
+  const files = collectSeedFiles(seedsDir);
   if (!files.length) {
     throw new Error("Nenhum seed em database/seeds/");
   }
 
-  for (const file of files) {
-    const sql = fs.readFileSync(path.join(seedsDir, file), "utf8");
-    console.log(`→ seeds/${file}`);
-    await client.query(sql);
+  await client.query("BEGIN");
+  try {
+    for (const file of files) {
+      const sql = fs.readFileSync(file, "utf8");
+      const rel = path.relative(seedsDir, file).replace(/\\/g, "/");
+      console.log(`→ seeds/${rel}`);
+      await client.query(sql);
+    }
+    await client.query("COMMIT");
+  } catch (err) {
+    await client.query("ROLLBACK");
+    throw err;
   }
   return files.length;
 }

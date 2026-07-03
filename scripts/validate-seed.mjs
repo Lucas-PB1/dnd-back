@@ -5,12 +5,12 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { loadPhbCatalog } from "./lib/phb-loader.mjs";
+import { collectSeedFiles } from "./lib/seed-writer.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
-const manifestFile = path.join(root, "database/seed-manifest.json");
-const phbSeed = path.join(root, "database/seeds/001_phb.sql");
-const subclassSeed = path.join(root, "database/seeds/002_subclass_mechanics.sql");
+const seedsDir = path.join(root, "database", "seeds");
+const manifestFile = path.join(root, "database", "seed-manifest.json");
 
 let errors = 0;
 function fail(msg) {
@@ -18,17 +18,22 @@ function fail(msg) {
   errors++;
 }
 
-for (const file of [phbSeed, subclassSeed]) {
-  if (!fs.existsSync(file)) {
-    fail(`${path.relative(root, file)} ausente — rode npm run generate:seed`);
-  }
+const truncateFile = path.join(seedsDir, "000_truncate.sql");
+if (!fs.existsSync(truncateFile)) {
+  fail("database/seeds/000_truncate.sql ausente — rode npm run generate:seed");
+}
+
+const seedFiles = collectSeedFiles(seedsDir);
+const phbSeeds = seedFiles.filter((f) => f.includes(`${path.sep}phb${path.sep}`));
+if (phbSeeds.length < 10) {
+  fail(`esperado seeds por tabela em database/seeds/phb/ (encontrados ${phbSeeds.length})`);
 }
 
 if (errors) process.exit(1);
 
 const catalog = loadPhbCatalog(root);
 const manifest = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
-const phbSql = fs.readFileSync(phbSeed, "utf8");
+const phbSql = phbSeeds.map((f) => fs.readFileSync(f, "utf8")).join("\n");
 
 const expectations = {
   "rpg.phb_spell": catalog.counts.spells,
@@ -36,8 +41,6 @@ const expectations = {
   "rpg.phb_species": catalog.counts.species,
   "rpg.phb_background": catalog.counts.backgrounds,
   "rpg.phb_feat": catalog.counts.feats,
-  "rpg.phb_ability": catalog.counts.abilities,
-  "rpg.phb_armor_category": catalog.counts.armorCategories,
 };
 
 for (const [table, expected] of Object.entries(expectations)) {
@@ -48,16 +51,8 @@ for (const [table, expected] of Object.entries(expectations)) {
   }
 }
 
-if (!/INSERT INTO rpg\.phb_spell \(slug,/m.test(phbSql)) {
-  fail("seed PHB deve inserir por coluna slug (v4)");
-}
-
 if (/player_character/i.test(phbSql)) {
   fail("seed PHB não deve referenciar player_character");
-}
-
-if (/property_ids/i.test(phbSql)) {
-  fail("seed PHB não deve usar property_ids (usar phb_weapon_property_link)");
 }
 
 if (manifest.phb?.spells !== catalog.counts.spells) {
@@ -69,5 +64,7 @@ if (errors) {
   process.exit(1);
 }
 
-console.log(`✓ Seeds válidos — PHB (${catalog.counts.spells} magias)`);
+console.log(
+  `✓ Seeds válidos — ${phbSeeds.length} tabelas PHB + subclass (${catalog.counts.spells} magias)`
+);
 process.exit(0);

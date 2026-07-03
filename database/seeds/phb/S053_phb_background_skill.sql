@@ -1,0 +1,37 @@
+-- Seed rpg.phb_background_skill
+-- Gerado automaticamente — não editar à mão
+
+INSERT INTO rpg.phb_background_skill (background_id, skill_id)
+VALUES
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'acolyte'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'acolyte'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'wanderer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'wanderer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'insight')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'artisan'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'artisan'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'entertainer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'acrobatics')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'entertainer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'performance')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'charlatan'), (SELECT id FROM rpg.phb_skill WHERE slug = 'deception')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'charlatan'), (SELECT id FROM rpg.phb_skill WHERE slug = 'sleight-of-hand')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'criminal'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'criminal'), (SELECT id FROM rpg.phb_skill WHERE slug = 'sleight-of-hand')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'hermit'), (SELECT id FROM rpg.phb_skill WHERE slug = 'medicine')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'hermit'), (SELECT id FROM rpg.phb_skill WHERE slug = 'religion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'scribe'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'scribe'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'farmer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'animal-handling')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'farmer'), (SELECT id FROM rpg.phb_skill WHERE slug = 'nature')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guide'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'guide'), (SELECT id FROM rpg.phb_skill WHERE slug = 'survival')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sailor'), (SELECT id FROM rpg.phb_skill WHERE slug = 'acrobatics')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sailor'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'merchant'), (SELECT id FROM rpg.phb_skill WHERE slug = 'animal-handling')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'merchant'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'noble'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'noble'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sage'), (SELECT id FROM rpg.phb_skill WHERE slug = 'arcana')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'sage'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'soldier'), (SELECT id FROM rpg.phb_skill WHERE slug = 'athletics')),
+  ((SELECT id FROM rpg.phb_background WHERE slug = 'soldier'), (SELECT id FROM rpg.phb_skill WHERE slug = 'intimidation'));
