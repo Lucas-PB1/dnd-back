@@ -1,5 +1,9 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+function isSupabaseDatabaseUrl(url: string): boolean {
+  return /supabase\.(co|com)/i.test(url);
+}
+
 export function databaseConfig(): TypeOrmModuleOptions {
   const url = process.env.DATABASE_URL;
   if (!url) {
@@ -7,6 +11,7 @@ export function databaseConfig(): TypeOrmModuleOptions {
   }
 
   const isProd = process.env.NODE_ENV === 'production';
+  const useSsl = isProd || isSupabaseDatabaseUrl(url);
 
   return {
     type: 'postgres',
@@ -17,6 +22,6 @@ export function databaseConfig(): TypeOrmModuleOptions {
     extra: {
       max: isProd ? 1 : 5,
     },
-    ssl: isProd ? { rejectUnauthorized: false } : false,
+    ssl: useSsl ? { rejectUnauthorized: false } : false,
   };
 }

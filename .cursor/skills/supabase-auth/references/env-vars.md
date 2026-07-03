@@ -4,8 +4,7 @@
 
 | Var | Uso |
 |-----|-----|
-| `SUPABASE_URL` | `https://xxx.supabase.co` |
-| `SUPABASE_JWT_SECRET` | Validar JWT no Nest |
+| `SUPABASE_URL` | JWKS + issuer para validar access tokens (ES256) |
 | `SUPABASE_SERVICE_ROLE_KEY` | Só server-side; nunca client |
 
 ## Frontend (repo Next — outro repo)
@@ -21,7 +20,6 @@
 ```
 DATABASE_URL=
 SUPABASE_URL=
-SUPABASE_JWT_SECRET=
 FRONTEND_URL=http://localhost:3001
 PORT=3000
 ```

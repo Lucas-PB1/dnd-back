@@ -11,9 +11,9 @@ Relacionados: [`architecture.md`](architecture.md) · [`data-model.md`](data-mod
 | Estilo | **REST** JSON, recursos por slug, sem HATEOAS na v1 |
 | Catálogo | **GET público** — sem auth na fase 1–3 |
 | Auth | **Fase 5 (final)** — Supabase JWT só em `game/*` |
-| Regras D&D | **Dados** no Postgres; **cálculos de ficha** no BC Game (futuro) |
+| Regras D&D | **Dados** no Postgres; **cálculos de ficha** no BC Game (HP/PB feito; restante fase 6) |
 | Docs | **Swagger** (`/api`) em toda fase de catálogo |
-| Testes | Unit + E2E por módulo; meta **≥ 80%** em services |
+| Testes | Unit + E2E por módulo; meta **≥ 80%** em `catalog/**/queries/` e `game/**/domain/` |
 
 ---
 
@@ -31,6 +31,7 @@ flowchart LR
 
   subgraph step2 [2. Detalhe]
     B1[class + subclasses]
+    B1b[subclass mechanics spells]
     B2[spells by class]
     B3[background equipment]
   end
@@ -40,8 +41,8 @@ flowchart LR
     C2[feats equipment]
   end
 
-  subgraph step4 [4. Ficha — futuro]
-    D1[POST characters]
+  subgraph step4 [4. Ficha]
+    D1[POST PATCH characters]
   end
 
   step1 --> step2 --> step3 --> step4
@@ -54,7 +55,10 @@ flowchart LR
 | P0 | `GET /classes`, `/classes/:slug` | Escolha de classe | ✅ feito |
 | P0 | `GET /species`, `/species/:slug` | Escolha de espécie | ✅ feito |
 | P0 | `GET /backgrounds`, `/backgrounds/:slug` | Antecedente | ✅ feito |
-| P0 | `GET /classes/:slug/subclasses` | Subclasse | ✅ feito |
+| P0 | `GET /classes/:slug/subclasses` | Subclasse (por classe) | ✅ feito |
+| P1 | `GET /subclasses/:slug` | Detalhe da subclasse | ✅ feito |
+| P2 | `GET /subclasses/:slug/mechanics` | Features e recursos | ✅ feito |
+| P2 | `GET /subclasses/:slug/spells` | Magias preparadas da subclasse | ✅ feito |
 | P1 | `GET /spells`, `/spells/:slug` | Grimoire / detalhe | ✅ feito |
 | P1 | `GET /classes/:slug/spells?maxLevel=` | Lista de magias por classe | ✅ feito |
 | P1 | `GET /classes/:slug/spell-slots` | Tabela de slots | ✅ feito |
@@ -187,7 +191,7 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 // main.ts (após create)
 const config = new DocumentBuilder()
   .setTitle('RPG PHB API')
-  .setDescription('Catálogo D&D 2024 + fichas (futuro)')
+  .setDescription('Catálogo D&D 2024 + fichas de jogador')
   .setVersion('1.0')
   .addBearerAuth() // usado na fase 5
   .build();
@@ -214,7 +218,7 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 |------|------|---------|
 | **Dados canônicos PHB** | `database/seeds/` | CD de classe, lista de magias |
 | **Agregações / joins** | Views SQL `v_phb_*` | Magias por classe, equipamento |
-| **Exposição read-only** | `catalog/*` service | GET sem recalcular regras |
+| **Exposição read-only** | `catalog/*/queries/` | GET sem recalcular regras |
 | **Cálculos de ficha** | `game/domain/` (fase 6) | HP máx, modificador, slots usados |
 | **Validação de escolhas** | `game/domain/` + `CatalogLookupService` | Classe existe? Magia na lista? |
 
@@ -253,7 +257,7 @@ Opcional (Catalog): ~~dividir [`classes.service.ts`](../src/catalog/classes/clas
 
 | Camada | Ferramenta | O quê |
 |--------|------------|-------|
-| Unit | Jest | Services catalog, domain game |
+| Unit | Jest | Queries catalog, domain game, handlers |
 | E2E | Jest + Supertest | Cada rota GET pública |
 | Integração DB | Testcontainers ou DB test (opcional) | Views retornam seed |
 
@@ -261,8 +265,8 @@ Opcional (Catalog): ~~dividir [`classes.service.ts`](../src/catalog/classes/clas
 
 | Área | Meta |
 |------|------|
-| `catalog/**/*.service.ts` | ≥ **80%** lines |
-| `game/**/domain/**` | ≥ **90%** (quando existir) |
+| `catalog/**/queries/` e `*.mapper.ts` | ≥ **80%** lines |
+| `game/**/domain/**` e `*.application.spec.ts` | ≥ **90%** (domain) |
 | Controllers | E2E cobre; unit opcional |
 | Global filter / pipes | 1 E2E de erro 400/404 |
 
@@ -270,8 +274,8 @@ Opcional (Catalog): ~~dividir [`classes.service.ts`](../src/catalog/classes/clas
 
 Para cada módulo catalog novo:
 
-- [x] `*.queries.spec.ts` — mock repository, findAll, findBySlug, 404 (classes, species, backgrounds)
-- [~] `*.e2e-spec.ts` — GET lista 200, GET slug válido 200, slug inválido 404 (`test/catalog.e2e-spec.ts` consolidado)
+- [x] `*.queries.spec.ts` — mock repository, findAll, findBySlug, 404 (todos os BCs catalog)
+- [x] `test/catalog.e2e-spec.ts` — GET lista 200, GET slug válido 200, slug inválido 404 (consolidado; inclui subclasses)
 - [ ] DTO snapshot ou assert campos obrigatórios
 - [ ] `npm run test:cov` no CI
 
@@ -308,13 +312,15 @@ Para cada módulo catalog novo:
 1. shared/     errors + pagination + Swagger + health + ValidationPipe
 2. species     P0
 3. backgrounds P0 (+ equipment nested P1)
-4. classes     completar subclasses, spells, equipment
-5. spells      P1 global + detalhe
-6. feats, skills, abilities, equipment
-7. reference   alignments, languages, character-levels
-8. test:cov    CI ≥ 80% catalog services
-9. identity    SupabaseAuthGuard (ÚLTIMO antes de game)
-10. game/      characters CRUD + domain D&D
+4. classes     subclasses nested, spells, equipment
+5. subclasses  detalhe, mechanics, prepared spells
+6. spells      P1 global + detalhe
+7. feats, skills, abilities, equipment
+8. reference   alignments, languages, character-levels
+9. catalog/    refactor queries + mappers (concluído)
+10. test:cov   CI ≥ 80% catalog queries
+11. identity   SupabaseAuthGuard (antes de game)
+12. game/      characters CRUD + domain D&D (HP/PB feito; aggregate pendente)
 ```
 
 ---
@@ -338,10 +344,11 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 | Infra API (errors, swagger, health) | **100%** (fase 1) |
 | Catálogo P0 | **100%** |
 | Catálogo P1 | **100%** |
-| Catálogo P2 | **100%** (feats, skills, abilities, weapons, armor, species traits) |
+| Catálogo P2 | **100%** (feats, skills, abilities, weapons, armor, species traits, **subclasses**) |
 | Catálogo P3 | **100%** (alignments, languages, character-levels) |
-| Testes | **~65%** (unit + E2E P0–P3; CI/cov pendente) |
+| Application layer | **100%** (catalog queries/mappers; game handlers/repository) |
+| Testes | **~75%** (42 unit + 37 e2e; `test:cov`/CI pendente) |
 | Auth | **~80%** (JWT guard + CRUD fichas; RLS Supabase pendente) |
 | Game | **~55%** (CRUD + HP/PB domain; aggregate/VOs pendente) |
 
-**Última revisão:** 2026-07-03 — fase 6: domain HP + proficiency bonus
+**Última revisão:** 2026-07-03 — subclasses (`/subclasses/*`), refactor catalog queries/mappers, fase 6 HP + proficiency bonus

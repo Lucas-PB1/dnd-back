@@ -17,12 +17,36 @@ Schema do **catálogo PHB** em migrations granulares.
 
 Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 
-## Aplicar (dev)
+## Aplicar
+
+**Dev local (reset + catálogo completo):**
 
 ```bash
-psql "$DATABASE_URL" -f database/dev-reset.sql
-Get-ChildItem database/migrations -Recurse -Filter *.sql | Sort-Object FullName | ForEach-Object { psql "$DATABASE_URL" -f $_.FullName }
-Get-ChildItem database/seeds -Recurse -Filter *.sql | Sort-Object FullName | ForEach-Object { psql "$DATABASE_URL" -f $_.FullName }
+npm run db:setup
+```
+
+**Incremental (local, Supabase ou ambos):**
+
+```bash
+npm run db:migrate          # DATABASE_URL
+npm run db:migrate:supabase # SUPABASE_DATABASE_URL (direct 5432)
+npm run db:migrate:all      # os dois
+```
+
+O runner registra versões em `rpg.schema_migration` e só aplica arquivos pendentes.
+
+**Banco já existente** (aplicado antes via psql):
+
+```bash
+npm run db:migrate:baseline      # marca tudo como aplicado, sem reexecutar SQL
+npm run db:migrate:baseline:all  # local + Supabase
+```
+
+**Seeds** (banco vazio ou após `db:reset`):
+
+```bash
+npm run db:seed
+npm run db:seed:supabase
 ```
 
 Sem tabelas `player_character_*` no fluxo padrão de catálogo — ver `090_player/` para dados de jogador (fase 5+).

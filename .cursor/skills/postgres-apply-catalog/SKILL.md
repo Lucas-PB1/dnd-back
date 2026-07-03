@@ -17,7 +17,13 @@ description: Aplica catálogo PHB ao PostgreSQL — dev-reset, migrations granul
 2. Migrations recursivas ordenadas
 3. Seeds recursivos ordenados
 
-## PowerShell
+## PowerShell (legado — preferir npm)
+
+```powershell
+npm run db:setup
+```
+
+Equivalente manual:
 
 ```powershell
 psql $env:DATABASE_URL -f database/dev-reset.sql
@@ -25,6 +31,14 @@ Get-ChildItem database/migrations -Recurse -Filter *.sql | Sort-Object FullName 
 Get-ChildItem database/seeds -Recurse -Filter *.sql | Sort-Object FullName | ForEach-Object { psql $env:DATABASE_URL -f $_.FullName }
 ```
 
-## Prod (Supabase)
+## Supabase (remoto)
 
-**Não** rodar `dev-reset.sql`. Aplicar migrations pendentes + seeds se necessário.
+Configure `SUPABASE_DATABASE_URL` (direct, porta 5432) no `.env`:
+
+```bash
+npm run db:migrate:all    # local + Supabase (incremental)
+npm run db:migrate:supabase
+npm run db:seed:supabase  # só em banco vazio
+```
+
+**Não** rodar `db:reset` no Supabase.

@@ -16,16 +16,19 @@ postgresql://postgres.[project-ref]:[password]@aws-0-[region].pooler.supabase.co
 
 ## Env vars
 
-| Var | Onde |
-|-----|------|
-| `DATABASE_URL` | Backend Nest, Vercel dashboard |
-| `SUPABASE_SERVICE_ROLE_KEY` | Só backend, nunca client |
-| `SUPABASE_ANON_KEY` | Frontend (fase futura) |
+| Var | Onde | Uso |
+|-----|------|-----|
+| `DATABASE_URL` | Backend Nest, Vercel | App runtime (local ou pooler 6543) |
+| `SUPABASE_DATABASE_URL` | `.env` local, CI | Migrations/seeds direct 5432 |
+| `SUPABASE_SERVICE_ROLE_KEY` | Só backend, nunca client | Admin API (futuro) |
+| `SUPABASE_ANON_KEY` | Frontend (fase futura) | Client SDK |
 
 ## .env.example
 
 ```
 DATABASE_URL=
+SUPABASE_DATABASE_URL=
+SUPABASE_URL=
 PORT=3000
 NODE_ENV=development
 ```

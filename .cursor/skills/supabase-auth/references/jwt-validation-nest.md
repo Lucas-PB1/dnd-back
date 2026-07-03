@@ -15,7 +15,7 @@ export class SupabaseAuthGuard implements CanActivate {
     const req = context.switchToHttp().getRequest();
     const token = req.headers.authorization?.replace('Bearer ', '');
     if (!token) throw new UnauthorizedException();
-    // Validar com SUPABASE_JWT_SECRET ou jose + JWKS
+    // Validar com jose + JWKS ({SUPABASE_URL}/auth/v1/.well-known/jwks.json)
     const payload = await verifySupabaseJwt(token);
     req.user = { id: payload.sub, email: payload.email };
     return true;

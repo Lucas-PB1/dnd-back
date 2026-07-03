@@ -51,14 +51,27 @@ flowchart LR
 
 ### Nest → Postgres (Supabase)
 
-- **Produção / Vercel:** transaction pooler, porta **6543**, `?pgbouncer=true`
-- **Migrations / seeds locais:** conexão direct **5432** (psql ou script)
-- TypeORM: `synchronize: false`, pool `max: 1` em prod serverless
+- **Produção / Vercel:** transaction pooler, porta **6543**, `?pgbouncer=true` → `DATABASE_URL`
+- **Migrations / seeds:** conexão **direct** porta **5432** → `SUPABASE_DATABASE_URL`
+- **Dev local:** `DATABASE_URL` aponta para Postgres local; API continua local enquanto migrations podem ir também ao Supabase
+- TypeORM: `synchronize: false`, pool `max: 1` em prod serverless, SSL automático se URL contiver `supabase`
+
+### Scripts de banco (`npm run db:*`)
+
+| Comando | O que faz |
+|---------|-----------|
+| `db:migrate` | Migrations pendentes em `DATABASE_URL` (local) |
+| `db:migrate:supabase` | Migrations pendentes só no Supabase |
+| `db:migrate:all` | Local **e** Supabase (incremental, rastreia `rpg.schema_migration`) |
+| `db:seed` / `db:seed:all` | Seeds PHB (após reset ou banco vazio) |
+| `db:reset` | `dev-reset.sql` — **só local**, nunca Supabase |
+| `db:setup` | reset + migrate + seed local |
+| `db:setup:all` | setup local + migrate + seed no Supabase (primeira carga remota) |
 
 ### Nest → Supabase Auth
 
 - Validar JWT do header `Authorization: Bearer <token>`
-- Usar `SUPABASE_JWT_SECRET` ou JWKS do projeto
+- **JWKS** (`SUPABASE_URL/auth/v1/.well-known/jwks.json`) — tokens ES256 do Supabase Auth
 - Rotas catálogo `phb_*`: **públicas** (sem auth)
 - Rotas jogador (fase futura): guard JWT + RLS com `auth.uid()`
 
@@ -80,8 +93,8 @@ flowchart LR
 
 ```
 DATABASE_URL=postgresql://...@...pooler.supabase.com:6543/postgres?pgbouncer=true
+SUPABASE_DATABASE_URL=postgresql://postgres.[ref]:[pass]@db.[ref].supabase.co:5432/postgres
 SUPABASE_URL=https://xxx.supabase.co
-SUPABASE_JWT_SECRET=...
 FRONTEND_URL=https://seu-app.vercel.app
 NODE_ENV=production
 PORT=3000

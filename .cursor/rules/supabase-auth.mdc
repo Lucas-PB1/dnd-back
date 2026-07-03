@@ -10,7 +10,7 @@ Skill: `supabase-auth`
 
 - Login/signup fica no **repo Next.js** (`@supabase/supabase-js`)
 - Nest valida JWT: `Authorization: Bearer <access_token>`
-- Env: `SUPABASE_URL`, `SUPABASE_JWT_SECRET` (ou JWKS)
+- Env: `SUPABASE_URL` (validação JWT via JWKS ES256)
 - Catálogo `phb_*`: rotas **públicas** (sem guard)
 - Dados de jogador (fase futura): `@UseGuards(SupabaseAuthGuard)` + RLS `auth.uid()`
 - Nunca expor service role key no client

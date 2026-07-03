@@ -33,15 +33,27 @@ rpg/
 
 ## Banco de dados
 
-Aplicar catálogo (dev):
+Dev local (reset completo):
 
-```powershell
-psql $env:DATABASE_URL -f database/dev-reset.sql
-Get-ChildItem database/migrations -Recurse -Filter *.sql | Sort-Object FullName | ForEach-Object { psql $env:DATABASE_URL -f $_.FullName }
-Get-ChildItem database/seeds -Recurse -Filter *.sql | Sort-Object FullName | ForEach-Object { psql $env:DATABASE_URL -f $_.FullName }
+```bash
+npm run db:setup
 ```
 
-Detalhes: [`database/migrations/README.md`](database/migrations/README.md)
+Migrations incrementais (local + Supabase):
+
+```bash
+# .env: DATABASE_URL (local) + SUPABASE_DATABASE_URL (direct 5432)
+npm run db:migrate:all
+```
+
+Primeira carga no Supabase (após configurar `SUPABASE_DATABASE_URL`):
+
+```bash
+npm run db:migrate:supabase
+npm run db:seed:supabase
+```
+
+Detalhes: [`database/migrations/README.md`](database/migrations/README.md) · [`docs/infrastructure.md`](docs/infrastructure.md)
 
 ## API (NestJS)
 
@@ -60,7 +72,6 @@ Variáveis (`.env`):
 ```
 DATABASE_URL=postgresql://...:6543/postgres?pgbouncer=true
 SUPABASE_URL=https://xxx.supabase.co
-SUPABASE_JWT_SECRET=
 FRONTEND_URL=http://localhost:3001
 PORT=3000
 ```
