@@ -56,6 +56,9 @@ export class PlayerCharacter {
   @Column({ name: 'hit_points_current', type: 'int', nullable: true })
   hitPointsCurrent!: number | null;
 
+  @Column({ name: 'ability_generation_method_slug', type: 'text', nullable: true })
+  abilityGenerationMethodSlug!: string | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 

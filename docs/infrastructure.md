@@ -6,6 +6,8 @@ Documento de referência para rules, skills e implementação.
 
 **Plano REST API (checklist mestre):** [`api-plan.md`](api-plan.md)
 
+**Roadmap produto (API + app Next.js):** [`product-roadmap.md`](product-roadmap.md)
+
 ## Decisão (2026-07)
 
 | Camada | Escolha | Motivo |

@@ -23,7 +23,8 @@ rpg/
 │   ├── data-model.md        # clusters, FKs, views
 │   ├── infrastructure.md    # stack Supabase + Vercel
 │   ├── architecture.md      # bounded contexts, CQRS, DDD
-│   └── api-plan.md          # checklist REST, Swagger, testes
+│   ├── api-plan.md          # checklist REST, Swagger, testes
+│   └── product-roadmap.md   # marcos API + app Next.js
 ├── src/                     # NestJS API
 ├── .cursor/
 │   ├── rules/               # regras por contexto

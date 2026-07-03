@@ -1,6 +1,12 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, IsOptional, Max, Min, ValidateNested } from 'class-validator';
+import {
+  CharacterEquipmentDto,
+  CharacterSpellDto,
+  SpeciesChoiceDto,
+  SubclassOptionDto,
+} from './character-sheet.dto';
 
 export class AbilityScoresDto {
   @ApiProperty({ example: 15 })
@@ -76,6 +82,39 @@ export class CharacterResponseDto {
 
   @ApiProperty({ example: 2, description: 'Proficiency bonus from PHB character level table' })
   proficiencyBonus!: number;
+
+  @ApiProperty({
+    example: ['athletics', 'perception'],
+    description: 'Perícias escolhidas da pool da classe',
+  })
+  classSkillSlugs!: string[];
+
+  @ApiProperty({ type: [SpeciesChoiceDto] })
+  speciesChoices!: SpeciesChoiceDto[];
+
+  @ApiProperty({ type: [SubclassOptionDto] })
+  subclassOptions!: SubclassOptionDto[];
+
+  @ApiProperty({ example: ['magic-initiate'] })
+  featSlugs!: string[];
+
+  @ApiProperty({ type: [CharacterSpellDto] })
+  characterSpells!: CharacterSpellDto[];
+
+  @ApiProperty({ type: [CharacterEquipmentDto] })
+  equipment!: CharacterEquipmentDto[];
+
+  @ApiProperty({ example: ['common'] })
+  languageSlugs!: string[];
+
+  @ApiPropertyOptional({ example: 'standard-array' })
+  abilityGenerationMethodSlug!: string | null;
+
+  @ApiProperty({
+    example: ['insight', 'religion'],
+    description: 'Perícias fixas do antecedente (derivado do catálogo)',
+  })
+  backgroundSkillSlugs!: string[];
 
   @ApiProperty()
   createdAt!: string;

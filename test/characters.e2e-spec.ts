@@ -56,6 +56,8 @@ describe('Characters API (e2e)', () => {
 
     expect(res.body.name).toBe('E2E Hero');
     expect(res.body.classSlug).toBe('fighter');
+    expect(res.body.classSkillSlugs).toEqual([]);
+    expect(res.body.backgroundSkillSlugs).toEqual(['insight', 'religion']);
     return res.body.id as string;
   });
 
@@ -139,4 +141,91 @@ describe('Characters API (e2e)', () => {
         backgroundSlug: 'acolyte',
       })
       .expect(400));
+
+  it('POST /characters with valid class skills', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/characters')
+      .set(auth())
+      .send({
+        name: 'Skilled Hero',
+        classSlug: 'fighter',
+        speciesSlug: 'dwarf',
+        backgroundSlug: 'acolyte',
+        classSkillSlugs: ['athletics', 'perception'],
+      })
+      .expect(201);
+
+    expect(res.body.classSkillSlugs).toEqual(['athletics', 'perception']);
+  });
+
+  it('POST /characters rejects skill outside class pool', () =>
+    request(app.getHttpServer())
+      .post('/characters')
+      .set(auth())
+      .send({
+        name: 'Bad Skills',
+        classSlug: 'fighter',
+        speciesSlug: 'dwarf',
+        backgroundSlug: 'acolyte',
+        classSkillSlugs: ['athletics', 'arcana'],
+      })
+      .expect(400));
+
+  it('POST /characters rejects wrong skill count for class', () =>
+    request(app.getHttpServer())
+      .post('/characters')
+      .set(auth())
+      .send({
+        name: 'Bad Count',
+        classSlug: 'fighter',
+        speciesSlug: 'dwarf',
+        backgroundSlug: 'acolyte',
+        classSkillSlugs: ['athletics'],
+      })
+      .expect(400));
+
+  it('POST /characters/roll-abilities standard array', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/characters/roll-abilities')
+      .set(auth())
+      .send({ method: 'standard-array' })
+      .expect(200);
+
+    expect(res.body.abilityScores.forca).toBe(15);
+    expect(res.body.rawValues).toEqual([15, 14, 13, 12, 10, 8]);
+  });
+
+  it('GET /characters/:id/level-up/preview and POST level-up', async () => {
+    const created = await request(app.getHttpServer())
+      .post('/characters')
+      .set(auth())
+      .send({
+        name: 'Level Hero',
+        classSlug: 'fighter',
+        speciesSlug: 'human',
+        backgroundSlug: 'acolyte',
+        classSkillSlugs: ['athletics', 'perception'],
+      })
+      .expect(201);
+
+    const id = created.body.id as string;
+
+    const preview = await request(app.getHttpServer())
+      .get(`/characters/${id}/level-up/preview`)
+      .set(auth())
+      .expect(200);
+
+    expect(preview.body.currentLevel).toBe(1);
+    expect(preview.body.nextLevel).toBe(2);
+    expect(preview.body.estimatedHpGain).toBeGreaterThan(0);
+
+    const leveled = await request(app.getHttpServer())
+      .post(`/characters/${id}/level-up`)
+      .set(auth())
+      .send({})
+      .expect(200);
+
+    expect(leveled.body.level).toBe(2);
+    expect(leveled.body.hitPointsMax).toBeGreaterThan(created.body.hitPointsMax);
+  });
 });

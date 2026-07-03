@@ -5,6 +5,7 @@ import { PhbSpecies } from '../entities/phb-species.entity';
 import { VPhbBackground } from '../entities/views/v-phb-background.entity';
 import { VPhbSubclass } from '../entities/views/v-phb-subclass.entity';
 import { PhbAlignment } from '../entities/phb-alignment.entity';
+import { VPhbClassSkillChoice } from '../entities/views/v-phb-class-skill-choice.entity';
 import { CatalogLookupService } from './catalog-lookup.service';
 
 @Module({
@@ -15,6 +16,7 @@ import { CatalogLookupService } from './catalog-lookup.service';
       VPhbBackground,
       VPhbSubclass,
       PhbAlignment,
+      VPhbClassSkillChoice,
     ]),
   ],
   providers: [CatalogLookupService],

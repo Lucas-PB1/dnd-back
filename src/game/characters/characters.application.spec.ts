@@ -2,12 +2,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { CharacterRepository } from './infrastructure/character.repository';
+import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CharacterDomainService } from './domain/character-domain.service';
+import { CharacterSheetValidator } from './domain/character-sheet.validator';
 import { PlayerCharacter } from './infrastructure/player-character.entity';
 import { CatalogLookupService } from '../../catalog/catalog-lookup.service';
+import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 
 describe('Characters application layer', () => {
   let createHandler: CreateCharacterHandler;
@@ -20,6 +23,10 @@ describe('Characters application layer', () => {
     remove: jest.Mock;
   };
   let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'validateCharacterCatalogRefs'>>;
+  let sheetValidator: jest.Mocked<
+    Pick<CharacterSheetValidator, 'validateSheetInput' | 'validateLevelRules'>
+  >;
+  let sheetRepo: jest.Mocked<Pick<CharacterSheetRepository, 'sync' | 'load' | 'loadMany' | 'empty' | 'mergeSheetData'>>;
   let domain: jest.Mocked<Pick<CharacterDomainService, 'applyDerivedHitPoints' | 'getProficiencyBonus'>>;
 
   const userId = '11111111-1111-1111-1111-111111111111';
@@ -45,6 +52,7 @@ describe('Characters application layer', () => {
     },
     hitPointsMax: 10,
     hitPointsCurrent: 10,
+    abilityGenerationMethodSlug: null,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -58,6 +66,17 @@ describe('Characters application layer', () => {
       remove: jest.fn(),
     };
     catalogLookup = { validateCharacterCatalogRefs: jest.fn().mockResolvedValue(undefined) };
+    sheetValidator = {
+      validateSheetInput: jest.fn().mockResolvedValue(undefined),
+      validateLevelRules: jest.fn().mockResolvedValue(undefined),
+    };
+    sheetRepo = {
+      sync: jest.fn().mockResolvedValue(undefined),
+      load: jest.fn().mockResolvedValue(EMPTY_SHEET_DATA),
+      loadMany: jest.fn().mockResolvedValue(new Map()),
+      empty: jest.fn().mockReturnValue(EMPTY_SHEET_DATA),
+      mergeSheetData: jest.fn((base, slug) => ({ ...base, abilityGenerationMethodSlug: slug })),
+    };
     domain = {
       applyDerivedHitPoints: jest.fn(async (entity) => {
         if (entity.hitPointsMax === null) {
@@ -76,6 +95,8 @@ describe('Characters application layer', () => {
         GetCharacterQuery,
         { provide: getRepositoryToken(PlayerCharacter), useValue: repo },
         { provide: CatalogLookupService, useValue: catalogLookup },
+        { provide: CharacterSheetValidator, useValue: sheetValidator },
+        { provide: CharacterSheetRepository, useValue: sheetRepo },
         { provide: CharacterDomainService, useValue: domain },
       ],
     }).compile();
@@ -93,6 +114,23 @@ describe('Characters application layer', () => {
     });
     expect(catalogLookup.validateCharacterCatalogRefs).toHaveBeenCalled();
     expect(domain.applyDerivedHitPoints).toHaveBeenCalled();
+  });
+
+  it('create persists class skill choices when provided', async () => {
+    const result = await createHandler.execute(userId, {
+      name: 'Thorin',
+      classSlug: 'fighter',
+      speciesSlug: 'dwarf',
+      backgroundSlug: 'acolyte',
+      classSkillSlugs: ['athletics', 'perception'],
+    });
+
+    expect(sheetValidator.validateSheetInput).toHaveBeenCalled();
+    expect(sheetRepo.sync).toHaveBeenCalledWith(
+      sample.id,
+      expect.objectContaining({ classSkillSlugs: ['athletics', 'perception'] }),
+    );
+    expect(result.classSkillSlugs).toEqual([]);
   });
 
   it('findOwnedOrFail throws ForbiddenException for other user', async () => {

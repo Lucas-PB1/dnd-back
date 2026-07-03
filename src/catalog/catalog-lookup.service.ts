@@ -6,6 +6,7 @@ import { PhbSpecies } from '../entities/phb-species.entity';
 import { VPhbBackground } from '../entities/views/v-phb-background.entity';
 import { VPhbSubclass } from '../entities/views/v-phb-subclass.entity';
 import { PhbAlignment } from '../entities/phb-alignment.entity';
+import { VPhbClassSkillChoice } from '../entities/views/v-phb-class-skill-choice.entity';
 
 @Injectable()
 export class CatalogLookupService {
@@ -20,6 +21,8 @@ export class CatalogLookupService {
     private readonly subclassesRepo: Repository<VPhbSubclass>,
     @InjectRepository(PhbAlignment)
     private readonly alignmentsRepo: Repository<PhbAlignment>,
+    @InjectRepository(VPhbClassSkillChoice)
+    private readonly classSkillChoiceRepo: Repository<VPhbClassSkillChoice>,
   ) {}
 
   async findClassOrFail(classSlug: string): Promise<VPhbClass> {
@@ -110,6 +113,35 @@ export class CatalogLookupService {
 
     if (input.alignmentSlug) {
       await this.assertAlignmentSlug(input.alignmentSlug);
+    }
+  }
+
+  async validateClassSkillChoices(classSlug: string, skillSlugs: string[]): Promise<void> {
+    const phbClass = await this.findClassOrFail(classSlug);
+    const expected = phbClass.skillChoiceCount ?? 0;
+
+    if (skillSlugs.length !== expected) {
+      throw new BadRequestException(
+        `Class '${classSlug}' requires exactly ${expected} skill choice(s), got ${skillSlugs.length}`,
+      );
+    }
+
+    if (expected === 0) return;
+
+    const unique = new Set(skillSlugs);
+    if (unique.size !== skillSlugs.length) {
+      throw new BadRequestException('Duplicate skill choices are not allowed');
+    }
+
+    const poolRows = await this.classSkillChoiceRepo.find({ where: { classSlug } });
+    const pool = new Set(poolRows.map((row) => row.skillSlug));
+
+    for (const slug of skillSlugs) {
+      if (!pool.has(slug)) {
+        throw new BadRequestException(
+          `Skill '${slug}' is not in the choice pool for class '${classSlug}'`,
+        );
+      }
     }
   }
 }

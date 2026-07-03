@@ -40,7 +40,11 @@ export class HttpExceptionFilter implements ExceptionFilter {
         error = (obj.error as string) ?? exception.name;
       }
     } else if (exception instanceof Error) {
-      this.logger.error(exception.message, exception.stack);
+      const isProd = process.env.NODE_ENV === 'production';
+      this.logger.error(
+        isProd ? exception.message : exception.message,
+        isProd ? undefined : exception.stack,
+      );
     }
 
     const payload: ApiErrorBody = {

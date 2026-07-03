@@ -23,6 +23,7 @@ export class CharacterFactory {
       abilityScores: dto.abilityScores ?? DEFAULT_ABILITY_SCORES,
       hitPointsMax: dto.hitPointsMax ?? null,
       hitPointsCurrent: dto.hitPointsCurrent ?? dto.hitPointsMax ?? null,
+      abilityGenerationMethodSlug: dto.abilityGenerationMethodSlug ?? null,
     };
   }
 
@@ -40,6 +41,9 @@ export class CharacterFactory {
     if (dto.abilityScores !== undefined) row.abilityScores = dto.abilityScores;
     if (dto.hitPointsMax !== undefined) row.hitPointsMax = dto.hitPointsMax;
     if (dto.hitPointsCurrent !== undefined) row.hitPointsCurrent = dto.hitPointsCurrent;
+    if (dto.abilityGenerationMethodSlug !== undefined) {
+      row.abilityGenerationMethodSlug = dto.abilityGenerationMethodSlug ?? null;
+    }
   }
 
   static assertLevel(level: number): void {

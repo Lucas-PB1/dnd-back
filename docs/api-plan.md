@@ -2,7 +2,7 @@
 
 Documento de referência para implementação, testes e documentação OpenAPI.
 
-Relacionados: [`architecture.md`](architecture.md) · [`data-model.md`](data-model.md) · [`infrastructure.md`](infrastructure.md)
+Relacionados: [`architecture.md`](architecture.md) · [`data-model.md`](data-model.md) · [`infrastructure.md`](infrastructure.md) · [`product-roadmap.md`](product-roadmap.md)
 
 ## Princípios
 
@@ -145,7 +145,7 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 | **characters** | `GET /characters`, `GET /characters/:id` | [x] |
 | **characters** | `POST /characters`, `PATCH /characters/:id` | [x] |
 | **characters** | `DELETE /characters/:id` | [x] |
-| **characters** | Domain: HP, level, validação slugs PHB | [~] (HP auto + PB na resposta; aggregate completo pendente) |
+| **characters** | Domain: HP, level, validação slugs + sheet PHB | [x] (`CharacterSheetValidator`, HP/PB, level-up) |
 
 ---
 
@@ -177,7 +177,7 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 ### Checklist errors
 
 - [x] `HttpExceptionFilter` global
-- [ ] Log estruturado server-side (sem vazar stack ao client em prod)
+- [x] Log estruturado server-side (sem vazar stack ao client em prod)
 - [ ] Mensagens em PT para `message` user-facing (opcional v1)
 - [x] Testes E2E: 404 em slug inexistente por recurso
 
@@ -348,7 +348,11 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 | Catálogo P3 | **100%** (alignments, languages, character-levels) |
 | Application layer | **100%** (catalog queries/mappers; game handlers/repository) |
 | Testes | **~75%** (42 unit + 37 e2e; `test:cov`/CI pendente) |
-| Auth | **~80%** (JWT guard + CRUD fichas; RLS Supabase pendente) |
-| Game | **~55%** (CRUD + HP/PB domain; aggregate/VOs pendente) |
+| Auth | **100%** (JWT + RLS Supabase) |
+| Game | **~95%** (ficha PHB completa; aggregate/VOs opcional) |
 
 **Última revisão:** 2026-07-03 — subclasses (`/subclasses/*`), refactor catalog queries/mappers, fase 6 HP + proficiency bonus
+
+**Roadmap produto (app + deploy):** [`product-roadmap.md`](product-roadmap.md)
+
+**Game avançado (gerador, level-up, mesa):** [`game-advanced-plan.md`](game-advanced-plan.md)

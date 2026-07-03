@@ -5,15 +5,15 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
-  Max,
   MaxLength,
   Min,
   MinLength,
   ValidateNested,
 } from 'class-validator';
 import { AbilityScoresDto } from './character-response.dto';
+import { CharacterSheetInputDto } from './character-sheet.dto';
 
-export class CreateCharacterDto {
+export class CreateCharacterDto extends CharacterSheetInputDto {
   @ApiProperty({ example: 'Thorin' })
   @IsString()
   @MinLength(1)
