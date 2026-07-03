@@ -5,6 +5,9 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { effectiveArmorTrainingWithFeats } from "./general-feat-mechanics-data.mjs";
+import {
+  expectedBackgroundToolProficiencies,
+} from "./lib/background-tool-benefits.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const phb = path.join(__dirname, "..", "data/phb");
@@ -174,17 +177,40 @@ export function applyFeatPassiveBenefits(doc) {
   ensureShieldMasterEquipment(doc);
 }
 
-export function expectedToolProficiencies(doc) {
+export function expectedGeneralFeatToolProficiencies(doc) {
   const tools = [];
   const have = new Set();
   for (const feat of doc.feats ?? []) {
-    const source = feat.source === "general" ? "general" : "background";
+    if (feat.source !== "general") continue;
     for (const toolId of FEAT_TOOL_GRANTS[feat.featId] ?? []) {
       if (have.has(toolId)) continue;
-      tools.push({ toolId, source });
+      tools.push({ toolId, source: "general" });
       have.add(toolId);
     }
   }
+  return tools;
+}
+
+export function expectedToolProficiencies(doc) {
+  const tools = [];
+  const have = new Set();
+  const addAll = (list) => {
+    for (const t of list) {
+      if (have.has(t.toolId)) continue;
+      tools.push(t);
+      have.add(t.toolId);
+    }
+  };
+  addAll(expectedBackgroundToolProficiencies(doc));
+  for (const feat of doc.feats ?? []) {
+    if (feat.source !== "background") continue;
+    for (const toolId of FEAT_TOOL_GRANTS[feat.featId] ?? []) {
+      if (have.has(toolId)) continue;
+      tools.push({ toolId, source: "background" });
+      have.add(toolId);
+    }
+  }
+  addAll(expectedGeneralFeatToolProficiencies(doc));
   return tools;
 }
 

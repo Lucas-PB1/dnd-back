@@ -31,6 +31,8 @@ import {
 } from "./feat-passive-benefits.mjs";
 import { checkFeatPrerequisites, proficiencyBonusAtLevel } from "./feat-prerequisites-data.mjs";
 import { sumAsiDeltas } from "./asi-mechanics.mjs";
+import { enrichDbDocument } from "./lib/enrich-db-document.mjs";
+import { validateBackgroundToolProficiency } from "./lib/background-tool-benefits.mjs";
 import {
   expectedThirdCasterCantrips,
   expectedThirdCasterPrepared,
@@ -1077,7 +1079,8 @@ export function validateFeatPrerequisites(doc) {
   return { ok: true };
 }
 
-export function validateGeneralFeats(doc) {
+export function validateGeneralFeats(doc, options = {}) {
+  const { fromDb = false } = options;
   const sc = doc.spellcasting;
 
   for (const feat of doc.feats ?? []) {
@@ -1102,11 +1105,13 @@ export function validateGeneralFeats(doc) {
       }
     }
 
-    if (feat.featId === "elemental-adept") {
+    if (feat.featId === "elemental-adept" && !fromDb) {
       const typeId = feat.elementalAdept?.damageTypeId;
       if (!typeId || !ELEMENTAL_DAMAGE_TYPES.includes(typeId)) {
         return { ok: false, reason: `elemental-adept tipo inválido: ${typeId ?? "ausente"}` };
       }
+    } else if (feat.featId === "elemental-adept" && fromDb) {
+      /* tipo elemental não persistido no PostgreSQL */
     }
 
     if (def.spells || def.ritualSpells) {
@@ -1225,6 +1230,90 @@ export function validateExpertiseList(doc) {
   return { ok: true };
 }
 
+/** Atributos persistidos — sem reversão de ASI (document não guarda asi.applied). */
+export function validateAbilityScoresRelational(doc) {
+  const abilities = doc.abilities ?? {};
+  const keys = Object.keys(abilities);
+  if (keys.length !== 6) {
+    return { ok: false, reason: `atributos=${keys.length}, esperado 6` };
+  }
+  for (const score of Object.values(abilities)) {
+    if (score < 1 || score > 30) {
+      return { ok: false, reason: "valor de atributo fora do intervalo 1–30" };
+    }
+  }
+  if (!doc.abilityGeneration?.backgroundBoostId) {
+    return { ok: false, reason: "abilityGeneration.backgroundBoostId ausente" };
+  }
+  if (!doc.abilityGeneration?.methodId) {
+    return { ok: false, reason: "abilityGeneration.methodId ausente" };
+  }
+  return { ok: true };
+}
+
+/** Especialização ⊆ perícias proficientes (sem recalcular escolhas do gerador). */
+export function validateExpertiseRelational(doc) {
+  const proficient = new Set((doc.skillProficiencies ?? []).map((s) => s.skillId));
+  for (const skillId of doc.expertise ?? []) {
+    if (!proficient.has(skillId)) {
+      return { ok: false, reason: `expertise ${skillId} sem proficiência correspondente` };
+    }
+  }
+  return { ok: true };
+}
+
+/** Validadores aplicáveis ao JSON de rpg.character_document (sem campos só em memória). */
+export const DB_DOCUMENT_VALIDATORS = [
+  validateAbilityScoresRelational,
+  validateSpeciesChoices,
+  validateSingleClass,
+  validateSubclassRequired,
+  validateSubclassLevel,
+  validateSpeciesSpellcasting,
+  validateSpeciesResources,
+  validateFeatRoster,
+  validateFeatPrerequisites,
+  validateMagicInitiate,
+  validateHp,
+  validateExpertiseRelational,
+  validateWeaponMasteryChoices,
+  validateEquippedArmorTraining,
+  validateShieldMaster,
+  validateArmorClass,
+  validateFightingStyle,
+  validateSkillProficiencies,
+  validateBackgroundToolProficiency,
+  validateToolProficiencies,
+  validatePassivePerception,
+  validateStartingEquipment,
+  validateClassResources,
+  validateSpellcasting,
+  validateSubclassSpells,
+  validateSubclassMechanics,
+];
+
+/**
+ * Valida ficha reconstruída pelo PostgreSQL (character_document + enrich).
+ * Exclui metadados de escolha de feat não persistidos no banco.
+ */
+export function validateCharacterRulesFromDb(doc, extras = {}) {
+  const enriched = enrichDbDocument(structuredClone(doc), extras);
+
+  for (const fn of DB_DOCUMENT_VALIDATORS) {
+    const result = fn(enriched);
+    if (!result.ok) {
+      return { ok: false, reason: result.reason, validator: fn.name };
+    }
+  }
+
+  const general = validateGeneralFeats(enriched, { fromDb: true });
+  if (!general.ok) {
+    return { ok: false, reason: general.reason, validator: "validateGeneralFeats" };
+  }
+
+  return { ok: true };
+}
+
 /** Executa todos os validadores de regras de jogo sobre uma ficha. */
 export function validateCharacterRules(doc) {
   const checks = [
@@ -1244,6 +1333,7 @@ export function validateCharacterRules(doc) {
     validateWeaponMasteryChoices,
     validateEquippedArmorTraining,
     validateShieldMaster,
+    validateBackgroundToolProficiency,
     validateToolProficiencies,
     validateFeatSkillChoices,
     validateArmorClass,

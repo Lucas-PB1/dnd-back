@@ -75,6 +75,7 @@ TRUNCATE TABLE
   rpg.player_character_feat_magic_initiate,
   rpg.player_character_feat,
   rpg.player_character_saving_throw,
+  rpg.player_character_tool,
   rpg.player_character_skill,
   rpg.player_character_ability,
   rpg.player_character_language,
@@ -87,6 +88,7 @@ const all = {
   abilities: [],
   languages: [],
   skills: [],
+  tools: [],
   saves: [],
   feats: [],
   featAsi: [],
@@ -109,6 +111,7 @@ for (const char of characters) {
   all.abilities.push(...rows.abilities);
   all.languages.push(...rows.languages);
   all.skills.push(...rows.skills);
+  all.tools.push(...rows.tools);
   all.saves.push(...rows.saves);
   all.feats.push(...rows.feats);
   all.featAsi.push(...rows.featAsi);
@@ -172,6 +175,9 @@ if (all.languages.length) {
 }
 if (all.skills.length) {
   lines.push(batchInsert("rpg.player_character_skill", ["character_id", "skill_id", "source"], all.skills));
+}
+if (all.tools.length) {
+  lines.push(batchInsert("rpg.player_character_tool", ["character_id", "item_id", "source"], all.tools));
 }
 if (all.saves.length) {
   lines.push(

@@ -8,6 +8,10 @@ CREATE TYPE rpg.skill_source AS ENUM (
   'species','background','class','feat','other'
 );
 
+CREATE TYPE rpg.tool_source AS ENUM (
+  'background','class','general','other'
+);
+
 CREATE TYPE rpg.feat_source AS ENUM (
   'background','class','species','general','other'
 );
@@ -73,6 +77,13 @@ CREATE TABLE rpg.player_character_skill (
   skill_id     BIGINT NOT NULL REFERENCES rpg.phb_skill(id),
   source       rpg.skill_source NOT NULL,
   PRIMARY KEY (character_id, skill_id)
+);
+
+CREATE TABLE rpg.player_character_tool (
+  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
+  item_id      BIGINT NOT NULL REFERENCES rpg.phb_item(id),
+  source       rpg.tool_source NOT NULL,
+  PRIMARY KEY (character_id, item_id)
 );
 
 CREATE TABLE rpg.player_character_saving_throw (
@@ -388,6 +399,7 @@ RETURNS JSONB AS $$
     'languageIds', langs.ids,
     'abilities', ab.scores,
     'skillProficiencies', sk.profs,
+    'toolProficiencies', tl.profs,
     'savingThrowProficiencies', sv.slugs,
     'feats', ft.list,
     'equipment', eq.list,
@@ -442,6 +454,15 @@ RETURNS JSONB AS $$
     JOIN rpg.phb_skill s ON s.id = pcs.skill_id
     WHERE pcs.character_id = pc.id
   ) sk ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT COALESCE(jsonb_agg(
+      jsonb_build_object('toolId', i.slug, 'source', pct.source)
+      ORDER BY i.slug
+    ), '[]'::jsonb) AS profs
+    FROM rpg.player_character_tool pct
+    JOIN rpg.phb_item i ON i.id = pct.item_id
+    WHERE pct.character_id = pc.id
+  ) tl ON TRUE
   LEFT JOIN LATERAL (
     SELECT COALESCE(jsonb_agg(a.slug ORDER BY a.slug), '[]'::jsonb) AS slugs
     FROM rpg.player_character_saving_throw pst

@@ -40,6 +40,13 @@ const EQUIPMENT_SLOT = {
   other: "other",
 };
 
+const TOOL_SOURCE = {
+  background: "background",
+  general: "general",
+  class: "class",
+  other: "other",
+};
+
 function mapEquipmentSource(source) {
   return EQUIPMENT_SOURCE[source] ?? "other";
 }
@@ -102,6 +109,12 @@ export function buildCharacterRows(char) {
     character_id: sqlStr(char.id),
     skill_id: sqlRef("phb_skill", s.skillId),
     source: `${sqlStr(s.source)}::rpg.skill_source`,
+  }));
+
+  const tools = (char.toolProficiencies ?? []).map((t) => ({
+    character_id: sqlStr(char.id),
+    item_id: sqlRef("phb_item", t.toolId),
+    source: `${sqlStr(TOOL_SOURCE[t.source] ?? "other")}::rpg.tool_source`,
   }));
 
   const saves = (char.savingThrowProficiencies ?? []).map((ab) => ({
@@ -297,6 +310,7 @@ export function buildCharacterRows(char) {
     abilities,
     languages,
     skills,
+    tools,
     saves,
     feats,
     featMagicInitiate,

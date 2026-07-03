@@ -102,7 +102,7 @@ export const FEAT_MECHANICS = {
   artisan: { hooks: ["tools"], description: "Ferramentas + desconto em crafting" },
   healer: { hooks: ["passive", "tools"], description: "Kit + cura por dado de vida" },
   lucky: { hooks: ["passive"], description: "Pontos de sorte" },
-  musician: { hooks: ["passive"], description: "Instrumentos + inspiração" },
+  musician: { hooks: ["passive", "tools"], description: "Instrumentos + inspiração" },
   "savage-attacker": { hooks: ["passive"], description: "Rerrolar dano de arma" },
   "tavern-brawler": { hooks: ["passive"], description: "Improvisado + agarrar" },
 };

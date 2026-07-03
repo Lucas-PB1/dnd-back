@@ -46,6 +46,7 @@ import {
 import { buildClassProgressionFeats } from "../class-feat-progression-data.mjs";
 import { mergeGeneralFeatSpells } from "../general-feat-mechanics-data.mjs";
 import { applyFeatPassiveBenefits } from "../feat-passive-benefits.mjs";
+import { applyBackgroundToolBenefits } from "./background-tool-benefits.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..", "..");
@@ -1163,6 +1164,10 @@ function buildCharacter(bp) {
 
   doc.spellcasting = mergeGeneralFeatSpells(doc.spellcasting, doc.feats);
   ensureElfKeenSenses(doc);
+  if (enriched.backgroundToolId) {
+    doc.backgroundChoices = { toolId: enriched.backgroundToolId };
+  }
+  applyBackgroundToolBenefits(doc, bg);
   applyFeatPassiveBenefits(doc);
   const expertise = buildExpertise(doc);
   if (expertise.length) doc.expertise = expertise;
