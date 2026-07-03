@@ -7,19 +7,25 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
-import { BackgroundsService } from './backgrounds.service';
+import { FindBackgroundsQuery } from './queries/find-backgrounds.query';
+import { FindBackgroundBySlugQuery } from './queries/find-background-by-slug.query';
+import { FindBackgroundEquipmentQuery } from './queries/find-background-equipment.query';
 import { BackgroundResponseDto } from './dto/background-response.dto';
 
 @ApiTags('catalog-backgrounds')
 @Controller('backgrounds')
 export class BackgroundsController {
-  constructor(private readonly backgroundsService: BackgroundsService) {}
+  constructor(
+    private readonly findBackgrounds: FindBackgroundsQuery,
+    private readonly findBackgroundBySlug: FindBackgroundBySlugQuery,
+    private readonly findBackgroundEquipment: FindBackgroundEquipmentQuery,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'List PHB backgrounds (paginated)' })
   @ApiOkResponse({ description: 'Paginated backgrounds list' })
   findAll(@Query() query: PaginationQueryDto) {
-    return this.backgroundsService.findAll(query.page, query.limit);
+    return this.findBackgrounds.execute(query.page, query.limit);
   }
 
   @Get(':slug/equipment')
@@ -28,7 +34,7 @@ export class BackgroundsController {
   @ApiOkResponse({ description: 'Paginated starting equipment list' })
   @ApiNotFoundResponse({ description: 'Background not found or no equipment data' })
   findEquipment(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.backgroundsService.findEquipmentByBackgroundSlug(slug, query.page, query.limit);
+    return this.findBackgroundEquipment.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug')
@@ -37,6 +43,6 @@ export class BackgroundsController {
   @ApiOkResponse({ type: BackgroundResponseDto })
   @ApiNotFoundResponse({ description: 'Background not found' })
   findOne(@Param('slug') slug: string): Promise<BackgroundResponseDto> {
-    return this.backgroundsService.findBySlug(slug);
+    return this.findBackgroundBySlug.execute(slug);
   }
 }

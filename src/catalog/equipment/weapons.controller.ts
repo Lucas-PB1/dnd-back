@@ -7,19 +7,23 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
-import { EquipmentService } from './equipment.service';
+import { FindWeaponsQuery } from './queries/find-weapons.query';
+import { FindWeaponBySlugQuery } from './queries/find-weapon-by-slug.query';
 import { WeaponResponseDto } from './dto/weapon-response.dto';
 
 @ApiTags('catalog-weapons')
 @Controller('weapons')
 export class WeaponsController {
-  constructor(private readonly equipmentService: EquipmentService) {}
+  constructor(
+    private readonly findWeapons: FindWeaponsQuery,
+    private readonly findWeaponBySlug: FindWeaponBySlugQuery,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'List PHB weapons (paginated)' })
   @ApiOkResponse({ description: 'Paginated weapon list' })
   findAll(@Query() query: PaginationQueryDto) {
-    return this.equipmentService.findAllWeapons(query.page, query.limit);
+    return this.findWeapons.execute(query.page, query.limit);
   }
 
   @Get(':slug')
@@ -28,6 +32,6 @@ export class WeaponsController {
   @ApiOkResponse({ type: WeaponResponseDto })
   @ApiNotFoundResponse({ description: 'Weapon not found' })
   findOne(@Param('slug') slug: string): Promise<WeaponResponseDto> {
-    return this.equipmentService.findWeaponBySlug(slug);
+    return this.findWeaponBySlug.execute(slug);
   }
 }

@@ -222,10 +222,28 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
 ### Checklist regras (fase 4–6)
 
-- [x] `CatalogLookupService` — validar slugs (class, species, background, spell)
+- [x] `CatalogLookupService` — validar slugs (class, species, background, alignment, subclass)
 - [ ] Documentar em Swagger descrições D&D (school, ritual, concentration)
 - [ ] Fase 6: `CharacterDomainService` — HP, proficiency bonus from `character-levels`
 - [ ] Testes unitários de domain com casos PHB (Guerreiro d10, Mago d6)
+
+### Checklist refatoração application layer (fase 6)
+
+Migrado para handlers + repository + mapper em [`src/game/characters/`](../src/game/characters/). Ver [`docs/architecture.md`](architecture.md#evitar-fat-services) e rule `application-layer`.
+
+| Item | Checklist |
+|------|-----------|
+| Extrair `CharacterRepository` (persistência + `findOwnedOrFail`) | [x] |
+| Extrair `character.mapper.ts` (`toDto`) | [x] |
+| `CreateCharacterHandler` | [x] |
+| `UpdateCharacterHandler` | [x] |
+| `DeleteCharacterHandler` | [x] |
+| `ListCharactersQuery` / `GetCharacterQuery` | [x] |
+| `Character` aggregate + VOs (HP, level) | [ ] (`CharacterFactory` com level; aggregate completo pendente) |
+| Controller injeta handlers (service removido ou vira facade) | [x] |
+| Testes unitários por handler + domain (não service monolítico) | [x] |
+
+Opcional (Catalog): ~~dividir [`classes.service.ts`](../src/catalog/classes/classes.service.ts)~~ **concluído** — todos os BCs em `queries/` + `*.mapper.ts`. Ver rule `application-layer`.
 
 ---
 
@@ -252,7 +270,7 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
 Para cada módulo catalog novo:
 
-- [x] `*.service.spec.ts` — mock repository, findAll, findBySlug, 404 (classes, species, backgrounds)
+- [x] `*.queries.spec.ts` — mock repository, findAll, findBySlug, 404 (classes, species, backgrounds)
 - [~] `*.e2e-spec.ts` — GET lista 200, GET slug válido 200, slug inválido 404 (`test/catalog.e2e-spec.ts` consolidado)
 - [ ] DTO snapshot ou assert campos obrigatórios
 - [ ] `npm run test:cov` no CI

@@ -14,7 +14,7 @@ Plano: [`docs/api-plan.md`](../../../docs/api-plan.md#testes-e-coverage)
 
 ## Checklist novo módulo
 
-- [ ] `xxx.service.spec.ts`
+- [ ] Catalog: `xxx.queries.spec.ts` · Game: `xxx.application.spec.ts`
 - [ ] `xxx.e2e-spec.ts` (lista + slug + 404)
 - [ ] DTOs com campos assertados
 - [ ] `test:cov` ≥ 80% no service

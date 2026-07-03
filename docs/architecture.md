@@ -48,17 +48,17 @@ flowchart TB
 - **Sem:** agregados, domain events, mutação via API
 - **Integração:** outros BCs referenciam catálogo por **slug** (contrato) ou **id** (persistência interna)
 
-### BC Identity (próxima fase)
+### BC Identity
 
 - **Responsabilidade:** autenticar requests
 - **Fonte de verdade:** Supabase Auth (externo)
 - **API:** `src/identity/` — guards, decorators, `@CurrentUser()`
 - **Sem:** modelar User como entidade de domínio rica — JWT claims bastam
 
-### BC Game (futuro)
+### BC Game
 
 - **Responsabilidade:** fichas, campanhas, inventário do jogador
-- **Fonte de verdade:** tabelas `player_*` (migrations TypeORM separadas)
+- **Fonte de verdade:** tabelas `player_*` (migrations em `database/migrations/090_player/`)
 - **API:** `src/game/` — DDD tático onde houver regras (nível, HP, validações)
 - **Segurança:** RLS `auth.uid()` + `SupabaseAuthGuard`
 - **Referência ao catálogo:** slug de classe/espécie/antecedente — não duplicar regras PHB no domínio
@@ -117,11 +117,86 @@ game       →  pode ler catalog (service/query); referencia slug PHB
 | Validar multiclasse / regras casa | **Agregado Personagem** |
 | Expor feat do PHB | Query catálogo — **sem** reimplementar benefício |
 
+## Evitar fat services
+
+Services que acumulam orquestração, SQL, regras de negócio, mapeamento e autorização viram difíceis de testar e manter. A solução é **separar por bounded context** — não um padrão único para todo o monolith.
+
+```mermaid
+flowchart TB
+  subgraph catalog [BC Catalog thin]
+    CC[Controller]
+    CQ[Query ou Service fino]
+    VE[ViewEntity]
+    CC --> CQ --> VE
+  end
+
+  subgraph game [BC Game em camadas]
+    GC[Controller]
+    H[Application Handler]
+    D[Domain]
+    R[Repository]
+    GC --> H --> D
+    H --> R
+    H --> CL[CatalogLookupService]
+  end
+```
+
+### Regra de ouro
+
+| BC | Service gordo? | Padrão |
+|----|----------------|--------|
+| **Catalog** | Não — alvo **&lt; ~80 linhas** por arquivo | Controller → Query → view |
+| **Game** | Não — service vira fachada ou some | Controller → Handler → domain + repository |
+
+### O que extrair (Catalog)
+
+Quando `*.service.ts` passar de ~80 linhas ou tiver **3+ repositórios**:
+
+1. **Mapper** — `classes.mapper.ts` com `toXxxDto`
+2. **Queries** — `queries/find-class-spells.query.ts` (um arquivo por rota aninhada, método `execute()`)
+3. **Lookup** — `assertClassExists` em `CatalogLookupService` (evitar duplicar por módulo)
+
+Exemplo atual que pode ser dividido: [`src/catalog/classes/classes.service.ts`](../src/catalog/classes/classes.service.ts).
+
+### O que extrair (Game)
+
+Para fichas, migrar de service monolítico para:
+
+```
+src/game/characters/
+├── application/     # create-character.handler.ts, list-characters.query.ts
+├── domain/          # character.aggregate.ts, value-objects/
+├── infrastructure/  # character.repository.ts, character.mapper.ts
+└── characters.controller.ts
+```
+
+| Peça | Faz | Não faz |
+|------|-----|---------|
+| Handler | Orquestra DTO → domain → repo | SQL direto, regra D&D complexa |
+| Repository | Persistência, ownership | Validar slug PHB |
+| Domain | Invariantes (nível, HP) | HTTP, TypeORM |
+| CatalogLookupService | Slugs existem no PHB | Calcular HP |
+
+Exemplo atual a refatorar na fase 6: [`src/game/characters/characters.service.ts`](../src/game/characters/characters.service.ts).
+
+### Gatilhos de refatoração
+
+| Sinal | Ação |
+|-------|------|
+| Service catalog &gt; 80 linhas | Mapper + queries |
+| 3+ `toXxxDto` no mesmo service | `*.mapper.ts` |
+| Regra “se… então…” D&D na ficha | `domain/` |
+| Teste unitário mocka 4+ repos | Dividir queries ou repository |
+| Início da **fase 6** | `CharactersService` → handlers + aggregate |
+
+Rule Cursor: `.cursor/rules/application-layer.mdc`
+
 ## Rules e skills
 
 | Tema | Rule | Skill |
 |------|------|-------|
 | Contextos | `bounded-contexts` | `nestjs-bounded-context` |
+| Camada aplicação | `application-layer` | `cqrs-catalog-vs-game` |
 | Catálogo thin | `catalog-thin-layer` | — |
 | Game DDD | `game-domain` | `cqrs-catalog-vs-game` |
 

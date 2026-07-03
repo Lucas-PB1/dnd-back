@@ -24,7 +24,11 @@ import {
 import { SupabaseAuthGuard } from '../../identity/guards/supabase-auth.guard';
 import { CurrentUser } from '../../identity/decorators/current-user.decorator';
 import { AuthUser } from '../../identity/auth-user';
-import { CharactersService } from './characters.service';
+import { ListCharactersQuery } from './application/list-characters.query';
+import { GetCharacterQuery } from './application/get-character.query';
+import { CreateCharacterHandler } from './application/create-character.handler';
+import { UpdateCharacterHandler } from './application/update-character.handler';
+import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { CharacterResponseDto } from './dto/character-response.dto';
@@ -35,13 +39,19 @@ import { CharacterResponseDto } from './dto/character-response.dto';
 @UseGuards(SupabaseAuthGuard)
 @Controller('characters')
 export class CharactersController {
-  constructor(private readonly charactersService: CharactersService) {}
+  constructor(
+    private readonly listCharacters: ListCharactersQuery,
+    private readonly getCharacter: GetCharacterQuery,
+    private readonly createCharacter: CreateCharacterHandler,
+    private readonly updateCharacter: UpdateCharacterHandler,
+    private readonly deleteCharacter: DeleteCharacterHandler,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'List characters for the authenticated user' })
   @ApiOkResponse({ type: [CharacterResponseDto] })
   findAll(@CurrentUser() user: AuthUser): Promise<CharacterResponseDto[]> {
-    return this.charactersService.findAllForUser(user.id);
+    return this.listCharacters.execute(user.id);
   }
 
   @Get(':id')
@@ -52,7 +62,7 @@ export class CharactersController {
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<CharacterResponseDto> {
-    return this.charactersService.findOneForUser(user.id, id);
+    return this.getCharacter.execute(user.id, id);
   }
 
   @Post()
@@ -62,7 +72,7 @@ export class CharactersController {
     @CurrentUser() user: AuthUser,
     @Body() dto: CreateCharacterDto,
   ): Promise<CharacterResponseDto> {
-    return this.charactersService.create(user.id, dto);
+    return this.createCharacter.execute(user.id, dto);
   }
 
   @Patch(':id')
@@ -74,7 +84,7 @@ export class CharactersController {
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UpdateCharacterDto,
   ): Promise<CharacterResponseDto> {
-    return this.charactersService.update(user.id, id, dto);
+    return this.updateCharacter.execute(user.id, id, dto);
   }
 
   @Delete(':id')
@@ -86,6 +96,6 @@ export class CharactersController {
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<void> {
-    return this.charactersService.remove(user.id, id);
+    return this.deleteCharacter.execute(user.id, id);
   }
 }

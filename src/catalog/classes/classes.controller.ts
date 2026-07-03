@@ -8,20 +8,34 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
-import { ClassesService } from './classes.service';
+import { FindClassesQuery } from './queries/find-classes.query';
+import { FindClassBySlugQuery } from './queries/find-class-by-slug.query';
+import { FindClassSubclassesQuery } from './queries/find-class-subclasses.query';
+import { FindClassSpellsQuery } from './queries/find-class-spells.query';
+import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query';
+import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
+import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { ClassResponseDto } from './dto/class-response.dto';
 import { ClassSpellsQueryDto } from './dto/class-spells-query.dto';
 
 @ApiTags('catalog-classes')
 @Controller('classes')
 export class ClassesController {
-  constructor(private readonly classesService: ClassesService) {}
+  constructor(
+    private readonly findClasses: FindClassesQuery,
+    private readonly findClassBySlug: FindClassBySlugQuery,
+    private readonly findClassSubclasses: FindClassSubclassesQuery,
+    private readonly findClassSpells: FindClassSpellsQuery,
+    private readonly findClassSpellSlots: FindClassSpellSlotsQuery,
+    private readonly findClassEquipment: FindClassEquipmentQuery,
+    private readonly findClassSkills: FindClassSkillsQuery,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'List PHB classes (paginated)' })
   @ApiOkResponse({ description: 'Paginated class list' })
   findAll(@Query() query: PaginationQueryDto) {
-    return this.classesService.findAll(query.page, query.limit);
+    return this.findClasses.execute(query.page, query.limit);
   }
 
   @Get(':slug/subclasses')
@@ -30,7 +44,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated subclass list' })
   @ApiNotFoundResponse({ description: 'Class not found' })
   findSubclasses(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.classesService.findSubclassesByClassSlug(slug, query.page, query.limit);
+    return this.findClassSubclasses.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug/spells')
@@ -40,7 +54,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated class spell list' })
   @ApiNotFoundResponse({ description: 'Class not found' })
   findSpells(@Param('slug') slug: string, @Query() query: ClassSpellsQueryDto) {
-    return this.classesService.findSpellsByClassSlug(slug, query.page, query.limit, query.maxLevel);
+    return this.findClassSpells.execute(slug, query.page, query.limit, query.maxLevel);
   }
 
   @Get(':slug/spell-slots')
@@ -49,7 +63,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated spell slot table' })
   @ApiNotFoundResponse({ description: 'Class not found or no spellcasting' })
   findSpellSlots(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.classesService.findSpellSlotsByClassSlug(slug, query.page, query.limit);
+    return this.findClassSpellSlots.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug/equipment')
@@ -58,7 +72,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated starting equipment list' })
   @ApiNotFoundResponse({ description: 'Class not found or no equipment data' })
   findEquipment(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.classesService.findEquipmentByClassSlug(slug, query.page, query.limit);
+    return this.findClassEquipment.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug/skills')
@@ -67,7 +81,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated class skill list' })
   @ApiNotFoundResponse({ description: 'Class not found or no skill pool' })
   findSkills(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.classesService.findSkillsByClassSlug(slug, query.page, query.limit);
+    return this.findClassSkills.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug')
@@ -76,6 +90,6 @@ export class ClassesController {
   @ApiOkResponse({ type: ClassResponseDto })
   @ApiNotFoundResponse({ description: 'Class not found' })
   findOne(@Param('slug') slug: string): Promise<ClassResponseDto> {
-    return this.classesService.findBySlug(slug);
+    return this.findClassBySlug.execute(slug);
   }
 }

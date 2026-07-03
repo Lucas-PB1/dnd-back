@@ -1,0 +1,82 @@
+---
+description: Camada de aplicação — evitar services inchados; Query/Handler/Mapper por BC
+globs: src/catalog/**/*.ts,src/game/**/*.ts
+alwaysApply: false
+---
+
+# Application layer — evitar fat services
+
+Doc: [`docs/architecture.md`](../../docs/architecture.md#evitar-fat-services) · Skills: `nestjs-bounded-context`, `cqrs-catalog-vs-game`
+
+## Duas velocidades
+
+| BC | Alvo por arquivo | Padrão |
+|----|------------------|--------|
+| **Catalog** | &lt; ~80 linhas | Controller → **Query** (ou service fino) → view |
+| **Game** | Service some ou vira fachada | Controller → **Handler** → domain + repository |
+
+## Catalog (`src/catalog/`)
+
+- Controller → Query ou service fino → `@ViewEntity`
+- **Sem** pasta `domain/`, agregados ou command handlers
+- Regras PHB no **Postgres** (views/seeds), não no TypeScript
+
+### Extração (quando service &gt; 80 linhas ou 3+ repos)
+
+1. **Mapper** — `*.mapper.ts` (só `toXxxDto`)
+2. **Queries** — `queries/find-*.query.ts`, um arquivo por rota aninhada, método `execute()`
+3. **Lookup** — `assertXExists` em `CatalogLookupService`, não duplicar por módulo
+4. **Facade** opcional — só delega para queries; controller pode injetar queries direto
+
+```typescript
+// Convenção — Catalog query
+@Injectable()
+export class FindClassSpellsQuery {
+  async execute(classSlug: string, page: number, limit: number, maxLevel?: number) { /* ... */ }
+}
+```
+
+## Game (`src/game/`)
+
+- Controller: HTTP, guard, `@CurrentUser()` — **sem** lógica de negócio
+- **Handler** (`application/*.handler.ts`): orquestra DTO → domain → repository → mapper
+- **Repository** (`infrastructure/*.repository.ts`): TypeORM, `findOwnedOrFail`, save/remove
+- **Domain** (`domain/`): invariantes D&D (HP, nível, atributos)
+- **CatalogLookupService**: validar slugs PHB — **não** calcular HP
+
+```typescript
+// Convenção — Game handler
+@Injectable()
+export class CreateCharacterHandler {
+  async execute(userId: string, dto: CreateCharacterDto): Promise<CharacterResponseDto> { /* ... */ }
+}
+```
+
+Handlers manuais `@Injectable()` — **sem** `@nestjs/cqrs` obrigatório.
+
+## Responsabilidades
+
+| Peça | Faz | Não faz |
+|------|-----|---------|
+| Query (catalog) | Ler view, paginar, mapper | Regra D&D, `save()` |
+| Handler (game) | Orquestrar use case | SQL direto, regra complexa |
+| Repository | Persistência, ownership | Validar slug PHB |
+| Domain | Invariantes ficha | HTTP, TypeORM |
+| Mapper | Entity/view → DTO | Lógica de negócio |
+
+## Gatilhos de refatoração
+
+| Sinal | Ação |
+|-------|------|
+| Service catalog &gt; 80 linhas | Mapper + queries |
+| 3+ `toXxxDto` no mesmo arquivo | `*.mapper.ts` |
+| Regra “se… então…” D&D na ficha | `domain/` |
+| Teste mocka 4+ repositories | Dividir queries ou repository |
+| Início fase 6 | Refatorar `CharactersService` → handlers + aggregate |
+
+## Proibido
+
+- `domain/` em `catalog/`
+- `@nestjs/cqrs` só por estética
+- Duplicar regras PHB em TS no catalog (usar views)
+- Crescer `CharactersService` com lógica de fase 6

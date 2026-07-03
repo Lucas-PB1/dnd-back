@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbClass } from '../entities/views/v-phb-class.entity';
@@ -21,6 +21,30 @@ export class CatalogLookupService {
     @InjectRepository(PhbAlignment)
     private readonly alignmentsRepo: Repository<PhbAlignment>,
   ) {}
+
+  async findClassOrFail(classSlug: string): Promise<VPhbClass> {
+    const row = await this.classesRepo.findOne({ where: { classSlug } });
+    if (!row) {
+      throw new NotFoundException(`Class '${classSlug}' not found`);
+    }
+    return row;
+  }
+
+  async findSpeciesOrFail(speciesSlug: string): Promise<PhbSpecies> {
+    const row = await this.speciesRepo.findOne({ where: { slug: speciesSlug } });
+    if (!row) {
+      throw new NotFoundException(`Species '${speciesSlug}' not found`);
+    }
+    return row;
+  }
+
+  async findBackgroundOrFail(backgroundSlug: string): Promise<VPhbBackground> {
+    const row = await this.backgroundsRepo.findOne({ where: { backgroundSlug } });
+    if (!row) {
+      throw new NotFoundException(`Background '${backgroundSlug}' not found`);
+    }
+    return row;
+  }
 
   async assertClassSlug(classSlug: string): Promise<void> {
     const exists = await this.classesRepo.findOne({ where: { classSlug } });

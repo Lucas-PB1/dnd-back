@@ -6,12 +6,39 @@ import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
 import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-choice.entity';
+import { CatalogLookupModule } from '../catalog-lookup.module';
 import { ClassesController } from './classes.controller';
-import { ClassesService } from './classes.service';
+import { ClassesMapper } from './classes.mapper';
+import { FindClassesQuery } from './queries/find-classes.query';
+import { FindClassBySlugQuery } from './queries/find-class-by-slug.query';
+import { FindClassSubclassesQuery } from './queries/find-class-subclasses.query';
+import { FindClassSpellsQuery } from './queries/find-class-spells.query';
+import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query';
+import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
+import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([VPhbClass, VPhbSubclass, VSpellByClass, VClassSpellSlots, VPhbClassEquipment, VPhbClassSkillChoice])],
+  imports: [
+    TypeOrmModule.forFeature([
+      VPhbClass,
+      VPhbSubclass,
+      VSpellByClass,
+      VClassSpellSlots,
+      VPhbClassEquipment,
+      VPhbClassSkillChoice,
+    ]),
+    CatalogLookupModule,
+  ],
   controllers: [ClassesController],
-  providers: [ClassesService],
+  providers: [
+    ClassesMapper,
+    FindClassesQuery,
+    FindClassBySlugQuery,
+    FindClassSubclassesQuery,
+    FindClassSpellsQuery,
+    FindClassSpellSlotsQuery,
+    FindClassEquipmentQuery,
+    FindClassSkillsQuery,
+  ],
 })
 export class ClassesModule {}

@@ -7,19 +7,23 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
-import { FeatsService } from './feats.service';
+import { FindFeatsQuery } from './queries/find-feats.query';
+import { FindFeatBySlugQuery } from './queries/find-feat-by-slug.query';
 import { FeatResponseDto } from './dto/feat-response.dto';
 
 @ApiTags('catalog-feats')
 @Controller('feats')
 export class FeatsController {
-  constructor(private readonly featsService: FeatsService) {}
+  constructor(
+    private readonly findFeats: FindFeatsQuery,
+    private readonly findFeatBySlug: FindFeatBySlugQuery,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'List PHB feats (paginated)' })
   @ApiOkResponse({ description: 'Paginated feat list' })
   findAll(@Query() query: PaginationQueryDto) {
-    return this.featsService.findAll(query.page, query.limit);
+    return this.findFeats.execute(query.page, query.limit);
   }
 
   @Get(':slug')
@@ -28,6 +32,6 @@ export class FeatsController {
   @ApiOkResponse({ type: FeatResponseDto })
   @ApiNotFoundResponse({ description: 'Feat not found' })
   findOne(@Param('slug') slug: string): Promise<FeatResponseDto> {
-    return this.featsService.findBySlug(slug);
+    return this.findFeatBySlug.execute(slug);
   }
 }

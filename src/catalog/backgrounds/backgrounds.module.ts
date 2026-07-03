@@ -2,12 +2,24 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { VPhbBackground } from '../../entities/views/v-phb-background.entity';
 import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
+import { CatalogLookupModule } from '../catalog-lookup.module';
 import { BackgroundsController } from './backgrounds.controller';
-import { BackgroundsService } from './backgrounds.service';
+import { BackgroundsMapper } from './backgrounds.mapper';
+import { FindBackgroundsQuery } from './queries/find-backgrounds.query';
+import { FindBackgroundBySlugQuery } from './queries/find-background-by-slug.query';
+import { FindBackgroundEquipmentQuery } from './queries/find-background-equipment.query';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([VPhbBackground, VPhbBackgroundEquipment])],
+  imports: [
+    TypeOrmModule.forFeature([VPhbBackground, VPhbBackgroundEquipment]),
+    CatalogLookupModule,
+  ],
   controllers: [BackgroundsController],
-  providers: [BackgroundsService],
+  providers: [
+    BackgroundsMapper,
+    FindBackgroundsQuery,
+    FindBackgroundBySlugQuery,
+    FindBackgroundEquipmentQuery,
+  ],
 })
 export class BackgroundsModule {}

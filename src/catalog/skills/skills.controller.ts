@@ -7,19 +7,23 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
-import { SkillsService } from './skills.service';
+import { FindSkillsQuery } from './queries/find-skills.query';
+import { FindSkillBySlugQuery } from './queries/find-skill-by-slug.query';
 import { SkillResponseDto } from './dto/skill-response.dto';
 
 @ApiTags('catalog-skills')
 @Controller('skills')
 export class SkillsController {
-  constructor(private readonly skillsService: SkillsService) {}
+  constructor(
+    private readonly findSkills: FindSkillsQuery,
+    private readonly findSkillBySlug: FindSkillBySlugQuery,
+  ) {}
 
   @Get()
   @ApiOperation({ summary: 'List PHB skills (paginated)' })
   @ApiOkResponse({ description: 'Paginated skill list' })
   findAll(@Query() query: PaginationQueryDto) {
-    return this.skillsService.findAll(query.page, query.limit);
+    return this.findSkills.execute(query.page, query.limit);
   }
 
   @Get(':slug')
@@ -28,6 +32,6 @@ export class SkillsController {
   @ApiOkResponse({ type: SkillResponseDto })
   @ApiNotFoundResponse({ description: 'Skill not found' })
   findOne(@Param('slug') slug: string): Promise<SkillResponseDto> {
-    return this.skillsService.findBySlug(slug);
+    return this.findSkillBySlug.execute(slug);
   }
 }
