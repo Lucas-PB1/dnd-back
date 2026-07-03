@@ -1,5 +1,5 @@
 -- DEV ONLY — apaga todo o schema rpg. Nunca rodar em produção/staging.
--- Uso: composto em seed-all.sql ou psql -f database/dev-reset.sql
+-- Uso: psql -f database/dev-reset.sql (ou npm run seed:run)
 
 DROP SCHEMA IF EXISTS rpg CASCADE;
 CREATE SCHEMA rpg;
