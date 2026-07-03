@@ -2,6 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbClass } from '../../entities/views/v-phb-class.entity';
+import { PaginatedResponseDto, paginate } from '../../common/dto/pagination.dto';
 import { ClassResponseDto } from './dto/class-response.dto';
 
 @Injectable()
@@ -11,9 +12,10 @@ export class ClassesService {
     private readonly classesRepo: Repository<VPhbClass>,
   ) {}
 
-  async findAll(): Promise<ClassResponseDto[]> {
+  async findAll(page = 1, limit = 20): Promise<PaginatedResponseDto<ClassResponseDto>> {
     const rows = await this.classesRepo.find({ order: { className: 'ASC' } });
-    return rows.map((row) => this.toDto(row));
+    const dtos = rows.map((row) => this.toDto(row));
+    return paginate(dtos, page, limit);
   }
 
   async findBySlug(slug: string): Promise<ClassResponseDto> {

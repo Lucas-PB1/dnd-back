@@ -49,7 +49,11 @@ Detalhes: [`database/migrations/README.md`](database/migrations/README.md)
 npm install
 npm run start:dev          # desenvolvimento local
 npm run vercel:dev         # simula runtime Vercel
+npm test                   # unit tests
+npm run test:e2e           # E2E (requer DATABASE_URL + catálogo aplicado)
 ```
+
+Swagger (dev): **http://localhost:3000/api**
 
 Variáveis (`.env`):
 
@@ -61,10 +65,19 @@ FRONTEND_URL=http://localhost:3001
 PORT=3000
 ```
 
-Endpoints piloto:
+Endpoints (catálogo P0):
 
-- `GET /classes` — lista classes (`rpg.v_phb_class`)
-- `GET /classes/:slug` — detalhe por slug
+| Rota | Descrição |
+|------|-----------|
+| `GET /health` | Status da API e conexão DB |
+| `GET /classes` | Lista classes (paginado: `{ data, meta }`) |
+| `GET /classes/:slug` | Detalhe por slug (ex.: `fighter`) |
+| `GET /species` | Lista espécies (paginado) |
+| `GET /species/:slug` | Detalhe por slug (ex.: `dwarf`) |
+| `GET /backgrounds` | Lista antecedentes (paginado) |
+| `GET /backgrounds/:slug` | Detalhe por slug (ex.: `acolyte`) |
+
+Query de paginação: `?page=1&limit=20` (default 20, max 100). Slugs em **inglês** (como no seed).
 
 ## Stack (decisão de infra)
 

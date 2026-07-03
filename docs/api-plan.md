@@ -52,8 +52,8 @@ flowchart LR
 | Prioridade | Recurso REST | Uso no app |
 |------------|--------------|------------|
 | P0 | `GET /classes`, `/classes/:slug` | Escolha de classe | ✅ feito |
-| P0 | `GET /species`, `/species/:slug` | Escolha de espécie |
-| P0 | `GET /backgrounds`, `/backgrounds/:slug` | Antecedente |
+| P0 | `GET /species`, `/species/:slug` | Escolha de espécie | ✅ feito |
+| P0 | `GET /backgrounds`, `/backgrounds/:slug` | Antecedente | ✅ feito |
 | P0 | `GET /classes/:slug/subclasses` | Subclasse |
 | P1 | `GET /spells`, `/spells/:slug` | Grimoire / detalhe |
 | P1 | `GET /classes/:slug/spells?maxLevel=` | Lista de magias por classe |
@@ -91,26 +91,26 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 
 | Item | Arquivo / pacote | Checklist |
 |------|------------------|-----------|
-| Filtro global de erros | `common/filters/http-exception.filter.ts` | [ ] |
-| Formato de erro JSON | `{ statusCode, message, error?, path, timestamp }` | [ ] |
-| Paginação | `common/dto/pagination-query.dto.ts`, `PaginatedResponseDto` | [ ] |
-| Health | `GET /health` → `{ status, db }` | [ ] |
-| Swagger | `@nestjs/swagger` em `main.ts`, prefixo `/api` | [ ] |
-| ValidationPipe global | `whitelist`, `transform` | [ ] |
+| Filtro global de erros | `common/filters/http-exception.filter.ts` | [x] |
+| Formato de erro JSON | `{ statusCode, message, error?, path, timestamp }` | [x] |
+| Paginação | `common/dto/pagination.dto.ts`, `PaginatedResponseDto` | [x] |
+| Health | `GET /health` → `{ status, db }` | [x] |
+| Swagger | `@nestjs/swagger` em `main.ts`, prefixo `/api` | [x] |
+| ValidationPipe global | `whitelist`, `transform` | [x] |
 
 ### Módulos de catálogo
 
 | Módulo | Rotas | View / fonte | Prioridade | Status |
 |--------|-------|--------------|------------|--------|
-| **classes** | `GET /classes`, `GET /classes/:slug` | `v_phb_class` | P0 | [~] |
+| **classes** | `GET /classes`, `GET /classes/:slug` | `v_phb_class` | P0 | [x] |
 | **classes** | `GET /classes/:slug/subclasses` | `v_phb_subclass` | P0 | [ ] |
 | **classes** | `GET /classes/:slug/spell-slots` | `v_class_spell_slots` | P1 | [ ] |
 | **classes** | `GET /classes/:slug/spells` | `v_spell_by_class` | P1 | [ ] |
 | **classes** | `GET /classes/:slug/skills` | `v_phb_class_skill_choice` | P2 | [ ] |
 | **classes** | `GET /classes/:slug/equipment` | `v_phb_class_equipment` | P1 | [ ] |
-| **species** | `GET /species`, `GET /species/:slug` | `phb_species` + traits view | P0 | [ ] |
+| **species** | `GET /species`, `GET /species/:slug` | `phb_species` + traits view | P0 | [x] |
 | **species** | `GET /species/:slug/trait-choices` | `v_phb_species_trait_choices` | P2 | [ ] |
-| **backgrounds** | `GET /backgrounds`, `GET /backgrounds/:slug` | `v_phb_background` | P0 | [ ] |
+| **backgrounds** | `GET /backgrounds`, `GET /backgrounds/:slug` | `v_phb_background` | P0 | [x] |
 | **backgrounds** | `GET /backgrounds/:slug/equipment` | `v_phb_background_equipment` | P1 | [ ] |
 | **subclasses** | `GET /subclasses/:slug` | `v_phb_subclass` | P1 | [ ] |
 | **subclasses** | `GET /subclasses/:slug/mechanics` | `v_phb_subclass_mechanics` | P2 | [ ] |
@@ -172,10 +172,10 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 
 ### Checklist errors
 
-- [ ] `AllExceptionsFilter` ou `HttpExceptionFilter` global
+- [x] `HttpExceptionFilter` global
 - [ ] Log estruturado server-side (sem vazar stack ao client em prod)
 - [ ] Mensagens em PT para `message` user-facing (opcional v1)
-- [ ] Testes E2E: 404 em slug inexistente por recurso
+- [x] Testes E2E: 404 em slug inexistente por recurso
 
 ---
 
@@ -196,15 +196,15 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
 ### Checklist Swagger
 
-- [ ] Instalar `@nestjs/swagger`
-- [ ] `@ApiTags('catalog-classes')` por controller
-- [ ] `@ApiProperty()` em todos os response DTOs
-- [ ] `@ApiParam({ name: 'slug' })` em rotas `:slug`
-- [ ] `@ApiQuery` para paginação e filtros (`maxLevel`, `page`, `limit`)
-- [ ] `@ApiOkResponse({ type: ClassResponseDto })`
-- [ ] `@ApiNotFoundResponse()` nos GET `:slug`
+- [x] Instalar `@nestjs/swagger`
+- [x] `@ApiTags('catalog-*')` por controller
+- [x] `@ApiProperty()` em todos os response DTOs (P0)
+- [x] `@ApiParam({ name: 'slug' })` em rotas `:slug`
+- [~] `@ApiQuery` para paginação e filtros (`maxLevel`, `page`, `limit`)
+- [x] `@ApiOkResponse({ type: *ResponseDto })`
+- [x] `@ApiNotFoundResponse()` nos GET `:slug`
 - [ ] Export OpenAPI JSON em CI (opcional) → `openapi.json`
-- [ ] README: link `http://localhost:3000/api` em dev
+- [x] README: link `http://localhost:3000/api` em dev
 
 ---
 
@@ -252,8 +252,8 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
 Para cada módulo catalog novo:
 
-- [ ] `*.service.spec.ts` — mock repository, findAll, findBySlug, 404
-- [ ] `*.e2e-spec.ts` — GET lista 200, GET slug válido 200, slug inválido 404
+- [x] `*.service.spec.ts` — mock repository, findAll, findBySlug, 404 (classes, species, backgrounds)
+- [~] `*.e2e-spec.ts` — GET lista 200, GET slug válido 200, slug inválido 404 (`test/catalog.e2e-spec.ts` consolidado)
 - [ ] DTO snapshot ou assert campos obrigatórios
 - [ ] `npm run test:cov` no CI
 
@@ -264,7 +264,7 @@ Para cada módulo catalog novo:
   "test": "jest",
   "test:watch": "jest --watch",
   "test:cov": "jest --coverage",
-  "test:e2e": "jest --config ./test/jest-e2e.json"
+  "test:e2e": "jest --config ./test/jest-e2e.config.js"
 }
 ```
 
@@ -317,11 +317,11 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 
 | Área | Progresso |
 |------|-----------|
-| Infra API (errors, swagger, health) | 0% |
-| Catálogo P0 | ~15% ( só classes ) |
+| Infra API (errors, swagger, health) | **100%** (fase 1) |
+| Catálogo P0 | **~75%** (classes, species, backgrounds — falta subclasses) |
 | Catálogo P1–P2 | 0% |
-| Testes | 0% |
+| Testes | **~40%** (unit P0 + E2E consolidado; CI/cov pendente) |
 | Auth | 0% (deferido) |
 | Game | 0% |
 
-**Última revisão:** 2026-07-03
+**Última revisão:** 2026-07-03 — fase 1 + P0 species/backgrounds validados (`build`, `test`, `test:e2e` OK)
