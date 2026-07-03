@@ -60,12 +60,12 @@ flowchart LR
 | P1 | `GET /classes/:slug/spell-slots` | Tabela de slots | ✅ feito |
 | P1 | `GET /backgrounds/:slug/equipment` | Equipamento inicial | ✅ feito |
 | P1 | `GET /classes/:slug/equipment` | Equipamento inicial | ✅ feito |
-| P2 | `GET /feats`, `/feats/:slug` | Talentos |
-| P2 | `GET /skills`, `/abilities` | Referência UI |
-| P2 | `GET /weapons`, `/armor` | Equipamento |
-| P2 | `GET /species/:slug/traits` | Traços e escolhas |
-| P3 | `GET /alignments`, `/languages` | Formulário |
-| P3 | `GET /character-levels` | Tabela XP / PB |
+| P2 | `GET /feats`, `/feats/:slug` | Talentos | ✅ feito |
+| P2 | `GET /skills`, `/abilities` | Referência UI | ✅ feito |
+| P2 | `GET /weapons`, `/armor` | Equipamento | ✅ feito |
+| P2 | `GET /species/:slug/traits` | Traços e escolhas | ✅ feito |
+| P3 | `GET /alignments`, `/languages` | Formulário | ✅ feito |
+| P3 | `GET /character-levels` | Tabela XP / PB | ✅ feito |
 | — | `POST /characters` … | **Fase Game + Auth** |
 
 ---
@@ -106,24 +106,24 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 | **classes** | `GET /classes/:slug/subclasses` | `v_phb_subclass` | P0 | [x] |
 | **classes** | `GET /classes/:slug/spell-slots` | `v_class_spell_slots` | P1 | [x] |
 | **classes** | `GET /classes/:slug/spells` | `v_spell_by_class` | P1 | [x] |
-| **classes** | `GET /classes/:slug/skills` | `v_phb_class_skill_choice` | P2 | [ ] |
+| **classes** | `GET /classes/:slug/skills` | `v_phb_class_skill_choice` | P2 | [x] |
 | **classes** | `GET /classes/:slug/equipment` | `v_phb_class_equipment` | P1 | [x] |
 | **species** | `GET /species`, `GET /species/:slug` | `phb_species` + traits view | P0 | [x] |
-| **species** | `GET /species/:slug/trait-choices` | `v_phb_species_trait_choices` | P2 | [ ] |
+| **species** | `GET /species/:slug/trait-choices` | `v_phb_species_trait_choices` | P2 | [x] |
 | **backgrounds** | `GET /backgrounds`, `GET /backgrounds/:slug` | `v_phb_background` | P0 | [x] |
 | **backgrounds** | `GET /backgrounds/:slug/equipment` | `v_phb_background_equipment` | P1 | [x] |
 | **subclasses** | `GET /subclasses/:slug` | `v_phb_subclass` | P1 | [ ] |
 | **subclasses** | `GET /subclasses/:slug/mechanics` | `v_phb_subclass_mechanics` | P2 | [ ] |
 | **subclasses** | `GET /subclasses/:slug/spells` | `v_phb_subclass_prepared_spell` | P2 | [ ] |
 | **spells** | `GET /spells`, `GET /spells/:slug` | `v_phb_spell` | P1 | [x] |
-| **feats** | `GET /feats`, `GET /feats/:slug` | `v_phb_feat` | P2 | [ ] |
-| **skills** | `GET /skills`, `GET /skills/:slug` | `phb_skill` + ability | P2 | [ ] |
-| **abilities** | `GET /abilities` | `phb_ability` | P2 | [ ] |
-| **equipment** | `GET /weapons`, `GET /weapons/:slug` | `phb_weapon` + item | P2 | [ ] |
-| **equipment** | `GET /armor`, `GET /armor/:slug` | `v_phb_armor` | P2 | [ ] |
-| **reference** | `GET /alignments` | `phb_alignment` | P3 | [ ] |
-| **reference** | `GET /languages` | `phb_language` | P3 | [ ] |
-| **reference** | `GET /character-levels` | `phb_character_level` | P3 | [ ] |
+| **feats** | `GET /feats`, `GET /feats/:slug` | `v_phb_feat` | P2 | [x] |
+| **skills** | `GET /skills`, `GET /skills/:slug` | `phb_skill` + ability | P2 | [x] |
+| **abilities** | `GET /abilities` | `phb_ability` | P2 | [x] |
+| **equipment** | `GET /weapons`, `GET /weapons/:slug` | `phb_weapon` + item | P2 | [x] |
+| **equipment** | `GET /armor`, `GET /armor/:slug` | `v_phb_armor` | P2 | [x] |
+| **reference** | `GET /alignments` | `phb_alignment` | P3 | [x] |
+| **reference** | `GET /languages` | `phb_language` | P3 | [x] |
+| **reference** | `GET /character-levels` | `phb_character_level` | P3 | [x] |
 
 ### BC Identity (fase 5 — final)
 
@@ -319,10 +319,11 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 |------|-----------|
 | Infra API (errors, swagger, health) | **100%** (fase 1) |
 | Catálogo P0 | **100%** |
-| Catálogo P1 | **100%** (spells, spell-slots, equipment nested) |
-| Catálogo P2 | 0% |
-| Testes | **~50%** (unit + E2E P0/P1; CI/cov pendente) |
+| Catálogo P1 | **100%** |
+| Catálogo P2 | **100%** (feats, skills, abilities, weapons, armor, species traits) |
+| Catálogo P3 | **100%** (alignments, languages, character-levels) |
+| Testes | **~65%** (unit + E2E P0–P3; CI/cov pendente) |
 | Auth | 0% (deferido) |
 | Game | 0% |
 
-**Última revisão:** 2026-07-03 — fase 3 P1 completa (spells + nested)
+**Última revisão:** 2026-07-03 — catálogo P0–P3 completo

@@ -7,6 +7,7 @@ import { FeatsModule } from './feats/feats.module';
 import { SkillsModule } from './skills/skills.module';
 import { AbilitiesModule } from './abilities/abilities.module';
 import { EquipmentModule } from './equipment/equipment.module';
+import { ReferenceModule } from './reference/reference.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { EquipmentModule } from './equipment/equipment.module';
     SkillsModule,
     AbilitiesModule,
     EquipmentModule,
+    ReferenceModule,
   ],
 })
 export class CatalogModule {}

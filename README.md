@@ -79,6 +79,17 @@ Endpoints (catálogo P0):
 | `GET /spells` | Lista de magias (paginado, 391+) |
 | `GET /spells/:slug` | Detalhe da magia (ex.: `alarme`) |
 | `GET /backgrounds/:slug/equipment` | Equipamento inicial do antecedente |
+| `GET /feats`, `/feats/:slug` | Talentos PHB |
+| `GET /skills`, `/skills/:slug` | Perícias + atributo |
+| `GET /abilities` | Atributos (FOR, DES, …) |
+| `GET /weapons`, `/weapons/:slug` | Armas |
+| `GET /armor`, `/armor/:slug` | Armaduras |
+| `GET /classes/:slug/skills` | Pool de perícias da classe |
+| `GET /species/:slug/traits` | Traços raciais |
+| `GET /species/:slug/trait-choices` | Opções de linhagem/ancestralidade |
+| `GET /alignments` | Tendências (9 alinhamentos) |
+| `GET /languages` | Idiomas PHB |
+| `GET /character-levels` | Nível, PB e XP (1–20) |
 | `GET /species` | Lista espécies (paginado) |
 | `GET /species/:slug` | Detalhe por slug (ex.: `dwarf`) |
 | `GET /backgrounds` | Lista antecedentes (paginado) |

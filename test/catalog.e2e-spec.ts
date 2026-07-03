@@ -170,6 +170,31 @@ describe('Catalog API (e2e)', () => {
         expect(res.body.data.length).toBeGreaterThan(0);
       }));
 
+  it('GET /alignments', () =>
+    request(app.getHttpServer())
+      .get('/alignments')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBe(9);
+      }));
+
+  it('GET /languages', () =>
+    request(app.getHttpServer())
+      .get('/languages')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBeGreaterThanOrEqual(10);
+      }));
+
+  it('GET /character-levels', () =>
+    request(app.getHttpServer())
+      .get('/character-levels')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBe(20);
+        expect(res.body.data[0].level).toBe(1);
+      }));
+
   it('GET /backgrounds/invalid returns 404', () =>
     request(app.getHttpServer()).get('/backgrounds/invalid').expect(404));
 });
