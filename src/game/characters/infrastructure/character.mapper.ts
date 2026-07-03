@@ -1,10 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PlayerCharacter } from './player-character.entity';
 import { CharacterResponseDto } from '../dto/character-response.dto';
+import { CharacterDomainService } from '../domain/character-domain.service';
 
 @Injectable()
 export class CharacterMapper {
-  toDto(row: PlayerCharacter): CharacterResponseDto {
+  constructor(private readonly domain: CharacterDomainService) {}
+
+  async toDto(row: PlayerCharacter): Promise<CharacterResponseDto> {
+    const proficiencyBonus = await this.domain.getProficiencyBonus(row.level);
     return {
       id: row.id,
       name: row.name,
@@ -17,12 +21,13 @@ export class CharacterMapper {
       abilityScores: row.abilityScores,
       hitPointsMax: row.hitPointsMax,
       hitPointsCurrent: row.hitPointsCurrent,
+      proficiencyBonus,
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     };
   }
 
-  toDtoList(rows: PlayerCharacter[]): CharacterResponseDto[] {
-    return rows.map((row) => this.toDto(row));
+  async toDtoList(rows: PlayerCharacter[]): Promise<CharacterResponseDto[]> {
+    return Promise.all(rows.map((row) => this.toDto(row)));
   }
 }

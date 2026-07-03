@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { CharacterFactory } from '../domain/character.factory';
+import { CharacterDomainService } from '../domain/character-domain.service';
 import { CharacterRepository } from '../infrastructure/character.repository';
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { CreateCharacterDto } from '../dto/create-character.dto';
@@ -10,6 +11,7 @@ import { CharacterResponseDto } from '../dto/character-response.dto';
 export class CreateCharacterHandler {
   constructor(
     private readonly catalogLookup: CatalogLookupService,
+    private readonly domain: CharacterDomainService,
     private readonly repository: CharacterRepository,
     private readonly mapper: CharacterMapper,
   ) {}
@@ -24,6 +26,11 @@ export class CreateCharacterHandler {
     });
 
     const entity = this.repository.create(CharacterFactory.buildNew(userId, dto));
+    await this.domain.applyDerivedHitPoints(entity, {
+      hitPointsMax: dto.hitPointsMax,
+      hitPointsCurrent: dto.hitPointsCurrent,
+    });
+
     const saved = await this.repository.save(entity);
     return this.mapper.toDto(saved);
   }

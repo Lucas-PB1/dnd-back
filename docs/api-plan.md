@@ -141,7 +141,7 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 | **characters** | `GET /characters`, `GET /characters/:id` | [x] |
 | **characters** | `POST /characters`, `PATCH /characters/:id` | [x] |
 | **characters** | `DELETE /characters/:id` | [x] |
-| **characters** | Domain: HP, level, validação slugs PHB | [~] |
+| **characters** | Domain: HP, level, validação slugs PHB | [~] (HP auto + PB na resposta; aggregate completo pendente) |
 
 ---
 
@@ -224,8 +224,8 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
 - [x] `CatalogLookupService` — validar slugs (class, species, background, alignment, subclass)
 - [ ] Documentar em Swagger descrições D&D (school, ritual, concentration)
-- [ ] Fase 6: `CharacterDomainService` — HP, proficiency bonus from `character-levels`
-- [ ] Testes unitários de domain com casos PHB (Guerreiro d10, Mago d6)
+- [x] Fase 6: `CharacterDomainService` — HP, proficiency bonus from `character-levels`
+- [x] Testes unitários de domain com casos PHB (Guerreiro d10, Mago d6)
 
 ### Checklist refatoração application layer (fase 6)
 
@@ -239,7 +239,7 @@ Migrado para handlers + repository + mapper em [`src/game/characters/`](../src/g
 | `UpdateCharacterHandler` | [x] |
 | `DeleteCharacterHandler` | [x] |
 | `ListCharactersQuery` / `GetCharacterQuery` | [x] |
-| `Character` aggregate + VOs (HP, level) | [ ] (`CharacterFactory` com level; aggregate completo pendente) |
+| `Character` aggregate + VOs (HP, level) | [~] (`CharacterDomainService` + calc HP; aggregate/VOs imutáveis pendente) |
 | Controller injeta handlers (service removido ou vira facade) | [x] |
 | Testes unitários por handler + domain (não service monolítico) | [x] |
 
@@ -342,6 +342,6 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 | Catálogo P3 | **100%** (alignments, languages, character-levels) |
 | Testes | **~65%** (unit + E2E P0–P3; CI/cov pendente) |
 | Auth | **~80%** (JWT guard + CRUD fichas; RLS Supabase pendente) |
-| Game | **~40%** (CRUD; domain HP/level fase 6) |
+| Game | **~55%** (CRUD + HP/PB domain; aggregate/VOs pendente) |
 
-**Última revisão:** 2026-07-03 — fase 5: Identity + characters CRUD
+**Última revisão:** 2026-07-03 — fase 6: domain HP + proficiency bonus

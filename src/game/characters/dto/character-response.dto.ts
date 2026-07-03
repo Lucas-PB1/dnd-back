@@ -74,6 +74,9 @@ export class CharacterResponseDto {
   @ApiPropertyOptional()
   hitPointsCurrent!: number | null;
 
+  @ApiProperty({ example: 2, description: 'Proficiency bonus from PHB character level table' })
+  proficiencyBonus!: number;
+
   @ApiProperty()
   createdAt!: string;
 
