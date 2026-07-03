@@ -58,6 +58,18 @@ function mapEquipmentSlot(slot) {
   return `${sqlStr(mapped)}::rpg.equipment_slot`;
 }
 
+function buildFeatOptions(f) {
+  const options = {};
+  if (f.resilient) options.resilient = f.resilient;
+  if (f.elementalAdept) options.elementalAdept = f.elementalAdept;
+  if (f.skillExpert) options.skillExpert = f.skillExpert;
+  if (f.featSkillChoice) options.featSkillChoice = f.featSkillChoice;
+  if (f.castingAbilityId) options.castingAbilityId = f.castingAbilityId;
+  if (f.ritualCaster) options.ritualCaster = f.ritualCaster;
+  if (f.featSpells) options.featSpells = f.featSpells;
+  return Object.keys(options).length ? options : null;
+}
+
 export function buildCharacterRows(char) {
   const ag = char.abilityGeneration ?? {};
   const hp = char.hp ?? {};
@@ -92,6 +104,7 @@ export function buildCharacterRows(char) {
     ac_fighting_style_bonus: sqlInt(ac.fightingStyleBonus ?? 0),
     ac_other_bonus: sqlInt(ac.otherBonus ?? 0),
     passive_perception: sqlInt(char.passivePerception),
+    species_traits: char.speciesTraits ? sqlJson(char.speciesTraits) : "NULL",
     notes: sqlStr(char.notes ?? null),
   };
 
@@ -159,11 +172,13 @@ export function buildCharacterRows(char) {
     if (Object.keys(rest).length) {
       throw new Error(`feat ${featId} com opções não mapeadas: ${Object.keys(rest).join(", ")}`);
     }
+    const options = buildFeatOptions(f);
     return {
       character_id: sqlStr(char.id),
       feat_id: sqlRef("phb_feat", featId),
       source: `${sqlStr(source)}::rpg.feat_source`,
       unlock_level: sqlInt(unlockLevel),
+      options: options ? sqlJson(options) : "NULL",
     };
   });
 

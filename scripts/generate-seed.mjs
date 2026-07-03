@@ -1,5 +1,5 @@
 /**
- * Gera database/seed-all.sql (dev-reset + schema + PHB).
+ * Gera arquivos em database/seeds/ a partir do PHB JSON.
  * Produção: npm run migrate:run && npm run seed:prod
  */
 import fs from "fs";
@@ -9,6 +9,7 @@ import { spawnSync } from "child_process";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
+const seedsDir = path.join(root, "database", "seeds");
 
 function run(script) {
   const r = spawnSync(process.execPath, [path.join(__dirname, script)], {
@@ -18,24 +19,14 @@ function run(script) {
   if (r.status !== 0) process.exit(r.status ?? 1);
 }
 
+fs.mkdirSync(seedsDir, { recursive: true });
 run("seed-phb.mjs");
+run("generate-seed-subclass-mechanics.mjs");
 
-const devReset = fs.readFileSync(path.join(root, "database/dev-reset.sql"), "utf8");
-const schema = fs.readFileSync(path.join(root, "database/schema.sql"), "utf8");
-const phb = fs.readFileSync(path.join(root, "database/seed-phb.sql"), "utf8");
+const files = fs
+  .readdirSync(seedsDir)
+  .filter((f) => f.endsWith(".sql"))
+  .sort();
 
-const all = `-- RPG — bootstrap DEV ONLY (dev-reset + schema + seed PHB)
--- Gerado por: npm run generate:seed
--- NUNCA rodar em produção — use npm run seed:prod
--- Uso local: npm run seed:run
-
-${devReset}
-
-${schema}
-
-${phb}
-`;
-
-const out = path.join(root, "database/seed-all.sql");
-fs.writeFileSync(out, all, "utf8");
-console.log(`✓ ${path.relative(root, out)} (${all.split("\n").length} linhas)`);
+console.log(`✓ ${files.length} seed(s) em database/seeds/`);
+for (const f of files) console.log(`  ${f}`);

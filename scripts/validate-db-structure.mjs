@@ -73,25 +73,6 @@ const REQUIRED_TABLES = [
   "phb_divine_order",
   "phb_weapon_property_link",
   "phb_class_fighting_style",
-  "player_character",
-  "player_character_language",
-  "player_character_ability",
-  "player_character_skill",
-  "player_character_tool",
-  "player_character_saving_throw",
-  "player_character_feat",
-  "player_character_feat_asi",
-  "player_character_feat_magic_initiate",
-  "player_character_equipment",
-  "player_character_weapon_mastery",
-  "player_character_expertise",
-  "player_character_spell_list",
-  "player_character_spell_slot",
-  "player_character_resource",
-  "player_character_species_option",
-  "player_character_class_option",
-  "player_character_subclass_option",
-  "player_character_class_skill",
 ];
 
 const FORBIDDEN = [
@@ -121,9 +102,8 @@ const FORBIDDEN = [
   /idx_phb_spell_slug/i,
   /idx_phb_class_slug/i,
   /idx_phb_item_slug/i,
-  /CREATE TABLE rpg\.player_character[\s\S]{0,800}\bforca\s+INTEGER/i,
-  /idx_spell_level\b/i,
   /^\s*DROP SCHEMA/im,
+  /player_character/i,
 ];
 
 const REQUIRED_PATTERNS = [
@@ -171,15 +151,7 @@ const REQUIRED_PATTERNS = [
   [/idx_class_skill_pool_skill/i, "índice inverso skill pool"],
   [/mv_spell_by_class/i, "materialized view magias por classe"],
   [/idx_mv_spell_by_class/i, "índice único MV spell_by_class"],
-  [/v_player_character_runtime/i, "view runtime combate"],
-  [/v_player_character_full/i, "view ficha completa"],
-  [/character_document/i, "função documento ficha"],
-  [/recalculate_character_ac/i, "recálculo CA por equipamento"],
-  [/v_character_abilities/i, "view atributos personagem"],
-  [/player_character_feat_magic_initiate/i, "iniciado em magia normalizado"],
-  [/player_character_ability/i, "atributos normalizados com FK phb_ability"],
-  [/validate_pc_subclass/i, "trigger validação subclasse"],
-  [/rpg\.skill_source/i, "ENUM skill_source"],
+  [/v_phb_subclass_mechanics/i, "view v_phb_subclass_mechanics"],
 ];
 
 let errors = 0;
@@ -188,22 +160,26 @@ function fail(msg) {
   errors++;
 }
 
-const migrationFile = path.join(root, "database", "migrations", "001_initial_catalog.sql");
+const migrationsDir = path.join(root, "database", "migrations");
 const devResetFile = path.join(root, "database", "dev-reset.sql");
 
-if (!fs.existsSync(migrationFile)) {
-  fail("database/migrations/001_initial_catalog.sql ausente — rode npm run generate:sql-schema");
+function countMigrations(dir) {
+  if (!fs.existsSync(dir)) return 0;
+  let n = 0;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) n += countMigrations(p);
+    else if (entry.name.endsWith(".sql")) n++;
+  }
+  return n;
+}
+
+if (countMigrations(migrationsDir) < 10) {
+  fail("database/migrations/ incompleto — rode npm run generate:sql-schema");
 }
 
 if (!fs.existsSync(devResetFile)) {
   fail("database/dev-reset.sql ausente — rode npm run generate:sql-schema");
-}
-
-if (fs.existsSync(migrationFile)) {
-  const mig = fs.readFileSync(migrationFile, "utf8");
-  if (/^\s*DROP SCHEMA/im.test(mig)) {
-    fail("migration 001 não deve conter DROP SCHEMA");
-  }
 }
 
 if (fs.existsSync(devResetFile)) {
@@ -244,6 +220,6 @@ if (errors) {
 }
 
 console.log(
-  `✓ PostgreSQL v4 — ${REQUIRED_TABLES.length} tabelas catálogo, BIGINT+slug, 12 views`
+  `✓ Catálogo PHB — ${REQUIRED_TABLES.length} tabelas, migrations granulares, views SQL`
 );
 process.exit(0);

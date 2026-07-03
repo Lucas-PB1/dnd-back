@@ -4,60 +4,8 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { PLAYER_CHARACTER_DDL, PLAYER_CHARACTER_RELATIONAL_MIGRATION, PLAYER_CHARACTER_AC_MIGRATION, PLAYER_CHARACTER_CLASS_SKILL_MIGRATION, PLAYER_CHARACTER_FEAT_MIGRATION } from "./lib/player-character-ddl.mjs";
-
-const PLAYER_CHARACTER_ABILITY_MIGRATION = `-- Fase 5.1 — atributos normalizados (FK phb_ability)
-
-CREATE TABLE IF NOT EXISTS rpg.player_character_ability (
-  character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
-  ability_id   BIGINT NOT NULL REFERENCES rpg.phb_ability(id),
-  score        INTEGER NOT NULL CHECK (score BETWEEN 1 AND 30),
-  PRIMARY KEY (character_id, ability_id)
-);
-
-DO $$
-BEGIN
-  IF EXISTS (
-    SELECT 1 FROM information_schema.columns
-    WHERE table_schema = 'rpg' AND table_name = 'player_character' AND column_name = 'forca'
-  ) THEN
-    INSERT INTO rpg.player_character_ability (character_id, ability_id, score)
-    SELECT pc.id, a.id, v.score
-    FROM rpg.player_character pc
-    CROSS JOIN LATERAL (
-      VALUES
-        ('forca', pc.forca),
-        ('destreza', pc.destreza),
-        ('constituicao', pc.constituicao),
-        ('inteligencia', pc.inteligencia),
-        ('sabedoria', pc.sabedoria),
-        ('carisma', pc.carisma)
-    ) AS v(slug, score)
-    JOIN rpg.phb_ability a ON a.slug = v.slug
-    ON CONFLICT (character_id, ability_id) DO UPDATE SET score = EXCLUDED.score;
-
-    ALTER TABLE rpg.player_character
-      DROP COLUMN forca,
-      DROP COLUMN destreza,
-      DROP COLUMN constituicao,
-      DROP COLUMN inteligencia,
-      DROP COLUMN sabedoria,
-      DROP COLUMN carisma;
-  END IF;
-END $$;
-
-CREATE OR REPLACE VIEW rpg.v_character_abilities AS
-SELECT
-  pc.id AS character_id,
-  pc.name AS character_name,
-  a.slug AS ability_slug,
-  a.name AS ability_name,
-  pca.score
-FROM rpg.player_character_ability pca
-JOIN rpg.player_character pc ON pc.id = pca.character_id
-JOIN rpg.phb_ability a ON a.id = pca.ability_id;
-`;
-
+import { SUBCLASS_MECHANICS_TABLES_DDL, SUBCLASS_MECHANICS_VIEWS_DDL } from "./lib/subclass-mechanics-ddl.mjs";
+import { writeSplitMigrations } from "./generate-migrations.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -108,7 +56,30 @@ CREATE TYPE rpg.item_type AS ENUM (
   'weapon','armor','gear','tool','focus','other'
 );
 
-CREATE TYPE rpg.resource_scope AS ENUM ('species','class');
+CREATE TYPE rpg.resource_scope AS ENUM ('species','class','subclass');
+
+CREATE TYPE rpg.subclass_feature_kind AS ENUM (
+  'passive',
+  'resource',
+  'choice',
+  'always_prepared',
+  'spellcasting',
+  'spellbook_bonus'
+);
+
+CREATE TYPE rpg.resource_max_formula AS ENUM (
+  'fixed',
+  'proficiency_bonus',
+  'charisma_mod',
+  'wisdom_mod',
+  'constitution_mod',
+  'intelligence_mod',
+  'level',
+  'level_plus_one',
+  'superiority_dice_count',
+  'psi_energy_dice_count',
+  'zealot_healing_dice_count'
+);
 
 CREATE TYPE rpg.spell_source_origin AS ENUM (
   'class_list','subclass','species','feat'
@@ -339,6 +310,8 @@ CREATE TABLE rpg.phb_subclass_feature (
   level INTEGER NOT NULL CHECK (level >= 1),
   name TEXT NOT NULL,
   description TEXT NOT NULL,
+  feature_kind rpg.subclass_feature_kind NOT NULL DEFAULT 'passive',
+  option_key TEXT,
   UNIQUE (subclass_id, level, name)
 );
 
@@ -411,12 +384,16 @@ CREATE TABLE rpg.phb_resource_definition (
   scope rpg.resource_scope NOT NULL,
   species_id BIGINT REFERENCES rpg.phb_species(id),
   class_id BIGINT REFERENCES rpg.phb_class(id),
+  subclass_id BIGINT REFERENCES rpg.phb_subclass(id) ON DELETE CASCADE,
   min_level INTEGER NOT NULL DEFAULT 1 CHECK (min_level BETWEEN 1 AND 20),
   CONSTRAINT prd_scope_fk CHECK (
-    (scope = 'species' AND species_id IS NOT NULL AND class_id IS NULL) OR
-    (scope = 'class' AND class_id IS NOT NULL AND species_id IS NULL)
+    (scope = 'species' AND species_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL) OR
+    (scope = 'class' AND class_id IS NOT NULL AND species_id IS NULL AND subclass_id IS NULL) OR
+    (scope = 'subclass' AND subclass_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL)
   )
 );
+
+${SUBCLASS_MECHANICS_TABLES_DDL}
 
 CREATE TABLE rpg.phb_spell_source (
   id BIGSERIAL PRIMARY KEY,
@@ -644,6 +621,9 @@ CREATE TABLE rpg.phb_tool (
   use_description TEXT
 );
 
+ALTER TABLE rpg.phb_background
+  ADD COLUMN tool_category_id BIGINT REFERENCES rpg.phb_tool_category(id);
+
 CREATE TABLE rpg.phb_character_level (
   level INTEGER PRIMARY KEY CHECK (level BETWEEN 1 AND 20),
   proficiency_bonus INTEGER NOT NULL CHECK (proficiency_bonus BETWEEN 2 AND 6),
@@ -754,6 +734,8 @@ FROM rpg.phb_subclass_prepared_spell ps
 JOIN rpg.phb_subclass s ON s.id = ps.subclass_id
 JOIN rpg.phb_spell sp ON sp.id = ps.spell_id
 LEFT JOIN rpg.phb_druid_land_terrain t ON t.id = ps.terrain_id;
+
+${SUBCLASS_MECHANICS_VIEWS_DDL}
 
 CREATE OR REPLACE VIEW rpg.v_phb_armor AS
 SELECT
@@ -980,6 +962,8 @@ CREATE UNIQUE INDEX uq_resource_species ON rpg.phb_resource_definition (species_
   WHERE scope = 'species';
 CREATE UNIQUE INDEX uq_resource_class ON rpg.phb_resource_definition (class_id, slug)
   WHERE scope = 'class';
+CREATE UNIQUE INDEX uq_resource_subclass ON rpg.phb_resource_definition (subclass_id, slug)
+  WHERE scope = 'subclass';
 
 -- Autocomplete (pg_trgm)
 CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_ops);
@@ -1007,50 +991,16 @@ $$ LANGUAGE plpgsql;
 
 ${AUDIT_TRIGGERS_SQL}
 
-${PLAYER_CHARACTER_DDL}
-
 COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — catálogo v4 (BIGINT + slug)';
 COMMENT ON COLUMN rpg.phb_spell.slug IS 'Identificador canônico do JSON/API; imutável na prática';
 `;
 
-const migrationDir = path.join(root, "database", "migrations");
 const prodSql = PROD_HEADER + SCHEMA_BODY;
 
 fs.mkdirSync(path.dirname(outFile), { recursive: true });
-fs.mkdirSync(migrationDir, { recursive: true });
 fs.writeFileSync(outFile, prodSql, "utf8");
-fs.writeFileSync(path.join(migrationDir, "001_initial_catalog.sql"), prodSql, "utf8");
-fs.writeFileSync(
-  path.join(migrationDir, "003_player_character.sql"),
-  `-- Fase 5 — camada de fichas\n\n${PLAYER_CHARACTER_DDL}`,
-  "utf8"
-);
-fs.writeFileSync(
-  path.join(migrationDir, "004_player_character_ability.sql"),
-  PLAYER_CHARACTER_ABILITY_MIGRATION,
-  "utf8"
-);
-fs.writeFileSync(
-  path.join(migrationDir, "005_player_character_relational.sql"),
-  `-- Fase 5.2 — fichas 100% relacionais\n\n${PLAYER_CHARACTER_RELATIONAL_MIGRATION}`,
-  "utf8"
-);
-fs.writeFileSync(
-  path.join(migrationDir, "006_player_character_ac_columns.sql"),
-  `-- Fase 5.3 — CA normalizada\n\n${PLAYER_CHARACTER_AC_MIGRATION}`,
-  "utf8"
-);
-fs.writeFileSync(
-  path.join(migrationDir, "007_player_character_class_skill.sql"),
-  `-- Fase 5.4 — opções de classe sem JSONB\n\n${PLAYER_CHARACTER_CLASS_SKILL_MIGRATION}`,
-  "utf8"
-);
-fs.writeFileSync(
-  path.join(migrationDir, "008_player_character_feat_magic_initiate.sql"),
-  `-- Fase 5.5 — feats sem JSONB\n\n${PLAYER_CHARACTER_FEAT_MIGRATION}`,
-  "utf8"
-);
 fs.writeFileSync(path.join(root, "database", "dev-reset.sql"), DEV_RESET, "utf8");
-console.log(`✓ ${path.relative(root, outFile)} — PostgreSQL v4 (${prodSql.split("\n").length} linhas)`);
-console.log(`✓ ${path.relative(root, path.join(migrationDir, "001_initial_catalog.sql"))}`);
-console.log(`✓ ${path.relative(root, "database/dev-reset.sql")}`);
+
+const migrationFiles = writeSplitMigrations(prodSql);
+console.log(`✓ ${path.relative(root, outFile)} — catálogo PHB (${prodSql.split("\n").length} linhas)`);
+console.log(`✓ ${migrationFiles.length} migrations granulares em database/migrations/`);

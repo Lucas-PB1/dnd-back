@@ -1,43 +1,42 @@
 # Migrations PostgreSQL
 
-Migrations incrementais do schema `rpg`. **Nunca** use `DROP SCHEMA` aqui.
+Schema do catálogo PHB em **migrations granulares** — geradas por `npm run generate:sql-schema`.
 
-## Arquivos
+## Estrutura
 
-| Arquivo | Descrição |
-|---------|-----------|
-| `001_initial_catalog.sql` | Baseline v4 (gerado junto com `schema.sql`) |
-| `002_performance.sql` | Índices de consulta + MV (incremental) |
+| Pasta / arquivo | Conteúdo |
+|-----------------|----------|
+| `001_schema.sql` | `CREATE SCHEMA rpg` + extensão `pg_trgm` |
+| `types/002_types.sql` | ENUMs |
+| `tables/T###_<nome>.sql` | **Uma tabela por arquivo** (+ índices inline) |
+| `alters/A###_<nome>.sql` | `ALTER TABLE` (ex.: `tool_category_id` em antecedentes) |
+| `functions/F001_set_updated_at.sql` | Função de auditoria |
+| `triggers/TR001_audit.sql` | Triggers `updated_at` |
+| `views/V###_<nome>.sql` | **Uma view por arquivo** |
+| `materialized/MV001_*.sql` | Materialized views |
+| `indexes/IX001_catalog.sql` | Índices adicionais |
+| `comments/C001_schema.sql` | Comentários |
 
-Registro de versões: `rpg.schema_migration`.
+Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 
 ## Comandos
 
 ```bash
-# Gerar baseline + schema prod-safe
+# Regenerar schema.sql + migrations/ a partir dos scripts em scripts/lib/
 npm run generate:sql-schema
 
 # Aplicar migrations pendentes
 npm run migrate:run
 
-# Produção/staging: migrations + seed PHB (sem DROP)
+# Dev: reset + migrations + seeds
+npm run seed:run
+
+# Produção: migrations + seeds (sem DROP)
 npm run seed:prod
-
-# Dev local: reset completo
-npm run seed:all && npm run seed:run
-
-# Atualizar MV após alteração manual de catálogo
-npm run refresh:views
 ```
 
 ## Regras
 
-1. **Produção:** `migrate:run` → `seed:prod` (ou só seed se schema já existir)
-2. **Dev:** `seed:run` usa `dev-reset.sql` + schema + seed (via `seed-all.sql`)
-3. Nova alteração de schema → criar `00N_descricao.sql` incremental; não editar `001` após deploy
-4. `database/schema.sql` espelha sempre o estado completo atual (referência + migration 001)
-
-## Multi-edição (fase 2.4 — pendente)
-
-Decisão adiada: adicionar `edition_id` nas entidades principais quando houver segundo livro de regras.
-Ver [plano-final.md](../../.cursor/skills/rpg-database/docs/plano-final.md).
+1. Editar DDL em `scripts/generate-sql-schema.mjs` e `scripts/lib/subclass-mechanics-ddl.mjs`
+2. Rodar `npm run generate:sql-schema` — **não editar migrations à mão**
+3. `database/schema.sql` é referência concatenada (catálogo only, sem fichas)

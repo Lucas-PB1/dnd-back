@@ -9,6 +9,8 @@ import { loadPhbCatalog } from "./lib/phb-loader.mjs";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const manifestFile = path.join(root, "database/seed-manifest.json");
+const phbSeed = path.join(root, "database/seeds/001_phb.sql");
+const subclassSeed = path.join(root, "database/seeds/002_subclass_mechanics.sql");
 
 let errors = 0;
 function fail(msg) {
@@ -16,11 +18,9 @@ function fail(msg) {
   errors++;
 }
 
-const required = ["database/seed-phb.sql", "database/seed-all.sql"];
-
-for (const rel of required) {
-  if (!fs.existsSync(path.join(root, rel))) {
-    fail(`${rel} ausente — rode npm run generate:seed`);
+for (const file of [phbSeed, subclassSeed]) {
+  if (!fs.existsSync(file)) {
+    fail(`${path.relative(root, file)} ausente — rode npm run generate:seed`);
   }
 }
 
@@ -28,7 +28,7 @@ if (errors) process.exit(1);
 
 const catalog = loadPhbCatalog(root);
 const manifest = JSON.parse(fs.readFileSync(manifestFile, "utf8"));
-const phbSql = fs.readFileSync(path.join(root, "database/seed-phb.sql"), "utf8");
+const phbSql = fs.readFileSync(phbSeed, "utf8");
 
 const expectations = {
   "rpg.phb_spell": catalog.counts.spells,
@@ -69,5 +69,5 @@ if (errors) {
   process.exit(1);
 }
 
-console.log(`✓ Seed válido — PHB (${catalog.counts.spells} magias, sem personagens)`);
+console.log(`✓ Seeds válidos — PHB (${catalog.counts.spells} magias)`);
 process.exit(0);

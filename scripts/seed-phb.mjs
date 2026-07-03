@@ -36,7 +36,7 @@ import { loadPhbCatalog } from "./lib/phb-loader.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
-const outFile = path.join(root, "database", "seed-phb.sql");
+const outFile = path.join(root, "database", "seeds", "001_phb.sql");
 const manifestFile = path.join(root, "database", "seed-manifest.json");
 
 const catalog = loadPhbCatalog(root);

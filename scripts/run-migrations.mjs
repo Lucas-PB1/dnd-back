@@ -1,6 +1,6 @@
 /**
- * Aplica migrations pendentes em database/migrations/ (ordem lexicográfica).
- * Registra versões em rpg.schema_migration.
+ * Aplica migrations pendentes em database/migrations/ (ordem lexicográfica, recursiva).
+ * Registra versões em rpg.schema_migration (caminho relativo sem .sql).
  */
 import fs from "fs";
 import path from "path";
@@ -13,6 +13,17 @@ const migrationsDir = path.join(root, "database", "migrations");
 const url =
   process.env.DATABASE_URL ??
   "postgresql://postgres:postgres@127.0.0.1:5432/rpg";
+
+function collectSqlFiles(dir) {
+  /** @type {string[]} */
+  const files = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) files.push(...collectSqlFiles(p));
+    else if (entry.name.endsWith(".sql")) files.push(p);
+  }
+  return files.sort((a, b) => a.localeCompare(b));
+}
 
 async function main() {
   let pg;
@@ -28,11 +39,7 @@ async function main() {
     process.exit(1);
   }
 
-  const files = fs
-    .readdirSync(migrationsDir)
-    .filter((f) => f.endsWith(".sql"))
-    .sort();
-
+  const files = collectSqlFiles(migrationsDir);
   if (!files.length) {
     console.error("✗ Nenhuma migration em database/migrations/");
     process.exit(1);
@@ -67,11 +74,14 @@ async function main() {
 
     let count = 0;
     for (const file of files) {
-      const version = file.replace(/\.sql$/, "");
+      const version = path
+        .relative(migrationsDir, file)
+        .replace(/\\/g, "/")
+        .replace(/\.sql$/, "");
       if (done.has(version)) continue;
 
-      const sql = fs.readFileSync(path.join(migrationsDir, file), "utf8");
-      console.log(`→ ${file}`);
+      const sql = fs.readFileSync(file, "utf8");
+      console.log(`→ ${version}`);
       await client.query("BEGIN");
       try {
         await client.query(sql);
@@ -88,7 +98,7 @@ async function main() {
     }
 
     if (count === 0) {
-      console.log(`✓ Migrations em dia (${files.length} registrada(s))`);
+      console.log(`✓ Migrations em dia (${files.length} arquivo(s))`);
     } else {
       console.log(`✓ ${count} migration(s) aplicada(s)`);
     }

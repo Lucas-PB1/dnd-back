@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-07-02T22:08:24.698Z",
+  "generatedAt": "2026-07-03T01:09:41.539Z",
   "phb": {
     "alignments": 9,
     "abilities": 6,
@@ -23,6 +23,6 @@
     "subclassPreparedSpells": 217
   },
   "files": {
-    "seedPhb": "database\\seed-phb.sql"
+    "seedPhb": "database\\seeds\\001_phb.sql"
   }
 }

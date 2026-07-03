@@ -12,7 +12,7 @@ import { sqlStr, sqlInt } from "./lib/sql-escape.mjs";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const phb = path.join(root, "data/phb");
-const outFile = path.join(root, "database", "seed-subclass-mechanics.sql");
+const outFile = path.join(root, "database", "seeds", "002_subclass_mechanics.sql");
 
 const index = JSON.parse(fs.readFileSync(path.join(phb, "index.json"), "utf8"));
 const subclassesDir = path.join(phb, "subclasses");

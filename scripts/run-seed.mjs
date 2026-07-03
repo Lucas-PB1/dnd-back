@@ -1,12 +1,11 @@
 /**
- * Aplica seed no PostgreSQL via DATABASE_URL ou PGPASSWORD + defaults locais.
- * Requer: npm install pg
+ * DEV: dev-reset + migrations + seeds.
  */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { spawnSync } from "child_process";
-import { refreshMaterializedViews } from "./lib/refresh-views.mjs";
+import { applySeeds } from "./run-seeds.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
@@ -15,124 +14,55 @@ const url =
   process.env.DATABASE_URL ??
   "postgresql://postgres:postgres@127.0.0.1:5432/rpg";
 
-const psqlCandidates = [
-  process.env.PSQL_PATH,
-  "C:\\Program Files\\PostgreSQL\\17\\bin\\psql.exe",
-  "C:\\Program Files\\PostgreSQL\\16\\bin\\psql.exe",
-].filter(Boolean);
-
-async function runWithPg() {
-  let pg;
-  try {
-    pg = await import("pg");
-  } catch {
-    return false;
-  }
-
-  const seedFile = path.join(root, "database/seed-all.sql");
-  if (!fs.existsSync(seedFile)) {
-    console.error("✗ database/seed-all.sql ausente — rode npm run generate:seed");
-    process.exit(1);
-  }
-
-  const adminUrl = url.replace(/\/rpg(\?|$)/, "/postgres$1");
-  const admin = new pg.default.Client({ connectionString: adminUrl });
-  await admin.connect();
-  const { rows } = await admin.query("SELECT 1 FROM pg_database WHERE datname = 'rpg'");
-  if (!rows.length) {
-    await admin.query("CREATE DATABASE rpg");
-    console.log("✓ Banco rpg criado");
-  }
-  await admin.end();
-
-  const sql = fs.readFileSync(seedFile, "utf8");
-  const client = new pg.default.Client({ connectionString: url });
-  try {
-    await client.connect();
-    await client.query(sql);
-    await client.query(`
-      CREATE SCHEMA IF NOT EXISTS rpg;
-      CREATE TABLE IF NOT EXISTS rpg.schema_migration (
-        version    TEXT PRIMARY KEY,
-        applied_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
-      );
-      INSERT INTO rpg.schema_migration (version) VALUES ('001_initial_catalog')
-      ON CONFLICT (version) DO NOTHING;
-    `);
-    const counts = await client.query(`
-      SELECT
-        (SELECT COUNT(*)::int FROM rpg.phb_spell) AS spells,
-        (SELECT COUNT(*)::int FROM rpg.phb_class) AS classes,
-        (SELECT COUNT(*)::int FROM rpg.phb_item) AS items
-    `);
-    console.log(
-      `✓ Seed aplicado — ${counts.rows[0].spells} magias, ${counts.rows[0].classes} classes, ${counts.rows[0].items} itens`
-    );
-    if (await refreshMaterializedViews(client)) {
-      const mv = await client.query("SELECT COUNT(*)::int AS n FROM rpg.mv_spell_by_class");
-      console.log(`✓ mv_spell_by_class — ${mv.rows[0].n} linhas`);
-    }
-    return true;
-  } finally {
-    await client.end();
-  }
-}
-
-function runWithPsql() {
-  const psql = psqlCandidates.find((p) => fs.existsSync(p));
-  if (!psql) return false;
-
-  const seedFile = path.join(root, "database/seed-all.sql");
-  const env = { ...process.env, PGPASSWORD: process.env.PGPASSWORD ?? "postgres" };
-
-  spawnSync(psql, ["-U", "postgres", "-h", "localhost", "-d", "postgres", "-c", "CREATE DATABASE rpg"], {
-    env,
-    stdio: "ignore",
-  });
-
-  const r = spawnSync(
-    psql,
-    ["-U", "postgres", "-h", "localhost", "-d", "rpg", "-v", "ON_ERROR_STOP=1", "-f", seedFile],
-    { env, encoding: "utf8" }
-  );
-
-  if (r.status !== 0) {
-    console.error(r.stderr || r.stdout);
-    process.exit(1);
-  }
-
-  const check = spawnSync(
-    psql,
-    [
-      "-U",
-      "postgres",
-      "-h",
-      "localhost",
-      "-d",
-      "rpg",
-      "-t",
-      "-c",
-      "SELECT (SELECT COUNT(*) FROM rpg.phb_spell) || ' magias, ' || (SELECT COUNT(*) FROM rpg.phb_class) || ' classes'",
-    ],
-    { env, encoding: "utf8" }
-  );
-  console.log(`✓ Seed aplicado — ${check.stdout.trim()}`);
-  return true;
-}
-
-try {
-  if (process.env.SEED_USE_PSQL === "1" && runWithPsql()) {
-    process.exit(0);
-  }
-  if (await runWithPg()) {
-    process.exit(0);
-  }
-  if (runWithPsql()) {
-    process.exit(0);
-  }
-  console.error("✗ Não foi possível conectar. Defina DATABASE_URL ou instale PostgreSQL/psql.");
+const devReset = path.join(root, "database/dev-reset.sql");
+if (!fs.existsSync(devReset)) {
+  console.error("✗ database/dev-reset.sql ausente — rode npm run generate:sql-schema");
   process.exit(1);
+}
+
+let pg;
+try {
+  pg = await import("pg");
+} catch {
+  console.error("✗ Instale pg: npm install pg");
+  process.exit(1);
+}
+
+const adminUrl = url.replace(/\/rpg(\?|$)/, "/postgres$1");
+const admin = new pg.default.Client({ connectionString: adminUrl });
+await admin.connect();
+const { rows } = await admin.query("SELECT 1 FROM pg_database WHERE datname = 'rpg'");
+if (!rows.length) {
+  await admin.query("CREATE DATABASE rpg");
+  console.log("✓ Banco rpg criado");
+}
+await admin.end();
+
+const client = new pg.default.Client({ connectionString: url });
+try {
+  await client.connect();
+  console.log("→ dev-reset.sql");
+  await client.query(fs.readFileSync(devReset, "utf8"));
+} finally {
+  await client.end();
+}
+
+const migrate = spawnSync(process.execPath, [path.join(__dirname, "run-migrations.mjs")], {
+  cwd: root,
+  stdio: "inherit",
+  env: process.env,
+});
+if (migrate.status !== 0) process.exit(migrate.status ?? 1);
+
+const seedClient = new pg.default.Client({ connectionString: url });
+try {
+  await seedClient.connect();
+  await applySeeds(seedClient);
 } catch (err) {
   console.error(`✗ ${err.message}`);
   process.exit(1);
+} finally {
+  await seedClient.end();
 }
+
+console.log("✓ Bootstrap DEV concluído");
