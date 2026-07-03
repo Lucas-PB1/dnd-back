@@ -4,7 +4,7 @@
 import {
   ELF_LINEAGE_SPELLS,
   TIEFLING_LEGACY_SPELLS,
-} from "../character-rules.mjs";
+} from "./catalog-species-data.mjs";
 
 const CHOICE_KIND = {
   elf: { "Linhagem Élfica": "elf_lineage" },

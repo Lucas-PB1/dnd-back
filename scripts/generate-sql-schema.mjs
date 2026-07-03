@@ -337,6 +337,13 @@ CREATE TABLE rpg.phb_item (
   properties JSONB,${AUDIT_COLUMNS}
 );
 
+CREATE TABLE rpg.phb_tool_category (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0
+);
+
 CREATE TABLE rpg.phb_background (
   id BIGSERIAL PRIMARY KEY,
   slug TEXT NOT NULL UNIQUE,
@@ -347,7 +354,8 @@ CREATE TABLE rpg.phb_background (
   equipment_gold_option INTEGER CHECK (equipment_gold_option >= 0),
   tool_proficiency_description TEXT,
   tool_proficiency_kind TEXT CHECK (tool_proficiency_kind IN ('fixed', 'choice')),
-  tool_item_id BIGINT REFERENCES rpg.phb_item(id),${AUDIT_COLUMNS}
+  tool_item_id BIGINT REFERENCES rpg.phb_item(id),
+  tool_category_id BIGINT REFERENCES rpg.phb_tool_category(id),${AUDIT_COLUMNS}
 );
 
 CREATE TABLE rpg.phb_armor_category (
@@ -608,21 +616,11 @@ CREATE TABLE rpg.phb_armor (
   stealth_disadvantage BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE rpg.phb_tool_category (
-  id BIGSERIAL PRIMARY KEY,
-  slug TEXT NOT NULL UNIQUE,
-  name TEXT NOT NULL,
-  sort_order INTEGER NOT NULL DEFAULT 0
-);
-
 CREATE TABLE rpg.phb_tool (
   item_id BIGINT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
   category_id BIGINT NOT NULL REFERENCES rpg.phb_tool_category(id),
   use_description TEXT
 );
-
-ALTER TABLE rpg.phb_background
-  ADD COLUMN tool_category_id BIGINT REFERENCES rpg.phb_tool_category(id);
 
 CREATE TABLE rpg.phb_character_level (
   level INTEGER PRIMARY KEY CHECK (level BETWEEN 1 AND 20),
@@ -990,9 +988,6 @@ END;
 $$ LANGUAGE plpgsql;
 
 ${AUDIT_TRIGGERS_SQL}
-
-COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — catálogo v4 (BIGINT + slug)';
-COMMENT ON COLUMN rpg.phb_spell.slug IS 'Identificador canônico do JSON/API; imutável na prática';
 `;
 
 const prodSql = PROD_HEADER + SCHEMA_BODY;

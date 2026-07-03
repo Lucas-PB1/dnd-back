@@ -3,7 +3,6 @@
  *   migrations/001_schema.sql
  *   migrations/types/002_types.sql
  *   migrations/tables/T###_<nome>.sql   — uma tabela por arquivo (+ índices inline)
- *   migrations/alters/A###_<nome>.sql
  *   migrations/functions/F001_set_updated_at.sql
  *   migrations/triggers/TR001_audit.sql
  *   migrations/views/V###_<nome>.sql
@@ -26,21 +25,28 @@ function parseStatements(sql) {
   let inDollar = false;
 
   for (const line of sql.split("\n")) {
-    if (/^\s*\$\$\s*;?\s*$/.test(line)) inDollar = !inDollar;
+    const dollarCount = (line.match(/\$\$/g) ?? []).length;
+    if (dollarCount % 2 === 1) inDollar = !inDollar;
     buf += `${line}\n`;
     if (inDollar) continue;
     const t = line.trim();
     if (t.endsWith(";") && !t.startsWith("--")) {
-      const stmt = buf.trim();
-      if (stmt && !/^--/.test(stmt.split("\n")[0]?.trim() ?? "")) {
-        statements.push(stmt);
-      }
+      const stmt = normalizeStatement(buf);
+      if (stmt) statements.push(stmt);
       buf = "";
     }
   }
-  const tail = buf.trim();
+  const tail = normalizeStatement(buf);
   if (tail) statements.push(tail);
   return statements;
+}
+
+function normalizeStatement(raw) {
+  const lines = raw.split("\n");
+  while (lines.length && (/^\s*--/.test(lines[0]) || lines[0].trim() === "")) {
+    lines.shift();
+  }
+  return lines.join("\n").trim();
 }
 
 function classify(stmt) {
@@ -62,7 +68,6 @@ function classify(stmt) {
   if (/^CREATE OR REPLACE FUNCTION rpg\./i.test(stmt)) return "function";
   if (/^CREATE TRIGGER/i.test(stmt)) return "trigger";
   if (/^CREATE (UNIQUE )?INDEX/i.test(stmt)) return "index";
-  if (/^COMMENT ON/i.test(stmt)) return "comment";
   return "other";
 }
 
@@ -99,13 +104,11 @@ export function writeSplitMigrations(schemaSql) {
   const types = [];
   /** @type {Map<string, string[]>} */
   const tableBlocks = new Map();
-  const alters = [];
   const views = [];
   const materialized = [];
   const functions = [];
   const triggers = [];
   const indexes = [];
-  const comments = [];
 
   /** @type {string|null} */
   let pendingTable = null;
@@ -123,8 +126,15 @@ export function writeSplitMigrations(schemaSql) {
       tableBlocks.set(c.name, [stmt]);
     } else if (c === "index" && pendingTable) {
       tableBlocks.get(pendingTable)?.push(stmt);
+    } else if (
+      c === "other" &&
+      pendingTable &&
+      new RegExp(`^INSERT INTO rpg\\.${pendingTable}\\b`, "i").test(stmt)
+    ) {
+      tableBlocks.get(pendingTable)?.push(stmt);
     } else if (c?.kind === "alter") {
-      alters.push({ name: c.name, stmt });
+      const blocks = tableBlocks.get(c.name);
+      if (blocks) blocks.push(stmt);
       pendingTable = null;
     } else if (c?.kind === "view") {
       views.push({ name: c.name, stmt });
@@ -141,9 +151,6 @@ export function writeSplitMigrations(schemaSql) {
     } else if (c === "index") {
       indexes.push(stmt);
       pendingTable = null;
-    } else if (c === "comment") {
-      comments.push(stmt);
-      pendingTable = null;
     }
   }
 
@@ -158,14 +165,18 @@ export function writeSplitMigrations(schemaSql) {
   );
 
   written.push(
-    writeMigration("types/002_types.sql", "-- ENUMs do catálogo PHB", types.join("\n\n"))
+    writeMigration(
+      "010_types/002_types.sql",
+      "-- ENUMs do catálogo PHB",
+      types.join("\n\n")
+    )
   );
 
   let t = 10;
   for (const [name, blocks] of tableBlocks) {
     written.push(
       writeMigration(
-        `tables/T${pad(t)}_${name}.sql`,
+        `020_tables/T${pad(t)}_${name}.sql`,
         `-- Tabela rpg.${name}`,
         blocks.join("\n\n")
       )
@@ -173,22 +184,10 @@ export function writeSplitMigrations(schemaSql) {
     t += 1;
   }
 
-  let a = 10;
-  for (const { name, stmt } of alters) {
-    written.push(
-      writeMigration(
-        `alters/A${pad(a)}_${name}.sql`,
-        `-- ALTER rpg.${name}`,
-        stmt
-      )
-    );
-    a += 1;
-  }
-
   functions.forEach((stmt, i) => {
     written.push(
       writeMigration(
-        `functions/F${pad(i + 1)}_set_updated_at.sql`,
+        `040_functions/F${pad(i + 1)}_set_updated_at.sql`,
         "-- Função de auditoria updated_at",
         stmt
       )
@@ -198,7 +197,7 @@ export function writeSplitMigrations(schemaSql) {
   if (triggers.length) {
     written.push(
       writeMigration(
-        "triggers/TR001_audit.sql",
+        "050_triggers/TR001_audit.sql",
         "-- Triggers updated_at em tabelas PHB",
         triggers.join("\n\n")
       )
@@ -208,7 +207,7 @@ export function writeSplitMigrations(schemaSql) {
   let v = 10;
   for (const { name, stmt } of views) {
     written.push(
-      writeMigration(`views/V${pad(v)}_${name}.sql`, `-- View rpg.${name}`, stmt)
+      writeMigration(`060_views/V${pad(v)}_${name}.sql`, `-- View rpg.${name}`, stmt)
     );
     v += 1;
   }
@@ -216,7 +215,7 @@ export function writeSplitMigrations(schemaSql) {
   materialized.forEach(({ name, stmt }, i) => {
     written.push(
       writeMigration(
-        `materialized/MV${pad(i + 1)}_${name}.sql`,
+        `070_materialized/MV${pad(i + 1)}_${name}.sql`,
         `-- Materialized view rpg.${name}`,
         stmt
       )
@@ -226,19 +225,9 @@ export function writeSplitMigrations(schemaSql) {
   if (indexes.length) {
     written.push(
       writeMigration(
-        "indexes/IX001_catalog.sql",
+        "080_indexes/IX001_catalog.sql",
         "-- Índices adicionais do catálogo",
         indexes.join("\n\n")
-      )
-    );
-  }
-
-  if (comments.length) {
-    written.push(
-      writeMigration(
-        "comments/C001_schema.sql",
-        "-- Comentários de schema/colunas",
-        comments.join("\n\n")
       )
     );
   }
@@ -254,6 +243,6 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const schemaSql = fs.readFileSync(schemaFile, "utf8");
   const files = writeSplitMigrations(schemaSql);
   console.log(`✓ ${files.length} migrations em database/migrations/`);
-  console.log(`  tabelas: ${files.filter((f) => f.startsWith("tables/")).length}`);
-  console.log(`  views: ${files.filter((f) => f.startsWith("views/")).length}`);
+  console.log(`  tabelas: ${files.filter((f) => f.includes("/T")).length}`);
+  console.log(`  views: ${files.filter((f) => f.startsWith("060_views/")).length}`);
 }

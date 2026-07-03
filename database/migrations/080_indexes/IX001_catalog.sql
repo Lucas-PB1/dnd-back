@@ -1,5 +1,7 @@
 -- Índices adicionais do catálogo
 
+CREATE INDEX idx_phb_species_trait_choice ON rpg.phb_species_trait(choice_kind);
+
 CREATE INDEX idx_phb_elf_lineage_spells ON rpg.phb_elf_lineage(spell_level3_id, spell_level5_id);
 
 CREATE INDEX idx_phb_feat_category ON rpg.phb_feat(category_id);
@@ -47,6 +49,8 @@ CREATE UNIQUE INDEX uq_resource_class ON rpg.phb_resource_definition (class_id, 
 CREATE UNIQUE INDEX uq_resource_subclass ON rpg.phb_resource_definition (subclass_id, slug)
   WHERE scope = 'subclass';
 
+CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_ops);
+
 CREATE INDEX idx_phb_feat_name_trgm ON rpg.phb_feat USING gin (name gin_trgm_ops);
 
 CREATE INDEX idx_phb_class_name_trgm ON rpg.phb_class USING gin (name gin_trgm_ops);
@@ -58,3 +62,5 @@ CREATE INDEX idx_phb_species_name_trgm ON rpg.phb_species USING gin (name gin_tr
 CREATE INDEX idx_phb_subclass_name_trgm ON rpg.phb_subclass USING gin (name gin_trgm_ops);
 
 CREATE INDEX idx_phb_background_name_trgm ON rpg.phb_background USING gin (name gin_trgm_ops);
+
+CREATE UNIQUE INDEX idx_mv_spell_by_class ON rpg.mv_spell_by_class (class_slug, spell_slug);

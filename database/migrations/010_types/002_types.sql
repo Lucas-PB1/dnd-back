@@ -1,5 +1,9 @@
 -- ENUMs do catálogo PHB
 
+CREATE TYPE rpg.item_type AS ENUM (
+  'weapon','armor','gear','tool','focus','other'
+);
+
 CREATE TYPE rpg.resource_scope AS ENUM ('species','class','subclass');
 
 CREATE TYPE rpg.subclass_feature_kind AS ENUM (

@@ -1,6 +1,6 @@
 /**
  * Catálogo tipado v3 — recursos, fontes de magia, opções espécie/classe.
- * Fonte: character-rules.mjs + data/phb/
+ * Fonte: data/phb/ + catalog-species-data.mjs
  */
 import fs from "fs";
 import path from "path";
@@ -12,7 +12,7 @@ import {
   GIANT_ANCESTRIES,
   GNOME_LINEAGES,
   TIEFLING_LEGACIES,
-} from "../character-rules.mjs";
+} from "./catalog-species-data.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const phb = path.join(__dirname, "..", "..", "data/phb");

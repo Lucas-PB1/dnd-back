@@ -306,6 +306,13 @@ CREATE TABLE rpg.phb_item (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
+CREATE TABLE rpg.phb_tool_category (
+  id BIGSERIAL PRIMARY KEY,
+  slug TEXT NOT NULL UNIQUE,
+  name TEXT NOT NULL,
+  sort_order INTEGER NOT NULL DEFAULT 0
+);
+
 CREATE TABLE rpg.phb_background (
   id BIGSERIAL PRIMARY KEY,
   slug TEXT NOT NULL UNIQUE,
@@ -317,6 +324,7 @@ CREATE TABLE rpg.phb_background (
   tool_proficiency_description TEXT,
   tool_proficiency_kind TEXT CHECK (tool_proficiency_kind IN ('fixed', 'choice')),
   tool_item_id BIGINT REFERENCES rpg.phb_item(id),
+  tool_category_id BIGINT REFERENCES rpg.phb_tool_category(id),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -616,21 +624,11 @@ CREATE TABLE rpg.phb_armor (
   stealth_disadvantage BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-CREATE TABLE rpg.phb_tool_category (
-  id BIGSERIAL PRIMARY KEY,
-  slug TEXT NOT NULL UNIQUE,
-  name TEXT NOT NULL,
-  sort_order INTEGER NOT NULL DEFAULT 0
-);
-
 CREATE TABLE rpg.phb_tool (
   item_id BIGINT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
   category_id BIGINT NOT NULL REFERENCES rpg.phb_tool_category(id),
   use_description TEXT
 );
-
-ALTER TABLE rpg.phb_background
-  ADD COLUMN tool_category_id BIGINT REFERENCES rpg.phb_tool_category(id);
 
 CREATE TABLE rpg.phb_character_level (
   level INTEGER PRIMARY KEY CHECK (level BETWEEN 1 AND 20),
@@ -1036,6 +1034,3 @@ CREATE TRIGGER tr_phb_species_updated_at BEFORE UPDATE ON rpg.phb_species FOR EA
 CREATE TRIGGER tr_phb_background_updated_at BEFORE UPDATE ON rpg.phb_background FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 CREATE TRIGGER tr_phb_feat_updated_at BEFORE UPDATE ON rpg.phb_feat FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 CREATE TRIGGER tr_phb_item_updated_at BEFORE UPDATE ON rpg.phb_item FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
-
-COMMENT ON SCHEMA rpg IS 'D&D 5e PHB 2024 PT-BR — catálogo v4 (BIGINT + slug)';
-COMMENT ON COLUMN rpg.phb_spell.slug IS 'Identificador canônico do JSON/API; imutável na prática';
