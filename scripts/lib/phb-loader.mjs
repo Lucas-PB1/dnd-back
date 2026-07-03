@@ -11,7 +11,7 @@ import { FEAT_CATEGORIES } from "./feat-categories.mjs";
 import { CLASS_SPELL_SLOT_PATTERN } from "./spell-slot-patterns.mjs";
 import { collectSourceCitations, sourceCitationSlug } from "./source-citations.mjs";
 import { SPELL_SCHOOL_SLUG_BY_NAME, SPELL_SCHOOLS } from "./spell-schools.mjs";
-import { TOOL_CATEGORIES, toolCategorySlug } from "./tool-categories.mjs";
+import { TOOL_CATEGORIES, toolCategorySlug, categorySlugFromName } from "./tool-categories.mjs";
 
 const ABILITY_PT = {
   Força: "forca",
@@ -399,6 +399,8 @@ export function loadPhbCatalog(root) {
       }
     }
     const tool = bg.toolProficiency ?? {};
+    const toolCategorySlugValue =
+      tool.kind === "choice" ? categorySlugFromName(tool.category) : null;
     return {
       ...bg,
       abilityOptions: abilitySlugs,
@@ -408,6 +410,7 @@ export function loadPhbCatalog(root) {
       toolProficiencyDescription: tool.description ?? null,
       toolProficiencyKind: tool.kind ?? null,
       toolItemId: tool.itemId ?? null,
+      toolCategorySlug: toolCategorySlugValue,
     };
   });
 

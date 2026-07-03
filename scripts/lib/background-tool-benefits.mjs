@@ -4,27 +4,13 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { TOOL_CATEGORIES } from "./tool-categories.mjs";
+import { categorySlugFromName } from "./tool-categories.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const phb = path.join(__dirname, "..", "..", "data/phb");
 
-const CATEGORY_NAME_TO_SLUG = Object.fromEntries(
-  TOOL_CATEGORIES.map((c) => [c.name, c.slug])
-);
-
-/** Nomes usados nos JSON de antecedente (podem diferir do rótulo em TOOL_CATEGORIES). */
-const CATEGORY_ALIASES = {
-  "Kit de Jogos": "kit",
-};
-
-function categorySlugForName(categoryName) {
-  if (CATEGORY_ALIASES[categoryName]) return CATEGORY_ALIASES[categoryName];
-  return CATEGORY_NAME_TO_SLUG[categoryName] ?? null;
-}
-
 export function toolsForCategoryName(categoryName) {
-  const slug = categorySlugForName(categoryName);
+  const slug = categorySlugFromName(categoryName);
   if (!slug) return [];
   const loader = CATEGORY_TOOL_IDS[slug];
   return loader ? [...loader()].sort() : [];

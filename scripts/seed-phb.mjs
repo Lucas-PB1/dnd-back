@@ -718,6 +718,7 @@ lines.push(
       "tool_proficiency_description",
       "tool_proficiency_kind",
       "tool_item_id",
+      "tool_category_id",
     ],
     catalog.backgrounds.map((b) => ({
       slug: sqlStr(b.id),
@@ -731,6 +732,9 @@ lines.push(
       tool_proficiency_description: sqlStr(b.toolProficiencyDescription),
       tool_proficiency_kind: sqlStr(b.toolProficiencyKind),
       tool_item_id: b.toolItemId ? sqlRef("phb_item", b.toolItemId) : "NULL",
+      tool_category_id: b.toolCategorySlug
+        ? sqlRef("phb_tool_category", b.toolCategorySlug)
+        : "NULL",
     }))
   )
 );

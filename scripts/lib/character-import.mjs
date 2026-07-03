@@ -9,6 +9,7 @@ import {
   sqlRef,
   sqlStr,
 } from "./sql-escape.mjs";
+import { resolveBackgroundToolId } from "./background-tool-benefits.mjs";
 
 const EDITION_SLUG = "phb-2024-pt";
 
@@ -111,10 +112,12 @@ export function buildCharacterRows(char) {
     source: `${sqlStr(s.source)}::rpg.skill_source`,
   }));
 
+  const bgToolId = resolveBackgroundToolId(char);
   const tools = (char.toolProficiencies ?? []).map((t) => ({
     character_id: sqlStr(char.id),
     item_id: sqlRef("phb_item", t.toolId),
     source: `${sqlStr(TOOL_SOURCE[t.source] ?? "other")}::rpg.tool_source`,
+    is_background_proficiency: sqlBool(bgToolId != null && t.toolId === bgToolId),
   }));
 
   const saves = (char.savingThrowProficiencies ?? []).map((ab) => ({

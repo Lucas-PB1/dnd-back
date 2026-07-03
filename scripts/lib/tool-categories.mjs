@@ -8,6 +8,17 @@ export const TOOL_CATEGORIES = [
   { slug: "other", name: "Ferramentas Diversas", sortOrder: 6 },
 ];
 
+/** Nomes de categoria nos JSON de antecedente (podem diferir de TOOL_CATEGORIES.name). */
+export const TOOL_CATEGORY_ALIASES = {
+  "Kit de Jogos": "kit",
+};
+
+export function categorySlugFromName(categoryName) {
+  if (!categoryName) return null;
+  if (TOOL_CATEGORY_ALIASES[categoryName]) return TOOL_CATEGORY_ALIASES[categoryName];
+  return TOOL_CATEGORIES.find((c) => c.name === categoryName)?.slug ?? null;
+}
+
 export function toolCategorySlug(toolId) {
   if (toolId.startsWith("suprimentos-")) return "supplies";
   if (toolId.startsWith("utensilios-")) return "utensils";

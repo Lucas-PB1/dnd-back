@@ -177,7 +177,7 @@ if (all.skills.length) {
   lines.push(batchInsert("rpg.player_character_skill", ["character_id", "skill_id", "source"], all.skills));
 }
 if (all.tools.length) {
-  lines.push(batchInsert("rpg.player_character_tool", ["character_id", "item_id", "source"], all.tools));
+  lines.push(batchInsert("rpg.player_character_tool", ["character_id", "item_id", "source", "is_background_proficiency"], all.tools));
 }
 if (all.saves.length) {
   lines.push(

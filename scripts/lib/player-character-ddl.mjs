@@ -83,6 +83,7 @@ CREATE TABLE rpg.player_character_tool (
   character_id TEXT NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   item_id      BIGINT NOT NULL REFERENCES rpg.phb_item(id),
   source       rpg.tool_source NOT NULL,
+  is_background_proficiency BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (character_id, item_id)
 );
 
@@ -407,6 +408,7 @@ RETURNS JSONB AS $$
     'expertise', ex.ids,
     'speciesChoices', so.choices,
     'classChoices', co.choices,
+    'backgroundChoices', bgc.choices,
     'resources', res.map,
     'spellcasting', sc.doc,
     'hp', jsonb_build_object(
@@ -463,6 +465,15 @@ RETURNS JSONB AS $$
     JOIN rpg.phb_item i ON i.id = pct.item_id
     WHERE pct.character_id = pc.id
   ) tl ON TRUE
+  LEFT JOIN LATERAL (
+    SELECT CASE
+      WHEN i.slug IS NOT NULL THEN jsonb_build_object('toolId', i.slug)
+    END AS choices
+    FROM rpg.player_character_tool pct
+    JOIN rpg.phb_item i ON i.id = pct.item_id
+    WHERE pct.character_id = pc.id AND pct.is_background_proficiency
+    LIMIT 1
+  ) bgc ON TRUE
   LEFT JOIN LATERAL (
     SELECT COALESCE(jsonb_agg(a.slug ORDER BY a.slug), '[]'::jsonb) AS slugs
     FROM rpg.player_character_saving_throw pst

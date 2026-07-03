@@ -34,6 +34,11 @@ import { sumAsiDeltas } from "./asi-mechanics.mjs";
 import { enrichDbDocument } from "./lib/enrich-db-document.mjs";
 import { validateBackgroundToolProficiency } from "./lib/background-tool-benefits.mjs";
 import {
+  backgroundPackageAllowedItemIds,
+  validateBackgroundStartingEquipmentPresent,
+} from "./lib/background-equipment.mjs";
+import { validateBackgroundChoices } from "./lib/background-validators.mjs";
+import {
   expectedThirdCasterCantrips,
   expectedThirdCasterPrepared,
   expectedThirdCasterSpellSlots,
@@ -1283,6 +1288,8 @@ export const DB_DOCUMENT_VALIDATORS = [
   validateFightingStyle,
   validateSkillProficiencies,
   validateBackgroundToolProficiency,
+  validateBackgroundStartingEquipmentPresent,
+  validateBackgroundChoices,
   validateToolProficiencies,
   validatePassivePerception,
   validateStartingEquipment,
@@ -1334,6 +1341,8 @@ export function validateCharacterRules(doc) {
     validateEquippedArmorTraining,
     validateShieldMaster,
     validateBackgroundToolProficiency,
+    validateBackgroundStartingEquipmentPresent,
+    validateBackgroundChoices,
     validateToolProficiencies,
     validateFeatSkillChoices,
     validateArmorClass,
@@ -1717,19 +1726,19 @@ function packageFixedItemIds(pkg) {
   return pkg.items.filter((i) => i.id).map((i) => i.id);
 }
 
-/** Itens típicos de escolhas textuais nos pacotes iniciais (PHB 2024). */
-const PACKAGE_CHOICE_ITEMS = {
+/** Itens típicos de escolhas textuais nos pacotes iniciais de classe (PHB 2024). */
+const CLASS_PACKAGE_CHOICE_ITEMS = {
   "2 Adagas": ["dagger"],
   "2 adagas": ["dagger"],
   "4 Machadinhas": ["handaxe"],
   "6 Azagaias": ["javelin"],
 };
 
-function packageAllowedItemIds(pkg) {
+function packageAllowedItemIds(pkg, doc = null) {
   const ids = new Set(packageFixedItemIds(pkg));
   for (const item of pkg?.items ?? []) {
-    if (item.choice && PACKAGE_CHOICE_ITEMS[item.choice]) {
-      for (const id of PACKAGE_CHOICE_ITEMS[item.choice]) ids.add(id);
+    if (item.choice && CLASS_PACKAGE_CHOICE_ITEMS[item.choice]) {
+      for (const id of CLASS_PACKAGE_CHOICE_ITEMS[item.choice]) ids.add(id);
     }
   }
   return ids;
@@ -1747,7 +1756,7 @@ export function validateStartingEquipment(doc) {
   if (!bgOpt) return { ok: false, reason: "opção de equipamento de antecedente inválida" };
 
   const allowedClass = packageAllowedItemIds(classOpt);
-  const allowedBg = packageAllowedItemIds(bgOpt);
+  const allowedBg = backgroundPackageAllowedItemIds(doc, bgOpt);
 
   for (const item of doc.equipment) {
     if (item.source === "purchased" || item.source === "other") continue;
