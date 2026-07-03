@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { VPhbClass } from '../../../entities/views/v-phb-class.entity';
 import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
-import { AbilityScores, PlayerCharacter } from '../infrastructure/player-character.entity';
+import { AbilityScores, PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import {
   calculateHitPointsMax,
   ClassHpProfile,

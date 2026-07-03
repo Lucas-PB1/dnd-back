@@ -15,7 +15,7 @@ Complementa [`product-roadmap.md`](product-roadmap.md) (Fases 1–4 concluídas)
 | Catálogo métodos de geração | **7A** | ✅ |
 | Preview de level-up | **7A** | ✅ |
 | Aplicar level-up (+1) com escolhas | **7A** | ✅ |
-| Inventário + equipado / mochila | **7B** | pendente |
+| Inventário + equipado / mochila | **7B** | ✅ |
 | Slots de magia (gastos / short rest) | **7C** | pendente |
 | Concentração + condições | **7C** | pendente |
 | Conjurar / efeitos ativos | **7C** | pendente |
@@ -63,12 +63,13 @@ player_character_item (
 )
 ```
 
-### Rotas (proposto)
+### Rotas
 
-- `GET /characters/:id/inventory`
-- `POST /characters/:id/inventory` — adicionar item
-- `PATCH /characters/:id/inventory/:itemSlug` — equipar / desequipar
-- Validação: proficiência, carga (futuro)
+- [x] `GET /characters/:id/inventory`
+- [x] `POST /characters/:id/inventory` — adicionar item
+- [x] `PATCH /characters/:id/inventory/:itemSlug` — equipar / desequipar / quantidade
+- [x] `DELETE /characters/:id/inventory/:itemSlug`
+- [ ] Validação: proficiência, carga (futuro)
 
 ---
 

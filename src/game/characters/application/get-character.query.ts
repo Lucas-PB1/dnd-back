@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterRepository } from '../infrastructure/character.repository';
+import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 

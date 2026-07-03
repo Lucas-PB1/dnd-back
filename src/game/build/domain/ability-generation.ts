@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { AbilityScores } from '../infrastructure/player-character.entity';
+import { AbilityScores } from '../../shared/infrastructure/player-character.entity';
 
 export type AbilityGenerationMethodSlug = 'standard-array' | 'roll' | 'point-buy';
 

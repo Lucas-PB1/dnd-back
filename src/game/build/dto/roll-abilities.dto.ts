@@ -1,7 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsIn, IsOptional, ValidateNested } from 'class-validator';
-import { AbilityScoresDto } from './character-response.dto';
+import { AbilityScoresDto } from '../../characters/dto/character-response.dto';
 
 export class RollAbilitiesDto {
   @ApiProperty({ enum: ['standard-array', 'roll', 'point-buy'] })

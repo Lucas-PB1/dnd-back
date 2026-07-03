@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { CharacterFactory } from '../domain/character.factory';
 import { CharacterDomainService } from '../domain/character-domain.service';
-import { CharacterRepository } from '../infrastructure/character.repository';
+import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { CharacterSheetRepository } from '../infrastructure/character-sheet.repository';
 import { CharacterSheetValidator } from '../domain/character-sheet.validator';
 import { CharacterMapper } from '../infrastructure/character.mapper';

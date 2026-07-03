@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterRepository } from '../infrastructure/character.repository';
+import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { LevelUpService } from '../domain/level-up.service';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 

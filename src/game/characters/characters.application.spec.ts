@@ -1,14 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
-import { CharacterRepository } from './infrastructure/character.repository';
+import { CharacterRepository } from '../shared/infrastructure/character.repository';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CharacterDomainService } from './domain/character-domain.service';
 import { CharacterSheetValidator } from './domain/character-sheet.validator';
-import { PlayerCharacter } from './infrastructure/player-character.entity';
+import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
 import { CatalogLookupService } from '../../catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 

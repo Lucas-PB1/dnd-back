@@ -228,4 +228,70 @@ describe('Characters API (e2e)', () => {
     expect(leveled.body.level).toBe(2);
     expect(leveled.body.hitPointsMax).toBeGreaterThan(created.body.hitPointsMax);
   });
+
+  it('inventory add, equip, unequip, remove', async () => {
+    const created = await request(app.getHttpServer())
+      .post('/characters')
+      .set(auth())
+      .send({
+        name: 'Inventory Hero',
+        classSlug: 'fighter',
+        speciesSlug: 'human',
+        backgroundSlug: 'acolyte',
+      })
+      .expect(201);
+
+    const id = created.body.id as string;
+
+    await request(app.getHttpServer())
+      .get(`/characters/${id}/inventory`)
+      .set(auth())
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.items).toEqual([]);
+      });
+
+    await request(app.getHttpServer())
+      .post(`/characters/${id}/inventory`)
+      .set(auth())
+      .send({ itemSlug: 'longsword', quantity: 1 })
+      .expect(201)
+      .expect((res) => {
+        expect(res.body.itemSlug).toBe('longsword');
+        expect(res.body.location).toBe('backpack');
+      });
+
+    await request(app.getHttpServer())
+      .patch(`/characters/${id}/inventory/longsword`)
+      .set(auth())
+      .send({ location: 'equipped', equipmentSlot: 'main_hand' })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.location).toBe('equipped');
+        expect(res.body.equipmentSlot).toBe('main_hand');
+      });
+
+    await request(app.getHttpServer())
+      .patch(`/characters/${id}/inventory/longsword`)
+      .set(auth())
+      .send({ location: 'backpack' })
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.location).toBe('backpack');
+        expect(res.body.equipmentSlot).toBeNull();
+      });
+
+    await request(app.getHttpServer())
+      .delete(`/characters/${id}/inventory/longsword`)
+      .set(auth())
+      .expect(204);
+
+    await request(app.getHttpServer())
+      .get(`/characters/${id}/inventory`)
+      .set(auth())
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.items).toEqual([]);
+      });
+  });
 });

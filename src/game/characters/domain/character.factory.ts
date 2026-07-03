@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import {
   DEFAULT_ABILITY_SCORES,
   PlayerCharacter,
-} from '../infrastructure/player-character.entity';
+} from '../../shared/infrastructure/player-character.entity';
 import { CreateCharacterDto } from '../dto/create-character.dto';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 
