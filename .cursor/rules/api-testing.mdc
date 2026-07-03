@@ -1,0 +1,15 @@
+---
+description: Testes Jest — unit services, E2E Supertest, coverage catalog
+globs: src/**/*.ts,test/**/*.ts
+alwaysApply: false
+---
+
+# Testes API
+
+Plano: [`docs/api-plan.md`](../../docs/api-plan.md#testes-e-coverage)
+
+- Cada módulo catalog: `*.service.spec.ts` + `*.e2e-spec.ts`
+- Meta: **≥ 80%** lines em `catalog/**/*.service.ts`
+- E2E: GET 200 lista, GET 200 slug, GET 404 slug inválido
+- Domain game (futuro): **≥ 90%** + casos PHB (d10 guerreiro, etc.)
+- `npm run test:cov` antes de PR

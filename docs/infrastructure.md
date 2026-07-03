@@ -4,6 +4,8 @@ Documento de referência para rules, skills e implementação.
 
 **Arquitetura (BC, CQRS, DDD):** [`architecture.md`](architecture.md)
 
+**Plano REST API (checklist mestre):** [`api-plan.md`](api-plan.md)
+
 ## Decisão (2026-07)
 
 | Camada | Escolha | Motivo |

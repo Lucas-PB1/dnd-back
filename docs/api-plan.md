@@ -1,0 +1,327 @@
+# Plano da REST API — checklist mestre
+
+Documento de referência para implementação, testes e documentação OpenAPI.
+
+Relacionados: [`architecture.md`](architecture.md) · [`data-model.md`](data-model.md) · [`infrastructure.md`](infrastructure.md)
+
+## Princípios
+
+| Decisão | Detalhe |
+|---------|---------|
+| Estilo | **REST** JSON, recursos por slug, sem HATEOAS na v1 |
+| Catálogo | **GET público** — sem auth na fase 1–3 |
+| Auth | **Fase 5 (final)** — Supabase JWT só em `game/*` |
+| Regras D&D | **Dados** no Postgres; **cálculos de ficha** no BC Game (futuro) |
+| Docs | **Swagger** (`/api`) em toda fase de catálogo |
+| Testes | Unit + E2E por módulo; meta **≥ 80%** em services |
+
+---
+
+## O que o consumidor (Next.js) precisa
+
+Fluxo típico: **criar personagem** e **consultar regras**.
+
+```mermaid
+flowchart LR
+  subgraph step1 [1. Base]
+    A1[species]
+    A2[classes]
+    A3[backgrounds]
+  end
+
+  subgraph step2 [2. Detalhe]
+    B1[class + subclasses]
+    B2[spells by class]
+    B3[background equipment]
+  end
+
+  subgraph step3 [3. Referência]
+    C1[skills abilities]
+    C2[feats equipment]
+  end
+
+  subgraph step4 [4. Ficha — futuro]
+    D1[POST characters]
+  end
+
+  step1 --> step2 --> step3 --> step4
+```
+
+### Prioridade para o usuário final
+
+| Prioridade | Recurso REST | Uso no app |
+|------------|--------------|------------|
+| P0 | `GET /classes`, `/classes/:slug` | Escolha de classe | ✅ feito |
+| P0 | `GET /species`, `/species/:slug` | Escolha de espécie |
+| P0 | `GET /backgrounds`, `/backgrounds/:slug` | Antecedente |
+| P0 | `GET /classes/:slug/subclasses` | Subclasse |
+| P1 | `GET /spells`, `/spells/:slug` | Grimoire / detalhe |
+| P1 | `GET /classes/:slug/spells?maxLevel=` | Lista de magias por classe |
+| P1 | `GET /classes/:slug/spell-slots` | Tabela de slots |
+| P1 | `GET /backgrounds/:slug/equipment` | Equipamento inicial |
+| P1 | `GET /classes/:slug/equipment` | Equipamento inicial |
+| P2 | `GET /feats`, `/feats/:slug` | Talentos |
+| P2 | `GET /skills`, `/abilities` | Referência UI |
+| P2 | `GET /weapons`, `/armor` | Equipamento |
+| P2 | `GET /species/:slug/traits` | Traços e escolhas |
+| P3 | `GET /alignments`, `/languages` | Formulário |
+| P3 | `GET /character-levels` | Tabela XP / PB |
+| — | `POST /characters` … | **Fase Game + Auth** |
+
+---
+
+## Fases de entrega
+
+| Fase | Escopo | Auth | Swagger |
+|------|--------|------|---------|
+| **1** | Infra API: errors, Swagger, health, paginação | Não | Setup |
+| **2** | Catálogo P0 (classes, species, backgrounds, subclasses) | Não | Completo |
+| **3** | Catálogo P1–P2 (spells, feats, equipment, referências) | Não | Completo |
+| **4** | Regras derivadas read-only (slots, skill pools) | Não | Completo |
+| **5** | Identity + Game (fichas) | **Sim** | Rotas protegidas |
+| **6** | Domínio D&D (HP, level-up, validações ficha) | Sim | + exemplos |
+
+---
+
+## Checklist de módulos Nest (`src/catalog/`)
+
+Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
+
+### Infra compartilhada (`src/shared/` ou `src/common/`)
+
+| Item | Arquivo / pacote | Checklist |
+|------|------------------|-----------|
+| Filtro global de erros | `common/filters/http-exception.filter.ts` | [ ] |
+| Formato de erro JSON | `{ statusCode, message, error?, path, timestamp }` | [ ] |
+| Paginação | `common/dto/pagination-query.dto.ts`, `PaginatedResponseDto` | [ ] |
+| Health | `GET /health` → `{ status, db }` | [ ] |
+| Swagger | `@nestjs/swagger` em `main.ts`, prefixo `/api` | [ ] |
+| ValidationPipe global | `whitelist`, `transform` | [ ] |
+
+### Módulos de catálogo
+
+| Módulo | Rotas | View / fonte | Prioridade | Status |
+|--------|-------|--------------|------------|--------|
+| **classes** | `GET /classes`, `GET /classes/:slug` | `v_phb_class` | P0 | [~] |
+| **classes** | `GET /classes/:slug/subclasses` | `v_phb_subclass` | P0 | [ ] |
+| **classes** | `GET /classes/:slug/spell-slots` | `v_class_spell_slots` | P1 | [ ] |
+| **classes** | `GET /classes/:slug/spells` | `v_spell_by_class` | P1 | [ ] |
+| **classes** | `GET /classes/:slug/skills` | `v_phb_class_skill_choice` | P2 | [ ] |
+| **classes** | `GET /classes/:slug/equipment` | `v_phb_class_equipment` | P1 | [ ] |
+| **species** | `GET /species`, `GET /species/:slug` | `phb_species` + traits view | P0 | [ ] |
+| **species** | `GET /species/:slug/trait-choices` | `v_phb_species_trait_choices` | P2 | [ ] |
+| **backgrounds** | `GET /backgrounds`, `GET /backgrounds/:slug` | `v_phb_background` | P0 | [ ] |
+| **backgrounds** | `GET /backgrounds/:slug/equipment` | `v_phb_background_equipment` | P1 | [ ] |
+| **subclasses** | `GET /subclasses/:slug` | `v_phb_subclass` | P1 | [ ] |
+| **subclasses** | `GET /subclasses/:slug/mechanics` | `v_phb_subclass_mechanics` | P2 | [ ] |
+| **subclasses** | `GET /subclasses/:slug/spells` | `v_phb_subclass_prepared_spell` | P2 | [ ] |
+| **spells** | `GET /spells`, `GET /spells/:slug` | `v_phb_spell` | P1 | [ ] |
+| **feats** | `GET /feats`, `GET /feats/:slug` | `v_phb_feat` | P2 | [ ] |
+| **skills** | `GET /skills`, `GET /skills/:slug` | `phb_skill` + ability | P2 | [ ] |
+| **abilities** | `GET /abilities` | `phb_ability` | P2 | [ ] |
+| **equipment** | `GET /weapons`, `GET /weapons/:slug` | `phb_weapon` + item | P2 | [ ] |
+| **equipment** | `GET /armor`, `GET /armor/:slug` | `v_phb_armor` | P2 | [ ] |
+| **reference** | `GET /alignments` | `phb_alignment` | P3 | [ ] |
+| **reference** | `GET /languages` | `phb_language` | P3 | [ ] |
+| **reference** | `GET /character-levels` | `phb_character_level` | P3 | [ ] |
+
+### BC Identity (fase 5 — final)
+
+| Módulo | Item | Checklist |
+|--------|------|-----------|
+| **identity** | `SupabaseAuthGuard` | [ ] |
+| **identity** | `@CurrentUser()` decorator | [ ] |
+| **identity** | Swagger `@ApiBearerAuth()` em rotas game | [ ] |
+| **identity** | Catálogo permanece `@ApiSecurity([])` / público | [ ] |
+
+### BC Game (fase 5–6)
+
+| Módulo | Rotas | Checklist |
+|--------|-------|-----------|
+| **characters** | `GET /characters`, `GET /characters/:id` | [ ] |
+| **characters** | `POST /characters`, `PATCH /characters/:id` | [ ] |
+| **characters** | `DELETE /characters/:id` | [ ] |
+| **characters** | Domain: HP, level, validação slugs PHB | [ ] |
+
+---
+
+## Tratamento de erros
+
+### Formato padrão (RFC 7800-like simplificado)
+
+```json
+{
+  "statusCode": 404,
+  "message": "Class 'guerreiro' not found",
+  "error": "Not Found",
+  "path": "/classes/guerreiro",
+  "timestamp": "2026-07-03T12:00:00.000Z"
+}
+```
+
+### Mapeamento
+
+| Situação | HTTP | Nest |
+|----------|------|------|
+| Recurso não encontrado (slug inválido) | 404 | `NotFoundException` |
+| Query param inválido | 400 | `BadRequestException` |
+| Validação DTO (`class-validator`) | 400 | `ValidationPipe` automático |
+| Auth ausente/inválida (fase 5) | 401 | `UnauthorizedException` |
+| Acesso a ficha de outro user | 403 | `ForbiddenException` |
+| Erro inesperado | 500 | filter — **sem** stack em prod |
+
+### Checklist errors
+
+- [ ] `AllExceptionsFilter` ou `HttpExceptionFilter` global
+- [ ] Log estruturado server-side (sem vazar stack ao client em prod)
+- [ ] Mensagens em PT para `message` user-facing (opcional v1)
+- [ ] Testes E2E: 404 em slug inexistente por recurso
+
+---
+
+## Swagger (OpenAPI)
+
+### Setup
+
+```typescript
+// main.ts (após create)
+const config = new DocumentBuilder()
+  .setTitle('RPG PHB API')
+  .setDescription('Catálogo D&D 2024 + fichas (futuro)')
+  .setVersion('1.0')
+  .addBearerAuth() // usado na fase 5
+  .build();
+SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
+```
+
+### Checklist Swagger
+
+- [ ] Instalar `@nestjs/swagger`
+- [ ] `@ApiTags('catalog-classes')` por controller
+- [ ] `@ApiProperty()` em todos os response DTOs
+- [ ] `@ApiParam({ name: 'slug' })` em rotas `:slug`
+- [ ] `@ApiQuery` para paginação e filtros (`maxLevel`, `page`, `limit`)
+- [ ] `@ApiOkResponse({ type: ClassResponseDto })`
+- [ ] `@ApiNotFoundResponse()` nos GET `:slug`
+- [ ] Export OpenAPI JSON em CI (opcional) → `openapi.json`
+- [ ] README: link `http://localhost:3000/api` em dev
+
+---
+
+## Regras de negócio D&D — onde vivem
+
+| Tipo | Onde | Exemplo |
+|------|------|---------|
+| **Dados canônicos PHB** | `database/seeds/` | CD de classe, lista de magias |
+| **Agregações / joins** | Views SQL `v_phb_*` | Magias por classe, equipamento |
+| **Exposição read-only** | `catalog/*` service | GET sem recalcular regras |
+| **Cálculos de ficha** | `game/domain/` (fase 6) | HP máx, modificador, slots usados |
+| **Validação de escolhas** | `game/domain/` + `CatalogLookupService` | Classe existe? Magia na lista? |
+
+**Não** reimplementar no TypeScript o que já está no SQL (ex.: tabela de slots em `v_class_spell_slots`).
+
+### Checklist regras (fase 4–6)
+
+- [ ] `CatalogLookupService` — validar slugs (class, species, background, spell)
+- [ ] Documentar em Swagger descrições D&D (school, ritual, concentration)
+- [ ] Fase 6: `CharacterDomainService` — HP, proficiency bonus from `character-levels`
+- [ ] Testes unitários de domain com casos PHB (Guerreiro d10, Mago d6)
+
+---
+
+## Testes e coverage
+
+### Pirâmide
+
+| Camada | Ferramenta | O quê |
+|--------|------------|-------|
+| Unit | Jest | Services catalog, domain game |
+| E2E | Jest + Supertest | Cada rota GET pública |
+| Integração DB | Testcontainers ou DB test (opcional) | Views retornam seed |
+
+### Meta de coverage
+
+| Área | Meta |
+|------|------|
+| `catalog/**/*.service.ts` | ≥ **80%** lines |
+| `game/**/domain/**` | ≥ **90%** (quando existir) |
+| Controllers | E2E cobre; unit opcional |
+| Global filter / pipes | 1 E2E de erro 400/404 |
+
+### Checklist testes por módulo
+
+Para cada módulo catalog novo:
+
+- [ ] `*.service.spec.ts` — mock repository, findAll, findBySlug, 404
+- [ ] `*.e2e-spec.ts` — GET lista 200, GET slug válido 200, slug inválido 404
+- [ ] DTO snapshot ou assert campos obrigatórios
+- [ ] `npm run test:cov` no CI
+
+### Scripts sugeridos (`package.json`)
+
+```json
+{
+  "test": "jest",
+  "test:watch": "jest --watch",
+  "test:cov": "jest --coverage",
+  "test:e2e": "jest --config ./test/jest-e2e.json"
+}
+```
+
+---
+
+## Contrato REST — convenções
+
+| Regra | Exemplo |
+|-------|---------|
+| Plural nouns | `/classes`, `/spells` |
+| Slug na URL | `/classes/fighter` (slug EN do seed) |
+| Nested quando 1-N claro | `/classes/fighter/spells?maxLevel=3` |
+| Paginação | `?page=1&limit=20` (default limit 20, max 100) |
+| JSON camelCase | `hitDie`, `primaryAbilitySlugs` |
+| Sem expor `id` BIGINT | Só slug na API pública |
+| Versionamento | v1 implícito; prefixo `/v1` se breaking change futuro |
+
+---
+
+## Ordem de implementação recomendada
+
+```
+1. shared/     errors + pagination + Swagger + health + ValidationPipe
+2. species     P0
+3. backgrounds P0 (+ equipment nested P1)
+4. classes     completar subclasses, spells, equipment
+5. spells      P1 global + detalhe
+6. feats, skills, abilities, equipment
+7. reference   alignments, languages, character-levels
+8. test:cov    CI ≥ 80% catalog services
+9. identity    SupabaseAuthGuard (ÚLTIMO antes de game)
+10. game/      characters CRUD + domain D&D
+```
+
+---
+
+## Rules / skills Cursor (derivadas)
+
+| Tema | Rule (criar) | Skill (criar) |
+|------|--------------|---------------|
+| REST + Swagger | `rest-api` | `nestjs-swagger` |
+| Erros | `api-errors` | — |
+| Testes | `api-testing` | `nestjs-api-tests` |
+
+Ver `.cursor/rules/` e `.cursor/skills/`.
+
+---
+
+## Status geral (atualizar ao implementar)
+
+| Área | Progresso |
+|------|-----------|
+| Infra API (errors, swagger, health) | 0% |
+| Catálogo P0 | ~15% ( só classes ) |
+| Catálogo P1–P2 | 0% |
+| Testes | 0% |
+| Auth | 0% (deferido) |
+| Game | 0% |
+
+**Última revisão:** 2026-07-03

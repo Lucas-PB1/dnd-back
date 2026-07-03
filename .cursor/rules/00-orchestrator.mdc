@@ -15,6 +15,8 @@ Monorepo **API only**: `database/` + `src/` Nest. Frontend Next.js = repo separa
 |----------|-------|--------|
 | Infra | — | `docs/infrastructure.md` |
 | Arquitetura / BC / CQRS | bounded-contexts, catalog-thin-layer, game-domain | nestjs-bounded-context, cqrs-catalog-vs-game |
+| REST / Swagger / erros / testes | rest-api, api-errors, api-testing | nestjs-swagger, nestjs-api-tests |
+| Plano API (checklist) | — | [`docs/api-plan.md`](../../docs/api-plan.md) |
 | SQL / migrations / seeds | postgres-sql, supabase-sql, sql-clean-code, sql-oop-patterns, phb-data-model | postgres-apply-catalog, rpg-catalog-model |
 | Nest catálogo (`src/catalog/`) | catalog-thin-layer, nestjs-core, nestjs-typeorm, api-contract | nest-phb-api, typeorm-rpg-entities |
 | Nest game (`src/game/`) | game-domain, bounded-contexts, supabase-auth | cqrs-catalog-vs-game |

@@ -22,7 +22,8 @@ rpg/
 ├── docs/
 │   ├── data-model.md        # clusters, FKs, views
 │   ├── infrastructure.md    # stack Supabase + Vercel
-│   └── architecture.md      # bounded contexts, CQRS, DDD
+│   ├── architecture.md      # bounded contexts, CQRS, DDD
+│   └── api-plan.md          # checklist REST, Swagger, testes
 ├── src/                     # NestJS API
 ├── .cursor/
 │   ├── rules/               # regras por contexto
@@ -87,6 +88,7 @@ Documento completo: [`docs/infrastructure.md`](docs/infrastructure.md) · Arquit
 | Referências | `.cursor/skills/*/references/` | Specs por tema |
 | Infra | [`docs/infrastructure.md`](docs/infrastructure.md) | Stack Supabase + Vercel |
 | Arquitetura | [`docs/architecture.md`](docs/architecture.md) | BC, CQRS, DDD |
+| **Plano API** | [`docs/api-plan.md`](docs/api-plan.md) | Módulos, rotas, Swagger, testes |
 
 Orquestrador: `.cursor/rules/00-orchestrator.mdc`
 

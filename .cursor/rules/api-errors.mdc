@@ -1,0 +1,14 @@
+---
+description: Tratamento de erros HTTP — filtros, status codes, formato JSON
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# Erros API
+
+Plano: [`docs/api-plan.md`](../../docs/api-plan.md#tratamento-de-erros)
+
+- Filtro global: `{ statusCode, message, error, path, timestamp }`
+- 404 slug inexistente · 400 validação · 401/403 auth (fase 5) · 500 sem stack em prod
+- `NotFoundException` com mensagem clara: `Class 'x' not found`
+- E2E obrigatório para 404 por recurso

@@ -1,6 +1,6 @@
 # Arquitetura — bounded contexts e camadas
 
-Complementa [`infrastructure.md`](infrastructure.md) (stack) e [`data-model.md`](data-model.md) (schema SQL).
+Complementa [`infrastructure.md`](infrastructure.md) (stack), [`data-model.md`](data-model.md) (schema SQL) e [`api-plan.md`](api-plan.md) (REST, Swagger, testes).
 
 ## Estilo adotado
 

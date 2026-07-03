@@ -1,0 +1,17 @@
+---
+description: REST API — rotas, paginação, Swagger, formato JSON
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# REST API
+
+Plano: [`docs/api-plan.md`](../../docs/api-plan.md)
+
+- Recursos plural: `/classes`, `/spells`
+- Detalhe por **slug**: `/classes/fighter`
+- Nested: `/classes/:slug/spells`, `/backgrounds/:slug/equipment`
+- JSON **camelCase**; sem expor id BIGINT
+- Paginação: `?page=1&limit=20` (max 100)
+- Swagger: `@ApiTags`, `@ApiProperty` em DTOs; UI em `/api`
+- Catálogo: **GET only**; auth só em `game/*` (fase final)
