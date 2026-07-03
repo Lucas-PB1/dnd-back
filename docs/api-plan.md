@@ -66,7 +66,7 @@ flowchart LR
 | P2 | `GET /species/:slug/traits` | Traços e escolhas | ✅ feito |
 | P3 | `GET /alignments`, `/languages` | Formulário | ✅ feito |
 | P3 | `GET /character-levels` | Tabela XP / PB | ✅ feito |
-| — | `POST /characters` … | **Fase Game + Auth** |
+| — | `POST /characters` … | **Fase Game + Auth** | ✅ CRUD básico |
 
 ---
 
@@ -129,19 +129,19 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 
 | Módulo | Item | Checklist |
 |--------|------|-----------|
-| **identity** | `SupabaseAuthGuard` | [ ] |
-| **identity** | `@CurrentUser()` decorator | [ ] |
-| **identity** | Swagger `@ApiBearerAuth()` em rotas game | [ ] |
-| **identity** | Catálogo permanece `@ApiSecurity([])` / público | [ ] |
+| **identity** | `SupabaseAuthGuard` | [x] |
+| **identity** | `@CurrentUser()` decorator | [x] |
+| **identity** | Swagger `@ApiBearerAuth()` em rotas game | [x] |
+| **identity** | Catálogo permanece `@ApiSecurity([])` / público | [x] |
 
 ### BC Game (fase 5–6)
 
 | Módulo | Rotas | Checklist |
 |--------|-------|-----------|
-| **characters** | `GET /characters`, `GET /characters/:id` | [ ] |
-| **characters** | `POST /characters`, `PATCH /characters/:id` | [ ] |
-| **characters** | `DELETE /characters/:id` | [ ] |
-| **characters** | Domain: HP, level, validação slugs PHB | [ ] |
+| **characters** | `GET /characters`, `GET /characters/:id` | [x] |
+| **characters** | `POST /characters`, `PATCH /characters/:id` | [x] |
+| **characters** | `DELETE /characters/:id` | [x] |
+| **characters** | Domain: HP, level, validação slugs PHB | [~] |
 
 ---
 
@@ -222,7 +222,7 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
 ### Checklist regras (fase 4–6)
 
-- [ ] `CatalogLookupService` — validar slugs (class, species, background, spell)
+- [x] `CatalogLookupService` — validar slugs (class, species, background, spell)
 - [ ] Documentar em Swagger descrições D&D (school, ritual, concentration)
 - [ ] Fase 6: `CharacterDomainService` — HP, proficiency bonus from `character-levels`
 - [ ] Testes unitários de domain com casos PHB (Guerreiro d10, Mago d6)
@@ -323,7 +323,7 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 | Catálogo P2 | **100%** (feats, skills, abilities, weapons, armor, species traits) |
 | Catálogo P3 | **100%** (alignments, languages, character-levels) |
 | Testes | **~65%** (unit + E2E P0–P3; CI/cov pendente) |
-| Auth | 0% (deferido) |
-| Game | 0% |
+| Auth | **~80%** (JWT guard + CRUD fichas; RLS Supabase pendente) |
+| Game | **~40%** (CRUD; domain HP/level fase 6) |
 
-**Última revisão:** 2026-07-03 — catálogo P0–P3 completo
+**Última revisão:** 2026-07-03 — fase 5: Identity + characters CRUD

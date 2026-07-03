@@ -1,4 +1,11 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { VPhbClass } from '../entities/views/v-phb-class.entity';
+import { PhbSpecies } from '../entities/phb-species.entity';
+import { VPhbBackground } from '../entities/views/v-phb-background.entity';
+import { VPhbSubclass } from '../entities/views/v-phb-subclass.entity';
+import { PhbAlignment } from '../entities/phb-alignment.entity';
+import { CatalogLookupService } from './catalog-lookup.service';
 import { ClassesModule } from './classes/classes.module';
 import { SpeciesModule } from './species/species.module';
 import { BackgroundsModule } from './backgrounds/backgrounds.module';
@@ -11,6 +18,13 @@ import { ReferenceModule } from './reference/reference.module';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([
+      VPhbClass,
+      PhbSpecies,
+      VPhbBackground,
+      VPhbSubclass,
+      PhbAlignment,
+    ]),
     ClassesModule,
     SpeciesModule,
     BackgroundsModule,
@@ -21,5 +35,7 @@ import { ReferenceModule } from './reference/reference.module';
     EquipmentModule,
     ReferenceModule,
   ],
+  providers: [CatalogLookupService],
+  exports: [CatalogLookupService],
 })
 export class CatalogModule {}

@@ -90,6 +90,18 @@ Endpoints (catálogo P0):
 | `GET /alignments` | Tendências (9 alinhamentos) |
 | `GET /languages` | Idiomas PHB |
 | `GET /character-levels` | Nível, PB e XP (1–20) |
+
+### Game (requer auth)
+
+Header: `Authorization: Bearer <supabase_access_token>`
+
+| Rota | Descrição |
+|------|-----------|
+| `GET /characters` | Lista fichas do usuário |
+| `GET /characters/:id` | Detalhe da ficha (UUID) |
+| `POST /characters` | Criar ficha (valida slugs PHB) |
+| `PATCH /characters/:id` | Atualizar ficha |
+| `DELETE /characters/:id` | Remover ficha |
 | `GET /species` | Lista espécies (paginado) |
 | `GET /species/:slug` | Detalhe por slug (ex.: `dwarf`) |
 | `GET /backgrounds` | Lista antecedentes (paginado) |

@@ -25,4 +25,4 @@ Get-ChildItem database/migrations -Recurse -Filter *.sql | Sort-Object FullName 
 Get-ChildItem database/seeds -Recurse -Filter *.sql | Sort-Object FullName | ForEach-Object { psql "$DATABASE_URL" -f $_.FullName }
 ```
 
-Sem tabelas `player_character_*` — só catálogo PHB 2024.
+Sem tabelas `player_character_*` no fluxo padrão de catálogo — ver `090_player/` para dados de jogador (fase 5+).
