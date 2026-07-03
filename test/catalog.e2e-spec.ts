@@ -45,6 +45,21 @@ describe('Catalog API (e2e)', () => {
   it('GET /classes/fighter', () =>
     request(app.getHttpServer()).get('/classes/fighter').expect(200));
 
+  it('GET /classes/fighter/subclasses', () =>
+    request(app.getHttpServer())
+      .get('/classes/fighter/subclasses')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.data).toBeInstanceOf(Array);
+        expect(res.body.meta.total).toBeGreaterThanOrEqual(4);
+        expect(res.body.data.some((s: { slug: string }) => s.slug === 'champion')).toBe(true);
+      }));
+
+  it('GET /classes/invalid-slug/subclasses returns 404', () =>
+    request(app.getHttpServer())
+      .get('/classes/invalid-slug/subclasses')
+      .expect(404));
+
   it('GET /classes/invalid returns 404 with body', () =>
     request(app.getHttpServer())
       .get('/classes/invalid-slug')

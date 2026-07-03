@@ -22,6 +22,15 @@ export class ClassesController {
     return this.classesService.findAll(query.page, query.limit);
   }
 
+  @Get(':slug/subclasses')
+  @ApiOperation({ summary: 'List subclasses for a PHB class (paginated)' })
+  @ApiParam({ name: 'slug', example: 'fighter' })
+  @ApiOkResponse({ description: 'Paginated subclass list' })
+  @ApiNotFoundResponse({ description: 'Class not found' })
+  findSubclasses(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
+    return this.classesService.findSubclassesByClassSlug(slug, query.page, query.limit);
+  }
+
   @Get(':slug')
   @ApiOperation({ summary: 'Get class by slug' })
   @ApiParam({ name: 'slug', example: 'fighter' })

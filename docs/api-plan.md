@@ -54,7 +54,7 @@ flowchart LR
 | P0 | `GET /classes`, `/classes/:slug` | Escolha de classe | ✅ feito |
 | P0 | `GET /species`, `/species/:slug` | Escolha de espécie | ✅ feito |
 | P0 | `GET /backgrounds`, `/backgrounds/:slug` | Antecedente | ✅ feito |
-| P0 | `GET /classes/:slug/subclasses` | Subclasse |
+| P0 | `GET /classes/:slug/subclasses` | Subclasse | ✅ feito |
 | P1 | `GET /spells`, `/spells/:slug` | Grimoire / detalhe |
 | P1 | `GET /classes/:slug/spells?maxLevel=` | Lista de magias por classe |
 | P1 | `GET /classes/:slug/spell-slots` | Tabela de slots |
@@ -103,7 +103,7 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 | Módulo | Rotas | View / fonte | Prioridade | Status |
 |--------|-------|--------------|------------|--------|
 | **classes** | `GET /classes`, `GET /classes/:slug` | `v_phb_class` | P0 | [x] |
-| **classes** | `GET /classes/:slug/subclasses` | `v_phb_subclass` | P0 | [ ] |
+| **classes** | `GET /classes/:slug/subclasses` | `v_phb_subclass` | P0 | [x] |
 | **classes** | `GET /classes/:slug/spell-slots` | `v_class_spell_slots` | P1 | [ ] |
 | **classes** | `GET /classes/:slug/spells` | `v_spell_by_class` | P1 | [ ] |
 | **classes** | `GET /classes/:slug/skills` | `v_phb_class_skill_choice` | P2 | [ ] |
@@ -318,10 +318,10 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 | Área | Progresso |
 |------|-----------|
 | Infra API (errors, swagger, health) | **100%** (fase 1) |
-| Catálogo P0 | **~75%** (classes, species, backgrounds — falta subclasses) |
+| Catálogo P0 | **100%** (classes, species, backgrounds, subclasses) |
 | Catálogo P1–P2 | 0% |
-| Testes | **~40%** (unit P0 + E2E consolidado; CI/cov pendente) |
+| Testes | **~45%** (unit P0 + E2E consolidado; CI/cov pendente) |
 | Auth | 0% (deferido) |
 | Game | 0% |
 
-**Última revisão:** 2026-07-03 — fase 1 + P0 species/backgrounds validados (`build`, `test`, `test:e2e` OK)
+**Última revisão:** 2026-07-03 — fase 2 P0 completa (subclasses)

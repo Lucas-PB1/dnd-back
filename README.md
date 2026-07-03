@@ -72,6 +72,7 @@ Endpoints (catálogo P0):
 | `GET /health` | Status da API e conexão DB |
 | `GET /classes` | Lista classes (paginado: `{ data, meta }`) |
 | `GET /classes/:slug` | Detalhe por slug (ex.: `fighter`) |
+| `GET /classes/:slug/subclasses` | Subclasses da classe (paginado) |
 | `GET /species` | Lista espécies (paginado) |
 | `GET /species/:slug` | Detalhe por slug (ex.: `dwarf`) |
 | `GET /backgrounds` | Lista antecedentes (paginado) |
