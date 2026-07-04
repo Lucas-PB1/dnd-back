@@ -2,7 +2,7 @@
 
 Massa de dados PostgreSQL do **Player's Handbook 2024 (PT-BR)** + API NestJS.
 
-Frontend irmão: **dnd-front** (Next.js) — ver [`docs/rpg-web-plan.md`](docs/rpg-web-plan.md).
+Frontend irmão: **dnd-front** (Next.js) — roadmap [`docs/product-roadmap.md`](docs/product-roadmap.md) · bootstrap [`docs/rpg-web-plan.md`](docs/rpg-web-plan.md).
 
 ## O que é
 

@@ -1,4 +1,6 @@
-# Plano da REST API — checklist mestre
+# Plano da REST API — referência técnica
+
+> **Status:** implementação concluída (jul/2026). Este documento é referência de contrato, testes e Swagger — não um backlog ativo. Roadmap vivo: [`product-roadmap.md`](product-roadmap.md).
 
 Documento de referência para implementação, testes e documentação OpenAPI.
 
@@ -351,7 +353,7 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 | Auth | **100%** (JWT + RLS Supabase) |
 | Game | **~95%** (ficha PHB completa; aggregate/VOs opcional) |
 
-**Última revisão:** 2026-07-03 — subclasses (`/subclasses/*`), refactor catalog queries/mappers, fase 6 HP + proficiency bonus
+**Última revisão:** 2026-07-04 — checklist concluído; pendências opcionais: `test:cov` CI, OpenAPI export, aggregate/VOs
 
 **Roadmap produto (app + deploy):** [`product-roadmap.md`](product-roadmap.md)
 

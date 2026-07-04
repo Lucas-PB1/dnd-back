@@ -2,7 +2,7 @@
 
 Base: `NEXT_PUBLIC_API_URL` · Swagger completo: `{API}/api`
 
-Plano detalhado: [`docs/rpg-web-plan.md`](../../../docs/rpg-web-plan.md#6-mapa-de-rotas-next--api)
+Plano / roadmap: [`docs/product-roadmap.md`](../../../docs/product-roadmap.md)
 
 ## Catálogo (sem auth)
 

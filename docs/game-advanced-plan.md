@@ -1,5 +1,7 @@
 # Plano — Game avançado (ficha viva + mesa)
 
+> **Status API 7A–7C:** concluído. **Front:** consumido em `character-sheet` (mesa, inventário, level-up). Roadmap: [`product-roadmap.md`](product-roadmap.md).
+
 Complementa [`product-roadmap.md`](product-roadmap.md) (Fases 1–4 concluídas).
 
 **Objetivo:** cobrir o que falta entre “ficha PHB estática” e “app completo de mesa”.
@@ -8,18 +10,18 @@ Complementa [`product-roadmap.md`](product-roadmap.md) (Fases 1–4 concluídas)
 
 ## Mapa de capacidades
 
-| Capacidade | Fase | Status |
-|------------|------|--------|
-| CRUD ficha + escolhas PHB | 4 | ✅ |
-| Gerar atributos (array / 4d6 / point-buy) | **7A** | ✅ |
-| Catálogo métodos de geração | **7A** | ✅ |
-| Preview de level-up | **7A** | ✅ |
-| Aplicar level-up (+1) com escolhas | **7A** | ✅ |
-| Inventário + equipado / mochila | **7B** | ✅ |
-| Slots de magia (gastos / short rest) | **7C** | ✅ |
-| Concentração + condições | **7C** | ✅ |
-| Conjurar / efeitos ativos | **7C** | ✅ (cast básico) |
-| Campanha / combate / iniciativa | **7D** | pendente |
+| Capacidade | Fase | API | Front |
+|------------|------|-----|-------|
+| CRUD ficha + escolhas PHB | 4 | ✅ | ✅ |
+| Gerar atributos (array / 4d6 / point-buy) | **7A** | ✅ | ✅ |
+| Catálogo métodos de geração | **7A** | ✅ | ✅ |
+| Preview de level-up | **7A** | ✅ | ✅ |
+| Aplicar level-up (+1) com escolhas | **7A** | ✅ | ✅ |
+| Inventário + equipado / mochila | **7B** | ✅ | ✅ |
+| Slots de magia (gastos / short rest) | **7C** | ✅ | ✅ |
+| Concentração + condições | **7C** | ✅ | ✅ (condições: texto livre) |
+| Conjurar / efeitos ativos | **7C** | ✅ (cast básico) | ✅ |
+| Campanha / combate / iniciativa | **7D** | pendente | pendente |
 
 ---
 
@@ -111,4 +113,4 @@ Catálogo: condições em `rpg.phb_condition` (seed na migration).
 7A (agora) → 7B inventário → 7C mesa → front rpg-web em paralelo após 7A
 ```
 
-**Última revisão:** 2026-07-03
+**Última revisão:** 2026-07-04
