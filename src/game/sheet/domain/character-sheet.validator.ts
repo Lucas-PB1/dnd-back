@@ -121,6 +121,25 @@ export class CharacterSheetValidator {
       }
       await this.validateSpeciesChoices(ctx.speciesSlug, input.speciesChoices);
     }
+
+    const unlockLevel = await this.resolveSubclassUnlockLevel(ctx.classSlug);
+    if (ctx.subclassSlug && ctx.level >= unlockLevel) {
+      const requiredOptionKeys = await this.loadSubclassOptionKeysAtLevel(
+        ctx.subclassSlug,
+        ctx.level,
+      );
+      if (requiredOptionKeys.length > 0) {
+        const provided = input.subclassOptions ?? [];
+        const providedKeys = new Set(provided.map((option) => option.optionKey));
+        const missing = requiredOptionKeys.filter((key) => !providedKeys.has(key));
+        if (missing.length > 0) {
+          throw new BadRequestException(
+            `Subclass '${ctx.subclassSlug}' requires options: ${missing.join(', ')}`,
+          );
+        }
+        await this.validateSubclassOptions(ctx.subclassSlug, provided);
+      }
+    }
   }
 
   async validateBackgroundAbilityBoosts(
@@ -210,6 +229,24 @@ export class CharacterSheetValidator {
       [classSlug],
     );
     return rows[0]?.subclass_unlock_level ?? 3;
+  }
+
+  private async loadSubclassOptionKeysAtLevel(
+    subclassSlug: string,
+    level: number,
+  ): Promise<string[]> {
+    const subclass = await this.subclassRefRepo.findOne({ where: { slug: subclassSlug } });
+    if (!subclass) return [];
+
+    const rows = await this.dataSource.query<{ optionKey: string }[]>(
+      `SELECT DISTINCT def.option_key AS "optionKey"
+       FROM rpg.phb_subclass_option_def def
+       WHERE def.subclass_id = $1
+         AND def.unlock_level <= $2
+       ORDER BY def.option_key ASC`,
+      [subclass.id, level],
+    );
+    return rows.map((row) => row.optionKey);
   }
 
   private async validateSpeciesChoices(

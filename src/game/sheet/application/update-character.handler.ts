@@ -10,6 +10,9 @@ import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
 import { applyBackgroundAbilityBoosts } from '../domain/background-ability-boost';
+import {
+  resolveBackgroundToolItemSlug,
+} from '../domain/background-origin';
 
 @Injectable()
 export class UpdateCharacterHandler {
@@ -91,9 +94,30 @@ export class UpdateCharacterHandler {
       row.backgroundBoostPlus1AbilitySlug = null;
     }
 
+    if (backgroundChanged && dto.backgroundToolItemSlug === undefined) {
+      row.backgroundToolItemSlug = null;
+    }
+
+    const updateDto: UpdateCharacterDto = { ...dto };
+
+    if (updateDto.backgroundToolItemSlug !== undefined) {
+      const background = await this.catalogLookup.findBackgroundOrFail(
+        effective.backgroundSlug,
+      );
+      const resolvedTool = resolveBackgroundToolItemSlug(
+        background,
+        updateDto.backgroundToolItemSlug,
+      );
+      await this.sheetValidator.validateBackgroundToolChoice(
+        background,
+        resolvedTool,
+      );
+      updateDto.backgroundToolItemSlug = resolvedTool ?? undefined;
+    }
+
     CharacterFactory.applyUpdate(
       row,
-      scoresAreBase ? { ...dto, abilityScores: undefined } : dto,
+      scoresAreBase ? { ...updateDto, abilityScores: undefined } : updateDto,
     );
 
     if (boostPatch) {
