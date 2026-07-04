@@ -22,11 +22,18 @@ describe('Characters application layer', () => {
     save: jest.Mock;
     remove: jest.Mock;
   };
-  let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'validateCharacterCatalogRefs'>>;
+  let catalogLookup: jest.Mocked<
+    Pick<CatalogLookupService, 'validateCharacterCatalogRefs' | 'findBackgroundOrFail'>
+  >;
   let sheetValidator: jest.Mocked<
     Pick<
       CharacterSheetValidator,
-      'validateSheetInput' | 'validateLevelRules' | 'validateCreateRequiredFields' | 'validateBackgroundAbilityBoosts'
+      | 'validateSheetInput'
+      | 'validateLevelRules'
+      | 'validateCreateRequiredFields'
+      | 'validateBackgroundAbilityBoosts'
+      | 'validateBackgroundToolChoice'
+      | 'validateBackgroundOriginFeat'
     >
   >;
   let sheetRepo: jest.Mocked<Pick<CharacterSheetRepository, 'sync' | 'load' | 'loadMany' | 'empty' | 'mergeSheetData'>>;
@@ -58,6 +65,7 @@ describe('Characters application layer', () => {
     abilityGenerationMethodSlug: null,
     backgroundBoostPlus2AbilitySlug: null,
     backgroundBoostPlus1AbilitySlug: null,
+    backgroundToolItemSlug: null,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -70,12 +78,23 @@ describe('Characters application layer', () => {
       save: jest.fn(async (entity: PlayerCharacter) => entity),
       remove: jest.fn(),
     };
-    catalogLookup = { validateCharacterCatalogRefs: jest.fn().mockResolvedValue(undefined) };
+    catalogLookup = {
+      validateCharacterCatalogRefs: jest.fn().mockResolvedValue(undefined),
+      findBackgroundOrFail: jest.fn().mockResolvedValue({
+        backgroundSlug: 'acolyte',
+        featSlug: 'magic-initiate',
+        toolProficiencyKind: 'fixed',
+        toolItemSlug: 'suprimentos-de-caligrafo',
+        abilityOptionSlugs: [],
+      }),
+    };
     sheetValidator = {
       validateSheetInput: jest.fn().mockResolvedValue(undefined),
       validateLevelRules: jest.fn().mockResolvedValue(undefined),
       validateCreateRequiredFields: jest.fn().mockResolvedValue(undefined),
       validateBackgroundAbilityBoosts: jest.fn().mockResolvedValue(undefined),
+      validateBackgroundToolChoice: jest.fn().mockResolvedValue(undefined),
+      validateBackgroundOriginFeat: jest.fn().mockResolvedValue(undefined),
     };
     sheetRepo = {
       sync: jest.fn().mockResolvedValue(undefined),

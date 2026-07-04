@@ -29,6 +29,14 @@ describe('Backgrounds queries', () => {
     editionSlug: 'phb-2024-pt',
     abilityOptionSlugs: ['sabedoria'],
     abilityOptionNames: ['Sabedoria'],
+    featSlug: 'magic-initiate',
+    featName: 'Iniciado em Magia',
+    toolProficiencyKind: 'fixed',
+    toolProficiencyDescription: 'Suprimentos de Calígrafo',
+    toolItemSlug: 'suprimentos-de-caligrafo',
+    toolItemName: 'Suprimentos de Calígrafo',
+    toolCategorySlug: null,
+    toolCategoryName: null,
   };
 
   const sampleEquipment: VPhbBackgroundEquipment = {

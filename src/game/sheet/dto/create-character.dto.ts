@@ -86,4 +86,12 @@ export class CreateCharacterDto extends CharacterSheetInputDto {
   @IsString()
   @IsNotEmpty()
   backgroundAbilityBoostPlus1Slug!: string;
+
+  @ApiPropertyOptional({
+    example: 'ferramentas-de-carpinteiro',
+    description: 'Obrigatório quando o antecedente exige escolha de ferramenta',
+  })
+  @IsOptional()
+  @IsString()
+  backgroundToolItemSlug?: string;
 }

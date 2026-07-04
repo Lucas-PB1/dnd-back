@@ -32,7 +32,15 @@ export class CharacterFactory {
       abilityGenerationMethodSlug: dto.abilityGenerationMethodSlug ?? null,
       backgroundBoostPlus2AbilitySlug: dto.backgroundAbilityBoostPlus2Slug ?? null,
       backgroundBoostPlus1AbilitySlug: dto.backgroundAbilityBoostPlus1Slug ?? null,
+      backgroundToolItemSlug: dto.backgroundToolItemSlug ?? null,
     };
+  }
+
+  static withBackgroundTool(
+    entity: Partial<PlayerCharacter>,
+    toolItemSlug: string | null,
+  ): Partial<PlayerCharacter> {
+    return { ...entity, backgroundToolItemSlug: toolItemSlug };
   }
 
   /** Aplica +2/+1 do antecedente sobre scores base (criação). */
@@ -79,6 +87,9 @@ export class CharacterFactory {
     }
     if (dto.backgroundAbilityBoostPlus1Slug !== undefined) {
       row.backgroundBoostPlus1AbilitySlug = dto.backgroundAbilityBoostPlus1Slug ?? null;
+    }
+    if (dto.backgroundToolItemSlug !== undefined) {
+      row.backgroundToolItemSlug = dto.backgroundToolItemSlug ?? null;
     }
   }
 

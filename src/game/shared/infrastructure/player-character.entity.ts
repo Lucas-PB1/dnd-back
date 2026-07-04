@@ -65,6 +65,9 @@ export class PlayerCharacter {
   @Column({ name: 'background_boost_plus1_ability_slug', type: 'text', nullable: true })
   backgroundBoostPlus1AbilitySlug!: string | null;
 
+  @Column({ name: 'background_tool_item_slug', type: 'text', nullable: true })
+  backgroundToolItemSlug!: string | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 

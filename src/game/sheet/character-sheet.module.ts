@@ -11,6 +11,7 @@ import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
+import { VPhbBackgroundToolOption } from '../../entities/views/v-phb-background-tool-option.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { PlayerCharacterSkill } from './infrastructure/player-character-skill.entity';
 import {
@@ -54,6 +55,7 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
       PhbSubclassOptionValue,
       VPhbClassEquipment,
       VPhbBackgroundEquipment,
+      VPhbBackgroundToolOption,
     ]),
     GameSharedModule,
     CatalogModule,

@@ -11,6 +11,7 @@ import { PhbAbilityGenerationMethod } from '../../../entities/phb-ability-genera
 import { PhbSubclassOptionValue, PhbSubclassRef } from '../../../entities/phb-subclass-option-value.entity';
 import { VPhbClassEquipment } from '../../../entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '../../../entities/views/v-phb-background-equipment.entity';
+import { VPhbBackgroundToolOption } from '../../../entities/views/v-phb-background-tool-option.entity';
 import { CharacterSheetInput } from './character-sheet.types';
 import {
   applyBackgroundAbilityBoosts,
@@ -50,6 +51,8 @@ export class CharacterSheetValidator {
     private readonly classEquipmentRepo: Repository<VPhbClassEquipment>,
     @InjectRepository(VPhbBackgroundEquipment)
     private readonly backgroundEquipmentRepo: Repository<VPhbBackgroundEquipment>,
+    @InjectRepository(VPhbBackgroundToolOption)
+    private readonly backgroundToolOptionsRepo: Repository<VPhbBackgroundToolOption>,
   ) {}
 
   async validateSheetInput(
@@ -132,6 +135,54 @@ export class CharacterSheetValidator {
       plus2Slug: boosts.plus2Slug ?? '',
       plus1Slug: boosts.plus1Slug ?? '',
     });
+  }
+
+  async validateBackgroundOriginFeat(
+    background: { featSlug: string | null },
+    featSlugs: string[],
+  ): Promise<void> {
+    const origin = background.featSlug?.trim();
+    if (!origin) return;
+    if (!featSlugs.includes(origin)) {
+      throw new BadRequestException(
+        `Background origin feat '${origin}' must be included in featSlugs`,
+      );
+    }
+  }
+
+  async validateBackgroundToolChoice(
+    background: {
+      backgroundSlug: string;
+      toolProficiencyKind: string | null;
+      toolItemSlug: string | null;
+    },
+    toolItemSlug: string | null,
+  ): Promise<void> {
+    if (background.toolProficiencyKind === 'choice') {
+      if (!toolItemSlug) {
+        throw new BadRequestException(
+          `Background '${background.backgroundSlug}' requires a tool proficiency choice`,
+        );
+      }
+      const allowed = await this.backgroundToolOptionsRepo.find({
+        where: { backgroundSlug: background.backgroundSlug, itemSlug: toolItemSlug },
+      });
+      if (allowed.length === 0) {
+        throw new BadRequestException(
+          `Tool '${toolItemSlug}' is not a valid choice for background '${background.backgroundSlug}'`,
+        );
+      }
+      return;
+    }
+
+    if (background.toolProficiencyKind === 'fixed') {
+      const expected = background.toolItemSlug;
+      if (expected && toolItemSlug && toolItemSlug !== expected) {
+        throw new BadRequestException(
+          `Background '${background.backgroundSlug}' grants fixed tool '${expected}'`,
+        );
+      }
+    }
   }
 
   async validateLevelRules(ctx: CharacterSheetContext): Promise<void> {

@@ -122,6 +122,12 @@ export class CharacterResponseDto {
   @ApiPropertyOptional({ example: 'carisma' })
   backgroundAbilityBoostPlus1Slug!: string | null;
 
+  @ApiPropertyOptional({
+    example: 'ferramentas-de-cartografo',
+    description: 'Ferramenta do antecedente (fixa ou escolhida)',
+  })
+  backgroundToolItemSlug!: string | null;
+
   @ApiProperty()
   createdAt!: string;
 

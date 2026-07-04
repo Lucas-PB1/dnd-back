@@ -25,4 +25,28 @@ export class VPhbBackground {
 
   @ViewColumn({ name: 'ability_option_names' })
   abilityOptionNames!: string[] | null;
+
+  @ViewColumn({ name: 'feat_slug' })
+  featSlug!: string | null;
+
+  @ViewColumn({ name: 'feat_name' })
+  featName!: string | null;
+
+  @ViewColumn({ name: 'tool_proficiency_kind' })
+  toolProficiencyKind!: string | null;
+
+  @ViewColumn({ name: 'tool_proficiency_description' })
+  toolProficiencyDescription!: string | null;
+
+  @ViewColumn({ name: 'tool_item_slug' })
+  toolItemSlug!: string | null;
+
+  @ViewColumn({ name: 'tool_item_name' })
+  toolItemName!: string | null;
+
+  @ViewColumn({ name: 'tool_category_slug' })
+  toolCategorySlug!: string | null;
+
+  @ViewColumn({ name: 'tool_category_name' })
+  toolCategoryName!: string | null;
 }

@@ -11,6 +11,7 @@ import { FindBackgroundsQuery } from './queries/find-backgrounds.query';
 import { FindBackgroundBySlugQuery } from './queries/find-background-by-slug.query';
 import { FindBackgroundEquipmentQuery } from './queries/find-background-equipment.query';
 import { FindBackgroundSkillsQuery } from './queries/find-background-skills.query';
+import { FindBackgroundToolsQuery } from './queries/find-background-tools.query';
 import { BackgroundResponseDto } from './dto/background-response.dto';
 
 @ApiTags('catalog-backgrounds')
@@ -21,6 +22,7 @@ export class BackgroundsController {
     private readonly findBackgroundBySlug: FindBackgroundBySlugQuery,
     private readonly findBackgroundEquipment: FindBackgroundEquipmentQuery,
     private readonly findBackgroundSkills: FindBackgroundSkillsQuery,
+    private readonly findBackgroundTools: FindBackgroundToolsQuery,
   ) {}
 
   @Get()
@@ -46,6 +48,15 @@ export class BackgroundsController {
   @ApiNotFoundResponse({ description: 'Background not found or no skills data' })
   findSkills(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findBackgroundSkills.execute(slug, query.page, query.limit);
+  }
+
+  @Get(':slug/tools')
+  @ApiOperation({ summary: 'Tool proficiency options for a background (paginated)' })
+  @ApiParam({ name: 'slug', example: 'artisan' })
+  @ApiOkResponse({ description: 'Paginated tool choice list' })
+  @ApiNotFoundResponse({ description: 'Background not found or no tool choices' })
+  findTools(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
+    return this.findBackgroundTools.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug')
