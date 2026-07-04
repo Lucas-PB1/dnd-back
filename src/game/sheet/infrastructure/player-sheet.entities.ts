@@ -33,6 +33,24 @@ export class PlayerCharacterFeat {
   featSlug!: string;
 }
 
+@Entity({ schema: 'rpg', name: 'player_character_feat_option' })
+export class PlayerCharacterFeatOption {
+  @PrimaryColumn({ name: 'character_id', type: 'uuid' })
+  characterId!: string;
+
+  @PrimaryColumn({ name: 'feat_slug' })
+  featSlug!: string;
+
+  @PrimaryColumn({ name: 'instance_index', type: 'int' })
+  instanceIndex!: number;
+
+  @PrimaryColumn({ name: 'option_key' })
+  optionKey!: string;
+
+  @Column({ name: 'value_id' })
+  valueId!: string;
+}
+
 @Entity({ schema: 'rpg', name: 'player_character_spell' })
 export class PlayerCharacterSpell {
   @PrimaryColumn({ name: 'character_id', type: 'uuid' })

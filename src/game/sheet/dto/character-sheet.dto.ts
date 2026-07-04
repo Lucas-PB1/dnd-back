@@ -36,6 +36,29 @@ export class SubclassOptionDto {
   valueId!: string;
 }
 
+export class FeatOptionDto {
+  @ApiProperty({ example: 'magic-initiate' })
+  @IsString()
+  @IsNotEmpty()
+  featSlug!: string;
+
+  @ApiPropertyOptional({ example: 0, default: 0 })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  instanceIndex?: number;
+
+  @ApiProperty({ example: 'spellList' })
+  @IsString()
+  @IsNotEmpty()
+  optionKey!: string;
+
+  @ApiProperty({ example: 'cleric' })
+  @IsString()
+  @IsNotEmpty()
+  valueId!: string;
+}
+
 export class CharacterSpellDto {
   @ApiProperty({ example: 'fire-bolt' })
   @IsString()
@@ -109,6 +132,13 @@ export class CharacterSheetInputDto {
   @IsString({ each: true })
   featSlugs?: string[];
 
+  @ApiPropertyOptional({ type: [FeatOptionDto] })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => FeatOptionDto)
+  featOptions?: FeatOptionDto[];
+
   @ApiPropertyOptional({ type: [CharacterSpellDto] })
   @IsOptional()
   @IsArray()
@@ -145,6 +175,9 @@ export class CharacterSheetResponseDto {
 
   @ApiProperty({ example: ['magic-initiate'] })
   featSlugs!: string[];
+
+  @ApiProperty({ type: [FeatOptionDto] })
+  featOptions!: FeatOptionDto[];
 
   @ApiProperty({ type: [CharacterSpellDto] })
   characterSpells!: CharacterSpellDto[];

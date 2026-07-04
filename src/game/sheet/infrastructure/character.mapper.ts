@@ -52,6 +52,7 @@ export class CharacterMapper {
       speciesChoices: loaded.speciesChoices,
       subclassOptions: loaded.subclassOptions,
       featSlugs: loaded.featSlugs,
+      featOptions: loaded.featOptions,
       characterSpells: loaded.characterSpells,
       equipment: loaded.equipment,
       languageSlugs: loaded.languageSlugs,

@@ -58,7 +58,29 @@ export class UpdateCharacterHandler {
     }
 
     await this.sheetValidator.validateLevelRules(effective);
-    await this.sheetValidator.validateSheetInput(this.toSheetInput(dto), effective);
+
+    const sheetSnapshot = await this.sheetRepository.load(row.id, effective.backgroundSlug);
+    const effectiveFeatSlugs = dto.featSlugs ?? sheetSnapshot.featSlugs;
+    let effectiveFeatOptions = sheetSnapshot.featOptions;
+    if (dto.featOptions !== undefined) {
+      effectiveFeatOptions = dto.featOptions;
+    } else if (dto.featSlugs !== undefined) {
+      effectiveFeatOptions = sheetSnapshot.featOptions.filter((option) =>
+        effectiveFeatSlugs.includes(option.featSlug),
+      );
+    }
+
+    await this.sheetValidator.validateSheetInput(this.toSheetInput(dto), {
+      ...effective,
+      featSlugs: effectiveFeatSlugs,
+    });
+
+    if (dto.featSlugs !== undefined || dto.featOptions !== undefined) {
+      await this.sheetValidator.validateFeatOptions(
+        effectiveFeatSlugs,
+        effectiveFeatOptions,
+      );
+    }
 
     const classChanged = dto.classSlug !== undefined && dto.classSlug !== row.classSlug;
     const speciesChanged = dto.speciesSlug !== undefined && dto.speciesSlug !== row.speciesSlug;
@@ -155,6 +177,7 @@ export class UpdateCharacterHandler {
       speciesChoices: dto.speciesChoices,
       subclassOptions: dto.subclassOptions,
       featSlugs: dto.featSlugs,
+      featOptions: dto.featOptions,
       characterSpells: dto.characterSpells,
       equipment: dto.equipment,
       languageSlugs: dto.languageSlugs,

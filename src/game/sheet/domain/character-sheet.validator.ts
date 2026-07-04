@@ -12,7 +12,13 @@ import { PhbSubclassOptionValue, PhbSubclassRef } from '../../../entities/phb-su
 import { VPhbClassEquipment } from '../../../entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '../../../entities/views/v-phb-background-equipment.entity';
 import { VPhbBackgroundToolOption } from '../../../entities/views/v-phb-background-tool-option.entity';
+import {
+  PhbFeatOptionDef,
+  PhbFeatOptionValue,
+  PhbFeatRef,
+} from '../../../entities/phb-feat-option.entity';
 import { CharacterSheetInput } from './character-sheet.types';
+import { FeatOptionDto } from '../dto/character-sheet.dto';
 import {
   applyBackgroundAbilityBoosts,
   assertBackgroundBoostSlugsAllowed,
@@ -24,6 +30,7 @@ export interface CharacterSheetContext {
   speciesSlug: string;
   backgroundSlug: string;
   subclassSlug: string | null;
+  featSlugs?: string[];
 }
 
 @Injectable()
@@ -53,6 +60,12 @@ export class CharacterSheetValidator {
     private readonly backgroundEquipmentRepo: Repository<VPhbBackgroundEquipment>,
     @InjectRepository(VPhbBackgroundToolOption)
     private readonly backgroundToolOptionsRepo: Repository<VPhbBackgroundToolOption>,
+    @InjectRepository(PhbFeatRef)
+    private readonly featRefRepo: Repository<PhbFeatRef>,
+    @InjectRepository(PhbFeatOptionDef)
+    private readonly featOptionDefRepo: Repository<PhbFeatOptionDef>,
+    @InjectRepository(PhbFeatOptionValue)
+    private readonly featOptionValueRepo: Repository<PhbFeatOptionValue>,
   ) {}
 
   async validateSheetInput(
@@ -73,6 +86,18 @@ export class CharacterSheetValidator {
 
     if (input.featSlugs !== undefined) {
       await this.validateFeatSlugs(input.featSlugs);
+    }
+
+    if (input.featSlugs !== undefined) {
+      await this.validateFeatSlugs(input.featSlugs);
+    }
+
+    if (input.featOptions !== undefined) {
+      const slugs = ctx.featSlugs ?? input.featSlugs;
+      if (!slugs?.length) {
+        throw new BadRequestException('featSlugs required when updating featOptions');
+      }
+      await this.validateFeatOptions(slugs, input.featOptions);
     }
 
     if (input.characterSpells !== undefined) {
@@ -139,6 +164,10 @@ export class CharacterSheetValidator {
         }
         await this.validateSubclassOptions(ctx.subclassSlug, provided);
       }
+    }
+
+    if (input.featSlugs?.length) {
+      await this.validateFeatOptions(input.featSlugs, input.featOptions ?? []);
     }
   }
 
@@ -439,6 +468,134 @@ export class CharacterSheetValidator {
     const row = await this.abilityMethodsRepo.findOne({ where: { slug } });
     if (!row) {
       throw new BadRequestException(`Ability generation method '${slug}' not found in catalog`);
+    }
+  }
+
+  async validateFeatOptions(
+    featSlugs: string[],
+    options: FeatOptionDto[],
+  ): Promise<void> {
+    const keys = options.map(
+      (o) => `${o.featSlug}:${o.instanceIndex ?? 0}:${o.optionKey}`,
+    );
+    if (new Set(keys).size !== keys.length) {
+      throw new BadRequestException('Duplicate feat option keys are not allowed');
+    }
+
+    for (const option of options) {
+      if (!featSlugs.includes(option.featSlug)) {
+        throw new BadRequestException(
+          `Feat option for '${option.featSlug}' but feat is not selected`,
+        );
+      }
+    }
+
+    for (const featSlug of featSlugs) {
+      const defs = await this.loadFeatOptionDefs(featSlug);
+      if (defs.length === 0) continue;
+
+      const featOptions = options.filter(
+        (o) => o.featSlug === featSlug && (o.instanceIndex ?? 0) === 0,
+      );
+      const providedKeys = new Set(featOptions.map((o) => o.optionKey));
+      const missing = defs.filter((def) => !providedKeys.has(def.optionKey));
+      if (missing.length > 0) {
+        throw new BadRequestException(
+          `Feat '${featSlug}' requires options: ${missing.map((d) => d.optionKey).join(', ')}`,
+        );
+      }
+
+      for (const option of featOptions) {
+        const def = defs.find((d) => d.optionKey === option.optionKey);
+        if (!def) {
+          throw new BadRequestException(
+            `Unknown feat option '${option.optionKey}' for '${featSlug}'`,
+          );
+        }
+        await this.validateFeatOptionValue(def, option, featOptions);
+      }
+    }
+  }
+
+  private async loadFeatOptionDefs(featSlug: string): Promise<PhbFeatOptionDef[]> {
+    const feat = await this.featRefRepo.findOne({ where: { slug: featSlug } });
+    if (!feat) return [];
+    return this.featOptionDefRepo.find({
+      where: { featId: feat.id },
+      order: { sortOrder: 'ASC', optionKey: 'ASC' },
+    });
+  }
+
+  private async validateFeatOptionValue(
+    def: PhbFeatOptionDef,
+    option: FeatOptionDto,
+    featOptions: FeatOptionDto[],
+  ): Promise<void> {
+    if (def.valueType === 'catalog') {
+      const valid = await this.featOptionValueRepo.findOne({
+        where: {
+          featId: def.featId,
+          optionKey: def.optionKey,
+          valueId: option.valueId,
+        },
+      });
+      if (!valid) {
+        throw new BadRequestException(
+          `Feat option '${def.optionKey}/${option.valueId}' is invalid`,
+        );
+      }
+      return;
+    }
+
+    if (def.valueType === 'spell') {
+      const spellList = featOptions.find((o) => o.optionKey === def.dependsOnOptionKey)?.valueId;
+      if (!spellList) {
+        throw new BadRequestException(
+          `Feat option '${def.optionKey}' requires '${def.dependsOnOptionKey}' first`,
+        );
+      }
+      const spell = await this.classSpellsRepo.findOne({
+        where: { classSlug: spellList, spellSlug: option.valueId },
+      });
+      if (!spell) {
+        throw new BadRequestException(
+          `Spell '${option.valueId}' is not on the '${spellList}' list`,
+        );
+      }
+      if (def.spellMaxLevel !== null && spell.spellLevel !== def.spellMaxLevel) {
+        throw new BadRequestException(
+          `Spell '${option.valueId}' must be level ${def.spellMaxLevel} for '${def.optionKey}'`,
+        );
+      }
+      if (def.optionKey === 'cantrip2') {
+        const first = featOptions.find((o) => o.optionKey === 'cantrip1')?.valueId;
+        if (first && first === option.valueId) {
+          throw new BadRequestException('Cantrip choices must be different');
+        }
+      }
+      return;
+    }
+
+    if (def.valueType === 'proficiency') {
+      const rows = await this.dataSource.query<{ ok: number }[]>(
+        `SELECT 1 AS ok
+         FROM rpg.phb_skill WHERE slug = $1
+         UNION ALL
+         SELECT 1 FROM rpg.phb_item WHERE slug = $1 AND item_type = 'tool'::rpg.item_type
+         LIMIT 1`,
+        [option.valueId],
+      );
+      if (rows.length === 0) {
+        throw new BadRequestException(
+          `Proficiency '${option.valueId}' is not a valid skill or tool`,
+        );
+      }
+      const skilledValues = featOptions
+        .filter((o) => o.optionKey.startsWith('proficiency'))
+        .map((o) => o.valueId);
+      if (new Set(skilledValues).size !== skilledValues.length) {
+        throw new BadRequestException('Skilled proficiencies must be distinct');
+      }
     }
   }
 }

@@ -97,6 +97,7 @@ export class CreateCharacterHandler {
       speciesChoices: dto.speciesChoices,
       subclassOptions: dto.subclassOptions,
       featSlugs: featSlugs ?? dto.featSlugs,
+      featOptions: dto.featOptions,
       characterSpells: dto.characterSpells,
       equipment: dto.equipment,
       languageSlugs: dto.languageSlugs,

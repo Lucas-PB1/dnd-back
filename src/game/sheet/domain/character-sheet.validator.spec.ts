@@ -66,6 +66,9 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       {} as never,
       {} as never,
       {} as never,
+      {} as never,
+      {} as never,
+      {} as never,
     );
   });
 

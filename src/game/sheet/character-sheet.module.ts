@@ -12,6 +12,11 @@ import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-p
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
 import { VPhbBackgroundToolOption } from '../../entities/views/v-phb-background-tool-option.entity';
+import {
+  PhbFeatOptionDef,
+  PhbFeatOptionValue,
+  PhbFeatRef,
+} from '../../entities/phb-feat-option.entity';
 import { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
@@ -19,6 +24,7 @@ import { PlayerCharacterSkill } from './infrastructure/player-character-skill.en
 import {
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
+  PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
@@ -44,6 +50,7 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
       PlayerCharacterSpeciesChoice,
       PlayerCharacterSubclassOption,
       PlayerCharacterFeat,
+      PlayerCharacterFeatOption,
       PlayerCharacterSpell,
       PlayerCharacterEquipment,
       PlayerCharacterLanguage,
@@ -59,6 +66,9 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
       VPhbClassEquipment,
       VPhbBackgroundEquipment,
       VPhbBackgroundToolOption,
+      PhbFeatRef,
+      PhbFeatOptionDef,
+      PhbFeatOptionValue,
       VPhbArmor,
       PlayerCharacterItem,
     ]),

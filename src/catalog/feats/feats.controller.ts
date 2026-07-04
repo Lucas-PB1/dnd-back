@@ -6,10 +6,12 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { PaginationQueryDto, PaginatedResponseDto } from '../../common/dto/pagination.dto';
 import { FindFeatsQuery } from './queries/find-feats.query';
 import { FindFeatBySlugQuery } from './queries/find-feat-by-slug.query';
+import { FindFeatOptionsQuery } from './queries/find-feat-options.query';
 import { FeatResponseDto } from './dto/feat-response.dto';
+import { FeatOptionResponseDto } from './dto/feat-option-response.dto';
 
 @ApiTags('catalog-feats')
 @Controller('feats')
@@ -17,6 +19,7 @@ export class FeatsController {
   constructor(
     private readonly findFeats: FindFeatsQuery,
     private readonly findFeatBySlug: FindFeatBySlugQuery,
+    private readonly findFeatOptions: FindFeatOptionsQuery,
   ) {}
 
   @Get()
@@ -33,5 +36,17 @@ export class FeatsController {
   @ApiNotFoundResponse({ description: 'Feat not found' })
   findOne(@Param('slug') slug: string): Promise<FeatResponseDto> {
     return this.findFeatBySlug.execute(slug);
+  }
+
+  @Get(':slug/options')
+  @ApiOperation({ summary: 'Selectable internal options for a feat (paginated)' })
+  @ApiParam({ name: 'slug', example: 'magic-initiate' })
+  @ApiOkResponse({ description: 'Paginated feat option definitions' })
+  @ApiNotFoundResponse({ description: 'Feat not found' })
+  findOptions(
+    @Param('slug') slug: string,
+    @Query() query: PaginationQueryDto,
+  ): Promise<PaginatedResponseDto<FeatOptionResponseDto>> {
+    return this.findFeatOptions.execute(slug, query.page, query.limit);
   }
 }

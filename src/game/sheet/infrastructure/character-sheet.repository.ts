@@ -5,6 +5,7 @@ import { PlayerCharacterSkill } from './player-character-skill.entity';
 import {
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
+  PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
@@ -28,6 +29,8 @@ export class CharacterSheetRepository {
     private readonly subclassOptions: Repository<PlayerCharacterSubclassOption>,
     @InjectRepository(PlayerCharacterFeat)
     private readonly feats: Repository<PlayerCharacterFeat>,
+    @InjectRepository(PlayerCharacterFeatOption)
+    private readonly featOptions: Repository<PlayerCharacterFeatOption>,
     @InjectRepository(PlayerCharacterSpell)
     private readonly spells: Repository<PlayerCharacterSpell>,
     @InjectRepository(PlayerCharacterEquipment)
@@ -42,6 +45,7 @@ export class CharacterSheetRepository {
       speciesRows,
       subclassRows,
       featRows,
+      featOptionRows,
       spellRows,
       equipmentRows,
       languageRows,
@@ -50,6 +54,10 @@ export class CharacterSheetRepository {
       this.speciesChoices.find({ where: { characterId }, order: { choiceKind: 'ASC' } }),
       this.subclassOptions.find({ where: { characterId }, order: { optionKey: 'ASC' } }),
       this.feats.find({ where: { characterId }, order: { featSlug: 'ASC' } }),
+      this.featOptions.find({
+        where: { characterId },
+        order: { featSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
+      }),
       this.spells.find({ where: { characterId }, order: { spellSlug: 'ASC' } }),
       this.equipment.find({ where: { characterId }, order: { sortOrder: 'ASC' } }),
       this.languages.find({ where: { characterId }, order: { languageSlug: 'ASC' } }),
@@ -70,6 +78,12 @@ export class CharacterSheetRepository {
         valueId: row.valueId,
       })),
       featSlugs: featRows.map((row) => row.featSlug),
+      featOptions: featOptionRows.map((row) => ({
+        featSlug: row.featSlug,
+        instanceIndex: row.instanceIndex,
+        optionKey: row.optionKey,
+        valueId: row.valueId,
+      })),
       characterSpells: spellRows.map((row) => ({
         spellSlug: row.spellSlug,
         listType: row.listType as 'known' | 'prepared' | 'always_prepared',
@@ -156,6 +170,29 @@ export class CharacterSheetRepository {
       if (input.featSlugs.length > 0) {
         await this.feats.insert(
           input.featSlugs.map((featSlug) => ({ characterId, featSlug })),
+        );
+        await this.featOptions
+          .createQueryBuilder()
+          .delete()
+          .where('character_id = :characterId', { characterId })
+          .andWhere('feat_slug NOT IN (:...slugs)', { slugs: input.featSlugs })
+          .execute();
+      } else {
+        await this.featOptions.delete({ characterId });
+      }
+    }
+
+    if (input.featOptions !== undefined) {
+      await this.featOptions.delete({ characterId });
+      if (input.featOptions.length > 0) {
+        await this.featOptions.insert(
+          input.featOptions.map((option) => ({
+            characterId,
+            featSlug: option.featSlug,
+            instanceIndex: option.instanceIndex ?? 0,
+            optionKey: option.optionKey,
+            valueId: option.valueId,
+          })),
         );
       }
     }

@@ -14,7 +14,7 @@ Plano detalhado: [`docs/rpg-web-plan.md`](../../../docs/rpg-web-plan.md#6-mapa-d
 | GET | `/species`, `/species/:slug`, `/species/:slug/traits` |
 | GET | `/backgrounds`, `/backgrounds/:slug`, `/backgrounds/:slug/equipment` |
 | GET | `/spells`, `/spells/:slug` |
-| GET | `/feats`, `/feats/:slug` |
+| GET | `/feats`, `/feats/:slug`, `/feats/:slug/options` |
 | GET | `/skills`, `/skills/:slug` |
 | GET | `/abilities` |
 | GET | `/weapons`, `/weapons/:slug`, `/armor`, `/armor/:slug` |

@@ -4,6 +4,7 @@ import { IsInt, IsOptional, Max, Min, ValidateNested } from 'class-validator';
 import {
   CharacterEquipmentDto,
   CharacterSpellDto,
+  FeatOptionDto,
   SpeciesChoiceDto,
   SubclassOptionDto,
 } from './character-sheet.dto';
@@ -97,6 +98,9 @@ export class CharacterResponseDto {
 
   @ApiProperty({ example: ['magic-initiate'] })
   featSlugs!: string[];
+
+  @ApiProperty({ type: [FeatOptionDto] })
+  featOptions!: FeatOptionDto[];
 
   @ApiProperty({ type: [CharacterSpellDto] })
   characterSpells!: CharacterSpellDto[];
