@@ -4,6 +4,7 @@ import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import { CharacterRepository } from '../shared/infrastructure/character.repository';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
+import { EquippedArmorClassService } from './infrastructure/equipped-armor-class.service';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CharacterDomainService } from './domain/character-domain.service';
@@ -124,6 +125,15 @@ describe('Characters application layer', () => {
         { provide: CharacterSheetValidator, useValue: sheetValidator },
         { provide: CharacterSheetRepository, useValue: sheetRepo },
         { provide: CharacterDomainService, useValue: domain },
+        {
+          provide: EquippedArmorClassService,
+          useValue: {
+            resolve: jest.fn().mockResolvedValue({
+              armorClass: 10,
+              armorClassNote: 'Sem armadura',
+            }),
+          },
+        },
       ],
     }).compile();
 

@@ -5,12 +5,14 @@ import { CharacterDomainService } from '../domain/character-domain.service';
 import { computeDerivedStats } from '../domain/character-derived-stats';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
+import { EquippedArmorClassService } from './equipped-armor-class.service';
 
 @Injectable()
 export class CharacterMapper {
   constructor(
     private readonly domain: CharacterDomainService,
     private readonly sheet: CharacterSheetRepository,
+    private readonly equippedArmorClass: EquippedArmorClassService,
   ) {}
 
   async toDto(
@@ -31,6 +33,7 @@ export class CharacterMapper {
       classSkillSlugs: loaded.classSkillSlugs,
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
     });
+    const armor = await this.equippedArmorClass.resolve(row.id, row.abilityScores);
 
     return {
       id: row.id,
@@ -59,7 +62,8 @@ export class CharacterMapper {
       backgroundToolItemSlug: row.backgroundToolItemSlug,
       abilityModifiers: derived.abilityModifiers,
       passivePerception: derived.passivePerception,
-      armorClass: derived.armorClass,
+      armorClass: armor.armorClass,
+      armorClassNote: armor.armorClassNote,
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     };

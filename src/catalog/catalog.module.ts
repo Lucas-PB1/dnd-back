@@ -9,6 +9,7 @@ import { FeatsModule } from './feats/feats.module';
 import { SkillsModule } from './skills/skills.module';
 import { AbilitiesModule } from './abilities/abilities.module';
 import { EquipmentModule } from './equipment/equipment.module';
+import { ItemsModule } from './items/items.module';
 import { ReferenceModule } from './reference/reference.module';
 
 @Module({
@@ -23,6 +24,7 @@ import { ReferenceModule } from './reference/reference.module';
     SkillsModule,
     AbilitiesModule,
     EquipmentModule,
+    ItemsModule,
     ReferenceModule,
   ],
   exports: [CatalogLookupModule],

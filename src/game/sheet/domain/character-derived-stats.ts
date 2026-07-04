@@ -1,4 +1,5 @@
 import { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+import { computeUnarmoredArmorClass } from './armor-class';
 
 export type AbilityModifiers = AbilityScores;
 
@@ -31,11 +32,6 @@ export function computePassivePerception(
     abilityModifierValue(scores.sabedoria) +
     (proficient ? proficiencyBonus : 0)
   );
-}
-
-/** CA base sem armadura (10 + mod Des). */
-export function computeUnarmoredArmorClass(scores: AbilityScores): number {
-  return 10 + abilityModifierValue(scores.destreza);
 }
 
 export type CharacterDerivedStats = {

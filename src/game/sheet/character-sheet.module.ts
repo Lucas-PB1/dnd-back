@@ -12,6 +12,8 @@ import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-p
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
 import { VPhbBackgroundToolOption } from '../../entities/views/v-phb-background-tool-option.entity';
+import { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
+import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { PlayerCharacterSkill } from './infrastructure/player-character-skill.entity';
 import {
@@ -25,6 +27,7 @@ import {
 import { CharactersController } from './characters.controller';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
+import { EquippedArmorClassService } from './infrastructure/equipped-armor-class.service';
 import { CharacterDomainService } from './domain/character-domain.service';
 import { CharacterSheetValidator } from './domain/character-sheet.validator';
 import { ListCharactersQuery } from './application/list-characters.query';
@@ -56,6 +59,8 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
       VPhbClassEquipment,
       VPhbBackgroundEquipment,
       VPhbBackgroundToolOption,
+      VPhbArmor,
+      PlayerCharacterItem,
     ]),
     GameSharedModule,
     CatalogModule,
@@ -66,6 +71,7 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
     CharacterSheetValidator,
     CharacterSheetRepository,
     CharacterMapper,
+    EquippedArmorClassService,
     ListCharactersQuery,
     GetCharacterQuery,
     CreateCharacterHandler,

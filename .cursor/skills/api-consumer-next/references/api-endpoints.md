@@ -18,6 +18,7 @@ Plano detalhado: [`docs/rpg-web-plan.md`](../../../docs/rpg-web-plan.md#6-mapa-d
 | GET | `/skills`, `/skills/:slug` |
 | GET | `/abilities` |
 | GET | `/weapons`, `/weapons/:slug`, `/armor`, `/armor/:slug` |
+| GET | `/items`, `/items/:slug` |
 | GET | `/alignments`, `/languages`, `/character-levels` |
 | GET | `/ability-generation-methods` |
 

@@ -12,6 +12,7 @@ import {
   InventoryItemResponseDto,
   PatchInventoryItemDto,
 } from '../dto/inventory.dto';
+import { EquipmentSlotResolver } from './equipment-slot-resolver';
 
 @Injectable()
 export class CharacterInventoryRepository {
@@ -20,6 +21,7 @@ export class CharacterInventoryRepository {
     private readonly items: Repository<PlayerCharacterItem>,
     @InjectRepository(PhbItem)
     private readonly catalogItems: Repository<PhbItem>,
+    private readonly slotResolver: EquipmentSlotResolver,
   ) {}
 
   async list(characterId: string): Promise<CharacterInventoryResponseDto> {
@@ -73,15 +75,17 @@ export class CharacterInventoryRepository {
     }
 
     const targetLocation = dto.location ?? row.location;
-    const targetSlot = dto.equipmentSlot ?? row.equipmentSlot;
+    let targetSlot = dto.equipmentSlot ?? row.equipmentSlot;
 
     if (targetLocation === 'backpack') {
       row.location = 'backpack';
       row.equipmentSlot = null;
     } else {
-      if (!targetSlot) {
-        throw new BadRequestException('equipmentSlot is required when equipping an item');
-      }
+      targetSlot = await this.slotResolver.resolve(
+        characterId,
+        itemSlug,
+        targetSlot,
+      );
       await this.clearSlotIfOccupied(characterId, targetSlot, itemSlug);
       row.location = 'equipped';
       row.equipmentSlot = targetSlot;

@@ -148,7 +148,13 @@ export class CharacterResponseDto {
 
   @ApiProperty({
     example: 12,
-    description: 'CA base sem armadura (10 + mod Des)',
+    description: 'CA considerando armadura e escudo equipados no inventário',
   })
   armorClass!: number;
+
+  @ApiProperty({
+    example: 'Armadura de Couro + Escudo',
+    description: 'Descrição legível da composição da CA',
+  })
+  armorClassNote!: string;
 }
