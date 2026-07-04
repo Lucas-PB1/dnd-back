@@ -8,6 +8,7 @@ import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
 import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-choice.entity';
+import { VPhbClassFeature } from '../../entities/views/v-phb-class-feature.entity';
 import { CatalogLookupService } from '../catalog-lookup.service';
 import { ClassesMapper } from './classes.mapper';
 import { FindClassesQuery } from './queries/find-classes.query';
@@ -17,6 +18,7 @@ import { FindClassSpellsQuery } from './queries/find-class-spells.query';
 import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query';
 import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
+import { FindClassFeaturesQuery } from './queries/find-class-features.query';
 
 describe('Classes queries', () => {
   let findClasses: FindClassesQuery;
@@ -26,12 +28,14 @@ describe('Classes queries', () => {
   let findClassSpellSlots: FindClassSpellSlotsQuery;
   let findClassEquipment: FindClassEquipmentQuery;
   let findClassSkills: FindClassSkillsQuery;
+  let findClassFeatures: FindClassFeaturesQuery;
   let classesRepo: jest.Mocked<Pick<Repository<VPhbClass>, 'find' | 'findOne'>>;
   let subclassesRepo: jest.Mocked<Pick<Repository<VPhbSubclass>, 'find'>>;
   let spellsByClassRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'find'>>;
   let spellSlotsRepo: jest.Mocked<Pick<Repository<VClassSpellSlots>, 'find'>>;
   let equipmentRepo: jest.Mocked<Pick<Repository<VPhbClassEquipment>, 'find'>>;
   let skillsRepo: jest.Mocked<Pick<Repository<VPhbClassSkillChoice>, 'find'>>;
+  let featuresRepo: jest.Mocked<Pick<Repository<VPhbClassFeature>, 'find'>>;
   let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findClassOrFail'>>;
 
   const sample: VPhbClass = {
@@ -94,6 +98,13 @@ describe('Classes queries', () => {
     goldAmount: null,
   };
 
+  const sampleFeature: VPhbClassFeature = {
+    classSlug: 'bard',
+    featureLevel: 1,
+    featureName: 'Conjuração',
+    featureDescription: 'Você aprendeu a conjurar magias.',
+  };
+
   beforeEach(async () => {
     classesRepo = { find: jest.fn(), findOne: jest.fn() };
     subclassesRepo = { find: jest.fn() };
@@ -101,6 +112,7 @@ describe('Classes queries', () => {
     spellSlotsRepo = { find: jest.fn() };
     equipmentRepo = { find: jest.fn() };
     skillsRepo = { find: jest.fn() };
+    featuresRepo = { find: jest.fn() };
     catalogLookup = {
       findClassOrFail: jest.fn(async (slug) => {
         if (slug === 'invalid') throw new NotFoundException();
@@ -118,12 +130,14 @@ describe('Classes queries', () => {
         FindClassSpellSlotsQuery,
         FindClassEquipmentQuery,
         FindClassSkillsQuery,
+        FindClassFeaturesQuery,
         { provide: getRepositoryToken(VPhbClass), useValue: classesRepo },
         { provide: getRepositoryToken(VPhbSubclass), useValue: subclassesRepo },
         { provide: getRepositoryToken(VSpellByClass), useValue: spellsByClassRepo },
         { provide: getRepositoryToken(VClassSpellSlots), useValue: spellSlotsRepo },
         { provide: getRepositoryToken(VPhbClassEquipment), useValue: equipmentRepo },
         { provide: getRepositoryToken(VPhbClassSkillChoice), useValue: skillsRepo },
+        { provide: getRepositoryToken(VPhbClassFeature), useValue: featuresRepo },
         { provide: CatalogLookupService, useValue: catalogLookup },
       ],
     }).compile();
@@ -135,6 +149,7 @@ describe('Classes queries', () => {
     findClassSpellSlots = module.get(FindClassSpellSlotsQuery);
     findClassEquipment = module.get(FindClassEquipmentQuery);
     findClassSkills = module.get(FindClassSkillsQuery);
+    findClassFeatures = module.get(FindClassFeaturesQuery);
   });
 
   it('findAll returns paginated data', async () => {
@@ -192,5 +207,20 @@ describe('Classes queries', () => {
     ]);
     const result = await findClassSkills.execute('fighter', 1, 20);
     expect(result.data[0].slug).toBe('athletics');
+  });
+
+  it('findFeaturesByClassSlug filters by maxLevel', async () => {
+    featuresRepo.find.mockResolvedValue([
+      sampleFeature,
+      { ...sampleFeature, featureLevel: 5, featureName: 'Inspiração Bárdica' },
+    ]);
+    const result = await findClassFeatures.execute('bard', 1, 50, 1);
+    expect(result.data).toHaveLength(1);
+    expect(result.data[0].featureName).toBe('Conjuração');
+  });
+
+  it('findFeaturesByClassSlug throws when empty', async () => {
+    featuresRepo.find.mockResolvedValue([]);
+    await expect(findClassFeatures.execute('bard')).rejects.toThrow(NotFoundException);
   });
 });

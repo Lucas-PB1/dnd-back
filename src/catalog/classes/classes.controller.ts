@@ -15,8 +15,10 @@ import { FindClassSpellsQuery } from './queries/find-class-spells.query';
 import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query';
 import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
+import { FindClassFeaturesQuery } from './queries/find-class-features.query';
 import { ClassResponseDto } from './dto/class-response.dto';
 import { ClassSpellsQueryDto } from './dto/class-spells-query.dto';
+import { ClassFeaturesQueryDto } from './dto/class-features-query.dto';
 
 @ApiTags('catalog-classes')
 @Controller('classes')
@@ -29,6 +31,7 @@ export class ClassesController {
     private readonly findClassSpellSlots: FindClassSpellSlotsQuery,
     private readonly findClassEquipment: FindClassEquipmentQuery,
     private readonly findClassSkills: FindClassSkillsQuery,
+    private readonly findClassFeatures: FindClassFeaturesQuery,
   ) {}
 
   @Get()
@@ -82,6 +85,16 @@ export class ClassesController {
   @ApiNotFoundResponse({ description: 'Class not found or no skill pool' })
   findSkills(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findClassSkills.execute(slug, query.page, query.limit);
+  }
+
+  @Get(':slug/features')
+  @ApiOperation({ summary: 'Class features by level (paginated)' })
+  @ApiParam({ name: 'slug', example: 'bard' })
+  @ApiQuery({ name: 'maxLevel', required: false, type: Number, description: 'Max class level (1–20)' })
+  @ApiOkResponse({ description: 'Paginated class feature list' })
+  @ApiNotFoundResponse({ description: 'Class not found or no features data' })
+  findFeatures(@Param('slug') slug: string, @Query() query: ClassFeaturesQueryDto) {
+    return this.findClassFeatures.execute(slug, query.page, query.limit, query.maxLevel);
   }
 
   @Get(':slug')
