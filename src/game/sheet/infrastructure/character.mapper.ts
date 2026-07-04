@@ -3,6 +3,7 @@ import { PlayerCharacter } from '../../shared/infrastructure/player-character.en
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterDomainService } from '../domain/character-domain.service';
 import { computeDerivedStats } from '../domain/character-derived-stats';
+import { characterFeatSlugs } from '../domain/character-feat';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 import { EquippedArmorClassService } from './equipped-armor-class.service';
@@ -51,7 +52,8 @@ export class CharacterMapper {
       classSkillSlugs: loaded.classSkillSlugs,
       speciesChoices: loaded.speciesChoices,
       subclassOptions: loaded.subclassOptions,
-      featSlugs: loaded.featSlugs,
+      characterFeats: loaded.characterFeats,
+      featSlugs: characterFeatSlugs(loaded.characterFeats),
       featOptions: loaded.featOptions,
       characterSpells: loaded.characterSpells,
       equipment: loaded.equipment,

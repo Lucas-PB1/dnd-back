@@ -1,23 +1,29 @@
 import { describe, expect, it } from '@jest/globals';
 import {
-  resolveBackgroundOriginFeatSlugs,
+  resolveBackgroundOriginCharacterFeats,
   resolveBackgroundToolItemSlug,
 } from './background-origin';
 
 describe('background-origin', () => {
   it('prepends origin feat when missing', () => {
     expect(
-      resolveBackgroundOriginFeatSlugs({ featSlug: 'magic-initiate' }, []),
-    ).toEqual(['magic-initiate']);
+      resolveBackgroundOriginCharacterFeats({ featSlug: 'magic-initiate' }, []),
+    ).toEqual([{ featSlug: 'magic-initiate', instanceIndex: 0 }]);
   });
 
-  it('keeps provided feat slugs without duplicating origin', () => {
+  it('keeps provided feats without duplicating origin', () => {
     expect(
-      resolveBackgroundOriginFeatSlugs(
+      resolveBackgroundOriginCharacterFeats(
         { featSlug: 'magic-initiate' },
-        ['magic-initiate', 'alert'],
+        [
+          { featSlug: 'magic-initiate', instanceIndex: 0 },
+          { featSlug: 'alert', instanceIndex: 0 },
+        ],
       ),
-    ).toEqual(['magic-initiate', 'alert']);
+    ).toEqual([
+      { featSlug: 'magic-initiate', instanceIndex: 0 },
+      { featSlug: 'alert', instanceIndex: 0 },
+    ]);
   });
 
   it('uses fixed tool from background', () => {

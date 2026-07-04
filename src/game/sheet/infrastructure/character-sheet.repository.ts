@@ -16,6 +16,7 @@ import {
   CharacterSheetInput,
   EMPTY_SHEET_DATA,
 } from '../domain/character-sheet.types';
+import { featInstanceKey, resolveCharacterFeats } from '../domain/character-feat';
 
 @Injectable()
 export class CharacterSheetRepository {
@@ -53,7 +54,10 @@ export class CharacterSheetRepository {
       this.skills.find({ where: { characterId }, order: { skillSlug: 'ASC' } }),
       this.speciesChoices.find({ where: { characterId }, order: { choiceKind: 'ASC' } }),
       this.subclassOptions.find({ where: { characterId }, order: { optionKey: 'ASC' } }),
-      this.feats.find({ where: { characterId }, order: { featSlug: 'ASC' } }),
+      this.feats.find({
+        where: { characterId },
+        order: { featSlug: 'ASC', instanceIndex: 'ASC' },
+      }),
       this.featOptions.find({
         where: { characterId },
         order: { featSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
@@ -77,7 +81,10 @@ export class CharacterSheetRepository {
         optionKey: row.optionKey,
         valueId: row.valueId,
       })),
-      featSlugs: featRows.map((row) => row.featSlug),
+      characterFeats: featRows.map((row) => ({
+        featSlug: row.featSlug,
+        instanceIndex: row.instanceIndex,
+      })),
       featOptions: featOptionRows.map((row) => ({
         featSlug: row.featSlug,
         instanceIndex: row.instanceIndex,
@@ -165,20 +172,42 @@ export class CharacterSheetRepository {
       }
     }
 
-    if (input.featSlugs !== undefined) {
+    const characterFeatsInput =
+      input.characterFeats !== undefined || input.featSlugs !== undefined
+        ? resolveCharacterFeats(input)
+        : undefined;
+
+    if (characterFeatsInput !== undefined) {
       await this.feats.delete({ characterId });
-      if (input.featSlugs.length > 0) {
+      if (characterFeatsInput.length > 0) {
         await this.feats.insert(
-          input.featSlugs.map((featSlug) => ({ characterId, featSlug })),
+          characterFeatsInput.map((feat) => ({
+            characterId,
+            featSlug: feat.featSlug,
+            instanceIndex: feat.instanceIndex,
+          })),
         );
-        await this.featOptions
-          .createQueryBuilder()
-          .delete()
-          .where('character_id = :characterId', { characterId })
-          .andWhere('feat_slug NOT IN (:...slugs)', { slugs: input.featSlugs })
-          .execute();
-      } else {
-        await this.featOptions.delete({ characterId });
+      }
+
+      const validKeys = new Set(
+        characterFeatsInput.map((feat) =>
+          featInstanceKey(feat.featSlug, feat.instanceIndex),
+        ),
+      );
+      const existingOptions = await this.featOptions.find({ where: { characterId } });
+      const orphanIds = existingOptions.filter(
+        (option) =>
+          !validKeys.has(featInstanceKey(option.featSlug, option.instanceIndex)),
+      );
+      if (orphanIds.length > 0) {
+        await this.featOptions.delete(
+          orphanIds.map((option) => ({
+            characterId,
+            featSlug: option.featSlug,
+            instanceIndex: option.instanceIndex,
+            optionKey: option.optionKey,
+          })),
+        );
       }
     }
 

@@ -8,6 +8,7 @@ import { CharacterSheetValidator } from '../domain/character-sheet.validator';
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
+import { resolveCharacterFeats } from '../domain/character-feat';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
 import { applyBackgroundAbilityBoosts } from '../domain/background-ability-boost';
 import {
@@ -60,24 +61,35 @@ export class UpdateCharacterHandler {
     await this.sheetValidator.validateLevelRules(effective);
 
     const sheetSnapshot = await this.sheetRepository.load(row.id, effective.backgroundSlug);
-    const effectiveFeatSlugs = dto.featSlugs ?? sheetSnapshot.featSlugs;
+    const effectiveCharacterFeats =
+      dto.characterFeats !== undefined || dto.featSlugs !== undefined
+        ? resolveCharacterFeats(dto)
+        : sheetSnapshot.characterFeats;
     let effectiveFeatOptions = sheetSnapshot.featOptions;
     if (dto.featOptions !== undefined) {
       effectiveFeatOptions = dto.featOptions;
-    } else if (dto.featSlugs !== undefined) {
+    } else if (dto.characterFeats !== undefined || dto.featSlugs !== undefined) {
       effectiveFeatOptions = sheetSnapshot.featOptions.filter((option) =>
-        effectiveFeatSlugs.includes(option.featSlug),
+        effectiveCharacterFeats.some(
+          (feat) =>
+            feat.featSlug === option.featSlug &&
+            feat.instanceIndex === (option.instanceIndex ?? 0),
+        ),
       );
     }
 
     await this.sheetValidator.validateSheetInput(this.toSheetInput(dto), {
       ...effective,
-      featSlugs: effectiveFeatSlugs,
+      characterFeats: effectiveCharacterFeats,
     });
 
-    if (dto.featSlugs !== undefined || dto.featOptions !== undefined) {
+    if (
+      dto.characterFeats !== undefined ||
+      dto.featSlugs !== undefined ||
+      dto.featOptions !== undefined
+    ) {
       await this.sheetValidator.validateFeatOptions(
-        effectiveFeatSlugs,
+        effectiveCharacterFeats,
         effectiveFeatOptions,
       );
     }
@@ -176,6 +188,7 @@ export class UpdateCharacterHandler {
       classSkillSlugs: dto.classSkillSlugs,
       speciesChoices: dto.speciesChoices,
       subclassOptions: dto.subclassOptions,
+      characterFeats: dto.characterFeats,
       featSlugs: dto.featSlugs,
       featOptions: dto.featOptions,
       characterSpells: dto.characterSpells,

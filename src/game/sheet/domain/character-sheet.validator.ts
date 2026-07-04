@@ -18,11 +18,12 @@ import {
   PhbFeatRef,
 } from '../../../entities/phb-feat-option.entity';
 import { CharacterSheetInput } from './character-sheet.types';
-import { FeatOptionDto } from '../dto/character-sheet.dto';
+import { FeatOptionDto, CharacterFeatDto } from '../dto/character-sheet.dto';
 import {
   applyBackgroundAbilityBoosts,
   assertBackgroundBoostSlugsAllowed,
 } from './background-ability-boost';
+import { featInstanceKey, resolveCharacterFeats } from './character-feat';
 
 export interface CharacterSheetContext {
   level: number;
@@ -30,7 +31,7 @@ export interface CharacterSheetContext {
   speciesSlug: string;
   backgroundSlug: string;
   subclassSlug: string | null;
-  featSlugs?: string[];
+  characterFeats?: CharacterFeatDto[];
 }
 
 @Injectable()
@@ -84,20 +85,17 @@ export class CharacterSheetValidator {
       await this.validateSubclassOptions(ctx.subclassSlug, input.subclassOptions);
     }
 
-    if (input.featSlugs !== undefined) {
-      await this.validateFeatSlugs(input.featSlugs);
-    }
-
-    if (input.featSlugs !== undefined) {
-      await this.validateFeatSlugs(input.featSlugs);
+    const characterFeats = resolveCharacterFeats(input);
+    if (input.characterFeats !== undefined || input.featSlugs !== undefined) {
+      await this.validateCharacterFeats(characterFeats);
     }
 
     if (input.featOptions !== undefined) {
-      const slugs = ctx.featSlugs ?? input.featSlugs;
-      if (!slugs?.length) {
-        throw new BadRequestException('featSlugs required when updating featOptions');
+      const feats = ctx.characterFeats ?? characterFeats;
+      if (!feats.length) {
+        throw new BadRequestException('characterFeats required when updating featOptions');
       }
-      await this.validateFeatOptions(slugs, input.featOptions);
+      await this.validateFeatOptions(feats, input.featOptions);
     }
 
     if (input.characterSpells !== undefined) {
@@ -166,8 +164,9 @@ export class CharacterSheetValidator {
       }
     }
 
-    if (input.featSlugs?.length) {
-      await this.validateFeatOptions(input.featSlugs, input.featOptions ?? []);
+    const createFeats = resolveCharacterFeats(input);
+    if (createFeats.length > 0) {
+      await this.validateFeatOptions(createFeats, input.featOptions ?? []);
     }
   }
 
@@ -187,13 +186,13 @@ export class CharacterSheetValidator {
 
   async validateBackgroundOriginFeat(
     background: { featSlug: string | null },
-    featSlugs: string[],
+    characterFeats: CharacterFeatDto[],
   ): Promise<void> {
     const origin = background.featSlug?.trim();
     if (!origin) return;
-    if (!featSlugs.includes(origin)) {
+    if (!characterFeats.some((feat) => feat.featSlug === origin)) {
       throw new BadRequestException(
-        `Background origin feat '${origin}' must be included in featSlugs`,
+        `Background origin feat '${origin}' must be included in characterFeats`,
       );
     }
   }
@@ -355,15 +354,36 @@ export class CharacterSheetValidator {
     }
   }
 
-  private async validateFeatSlugs(featSlugs: string[]): Promise<void> {
-    if (new Set(featSlugs).size !== featSlugs.length) {
-      throw new BadRequestException('Duplicate feat slugs are not allowed');
+  private async validateCharacterFeats(feats: CharacterFeatDto[]): Promise<void> {
+    const keys = feats.map((feat) => featInstanceKey(feat.featSlug, feat.instanceIndex));
+    if (new Set(keys).size !== keys.length) {
+      throw new BadRequestException('Duplicate feat instances are not allowed');
     }
 
-    for (const slug of featSlugs) {
+    const bySlug = new Map<string, CharacterFeatDto[]>();
+    for (const feat of feats) {
+      const list = bySlug.get(feat.featSlug) ?? [];
+      list.push(feat);
+      bySlug.set(feat.featSlug, list);
+    }
+
+    for (const [slug, instances] of bySlug) {
       const feat = await this.featsRepo.findOne({ where: { featSlug: slug } });
       if (!feat) {
         throw new BadRequestException(`Feat '${slug}' not found in catalog`);
+      }
+
+      if (!feat.repeatable && instances.length > 1) {
+        throw new BadRequestException(`Feat '${slug}' is not repeatable`);
+      }
+
+      const indices = [...instances.map((item) => item.instanceIndex)].sort((a, b) => a - b);
+      for (let i = 0; i < indices.length; i += 1) {
+        if (indices[i] !== i) {
+          throw new BadRequestException(
+            `Feat '${slug}' instance indices must be contiguous starting at 0`,
+          );
+        }
       }
     }
   }
@@ -472,36 +492,43 @@ export class CharacterSheetValidator {
   }
 
   async validateFeatOptions(
-    featSlugs: string[],
+    characterFeats: CharacterFeatDto[],
     options: FeatOptionDto[],
   ): Promise<void> {
-    const keys = options.map(
-      (o) => `${o.featSlug}:${o.instanceIndex ?? 0}:${o.optionKey}`,
+    const keys = options.map((o) =>
+      `${o.featSlug}:${o.instanceIndex ?? 0}:${o.optionKey}`,
     );
     if (new Set(keys).size !== keys.length) {
       throw new BadRequestException('Duplicate feat option keys are not allowed');
     }
 
     for (const option of options) {
-      if (!featSlugs.includes(option.featSlug)) {
+      const match = characterFeats.find(
+        (feat) =>
+          feat.featSlug === option.featSlug &&
+          feat.instanceIndex === (option.instanceIndex ?? 0),
+      );
+      if (!match) {
         throw new BadRequestException(
-          `Feat option for '${option.featSlug}' but feat is not selected`,
+          `Feat option for '${option.featSlug}' instance ${option.instanceIndex ?? 0} but feat is not selected`,
         );
       }
     }
 
-    for (const featSlug of featSlugs) {
-      const defs = await this.loadFeatOptionDefs(featSlug);
+    for (const feat of characterFeats) {
+      const defs = await this.loadFeatOptionDefs(feat.featSlug);
       if (defs.length === 0) continue;
 
       const featOptions = options.filter(
-        (o) => o.featSlug === featSlug && (o.instanceIndex ?? 0) === 0,
+        (o) =>
+          o.featSlug === feat.featSlug &&
+          (o.instanceIndex ?? 0) === feat.instanceIndex,
       );
       const providedKeys = new Set(featOptions.map((o) => o.optionKey));
       const missing = defs.filter((def) => !providedKeys.has(def.optionKey));
       if (missing.length > 0) {
         throw new BadRequestException(
-          `Feat '${featSlug}' requires options: ${missing.map((d) => d.optionKey).join(', ')}`,
+          `Feat '${feat.featSlug}' instance ${feat.instanceIndex} requires options: ${missing.map((d) => d.optionKey).join(', ')}`,
         );
       }
 
@@ -509,11 +536,37 @@ export class CharacterSheetValidator {
         const def = defs.find((d) => d.optionKey === option.optionKey);
         if (!def) {
           throw new BadRequestException(
-            `Unknown feat option '${option.optionKey}' for '${featSlug}'`,
+            `Unknown feat option '${option.optionKey}' for '${feat.featSlug}'`,
           );
         }
         await this.validateFeatOptionValue(def, option, featOptions);
       }
+    }
+
+    this.validateMagicInitiateSpellLists(characterFeats, options);
+  }
+
+  private validateMagicInitiateSpellLists(
+    characterFeats: CharacterFeatDto[],
+    options: FeatOptionDto[],
+  ): void {
+    const instances = characterFeats.filter((feat) => feat.featSlug === 'magic-initiate');
+    if (instances.length <= 1) return;
+
+    const spellLists = instances.map((instance) =>
+      options.find(
+        (option) =>
+          option.featSlug === 'magic-initiate' &&
+          (option.instanceIndex ?? 0) === instance.instanceIndex &&
+          option.optionKey === 'spellList',
+      )?.valueId,
+    );
+
+    if (spellLists.some((value) => !value)) return;
+    if (new Set(spellLists).size !== spellLists.length) {
+      throw new BadRequestException(
+        'Each Magic Initiate instance must choose a different spell list',
+      );
     }
   }
 
@@ -548,6 +601,25 @@ export class CharacterSheetValidator {
     }
 
     if (def.valueType === 'spell') {
+      if (def.spellSchoolSlugs?.length) {
+        const schoolRows = await this.dataSource.query<{ ok: number }[]>(
+          `SELECT 1 AS ok
+           FROM rpg.phb_spell s
+           JOIN rpg.phb_spell_school sch ON sch.id = s.school_id
+           WHERE s.slug = $1
+             AND s.level = $2
+             AND sch.slug = ANY($3::text[])
+           LIMIT 1`,
+          [option.valueId, def.spellMaxLevel ?? 1, def.spellSchoolSlugs],
+        );
+        if (schoolRows.length === 0) {
+          throw new BadRequestException(
+            `Spell '${option.valueId}' is not a valid choice for '${def.optionKey}'`,
+          );
+        }
+        return;
+      }
+
       const spellList = featOptions.find((o) => o.optionKey === def.dependsOnOptionKey)?.valueId;
       if (!spellList) {
         throw new BadRequestException(

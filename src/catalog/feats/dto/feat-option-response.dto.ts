@@ -27,8 +27,14 @@ export class FeatOptionResponseDto {
   @ApiPropertyOptional({ example: 'spellList' })
   dependsOnOptionKey!: string | null;
 
-  @ApiPropertyOptional({ example: 0, description: 'Para valueType spell — nível máximo da magia' })
+  @ApiPropertyOptional({ example: 0, description: 'Nível máximo da magia para valueType spell' })
   spellMaxLevel!: number | null;
+
+  @ApiPropertyOptional({
+    example: ['divination', 'enchantment'],
+    description: 'Escolas permitidas quando valueType spell sem lista de classe',
+  })
+  spellSchoolSlugs!: string[] | null;
 
   @ApiPropertyOptional({ type: [FeatOptionValueDto] })
   values!: FeatOptionValueDto[];

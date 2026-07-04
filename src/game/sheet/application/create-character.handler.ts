@@ -9,10 +9,12 @@ import { CharacterMapper } from '../infrastructure/character.mapper';
 import { CreateCharacterDto } from '../dto/create-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
+import { CharacterFeatDto } from '../dto/character-sheet.dto';
 import {
-  resolveBackgroundOriginFeatSlugs,
+  resolveBackgroundOriginCharacterFeats,
   resolveBackgroundToolItemSlug,
 } from '../domain/background-origin';
+import { resolveCharacterFeats } from '../domain/character-feat';
 
 @Injectable()
 export class CreateCharacterHandler {
@@ -51,16 +53,20 @@ export class CreateCharacterHandler {
     });
 
     const background = await this.catalogLookup.findBackgroundOrFail(dto.backgroundSlug);
-    const featSlugs = resolveBackgroundOriginFeatSlugs(background, dto.featSlugs);
+    const characterFeats = resolveBackgroundOriginCharacterFeats(
+      background,
+      dto.characterFeats,
+      dto.featSlugs,
+    );
     const backgroundToolItemSlug = resolveBackgroundToolItemSlug(
       background,
       dto.backgroundToolItemSlug,
     );
 
     await this.sheetValidator.validateBackgroundToolChoice(background, backgroundToolItemSlug);
-    await this.sheetValidator.validateBackgroundOriginFeat(background, featSlugs);
+    await this.sheetValidator.validateBackgroundOriginFeat(background, characterFeats);
 
-    const sheetInput = this.toSheetInput(dto, featSlugs);
+    const sheetInput = this.toSheetInput(dto, characterFeats);
 
     await this.sheetValidator.validateCreateRequiredFields(sheetInput, ctx);
     await this.sheetValidator.validateSheetInput(sheetInput, ctx);
@@ -90,13 +96,13 @@ export class CreateCharacterHandler {
 
   private toSheetInput(
     dto: CreateCharacterDto,
-    featSlugs?: string[],
+    characterFeats?: CharacterFeatDto[],
   ): CharacterSheetInput {
     return {
       classSkillSlugs: dto.classSkillSlugs,
       speciesChoices: dto.speciesChoices,
       subclassOptions: dto.subclassOptions,
-      featSlugs: featSlugs ?? dto.featSlugs,
+      characterFeats: characterFeats ?? dto.characterFeats,
       featOptions: dto.featOptions,
       characterSpells: dto.characterSpells,
       equipment: dto.equipment,

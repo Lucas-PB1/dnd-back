@@ -3,6 +3,7 @@ import { Type } from 'class-transformer';
 import { IsInt, IsOptional, Max, Min, ValidateNested } from 'class-validator';
 import {
   CharacterEquipmentDto,
+  CharacterFeatDto,
   CharacterSpellDto,
   FeatOptionDto,
   SpeciesChoiceDto,
@@ -96,7 +97,13 @@ export class CharacterResponseDto {
   @ApiProperty({ type: [SubclassOptionDto] })
   subclassOptions!: SubclassOptionDto[];
 
-  @ApiProperty({ example: ['magic-initiate'] })
+  @ApiProperty({ type: [CharacterFeatDto] })
+  characterFeats!: CharacterFeatDto[];
+
+  @ApiProperty({
+    example: ['magic-initiate'],
+    description: 'Lista plana derivada de characterFeats (pode repetir slugs)',
+  })
   featSlugs!: string[];
 
   @ApiProperty({ type: [FeatOptionDto] })

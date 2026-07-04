@@ -1,5 +1,6 @@
 import {
   CharacterEquipmentDto,
+  CharacterFeatDto,
   CharacterSpellDto,
   FeatOptionDto,
   SpeciesChoiceDto,
@@ -10,7 +11,7 @@ export interface CharacterSheetData {
   classSkillSlugs: string[];
   speciesChoices: SpeciesChoiceDto[];
   subclassOptions: SubclassOptionDto[];
-  featSlugs: string[];
+  characterFeats: CharacterFeatDto[];
   featOptions: FeatOptionDto[];
   characterSpells: CharacterSpellDto[];
   equipment: CharacterEquipmentDto[];
@@ -23,7 +24,7 @@ export const EMPTY_SHEET_DATA: CharacterSheetData = {
   classSkillSlugs: [],
   speciesChoices: [],
   subclassOptions: [],
-  featSlugs: [],
+  characterFeats: [],
   featOptions: [],
   characterSpells: [],
   equipment: [],
@@ -36,7 +37,9 @@ export interface CharacterSheetInput {
   classSkillSlugs?: string[];
   speciesChoices?: SpeciesChoiceDto[];
   subclassOptions?: SubclassOptionDto[];
+  /** @deprecated Prefer characterFeats */
   featSlugs?: string[];
+  characterFeats?: CharacterFeatDto[];
   featOptions?: FeatOptionDto[];
   characterSpells?: CharacterSpellDto[];
   equipment?: CharacterEquipmentDto[];

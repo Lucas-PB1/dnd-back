@@ -36,6 +36,18 @@ export class SubclassOptionDto {
   valueId!: string;
 }
 
+export class CharacterFeatDto {
+  @ApiProperty({ example: 'magic-initiate' })
+  @IsString()
+  @IsNotEmpty()
+  featSlug!: string;
+
+  @ApiProperty({ example: 0, description: '0-based instance when the feat is repeatable' })
+  @IsInt()
+  @Min(0)
+  instanceIndex!: number;
+}
+
 export class FeatOptionDto {
   @ApiProperty({ example: 'magic-initiate' })
   @IsString()
@@ -128,9 +140,15 @@ export class CharacterSheetInputDto {
   @ApiPropertyOptional({ example: ['magic-initiate'] })
   @IsOptional()
   @IsArray()
-  @ArrayUnique()
   @IsString({ each: true })
   featSlugs?: string[];
+
+  @ApiPropertyOptional({ type: [CharacterFeatDto] })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CharacterFeatDto)
+  characterFeats?: CharacterFeatDto[];
 
   @ApiPropertyOptional({ type: [FeatOptionDto] })
   @IsOptional()
@@ -175,6 +193,9 @@ export class CharacterSheetResponseDto {
 
   @ApiProperty({ example: ['magic-initiate'] })
   featSlugs!: string[];
+
+  @ApiProperty({ type: [CharacterFeatDto] })
+  characterFeats!: CharacterFeatDto[];
 
   @ApiProperty({ type: [FeatOptionDto] })
   featOptions!: FeatOptionDto[];

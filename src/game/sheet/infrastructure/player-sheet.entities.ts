@@ -31,6 +31,9 @@ export class PlayerCharacterFeat {
 
   @PrimaryColumn({ name: 'feat_slug' })
   featSlug!: string;
+
+  @PrimaryColumn({ name: 'instance_index', type: 'int' })
+  instanceIndex!: number;
 }
 
 @Entity({ schema: 'rpg', name: 'player_character_feat_option' })

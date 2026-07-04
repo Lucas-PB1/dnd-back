@@ -58,6 +58,7 @@ export class FindFeatOptionsQuery {
       sortOrder: def.sortOrder,
       dependsOnOptionKey: def.dependsOnOptionKey,
       spellMaxLevel: def.spellMaxLevel,
+      spellSchoolSlugs: def.spellSchoolSlugs,
       values: def.valueType === 'catalog' ? (valuesByKey.get(def.optionKey) ?? []) : [],
     }));
 

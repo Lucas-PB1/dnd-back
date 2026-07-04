@@ -22,6 +22,9 @@ export class PhbFeatOptionDef {
 
   @Column({ name: 'spell_max_level', type: 'int', nullable: true })
   spellMaxLevel!: number | null;
+
+  @Column({ name: 'spell_school_slugs', type: 'text', array: true, nullable: true })
+  spellSchoolSlugs!: string[] | null;
 }
 
 @Entity({ schema: 'rpg', name: 'phb_feat_option_value' })

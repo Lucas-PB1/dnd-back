@@ -8,9 +8,9 @@ import {
   PhbFeatRef,
 } from '../../../entities/phb-feat-option.entity';
 import { VPhbSpeciesTraitChoices } from '../../../entities/views/v-phb-species-trait-choices.entity';
+import { VPhbFeat } from '../../../entities/views/v-phb-feat.entity';
 import { VSpellByClass } from '../../../entities/views/v-spell-by-class.entity';
 import { CharacterSheetValidator } from './character-sheet.validator';
-import { EMPTY_SHEET_DATA, type CharacterSheetInput } from './character-sheet.types';
 
 describe('CharacterSheetValidator.validateFeatOptions', () => {
   let validator: CharacterSheetValidator;
@@ -18,6 +18,7 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
   let featOptionDefRepo: jest.Mocked<Pick<Repository<PhbFeatOptionDef>, 'find'>>;
   let featOptionValueRepo: jest.Mocked<Pick<Repository<PhbFeatOptionValue>, 'findOne'>>;
   let classSpellsRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'findOne'>>;
+  let featsRepo: jest.Mocked<Pick<Repository<VPhbFeat>, 'findOne'>>;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
 
   beforeEach(() => {
@@ -34,6 +35,7 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
           sortOrder: 1,
           dependsOnOptionKey: null,
           spellMaxLevel: null,
+          spellSchoolSlugs: null,
         },
         {
           featId: '10',
@@ -43,6 +45,7 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
           sortOrder: 2,
           dependsOnOptionKey: 'spellList',
           spellMaxLevel: 0,
+          spellSchoolSlugs: null,
         },
       ] as PhbFeatOptionDef[]),
     };
@@ -52,6 +55,9 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
     classSpellsRepo = {
       findOne: jest.fn().mockResolvedValue({ spellLevel: 0 }),
     };
+    featsRepo = {
+      findOne: jest.fn().mockResolvedValue({ featSlug: 'magic-initiate', repeatable: true }),
+    };
     dataSource = {
       query: jest.fn().mockResolvedValue([{ ok: 1 }]),
     };
@@ -60,7 +66,7 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
       dataSource as unknown as DataSource,
       {} as CatalogLookupService,
       {} as Repository<VPhbSpeciesTraitChoices>,
-      {} as never,
+      featsRepo as unknown as Repository<VPhbFeat>,
       classSpellsRepo as unknown as Repository<VSpellByClass>,
       {} as never,
       {} as never,
@@ -76,26 +82,52 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
     );
   });
 
-  it('requires all feat option keys', async () => {
+  it('requires all feat option keys per instance', async () => {
     await expect(
-      validator.validateFeatOptions(['magic-initiate'], []),
+      validator.validateFeatOptions(
+        [{ featSlug: 'magic-initiate', instanceIndex: 0 }],
+        [],
+      ),
     ).rejects.toThrow(/requires options/i);
   });
 
   it('accepts valid magic-initiate options', async () => {
     await expect(
-      validator.validateFeatOptions(['magic-initiate'], [
-        { featSlug: 'magic-initiate', optionKey: 'spellList', valueId: 'cleric' },
-        { featSlug: 'magic-initiate', optionKey: 'cantrip1', valueId: 'guidance' },
-      ]),
+      validator.validateFeatOptions(
+        [{ featSlug: 'magic-initiate', instanceIndex: 0 }],
+        [
+          { featSlug: 'magic-initiate', instanceIndex: 0, optionKey: 'spellList', valueId: 'cleric' },
+          { featSlug: 'magic-initiate', instanceIndex: 0, optionKey: 'cantrip1', valueId: 'guidance' },
+        ],
+      ),
     ).resolves.toBeUndefined();
   });
 
-  it('rejects options for unselected feats', async () => {
+  it('requires different spell lists for repeated magic-initiate', async () => {
     await expect(
-      validator.validateFeatOptions(['alert'], [
-        { featSlug: 'magic-initiate', optionKey: 'spellList', valueId: 'cleric' },
-      ]),
+      validator.validateFeatOptions(
+        [
+          { featSlug: 'magic-initiate', instanceIndex: 0 },
+          { featSlug: 'magic-initiate', instanceIndex: 1 },
+        ],
+        [
+          { featSlug: 'magic-initiate', instanceIndex: 0, optionKey: 'spellList', valueId: 'cleric' },
+          { featSlug: 'magic-initiate', instanceIndex: 0, optionKey: 'cantrip1', valueId: 'guidance' },
+          { featSlug: 'magic-initiate', instanceIndex: 1, optionKey: 'spellList', valueId: 'cleric' },
+          { featSlug: 'magic-initiate', instanceIndex: 1, optionKey: 'cantrip1', valueId: 'guidance' },
+        ],
+      ),
+    ).rejects.toThrow(/different spell list/i);
+  });
+
+  it('rejects options for unselected feat instances', async () => {
+    await expect(
+      validator.validateFeatOptions(
+        [{ featSlug: 'alert', instanceIndex: 0 }],
+        [
+          { featSlug: 'magic-initiate', instanceIndex: 0, optionKey: 'spellList', valueId: 'cleric' },
+        ],
+      ),
     ).rejects.toThrow(BadRequestException);
   });
 });
