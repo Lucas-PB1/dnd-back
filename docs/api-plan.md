@@ -4,7 +4,7 @@
 
 Documento de referência para implementação, testes e documentação OpenAPI.
 
-Relacionados: [`architecture.md`](architecture.md) · [`data-model.md`](data-model.md) · [`infrastructure.md`](infrastructure.md) · [`product-roadmap.md`](product-roadmap.md)
+Relacionados: [`architecture.md`](architecture.md) · [`data-model.md`](data-model.md) · [`infrastructure.md`](infrastructure.md) · [`product-roadmap.md`](product-roadmap.md) · **[`DEPLOY.md`](DEPLOY.md)** (Vercel + Supabase)
 
 ## Princípios
 

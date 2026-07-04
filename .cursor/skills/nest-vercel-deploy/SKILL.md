@@ -22,8 +22,11 @@ description: Deploy NestJS na Vercel — zero-config, serverless, diferenças vs
 
 ## Checklist deploy
 
-- [ ] `src/main.ts` com `bootstrap()` + `app.listen(process.env.PORT ?? 3000)`
-- [ ] `DATABASE_URL` com pooler Supabase (6543) no dashboard Vercel
-- [ ] TypeORM pool mínimo / singleton
+- [x] `src/main.ts` com `bootstrap()` + `app.listen(process.env.PORT ?? 3000)`
+- [x] `reflect-metadata` importado em `main.ts`
+- [x] `DATABASE_URL` com pooler Supabase (6543) + `?pgbouncer=true`
+- [x] TypeORM `prepareThreshold: 0` no pooler
+- [x] `vercel.json` com `npm ci` (API usa npm, não pnpm)
+- [x] `validateDeployEnv()` — erro claro se env faltar
+- [ ] Env vars no dashboard Vercel
 - [ ] `vercel dev` testado localmente
-- [ ] Env vars no dashboard (nunca commitadas)

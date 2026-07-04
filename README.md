@@ -133,7 +133,7 @@ Documento completo: [`docs/infrastructure.md`](docs/infrastructure.md) · Arquit
 | DB + Auth | **Supabase** (pooler 6543, Supabase Auth, RLS futuro) |
 | API | NestJS + TypeORM — **modular monolith**, 3 bounded contexts |
 | Padrão | CQRS leve (views = read); DDD tático só em `game/` |
-| Deploy API | **Vercel** (serverless Nest) |
+| Deploy API | **Vercel** (serverless Nest) — ver [`docs/DEPLOY.md`](docs/DEPLOY.md) |
 | Frontend | **Next.js em repo separado** |
 
 ## Cursor — rules e skills

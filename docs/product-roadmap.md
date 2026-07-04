@@ -25,7 +25,7 @@ Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`game-advanced
 | Game — mesa 7A–7C (API) | **100%** | level-up, inventário, state, cast, rest |
 | **dnd-front** — MVP ficha | **~95%** | Wizard PHB, ficha leitura/edição, mesa |
 | **dnd-front** — compêndio | **~70%** | classes, espécies, antecedentes, magias |
-| Deploy produção (Fase 6) | **0%** | Vercel + smoke E2E |
+| Deploy produção (Fase 6) | **em andamento** | Ver [`DEPLOY.md`](DEPLOY.md) |
 | Campanha / combate (7D) | **0%** | Fora do escopo atual |
 
 **Testes automatizados:** API 88 · Front 35 · ambos passando localmente (jul/2026).
@@ -131,12 +131,15 @@ Detalhe da ficha: [`CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-
 
 ## Fase 6 — Deploy produção
 
+Guia: **[`DEPLOY.md`](DEPLOY.md)**
+
 | Item | Status |
 |------|--------|
-| API na Vercel | [ ] |
+| API na Vercel (`vercel.json`, pooler 6543) | [~] |
+| Env prod: `DATABASE_URL`, `SUPABASE_URL`, `FRONTEND_URL` | [ ] |
 | Front na Vercel | [ ] |
-| RLS ativo em prod | [ ] |
-| Smoke: health + classes + POST character | [ ] |
+| RLS ativo em prod | [x] |
+| Smoke: health + classes + login | [ ] |
 
 ---
 
@@ -170,4 +173,4 @@ Detalhe da ficha: [`CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-
 | 2026-07-03 | Catálogo API P0–P3; auth; CRUD fichas; ficha PHB API |
 | 2026-07-03 | Game 7A–7C (level-up, inventário, mesa) |
 | 2026-07-04 | Front: wizard PHB, ficha edição/leitura, feats com opções, Sprint 9 polish |
-| 2026-07-04 | Revisão de planos — MVP ficha declarado concluído; roadmap consolidado |
+| 2026-07-04 | Deploy: `vercel.json`, fix pooler/pnpm, guia [`DEPLOY.md`](DEPLOY.md) |
