@@ -9,6 +9,7 @@ import { CharacterMapper } from '../infrastructure/character.mapper';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
+import { applyBackgroundAbilityBoosts } from '../domain/background-ability-boost';
 
 @Injectable()
 export class UpdateCharacterHandler {
@@ -77,7 +78,38 @@ export class UpdateCharacterHandler {
       abilityScores: row.abilityScores,
     };
 
-    CharacterFactory.applyUpdate(row, dto);
+    const backgroundChanged =
+      dto.backgroundSlug !== undefined && dto.backgroundSlug !== row.backgroundSlug;
+
+    const boostPatch =
+      dto.backgroundAbilityBoostPlus2Slug !== undefined ||
+      dto.backgroundAbilityBoostPlus1Slug !== undefined;
+    const scoresAreBase = boostPatch && dto.abilityScores !== undefined;
+
+    if (backgroundChanged && !boostPatch) {
+      row.backgroundBoostPlus2AbilitySlug = null;
+      row.backgroundBoostPlus1AbilitySlug = null;
+    }
+
+    CharacterFactory.applyUpdate(
+      row,
+      scoresAreBase ? { ...dto, abilityScores: undefined } : dto,
+    );
+
+    if (boostPatch) {
+      const plus2 = row.backgroundBoostPlus2AbilitySlug;
+      const plus1 = row.backgroundBoostPlus1AbilitySlug;
+      await this.sheetValidator.validateBackgroundAbilityBoosts(
+        effective.backgroundSlug,
+        { plus2Slug: plus2 ?? undefined, plus1Slug: plus1 ?? undefined },
+      );
+      if (scoresAreBase && plus2 && plus1 && dto.abilityScores) {
+        row.abilityScores = applyBackgroundAbilityBoosts(dto.abilityScores, {
+          plus2Slug: plus2,
+          plus1Slug: plus1,
+        });
+      }
+    }
 
     await this.domain.refreshHitPointsAfterChange(row, dto, {
       level: dto.level !== undefined && dto.level !== before.level,

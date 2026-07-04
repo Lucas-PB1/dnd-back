@@ -59,6 +59,12 @@ export class PlayerCharacter {
   @Column({ name: 'ability_generation_method_slug', type: 'text', nullable: true })
   abilityGenerationMethodSlug!: string | null;
 
+  @Column({ name: 'background_boost_plus2_ability_slug', type: 'text', nullable: true })
+  backgroundBoostPlus2AbilitySlug!: string | null;
+
+  @Column({ name: 'background_boost_plus1_ability_slug', type: 'text', nullable: true })
+  backgroundBoostPlus1AbilitySlug!: string | null;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 

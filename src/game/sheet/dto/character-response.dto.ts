@@ -116,6 +116,12 @@ export class CharacterResponseDto {
   })
   backgroundSkillSlugs!: string[];
 
+  @ApiPropertyOptional({ example: 'sabedoria' })
+  backgroundAbilityBoostPlus2Slug!: string | null;
+
+  @ApiPropertyOptional({ example: 'carisma' })
+  backgroundAbilityBoostPlus1Slug!: string | null;
+
   @ApiProperty()
   createdAt!: string;
 

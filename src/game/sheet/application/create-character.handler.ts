@@ -41,10 +41,19 @@ export class CreateCharacterHandler {
     };
 
     await this.sheetValidator.validateLevelRules(ctx);
+    await this.sheetValidator.validateBackgroundAbilityBoosts(dto.backgroundSlug, {
+      plus2Slug: dto.backgroundAbilityBoostPlus2Slug,
+      plus1Slug: dto.backgroundAbilityBoostPlus1Slug,
+    });
     await this.sheetValidator.validateCreateRequiredFields(this.toSheetInput(dto), ctx);
     await this.sheetValidator.validateSheetInput(this.toSheetInput(dto), ctx);
 
-    const entity = this.repository.create(CharacterFactory.buildNew(userId, dto));
+    const entity = this.repository.create(
+      CharacterFactory.withBackgroundBoostsApplied(
+        CharacterFactory.buildNew(userId, dto),
+        dto,
+      ),
+    );
     await this.domain.applyDerivedHitPoints(entity, {
       hitPointsMax: dto.hitPointsMax,
       hitPointsCurrent: dto.hitPointsCurrent,

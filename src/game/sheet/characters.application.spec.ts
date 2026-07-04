@@ -26,7 +26,7 @@ describe('Characters application layer', () => {
   let sheetValidator: jest.Mocked<
     Pick<
       CharacterSheetValidator,
-      'validateSheetInput' | 'validateLevelRules' | 'validateCreateRequiredFields'
+      'validateSheetInput' | 'validateLevelRules' | 'validateCreateRequiredFields' | 'validateBackgroundAbilityBoosts'
     >
   >;
   let sheetRepo: jest.Mocked<Pick<CharacterSheetRepository, 'sync' | 'load' | 'loadMany' | 'empty' | 'mergeSheetData'>>;
@@ -56,6 +56,8 @@ describe('Characters application layer', () => {
     hitPointsMax: 10,
     hitPointsCurrent: 10,
     abilityGenerationMethodSlug: null,
+    backgroundBoostPlus2AbilitySlug: null,
+    backgroundBoostPlus1AbilitySlug: null,
     createdAt: new Date(),
     updatedAt: new Date(),
   };
@@ -73,6 +75,7 @@ describe('Characters application layer', () => {
       validateSheetInput: jest.fn().mockResolvedValue(undefined),
       validateLevelRules: jest.fn().mockResolvedValue(undefined),
       validateCreateRequiredFields: jest.fn().mockResolvedValue(undefined),
+      validateBackgroundAbilityBoosts: jest.fn().mockResolvedValue(undefined),
     };
     sheetRepo = {
       sync: jest.fn().mockResolvedValue(undefined),
@@ -115,6 +118,8 @@ describe('Characters application layer', () => {
       classSlug: 'fighter',
       speciesSlug: 'dwarf',
       backgroundSlug: 'acolyte',
+      backgroundAbilityBoostPlus2Slug: 'sabedoria',
+      backgroundAbilityBoostPlus1Slug: 'carisma',
     });
     expect(catalogLookup.validateCharacterCatalogRefs).toHaveBeenCalled();
     expect(domain.applyDerivedHitPoints).toHaveBeenCalled();
@@ -128,6 +133,8 @@ describe('Characters application layer', () => {
       speciesSlug: 'dwarf',
       backgroundSlug: 'acolyte',
       subclassSlug: 'champion',
+      backgroundAbilityBoostPlus2Slug: 'sabedoria',
+      backgroundAbilityBoostPlus1Slug: 'carisma',
     });
 
     expect(sheetValidator.validateLevelRules).toHaveBeenCalledWith(
@@ -145,6 +152,8 @@ describe('Characters application layer', () => {
       speciesSlug: 'dwarf',
       backgroundSlug: 'acolyte',
       classSkillSlugs: ['athletics', 'perception'],
+      backgroundAbilityBoostPlus2Slug: 'sabedoria',
+      backgroundAbilityBoostPlus1Slug: 'carisma',
     });
 
     expect(sheetValidator.validateSheetInput).toHaveBeenCalled();

@@ -70,4 +70,20 @@ export class CreateCharacterDto extends CharacterSheetInputDto {
   @IsInt()
   @Min(0)
   hitPointsCurrent?: number;
+
+  @ApiProperty({
+    example: 'sabedoria',
+    description: 'Atributo que recebe +2 do antecedente (entre as opções do PHB)',
+  })
+  @IsString()
+  @IsNotEmpty()
+  backgroundAbilityBoostPlus2Slug!: string;
+
+  @ApiProperty({
+    example: 'carisma',
+    description: 'Atributo que recebe +1 do antecedente (distinto do +2)',
+  })
+  @IsString()
+  @IsNotEmpty()
+  backgroundAbilityBoostPlus1Slug!: string;
 }

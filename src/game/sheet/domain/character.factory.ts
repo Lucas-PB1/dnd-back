@@ -5,6 +5,9 @@ import {
 } from '../../shared/infrastructure/player-character.entity';
 import { CreateCharacterDto } from '../dto/create-character.dto';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
+import {
+  applyBackgroundAbilityBoosts,
+} from './background-ability-boost';
 
 const MIN_LEVEL = 1;
 const MAX_LEVEL = 20;
@@ -27,6 +30,30 @@ export class CharacterFactory {
       hitPointsMax: dto.hitPointsMax ?? null,
       hitPointsCurrent: dto.hitPointsCurrent ?? dto.hitPointsMax ?? null,
       abilityGenerationMethodSlug: dto.abilityGenerationMethodSlug ?? null,
+      backgroundBoostPlus2AbilitySlug: dto.backgroundAbilityBoostPlus2Slug ?? null,
+      backgroundBoostPlus1AbilitySlug: dto.backgroundAbilityBoostPlus1Slug ?? null,
+    };
+  }
+
+  /** Aplica +2/+1 do antecedente sobre scores base (criação). */
+  static withBackgroundBoostsApplied(
+    entity: Partial<PlayerCharacter>,
+    dto: Pick<
+      CreateCharacterDto,
+      | 'abilityScores'
+      | 'backgroundAbilityBoostPlus2Slug'
+      | 'backgroundAbilityBoostPlus1Slug'
+    >,
+  ): Partial<PlayerCharacter> {
+    const base = dto.abilityScores ?? DEFAULT_ABILITY_SCORES;
+    return {
+      ...entity,
+      abilityScores: applyBackgroundAbilityBoosts(base, {
+        plus2Slug: dto.backgroundAbilityBoostPlus2Slug,
+        plus1Slug: dto.backgroundAbilityBoostPlus1Slug,
+      }),
+      backgroundBoostPlus2AbilitySlug: dto.backgroundAbilityBoostPlus2Slug,
+      backgroundBoostPlus1AbilitySlug: dto.backgroundAbilityBoostPlus1Slug,
     };
   }
 
@@ -46,6 +73,12 @@ export class CharacterFactory {
     if (dto.hitPointsCurrent !== undefined) row.hitPointsCurrent = dto.hitPointsCurrent;
     if (dto.abilityGenerationMethodSlug !== undefined) {
       row.abilityGenerationMethodSlug = dto.abilityGenerationMethodSlug ?? null;
+    }
+    if (dto.backgroundAbilityBoostPlus2Slug !== undefined) {
+      row.backgroundBoostPlus2AbilitySlug = dto.backgroundAbilityBoostPlus2Slug ?? null;
+    }
+    if (dto.backgroundAbilityBoostPlus1Slug !== undefined) {
+      row.backgroundBoostPlus1AbilitySlug = dto.backgroundAbilityBoostPlus1Slug ?? null;
     }
   }
 

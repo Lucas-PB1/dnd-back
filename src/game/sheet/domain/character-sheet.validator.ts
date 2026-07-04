@@ -12,6 +12,10 @@ import { PhbSubclassOptionValue, PhbSubclassRef } from '../../../entities/phb-su
 import { VPhbClassEquipment } from '../../../entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '../../../entities/views/v-phb-background-equipment.entity';
 import { CharacterSheetInput } from './character-sheet.types';
+import {
+  applyBackgroundAbilityBoosts,
+  assertBackgroundBoostSlugsAllowed,
+} from './background-ability-boost';
 
 export interface CharacterSheetContext {
   level: number;
@@ -114,6 +118,20 @@ export class CharacterSheetValidator {
       }
       await this.validateSpeciesChoices(ctx.speciesSlug, input.speciesChoices);
     }
+  }
+
+  async validateBackgroundAbilityBoosts(
+    backgroundSlug: string,
+    boosts: { plus2Slug?: string; plus1Slug?: string },
+  ): Promise<void> {
+    const background = await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
+    const allowed = background.abilityOptionSlugs ?? [];
+    if (allowed.length === 0) return;
+
+    assertBackgroundBoostSlugsAllowed(allowed, {
+      plus2Slug: boosts.plus2Slug ?? '',
+      plus1Slug: boosts.plus1Slug ?? '',
+    });
   }
 
   async validateLevelRules(ctx: CharacterSheetContext): Promise<void> {

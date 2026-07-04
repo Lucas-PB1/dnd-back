@@ -54,6 +54,8 @@ export class CharacterMapper {
       languageSlugs: loaded.languageSlugs,
       abilityGenerationMethodSlug: loaded.abilityGenerationMethodSlug,
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
+      backgroundAbilityBoostPlus2Slug: row.backgroundBoostPlus2AbilitySlug,
+      backgroundAbilityBoostPlus1Slug: row.backgroundBoostPlus1AbilitySlug,
       abilityModifiers: derived.abilityModifiers,
       passivePerception: derived.passivePerception,
       armorClass: derived.armorClass,
