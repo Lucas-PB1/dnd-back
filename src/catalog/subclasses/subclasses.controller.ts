@@ -9,6 +9,7 @@ import {
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
 import { FindSubclassBySlugQuery } from './queries/find-subclass-by-slug.query';
 import { FindSubclassMechanicsQuery } from './queries/find-subclass-mechanics.query';
+import { FindSubclassOptionsQuery } from './queries/find-subclass-options.query';
 import { FindSubclassSpellsQuery } from './queries/find-subclass-spells.query';
 import { SubclassResponseDto } from './dto/subclass-response.dto';
 
@@ -18,8 +19,22 @@ export class SubclassesController {
   constructor(
     private readonly findSubclassBySlug: FindSubclassBySlugQuery,
     private readonly findSubclassMechanics: FindSubclassMechanicsQuery,
+    private readonly findSubclassOptions: FindSubclassOptionsQuery,
     private readonly findSubclassSpells: FindSubclassSpellsQuery,
   ) {}
+
+  @Get(':slug/options')
+  @ApiOperation({ summary: 'Selectable subclass options by character level (paginated)' })
+  @ApiParam({ name: 'slug', example: 'battle-master' })
+  @ApiOkResponse({ description: 'Paginated subclass option groups with values' })
+  @ApiNotFoundResponse({ description: 'Subclass not found or no options at this level' })
+  findOptions(
+    @Param('slug') slug: string,
+    @Query() query: PaginationQueryDto & { level?: number },
+  ) {
+    const level = query.level !== undefined ? Number(query.level) : 20;
+    return this.findSubclassOptions.execute(slug, level, query.page, query.limit);
+  }
 
   @Get(':slug/mechanics')
   @ApiOperation({ summary: 'Subclass features and resources (paginated)' })

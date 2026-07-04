@@ -15,7 +15,7 @@ Contagens: [`database/seed-manifest.json`](database/seed-manifest.json)
 ## Estrutura
 
 ```
-dnd-api/                     # este repo (renomear pasta `rpg` quando puder)
+dnd-work/dnd-api/             # este repo
 ├── database/
 │   ├── schema.sql           # DDL completo
 │   ├── dev-reset.sql        # DROP SCHEMA (só dev)

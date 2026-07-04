@@ -190,6 +190,14 @@ describe('Catalog API (e2e)', () => {
         expect(res.body.meta.total).toBeGreaterThan(0);
       }));
 
+  it('GET /subclasses/battle-master/options?level=5', () =>
+    request(app.getHttpServer())
+      .get('/subclasses/battle-master/options?level=5')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.data.length).toBeGreaterThan(0);
+      }));
+
   it('GET /species/elf/trait-choices', () =>
     request(app.getHttpServer())
       .get('/species/elf/trait-choices')

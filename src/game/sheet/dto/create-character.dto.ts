@@ -5,6 +5,7 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Max,
   MaxLength,
   Min,
   MinLength,
@@ -44,6 +45,13 @@ export class CreateCharacterDto extends CharacterSheetInputDto {
   @IsOptional()
   @IsString()
   alignmentSlug?: string;
+
+  @ApiPropertyOptional({ example: 1, minimum: 1, maximum: 20, default: 1 })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(20)
+  level?: number;
 
   @ApiPropertyOptional({ type: AbilityScoresDto })
   @IsOptional()

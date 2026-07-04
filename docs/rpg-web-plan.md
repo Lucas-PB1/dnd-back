@@ -4,37 +4,25 @@ Documento base para o **frontend**, integração com **`dnd-api`** (API Nest nes
 
 | Repo | Pasta no disco | Papel |
 |------|----------------|-------|
-| **dnd-api** | `Projetos/dnd-api/` | Postgres PHB + API NestJS + regras D&D (**este projeto** — hoje a pasta git ainda pode chamar-se `rpg` até você renomear) |
-| **dnd-front** | `Projetos/dnd-front/` | UI Next.js — compendium, wizard, ficha, mesa |
+| **dnd-api** | `Projetos/dnd-work/dnd-api/` | Postgres PHB + API NestJS + regras D&D (**este projeto**) |
+| **dnd-front** | `Projetos/dnd-work/dnd-front/` | UI Next.js — compendium, wizard, ficha, mesa |
 
 Relacionados (dnd-api): [`product-roadmap.md`](product-roadmap.md) · [`api-plan.md`](api-plan.md) · [`game-module-structure.md`](game-module-structure.md)
 
-**Como usar:** abrir `Projetos/dnd-workspace.code-workspace`. No front: [`../dnd-front/docs/API-INTEGRATION.md`](../dnd-front/docs/API-INTEGRATION.md).
+**Como usar:** abrir `Projetos/dnd-work/dnd-workspace.code-workspace`. No front: [`../dnd-front/docs/API-INTEGRATION.md`](../dnd-front/docs/API-INTEGRATION.md).
 
 **Última revisão:** 2026-07-03
 
 ---
 
-## Nomenclatura (importante)
+## Nomenclatura
 
-| Nome lógico | O quê | Pasta alvo |
-|-------------|-------|------------|
-| **dnd-api** | API Nest + banco | `dnd-api/` (renomear de `rpg/`) |
-| **dnd-front** | Next.js | `dnd-front/` (renomear de `dnd/`) |
+| Nome lógico | O quê | Pasta |
+|-------------|-------|-------|
+| **dnd-api** | API Nest + banco | `dnd-work/dnd-api/` |
+| **dnd-front** | Next.js | `dnd-work/dnd-front/` |
 
-**Não** usar junction `dnd-api` → `rpg`. O repositório da API **é** o projeto `dnd-api`.
-
-### Renomear pastas (feche o Cursor antes)
-
-```powershell
-cd D:\Projetos
-# se existir junction antigo:
-cmd /c rmdir dnd-api
-Rename-Item rpg dnd-api
-Rename-Item dnd dnd-front
-```
-
-Depois reabra `dnd-workspace.code-workspace` (paths já apontam para `dnd-api` e `dnd-front`).
+Ambos ficam dentro de **`dnd-work/`** (D&D Work). Abra o workspace multi-root `dnd-work/dnd-workspace.code-workspace`.
 
 ---
 
@@ -71,9 +59,9 @@ flowchart LR
 ## 2. Workspace Cursor
 
 ```
-Projetos/
-├── dnd-api/      ← API (Nest + database/)
-├── dnd-front/    ← Next.js (pnpm)
+Projetos/dnd-work/
+├── dnd-api/                  ← API (Nest + database/)
+├── dnd-front/                ← Next.js (pnpm)
 └── dnd-workspace.code-workspace
 ```
 
@@ -187,10 +175,10 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 
 ```bash
 # dnd-api
-cd dnd-api && npm run start:dev
+cd dnd-work/dnd-api && npm install && npm run start:dev
 
 # dnd-front
-cd dnd-front && pnpm dev
+cd dnd-work/dnd-front && pnpm install && pnpm dev
 ```
 
 ---
@@ -201,3 +189,4 @@ cd dnd-front && pnpm dev
 |------|------|
 | 2026-07-03 | Plano inicial |
 | 2026-07-03 | Nomes finais: **dnd-api** + **dnd-front** |
+| 2026-07-03 | Pastas em `dnd-work/`; workspace `dnd-workspace.code-workspace` |

@@ -116,6 +116,24 @@ describe('Characters application layer', () => {
     expect(domain.applyDerivedHitPoints).toHaveBeenCalled();
   });
 
+  it('create persists requested starting level', async () => {
+    await createHandler.execute(userId, {
+      name: 'Veteran',
+      level: 7,
+      classSlug: 'fighter',
+      speciesSlug: 'dwarf',
+      backgroundSlug: 'acolyte',
+      subclassSlug: 'champion',
+    });
+
+    expect(sheetValidator.validateLevelRules).toHaveBeenCalledWith(
+      expect.objectContaining({ level: 7 }),
+    );
+    expect(repo.create).toHaveBeenCalledWith(
+      expect.objectContaining({ level: 7 }),
+    );
+  });
+
   it('create persists class skill choices when provided', async () => {
     const result = await createHandler.execute(userId, {
       name: 'Thorin',

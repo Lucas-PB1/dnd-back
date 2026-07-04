@@ -11,10 +11,13 @@ const MAX_LEVEL = 20;
 
 export class CharacterFactory {
   static buildNew(userId: string, dto: CreateCharacterDto): Partial<PlayerCharacter> {
+    const level = dto.level ?? MIN_LEVEL;
+    CharacterFactory.assertLevel(level);
+
     return {
       userId,
       name: dto.name,
-      level: MIN_LEVEL,
+      level,
       classSlug: dto.classSlug,
       speciesSlug: dto.speciesSlug,
       backgroundSlug: dto.backgroundSlug,

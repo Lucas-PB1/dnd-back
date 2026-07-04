@@ -1,5 +1,5 @@
 {
-  "name": "rpg",
+  "name": "dnd-api",
   "version": "1.0.0",
   "private": true,
   "description": "PostgreSQL — catálogo PHB 2024 + API NestJS",

@@ -52,7 +52,7 @@ flowchart LR
 | Game — ficha PHB (API) | **100%** | CRUD + todas escolhas persistidas |
 | Game — domínio D&D | **~85%** | HP, PB, validações ficha; aggregate/VOs opcional |
 | Deploy API (Vercel) | — | Responsabilidade do time (fora do escopo atual) |
-| **dnd-front** | **~15%** bootstrap | [`rpg-web-plan.md`](rpg-web-plan.md) · pasta irmã `dnd` → renomear **`dnd-front`** |
+| **dnd-front** | **~15%** bootstrap | [`rpg-web-plan.md`](rpg-web-plan.md) · `dnd-work/dnd-front/` |
 | Prod end-to-end | **0%** | — |
 
 **Última revisão:** 2026-07-03 — ficha PHB completa na API (Fase 4); RLS Supabase
@@ -139,7 +139,7 @@ Migrations: `090_player/P002`–`P004`. Validação: `CharacterSheetValidator`.
 
 **Plano mestre:** [`rpg-web-plan.md`](rpg-web-plan.md) — stack, UX/UI, skills, fases A–E.
 
-Repo **dnd-front** (pasta irmã; renomear `dnd/` → `dnd-front/`). Skills front em `dnd-front/.cursor/skills/`.
+Repo **dnd-front** (`dnd-work/dnd-front/`). Skills front em `dnd-front/.cursor/skills/`.
 
 ### 5.1 Setup
 

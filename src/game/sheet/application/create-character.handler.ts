@@ -30,8 +30,10 @@ export class CreateCharacterHandler {
       alignmentSlug: dto.alignmentSlug,
     });
 
+    const level = dto.level ?? 1;
+
     const ctx = {
-      level: 1,
+      level,
       classSlug: dto.classSlug,
       speciesSlug: dto.speciesSlug,
       backgroundSlug: dto.backgroundSlug,

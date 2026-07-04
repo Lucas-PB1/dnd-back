@@ -61,6 +61,26 @@ describe('Characters API (e2e)', () => {
     return res.body.id as string;
   });
 
+  it('POST /characters accepts starting level with subclass', async () => {
+    const res = await request(app.getHttpServer())
+      .post('/characters')
+      .set(auth())
+      .send({
+        name: 'E2E Level 5',
+        level: 5,
+        classSlug: 'fighter',
+        speciesSlug: 'dwarf',
+        backgroundSlug: 'acolyte',
+        subclassSlug: 'champion',
+      })
+      .expect(201);
+
+    expect(res.body.level).toBe(5);
+    expect(res.body.proficiencyBonus).toBe(3);
+    expect(res.body.subclassSlug).toBe('champion');
+    expect(res.body.hitPointsMax).toBeGreaterThan(10);
+  });
+
   it('GET /characters lists user characters', async () => {
     await request(app.getHttpServer())
       .post('/characters')

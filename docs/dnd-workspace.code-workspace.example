@@ -1,9 +1,0 @@
-{
-  "folders": [
-    { "name": "dnd-api", "path": "dnd-api" },
-    { "name": "dnd-front", "path": "dnd-front" }
-  ],
-  "settings": {
-    "typescript.tsdk": "dnd-front/node_modules/typescript/lib"
-  }
-}
