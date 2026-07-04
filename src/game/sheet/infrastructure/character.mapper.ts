@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterDomainService } from '../domain/character-domain.service';
+import { computeDerivedStats } from '../domain/character-derived-stats';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 
@@ -24,6 +25,12 @@ export class CharacterMapper {
       );
 
     const proficiencyBonus = await this.domain.getProficiencyBonus(row.level);
+    const derived = computeDerivedStats({
+      abilityScores: row.abilityScores,
+      proficiencyBonus,
+      classSkillSlugs: loaded.classSkillSlugs,
+      backgroundSkillSlugs: loaded.backgroundSkillSlugs,
+    });
 
     return {
       id: row.id,
@@ -47,6 +54,9 @@ export class CharacterMapper {
       languageSlugs: loaded.languageSlugs,
       abilityGenerationMethodSlug: loaded.abilityGenerationMethodSlug,
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
+      abilityModifiers: derived.abilityModifiers,
+      passivePerception: derived.passivePerception,
+      armorClass: derived.armorClass,
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     };

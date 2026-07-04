@@ -85,6 +85,37 @@ export class CharacterSheetValidator {
     }
   }
 
+  /** Exige escolhas obrigatórias no POST /characters quando o catálogo exige. */
+  async validateCreateRequiredFields(
+    input: CharacterSheetInput,
+    ctx: CharacterSheetContext,
+  ): Promise<void> {
+    const phbClass = await this.catalogLookup.findClassOrFail(ctx.classSlug);
+    const requiredSkills = phbClass.skillChoiceCount ?? 0;
+
+    if (requiredSkills > 0) {
+      const slugs = input.classSkillSlugs ?? [];
+      if (slugs.length !== requiredSkills) {
+        throw new BadRequestException(
+          `Class '${ctx.classSlug}' requires exactly ${requiredSkills} skill choice(s)`,
+        );
+      }
+      await this.catalogLookup.validateClassSkillChoices(ctx.classSlug, slugs);
+    }
+
+    const traitRows = await this.speciesTraitChoicesRepo.find({
+      where: { speciesSlug: ctx.speciesSlug },
+    });
+    if (traitRows.length > 0) {
+      if (!input.speciesChoices?.length) {
+        throw new BadRequestException(
+          `Species '${ctx.speciesSlug}' requires trait choices`,
+        );
+      }
+      await this.validateSpeciesChoices(ctx.speciesSlug, input.speciesChoices);
+    }
+  }
+
   async validateLevelRules(ctx: CharacterSheetContext): Promise<void> {
     const phbClass = await this.catalogLookup.findClassOrFail(ctx.classSlug);
     const unlockLevel = await this.resolveSubclassUnlockLevel(ctx.classSlug);

@@ -24,7 +24,10 @@ describe('Characters application layer', () => {
   };
   let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'validateCharacterCatalogRefs'>>;
   let sheetValidator: jest.Mocked<
-    Pick<CharacterSheetValidator, 'validateSheetInput' | 'validateLevelRules'>
+    Pick<
+      CharacterSheetValidator,
+      'validateSheetInput' | 'validateLevelRules' | 'validateCreateRequiredFields'
+    >
   >;
   let sheetRepo: jest.Mocked<Pick<CharacterSheetRepository, 'sync' | 'load' | 'loadMany' | 'empty' | 'mergeSheetData'>>;
   let domain: jest.Mocked<Pick<CharacterDomainService, 'applyDerivedHitPoints' | 'getProficiencyBonus'>>;
@@ -69,6 +72,7 @@ describe('Characters application layer', () => {
     sheetValidator = {
       validateSheetInput: jest.fn().mockResolvedValue(undefined),
       validateLevelRules: jest.fn().mockResolvedValue(undefined),
+      validateCreateRequiredFields: jest.fn().mockResolvedValue(undefined),
     };
     sheetRepo = {
       sync: jest.fn().mockResolvedValue(undefined),

@@ -119,6 +119,17 @@ describe('Catalog API (e2e)', () => {
         expect(res.body.data.length).toBeGreaterThan(0);
       }));
 
+  it('GET /backgrounds/acolyte/skills', () =>
+    request(app.getHttpServer())
+      .get('/backgrounds/acolyte/skills')
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.meta.total).toBeGreaterThan(0);
+        expect(res.body.data.some((s: { slug: string }) => s.slug === 'insight')).toBe(
+          true,
+        );
+      }));
+
   it('GET /spells returns paginated list', () =>
     request(app.getHttpServer())
       .get('/spells')

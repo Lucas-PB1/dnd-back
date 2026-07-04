@@ -41,6 +41,7 @@ export class CreateCharacterHandler {
     };
 
     await this.sheetValidator.validateLevelRules(ctx);
+    await this.sheetValidator.validateCreateRequiredFields(this.toSheetInput(dto), ctx);
     await this.sheetValidator.validateSheetInput(this.toSheetInput(dto), ctx);
 
     const entity = this.repository.create(CharacterFactory.buildNew(userId, dto));

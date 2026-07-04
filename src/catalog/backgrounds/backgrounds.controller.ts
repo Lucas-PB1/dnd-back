@@ -10,6 +10,7 @@ import { PaginationQueryDto } from '../../common/dto/pagination.dto';
 import { FindBackgroundsQuery } from './queries/find-backgrounds.query';
 import { FindBackgroundBySlugQuery } from './queries/find-background-by-slug.query';
 import { FindBackgroundEquipmentQuery } from './queries/find-background-equipment.query';
+import { FindBackgroundSkillsQuery } from './queries/find-background-skills.query';
 import { BackgroundResponseDto } from './dto/background-response.dto';
 
 @ApiTags('catalog-backgrounds')
@@ -19,6 +20,7 @@ export class BackgroundsController {
     private readonly findBackgrounds: FindBackgroundsQuery,
     private readonly findBackgroundBySlug: FindBackgroundBySlugQuery,
     private readonly findBackgroundEquipment: FindBackgroundEquipmentQuery,
+    private readonly findBackgroundSkills: FindBackgroundSkillsQuery,
   ) {}
 
   @Get()
@@ -35,6 +37,15 @@ export class BackgroundsController {
   @ApiNotFoundResponse({ description: 'Background not found or no equipment data' })
   findEquipment(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findBackgroundEquipment.execute(slug, query.page, query.limit);
+  }
+
+  @Get(':slug/skills')
+  @ApiOperation({ summary: 'Fixed proficient skills granted by a background (paginated)' })
+  @ApiParam({ name: 'slug', example: 'acolyte' })
+  @ApiOkResponse({ description: 'Paginated background skills list' })
+  @ApiNotFoundResponse({ description: 'Background not found or no skills data' })
+  findSkills(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
+    return this.findBackgroundSkills.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug')

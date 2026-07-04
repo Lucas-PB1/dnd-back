@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { VPhbBackground } from '../../entities/views/v-phb-background.entity';
 import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
+import { VPhbBackgroundSkill } from '../../entities/views/v-phb-background-skill.entity';
 import { BackgroundResponseDto } from './dto/background-response.dto';
 import { BackgroundEquipmentResponseDto } from './dto/background-equipment-response.dto';
+import { BackgroundSkillResponseDto } from './dto/background-skill-response.dto';
 
 @Injectable()
 export class BackgroundsMapper {
@@ -29,6 +31,13 @@ export class BackgroundsMapper {
       itemName: row.itemName,
       quantity: row.quantity,
       choiceText: row.choiceText,
+    };
+  }
+
+  toSkillDto(row: VPhbBackgroundSkill): BackgroundSkillResponseDto {
+    return {
+      slug: row.skillSlug,
+      name: row.skillName,
     };
   }
 }

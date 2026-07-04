@@ -121,4 +121,22 @@ export class CharacterResponseDto {
 
   @ApiProperty()
   updatedAt!: string;
+
+  @ApiProperty({
+    example: { forca: 2, destreza: 1, constituicao: 0, inteligencia: 0, sabedoria: 1, carisma: -1 },
+    description: 'Modificadores derivados dos abilityScores',
+  })
+  abilityModifiers!: AbilityScoresDto;
+
+  @ApiProperty({
+    example: 13,
+    description: '10 + mod Sab + PB se proficiente em Percepção',
+  })
+  passivePerception!: number;
+
+  @ApiProperty({
+    example: 12,
+    description: 'CA base sem armadura (10 + mod Des)',
+  })
+  armorClass!: number;
 }
