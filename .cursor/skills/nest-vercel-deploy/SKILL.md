@@ -24,8 +24,8 @@ description: Deploy NestJS na Vercel — zero-config, serverless, diferenças vs
 
 - [x] `src/main.ts` com `bootstrap()` + `app.listen(process.env.PORT ?? 3000)`
 - [x] `reflect-metadata` importado em `main.ts`
-- [x] `jose@5.10.0` fixo — **sem** `jwks-rsa@4` (puxa `jose@6` ESM)
-- [x] `package.json` → `"overrides": { "jose": "5.10.0" }`
+- [x] JWT: `fetch` JWKS + `jsonwebtoken` + `crypto` — **zero** `jose` / `jwks-rsa` no runtime
+- [x] SSL só para URLs Supabase (localhost funciona com `VERCEL=1` em teste local)
 - [x] `DATABASE_URL` com pooler Supabase (6543) + `?pgbouncer=true`
 - [x] `vercel.json` sem `framework: null`
 - [x] `npm run smoke:health` para testar `/health`

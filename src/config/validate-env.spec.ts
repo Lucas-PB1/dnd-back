@@ -36,11 +36,10 @@ describe('validateDeployEnv', () => {
     expect(() => validateDeployEnv()).not.toThrow();
   });
 
-  it('requires DATABASE_URL and SUPABASE_URL on Vercel', () => {
+  it('requires DATABASE_URL on Vercel', () => {
     process.env.VERCEL = '1';
     process.env.NODE_ENV = 'production';
     delete process.env.DATABASE_URL;
-    delete process.env.SUPABASE_URL;
     expect(() => validateDeployEnv()).toThrow(/DATABASE_URL/);
   });
 

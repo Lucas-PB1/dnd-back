@@ -14,11 +14,16 @@ export function validateDeployEnv(): void {
 
   const missing: string[] = [];
   if (!process.env.DATABASE_URL?.trim()) missing.push('DATABASE_URL');
-  if (!process.env.SUPABASE_URL?.trim()) missing.push('SUPABASE_URL');
 
   if (missing.length > 0) {
     throw new Error(
       `Missing required environment variables on Vercel: ${missing.join(', ')}`,
+    );
+  }
+
+  if (!process.env.SUPABASE_URL?.trim()) {
+    console.warn(
+      '[deploy] SUPABASE_URL not set — rotas autenticadas falharão até configurar',
     );
   }
 

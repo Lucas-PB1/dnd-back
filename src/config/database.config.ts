@@ -51,10 +51,11 @@ export function databaseConfig(): TypeOrmModuleOptions {
   const url = normalizeDatabaseUrl(rawUrl);
   const isProd =
     process.env.NODE_ENV === 'production' || process.env.VERCEL === '1';
-  const useSsl = isProd || isSupabaseDatabaseUrl(url);
+  const isSupabase = isSupabaseDatabaseUrl(url);
   const usePooler = isSupabasePoolerUrl(url);
+  const useSsl = isSupabase;
 
-  if (isProd) {
+  if (isProd && isSupabase) {
     console.log(`[database] connecting ${describeDatabaseUrl(url)}`);
   }
 

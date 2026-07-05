@@ -6,11 +6,67 @@ Guia para publicar **dnd-api** e **dnd-front** com Supabase já populado.
 
 ---
 
+## Como a Vercel executa NestJS (zero-config)
+
+Fontes: [NestJS on Vercel](https://vercel.com/docs/frameworks/backend/nestjs) · [Ship a NestJS app](https://vercel.com/kb/guide/ship-a-nestjs-app-on-vercel) · [Changelog out/2025](https://vercel.com/changelog/zero-configuration-support-for-nestjs)
+
+| O quê | Comportamento |
+|-------|----------------|
+| **Detecção** | Vercel procura `src/main.ts` (ou `app` / `index` / `server`) |
+| **Runtime** | O app inteiro vira **uma Vercel Function** (Fluid compute) |
+| **Entrypoint** | `bootstrap()` + `await app.listen(process.env.PORT ?? 3000)` — **não alterar** |
+| **Build** | Automático — **não** definir `outputDirectory` (`public`, `dist`) |
+| **Framework** | Preset **NestJS** — **não** usar `framework: null` nem "Other" |
+| **CLI mínima** | Vercel CLI **≥ 48.4** |
+
+```mermaid
+flowchart LR
+  subgraph git [Git push]
+    Repo[dnd-api]
+  end
+
+  subgraph vercel [Vercel]
+    Detect[Detecta NestJS]
+    Build[Build + bundle]
+    Fn[Uma serverless function]
+  end
+
+  subgraph runtime [Request]
+    HTTP[GET /health]
+    Nest[src/main.ts → AppModule]
+  end
+
+  Repo --> Detect --> Build --> Fn
+  HTTP --> Fn --> Nest
+```
+
+### O que **não** fazer
+
+| Erro | Sintoma |
+|------|---------|
+| `framework: null` ou Preset "Other" | Build procura pasta `public` |
+| `outputDirectory: dist` ou `public` | Mesmo erro ou function quebrada |
+| Dependência **ESM-only** com `require()` | `ERR_REQUIRE_ESM` (ex.: `jose@6`, `jwks-rsa@4`) |
+| `DATABASE_URL` direct 5432 na Vercel | `[TypeOrmModule] Unable to connect` |
+| `packageManager: pnpm` sem `pnpm-lock` | `node_modules` incorreto |
+
+### JWT / dependências neste projeto
+
+A API **não usa `jose` nem `jwks-rsa`**. Auth Supabase:
+
+- `fetch` → JWKS (`/auth/v1/.well-known/jwks.json`)
+- `crypto.createPublicKey` (JWK → chave)
+- `jsonwebtoken.verify` (CJS, compatível com bundle Vercel)
+
+Isso evita `ERR_REQUIRE_ESM` documentado em [jwks-rsa#507](https://github.com/auth0/node-jwks-rsa/issues/507).
+
+---
+
 ## Pré-requisitos
 
-- Projeto Supabase com schema `rpg` migrado e com seeds (`npm run db:migrate:supabase` + `npm run db:seed:supabase` no `dnd-api`)
-- Conta Vercel com dois projetos (ou um monorepo com root directories distintos)
-- URLs do Supabase: **Project URL** e **Publishable key** (Settings → API)
+- Schema `rpg` migrado + seeds no Supabase (`npm run db:migrate:supabase` + `npm run db:seed:supabase`)
+- Conta Vercel · CLI ≥ 48.4 (`npm i -g vercel` ou `devDependency` no projeto)
+- Supabase: Project URL + Publishable key
 
 ---
 
@@ -20,182 +76,147 @@ Guia para publicar **dnd-api** e **dnd-front** com Supabase já populado.
 
 | Campo | Valor |
 |-------|-------|
-| **Root Directory** | `dnd-api` (se o repo é `dnd-work`) |
-| **Framework Preset** | **NestJS** (detecção automática — não use "Other") |
-| **Output Directory** | **vazio** (não `public`, não `dist`) |
-| **Install Command** | `npm ci` (já em `vercel.json`) |
-| **Build Command** | *(deixar em branco — Vercel detecta `src/main.ts`)* |
+| **Root Directory** | `dnd-api` (monorepo `dnd-work`) |
+| **Framework Preset** | **NestJS** |
+| **Output Directory** | *(vazio)* |
+| **Build Command** | *(vazio — detecção automática)* |
+| **Install Command** | `npm ci` (`vercel.json`) |
 | **Node.js** | 20.x |
 
-> **Importante:** o `dnd-api` usa **npm** (`package-lock.json`). Não use pnpm neste projeto.  
-> **Não** coloque `"framework": null` no `vercel.json` — isso faz a Vercel procurar pasta `public` e o build falha.
+`vercel.json` mínimo:
+
+```json
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "npm ci",
+  "regions": ["gru1"]
+}
+```
 
 ### Variáveis de ambiente (Production + Preview)
 
-| Variável | Valor | Onde obter |
-|----------|-------|------------|
-| `DATABASE_URL` | Transaction pooler **6543** com `?pgbouncer=true` | Supabase → Settings → Database → **Transaction pooler** |
-| `SUPABASE_URL` | `https://[ref].supabase.co` | Supabase → Settings → API |
-| `FRONTEND_URL` | `https://seu-front.vercel.app` | URL do projeto Next (atualizar após deploy do front) |
-| `NODE_ENV` | `production` | — |
+| Variável | Obrigatória | Valor |
+|----------|-------------|-------|
+| `DATABASE_URL` | Sim | Transaction pooler **6543** + `?pgbouncer=true` |
+| `SUPABASE_URL` | Sim (auth) | `https://[ref].supabase.co` |
+| `FRONTEND_URL` | Recomendado | URL do front (CORS) |
+| `NODE_ENV` | Sim | `production` |
 
-**Não** use `SUPABASE_DATABASE_URL` (porta 5432) como `DATABASE_URL` na Vercel — essa URL é só para migrations locais.
-
-Exemplo de pooler (note o usuário `postgres.[ref]` — não só `postgres`):
+Exemplo pooler (usuário `postgres.[ref]`, não só `postgres`):
 
 ```env
 DATABASE_URL=postgresql://postgres.[ref]:[password]@aws-0-[region].pooler.supabase.com:6543/postgres?pgbouncer=true
 ```
 
-Se a senha tiver caracteres especiais (`@`, `#`, `'`, etc.), use **URL encoding** na connection string.
+Senha com caracteres especiais → **URL-encode**. A API adiciona `sslmode=require` automaticamente.
 
-A API adiciona automaticamente `sslmode=require` e `pgbouncer=true` quando detecta Supabase pooler.
+**Não** use `SUPABASE_DATABASE_URL` (5432) como `DATABASE_URL` na Vercel.
 
-### Verificar após deploy
+---
 
-```bash
-curl https://SUA-API.vercel.app/health
-# {"status":"ok","db":"connected"}
-```
+## 2. Testar localmente (obrigatório antes do deploy)
 
-Swagger: `https://SUA-API.vercel.app/api`
-
-### Erros comuns
-
-| Sintoma | Causa | Correção |
-|---------|-------|----------|
-| `No Output Directory named 'public' found` | Framework = Other / `framework: null` | Preset **NestJS**; Output Directory vazio; ver `vercel.json` |
-| `FUNCTION_INVOCATION_FAILED` / 500 | `DATABASE_URL` ausente ou URL direct 5432 | Pooler 6543 + `pgbouncer=true` |
-| `ERR_REQUIRE_ESM` + `jwks-rsa` / `jose/dist/webapi` | `jwks-rsa@4` puxa `jose@6` (ESM); Vercel CJS não suporta | **Não usar `jwks-rsa`** — API usa `jose@5.10.0` direto + `overrides` no `package.json` |
-| `[TypeOrmModule] Unable to connect to the database` | `DATABASE_URL` errada ou senha sem URL-encode | Pooler 6543, user `postgres.[ref]`, ver logs `[database]` |
-| `FUNCTION_INVOCATION_FAILED` | `SUPABASE_URL` ausente | Adicionar no dashboard Vercel |
-| Build falha no install | pnpm vs npm | Usar `npm ci` (ver `vercel.json`) |
-| `db: disconnected` no `/health` | Pooler errado ou migrations não aplicadas | Rodar migrations no Supabase |
-| CORS no browser | `FRONTEND_URL` não bate com o domínio | Ajustar URL ou usar `*.vercel.app` (já permitido) |
-
-### Testar localmente (antes do deploy)
-
-Há três níveis — do mais rápido ao mais fiel à Vercel:
-
-#### A) Desenvolvimento normal
+### A) Dev normal
 
 ```bash
 cd dnd-api
 npm run start:dev
 npm run smoke:health
-# GET http://localhost:3000/health → {"status":"ok","db":"connected"}
 ```
 
-Usa `DATABASE_URL` do `.env` (Postgres local ou pooler Supabase).
+### B) Simular `VERCEL=1` + produção
 
-#### B) Simular produção (sem Vercel CLI)
-
-Útil para validar env de produção e conexão com pooler:
-
-```bash
-cd dnd-api
+```powershell
 npm run build
-
-# PowerShell — cole a DATABASE_URL do pooler Supabase (6543)
 $env:VERCEL = "1"
 $env:NODE_ENV = "production"
-$env:DATABASE_URL = "postgresql://postgres.[ref]:[senha]@....pooler.supabase.com:6543/postgres?pgbouncer=true"
+$env:DATABASE_URL = "postgresql://postgres.[ref]:...@....pooler.supabase.com:6543/postgres?pgbouncer=true"
 $env:SUPABASE_URL = "https://[ref].supabase.co"
-$env:FRONTEND_URL = "http://localhost:3001"
 node dist/main.js
-```
-
-Em outro terminal:
-
-```bash
+# outro terminal:
 npm run smoke:health
-# ou: npm run smoke:health -- https://sua-api.vercel.app
 ```
 
-Nos logs deve aparecer `[database] connecting host=....pooler.supabase.com port=6543 pooler=true`.
+Logs esperados: `[database] connecting host=....pooler.... port=6543 pooler=true`
 
-#### C) Runtime idêntico à Vercel (`vercel dev`)
+### C) `vercel dev` — runtime idêntico à Vercel (recomendado)
 
 ```bash
-npm i -g vercel   # CLI ≥ 48.4
 cd dnd-api
-vercel link       # primeira vez
-vercel env pull .env.vercel.local
-# Confira DATABASE_URL (pooler 6543) em .env.vercel.local
-vercel dev
+npm install
+
+# 1ª vez: linkar projeto (interativo)
+npx vercel link
+
+# Puxar env do dashboard (opcional)
+npx vercel env pull .env.vercel.local
+
+# Garantir DATABASE_URL no .env ou .env.vercel.local
+npm run vercel:dev
+# → http://localhost:3000
+
+# outro terminal:
 npm run smoke:health
 ```
 
-Referência: [jwks-rsa #507](https://github.com/auth0/node-jwks-rsa/issues/507) — `jwks-rsa@4` + `jose@6` quebra em CJS; por isso usamos **`jose@5.10.0` fixo** (campo `overrides` no `package.json`).
+**Smoke automatizado** (sobe `vercel dev`, testa `/health`, encerra):
 
-### Dev local simulando Vercel (resumo)
+```bash
+npm run vercel:smoke
+```
 
-Ver seção **B** ou **C** acima. O atalho `npm run vercel:dev` equivale a `vercel dev`.
+Requisitos: `.env` com `DATABASE_URL` válido; projeto linkado ou `vercel link` feito.
+
+### D) Após deploy
+
+```bash
+npm run smoke:health -- https://sua-api.vercel.app
+curl https://sua-api.vercel.app/classes?limit=1
+```
 
 ---
 
-## 2. Front (`dnd-front`)
+## 3. Erros comuns
 
-### Vercel — configuração do projeto
+| Sintoma | Causa | Correção |
+|---------|-------|----------|
+| `No Output Directory named 'public'` | Preset Other / `framework: null` | Preset **NestJS**, Output vazio |
+| `ERR_REQUIRE_ESM` + `jose` / `jwks-rsa` | Bundle CJS + pacote ESM | Stack atual: `jsonwebtoken` + `fetch` JWKS (sem `jose`) |
+| `The server does not support SSL` (teste local) | `VERCEL=1` + Postgres local | SSL só em URLs Supabase; use pooler 6543 na Vercel real |
+| `[TypeOrmModule] Unable to connect` | Pooler errado / senha / migrations | 6543, `postgres.[ref]`, encode, migrations Supabase |
+| `FUNCTION_INVOCATION_FAILED` | Boot falhou (env ou DB) | Logs → `[bootstrap] failed` ou `[database]` |
+| `db: disconnected` em `/health` | DB inacessível | Mesmo que acima |
 
-| Campo | Valor |
-|-------|-------|
-| **Root Directory** | `dnd-front` |
-| **Framework Preset** | Next.js |
-| **Install Command** | `pnpm install` (padrão) |
-| **Build Command** | `pnpm build` |
+---
 
-### Variáveis de ambiente
+## 4. Front (`dnd-front`)
 
 | Variável | Valor |
 |----------|-------|
-| `NEXT_PUBLIC_SUPABASE_URL` | Igual ao `SUPABASE_URL` da API |
-| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase → Settings → API |
-| `NEXT_PUBLIC_API_URL` | `https://SUA-API.vercel.app` |
+| `NEXT_PUBLIC_SUPABASE_URL` | = `SUPABASE_URL` |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Supabase → API |
+| `NEXT_PUBLIC_API_URL` | `https://sua-api.vercel.app` |
 
-### Supabase Auth — redirect URLs
+Root Directory: `dnd-front` · Framework: **Next.js**
 
-No dashboard Supabase → Authentication → URL Configuration:
-
-- **Site URL:** `https://seu-front.vercel.app`
-- **Redirect URLs:** `https://seu-front.vercel.app/**`, `http://localhost:3001/**`
-
-### Atualizar CORS na API
-
-Depois do deploy do front, defina `FRONTEND_URL` na API com a URL de produção do Next e redeploy a API.
+Detalhes: [`dnd-front/docs/DEPLOY.md`](../../dnd-front/docs/DEPLOY.md)
 
 ---
 
-## 3. Ordem recomendada
+## 5. Ordem de deploy
 
 ```text
-1. Migrations + seeds no Supabase (local, uma vez)
-2. Deploy dnd-api → testar GET /health
-3. Deploy dnd-front com NEXT_PUBLIC_API_URL apontando para a API
-4. Ajustar FRONTEND_URL na API + redirect URLs no Supabase
-5. Smoke: login → criar ficha → abrir /characters
-```
-
----
-
-## 4. Smoke test rápido
-
-```bash
-# API
-curl -s https://SUA-API.vercel.app/health
-curl -s https://SUA-API.vercel.app/classes?limit=1
-
-# Front (browser)
-# - /compendium carrega classes
-# - /login funciona
-# - /characters/new cria ficha (autenticado)
+1. Migrations + seeds Supabase
+2. npm run vercel:smoke  (local)
+3. Deploy API → smoke /health
+4. Deploy front → NEXT_PUBLIC_API_URL
+5. FRONTEND_URL na API + redirect URLs Supabase Auth
 ```
 
 ---
 
 ## Referências
 
-- [`infrastructure.md`](infrastructure.md) — diagrama e conexões
-- [`product-roadmap.md`](product-roadmap.md) — Fase 6
-- Skill Cursor: `.cursor/skills/nest-vercel-deploy/`
-- Vercel NestJS: https://vercel.com/docs/frameworks/backend/nestjs
+- [NestJS on Vercel](https://vercel.com/docs/frameworks/backend/nestjs)
+- [infrastructure.md](infrastructure.md)
+- Skill: `.cursor/skills/nest-vercel-deploy/`

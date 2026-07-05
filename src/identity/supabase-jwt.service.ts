@@ -1,16 +1,24 @@
+import { createPublicKey, type JsonWebKey } from 'node:crypto';
+
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import {
-  createRemoteJWKSet,
-  jwtVerify,
-  type JWTVerifyGetKey,
-  type JWTPayload,
-} from 'jose';
+import jwt from 'jsonwebtoken';
 import { AuthUser } from './auth-user';
+
+type JsonWebKeyWithKid = Record<string, unknown> & { kid?: string };
+
+type JwtPayload = jwt.JwtPayload & {
+  email?: string;
+};
 
 @Injectable()
 export class SupabaseJwtService {
-  private jwks?: JWTVerifyGetKey;
+  private static readonly JWKS_CACHE_MS = 600_000;
+
+  private readonly jwksCache = new Map<
+    string,
+    { keys: JsonWebKeyWithKid[]; fetchedAt: number }
+  >();
 
   constructor(private readonly config: ConfigService) {}
 
@@ -23,23 +31,59 @@ export class SupabaseJwtService {
     }
 
     try {
-      const { payload } = await jwtVerify(token, this.getJwks(supabaseUrl), {
-        issuer: `${supabaseUrl}/auth/v1`,
-        audience: 'authenticated',
+      const decoded = jwt.decode(token, { complete: true });
+      const kid = decoded?.header.kid;
+      if (!kid) {
+        throw new Error('JWT header missing kid');
+      }
+
+      const jwk = (await this.fetchJwks(supabaseUrl)).find(
+        (key) => key.kid === kid,
+      );
+      if (!jwk) {
+        throw new Error('JWKS key not found');
+      }
+
+      const publicKey = createPublicKey({
+        key: jwk as JsonWebKey,
+        format: 'jwk',
       });
+      const payload = jwt.verify(token, publicKey, {
+        audience: 'authenticated',
+        issuer: `${supabaseUrl}/auth/v1`,
+        algorithms: ['ES256', 'RS256'],
+      });
+
+      if (typeof payload === 'string') {
+        throw new Error('Unexpected JWT payload');
+      }
+
       return this.toAuthUser(payload);
     } catch {
       throw new UnauthorizedException('Invalid or expired token');
     }
   }
 
-  private getJwks(supabaseUrl: string): JWTVerifyGetKey {
-    if (!this.jwks) {
-      this.jwks = createRemoteJWKSet(
-        new URL(`${supabaseUrl}/auth/v1/.well-known/jwks.json`),
-      );
+  private async fetchJwks(supabaseUrl: string): Promise<JsonWebKeyWithKid[]> {
+    const cached = this.jwksCache.get(supabaseUrl);
+    if (
+      cached &&
+      Date.now() - cached.fetchedAt < SupabaseJwtService.JWKS_CACHE_MS
+    ) {
+      return cached.keys;
     }
-    return this.jwks;
+
+    const response = await fetch(
+      `${supabaseUrl}/auth/v1/.well-known/jwks.json`,
+    );
+    if (!response.ok) {
+      throw new Error(`JWKS fetch failed: ${response.status}`);
+    }
+
+    const body = (await response.json()) as { keys: JsonWebKeyWithKid[] };
+    const keys = body.keys ?? [];
+    this.jwksCache.set(supabaseUrl, { keys, fetchedAt: Date.now() });
+    return keys;
   }
 
   private normalizeSupabaseUrl(url?: string): string | undefined {
@@ -49,7 +93,7 @@ export class SupabaseJwtService {
     return url.trim().replace(/\/+$/, '');
   }
 
-  private toAuthUser(payload: JWTPayload): AuthUser {
+  private toAuthUser(payload: JwtPayload): AuthUser {
     const sub = payload.sub;
     if (!sub || typeof sub !== 'string') {
       throw new UnauthorizedException('Invalid token: missing subject');
