@@ -21,12 +21,14 @@ Guia para publicar **dnd-api** e **dnd-front** com Supabase já populado.
 | Campo | Valor |
 |-------|-------|
 | **Root Directory** | `dnd-api` (se o repo é `dnd-work`) |
-| **Framework Preset** | Other (zero-config Nest) |
+| **Framework Preset** | **NestJS** (detecção automática — não use "Other") |
+| **Output Directory** | **vazio** (não `public`, não `dist`) |
 | **Install Command** | `npm ci` (já em `vercel.json`) |
-| **Build Command** | `npm run build` |
+| **Build Command** | *(deixar em branco — Vercel detecta `src/main.ts`)* |
 | **Node.js** | 20.x |
 
-> **Importante:** o `dnd-api` usa **npm** (`package-lock.json`). Não use pnpm neste projeto.
+> **Importante:** o `dnd-api` usa **npm** (`package-lock.json`). Não use pnpm neste projeto.  
+> **Não** coloque `"framework": null` no `vercel.json` — isso faz a Vercel procurar pasta `public` e o build falha.
 
 ### Variáveis de ambiente (Production + Preview)
 
@@ -58,6 +60,7 @@ Swagger: `https://SUA-API.vercel.app/api`
 
 | Sintoma | Causa | Correção |
 |---------|-------|----------|
+| `No Output Directory named 'public' found` | Framework = Other / `framework: null` | Preset **NestJS**; Output Directory vazio; ver `vercel.json` |
 | `FUNCTION_INVOCATION_FAILED` / 500 | `DATABASE_URL` ausente ou URL direct 5432 | Pooler 6543 + `pgbouncer=true` |
 | `ERR_REQUIRE_ESM` / `require() of ES Module` | `jose` v6+ é ESM-only | Manter `jose@5` (CJS) — ver `package.json` |
 | `FUNCTION_INVOCATION_FAILED` | `SUPABASE_URL` ausente | Adicionar no dashboard Vercel |
