@@ -59,6 +59,7 @@ Swagger: `https://SUA-API.vercel.app/api`
 | Sintoma | Causa | Correção |
 |---------|-------|----------|
 | `FUNCTION_INVOCATION_FAILED` / 500 | `DATABASE_URL` ausente ou URL direct 5432 | Pooler 6543 + `pgbouncer=true` |
+| `ERR_REQUIRE_ESM` / `require() of ES Module` | `jose` v6+ é ESM-only | Manter `jose@5` (CJS) — ver `package.json` |
 | `FUNCTION_INVOCATION_FAILED` | `SUPABASE_URL` ausente | Adicionar no dashboard Vercel |
 | Build falha no install | pnpm vs npm | Usar `npm ci` (ver `vercel.json`) |
 | `db: disconnected` no `/health` | Pooler errado ou migrations não aplicadas | Rodar migrations no Supabase |
