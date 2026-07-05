@@ -66,21 +66,71 @@ Swagger: `https://SUA-API.vercel.app/api`
 |---------|-------|----------|
 | `No Output Directory named 'public' found` | Framework = Other / `framework: null` | Preset **NestJS**; Output Directory vazio; ver `vercel.json` |
 | `FUNCTION_INVOCATION_FAILED` / 500 | `DATABASE_URL` ausente ou URL direct 5432 | Pooler 6543 + `pgbouncer=true` |
-| `ERR_REQUIRE_ESM` / `require() of ES Module` | Pacote ESM no bundle | API usa `jsonwebtoken` + `jwks-rsa` — redeploy após pull |
+| `ERR_REQUIRE_ESM` + `jwks-rsa` / `jose/dist/webapi` | `jwks-rsa@4` puxa `jose@6` (ESM); Vercel CJS não suporta | **Não usar `jwks-rsa`** — API usa `jose@5.10.0` direto + `overrides` no `package.json` |
 | `[TypeOrmModule] Unable to connect to the database` | `DATABASE_URL` errada ou senha sem URL-encode | Pooler 6543, user `postgres.[ref]`, ver logs `[database]` |
 | `FUNCTION_INVOCATION_FAILED` | `SUPABASE_URL` ausente | Adicionar no dashboard Vercel |
 | Build falha no install | pnpm vs npm | Usar `npm ci` (ver `vercel.json`) |
 | `db: disconnected` no `/health` | Pooler errado ou migrations não aplicadas | Rodar migrations no Supabase |
 | CORS no browser | `FRONTEND_URL` não bate com o domínio | Ajustar URL ou usar `*.vercel.app` (já permitido) |
 
-### Dev local simulando Vercel
+### Testar localmente (antes do deploy)
+
+Há três níveis — do mais rápido ao mais fiel à Vercel:
+
+#### A) Desenvolvimento normal
+
+```bash
+cd dnd-api
+npm run start:dev
+npm run smoke:health
+# GET http://localhost:3000/health → {"status":"ok","db":"connected"}
+```
+
+Usa `DATABASE_URL` do `.env` (Postgres local ou pooler Supabase).
+
+#### B) Simular produção (sem Vercel CLI)
+
+Útil para validar env de produção e conexão com pooler:
+
+```bash
+cd dnd-api
+npm run build
+
+# PowerShell — cole a DATABASE_URL do pooler Supabase (6543)
+$env:VERCEL = "1"
+$env:NODE_ENV = "production"
+$env:DATABASE_URL = "postgresql://postgres.[ref]:[senha]@....pooler.supabase.com:6543/postgres?pgbouncer=true"
+$env:SUPABASE_URL = "https://[ref].supabase.co"
+$env:FRONTEND_URL = "http://localhost:3001"
+node dist/main.js
+```
+
+Em outro terminal:
+
+```bash
+npm run smoke:health
+# ou: npm run smoke:health -- https://sua-api.vercel.app
+```
+
+Nos logs deve aparecer `[database] connecting host=....pooler.supabase.com port=6543 pooler=true`.
+
+#### C) Runtime idêntico à Vercel (`vercel dev`)
 
 ```bash
 npm i -g vercel   # CLI ≥ 48.4
 cd dnd-api
-vercel env pull .env.local
+vercel link       # primeira vez
+vercel env pull .env.vercel.local
+# Confira DATABASE_URL (pooler 6543) em .env.vercel.local
 vercel dev
+npm run smoke:health
 ```
+
+Referência: [jwks-rsa #507](https://github.com/auth0/node-jwks-rsa/issues/507) — `jwks-rsa@4` + `jose@6` quebra em CJS; por isso usamos **`jose@5.10.0` fixo** (campo `overrides` no `package.json`).
+
+### Dev local simulando Vercel (resumo)
+
+Ver seção **B** ou **C** acima. O atalho `npm run vercel:dev` equivale a `vercel dev`.
 
 ---
 

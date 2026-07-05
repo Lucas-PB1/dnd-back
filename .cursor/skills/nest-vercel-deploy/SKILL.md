@@ -24,9 +24,10 @@ description: Deploy NestJS na Vercel — zero-config, serverless, diferenças vs
 
 - [x] `src/main.ts` com `bootstrap()` + `app.listen(process.env.PORT ?? 3000)`
 - [x] `reflect-metadata` importado em `main.ts`
+- [x] `jose@5.10.0` fixo — **sem** `jwks-rsa@4` (puxa `jose@6` ESM)
+- [x] `package.json` → `"overrides": { "jose": "5.10.0" }`
 - [x] `DATABASE_URL` com pooler Supabase (6543) + `?pgbouncer=true`
-- [x] TypeORM `prepareThreshold: 0` no pooler
-- [x] `vercel.json` sem `framework: null` (detecção NestJS automática)
-- [x] `validateDeployEnv()` — erro claro se env faltar
+- [x] `vercel.json` sem `framework: null`
+- [x] `npm run smoke:health` para testar `/health`
 - [ ] Env vars no dashboard Vercel
-- [ ] `vercel dev` testado localmente
+- [ ] `vercel dev` ou simulação B testada localmente
