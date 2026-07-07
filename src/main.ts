@@ -6,6 +6,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { corsConfig } from './config/cors.config';
+import { swaggerSetupOptions } from './config/swagger.config';
 import { validateDeployEnv } from './config/validate-env';
 
 async function bootstrap() {
@@ -31,7 +32,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api', app, document, swaggerSetupOptions());
 
   await app.listen(process.env.PORT ?? 3000);
 }

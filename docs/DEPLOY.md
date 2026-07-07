@@ -185,7 +185,7 @@ curl https://sua-api.vercel.app/classes?limit=1
 | `The server does not support SSL` (teste local) | `VERCEL=1` + Postgres local | SSL só em URLs Supabase; use pooler 6543 na Vercel real |
 | `[TypeOrmModule] Unable to connect` / TLS handshake | `sslmode=require` sem `uselibpqcompat` (pg v8+) | Código adiciona `uselibpqcompat=true` automaticamente; redeploy |
 | `FUNCTION_INVOCATION_FAILED` | Boot falhou (env ou DB) | Logs → `[bootstrap] failed` ou `[database]` |
-| `db: disconnected` em `/health` | DB inacessível | Mesmo que acima |
+| Swagger `/api` em branco (404 em `swagger-ui-*.js`) | Assets estáticos não existem no bundle Vercel | CDN em `swagger.config.ts` (já no código) |
 
 ---
 
