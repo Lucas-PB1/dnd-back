@@ -183,7 +183,7 @@ curl https://sua-api.vercel.app/classes?limit=1
 | `nest: command not found` / build exit 127 | `npm ci` sem devDeps (`NODE_ENV=production`) | `installCommand`: `npm ci --include=dev` |
 | `ERR_REQUIRE_ESM` + `jose` / `jwks-rsa` | Bundle CJS + pacote ESM | Stack atual: `jsonwebtoken` + `fetch` JWKS (sem `jose`) |
 | `The server does not support SSL` (teste local) | `VERCEL=1` + Postgres local | SSL só em URLs Supabase; use pooler 6543 na Vercel real |
-| `[TypeOrmModule] Unable to connect` | Pooler errado / senha / migrations | 6543, `postgres.[ref]`, encode, migrations Supabase |
+| `[TypeOrmModule] Unable to connect` / TLS handshake | `sslmode=require` sem `uselibpqcompat` (pg v8+) | Código adiciona `uselibpqcompat=true` automaticamente; redeploy |
 | `FUNCTION_INVOCATION_FAILED` | Boot falhou (env ou DB) | Logs → `[bootstrap] failed` ou `[database]` |
 | `db: disconnected` em `/health` | DB inacessível | Mesmo que acima |
 

@@ -27,6 +27,8 @@ export function normalizeDatabaseUrl(url: string): string {
     if (isSupabasePoolerUrl(normalized)) {
       normalized = ensureQueryParam(normalized, 'pgbouncer', 'true');
     }
+    // pg v8+ trata sslmode=require como verify-full; Supabase pooler precisa de compat libpq
+    normalized = ensureQueryParam(normalized, 'uselibpqcompat', 'true');
     normalized = ensureQueryParam(normalized, 'sslmode', 'require');
   }
 
@@ -72,6 +74,7 @@ export function databaseConfig(): TypeOrmModuleOptions {
       connectionTimeoutMillis: 20_000,
       idleTimeoutMillis: 5_000,
       keepAlive: false,
+      ...(useSsl ? { ssl: { rejectUnauthorized: false } } : {}),
       ...(usePooler
         ? {
             prepareThreshold: 0,
