@@ -3,6 +3,8 @@ dist/
 *.pdf
 .env
 .env.local
+.env.vercel
+.env.vercel.local
 .vercel
 
 .vercel

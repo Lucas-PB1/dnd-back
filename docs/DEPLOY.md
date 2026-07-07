@@ -80,7 +80,7 @@ Isso evita `ERR_REQUIRE_ESM` documentado em [jwks-rsa#507](https://github.com/au
 | **Framework Preset** | **NestJS** |
 | **Output Directory** | *(vazio)* |
 | **Build Command** | *(vazio — detecção automática)* |
-| **Install Command** | `npm ci` (`vercel.json`) |
+| **Install Command** | `npm ci --include=dev` (`vercel.json`) — inclui `@nestjs/cli` e `typescript` no build |
 | **Node.js** | 20.x |
 
 `vercel.json` mínimo:
@@ -88,7 +88,7 @@ Isso evita `ERR_REQUIRE_ESM` documentado em [jwks-rsa#507](https://github.com/au
 ```json
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "installCommand": "npm ci",
+  "installCommand": "npm ci --include=dev",
   "regions": ["gru1"]
 }
 ```
@@ -180,7 +180,7 @@ curl https://sua-api.vercel.app/classes?limit=1
 
 | Sintoma | Causa | Correção |
 |---------|-------|----------|
-| `No Output Directory named 'public'` | Preset Other / `framework: null` | Preset **NestJS**, Output vazio |
+| `nest: command not found` / build exit 127 | `npm ci` sem devDeps (`NODE_ENV=production`) | `installCommand`: `npm ci --include=dev` |
 | `ERR_REQUIRE_ESM` + `jose` / `jwks-rsa` | Bundle CJS + pacote ESM | Stack atual: `jsonwebtoken` + `fetch` JWKS (sem `jose`) |
 | `The server does not support SSL` (teste local) | `VERCEL=1` + Postgres local | SSL só em URLs Supabase; use pooler 6543 na Vercel real |
 | `[TypeOrmModule] Unable to connect` | Pooler errado / senha / migrations | 6543, `postgres.[ref]`, encode, migrations Supabase |
