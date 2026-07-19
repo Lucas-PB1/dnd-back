@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbArmor } from '../../../entities/views/v-phb-armor.entity';
-import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
+import { PaginatedResponseDto } from '../../../common/dto/pagination.dto';
 import { ArmorResponseDto } from '../dto/armor-response.dto';
 import { EquipmentMapper } from '../equipment.mapper';
 
@@ -14,8 +14,39 @@ export class FindArmorQuery {
     private readonly mapper: EquipmentMapper,
   ) {}
 
-  async execute(page = 1, limit = 20): Promise<PaginatedResponseDto<ArmorResponseDto>> {
-    const rows = await this.armorRepo.find({ order: { itemName: 'ASC' } });
-    return paginate(rows.map((row) => this.mapper.toArmorDto(row)), page, limit);
+  async execute(
+    page = 1,
+    limit = 20,
+    q?: string,
+  ): Promise<PaginatedResponseDto<ArmorResponseDto>> {
+    const safePage = Math.max(1, page);
+    const safeLimit = Math.min(100, Math.max(1, limit));
+
+    const qb = this.armorRepo
+      .createQueryBuilder('armor')
+      .orderBy('armor.itemName', 'ASC');
+
+    const term = q?.trim();
+    if (term) {
+      qb.andWhere(
+        '(armor.itemName ILIKE :q OR armor.itemSlug ILIKE :q OR armor.categoryName ILIKE :q OR armor.categorySlug ILIKE :q)',
+        { q: `%${term}%` },
+      );
+    }
+
+    qb.skip((safePage - 1) * safeLimit).take(safeLimit);
+
+    const [rows, total] = await qb.getManyAndCount();
+    const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
+
+    return {
+      data: rows.map((row) => this.mapper.toArmorDto(row)),
+      meta: {
+        page: safePage,
+        limit: safeLimit,
+        total,
+        totalPages,
+      },
+    };
   }
 }

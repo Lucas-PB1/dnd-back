@@ -6,7 +6,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { ArmorQueryDto } from './dto/armor-query.dto';
 import { FindArmorQuery } from './queries/find-armor.query';
 import { FindArmorBySlugQuery } from './queries/find-armor-by-slug.query';
 import { ArmorResponseDto } from './dto/armor-response.dto';
@@ -20,10 +20,10 @@ export class ArmorController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'List PHB armor (paginated)' })
+  @ApiOperation({ summary: 'List PHB armor (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated armor list' })
-  findAll(@Query() query: PaginationQueryDto) {
-    return this.findArmor.execute(query.page, query.limit);
+  findAll(@Query() query: ArmorQueryDto) {
+    return this.findArmor.execute(query.page, query.limit, query.q);
   }
 
   @Get(':slug')

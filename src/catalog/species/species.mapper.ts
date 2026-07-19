@@ -12,6 +12,8 @@ export class SpeciesMapper {
     return {
       slug: row.slug,
       name: row.name,
+      tagline: row.tagline,
+      summary: row.summary,
       creatureType: row.creatureType,
       size: row.size,
       speed: row.speed,

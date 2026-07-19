@@ -29,7 +29,10 @@ describe('Items queries', () => {
     const qb = {
       orderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([sample]),
+      getManyAndCount: jest.fn().mockResolvedValue([[sample], 1]),
     };
     repo = {
       findOne: jest.fn(),

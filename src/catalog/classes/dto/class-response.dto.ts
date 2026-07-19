@@ -7,6 +7,17 @@ export class ClassResponseDto {
   @ApiProperty({ example: 'Guerreiro' })
   name!: string;
 
+  @ApiPropertyOptional({ example: 'Mestre de armas e armaduras' })
+  tagline!: string | null;
+
+  @ApiPropertyOptional({ example: 'Domine todas as armas e armaduras.' })
+  summary!: string | null;
+
+  @ApiPropertyOptional({
+    description: 'Texto introdutório completo da classe (PHB)',
+  })
+  description!: string | null;
+
   @ApiProperty({ example: 'D10' })
   hitDie!: string;
 

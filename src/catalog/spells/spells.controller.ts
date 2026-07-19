@@ -6,7 +6,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { SpellsQueryDto } from './dto/spells-query.dto';
 import { FindSpellsQuery } from './queries/find-spells.query';
 import { FindSpellBySlugQuery } from './queries/find-spell-by-slug.query';
 import { SpellResponseDto } from './dto/spell-response.dto';
@@ -20,10 +20,10 @@ export class SpellsController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'List PHB spells (paginated)' })
+  @ApiOperation({ summary: 'List PHB spells (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated spell list' })
-  findAll(@Query() query: PaginationQueryDto) {
-    return this.findSpells.execute(query.page, query.limit);
+  findAll(@Query() query: SpellsQueryDto) {
+    return this.findSpells.execute(query.page, query.limit, query.q);
   }
 
   @Get(':slug')

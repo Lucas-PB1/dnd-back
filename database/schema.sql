@@ -284,6 +284,8 @@ CREATE TABLE rpg.phb_species (
   id BIGSERIAL PRIMARY KEY,
   slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
+  tagline TEXT,
+  summary TEXT,
   creature_type TEXT NOT NULL,
   size TEXT NOT NULL,
   speed TEXT NOT NULL,
@@ -317,6 +319,8 @@ CREATE TABLE rpg.phb_background (
   id BIGSERIAL PRIMARY KEY,
   slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
+  tagline TEXT,
+  summary TEXT,
   description TEXT,
   feat_id BIGINT REFERENCES rpg.phb_feat(id),
   source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
@@ -794,18 +798,52 @@ CREATE OR REPLACE VIEW rpg.v_phb_background AS
 SELECT
   b.slug AS background_slug,
   b.name AS background_name,
+  b.tagline,
+  b.summary,
+  b.description,
   b.equipment_gold_option,
   sc.chapter AS source_chapter,
   sc.chapter_title AS source_chapter_title,
   e.slug AS edition_slug,
-  array_agg(ab.slug ORDER BY bao.sort_order) AS ability_option_slugs,
-  array_agg(ab.name ORDER BY bao.sort_order) AS ability_option_names
+  array_agg(ab.slug ORDER BY bao.sort_order)
+    FILTER (WHERE ab.slug IS NOT NULL) AS ability_option_slugs,
+  array_agg(ab.name ORDER BY bao.sort_order)
+    FILTER (WHERE ab.name IS NOT NULL) AS ability_option_names,
+  f.slug AS feat_slug,
+  f.name AS feat_name,
+  b.tool_proficiency_kind,
+  b.tool_proficiency_description,
+  ti.slug AS tool_item_slug,
+  ti.name AS tool_item_name,
+  tc.slug AS tool_category_slug,
+  tc.name AS tool_category_name
 FROM rpg.phb_background b
 LEFT JOIN rpg.phb_source_citation sc ON sc.id = b.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id
+LEFT JOIN rpg.phb_feat f ON f.id = b.feat_id
+LEFT JOIN rpg.phb_item ti ON ti.id = b.tool_item_id
+LEFT JOIN rpg.phb_tool_category tc ON tc.id = b.tool_category_id
 LEFT JOIN rpg.phb_background_ability_option bao ON bao.background_id = b.id
 LEFT JOIN rpg.phb_ability ab ON ab.id = bao.ability_id
-GROUP BY b.id, b.slug, b.name, b.equipment_gold_option, sc.chapter, sc.chapter_title, e.slug;
+GROUP BY
+  b.id,
+  b.slug,
+  b.name,
+  b.tagline,
+  b.summary,
+  b.description,
+  b.equipment_gold_option,
+  sc.chapter,
+  sc.chapter_title,
+  e.slug,
+  f.slug,
+  f.name,
+  b.tool_proficiency_kind,
+  b.tool_proficiency_description,
+  ti.slug,
+  ti.name,
+  tc.slug,
+  tc.name;
 
 CREATE OR REPLACE VIEW rpg.v_phb_background_equipment AS
 SELECT
@@ -828,6 +866,9 @@ CREATE OR REPLACE VIEW rpg.v_phb_class AS
 SELECT
   c.slug AS class_slug,
   c.name AS class_name,
+  c.tagline,
+  c.summary,
+  c.description,
   c.primary_ability_label,
   c.primary_ability_operator,
   hd.label AS hit_die,
@@ -844,7 +885,8 @@ LEFT JOIN rpg.phb_source_citation sc ON sc.id = c.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id
 LEFT JOIN rpg.phb_class_primary_ability cpa ON cpa.class_id = c.id
 LEFT JOIN rpg.phb_ability pa ON pa.id = cpa.ability_id
-GROUP BY c.id, c.slug, c.name, c.primary_ability_label, c.primary_ability_operator,
+GROUP BY c.id, c.slug, c.name, c.tagline, c.summary, c.description,
+  c.primary_ability_label, c.primary_ability_operator,
   hd.label, c.hp_level1_die_value, c.hp_fixed_per_level, c.skill_choice_count,
   c.skill_choice_from, sc.chapter, e.slug;
 

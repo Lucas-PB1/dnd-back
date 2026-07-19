@@ -10,7 +10,9 @@ import { FindSpellBySlugQuery } from './queries/find-spell-by-slug.query';
 describe('Spells queries', () => {
   let findSpells: FindSpellsQuery;
   let findSpellBySlug: FindSpellBySlugQuery;
-  let repo: jest.Mocked<Pick<Repository<VPhbSpell>, 'find' | 'findOne'>>;
+  let repo: jest.Mocked<
+    Pick<Repository<VPhbSpell>, 'findOne' | 'createQueryBuilder'>
+  >;
 
   const sample: VPhbSpell = {
     slug: 'alarme',
@@ -35,8 +37,22 @@ describe('Spells queries', () => {
     editionSlug: 'phb-2024-pt',
   };
 
+  function mockQb(rows: VPhbSpell[], total: number) {
+    return {
+      orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      take: jest.fn().mockReturnThis(),
+      getManyAndCount: jest.fn().mockResolvedValue([rows, total]),
+    };
+  }
+
   beforeEach(async () => {
-    repo = { find: jest.fn(), findOne: jest.fn() };
+    repo = {
+      findOne: jest.fn(),
+      createQueryBuilder: jest.fn(),
+    };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SpellsMapper,
@@ -51,10 +67,17 @@ describe('Spells queries', () => {
   });
 
   it('findAll returns paginated data', async () => {
-    repo.find.mockResolvedValue([sample]);
+    repo.createQueryBuilder.mockReturnValue(mockQb([sample], 1) as never);
     const result = await findSpells.execute(1, 20);
     expect(result.data[0].slug).toBe('alarme');
     expect(result.meta.total).toBe(1);
+  });
+
+  it('findAll applies search filter', async () => {
+    const qb = mockQb([sample], 1);
+    repo.createQueryBuilder.mockReturnValue(qb as never);
+    await findSpells.execute(1, 20, 'alarme');
+    expect(qb.andWhere).toHaveBeenCalled();
   });
 
   it('findBySlug returns dto', async () => {

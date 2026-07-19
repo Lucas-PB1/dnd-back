@@ -41,6 +41,9 @@ describe('Classes queries', () => {
   const sample: VPhbClass = {
     classSlug: 'fighter',
     className: 'Guerreiro',
+    tagline: 'Mestre de armas e armaduras',
+    summary: 'Domine todas as armas e armaduras.',
+    description: null,
     hitDie: 'D10',
     primaryAbilityLabel: null,
     primaryAbilityOperator: null,

@@ -6,7 +6,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { WeaponsQueryDto } from './dto/weapons-query.dto';
 import { FindWeaponsQuery } from './queries/find-weapons.query';
 import { FindWeaponBySlugQuery } from './queries/find-weapon-by-slug.query';
 import { WeaponResponseDto } from './dto/weapon-response.dto';
@@ -20,10 +20,10 @@ export class WeaponsController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'List PHB weapons (paginated)' })
+  @ApiOperation({ summary: 'List PHB weapons (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated weapon list' })
-  findAll(@Query() query: PaginationQueryDto) {
-    return this.findWeapons.execute(query.page, query.limit);
+  findAll(@Query() query: WeaponsQueryDto) {
+    return this.findWeapons.execute(query.page, query.limit, query.q);
   }
 
   @Get(':slug')

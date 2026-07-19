@@ -7,6 +7,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto, PaginatedResponseDto } from '../../common/dto/pagination.dto';
+import { FeatsQueryDto } from './dto/feats-query.dto';
 import { FindFeatsQuery } from './queries/find-feats.query';
 import { FindFeatBySlugQuery } from './queries/find-feat-by-slug.query';
 import { FindFeatOptionsQuery } from './queries/find-feat-options.query';
@@ -23,10 +24,10 @@ export class FeatsController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'List PHB feats (paginated)' })
+  @ApiOperation({ summary: 'List PHB feats (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated feat list' })
-  findAll(@Query() query: PaginationQueryDto) {
-    return this.findFeats.execute(query.page, query.limit);
+  findAll(@Query() query: FeatsQueryDto) {
+    return this.findFeats.execute(query.page, query.limit, query.q);
   }
 
   @Get(':slug')

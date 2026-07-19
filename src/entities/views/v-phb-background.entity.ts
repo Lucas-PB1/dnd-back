@@ -8,6 +8,15 @@ export class VPhbBackground {
   @ViewColumn({ name: 'background_name' })
   backgroundName!: string;
 
+  @ViewColumn({ name: 'tagline' })
+  tagline!: string | null;
+
+  @ViewColumn({ name: 'summary' })
+  summary!: string | null;
+
+  @ViewColumn({ name: 'description' })
+  description!: string | null;
+
   @ViewColumn({ name: 'equipment_gold_option' })
   equipmentGoldOption!: number | null;
 

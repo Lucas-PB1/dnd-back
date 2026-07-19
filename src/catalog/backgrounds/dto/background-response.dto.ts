@@ -7,6 +7,19 @@ export class BackgroundResponseDto {
   @ApiProperty({ example: 'Acólito' })
   name!: string;
 
+  @ApiPropertyOptional({ example: 'Serviço no templo' })
+  tagline!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Devoto de um culto que aprendeu a canalizar um pouco do poder divino.',
+  })
+  summary!: string | null;
+
+  @ApiPropertyOptional({
+    description: 'Texto introdutório do antecedente (PHB)',
+  })
+  description!: string | null;
+
   @ApiPropertyOptional()
   equipmentGoldOption!: number | null;
 

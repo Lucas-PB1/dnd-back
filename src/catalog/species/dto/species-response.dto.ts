@@ -7,6 +7,14 @@ export class SpeciesResponseDto {
   @ApiProperty({ example: 'Elfo' })
   name!: string;
 
+  @ApiPropertyOptional({ example: 'Filhos de Corellon e de Faéria' })
+  tagline!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Longevidade, transe e magia moldada pelo ambiente.',
+  })
+  summary!: string | null;
+
   @ApiProperty({ example: 'Humanoide' })
   creatureType!: string;
 

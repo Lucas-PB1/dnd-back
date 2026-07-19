@@ -23,6 +23,9 @@ describe('Backgrounds queries', () => {
   const sample: VPhbBackground = {
     backgroundSlug: 'acolyte',
     backgroundName: 'Acólito',
+    tagline: 'Serviço no templo',
+    summary: 'Devoto de um culto que aprendeu a canalizar um pouco do poder divino.',
+    description: 'Você se dedicou ao serviço em um templo…',
     equipmentGoldOption: 50,
     sourceChapter: 4,
     sourceChapterTitle: null,

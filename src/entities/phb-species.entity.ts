@@ -11,6 +11,12 @@ export class PhbSpecies {
   @Column()
   name!: string;
 
+  @Column({ type: 'text', nullable: true })
+  tagline!: string | null;
+
+  @Column({ type: 'text', nullable: true })
+  summary!: string | null;
+
   @Column({ name: 'creature_type' })
   creatureType!: string;
 

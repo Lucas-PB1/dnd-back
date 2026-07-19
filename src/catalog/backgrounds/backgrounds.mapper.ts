@@ -14,6 +14,9 @@ export class BackgroundsMapper {
     return {
       slug: row.backgroundSlug,
       name: row.backgroundName,
+      tagline: row.tagline,
+      summary: row.summary,
+      description: row.description,
       equipmentGoldOption: row.equipmentGoldOption,
       abilityOptionSlugs: row.abilityOptionSlugs ?? [],
       abilityOptionNames: row.abilityOptionNames ?? [],

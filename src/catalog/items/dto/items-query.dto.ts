@@ -8,7 +8,11 @@ export class ItemsQueryDto extends PaginationQueryDto {
   @IsString()
   q?: string;
 
-  @ApiPropertyOptional({ example: 'weapon', description: 'Filter by item_type' })
+  @ApiPropertyOptional({
+    example: 'weapon',
+    description:
+      'Filter by item_type. Comma-separated for multiple (e.g. gear,tool,focus,other)',
+  })
   @IsOptional()
   @IsString()
   itemType?: string;

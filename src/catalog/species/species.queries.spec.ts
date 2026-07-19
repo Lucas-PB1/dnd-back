@@ -20,6 +20,8 @@ describe('Species queries', () => {
     id: '1',
     slug: 'dwarf',
     name: 'Anão',
+    tagline: 'Filhos da forja e da pedra',
+    summary: 'Afinidade por metal, vida subterrânea e resiliência de montanha.',
     creatureType: 'Humanoide',
     size: 'Médio',
     speed: '9 metros',

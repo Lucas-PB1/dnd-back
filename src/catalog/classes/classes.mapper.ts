@@ -20,6 +20,9 @@ export class ClassesMapper {
     return {
       slug: row.classSlug,
       name: row.className,
+      tagline: row.tagline,
+      summary: row.summary,
+      description: row.description,
       hitDie: row.hitDie,
       primaryAbilityLabel: row.primaryAbilityLabel,
       primaryAbilityOperator: row.primaryAbilityOperator,

@@ -7,6 +7,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { BackgroundsQueryDto } from './dto/backgrounds-query.dto';
 import { FindBackgroundsQuery } from './queries/find-backgrounds.query';
 import { FindBackgroundBySlugQuery } from './queries/find-background-by-slug.query';
 import { FindBackgroundEquipmentQuery } from './queries/find-background-equipment.query';
@@ -26,10 +27,10 @@ export class BackgroundsController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'List PHB backgrounds (paginated)' })
+  @ApiOperation({ summary: 'List PHB backgrounds (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated backgrounds list' })
-  findAll(@Query() query: PaginationQueryDto) {
-    return this.findBackgrounds.execute(query.page, query.limit);
+  findAll(@Query() query: BackgroundsQueryDto) {
+    return this.findBackgrounds.execute(query.page, query.limit, query.q);
   }
 
   @Get(':slug/equipment')

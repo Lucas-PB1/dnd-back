@@ -8,6 +8,15 @@ export class VPhbClass {
   @ViewColumn({ name: 'class_name' })
   className!: string;
 
+  @ViewColumn({ name: 'tagline' })
+  tagline!: string | null;
+
+  @ViewColumn({ name: 'summary' })
+  summary!: string | null;
+
+  @ViewColumn({ name: 'description' })
+  description!: string | null;
+
   @ViewColumn({ name: 'primary_ability_label' })
   primaryAbilityLabel!: string | null;
 
