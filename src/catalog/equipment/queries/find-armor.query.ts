@@ -34,15 +34,19 @@ export class FindArmorQuery {
       );
     }
 
-    qb.skip((safePage - 1) * safeLimit).take(safeLimit);
-
-    const [rows, total] = await qb.getManyAndCount();
+    const total = await qb.getCount();
     const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
+    const currentPage = Math.min(safePage, totalPages);
+
+    const rows = await qb
+      .skip((currentPage - 1) * safeLimit)
+      .take(safeLimit)
+      .getMany();
 
     return {
       data: rows.map((row) => this.mapper.toArmorDto(row)),
       meta: {
-        page: safePage,
+        page: currentPage,
         limit: safeLimit,
         total,
         totalPages,

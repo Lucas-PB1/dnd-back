@@ -46,16 +46,20 @@ export class FindWeaponsQuery {
       );
     }
 
-    qb.skip((safePage - 1) * safeLimit).take(safeLimit);
-
-    const [rows, total] = await qb.getManyAndCount();
-    const data = await this.mapRows(rows);
+    const total = await qb.getCount();
     const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
+    const currentPage = Math.min(safePage, totalPages);
+
+    const rows = await qb
+      .skip((currentPage - 1) * safeLimit)
+      .take(safeLimit)
+      .getMany();
+    const data = await this.mapRows(rows);
 
     return {
       data,
       meta: {
-        page: safePage,
+        page: currentPage,
         limit: safeLimit,
         total,
         totalPages,
