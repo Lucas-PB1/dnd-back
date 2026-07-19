@@ -28,4 +28,10 @@ export class VPhbArmor {
 
   @ViewColumn({ name: 'stealth_disadvantage' })
   stealthDisadvantage!: boolean;
+
+  @ViewColumn({ name: 'cost_text' })
+  costText!: string | null;
+
+  @ViewColumn({ name: 'weight' })
+  weight!: string | null;
 }

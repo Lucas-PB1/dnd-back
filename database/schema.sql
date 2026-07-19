@@ -789,7 +789,9 @@ SELECT
   a.ac_base,
   a.ac_formula,
   a.strength_req,
-  a.stealth_disadvantage
+  a.stealth_disadvantage,
+  i.cost->>'text' AS cost_text,
+  i.weight
 FROM rpg.phb_armor a
 JOIN rpg.phb_item i ON i.id = a.item_id
 JOIN rpg.phb_armor_category c ON c.id = a.category_id;

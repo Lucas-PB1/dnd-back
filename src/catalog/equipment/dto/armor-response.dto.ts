@@ -27,4 +27,10 @@ export class ArmorResponseDto {
 
   @ApiProperty()
   stealthDisadvantage!: boolean;
+
+  @ApiPropertyOptional({ example: '10 PO' })
+  costText!: string | null;
+
+  @ApiPropertyOptional({ example: '5 kg' })
+  weight!: string | null;
 }

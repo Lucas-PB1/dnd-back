@@ -1,5 +1,16 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
+export class WeaponTraitDto {
+  @ApiProperty({ example: 'finesse' })
+  slug!: string;
+
+  @ApiProperty({ example: 'Acuidade' })
+  name!: string;
+
+  @ApiProperty()
+  description!: string;
+}
+
 export class WeaponResponseDto {
   @ApiProperty({ example: 'longsword' })
   slug!: string;
@@ -7,14 +18,17 @@ export class WeaponResponseDto {
   @ApiProperty({ example: 'Espada Longa' })
   name!: string;
 
-  @ApiProperty({ example: 'martial_melee' })
+  @ApiProperty({ example: 'martial' })
   category!: string;
 
   @ApiPropertyOptional({ example: '1d8' })
   damage!: string | null;
 
-  @ApiPropertyOptional({ example: 'cortante' })
+  @ApiPropertyOptional({ example: 'Cortante' })
   damageType!: string | null;
+
+  @ApiPropertyOptional({ example: '1d10', description: 'Damage when used two-handed (Versatile)' })
+  versatileDamage!: string | null;
 
   @ApiPropertyOptional()
   cost!: Record<string, unknown> | null;
@@ -22,6 +36,12 @@ export class WeaponResponseDto {
   @ApiPropertyOptional()
   weight!: string | null;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({ description: 'Legacy raw properties jsonb' })
   properties!: Record<string, unknown> | null;
+
+  @ApiProperty({ type: [WeaponTraitDto] })
+  propertyDetails!: WeaponTraitDto[];
+
+  @ApiPropertyOptional({ type: WeaponTraitDto })
+  mastery!: WeaponTraitDto | null;
 }

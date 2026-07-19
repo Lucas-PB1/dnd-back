@@ -7,9 +7,9 @@ Documento **vivo** do caminho até app consumidor 100% baseado na API.
 | **dnd-api** | Postgres PHB + API NestJS + regras de ficha |
 | **dnd-front** | Next.js — compêndio, wizard, ficha, mesa |
 
-Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`game-advanced-plan.md`](game-advanced-plan.md) (mesa/inventário) · [`../dnd-front/docs/CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-PLAN.md) (ficha front)
+Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`equipment-catalog-plan.md`](equipment-catalog-plan.md) (itens/armas/armaduras) · [`game-advanced-plan.md`](game-advanced-plan.md) (mesa/inventário) · [`../dnd-front/docs/CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-PLAN.md) (ficha front)
 
-**Última revisão:** 2026-07-04
+**Última revisão:** 2026-07-19
 
 ---
 
@@ -24,7 +24,7 @@ Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`game-advanced
 | Game — ficha PHB (API) | **100%** | CRUD + escolhas + `characterFeats` / `featOptions` |
 | Game — mesa 7A–7C (API) | **100%** | level-up, inventário, state, cast, rest |
 | **dnd-front** — MVP ficha | **~95%** | Wizard PHB, ficha leitura/edição, mesa |
-| **dnd-front** — compêndio | **~70%** | classes, espécies, antecedentes, magias |
+| **dnd-front** — compêndio | **~85%** | + talentos, equipamento; ver [`equipment-catalog-plan.md`](equipment-catalog-plan.md) p/ gaps mecânicos |
 | Deploy produção (Fase 6) | **em andamento** | Ver [`DEPLOY.md`](DEPLOY.md) |
 | Campanha / combate (7D) | **0%** | Fora do escopo atual |
 

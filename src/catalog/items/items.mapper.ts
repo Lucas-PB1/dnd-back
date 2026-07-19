@@ -12,6 +12,8 @@ export class ItemsMapper {
       itemType: row.itemType,
       costText: cost?.text ?? null,
       weight: row.weight,
+      description: row.description,
+      properties: row.properties,
     };
   }
 }

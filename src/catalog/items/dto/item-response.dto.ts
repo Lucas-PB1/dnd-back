@@ -15,4 +15,12 @@ export class ItemResponseDto {
 
   @ApiPropertyOptional({ example: '1,5 kg' })
   weight!: string | null;
+
+  @ApiPropertyOptional()
+  description!: string | null;
+
+  @ApiPropertyOptional({
+    description: 'Type-specific JSON (tools: attribute/crafting; weapons: ids; etc.)',
+  })
+  properties!: Record<string, unknown> | null;
 }
