@@ -8,6 +8,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { ClassesQueryDto } from './dto/classes-query.dto';
 import { FindClassesQuery } from './queries/find-classes.query';
 import { FindClassBySlugQuery } from './queries/find-class-by-slug.query';
 import { FindClassSubclassesQuery } from './queries/find-class-subclasses.query';
@@ -35,10 +36,10 @@ export class ClassesController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'List PHB classes (paginated)' })
+  @ApiOperation({ summary: 'List PHB classes (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated class list' })
-  findAll(@Query() query: PaginationQueryDto) {
-    return this.findClasses.execute(query.page, query.limit);
+  findAll(@Query() query: ClassesQueryDto) {
+    return this.findClasses.execute(query.page, query.limit, query.q);
   }
 
   @Get(':slug/subclasses')

@@ -10,4 +10,12 @@ export class WeaponsQueryDto extends PaginationQueryDto {
   @IsOptional()
   @IsString()
   q?: string;
+
+  @ApiPropertyOptional({
+    description: 'Weapon category (simple | martial)',
+    example: 'simple',
+  })
+  @IsOptional()
+  @IsString()
+  category?: string;
 }

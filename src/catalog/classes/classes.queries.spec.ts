@@ -29,7 +29,9 @@ describe('Classes queries', () => {
   let findClassEquipment: FindClassEquipmentQuery;
   let findClassSkills: FindClassSkillsQuery;
   let findClassFeatures: FindClassFeaturesQuery;
-  let classesRepo: jest.Mocked<Pick<Repository<VPhbClass>, 'find' | 'findOne'>>;
+  let classesRepo: jest.Mocked<
+    Pick<Repository<VPhbClass>, 'find' | 'findOne' | 'createQueryBuilder'>
+  >;
   let subclassesRepo: jest.Mocked<Pick<Repository<VPhbSubclass>, 'find'>>;
   let spellsByClassRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'find'>>;
   let spellSlotsRepo: jest.Mocked<Pick<Repository<VClassSpellSlots>, 'find'>>;
@@ -109,7 +111,19 @@ describe('Classes queries', () => {
   };
 
   beforeEach(async () => {
-    classesRepo = { find: jest.fn(), findOne: jest.fn() };
+    const qb = {
+      orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      take: jest.fn().mockReturnThis(),
+      getManyAndCount: jest.fn().mockResolvedValue([[sample], 1]),
+    };
+    classesRepo = {
+      find: jest.fn(),
+      findOne: jest.fn(),
+      createQueryBuilder: jest.fn().mockReturnValue(qb as never),
+    };
     subclassesRepo = { find: jest.fn() };
     spellsByClassRepo = { find: jest.fn() };
     spellSlotsRepo = { find: jest.fn() };
@@ -156,9 +170,22 @@ describe('Classes queries', () => {
   });
 
   it('findAll returns paginated data', async () => {
-    classesRepo.find.mockResolvedValue([sample]);
     const result = await findClasses.execute(1, 20);
     expect(result.data[0].slug).toBe('fighter');
+  });
+
+  it('findAll applies search filter', async () => {
+    const qb = {
+      orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
+      skip: jest.fn().mockReturnThis(),
+      take: jest.fn().mockReturnThis(),
+      getManyAndCount: jest.fn().mockResolvedValue([[sample], 1]),
+    };
+    classesRepo.createQueryBuilder.mockReturnValue(qb as never);
+    await findClasses.execute(1, 20, 'fighter');
+    expect(qb.andWhere).toHaveBeenCalled();
   });
 
   it('findBySlug throws NotFoundException', async () => {

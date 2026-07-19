@@ -7,6 +7,7 @@ import { PhbAbilityGenerationMethod } from '../../entities/phb-ability-generatio
 import { ReferenceMapper } from './reference.mapper';
 import { FindAlignmentsQuery } from './queries/find-alignments.query';
 import { FindLanguagesQuery } from './queries/find-languages.query';
+import { FindLanguageBySlugQuery } from './queries/find-language-by-slug.query';
 import { FindCharacterLevelsQuery } from './queries/find-character-levels.query';
 import { FindAbilityGenerationMethodsQuery } from './queries/find-ability-generation-methods.query';
 import { AlignmentsController } from './alignments.controller';
@@ -33,6 +34,7 @@ import { AbilityGenerationMethodsController } from './ability-generation-methods
     ReferenceMapper,
     FindAlignmentsQuery,
     FindLanguagesQuery,
+    FindLanguageBySlugQuery,
     FindCharacterLevelsQuery,
     FindAbilityGenerationMethodsQuery,
   ],

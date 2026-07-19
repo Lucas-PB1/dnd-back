@@ -29,6 +29,7 @@ export class FindWeaponsQuery {
     page = 1,
     limit = 20,
     q?: string,
+    category?: string,
   ): Promise<PaginatedResponseDto<WeaponResponseDto>> {
     const safePage = Math.max(1, page);
     const safeLimit = Math.min(100, Math.max(1, limit));
@@ -44,6 +45,11 @@ export class FindWeaponsQuery {
         '(item.name ILIKE :q OR item.slug ILIKE :q OR weapon.category::text ILIKE :q OR COALESCE(weapon.damageType, \'\') ILIKE :q OR COALESCE(weapon.damage, \'\') ILIKE :q)',
         { q: `%${term}%` },
       );
+    }
+
+    const categoryValue = category?.trim();
+    if (categoryValue) {
+      qb.andWhere('weapon.category = :category', { category: categoryValue });
     }
 
     const total = await qb.getCount();

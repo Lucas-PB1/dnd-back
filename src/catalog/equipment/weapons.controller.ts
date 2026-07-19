@@ -23,7 +23,12 @@ export class WeaponsController {
   @ApiOperation({ summary: 'List PHB weapons (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated weapon list' })
   findAll(@Query() query: WeaponsQueryDto) {
-    return this.findWeapons.execute(query.page, query.limit, query.q);
+    return this.findWeapons.execute(
+      query.page,
+      query.limit,
+      query.q,
+      query.category,
+    );
   }
 
   @Get(':slug')

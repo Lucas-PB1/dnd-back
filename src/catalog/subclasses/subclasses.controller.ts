@@ -7,6 +7,8 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { SubclassesQueryDto } from './dto/subclasses-query.dto';
+import { FindSubclassesQuery } from './queries/find-subclasses.query';
 import { FindSubclassBySlugQuery } from './queries/find-subclass-by-slug.query';
 import { FindSubclassMechanicsQuery } from './queries/find-subclass-mechanics.query';
 import { FindSubclassOptionsQuery } from './queries/find-subclass-options.query';
@@ -17,11 +19,24 @@ import { SubclassResponseDto } from './dto/subclass-response.dto';
 @Controller('subclasses')
 export class SubclassesController {
   constructor(
+    private readonly findSubclasses: FindSubclassesQuery,
     private readonly findSubclassBySlug: FindSubclassBySlugQuery,
     private readonly findSubclassMechanics: FindSubclassMechanicsQuery,
     private readonly findSubclassOptions: FindSubclassOptionsQuery,
     private readonly findSubclassSpells: FindSubclassSpellsQuery,
   ) {}
+
+  @Get()
+  @ApiOperation({ summary: 'List PHB subclasses (paginated, searchable)' })
+  @ApiOkResponse({ description: 'Paginated subclass list' })
+  findAll(@Query() query: SubclassesQueryDto) {
+    return this.findSubclasses.execute(
+      query.page,
+      query.limit,
+      query.q,
+      query.class,
+    );
+  }
 
   @Get(':slug/options')
   @ApiOperation({ summary: 'Selectable subclass options by character level (paginated)' })

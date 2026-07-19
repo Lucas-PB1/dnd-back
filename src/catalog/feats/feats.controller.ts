@@ -27,7 +27,12 @@ export class FeatsController {
   @ApiOperation({ summary: 'List PHB feats (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated feat list' })
   findAll(@Query() query: FeatsQueryDto) {
-    return this.findFeats.execute(query.page, query.limit, query.q);
+    return this.findFeats.execute(
+      query.page,
+      query.limit,
+      query.q,
+      query.category,
+    );
   }
 
   @Get(':slug')

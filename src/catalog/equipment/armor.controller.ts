@@ -23,7 +23,12 @@ export class ArmorController {
   @ApiOperation({ summary: 'List PHB armor (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated armor list' })
   findAll(@Query() query: ArmorQueryDto) {
-    return this.findArmor.execute(query.page, query.limit, query.q);
+    return this.findArmor.execute(
+      query.page,
+      query.limit,
+      query.q,
+      query.category,
+    );
   }
 
   @Get(':slug')

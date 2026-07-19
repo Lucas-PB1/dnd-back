@@ -18,6 +18,7 @@ export class FindFeatsQuery {
     page = 1,
     limit = 20,
     q?: string,
+    category?: string,
   ): Promise<PaginatedResponseDto<FeatResponseDto>> {
     const safePage = Math.max(1, page);
     const safeLimit = Math.min(100, Math.max(1, limit));
@@ -32,6 +33,11 @@ export class FindFeatsQuery {
         '(feat.featName ILIKE :q OR feat.featSlug ILIKE :q OR feat.categoryName ILIKE :q OR feat.categoryTypeLabel ILIKE :q OR COALESCE(feat.prerequisite, \'\') ILIKE :q)',
         { q: `%${term}%` },
       );
+    }
+
+    const categorySlug = category?.trim();
+    if (categorySlug) {
+      qb.andWhere('feat.categorySlug = :categorySlug', { categorySlug });
     }
 
     qb.skip((safePage - 1) * safeLimit).take(safeLimit);

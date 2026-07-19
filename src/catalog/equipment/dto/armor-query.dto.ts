@@ -9,4 +9,12 @@ export class ArmorQueryDto extends PaginationQueryDto {
   @IsOptional()
   @IsString()
   q?: string;
+
+  @ApiPropertyOptional({
+    description: 'Armor category slug (light | medium | heavy | shield)',
+    example: 'light',
+  })
+  @IsOptional()
+  @IsString()
+  category?: string;
 }

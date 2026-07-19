@@ -2,20 +2,19 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsString } from 'class-validator';
 import { PaginationQueryDto } from '../../../common/dto/pagination.dto';
 
-export class FeatsQueryDto extends PaginationQueryDto {
+export class SubclassesQueryDto extends PaginationQueryDto {
   @ApiPropertyOptional({
-    description:
-      'Filter by name, slug, category, or prerequisite (case-insensitive)',
+    description: 'Filter by name, slug, class, or summary (case-insensitive)',
   })
   @IsOptional()
   @IsString()
   q?: string;
 
   @ApiPropertyOptional({
-    description: 'Feat category slug (e.g. origin, general)',
-    example: 'origin',
+    description: 'Parent class slug (e.g. fighter)',
+    example: 'fighter',
   })
   @IsOptional()
   @IsString()
-  category?: string;
+  class?: string;
 }

@@ -18,6 +18,8 @@ export class FindSpellsQuery {
     page = 1,
     limit = 20,
     q?: string,
+    level?: number,
+    school?: string,
   ): Promise<PaginatedResponseDto<SpellResponseDto>> {
     const safePage = Math.max(1, page);
     const safeLimit = Math.min(100, Math.max(1, limit));
@@ -33,6 +35,15 @@ export class FindSpellsQuery {
         '(spell.name ILIKE :q OR spell.slug ILIKE :q OR spell.schoolName ILIKE :q OR spell.levelLabel ILIKE :q)',
         { q: `%${term}%` },
       );
+    }
+
+    if (level !== undefined && level !== null && !Number.isNaN(level)) {
+      qb.andWhere('spell.level = :level', { level });
+    }
+
+    const schoolSlug = school?.trim();
+    if (schoolSlug) {
+      qb.andWhere('spell.schoolSlug = :schoolSlug', { schoolSlug });
     }
 
     qb.skip((safePage - 1) * safeLimit).take(safeLimit);

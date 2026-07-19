@@ -18,6 +18,7 @@ export class FindArmorQuery {
     page = 1,
     limit = 20,
     q?: string,
+    category?: string,
   ): Promise<PaginatedResponseDto<ArmorResponseDto>> {
     const safePage = Math.max(1, page);
     const safeLimit = Math.min(100, Math.max(1, limit));
@@ -32,6 +33,11 @@ export class FindArmorQuery {
         '(armor.itemName ILIKE :q OR armor.itemSlug ILIKE :q OR armor.categoryName ILIKE :q OR armor.categorySlug ILIKE :q)',
         { q: `%${term}%` },
       );
+    }
+
+    const categorySlug = category?.trim();
+    if (categorySlug) {
+      qb.andWhere('armor.category_slug = :categorySlug', { categorySlug });
     }
 
     const total = await qb.getCount();

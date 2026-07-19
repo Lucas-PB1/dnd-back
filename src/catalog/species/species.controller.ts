@@ -7,6 +7,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { SpeciesQueryDto } from './dto/species-query.dto';
 import { FindSpeciesQuery } from './queries/find-species.query';
 import { FindSpeciesBySlugQuery } from './queries/find-species-by-slug.query';
 import { FindSpeciesTraitsQuery } from './queries/find-species-traits.query';
@@ -24,10 +25,10 @@ export class SpeciesController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'List PHB species (paginated)' })
+  @ApiOperation({ summary: 'List PHB species (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated species list' })
-  findAll(@Query() query: PaginationQueryDto) {
-    return this.findSpecies.execute(query.page, query.limit);
+  findAll(@Query() query: SpeciesQueryDto) {
+    return this.findSpecies.execute(query.page, query.limit, query.q);
   }
 
   @Get(':slug/traits')
