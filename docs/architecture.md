@@ -9,7 +9,7 @@ Complementa [`infrastructure.md`](infrastructure.md) (stack), [`data-model.md`](
 | **Modular monolith** | Organização do Nest | `src/` por módulo |
 | **DDD estratégico** | 3 bounded contexts | Catalog, Identity, Game |
 | **CQRS leve** | Read vs write | Views = query; fichas = command |
-| **DDD tático** | Agregados, VOs, domain services | **Só BC Game** (futuro) |
+| **DDD tático** | Handlers, domain, repositories | **Só BC Game** (`sheet/`, `build/`, …) |
 | **CRUD anêmico** | Catálogo PHB | `catalog/*` — intencional |
 
 Não adotamos DDD tático completo no catálogo — o **banco SQL já é o modelo de referência**.
@@ -30,10 +30,10 @@ flowchart TB
     I2[JWT Guard]
   end
 
-  subgraph game [BC Game — futuro]
-    G1[Personagem]
-    G2[Campanha]
-    G3[domain/ aggregates]
+  subgraph game [BC Game]
+    G1[sheet / build / progression]
+    G2[inventory / session]
+    G3[domain + handlers]
   end
 
   catalog -->|"slug / id ref"| game
@@ -44,53 +44,54 @@ flowchart TB
 
 - **Responsabilidade:** expor dados PHB 2024 read-only
 - **Fonte de verdade:** `database/` (migrations + seeds)
-- **API:** `src/catalog/` — controller → service → `@ViewEntity`
+- **API:** `src/catalog/` — controller → query → `@ViewEntity`
 - **Sem:** agregados, domain events, mutação via API
 - **Integração:** outros BCs referenciam catálogo por **slug** (contrato) ou **id** (persistência interna)
 
-### BC Identity
+### BC Identity (atual)
 
 - **Responsabilidade:** autenticar requests
 - **Fonte de verdade:** Supabase Auth (externo)
 - **API:** `src/identity/` — guards, decorators, `@CurrentUser()`
 - **Sem:** modelar User como entidade de domínio rica — JWT claims bastam
 
-### BC Game
+### BC Game (atual)
 
-- **Responsabilidade:** fichas, campanhas, inventário do jogador
+- **Responsabilidade:** fichas, inventário, progressão, estado de mesa
 - **Fonte de verdade:** tabelas `player_*` (migrations em `database/migrations/090_player/`)
-- **API:** `src/game/` — DDD tático onde houver regras (nível, HP, validações)
-- **Segurança:** RLS `auth.uid()` + `SupabaseAuthGuard`
+- **API:** `src/game/` — submódulos `sheet/`, `build/`, `progression/`, `inventory/`, `session/`, `shared/`
+- **Segurança:** ownership por `userId` + `SupabaseAuthGuard`
 - **Referência ao catálogo:** slug de classe/espécie/antecedente — não duplicar regras PHB no domínio
+- **Campanha / combate (7D):** ainda futuro
 
 ## CQRS leve
 
-| Lado | Catálogo | Game (futuro) |
-|------|----------|---------------|
+| Lado | Catálogo | Game |
+|------|----------|------|
 | **Query** | Views `v_phb_*`, GET público | GET com auth, leitura de ficha |
-| **Command** | Nenhum (seeds offline) | POST/PATCH personagem, campanha |
-| **Modelo leitura** | ViewEntity / SQL view | DTO de resposta ou projeção |
-| **Modelo escrita** | — | Agregado + repository |
+| **Command** | Nenhum (seeds offline) | POST/PATCH personagem, level-up, inventário, sessão |
+| **Modelo leitura** | ViewEntity / SQL view | DTO de resposta |
+| **Modelo escrita** | — | Handler + domain + repository |
 
 ```
-Catalog:  HTTP GET → Service → ViewEntity → Postgres view
-Game:     HTTP POST → Command handler → Aggregate → Repository → Postgres table + RLS
+Catalog:  HTTP GET → Query → ViewEntity → Postgres view
+Game:     HTTP POST → Handler → Domain → Repository → Postgres
 ```
 
-## Estrutura `src/` (evolução)
+## Estrutura `src/` (atual)
 
 ```
 src/
-├── catalog/              # BC Catalog — thin (atual)
-│   └── classes/
-├── identity/             # BC Identity — guards (futuro)
-│   └── guards/
-├── game/                 # BC Game — DDD tático (futuro)
-│   └── characters/
-│       ├── domain/           # aggregate, VOs, domain services
-│       ├── application/      # use cases / command handlers
-│       └── infrastructure/   # TypeORM entities, repos
-├── entities/             # ViewEntity compartilhadas (catalog)
+├── catalog/              # BC Catalog — thin (queries + mappers)
+├── identity/             # BC Identity — JWT / guards
+├── game/                 # BC Game
+│   ├── sheet/
+│   ├── build/
+│   ├── progression/
+│   ├── inventory/
+│   ├── session/
+│   └── shared/
+├── entities/             # ViewEntity / entities compartilhadas
 ├── config/
 ├── app.module.ts
 └── main.ts
@@ -156,28 +157,42 @@ Quando `*.service.ts` passar de ~80 linhas ou tiver **3+ repositórios**:
 2. **Queries** — `queries/find-class-spells.query.ts` (um arquivo por rota aninhada, método `execute()`)
 3. **Lookup** — `assertClassExists` em `CatalogLookupService` (evitar duplicar por módulo)
 
-Exemplo atual que pode ser dividido: [`src/catalog/classes/classes.service.ts`](../src/catalog/classes/classes.service.ts).
+Catálogo já segue esse padrão (`queries/` + `*.mapper.ts`).
 
-### O que extrair (Game)
+### Game (já migrado)
 
-Para fichas, migrar de service monolítico para:
+Ficha e subdomínios em `src/game/`:
 
 ```
-src/game/characters/
-├── application/     # create-character.handler.ts, list-characters.query.ts
-├── domain/          # character.aggregate.ts, value-objects/
-├── infrastructure/  # character.repository.ts, character.mapper.ts
-└── characters.controller.ts
+src/game/
+├── sheet/           # CRUD ficha — handlers, domain, repository, mapper
+├── build/           # geração de atributos
+├── progression/     # level-up
+├── inventory/       # inventário / slots
+├── session/         # estado de mesa (HP temp, slots, conjuração)
+└── shared/          # PlayerCharacter entity, CharacterRepository
+```
+
+Layout típico de `sheet/`:
+
+```
+src/game/sheet/
+├── application/     # create/update/delete handlers, list/get queries
+├── domain/          # validator, HP, feats, armor class, …
+├── infrastructure/  # character-sheet.repository, character.mapper
+├── dto/
+├── characters.controller.ts
+└── character-sheet.module.ts
 ```
 
 | Peça | Faz | Não faz |
 |------|-----|---------|
 | Handler | Orquestra DTO → domain → repo | SQL direto, regra D&D complexa |
 | Repository | Persistência, ownership | Validar slug PHB |
-| Domain | Invariantes (nível, HP) | HTTP, TypeORM |
+| Domain | Invariantes (nível, HP, feats) | HTTP, TypeORM |
 | CatalogLookupService | Slugs existem no PHB | Calcular HP |
 
-Exemplo atual a refatorar na fase 6: [`src/game/characters/characters.service.ts`](../src/game/characters/characters.service.ts).
+Contrato de talentos: **`characterFeats`** + **`featOptions`** (sem lista plana legada).
 
 ### Gatilhos de refatoração
 
@@ -185,9 +200,9 @@ Exemplo atual a refatorar na fase 6: [`src/game/characters/characters.service.ts
 |-------|------|
 | Service catalog &gt; 80 linhas | Mapper + queries |
 | 3+ `toXxxDto` no mesmo service | `*.mapper.ts` |
-| Regra “se… então…” D&D na ficha | `domain/` |
+| Regra “se… então…” D&D na ficha | `game/<submodulo>/domain/` |
 | Teste unitário mocka 4+ repos | Dividir queries ou repository |
-| Início da **fase 6** | `CharactersService` → handlers + aggregate |
+| Handler &gt; ~150 linhas | Extrair domain / validator |
 
 Rule Cursor: `.cursor/rules/application-layer.mdc`
 

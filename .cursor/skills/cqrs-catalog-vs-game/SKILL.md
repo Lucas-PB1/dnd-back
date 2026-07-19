@@ -19,5 +19,5 @@ Doc: [`docs/architecture.md`](../../../docs/architecture.md)
 |---|---------|------|
 | HTTP | GET | GET, POST, PATCH, DELETE |
 | SQL | Views `v_phb_*` | Tabelas `player_*` |
-| DDD | Nenhum | Agregados onde necessário |
-| Auth | Público | JWT + RLS |
+| Nest | `queries/` + mapper | handlers + domain + repository |
+| Auth | Público | JWT + ownership |

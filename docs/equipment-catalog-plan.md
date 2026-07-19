@@ -6,12 +6,12 @@ Documento de planejamento para completar **dados mecânicos** e a experiência d
 |--|--|
 | **Repos** | dnd-api (seeds, views, DTOs) + dnd-front (UI do compêndio) |
 | **Última revisão** | 2026-07-19 |
-| **Status** | Em andamento — Fases 0–5 entregues no código; falta apply prod + QA |
+| **Status** | Fases 0–5 entregues; weapon DTO = `range` + `propertyDetails` + `mastery` (sem jsonb bruto na response) |
 | **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`data-model.md`](data-model.md) · front [`UX-UI-PLAN.md`](../../dnd-front/docs/UX-UI-PLAN.md) |
 
 ### Progresso desta entrega
 
-- [x] Fase 0 — script truncados + Opção A (`S070` UPDATE)
+- [x] Fase 0 — inventário truncados + Opção A (`S070` UPDATE) — scripts one-off removidos após apply
 - [x] Fase 1 — 70 descriptions gear/focus (`S070`)
 - [x] Fase 2 — `properties` no Item DTO + atributo na UI
 - [x] Fase 3 — `propertyDetails` + `mastery` armas (API/UI)
@@ -183,13 +183,14 @@ UI: faixa “Uso” + badge de atributo + craft.
 
 ### 5.3 Weapons — enriquecer resposta
 
-Evoluir `WeaponResponseDto` (detalhe e, se leve, lista):
+Evoluir `WeaponResponseDto` (detalhe e lista) — **contrato atual**:
 
 ```ts
 {
   // existente…
-  versatileDamage?: string | null;  // ex. "1d10"
-  properties: Array<{
+  versatileDamage: string | null;
+  range: { normal: number | null; max: number | null } | null;
+  propertyDetails: Array<{
     slug: string;
     name: string;
     description: string;
@@ -202,11 +203,9 @@ Evoluir `WeaponResponseDto` (detalhe e, se leve, lista):
 }
 ```
 
-Implementação preferida:
+Implementação atual: resolve `propertyIds` / `masteryId` / `range` / `versatileDamage` a partir do jsonb interno de `phb_item.properties` + tabelas `phb_weapon_property` / `phb_weapon_mastery`. **Não** expor o jsonb bruto na response.
 
-- Query com joins em `phb_weapon_property_link` + `phb_weapon_property` + `phb_weapon_mastery`.
-- Manter `item.properties` jsonb só como cache/legado ou sincronizar a partir das tabelas.
-- Remover mapa hardcoded do front (ou usar só como fallback temporário).
+Opcional futuro: joins via `phb_weapon_property_link` como fonte canônica e jsonb só como cache.
 
 ### 5.4 Armor — completar view/DTO
 

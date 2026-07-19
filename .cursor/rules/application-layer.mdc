@@ -12,24 +12,22 @@ Doc: [`docs/architecture.md`](../../docs/architecture.md#evitar-fat-services) ·
 
 | BC | Alvo por arquivo | Padrão |
 |----|------------------|--------|
-| **Catalog** | &lt; ~80 linhas | Controller → **Query** (ou service fino) → view |
-| **Game** | Service some ou vira fachada | Controller → **Handler** → domain + repository |
+| **Catalog** | &lt; ~80 linhas | Controller → **Query** → view |
+| **Game** | Sem service monolítico | Controller → **Handler** → domain + repository |
 
 ## Catalog (`src/catalog/`)
 
-- Controller → Query ou service fino → `@ViewEntity`
+- Controller → Query → `@ViewEntity` / entity
 - **Sem** pasta `domain/`, agregados ou command handlers
 - Regras PHB no **Postgres** (views/seeds), não no TypeScript
 
-### Extração (quando service &gt; 80 linhas ou 3+ repos)
+### Extração (quando um arquivo crescer demais ou tiver 3+ repos)
 
 1. **Mapper** — `*.mapper.ts` (só `toXxxDto`)
-2. **Queries** — `queries/find-*.query.ts`, um arquivo por rota aninhada, método `execute()`
+2. **Queries** — `queries/find-*.query.ts`, um arquivo por rota, método `execute()`
 3. **Lookup** — `assertXExists` em `CatalogLookupService`, não duplicar por módulo
-4. **Facade** opcional — só delega para queries; controller pode injetar queries direto
 
 ```typescript
-// Convenção — Catalog query
 @Injectable()
 export class FindClassSpellsQuery {
   async execute(classSlug: string, page: number, limit: number, maxLevel?: number) { /* ... */ }
@@ -38,14 +36,15 @@ export class FindClassSpellsQuery {
 
 ## Game (`src/game/`)
 
+Submódulos: `sheet/`, `build/`, `progression/`, `inventory/`, `session/`, `shared/`.
+
 - Controller: HTTP, guard, `@CurrentUser()` — **sem** lógica de negócio
 - **Handler** (`application/*.handler.ts`): orquestra DTO → domain → repository → mapper
 - **Repository** (`infrastructure/*.repository.ts`): TypeORM, `findOwnedOrFail`, save/remove
-- **Domain** (`domain/`): invariantes D&D (HP, nível, atributos)
+- **Domain** (`<submodulo>/domain/`): invariantes D&D (HP, nível, feats, AC)
 - **CatalogLookupService**: validar slugs PHB — **não** calcular HP
 
 ```typescript
-// Convenção — Game handler
 @Injectable()
 export class CreateCharacterHandler {
   async execute(userId: string, dto: CreateCharacterDto): Promise<CharacterResponseDto> { /* ... */ }
@@ -53,6 +52,8 @@ export class CreateCharacterHandler {
 ```
 
 Handlers manuais `@Injectable()` — **sem** `@nestjs/cqrs` obrigatório.
+
+Talentos: **`characterFeats`** + **`featOptions`** apenas.
 
 ## Responsabilidades
 
@@ -68,15 +69,15 @@ Handlers manuais `@Injectable()` — **sem** `@nestjs/cqrs` obrigatório.
 
 | Sinal | Ação |
 |-------|------|
-| Service catalog &gt; 80 linhas | Mapper + queries |
+| Service/query catalog &gt; 80 linhas | Mapper + queries |
 | 3+ `toXxxDto` no mesmo arquivo | `*.mapper.ts` |
-| Regra “se… então…” D&D na ficha | `domain/` |
+| Regra “se… então…” D&D na ficha | `<submodulo>/domain/` |
 | Teste mocka 4+ repositories | Dividir queries ou repository |
-| Início fase 6 | Refatorar `CharactersService` → handlers + aggregate |
+| Handler inchado | Extrair validator / domain puro |
 
 ## Proibido
 
 - `domain/` em `catalog/`
 - `@nestjs/cqrs` só por estética
 - Duplicar regras PHB em TS no catalog (usar views)
-- Crescer `CharactersService` com lógica de fase 6
+- Reintroduzir service monolítico de ficha ou campos de contrato removidos (`featSlugs`, etc.)

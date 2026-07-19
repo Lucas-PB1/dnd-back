@@ -1,5 +1,5 @@
 ---
-description: Supabase Auth — JWT, guards Nest, RLS futuro
+description: Supabase Auth — JWT, guards Nest, ownership; RLS futuro
 globs: src/**/*.ts
 alwaysApply: false
 ---
@@ -8,9 +8,10 @@ alwaysApply: false
 
 Skill: `supabase-auth`
 
-- Login/signup fica no **repo Next.js** (`@supabase/supabase-js`)
-- Nest valida JWT: `Authorization: Bearer <access_token>`
-- Env: `SUPABASE_URL` (validação JWT via JWKS ES256)
+- Login/signup fica no **dnd-front** (`@supabase/supabase-js`)
+- Nest valida JWT: `Authorization: Bearer <access_token>` via `SupabaseAuthGuard` + JWKS
+- Env: `SUPABASE_URL` (JWKS ES256)
 - Catálogo `phb_*`: rotas **públicas** (sem guard)
-- Dados de jogador (fase futura): `@UseGuards(SupabaseAuthGuard)` + RLS `auth.uid()`
+- Dados de jogador: `@UseGuards(SupabaseAuthGuard)` + ownership por `userId` na API
+- RLS `auth.uid()` em `player_*`: opcional / futuro
 - Nunca expor service role key no client

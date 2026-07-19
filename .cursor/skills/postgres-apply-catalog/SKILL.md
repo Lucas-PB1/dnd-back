@@ -17,7 +17,7 @@ description: Aplica catálogo PHB ao PostgreSQL — dev-reset, migrations granul
 2. Migrations recursivas ordenadas
 3. Seeds recursivos ordenados
 
-## PowerShell (legado — preferir npm)
+## Preferir npm
 
 ```powershell
 npm run db:setup

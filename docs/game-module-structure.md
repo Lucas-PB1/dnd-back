@@ -2,18 +2,9 @@
 
 Complementa [`architecture.md`](architecture.md) e [`game-advanced-plan.md`](game-advanced-plan.md).
 
-## Problema
+## Problema (histórico — resolvido)
 
-Tudo em `src/game/sheet/` (antes `characters/`) virou um **god module**:
-
-| Arquivo | Linhas | Papel |
-|---------|--------|-------|
-| `character-sheet.validator.ts` | ~270 | Validação PHB da ficha |
-| `character-sheet.repository.ts` | ~210 | 7 tabelas `player_character_*` |
-| `characters.controller.ts` | ~190 | CRUD + inventário + level-up + roll |
-| `characters.module.ts` | ~95 | Registra 20+ providers |
-
-Inventário, progression e **state (7C)** no mesmo módulo não escala. Campanha (7D) pioraria mais.
+Antes do split, tudo em um único módulo de personagens virou **god module** (validator, repository, controller e inventário/progression no mesmo lugar).
 
 ## Princípio
 
@@ -22,11 +13,11 @@ Inventário, progression e **state (7C)** no mesmo módulo não escala. Campanha
 ```
 BC Game (modular monolith)
 ├── shared/           # ownership, repositório raiz player_character
-├── sheet/            # ficha PHB (CRUD + escolhas persistidas)
-├── build/            # criação: roll abilities, generate (futuro)
-├── progression/      # level-up, preview, ASI (futuro)
+├── sheet/            # ficha PHB (CRUD + escolhas persistidas) — CharacterSheetModule
+├── build/            # criação: roll abilities
+├── progression/      # level-up, preview
 ├── inventory/        # mochila + equipado
-└── session/          # 7C: slots, condições, concentração (futuro)
+└── session/          # slots, condições, concentração
 ```
 
 Cada submódulo:

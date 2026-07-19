@@ -1,30 +1,29 @@
-# Command side — Game (futuro)
+# Command side — Game
 
 ## Fluxo
 
 ```
 POST /characters
   → @UseGuards(SupabaseAuthGuard)
-  → CreateCharacterHandler
-  → Character.create(props)   // aggregate
+  → CreateCharacterHandler (game/sheet/application/)
+  → CatalogLookupService + domain/factory
   → CharacterRepository.save()
-  → Postgres player_character + RLS
-  → CharacterResponseDto
+  → CharacterSheetRepository.sync()
+  → CharacterMapper.toDto()
 ```
 
 ## Características
 
-- Valida invariantes no **aggregate** (ex.: nível 1–20, soma atributos método)
-- Referência PHB: `classSlug`, `speciesSlug` — validar via CatalogLookupService
-- Um command = uma transação
+- Invariantes em `game/<submodulo>/domain/` (nível, HP, feats, AC)
+- Referência PHB: `classSlug`, `speciesSlug`, … via `CatalogLookupService`
+- Talentos: **`characterFeats`** + **`featOptions`**
+- Um command = uma transação lógica (save ficha + sync sheet)
 - Erros de domínio → 400; auth → 401; not found → 404
 
 ## Queries no Game
 
-GET ficha pode ser:
-- Query handler leve (projeção DTO), ou
-- Read model denormalizado depois — **não** precisa agregado para GET simples
+GET ficha: `GetCharacterQuery` / `ListCharactersQuery` → repository + mapper.
 
-## RLS
+## Auth / ownership
 
-Insert/update com JWT do usuário; Postgres garante `user_id = auth.uid()`.
+JWT Supabase; API garante `user_id` do personagem = usuário autenticado.

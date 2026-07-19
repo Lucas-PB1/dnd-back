@@ -65,7 +65,7 @@ Checklist detalhado em [`api-plan.md`](api-plan.md). Todos os módulos P0–P3 i
 | Traços de espécie | `speciesChoices` |
 | Opções de subclasse | `subclassOptions` |
 | Magias | `characterSpells` |
-| Talentos | `characterFeats` (+ `featOptions`, `featSlugs` derivado) |
+| Talentos | `characterFeats` (+ `featOptions`) |
 | Equipamento inicial | `equipment` |
 | Idiomas | `languageSlugs` |
 

@@ -1,6 +1,6 @@
 ---
 name: supabase-auth
-description: Integra Supabase Auth com NestJS na Vercel — validação JWT, guards, RLS futuro. Use quando implementar autenticação, proteger rotas ou configurar auth.uid() no Postgres.
+description: Integra Supabase Auth com NestJS — validação JWT, guards, ownership; RLS opcional no futuro. Use quando autenticar, proteger rotas game ou configurar JWT.
 ---
 
 # Supabase Auth
@@ -13,13 +13,15 @@ Infra: [`docs/infrastructure.md`](../../../docs/infrastructure.md)
 - [`rls-player-data.md`](references/rls-player-data.md)
 - [`env-vars.md`](references/env-vars.md)
 
-## Workflow
+## Workflow (atual)
 
-1. Login/signup no **repo Next.js** — não neste repo
-2. Nest valida JWT nas rotas protegidas (fase futura)
-3. RLS no Supabase com `auth.uid()` para tabelas de jogador
-4. Catálogo `phb_*` permanece SELECT público
+1. Login/signup no **dnd-front** (`@supabase/supabase-js`)
+2. Nest valida JWT nas rotas game (`SupabaseAuthGuard` + JWKS)
+3. Ownership na API (`userId` do personagem = `sub` do JWT)
+4. Catálogo `phb_*` permanece SELECT público (sem guard)
+5. RLS no Postgres para `player_*` — opcional / futuro (hoje a API filtra)
 
-## Fase atual
+## Não fazer
 
-Sem auth — endpoints catálogo públicos. Preparar env vars e skill para fase 2.
+- Expor service role no client
+- Guard em rotas de catálogo público

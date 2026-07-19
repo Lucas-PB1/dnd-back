@@ -17,12 +17,12 @@ game → mutação de phb_* via API
 identity → game (identity é transversal, não conhece ficha)
 ```
 
-## CatalogLookupService (futuro, em catalog/)
+## CatalogLookupService (em catalog/)
 
 ```typescript
 @Injectable()
 export class CatalogLookupService {
-  async classExists(slug: string): Promise<boolean> { ... }
+  async validateCharacterCatalogRefs(refs: { classSlug: string; /* … */ }): Promise<void> { ... }
 }
 ```
 
@@ -31,5 +31,5 @@ Game usa para validar escolhas — não duplica SQL do PHB.
 ## Comunicação entre BCs
 
 - **Preferir:** injeção de service read-only do catalog
-- **Evitar:** importar entities TypeORM de `phb_*` dentro de `game/domain/`
+- **Evitar:** importar entities TypeORM de `phb_*` dentro de `game/*/domain/`
 - **Nunca:** event bus entre BCs nesta fase — YAGNI

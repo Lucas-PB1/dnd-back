@@ -6,21 +6,14 @@
 Authorization: Bearer <supabase_access_token>
 ```
 
-## Guard (fase futura)
+## Guard (implementado)
+
+`src/identity/guards/supabase-auth.guard.ts` + `supabase-jwt.service.ts` (JWKS).
 
 ```typescript
-@Injectable()
-export class SupabaseAuthGuard implements CanActivate {
-  async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req = context.switchToHttp().getRequest();
-    const token = req.headers.authorization?.replace('Bearer ', '');
-    if (!token) throw new UnauthorizedException();
-    // Validar com jose + JWKS ({SUPABASE_URL}/auth/v1/.well-known/jwks.json)
-    const payload = await verifySupabaseJwt(token);
-    req.user = { id: payload.sub, email: payload.email };
-    return true;
-  }
-}
+@UseGuards(SupabaseAuthGuard)
+@Get(':id')
+async get(@CurrentUser() user: AuthUser, @Param('id') id: string) { ... }
 ```
 
 ## Rotas
@@ -28,9 +21,9 @@ export class SupabaseAuthGuard implements CanActivate {
 | Tipo | Guard |
 |------|-------|
 | `GET /classes`, `/spells`, … | Nenhum (público) |
-| `/characters`, `/campaigns` (futuro) | `SupabaseAuthGuard` |
+| `/characters`, inventory, session, level-up, roll-abilities | `SupabaseAuthGuard` |
 
-## Pacotes sugeridos
+## Pacotes
 
-- `jose` ou `@nestjs/passport` + estratégia custom
+- Validação via JWKS (`jose` / implementação em `SupabaseJwtService`)
 - Não usar service role para validar token de usuário

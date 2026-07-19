@@ -4,44 +4,26 @@ Estado atual do repo + convenções para evitar services inchados. Rule: `applic
 
 ## Catalog (thin)
 
-### Módulo simples (padrão atual)
-
-```
-src/catalog/spells/
-├── spells.module.ts
-├── spells.controller.ts
-├── spells.service.ts          # < ~80 linhas
-└── dto/
-    └── spell-response.dto.ts
-```
-
-Entities: `src/entities/views/v-phb-spell.entity.ts`
-
-### Módulo com rotas aninhadas (convenção futura)
-
-Quando o service passar de ~80 linhas ou tiver 3+ repos — extrair:
+### Módulo padrão (queries + mapper)
 
 ```
 src/catalog/classes/
 ├── classes.module.ts
 ├── classes.controller.ts
-├── classes.mapper.ts                    # toClassDto, toSubclassDto, …
+├── classes.mapper.ts
 ├── queries/
+│   ├── find-classes.query.ts
 │   ├── find-class-by-slug.query.ts
-│   ├── find-class-subclasses.query.ts
-│   ├── find-class-spells.query.ts
-│   ├── find-class-spell-slots.query.ts
-│   ├── find-class-equipment.query.ts
-│   └── find-class-skills.query.ts
+│   └── …
 └── dto/
     └── class-response.dto.ts
 ```
 
-Cada `*Query` é `@Injectable()` com um método `execute()`. O controller injeta queries diretamente ou um facade fino que só delega.
+Entities/views: `src/entities/` e `src/entities/views/`.
 
-**Estado atual (ainda monolítico):** [`src/catalog/classes/classes.service.ts`](../../../src/catalog/classes/classes.service.ts) — candidato a refatoração quando incomodar.
+Cada `*Query` é `@Injectable()` com um método `execute()`. O controller injeta queries diretamente.
 
-Lookup compartilhado: [`src/catalog/catalog-lookup.service.ts`](../../../src/catalog/catalog-lookup.service.ts) (`assertClassSlug`, etc.).
+Lookup compartilhado: [`src/catalog/catalog-lookup.service.ts`](../../../src/catalog/catalog-lookup.service.ts).
 
 ## Identity
 
@@ -58,41 +40,39 @@ src/identity/
 
 ## Game (DDD tático + application layer)
 
-### Estado atual (fase 5 — service monolítico)
+Submódulos ativos:
 
 ```
-src/game/characters/
-├── characters.module.ts
-├── characters.controller.ts
-├── characters.service.ts       # refatorar na fase 6
-├── characters.application.spec.ts
-├── player-character.entity.ts
-└── dto/
-    ├── create-character.dto.ts
-    ├── update-character.dto.ts
-    └── character-response.dto.ts
+src/game/
+├── game.module.ts
+├── sheet/              # CRUD ficha (CharacterSheetModule)
+├── build/              # geração de atributos
+├── progression/        # level-up
+├── inventory/
+├── session/
+└── shared/             # PlayerCharacter, CharacterRepository
 ```
 
-### Alvo (fase 6 — handlers + domain)
+### `sheet/` (padrão a seguir)
 
 ```
-src/game/characters/
-├── characters.module.ts
-├── characters.controller.ts      # HTTP + guard + @CurrentUser apenas
+src/game/sheet/
+├── character-sheet.module.ts
+├── characters.controller.ts      # HTTP + guard + @CurrentUser
 ├── application/
 │   ├── create-character.handler.ts
 │   ├── update-character.handler.ts
 │   ├── delete-character.handler.ts
-│   └── list-characters.query.ts
+│   ├── list-characters.query.ts
+│   └── get-character.query.ts
 ├── domain/
-│   ├── character.aggregate.ts
-│   └── value-objects/
-│       ├── ability-scores.vo.ts
-│       └── hit-points.vo.ts
+│   ├── character-domain.service.ts
+│   ├── character-sheet.validator.ts
+│   └── …
 ├── infrastructure/
-│   ├── player-character.entity.ts
-│   ├── character.repository.ts   # findOwnedOrFail, save, remove
-│   └── character.mapper.ts
+│   ├── character-sheet.repository.ts
+│   ├── character.mapper.ts
+│   └── …
 └── dto/
     └── …
 ```
@@ -101,14 +81,15 @@ Fluxo de escrita:
 
 ```
 POST /characters
-  → CreateCharacterHandler.execute(dto, userId)
+  → CreateCharacterHandler.execute(userId, dto)
   → CatalogLookupService.validateCharacterCatalogRefs()
-  → Character.create(props)                    // domain
+  → domain / factory
   → CharacterRepository.save()
+  → CharacterSheetRepository.sync()
   → CharacterMapper.toDto()
 ```
 
-Handlers manuais — sem `@nestjs/cqrs` obrigatório.
+Talentos: input/output via **`characterFeats`** (+ `featOptions`). Handlers manuais — sem `@nestjs/cqrs` obrigatório.
 
 ## app.module.ts
 

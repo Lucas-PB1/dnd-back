@@ -7,7 +7,7 @@ alwaysApply: true
 
 **Infra:** [`docs/infrastructure.md`](../../docs/infrastructure.md) · **Arquitetura:** [`docs/architecture.md`](../../docs/architecture.md)
 
-Monorepo **API only**: `database/` + `src/` Nest. Frontend Next.js = repo separado.
+Monorepo **API only**: `database/` + `src/` Nest. Frontend Next.js = repo separado (`dnd-front`).
 
 ## Roteamento
 
@@ -27,7 +27,7 @@ Monorepo **API only**: `database/` + `src/` Nest. Frontend Next.js = repo separa
 
 ## Princípios
 
-- **3 BC:** Catalog (thin), Identity, Game (DDD tático futuro)
+- **3 BC:** Catalog (thin), Identity (JWT), Game (sheet / build / progression / inventory / session)
 - DB + Auth: Supabase · API: Vercel · ORM: TypeORM
-- Catálogo read-only público; fichas = JWT + RLS + commands
+- Catálogo read-only público; fichas = JWT + ownership na API
 - `database/` source of truth PHB; `synchronize: false`

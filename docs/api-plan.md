@@ -13,7 +13,7 @@ Relacionados: [`architecture.md`](architecture.md) · [`data-model.md`](data-mod
 | Estilo | **REST** JSON, recursos por slug, sem HATEOAS na v1 |
 | Catálogo | **GET público** — sem auth na fase 1–3 |
 | Auth | **Fase 5 (final)** — Supabase JWT só em `game/*` |
-| Regras D&D | **Dados** no Postgres; **cálculos de ficha** no BC Game (HP/PB feito; restante fase 6) |
+| Regras D&D | **Dados** no Postgres; **cálculos de ficha** no BC Game (`sheet/domain`, etc.) |
 | Docs | **Swagger** (`/api`) em toda fase de catálogo |
 | Testes | Unit + E2E por módulo; meta **≥ 80%** em `catalog/**/queries/` e `game/**/domain/` |
 
@@ -221,8 +221,8 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 | **Dados canônicos PHB** | `database/seeds/` | CD de classe, lista de magias |
 | **Agregações / joins** | Views SQL `v_phb_*` | Magias por classe, equipamento |
 | **Exposição read-only** | `catalog/*/queries/` | GET sem recalcular regras |
-| **Cálculos de ficha** | `game/domain/` (fase 6) | HP máx, modificador, slots usados |
-| **Validação de escolhas** | `game/domain/` + `CatalogLookupService` | Classe existe? Magia na lista? |
+| **Cálculos de ficha** | `game/sheet/domain/` (e outros submódulos) | HP máx, modificador, AC |
+| **Validação de escolhas** | `game/sheet/domain/` + `CatalogLookupService` | Classe existe? Magia na lista? |
 
 **Não** reimplementar no TypeScript o que já está no SQL (ex.: tabela de slots em `v_class_spell_slots`).
 
@@ -235,7 +235,7 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
 ### Checklist refatoração application layer (fase 6)
 
-Migrado para handlers + repository + mapper em [`src/game/characters/`](../src/game/characters/). Ver [`docs/architecture.md`](architecture.md#evitar-fat-services) e rule `application-layer`.
+Migrado para handlers + repository + mapper em [`src/game/sheet/`](../src/game/sheet/) (submódulos: `build/`, `progression/`, `inventory/`, `session/`, `shared/`). Ver [`docs/architecture.md`](architecture.md#evitar-fat-services) e rule `application-layer`.
 
 | Item | Checklist |
 |------|-----------|
@@ -249,7 +249,7 @@ Migrado para handlers + repository + mapper em [`src/game/characters/`](../src/g
 | Controller injeta handlers (service removido ou vira facade) | [x] |
 | Testes unitários por handler + domain (não service monolítico) | [x] |
 
-Opcional (Catalog): ~~dividir [`classes.service.ts`](../src/catalog/classes/classes.service.ts)~~ **concluído** — todos os BCs em `queries/` + `*.mapper.ts`. Ver rule `application-layer`.
+Opcional (Catalog): divisão em `queries/` + `*.mapper.ts` — **concluído** em todos os BCs de catálogo. Ver rule `application-layer`.
 
 ---
 

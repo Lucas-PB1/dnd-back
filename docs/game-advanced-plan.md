@@ -13,8 +13,8 @@ Complementa [`product-roadmap.md`](product-roadmap.md) (Fases 1–4 concluídas)
 | Capacidade | Fase | API | Front |
 |------------|------|-----|-------|
 | CRUD ficha + escolhas PHB | 4 | ✅ | ✅ |
-| Gerar atributos (array / 4d6 / point-buy) | **7A** | ✅ | ✅ |
-| Catálogo métodos de geração | **7A** | ✅ | ✅ |
+| Gerar atributos (array / 4d6 / point-buy) | **7A** | ✅ | ✅ (wizard: enum local + `POST /characters/roll-abilities`) |
+| Catálogo métodos de geração | **7A** | ✅ `GET /ability-generation-methods` | ⚠️ endpoint existe; UI **não** consome (slugs fixos no wizard) |
 | Preview de level-up | **7A** | ✅ | ✅ |
 | Aplicar level-up (+1) com escolhas | **7A** | ✅ | ✅ |
 | Inventário + equipado / mochila | **7B** | ✅ | ✅ |

@@ -20,7 +20,8 @@ Plano / roadmap: [`docs/product-roadmap.md`](../../../docs/product-roadmap.md)
 | GET | `/weapons`, `/weapons/:slug`, `/armor`, `/armor/:slug` |
 | GET | `/items`, `/items/:slug` |
 | GET | `/alignments`, `/languages`, `/character-levels` |
-| GET | `/ability-generation-methods` |
+| GET | `/ability-generation-methods` (catálogo; front wizard pode usar enum local) |
+| GET | `/subclasses` (lista paginada) |
 
 ## Game (Bearer JWT)
 

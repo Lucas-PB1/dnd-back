@@ -75,7 +75,7 @@ flowchart LR
 - Validar JWT do header `Authorization: Bearer <token>`
 - **JWKS** (`SUPABASE_URL/auth/v1/.well-known/jwks.json`) — tokens ES256 do Supabase Auth
 - Rotas catálogo `phb_*`: **públicas** (sem auth)
-- Rotas jogador (fase futura): guard JWT + RLS com `auth.uid()`
+- Rotas jogador: `SupabaseAuthGuard` + ownership por `userId` (RLS Postgres opcional / futuro)
 
 ### Frontend → API
 

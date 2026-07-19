@@ -3,41 +3,34 @@
 ## Query — listar classes (implementado)
 
 ```typescript
-// catalog/classes/classes.service.ts
-async findAll(): Promise<ClassResponseDto[]> {
-  const rows = await this.classesRepo.find({ order: { className: 'ASC' } });
-  return rows.map((row) => this.toDto(row));
+// catalog/classes/queries/find-classes.query.ts
+async execute(page: number, limit: number, q?: string): Promise<PaginatedResponse<ClassResponseDto>> {
+  // QueryBuilder na view + mapper.toDto
 }
 ```
 
 Read model: `rpg.v_phb_class` · Sem command · Sem aggregate
 
-## Query — magias do mago (futuro)
+## Query — magias do mago (implementado)
 
 ```sql
 SELECT * FROM rpg.v_spell_by_class WHERE class_slug = 'wizard';
 ```
 
-Service retorna DTO; lógica de join está na view.
+`FindClassSpellsQuery` / views equivalentes; lógica de join na view.
 
-## Command — criar personagem (futuro)
+## Command — criar personagem (implementado)
 
 ```typescript
-// game/characters/application/create-character.handler.ts
-async execute(cmd: CreateCharacterCommand): Promise<string> {
-  await this.catalog.assertClassExists(cmd.classSlug);
-  const character = Character.create({
-    userId: cmd.userId,
-    name: cmd.name,
-    classSlug: cmd.classSlug,
-    speciesSlug: cmd.speciesSlug,
-  });
-  await this.repo.save(character);
-  return character.id;
+// game/sheet/application/create-character.handler.ts
+async execute(userId: string, dto: CreateCharacterDto): Promise<CharacterResponseDto> {
+  await this.catalogLookup.validateCharacterCatalogRefs({ ... });
+  const characterFeats = resolveBackgroundOriginCharacterFeats(background, dto.characterFeats);
+  // factory → save → sheetRepository.sync → mapper.toDto
 }
 ```
 
-Invariantes (nome não vazio, slugs válidos) no aggregate + catalog lookup.
+Talentos via **`characterFeats`** (instâncias indexadas), não lista plana de slugs.
 
 ## Anti-pattern
 

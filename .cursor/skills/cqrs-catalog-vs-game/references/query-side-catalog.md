@@ -5,18 +5,18 @@
 ```
 GET /spells/:slug
   → SpellsController
-  → SpellsService.findBySlug()
-  → Repository(VPhbSpell)
+  → FindSpellBySlugQuery.execute()
+  → Repository(VPhbSpell) + mapper
   → rpg.v_phb_spell
   → SpellResponseDto
 ```
 
 ## Características
 
-- Idempotente, cacheável (CDN futuro)
+- Idempotente, cacheável
 - Sem transação multi-tabela no Nest — view já faz join
 - Paginação via query params (`page`, `limit`)
-- Filtros simples no service ou QueryBuilder na view
+- Filtros no QueryBuilder da query
 
 ## Não fazer
 
@@ -26,4 +26,4 @@ GET /spells/:slug
 
 ## SQL como read model
 
-Mudança no contrato de leitura = migration de **view**, não lógica no service.
+Mudança no contrato de leitura = migration de **view**, não lógica no Nest.

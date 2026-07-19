@@ -12,11 +12,11 @@ Doc: [`docs/architecture.md`](../../docs/architecture.md)
 |----|-------|------------------|
 | **Catalog** | `src/catalog/` | PHB read-only, views |
 | **Identity** | `src/identity/` | JWT guards, Supabase Auth |
-| **Game** | `src/game/` | Fichas, campanhas (futuro) |
+| **Game** | `src/game/` | Fichas, progressão, inventário, sessão |
 
 ## Limites
 
 - `catalog` **não** importa `game`
-- Regras de ficha **só** em `game/domain/`
+- Regras de ficha **só** em `game/<submodulo>/domain/`
 - Catálogo referenciado por **slug** na API; **id** só persistência interna
-- DDD tático (agregados, VOs) **apenas** no BC Game
+- DDD tático (handlers, domain, repositories) **apenas** no BC Game
