@@ -47,4 +47,22 @@ export class ClassResponseDto {
 
   @ApiPropertyOptional()
   editionSlug!: string | null;
+
+  @ApiProperty({ type: [String], example: ['forca', 'constituicao'] })
+  savingThrowSlugs!: string[];
+
+  @ApiProperty({ type: [String], example: ['Força', 'Constituição'] })
+  savingThrowNames!: string[];
+
+  @ApiProperty({ type: [String], example: ['light', 'medium', 'shield'] })
+  armorTrainingSlugs!: string[];
+
+  @ApiProperty({ type: [String], example: ['Leve', 'Média', 'Escudo'] })
+  armorTrainingNames!: string[];
+
+  @ApiProperty({ type: [String], example: ['armas-simples', 'armas-marciais'] })
+  weaponProficiencySlugs!: string[];
+
+  @ApiProperty({ type: [String], example: ['Armas simples', 'Armas marciais'] })
+  weaponProficiencyNames!: string[];
 }

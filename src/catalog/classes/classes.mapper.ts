@@ -34,6 +34,12 @@ export class ClassesMapper {
       skillChoiceFrom: row.skillChoiceFrom,
       sourceChapter: row.sourceChapter,
       editionSlug: row.editionSlug,
+      savingThrowSlugs: [],
+      savingThrowNames: [],
+      armorTrainingSlugs: [],
+      armorTrainingNames: [],
+      weaponProficiencySlugs: [],
+      weaponProficiencyNames: [],
     };
   }
 

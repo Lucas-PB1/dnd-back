@@ -19,6 +19,7 @@ import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query
 import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { FindClassFeaturesQuery } from './queries/find-class-features.query';
+import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
 
 describe('Classes queries', () => {
   let findClasses: FindClassesQuery;
@@ -138,6 +139,17 @@ describe('Classes queries', () => {
       }),
     };
 
+    const proficiencies = {
+      forClassSlug: jest.fn(async () => ({
+        savingThrowSlugs: ['forca', 'constituicao'],
+        savingThrowNames: ['Força', 'Constituição'],
+        armorTrainingSlugs: ['light', 'medium', 'heavy', 'shield'],
+        armorTrainingNames: ['Leve', 'Média', 'Pesada', 'Escudo'],
+        weaponProficiencySlugs: ['armas-simples', 'armas-marciais'],
+        weaponProficiencyNames: ['Armas simples', 'Armas marciais'],
+      })),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ClassesMapper,
@@ -149,6 +161,7 @@ describe('Classes queries', () => {
         FindClassEquipmentQuery,
         FindClassSkillsQuery,
         FindClassFeaturesQuery,
+        { provide: ClassProficienciesQuery, useValue: proficiencies },
         { provide: getRepositoryToken(VPhbClass), useValue: classesRepo },
         { provide: getRepositoryToken(VPhbSubclass), useValue: subclassesRepo },
         { provide: getRepositoryToken(VSpellByClass), useValue: spellsByClassRepo },
@@ -192,6 +205,13 @@ describe('Classes queries', () => {
 
   it('findBySlug throws NotFoundException', async () => {
     await expect(findClassBySlug.execute('invalid')).rejects.toThrow(NotFoundException);
+  });
+
+  it('findBySlug includes class proficiencies', async () => {
+    const result = await findClassBySlug.execute('fighter');
+    expect(result.savingThrowSlugs).toEqual(['forca', 'constituicao']);
+    expect(result.armorTrainingNames).toContain('Escudo');
+    expect(result.weaponProficiencyNames).toContain('Armas marciais');
   });
 
   it('findSubclassesByClassSlug returns paginated subclasses', async () => {

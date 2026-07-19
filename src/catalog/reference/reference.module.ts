@@ -4,16 +4,19 @@ import { PhbAlignment } from '../../entities/phb-alignment.entity';
 import { PhbLanguage } from '../../entities/phb-language.entity';
 import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
 import { PhbAbilityGenerationMethod } from '../../entities/phb-ability-generation-method.entity';
+import { PhbCondition } from '../../game/session/infrastructure/phb-condition.entity';
 import { ReferenceMapper } from './reference.mapper';
 import { FindAlignmentsQuery } from './queries/find-alignments.query';
 import { FindLanguagesQuery } from './queries/find-languages.query';
 import { FindLanguageBySlugQuery } from './queries/find-language-by-slug.query';
 import { FindCharacterLevelsQuery } from './queries/find-character-levels.query';
 import { FindAbilityGenerationMethodsQuery } from './queries/find-ability-generation-methods.query';
+import { FindConditionsQuery } from './queries/find-conditions.query';
 import { AlignmentsController } from './alignments.controller';
 import { LanguagesController } from './languages.controller';
 import { CharacterLevelsController } from './character-levels.controller';
 import { AbilityGenerationMethodsController } from './ability-generation-methods.controller';
+import { ConditionsController } from './conditions.controller';
 
 @Module({
   imports: [
@@ -22,6 +25,7 @@ import { AbilityGenerationMethodsController } from './ability-generation-methods
       PhbLanguage,
       PhbCharacterLevel,
       PhbAbilityGenerationMethod,
+      PhbCondition,
     ]),
   ],
   controllers: [
@@ -29,6 +33,7 @@ import { AbilityGenerationMethodsController } from './ability-generation-methods
     LanguagesController,
     CharacterLevelsController,
     AbilityGenerationMethodsController,
+    ConditionsController,
   ],
   providers: [
     ReferenceMapper,
@@ -37,6 +42,7 @@ import { AbilityGenerationMethodsController } from './ability-generation-methods
     FindLanguageBySlugQuery,
     FindCharacterLevelsQuery,
     FindAbilityGenerationMethodsQuery,
+    FindConditionsQuery,
   ],
 })
 export class ReferenceModule {}

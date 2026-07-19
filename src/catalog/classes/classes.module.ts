@@ -18,6 +18,7 @@ import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query
 import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { FindClassFeaturesQuery } from './queries/find-class-features.query';
+import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { FindClassFeaturesQuery } from './queries/find-class-features.query';
   controllers: [ClassesController],
   providers: [
     ClassesMapper,
+    ClassProficienciesQuery,
     FindClassesQuery,
     FindClassBySlugQuery,
     FindClassSubclassesQuery,

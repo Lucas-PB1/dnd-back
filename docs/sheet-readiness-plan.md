@@ -13,10 +13,10 @@ Documento de planejamento para **expor e usar na ficha/mesa** dados PHB 2024 que
 
 ### Progresso desta entrega
 
-- [ ] Fase 0 — Auditoria / contrato
-- [ ] Fase 1 — API: salvaguardas + proficiências de classe
-- [ ] Fase 2 — Ficha: ST + traços de espécie
-- [ ] Fase 3 — Mesa: picker de condições
+- [x] Fase 0 — Auditoria / contrato (shapes fechados neste doc)
+- [x] Fase 1 — API: salvaguardas + proficiências de classe (`ClassProficienciesQuery` + detalhe)
+- [x] Fase 2 — Ficha: ST + traços de espécie
+- [x] Fase 3 — Mesa: picker de condições (`GET /conditions`)
 - [ ] Fase 4 — Progressão / cotas de magia
 - [ ] Fase 5 — Level-up ASI guiado (+2 / +1)
 - [ ] Fase 6 — Backlog (idiomas concedidos, feat options, inventário, mesa avançada)
