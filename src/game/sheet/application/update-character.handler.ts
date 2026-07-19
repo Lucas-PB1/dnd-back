@@ -8,7 +8,6 @@ import { CharacterSheetValidator } from '../domain/character-sheet.validator';
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
-import { resolveCharacterFeats } from '../domain/character-feat';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
 import { applyBackgroundAbilityBoosts } from '../domain/background-ability-boost';
 import {
@@ -62,13 +61,13 @@ export class UpdateCharacterHandler {
 
     const sheetSnapshot = await this.sheetRepository.load(row.id, effective.backgroundSlug);
     const effectiveCharacterFeats =
-      dto.characterFeats !== undefined || dto.featSlugs !== undefined
-        ? resolveCharacterFeats(dto)
+      dto.characterFeats !== undefined
+        ? dto.characterFeats
         : sheetSnapshot.characterFeats;
     let effectiveFeatOptions = sheetSnapshot.featOptions;
     if (dto.featOptions !== undefined) {
       effectiveFeatOptions = dto.featOptions;
-    } else if (dto.characterFeats !== undefined || dto.featSlugs !== undefined) {
+    } else if (dto.characterFeats !== undefined) {
       effectiveFeatOptions = sheetSnapshot.featOptions.filter((option) =>
         effectiveCharacterFeats.some(
           (feat) =>
@@ -83,11 +82,7 @@ export class UpdateCharacterHandler {
       characterFeats: effectiveCharacterFeats,
     });
 
-    if (
-      dto.characterFeats !== undefined ||
-      dto.featSlugs !== undefined ||
-      dto.featOptions !== undefined
-    ) {
+    if (dto.characterFeats !== undefined || dto.featOptions !== undefined) {
       await this.sheetValidator.validateFeatOptions(
         effectiveCharacterFeats,
         effectiveFeatOptions,
@@ -189,7 +184,6 @@ export class UpdateCharacterHandler {
       speciesChoices: dto.speciesChoices,
       subclassOptions: dto.subclassOptions,
       characterFeats: dto.characterFeats,
-      featSlugs: dto.featSlugs,
       featOptions: dto.featOptions,
       characterSpells: dto.characterSpells,
       equipment: dto.equipment,

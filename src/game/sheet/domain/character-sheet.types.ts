@@ -37,8 +37,6 @@ export interface CharacterSheetInput {
   classSkillSlugs?: string[];
   speciesChoices?: SpeciesChoiceDto[];
   subclassOptions?: SubclassOptionDto[];
-  /** @deprecated Prefer characterFeats */
-  featSlugs?: string[];
   characterFeats?: CharacterFeatDto[];
   featOptions?: FeatOptionDto[];
   characterSpells?: CharacterSpellDto[];

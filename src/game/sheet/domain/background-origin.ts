@@ -1,18 +1,12 @@
 import { CharacterFeatDto } from '../dto/character-sheet.dto';
 import { VPhbBackground } from '../../../entities/views/v-phb-background.entity';
-import {
-  characterFeatsFromSlugs,
-  nextFeatInstanceIndex,
-} from './character-feat';
+import { nextFeatInstanceIndex } from './character-feat';
 
 export function resolveBackgroundOriginCharacterFeats(
   background: Pick<VPhbBackground, 'featSlug'>,
   provided?: CharacterFeatDto[],
-  legacyFeatSlugs?: string[],
 ): CharacterFeatDto[] {
-  const feats = provided?.length
-    ? [...provided]
-    : characterFeatsFromSlugs(legacyFeatSlugs);
+  const feats = provided?.length ? [...provided] : [];
 
   const origin = background.featSlug?.trim();
   if (origin && !feats.some((feat) => feat.featSlug === origin)) {
@@ -23,16 +17,6 @@ export function resolveBackgroundOriginCharacterFeats(
   }
 
   return feats;
-}
-
-/** @deprecated Use resolveBackgroundOriginCharacterFeats */
-export function resolveBackgroundOriginFeatSlugs(
-  background: Pick<VPhbBackground, 'featSlug'>,
-  provided?: string[],
-): string[] {
-  return resolveBackgroundOriginCharacterFeats(background, undefined, provided).map(
-    (feat) => feat.featSlug,
-  );
 }
 
 export function resolveBackgroundToolItemSlug(

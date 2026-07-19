@@ -33,6 +33,14 @@ export class EquipmentMapper {
         description: p.description,
       }));
 
+    const range =
+      raw?.range && (raw.range.normal != null || raw.range.max != null)
+        ? {
+            normal: raw.range.normal ?? null,
+            max: raw.range.max ?? null,
+          }
+        : null;
+
     return {
       slug: row.item.slug,
       name: row.item.name,
@@ -42,7 +50,7 @@ export class EquipmentMapper {
       versatileDamage: raw?.versatileDamage ?? null,
       cost: row.item.cost,
       weight: row.item.weight,
-      properties: raw,
+      range,
       propertyDetails,
       mastery: mastery
         ? {

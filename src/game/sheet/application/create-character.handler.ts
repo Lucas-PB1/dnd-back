@@ -14,7 +14,6 @@ import {
   resolveBackgroundOriginCharacterFeats,
   resolveBackgroundToolItemSlug,
 } from '../domain/background-origin';
-import { resolveCharacterFeats } from '../domain/character-feat';
 
 @Injectable()
 export class CreateCharacterHandler {
@@ -56,7 +55,6 @@ export class CreateCharacterHandler {
     const characterFeats = resolveBackgroundOriginCharacterFeats(
       background,
       dto.characterFeats,
-      dto.featSlugs,
     );
     const backgroundToolItemSlug = resolveBackgroundToolItemSlug(
       background,

@@ -92,6 +92,3 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
   exports: [CharacterDomainService, UpdateCharacterHandler, CharacterSpellLookup],
 })
 export class CharacterSheetModule {}
-
-/** @deprecated Use CharacterSheetModule */
-export { CharacterSheetModule as CharactersModule };

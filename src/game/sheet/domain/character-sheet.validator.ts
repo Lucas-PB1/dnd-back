@@ -23,7 +23,7 @@ import {
   applyBackgroundAbilityBoosts,
   assertBackgroundBoostSlugsAllowed,
 } from './background-ability-boost';
-import { featInstanceKey, resolveCharacterFeats } from './character-feat';
+import { featInstanceKey } from './character-feat';
 
 export interface CharacterSheetContext {
   level: number;
@@ -85,8 +85,8 @@ export class CharacterSheetValidator {
       await this.validateSubclassOptions(ctx.subclassSlug, input.subclassOptions);
     }
 
-    const characterFeats = resolveCharacterFeats(input);
-    if (input.characterFeats !== undefined || input.featSlugs !== undefined) {
+    const characterFeats = input.characterFeats ?? [];
+    if (input.characterFeats !== undefined) {
       await this.validateCharacterFeats(characterFeats);
     }
 
@@ -164,7 +164,7 @@ export class CharacterSheetValidator {
       }
     }
 
-    const createFeats = resolveCharacterFeats(input);
+    const createFeats = input.characterFeats ?? [];
     if (createFeats.length > 0) {
       await this.validateFeatOptions(createFeats, input.featOptions ?? []);
     }

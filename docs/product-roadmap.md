@@ -7,7 +7,7 @@ Documento **vivo** do caminho até app consumidor 100% baseado na API.
 | **dnd-api** | Postgres PHB + API NestJS + regras de ficha |
 | **dnd-front** | Next.js — compêndio, wizard, ficha, mesa |
 
-Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`equipment-catalog-plan.md`](equipment-catalog-plan.md) (itens/armas/armaduras) · [`game-advanced-plan.md`](game-advanced-plan.md) (mesa/inventário) · [`../dnd-front/docs/CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-PLAN.md) (ficha front)
+Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`sheet-readiness-plan.md`](sheet-readiness-plan.md) (catálogo→ficha) · [`equipment-catalog-plan.md`](equipment-catalog-plan.md) (itens/armas/armaduras) · [`game-advanced-plan.md`](game-advanced-plan.md) (mesa/inventário) · [`../dnd-front/docs/CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-PLAN.md) (ficha front)
 
 **Última revisão:** 2026-07-19
 
@@ -24,7 +24,7 @@ Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`equipment-cat
 | Game — ficha PHB (API) | **100%** | CRUD + escolhas + `characterFeats` / `featOptions` |
 | Game — mesa 7A–7C (API) | **100%** | level-up, inventário, state, cast, rest |
 | **dnd-front** — MVP ficha | **~95%** | Wizard PHB, ficha leitura/edição, mesa |
-| **dnd-front** — compêndio | **~85%** | + talentos, equipamento; ver [`equipment-catalog-plan.md`](equipment-catalog-plan.md) p/ gaps mecânicos |
+| **dnd-front** — compêndio | **~95%** | Hub completo + filtros; gaps mecânicos em [`equipment-catalog-plan.md`](equipment-catalog-plan.md) / ficha em [`sheet-readiness-plan.md`](sheet-readiness-plan.md) |
 | Deploy produção (Fase 6) | **em andamento** | Ver [`DEPLOY.md`](DEPLOY.md) |
 | Campanha / combate (7D) | **0%** | Fora do escopo atual |
 
@@ -145,16 +145,19 @@ Guia: **[`DEPLOY.md`](DEPLOY.md)**
 
 ## Próximos passos (prioridade sugerida)
 
+Plano detalhado catálogo→ficha: **[`sheet-readiness-plan.md`](sheet-readiness-plan.md)** (ST, proficiências, traits, condições, progressão, ASI).
+
 | # | Área | O quê | Por quê |
 |---|------|-------|---------|
 | 1 | **Deploy** | Fase 6 — API + front na Vercel, env prod | Usar fora da máquina local |
 | 2 | **CI** | `test:cov` API + lint/test/build front no PR | Regressão automática |
-| 3 | **Compêndio** | Páginas `/feats`, `/skills`, armas/armaduras | Completar hub PHB |
-| 4 | **Feats PHB** | Seeds de mais talentos com `feat_option_def` | Só 3 feats com opções internas hoje |
-| 5 | **Mesa UX** | Picker de condições (`phb_condition`) em vez de texto livre | Consistência com concentração |
-| 6 | **Level-up ASI** | Fluxo guiado +2/+1 no level-up (hoje via editar Atributos) | Menos fricção no marco 4/8/12… |
-| 7 | **Contrato** | `GET /feats/:slug/options` nos dois `api-endpoints.md` | Documentação alinhada |
-| 8 | **Campanha** | Fase 7D — mesas, iniciativa | Novo BC; escopo grande |
+| 3 | **Sheet readiness** | Fases 1–2 — ST/prof na API + ficha; traits de espécie | Dados seedados sem UI |
+| 4 | **Mesa UX** | Fase 3 — picker de condições (`GET /conditions`) | Consistência com concentração |
+| 5 | **Progressão / magias** | Fase 4 — `GET /classes/:slug/progression` + cotas | Cantrips/prepared no wizard |
+| 6 | **Level-up ASI** | Fase 5 — fluxo guiado +2/+1 no level-up | Menos fricção no marco 4/8/12… |
+| 7 | **Feats PHB** | Seeds de mais talentos com `feat_option_def` | Só poucos feats com opções internas |
+| 8 | **Contrato** | `GET /feats/:slug/options` nos dois `api-endpoints.md` | Documentação alinhada |
+| 9 | **Campanha** | Fase 7D — mesas, iniciativa | Novo BC; escopo grande |
 
 ---
 

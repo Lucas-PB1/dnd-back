@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { PhbWeapon } from '../../entities/phb-weapon.entity';
 import { PhbWeaponMastery } from '../../entities/phb-weapon-mastery.entity';
 import { PhbWeaponProperty } from '../../entities/phb-weapon-property.entity';
-import { PhbItem } from '../../entities/phb-item.entity';
 import { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
 import { EquipmentMapper } from './equipment.mapper';
 import { FindWeaponsQuery } from './queries/find-weapons.query';
@@ -17,7 +16,6 @@ import { ArmorController } from './armor.controller';
   imports: [
     TypeOrmModule.forFeature([
       PhbWeapon,
-      PhbItem,
       VPhbArmor,
       PhbWeaponProperty,
       PhbWeaponMastery,

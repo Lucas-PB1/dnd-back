@@ -30,7 +30,6 @@ export class LevelUpHandler {
       speciesChoices: dto.speciesChoices,
       subclassOptions: dto.subclassOptions,
       characterFeats: dto.characterFeats,
-      featSlugs: dto.featSlugs,
       featOptions: dto.featOptions,
       characterSpells: dto.characterSpells,
       equipment: dto.equipment,

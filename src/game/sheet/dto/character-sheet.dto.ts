@@ -137,12 +137,6 @@ export class CharacterSheetInputDto {
   @Type(() => SubclassOptionDto)
   subclassOptions?: SubclassOptionDto[];
 
-  @ApiPropertyOptional({ example: ['magic-initiate'] })
-  @IsOptional()
-  @IsArray()
-  @IsString({ each: true })
-  featSlugs?: string[];
-
   @ApiPropertyOptional({ type: [CharacterFeatDto] })
   @IsOptional()
   @IsArray()
@@ -182,39 +176,4 @@ export class CharacterSheetInputDto {
   @IsOptional()
   @IsString()
   abilityGenerationMethodSlug?: string;
-}
-
-export class CharacterSheetResponseDto {
-  @ApiProperty({ type: [SpeciesChoiceDto] })
-  speciesChoices!: SpeciesChoiceDto[];
-
-  @ApiProperty({ type: [SubclassOptionDto] })
-  subclassOptions!: SubclassOptionDto[];
-
-  @ApiProperty({ example: ['magic-initiate'] })
-  featSlugs!: string[];
-
-  @ApiProperty({ type: [CharacterFeatDto] })
-  characterFeats!: CharacterFeatDto[];
-
-  @ApiProperty({ type: [FeatOptionDto] })
-  featOptions!: FeatOptionDto[];
-
-  @ApiProperty({ type: [CharacterSpellDto] })
-  characterSpells!: CharacterSpellDto[];
-
-  @ApiProperty({ type: [CharacterEquipmentDto] })
-  equipment!: CharacterEquipmentDto[];
-
-  @ApiProperty({ example: ['common'] })
-  languageSlugs!: string[];
-
-  @ApiPropertyOptional({ example: 'standard-array' })
-  abilityGenerationMethodSlug!: string | null;
-
-  @ApiProperty({
-    example: ['insight', 'religion'],
-    description: 'Perícias fixas do antecedente (somente leitura, derivado do catálogo)',
-  })
-  backgroundSkillSlugs!: string[];
 }

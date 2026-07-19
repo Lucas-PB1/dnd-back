@@ -16,7 +16,7 @@ import {
   CharacterSheetInput,
   EMPTY_SHEET_DATA,
 } from '../domain/character-sheet.types';
-import { featInstanceKey, resolveCharacterFeats } from '../domain/character-feat';
+import { featInstanceKey } from '../domain/character-feat';
 
 @Injectable()
 export class CharacterSheetRepository {
@@ -172,16 +172,11 @@ export class CharacterSheetRepository {
       }
     }
 
-    const characterFeatsInput =
-      input.characterFeats !== undefined || input.featSlugs !== undefined
-        ? resolveCharacterFeats(input)
-        : undefined;
-
-    if (characterFeatsInput !== undefined) {
+    if (input.characterFeats !== undefined) {
       await this.feats.delete({ characterId });
-      if (characterFeatsInput.length > 0) {
+      if (input.characterFeats.length > 0) {
         await this.feats.insert(
-          characterFeatsInput.map((feat) => ({
+          input.characterFeats.map((feat) => ({
             characterId,
             featSlug: feat.featSlug,
             instanceIndex: feat.instanceIndex,
@@ -190,7 +185,7 @@ export class CharacterSheetRepository {
       }
 
       const validKeys = new Set(
-        characterFeatsInput.map((feat) =>
+        input.characterFeats.map((feat) =>
           featInstanceKey(feat.featSlug, feat.instanceIndex),
         ),
       );

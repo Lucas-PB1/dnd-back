@@ -11,6 +11,14 @@ export class WeaponTraitDto {
   description!: string;
 }
 
+export class WeaponRangeDto {
+  @ApiPropertyOptional({ example: 20 })
+  normal!: number | null;
+
+  @ApiPropertyOptional({ example: 60 })
+  max!: number | null;
+}
+
 export class WeaponResponseDto {
   @ApiProperty({ example: 'longsword' })
   slug!: string;
@@ -36,8 +44,8 @@ export class WeaponResponseDto {
   @ApiPropertyOptional()
   weight!: string | null;
 
-  @ApiPropertyOptional({ description: 'Legacy raw properties jsonb' })
-  properties!: Record<string, unknown> | null;
+  @ApiPropertyOptional({ type: WeaponRangeDto })
+  range!: WeaponRangeDto | null;
 
   @ApiProperty({ type: [WeaponTraitDto] })
   propertyDetails!: WeaponTraitDto[];
