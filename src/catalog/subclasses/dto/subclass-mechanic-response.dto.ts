@@ -7,8 +7,14 @@ export class SubclassMechanicResponseDto {
   @ApiProperty({ example: 3 })
   featureLevel!: number;
 
-  @ApiProperty({ example: 'Atleta Extraordinário' })
+  @ApiProperty({ example: 'Crítico Aprimorado' })
   featureName!: string;
+
+  @ApiProperty({
+    example:
+      'Seus ataques com armas e Desarmados podem marcar um sucesso crítico em um 19 ou 20 no d20.',
+  })
+  featureDescription!: string;
 
   @ApiPropertyOptional({ example: 'passive' })
   featureKind!: string | null;

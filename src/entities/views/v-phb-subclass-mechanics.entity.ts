@@ -14,6 +14,9 @@ export class VPhbSubclassMechanics {
   @ViewColumn({ name: 'feature_name' })
   featureName!: string;
 
+  @ViewColumn({ name: 'feature_description' })
+  featureDescription!: string;
+
   @ViewColumn({ name: 'feature_kind' })
   featureKind!: string | null;
 

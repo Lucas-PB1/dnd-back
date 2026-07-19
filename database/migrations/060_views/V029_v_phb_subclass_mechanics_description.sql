@@ -1,4 +1,5 @@
--- View rpg.v_phb_subclass_mechanics
+-- Recria a view para incluir feature_description (CREATE OR REPLACE
+-- não permite inserir coluna no meio da lista existente).
 
 DROP VIEW IF EXISTS rpg.v_phb_subclass_mechanics;
 

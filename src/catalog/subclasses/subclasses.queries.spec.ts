@@ -37,6 +37,7 @@ describe('Subclasses queries', () => {
     subclassSlug: 'champion',
     featureLevel: 3,
     featureName: 'Atleta Extraordinário',
+    featureDescription: 'Você tem vantagem em testes de Força (Atletismo).',
     featureKind: 'passive',
     optionKey: null,
     resourceSlug: null,

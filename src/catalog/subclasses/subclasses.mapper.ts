@@ -28,6 +28,7 @@ export class SubclassesMapper {
       classSlug: row.classSlug,
       featureLevel: row.featureLevel,
       featureName: row.featureName,
+      featureDescription: row.featureDescription,
       featureKind: row.featureKind,
       optionKey: row.optionKey,
       resourceSlug: row.resourceSlug,
