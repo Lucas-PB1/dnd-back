@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbClassFeature } from '../../../entities/views/v-phb-class-feature.entity';
 import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
+import { PaginatedResponseDto, paginateOrNotFound } from '../../../common/dto/pagination.dto';
 import { ClassFeatureResponseDto } from '../dto/class-feature-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 
@@ -31,9 +31,13 @@ export class FindClassFeaturesQuery {
     if (maxLevel !== undefined) {
       rows = rows.filter((row) => row.featureLevel <= maxLevel);
     }
-    if (rows.length === 0) {
-      throw new NotFoundException(`Class '${classSlug}' has no class features data`);
-    }
-    return paginate(rows.map((row) => this.mapper.toClassFeatureDto(row)), page, limit);
+
+    return paginateOrNotFound(
+      rows,
+      (row) => this.mapper.toClassFeatureDto(row),
+      page,
+      limit,
+      `Class '${classSlug}' has no class features data`,
+    );
   }
 }

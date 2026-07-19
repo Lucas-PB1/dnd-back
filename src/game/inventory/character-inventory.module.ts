@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CatalogModule } from '../../catalog/catalog.module';
 import { PhbItem } from '../../entities/phb-item.entity';
 import { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
@@ -16,6 +17,7 @@ import { RemoveInventoryItemHandler } from './application/remove-inventory-item.
   imports: [
     TypeOrmModule.forFeature([PlayerCharacterItem, PhbItem, VPhbArmor]),
     GameSharedModule,
+    CatalogModule,
   ],
   controllers: [CharacterInventoryController],
   providers: [

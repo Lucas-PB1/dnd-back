@@ -5,14 +5,7 @@ import { PhbWeaponProperty } from '../../entities/phb-weapon-property.entity';
 import { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
 import { WeaponResponseDto } from './dto/weapon-response.dto';
 import { ArmorResponseDto } from './dto/armor-response.dto';
-
-type WeaponPropsJson = {
-  propertyIds?: string[];
-  masteryId?: string;
-  versatileDamage?: string;
-  range?: { normal?: number; max?: number };
-  [key: string]: unknown;
-};
+import { weaponPropsOf } from './weapon-props';
 
 @Injectable()
 export class EquipmentMapper {
@@ -21,9 +14,9 @@ export class EquipmentMapper {
     propertyRows: PhbWeaponProperty[] = [],
     mastery: PhbWeaponMastery | null = null,
   ): WeaponResponseDto {
-    const raw = (row.item.properties ?? null) as WeaponPropsJson | null;
+    const raw = weaponPropsOf(row);
     const bySlug = new Map(propertyRows.map((p) => [p.slug, p]));
-    const orderedIds = raw?.propertyIds ?? [];
+    const orderedIds = raw.propertyIds ?? [];
     const propertyDetails = orderedIds
       .map((slug) => bySlug.get(slug))
       .filter((p): p is PhbWeaponProperty => !!p)
@@ -34,7 +27,7 @@ export class EquipmentMapper {
       }));
 
     const range =
-      raw?.range && (raw.range.normal != null || raw.range.max != null)
+      raw.range && (raw.range.normal != null || raw.range.max != null)
         ? {
             normal: raw.range.normal ?? null,
             max: raw.range.max ?? null,
@@ -47,7 +40,7 @@ export class EquipmentMapper {
       category: row.category,
       damage: row.damage,
       damageType: row.damageType,
-      versatileDamage: raw?.versatileDamage ?? null,
+      versatileDamage: raw.versatileDamage ?? null,
       cost: row.item.cost,
       weight: row.item.weight,
       range,

@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbSpell } from '../../../entities/views/v-phb-spell.entity';
-import { PaginatedResponseDto } from '../../../common/dto/pagination.dto';
+import {
+  applyIlikeSearch,
+  PaginatedResponseDto,
+  paginateQb,
+} from '../../../common/dto/pagination.dto';
 import { SpellResponseDto } from '../dto/spell-response.dto';
 import { SpellsMapper } from '../spells.mapper';
 
@@ -21,21 +25,17 @@ export class FindSpellsQuery {
     level?: number,
     school?: string,
   ): Promise<PaginatedResponseDto<SpellResponseDto>> {
-    const safePage = Math.max(1, page);
-    const safeLimit = Math.min(100, Math.max(1, limit));
-
     const qb = this.spellsRepo
       .createQueryBuilder('spell')
       .orderBy('spell.level', 'ASC')
       .addOrderBy('spell.name', 'ASC');
 
-    const term = q?.trim();
-    if (term) {
-      qb.andWhere(
-        '(spell.name ILIKE :q OR spell.slug ILIKE :q OR spell.schoolName ILIKE :q OR spell.levelLabel ILIKE :q)',
-        { q: `%${term}%` },
-      );
-    }
+    applyIlikeSearch(qb, [
+      'spell.name',
+      'spell.slug',
+      'spell.schoolName',
+      'spell.levelLabel',
+    ], q);
 
     if (level !== undefined && level !== null && !Number.isNaN(level)) {
       qb.andWhere('spell.level = :level', { level });
@@ -46,19 +46,7 @@ export class FindSpellsQuery {
       qb.andWhere('spell.schoolSlug = :schoolSlug', { schoolSlug });
     }
 
-    qb.skip((safePage - 1) * safeLimit).take(safeLimit);
-
-    const [rows, total] = await qb.getManyAndCount();
-    const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
-
-    return {
-      data: rows.map((row) => this.mapper.toDto(row)),
-      meta: {
-        page: safePage,
-        limit: safeLimit,
-        total,
-        totalPages,
-      },
-    };
+    const { rows, meta } = await paginateQb(qb, page, limit);
+    return { data: rows.map((row) => this.mapper.toDto(row)), meta };
   }
 }

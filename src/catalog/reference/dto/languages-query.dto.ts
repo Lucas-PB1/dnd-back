@@ -1,15 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsIn, IsOptional, IsString } from 'class-validator';
-import { PaginationQueryDto } from '../../../common/dto/pagination.dto';
+import { IsIn, IsOptional } from 'class-validator';
+import { SearchQueryDto } from '../../../common/dto/pagination.dto';
 
-export class LanguagesQueryDto extends PaginationQueryDto {
-  @ApiPropertyOptional({
-    description: 'Filter by name, slug, script, or speakers (case-insensitive)',
-  })
-  @IsOptional()
-  @IsString()
-  q?: string;
-
+export class LanguagesQueryDto extends SearchQueryDto {
   @ApiPropertyOptional({
     description: 'Filter rare languages (true | false)',
     enum: ['true', 'false'],

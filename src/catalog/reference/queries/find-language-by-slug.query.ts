@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { requireFound } from '../../../common/require-found';
 import { PhbLanguage } from '../../../entities/phb-language.entity';
 import { LanguageResponseDto } from '../dto/language-response.dto';
 import { ReferenceMapper } from '../reference.mapper';
@@ -14,10 +15,10 @@ export class FindLanguageBySlugQuery {
   ) {}
 
   async execute(slug: string): Promise<LanguageResponseDto> {
-    const row = await this.languagesRepo.findOne({ where: { slug } });
-    if (!row) {
-      throw new NotFoundException(`Language not found: ${slug}`);
-    }
+    const row = requireFound(
+      await this.languagesRepo.findOne({ where: { slug } }),
+      `Language not found: ${slug}`,
+    );
     return this.mapper.toLanguageDto(row);
   }
 }

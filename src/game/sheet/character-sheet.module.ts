@@ -2,11 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '../../catalog/catalog.module';
 import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
-import { PhbLanguage } from '../../entities/phb-language.entity';
-import { PhbAbilityGenerationMethod } from '../../entities/phb-ability-generation-method.entity';
 import { PhbSubclassOptionValue, PhbSubclassRef } from '../../entities/phb-subclass-option-value.entity';
 import { VPhbSpeciesTraitChoices } from '../../entities/views/v-phb-species-trait-choices.entity';
-import { VPhbFeat } from '../../entities/views/v-phb-feat.entity';
 import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
@@ -56,11 +53,8 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
       PlayerCharacterLanguage,
       PhbCharacterLevel,
       VPhbSpeciesTraitChoices,
-      VPhbFeat,
       VSpellByClass,
       VPhbSubclassPreparedSpell,
-      PhbLanguage,
-      PhbAbilityGenerationMethod,
       PhbSubclassRef,
       PhbSubclassOptionValue,
       VPhbClassEquipment,

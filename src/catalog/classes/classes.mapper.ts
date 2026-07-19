@@ -8,6 +8,7 @@ import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-cho
 import { VPhbClassFeature } from '../../entities/views/v-phb-class-feature.entity';
 import { ClassResponseDto } from './dto/class-response.dto';
 import { SubclassResponseDto } from '../subclasses/dto/subclass-response.dto';
+import { mapSubclassDto } from '../subclasses/map-subclass-dto';
 import { ClassSpellResponseDto } from './dto/class-spell-response.dto';
 import { ClassSpellSlotsResponseDto } from './dto/class-spell-slots-response.dto';
 import { ClassEquipmentResponseDto } from './dto/class-equipment-response.dto';
@@ -37,18 +38,7 @@ export class ClassesMapper {
   }
 
   toSubclassDto(row: VPhbSubclass): SubclassResponseDto {
-    return {
-      slug: row.subclassSlug,
-      name: row.subclassName,
-      classSlug: row.classSlug,
-      className: row.className,
-      tagline: row.tagline,
-      summary: row.summary,
-      sourceChapter: row.sourceChapter,
-      editionSlug: row.editionSlug,
-      spellSourceSlug: row.spellSourceSlug,
-      spellSourceLabel: row.spellSourceLabel,
-    };
+    return mapSubclassDto(row);
   }
 
   toClassSpellDto(row: VSpellByClass): ClassSpellResponseDto {

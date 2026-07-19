@@ -1,7 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PaginatedResponseDto } from '../../../common/dto/pagination.dto';
+import {
+  applyIlikeSearch,
+  PaginatedResponseDto,
+  paginateQb,
+} from '../../../common/dto/pagination.dto';
 import { PhbItem } from '../../../entities/phb-item.entity';
 import { ItemResponseDto } from '../dto/item-response.dto';
 import { ItemsMapper } from '../items.mapper';
@@ -20,19 +24,11 @@ export class FindItemsQuery {
     q?: string,
     itemType?: string,
   ): Promise<PaginatedResponseDto<ItemResponseDto>> {
-    const safePage = Math.max(1, page);
-    const safeLimit = Math.min(100, Math.max(1, limit));
-
     const qb = this.itemsRepo
       .createQueryBuilder('item')
       .orderBy('item.name', 'ASC');
 
-    const term = q?.trim();
-    if (term) {
-      qb.andWhere('(item.name ILIKE :q OR item.slug ILIKE :q)', {
-        q: `%${term}%`,
-      });
-    }
+    applyIlikeSearch(qb, ['item.name', 'item.slug'], q);
 
     const types = itemType
       ?.split(',')
@@ -44,19 +40,7 @@ export class FindItemsQuery {
       qb.andWhere('item.itemType IN (:...types)', { types });
     }
 
-    qb.skip((safePage - 1) * safeLimit).take(safeLimit);
-
-    const [rows, total] = await qb.getManyAndCount();
-    const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
-
-    return {
-      data: rows.map((row) => this.mapper.toDto(row)),
-      meta: {
-        page: safePage,
-        limit: safeLimit,
-        total,
-        totalPages,
-      },
-    };
+    const { rows, meta } = await paginateQb(qb, page, limit);
+    return { data: rows.map((row) => this.mapper.toDto(row)), meta };
   }
 }

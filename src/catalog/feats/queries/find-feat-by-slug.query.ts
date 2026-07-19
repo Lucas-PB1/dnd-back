@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { requireFound } from '../../../common/require-found';
 import { VPhbFeat } from '../../../entities/views/v-phb-feat.entity';
 import { FeatResponseDto } from '../dto/feat-response.dto';
 import { FeatsMapper } from '../feats.mapper';
@@ -14,10 +15,10 @@ export class FindFeatBySlugQuery {
   ) {}
 
   async execute(slug: string): Promise<FeatResponseDto> {
-    const row = await this.featsRepo.findOne({ where: { featSlug: slug } });
-    if (!row) {
-      throw new NotFoundException(`Feat '${slug}' not found`);
-    }
+    const row = requireFound(
+      await this.featsRepo.findOne({ where: { featSlug: slug } }),
+      `Feat '${slug}' not found`,
+    );
     return this.mapper.toDto(row);
   }
 }

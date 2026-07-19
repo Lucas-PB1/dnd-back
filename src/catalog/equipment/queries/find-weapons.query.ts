@@ -1,17 +1,21 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { PhbWeapon } from '../../../entities/phb-weapon.entity';
 import { PhbWeaponMastery } from '../../../entities/phb-weapon-mastery.entity';
 import { PhbWeaponProperty } from '../../../entities/phb-weapon-property.entity';
-import { PaginatedResponseDto } from '../../../common/dto/pagination.dto';
+import {
+  applyIlikeSearch,
+  PaginatedResponseDto,
+  paginateQb,
+} from '../../../common/dto/pagination.dto';
 import { WeaponResponseDto } from '../dto/weapon-response.dto';
 import { EquipmentMapper } from '../equipment.mapper';
-
-type WeaponPropsJson = {
-  propertyIds?: string[];
-  masteryId?: string;
-};
+import {
+  loadWeaponMasteryBySlug,
+  loadWeaponPropertyRows,
+  weaponPropsOf,
+} from '../weapon-props';
 
 @Injectable()
 export class FindWeaponsQuery {
@@ -31,70 +35,36 @@ export class FindWeaponsQuery {
     q?: string,
     category?: string,
   ): Promise<PaginatedResponseDto<WeaponResponseDto>> {
-    const safePage = Math.max(1, page);
-    const safeLimit = Math.min(100, Math.max(1, limit));
-
     const qb = this.weaponsRepo
       .createQueryBuilder('weapon')
       .innerJoinAndSelect('weapon.item', 'item')
       .orderBy('item.name', 'ASC');
 
-    const term = q?.trim();
-    if (term) {
-      qb.andWhere(
-        '(item.name ILIKE :q OR item.slug ILIKE :q OR weapon.category::text ILIKE :q OR COALESCE(weapon.damageType, \'\') ILIKE :q OR COALESCE(weapon.damage, \'\') ILIKE :q)',
-        { q: `%${term}%` },
-      );
-    }
+    applyIlikeSearch(qb, [
+      'item.name',
+      'item.slug',
+      'weapon.category::text',
+      "COALESCE(weapon.damageType, '')",
+      "COALESCE(weapon.damage, '')",
+    ], q);
 
     const categoryValue = category?.trim();
     if (categoryValue) {
       qb.andWhere('weapon.category = :category', { category: categoryValue });
     }
 
-    const total = await qb.getCount();
-    const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
-    const currentPage = Math.min(safePage, totalPages);
-
-    const rows = await qb
-      .skip((currentPage - 1) * safeLimit)
-      .take(safeLimit)
-      .getMany();
-    const data = await this.mapRows(rows);
-
-    return {
-      data,
-      meta: {
-        page: currentPage,
-        limit: safeLimit,
-        total,
-        totalPages,
-      },
-    };
+    const { rows, meta } = await paginateQb(qb, page, limit);
+    return { data: await this.mapRows(rows), meta };
   }
 
   private async mapRows(rows: PhbWeapon[]): Promise<WeaponResponseDto[]> {
-    const propertySlugs = new Set<string>();
-    const masterySlugs = new Set<string>();
-    for (const row of rows) {
-      const raw = (row.item.properties ?? {}) as WeaponPropsJson;
-      for (const slug of raw.propertyIds ?? []) propertySlugs.add(slug);
-      if (raw.masteryId) masterySlugs.add(raw.masteryId);
-    }
-
-    const [properties, masteries] = await Promise.all([
-      propertySlugs.size
-        ? this.propertyRepo.find({ where: { slug: In([...propertySlugs]) } })
-        : Promise.resolve([]),
-      masterySlugs.size
-        ? this.masteryRepo.find({ where: { slug: In([...masterySlugs]) } })
-        : Promise.resolve([]),
+    const [properties, masteryBySlug] = await Promise.all([
+      loadWeaponPropertyRows(rows, this.propertyRepo),
+      loadWeaponMasteryBySlug(rows, this.masteryRepo),
     ]);
 
-    const masteryBySlug = new Map(masteries.map((m) => [m.slug, m]));
-
     return rows.map((row) => {
-      const raw = (row.item.properties ?? {}) as WeaponPropsJson;
+      const raw = weaponPropsOf(row);
       const needed = new Set(raw.propertyIds ?? []);
       const props = properties.filter((p) => needed.has(p.slug));
       const mastery = raw.masteryId

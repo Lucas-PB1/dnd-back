@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CatalogModule } from '../../catalog/catalog.module';
 import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
-import { VPhbSpell } from '../../entities/views/v-phb-spell.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { PhbCondition } from './infrastructure/phb-condition.entity';
@@ -19,10 +19,10 @@ import { RestHandler } from './application/rest.handler';
       PlayerCharacterState,
       PhbCondition,
       VClassSpellSlots,
-      VPhbSpell,
     ]),
     GameSharedModule,
     CharacterSheetModule,
+    CatalogModule,
   ],
   controllers: [CharacterSessionController],
   providers: [

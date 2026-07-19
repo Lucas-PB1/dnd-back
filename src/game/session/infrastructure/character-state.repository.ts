@@ -1,8 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
+import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
-import { VPhbSpell } from '../../../entities/views/v-phb-spell.entity';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { CharacterSpellLookup } from '../../sheet/application/character-spell-lookup';
@@ -24,10 +24,9 @@ export class CharacterStateRepository {
     private readonly state: Repository<PlayerCharacterState>,
     @InjectRepository(VClassSpellSlots)
     private readonly classSlots: Repository<VClassSpellSlots>,
-    @InjectRepository(VPhbSpell)
-    private readonly spells: Repository<VPhbSpell>,
     @InjectRepository(PhbCondition)
     private readonly conditions: Repository<PhbCondition>,
+    private readonly catalogLookup: CatalogLookupService,
     private readonly characters: CharacterRepository,
     private readonly spellLookup: CharacterSpellLookup,
   ) {}
@@ -85,10 +84,7 @@ export class CharacterStateRepository {
 
     if (dto.concentratingOn !== undefined) {
       if (dto.concentratingOn !== null) {
-        const spell = await this.spells.findOne({ where: { slug: dto.concentratingOn } });
-        if (!spell) {
-          throw new BadRequestException(`Spell '${dto.concentratingOn}' not found in catalog`);
-        }
+        const spell = await this.catalogLookup.assertSpellInCatalog(dto.concentratingOn);
         if (!spell.concentration) {
           throw new BadRequestException(`Spell '${dto.concentratingOn}' is not a concentration spell`);
         }
@@ -109,10 +105,7 @@ export class CharacterStateRepository {
       throw new BadRequestException(`Spell '${dto.spellSlug}' is not on this character's list`);
     }
 
-    const spell = await this.spells.findOne({ where: { slug: dto.spellSlug } });
-    if (!spell) {
-      throw new NotFoundException(`Spell '${dto.spellSlug}' not found in catalog`);
-    }
+    const spell = await this.catalogLookup.findSpellOrFail(dto.spellSlug);
 
     const state = await this.findOrCreate(character.id);
     let slotLevelUsed: number | null = null;

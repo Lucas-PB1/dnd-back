@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbFeat } from '../../../entities/views/v-phb-feat.entity';
-import { PaginatedResponseDto } from '../../../common/dto/pagination.dto';
+import {
+  applyIlikeSearch,
+  PaginatedResponseDto,
+  paginateQb,
+} from '../../../common/dto/pagination.dto';
 import { FeatResponseDto } from '../dto/feat-response.dto';
 import { FeatsMapper } from '../feats.mapper';
 
@@ -20,39 +24,24 @@ export class FindFeatsQuery {
     q?: string,
     category?: string,
   ): Promise<PaginatedResponseDto<FeatResponseDto>> {
-    const safePage = Math.max(1, page);
-    const safeLimit = Math.min(100, Math.max(1, limit));
-
     const qb = this.featsRepo
       .createQueryBuilder('feat')
       .orderBy('feat.featName', 'ASC');
 
-    const term = q?.trim();
-    if (term) {
-      qb.andWhere(
-        '(feat.featName ILIKE :q OR feat.featSlug ILIKE :q OR feat.categoryName ILIKE :q OR feat.categoryTypeLabel ILIKE :q OR COALESCE(feat.prerequisite, \'\') ILIKE :q)',
-        { q: `%${term}%` },
-      );
-    }
+    applyIlikeSearch(qb, [
+      'feat.featName',
+      'feat.featSlug',
+      'feat.categoryName',
+      'feat.categoryTypeLabel',
+      "COALESCE(feat.prerequisite, '')",
+    ], q);
 
     const categorySlug = category?.trim();
     if (categorySlug) {
       qb.andWhere('feat.categorySlug = :categorySlug', { categorySlug });
     }
 
-    qb.skip((safePage - 1) * safeLimit).take(safeLimit);
-
-    const [rows, total] = await qb.getManyAndCount();
-    const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
-
-    return {
-      data: rows.map((row) => this.mapper.toDto(row)),
-      meta: {
-        page: safePage,
-        limit: safeLimit,
-        total,
-        totalPages,
-      },
-    };
+    const { rows, meta } = await paginateQb(qb, page, limit);
+    return { data: rows.map((row) => this.mapper.toDto(row)), meta };
   }
 }

@@ -44,7 +44,8 @@ describe('Spells queries', () => {
       andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
-      getManyAndCount: jest.fn().mockResolvedValue([rows, total]),
+      getCount: jest.fn().mockResolvedValue(total),
+      getMany: jest.fn().mockResolvedValue(rows),
     };
   }
 

@@ -8,7 +8,6 @@ import {
   PhbFeatRef,
 } from '../../../entities/phb-feat-option.entity';
 import { VPhbSpeciesTraitChoices } from '../../../entities/views/v-phb-species-trait-choices.entity';
-import { VPhbFeat } from '../../../entities/views/v-phb-feat.entity';
 import { VSpellByClass } from '../../../entities/views/v-spell-by-class.entity';
 import { CharacterSheetValidator } from './character-sheet.validator';
 
@@ -18,7 +17,6 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
   let featOptionDefRepo: jest.Mocked<Pick<Repository<PhbFeatOptionDef>, 'find'>>;
   let featOptionValueRepo: jest.Mocked<Pick<Repository<PhbFeatOptionValue>, 'findOne'>>;
   let classSpellsRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'findOne'>>;
-  let featsRepo: jest.Mocked<Pick<Repository<VPhbFeat>, 'findOne'>>;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
 
   beforeEach(() => {
@@ -55,9 +53,6 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
     classSpellsRepo = {
       findOne: jest.fn().mockResolvedValue({ spellLevel: 0 }),
     };
-    featsRepo = {
-      findOne: jest.fn().mockResolvedValue({ featSlug: 'magic-initiate', repeatable: true }),
-    };
     dataSource = {
       query: jest.fn().mockResolvedValue([{ ok: 1 }]),
     };
@@ -66,10 +61,7 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
       dataSource as unknown as DataSource,
       {} as CatalogLookupService,
       {} as Repository<VPhbSpeciesTraitChoices>,
-      featsRepo as unknown as Repository<VPhbFeat>,
       classSpellsRepo as unknown as Repository<VSpellByClass>,
-      {} as never,
-      {} as never,
       {} as never,
       {} as Repository<PhbSubclassRef>,
       {} as Repository<PhbSubclassOptionValue>,

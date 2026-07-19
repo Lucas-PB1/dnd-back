@@ -1,9 +1,9 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbBackgroundEquipment } from '../../../entities/views/v-phb-background-equipment.entity';
 import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
+import { PaginatedResponseDto, paginateOrNotFound } from '../../../common/dto/pagination.dto';
 import { BackgroundEquipmentResponseDto } from '../dto/background-equipment-response.dto';
 import { BackgroundsMapper } from '../backgrounds.mapper';
 
@@ -22,14 +22,16 @@ export class FindBackgroundEquipmentQuery {
     limit = 20,
   ): Promise<PaginatedResponseDto<BackgroundEquipmentResponseDto>> {
     await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
-
     const rows = await this.equipmentRepo.find({
       where: { backgroundSlug },
       order: { packageSlug: 'ASC', sortOrder: 'ASC' },
     });
-    if (rows.length === 0) {
-      throw new NotFoundException(`Background '${backgroundSlug}' has no starting equipment`);
-    }
-    return paginate(rows.map((row) => this.mapper.toEquipmentDto(row)), page, limit);
+    return paginateOrNotFound(
+      rows,
+      (row) => this.mapper.toEquipmentDto(row),
+      page,
+      limit,
+      `Background '${backgroundSlug}' has no starting equipment`,
+    );
   }
 }

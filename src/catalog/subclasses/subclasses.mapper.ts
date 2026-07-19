@@ -5,22 +5,12 @@ import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-p
 import { SubclassResponseDto } from './dto/subclass-response.dto';
 import { SubclassMechanicResponseDto } from './dto/subclass-mechanic-response.dto';
 import { SubclassSpellResponseDto } from './dto/subclass-spell-response.dto';
+import { mapSubclassDto } from './map-subclass-dto';
 
 @Injectable()
 export class SubclassesMapper {
   toSubclassDto(row: VPhbSubclass): SubclassResponseDto {
-    return {
-      slug: row.subclassSlug,
-      name: row.subclassName,
-      classSlug: row.classSlug,
-      className: row.className,
-      tagline: row.tagline,
-      summary: row.summary,
-      sourceChapter: row.sourceChapter,
-      editionSlug: row.editionSlug,
-      spellSourceSlug: row.spellSourceSlug,
-      spellSourceLabel: row.spellSourceLabel,
-    };
+    return mapSubclassDto(row);
   }
 
   toMechanicDto(row: VPhbSubclassMechanics): SubclassMechanicResponseDto {

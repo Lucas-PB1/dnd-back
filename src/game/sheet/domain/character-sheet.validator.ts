@@ -1,13 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
+import { assertUnique } from '../../../common/assert';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { VPhbSpeciesTraitChoices } from '../../../entities/views/v-phb-species-trait-choices.entity';
-import { VPhbFeat } from '../../../entities/views/v-phb-feat.entity';
 import { VSpellByClass } from '../../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { PhbLanguage } from '../../../entities/phb-language.entity';
-import { PhbAbilityGenerationMethod } from '../../../entities/phb-ability-generation-method.entity';
 import { PhbSubclassOptionValue, PhbSubclassRef } from '../../../entities/phb-subclass-option-value.entity';
 import { VPhbClassEquipment } from '../../../entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '../../../entities/views/v-phb-background-equipment.entity';
@@ -41,16 +39,10 @@ export class CharacterSheetValidator {
     private readonly catalogLookup: CatalogLookupService,
     @InjectRepository(VPhbSpeciesTraitChoices)
     private readonly speciesTraitChoicesRepo: Repository<VPhbSpeciesTraitChoices>,
-    @InjectRepository(VPhbFeat)
-    private readonly featsRepo: Repository<VPhbFeat>,
     @InjectRepository(VSpellByClass)
     private readonly classSpellsRepo: Repository<VSpellByClass>,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
-    @InjectRepository(PhbLanguage)
-    private readonly languagesRepo: Repository<PhbLanguage>,
-    @InjectRepository(PhbAbilityGenerationMethod)
-    private readonly abilityMethodsRepo: Repository<PhbAbilityGenerationMethod>,
     @InjectRepository(PhbSubclassRef)
     private readonly subclassRefRepo: Repository<PhbSubclassRef>,
     @InjectRepository(PhbSubclassOptionValue)
@@ -291,9 +283,7 @@ export class CharacterSheetValidator {
     const requiredKinds = [...new Set(rows.map((row) => row.choiceKind))];
     const providedKinds = choices.map((choice) => choice.choiceKind);
 
-    if (new Set(providedKinds).size !== providedKinds.length) {
-      throw new BadRequestException('Duplicate species choice kinds are not allowed');
-    }
+    assertUnique(providedKinds, 'Duplicate species choice kinds are not allowed');
 
     for (const kind of requiredKinds) {
       if (!providedKinds.includes(kind)) {
@@ -329,9 +319,10 @@ export class CharacterSheetValidator {
       throw new BadRequestException('Subclass must be set before choosing subclass options');
     }
 
-    if (new Set(options.map((o) => o.optionKey)).size !== options.length) {
-      throw new BadRequestException('Duplicate subclass option keys are not allowed');
-    }
+    assertUnique(
+      options.map((o) => o.optionKey),
+      'Duplicate subclass option keys are not allowed',
+    );
 
     const subclass = await this.subclassRefRepo.findOne({ where: { slug: subclassSlug } });
     if (!subclass) {
@@ -356,9 +347,7 @@ export class CharacterSheetValidator {
 
   private async validateCharacterFeats(feats: CharacterFeatDto[]): Promise<void> {
     const keys = feats.map((feat) => featInstanceKey(feat.featSlug, feat.instanceIndex));
-    if (new Set(keys).size !== keys.length) {
-      throw new BadRequestException('Duplicate feat instances are not allowed');
-    }
+    assertUnique(keys, 'Duplicate feat instances are not allowed');
 
     const bySlug = new Map<string, CharacterFeatDto[]>();
     for (const feat of feats) {
@@ -368,10 +357,7 @@ export class CharacterSheetValidator {
     }
 
     for (const [slug, instances] of bySlug) {
-      const feat = await this.featsRepo.findOne({ where: { featSlug: slug } });
-      if (!feat) {
-        throw new BadRequestException(`Feat '${slug}' not found in catalog`);
-      }
+      const feat = await this.catalogLookup.assertFeatInCatalog(slug);
 
       if (!feat.repeatable && instances.length > 1) {
         throw new BadRequestException(`Feat '${slug}' is not repeatable`);
@@ -393,9 +379,7 @@ export class CharacterSheetValidator {
     ctx: CharacterSheetContext,
   ): Promise<void> {
     const keys = spells.map((s) => `${s.spellSlug}:${s.listType}`);
-    if (new Set(keys).size !== keys.length) {
-      throw new BadRequestException('Duplicate character spell entries are not allowed');
-    }
+    assertUnique(keys, 'Duplicate character spell entries are not allowed');
 
     for (const spell of spells) {
       const inClass = await this.classSpellsRepo.findOne({
@@ -426,69 +410,59 @@ export class CharacterSheetValidator {
     items: NonNullable<CharacterSheetInput['equipment']>,
     ctx: CharacterSheetContext,
   ): Promise<void> {
-    for (const [index, item] of items.entries()) {
-      const sortOrder = item.sortOrder ?? index;
-      const quantity = item.quantity ?? 1;
-
+    for (const item of items) {
       if (item.source === 'class') {
-        const rows = await this.classEquipmentRepo.find({
-          where: { classSlug: ctx.classSlug, packageSlug: item.packageSlug },
-        });
-        if (rows.length === 0) {
-          throw new BadRequestException(
-            `Class equipment package '${item.packageSlug}' not found for '${ctx.classSlug}'`,
-          );
-        }
-        if (item.itemSlug) {
-          const match = rows.some((row) => row.itemSlug === item.itemSlug);
-          if (!match) {
-            throw new BadRequestException(
-              `Item '${item.itemSlug}' is not in class package '${item.packageSlug}'`,
-            );
-          }
-        }
+        await this.assertEquipmentPackage(
+          await this.classEquipmentRepo.find({
+            where: { classSlug: ctx.classSlug, packageSlug: item.packageSlug },
+          }),
+          item.packageSlug,
+          item.itemSlug,
+          'class',
+          ctx.classSlug,
+        );
       } else {
-        const rows = await this.backgroundEquipmentRepo.find({
-          where: { backgroundSlug: ctx.backgroundSlug, packageSlug: item.packageSlug },
-        });
-        if (rows.length === 0) {
-          throw new BadRequestException(
-            `Background equipment package '${item.packageSlug}' not found for '${ctx.backgroundSlug}'`,
-          );
-        }
-        if (item.itemSlug) {
-          const match = rows.some((row) => row.itemSlug === item.itemSlug);
-          if (!match) {
-            throw new BadRequestException(
-              `Item '${item.itemSlug}' is not in background package '${item.packageSlug}'`,
-            );
-          }
-        }
+        await this.assertEquipmentPackage(
+          await this.backgroundEquipmentRepo.find({
+            where: { backgroundSlug: ctx.backgroundSlug, packageSlug: item.packageSlug },
+          }),
+          item.packageSlug,
+          item.itemSlug,
+          'background',
+          ctx.backgroundSlug,
+        );
       }
+    }
+  }
 
-      void sortOrder;
-      void quantity;
+  private assertEquipmentPackage(
+    rows: { itemSlug: string | null }[],
+    packageSlug: string,
+    itemSlug: string | undefined,
+    source: 'class' | 'background',
+    ownerSlug: string,
+  ): void {
+    if (rows.length === 0) {
+      throw new BadRequestException(
+        `${source === 'class' ? 'Class' : 'Background'} equipment package '${packageSlug}' not found for '${ownerSlug}'`,
+      );
+    }
+    if (itemSlug && !rows.some((row) => row.itemSlug === itemSlug)) {
+      throw new BadRequestException(
+        `Item '${itemSlug}' is not in ${source} package '${packageSlug}'`,
+      );
     }
   }
 
   private async validateLanguageSlugs(languageSlugs: string[]): Promise<void> {
-    if (new Set(languageSlugs).size !== languageSlugs.length) {
-      throw new BadRequestException('Duplicate language slugs are not allowed');
-    }
-
+    assertUnique(languageSlugs, 'Duplicate language slugs are not allowed');
     for (const slug of languageSlugs) {
-      const row = await this.languagesRepo.findOne({ where: { slug } });
-      if (!row) {
-        throw new BadRequestException(`Language '${slug}' not found in catalog`);
-      }
+      await this.catalogLookup.assertLanguageSlug(slug);
     }
   }
 
   private async validateAbilityGenerationMethod(slug: string): Promise<void> {
-    const row = await this.abilityMethodsRepo.findOne({ where: { slug } });
-    if (!row) {
-      throw new BadRequestException(`Ability generation method '${slug}' not found in catalog`);
-    }
+    await this.catalogLookup.assertAbilityGenerationMethodSlug(slug);
   }
 
   async validateFeatOptions(
@@ -498,9 +472,7 @@ export class CharacterSheetValidator {
     const keys = options.map((o) =>
       `${o.featSlug}:${o.instanceIndex ?? 0}:${o.optionKey}`,
     );
-    if (new Set(keys).size !== keys.length) {
-      throw new BadRequestException('Duplicate feat option keys are not allowed');
-    }
+    assertUnique(keys, 'Duplicate feat option keys are not allowed');
 
     for (const option of options) {
       const match = characterFeats.find(
@@ -563,11 +535,10 @@ export class CharacterSheetValidator {
     );
 
     if (spellLists.some((value) => !value)) return;
-    if (new Set(spellLists).size !== spellLists.length) {
-      throw new BadRequestException(
-        'Each Magic Initiate instance must choose a different spell list',
-      );
-    }
+    assertUnique(
+      spellLists,
+      'Each Magic Initiate instance must choose a different spell list',
+    );
   }
 
   private async loadFeatOptionDefs(featSlug: string): Promise<PhbFeatOptionDef[]> {
@@ -665,9 +636,7 @@ export class CharacterSheetValidator {
       const skilledValues = featOptions
         .filter((o) => o.optionKey.startsWith('proficiency'))
         .map((o) => o.valueId);
-      if (new Set(skilledValues).size !== skilledValues.length) {
-        throw new BadRequestException('Skilled proficiencies must be distinct');
-      }
+      assertUnique(skilledValues, 'Skilled proficiencies must be distinct');
     }
   }
 }

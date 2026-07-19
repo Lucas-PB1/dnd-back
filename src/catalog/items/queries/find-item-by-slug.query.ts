@@ -1,6 +1,7 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { requireFound } from '../../../common/require-found';
 import { PhbItem } from '../../../entities/phb-item.entity';
 import { ItemResponseDto } from '../dto/item-response.dto';
 import { ItemsMapper } from '../items.mapper';
@@ -14,10 +15,10 @@ export class FindItemBySlugQuery {
   ) {}
 
   async execute(slug: string): Promise<ItemResponseDto> {
-    const row = await this.itemsRepo.findOne({ where: { slug } });
-    if (!row) {
-      throw new NotFoundException(`Item '${slug}' not found`);
-    }
+    const row = requireFound(
+      await this.itemsRepo.findOne({ where: { slug } }),
+      `Item '${slug}' not found`,
+    );
     return this.mapper.toDto(row);
   }
 }

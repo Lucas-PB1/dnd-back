@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { PhbItem } from '../../../entities/phb-item.entity';
 import {
   EquipmentSlot,
@@ -21,6 +22,7 @@ export class CharacterInventoryRepository {
     private readonly items: Repository<PlayerCharacterItem>,
     @InjectRepository(PhbItem)
     private readonly catalogItems: Repository<PhbItem>,
+    private readonly catalogLookup: CatalogLookupService,
     private readonly slotResolver: EquipmentSlotResolver,
   ) {}
 
@@ -112,11 +114,7 @@ export class CharacterInventoryRepository {
   }
 
   private async assertItemExists(itemSlug: string): Promise<PhbItem> {
-    const item = await this.catalogItems.findOne({ where: { slug: itemSlug } });
-    if (!item) {
-      throw new BadRequestException(`Item '${itemSlug}' not found in catalog`);
-    }
-    return item;
+    return this.catalogLookup.assertItemInCatalog(itemSlug);
   }
 
   private async clearSlotIfOccupied(

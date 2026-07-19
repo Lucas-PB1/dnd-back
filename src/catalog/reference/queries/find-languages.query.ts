@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PhbLanguage } from '../../../entities/phb-language.entity';
-import { PaginatedResponseDto } from '../../../common/dto/pagination.dto';
+import {
+  applyIlikeSearch,
+  PaginatedResponseDto,
+  paginateQb,
+} from '../../../common/dto/pagination.dto';
 import { LanguageResponseDto } from '../dto/language-response.dto';
 import { ReferenceMapper } from '../reference.mapper';
 
@@ -20,20 +24,16 @@ export class FindLanguagesQuery {
     q?: string,
     rare?: 'true' | 'false',
   ): Promise<PaginatedResponseDto<LanguageResponseDto>> {
-    const safePage = Math.max(1, page);
-    const safeLimit = Math.min(100, Math.max(1, limit));
-
     const qb = this.languagesRepo
       .createQueryBuilder('lang')
       .orderBy('lang.name', 'ASC');
 
-    const term = q?.trim();
-    if (term) {
-      qb.andWhere(
-        '(lang.name ILIKE :q OR lang.slug ILIKE :q OR COALESCE(lang.script, \'\') ILIKE :q OR COALESCE(lang.typicalSpeakers, \'\') ILIKE :q)',
-        { q: `%${term}%` },
-      );
-    }
+    applyIlikeSearch(qb, [
+      'lang.name',
+      'lang.slug',
+      "COALESCE(lang.script, '')",
+      "COALESCE(lang.typicalSpeakers, '')",
+    ], q);
 
     if (rare === 'true') {
       qb.andWhere('lang.isRare = true');
@@ -41,19 +41,7 @@ export class FindLanguagesQuery {
       qb.andWhere('lang.isRare = false');
     }
 
-    qb.skip((safePage - 1) * safeLimit).take(safeLimit);
-
-    const [rows, total] = await qb.getManyAndCount();
-    const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
-
-    return {
-      data: rows.map((row) => this.mapper.toLanguageDto(row)),
-      meta: {
-        page: safePage,
-        limit: safeLimit,
-        total,
-        totalPages,
-      },
-    };
+    const { rows, meta } = await paginateQb(qb, page, limit);
+    return { data: rows.map((row) => this.mapper.toLanguageDto(row)), meta };
   }
 }

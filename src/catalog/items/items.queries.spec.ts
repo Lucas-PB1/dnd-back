@@ -31,8 +31,8 @@ describe('Items queries', () => {
       andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
+      getCount: jest.fn().mockResolvedValue(1),
       getMany: jest.fn().mockResolvedValue([sample]),
-      getManyAndCount: jest.fn().mockResolvedValue([[sample], 1]),
     };
     repo = {
       findOne: jest.fn(),

@@ -52,9 +52,6 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       speciesTraitChoicesRepo as unknown as Repository<VPhbSpeciesTraitChoices>,
       {} as never,
       {} as never,
-      {} as never,
-      {} as never,
-      {} as never,
       subclassRefRepo as unknown as Repository<PhbSubclassRef>,
       {
         findOne: jest.fn().mockResolvedValue({

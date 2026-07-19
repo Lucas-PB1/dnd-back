@@ -1,16 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
-import { PaginationQueryDto } from '../../../common/dto/pagination.dto';
+import { SearchQueryDto } from '../../../common/dto/pagination.dto';
 
-export class SpellsQueryDto extends PaginationQueryDto {
-  @ApiPropertyOptional({
-    description: 'Filter by name, slug, school, or level label (case-insensitive)',
-  })
-  @IsOptional()
-  @IsString()
-  q?: string;
-
+export class SpellsQueryDto extends SearchQueryDto {
   @ApiPropertyOptional({
     description: 'Spell circle (0 = cantrip, 1–9)',
     minimum: 0,

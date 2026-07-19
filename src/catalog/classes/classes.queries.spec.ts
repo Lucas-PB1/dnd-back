@@ -117,7 +117,8 @@ describe('Classes queries', () => {
       andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
-      getManyAndCount: jest.fn().mockResolvedValue([[sample], 1]),
+      getCount: jest.fn().mockResolvedValue(1),
+      getMany: jest.fn().mockResolvedValue([sample]),
     };
     classesRepo = {
       find: jest.fn(),
@@ -181,7 +182,8 @@ describe('Classes queries', () => {
       andWhere: jest.fn().mockReturnThis(),
       skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
-      getManyAndCount: jest.fn().mockResolvedValue([[sample], 1]),
+      getCount: jest.fn().mockResolvedValue(1),
+      getMany: jest.fn().mockResolvedValue([sample]),
     };
     classesRepo.createQueryBuilder.mockReturnValue(qb as never);
     await findClasses.execute(1, 20, 'fighter');

@@ -2,7 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbArmor } from '../../../entities/views/v-phb-armor.entity';
-import { PaginatedResponseDto } from '../../../common/dto/pagination.dto';
+import {
+  applyIlikeSearch,
+  PaginatedResponseDto,
+  paginateQb,
+} from '../../../common/dto/pagination.dto';
 import { ArmorResponseDto } from '../dto/armor-response.dto';
 import { EquipmentMapper } from '../equipment.mapper';
 
@@ -20,43 +24,23 @@ export class FindArmorQuery {
     q?: string,
     category?: string,
   ): Promise<PaginatedResponseDto<ArmorResponseDto>> {
-    const safePage = Math.max(1, page);
-    const safeLimit = Math.min(100, Math.max(1, limit));
-
     const qb = this.armorRepo
       .createQueryBuilder('armor')
       .orderBy('armor.itemName', 'ASC');
 
-    const term = q?.trim();
-    if (term) {
-      qb.andWhere(
-        '(armor.itemName ILIKE :q OR armor.itemSlug ILIKE :q OR armor.categoryName ILIKE :q OR armor.categorySlug ILIKE :q)',
-        { q: `%${term}%` },
-      );
-    }
+    applyIlikeSearch(qb, [
+      'armor.itemName',
+      'armor.itemSlug',
+      'armor.categoryName',
+      'armor.categorySlug',
+    ], q);
 
     const categorySlug = category?.trim();
     if (categorySlug) {
       qb.andWhere('armor.category_slug = :categorySlug', { categorySlug });
     }
 
-    const total = await qb.getCount();
-    const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
-    const currentPage = Math.min(safePage, totalPages);
-
-    const rows = await qb
-      .skip((currentPage - 1) * safeLimit)
-      .take(safeLimit)
-      .getMany();
-
-    return {
-      data: rows.map((row) => this.mapper.toArmorDto(row)),
-      meta: {
-        page: currentPage,
-        limit: safeLimit,
-        total,
-        totalPages,
-      },
-    };
+    const { rows, meta } = await paginateQb(qb, page, limit);
+    return { data: rows.map((row) => this.mapper.toArmorDto(row)), meta };
   }
 }
