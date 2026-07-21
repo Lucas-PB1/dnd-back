@@ -89,6 +89,10 @@ describe('Classes queries', () => {
     classLevel: 5,
     patternSlug: 'full-caster',
     patternName: 'Conjurador completo',
+    proficiencyBonus: 3,
+    cantrips: 4,
+    preparedSpells: 9,
+    channelDivinity: null,
     spellSlots: { '1': 4, '2': 3, '3': 2 },
   };
 

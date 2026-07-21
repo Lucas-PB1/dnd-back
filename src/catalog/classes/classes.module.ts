@@ -18,6 +18,7 @@ import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query
 import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { FindClassFeaturesQuery } from './queries/find-class-features.query';
+import { FindClassProgressionQuery } from './queries/find-class-progression.query';
 import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
 
 @Module({
@@ -30,6 +31,7 @@ import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
       VPhbClassEquipment,
       VPhbClassSkillChoice,
       VPhbClassFeature,
+      VPhbClassProgression,
     ]),
     CatalogLookupModule,
   ],
@@ -45,6 +47,7 @@ import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
     FindClassEquipmentQuery,
     FindClassSkillsQuery,
     FindClassFeaturesQuery,
+    FindClassProgressionQuery,
   ],
 })
 export class ClassesModule {}

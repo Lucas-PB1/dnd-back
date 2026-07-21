@@ -1,18 +1,12 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-@ViewEntity({ schema: 'rpg', name: 'v_class_spell_slots' })
-export class VClassSpellSlots {
+@ViewEntity({ schema: 'rpg', name: 'v_phb_class_progression' })
+export class VPhbClassProgression {
   @ViewColumn({ name: 'class_slug' })
   classSlug!: string;
 
-  @ViewColumn({ name: 'class_level' })
-  classLevel!: number;
-
-  @ViewColumn({ name: 'pattern_slug' })
-  patternSlug!: string;
-
-  @ViewColumn({ name: 'pattern_name' })
-  patternName!: string;
+  @ViewColumn({ name: 'level' })
+  level!: number;
 
   @ViewColumn({ name: 'proficiency_bonus' })
   proficiencyBonus!: number;
@@ -25,7 +19,4 @@ export class VClassSpellSlots {
 
   @ViewColumn({ name: 'channel_divinity' })
   channelDivinity!: number | null;
-
-  @ViewColumn({ name: 'spell_slots' })
-  spellSlots!: Record<string, number>;
 }

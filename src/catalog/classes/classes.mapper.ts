@@ -6,6 +6,7 @@ import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entit
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-choice.entity';
 import { VPhbClassFeature } from '../../entities/views/v-phb-class-feature.entity';
+import { VPhbClassProgression } from '../../entities/views/v-phb-class-progression.entity';
 import { ClassResponseDto } from './dto/class-response.dto';
 import { SubclassResponseDto } from '../subclasses/dto/subclass-response.dto';
 import { mapSubclassDto } from '../subclasses/map-subclass-dto';
@@ -14,6 +15,7 @@ import { ClassSpellSlotsResponseDto } from './dto/class-spell-slots-response.dto
 import { ClassEquipmentResponseDto } from './dto/class-equipment-response.dto';
 import { ClassSkillResponseDto } from './dto/class-skill-response.dto';
 import { ClassFeatureResponseDto } from './dto/class-feature-response.dto';
+import { ClassProgressionResponseDto } from './dto/class-progression-response.dto';
 
 @Injectable()
 export class ClassesMapper {
@@ -64,6 +66,10 @@ export class ClassesMapper {
       classLevel: row.classLevel,
       patternSlug: row.patternSlug,
       patternName: row.patternName,
+      proficiencyBonus: row.proficiencyBonus,
+      cantrips: row.cantrips,
+      preparedSpells: row.preparedSpells,
+      channelDivinity: row.channelDivinity,
       spellSlots: row.spellSlots,
     };
   }
@@ -96,6 +102,16 @@ export class ClassesMapper {
       featureLevel: row.featureLevel,
       featureName: row.featureName,
       featureDescription: row.featureDescription,
+    };
+  }
+
+  toProgressionDto(row: VPhbClassProgression): ClassProgressionResponseDto {
+    return {
+      level: row.level,
+      proficiencyBonus: row.proficiencyBonus,
+      cantrips: row.cantrips,
+      preparedSpells: row.preparedSpells,
+      channelDivinity: row.channelDivinity,
     };
   }
 }

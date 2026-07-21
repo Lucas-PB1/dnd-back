@@ -17,6 +17,7 @@ import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query
 import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { FindClassFeaturesQuery } from './queries/find-class-features.query';
+import { FindClassProgressionQuery } from './queries/find-class-progression.query';
 import { ClassResponseDto } from './dto/class-response.dto';
 import { ClassSpellsQueryDto } from './dto/class-spells-query.dto';
 import { ClassFeaturesQueryDto } from './dto/class-features-query.dto';
@@ -33,6 +34,7 @@ export class ClassesController {
     private readonly findClassEquipment: FindClassEquipmentQuery,
     private readonly findClassSkills: FindClassSkillsQuery,
     private readonly findClassFeatures: FindClassFeaturesQuery,
+    private readonly findClassProgression: FindClassProgressionQuery,
   ) {}
 
   @Get()
@@ -68,6 +70,15 @@ export class ClassesController {
   @ApiNotFoundResponse({ description: 'Class not found or no spellcasting' })
   findSpellSlots(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findClassSpellSlots.execute(slug, query.page, query.limit);
+  }
+
+  @Get(':slug/progression')
+  @ApiOperation({ summary: 'Level progression (cantrips, prepared quota, channel divinity)' })
+  @ApiParam({ name: 'slug', example: 'wizard' })
+  @ApiOkResponse({ description: 'Paginated progression by level (1–20)' })
+  @ApiNotFoundResponse({ description: 'Class not found' })
+  findProgression(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
+    return this.findClassProgression.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug/equipment')
