@@ -502,6 +502,29 @@ export class CharacterSheetValidator {
     ctx: CharacterSheetContext,
   ): Promise<void> {
     for (const item of items) {
+      if (
+        item.source === 'background' &&
+        item.packageSlug === 'gold'
+      ) {
+        const background = await this.catalogLookup.findBackgroundOrFail(
+          ctx.backgroundSlug,
+        );
+        if (
+          background.equipmentGoldOption == null ||
+          background.equipmentGoldOption <= 0
+        ) {
+          throw new BadRequestException(
+            `Background '${ctx.backgroundSlug}' does not offer a gold equipment option`,
+          );
+        }
+        if (item.itemSlug) {
+          throw new BadRequestException(
+            'Gold background equipment option cannot include item rows',
+          );
+        }
+        continue;
+      }
+
       if (item.source === 'class') {
         await this.assertEquipmentPackage(
           await this.classEquipmentRepo.find({
