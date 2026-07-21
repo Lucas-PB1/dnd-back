@@ -15,6 +15,7 @@ import {
   PhbFeatOptionValue,
   PhbFeatRef,
 } from '../../../entities/phb-feat-option.entity';
+import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity';
 import { CharacterSheetInput } from './character-sheet.types';
 import { FeatOptionDto, CharacterFeatDto } from '../dto/character-sheet.dto';
 import {
@@ -22,6 +23,24 @@ import {
   assertBackgroundBoostSlugsAllowed,
 } from './background-ability-boost';
 import { featInstanceKey } from './character-feat';
+import {
+  requiredFeatOptionDefsForInstance,
+  ritualSpellSlotIndex,
+  RITUAL_CASTER_FEAT_SLUG,
+} from './ritual-caster-feat-options';
+import { isFeatCastingLinkedToAsi } from './linked-casting-feat-options';
+import {
+  ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG,
+  ASI_DISTRIBUTION_PLUS1PLUS1,
+  ASI_DISTRIBUTION_PLUS2,
+  requiredAbilityScoreImprovementDefs,
+} from './ability-score-improvement-feat-options';
+import { RESILIENT_FEAT_SLUG } from './resilient-feat-options';
+import {
+  FIGHTING_STYLE_FEAT_CATEGORY,
+  collectFightingStyleSlugsFromSubclassOptions,
+  isFightingStyleSubclassOptionKey,
+} from './fighting-style-feat-options';
 
 export interface CharacterSheetContext {
   level: number;
@@ -59,6 +78,8 @@ export class CharacterSheetValidator {
     private readonly featOptionDefRepo: Repository<PhbFeatOptionDef>,
     @InjectRepository(PhbFeatOptionValue)
     private readonly featOptionValueRepo: Repository<PhbFeatOptionValue>,
+    @InjectRepository(PhbCharacterLevel)
+    private readonly characterLevelsRepo: Repository<PhbCharacterLevel>,
   ) {}
 
   async validateSheetInput(
@@ -75,6 +96,12 @@ export class CharacterSheetValidator {
 
     if (input.subclassOptions !== undefined) {
       await this.validateSubclassOptions(ctx.subclassSlug, input.subclassOptions);
+      const feats = input.characterFeats ?? ctx.characterFeats ?? [];
+      await this.validateFightingStyleSelections(
+        ctx.classSlug,
+        feats,
+        input.subclassOptions,
+      );
     }
 
     const characterFeats = input.characterFeats ?? [];
@@ -87,7 +114,7 @@ export class CharacterSheetValidator {
       if (!feats.length) {
         throw new BadRequestException('characterFeats required when updating featOptions');
       }
-      await this.validateFeatOptions(feats, input.featOptions);
+      await this.validateFeatOptions(feats, input.featOptions, ctx.level, ctx.classSlug);
     }
 
     if (input.characterSpells !== undefined) {
@@ -158,7 +185,59 @@ export class CharacterSheetValidator {
 
     const createFeats = input.characterFeats ?? [];
     if (createFeats.length > 0) {
-      await this.validateFeatOptions(createFeats, input.featOptions ?? []);
+      await this.validateFeatOptions(
+        createFeats,
+        input.featOptions ?? [],
+        ctx.level,
+        ctx.classSlug,
+      );
+    }
+
+    await this.validateFightingStyleSelections(
+      ctx.classSlug,
+      createFeats,
+      input.subclassOptions,
+    );
+  }
+
+  async validateFightingStyleSelections(
+    classSlug: string,
+    characterFeats: CharacterFeatDto[],
+    subclassOptions: CharacterSheetInput['subclassOptions'],
+  ): Promise<void> {
+    const allowedSlugs = await this.loadClassFightingStyleSlugs(classSlug);
+    const allowed = new Set(allowedSlugs);
+    const styleSlugs: string[] = [];
+
+    for (const feat of characterFeats) {
+      const meta = await this.catalogLookup.assertFeatInCatalog(feat.featSlug);
+      if (meta.categorySlug !== FIGHTING_STYLE_FEAT_CATEGORY) continue;
+      if (!allowed.has(feat.featSlug)) {
+        throw new BadRequestException(
+          `Fighting style feat '${feat.featSlug}' is not available for class '${classSlug}'`,
+        );
+      }
+      styleSlugs.push(feat.featSlug);
+    }
+
+    for (const slug of collectFightingStyleSlugsFromSubclassOptions(subclassOptions)) {
+      const exists = await this.dataSource.query<{ ok: number }[]>(
+        `SELECT 1 AS ok FROM rpg.phb_fighting_style WHERE slug = $1 LIMIT 1`,
+        [slug],
+      );
+      if (exists.length === 0) {
+        throw new BadRequestException(`Unknown fighting style '${slug}'`);
+      }
+      if (!allowed.has(slug)) {
+        throw new BadRequestException(
+          `Fighting style '${slug}' is not available for class '${classSlug}'`,
+        );
+      }
+      styleSlugs.push(slug);
+    }
+
+    if (styleSlugs.length > 0) {
+      assertUnique(styleSlugs, 'Each fighting style can only be chosen once');
     }
   }
 
@@ -342,6 +421,18 @@ export class CharacterSheetValidator {
           `Subclass option '${option.optionKey}/${option.valueId}' is invalid for '${subclassSlug}'`,
         );
       }
+
+      if (isFightingStyleSubclassOptionKey(option.optionKey)) {
+        const exists = await this.dataSource.query<{ ok: number }[]>(
+          `SELECT 1 AS ok FROM rpg.phb_fighting_style WHERE slug = $1 LIMIT 1`,
+          [option.valueId],
+        );
+        if (exists.length === 0) {
+          throw new BadRequestException(
+            `Subclass option '${option.optionKey}/${option.valueId}' is not a valid fighting style`,
+          );
+        }
+      }
     }
   }
 
@@ -468,7 +559,16 @@ export class CharacterSheetValidator {
   async validateFeatOptions(
     characterFeats: CharacterFeatDto[],
     options: FeatOptionDto[],
+    characterLevel = 1,
+    classSlug?: string,
   ): Promise<void> {
+    const proficiencyBonus = await this.resolveProficiencyBonus(characterLevel);
+    const classSavingThrowSlugs = classSlug
+      ? await this.loadClassSavingThrowSlugs(classSlug)
+      : [];
+    const classFightingStyleSlugs = classSlug
+      ? await this.loadClassFightingStyleSlugs(classSlug)
+      : [];
     const keys = options.map((o) =>
       `${o.featSlug}:${o.instanceIndex ?? 0}:${o.optionKey}`,
     );
@@ -497,7 +597,16 @@ export class CharacterSheetValidator {
           (o.instanceIndex ?? 0) === feat.instanceIndex,
       );
       const providedKeys = new Set(featOptions.map((o) => o.optionKey));
-      const missing = defs.filter((def) => !providedKeys.has(def.optionKey));
+      const requiredDefs = requiredAbilityScoreImprovementDefs(
+        feat.featSlug,
+        requiredFeatOptionDefsForInstance(
+          feat.featSlug,
+          defs,
+          proficiencyBonus,
+        ),
+        featOptions,
+      );
+      const missing = requiredDefs.filter((def) => !providedKeys.has(def.optionKey));
       if (missing.length > 0) {
         throw new BadRequestException(
           `Feat '${feat.featSlug}' instance ${feat.instanceIndex} requires options: ${missing.map((d) => d.optionKey).join(', ')}`,
@@ -507,15 +616,157 @@ export class CharacterSheetValidator {
       for (const option of featOptions) {
         const def = defs.find((d) => d.optionKey === option.optionKey);
         if (!def) {
+          if (
+            feat.featSlug === RITUAL_CASTER_FEAT_SLUG &&
+            ritualSpellSlotIndex(option.optionKey) !== null
+          ) {
+            const slot = ritualSpellSlotIndex(option.optionKey)!;
+            if (slot > proficiencyBonus) {
+              throw new BadRequestException(
+                `Feat 'ritual-caster' allows ${proficiencyBonus} ritual spell choice(s) at level ${characterLevel}`,
+              );
+            }
+          }
           throw new BadRequestException(
             `Unknown feat option '${option.optionKey}' for '${feat.featSlug}'`,
           );
         }
-        await this.validateFeatOptionValue(def, option, featOptions);
+        await this.validateFeatOptionValue(
+          def,
+          option,
+          featOptions,
+          feat.featSlug,
+          classSavingThrowSlugs,
+          classFightingStyleSlugs,
+        );
       }
     }
 
     this.validateMagicInitiateSpellLists(characterFeats, options);
+    this.validateRitualCasterSpells(characterFeats, options, proficiencyBonus);
+    this.validateLinkedCastingAbilityMatchesAsi(characterFeats, options);
+    this.validateAbilityScoreImprovement(characterFeats, options);
+  }
+
+  private validateAbilityScoreImprovement(
+    characterFeats: CharacterFeatDto[],
+    options: FeatOptionDto[],
+  ): void {
+    for (const feat of characterFeats.filter(
+      (f) => f.featSlug === ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG,
+    )) {
+      const featOptions = options.filter(
+        (o) =>
+          o.featSlug === ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG &&
+          (o.instanceIndex ?? 0) === feat.instanceIndex,
+      );
+      const mode = featOptions.find((o) => o.optionKey === 'distributionMode')?.valueId;
+      const primary = featOptions.find((o) => o.optionKey === 'primaryAbility')?.valueId;
+      const secondary = featOptions.find(
+        (o) => o.optionKey === 'secondaryAbility',
+      )?.valueId;
+
+      if (mode && mode !== ASI_DISTRIBUTION_PLUS2 && mode !== ASI_DISTRIBUTION_PLUS1PLUS1) {
+        throw new BadRequestException(
+          `Invalid distributionMode '${mode}' for ability-score-improvement`,
+        );
+      }
+
+      if (mode === ASI_DISTRIBUTION_PLUS2 && secondary) {
+        throw new BadRequestException(
+          'secondaryAbility is not used when distribution is +2 on one ability',
+        );
+      }
+
+      if (mode === ASI_DISTRIBUTION_PLUS1PLUS1 && primary && secondary && primary === secondary) {
+        throw new BadRequestException(
+          'Ability Score Improvement +1/+1 choices must be different abilities',
+        );
+      }
+    }
+  }
+
+  private validateLinkedCastingAbilityMatchesAsi(
+    characterFeats: CharacterFeatDto[],
+    options: FeatOptionDto[],
+  ): void {
+    for (const feat of characterFeats.filter((f) => isFeatCastingLinkedToAsi(f.featSlug))) {
+      const featOptions = options.filter(
+        (o) =>
+          o.featSlug === feat.featSlug &&
+          (o.instanceIndex ?? 0) === feat.instanceIndex,
+      );
+      const asi = featOptions.find((o) => o.optionKey === 'abilityIncrease')?.valueId;
+      const casting = featOptions.find((o) => o.optionKey === 'castingAbility')?.valueId;
+      if (!asi || !casting) continue;
+      if (asi !== casting) {
+        throw new BadRequestException(
+          `Feat '${feat.featSlug}' requires the same attribute for +1 and spell casting`,
+        );
+      }
+    }
+  }
+
+  private async loadClassFightingStyleSlugs(classSlug: string): Promise<string[]> {
+    const rows = await this.dataSource.query<{ slug: string }[]>(
+      `SELECT fs.slug
+       FROM rpg.phb_class_fighting_style cfs
+       JOIN rpg.phb_class c ON c.id = cfs.class_id
+       JOIN rpg.phb_fighting_style fs ON fs.id = cfs.fighting_style_id
+       WHERE c.slug = $1
+       ORDER BY fs.slug`,
+      [classSlug],
+    );
+    return rows.map((row) => row.slug);
+  }
+
+  private async loadClassSavingThrowSlugs(classSlug: string): Promise<string[]> {
+    const rows = await this.dataSource.query<{ slug: string }[]>(
+      `SELECT a.slug
+       FROM rpg.phb_class_saving_throw cst
+       JOIN rpg.phb_class c ON c.id = cst.class_id
+       JOIN rpg.phb_ability a ON a.id = cst.ability_id
+       WHERE c.slug = $1
+       ORDER BY a.slug`,
+      [classSlug],
+    );
+    return rows.map((row) => row.slug);
+  }
+
+  private async resolveProficiencyBonus(level: number): Promise<number> {
+    const row = await this.characterLevelsRepo.findOne({ where: { level } });
+    if (!row) {
+      throw new BadRequestException(`Character level '${level}' not found in catalog`);
+    }
+    return row.proficiencyBonus;
+  }
+
+  private validateRitualCasterSpells(
+    characterFeats: CharacterFeatDto[],
+    options: FeatOptionDto[],
+    proficiencyBonus: number,
+  ): void {
+    for (const feat of characterFeats.filter((f) => f.featSlug === RITUAL_CASTER_FEAT_SLUG)) {
+      const featOptions = options.filter(
+        (o) =>
+          o.featSlug === RITUAL_CASTER_FEAT_SLUG &&
+          (o.instanceIndex ?? 0) === feat.instanceIndex,
+      );
+      const ritualSlugs = featOptions
+        .filter((o) => ritualSpellSlotIndex(o.optionKey) !== null)
+        .map((o) => o.valueId);
+      if (ritualSlugs.some((value) => !value)) continue;
+      assertUnique(ritualSlugs, 'Ritual Caster spell choices must be distinct');
+      const extra = featOptions.filter((o) => {
+        const slot = ritualSpellSlotIndex(o.optionKey);
+        return slot !== null && slot > proficiencyBonus;
+      });
+      if (extra.length > 0) {
+        throw new BadRequestException(
+          `Feat 'ritual-caster' allows ${proficiencyBonus} ritual spell choice(s) at this level`,
+        );
+      }
+    }
   }
 
   private validateMagicInitiateSpellLists(
@@ -554,7 +805,28 @@ export class CharacterSheetValidator {
     def: PhbFeatOptionDef,
     option: FeatOptionDto,
     featOptions: FeatOptionDto[],
+    featSlug: string,
+    classSavingThrowSlugs: string[],
+    classFightingStyleSlugs: string[],
   ): Promise<void> {
+    if (def.valueType === 'fighting_style') {
+      if (!classFightingStyleSlugs.includes(option.valueId)) {
+        throw new BadRequestException(
+          `Feat option '${def.optionKey}/${option.valueId}' is not a valid fighting style for this class`,
+        );
+      }
+      const exists = await this.dataSource.query<{ ok: number }[]>(
+        `SELECT 1 AS ok FROM rpg.phb_fighting_style WHERE slug = $1 LIMIT 1`,
+        [option.valueId],
+      );
+      if (exists.length === 0) {
+        throw new BadRequestException(
+          `Feat option '${def.optionKey}/${option.valueId}' is invalid`,
+        );
+      }
+      return;
+    }
+
     if (def.valueType === 'catalog') {
       const valid = await this.featOptionValueRepo.findOne({
         where: {
@@ -571,7 +843,50 @@ export class CharacterSheetValidator {
       return;
     }
 
+    if (def.valueType === 'ability') {
+      const valid = await this.featOptionValueRepo.findOne({
+        where: {
+          featId: def.featId,
+          optionKey: def.optionKey,
+          valueId: option.valueId,
+        },
+      });
+      if (!valid) {
+        throw new BadRequestException(
+          `Feat option '${def.optionKey}/${option.valueId}' is invalid`,
+        );
+      }
+      if (
+        featSlug === RESILIENT_FEAT_SLUG &&
+        def.optionKey === 'abilityIncrease' &&
+        classSavingThrowSlugs.includes(option.valueId)
+      ) {
+        throw new BadRequestException(
+          'Resilient must choose an ability without save proficiency from your class',
+        );
+      }
+      return;
+    }
+
     if (def.valueType === 'spell') {
+      if (def.spellRitualOnly) {
+        const ritualRows = await this.dataSource.query<{ ok: number }[]>(
+          `SELECT 1 AS ok
+           FROM rpg.phb_spell s
+           WHERE s.slug = $1
+             AND s.level = $2
+             AND s.ritual = TRUE
+           LIMIT 1`,
+          [option.valueId, def.spellMaxLevel ?? 1],
+        );
+        if (ritualRows.length === 0) {
+          throw new BadRequestException(
+            `Spell '${option.valueId}' must be a level ${def.spellMaxLevel ?? 1} ritual for '${def.optionKey}'`,
+          );
+        }
+        return;
+      }
+
       if (def.spellSchoolSlugs?.length) {
         const schoolRows = await this.dataSource.query<{ ok: number }[]>(
           `SELECT 1 AS ok
@@ -620,23 +935,48 @@ export class CharacterSheetValidator {
     }
 
     if (def.valueType === 'proficiency') {
-      const rows = await this.dataSource.query<{ ok: number }[]>(
-        `SELECT 1 AS ok
-         FROM rpg.phb_skill WHERE slug = $1
-         UNION ALL
-         SELECT 1 FROM rpg.phb_item WHERE slug = $1 AND item_type = 'tool'::rpg.item_type
-         LIMIT 1`,
-        [option.valueId],
-      );
-      if (rows.length === 0) {
-        throw new BadRequestException(
-          `Proficiency '${option.valueId}' is not a valid skill or tool`,
+      const allowed = await this.featOptionValueRepo.findOne({
+        where: {
+          featId: def.featId,
+          optionKey: def.optionKey,
+          valueId: option.valueId,
+        },
+      });
+      if (!allowed) {
+        const hasWhitelist = await this.featOptionValueRepo.exists({
+          where: { featId: def.featId, optionKey: def.optionKey },
+        });
+        if (hasWhitelist) {
+          throw new BadRequestException(
+            `Feat option '${def.optionKey}/${option.valueId}' is invalid`,
+          );
+        }
+        const rows = await this.dataSource.query<{ ok: number }[]>(
+          `SELECT 1 AS ok
+           FROM rpg.phb_skill WHERE slug = $1
+           UNION ALL
+           SELECT 1 FROM rpg.phb_item WHERE slug = $1 AND item_type = 'tool'::rpg.item_type
+           LIMIT 1`,
+          [option.valueId],
         );
+        if (rows.length === 0) {
+          throw new BadRequestException(
+            `Proficiency '${option.valueId}' is not a valid skill or tool`,
+          );
+        }
       }
       const skilledValues = featOptions
         .filter((o) => o.optionKey.startsWith('proficiency'))
         .map((o) => o.valueId);
       assertUnique(skilledValues, 'Skilled proficiencies must be distinct');
+      const artisanTools = featOptions
+        .filter((o) => o.optionKey.startsWith('artisanTool'))
+        .map((o) => o.valueId);
+      assertUnique(artisanTools, 'Artisan tool choices must be distinct');
+      const instruments = featOptions
+        .filter((o) => o.optionKey.startsWith('musicalInstrument'))
+        .map((o) => o.valueId);
+      assertUnique(instruments, 'Musical instrument choices must be distinct');
     }
   }
 }

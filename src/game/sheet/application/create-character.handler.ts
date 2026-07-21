@@ -14,6 +14,7 @@ import {
   resolveBackgroundOriginCharacterFeats,
   resolveBackgroundToolItemSlug,
 } from '../domain/background-origin';
+import { resolveHumanOriginCharacterFeats } from '../domain/species-origin';
 
 @Injectable()
 export class CreateCharacterHandler {
@@ -52,9 +53,14 @@ export class CreateCharacterHandler {
     });
 
     const background = await this.catalogLookup.findBackgroundOrFail(dto.backgroundSlug);
-    const characterFeats = resolveBackgroundOriginCharacterFeats(
+    let characterFeats = resolveBackgroundOriginCharacterFeats(
       background,
       dto.characterFeats,
+    );
+    characterFeats = resolveHumanOriginCharacterFeats(
+      dto.speciesSlug,
+      dto.speciesChoices,
+      characterFeats,
     );
     const backgroundToolItemSlug = resolveBackgroundToolItemSlug(
       background,
@@ -69,16 +75,22 @@ export class CreateCharacterHandler {
     await this.sheetValidator.validateCreateRequiredFields(sheetInput, ctx);
     await this.sheetValidator.validateSheetInput(sheetInput, ctx);
 
+    const epicBoonFeatSlugs = await this.catalogLookup.findEpicBoonFeatSlugs();
+
     const entity = this.repository.create(
-      CharacterFactory.withBackgroundTool(
-        CharacterFactory.withBackgroundBoostsApplied(
-          CharacterFactory.buildNew(userId, {
-            ...dto,
-            backgroundToolItemSlug: backgroundToolItemSlug ?? undefined,
-          }),
-          dto,
+      CharacterFactory.withFeatAbilityBoostsApplied(
+        CharacterFactory.withBackgroundTool(
+          CharacterFactory.withBackgroundBoostsApplied(
+            CharacterFactory.buildNew(userId, {
+              ...dto,
+              backgroundToolItemSlug: backgroundToolItemSlug ?? undefined,
+            }),
+            dto,
+          ),
+          backgroundToolItemSlug,
         ),
-        backgroundToolItemSlug,
+        sheetInput.featOptions,
+        epicBoonFeatSlugs,
       ),
     );
     await this.domain.applyDerivedHitPoints(entity, {

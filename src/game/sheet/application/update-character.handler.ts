@@ -86,6 +86,23 @@ export class UpdateCharacterHandler {
       await this.sheetValidator.validateFeatOptions(
         effectiveCharacterFeats,
         effectiveFeatOptions,
+        dto.level ?? row.level,
+        dto.classSlug ?? row.classSlug,
+      );
+    }
+
+    const effectiveSubclassOptions =
+      dto.subclassOptions !== undefined
+        ? dto.subclassOptions
+        : sheetSnapshot.subclassOptions;
+    if (
+      dto.characterFeats !== undefined ||
+      dto.subclassOptions !== undefined
+    ) {
+      await this.sheetValidator.validateFightingStyleSelections(
+        dto.classSlug ?? row.classSlug,
+        effectiveCharacterFeats,
+        effectiveSubclassOptions,
       );
     }
 

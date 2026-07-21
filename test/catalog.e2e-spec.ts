@@ -209,6 +209,22 @@ describe('Catalog API (e2e)', () => {
         expect(res.body.data.length).toBeGreaterThan(0);
       }));
 
+  it('GET /species/human/trait-choices includes Versátil origin feats', () =>
+    request(app.getHttpServer())
+      .get('/species/human/trait-choices?limit=100')
+      .expect(200)
+      .expect((res) => {
+        const kinds = new Set(res.body.data.map((row: { choiceKind: string }) => row.choiceKind));
+        expect(kinds.has('human_skill')).toBe(true);
+        expect(kinds.has('human_size')).toBe(true);
+        expect(kinds.has('human_origin_feat')).toBe(true);
+        expect(
+          res.body.data.some(
+            (row: { traitName: string }) => row.traitName === 'Versátil',
+          ),
+        ).toBe(true);
+      }));
+
   it('GET /species/elf/trait-choices', () =>
     request(app.getHttpServer())
       .get('/species/elf/trait-choices')

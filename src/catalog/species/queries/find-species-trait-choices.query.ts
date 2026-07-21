@@ -19,7 +19,7 @@ export class FindSpeciesTraitChoicesQuery {
   async execute(
     speciesSlug: string,
     page = 1,
-    limit = 20,
+    limit = 100,
   ): Promise<PaginatedResponseDto<SpeciesTraitChoiceResponseDto>> {
     await this.catalogLookup.findSpeciesOrFail(speciesSlug);
     const rows = await this.traitChoicesRepo.find({

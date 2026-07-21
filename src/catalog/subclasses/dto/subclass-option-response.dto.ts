@@ -21,6 +21,9 @@ export class SubclassOptionResponseDto {
   @ApiProperty({ example: 7 })
   unlockLevel!: number;
 
+  @ApiProperty({ example: 'fighting_style' })
+  valueType!: string;
+
   @ApiProperty({ type: [SubclassOptionValueDto] })
   values!: SubclassOptionValueDto[];
 }

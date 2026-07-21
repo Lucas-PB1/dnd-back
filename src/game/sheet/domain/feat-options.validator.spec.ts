@@ -49,6 +49,10 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
     };
     featOptionValueRepo = {
       findOne: jest.fn().mockResolvedValue({ valueId: 'cleric' }),
+      exists: jest.fn().mockResolvedValue(false),
+    } as unknown as jest.Mocked<Pick<Repository<PhbFeatOptionValue>, 'findOne'>>;
+    const characterLevelsRepo = {
+      findOne: jest.fn().mockResolvedValue({ level: 1, proficiencyBonus: 2 }),
     };
     classSpellsRepo = {
       findOne: jest.fn().mockResolvedValue({ spellLevel: 0 }),
@@ -71,6 +75,7 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
       featRefRepo as unknown as Repository<PhbFeatRef>,
       featOptionDefRepo as unknown as Repository<PhbFeatOptionDef>,
       featOptionValueRepo as unknown as Repository<PhbFeatOptionValue>,
+      characterLevelsRepo as never,
     );
   });
 

@@ -8,6 +8,8 @@ export type ClassProficiencies = {
   armorTrainingNames: string[];
   weaponProficiencySlugs: string[];
   weaponProficiencyNames: string[];
+  fightingStyleSlugs: string[];
+  fightingStyleNames: string[];
 };
 
 const EMPTY: ClassProficiencies = {
@@ -17,6 +19,8 @@ const EMPTY: ClassProficiencies = {
   armorTrainingNames: [],
   weaponProficiencySlugs: [],
   weaponProficiencyNames: [],
+  fightingStyleSlugs: [],
+  fightingStyleNames: [],
 };
 
 @Injectable()
@@ -24,7 +28,7 @@ export class ClassProficienciesQuery {
   constructor(private readonly dataSource: DataSource) {}
 
   async forClassSlug(classSlug: string): Promise<ClassProficiencies> {
-    const [savingThrows, armor, weapons] = await Promise.all([
+    const [savingThrows, armor, weapons, fightingStyles] = await Promise.all([
       this.dataSource.query<{ slug: string; name: string }[]>(
         `SELECT a.slug, a.name
          FROM rpg.phb_class c
@@ -52,9 +56,18 @@ export class ClassProficienciesQuery {
          ORDER BY wp.id`,
         [classSlug],
       ),
+      this.dataSource.query<{ slug: string; name: string }[]>(
+        `SELECT fs.slug, fs.name
+         FROM rpg.phb_class c
+         JOIN rpg.phb_class_fighting_style cfs ON cfs.class_id = c.id
+         JOIN rpg.phb_fighting_style fs ON fs.id = cfs.fighting_style_id
+         WHERE c.slug = $1
+         ORDER BY fs.slug`,
+        [classSlug],
+      ),
     ]);
 
-    if (!savingThrows.length && !armor.length && !weapons.length) {
+    if (!savingThrows.length && !armor.length && !weapons.length && !fightingStyles.length) {
       return { ...EMPTY };
     }
 
@@ -65,6 +78,8 @@ export class ClassProficienciesQuery {
       armorTrainingNames: armor.map((r) => r.name),
       weaponProficiencySlugs: weapons.map((r) => r.slug),
       weaponProficiencyNames: weapons.map((r) => r.label),
+      fightingStyleSlugs: fightingStyles.map((r) => r.slug),
+      fightingStyleNames: fightingStyles.map((r) => r.name),
     };
   }
 }

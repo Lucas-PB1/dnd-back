@@ -126,6 +126,13 @@ export class CatalogLookupService {
     );
   }
 
+  async findEpicBoonFeatSlugs(): Promise<Set<string>> {
+    const rows = await this.featsRepo.find({
+      where: { categorySlug: 'epic-boon' },
+    });
+    return new Set(rows.map((row) => row.featSlug));
+  }
+
   async assertLanguageSlug(slug: string): Promise<void> {
     requireCatalog(
       await this.languagesRepo.findOne({ where: { slug } }),

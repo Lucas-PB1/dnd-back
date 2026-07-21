@@ -80,7 +80,7 @@ INSERT INTO rpg.phb_subclass_option_def (subclass_id, option_key, label, unlock_
 
 INSERT INTO rpg.phb_subclass_option_def (subclass_id, option_key, label, unlock_level, value_type)
        VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'champion'),
-         'additionalFightingStyle', 'Estilo de Luta Adicional', 7, 'catalog'::rpg.option_value_type)
+         'additionalFightingStyle', 'Estilo de Luta Adicional', 7, 'fighting_style'::rpg.option_value_type)
        ON CONFLICT (subclass_id, option_key) DO UPDATE SET
          label = EXCLUDED.label,
          unlock_level = EXCLUDED.unlock_level;

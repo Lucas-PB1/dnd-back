@@ -40,6 +40,8 @@ export class ClassesMapper {
       armorTrainingNames: [],
       weaponProficiencySlugs: [],
       weaponProficiencyNames: [],
+      fightingStyleSlugs: [],
+      fightingStyleNames: [],
     };
   }
 

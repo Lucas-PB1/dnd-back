@@ -25,6 +25,9 @@ export class PhbFeatOptionDef {
 
   @Column({ name: 'spell_school_slugs', type: 'text', array: true, nullable: true })
   spellSchoolSlugs!: string[] | null;
+
+  @Column({ name: 'spell_ritual_only', type: 'boolean', default: false })
+  spellRitualOnly!: boolean;
 }
 
 @Entity({ schema: 'rpg', name: 'phb_feat_option_value' })

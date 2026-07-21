@@ -10,6 +10,13 @@ import { TestAuthGuard } from './helpers/test-auth.guard';
 const TEST_USER_ID = '11111111-1111-1111-1111-111111111111';
 const OTHER_USER_ID = '22222222-2222-2222-2222-222222222222';
 
+/** Escolhas mínimas PHB 2024 para humano nos testes e2e. */
+const HUMAN_SPECIES_CHOICES = [
+  { choiceKind: 'human_skill', choiceSlug: 'athletics' },
+  { choiceKind: 'human_origin_feat', choiceSlug: 'alert' },
+  { choiceKind: 'human_size', choiceSlug: 'medium' },
+];
+
 describe('Characters API (e2e)', () => {
   let app: INestApplication<App>;
 
@@ -111,6 +118,7 @@ describe('Characters API (e2e)', () => {
         classSlug: 'fighter',
         speciesSlug: 'human',
         backgroundSlug: 'acolyte',
+        speciesChoices: HUMAN_SPECIES_CHOICES,
         alignmentSlug: 'neutral-good',
       })
       .expect(201);
@@ -224,6 +232,7 @@ describe('Characters API (e2e)', () => {
         classSlug: 'fighter',
         speciesSlug: 'human',
         backgroundSlug: 'acolyte',
+        speciesChoices: HUMAN_SPECIES_CHOICES,
         classSkillSlugs: ['athletics', 'perception'],
       })
       .expect(201);
@@ -330,6 +339,7 @@ describe('Characters API (e2e)', () => {
         classSlug: 'fighter',
         speciesSlug: 'human',
         backgroundSlug: 'acolyte',
+        speciesChoices: HUMAN_SPECIES_CHOICES,
       })
       .expect(201);
 

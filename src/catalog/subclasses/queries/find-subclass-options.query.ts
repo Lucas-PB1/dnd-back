@@ -42,6 +42,7 @@ export class FindSubclassOptionsQuery {
       optionKey: string;
       optionLabel: string;
       unlockLevel: number;
+      valueType: string;
       valueId: string;
       valueLabel: string;
       sortOrder: number;
@@ -51,6 +52,7 @@ export class FindSubclassOptionsQuery {
       `SELECT def.option_key AS "optionKey",
               def.label AS "optionLabel",
               def.unlock_level AS "unlockLevel",
+              def.value_type::text AS "valueType",
               val.value_id AS "valueId",
               val.label AS "valueLabel",
               val.sort_order AS "sortOrder"
@@ -69,6 +71,7 @@ export class FindSubclassOptionsQuery {
       optionKey: string;
       optionLabel: string;
       unlockLevel: number;
+      valueType: string;
       valueId: string;
       valueLabel: string;
       sortOrder: number;
@@ -83,6 +86,7 @@ export class FindSubclassOptionsQuery {
           optionKey: row.optionKey,
           label: row.optionLabel,
           unlockLevel: row.unlockLevel,
+          valueType: row.valueType,
           values: [],
         };
         map.set(row.optionKey, group);

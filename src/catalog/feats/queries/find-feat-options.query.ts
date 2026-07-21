@@ -59,7 +59,10 @@ export class FindFeatOptionsQuery {
       dependsOnOptionKey: def.dependsOnOptionKey,
       spellMaxLevel: def.spellMaxLevel,
       spellSchoolSlugs: def.spellSchoolSlugs,
-      values: def.valueType === 'catalog' ? (valuesByKey.get(def.optionKey) ?? []) : [],
+      spellRitualOnly: def.spellRitualOnly,
+      values: ['catalog', 'ability'].includes(def.valueType)
+        ? (valuesByKey.get(def.optionKey) ?? [])
+        : [],
     }));
 
     return paginate(options, page, limit);

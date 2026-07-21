@@ -8,6 +8,8 @@ import { UpdateCharacterDto } from '../dto/update-character.dto';
 import {
   applyBackgroundAbilityBoosts,
 } from './background-ability-boost';
+import { applyFeatAbilityIncreases } from './feat-ability-boost';
+import type { FeatOptionDto } from '../dto/character-sheet.dto';
 
 const MIN_LEVEL = 1;
 const MAX_LEVEL = 20;
@@ -62,6 +64,23 @@ export class CharacterFactory {
       }),
       backgroundBoostPlus2AbilitySlug: dto.backgroundAbilityBoostPlus2Slug,
       backgroundBoostPlus1AbilitySlug: dto.backgroundAbilityBoostPlus1Slug,
+    };
+  }
+
+  /** +1 de talentos com optionKey abilityIncrease (após antecedente). */
+  static withFeatAbilityBoostsApplied(
+    entity: Partial<PlayerCharacter>,
+    featOptions: FeatOptionDto[] | undefined,
+    epicBoonFeatSlugs?: ReadonlySet<string>,
+  ): Partial<PlayerCharacter> {
+    if (!entity.abilityScores) return entity;
+    return {
+      ...entity,
+      abilityScores: applyFeatAbilityIncreases(
+        entity.abilityScores,
+        featOptions,
+        { epicBoonFeatSlugs },
+      ),
     };
   }
 

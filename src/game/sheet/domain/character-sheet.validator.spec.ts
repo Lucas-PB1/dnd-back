@@ -10,7 +10,12 @@ const emptyInput = EMPTY_SHEET_DATA as CharacterSheetInput;
 
 describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
   let validator: CharacterSheetValidator;
-  let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findClassOrFail' | 'validateClassSkillChoices'>>;
+  let catalogLookup: jest.Mocked<
+    Pick<
+      CatalogLookupService,
+      'findClassOrFail' | 'validateClassSkillChoices' | 'assertFeatInCatalog'
+    >
+  >;
   let speciesTraitChoicesRepo: jest.Mocked<Pick<Repository<VPhbSpeciesTraitChoices>, 'find'>>;
   let subclassRefRepo: jest.Mocked<Pick<Repository<PhbSubclassRef>, 'findOne'>>;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
@@ -27,6 +32,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
     catalogLookup = {
       findClassOrFail: jest.fn().mockResolvedValue({ skillChoiceCount: 2 }),
       validateClassSkillChoices: jest.fn().mockResolvedValue(undefined),
+      assertFeatInCatalog: jest.fn().mockResolvedValue({ categorySlug: 'general' }),
     };
     speciesTraitChoicesRepo = {
       find: jest.fn().mockResolvedValue([]),
@@ -41,6 +47,9 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         }
         if (sql.includes('phb_subclass_option_def')) {
           return Promise.resolve([{ optionKey: 'fighting_style' }]);
+        }
+        if (sql.includes('phb_class_fighting_style') || sql.includes('phb_fighting_style')) {
+          return Promise.resolve([{ slug: 'defense' }, { ok: 1 }]);
         }
         return Promise.resolve([]);
       }),
@@ -66,6 +75,9 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       {} as never,
       {} as never,
       {} as never,
+      {
+        findOne: jest.fn().mockResolvedValue({ level: 5, proficiencyBonus: 3 }),
+      } as never,
     );
   });
 

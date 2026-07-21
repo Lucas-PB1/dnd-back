@@ -36,6 +36,12 @@ export class FeatOptionResponseDto {
   })
   spellSchoolSlugs!: string[] | null;
 
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Quando true, valueType spell restringe a magias com marcador Ritual',
+  })
+  spellRitualOnly!: boolean;
+
   @ApiPropertyOptional({ type: [FeatOptionValueDto] })
   values!: FeatOptionValueDto[];
 }

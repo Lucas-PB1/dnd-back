@@ -65,4 +65,10 @@ export class ClassResponseDto {
 
   @ApiProperty({ type: [String], example: ['Armas simples', 'Armas marciais'] })
   weaponProficiencyNames!: string[];
+
+  @ApiProperty({ type: [String], example: ['defense', 'dueling'] })
+  fightingStyleSlugs!: string[];
+
+  @ApiProperty({ type: [String], example: ['Defensivo', 'Duelismo'] })
+  fightingStyleNames!: string[];
 }

@@ -24,7 +24,10 @@ describe('Characters application layer', () => {
     remove: jest.Mock;
   };
   let catalogLookup: jest.Mocked<
-    Pick<CatalogLookupService, 'validateCharacterCatalogRefs' | 'findBackgroundOrFail'>
+    Pick<
+      CatalogLookupService,
+      'validateCharacterCatalogRefs' | 'findBackgroundOrFail' | 'findEpicBoonFeatSlugs'
+    >
   >;
   let sheetValidator: jest.Mocked<
     Pick<
@@ -81,6 +84,7 @@ describe('Characters application layer', () => {
     };
     catalogLookup = {
       validateCharacterCatalogRefs: jest.fn().mockResolvedValue(undefined),
+      findEpicBoonFeatSlugs: jest.fn().mockResolvedValue(new Set<string>()),
       findBackgroundOrFail: jest.fn().mockResolvedValue({
         backgroundSlug: 'acolyte',
         featSlug: 'magic-initiate',
