@@ -60,7 +60,7 @@ export class FindFeatOptionsQuery {
       spellMaxLevel: def.spellMaxLevel,
       spellSchoolSlugs: def.spellSchoolSlugs,
       spellRitualOnly: def.spellRitualOnly,
-      values: ['catalog', 'ability'].includes(def.valueType)
+      values: ['catalog', 'ability', 'proficiency'].includes(def.valueType)
         ? (valuesByKey.get(def.optionKey) ?? [])
         : [],
     }));

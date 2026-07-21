@@ -49,7 +49,18 @@ CREATE TYPE rpg.option_value_type AS ENUM (
 CREATE TYPE rpg.species_choice_kind AS ENUM (
   'elf_lineage',
   'infernal_legacy',
-  'dragon_ancestry'
+  'dragon_ancestry',
+  'human_skill',
+  'human_origin_feat',
+  'human_size',
+  'gnome_lineage',
+  'giant_ancestry',
+  'elf_keen_senses',
+  'elf_casting_ability',
+  'gnome_casting_ability',
+  'infernal_casting_ability',
+  'aasimar_size',
+  'tiefling_size'
 );
 
 CREATE TYPE rpg.weapon_category AS ENUM ('simple', 'martial');

@@ -1,5 +1,4 @@
--- Enriquece v_class_spell_slots com cotas de phb_class_progression.
--- DROP necessário: CREATE OR REPLACE não pode mudar nomes/ordem de colunas.
+-- Reaplica V035 com DROP VIEW (CREATE OR REPLACE falhou por rename de colunas).
 
 DROP VIEW IF EXISTS rpg.v_class_spell_slots;
 

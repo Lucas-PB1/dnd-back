@@ -88,6 +88,12 @@ export class CharacterSheetValidator {
   ): Promise<void> {
     if (input.classSkillSlugs !== undefined) {
       await this.catalogLookup.validateClassSkillChoices(ctx.classSlug, input.classSkillSlugs);
+      if (ctx.backgroundSlug) {
+        await this.assertClassSkillsDoNotOverlapBackground(
+          ctx.backgroundSlug,
+          input.classSkillSlugs,
+        );
+      }
     }
 
     if (input.speciesChoices !== undefined) {
@@ -150,6 +156,10 @@ export class CharacterSheetValidator {
         );
       }
       await this.catalogLookup.validateClassSkillChoices(ctx.classSlug, slugs);
+      await this.assertClassSkillsDoNotOverlapBackground(
+        ctx.backgroundSlug,
+        slugs,
+      );
     }
 
     const traitRows = await this.speciesTraitChoicesRepo.find({
@@ -253,6 +263,29 @@ export class CharacterSheetValidator {
       plus2Slug: boosts.plus2Slug ?? '',
       plus1Slug: boosts.plus1Slug ?? '',
     });
+  }
+
+  /** PHB: se já tem a perícia do antecedente, escolha outra na classe. */
+  async assertClassSkillsDoNotOverlapBackground(
+    backgroundSlug: string,
+    classSkillSlugs: string[],
+  ): Promise<void> {
+    if (!classSkillSlugs.length) return;
+    const rows = await this.dataSource.query<{ slug: string }[]>(
+      `SELECT sk.slug
+       FROM rpg.phb_background_skill bs
+       JOIN rpg.phb_background b ON b.id = bs.background_id
+       JOIN rpg.phb_skill sk ON sk.id = bs.skill_id
+       WHERE b.slug = $1`,
+      [backgroundSlug],
+    );
+    const backgroundSkills = new Set(rows.map((row) => row.slug));
+    const overlap = classSkillSlugs.filter((slug) => backgroundSkills.has(slug));
+    if (overlap.length > 0) {
+      throw new BadRequestException(
+        `Skill(s) already granted by background '${backgroundSlug}': ${overlap.join(', ')}. Choose a different class skill.`,
+      );
+    }
   }
 
   async validateBackgroundOriginFeat(
@@ -1000,6 +1033,10 @@ export class CharacterSheetValidator {
         .filter((o) => o.optionKey.startsWith('musicalInstrument'))
         .map((o) => o.valueId);
       assertUnique(instruments, 'Musical instrument choices must be distinct');
+
+      // Mesmo talento: slots distintos já cobertos acima.
+      // Entre slots do feat e outras fontes: validado na UI; reforço leve aqui
+      // só contra repetição óbvia no próprio payload de featOptions.
     }
   }
 }

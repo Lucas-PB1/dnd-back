@@ -130,6 +130,46 @@ describe('Catalog API (e2e)', () => {
         );
       }));
 
+  it('GET /backgrounds/artisan/tools excludes thief and navigator tools', () =>
+    request(app.getHttpServer())
+      .get('/backgrounds/artisan/tools?limit=50')
+      .expect(200)
+      .expect((res) => {
+        const slugs = res.body.data.map((row: { itemSlug: string }) => row.itemSlug);
+        expect(slugs.length).toBeGreaterThanOrEqual(10);
+        expect(slugs).not.toContain('ferramentas-de-ladrao');
+        expect(slugs).not.toContain('ferramentas-de-navegador');
+      }));
+
+  it('GET /backgrounds/entertainer/tools lists musical instruments', () =>
+    request(app.getHttpServer())
+      .get('/backgrounds/entertainer/tools?limit=50')
+      .expect(200)
+      .expect((res) => {
+        const slugs = res.body.data.map((row: { itemSlug: string }) => row.itemSlug);
+        expect(slugs).toContain('alaude');
+        expect(slugs).toContain('flauta');
+        expect(slugs).not.toContain('instrumento-musical');
+      }));
+
+  it('GET /backgrounds/guard/tools lists only gaming sets', () =>
+    request(app.getHttpServer())
+      .get('/backgrounds/guard/tools?limit=50')
+      .expect(200)
+      .expect((res) => {
+        const slugs = res.body.data.map((row: { itemSlug: string }) => row.itemSlug);
+        expect(slugs).toEqual(
+          expect.arrayContaining([
+            'conjunto-de-dados',
+            'xadrez-do-dragao',
+            'baralho',
+            'ante-dos-tres-dragoes',
+          ]),
+        );
+        expect(slugs).not.toContain('kit-de-veneno');
+        expect(slugs).not.toContain('kit-de-disfarce');
+      }));
+
   it('GET /spells returns paginated list', () =>
     request(app.getHttpServer())
       .get('/spells')
@@ -225,12 +265,65 @@ describe('Catalog API (e2e)', () => {
         ).toBe(true);
       }));
 
-  it('GET /species/elf/trait-choices', () =>
+  it('GET /species/elf/trait-choices includes lineage, senses and casting', () =>
     request(app.getHttpServer())
-      .get('/species/elf/trait-choices')
+      .get('/species/elf/trait-choices?limit=100')
       .expect(200)
       .expect((res) => {
-        expect(res.body.data.length).toBeGreaterThan(0);
+        const kinds = new Set(
+          res.body.data.map((row: { choiceKind: string }) => row.choiceKind),
+        );
+        expect(kinds.has('elf_lineage')).toBe(true);
+        expect(kinds.has('elf_keen_senses')).toBe(true);
+        expect(kinds.has('elf_casting_ability')).toBe(true);
+      }));
+
+  it('GET /species/gnome/trait-choices includes lineage and casting', () =>
+    request(app.getHttpServer())
+      .get('/species/gnome/trait-choices?limit=50')
+      .expect(200)
+      .expect((res) => {
+        const kinds = new Set(
+          res.body.data.map((row: { choiceKind: string }) => row.choiceKind),
+        );
+        expect(kinds.has('gnome_lineage')).toBe(true);
+        expect(kinds.has('gnome_casting_ability')).toBe(true);
+      }));
+
+  it('GET /species/goliath/trait-choices includes giant ancestry', () =>
+    request(app.getHttpServer())
+      .get('/species/goliath/trait-choices?limit=50')
+      .expect(200)
+      .expect((res) => {
+        const kinds = new Set(
+          res.body.data.map((row: { choiceKind: string }) => row.choiceKind),
+        );
+        expect(kinds.has('giant_ancestry')).toBe(true);
+        expect(res.body.data.length).toBeGreaterThanOrEqual(6);
+      }));
+
+  it('GET /species/tiefling/trait-choices includes legacy, casting and size', () =>
+    request(app.getHttpServer())
+      .get('/species/tiefling/trait-choices?limit=50')
+      .expect(200)
+      .expect((res) => {
+        const kinds = new Set(
+          res.body.data.map((row: { choiceKind: string }) => row.choiceKind),
+        );
+        expect(kinds.has('infernal_legacy')).toBe(true);
+        expect(kinds.has('infernal_casting_ability')).toBe(true);
+        expect(kinds.has('tiefling_size')).toBe(true);
+      }));
+
+  it('GET /species/aasimar/trait-choices includes size', () =>
+    request(app.getHttpServer())
+      .get('/species/aasimar/trait-choices?limit=20')
+      .expect(200)
+      .expect((res) => {
+        const kinds = new Set(
+          res.body.data.map((row: { choiceKind: string }) => row.choiceKind),
+        );
+        expect(kinds.has('aasimar_size')).toBe(true);
       }));
 
   it('GET /alignments', () =>

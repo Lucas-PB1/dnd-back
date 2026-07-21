@@ -7,6 +7,7 @@ import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entit
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-choice.entity';
 import { VPhbClassFeature } from '../../entities/views/v-phb-class-feature.entity';
+import { VPhbClassProgression } from '../../entities/views/v-phb-class-progression.entity';
 import { CatalogLookupModule } from '../catalog-lookup.module';
 import { ClassesController } from './classes.controller';
 import { ClassesMapper } from './classes.mapper';
