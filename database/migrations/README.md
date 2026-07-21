@@ -25,7 +25,9 @@ Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 npm run db:setup
 ```
 
-**Incremental (local, Supabase ou ambos):**
+Ordem: reset → migrations de schema → seeds (PHB) → migrations `050_data` (opções de talento, humano, etc.).
+
+**Incremental** — `npm run db:migrate` aplica tudo pendente; em banco **só com schema**, rode `db:seed` antes de aplicar `050_data`, ou use `db:migrate:data` após seed.
 
 ```bash
 npm run db:migrate          # DATABASE_URL

@@ -5,7 +5,8 @@
  * Uso:
  *   node scripts/run-migrations.mjs                 # DATABASE_URL
  *   node scripts/run-migrations.mjs --target=supabase
- *   node scripts/run-migrations.mjs --target=all    # local + Supabase
+ *   node scripts/run-migrations.mjs --phase=data     # só 050_data (após db:seed)
+ *   node scripts/run-migrations.mjs --phase=schema   # sem 050_data
  */
 import fs from 'fs';
 import path from 'path';
@@ -25,6 +26,24 @@ CREATE TABLE IF NOT EXISTS rpg.schema_migration (
   applied_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 `;
+
+/** @param {string} arg */
+function parsePhase(arg) {
+  const value = arg?.split('=')[1] ?? 'all';
+  if (!['all', 'schema', 'data'].includes(value)) {
+    console.error(`Phase inválida: ${value}. Use all, schema ou data.`);
+    process.exit(1);
+  }
+  return value;
+}
+
+/** @param {string} relativePath from migrations dir */
+function includeMigrationFile(relativePath, phase) {
+  const isData = relativePath.includes('/050_data/') || relativePath.startsWith('050_data/');
+  if (phase === 'schema') return !isData;
+  if (phase === 'data') return isData;
+  return true;
+}
 
 /** @param {string} arg */
 function parseTarget(arg) {
@@ -81,7 +100,7 @@ async function getAppliedVersions(client) {
  * @param {string} label
  * @param {string} url
  */
-async function migrateOne(label, url) {
+async function migrateOne(label, url, phase) {
   console.log(`\n→ ${maskDatabaseUrl(url)}`);
 
   const client = createPgClient(url);
@@ -95,12 +114,14 @@ async function migrateOne(label, url) {
 
     for (const filePath of files) {
       const version = migrationVersion(filePath, migrationsDir);
+      const relative = path.relative(migrationsDir, filePath).replace(/\\/g, '/');
+      if (!includeMigrationFile(relative, phase)) continue;
       if (applied.has(version)) continue;
 
       const sql = fs.readFileSync(filePath, 'utf8');
-      const relative = path.relative(rootDir, filePath).replace(/\\/g, '/');
+      const relativeFromRoot = path.relative(rootDir, filePath).replace(/\\/g, '/');
 
-      process.stdout.write(`  applying ${relative}... `);
+      process.stdout.write(`  applying ${relativeFromRoot}... `);
       await client.query('BEGIN');
       try {
         await client.query(sql);
@@ -129,13 +150,15 @@ async function migrateOne(label, url) {
 }
 
 const targetArg = process.argv.find((arg) => arg.startsWith('--target='));
+const phaseArg = process.argv.find((arg) => arg.startsWith('--phase='));
 const target = parseTarget(targetArg);
+const phase = parsePhase(phaseArg);
 const targets = resolveTargets(target);
 
-console.log(`Migrations — target: ${target}`);
+console.log(`Migrations — target: ${target}, phase: ${phase}`);
 
 for (const { label, url } of targets) {
-  await migrateOne(label, url);
+  await migrateOne(label, url, phase);
 }
 
 console.log('\nConcluído.');

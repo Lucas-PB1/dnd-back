@@ -36,7 +36,7 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 - [x] **Mestre das Armas** — arma simples/marcial com maestria (`masteryWeapon`)
 - [x] Validar escolhas distintas + whitelist na API (artifista/músico)
 - [x] Migrar D005 no Supabase remoto
-- [ ] Smoke: wizard com antecedente Artesão / Artista + feat nível 4 Mestre das Armas
+- [x] Smoke: catálogo Artesão/Músico/Mestre das Armas (`npm run smoke:feat-options` após `db:setup`)
 
 ---
 
@@ -60,9 +60,9 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 
 ## Lote 5 — Catálogo restante (auditoria S022)
 
-- [ ] Varredura: benefícios com “Escolha…” sem `feat_option_def`
-- [ ] Magias em talentos (lista dinâmica / ritual flag)
-- [ ] Sincronizar seeds `S075+` com migrations `050_data` para `db:setup` limpo
+- [x] Varredura: benefícios com “Escolha…” sem `feat_option_def` — [`docs/feat-options-audit.md`](feat-options-audit.md) (`npm run db:audit:feat-options`)
+- [x] Magias em talentos (lista dinâmica / ritual flag) — documentado na auditoria
+- [x] Sincronizar seeds `S075+` com migrations `050_data` — `S078` via `npm run db:sync:feat-option-seeds`
 
 ---
 
@@ -70,8 +70,12 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 
 ```powershell
 cd dnd-api
-npm run db:migrate:supabase    # remoto
+npm run db:setup                  # reset → schema → seed → 050_data
+npm run smoke:feat-options        # valida artisan/musician/weapon-master no DB
+npm run db:migrate:supabase         # remoto (incremental)
 npm run db:generate:feat-asi   # regerar D003 se S022 mudar
+npm run db:sync:feat-option-seeds  # regerar S078 a partir de D002–D010
+npm run db:audit:feat-options      # relatório feat-options-audit.md
 ```
 
-Última atualização: 2026-07-21 — Lote 4 concluído (estilos, teto 30, opções na ficha). Próximo: Lote 5 auditoria S022.
+Última atualização: 2026-07-21 — `db:setup` corrigido + smoke catálogo OK.
