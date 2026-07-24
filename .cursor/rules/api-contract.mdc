@@ -1,18 +1,39 @@
 ---
-description: Contrato API para frontend Next.js separado — CORS, slugs, JSON
+description: Contrato HTTP dnd-api ↔ dnd-front — rotas, erros, auth, JSON
 globs: src/**/*.ts
 alwaysApply: false
 ---
 
-# Contrato API (frontend externo)
+# Contrato API
 
-Skill: `api-consumer-next`
+Frontend: repo **`dnd-front`**. CORS: `FRONTEND_URL`.
 
-- Frontend em **repo separado** (`dnd-front`) — este repo não contém Next.js
-- CORS: configurar `FRONTEND_URL` no Nest
-- URLs públicas usam **slug** (`/classes/fighter`), nunca id
-- Respostas JSON camelCase; erros `{ message, statusCode }`
-- Auth: frontend envia JWT Supabase; API valida com `SupabaseAuthGuard`
-- OpenAPI/Swagger: manter DTOs alinhados ao contrato consumido pelo front
-- Armas: `range` + `propertyDetails` + `mastery` (não expor jsonb bruto `properties`)
+## Rotas
+
+- Plural: `/classes`, `/spells`, `/armor`, `/weapons` (não `/equipment/armor`)
+- Detalhe por slug: `/classes/fighter`, `/spells/bola-de-fogo`
+- Nested: `/classes/:slug/spells`, `/backgrounds/:slug/equipment`
+- Paginação: `?page=1&limit=20` (max 100)
+- Catálogo: **GET only**; Bearer só em `game/*`
+- JSON camelCase; **sem** BIGINT na URL/response
+- Swagger: `@ApiTags` / `@ApiProperty`; UI `/api`
+
+Slugs: classes/species/items **EN**; magias muitas **PT** — skill `dnd-glossary-pt`.
+
+## Auth
+
+- Front envia `Authorization: Bearer` (Supabase access token)
+- Nest: `SupabaseAuthGuard` + JWKS (`SUPABASE_URL`)
+- Catálogo público; game + ownership por `userId`
+- Nunca service role no client
+
+## Erros
+
+- Shape: `{ statusCode, message, path, timestamp }` (+ `error` se o filtro incluir)
+- 404 slug: `Class 'x' not found` · 400 validação · 401/403 auth · 500 sem stack em prod
+
+## Contrato de campos
+
+- Armas: `range` + `propertyDetails` + `mastery` (não jsonb bruto)
 - Talentos na ficha: `characterFeats` + `featOptions`
+- Front **nunca** recalcula HP, PB, spell slots

@@ -1,0 +1,46 @@
+---
+description: Arquitetura dnd-api — BC Catalog/Identity/Game, thin catalog, application layer
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# Arquitetura
+
+Doc: [`docs/architecture.md`](../../docs/architecture.md)
+
+## Bounded contexts
+
+| BC | Pasta | Papel |
+|----|-------|-------|
+| **Catalog** | `src/catalog/` | PHB read-only, views |
+| **Identity** | `src/identity/` | JWT / Supabase Auth |
+| **Game** | `src/game/` | Fichas, progressão, inventário, sessão |
+
+- `catalog` **não** importa `game`
+- DDD tático (domain/handlers) **só** em Game
+- API: **slug**; **id** só persistência interna
+
+## Catalog (thin)
+
+- Controller → **Query** (`execute()`) → `@ViewEntity` + mapper
+- **Sem** `domain/`, agregados ou POST/PATCH/DELETE em `phb_*`
+- Regras PHB no Postgres (views/seeds), não em TS
+- Lookup compartilhado: `CatalogLookupService`
+
+## Game
+
+Submódulos: `sheet/`, `build/`, `progression/`, `inventory/`, `session/`, `shared/`
+
+- Controller: HTTP + `SupabaseAuthGuard` + `@CurrentUser` — sem regra de negócio
+- Handler → domain → repository → mapper
+- PHB via slug/`CatalogLookupService` — não duplicar `phb_*`
+- Talentos: **`characterFeats`** + **`featOptions`**
+- Handlers manuais `@Injectable()` — sem `@nestjs/cqrs` obrigatório
+
+## Gatilhos
+
+| Sinal | Ação |
+|-------|------|
+| Query catalog &gt; ~80 linhas | Extrair mapper / queries |
+| Regra D&D na ficha | `game/<sub>/domain/` |
+| Service monolítico | Dividir handler + repository |

@@ -1,33 +1,30 @@
 ---
-description: Orquestra rules e skills do dnd-api (SQL + Nest + Supabase + Vercel)
+description: Orquestra dnd-api — shared-ai + domínio PHB
 alwaysApply: true
 ---
 
 # Orquestrador dnd-api
 
-**Infra:** [`docs/infrastructure.md`](../../docs/infrastructure.md) · **Arquitetura:** [`docs/architecture.md`](../../docs/architecture.md)
+Docs: [`docs/infrastructure.md`](../../docs/infrastructure.md) · [`docs/architecture.md`](../../docs/architecture.md)
 
-Repo **API only**: `database/` + `src/` Nest. Frontend = `dnd-front` (irmão em `dnd-work/`).
+Genérico: shared-ai (`nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`, `supabase`, `vercel`, `rest-api`).
 
-Genérico (shared-ai): `nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`, `supabase`, `vercel`, `rest-api`.
+## Skills locais
 
-## Roteamento local
+| Quando | Skill |
+|--------|-------|
+| Glossário / slugs PT-EN | `dnd-glossary-pt` |
+| Tabelas, FKs, views PHB | `rpg-catalog-model` |
+| Queries prontas nas views | `phb-query-views` |
+| `db:setup` / migrate / seed | `postgres-apply-catalog` |
 
-| Contexto | Rules | Skills locais |
-|----------|-------|---------------|
-| Arquitetura / BC / CQRS | bounded-contexts, catalog-thin-layer, game-domain, application-layer | nestjs-bounded-context, cqrs-catalog-vs-game |
-| REST / erros / testes | rest-api, api-errors, api-testing, api-contract | nestjs-api-tests (+ global `jest`) |
-| SQL / migrations / seeds | postgres-sql, supabase-sql, sql-clean-code, sql-oop-patterns, phb-data-model | postgres-apply-catalog, rpg-catalog-model, phb-query-views |
-| Nest catálogo | catalog-thin-layer, nestjs-core, nestjs-typeorm, api-contract | nestjs-bounded-context, typeorm-rpg-entities (+ global `typeorm`) |
-| Nest game | game-domain, bounded-contexts, supabase-auth | cqrs-catalog-vs-game |
-| Deploy Vercel | nestjs-vercel | nest-vercel-deploy (+ global `vercel`) |
-| Supabase DB / Auth | supabase-sql, supabase-auth | supabase-auth (+ global `supabase`) |
-| Contrato frontend | api-contract | api-consumer-next |
-| Glossário PHB PT | — | dnd-glossary-pt |
+## Rules locais
 
-## Princípios
+`architecture` · `api-contract` · `phb-data`
 
-- **3 BC:** Catalog (thin), Identity (JWT), Game (sheet / build / progression / inventory / session)
-- DB + Auth: Supabase · API: Vercel · ORM: TypeORM
-- Catálogo read-only público; fichas = JWT + ownership na API
-- `database/` source of truth PHB; `synchronize: false`
+## Ops rápidos
+
+- TypeORM: `schema: 'rpg'`, `synchronize: false`; pooler **6543** em prod
+- JWT: `jsonwebtoken` + JWKS — sem `jose` no runtime
+- Testes: `*.queries.spec.ts` / `*.application.spec.ts` / e2e; `npm run test:cov`
+- Migrations: não editar aplicadas; seeds FK-safe; `dev-reset` só em dev

@@ -1,0 +1,32 @@
+---
+description: Modelo PHB no schema rpg — tabelas, herança, migrations, Supabase DB
+globs: database/**/*
+alwaysApply: false
+---
+
+# Dados PHB
+
+63 tabelas `phb_*` no schema `rpg`. Doc: [`docs/data-model.md`](../../docs/data-model.md).  
+Skills: `rpg-catalog-model` · `phb-query-views` · `postgres-apply-catalog`.
+
+## Modelo
+
+- API/contratos: **slug** · joins: **id**
+- Item: `phb_item` → weapon/armor/tool (table-per-type via `item_id`)
+- FK composta: `phb_subclass(class_id, id)`
+- Polimorfismo: `phb_resource_definition` + `resource_scope`
+- Views `v_phb_*` encapsulam joins; catálogo read-only (seeds)
+
+## SQL / Postgres
+
+- Extensão `pg_trgm`
+- Ordem migrations: types → tables → functions → triggers → views → MV → indexes
+- Uma migration por tabela/view; seeds um arquivo por tabela; ordem FK-safe
+- Não editar migration já aplicada
+
+## Supabase DB
+
+- App: transaction pooler **6543** + `pgbouncer=true`
+- Migrations: `SUPABASE_DATABASE_URL` (5432)
+- `dev-reset.sql` **só** dev
+- RLS futuro: `phb_*` SELECT público; `player_*` com `auth.uid()`
