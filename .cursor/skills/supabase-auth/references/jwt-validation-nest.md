@@ -25,5 +25,6 @@ async get(@CurrentUser() user: AuthUser, @Param('id') id: string) { ... }
 
 ## Pacotes
 
-- Validação via JWKS (`jose` / implementação em `SupabaseJwtService`)
+- Validação: `jsonwebtoken` + JWKS via `fetch` (`SupabaseJwtService`)
+- **Não** `jose` / `jwks-rsa` no runtime
 - Não usar service role para validar token de usuário

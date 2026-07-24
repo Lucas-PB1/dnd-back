@@ -1,19 +1,13 @@
 ---
 name: api-consumer-next
-description: Contrato entre API Nest (repo dnd-api) e frontend Next.js (dnd-front) — CORS, slugs, JWT, env, plano mestre. Use ao integrar front, configurar CORS/FRONTEND_URL ou documentar endpoints.
+description: Contrato entre API Nest (dnd-api) e frontend Next.js (dnd-front) — CORS, slugs, JWT, env. Use ao integrar front ou documentar endpoints.
 ---
 
 # API ↔ Next.js (`dnd-front`)
 
-- **Plano mestre frontend:** [`docs/rpg-web-plan.md`](../../../docs/rpg-web-plan.md)
+- **Plano frontend:** [`docs/rpg-web-plan.md`](../../../docs/rpg-web-plan.md)
 - **Infra:** [`docs/infrastructure.md`](../../../docs/infrastructure.md)
-
-## Repos
-
-| Nome | Papel |
-|------|-------|
-| **dnd-api** | Este repo — Nest + Postgres |
-| **dnd-front** | Next.js — pasta irmã |
+- Workspace: `dnd-work/` — pastas irmãs `dnd-api` + `dnd-front`
 
 ## Referências
 
@@ -23,13 +17,13 @@ description: Contrato entre API Nest (repo dnd-api) e frontend Next.js (dnd-fron
 
 ## Contrato
 
-- Base URL: `NEXT_PUBLIC_API_URL` (local `:3000`, prod Vercel)
+- Base URL: `NEXT_PUBLIC_API_URL` (local `:3000`)
 - Recursos por slug: `/classes/:slug`, `/spells/:slug`, `/characters/:uuid`
 - Auth: Supabase no Next; `Authorization: Bearer` em `/characters/*`
-- Catálogo: fetch sem auth (RSC recomendado)
+- Catálogo: fetch sem auth
 - Erros: `{ statusCode, message, path, timestamp }`
 - Regras D&D: **nunca** recalcular no front — API é fonte de verdade
 
-## Skills no repo `rpg-web`
+## Skills no front
 
-Ver §8 de [`rpg-web-plan.md`](../../../docs/rpg-web-plan.md): `rpg-web-api-client`, `rpg-web-supabase-auth`, etc.
+No repo `dnd-front`: `dnd-api-client`, `dnd-api-contract`, `supabase-auth` (não skills `rpg-web-*` legadas).

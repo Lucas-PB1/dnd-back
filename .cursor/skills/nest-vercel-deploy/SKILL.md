@@ -1,33 +1,33 @@
 ---
 name: nest-vercel-deploy
-description: Deploy NestJS na Vercel — zero-config, serverless, diferenças vs Nest tradicional, TypeORM com Supabase pooler. Use quando o usuário mencionar Vercel, deploy, serverless, cold start, ou diferenças entre Nest normal e Vercel.
+description: Deltas Nest+TypeORM+Supabase para deploy Vercel deste repo. Use quando configurar vercel.json, pooler, cold start ou smoke health.
 ---
 
-# NestJS na Vercel
+# Nest na Vercel — deltas dnd-api
+
+Genérico Vercel → skill global `vercel` (shared-ai).  
+Detalhes longos ainda em `references/` deste skill (entrypoint, pooler, CORS).
 
 ## Quando usar
 
-- Deploy ou dev local simulando produção Vercel
-- Dúvidas sobre serverless vs processo long-running
-- Configurar TypeORM + Supabase para Vercel
+- Env / `DATABASE_URL` pooler 6543 neste projeto
+- Cold start + TypeORM + SSL Supabase
+- `vercel.json` / `npm run smoke:health`
+
+## Checklist deste repo
+
+- [x] `src/main.ts` — `bootstrap()` + `app.listen(process.env.PORT ?? 3000)`
+- [x] `reflect-metadata` em `main.ts`
+- [x] JWT: `jsonwebtoken` + JWKS `fetch` — **zero** `jose` no runtime
+- [x] `DATABASE_URL` pooler 6543 + `?pgbouncer=true` em prod
+- [x] `vercel.json` sem `framework: null`
+- [x] `npm run smoke:health` → `/health`
+- [ ] Env vars no dashboard Vercel
+- [ ] `FRONTEND_URL` = URL do dnd-front em prod
 
 ## Workflow
 
-1. Ler [`vercel-vs-traditional.md`](references/vercel-vs-traditional.md) — **obrigatório** antes de sugerir arquitetura
-2. Confirmar entrypoint → [`entrypoint-and-build.md`](references/entrypoint-and-build.md)
-3. Configurar DB → [`database-on-vercel.md`](references/database-on-vercel.md)
-4. CORS/sessões → [`cors-sessions-proxy.md`](references/cors-sessions-proxy.md)
-5. Dev local → [`local-dev.md`](references/local-dev.md)
-6. Restrições → [`serverless-constraints.md`](references/serverless-constraints.md)
-
-## Checklist deploy
-
-- [x] `src/main.ts` com `bootstrap()` + `app.listen(process.env.PORT ?? 3000)`
-- [x] `reflect-metadata` importado em `main.ts`
-- [x] JWT: `fetch` JWKS + `jsonwebtoken` + `crypto` — **zero** `jose` / `jwks-rsa` no runtime
-- [x] SSL só para URLs Supabase (localhost funciona com `VERCEL=1` em teste local)
-- [x] `DATABASE_URL` com pooler Supabase (6543) + `?pgbouncer=true`
-- [x] `vercel.json` sem `framework: null`
-- [x] `npm run smoke:health` para testar `/health`
-- [ ] Env vars no dashboard Vercel
-- [ ] `vercel dev` ou simulação B testada localmente
+1. Shared-ai `vercel` para preview/deploy genérico
+2. [`database-on-vercel.md`](references/database-on-vercel.md) — pooler TypeORM
+3. [`cors-sessions-proxy.md`](references/cors-sessions-proxy.md) — `FRONTEND_URL`
+4. [`serverless-constraints.md`](references/serverless-constraints.md) se cold start / conexões

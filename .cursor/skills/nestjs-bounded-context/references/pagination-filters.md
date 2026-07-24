@@ -2,23 +2,7 @@
 
 ## Lista paginada
 
-```typescript
-@Get()
-findAll(@Query('page') page = 1, @Query('limit') limit = 20) {
-  return this.service.findAll({ page, limit: Math.min(limit, 100) });
-}
-```
-
-## Filtro por slug prefix (futuro)
-
-```typescript
-@Get()
-findAll(@Query('q') q?: string) {
-  return this.service.search(q);
-}
-```
-
-## Query params validados
+`?page=1&limit=20` (max 100). Preferir `PaginationQueryDto` + `class-validator`.
 
 ```typescript
 export class PaginationQueryDto {
@@ -36,6 +20,10 @@ export class PaginationQueryDto {
   limit?: number = 20;
 }
 ```
+
+## Busca
+
+Filtro `q` (texto) quando o recurso suporte — ver DTOs existentes (`ArmorQueryDto`, etc.).
 
 ## Detalhe
 

@@ -1,13 +1,13 @@
 ---
-description: Padrões NestJS — módulos, controllers, DTOs
+description: NestJS no dnd-api — BCs Catalog/Identity/Game (além da skill global nestjs)
 globs: src/**/*.ts
 alwaysApply: false
 ---
 
-# NestJS
+# NestJS (dnd-api)
 
-- **BC Catalog:** `src/catalog/` — thin, read-only (rule `catalog-thin-layer`)
-- **BC Identity / Game:** `src/identity/`, `src/game/` — ver `docs/architecture.md`
-- Controllers finos; lógica em services (catalog) ou application handlers (game)
-- Catálogo: sem POST/PATCH/DELETE em `phb_*`
-- Config via `@nestjs/config`; `.env` nunca commitado
+1. Skill global `nestjs` + local `nestjs-bounded-context`.
+2. **Catalog** `src/catalog/` — thin, GET only (`catalog-thin-layer`).
+3. **Identity** `src/identity/` · **Game** `src/game/` — handlers/application.
+4. Controllers finos; catálogo sem POST/PATCH/DELETE em `phb_*`.
+5. Config `@nestjs/config`; `.env` nunca commitado.

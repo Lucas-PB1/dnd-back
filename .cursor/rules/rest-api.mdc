@@ -1,17 +1,20 @@
 ---
-description: REST API — rotas, paginação, Swagger, formato JSON
+description: REST API PHB — rotas, slug, paginação, Swagger, JSON
 globs: src/**/*.ts
 alwaysApply: false
 ---
 
-# REST API
+# REST API (dnd-api)
 
-Plano: [`docs/api-plan.md`](../../docs/api-plan.md)
+Plano: [`docs/api-plan.md`](../../docs/api-plan.md)  
+Design REST genérico → skill global `rest-api` (shared-ai).
 
-- Recursos plural: `/classes`, `/spells`
-- Detalhe por **slug**: `/classes/fighter`
+- Recursos plural: `/classes`, `/spells`, `/armor`, `/weapons` (não `/equipment/armor`)
+- Detalhe por **slug**: `/classes/fighter`, `/spells/bola-de-fogo`
 - Nested: `/classes/:slug/spells`, `/backgrounds/:slug/equipment`
 - JSON **camelCase**; sem expor id BIGINT
 - Paginação: `?page=1&limit=20` (max 100)
+- Catálogo: **GET only**; Bearer só em `game/*` (`@ApiBearerAuth`)
 - Swagger: `@ApiTags`, `@ApiProperty` em DTOs; UI em `/api`
-- Catálogo: **GET only**; auth só em `game/*` (fase final)
+
+Slugs: classes/species/items **EN**; magias muitas **PT** — skill `dnd-glossary-pt` · `nestjs-bounded-context` → `slug-routing.md`.

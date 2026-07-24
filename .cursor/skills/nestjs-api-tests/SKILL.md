@@ -1,20 +1,28 @@
 ---
 name: nestjs-api-tests
-description: Cria testes unitários e E2E para módulos REST do catálogo PHB. Use ao adicionar *.spec.ts, *.e2e-spec.ts ou configurar coverage Jest.
+description: Overlay Jest do dnd-api — *.queries.spec.ts, handlers Game, e2e PHB. Use ao testar catálogo/game (além da skill global jest).
 ---
 
-# Testes — API REST
+# Testes — dnd-api (Jest)
+
+Genérico → skills **shared-ai** `jest` + `testing`. Este repo usa **Jest** (não Vitest).
 
 Plano: [`docs/api-plan.md`](../../../docs/api-plan.md#testes-e-coverage)
 
-## Referências
+## Deltas deste repo
 
-- [`unit-service.md`](references/unit-service.md)
+| Área | Arquivos |
+|------|----------|
+| Catalog unit | `*.queries.spec.ts` — mock `getRepositoryToken` + `execute()` |
+| Game unit | `*.application.spec.ts` |
+| E2E | `*.e2e-spec.ts` — lista + slug (`fighter`) + 404 |
+
+## Referências locais
+
+- [`unit-queries.md`](references/unit-queries.md)
 - [`e2e-route.md`](references/e2e-route.md)
 
-## Checklist novo módulo
+## Checklist
 
-- [ ] Catalog: `xxx.queries.spec.ts` · Game: `xxx.application.spec.ts`
-- [ ] `xxx.e2e-spec.ts` (lista + slug + 404)
-- [ ] DTOs com campos assertados
-- [ ] `test:cov` ≥ 80% no service
+- [ ] Coverage alinhado à rule `api-testing`
+- [ ] Slugs de amostra EN para classes (`fighter`)

@@ -1,13 +1,13 @@
 ---
-description: TypeORM — entities rpg.phb_*, views, Supabase pooler
+description: TypeORM no dnd-api — schema rpg, views PHB, pooler (além da skill global typeorm)
 globs: src/**/*.ts
 alwaysApply: false
 ---
 
-# TypeORM
+# TypeORM (dnd-api)
 
-- `@Entity({ schema: 'rpg', name: 'phb_class' })`; colunas snake_case
-- `synchronize: false`; migrations TypeORM só para tabelas novas
-- Relations espelham FKs em `database/schema.sql`
-- Queries pesadas via `@ViewEntity` nas views `v_phb_*`
-- `DATABASE_URL` com Supabase pooler (6543); pool mínimo em serverless
+1. Skill global `typeorm` (+ `nestjs`).
+2. Overlay local: `typeorm-rpg-entities` (schema `rpg`, `phb_*`, `v_phb_*`).
+3. `synchronize: false`; DDL em `database/`.
+4. `DATABASE_URL` pooler Supabase 6543 em serverless.
+5. Não expor entity na API — mapper/DTO.

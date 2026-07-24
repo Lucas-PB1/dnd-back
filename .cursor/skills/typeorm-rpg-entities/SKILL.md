@@ -1,18 +1,23 @@
 ---
 name: typeorm-rpg-entities
-description: Mapeia entidades TypeORM para schema rpg.phb_* e views v_phb_*. Use quando criar entities, relations ou ViewEntity para o catálogo PHB.
+description: Overlay TypeORM do catálogo PHB — schema rpg, phb_*, v_phb_*, slugs. Use quando mapear entities/views do dnd-api (além da skill global typeorm).
 ---
 
-# TypeORM — entities PHB
+# TypeORM — entities PHB (dnd-api)
 
-## Referências
+Genérico TypeORM / Nest → skills **shared-ai** `typeorm` + `nestjs`.  
+Modelo de dados → `rpg-catalog-model`. Postgres → `postgres`.
 
-- [`entity-template.md`](references/entity-template.md) — template base
-- [`relations-by-cluster.md`](references/relations-by-cluster.md) — relations por domínio
-- [`view-entities.md`](references/view-entities.md) — @ViewEntity para API
+## Deltas deste repo
 
-## Regras
+- `schema: 'rpg'`, tabelas `phb_*`, views `v_phb_*` / `v_spell_by_class`
+- Paths: entities `src/entities/`, views `src/entities/views/`
+- `synchronize: false` — DDL em `database/`
+- Slug de classe nas views: EN (`fighter`); magias muitas em PT
+- BIGINT → `string` em TS
 
-- `schema: 'rpg'`, `synchronize: false`
-- Colunas snake_case com `@Column({ name: 'class_id' })`
-- Views para endpoints read-only; entities para relations complexas
+## Referências locais
+
+- [`entity-template.md`](references/entity-template.md)
+- [`relations-by-cluster.md`](references/relations-by-cluster.md)
+- [`view-entities.md`](references/view-entities.md)

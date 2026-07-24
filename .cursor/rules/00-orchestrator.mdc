@@ -1,29 +1,29 @@
 ---
-description: Orquestra rules e skills do monorepo RPG (SQL + Nest + Supabase + Vercel)
+description: Orquestra rules e skills do dnd-api (SQL + Nest + Supabase + Vercel)
 alwaysApply: true
 ---
 
-# Orquestrador RPG
+# Orquestrador dnd-api
 
 **Infra:** [`docs/infrastructure.md`](../../docs/infrastructure.md) · **Arquitetura:** [`docs/architecture.md`](../../docs/architecture.md)
 
-Monorepo **API only**: `database/` + `src/` Nest. Frontend Next.js = repo separado (`dnd-front`).
+Repo **API only**: `database/` + `src/` Nest. Frontend = `dnd-front` (irmão em `dnd-work/`).
 
-## Roteamento
+Genérico (shared-ai): `nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`, `supabase`, `vercel`, `rest-api`.
 
-| Contexto | Rules | Skills |
-|----------|-------|--------|
-| Infra | — | `docs/infrastructure.md` |
-| Arquitetura / BC / CQRS | bounded-contexts, catalog-thin-layer, game-domain | nestjs-bounded-context, cqrs-catalog-vs-game |
-| REST / Swagger / erros / testes | rest-api, api-errors, api-testing | nestjs-swagger, nestjs-api-tests |
-| Plano API (checklist) | — | [`docs/api-plan.md`](../../docs/api-plan.md) |
-| SQL / migrations / seeds | postgres-sql, supabase-sql, sql-clean-code, sql-oop-patterns, phb-data-model | postgres-apply-catalog, rpg-catalog-model |
-| Nest catálogo (`src/catalog/`) | catalog-thin-layer, nestjs-core, nestjs-typeorm, api-contract | nest-phb-api, typeorm-rpg-entities |
-| Nest game (`src/game/`) | game-domain, bounded-contexts, supabase-auth | cqrs-catalog-vs-game |
-| Deploy Vercel | nestjs-vercel | nest-vercel-deploy |
-| Supabase DB / Auth | supabase-sql, supabase-auth | supabase-connection, supabase-auth |
-| Contrato frontend Next | api-contract | api-consumer-next |
-| Relações PHB | phb-data-model | rpg-catalog-model |
+## Roteamento local
+
+| Contexto | Rules | Skills locais |
+|----------|-------|---------------|
+| Arquitetura / BC / CQRS | bounded-contexts, catalog-thin-layer, game-domain, application-layer | nestjs-bounded-context, cqrs-catalog-vs-game |
+| REST / erros / testes | rest-api, api-errors, api-testing, api-contract | nestjs-api-tests (+ global `jest`) |
+| SQL / migrations / seeds | postgres-sql, supabase-sql, sql-clean-code, sql-oop-patterns, phb-data-model | postgres-apply-catalog, rpg-catalog-model, phb-query-views |
+| Nest catálogo | catalog-thin-layer, nestjs-core, nestjs-typeorm, api-contract | nestjs-bounded-context, typeorm-rpg-entities (+ global `typeorm`) |
+| Nest game | game-domain, bounded-contexts, supabase-auth | cqrs-catalog-vs-game |
+| Deploy Vercel | nestjs-vercel | nest-vercel-deploy (+ global `vercel`) |
+| Supabase DB / Auth | supabase-sql, supabase-auth | supabase-auth (+ global `supabase`) |
+| Contrato frontend | api-contract | api-consumer-next |
+| Glossário PHB PT | — | dnd-glossary-pt |
 
 ## Princípios
 

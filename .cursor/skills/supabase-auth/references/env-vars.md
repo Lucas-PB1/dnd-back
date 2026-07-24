@@ -1,25 +1,21 @@
-# Variáveis Supabase Auth
+## Variáveis de Auth + DB
 
-## API (Vercel)
+### API (este repo)
 
 | Var | Uso |
 |-----|-----|
-| `SUPABASE_URL` | JWKS + issuer para validar access tokens (ES256) |
+| `SUPABASE_URL` | JWKS + issuer (ES256) |
+| `DATABASE_URL` | TypeORM — local ou pooler **6543** + `pgbouncer=true` |
+| `SUPABASE_DATABASE_URL` | Migrations/seeds (5432) |
+| `FRONTEND_URL` | CORS |
 | `SUPABASE_SERVICE_ROLE_KEY` | Só server-side; nunca client |
 
-## Frontend (repo Next — outro repo)
+### Frontend (`dnd-front`)
 
 | Var | Uso |
 |-----|-----|
 | `NEXT_PUBLIC_SUPABASE_URL` | Client SDK |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Client SDK |
-| `NEXT_PUBLIC_API_URL` | Base URL desta API Nest |
+| `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` | Client SDK |
+| `NEXT_PUBLIC_API_URL` | Base desta API |
 
-## .env.example (este repo)
-
-```
-DATABASE_URL=
-SUPABASE_URL=
-FRONTEND_URL=http://localhost:3001
-PORT=3000
-```
+Ver também [`pooler-and-env.md`](pooler-and-env.md).

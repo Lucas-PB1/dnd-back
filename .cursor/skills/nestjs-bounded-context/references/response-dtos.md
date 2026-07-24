@@ -12,7 +12,7 @@ export class ClassResponseDto {
 
 ## Mapeamento
 
-Service mapeia ViewEntity → DTO (não expor entity diretamente):
+Mapper (`classes.mapper.ts`) mapeia ViewEntity → DTO — **não** expor entity/ORM cru:
 
 ```typescript
 toDto(row: VPhbClass): ClassResponseDto {
@@ -28,4 +28,4 @@ toDto(row: VPhbClass): ClassResponseDto {
 
 ## Naming API
 
-camelCase em JSON; snake_case só no banco.
+camelCase em JSON; snake_case só no banco. Slug string — sem BIGINT na response.

@@ -2,7 +2,7 @@
 
 ## Identidade
 - `BIGSERIAL id` — PK interna, joins
-- `slug TEXT UNIQUE` — identificador estável para API (`/classes/guerreiro`)
+- `slug TEXT UNIQUE` — identificador estável para API (`/classes/fighter`; classes EN, magias muitas PT)
 
 ## Naming
 - Tabelas: `phb_<entidade>`

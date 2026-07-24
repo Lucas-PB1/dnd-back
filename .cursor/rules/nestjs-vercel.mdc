@@ -1,15 +1,12 @@
 ---
-description: NestJS na Vercel — serverless, entrypoint, stateless
+description: NestJS na Vercel — deltas dnd-api (além da skill global vercel)
 globs: src/**/*.ts,vercel.json
 alwaysApply: false
 ---
 
-# NestJS + Vercel
+# NestJS + Vercel (dnd-api)
 
-Skill: `nest-vercel-deploy` · ref: `vercel-vs-traditional.md`
-
-- Entrypoint `src/main.ts` com `bootstrap()` + `app.listen(process.env.PORT ?? 3000)`
-- Dev prod-like: `vercel dev` (CLI ≥ 48.4)
-- App = uma Vercel Function (Fluid compute); stateless
-- Sem sessão in-memory; TypeORM DataSource singleton
-- Limite 250 MB; lazy imports para módulos pesados
+1. Skill global `vercel` + local `nest-vercel-deploy`.
+2. Entrypoint `src/main.ts` — `bootstrap()` + `app.listen(process.env.PORT ?? 3000)`.
+3. TypeORM DataSource singleton; pooler 6543; app stateless.
+4. JWT: `jsonwebtoken` + JWKS (sem `jose` no runtime).
