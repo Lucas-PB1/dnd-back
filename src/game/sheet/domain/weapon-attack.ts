@@ -66,8 +66,13 @@ function isTwoHanded(piece: EquippedWeaponPiece): boolean {
 
 function isProficient(
   piece: EquippedWeaponPiece,
-  proficiencySlugs: readonly string[],
+  context: WeaponAttackContext,
 ): boolean {
+  const proficiencySlugs = [...context.weaponProficiencySlugs];
+  if (hasStyleOrFeat(context, 'martial-weapon-training')) {
+    proficiencySlugs.push(MARTIAL_PROFICIENCY);
+  }
+
   if (piece.category === 'simple') {
     return proficiencySlugs.includes(SIMPLE_PROFICIENCY);
   }
@@ -88,7 +93,7 @@ function pickAbility(
   if (mode === 'ranged' && !hasProperty(piece, 'finesse')) {
     return { slug: 'destreza', mod: dex };
   }
-  if (hasProperty(piece, 'finesse') || (mode === 'ranged' && hasProperty(piece, 'finesse'))) {
+  if (hasProperty(piece, 'finesse')) {
     return str >= dex
       ? { slug: 'forca', mod: str }
       : { slug: 'destreza', mod: dex };
@@ -128,7 +133,7 @@ function computeOneAttack(
   context: WeaponAttackContext,
   equippedWeapons: EquippedWeaponPiece[],
 ): WeaponAttack {
-  const proficient = isProficient(piece, context.weaponProficiencySlugs);
+  const proficient = isProficient(piece, context);
   const ability = pickAbility(scores, piece, mode);
   const attackParts: string[] = [ability.slug === 'forca' ? 'FOR' : 'DES'];
   let attackBonus = ability.mod;
@@ -161,6 +166,12 @@ function computeOneAttack(
   ) {
     damageBonus += 2;
     damageParts.push('Arremesso');
+  }
+
+  // PHB 2024: Maestria em Armas Pesadas — +PB de dano com propriedade Pesada.
+  if (hasProperty(piece, 'heavy') && hasStyleOrFeat(context, 'great-weapon-master')) {
+    damageBonus += context.proficiencyBonus;
+    damageParts.push('Mestre em Armas Grandes');
   }
 
   const damageDice = piece.damage ?? '1';

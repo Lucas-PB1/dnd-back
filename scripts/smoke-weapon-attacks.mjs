@@ -161,15 +161,94 @@ const SCENARIOS = [
     source: 'estilo',
     classSlug: 'fighter',
     subclassSlug: 'champion',
+    level: 7,
     fightingStyleOption: 'archery',
     equip: [{ itemSlug: 'shortbow', slot: 'main_hand' }],
-    rule: 'Arquearia via opção de subclasse Champion',
+    rule: 'Arquearia via opção de subclasse Champion (nv.7)',
     expected: (s, pb) => [
       {
         mode: 'ranged',
         attackBonus: mod(s.destreza) + pb + 2,
         damageDice: '1d6',
         damageBonus: mod(s.destreza),
+      },
+    ],
+  },
+  {
+    id: 'talento/mestre-armas-grandes',
+    source: 'talento',
+    classSlug: 'fighter',
+    subclassSlug: 'champion',
+    level: 4,
+    feats: [{ featSlug: 'great-weapon-master', instanceIndex: 0 }],
+    featOptions: [
+      {
+        featSlug: 'great-weapon-master',
+        instanceIndex: 0,
+        optionKey: 'abilityIncrease',
+        valueId: 'forca',
+      },
+    ],
+    equip: [{ itemSlug: 'greataxe', slot: 'main_hand' }],
+    rule: '1d12 + FOR + PB (Maestria em Armas Pesadas)',
+    expected: (s, pb) => [
+      {
+        mode: 'melee',
+        attackBonus: mod(s.forca) + pb,
+        damageDice: '1d12',
+        damageBonus: mod(s.forca) + pb,
+      },
+    ],
+  },
+  {
+    id: 'talento/mestre-armas-grandes-nao-pesa',
+    source: 'talento',
+    classSlug: 'fighter',
+    subclassSlug: 'champion',
+    level: 4,
+    feats: [{ featSlug: 'great-weapon-master', instanceIndex: 0 }],
+    featOptions: [
+      {
+        featSlug: 'great-weapon-master',
+        instanceIndex: 0,
+        optionKey: 'abilityIncrease',
+        valueId: 'forca',
+      },
+    ],
+    equip: [{ itemSlug: 'longsword', slot: 'main_hand' }],
+    rule: 'espada longa sem Pesada: sem +PB de dano',
+    expected: (s, pb) => [
+      {
+        mode: 'melee',
+        attackBonus: mod(s.forca) + pb,
+        damageDice: '1d8',
+        damageBonus: mod(s.forca),
+      },
+    ],
+  },
+  {
+    id: 'talento/treino-marciais-mago',
+    source: 'talento',
+    classSlug: 'wizard',
+    subclassSlug: 'evoker',
+    level: 4,
+    feats: [{ featSlug: 'martial-weapon-training', instanceIndex: 0 }],
+    featOptions: [
+      {
+        featSlug: 'martial-weapon-training',
+        instanceIndex: 0,
+        optionKey: 'abilityIncrease',
+        valueId: 'forca',
+      },
+    ],
+    equip: [{ itemSlug: 'longsword', slot: 'main_hand' }],
+    rule: 'mago com Treinamento Marcial ganha PB na marcial',
+    expected: (s, pb) => [
+      {
+        mode: 'melee',
+        attackBonus: mod(s.forca) + pb,
+        damageDice: '1d8',
+        damageBonus: mod(s.forca),
       },
     ],
   },
@@ -219,7 +298,7 @@ async function buildPayload(dataSource, scenario) {
 
   return {
     name: `SMOKE ATK ${scenario.id}`.slice(0, 100),
-    level: LEVEL,
+    level: scenario.level ?? LEVEL,
     classSlug: scenario.classSlug,
     subclassSlug: scenario.subclassSlug,
     speciesSlug: 'orc',
@@ -234,14 +313,14 @@ async function buildPayload(dataSource, scenario) {
     subclassOptions: await resolveSubclassOptions(
       dataSource,
       scenario.subclassSlug,
-      LEVEL,
+      scenario.level ?? LEVEL,
       preferredStyle,
     ),
     characterFeats: [
       { featSlug: 'alert', instanceIndex: 0 },
       ...(scenario.feats ?? []),
     ],
-    featOptions: [],
+    featOptions: scenario.featOptions ?? [],
     characterSpells: [],
     equipment: [],
   };
@@ -357,7 +436,7 @@ async function main() {
   const okCount = results.filter((r) => r.ok).length;
   console.log('\n=== Resumo ===');
   console.log(`Cenários: ${okCount}/${results.length} OK`);
-  for (const source of ['catalog', 'base', 'estilo']) {
+  for (const source of ['catalog', 'base', 'estilo', 'talento']) {
     const group = results.filter((r) => r.source === source);
     if (!group.length) continue;
     console.log(`  ${source}: ${group.filter((r) => r.ok).length}/${group.length}`);

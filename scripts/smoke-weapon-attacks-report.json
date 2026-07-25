@@ -1,0 +1,325 @@
+{
+  "at": "2026-07-25T16:44:19.196Z",
+  "results": [
+    {
+      "id": "catalog/longsword",
+      "source": "catalog",
+      "ok": true
+    },
+    {
+      "id": "catalog/greataxe",
+      "source": "catalog",
+      "ok": true
+    },
+    {
+      "id": "catalog/greatsword",
+      "source": "catalog",
+      "ok": true
+    },
+    {
+      "id": "catalog/dagger",
+      "source": "catalog",
+      "ok": true
+    },
+    {
+      "id": "catalog/longbow",
+      "source": "catalog",
+      "ok": true
+    },
+    {
+      "id": "catalog/shortbow",
+      "source": "catalog",
+      "ok": true
+    },
+    {
+      "id": "catalog/rapier",
+      "source": "catalog",
+      "ok": true
+    },
+    {
+      "id": "catalog/mace",
+      "source": "catalog",
+      "ok": true
+    },
+    {
+      "id": "base/espada-longa-guerreiro",
+      "source": "base",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "melee",
+          "attackBonus": 5,
+          "damageDice": "1d8",
+          "damageBonus": 3
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "longsword",
+          "itemName": "Espada Longa",
+          "mode": "melee",
+          "attackBonus": 5,
+          "abilitySlug": "forca",
+          "proficient": true,
+          "damageDice": "1d8",
+          "damageBonus": 3,
+          "damageType": "Cortante",
+          "attackNote": "corpo a corpo: FOR + PB",
+          "damageNote": "1d8 +3 (FOR)"
+        }
+      ],
+      "rule": "FOR + PB / 1d8 + FOR"
+    },
+    {
+      "id": "base/mago-sem-proficiencia-marciais",
+      "source": "base",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "melee",
+          "attackBonus": 3,
+          "damageDice": "1d8",
+          "damageBonus": 3
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "longsword",
+          "itemName": "Espada Longa",
+          "mode": "melee",
+          "attackBonus": 3,
+          "abilitySlug": "forca",
+          "proficient": false,
+          "damageDice": "1d8",
+          "damageBonus": 3,
+          "damageType": "Cortante",
+          "attackNote": "corpo a corpo: FOR",
+          "damageNote": "1d8 +3 (FOR)"
+        }
+      ],
+      "rule": "FOR apenas (sem PB marcial)"
+    },
+    {
+      "id": "estilo/arquearia-arco-longo",
+      "source": "estilo",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "ranged",
+          "attackBonus": 7,
+          "damageDice": "1d8",
+          "damageBonus": 3
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "longbow",
+          "itemName": "Arco Longo",
+          "mode": "ranged",
+          "attackBonus": 7,
+          "abilitySlug": "destreza",
+          "proficient": true,
+          "damageDice": "1d8",
+          "damageBonus": 3,
+          "damageType": "Perfurante",
+          "attackNote": "à distância: DES + PB + Arquearia",
+          "damageNote": "1d8 +3 (DES)"
+        }
+      ],
+      "rule": "DES + PB + 2 Arquearia"
+    },
+    {
+      "id": "estilo/duelismo-rapieira",
+      "source": "estilo",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "melee",
+          "attackBonus": 5,
+          "damageDice": "1d8",
+          "damageBonus": 5
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "rapier",
+          "itemName": "Rapieira",
+          "mode": "melee",
+          "attackBonus": 5,
+          "abilitySlug": "forca",
+          "proficient": true,
+          "damageDice": "1d8",
+          "damageBonus": 5,
+          "damageType": "Perfurante",
+          "attackNote": "corpo a corpo: FOR + PB",
+          "damageNote": "1d8 +5 (FOR + Duelismo)"
+        }
+      ],
+      "rule": "melhor FOR/DES + PB; dano +2 Duelismo"
+    },
+    {
+      "id": "estilo/arremesso-adaga",
+      "source": "estilo",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "melee",
+          "attackBonus": 5,
+          "damageDice": "1d4",
+          "damageBonus": 3
+        },
+        {
+          "mode": "ranged",
+          "attackBonus": 5,
+          "damageDice": "1d4",
+          "damageBonus": 5
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "dagger",
+          "itemName": "Adaga",
+          "mode": "melee",
+          "attackBonus": 5,
+          "abilitySlug": "forca",
+          "proficient": true,
+          "damageDice": "1d4",
+          "damageBonus": 3,
+          "damageType": "Perfurante",
+          "attackNote": "corpo a corpo: FOR + PB",
+          "damageNote": "1d4 +3 (FOR)"
+        },
+        {
+          "itemSlug": "dagger",
+          "itemName": "Adaga",
+          "mode": "ranged",
+          "attackBonus": 5,
+          "abilitySlug": "forca",
+          "proficient": true,
+          "damageDice": "1d4",
+          "damageBonus": 5,
+          "damageType": "Perfurante",
+          "attackNote": "à distância: FOR + PB",
+          "damageNote": "1d4 +5 (FOR + Arremesso)"
+        }
+      ],
+      "rule": "melee sem +2; ranged com +2 dano de arremesso"
+    },
+    {
+      "id": "combo/arquearia-via-subclass-option",
+      "source": "estilo",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "ranged",
+          "attackBonus": 8,
+          "damageDice": "1d6",
+          "damageBonus": 3
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "shortbow",
+          "itemName": "Arco Curto",
+          "mode": "ranged",
+          "attackBonus": 8,
+          "abilitySlug": "destreza",
+          "proficient": true,
+          "damageDice": "1d6",
+          "damageBonus": 3,
+          "damageType": "Perfurante",
+          "attackNote": "à distância: DES + PB + Arquearia",
+          "damageNote": "1d6 +3 (DES)"
+        }
+      ],
+      "rule": "Arquearia via opção de subclasse Champion (nv.7)"
+    },
+    {
+      "id": "talento/mestre-armas-grandes",
+      "source": "talento",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "melee",
+          "attackBonus": 5,
+          "damageDice": "1d12",
+          "damageBonus": 5
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "greataxe",
+          "itemName": "Machado Grande",
+          "mode": "melee",
+          "attackBonus": 5,
+          "abilitySlug": "forca",
+          "proficient": true,
+          "damageDice": "1d12",
+          "damageBonus": 5,
+          "damageType": "Cortante",
+          "attackNote": "corpo a corpo: FOR + PB",
+          "damageNote": "1d12 +5 (FOR + Mestre em Armas Grandes)"
+        }
+      ],
+      "rule": "1d12 + FOR + PB (Maestria em Armas Pesadas)"
+    },
+    {
+      "id": "talento/mestre-armas-grandes-nao-pesa",
+      "source": "talento",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "melee",
+          "attackBonus": 5,
+          "damageDice": "1d8",
+          "damageBonus": 3
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "longsword",
+          "itemName": "Espada Longa",
+          "mode": "melee",
+          "attackBonus": 5,
+          "abilitySlug": "forca",
+          "proficient": true,
+          "damageDice": "1d8",
+          "damageBonus": 3,
+          "damageType": "Cortante",
+          "attackNote": "corpo a corpo: FOR + PB",
+          "damageNote": "1d8 +3 (FOR)"
+        }
+      ],
+      "rule": "espada longa sem Pesada: sem +PB de dano"
+    },
+    {
+      "id": "talento/treino-marciais-mago",
+      "source": "talento",
+      "ok": true,
+      "expected": [
+        {
+          "mode": "melee",
+          "attackBonus": 5,
+          "damageDice": "1d8",
+          "damageBonus": 3
+        }
+      ],
+      "actual": [
+        {
+          "itemSlug": "longsword",
+          "itemName": "Espada Longa",
+          "mode": "melee",
+          "attackBonus": 5,
+          "abilitySlug": "forca",
+          "proficient": true,
+          "damageDice": "1d8",
+          "damageBonus": 3,
+          "damageType": "Cortante",
+          "attackNote": "corpo a corpo: FOR + PB",
+          "damageNote": "1d8 +3 (FOR)"
+        }
+      ],
+      "rule": "mago com Treinamento Marcial ganha PB na marcial"
+    }
+  ]
+}

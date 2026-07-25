@@ -44,6 +44,17 @@ const dagger = (): EquippedWeaponPiece => ({
   equipmentSlot: 'main_hand',
 });
 
+const greataxe = (): EquippedWeaponPiece => ({
+  itemSlug: 'greataxe',
+  itemName: 'Machado Grande',
+  category: 'martial',
+  damage: '1d12',
+  damageType: 'Cortante',
+  versatileDamage: null,
+  propertySlugs: ['two-handed', 'heavy'],
+  equipmentSlot: 'main_hand',
+});
+
 const fighterContext = {
   proficiencyBonus: 2,
   weaponProficiencySlugs: ['armas-simples', 'armas-marciais'],
@@ -66,6 +77,16 @@ describe('computeWeaponAttacks', () => {
     });
     expect(attack.attackBonus).toBe(3);
     expect(attack.proficient).toBe(false);
+  });
+
+  it('grants martial proficiency from martial-weapon-training feat', () => {
+    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
+      proficiencyBonus: 2,
+      weaponProficiencySlugs: ['armas-simples'],
+      featSlugs: ['martial-weapon-training'],
+    });
+    expect(attack.proficient).toBe(true);
+    expect(attack.attackBonus).toBe(5);
   });
 
   it('uses DEX for ammunition weapons and applies archery +2', () => {
@@ -120,6 +141,31 @@ describe('computeWeaponAttacks', () => {
     const ranged = attacks.find((a) => a.mode === 'ranged')!;
     expect(melee.damageBonus).toBe(3);
     expect(ranged.damageBonus).toBe(5);
+  });
+
+  it('applies great-weapon-master PB damage with heavy weapons', () => {
+    const [attack] = computeWeaponAttacks(scores(), [greataxe()], {
+      ...fighterContext,
+      featSlugs: ['great-weapon-master'],
+    });
+    expect(attack.damageBonus).toBe(3 + 2); // FOR + PB
+    expect(attack.damageNote).toContain('Mestre em Armas Grandes');
+  });
+
+  it('does not apply great-weapon-master without the heavy property', () => {
+    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
+      ...fighterContext,
+      featSlugs: ['great-weapon-master'],
+    });
+    expect(attack.damageBonus).toBe(3);
+  });
+
+  it('applies great-weapon-master to heavy ranged weapons too', () => {
+    const [attack] = computeWeaponAttacks(scores(), [longbow()], {
+      ...fighterContext,
+      featSlugs: ['great-weapon-master'],
+    });
+    expect(attack.damageBonus).toBe(2 + 2); // DES + PB
   });
 
   it('returns an empty list without equipped weapons', () => {

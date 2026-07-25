@@ -8,51 +8,65 @@ Escopo: **ataques passivos derivados do inventário equipado** — dado da arma,
 - Magias e ataques de magia (CD / bônus de ataque mágico)
 - Vantagem / desvantagem / cobertura
 - `great-weapon-fighting` (trata 1–2 como 3 — não é bônus fixo)
-- `two-weapon-fighting` (regra do ataque extra da mão inábil — lote futuro)
+- `two-weapon-fighting` / `dual-wielder` (economia de ação do ataque extra)
+- `savage-attacker` / `piercer` / `crusher` / `slasher` (uma vez por turno / crítico)
+- `sharpshooter` (ignora cobertura/desvantagem — sem bônus numérico fixo)
+- `weapon-master` (habilita maestria de arma — não altera o número do ataque)
+
+Smoke: `node scripts/smoke-weapon-attacks.mjs` → **17/17 OK** (in-scope)
 
 Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 
 ---
 
-## Estado atual (antes deste lote)
+## Estado atual
 
-- [ ] Bônus de ataque da arma na ficha
-- [ ] Dado / tipo de dano da arma equipada
-- [ ] Arquearia (+2 atq à distância)
-- [ ] Duelismo (+2 dano corpo a corpo uma mão)
-- [ ] Combate com Armas de Arremesso (+2 dano arremesso)
-- [ ] Aba Ações ainda é stub (contadores em 0)
+- [x] Bônus de ataque da arma na ficha
+- [x] Dado / tipo de dano da arma equipada
+- [x] Arquearia (+2 atq à distância)
+- [x] Duelismo (+2 dano corpo a corpo uma mão)
+- [x] Combate com Armas de Arremesso (+2 dano arremesso)
+- [x] Mestre em Armas Grandes (+PB dano com Pesada)
+- [x] Treinamento com Armas Marciais (proficiência)
+- [x] Aba Ações consome `weaponAttacks`
 
-Código previsto: `weapon-attack.ts` + service de inventário equipado + `character.mapper.ts`
+Código: `weapon-attack.ts` + `equipped-weapon-attacks.service.ts` + `character.mapper.ts`
 
 ---
 
 ## Lote 1 — Base da arma
 
-- [ ] Ataque = `mod(atributo) + PB` (se proficiente) 
-- [ ] Atributo: FOR; Acuidade → melhor entre FOR/DES; munição → DES
-- [ ] Proficiência via `armas-simples` / `armas-marciais` da classe
-- [ ] Dano = `dado do catálogo + mod(atributo)`
-- [ ] Dados do catálogo batem com PHB (smoke de amostra)
+- [x] Ataque = `mod(atributo) + PB` (se proficiente)
+- [x] Atributo: FOR; Acuidade → melhor entre FOR/DES; munição → DES
+- [x] Proficiência via `armas-simples` / `armas-marciais` da classe
+- [x] Dano = `dado do catálogo + mod(atributo)`
+- [x] Dados do catálogo batem com PHB (smoke de amostra 8/8)
 
 ---
 
 ## Lote 2 — Estilos / talentos passivos
 
-- [ ] **Arquearia** (`archery`) — +2 nas jogadas de ataque à distância
-- [ ] **Duelismo** (`dueling`) — +2 dano com arma corpo a corpo em uma mão e sem outra arma (escudo ok)
-- [ ] **Combate com Armas de Arremesso** (`thrown-weapon-fighting`) — +2 dano em ataque à distância com propriedade Arremesso
-- [ ] Fonte via `featSlugs` **ou** `fightingStyleSlugs` (subclass options)
+- [x] **Arquearia** (`archery`) — +2 nas jogadas de ataque à distância
+- [x] **Duelismo** (`dueling`) — +2 dano com arma corpo a corpo em uma mão e sem outra arma (escudo ok)
+- [x] **Combate com Armas de Arremesso** (`thrown-weapon-fighting`) — +2 dano em ataque à distância com propriedade Arremesso
+- [x] **Mestre em Armas Grandes** (`great-weapon-master`) — +PB de dano com arma **Pesada**
+- [x] **Treinamento com Armas Marciais** (`martial-weapon-training`) — concede proficiência marcial (PB no ataque)
+- [x] Fonte via `featSlugs` **ou** `fightingStyleSlugs` (subclass options)
+
+Smoke:
+- [x] `talento/mestre-armas-grandes`
+- [x] `talento/mestre-armas-grandes-nao-pesa` (controle)
+- [x] `talento/treino-marciais-mago`
 
 ---
 
 ## Lote 3 — Engenharia / ficha
 
-- [ ] Contexto: PB, proficiências de arma da classe, estilos/talentos
-- [ ] Lista `weaponAttacks` no `CharacterResponseDto`
-- [ ] Testes unitários
-- [ ] Smoke end-to-end
-- [ ] UI mínima na aba Ações (consumir `weaponAttacks`)
+- [x] Contexto: PB, proficiências de arma da classe, estilos/talentos
+- [x] Lista `weaponAttacks` no `CharacterResponseDto`
+- [x] Testes unitários (`weapon-attack.spec.ts`)
+- [x] Smoke end-to-end 17/17 OK
+- [x] UI mínima na aba Ações (consumir `weaponAttacks`)
 
 ---
 
@@ -65,6 +79,9 @@ Código previsto: `weapon-attack.ts` + service de inventário equipado + `charac
 | `berserker` / Frenesi | Condicional de Fúria |
 | `great-weapon-fighting` | Re-roll, não bônus fixo |
 | `two-weapon-fighting` | Economia de ação do ataque extra |
+| `savage-attacker` / `piercer` | Uma vez por turno / crítico |
+| `sharpshooter` | Sem bônus numérico fixo (2024) |
+| `weapon-master` | Maestria de arma, não número |
 | Ataques de magia | Outro sistema (atributo de conjuração) |
 
 ---
@@ -74,6 +91,6 @@ Código previsto: `weapon-attack.ts` + service de inventário equipado + `charac
 ```powershell
 cd dnd-api
 npx jest src/game/sheet/domain/weapon-attack.spec.ts --no-coverage
-npm run build
+npx tsc -p tsconfig.json
 node scripts/smoke-weapon-attacks.mjs
 ```
