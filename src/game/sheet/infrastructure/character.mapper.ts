@@ -6,6 +6,7 @@ import { computeDerivedStats } from '../domain/character-derived-stats';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 import { EquippedArmorClassService } from './equipped-armor-class.service';
+import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/fighting-style-feat-options';
 
 @Injectable()
 export class CharacterMapper {
@@ -33,7 +34,14 @@ export class CharacterMapper {
       classSkillSlugs: loaded.classSkillSlugs,
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
     });
-    const armor = await this.equippedArmorClass.resolve(row.id, row.abilityScores);
+    const armor = await this.equippedArmorClass.resolve(row.id, row.abilityScores, {
+      classSlug: row.classSlug,
+      subclassSlug: row.subclassSlug,
+      featSlugs: loaded.characterFeats.map((feat) => feat.featSlug),
+      fightingStyleSlugs: collectFightingStyleSlugsFromSubclassOptions(
+        loaded.subclassOptions,
+      ),
+    });
 
     return {
       id: row.id,

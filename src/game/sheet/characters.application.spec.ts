@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, it } from '@jest/globals';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
@@ -12,6 +13,7 @@ import { CharacterSheetValidator } from './domain/character-sheet.validator';
 import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
 import { CatalogLookupService } from '../../catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
+import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
 
 describe('Characters application layer', () => {
   let createHandler: CreateCharacterHandler;
@@ -138,6 +140,10 @@ describe('Characters application layer', () => {
             }),
           },
         },
+        {
+          provide: SeedStartingInventoryHandler,
+          useValue: { execute: jest.fn().mockResolvedValue(undefined) },
+        },
       ],
     }).compile();
 
@@ -156,6 +162,24 @@ describe('Characters application layer', () => {
     });
     expect(catalogLookup.validateCharacterCatalogRefs).toHaveBeenCalled();
     expect(domain.applyDerivedHitPoints).toHaveBeenCalled();
+  });
+
+  it('create forwards feat slugs to the hit points calculation', async () => {
+    await createHandler.execute(userId, {
+      name: 'Thorin',
+      classSlug: 'fighter',
+      speciesSlug: 'dwarf',
+      backgroundSlug: 'acolyte',
+      backgroundAbilityBoostPlus2Slug: 'sabedoria',
+      backgroundAbilityBoostPlus1Slug: 'carisma',
+      characterFeats: [{ featSlug: 'tough', instanceIndex: 0 }],
+    });
+
+    expect(domain.applyDerivedHitPoints).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.anything(),
+      expect.arrayContaining(['tough']),
+    );
   });
 
   it('create persists requested starting level', async () => {

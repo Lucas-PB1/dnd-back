@@ -95,10 +95,14 @@ export class CreateCharacterHandler {
         epicBoonFeatSlugs,
       ),
     );
-    await this.domain.applyDerivedHitPoints(entity, {
-      hitPointsMax: dto.hitPointsMax,
-      hitPointsCurrent: dto.hitPointsCurrent,
-    });
+    await this.domain.applyDerivedHitPoints(
+      entity,
+      {
+        hitPointsMax: dto.hitPointsMax,
+        hitPointsCurrent: dto.hitPointsCurrent,
+      },
+      (sheetInput.characterFeats ?? []).map((feat) => feat.featSlug),
+    );
 
     const saved = await this.repository.save(entity);
     await this.sheetRepository.sync(saved.id, sheetInput);

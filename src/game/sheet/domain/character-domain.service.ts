@@ -8,8 +8,20 @@ import { AbilityScores, PlayerCharacter } from '../../shared/infrastructure/play
 import {
   calculateHitPointsMax,
   ClassHpProfile,
+  HitPointsContext,
   parseHitDieLabel,
 } from './hit-points.calc';
+
+function hitPointsContextOf(
+  entity: PlayerCharacter,
+  featSlugs?: readonly string[],
+): HitPointsContext {
+  return {
+    speciesSlug: entity.speciesSlug,
+    subclassSlug: entity.subclassSlug,
+    featSlugs,
+  };
+}
 
 @Injectable()
 export class CharacterDomainService {
@@ -42,18 +54,21 @@ export class CharacterDomainService {
     level: number;
     classSlug: string;
     abilityScores: AbilityScores;
+    hitPointsContext?: HitPointsContext;
   }): Promise<number> {
     const phbClass = await this.catalogLookup.findClassOrFail(input.classSlug);
     return calculateHitPointsMax(
       input.level,
       this.classHpProfile(phbClass),
       input.abilityScores.constituicao,
+      input.hitPointsContext,
     );
   }
 
   async applyDerivedHitPoints(
     entity: PlayerCharacter,
     overrides?: { hitPointsMax?: number | null; hitPointsCurrent?: number | null },
+    featSlugs?: readonly string[],
   ): Promise<void> {
     if (overrides?.hitPointsMax !== undefined && overrides.hitPointsMax !== null) {
       entity.hitPointsMax = overrides.hitPointsMax;
@@ -62,6 +77,7 @@ export class CharacterDomainService {
         level: entity.level,
         classSlug: entity.classSlug,
         abilityScores: entity.abilityScores,
+        hitPointsContext: hitPointsContextOf(entity, featSlugs),
       });
     }
 
@@ -75,17 +91,26 @@ export class CharacterDomainService {
   async refreshHitPointsAfterChange(
     entity: PlayerCharacter,
     dto: { hitPointsMax?: number; hitPointsCurrent?: number },
-    changed: { level?: boolean; classSlug?: boolean; abilityScores?: boolean },
+    changed: {
+      level?: boolean;
+      classSlug?: boolean;
+      abilityScores?: boolean;
+      speciesSlug?: boolean;
+      subclassSlug?: boolean;
+      characterFeats?: boolean;
+    },
+    featSlugs?: readonly string[],
   ): Promise<void> {
     const shouldRecalculateMax =
       dto.hitPointsMax === undefined &&
-      (changed.level || changed.classSlug || changed.abilityScores);
+      Object.values(changed).some(Boolean);
 
     if (shouldRecalculateMax) {
       entity.hitPointsMax = await this.calculateHitPointsMaxForCharacter({
         level: entity.level,
         classSlug: entity.classSlug,
         abilityScores: entity.abilityScores,
+        hitPointsContext: hitPointsContextOf(entity, featSlugs),
       });
     }
 

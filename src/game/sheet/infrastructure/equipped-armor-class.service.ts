@@ -6,7 +6,7 @@ import { PlayerCharacterItem } from '../../inventory/infrastructure/player-chara
 import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
 import {
   computeArmorClassFromEquipment,
-  computeUnarmoredArmorClass,
+  type ArmorClassContext,
   type EquippedArmorPiece,
 } from '../domain/armor-class';
 
@@ -22,6 +22,7 @@ export class EquippedArmorClassService {
   async resolve(
     characterId: string,
     scores: AbilityScores,
+    context: ArmorClassContext = {},
   ): Promise<{ armorClass: number; armorClassNote: string }> {
     const equipped = await this.inventoryItems.find({
       where: { characterId, location: 'equipped' },
@@ -31,32 +32,20 @@ export class EquippedArmorClassService {
       (row) => row.equipmentSlot === 'armor' || row.equipmentSlot === 'shield',
     );
 
-    if (armorSlots.length === 0) {
-      return {
-        armorClass: computeUnarmoredArmorClass(scores),
-        armorClassNote: 'Sem armadura',
-      };
+    let pieces: EquippedArmorPiece[] = [];
+    if (armorSlots.length > 0) {
+      const slugs = armorSlots.map((row) => row.itemSlug);
+      const catalogRows = await this.armorCatalog.find({
+        where: { itemSlug: In(slugs) },
+      });
+      pieces = catalogRows.map((row) => ({
+        itemSlug: row.itemSlug,
+        itemName: row.itemName,
+        categorySlug: row.categorySlug,
+        acBase: row.acBase,
+      }));
     }
 
-    const slugs = armorSlots.map((row) => row.itemSlug);
-    const catalogRows = await this.armorCatalog.find({
-      where: { itemSlug: In(slugs) },
-    });
-
-    const pieces: EquippedArmorPiece[] = catalogRows.map((row) => ({
-      itemSlug: row.itemSlug,
-      itemName: row.itemName,
-      categorySlug: row.categorySlug,
-      acBase: row.acBase,
-    }));
-
-    if (pieces.length === 0) {
-      return {
-        armorClass: computeUnarmoredArmorClass(scores),
-        armorClassNote: 'Sem armadura',
-      };
-    }
-
-    return computeArmorClassFromEquipment(scores, pieces);
+    return computeArmorClassFromEquipment(scores, pieces, context);
   }
 }

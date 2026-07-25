@@ -7,8 +7,7 @@ import { VSpellByClass } from '../../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterDomainService } from '../../sheet/domain/character-domain.service';
-import { hpGainPerLevel } from '../../sheet/domain/hit-points.calc';
-import { abilityModifier } from '../../sheet/domain/ability-modifier';
+import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 
 const ASI_FEAT_LEVELS = new Set([4, 8, 12, 16, 19]);
@@ -19,6 +18,7 @@ export class LevelUpService {
     private readonly dataSource: DataSource,
     private readonly catalogLookup: CatalogLookupService,
     private readonly domain: CharacterDomainService,
+    private readonly sheetRepository: CharacterSheetRepository,
     @InjectRepository(PhbCharacterLevel)
     private readonly levelsRepo: Repository<PhbCharacterLevel>,
     @InjectRepository(VSpellByClass)
@@ -33,15 +33,23 @@ export class LevelUpService {
     }
 
     const nextLevel = character.level + 1;
-    const phbClass = await this.catalogLookup.findClassOrFail(character.classSlug);
-    const profile = this.domain.classHpProfile(phbClass);
-    const conMod = abilityModifier(character.abilityScores.constituicao);
-    const estimatedHpGain = hpGainPerLevel(profile.hpFixedPerLevel, conMod);
-    const estimatedHitPointsMax = await this.domain.calculateHitPointsMaxForCharacter({
-      level: nextLevel,
-      classSlug: character.classSlug,
-      abilityScores: character.abilityScores,
-    });
+    const sheet = await this.sheetRepository.load(character.id);
+    const hitPointsContext = {
+      speciesSlug: character.speciesSlug,
+      subclassSlug: character.subclassSlug,
+      featSlugs: sheet.characterFeats.map((feat) => feat.featSlug),
+    };
+    const [currentHitPointsMax, estimatedHitPointsMax] = await Promise.all(
+      [character.level, nextLevel].map((level) =>
+        this.domain.calculateHitPointsMaxForCharacter({
+          level,
+          classSlug: character.classSlug,
+          abilityScores: character.abilityScores,
+          hitPointsContext,
+        }),
+      ),
+    );
+    const estimatedHpGain = estimatedHitPointsMax - currentHitPointsMax;
 
     const [currentPbRow, nextPbRow] = await Promise.all([
       this.levelsRepo.findOne({ where: { level: character.level } }),

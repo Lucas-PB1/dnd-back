@@ -1,0 +1,166 @@
+{
+  "at": "2026-07-25T15:24:14.605Z",
+  "sources": {
+    "classFeatures": [
+      {
+        "owner": "barbarian",
+        "name": "Defesa sem Armadura",
+        "level": 1
+      },
+      {
+        "owner": "monk",
+        "name": "Defesa sem Armadura",
+        "level": 1
+      }
+    ],
+    "subclassFeatures": [
+      {
+        "owner": "dance",
+        "name": "Ginga Fascinante",
+        "level": 3
+      },
+      {
+        "owner": "draconic",
+        "name": "Resiliência Dracônica",
+        "level": 3
+      },
+      {
+        "owner": "moon",
+        "name": "Formas Animais dos Círculos Druídicos",
+        "level": 3
+      }
+    ],
+    "feats": [
+      {
+        "owner": "defense",
+        "name": null
+      },
+      {
+        "owner": "defensive-duelist",
+        "name": "Aparar"
+      }
+    ],
+    "spells": [
+      {
+        "owner": "pele-casca",
+        "name": "Pele-Casca",
+        "level": 2
+      },
+      {
+        "owner": "celeridade",
+        "name": "Celeridade",
+        "level": 3
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "armadura/sem-armadura",
+      "source": "base",
+      "rule": "10 + DES",
+      "expected": 13,
+      "actual": 13,
+      "note": "Sem armadura",
+      "ok": true
+    },
+    {
+      "id": "armadura/leve-couro",
+      "source": "base",
+      "rule": "11 + DES",
+      "expected": 14,
+      "actual": 14,
+      "note": "Couro",
+      "ok": true
+    },
+    {
+      "id": "armadura/media-peitoral-cap-des",
+      "source": "base",
+      "rule": "14 + min(DES, 2)",
+      "expected": 16,
+      "actual": 16,
+      "note": "Couraça Peitoral",
+      "ok": true
+    },
+    {
+      "id": "armadura/pesada-cota-de-malha",
+      "source": "base",
+      "rule": "16 (ignora DES)",
+      "expected": 16,
+      "actual": 16,
+      "note": "Cota de Malha",
+      "ok": true
+    },
+    {
+      "id": "armadura/couro-mais-escudo",
+      "source": "base",
+      "rule": "11 + DES + 2 (escudo)",
+      "expected": 16,
+      "actual": 16,
+      "note": "Couro + Escudo",
+      "ok": true
+    },
+    {
+      "id": "classe/barbaro-defesa-sem-armadura",
+      "source": "classe",
+      "rule": "10 + DES + CON (Defesa sem Armadura)",
+      "expected": 16,
+      "actual": 16,
+      "note": "Defesa sem Armadura (bárbaro)",
+      "ok": true
+    },
+    {
+      "id": "classe/barbaro-defesa-sem-armadura-mais-escudo",
+      "source": "classe",
+      "rule": "10 + DES + CON + 2 (escudo é permitido)",
+      "expected": 18,
+      "actual": 18,
+      "note": "Defesa sem Armadura (bárbaro) + Escudo",
+      "ok": true
+    },
+    {
+      "id": "classe/monge-defesa-sem-armadura",
+      "source": "classe",
+      "rule": "10 + DES + SAB (Defesa sem Armadura)",
+      "expected": 17,
+      "actual": 17,
+      "note": "Defesa sem Armadura (monge)",
+      "ok": true
+    },
+    {
+      "id": "subclasse/feiticeiro-draconico",
+      "source": "subclasse",
+      "rule": "10 + DES + CAR (Resiliência Dracônica)",
+      "expected": 16,
+      "actual": 16,
+      "note": "Resiliência Dracônica",
+      "ok": true
+    },
+    {
+      "id": "subclasse/bardo-danca",
+      "source": "subclasse",
+      "rule": "10 + DES + CAR (Ginga / Defesa sem Armadura)",
+      "expected": 16,
+      "actual": 16,
+      "note": "Defesa sem Armadura (dança)",
+      "ok": true
+    },
+    {
+      "id": "talento/estilo-defensivo",
+      "source": "talento",
+      "rule": "11 + DES + 1 (Defensivo, usando armadura)",
+      "expected": 15,
+      "actual": 15,
+      "note": "Couro + Defensivo",
+      "ok": true
+    },
+    {
+      "id": "talento/mestre-armadura-media",
+      "source": "talento",
+      "rule": "14 + min(DES, 3) com DES ≥ 16",
+      "expected": 17,
+      "actual": 17,
+      "note": "Couraça Peitoral + Mestre em Armadura Média",
+      "ok": true
+    }
+  ]
+}

@@ -85,6 +85,11 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
     DeleteCharacterHandler,
     CharacterSpellLookup,
   ],
-  exports: [CharacterDomainService, UpdateCharacterHandler, CharacterSpellLookup],
+  exports: [
+    CharacterDomainService,
+    UpdateCharacterHandler,
+    CharacterSpellLookup,
+    CharacterSheetRepository,
+  ],
 })
 export class CharacterSheetModule {}

@@ -14,6 +14,11 @@ import {
   resolveBackgroundToolItemSlug,
 } from '../domain/background-origin';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
+import { CharacterFeatDto } from '../dto/character-sheet.dto';
+
+function featSlugsOf(feats: readonly CharacterFeatDto[]): string[] {
+  return feats.map((feat) => feat.featSlug).sort();
+}
 
 @Injectable()
 export class UpdateCharacterHandler {
@@ -127,6 +132,7 @@ export class UpdateCharacterHandler {
       level: row.level,
       classSlug: row.classSlug,
       abilityScores: row.abilityScores,
+      featSlugs: featSlugsOf(sheetSnapshot.characterFeats),
     };
 
     const backgroundChanged =
@@ -183,13 +189,24 @@ export class UpdateCharacterHandler {
       }
     }
 
-    await this.domain.refreshHitPointsAfterChange(row, dto, {
-      level: dto.level !== undefined && dto.level !== before.level,
-      classSlug: dto.classSlug !== undefined && dto.classSlug !== before.classSlug,
-      abilityScores:
-        dto.abilityScores !== undefined &&
-        JSON.stringify(dto.abilityScores) !== JSON.stringify(before.abilityScores),
-    });
+    const effectiveFeatSlugs = featSlugsOf(effectiveCharacterFeats);
+
+    await this.domain.refreshHitPointsAfterChange(
+      row,
+      dto,
+      {
+        level: dto.level !== undefined && dto.level !== before.level,
+        classSlug: dto.classSlug !== undefined && dto.classSlug !== before.classSlug,
+        abilityScores:
+          dto.abilityScores !== undefined &&
+          JSON.stringify(dto.abilityScores) !== JSON.stringify(before.abilityScores),
+        speciesSlug: speciesChanged,
+        subclassSlug: subclassChanged,
+        characterFeats:
+          effectiveFeatSlugs.join('|') !== before.featSlugs.join('|'),
+      },
+      effectiveFeatSlugs,
+    );
 
     const saved = await this.repository.save(row);
     const sheetInput = this.toSheetInput(dto);

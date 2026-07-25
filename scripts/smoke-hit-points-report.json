@@ -1,0 +1,169 @@
+{
+  "at": "2026-07-25T15:56:59.852Z",
+  "sources": {
+    "speciesTraits": [
+      {
+        "owner": "dwarf",
+        "name": "Tenacidade Anã"
+      }
+    ],
+    "subclassFeatures": [
+      {
+        "owner": "abjurer",
+        "name": "Proteção Arcana",
+        "level": 3
+      },
+      {
+        "owner": "celestial",
+        "name": "Vingança Calcinante",
+        "level": 14
+      },
+      {
+        "owner": "draconic",
+        "name": "Resiliência Dracônica",
+        "level": 3
+      }
+    ],
+    "feats": [
+      {
+        "owner": "boon-of-fortitude"
+      },
+      {
+        "owner": "boon-of-recovery"
+      },
+      {
+        "owner": "tough"
+      }
+    ]
+  },
+  "results": [
+    {
+      "id": "base/guerreiro-nv1-sem-fontes",
+      "source": "base",
+      "rule": "dado de vida + CON",
+      "characterId": "fbc6c671-addd-4e41-b596-8f021025fd10",
+      "expected": 12,
+      "actual": 12,
+      "current": 12,
+      "ok": true
+    },
+    {
+      "id": "base/guerreiro-nv5-sem-fontes",
+      "source": "base",
+      "rule": "dado + CON + 4x(fixo + CON)",
+      "characterId": "a61ed5bd-914d-46df-be90-10c23cfc138a",
+      "expected": 44,
+      "actual": 44,
+      "current": 44,
+      "ok": true
+    },
+    {
+      "id": "especie/anao-tenacidade-nv1",
+      "source": "especie",
+      "rule": "base + 1 por nível (Tenacidade Anã)",
+      "characterId": "7e856022-18c5-4631-a2d0-230b977b5648",
+      "expected": 13,
+      "actual": 13,
+      "current": 13,
+      "ok": true
+    },
+    {
+      "id": "especie/anao-tenacidade-nv5",
+      "source": "especie",
+      "rule": "base + 1 por nível (Tenacidade Anã)",
+      "characterId": "776b7a9f-3309-4717-bb5b-d33590010bdf",
+      "expected": 49,
+      "actual": 49,
+      "current": 49,
+      "ok": true
+    },
+    {
+      "id": "subclasse/feiticeiro-nao-draconico-nv3",
+      "source": "subclasse",
+      "rule": "controle: subclasse sem bônus de PV",
+      "characterId": "b057599b-cfa9-447b-8bb3-e0dc7fd2c03b",
+      "expected": 20,
+      "actual": 20,
+      "current": 20,
+      "ok": true
+    },
+    {
+      "id": "subclasse/draconico-nv3",
+      "source": "subclasse",
+      "rule": "base + 3 (Resiliência Dracônica)",
+      "characterId": "4d085a61-0abb-4cfd-8609-2cbb4ce559d4",
+      "expected": 23,
+      "actual": 23,
+      "current": 23,
+      "ok": true
+    },
+    {
+      "id": "subclasse/draconico-nv5",
+      "source": "subclasse",
+      "rule": "base + 3 no nv.3 e +1 por nível depois",
+      "characterId": "882f013f-d5ad-44a4-84b1-dcc176c2551b",
+      "expected": 37,
+      "actual": 37,
+      "current": 37,
+      "ok": true
+    },
+    {
+      "id": "talento/resistente-nv1",
+      "source": "talento",
+      "rule": "base + 2 por nível (Vigoroso)",
+      "characterId": "2eab9ba1-d74a-4b07-90c3-003e2bd4bbdb",
+      "expected": 14,
+      "actual": 14,
+      "current": 14,
+      "ok": true
+    },
+    {
+      "id": "talento/resistente-nv5",
+      "source": "talento",
+      "rule": "base + 2 por nível (Vigoroso)",
+      "characterId": "f15a7573-c1d9-452e-baa8-0948001e566a",
+      "expected": 54,
+      "actual": 54,
+      "current": 54,
+      "ok": true
+    },
+    {
+      "id": "talento/dadiva-fortitude-nv19",
+      "source": "talento",
+      "rule": "base + 40 (Dádiva da Fortitude)",
+      "characterId": "af8d1604-141d-45af-950b-e302eb7dc3cb",
+      "expected": 215,
+      "actual": 215,
+      "current": 215,
+      "ok": true
+    },
+    {
+      "id": "combo/anao-draconico-resistente-nv5",
+      "source": "combo",
+      "rule": "base + anão + dracônico + vigoroso",
+      "characterId": "a3f63f9b-6145-45a5-8ac0-d0bf03ddbfe7",
+      "expected": 52,
+      "actual": 52,
+      "current": 52,
+      "ok": true
+    },
+    {
+      "id": "atualizacao/adicionar-vigoroso",
+      "source": "atualizacao",
+      "rule": "PATCH adicionando Vigoroso soma +2 por nível",
+      "characterId": "3ee40a53-bb9d-4c29-990b-1ed19df1f834",
+      "expected": 44,
+      "actual": 44,
+      "ok": true
+    },
+    {
+      "id": "levelup/preview-anao-vigoroso",
+      "source": "levelup",
+      "rule": "ganho por nível = fixo + CON + 1 (anão) + 2 (vigoroso)",
+      "characterId": "a4f49ace-6b20-4a26-a8ed-66be7c1af53f",
+      "expected": 11,
+      "actual": 11,
+      "ok": true
+    }
+  ]
+}
