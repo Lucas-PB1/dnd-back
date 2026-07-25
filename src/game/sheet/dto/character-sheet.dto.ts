@@ -81,6 +81,15 @@ export class CharacterSpellDto {
   @IsString()
   @IsIn(['known', 'prepared', 'always_prepared'])
   listType!: 'known' | 'prepared' | 'always_prepared';
+
+  /** Derivado na resposta: origem da magia na ficha (ignorado no input). */
+  @ApiPropertyOptional({
+    enum: ['class', 'subclass', 'feat', 'species'],
+    description: 'Fonte da magia (preenchido na resposta)',
+  })
+  @IsOptional()
+  @IsIn(['class', 'subclass', 'feat', 'species'])
+  source?: 'class' | 'subclass' | 'feat' | 'species';
 }
 
 export class CharacterEquipmentDto {

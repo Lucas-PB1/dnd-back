@@ -17,7 +17,7 @@ import {
 } from '../../../entities/phb-feat-option.entity';
 import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity';
 import { CharacterSheetInput } from './character-sheet.types';
-import { FeatOptionDto, CharacterFeatDto } from '../dto/character-sheet.dto';
+import { FeatOptionDto, CharacterFeatDto, SpeciesChoiceDto } from '../dto/character-sheet.dto';
 import {
   applyBackgroundAbilityBoosts,
   assertBackgroundBoostSlugsAllowed,
@@ -41,6 +41,10 @@ import {
   collectFightingStyleSlugsFromSubclassOptions,
   isFightingStyleSubclassOptionKey,
 } from './fighting-style-feat-options';
+import {
+  collectFeatGrantedSpellSlugs,
+  collectSpeciesGrantedSpellSlugs,
+} from './granted-spells';
 
 export interface CharacterSheetContext {
   level: number;
@@ -124,7 +128,13 @@ export class CharacterSheetValidator {
     }
 
     if (input.characterSpells !== undefined) {
-      await this.validateCharacterSpells(input.characterSpells, ctx);
+      await this.validateCharacterSpells(
+        input.characterSpells,
+        ctx,
+        input.featOptions,
+        input.characterFeats ?? ctx.characterFeats,
+        input.speciesChoices,
+      );
     }
 
     if (input.equipment !== undefined) {
@@ -501,11 +511,24 @@ export class CharacterSheetValidator {
   private async validateCharacterSpells(
     spells: NonNullable<CharacterSheetInput['characterSpells']>,
     ctx: CharacterSheetContext,
+    featOptions?: CharacterSheetInput['featOptions'],
+    characterFeats?: CharacterFeatDto[],
+    speciesChoices?: SpeciesChoiceDto[],
   ): Promise<void> {
     const keys = spells.map((s) => `${s.spellSlug}:${s.listType}`);
     assertUnique(keys, 'Duplicate character spell entries are not allowed');
 
+    const featGranted = collectFeatGrantedSpellSlugs(featOptions, characterFeats);
+    const speciesGranted = collectSpeciesGrantedSpellSlugs(
+      ctx.speciesSlug,
+      speciesChoices,
+      ctx.level,
+    );
+
     for (const spell of spells) {
+      if (featGranted.has(spell.spellSlug)) continue;
+      if (speciesGranted.has(spell.spellSlug)) continue;
+
       const inClass = await this.classSpellsRepo.findOne({
         where: {
           classSlug: ctx.classSlug,
@@ -524,7 +547,7 @@ export class CharacterSheetValidator {
 
       if (!inClass && !inSubclass) {
         throw new BadRequestException(
-          `Spell '${spell.spellSlug}' is not available for this character's class/subclass`,
+          `Spell '${spell.spellSlug}' is not available for this character's class/subclass/feats/species`,
         );
       }
     }

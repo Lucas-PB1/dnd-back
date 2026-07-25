@@ -15,6 +15,7 @@ import {
   resolveBackgroundToolItemSlug,
 } from '../domain/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../domain/species-origin';
+import { mergeCharacterSpellsWithGrantedSources } from '../domain/granted-spells';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 
 @Injectable()
@@ -73,6 +74,16 @@ export class CreateCharacterHandler {
     await this.sheetValidator.validateBackgroundOriginFeat(background, characterFeats);
 
     const sheetInput = this.toSheetInput(dto, characterFeats);
+    sheetInput.characterSpells = mergeCharacterSpellsWithGrantedSources(
+      sheetInput.characterSpells ?? [],
+      {
+        featOptions: sheetInput.featOptions,
+        characterFeats: sheetInput.characterFeats,
+        speciesSlug: dto.speciesSlug,
+        speciesChoices: sheetInput.speciesChoices,
+        level,
+      },
+    );
 
     await this.sheetValidator.validateCreateRequiredFields(sheetInput, ctx);
     await this.sheetValidator.validateSheetInput(sheetInput, ctx);

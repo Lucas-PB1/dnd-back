@@ -15,6 +15,7 @@ import {
 } from '../domain/background-origin';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 import { CharacterFeatDto } from '../dto/character-sheet.dto';
+import { mergeCharacterSpellsWithGrantedSources } from '../domain/granted-spells';
 
 function featSlugsOf(feats: readonly CharacterFeatDto[]): string[] {
   return feats.map((feat) => feat.featSlug).sort();
@@ -84,7 +85,56 @@ export class UpdateCharacterHandler {
       );
     }
 
-    await this.sheetValidator.validateSheetInput(this.toSheetInput(dto), {
+    const effectiveSpeciesChoices =
+      dto.speciesChoices !== undefined
+        ? dto.speciesChoices
+        : sheetSnapshot.speciesChoices;
+
+    const levelChanged = dto.level !== undefined && dto.level !== row.level;
+    const speciesChanged =
+      dto.speciesSlug !== undefined && dto.speciesSlug !== row.speciesSlug;
+
+    const shouldResyncSpells =
+      dto.characterSpells !== undefined ||
+      dto.featOptions !== undefined ||
+      dto.characterFeats !== undefined ||
+      dto.speciesChoices !== undefined ||
+      speciesChanged ||
+      levelChanged;
+
+    const sheetInput = this.toSheetInput(dto);
+    if (shouldResyncSpells) {
+      sheetInput.characterSpells = mergeCharacterSpellsWithGrantedSources(
+        dto.characterSpells ?? sheetSnapshot.characterSpells,
+        {
+          featOptions: effectiveFeatOptions,
+          characterFeats: effectiveCharacterFeats,
+          previousFeatOptions: sheetSnapshot.featOptions,
+          previousCharacterFeats: sheetSnapshot.characterFeats,
+          speciesSlug: effective.speciesSlug,
+          speciesChoices: effectiveSpeciesChoices,
+          level: effective.level,
+          previousSpeciesSlug: row.speciesSlug,
+          previousSpeciesChoices: sheetSnapshot.speciesChoices,
+          previousLevel: row.level,
+        },
+      );
+      if (dto.featOptions === undefined && dto.characterFeats !== undefined) {
+        sheetInput.featOptions = effectiveFeatOptions;
+      }
+    }
+
+    const validationInput: CharacterSheetInput = {
+      ...sheetInput,
+      ...(shouldResyncSpells && sheetInput.featOptions === undefined
+        ? { featOptions: effectiveFeatOptions }
+        : {}),
+      ...(shouldResyncSpells && sheetInput.speciesChoices === undefined
+        ? { speciesChoices: effectiveSpeciesChoices }
+        : {}),
+    };
+
+    await this.sheetValidator.validateSheetInput(validationInput, {
       ...effective,
       characterFeats: effectiveCharacterFeats,
     });
@@ -114,7 +164,6 @@ export class UpdateCharacterHandler {
     }
 
     const classChanged = dto.classSlug !== undefined && dto.classSlug !== row.classSlug;
-    const speciesChanged = dto.speciesSlug !== undefined && dto.speciesSlug !== row.speciesSlug;
     const subclassChanged =
       dto.subclassSlug !== undefined && dto.subclassSlug !== row.subclassSlug;
 
@@ -209,7 +258,6 @@ export class UpdateCharacterHandler {
     );
 
     const saved = await this.repository.save(row);
-    const sheetInput = this.toSheetInput(dto);
     await this.sheetRepository.sync(saved.id, sheetInput);
     if (dto.equipment !== undefined) {
       await this.seedStartingInventory.execute(saved.id, dto.equipment);

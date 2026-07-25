@@ -1,4 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterDomainService } from '../domain/character-domain.service';
@@ -8,6 +10,12 @@ import { CharacterSheetData } from '../domain/character-sheet.types';
 import { EquippedArmorClassService } from './equipped-armor-class.service';
 import { EquippedWeaponAttacksService } from './equipped-weapon-attacks.service';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/fighting-style-feat-options';
+import {
+  annotateCharacterSpellSources,
+  collectFeatGrantedSpellSlugs,
+  collectSpeciesGrantedSpellSlugs,
+} from '../domain/granted-spells';
+import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
 
 @Injectable()
 export class CharacterMapper {
@@ -16,6 +24,8 @@ export class CharacterMapper {
     private readonly sheet: CharacterSheetRepository,
     private readonly equippedArmorClass: EquippedArmorClassService,
     private readonly equippedWeaponAttacks: EquippedWeaponAttacksService,
+    @InjectRepository(VPhbSubclassPreparedSpell)
+    private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
   ) {}
 
   async toDto(
@@ -57,6 +67,22 @@ export class CharacterMapper {
       },
     );
 
+    const featGrantedSlugs = collectFeatGrantedSpellSlugs(
+      loaded.featOptions,
+      loaded.characterFeats,
+    );
+    const speciesGrantedSlugs = collectSpeciesGrantedSpellSlugs(
+      row.speciesSlug,
+      loaded.speciesChoices,
+      row.level,
+    );
+    const subclassSpellSlugs = await this.loadSubclassSpellSlugs(row.subclassSlug);
+    const characterSpells = annotateCharacterSpellSources(loaded.characterSpells, {
+      featGrantedSlugs,
+      speciesGrantedSlugs,
+      subclassSpellSlugs,
+    });
+
     return {
       id: row.id,
       name: row.name,
@@ -75,7 +101,7 @@ export class CharacterMapper {
       subclassOptions: loaded.subclassOptions,
       characterFeats: loaded.characterFeats,
       featOptions: loaded.featOptions,
-      characterSpells: loaded.characterSpells,
+      characterSpells,
       equipment: loaded.equipment,
       languageSlugs: loaded.languageSlugs,
       abilityGenerationMethodSlug: loaded.abilityGenerationMethodSlug,
@@ -105,5 +131,16 @@ export class CharacterMapper {
         return this.toDto(row, this.sheet.mergeSheetData(base, row.abilityGenerationMethodSlug));
       }),
     );
+  }
+
+  private async loadSubclassSpellSlugs(
+    subclassSlug: string | null,
+  ): Promise<Set<string>> {
+    if (!subclassSlug) return new Set();
+    const rows = await this.subclassSpellsRepo.find({
+      where: { subclassSlug },
+      select: ['spellSlug'],
+    });
+    return new Set(rows.map((row) => row.spellSlug));
   }
 }

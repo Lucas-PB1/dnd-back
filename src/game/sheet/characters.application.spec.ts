@@ -15,6 +15,7 @@ import { PlayerCharacter } from '../shared/infrastructure/player-character.entit
 import { CatalogLookupService } from '../../catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
+import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
 
 describe('Characters application layer', () => {
   let createHandler: CreateCharacterHandler;
@@ -146,6 +147,10 @@ describe('Characters application layer', () => {
           useValue: {
             resolve: jest.fn().mockResolvedValue([]),
           },
+        },
+        {
+          provide: getRepositoryToken(VPhbSubclassPreparedSpell),
+          useValue: { find: jest.fn().mockResolvedValue([]) },
         },
         {
           provide: SeedStartingInventoryHandler,
