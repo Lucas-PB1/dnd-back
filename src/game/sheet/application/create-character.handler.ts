@@ -16,6 +16,7 @@ import {
 } from '../domain/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../domain/species-origin';
 import { mergeCharacterSpellsWithGrantedSources } from '../domain/granted-spells';
+import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 
 @Injectable()
@@ -28,6 +29,7 @@ export class CreateCharacterHandler {
     private readonly sheetRepository: CharacterSheetRepository,
     private readonly mapper: CharacterMapper,
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
+    private readonly grantedSpellCatalog: GrantedSpellCatalogService,
   ) {}
 
   async execute(userId: string, dto: CreateCharacterDto): Promise<CharacterResponseDto> {
@@ -74,6 +76,12 @@ export class CreateCharacterHandler {
     await this.sheetValidator.validateBackgroundOriginFeat(background, characterFeats);
 
     const sheetInput = this.toSheetInput(dto, characterFeats);
+    const featSlugs = (sheetInput.characterFeats ?? []).map((f) => f.featSlug);
+    const { speciesCatalog, featFixedSpells } =
+      await this.grantedSpellCatalog.loadMergeCatalog({
+        speciesSlugs: [dto.speciesSlug],
+        featSlugs,
+      });
     sheetInput.characterSpells = mergeCharacterSpellsWithGrantedSources(
       sheetInput.characterSpells ?? [],
       {
@@ -82,6 +90,8 @@ export class CreateCharacterHandler {
         speciesSlug: dto.speciesSlug,
         speciesChoices: sheetInput.speciesChoices,
         level,
+        speciesCatalog,
+        featFixedSpells,
       },
     );
 

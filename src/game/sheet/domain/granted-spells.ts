@@ -8,74 +8,26 @@ import { ritualSpellSlotIndex } from './ritual-caster-feat-options';
 
 export type CharacterSpellSource = 'class' | 'subclass' | 'feat' | 'species';
 
+/** Linha do catálogo `v_phb_species_granted_spell`. */
+export type SpeciesGrantedSpellRow = {
+  speciesSlug: string;
+  choiceKind: string | null;
+  choiceSlug: string | null;
+  unlockLevel: number;
+  spellSlug: string;
+};
+
+/** Linha do catálogo `v_phb_feat_granted_spell`. */
+export type FeatGrantedSpellRow = {
+  featSlug: string;
+  spellSlug: string;
+};
+
 const MAGIC_INITIATE_SPELL_KEYS = new Set([
   'cantrip1',
   'cantrip2',
   'firstLevelSpell',
 ]);
-
-/** Magias fixas do talento (não escolhidas em featOptions). */
-const FEAT_FIXED_SPELLS: Readonly<Record<string, readonly string[]>> = {
-  'fey-touched': ['passo-nebuloso'],
-  'shadow-touched': ['invisibilidade'],
-};
-
-/** Magias fixas da espécie (sem choice). */
-const SPECIES_FIXED_SPELLS: Readonly<Record<string, readonly string[]>> = {
-  aasimar: ['luz'],
-  tiefling: ['taumaturgia'],
-};
-
-type LineageSpellProgression = {
-  level1: readonly string[];
-  level3: readonly string[];
-  level5: readonly string[];
-};
-
-/** Linhagem élfica — L1 em texto do catálogo; L3/L5 estruturados. */
-const ELF_LINEAGE_SPELLS: Readonly<Record<string, LineageSpellProgression>> = {
-  'high-elf': {
-    level1: ['prestidigitacao-arcana'],
-    level3: ['detectar-magia'],
-    level5: ['passo-nebuloso'],
-  },
-  drow: {
-    level1: ['luzes-dancantes'],
-    level3: ['fogo-das-fadas'],
-    level5: ['escuridao'],
-  },
-  'wood-elf': {
-    level1: ['arte-druidica'],
-    level3: ['passos-largos'],
-    level5: ['passo-sem-rastro'],
-  },
-};
-
-/** Legado infernal — L1 cantrip + L3/L5. */
-const INFERNAL_LEGACY_SPELLS: Readonly<Record<string, LineageSpellProgression>> =
-  {
-    abyssal: {
-      level1: ['rajada-de-veneno'],
-      level3: ['raio-nauseante'],
-      level5: ['paralisar-pessoa'],
-    },
-    chthonic: {
-      level1: ['toque-necrotico'],
-      level3: ['vitalidade-vazia'],
-      level5: ['raio-do-enfraquecimento'],
-    },
-    infernal: {
-      level1: ['raio-de-fogo'],
-      level3: ['repreensao-diabolica'],
-      level5: ['escuridao'],
-    },
-  };
-
-/** Linhagem de gnomo — todas desde o 1º nível. */
-const GNOME_LINEAGE_SPELLS: Readonly<Record<string, readonly string[]>> = {
-  'rock-gnome': ['prestidigitacao-arcana', 'reparar'],
-  'forest-gnome': ['ilusao-menor', 'falar-com-animais'],
-};
 
 function isFeatSpellOption(featSlug: string, optionKey: string): boolean {
   if (featSlug === 'magic-initiate') {
@@ -90,21 +42,6 @@ function isFeatSpellOption(featSlug: string, optionKey: string): boolean {
   return false;
 }
 
-function addLineageProgression(
-  slugs: Set<string>,
-  progression: LineageSpellProgression | undefined,
-  level: number,
-): void {
-  if (!progression) return;
-  for (const slug of progression.level1) slugs.add(slug);
-  if (level >= 3) {
-    for (const slug of progression.level3) slugs.add(slug);
-  }
-  if (level >= 5) {
-    for (const slug of progression.level5) slugs.add(slug);
-  }
-}
-
 function choiceSlugOf(
   choices: readonly SpeciesChoiceDto[] | undefined,
   choiceKind: string,
@@ -112,13 +49,13 @@ function choiceSlugOf(
   return choices?.find((choice) => choice.choiceKind === choiceKind)?.choiceSlug;
 }
 
-/** Slugs de magia concedidos por talentos (escolhas + fixas). */
+/** Slugs de magia concedidos por talentos (escolhas em featOptions + fixas do catálogo). */
 export function collectFeatGrantedSpellSlugs(
   featOptions: readonly FeatOptionDto[] | undefined,
-  characterFeats?: readonly CharacterFeatDto[],
+  characterFeats: readonly CharacterFeatDto[] | undefined,
+  featFixedSpells: readonly FeatGrantedSpellRow[] = [],
 ): Set<string> {
   const slugs = new Set<string>();
-  if (!featOptions?.length && !characterFeats?.length) return slugs;
 
   for (const option of featOptions ?? []) {
     if (!option.valueId) continue;
@@ -127,46 +64,47 @@ export function collectFeatGrantedSpellSlugs(
     }
   }
 
-  const featSlugs = characterFeats?.length
-    ? characterFeats.map((feat) => feat.featSlug)
-    : [...new Set((featOptions ?? []).map((option) => option.featSlug))];
+  const featSlugs = new Set(
+    (characterFeats?.length
+      ? characterFeats.map((feat) => feat.featSlug)
+      : (featOptions ?? []).map((option) => option.featSlug)
+    ),
+  );
 
-  for (const featSlug of featSlugs) {
-    for (const fixed of FEAT_FIXED_SPELLS[featSlug] ?? []) {
-      slugs.add(fixed);
+  for (const row of featFixedSpells) {
+    if (featSlugs.has(row.featSlug)) {
+      slugs.add(row.spellSlug);
     }
   }
 
   return slugs;
 }
 
-/** Slugs de magia concedidos por espécie + escolhas, respeitando o nível. */
+/**
+ * Slugs de magia concedidos por espécie a partir do catálogo,
+ * filtrados por escolhas da ficha e nível.
+ */
 export function collectSpeciesGrantedSpellSlugs(
   speciesSlug: string | undefined,
   speciesChoices: readonly SpeciesChoiceDto[] | undefined,
   level: number,
+  catalogRows: readonly SpeciesGrantedSpellRow[],
 ): Set<string> {
   const slugs = new Set<string>();
   if (!speciesSlug) return slugs;
 
-  for (const fixed of SPECIES_FIXED_SPELLS[speciesSlug] ?? []) {
-    slugs.add(fixed);
-  }
+  for (const row of catalogRows) {
+    if (row.speciesSlug !== speciesSlug) continue;
+    if (row.unlockLevel > level) continue;
 
-  if (speciesSlug === 'elf') {
-    const lineage = choiceSlugOf(speciesChoices, 'elf_lineage');
-    addLineageProgression(slugs, ELF_LINEAGE_SPELLS[lineage ?? ''], level);
-  }
+    if (row.choiceKind == null) {
+      slugs.add(row.spellSlug);
+      continue;
+    }
 
-  if (speciesSlug === 'tiefling') {
-    const legacy = choiceSlugOf(speciesChoices, 'infernal_legacy');
-    addLineageProgression(slugs, INFERNAL_LEGACY_SPELLS[legacy ?? ''], level);
-  }
-
-  if (speciesSlug === 'gnome') {
-    const lineage = choiceSlugOf(speciesChoices, 'gnome_lineage');
-    for (const slug of GNOME_LINEAGE_SPELLS[lineage ?? ''] ?? []) {
-      slugs.add(slug);
+    const selected = choiceSlugOf(speciesChoices, row.choiceKind);
+    if (selected && selected === row.choiceSlug) {
+      slugs.add(row.spellSlug);
     }
   }
 
@@ -184,6 +122,10 @@ export type GrantedSpellMergeContext = {
   previousSpeciesSlug?: string;
   previousSpeciesChoices?: readonly SpeciesChoiceDto[];
   previousLevel?: number;
+  /** Catálogo de magias fixas de talento (`v_phb_feat_granted_spell`). */
+  featFixedSpells?: readonly FeatGrantedSpellRow[];
+  /** Catálogo de magias de espécie (`v_phb_species_granted_spell`). */
+  speciesCatalog?: readonly SpeciesGrantedSpellRow[];
 };
 
 /**
@@ -196,24 +138,33 @@ export function mergeCharacterSpellsWithGrantedSources(
 ): CharacterSpellDto[] {
   const level = context.level ?? 1;
   const previousLevel = context.previousLevel ?? level;
+  const featFixed = context.featFixedSpells ?? [];
+  const speciesCatalog = context.speciesCatalog ?? [];
 
   const nextGranted = unionSets(
-    collectFeatGrantedSpellSlugs(context.featOptions, context.characterFeats),
+    collectFeatGrantedSpellSlugs(
+      context.featOptions,
+      context.characterFeats,
+      featFixed,
+    ),
     collectSpeciesGrantedSpellSlugs(
       context.speciesSlug,
       context.speciesChoices,
       level,
+      speciesCatalog,
     ),
   );
   const previousGranted = unionSets(
     collectFeatGrantedSpellSlugs(
       context.previousFeatOptions,
       context.previousCharacterFeats,
+      featFixed,
     ),
     collectSpeciesGrantedSpellSlugs(
       context.previousSpeciesSlug,
       context.previousSpeciesChoices,
       previousLevel,
+      speciesCatalog,
     ),
   );
 
@@ -245,6 +196,7 @@ export function mergeCharacterSpellsWithFeatGrants(
     characterFeats?: readonly CharacterFeatDto[];
     previousFeatOptions?: readonly FeatOptionDto[];
     previousCharacterFeats?: readonly CharacterFeatDto[];
+    featFixedSpells?: readonly FeatGrantedSpellRow[];
   },
 ): CharacterSpellDto[] {
   return mergeCharacterSpellsWithGrantedSources(baseSpells, {
@@ -252,6 +204,7 @@ export function mergeCharacterSpellsWithFeatGrants(
     characterFeats: options?.characterFeats,
     previousFeatOptions: options?.previousFeatOptions,
     previousCharacterFeats: options?.previousCharacterFeats,
+    featFixedSpells: options?.featFixedSpells,
   });
 }
 

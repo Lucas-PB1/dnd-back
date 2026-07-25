@@ -78,6 +78,12 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       {
         findOne: jest.fn().mockResolvedValue({ level: 5, proficiencyBonus: 3 }),
       } as never,
+      {
+        loadMergeCatalog: jest.fn().mockResolvedValue({
+          speciesCatalog: [],
+          featFixedSpells: [],
+        }),
+      } as never,
     );
   });
 

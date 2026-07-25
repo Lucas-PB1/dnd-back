@@ -55,6 +55,12 @@ describe('CharacterSheetValidator fighting styles', () => {
       {} as never,
       {} as never,
       characterLevelsRepo as never,
+      {
+        loadMergeCatalog: jest.fn().mockResolvedValue({
+          speciesCatalog: [],
+          featFixedSpells: [],
+        }),
+      } as never,
     );
   });
 
@@ -161,6 +167,12 @@ describe('CharacterSheetValidator fighting_style feat option value', () => {
       featOptionDefRepo as unknown as Repository<PhbFeatOptionDef>,
       featOptionValueRepo as unknown as Repository<PhbFeatOptionValue>,
       characterLevelsRepo as never,
+      {
+        loadMergeCatalog: jest.fn().mockResolvedValue({
+          speciesCatalog: [],
+          featFixedSpells: [],
+        }),
+      } as never,
     );
   });
 

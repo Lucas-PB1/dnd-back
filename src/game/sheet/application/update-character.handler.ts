@@ -16,6 +16,7 @@ import {
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 import { CharacterFeatDto } from '../dto/character-sheet.dto';
 import { mergeCharacterSpellsWithGrantedSources } from '../domain/granted-spells';
+import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
 
 function featSlugsOf(feats: readonly CharacterFeatDto[]): string[] {
   return feats.map((feat) => feat.featSlug).sort();
@@ -31,6 +32,7 @@ export class UpdateCharacterHandler {
     private readonly sheetRepository: CharacterSheetRepository,
     private readonly mapper: CharacterMapper,
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
+    private readonly grantedSpellCatalog: GrantedSpellCatalogService,
   ) {}
 
   async execute(
@@ -104,6 +106,15 @@ export class UpdateCharacterHandler {
 
     const sheetInput = this.toSheetInput(dto);
     if (shouldResyncSpells) {
+      const featSlugs = [
+        ...effectiveCharacterFeats.map((f) => f.featSlug),
+        ...sheetSnapshot.characterFeats.map((f) => f.featSlug),
+      ];
+      const { speciesCatalog, featFixedSpells } =
+        await this.grantedSpellCatalog.loadMergeCatalog({
+          speciesSlugs: [effective.speciesSlug, row.speciesSlug],
+          featSlugs,
+        });
       sheetInput.characterSpells = mergeCharacterSpellsWithGrantedSources(
         dto.characterSpells ?? sheetSnapshot.characterSpells,
         {
@@ -117,6 +128,8 @@ export class UpdateCharacterHandler {
           previousSpeciesSlug: row.speciesSlug,
           previousSpeciesChoices: sheetSnapshot.speciesChoices,
           previousLevel: row.level,
+          speciesCatalog,
+          featFixedSpells,
         },
       );
       if (dto.featOptions === undefined && dto.characterFeats !== undefined) {

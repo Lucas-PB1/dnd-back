@@ -42,6 +42,9 @@ import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
 import { PhbWeapon } from '../../entities/phb-weapon.entity';
+import { VPhbSpeciesGrantedSpell } from '../../entities/views/v-phb-species-granted-spell.entity';
+import { VPhbFeatGrantedSpell } from '../../entities/views/v-phb-feat-granted-spell.entity';
+import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catalog.service';
 
 @Module({
   imports: [
@@ -69,6 +72,8 @@ import { PhbWeapon } from '../../entities/phb-weapon.entity';
       VPhbArmor,
       PlayerCharacterItem,
       PhbWeapon,
+      VPhbSpeciesGrantedSpell,
+      VPhbFeatGrantedSpell,
     ]),
     GameSharedModule,
     CatalogModule,
@@ -82,6 +87,7 @@ import { PhbWeapon } from '../../entities/phb-weapon.entity';
     CharacterMapper,
     EquippedArmorClassService,
     EquippedWeaponAttacksService,
+    GrantedSpellCatalogService,
     ListCharactersQuery,
     GetCharacterQuery,
     CreateCharacterHandler,

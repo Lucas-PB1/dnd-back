@@ -31,7 +31,8 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 - [x] Campo `source` na resposta (`class` | `subclass` | `feat` | `species`)
 - [x] Aba Magias mostra rótulo da origem
 
-Código: `granted-spells.ts` + create/update handlers + `character.mapper.ts`
+- [x] Magias de espécie/talento fixo vêm do **banco** (`v_phb_species_granted_spell`, `v_phb_feat_granted_spell`)
+- [x] Sem hardcode de L1/gnomo/aasimar/fey-fixed no domínio
 
 ---
 

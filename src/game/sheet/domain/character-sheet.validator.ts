@@ -45,6 +45,7 @@ import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
 } from './granted-spells';
+import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
 
 export interface CharacterSheetContext {
   level: number;
@@ -84,6 +85,7 @@ export class CharacterSheetValidator {
     private readonly featOptionValueRepo: Repository<PhbFeatOptionValue>,
     @InjectRepository(PhbCharacterLevel)
     private readonly characterLevelsRepo: Repository<PhbCharacterLevel>,
+    private readonly grantedSpellCatalog: GrantedSpellCatalogService,
   ) {}
 
   async validateSheetInput(
@@ -518,11 +520,27 @@ export class CharacterSheetValidator {
     const keys = spells.map((s) => `${s.spellSlug}:${s.listType}`);
     assertUnique(keys, 'Duplicate character spell entries are not allowed');
 
-    const featGranted = collectFeatGrantedSpellSlugs(featOptions, characterFeats);
+    const feats = characterFeats ?? [];
+    const featSlugs = [
+      ...feats.map((f) => f.featSlug),
+      ...(featOptions ?? []).map((o) => o.featSlug),
+    ];
+    const { speciesCatalog, featFixedSpells } =
+      await this.grantedSpellCatalog.loadMergeCatalog({
+        speciesSlugs: [ctx.speciesSlug],
+        featSlugs,
+      });
+
+    const featGranted = collectFeatGrantedSpellSlugs(
+      featOptions,
+      feats,
+      featFixedSpells,
+    );
     const speciesGranted = collectSpeciesGrantedSpellSlugs(
       ctx.speciesSlug,
       speciesChoices,
       ctx.level,
+      speciesCatalog,
     );
 
     for (const spell of spells) {

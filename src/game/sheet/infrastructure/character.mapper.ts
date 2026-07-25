@@ -16,6 +16,7 @@ import {
   collectSpeciesGrantedSpellSlugs,
 } from '../domain/granted-spells';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { GrantedSpellCatalogService } from './granted-spell-catalog.service';
 
 @Injectable()
 export class CharacterMapper {
@@ -26,6 +27,7 @@ export class CharacterMapper {
     private readonly equippedWeaponAttacks: EquippedWeaponAttacksService,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
+    private readonly grantedSpellCatalog: GrantedSpellCatalogService,
   ) {}
 
   async toDto(
@@ -67,14 +69,21 @@ export class CharacterMapper {
       },
     );
 
+    const { speciesCatalog, featFixedSpells } =
+      await this.grantedSpellCatalog.loadMergeCatalog({
+        speciesSlugs: [row.speciesSlug],
+        featSlugs,
+      });
     const featGrantedSlugs = collectFeatGrantedSpellSlugs(
       loaded.featOptions,
       loaded.characterFeats,
+      featFixedSpells,
     );
     const speciesGrantedSlugs = collectSpeciesGrantedSpellSlugs(
       row.speciesSlug,
       loaded.speciesChoices,
       row.level,
+      speciesCatalog,
     );
     const subclassSpellSlugs = await this.loadSubclassSpellSlugs(row.subclassSlug);
     const characterSpells = annotateCharacterSpellSources(loaded.characterSpells, {

@@ -21,6 +21,7 @@ TRUNCATE TABLE
   rpg.phb_background_skill,
   rpg.phb_background_tool_option,
   rpg.phb_species_trait,
+  rpg.phb_feat_granted_spell,
   rpg.phb_dragon_ancestry,
   rpg.phb_giant_ancestry,
   rpg.phb_gnome_lineage,

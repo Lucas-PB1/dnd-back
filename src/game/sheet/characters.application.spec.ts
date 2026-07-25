@@ -16,6 +16,7 @@ import { CatalogLookupService } from '../../catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catalog.service';
 
 describe('Characters application layer', () => {
   let createHandler: CreateCharacterHandler;
@@ -151,6 +152,17 @@ describe('Characters application layer', () => {
         {
           provide: getRepositoryToken(VPhbSubclassPreparedSpell),
           useValue: { find: jest.fn().mockResolvedValue([]) },
+        },
+        {
+          provide: GrantedSpellCatalogService,
+          useValue: {
+            loadMergeCatalog: jest.fn().mockResolvedValue({
+              speciesCatalog: [],
+              featFixedSpells: [],
+            }),
+            loadSpeciesCatalog: jest.fn().mockResolvedValue([]),
+            loadFeatFixedSpells: jest.fn().mockResolvedValue([]),
+          },
         },
         {
           provide: SeedStartingInventoryHandler,

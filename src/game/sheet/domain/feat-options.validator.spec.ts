@@ -76,6 +76,12 @@ describe('CharacterSheetValidator.validateFeatOptions', () => {
       featOptionDefRepo as unknown as Repository<PhbFeatOptionDef>,
       featOptionValueRepo as unknown as Repository<PhbFeatOptionValue>,
       characterLevelsRepo as never,
+      {
+        loadMergeCatalog: jest.fn().mockResolvedValue({
+          speciesCatalog: [],
+          featFixedSpells: [],
+        }),
+      } as never,
     );
   });
 

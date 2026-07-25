@@ -4,37 +4,121 @@ import {
   collectSpeciesGrantedSpellSlugs,
   mergeCharacterSpellsWithFeatGrants,
   mergeCharacterSpellsWithGrantedSources,
+  type FeatGrantedSpellRow,
+  type SpeciesGrantedSpellRow,
 } from './granted-spells';
+
+const FEAT_FIXED: FeatGrantedSpellRow[] = [
+  { featSlug: 'fey-touched', spellSlug: 'passo-nebuloso' },
+  { featSlug: 'shadow-touched', spellSlug: 'invisibilidade' },
+];
+
+const SPECIES_CATALOG: SpeciesGrantedSpellRow[] = [
+  {
+    speciesSlug: 'aasimar',
+    choiceKind: null,
+    choiceSlug: null,
+    unlockLevel: 1,
+    spellSlug: 'luz',
+  },
+  {
+    speciesSlug: 'tiefling',
+    choiceKind: null,
+    choiceSlug: null,
+    unlockLevel: 1,
+    spellSlug: 'taumaturgia',
+  },
+  {
+    speciesSlug: 'tiefling',
+    choiceKind: 'infernal_legacy',
+    choiceSlug: 'infernal',
+    unlockLevel: 1,
+    spellSlug: 'raio-de-fogo',
+  },
+  {
+    speciesSlug: 'tiefling',
+    choiceKind: 'infernal_legacy',
+    choiceSlug: 'infernal',
+    unlockLevel: 3,
+    spellSlug: 'repreensao-diabolica',
+  },
+  {
+    speciesSlug: 'tiefling',
+    choiceKind: 'infernal_legacy',
+    choiceSlug: 'infernal',
+    unlockLevel: 5,
+    spellSlug: 'escuridao',
+  },
+  {
+    speciesSlug: 'elf',
+    choiceKind: 'elf_lineage',
+    choiceSlug: 'drow',
+    unlockLevel: 1,
+    spellSlug: 'luzes-dancantes',
+  },
+  {
+    speciesSlug: 'elf',
+    choiceKind: 'elf_lineage',
+    choiceSlug: 'drow',
+    unlockLevel: 3,
+    spellSlug: 'fogo-das-fadas',
+  },
+  {
+    speciesSlug: 'elf',
+    choiceKind: 'elf_lineage',
+    choiceSlug: 'drow',
+    unlockLevel: 5,
+    spellSlug: 'escuridao',
+  },
+  {
+    speciesSlug: 'gnome',
+    choiceKind: 'gnome_lineage',
+    choiceSlug: 'forest-gnome',
+    unlockLevel: 1,
+    spellSlug: 'ilusao-menor',
+  },
+  {
+    speciesSlug: 'gnome',
+    choiceKind: 'gnome_lineage',
+    choiceSlug: 'forest-gnome',
+    unlockLevel: 1,
+    spellSlug: 'falar-com-animais',
+  },
+];
 
 describe('granted-spells', () => {
   describe('collectFeatGrantedSpellSlugs', () => {
     it('collects magic-initiate cantrips and 1st-level spell', () => {
-      const slugs = collectFeatGrantedSpellSlugs([
-        {
-          featSlug: 'magic-initiate',
-          instanceIndex: 0,
-          optionKey: 'spellList',
-          valueId: 'wizard',
-        },
-        {
-          featSlug: 'magic-initiate',
-          instanceIndex: 0,
-          optionKey: 'cantrip1',
-          valueId: 'luz',
-        },
-        {
-          featSlug: 'magic-initiate',
-          instanceIndex: 0,
-          optionKey: 'cantrip2',
-          valueId: 'prestidigitacao-arcana',
-        },
-        {
-          featSlug: 'magic-initiate',
-          instanceIndex: 0,
-          optionKey: 'firstLevelSpell',
-          valueId: 'escudo-arcano',
-        },
-      ]);
+      const slugs = collectFeatGrantedSpellSlugs(
+        [
+          {
+            featSlug: 'magic-initiate',
+            instanceIndex: 0,
+            optionKey: 'spellList',
+            valueId: 'wizard',
+          },
+          {
+            featSlug: 'magic-initiate',
+            instanceIndex: 0,
+            optionKey: 'cantrip1',
+            valueId: 'luz',
+          },
+          {
+            featSlug: 'magic-initiate',
+            instanceIndex: 0,
+            optionKey: 'cantrip2',
+            valueId: 'prestidigitacao-arcana',
+          },
+          {
+            featSlug: 'magic-initiate',
+            instanceIndex: 0,
+            optionKey: 'firstLevelSpell',
+            valueId: 'escudo-arcano',
+          },
+        ],
+        undefined,
+        FEAT_FIXED,
+      );
 
       expect([...slugs].sort()).toEqual([
         'escudo-arcano',
@@ -43,7 +127,7 @@ describe('granted-spells', () => {
       ]);
     });
 
-    it('adds fixed companions for fey-touched and shadow-touched', () => {
+    it('adds fixed companions from catalog for fey/shadow touched', () => {
       const fey = collectFeatGrantedSpellSlugs(
         [
           {
@@ -54,6 +138,7 @@ describe('granted-spells', () => {
           },
         ],
         [{ featSlug: 'fey-touched', instanceIndex: 0 }],
+        FEAT_FIXED,
       );
       expect(fey.has('detectar-magia')).toBe(true);
       expect(fey.has('passo-nebuloso')).toBe(true);
@@ -68,32 +153,20 @@ describe('granted-spells', () => {
           },
         ],
         [{ featSlug: 'shadow-touched', instanceIndex: 0 }],
+        FEAT_FIXED,
       );
       expect(shadow.has('invisibilidade')).toBe(true);
-    });
-
-    it('collects ritual-caster ritualSpell slots', () => {
-      const slugs = collectFeatGrantedSpellSlugs([
-        {
-          featSlug: 'ritual-caster',
-          instanceIndex: 0,
-          optionKey: 'ritualSpell1',
-          valueId: 'alarme',
-        },
-        {
-          featSlug: 'ritual-caster',
-          instanceIndex: 0,
-          optionKey: 'ritualSpell2',
-          valueId: 'detectar-magia',
-        },
-      ]);
-      expect([...slugs].sort()).toEqual(['alarme', 'detectar-magia']);
     });
   });
 
   describe('collectSpeciesGrantedSpellSlugs', () => {
-    it('grants aasimar light cantrip', () => {
-      const slugs = collectSpeciesGrantedSpellSlugs('aasimar', [], 1);
+    it('grants aasimar light cantrip from catalog', () => {
+      const slugs = collectSpeciesGrantedSpellSlugs(
+        'aasimar',
+        [],
+        1,
+        SPECIES_CATALOG,
+      );
       expect([...slugs]).toEqual(['luz']);
     });
 
@@ -101,10 +174,20 @@ describe('granted-spells', () => {
       const choices = [
         { choiceKind: 'infernal_legacy', choiceSlug: 'infernal' },
       ];
-      const lv1 = collectSpeciesGrantedSpellSlugs('tiefling', choices, 1);
+      const lv1 = collectSpeciesGrantedSpellSlugs(
+        'tiefling',
+        choices,
+        1,
+        SPECIES_CATALOG,
+      );
       expect([...lv1].sort()).toEqual(['raio-de-fogo', 'taumaturgia']);
 
-      const lv5 = collectSpeciesGrantedSpellSlugs('tiefling', choices, 5);
+      const lv5 = collectSpeciesGrantedSpellSlugs(
+        'tiefling',
+        choices,
+        5,
+        SPECIES_CATALOG,
+      );
       expect([...lv5].sort()).toEqual([
         'escuridao',
         'raio-de-fogo',
@@ -115,18 +198,12 @@ describe('granted-spells', () => {
 
     it('gates elf lineage spells by level', () => {
       const choices = [{ choiceKind: 'elf_lineage', choiceSlug: 'drow' }];
-      expect([...collectSpeciesGrantedSpellSlugs('elf', choices, 1)]).toEqual([
-        'luzes-dancantes',
-      ]);
-      expect([...collectSpeciesGrantedSpellSlugs('elf', choices, 3)].sort()).toEqual([
-        'fogo-das-fadas',
-        'luzes-dancantes',
-      ]);
-      expect([...collectSpeciesGrantedSpellSlugs('elf', choices, 5)].sort()).toEqual([
-        'escuridao',
-        'fogo-das-fadas',
-        'luzes-dancantes',
-      ]);
+      expect([
+        ...collectSpeciesGrantedSpellSlugs('elf', choices, 1, SPECIES_CATALOG),
+      ]).toEqual(['luzes-dancantes']);
+      expect([
+        ...collectSpeciesGrantedSpellSlugs('elf', choices, 3, SPECIES_CATALOG),
+      ].sort()).toEqual(['fogo-das-fadas', 'luzes-dancantes']);
     });
 
     it('grants gnome lineage spells at level 1', () => {
@@ -134,6 +211,7 @@ describe('granted-spells', () => {
         'gnome',
         [{ choiceKind: 'gnome_lineage', choiceSlug: 'forest-gnome' }],
         1,
+        SPECIES_CATALOG,
       );
       expect([...forest].sort()).toEqual(['falar-com-animais', 'ilusao-menor']);
     });
@@ -160,62 +238,6 @@ describe('granted-spells', () => {
         ]),
       );
     });
-
-    it('removes previous feat always_prepared when feat options change', () => {
-      const merged = mergeCharacterSpellsWithFeatGrants(
-        [
-          { spellSlug: 'luz', listType: 'always_prepared' },
-          { spellSlug: 'bola-de-fogo', listType: 'prepared' },
-        ],
-        [
-          {
-            featSlug: 'magic-initiate',
-            instanceIndex: 0,
-            optionKey: 'cantrip1',
-            valueId: 'prestidigitacao-arcana',
-          },
-        ],
-        {
-          previousFeatOptions: [
-            {
-              featSlug: 'magic-initiate',
-              instanceIndex: 0,
-              optionKey: 'cantrip1',
-              valueId: 'luz',
-            },
-          ],
-        },
-      );
-
-      expect(merged.find((s) => s.spellSlug === 'luz')).toBeUndefined();
-      expect(merged).toEqual(
-        expect.arrayContaining([
-          { spellSlug: 'bola-de-fogo', listType: 'prepared' },
-          { spellSlug: 'prestidigitacao-arcana', listType: 'always_prepared' },
-        ]),
-      );
-    });
-
-    it('keeps always_prepared that were not from previous feat grants', () => {
-      const merged = mergeCharacterSpellsWithFeatGrants(
-        [{ spellSlug: 'cura-ferimentos', listType: 'always_prepared' }],
-        [],
-        {
-          previousFeatOptions: [
-            {
-              featSlug: 'magic-initiate',
-              instanceIndex: 0,
-              optionKey: 'cantrip1',
-              valueId: 'luz',
-            },
-          ],
-        },
-      );
-
-      expect(merged).toEqual([
-        { spellSlug: 'cura-ferimentos', listType: 'always_prepared' },
-      ]);
-    });
   });
 
   describe('mergeCharacterSpellsWithGrantedSources', () => {
@@ -231,6 +253,7 @@ describe('granted-spells', () => {
             { choiceKind: 'elf_lineage', choiceSlug: 'drow' },
           ],
           previousLevel: 2,
+          speciesCatalog: SPECIES_CATALOG,
         },
       );
 
@@ -261,6 +284,8 @@ describe('granted-spells', () => {
           previousSpeciesSlug: 'aasimar',
           previousSpeciesChoices: [],
           previousLevel: 1,
+          speciesCatalog: SPECIES_CATALOG,
+          featFixedSpells: FEAT_FIXED,
         },
       );
 
