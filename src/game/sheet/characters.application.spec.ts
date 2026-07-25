@@ -6,6 +6,7 @@ import { CharacterRepository } from '../shared/infrastructure/character.reposito
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
 import { EquippedArmorClassService } from './infrastructure/equipped-armor-class.service';
+import { EquippedWeaponAttacksService } from './infrastructure/equipped-weapon-attacks.service';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CharacterDomainService } from './domain/character-domain.service';
@@ -138,6 +139,12 @@ describe('Characters application layer', () => {
               armorClass: 10,
               armorClassNote: 'Sem armadura',
             }),
+          },
+        },
+        {
+          provide: EquippedWeaponAttacksService,
+          useValue: {
+            resolve: jest.fn().mockResolvedValue([]),
           },
         },
         {

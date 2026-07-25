@@ -162,4 +162,37 @@ export class CharacterResponseDto {
     description: 'Descrição legível da composição da CA',
   })
   armorClassNote!: string;
+
+  @ApiProperty({
+    type: 'array',
+    description: 'Ataques passivos das armas equipadas (main_hand / off_hand)',
+    example: [
+      {
+        itemSlug: 'longsword',
+        itemName: 'Espada Longa',
+        mode: 'melee',
+        attackBonus: 5,
+        abilitySlug: 'forca',
+        proficient: true,
+        damageDice: '1d8',
+        damageBonus: 3,
+        damageType: 'Cortante',
+        attackNote: 'corpo a corpo: FOR + PB',
+        damageNote: '1d8 +3 (FOR)',
+      },
+    ],
+  })
+  weaponAttacks!: Array<{
+    itemSlug: string;
+    itemName: string;
+    mode: 'melee' | 'ranged';
+    attackBonus: number;
+    abilitySlug: 'forca' | 'destreza';
+    proficient: boolean;
+    damageDice: string;
+    damageBonus: number;
+    damageType: string | null;
+    attackNote: string;
+    damageNote: string;
+  }>;
 }

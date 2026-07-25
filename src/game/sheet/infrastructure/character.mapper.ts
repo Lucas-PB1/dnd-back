@@ -6,6 +6,7 @@ import { computeDerivedStats } from '../domain/character-derived-stats';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 import { EquippedArmorClassService } from './equipped-armor-class.service';
+import { EquippedWeaponAttacksService } from './equipped-weapon-attacks.service';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/fighting-style-feat-options';
 
 @Injectable()
@@ -14,6 +15,7 @@ export class CharacterMapper {
     private readonly domain: CharacterDomainService,
     private readonly sheet: CharacterSheetRepository,
     private readonly equippedArmorClass: EquippedArmorClassService,
+    private readonly equippedWeaponAttacks: EquippedWeaponAttacksService,
   ) {}
 
   async toDto(
@@ -34,14 +36,26 @@ export class CharacterMapper {
       classSkillSlugs: loaded.classSkillSlugs,
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
     });
+    const featSlugs = loaded.characterFeats.map((feat) => feat.featSlug);
+    const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
+      loaded.subclassOptions,
+    );
     const armor = await this.equippedArmorClass.resolve(row.id, row.abilityScores, {
       classSlug: row.classSlug,
       subclassSlug: row.subclassSlug,
-      featSlugs: loaded.characterFeats.map((feat) => feat.featSlug),
-      fightingStyleSlugs: collectFightingStyleSlugsFromSubclassOptions(
-        loaded.subclassOptions,
-      ),
+      featSlugs,
+      fightingStyleSlugs,
     });
+    const weaponAttacks = await this.equippedWeaponAttacks.resolve(
+      row.id,
+      row.abilityScores,
+      {
+        classSlug: row.classSlug,
+        proficiencyBonus,
+        featSlugs,
+        fightingStyleSlugs,
+      },
+    );
 
     return {
       id: row.id,
@@ -73,6 +87,7 @@ export class CharacterMapper {
       passivePerception: derived.passivePerception,
       armorClass: armor.armorClass,
       armorClassNote: armor.armorClassNote,
+      weaponAttacks,
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     };

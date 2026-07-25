@@ -32,6 +32,7 @@ import { CharactersController } from './characters.controller';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
 import { EquippedArmorClassService } from './infrastructure/equipped-armor-class.service';
+import { EquippedWeaponAttacksService } from './infrastructure/equipped-weapon-attacks.service';
 import { CharacterDomainService } from './domain/character-domain.service';
 import { CharacterSheetValidator } from './domain/character-sheet.validator';
 import { ListCharactersQuery } from './application/list-characters.query';
@@ -40,6 +41,7 @@ import { CreateCharacterHandler } from './application/create-character.handler';
 import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
+import { PhbWeapon } from '../../entities/phb-weapon.entity';
 
 @Module({
   imports: [
@@ -66,6 +68,7 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
       PhbFeatOptionValue,
       VPhbArmor,
       PlayerCharacterItem,
+      PhbWeapon,
     ]),
     GameSharedModule,
     CatalogModule,
@@ -78,6 +81,7 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
     CharacterSheetRepository,
     CharacterMapper,
     EquippedArmorClassService,
+    EquippedWeaponAttacksService,
     ListCharactersQuery,
     GetCharacterQuery,
     CreateCharacterHandler,
