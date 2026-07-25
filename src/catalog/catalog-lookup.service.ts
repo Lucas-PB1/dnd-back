@@ -14,6 +14,7 @@ import { PhbLanguage } from '../entities/phb-language.entity';
 import { PhbAbilityGenerationMethod } from '../entities/phb-ability-generation-method.entity';
 import { PhbItem } from '../entities/phb-item.entity';
 import { VPhbSpell } from '../entities/views/v-phb-spell.entity';
+import { PhbSkill } from '../entities/phb-skill.entity';
 
 @Injectable()
 export class CatalogLookupService {
@@ -40,6 +41,8 @@ export class CatalogLookupService {
     private readonly itemsRepo: Repository<PhbItem>,
     @InjectRepository(VPhbSpell)
     private readonly spellsRepo: Repository<VPhbSpell>,
+    @InjectRepository(PhbSkill)
+    private readonly skillsRepo: Repository<PhbSkill>,
   ) {}
 
   async findClassOrFail(classSlug: string): Promise<VPhbClass> {
@@ -161,6 +164,13 @@ export class CatalogLookupService {
     );
   }
 
+  async assertSkillInCatalog(skillSlug: string): Promise<void> {
+    requireCatalog(
+      await this.skillsRepo.findOne({ where: { slug: skillSlug } }),
+      `Skill '${skillSlug}' not found in catalog`,
+    );
+  }
+
   async assertSubclassForClass(subclassSlug: string, classSlug: string): Promise<void> {
     requireCatalog(
       await this.subclassesRepo.findOne({ where: { subclassSlug, classSlug } }),
@@ -203,6 +213,14 @@ export class CatalogLookupService {
     if (expected === 0) return;
 
     assertUnique(skillSlugs, 'Duplicate skill choices are not allowed');
+
+    // Bard (e similares): pool aberto — qualquer perícia do catálogo.
+    if (phbClass.skillChoiceFrom === 'any') {
+      for (const slug of skillSlugs) {
+        await this.assertSkillInCatalog(slug);
+      }
+      return;
+    }
 
     const poolRows = await this.classSkillChoiceRepo.find({ where: { classSlug } });
     const pool = new Set(poolRows.map((row) => row.skillSlug));

@@ -11,6 +11,7 @@ import { PhbLanguage } from '../entities/phb-language.entity';
 import { PhbAbilityGenerationMethod } from '../entities/phb-ability-generation-method.entity';
 import { PhbItem } from '../entities/phb-item.entity';
 import { VPhbSpell } from '../entities/views/v-phb-spell.entity';
+import { PhbSkill } from '../entities/phb-skill.entity';
 import { CatalogLookupService } from './catalog-lookup.service';
 
 @Module({
@@ -27,6 +28,7 @@ import { CatalogLookupService } from './catalog-lookup.service';
       PhbAbilityGenerationMethod,
       PhbItem,
       VPhbSpell,
+      PhbSkill,
     ]),
   ],
   providers: [CatalogLookupService],

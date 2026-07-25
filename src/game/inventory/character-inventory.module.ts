@@ -4,6 +4,7 @@ import { CatalogModule } from '../../catalog/catalog.module';
 import { PhbItem } from '../../entities/phb-item.entity';
 import { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
+import { PlayerCharacterEquipment } from '../sheet/infrastructure/player-sheet.entities';
 import { PlayerCharacterItem } from './infrastructure/player-character-item.entity';
 import { CharacterInventoryRepository } from './infrastructure/character-inventory.repository';
 import { EquipmentSlotResolver } from './infrastructure/equipment-slot-resolver';
@@ -12,10 +13,16 @@ import { GetCharacterInventoryQuery } from './application/get-character-inventor
 import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
 import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
 import { RemoveInventoryItemHandler } from './application/remove-inventory-item.handler';
+import { SeedStartingInventoryHandler } from './application/seed-starting-inventory.handler';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([PlayerCharacterItem, PhbItem, VPhbArmor]),
+    TypeOrmModule.forFeature([
+      PlayerCharacterItem,
+      PlayerCharacterEquipment,
+      PhbItem,
+      VPhbArmor,
+    ]),
     GameSharedModule,
     CatalogModule,
   ],
@@ -27,6 +34,8 @@ import { RemoveInventoryItemHandler } from './application/remove-inventory-item.
     AddInventoryItemHandler,
     PatchInventoryItemHandler,
     RemoveInventoryItemHandler,
+    SeedStartingInventoryHandler,
   ],
+  exports: [SeedStartingInventoryHandler],
 })
 export class CharacterInventoryModule {}

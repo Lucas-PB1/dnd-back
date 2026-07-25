@@ -5,9 +5,9 @@ INSERT INTO rpg.phb_feat_option_def (
 )
 VALUES
   ((SELECT id FROM rpg.phb_feat WHERE slug = 'fey-touched'), 'castingAbility', 'Atributo de conjuração', 'catalog', 1, NULL, NULL, NULL),
-  ((SELECT id FROM rpg.phb_feat WHERE slug = 'fey-touched'), 'bonusSpell', 'Magia de 1º círculo', 'spell', 2, NULL, 1, ARRAY['divination', 'enchantment']),
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'fey-touched'), 'bonusSpell', 'Magia de 1º círculo', 'spell', 2, NULL, 1, ARRAY['adivinhacao', 'encantamento']),
   ((SELECT id FROM rpg.phb_feat WHERE slug = 'shadow-touched'), 'castingAbility', 'Atributo de conjuração', 'catalog', 1, NULL, NULL, NULL),
-  ((SELECT id FROM rpg.phb_feat WHERE slug = 'shadow-touched'), 'bonusSpell', 'Magia de 1º círculo', 'spell', 2, NULL, 1, ARRAY['illusion', 'necromancy']);
+  ((SELECT id FROM rpg.phb_feat WHERE slug = 'shadow-touched'), 'bonusSpell', 'Magia de 1º círculo', 'spell', 2, NULL, 1, ARRAY['ilusao', 'necromancia']);
 
 INSERT INTO rpg.phb_feat_option_value (feat_id, option_key, value_id, label, sort_order)
 VALUES

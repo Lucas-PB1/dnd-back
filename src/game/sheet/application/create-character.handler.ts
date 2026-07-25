@@ -15,6 +15,7 @@ import {
   resolveBackgroundToolItemSlug,
 } from '../domain/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../domain/species-origin';
+import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 
 @Injectable()
 export class CreateCharacterHandler {
@@ -25,6 +26,7 @@ export class CreateCharacterHandler {
     private readonly repository: CharacterRepository,
     private readonly sheetRepository: CharacterSheetRepository,
     private readonly mapper: CharacterMapper,
+    private readonly seedStartingInventory: SeedStartingInventoryHandler,
   ) {}
 
   async execute(userId: string, dto: CreateCharacterDto): Promise<CharacterResponseDto> {
@@ -100,6 +102,7 @@ export class CreateCharacterHandler {
 
     const saved = await this.repository.save(entity);
     await this.sheetRepository.sync(saved.id, sheetInput);
+    await this.seedStartingInventory.execute(saved.id, sheetInput.equipment);
 
     return this.mapper.toDto(saved);
   }

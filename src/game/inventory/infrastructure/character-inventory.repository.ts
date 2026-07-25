@@ -65,6 +65,41 @@ export class CharacterInventoryRepository {
     return this.toDto(row);
   }
 
+  /**
+   * Expande equipamento inicial (pacotes) em itens da mochila — estilo Beyond.
+   * Não sobrescreve itens já presentes (o jogador pode ter gasto/movido).
+   */
+  async ensureFromStartingEquipment(
+    characterId: string,
+    equipment: Array<{ itemSlug?: string; quantity?: number }>,
+  ): Promise<void> {
+    const totals = new Map<string, number>();
+    for (const row of equipment) {
+      const slug = row.itemSlug?.trim();
+      if (!slug) continue;
+      const qty = Math.max(1, row.quantity ?? 1);
+      totals.set(slug, (totals.get(slug) ?? 0) + qty);
+    }
+
+    for (const [itemSlug, quantity] of totals) {
+      const existing = await this.items.findOne({
+        where: { characterId, itemSlug },
+      });
+      if (existing) continue;
+
+      await this.assertItemExists(itemSlug);
+      await this.items.save(
+        this.items.create({
+          characterId,
+          itemSlug,
+          quantity,
+          location: 'backpack',
+          equipmentSlot: null,
+        }),
+      );
+    }
+  }
+
   async patch(
     characterId: string,
     itemSlug: string,

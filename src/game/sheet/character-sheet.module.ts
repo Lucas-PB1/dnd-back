@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '../../catalog/catalog.module';
+import { CharacterInventoryModule } from '../inventory/character-inventory.module';
 import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
 import { PhbSubclassOptionValue, PhbSubclassRef } from '../../entities/phb-subclass-option-value.entity';
 import { VPhbSpeciesTraitChoices } from '../../entities/views/v-phb-species-trait-choices.entity';
@@ -68,6 +69,7 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
     ]),
     GameSharedModule,
     CatalogModule,
+    CharacterInventoryModule,
   ],
   controllers: [CharactersController],
   providers: [

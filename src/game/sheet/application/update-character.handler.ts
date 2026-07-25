@@ -13,6 +13,7 @@ import { applyBackgroundAbilityBoosts } from '../domain/background-ability-boost
 import {
   resolveBackgroundToolItemSlug,
 } from '../domain/background-origin';
+import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 
 @Injectable()
 export class UpdateCharacterHandler {
@@ -23,6 +24,7 @@ export class UpdateCharacterHandler {
     private readonly repository: CharacterRepository,
     private readonly sheetRepository: CharacterSheetRepository,
     private readonly mapper: CharacterMapper,
+    private readonly seedStartingInventory: SeedStartingInventoryHandler,
   ) {}
 
   async execute(
@@ -190,7 +192,11 @@ export class UpdateCharacterHandler {
     });
 
     const saved = await this.repository.save(row);
-    await this.sheetRepository.sync(saved.id, this.toSheetInput(dto));
+    const sheetInput = this.toSheetInput(dto);
+    await this.sheetRepository.sync(saved.id, sheetInput);
+    if (dto.equipment !== undefined) {
+      await this.seedStartingInventory.execute(saved.id, dto.equipment);
+    }
 
     return this.mapper.toDto(saved);
   }
