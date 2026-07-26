@@ -623,23 +623,32 @@ export class CharacterSheetValidator {
     }
   }
 
-  private assertEquipmentPackage(
-    rows: { itemSlug: string | null }[],
+  private async assertEquipmentPackage(
+    rows: { itemSlug: string | null; choiceText: string | null }[],
     packageSlug: string,
     itemSlug: string | undefined,
     source: 'class' | 'background',
     ownerSlug: string,
-  ): void {
+  ): Promise<void> {
     if (rows.length === 0) {
       throw new BadRequestException(
         `${source === 'class' ? 'Class' : 'Background'} equipment package '${packageSlug}' not found for '${ownerSlug}'`,
       );
     }
-    if (itemSlug && !rows.some((row) => row.itemSlug === itemSlug)) {
-      throw new BadRequestException(
-        `Item '${itemSlug}' is not in ${source} package '${packageSlug}'`,
-      );
+    if (!itemSlug) return;
+    if (rows.some((row) => row.itemSlug === itemSlug)) return;
+
+    // Item resolvido de uma linha de escolha (ex.: instrumento musical ou
+    // ferramenta de artesão): a linha guarda choice_text sem item_id, então
+    // aceitamos qualquer item do catálogo quando o pacote tem escolha em aberto.
+    if (rows.some((row) => row.choiceText != null)) {
+      await this.catalogLookup.assertItemInCatalog(itemSlug);
+      return;
     }
+
+    throw new BadRequestException(
+      `Item '${itemSlug}' is not in ${source} package '${packageSlug}'`,
+    );
   }
 
   private async validateLanguageSlugs(languageSlugs: string[]): Promise<void> {

@@ -5,7 +5,7 @@ INSERT INTO rpg.phb_class_starting_item (package_id, item_id, choice_text, gold_
 VALUES
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
-    WHERE c.slug = 'barbarian' AND p.slug = 'a'), NULL, '4 Machadinhas', NULL, 1, 1),
+    WHERE c.slug = 'barbarian' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'handaxe'), NULL, NULL, 4, 1),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
     WHERE c.slug = 'barbarian' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'greataxe'), NULL, NULL, 1, 2),
@@ -23,7 +23,7 @@ VALUES
     WHERE c.slug = 'bard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
-    WHERE c.slug = 'bard' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 2),
+    WHERE c.slug = 'bard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, NULL, 2, 2),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
     WHERE c.slug = 'bard' AND p.slug = 'a'), NULL, 'Instrumento Musical (escolha)', NULL, 1, 3),
@@ -44,7 +44,7 @@ VALUES
     WHERE c.slug = 'warlock' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'sickle'), NULL, NULL, 1, 2),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
-    WHERE c.slug = 'warlock' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 3),
+    WHERE c.slug = 'warlock' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, NULL, 2, 3),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
     WHERE c.slug = 'warlock' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), NULL, NULL, 1, 4),
@@ -101,7 +101,7 @@ VALUES
     WHERE c.slug = 'druid' AND p.slug = 'b'), NULL, NULL, 50, 1, 1),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
-    WHERE c.slug = 'sorcerer' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 1),
+    WHERE c.slug = 'sorcerer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, NULL, 2, 1),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
     WHERE c.slug = 'sorcerer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), NULL, NULL, 1, 2),
@@ -119,7 +119,7 @@ VALUES
     WHERE c.slug = 'ranger' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
-    WHERE c.slug = 'ranger' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 2),
+    WHERE c.slug = 'ranger' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, NULL, 2, 2),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
     WHERE c.slug = 'ranger' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'longbow'), NULL, NULL, 1, 3),
@@ -164,7 +164,7 @@ VALUES
     WHERE c.slug = 'rogue' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'leather'), NULL, NULL, 1, 1),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
-    WHERE c.slug = 'rogue' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 2),
+    WHERE c.slug = 'rogue' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, NULL, 2, 2),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
     WHERE c.slug = 'rogue' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shortsword'), NULL, NULL, 1, 3),
@@ -185,7 +185,7 @@ VALUES
     WHERE c.slug = 'rogue' AND p.slug = 'b'), NULL, NULL, 100, 1, 1),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
-    WHERE c.slug = 'wizard' AND p.slug = 'a'), NULL, '2 Adagas', NULL, 1, 1),
+    WHERE c.slug = 'wizard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, NULL, 2, 1),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
     WHERE c.slug = 'wizard' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'), NULL, NULL, 1, 2),
@@ -227,7 +227,7 @@ VALUES
     WHERE c.slug = 'paladin' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'shield'), NULL, NULL, 1, 3),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
-    WHERE c.slug = 'paladin' AND p.slug = 'a'), NULL, '6 Azagaias', NULL, 1, 4),
+    WHERE c.slug = 'paladin' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'javelin'), NULL, NULL, 6, 4),
   ((SELECT p.id FROM rpg.phb_class_starting_package p
     JOIN rpg.phb_class c ON c.id = p.class_id
     WHERE c.slug = 'paladin' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-sacerdote'), NULL, NULL, 1, 5),

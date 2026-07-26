@@ -20,7 +20,7 @@ VALUES
     WHERE b.slug = 'acolyte' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'tunica'), NULL, 1, 5),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
-    WHERE b.slug = 'wanderer' AND p.slug = 'a'), NULL, '2 Adagas', 1, 1),
+    WHERE b.slug = 'wanderer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, 2, 1),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
     WHERE b.slug = 'wanderer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-ladrao'), NULL, 1, 2),
@@ -29,7 +29,7 @@ VALUES
     WHERE b.slug = 'wanderer' AND p.slug = 'a'), NULL, 'Kit de Jogos (qualquer um)', 1, 3),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
-    WHERE b.slug = 'wanderer' AND p.slug = 'a'), NULL, '2 Algibeiras', 1, 4),
+    WHERE b.slug = 'wanderer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'algibeira'), NULL, 2, 4),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
     WHERE b.slug = 'wanderer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 5),
@@ -41,7 +41,7 @@ VALUES
     WHERE b.slug = 'artisan' AND p.slug = 'a'), NULL, 'Ferramentas de Artesão (a mesma que acima)', 1, 1),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
-    WHERE b.slug = 'artisan' AND p.slug = 'a'), NULL, '2 Algibeiras', 1, 2),
+    WHERE b.slug = 'artisan' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'algibeira'), NULL, 2, 2),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
     WHERE b.slug = 'artisan' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 3),
@@ -53,7 +53,7 @@ VALUES
     WHERE b.slug = 'entertainer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'espelho'), NULL, 1, 2),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
-    WHERE b.slug = 'entertainer' AND p.slug = 'a'), NULL, '2 Fantasias', 1, 3),
+    WHERE b.slug = 'entertainer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-fantasia'), NULL, 2, 3),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
     WHERE b.slug = 'entertainer' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'perfume'), NULL, 1, 4),
@@ -71,13 +71,13 @@ VALUES
     WHERE b.slug = 'charlatan' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-finas'), NULL, 1, 3),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
-    WHERE b.slug = 'criminal' AND p.slug = 'a'), NULL, '2 Adagas', 1, 1),
+    WHERE b.slug = 'criminal' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'dagger'), NULL, 2, 1),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
     WHERE b.slug = 'criminal' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-ladrao'), NULL, 1, 2),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
-    WHERE b.slug = 'criminal' AND p.slug = 'a'), NULL, '2 Algibeiras', 1, 3),
+    WHERE b.slug = 'criminal' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'algibeira'), NULL, 2, 3),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
     WHERE b.slug = 'criminal' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'pe-de-cabra'), NULL, 1, 4),
@@ -197,7 +197,7 @@ VALUES
     WHERE b.slug = 'merchant' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'ferramentas-de-navegador'), NULL, 1, 1),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
-    WHERE b.slug = 'merchant' AND p.slug = 'a'), NULL, '2 Algibeiras', 1, 2),
+    WHERE b.slug = 'merchant' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'algibeira'), NULL, 2, 2),
   ((SELECT p.id FROM rpg.phb_background_starting_package p
     JOIN rpg.phb_background b ON b.id = p.background_id
     WHERE b.slug = 'merchant' AND p.slug = 'a'), (SELECT id FROM rpg.phb_item WHERE slug = 'roupas-viagem'), NULL, 1, 3),
