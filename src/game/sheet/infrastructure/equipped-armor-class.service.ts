@@ -6,9 +6,16 @@ import { PlayerCharacterItem } from '../../inventory/infrastructure/player-chara
 import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
 import {
   computeArmorClassFromEquipment,
-  type ArmorClassContext,
   type EquippedArmorPiece,
 } from '../domain/armor-class';
+import { CombatCatalogService } from './combat-catalog.service';
+
+export type ArmorClassResolveInput = {
+  classSlug?: string | null;
+  subclassSlug?: string | null;
+  featSlugs?: string[];
+  fightingStyleSlugs?: string[];
+};
 
 @Injectable()
 export class EquippedArmorClassService {
@@ -17,12 +24,13 @@ export class EquippedArmorClassService {
     private readonly inventoryItems: Repository<PlayerCharacterItem>,
     @InjectRepository(VPhbArmor)
     private readonly armorCatalog: Repository<VPhbArmor>,
+    private readonly combatCatalog: CombatCatalogService,
   ) {}
 
   async resolve(
     characterId: string,
     scores: AbilityScores,
-    context: ArmorClassContext = {},
+    context: ArmorClassResolveInput = {},
   ): Promise<{ armorClass: number; armorClassNote: string }> {
     const equipped = await this.inventoryItems.find({
       where: { characterId, location: 'equipped' },
@@ -46,6 +54,15 @@ export class EquippedArmorClassService {
       }));
     }
 
-    return computeArmorClassFromEquipment(scores, pieces, context);
+    const unarmoredDefenses = await this.combatCatalog.loadUnarmoredDefenses({
+      classSlug: context.classSlug,
+      subclassSlug: context.subclassSlug,
+    });
+
+    return computeArmorClassFromEquipment(scores, pieces, {
+      featSlugs: context.featSlugs,
+      fightingStyleSlugs: context.fightingStyleSlugs,
+      unarmoredDefenses,
+    });
   }
 }

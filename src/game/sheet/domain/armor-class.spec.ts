@@ -1,8 +1,30 @@
 import {
   computeArmorClassFromEquipment,
   type EquippedArmorPiece,
+  type UnarmoredDefenseRow,
 } from './armor-class';
 import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+
+const BARBARIAN_UD: UnarmoredDefenseRow = {
+  label: 'Defesa sem Armadura (bárbaro)',
+  secondAbility: 'constituicao',
+  allowsShield: true,
+};
+const MONK_UD: UnarmoredDefenseRow = {
+  label: 'Defesa sem Armadura (monge)',
+  secondAbility: 'sabedoria',
+  allowsShield: false,
+};
+const DRACONIC_UD: UnarmoredDefenseRow = {
+  label: 'Resiliência Dracônica',
+  secondAbility: 'carisma',
+  allowsShield: true,
+};
+const DANCE_UD: UnarmoredDefenseRow = {
+  label: 'Defesa sem Armadura (dança)',
+  secondAbility: 'carisma',
+  allowsShield: false,
+};
 
 const scores: AbilityScores = {
   forca: 15,
@@ -78,7 +100,7 @@ describe('armor-class', () => {
   it('barbarian unarmored defense uses 10 + dex + con', () => {
     const barb = { ...scores, destreza: 14, constituicao: 16 };
     const result = computeArmorClassFromEquipment(barb, [], {
-      classSlug: 'barbarian',
+      unarmoredDefenses: [BARBARIAN_UD],
     });
     // 10 + 2 + 3
     expect(result.armorClass).toBe(15);
@@ -88,7 +110,7 @@ describe('armor-class', () => {
   it('barbarian unarmored defense allows shield', () => {
     const barb = { ...scores, destreza: 14, constituicao: 16 };
     const result = computeArmorClassFromEquipment(barb, [shield], {
-      classSlug: 'barbarian',
+      unarmoredDefenses: [BARBARIAN_UD],
     });
     expect(result.armorClass).toBe(17);
   });
@@ -96,13 +118,13 @@ describe('armor-class', () => {
   it('monk unarmored defense uses 10 + dex + wis and forbids shield', () => {
     const monk = { ...scores, destreza: 16, sabedoria: 16 };
     const withoutShield = computeArmorClassFromEquipment(monk, [], {
-      classSlug: 'monk',
+      unarmoredDefenses: [MONK_UD],
     });
     // 10 + 3 + 3
     expect(withoutShield.armorClass).toBe(16);
 
     const withShield = computeArmorClassFromEquipment(monk, [shield], {
-      classSlug: 'monk',
+      unarmoredDefenses: [MONK_UD],
     });
     // Escudo anula a defesa sem armadura → 10 + DES + 2
     expect(withShield.armorClass).toBe(15);
@@ -111,8 +133,7 @@ describe('armor-class', () => {
   it('draconic resilience uses 10 + dex + cha', () => {
     const sorc = { ...scores, destreza: 14, carisma: 16 };
     const result = computeArmorClassFromEquipment(sorc, [], {
-      classSlug: 'sorcerer',
-      subclassSlug: 'draconic',
+      unarmoredDefenses: [DRACONIC_UD],
     });
     expect(result.armorClass).toBe(15);
     expect(result.armorClassNote).toContain('Dracônica');
@@ -121,8 +142,7 @@ describe('armor-class', () => {
   it('dance unarmored defense forbids shield', () => {
     const bard = { ...scores, destreza: 14, carisma: 16 };
     const result = computeArmorClassFromEquipment(bard, [], {
-      classSlug: 'bard',
-      subclassSlug: 'dance',
+      unarmoredDefenses: [DANCE_UD],
     });
     expect(result.armorClass).toBe(15);
   });
@@ -160,7 +180,7 @@ describe('armor-class', () => {
   it('body armor suppresses unarmored defenses', () => {
     const barb = { ...scores, destreza: 14, constituicao: 16 };
     const result = computeArmorClassFromEquipment(barb, [leather], {
-      classSlug: 'barbarian',
+      unarmoredDefenses: [BARBARIAN_UD],
     });
     expect(result.armorClass).toBe(13);
   });

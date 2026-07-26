@@ -7,19 +7,23 @@ export type EquippedArmorPiece = {
   acBase: number | null;
 };
 
+/**
+ * Defesa sem Armadura já resolvida do catálogo (`v_phb_unarmored_defense`).
+ * Quais classes/subclasses concedem cada variação vive no banco.
+ */
+export type UnarmoredDefenseRow = {
+  label: string;
+  secondAbility: keyof AbilityScores;
+  allowsShield: boolean;
+};
+
 export type ArmorClassContext = {
-  classSlug?: string | null;
-  subclassSlug?: string | null;
   /** Slugs de talentos selecionados (ex.: defense, medium-armor-master). */
   featSlugs?: string[];
   /** Estilos de luta via opção de subclasse/classe (ex.: defense). */
   fightingStyleSlugs?: string[];
-};
-
-type UnarmoredDefense = {
-  label: string;
-  secondAbility: keyof AbilityScores;
-  allowsShield: boolean;
+  /** Defesas sem Armadura aplicáveis, carregadas do catálogo. */
+  unarmoredDefenses?: readonly UnarmoredDefenseRow[];
 };
 
 const BODY_ARMOR = new Set(['light', 'medium', 'heavy']);
@@ -36,42 +40,6 @@ function hasStyleOrFeat(
     (context?.featSlugs ?? []).includes(slug) ||
     (context?.fightingStyleSlugs ?? []).includes(slug)
   );
-}
-
-/** Passivos que substituem a CA base enquanto sem armadura corporal. */
-function unarmoredDefenseCandidates(
-  context: ArmorClassContext | undefined,
-): UnarmoredDefense[] {
-  const out: UnarmoredDefense[] = [];
-  if (context?.classSlug === 'barbarian') {
-    out.push({
-      label: 'Defesa sem Armadura (bárbaro)',
-      secondAbility: 'constituicao',
-      allowsShield: true,
-    });
-  }
-  if (context?.classSlug === 'monk') {
-    out.push({
-      label: 'Defesa sem Armadura (monge)',
-      secondAbility: 'sabedoria',
-      allowsShield: false,
-    });
-  }
-  if (context?.subclassSlug === 'draconic') {
-    out.push({
-      label: 'Resiliência Dracônica',
-      secondAbility: 'carisma',
-      allowsShield: true,
-    });
-  }
-  if (context?.subclassSlug === 'dance') {
-    out.push({
-      label: 'Defesa sem Armadura (dança)',
-      secondAbility: 'carisma',
-      allowsShield: false,
-    });
-  }
-  return out;
 }
 
 function bodyArmorAc(
@@ -96,7 +64,7 @@ function bodyArmorAc(
 function pickBestUnarmoredDefense(
   scores: AbilityScores,
   hasShield: boolean,
-  candidates: UnarmoredDefense[],
+  candidates: readonly UnarmoredDefenseRow[],
 ): { armorClass: number; label: string } | null {
   let best: { armorClass: number; label: string } | null = null;
   for (const candidate of candidates) {
@@ -140,7 +108,7 @@ export function computeArmorClassFromEquipment(
     const unarmored = pickBestUnarmoredDefense(
       scores,
       hasShield,
-      unarmoredDefenseCandidates(context),
+      context?.unarmoredDefenses ?? [],
     );
     if (unarmored) {
       armorClass = unarmored.armorClass;

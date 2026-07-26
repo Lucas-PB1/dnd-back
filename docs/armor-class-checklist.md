@@ -22,8 +22,9 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 - [x] Escudo equipado: `+2`
 - [x] Nota da CA na ficha (`armorClassNote`)
 - [x] Fontes passivas de classe / subclasse / talento
+- [x] Defesa sem Armadura no banco (`phb_unarmored_defense` → `v_phb_unarmored_defense`); domínio só aplica
 
-Código: `armor-class.ts` + `equipped-armor-class.service.ts` + `character.mapper.ts`
+Código: `armor-class.ts` + `combat-catalog.service.ts` + `equipped-armor-class.service.ts` + `character.mapper.ts`
 
 ---
 
@@ -63,11 +64,12 @@ Smoke:
 
 ## Lote 4 — Engenharia / ficha
 
-- [x] Contexto no cálculo: `classSlug`, `subclassSlug`, `featSlugs`, `fightingStyleSlugs`
+- [x] Contexto no cálculo: `unarmoredDefenses` do catálogo + `featSlugs` / `fightingStyleSlugs`
 - [x] Bases alternativas substituem `10+DES` quando elegíveis; armadura corporal as anula
 - [x] Bônus (`defense`) soma depois; cap DES só em armadura média
 - [x] Várias bases candidatas → maior valor
 - [x] `armorClassNote` descritiva
+- [x] Sem hardcode de bárbaro/monge/dracônico/dança no domínio
 - [x] Testes unitários (`armor-class.spec.ts` — 16 passed)
 - [x] Smoke in-scope 12/12 OK
 - [x] UI já consome `armorClass` / `armorClassNote` da API

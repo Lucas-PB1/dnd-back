@@ -20,8 +20,9 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 - [x] PV por nível: `hpFixedPerLevel + mod(CON)`, mínimo 1
 - [x] Recalcula ao mudar nível / classe / atributos
 - [x] Bônus permanentes de espécie / subclasse / talento
+- [x] Catálogo no banco (`phb_hp_bonus_source` → `v_phb_hp_bonus_source`); domínio só soma efeitos
 
-Código: `hit-points.calc.ts` + `character-domain.service.ts` + `create/update-character.handler.ts` + `level-up.service.ts`
+Código: `hit-points.calc.ts` + `combat-catalog.service.ts` + `character-domain.service.ts` + `create/update-character.handler.ts` + `level-up.service.ts`
 
 ---
 
@@ -60,12 +61,13 @@ Smoke:
 
 ## Lote 4 — Engenharia / ficha
 
-- [x] Contexto no cálculo: `speciesSlug`, `subclassSlug`, `featSlugs`
+- [x] Contexto no cálculo: bônus carregados do catálogo via `CombatCatalogService`
 - [x] Aplicado na **criação** (depois de resolver talentos de origem/antecedente)
 - [x] Recalcula ao mudar **espécie**, **subclasse** e **talentos** (além de nível/classe/atributos)
 - [x] `estimatedHpGain` do level-up inclui os bônus por nível
-- [x] Fonte repetida (mesmo talento duas vezes) conta uma só vez
+- [x] Fonte repetida (mesmo talento duas vezes) conta uma só vez (dedupe por slug no catálogo)
 - [x] `hitPointsMax` informado manualmente continua prevalecendo
+- [x] Sem hardcode de anão/dracônico/vigoroso/dádiva no domínio
 - [x] Testes unitários (`character.domain.spec.ts`)
 - [x] Smoke in-scope 13/13 OK (inclui combo e preview de level-up)
 - [x] UI já consome `hitPointsMax` da API (sem cálculo no front)

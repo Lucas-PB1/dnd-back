@@ -44,7 +44,10 @@ import { CharacterSpellLookup } from './application/character-spell-lookup';
 import { PhbWeapon } from '../../entities/phb-weapon.entity';
 import { VPhbSpeciesGrantedSpell } from '../../entities/views/v-phb-species-granted-spell.entity';
 import { VPhbFeatGrantedSpell } from '../../entities/views/v-phb-feat-granted-spell.entity';
+import { VPhbHpBonusSource } from '../../entities/views/v-phb-hp-bonus-source.entity';
+import { VPhbUnarmoredDefense } from '../../entities/views/v-phb-unarmored-defense.entity';
 import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catalog.service';
+import { CombatCatalogService } from './infrastructure/combat-catalog.service';
 
 @Module({
   imports: [
@@ -74,6 +77,8 @@ import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catal
       PhbWeapon,
       VPhbSpeciesGrantedSpell,
       VPhbFeatGrantedSpell,
+      VPhbHpBonusSource,
+      VPhbUnarmoredDefense,
     ]),
     GameSharedModule,
     CatalogModule,
@@ -88,6 +93,7 @@ import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catal
     EquippedArmorClassService,
     EquippedWeaponAttacksService,
     GrantedSpellCatalogService,
+    CombatCatalogService,
     ListCharactersQuery,
     GetCharacterQuery,
     CreateCharacterHandler,

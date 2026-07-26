@@ -34,7 +34,7 @@ export class LevelUpService {
 
     const nextLevel = character.level + 1;
     const sheet = await this.sheetRepository.load(character.id);
-    const hitPointsContext = {
+    const hitPointsSources = {
       speciesSlug: character.speciesSlug,
       subclassSlug: character.subclassSlug,
       featSlugs: sheet.characterFeats.map((feat) => feat.featSlug),
@@ -45,7 +45,7 @@ export class LevelUpService {
           level,
           classSlug: character.classSlug,
           abilityScores: character.abilityScores,
-          hitPointsContext,
+          hitPointsSources,
         }),
       ),
     );

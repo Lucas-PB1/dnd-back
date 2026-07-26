@@ -5,17 +5,23 @@ import { VPhbClass } from '../../../entities/views/v-phb-class.entity';
 import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { AbilityScores, PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import { CombatCatalogService } from '../infrastructure/combat-catalog.service';
 import {
   calculateHitPointsMax,
   ClassHpProfile,
-  HitPointsContext,
   parseHitDieLabel,
 } from './hit-points.calc';
 
-function hitPointsContextOf(
+type HitPointsSources = {
+  speciesSlug?: string | null;
+  subclassSlug?: string | null;
+  featSlugs?: readonly string[];
+};
+
+function hitPointsSourcesOf(
   entity: PlayerCharacter,
   featSlugs?: readonly string[],
-): HitPointsContext {
+): HitPointsSources {
   return {
     speciesSlug: entity.speciesSlug,
     subclassSlug: entity.subclassSlug,
@@ -27,6 +33,7 @@ function hitPointsContextOf(
 export class CharacterDomainService {
   constructor(
     private readonly catalogLookup: CatalogLookupService,
+    private readonly combatCatalog: CombatCatalogService,
     @InjectRepository(PhbCharacterLevel)
     private readonly characterLevelsRepo: Repository<PhbCharacterLevel>,
   ) {}
@@ -54,14 +61,17 @@ export class CharacterDomainService {
     level: number;
     classSlug: string;
     abilityScores: AbilityScores;
-    hitPointsContext?: HitPointsContext;
+    hitPointsSources?: HitPointsSources;
   }): Promise<number> {
     const phbClass = await this.catalogLookup.findClassOrFail(input.classSlug);
+    const bonusSources = await this.combatCatalog.loadHitPointsBonusSources(
+      input.hitPointsSources ?? {},
+    );
     return calculateHitPointsMax(
       input.level,
       this.classHpProfile(phbClass),
       input.abilityScores.constituicao,
-      input.hitPointsContext,
+      bonusSources,
     );
   }
 
@@ -77,7 +87,7 @@ export class CharacterDomainService {
         level: entity.level,
         classSlug: entity.classSlug,
         abilityScores: entity.abilityScores,
-        hitPointsContext: hitPointsContextOf(entity, featSlugs),
+        hitPointsSources: hitPointsSourcesOf(entity, featSlugs),
       });
     }
 
@@ -110,7 +120,7 @@ export class CharacterDomainService {
         level: entity.level,
         classSlug: entity.classSlug,
         abilityScores: entity.abilityScores,
-        hitPointsContext: hitPointsContextOf(entity, featSlugs),
+        hitPointsSources: hitPointsSourcesOf(entity, featSlugs),
       });
     }
 
