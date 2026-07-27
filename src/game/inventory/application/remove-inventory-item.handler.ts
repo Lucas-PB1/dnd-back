@@ -10,7 +10,7 @@ export class RemoveInventoryItemHandler {
   ) {}
 
   async execute(userId: string, characterId: string, itemSlug: string): Promise<void> {
-    await this.access.findOwnedOrFail(userId, characterId);
+    await this.access.findAccessibleOrFail(userId, characterId, 'write');
     await this.inventory.remove(characterId, itemSlug);
   }
 }

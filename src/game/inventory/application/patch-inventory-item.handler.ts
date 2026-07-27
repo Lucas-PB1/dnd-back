@@ -19,7 +19,7 @@ export class PatchInventoryItemHandler {
     itemSlug: string,
     dto: PatchInventoryItemDto,
   ): Promise<InventoryItemResponseDto> {
-    await this.access.findOwnedOrFail(userId, characterId);
+    await this.access.findAccessibleOrFail(userId, characterId, 'write');
     return this.inventory.patch(characterId, itemSlug, dto);
   }
 }

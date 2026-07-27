@@ -11,7 +11,11 @@ export class LevelUpPreviewQuery {
   ) {}
 
   async execute(userId: string, characterId: string): Promise<LevelUpPreviewDto> {
-    const character = await this.repository.findOwnedOrFail(userId, characterId);
+    const character = await this.repository.findAccessibleOrFail(
+      userId,
+      characterId,
+      'read',
+    );
     return this.levelUp.buildPreview(character);
   }
 }

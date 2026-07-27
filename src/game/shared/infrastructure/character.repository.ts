@@ -6,12 +6,17 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PlayerCharacter } from './player-character.entity';
+import {
+  CampaignCharacterAccessService,
+  CharacterAccessMode,
+} from '../../campaign/infrastructure/campaign-character-access.service';
 
 @Injectable()
 export class CharacterRepository {
   constructor(
     @InjectRepository(PlayerCharacter)
     private readonly repo: Repository<PlayerCharacter>,
+    private readonly campaignAccess: CampaignCharacterAccessService,
   ) {}
 
   findAllByUser(userId: string): Promise<PlayerCharacter[]> {
@@ -22,13 +27,32 @@ export class CharacterRepository {
   }
 
   async findOwnedOrFail(userId: string, id: string): Promise<PlayerCharacter> {
+    return this.findAccessibleOrFail(userId, id, 'own');
+  }
+
+  async findAccessibleOrFail(
+    userId: string,
+    id: string,
+    mode: CharacterAccessMode,
+  ): Promise<PlayerCharacter> {
     const row = await this.repo.findOne({ where: { id } });
     if (!row) {
       throw new NotFoundException(`Character '${id}' not found`);
     }
-    if (row.userId !== userId) {
+
+    if (row.userId === userId) {
+      return row;
+    }
+
+    if (mode === 'own') {
       throw new ForbiddenException('You do not have access to this character');
     }
+
+    const viaCampaign = await this.campaignAccess.hasAccess(userId, id, mode);
+    if (!viaCampaign) {
+      throw new ForbiddenException('You do not have access to this character');
+    }
+
     return row;
   }
 

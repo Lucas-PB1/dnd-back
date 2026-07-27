@@ -15,7 +15,11 @@ export class RestHandler {
     characterId: string,
     dto: RestDto,
   ): Promise<RestResponseDto> {
-    const character = await this.access.findOwnedOrFail(userId, characterId);
+    const character = await this.access.findAccessibleOrFail(
+      userId,
+      characterId,
+      'write',
+    );
 
     const state =
       dto.type === 'long'

@@ -21,7 +21,7 @@ export class GetCharacterInventoryQuery {
     userId: string,
     characterId: string,
   ): Promise<CharacterInventoryResponseDto> {
-    await this.access.findOwnedOrFail(userId, characterId);
+    await this.access.findAccessibleOrFail(userId, characterId, 'read');
 
     let result = await this.inventory.list(characterId);
     if (result.items.length > 0) return result;

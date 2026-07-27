@@ -18,7 +18,11 @@ export class PatchCharacterStateHandler {
     characterId: string,
     dto: PatchCharacterStateDto,
   ): Promise<CharacterStateResponseDto> {
-    const character = await this.access.findOwnedOrFail(userId, characterId);
+    const character = await this.access.findAccessibleOrFail(
+      userId,
+      characterId,
+      'write',
+    );
     return this.state.patch(character, dto);
   }
 }

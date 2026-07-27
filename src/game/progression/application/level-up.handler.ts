@@ -17,7 +17,11 @@ export class LevelUpHandler {
     characterId: string,
     dto: LevelUpDto,
   ): Promise<CharacterResponseDto> {
-    const character = await this.repository.findOwnedOrFail(userId, characterId);
+    const character = await this.repository.findAccessibleOrFail(
+      userId,
+      characterId,
+      'write',
+    );
 
     if (character.level >= 20) {
       throw new BadRequestException('Character is already at maximum level');

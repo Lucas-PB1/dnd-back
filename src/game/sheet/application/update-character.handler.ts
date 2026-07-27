@@ -40,7 +40,7 @@ export class UpdateCharacterHandler {
     id: string,
     dto: UpdateCharacterDto,
   ): Promise<CharacterResponseDto> {
-    const row = await this.repository.findOwnedOrFail(userId, id);
+    const row = await this.repository.findAccessibleOrFail(userId, id, 'write');
 
     const effective = {
       level: dto.level ?? row.level,

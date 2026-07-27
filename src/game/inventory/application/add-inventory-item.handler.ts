@@ -18,7 +18,7 @@ export class AddInventoryItemHandler {
     characterId: string,
     dto: AddInventoryItemDto,
   ): Promise<InventoryItemResponseDto> {
-    await this.access.findOwnedOrFail(userId, characterId);
+    await this.access.findAccessibleOrFail(userId, characterId, 'write');
     return this.inventory.add(characterId, dto);
   }
 }

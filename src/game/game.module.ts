@@ -5,6 +5,7 @@ import { CharacterProgressionModule } from './progression/character-progression.
 import { CharacterInventoryModule } from './inventory/character-inventory.module';
 import { CharacterSessionModule } from './session/character-session.module';
 import { GameSharedModule } from './shared/game-shared.module';
+import { CampaignModule } from './campaign/campaign.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { GameSharedModule } from './shared/game-shared.module';
     CharacterProgressionModule,
     CharacterInventoryModule,
     CharacterSessionModule,
+    CampaignModule,
   ],
 })
 export class GameModule {}

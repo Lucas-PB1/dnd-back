@@ -11,7 +11,7 @@ export class GetCharacterQuery {
   ) {}
 
   async execute(userId: string, id: string): Promise<CharacterResponseDto> {
-    const row = await this.repository.findOwnedOrFail(userId, id);
+    const row = await this.repository.findAccessibleOrFail(userId, id, 'read');
     return this.mapper.toDto(row);
   }
 }

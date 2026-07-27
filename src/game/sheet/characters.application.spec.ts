@@ -17,6 +17,7 @@ import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catalog.service';
+import { CampaignCharacterAccessService } from '../campaign/infrastructure/campaign-character-access.service';
 
 describe('Characters application layer', () => {
   let createHandler: CreateCharacterHandler;
@@ -169,6 +170,10 @@ describe('Characters application layer', () => {
         {
           provide: SeedStartingInventoryHandler,
           useValue: { execute: jest.fn().mockResolvedValue(undefined) },
+        },
+        {
+          provide: CampaignCharacterAccessService,
+          useValue: { hasAccess: jest.fn().mockResolvedValue(false) },
         },
       ],
     }).compile();

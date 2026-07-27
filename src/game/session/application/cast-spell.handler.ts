@@ -15,7 +15,11 @@ export class CastSpellHandler {
     characterId: string,
     dto: CastSpellDto,
   ): Promise<CastSpellResponseDto> {
-    const character = await this.access.findOwnedOrFail(userId, characterId);
+    const character = await this.access.findAccessibleOrFail(
+      userId,
+      characterId,
+      'write',
+    );
     const result = await this.state.castSpell(character, dto);
     return {
       spellSlug: dto.spellSlug,

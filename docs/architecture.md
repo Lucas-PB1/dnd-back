@@ -62,7 +62,7 @@ flowchart TB
 - **API:** `src/game/` — submódulos `sheet/`, `build/`, `progression/`, `inventory/`, `session/`, `shared/`
 - **Segurança:** ownership por `userId` + `SupabaseAuthGuard`
 - **Referência ao catálogo:** slug de classe/espécie/antecedente — não duplicar regras PHB no domínio
-- **Campanha / combate (7D):** ainda futuro
+- **Campanha / combate (7D):** MVP de campanhas (`campaign`, membros dm/player/assistant, vínculo N:N de personagens) em `src/game/campaign/`; combate/iniciativa ainda futuro
 
 ## CQRS leve
 

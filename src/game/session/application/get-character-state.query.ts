@@ -13,7 +13,11 @@ export class GetCharacterStateQuery {
   ) {}
 
   async execute(userId: string, characterId: string): Promise<CharacterStateResponseDto> {
-    const character = await this.access.findOwnedOrFail(userId, characterId);
+    const character = await this.access.findAccessibleOrFail(
+      userId,
+      characterId,
+      'read',
+    );
     return this.state.buildResponse(character);
   }
 }
