@@ -16,7 +16,7 @@ Fonte salva (compra D&D Beyond / Mage Hand Press) para ingestão no catálogo Gr
 | Tipo | Extraído | No DB |
 |------|----------|-------|
 | Classe | Gunslinger | ✅ `G001`–`G007` |
-| Features | 16 + 6 maneuvers | ✅ `G008` |
+| Features | 16 + 6 maneuvers (todas conhecidas RAW) | ✅ `G008` |
 | Subclasses (Creeds) | 6 | ✅ `G009`–`G010` |
 | Props / masteries Valda | Firearm, Recoil, Reload, Automatic… | ✅ `G011` / `G011b` |
 | Firearms + munição | 14 armas + 5 ammo | ✅ `G012`–`G013` |
@@ -26,20 +26,17 @@ Fonte salva (compra D&D Beyond / Mage Hand Press) para ingestão no catálogo Gr
 | Weapon Mastery + Risk | progressão + recurso | ✅ `G019` |
 | Fighting Style allowlist | amplitude do fighter | ✅ `G020` |
 | **Spellslinger casting** | pattern `third`, cotas, lista Wizard, Finger Guns | ✅ `G021`–`G024` |
+| Proficiência armas | Simple + Martial Ranged | ✅ `G005` (`armas-marciais-a-distancia`) |
 
 Edição: `valda-spire-2024-en` · citação: `valda-spire-2024-en:gunslinger`
 
 ### Jogável
 
-- Create: skills, mastery, Estilo de Luta L1, pacotes A/B
-- Risk (nv.2+): usos + `dieLabel` (d8/d10/d12) no combat hub
+- Create: skills, mastery (só armas com proficiência), Estilo de Luta L1, pacotes A/B
+- Proficiência: Simple + Martial Ranged (não martial melee)
+- Risk (nv.2+): usos + `dieLabel` (d8/d10/d12) no combat hub; as 6 manobras de classe são todas conhecidas (RAW — não há “choose X” como Battle Master); creeds podem conceder manobras adicionais
 - **Spellslinger (nv.3+):** slots `third`, prepared da lista Wizard, Finger Guns `always_prepared`; passo Magias no create quando Creed = Spellslinger
 - Reload/Recoil: só catálogo/texto (engine não automatiza)
-
-### Ainda fora
-
-- Maneuvers como subset escolhido
-- Proficiência estrita “Martial Ranged only”
 
 ## Pipeline
 

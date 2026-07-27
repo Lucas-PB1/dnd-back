@@ -39,9 +39,9 @@
       ],
       "weaponProficiencies": [
         "armas-simples",
-        "armas-marciais"
+        "armas-marciais-a-distancia"
       ],
-      "weaponNote": "Simple weapons and Martial Ranged weapons (mapped to simple+martial)",
+      "weaponNote": "Simple weapons and Martial Ranged weapons",
       "savingThrowsLabel": "Dexterity and Charisma",
       "armor": "Light armor",
       "weapons": "Simple weapons and Martial Ranged weapons",
@@ -1248,9 +1248,9 @@
     ],
     "weaponProficiencies": [
       "armas-simples",
-      "armas-marciais"
+      "armas-marciais-a-distancia"
     ],
-    "weaponNote": "Simple weapons and Martial Ranged weapons (mapped to simple+martial)",
+    "weaponNote": "Simple weapons and Martial Ranged weapons",
     "savingThrowsLabel": "Dexterity and Charisma",
     "armor": "Light armor",
     "weapons": "Simple weapons and Martial Ranged weapons",

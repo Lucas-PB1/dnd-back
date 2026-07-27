@@ -66,6 +66,8 @@ export type WeaponAttack = {
 const SIMPLE_PROFICIENCY = 'armas-simples';
 const MARTIAL_PROFICIENCY = 'armas-marciais';
 const MARTIAL_LIGHT_PROFICIENCY = 'armas-marciais-leves';
+/** Martial Ranged only (ex.: Gunslinger) — martial + ammunition. */
+const MARTIAL_RANGED_PROFICIENCY = 'armas-marciais-a-distancia';
 
 /** Proficiências específicas (seeds S031) → item slug. */
 const SPECIFIC_WEAPON_PROFICIENCY: Record<string, string> = {
@@ -149,7 +151,13 @@ export function isProficient(
     return proficiencySlugs.includes(SIMPLE_PROFICIENCY);
   }
   if (piece.category === 'martial') {
-    return proficiencySlugs.includes(MARTIAL_PROFICIENCY);
+    if (proficiencySlugs.includes(MARTIAL_PROFICIENCY)) return true;
+    if (
+      proficiencySlugs.includes(MARTIAL_RANGED_PROFICIENCY) &&
+      isAmmunitionWeapon(piece)
+    ) {
+      return true;
+    }
   }
   return false;
 }

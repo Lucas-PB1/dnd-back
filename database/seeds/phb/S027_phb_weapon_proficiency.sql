@@ -14,4 +14,5 @@ VALUES
   ('espada-longa', 'Espada Longa'),
   ('rapieira', 'Rapieira'),
   ('espada-curta', 'Espada Curta'),
-  ('armas-marciais-leves', 'Armas Marciais (leves)');
+  ('armas-marciais-leves', 'Armas Marciais (leves)'),
+  ('armas-marciais-a-distancia', 'Armas Marciais (à Distância)');

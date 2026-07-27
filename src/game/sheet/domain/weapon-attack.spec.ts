@@ -145,6 +145,26 @@ describe('computeWeaponAttacks', () => {
     expect(melee.proficient).toBe(true);
   });
 
+  it('grants martial ranged only from armas-marciais-a-distancia', () => {
+    const gunslinger = {
+      proficiencyBonus: 2,
+      weaponProficiencySlugs: [
+        'armas-simples',
+        'armas-marciais-a-distancia',
+      ],
+    };
+    const [bow] = computeWeaponAttacks(scores(), [longbow()], gunslinger);
+    expect(bow.proficient).toBe(true);
+    const [sword] = computeWeaponAttacks(scores(), [longsword()], gunslinger);
+    expect(sword.proficient).toBe(false);
+    const [blade] = computeWeaponAttacks(
+      scores({ forca: 10, destreza: 16 }),
+      [dagger()],
+      gunslinger,
+    ).filter((a) => a.mode === 'melee');
+    expect(blade.proficient).toBe(true);
+  });
+
   it('grants martial proficiency from martial-weapon-training feat', () => {
     const [attack] = computeWeaponAttacks(scores(), [longsword()], {
       proficiencyBonus: 2,
