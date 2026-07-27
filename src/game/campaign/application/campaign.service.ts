@@ -151,6 +151,19 @@ export class CampaignService {
     await this.repo.unlinkCharacter(campaignId, userId, characterId);
   }
 
+  async rotateInvite(
+    userId: string,
+    campaignId: string,
+  ): Promise<CampaignSummaryDto> {
+    const campaign = await this.repo.rotateInviteCode(campaignId, userId);
+    const membership = await this.repo.requireMember(campaignId, userId);
+    return this.toSummary(campaign, membership.role);
+  }
+
+  listCampaignRefsByCharacterIds(characterIds: string[]) {
+    return this.repo.listCampaignRefsByCharacterIds(characterIds);
+  }
+
   private toSummary(
     campaign: Campaign,
     role: CampaignRole,

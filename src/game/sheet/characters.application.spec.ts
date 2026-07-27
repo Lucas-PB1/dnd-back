@@ -18,6 +18,7 @@ import { SeedStartingInventoryHandler } from '../inventory/application/seed-star
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catalog.service';
 import { CampaignCharacterAccessService } from '../campaign/infrastructure/campaign-character-access.service';
+import { CampaignService } from '../campaign/application/campaign.service';
 
 describe('Characters application layer', () => {
   let createHandler: CreateCharacterHandler;
@@ -174,6 +175,14 @@ describe('Characters application layer', () => {
         {
           provide: CampaignCharacterAccessService,
           useValue: { hasAccess: jest.fn().mockResolvedValue(false) },
+        },
+        {
+          provide: CampaignService,
+          useValue: {
+            listCampaignRefsByCharacterIds: jest
+              .fn()
+              .mockResolvedValue(new Map()),
+          },
         },
       ],
     }).compile();

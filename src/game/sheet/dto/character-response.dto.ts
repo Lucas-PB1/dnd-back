@@ -48,6 +48,14 @@ export class AbilityScoresDto {
   carisma!: number;
 }
 
+export class CharacterCampaignRefDto {
+  @ApiProperty({ format: 'uuid' })
+  id!: string;
+
+  @ApiProperty({ example: 'Ruínas de Shadowdale' })
+  name!: string;
+}
+
 export class CharacterResponseDto {
   @ApiProperty({ format: 'uuid' })
   id!: string;
@@ -207,4 +215,10 @@ export class CharacterResponseDto {
     attackNote: string;
     damageNote: string;
   }>;
+
+  @ApiProperty({
+    type: [CharacterCampaignRefDto],
+    description: 'Campanhas em que o personagem está vinculado',
+  })
+  campaigns!: CharacterCampaignRefDto[];
 }

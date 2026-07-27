@@ -126,6 +126,7 @@ export class CharacterMapper {
       armorClass: armor.armorClass,
       armorClassNote: armor.armorClassNote,
       weaponAttacks,
+      campaigns: [],
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     };

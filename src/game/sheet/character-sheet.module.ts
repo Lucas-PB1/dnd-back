@@ -48,6 +48,7 @@ import { VPhbHpBonusSource } from '../../entities/views/v-phb-hp-bonus-source.en
 import { VPhbUnarmoredDefense } from '../../entities/views/v-phb-unarmored-defense.entity';
 import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catalog.service';
 import { CombatCatalogService } from './infrastructure/combat-catalog.service';
+import { CampaignModule } from '../campaign/campaign.module';
 
 @Module({
   imports: [
@@ -83,6 +84,7 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
     GameSharedModule,
     CatalogModule,
     CharacterInventoryModule,
+    CampaignModule,
   ],
   controllers: [CharactersController],
   providers: [

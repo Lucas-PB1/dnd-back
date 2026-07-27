@@ -149,4 +149,14 @@ export class CampaignsController {
   ): Promise<void> {
     await this.campaigns.unlinkCharacter(user.id, id, characterId);
   }
+
+  @Post(':id/invite-code/rotate')
+  @ApiOperation({ summary: 'Rotate invite code (dm only)' })
+  @ApiOkResponse({ type: CampaignSummaryDto })
+  rotateInvite(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<CampaignSummaryDto> {
+    return this.campaigns.rotateInvite(user.id, id);
+  }
 }

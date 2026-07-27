@@ -295,4 +295,50 @@ export class CampaignRepository {
     if (ids.length === 0) return [];
     return this.characterRows.find({ where: { id: In(ids) } });
   }
+
+  async rotateInviteCode(
+    campaignId: string,
+    userId: string,
+  ): Promise<Campaign> {
+    await this.requireRole(campaignId, userId, ['dm']);
+    const campaign = await this.findCampaignOrFail(campaignId);
+    let inviteCode = generateCampaignInviteCode();
+    for (let attempt = 0; attempt < 5; attempt += 1) {
+      const exists = await this.campaigns.exist({ where: { inviteCode } });
+      if (!exists) break;
+      inviteCode = generateCampaignInviteCode();
+    }
+    campaign.inviteCode = inviteCode;
+    return this.campaigns.save(campaign);
+  }
+
+  /**
+   * Mapa characterId → campanhas em que o personagem está vinculado.
+   */
+  async listCampaignRefsByCharacterIds(
+    characterIds: string[],
+  ): Promise<Map<string, Array<{ id: string; name: string }>>> {
+    const result = new Map<string, Array<{ id: string; name: string }>>();
+    if (characterIds.length === 0) return result;
+
+    const links = await this.links.find({
+      where: { characterId: In(characterIds) },
+    });
+    if (links.length === 0) return result;
+
+    const campaigns = await this.campaigns.find({
+      where: { id: In([...new Set(links.map((l) => l.campaignId))]) },
+    });
+    const campaignById = new Map(campaigns.map((c) => [c.id, c]));
+
+    for (const link of links) {
+      const campaign = campaignById.get(link.campaignId);
+      if (!campaign) continue;
+      const list = result.get(link.characterId) ?? [];
+      list.push({ id: campaign.id, name: campaign.name });
+      result.set(link.characterId, list);
+    }
+
+    return result;
+  }
 }
