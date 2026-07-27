@@ -36,7 +36,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.config.js --runInBand"
   },
   "engines": {
-    "node": "20.x"
+    "node": "24.x"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.12",

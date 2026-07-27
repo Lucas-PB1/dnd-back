@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { PhbSpecies } from '../../../entities/phb-species.entity';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterDomainService } from '../domain/character-domain.service';
 import { computeDerivedStats } from '../domain/character-derived-stats';
+import { spellcastingDerivedStats } from '../domain/spellcasting-stats';
+import type { AbilityKey } from '../../build/domain/ability-generation';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 import { EquippedArmorClassService } from './equipped-armor-class.service';
@@ -25,9 +27,19 @@ import {
 } from '../domain/creature-size';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
 
+const ABILITY_SLUGS = new Set<AbilityKey>([
+  'forca',
+  'destreza',
+  'constituicao',
+  'inteligencia',
+  'sabedoria',
+  'carisma',
+]);
+
 @Injectable()
 export class CharacterMapper {
   constructor(
+    private readonly dataSource: DataSource,
     private readonly domain: CharacterDomainService,
     private readonly sheet: CharacterSheetRepository,
     private readonly equippedArmorClass: EquippedArmorClassService,
@@ -108,6 +120,15 @@ export class CharacterMapper {
       hasShield,
     });
 
+    const spellcastingAbilitySlug = await this.loadSpellcastingAbilitySlug(
+      row.classSlug,
+    );
+    const spellcasting = spellcastingDerivedStats({
+      spellcastingAbilitySlug,
+      proficiencyBonus,
+      abilityModifiers: derived.abilityModifiers,
+    });
+
     const { speciesCatalog, featFixedSpells } =
       await this.grantedSpellCatalog.loadMergeCatalog({
         speciesSlugs: [row.speciesSlug],
@@ -168,10 +189,30 @@ export class CharacterMapper {
       equipmentWarnings: compliance.warnings,
       cannotCastSpellsInArmor: compliance.cannotCastSpells,
       speedPenaltyMeters: compliance.speedPenaltyMeters,
+      spellcastingAbilitySlug: spellcasting.spellcastingAbilitySlug,
+      spellSaveDc: spellcasting.spellSaveDc,
+      spellAttackBonus: spellcasting.spellAttackBonus,
       campaigns: [],
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     };
+  }
+
+  private async loadSpellcastingAbilitySlug(
+    classSlug: string,
+  ): Promise<AbilityKey | null> {
+    const rows = await this.dataSource.query<{ ability_slug: string }[]>(
+      `SELECT a.slug AS ability_slug
+       FROM rpg.phb_class_spellcasting cs
+       JOIN rpg.phb_class c ON c.id = cs.class_id
+       JOIN rpg.phb_ability a ON a.id = cs.ability_id
+       WHERE c.slug = $1
+       LIMIT 1`,
+      [classSlug],
+    );
+    const slug = rows[0]?.ability_slug;
+    if (!slug || !ABILITY_SLUGS.has(slug as AbilityKey)) return null;
+    return slug as AbilityKey;
   }
 
   async toDtoList(rows: PlayerCharacter[]): Promise<CharacterResponseDto[]> {

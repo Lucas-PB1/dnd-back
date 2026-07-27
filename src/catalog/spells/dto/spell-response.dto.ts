@@ -60,4 +60,15 @@ export class SpellResponseDto {
 
   @ApiPropertyOptional()
   editionSlug!: string | null;
+
+  @ApiPropertyOptional({
+    description: 'Atributo da salvaguarda principal, se a magia pedir teste',
+    example: 'sabedoria',
+  })
+  saveAbilitySlug!: string | null;
+
+  @ApiProperty({
+    description: 'True se a magia pede jogada de ataque mágico',
+  })
+  requiresAttackRoll!: boolean;
 }

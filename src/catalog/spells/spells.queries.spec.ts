@@ -35,6 +35,8 @@ describe('Spells queries', () => {
     higherLevels: null,
     sourceChapter: 7,
     editionSlug: 'phb-2024-pt',
+    saveAbilitySlug: null,
+    requiresAttackRoll: false,
   };
 
   function mockQb(rows: VPhbSpell[], total: number) {

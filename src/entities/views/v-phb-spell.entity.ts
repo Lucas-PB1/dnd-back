@@ -61,4 +61,10 @@ export class VPhbSpell {
 
   @ViewColumn({ name: 'edition_slug' })
   editionSlug!: string | null;
+
+  @ViewColumn({ name: 'save_ability_slug' })
+  saveAbilitySlug!: string | null;
+
+  @ViewColumn({ name: 'requires_attack_roll' })
+  requiresAttackRoll!: boolean;
 }

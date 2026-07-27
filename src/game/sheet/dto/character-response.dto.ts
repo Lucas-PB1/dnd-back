@@ -222,6 +222,24 @@ export class CharacterResponseDto {
     omitsAbilityDamage: boolean;
   }>;
 
+  @ApiPropertyOptional({
+    example: 'sabedoria',
+    description: 'Atributo de conjuração da classe (phb_class_spellcasting)',
+  })
+  spellcastingAbilitySlug!: string | null;
+
+  @ApiPropertyOptional({
+    example: 14,
+    description: 'CD de magia: 8 + PB + mod do atributo de conjuração',
+  })
+  spellSaveDc!: number | null;
+
+  @ApiPropertyOptional({
+    example: 6,
+    description: 'Bônus de ataque mágico: PB + mod do atributo de conjuração',
+  })
+  spellAttackBonus!: number | null;
+
   @ApiProperty({
     type: 'array',
     description: 'Avisos de conformidade de equipamento (treino, Força, dual wield, etc.)',

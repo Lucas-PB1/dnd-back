@@ -112,6 +112,7 @@ import { EquippedEquipmentComplianceService } from './infrastructure/equipped-eq
     UpdateCharacterHandler,
     CharacterSpellLookup,
     CharacterSheetRepository,
+    EquippedWeaponAttacksService,
   ],
 })
 export class CharacterSheetModule {}

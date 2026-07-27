@@ -26,6 +26,8 @@ export class SpellsMapper {
       higherLevels: row.higherLevels,
       sourceChapter: row.sourceChapter,
       editionSlug: row.editionSlug,
+      saveAbilitySlug: row.saveAbilitySlug ?? null,
+      requiresAttackRoll: Boolean(row.requiresAttackRoll),
     };
   }
 }

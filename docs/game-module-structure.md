@@ -17,7 +17,8 @@ BC Game (modular monolith)
 ├── build/            # criação: roll abilities
 ├── progression/      # level-up, preview
 ├── inventory/        # mochila + equipado
-└── session/          # slots, condições, concentração
+├── session/          # slots, condições, concentração
+└── dice/             # motor de dados + rolls da ficha (ataque, dano, perícia, ST, iniciativa)
 ```
 
 Cada submódulo:
@@ -76,6 +77,7 @@ Todos os controllers usam `@Controller('characters')`:
 | **progression** | `GET/POST /characters/:id/level-up/*` |
 | **inventory** | `GET/POST/PATCH/DELETE /characters/:id/inventory/*` |
 | **session** | `GET/PATCH /characters/:id/state`, `POST .../spells/cast`, `POST .../rest` |
+| **dice** | `POST /characters/:id/rolls/{attack,damage,skill,saving-throw,initiative}` |
 
 ## O que fica onde
 

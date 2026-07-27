@@ -1,6 +1,8 @@
--- View rpg.v_phb_spell
+-- Recria v_phb_spell com save_ability_slug e requires_attack_roll.
 
-CREATE OR REPLACE VIEW rpg.v_phb_spell AS
+DROP VIEW IF EXISTS rpg.v_phb_spell;
+
+CREATE VIEW rpg.v_phb_spell AS
 SELECT
   s.slug,
   s.name,

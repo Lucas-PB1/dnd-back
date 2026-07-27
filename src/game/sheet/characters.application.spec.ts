@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from '@jest/globals';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { DataSource } from 'typeorm';
 import { CharacterRepository } from '../shared/infrastructure/character.repository';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
@@ -136,6 +137,12 @@ describe('Characters application layer', () => {
         CharacterMapper,
         CreateCharacterHandler,
         GetCharacterQuery,
+        {
+          provide: DataSource,
+          useValue: {
+            query: jest.fn().mockResolvedValue([]),
+          },
+        },
         { provide: getRepositoryToken(PlayerCharacter), useValue: repo },
         { provide: CatalogLookupService, useValue: catalogLookup },
         { provide: CharacterSheetValidator, useValue: sheetValidator },

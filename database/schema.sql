@@ -204,6 +204,8 @@ CREATE TABLE rpg.phb_spell (
   description TEXT NOT NULL,
   higher_levels TEXT,
   source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
+  save_ability_id BIGINT REFERENCES rpg.phb_ability(id),
+  requires_attack_roll BOOLEAN NOT NULL DEFAULT FALSE,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -719,9 +721,12 @@ SELECT
   s.description,
   s.higher_levels,
   sc.chapter AS source_chapter,
-  e.slug AS edition_slug
+  e.slug AS edition_slug,
+  a.slug AS save_ability_slug,
+  s.requires_attack_roll
 FROM rpg.phb_spell s
 JOIN rpg.phb_spell_school sch ON sch.id = s.school_id
+LEFT JOIN rpg.phb_ability a ON a.id = s.save_ability_id
 LEFT JOIN rpg.phb_source_citation sc ON sc.id = s.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id;
 
