@@ -16,6 +16,8 @@ export type WeaponAttackResolveContext = {
   proficiencyBonus: number;
   featSlugs?: readonly string[];
   fightingStyleSlugs?: readonly string[];
+  sizeCategory?: import('../domain/creature-size').SizeCategory;
+  hasShield?: boolean;
 };
 
 @Injectable()
@@ -73,6 +75,8 @@ export class EquippedWeaponAttacksService {
       weaponProficiencySlugs,
       featSlugs: context.featSlugs,
       fightingStyleSlugs: context.fightingStyleSlugs,
+      sizeCategory: context.sizeCategory,
+      hasShield: context.hasShield,
     });
   }
 

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import { PhbSpecies } from '../../../entities/phb-species.entity';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterDomainService } from '../domain/character-domain.service';
 import { computeDerivedStats } from '../domain/character-derived-stats';
@@ -9,6 +10,7 @@ import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 import { EquippedArmorClassService } from './equipped-armor-class.service';
 import { EquippedWeaponAttacksService } from './equipped-weapon-attacks.service';
+import { EquippedEquipmentComplianceService } from './equipped-equipment-compliance.service';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/fighting-style-feat-options';
 import {
   annotateCharacterSpellSources,
@@ -17,6 +19,11 @@ import {
 } from '../domain/granted-spells';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { GrantedSpellCatalogService } from './granted-spell-catalog.service';
+import {
+  resolveSizeCategory,
+  sizeCategoryFromChoices,
+} from '../domain/creature-size';
+import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
 
 @Injectable()
 export class CharacterMapper {
@@ -25,9 +32,14 @@ export class CharacterMapper {
     private readonly sheet: CharacterSheetRepository,
     private readonly equippedArmorClass: EquippedArmorClassService,
     private readonly equippedWeaponAttacks: EquippedWeaponAttacksService,
+    private readonly equipmentCompliance: EquippedEquipmentComplianceService,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
     private readonly grantedSpellCatalog: GrantedSpellCatalogService,
+    @InjectRepository(PhbSpecies)
+    private readonly speciesRepo: Repository<PhbSpecies>,
+    @InjectRepository(PlayerCharacterItem)
+    private readonly inventoryItems: Repository<PlayerCharacterItem>,
   ) {}
 
   async toDto(
@@ -52,6 +64,23 @@ export class CharacterMapper {
     const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
       loaded.subclassOptions,
     );
+
+    const species = await this.speciesRepo.findOne({
+      where: { slug: row.speciesSlug },
+    });
+    const sizeCategory = resolveSizeCategory(
+      species?.size,
+      sizeCategoryFromChoices(loaded.speciesChoices),
+    );
+
+    const hasShield = await this.inventoryItems.exist({
+      where: {
+        characterId: row.id,
+        location: 'equipped',
+        equipmentSlot: 'shield',
+      },
+    });
+
     const armor = await this.equippedArmorClass.resolve(row.id, row.abilityScores, {
       classSlug: row.classSlug,
       subclassSlug: row.subclassSlug,
@@ -66,8 +95,18 @@ export class CharacterMapper {
         proficiencyBonus,
         featSlugs,
         fightingStyleSlugs,
+        sizeCategory,
+        hasShield,
       },
     );
+
+    const compliance = await this.equipmentCompliance.resolve(row.id, {
+      classSlug: row.classSlug,
+      strengthScore: row.abilityScores.forca,
+      featSlugs,
+      sizeCategory,
+      hasShield,
+    });
 
     const { speciesCatalog, featFixedSpells } =
       await this.grantedSpellCatalog.loadMergeCatalog({
@@ -126,6 +165,9 @@ export class CharacterMapper {
       armorClass: armor.armorClass,
       armorClassNote: armor.armorClassNote,
       weaponAttacks,
+      equipmentWarnings: compliance.warnings,
+      cannotCastSpellsInArmor: compliance.cannotCastSpells,
+      speedPenaltyMeters: compliance.speedPenaltyMeters,
       campaigns: [],
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),

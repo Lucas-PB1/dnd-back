@@ -42,6 +42,7 @@ import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
 import { PhbWeapon } from '../../entities/phb-weapon.entity';
+import { PhbSpecies } from '../../entities/phb-species.entity';
 import { VPhbSpeciesGrantedSpell } from '../../entities/views/v-phb-species-granted-spell.entity';
 import { VPhbFeatGrantedSpell } from '../../entities/views/v-phb-feat-granted-spell.entity';
 import { VPhbHpBonusSource } from '../../entities/views/v-phb-hp-bonus-source.entity';
@@ -49,6 +50,7 @@ import { VPhbUnarmoredDefense } from '../../entities/views/v-phb-unarmored-defen
 import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catalog.service';
 import { CombatCatalogService } from './infrastructure/combat-catalog.service';
 import { CampaignModule } from '../campaign/campaign.module';
+import { EquippedEquipmentComplianceService } from './infrastructure/equipped-equipment-compliance.service';
 
 @Module({
   imports: [
@@ -76,6 +78,7 @@ import { CampaignModule } from '../campaign/campaign.module';
       VPhbArmor,
       PlayerCharacterItem,
       PhbWeapon,
+      PhbSpecies,
       VPhbSpeciesGrantedSpell,
       VPhbFeatGrantedSpell,
       VPhbHpBonusSource,
@@ -94,6 +97,7 @@ import { CampaignModule } from '../campaign/campaign.module';
     CharacterMapper,
     EquippedArmorClassService,
     EquippedWeaponAttacksService,
+    EquippedEquipmentComplianceService,
     GrantedSpellCatalogService,
     CombatCatalogService,
     ListCharactersQuery,

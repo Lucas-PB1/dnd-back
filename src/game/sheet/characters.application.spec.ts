@@ -7,11 +7,14 @@ import { CharacterSheetRepository } from './infrastructure/character-sheet.repos
 import { CharacterMapper } from './infrastructure/character.mapper';
 import { EquippedArmorClassService } from './infrastructure/equipped-armor-class.service';
 import { EquippedWeaponAttacksService } from './infrastructure/equipped-weapon-attacks.service';
+import { EquippedEquipmentComplianceService } from './infrastructure/equipped-equipment-compliance.service';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CharacterDomainService } from './domain/character-domain.service';
 import { CharacterSheetValidator } from './domain/character-sheet.validator';
 import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
+import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
+import { PhbSpecies } from '../../entities/phb-species.entity';
 import { CatalogLookupService } from '../../catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
@@ -151,6 +154,36 @@ describe('Characters application layer', () => {
           provide: EquippedWeaponAttacksService,
           useValue: {
             resolve: jest.fn().mockResolvedValue([]),
+          },
+        },
+        {
+          provide: EquippedEquipmentComplianceService,
+          useValue: {
+            resolve: jest.fn().mockResolvedValue({
+              lacksArmorTraining: false,
+              strengthPenalty: null,
+              stealthDisadvantage: false,
+              cannotCastSpells: false,
+              strDexTestDisadvantage: false,
+              speedPenaltyMeters: 0,
+              warnings: [],
+            }),
+          },
+        },
+        {
+          provide: getRepositoryToken(PhbSpecies),
+          useValue: {
+            findOne: jest.fn().mockResolvedValue({
+              slug: 'dwarf',
+              size: 'Médio (cerca de 1,20-1,50 metro de altura)',
+            }),
+          },
+        },
+        {
+          provide: getRepositoryToken(PlayerCharacterItem),
+          useValue: {
+            exist: jest.fn().mockResolvedValue(false),
+            find: jest.fn().mockResolvedValue([]),
           },
         },
         {

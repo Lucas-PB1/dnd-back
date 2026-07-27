@@ -194,11 +194,14 @@ export class CharacterResponseDto {
         attackBonus: 5,
         abilitySlug: 'forca',
         proficient: true,
-        damageDice: '1d8',
+        damageDice: '1d10',
         damageBonus: 3,
         damageType: 'Cortante',
-        attackNote: 'corpo a corpo: FOR + PB',
-        damageNote: '1d8 +3 (FOR)',
+        attackNote: 'corpo a corpo: FOR + PB · versátil (2 mãos)',
+        damageNote: '1d10 +3 (FOR)',
+        role: 'main',
+        attackDisadvantage: false,
+        omitsAbilityDamage: false,
       },
     ],
   })
@@ -214,7 +217,40 @@ export class CharacterResponseDto {
     damageType: string | null;
     attackNote: string;
     damageNote: string;
+    role: 'main' | 'light_bonus' | 'dual_bonus';
+    attackDisadvantage: boolean;
+    omitsAbilityDamage: boolean;
   }>;
+
+  @ApiProperty({
+    type: 'array',
+    description: 'Avisos de conformidade de equipamento (treino, Força, dual wield, etc.)',
+    example: [
+      {
+        code: 'lacks_armor_training',
+        message: 'Sem treino com Cota de Malha…',
+        itemSlug: 'chain-mail',
+      },
+    ],
+  })
+  equipmentWarnings!: Array<{
+    code: string;
+    message: string;
+    itemSlug?: string;
+  }>;
+
+  @ApiProperty({
+    example: false,
+    description: 'True se armadura/escudo sem treino impede conjuração',
+  })
+  cannotCastSpellsInArmor!: boolean;
+
+  @ApiProperty({
+    example: 0,
+    description: 'Penalidade de deslocamento em metros (Força < strength_req)',
+    enum: [0, 3],
+  })
+  speedPenaltyMeters!: 0 | 3;
 
   @ApiProperty({
     type: [CharacterCampaignRefDto],
