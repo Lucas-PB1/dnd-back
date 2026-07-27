@@ -4,6 +4,8 @@
 TRUNCATE TABLE
   rpg.phb_hp_bonus_source,
   rpg.phb_unarmored_defense,
+  rpg.phb_subclass_progression,
+  rpg.phb_subclass_spellcasting,
   rpg.phb_subclass_prepared_spell,
   rpg.phb_subclass_feature,
   rpg.phb_spell_class,

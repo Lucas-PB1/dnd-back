@@ -6,6 +6,7 @@ import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity'
 import { VSpellByClass } from '../../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterDomainService } from '../../sheet/domain/character-domain.service';
 import { maxSpellLevelFromSlots } from '../../sheet/domain/max-spell-level';
@@ -30,6 +31,8 @@ export class LevelUpService {
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
     @InjectRepository(VClassSpellSlots)
     private readonly spellSlotsRepo: Repository<VClassSpellSlots>,
+    @InjectRepository(VSubclassSpellSlots)
+    private readonly subclassSpellSlotsRepo: Repository<VSubclassSpellSlots>,
   ) {}
 
   async buildPreview(character: PlayerCharacter): Promise<LevelUpPreviewDto> {
@@ -110,14 +113,19 @@ export class LevelUpService {
     character: PlayerCharacter,
     nextLevel: number,
   ): Promise<LevelUpPreviewDto['newSpellOptions']> {
-    const maxSpellLevel = await this.maxSpellLevelForClass(
+    const spellListClassSlug = await this.resolveSpellListClassSlug(
+      character.subclassSlug,
+    );
+    const maxSpellLevel = await this.maxSpellLevelForCharacter(
       character.classSlug,
       nextLevel,
+      character.subclassSlug,
     );
     const options: LevelUpPreviewDto['newSpellOptions'] = [];
 
+    const listSlug = spellListClassSlug ?? character.classSlug;
     const classSpells = await this.classSpellsRepo.find({
-      where: { classSlug: character.classSlug },
+      where: { classSlug: listSlug },
       order: { spellLevel: 'ASC', spellName: 'ASC' },
     });
 
@@ -154,11 +162,36 @@ export class LevelUpService {
     });
   }
 
-  /** Círculo máximo com slot > 0 na tabela da classe (full / half / pact). */
-  private async maxSpellLevelForClass(
+  private async resolveSpellListClassSlug(
+    subclassSlug: string | null,
+  ): Promise<string | null> {
+    if (!subclassSlug) return null;
+    const rows = await this.dataSource.query<{ slug: string }[]>(
+      `SELECT list_c.slug
+       FROM rpg.phb_subclass_spellcasting ssc
+       JOIN rpg.phb_subclass sc ON sc.id = ssc.subclass_id
+       JOIN rpg.phb_class list_c ON list_c.id = ssc.spell_list_class_id
+       WHERE sc.slug = $1
+       LIMIT 1`,
+      [subclassSlug],
+    );
+    return rows[0]?.slug ?? null;
+  }
+
+  /** Círculo máximo com slot > 0 (classe ou subclasse conjuradora). */
+  private async maxSpellLevelForCharacter(
     classSlug: string,
     level: number,
+    subclassSlug: string | null,
   ): Promise<number> {
+    if (subclassSlug) {
+      const subclassRow = await this.subclassSpellSlotsRepo.findOne({
+        where: { subclassSlug, classLevel: level },
+      });
+      if (subclassRow?.spellSlots) {
+        return maxSpellLevelFromSlots(subclassRow.spellSlots);
+      }
+    }
     const row = await this.spellSlotsRepo.findOne({
       where: { classSlug, classLevel: level },
     });

@@ -23,6 +23,23 @@ export type FeatGrantedSpellRow = {
   spellSlug: string;
 };
 
+/** Magia fixa de subclasse (ex. Finger Guns do Spellslinger). */
+export type SubclassGrantedSpellRow = {
+  unlockLevel: number;
+  spellSlug: string;
+};
+
+export function collectSubclassGrantedSpellSlugs(
+  level: number,
+  rows: readonly SubclassGrantedSpellRow[],
+): Set<string> {
+  const slugs = new Set<string>();
+  for (const row of rows) {
+    if (row.unlockLevel <= level) slugs.add(row.spellSlug);
+  }
+  return slugs;
+}
+
 const MAGIC_INITIATE_SPELL_KEYS = new Set([
   'cantrip1',
   'cantrip2',
@@ -126,6 +143,9 @@ export type GrantedSpellMergeContext = {
   featFixedSpells?: readonly FeatGrantedSpellRow[];
   /** Catálogo de magias de espécie (`v_phb_species_granted_spell`). */
   speciesCatalog?: readonly SpeciesGrantedSpellRow[];
+  /** Magias always_prepared da subclasse (Finger Guns etc.). */
+  subclassGrantedSpells?: readonly SubclassGrantedSpellRow[];
+  previousSubclassGrantedSpells?: readonly SubclassGrantedSpellRow[];
 };
 
 /**
@@ -140,6 +160,7 @@ export function mergeCharacterSpellsWithGrantedSources(
   const previousLevel = context.previousLevel ?? level;
   const featFixed = context.featFixedSpells ?? [];
   const speciesCatalog = context.speciesCatalog ?? [];
+  const subclassGrants = context.subclassGrantedSpells ?? [];
 
   const nextGranted = unionSets(
     collectFeatGrantedSpellSlugs(
@@ -153,6 +174,7 @@ export function mergeCharacterSpellsWithGrantedSources(
       level,
       speciesCatalog,
     ),
+    collectSubclassGrantedSpellSlugs(level, subclassGrants),
   );
   const previousGranted = unionSets(
     collectFeatGrantedSpellSlugs(
@@ -165,6 +187,10 @@ export function mergeCharacterSpellsWithGrantedSources(
       context.previousSpeciesChoices,
       previousLevel,
       speciesCatalog,
+    ),
+    collectSubclassGrantedSpellSlugs(
+      previousLevel,
+      context.previousSubclassGrantedSpells ?? subclassGrants,
     ),
   );
 

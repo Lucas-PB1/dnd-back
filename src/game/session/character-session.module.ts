@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '../../catalog/catalog.module';
 import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '../../entities/views/v-subclass-spell-slots.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { PhbCondition } from './infrastructure/phb-condition.entity';
@@ -20,6 +21,7 @@ import { UseClassResourceHandler } from './application/use-class-resource.handle
       PlayerCharacterState,
       PhbCondition,
       VClassSpellSlots,
+      VSubclassSpellSlots,
     ]),
     GameSharedModule,
     CharacterSheetModule,

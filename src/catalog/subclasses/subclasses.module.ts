@@ -15,6 +15,9 @@ import { FindSubclassBySlugQuery } from './queries/find-subclass-by-slug.query';
 import { FindSubclassMechanicsQuery } from './queries/find-subclass-mechanics.query';
 import { FindSubclassOptionsQuery } from './queries/find-subclass-options.query';
 import { FindSubclassSpellsQuery } from './queries/find-subclass-spells.query';
+import { FindSubclassSpellSlotsQuery } from './queries/find-subclass-spell-slots.query';
+import { FindSubclassSpellcastingQuery } from './queries/find-subclass-spellcasting.query';
+import { VSubclassSpellSlots } from '../../entities/views/v-subclass-spell-slots.entity';
 
 @Module({
   imports: [
@@ -22,6 +25,7 @@ import { FindSubclassSpellsQuery } from './queries/find-subclass-spells.query';
       VPhbSubclass,
       VPhbSubclassMechanics,
       VPhbSubclassPreparedSpell,
+      VSubclassSpellSlots,
       PhbSubclassRef,
       PhbSubclassOptionValue,
     ]),
@@ -35,6 +39,8 @@ import { FindSubclassSpellsQuery } from './queries/find-subclass-spells.query';
     FindSubclassMechanicsQuery,
     FindSubclassOptionsQuery,
     FindSubclassSpellsQuery,
+    FindSubclassSpellSlotsQuery,
+    FindSubclassSpellcastingQuery,
   ],
 })
 export class SubclassesModule {}

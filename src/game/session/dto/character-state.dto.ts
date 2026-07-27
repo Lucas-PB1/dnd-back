@@ -54,6 +54,18 @@ export class ClassResourceStateDto {
 
   @ApiProperty({ example: 2 })
   remaining!: number;
+
+  @ApiPropertyOptional({
+    example: 8,
+    description: 'Faces do dado associado (ex. Risk d8/d10/d12); omitido se N/A',
+  })
+  dieFaces?: number | null;
+
+  @ApiPropertyOptional({
+    example: 'd8',
+    description: 'Rótulo do dado (ex. d8); omitido se N/A',
+  })
+  dieLabel?: string | null;
 }
 
 export class CharacterStateResponseDto {

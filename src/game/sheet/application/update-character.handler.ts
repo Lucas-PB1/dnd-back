@@ -95,6 +95,8 @@ export class UpdateCharacterHandler {
     const levelChanged = dto.level !== undefined && dto.level !== row.level;
     const speciesChanged =
       dto.speciesSlug !== undefined && dto.speciesSlug !== row.speciesSlug;
+    const subclassChanged =
+      dto.subclassSlug !== undefined && dto.subclassSlug !== row.subclassSlug;
 
     const shouldResyncSpells =
       dto.characterSpells !== undefined ||
@@ -102,6 +104,7 @@ export class UpdateCharacterHandler {
       dto.characterFeats !== undefined ||
       dto.speciesChoices !== undefined ||
       speciesChanged ||
+      subclassChanged ||
       levelChanged;
 
     const sheetInput = this.toSheetInput(dto);
@@ -110,11 +113,16 @@ export class UpdateCharacterHandler {
         ...effectiveCharacterFeats.map((f) => f.featSlug),
         ...sheetSnapshot.characterFeats.map((f) => f.featSlug),
       ];
-      const { speciesCatalog, featFixedSpells } =
+      const { speciesCatalog, featFixedSpells, subclassGrantedSpells } =
         await this.grantedSpellCatalog.loadMergeCatalog({
           speciesSlugs: [effective.speciesSlug, row.speciesSlug],
           featSlugs,
+          subclassSlug: effective.subclassSlug,
         });
+      const previousSubclassGrantedSpells =
+        await this.grantedSpellCatalog.loadSubclassGrantedSpells(
+          row.subclassSlug,
+        );
       sheetInput.characterSpells = mergeCharacterSpellsWithGrantedSources(
         dto.characterSpells ?? sheetSnapshot.characterSpells,
         {
@@ -130,6 +138,8 @@ export class UpdateCharacterHandler {
           previousLevel: row.level,
           speciesCatalog,
           featFixedSpells,
+          subclassGrantedSpells,
+          previousSubclassGrantedSpells,
         },
       );
       if (dto.featOptions === undefined && dto.characterFeats !== undefined) {
@@ -177,8 +187,6 @@ export class UpdateCharacterHandler {
     }
 
     const classChanged = dto.classSlug !== undefined && dto.classSlug !== row.classSlug;
-    const subclassChanged =
-      dto.subclassSlug !== undefined && dto.subclassSlug !== row.subclassSlug;
 
     if (classChanged && dto.classSkillSlugs === undefined) {
       await this.sheetRepository.clearClassSkills(row.id);

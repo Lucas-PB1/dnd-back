@@ -79,10 +79,11 @@ export class CreateCharacterHandler {
 
     const sheetInput = this.toSheetInput(dto, characterFeats);
     const featSlugs = (sheetInput.characterFeats ?? []).map((f) => f.featSlug);
-    const { speciesCatalog, featFixedSpells } =
+    const { speciesCatalog, featFixedSpells, subclassGrantedSpells } =
       await this.grantedSpellCatalog.loadMergeCatalog({
         speciesSlugs: [dto.speciesSlug],
         featSlugs,
+        subclassSlug: dto.subclassSlug,
       });
     sheetInput.characterSpells = mergeCharacterSpellsWithGrantedSources(
       sheetInput.characterSpells ?? [],
@@ -94,6 +95,7 @@ export class CreateCharacterHandler {
         level,
         speciesCatalog,
         featFixedSpells,
+        subclassGrantedSpells,
       },
     );
 

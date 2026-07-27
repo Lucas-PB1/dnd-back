@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { CharacterSpellLookup } from '../../sheet/application/character-spell-lookup';
@@ -32,6 +33,7 @@ import {
   type ClassResourceMax,
   type ClassResourceScheduleRow,
 } from '../domain/class-resources';
+import { riskDieFaces, riskDieLabel } from '../domain/risk-die';
 
 type ClassResourceDbRow = {
   resource_slug: string;
@@ -51,6 +53,8 @@ export class CharacterStateRepository {
     private readonly state: Repository<PlayerCharacterState>,
     @InjectRepository(VClassSpellSlots)
     private readonly classSlots: Repository<VClassSpellSlots>,
+    @InjectRepository(VSubclassSpellSlots)
+    private readonly subclassSlots: Repository<VSubclassSpellSlots>,
     @InjectRepository(PhbCondition)
     private readonly conditions: Repository<PhbCondition>,
     private readonly catalogLookup: CatalogLookupService,
@@ -88,7 +92,11 @@ export class CharacterStateRepository {
   ): Promise<CharacterStateResponseDto> {
     const state = stateRow ?? (await this.findOrCreate(character.id, character.level));
     await this.clampHitDiceToLevel(state, character.level);
-    const spellSlotsMax = await this.loadMaxSlots(character.classSlug, character.level);
+    const spellSlotsMax = await this.loadMaxSlots(
+      character.classSlug,
+      character.level,
+      character.subclassSlug,
+    );
     const spellSlotsUsed = state.spellSlotsUsed ?? {};
     const spellSlotsRemaining = this.computeRemaining(spellSlotsMax, spellSlotsUsed);
     const phbClass = await this.catalogLookup.findClassOrFail(character.classSlug);
@@ -161,7 +169,11 @@ export class CharacterStateRepository {
         );
       }
 
-      const maxSlots = await this.loadMaxSlots(character.classSlug, character.level);
+      const maxSlots = await this.loadMaxSlots(
+        character.classSlug,
+        character.level,
+        character.subclassSlug,
+      );
       const key = String(slotLevel);
       const max = maxSlots[key] ?? 0;
       const used = state.spellSlotsUsed[key] ?? 0;
@@ -334,12 +346,19 @@ export class CharacterStateRepository {
     const used = state.resourcesUsed ?? {};
     return resources.map((resource) => {
       const spent = used[resource.slug] ?? 0;
+      const isRisk = resource.slug === 'risk';
       return {
         slug: resource.slug,
         name: resource.name,
         max: resource.max,
         used: spent,
         remaining: Math.max(0, resource.max - spent),
+        ...(isRisk
+          ? {
+              dieFaces: riskDieFaces(character.level),
+              dieLabel: riskDieLabel(character.level),
+            }
+          : {}),
       };
     });
   }
@@ -430,7 +449,19 @@ export class CharacterStateRepository {
     }
   }
 
-  private async loadMaxSlots(classSlug: string, level: number): Promise<Record<string, number>> {
+  private async loadMaxSlots(
+    classSlug: string,
+    level: number,
+    subclassSlug?: string | null,
+  ): Promise<Record<string, number>> {
+    if (subclassSlug) {
+      const subclassRow = await this.subclassSlots.findOne({
+        where: { subclassSlug, classLevel: level },
+      });
+      if (subclassRow?.spellSlots) {
+        return subclassRow.spellSlots;
+      }
+    }
     const row = await this.classSlots.findOne({
       where: { classSlug, classLevel: level },
     });

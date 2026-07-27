@@ -1,0 +1,1259 @@
+{
+  "summary": {
+    "class": 1,
+    "features": 16,
+    "maneuvers": 6,
+    "subclasses": 6,
+    "subclassFeatures": 30,
+    "feats": 2,
+    "spells": 8,
+    "weaponProperties": 9,
+    "masteryProperties": 8,
+    "firearmEras": 4,
+    "headings": 113,
+    "meta": {
+      "hitDie": "d8",
+      "primaryAbility": "Dexterity",
+      "primaryAbilitySlug": "destreza",
+      "subclassUnlockLevel": 3,
+      "subclassLabel": "Creed",
+      "skillChoiceCount": 2,
+      "skillSlugs": [
+        "acrobatics",
+        "animal-handling",
+        "athletics",
+        "deception",
+        "insight",
+        "intimidation",
+        "perception",
+        "persuasion",
+        "sleight-of-hand",
+        "stealth"
+      ],
+      "savingThrowSlugs": [
+        "destreza",
+        "carisma"
+      ],
+      "armorCategories": [
+        "light"
+      ],
+      "weaponProficiencies": [
+        "armas-simples",
+        "armas-marciais"
+      ],
+      "weaponNote": "Simple weapons and Martial Ranged weapons (mapped to simple+martial)",
+      "savingThrowsLabel": "Dexterity and Charisma",
+      "armor": "Light armor",
+      "weapons": "Simple weapons and Martial Ranged weapons",
+      "startingEquipment": "Choose A or B: (A) Leather Armor, 2 Daggers, Revolver, 50 Bullets, Explorer’s Pack, and 11 GP; or (B) 175 GP"
+    }
+  },
+  "edition": {
+    "slug": "valda-spire-2024-en",
+    "label": "Valda Spire 2024 EN",
+    "book": "Valda's Spire of Secrets: The Gunslinger Class",
+    "language": "en",
+    "notes": "Mage Hand Press — Gunslinger Class on D&D Beyond (2024 rules)"
+  },
+  "citation": {
+    "slug": "valda-spire-2024-en:gunslinger",
+    "chapter": 2,
+    "chapterTitle": "Valda's Spire of Secrets: The Gunslinger Class"
+  },
+  "class": {
+    "slug": "gunslinger",
+    "name": "Gunslinger",
+    "tagline": "## Guts and Gunpowder",
+    "summary": "Risk is in a Gunslinger’s blood. They are bold renegades, bucking tradition and forging a new path with dangerous and inelegant firearms. Gunslingers are infamous for surviving by their wits and relying on split-second timing and a considerable amount of luck to survive.",
+    "description": "Risk is in a Gunslinger’s blood. They are bold renegades, bucking tradition and forging a new path with dangerous and inelegant firearms. Gunslingers are infamous for surviving by their wits and relying on split-second timing and a considerable amount of luck to survive.\n\n## Guts and Gunpowder\n\nBlack powder isn’t for the faint of heart. Its thunderous applause is volatile and imprecise—a barely controlled explosion directed at an enemy. Only the truly fearless seek to master it. But Gunslingers have nerves of steel, hurling death from their guns in a roaring cacophony. Adapted for shootouts, gunslingers are mobile and daring, knowing that life or death hangs on snap decision-making and one’s own mettle.\n\n## Dangerous Outsiders\n\nA Gunslinger’s explosive lifestyle lends well to wandering and adventuring. Gunslingers often shoot first and ask questions later, an attitude which earns them few friends and bountiful enemies. In their travels, most gunslingers are secretive and take great lengths to go unnoticed, lest they be spotted by old foes with scores to settle.",
+    "sourceAnchor": "Gunslinger",
+    "coreTraits": "Primary Ability\nDexterity\n\nHit Point Die\nD8 per Gunslinger level\n\nSaving Throw Proficiencies\nDexterity and Charisma\n\nSkill Proficiencies\nChoose 2: Acrobatics, Animal Handling, Athletics, Deception, Insight, Intimidation, Perception, Persuasion, Sleight of Hand, and Stealth\n\nWeapon Proficiencies\nSimple weapons and Martial Ranged weapons\n\nArmor Training\nLight armor\n\nStarting Equipment\nChoose A or B: (A) Leather Armor, 2 Daggers, Revolver, 50 Bullets, Explorer’s Pack, and 11 GP; or (B) 175 GP\n\nMartin Kirby-Jackson"
+  },
+  "features": [
+    {
+      "level": 1,
+      "name": "Fighting Style",
+      "description": "You gain a Fighting Style feat of your choice. If you choose a feat, such as Great Weapon Fighting, that requires you to hold a Melee weapon in one or two hands, you can use that feat with Ranged weapons.\n\nWhenever you gain a Gunslinger level, you can replace the feat you chose with a different Fighting Style feat.",
+      "sourceAnchor": "Level1FightingStyle"
+    },
+    {
+      "level": 1,
+      "name": "Quick Draw",
+      "description": "You’re adept at drawing and firing before others have time to react, granting you the following benefits.\n\nInitiative. You have Advantage on Initiative rolls.\n\nDouble Draw. You can draw or stow two weapons that lack the Two-Handed property when you would normally be able to draw or stow only one.",
+      "sourceAnchor": "Level1QuickDraw"
+    },
+    {
+      "level": 1,
+      "name": "Weapon Mastery",
+      "description": "Your training with weapons allows you to use the mastery properties of two kinds of Simple or Martial Ranged weapons of your choice. Whenever you finish a Long Rest, you can practice weapon drills and change one of those weapon choices.\n\nWhen you reach certain Gunslinger levels, you gain the ability to use the mastery properties of more kinds of weapons, as shown in the Weapon Mastery column of the Gunslinger Features table.",
+      "sourceAnchor": "Level1WeaponMastery"
+    },
+    {
+      "level": 2,
+      "name": "Critical Shot",
+      "description": "Your attack rolls with Ranged weapons can score a Critical Hit on a roll of 19 or 20 on the d20.\n\nAt Gunslinger level 9, your attack rolls with Ranged weapons score a Critical Hit on a roll of 18–20. At Gunslinger level 17, they score a Critical Hit on a roll of 17–20.",
+      "sourceAnchor": "Level2CriticalShot"
+    },
+    {
+      "level": 2,
+      "name": "Risk",
+      "description": "You can perform incredible feats of daring fueled by special dice called Risk Dice.\n\nRisk Dice. You have four Risk Dice, which are d8s. A Risk Die is expended when you use it. You regain all expended Risk Dice when you finish a Short or Long Rest. Your Risk Die changes and more Risk Dice become available as shown on the Risk Dice column of the Gunslinger Features table.\n\nManeuvers. You can expend Risk Dice to perform maneuvers. Your maneuver options are detailed later in the class description.\n\nSaving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Dexterity modifier and Proficiency Bonus.\n\nLucas Ferreira CM",
+      "sourceAnchor": "Level2Risk"
+    },
+    {
+      "level": 3,
+      "name": "Gunslinger Subclass",
+      "description": "You gain a Gunslinger subclass of your choice. A subclass is a specialization that grants you features at certain Gunslinger levels. For the rest of your career, you gain each of your subclass’s features that are of your Gunslinger level or lower.",
+      "sourceAnchor": "Level3GunslingerSubclass"
+    },
+    {
+      "level": 4,
+      "name": "Ability Score Improvement",
+      "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify. You gain this feature again at Gunslinger levels 8, 12, and 16.",
+      "sourceAnchor": "Level4AbilityScoreImprovement"
+    },
+    {
+      "level": 5,
+      "name": "Extra Attack",
+      "description": "You can attack twice instead of once whenever you take the Attack action on your turn.",
+      "sourceAnchor": "Level5ExtraAttack"
+    },
+    {
+      "level": 5,
+      "name": "Gut Shot",
+      "description": "Whenever you score a Critical Hit against a Large or smaller creature with a ranged attack using a weapon, the projectile lodges itself in the target. For 1 minute or until the target replaces one of its attacks with dislodging the projectile, its Speed is halved and it has Disadvantage on attack rolls.",
+      "sourceAnchor": "Level5GutShot"
+    },
+    {
+      "level": 7,
+      "name": "Evasion",
+      "description": "When you’re subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail.\n\nYou don’t benefit from this feature if you have the Incapacitated condition.",
+      "sourceAnchor": "Level7Evasion"
+    },
+    {
+      "level": 11,
+      "name": "Overkill",
+      "description": "When you deal damage with a Ranged weapon that doesn’t add your ability modifier to the roll, you add your ability modifier nonetheless. If you already add your modifier to the damage roll, the target takes an extra 1d8 damage of the weapon’s type.\n\nNote that weapons that have the Firearm property don’t add your ability modifier to damage rolls.",
+      "sourceAnchor": "Level11Overkill"
+    },
+    {
+      "level": 13,
+      "name": "Cheat Death",
+      "description": "When you are reduced to 0 Hit Points and not killed outright, you can drop to 1 Hit Point instead, and you regain a number of Hit Points equal to your Gunslinger level.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest.",
+      "sourceAnchor": "Level13CheatDeath"
+    },
+    {
+      "level": 15,
+      "name": "Dire Gambit",
+      "description": "Whenever you roll Initiative or score a Critical Hit, you regain one expended Risk Die.",
+      "sourceAnchor": "Level15DireGambit"
+    },
+    {
+      "level": 18,
+      "name": "Deft Maneuver",
+      "description": "You gain a special additional Bonus Action that you can take once on each of your turns. You can take this special Bonus Action only to use a maneuver.",
+      "sourceAnchor": "Level18DeftManeuver"
+    },
+    {
+      "level": 19,
+      "name": "Epic Boon",
+      "description": "You gain an Epic Boon feat or another feat of your choice for which you qualify. Boon of Irresistible Offense is recommended.",
+      "sourceAnchor": "Level19EpicBoon"
+    },
+    {
+      "level": 20,
+      "name": "Headshot",
+      "description": "When you score a Critical Hit against a creature using a Ranged weapon, you can choose for it to be a Headshot. If the creature has less than 100 Hit Points, it dies. Otherwise, it takes an extra 10d10 damage of the weapon’s type.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending three Risk Dice (no action required).\n\nLucas Ferreira CM",
+      "sourceAnchor": "Level20Headshot"
+    }
+  ],
+  "maneuvers": [
+    {
+      "slug": "bite-the-bullet",
+      "name": "Bite the Bullet",
+      "description": "As a Bonus Action, you can expend one Risk Die to gain Temporary Hit Points equal to the number rolled on the die plus your Gunslinger level.",
+      "sourceAnchor": "BitetheBullet"
+    },
+    {
+      "slug": "blindfire",
+      "name": "Blindfire",
+      "description": "You can take a Bonus Action and expend one Risk Die to gain Blindsight with a range of 30 feet until the end of the current turn.",
+      "sourceAnchor": "Blindfire"
+    },
+    {
+      "slug": "dodge-roll",
+      "name": "Dodge Roll",
+      "description": "You can expend one Risk Die as a Bonus Action to move up to 15 feet and reload any Ranged weapon you are holding. This movement doesn’t provoke Opportunity Attacks and is unaffected by Difficult Terrain.",
+      "sourceAnchor": "DodgeRoll"
+    },
+    {
+      "slug": "grazing-shot",
+      "name": "Grazing Shot",
+      "description": "When you miss with a ranged attack roll using a weapon, you can expend one Risk Die (no action required) to deal damage to that creature equal to a roll of the die plus your Dexterity modifier (minimum of 1). This damage is the same type dealt by the weapon, and the damage can be increased only by increasing the ability modifier. You can only use this maneuver once per turn.",
+      "sourceAnchor": "GrazingShot"
+    },
+    {
+      "slug": "maverick-spirit",
+      "name": "Maverick Spirit",
+      "description": "When you fail an Intelligence, Wisdom, or Charisma ability check or saving throw, you can expend one Risk Die to add it to the roll, potentially turning it into a success. You can only use this maneuver once per turn.",
+      "sourceAnchor": "MaverickSpirit"
+    },
+    {
+      "slug": "skin-of-your-teeth",
+      "name": "Skin of Your Teeth",
+      "description": "When a creature you can see hits you with an attack roll, you can take a Reaction and expend one Risk Die to dodge out of harm’s way. Roll the die and add the number rolled to your AC against this attack, potentially causing it to miss.",
+      "sourceAnchor": "SkinofYourTeeth"
+    }
+  ],
+  "subclasses": [
+    {
+      "slug": "deadeye",
+      "classSlug": "gunslinger",
+      "name": "Deadeye",
+      "tagline": "Shoot with Bullseye Precision",
+      "summary": "A well-placed bullet is more powerful than a sword, arrow, or spell. Indeed, you believe that every violent conflict should sound like a single loud crack followed by a long silence. Such shots demand perfection, even at range, for when they are done right, they are as deadly for",
+      "description": "Shoot with Bullseye Precision\n\nA well-placed bullet is more powerful than a sword, arrow, or spell. Indeed, you believe that every violent conflict should sound like a single loud crack followed by a long silence. Such shots demand perfection, even at range, for when they are done right, they are as deadly for the target as they are stupendous for the audience.\n\nLucas Ferreira CM",
+      "sourceAnchor": "Deadeye",
+      "features": [
+        {
+          "level": 3,
+          "name": "Eagle Eye [Maneuver]",
+          "description": "Once per turn when you miss with a ranged attack roll, you can expend one Risk Die and add it to the attack roll, potentially causing the attack to hit.",
+          "sourceAnchor": "Level3EagleEyeManeuver"
+        },
+        {
+          "level": 3,
+          "name": "Sharpshooter’s Stance",
+          "description": "You have trained to fire from a stable Prone position, granting the following conditions.\n\nFire While Prone. You don’t have Disadvantage on ranged attack rolls as a result of the Prone condition.\n\nQuick Stand. When you have the Prone condition, you can right yourself and thereby end the condition with only 5 feet of movement.",
+          "sourceAnchor": "Level3SharpshootersStance"
+        },
+        {
+          "level": 6,
+          "name": "Concealed Position",
+          "description": "You excel at firing from concealment, granting you the following benefits.\n\nCamouflage. You can take the Hide action even if you aren’t Heavily Obscured or behind Three-Quarters Cover or Total Cover, as long as you have the Prone condition. The Invisible condition of this Hide action ends if you don’t have the Prone condition.\n\nSniper’s Nest. If you make an attack roll while hidden and the roll misses, making the attack roll doesn’t reveal your location.",
+          "sourceAnchor": "Level6ConcealedPosition"
+        },
+        {
+          "level": 10,
+          "name": "Reposition",
+          "description": "Whenever a creature misses you with an attack roll, you can take a Reaction to end the Prone condition on yourself and move up to half your Speed.",
+          "sourceAnchor": "Level10Reposition"
+        },
+        {
+          "level": 14,
+          "name": "Focused Shot",
+          "description": "When you take the Attack action, you can choose to make only one ranged attack roll using a weapon to make a Focused Shot. You have Advantage on this attack roll and, on a hit, score a Critical Hit.",
+          "sourceAnchor": "Level14FocusedShot"
+        }
+      ]
+    },
+    {
+      "slug": "high-roller",
+      "classSlug": "gunslinger",
+      "name": "High Roller",
+      "tagline": "Gamble with Life and Death",
+      "summary": "Fortune is a fickle thing—unless you’re a High Roller. These Gunslingers are master card sharps and dice throwers that mix their love of risk with their talent for gunplay. High Rollers push their luck until it runs out, then push harder. Why settle for a win when you could bet i",
+      "description": "Gamble with Life and Death\n\nFortune is a fickle thing—unless you’re a High Roller. These Gunslingers are master card sharps and dice throwers that mix their love of risk with their talent for gunplay. High Rollers push their luck until it runs out, then push harder. Why settle for a win when you could bet it all and win big?\n\nNoa Kriukova",
+      "sourceAnchor": "HighRoller",
+      "features": [
+        {
+          "level": 3,
+          "name": "Poker Face",
+          "description": "You gain proficiency with all Gaming Sets and in one of the following skills of your choice: Deception, Insight, or Perception.",
+          "sourceAnchor": "Level3PokerFace"
+        },
+        {
+          "level": 3,
+          "name": "Liar’s Dice [Maneuver]",
+          "description": "When you make a damage roll with a Ranged weapon, you can expend one Risk Die as a Bonus Action and declare it to be a hidden roll. Roll the damage in secret and declare any total you wish. The GM has the option to call your bluff, in which case you reveal the damage dice you rolled. This has different consequences based on whether or not you lied.\n\nThe GM Calls Your Bluff; You Lied. The damage you deal is halved.\n\nThe GM Calls Your Bluff; You Told the Truth. The damage you deal is doubled.\n\nThe GM Doesn’t Call Your Bluff. Use the total damage you declared, even if you rolled a different total.",
+          "sourceAnchor": "Level3LiarsDiceManeuver"
+        },
+        {
+          "level": 6,
+          "name": "Risky Business",
+          "description": "Once per turn when you make an attack roll against an enemy and the roll doesn’t have Disadvantage, you can choose to make the roll with Disadvantage. When you do, you regain one expended Risk Die.",
+          "sourceAnchor": "Level6RiskyBusiness"
+        },
+        {
+          "level": 10,
+          "name": "Risk Taker",
+          "description": "You can use your Maverick Spirit and Skin of Your Teeth maneuvers without expending a Risk Die. When you do so, roll a d6 instead of a Risk Die.",
+          "sourceAnchor": "Level10RiskTaker"
+        },
+        {
+          "level": 14,
+          "name": "Double or Nothing",
+          "description": "When you score a Critical Hit using a Ranged weapon, you can gamble for a higher result. Roll a d20. If the roll is a 10 or higher, roll all of the attack’s damage dice four times and add them together, instead of only two times as normal for a Critical Hit. If you roll a 9 or lower on the d20, the Critical Hit becomes a normal hit.\n\nAgustin Marceillac",
+          "sourceAnchor": "Level14DoubleorNothing"
+        }
+      ]
+    },
+    {
+      "slug": "secret-agent",
+      "classSlug": "gunslinger",
+      "name": "Secret Agent",
+      "tagline": "Engage in Espionage and Assassination",
+      "summary": "Knowledge is power. The best way to defeat your enemies is by stealing what they know and replacing it with misinformation. To that end, you have been trained in the ways of covert warfare, giving you a broad range of abilities to complement your fearsome gunnery skills.",
+      "description": "Engage in Espionage and Assassination\n\nKnowledge is power. The best way to defeat your enemies is by stealing what they know and replacing it with misinformation. To that end, you have been trained in the ways of covert warfare, giving you a broad range of abilities to complement your fearsome gunnery skills.",
+      "sourceAnchor": "SecretAgent",
+      "features": [
+        {
+          "level": 3,
+          "name": "Operative Training",
+          "description": "Your covert training grants you the following benefits:\n\nConcealed Shot. You learn the Concealed Shot cantrip. Intelligence, Wisdom, or Charisma is your spellcasting ability for this cantrip (choose when you select this subclass).\n\nOperative Tools. You gain a Disguise Kit and Thieves’ Tools, and you have proficiency with them.\n\nSkill Proficiencies. You gain proficiency in two of these skills of your choice: Deception, Investigation, Persuasion, Sleight of Hand, or Stealth.\n\nLucas Ferreira CM",
+          "sourceAnchor": "Level3OperativeTraining"
+        },
+        {
+          "level": 3,
+          "name": "Parting Shot [Maneuver]",
+          "description": "When you take the Dash, Disengage, or Dodge action on your turn, you can expend one Risk Die to make a ranged attack using a weapon as a Bonus Action. Add the Risk Die to the damage roll on a hit.",
+          "sourceAnchor": "Level3PartingShotManeuver"
+        },
+        {
+          "level": 6,
+          "name": "Fieldcraft",
+          "description": "Your experience in the field grants you the following benefits.\n\nQuick Change. Using a Disguise Kit, you can create a Costume and don it as a Bonus Action.\n\nSlick Talker. Whenever you make a Charisma (Deception) or Charisma (Persuasion) check, you can treat a d20 roll of 9 or lower as a 10.",
+          "sourceAnchor": "Level6Fieldcraft"
+        },
+        {
+          "level": 10,
+          "name": "Exit Strategy",
+          "description": "When you take damage, you can take a Reaction to evade further harm. You have the Invisible condition until the start of your next turn, and you can immediately move up to 10 feet.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending one Risk Die (no action required).",
+          "sourceAnchor": "Level10ExitStrategy"
+        },
+        {
+          "level": 14,
+          "name": "License to Kill",
+          "description": "Whenever you deal damage with a Ranged weapon, you can expend either one or two Risk Dice and add them to the damage roll. If you roll the highest number on a Risk Die, you can roll the die again and add it to the damage without expending it, rolling again if it is the highest number again, and so on. The maximum number of Risk Dice you can add to the damage equals your Proficiency Bonus.",
+          "sourceAnchor": "Level14LicensetoKill"
+        }
+      ]
+    },
+    {
+      "slug": "spellslinger",
+      "classSlug": "gunslinger",
+      "name": "Spellslinger",
+      "tagline": "Complement Your Gunslinging with Arcana",
+      "summary": "Magic and guns aren’t so different—arcane power is like gunpowder, a spell is like a bullet, and you are like a gun, directing your spells with precision at unfortunate targets. Spellslingers mix the disciplines of gunplay and spellcasting, sometimes loading arcane charges with y",
+      "description": "Complement Your Gunslinging with Arcana\n\nMagic and guns aren’t so different—arcane power is like gunpowder, a spell is like a bullet, and you are like a gun, directing your spells with precision at unfortunate targets. Spellslingers mix the disciplines of gunplay and spellcasting, sometimes loading arcane charges with your shots and firing bullets enhanced with lighting, frost, or flame.\n\nLucas Ferreira CM",
+      "sourceAnchor": "Spellslinger",
+      "features": [
+        {
+          "level": 3,
+          "name": "Spellcasting",
+          "description": "You complement your bullets with the ability to cast spells.\n\nCantrips. You know two cantrips of your choice from the Wizard spell list (see that class’s section for its list). Fire Bolt and Message are recommended. Whenever you gain a Gunslinger level, you can replace one of these cantrips with another cantrip of your choice from the Wizard spell list.\n\nWhen you reach Gunslinger level 10, you learn another Wizard cantrip of your choice.\n\nSpell Slots. The Spellslinger Spellcasting table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.\n\nPrepared Spells of Level 1+. You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose three level 1 spells from the Wizard spell list. Chromatic Orb, Jump, and Shield are recommended.\n\nThe number of spells on your list increases as you gain Gunslinger levels, as shown in the Prepared Spells column of the Spellslinger Spellcasting table. Whenever that number increases, choose additional spells from the Wizard spell list until the number of spells on your list matches the number on the table. The chosen spells must be of a level for which you have spell slots. For example, if you’re a level 7 Gunslinger, your list of prepared spells can include five Wizard spells of levels 1 and 2 in any combination.\n\nChanging your Prepared Spells. Whenever you gain a Gunslinger level, you can replace one spell on your list with another Wizard spell for which you have spell slots.\n\nSpellcasting Ability. Intelligence is your spellcasting ability for your Wizard spells.\n\nSpellcasting Focus. You can use an Arcane Focus or a Ranged weapon as a Spellcasting Focus for your Wizard spells.\n\n    Spellslinger Spellcasting\n\n        —Spell Slots per Spell Level—\n\nGunslinger Level\nPrepared Spells\n1\n2\n3\n4\n\n3\n3\n2\n—\n—\n—\n\n4\n4\n3\n—\n—\n—\n\n5\n4\n3\n—\n—\n—\n\n6\n4\n3\n—\n—\n—\n\n7\n5\n4\n2\n—\n—\n\n8\n6\n4\n2\n—\n—\n\n9\n6\n4\n2\n—\n—\n\n10\n7\n4\n3\n—\n—\n\n11\n8\n4\n3\n—\n—\n\n12\n8\n4\n3\n—\n—\n\n13\n9\n4\n3\n2\n—\n\n14\n10\n4\n3\n2\n—\n\n15\n10\n4\n3\n2\n—\n\n16\n11\n4\n3\n3\n—\n\n17\n11\n4\n3\n3\n—\n\n18\n11\n4\n3\n3\n—\n\n19\n12\n4\n3\n3\n1\n\n20\n13\n4\n3\n3\n1",
+          "sourceAnchor": "Level3Spellcasting"
+        },
+        {
+          "level": 3,
+          "name": "Bang, You’re Dead!",
+          "description": "You can use magic in place of guns.\n\nFinger Guns. You learn the Finger Guns cantrip. See the New Spells section for details.\n\nArcane Shot. When you hit a target with a Finger Guns attack, you can expend one Risk Die as a Bonus Action and add it to the damage roll.",
+          "sourceAnchor": "Level3BangYoureDead"
+        },
+        {
+          "level": 6,
+          "name": "Spellshot",
+          "description": "When you take the Attack action on your turn, you can replace one of the attacks with a casting of one of your Wizard cantrips that has a casting time of an action.",
+          "sourceAnchor": "Level6Spellshot"
+        },
+        {
+          "level": 10,
+          "name": "Counter-Mage",
+          "description": "Your experience in combating spellcasters grants you the following benefits.\n\nAbjuration-Breaker. Whenever you make a ranged attack roll, you temporarily disrupt protective magic affecting the target. For the duration of the attack, the effects of spells targeting the creature, such as Mage Armor, as well as the properties and powers of magic items worn or carried by the creature, are suppressed and don’t function. The target of the attack can’t take a Reaction to cast spells such as Shield in response to the attack or damage.\n\nAntimagic Shot. When you score a Critical Hit and the target is affected by your Gut Shot feature, it also impedes the target’s ability to cast spells. While the projectile is lodged in the target, it can’t cast spells or take the Magic action. Additionally, the target has Disadvantage on Constitution saving throws it makes to maintain Concentration.\n\nInured to Magic. When you fail a saving throw against a spell or magical effect, you can take a Reaction to roll 1d6 and add it to the roll, potentially turning the failure into a success.",
+          "sourceAnchor": "Level10CounterMage"
+        },
+        {
+          "level": 14,
+          "name": "Magic Bullet [Maneuver]",
+          "description": "When you make a spell attack roll, you can expend one Risk Die as a Bonus Action to substitute the spell attack with a ranged attack using a weapon. Add the Risk Die to the attack roll. On a hit, the attack deals the weapon’s normal damage, in addition to the effects of the spell attack roll.",
+          "sourceAnchor": "Level14MagicBulletManeuver"
+        }
+      ]
+    },
+    {
+      "slug": "trick-shot",
+      "classSlug": "gunslinger",
+      "name": "Trick Shot",
+      "tagline": "Ricochet Bullets from Every Angle",
+      "summary": "Noa Kriukova",
+      "description": "Ricochet Bullets from Every Angle\n\nNoa Kriukova\n\nAccuracy means different things to different people. For you, true accuracy isn’t necessarily in hitting a target on the first shot, but might include hitting the mark after the bullet bounces around a dozen times. Your attacks are just as dangerous if they miss, or even after hitting their mark, as others’ are while they’re still in the air.",
+      "sourceAnchor": "TrickShot",
+      "features": [
+        {
+          "level": 3,
+          "name": "Creative Trajectory",
+          "description": "You can make your projectiles travel in unexpected ways. Your ranged attacks with weapons ignore Half Cover and Three-Quarters Cover.",
+          "sourceAnchor": "Level3CreativeTrajectory"
+        },
+        {
+          "level": 3,
+          "name": "Ricochet [Maneuver]",
+          "description": "When you miss with a ranged attack using a weapon, you can take a Bonus Action and expend one Risk Die to reroll the attack and add the Risk Die to the roll. You must use the new roll.",
+          "sourceAnchor": "Level3RicochetManeuver"
+        },
+        {
+          "level": 6,
+          "name": "Fancy Gunplay",
+          "description": "Your flashy weapon tricks grant you the following benefits.\n\nGun Spinning. Once per turn when you make a Charisma (Performance) check or a Dexterity (Sleight of Hand) check using one of your Ranged weapons, you can roll a Risk Die and add it to the ability check without expending it.\n\nSpeed Loader. On your turn, you can reload a weapon with the Reload property without taking an action or Bonus Action.",
+          "sourceAnchor": "Level6FancyGunplay"
+        },
+        {
+          "level": 10,
+          "name": "Deft Deflection [Maneuver]",
+          "description": "You can shoot projectiles out of the air. When an ally within 30 feet of you is hit by an attack, you can take a Reaction and expend one Risk Die to grant that ally the benefit of the Skin of Your Teeth maneuver against that attack. You must be holding a Ranged weapon to use this maneuver.",
+          "sourceAnchor": "Level10DeftDeflectionManeuver"
+        },
+        {
+          "level": 14,
+          "name": "Pinball Shot",
+          "description": "Once on each of your turns when you hit a creature with a ranged attack using a weapon, you can deflect the projectile at additional targets. Choose a different target within 30 feet of the first and make an attack roll against it. On a hit, you can repeat this attack against a new target within 30 feet until you miss or make a total of five attacks. You can’t target the same creature with more than one attack each time you use this feature.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending two Risk Dice (no action required).",
+          "sourceAnchor": "Level14PinballShot"
+        }
+      ]
+    },
+    {
+      "slug": "white-hat",
+      "classSlug": "gunslinger",
+      "name": "White Hat",
+      "tagline": "Protect Your Allies and Uphold the Law",
+      "summary": "Some Gunslingers live by a code and expect others to do the same. These Gunslingers, known as White Hats, sometimes serve as officers of the law but never hesitate to do what’s right when the law says otherwise. Despite their affinity for deadly weapons, White Hats prefer to keep",
+      "description": "Protect Your Allies and Uphold the Law\n\nSome Gunslingers live by a code and expect others to do the same. These Gunslingers, known as White Hats, sometimes serve as officers of the law but never hesitate to do what’s right when the law says otherwise. Despite their affinity for deadly weapons, White Hats prefer to keep their friends safe and subdue their enemies nonviolently—a preference their enemies don’t often oblige.",
+      "sourceAnchor": "WhiteHat",
+      "features": [
+        {
+          "level": 3,
+          "name": "Lay Down the Law [Maneuver]",
+          "description": "You can take a Bonus Action and expend one Risk Die to keep an eye out for dangers that threaten your companions. Choose an ally that you can see within 60 feet of you. That ally gains Temporary Hit Points equal to the number rolled on the Risk Die. Until the start of your next turn, if the ally is hit by an attack, you can take a Reaction to make a ranged attack using a weapon against the attacker.",
+          "sourceAnchor": "Level3LayDowntheLawManeuver"
+        },
+        {
+          "level": 3,
+          "name": "Steely-Eyed Aura",
+          "description": "An aura of stoic confidence radiates from you in a 10-foot Emanantion. You and allies within the Emanantion have Advantage on saving throws made to avoid or end the Frightened condition. The aura is inactive while you have the Incapacitated condition.",
+          "sourceAnchor": "Level3SteelyEyedAura"
+        },
+        {
+          "level": 6,
+          "name": "Reach for the Skies",
+          "description": "When you score a Critical Hit against a creature, you call for the target to surrender instead of lodging a projectile in it. The target must succeed on a Wisdom saving throw against your Maneuver save DC or have the Frightened and Incapacitated conditions for 1 minute. These conditions end early if the creature takes any damage, if you have the Incapacitated condition, or if you die. The creature can repeat the Wisdom saving throw at the end of each of its turns, ending the conditions on itself on a success.",
+          "sourceAnchor": "Level6ReachfortheSkies"
+        },
+        {
+          "level": 10,
+          "name": "Long Arm of the Law",
+          "description": "Once per turn when you hit a Large or smaller creature with a ranged attack using a weapon, you can hobble the target. The creature can’t move on its next turn unless it first takes the Disengage action.",
+          "sourceAnchor": "Level10LongArmoftheLaw"
+        },
+        {
+          "level": 14,
+          "name": "Gold Star Hero",
+          "description": "Though gunslinging heroism, you gain the following benefits.\n\nImproved Aura. The range of your Steely-Eyed Aura feature increases to 30 feet.\n\nIron-Clad Law. When you use your Lay Down the Law maneuver, the ally has Resistance to Bludgeoning, Piercing, and Slashing damage until the start of your next turn.\n\nStunned Surrender. When a creature fails its saving throw against your Reach for the Skies feature, it has the Stunned condition instead of the Incapacitated condition.\n\nLucas Ferreira CM",
+          "sourceAnchor": "Level14GoldStarHero"
+        }
+      ]
+    }
+  ],
+  "feats": [
+    {
+      "slug": "marksman-s-luck",
+      "name": "Marksman’s Luck",
+      "description": "General Feat (Prerequisite: Level 4+, Dexterity 13+)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Dexterity score by 1, to a maximum of 20.\n\nFlip Die. Once per turn, when you roll for damage with a Ranged weapon, you can flip one of the damage dice over and use the number on the bottom. You can’t use this ability on d4s. Note that for a balanced die, the top and bottom numbers add up to one more than the die’s largest number.\n\nEnhanced Critical. When you score a Critical Hit with a Ranged weapon, the target’s Speed is 0 until the end of its next turn.",
+      "sourceAnchor": "MarksmansLuck"
+    },
+    {
+      "slug": "gun-mage-adept",
+      "name": "Gun-Mage Adept",
+      "description": "General Feat (Prerequisites: Level 4+, Spellcasting or Pact Magic Feature)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Dexterity by 1, to a maximum of 20.\n\nRanged Weapon Proficiency. You gain proficiency with Ranged Martial weapons.\n\nCantrip. You learn the Finger Guns cantrip.\n\nExpanded Spell List. The following spells are added to your spell list: Antiballistics Field, Ballistic Smite, Conjure Cannonball, Conjure Cover, Jam Weapon, Jethro’s Instant Reload, and Perforating Shot.\n\nSpells Prepared. Choose a number of spells equal to your Proficiency Bonus from among those in the Expanded Spell List benefit. You always have these spells prepared. Whenever you gain a new level, you can replace one of these spells with a different spell from the Expanded Spell List.",
+      "sourceAnchor": "GunMageAdept"
+    }
+  ],
+  "spells": [
+    {
+      "slug": "antiballistics-field",
+      "name": "Antiballistics Field",
+      "description": "Level 6 Abjuration (Cleric, Wizard)\n\nCasting Time: Action\n\nRange: Self\n\nComponents: V, S, M (a pinch of wet gunpowder)\n\nDuration: Concentration, up to 10 minutes\n\nA 40-foot Emanation extends from you, disrupting projectiles and causing Ranged weapons to malfunction. Within the Emanation, whenever a Ranged weapon is used for an attack, the weapon immediately malfunctions and the attack is lost. A malfunctioning weapon can’t be used to make an attack until a creature takes the Utilize action to fix the weapon malfunction. Ranged attacks using weapons whose projectiles pass through the Emanation have Disadvantage and deal only half damage on a hit.",
+      "sourceAnchor": "AntiballisticsField"
+    },
+    {
+      "slug": "ballistic-smite",
+      "name": "Ballistic Smite",
+      "description": "Level 1 Evocation (Paladin)\n\nMariana Livraes\n\nCasting Time: Bonus Action, which you take immediately after hitting a creature with a Ranged weapon\n\nRange: Self\n\nComponents: V\n\nDuration: Instantaneous\n\nChoose Acid, Cold, Fire, Lightning, Poison, or Thunder damage. The target hit by the attack takes an extra 2d6 damage of the chosen type. The triggering attack can deal the chosen damage type or its normal damage type (your choice).\n\nUsing a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 1.",
+      "sourceAnchor": "BallisticSmite"
+    },
+    {
+      "slug": "concealed-shot",
+      "name": "Concealed Shot",
+      "description": "Illusion Cantrip (Bard, Druid, Sorcerer, Warlock, Wizard)\n\nCasting Time: Action\n\nRange: Touch\n\nComponents: S, M (a Ranged weapon)\n\nDuration: 1 minute\n\nA Ranged weapon you touch is made supernaturally subtle. For the duration, when you make a ranged attack using the weapon, the weapon or ammunition you’re using becomes invisible while in flight and the weapon becomes silent. If the weapon produces smoke or light, the spell suppresses these effects. The weapon or projectile you’re using becomes visible again after the attack hits or misses. If you are hidden and the target is 80 feet or further from you, the attack doesn’t reveal your location.",
+      "sourceAnchor": "ConcealedShot"
+    },
+    {
+      "slug": "conjure-cannonball",
+      "name": "Conjure Cannonball",
+      "description": "Level 3 Conjuration (Sorcerer, Wizard)\n\nCasting Time: Action\n\nRange: 600 feet\n\nComponents: V, S, M (a small replica cannon)\n\nDuration: Instantaneous\n\nYou summon a cannonball, mid-flight and at full velocity, which explodes on impact. Make a ranged spell attack roll against a target you can see within range. On a hit, the target takes 5d10 Bludgeoning damage and an explosion extends from it in a 5-foot Emanation. Each creature other than the target within the Emanation makes a Dexterity saving throw, taking half as much damage as the target on a failed save.\n\nUsing a Higher-Level Spell Slot. The damage increases by 1d10 for each slot level above 3.",
+      "sourceAnchor": "ConjureCannonball"
+    },
+    {
+      "slug": "conjure-cover",
+      "name": "Conjure Cover",
+      "description": "Level 1 Conjuration (Druid, Paladin, Sorcerer, Wizard)\n\nCasting Time: Bonus Action\n\nRange: 10 feet\n\nComponents: V, S, M (a duck figurine)\n\nDuration: Concentration, up to 1 hour\n\nYou conjure a low cobblestone wall along the ground at a point you can see within range. The wall is 18 inches thick and is composed of three 5-foot-long, 3-foot-high segments. Each segment must be contiguous with at least one other segment.\n\nA Medium creature that hunkers behind the wall has Half Cover, and a Small creature that hunkers behind it has Three-Quarters Cover. The wall can be leapt over without spending any additional movement.\n\nEach segment has AC 10 and 30 hit points. Reducing a segment of the wall to 0 hit points causes it to crumble, destroying it. The wall disappears when all the segments are destroyed or the spell ends.",
+      "sourceAnchor": "ConjureCover"
+    },
+    {
+      "slug": "jam-weapon",
+      "name": "Jam Weapon",
+      "description": "Level 2 Transmutation (Bard, Wizard)\n\nCasting Time: Reaction, which you take when a creature you can see within range makes an attack using a Ranged weapon\n\nRange: 60 feet\n\nComponents: V, S, M (a pinch of wet gunpowder)\n\nDuration: Instantaneous\n\nThe weapon you target suffers a malfunction and the attack fails. A malfunctioning weapon can’t be used to make an attack until a creature takes the Utilize action to fix the weapon malfunction.",
+      "sourceAnchor": "JamWeapon"
+    },
+    {
+      "slug": "jethro-s-instant-reload",
+      "name": "Jethro’s Instant Reload",
+      "description": "Level 2 Conjuration (Bard, Ranger, Wizard)\n\nCasting Time: Action\n\nRange: Touch\n\nComponents: V, S, M (a spent bullet casing)\n\nDuration: 8 hours\n\nOne Ranged weapon you touch becomes enchanted to reload itself automatically. If the weapon has the Loading or Reload property, you ignore the property for the duration. When the weapon’s ammunition is depleted, ammunition you are carrying teleports into the weapon.",
+      "sourceAnchor": "JethrosInstantReload"
+    },
+    {
+      "slug": "perforating-shot",
+      "name": "Perforating Shot",
+      "description": "Level 1 Evocation (Paladin, Ranger)\n\nCasting Time: Bonus Action, which you take immediately after hitting or missing with a ranged attack using a weapon\n\nRange: Self\n\nComponents: V\n\nDuration: Instantaneous\n\nAs your attack hits or misses the target, the weapon or ammunition transforms into a 5-foot-wide Line of magical energy that extends out to the weapon’s normal range. The Line includes the attack’s original target. Each creature within the Line makes a Dexterity saving throw, taking Force damage equal to the weapon’s normal damage on a failed save or half as much damage on a successful one.\n\nUsing a Higher-Level Spell Slot. The weapon’s damage increases by 1d8 for each slot level above 1.",
+      "sourceAnchor": "PerforatingShot"
+    }
+  ],
+  "firearmEras": [
+    {
+      "name": "Firearm Eras",
+      "description": "Firearms have evolved dramatically throughout history, and will continue to evolve into the far future. Therefore, in addition to being organized into Simple and Martial weapons, the following firearms are organized into eras, the periods of time in which they might be encountered. Some firearms might appear in multiple eras, especially if the story demands an unusual weapon, but many are best suited to campaign settings that echo their level of technology.\n\nThe GM determines which era or eras of weapons are in the campaign.",
+      "sourceAnchor": "FirearmEras"
+    },
+    {
+      "name": "Renaissance Firearms",
+      "description": "Renaissance-era firearms, such as Pistols and Muskets, are weapons that have taken the first steps away from cannons and into portable rifles, making them the progenitors of all modern firearms. Weapons from this era use musket balls and loose black powder, and are therefore slow to reload. Importantly, these weapons exist comfortably in many fantasy settings alongside bows, swords, and axes, especially where pirates are at play.\n\n    Renaissance Firearms\n\nName\nDamage\nProperties\nMastery\nWeight\nCost\n\nMartial Ranged Weapons\n\nBlunderbuss\n1d12 Piercing\nAmmunition (Range 20/60; Shot), Heavy, Loading, Two-Handed\nScatter\n15 lb.\n750 GP\n\nMusket\n1d12 Piercing\nAmmunition (Range 40/120; Bullet), Loading, Two-Handed\nSlow\n10 lb.\n500 GP\n\nPistol\n1d10 Piercing\nAmmunition (Range 30/90; Bullet), Loading\nVex\n3 lb.\n250 GP",
+      "sourceAnchor": "RenaissanceFirearms"
+    },
+    {
+      "name": "Industrial Age Firearms",
+      "description": "Industrial Age firearms, such as Revolvers and Double-Barrel Shotguns, stem from advancements in machinery and assembly lines, granting them more interchangeable parts and cartridge-based bullets. These guns lack the assembly-line consistency of modern firearms, but laid down the bedrock for designs that haven’t changed much since: a classic six-shot Revolver is as timeless as it is effective. While the heyday of Industrial Age firearms was in the Wild West, their simple and reliable construction means they are still commonplace in the modern day.\n\n    Industrial Age Firearms\n\nName\nDamage\nProperties\nMastery\nWeight\nCost\n\nSimple Ranged Weapons\n\nDouble-Barrel Shotgun\n2d6 Piercing\nAmmunition (Range 20/60; Shell), Firearm, Recoil, Reload (2), Two-Handed\nScatter\n8 lb.\n175 GP\n\nHunting Rifle\n2d6 Piercing\nAmmunition (Range 80/320; Bullet), Firearm, Reload (4), Two-Handed\nSighted\n8 lb.\n150 GP\n\nParlor Gun\n2d4 Piercing\nAmmunition (Range 30/120; Bullet), Firearm, Light, Reload (2)\nVex\n1 lb.\n75 GP\n\nRevolver\n2d6 Piercing\nAmmunition (Range 30/120; Bullet), Firearm, Recoil, Reload (6)\nSlow\n3 lb.\n125 GP\n\nMartial Ranged Weapons\n\nCannon\n2d8 Fire\nAmmunition (Range 100/400; Cannonball), Firearm, Heavy, Loading, Two-Handed\nExplode\n225 lb.\n1,500 GP\n\nGatling Gun\n2d6 Piercing\nAmmunition (Range 60/240; Bullet), Firearm, Heavy, Reload (40), Two-Handed\nAutomatic\n125 lb.\n750 GP\n\nMagnum\n2d8 Piercing\nAmmunition (Range 30/120, Bullet), Firearm, Heavy, Recoil, Reload (6)\nSlow\n6 lb.\n600 GP",
+      "sourceAnchor": "IndustrialAgeFirearms"
+    },
+    {
+      "name": "Modern Firearms",
+      "description": "Modern firearms have embraced automatic fire, ammunition magazines, and lighter caliber bullets (which can travel at much higher speeds). For these guns, form begets function: weapons are designed for a specific role, such as Sniper Rifles for long range and Pump Shotguns for close quarters. Moreover, weapons that enjoyed success in the Wild West, such as the Double-Barrel Shotgun, can still be found in use today.\n\n    Modern Firearms\n\nName\nDamage\nProperties\nMastery\nWeight\nCost\n\nSimple Ranged Weapons\n\nFlare Gun\n2d6 Fire\nAmmunition (Range 30/120; Flare), Firearm, Loading\nSlow\n1 lb.\n100 GP\n\nHandgun\n2d4 Piercing\nAmmunition (Range 30/120; Bullet), Firearm, Light, Reload (10)\nVex\n3 lb.\n125 GP\n\nMartial Ranged Weapons\n\nAssault Rifle\n2d6 Piercing\nAmmunition (Range 80/320; Bullet), Firearm, Reload (20), Two-Handed\nAutomatic\n7 lb.\n300 GP\n\nPump Shotgun\n2d8 Piercing\nAmmunition (Range 20/60, Shell), Firearm, Heavy, Recoil, Reload (8), Two-Handed\nScatter\n7 lb.\n550 GP\n\nSniper Rifle\n2d8 Piercing\nAmmunition (Range 100/400, Bullet), Firearm, Heavy, Loading, Two-Handed\nSighted\n8 lb.\n450 GP\n\nSubmachine Gun\n2d4 Piercing\nAmmunition (20/60; Bullet), Firearm, Light, Reload (16)\nAutomatic\n6 lb.\n250 GP\n\nLucas Ferreira CM",
+      "sourceAnchor": "ModernFirearms"
+    }
+  ],
+  "weaponProperties": [
+    {
+      "slug": "ammunition",
+      "name": "Ammunition",
+      "description": "You can use a weapon that has the Ammunition property to make a ranged attack only if you have ammunition to fire from it. The type of ammunition required is specified with the weapon’s range. Each attack expends one piece of ammunition. Drawing the ammunition is part of the attack (you need a free hand to load a one-handed weapon). After a fight, you can spend 1 minute to recover half the ammunition (round down) you used in the fight; the rest is lost.",
+      "sourceAnchor": "Ammunition"
+    },
+    {
+      "slug": "finesse",
+      "name": "Finesse",
+      "description": "When making an attack with a Finesse weapon, use your choice of your Strength or Dexterity modifier for the attack and damage rolls. You must use the same modifier for both rolls.",
+      "sourceAnchor": "Finesse"
+    },
+    {
+      "slug": "firearm",
+      "name": "Firearm",
+      "description": "You don’t add your ability modifier to the weapon’s damage, unless otherwise stated. Firearm ammunition is destroyed upon use.",
+      "sourceAnchor": "Firearm"
+    },
+    {
+      "slug": "heavy",
+      "name": "Heavy",
+      "description": "You have Disadvantage on attack rolls with a Heavy weapon if it’s a Melee weapon and your Strength score isn’t at least 13 or if it’s a Ranged weapon and your Dexterity score isn’t at least 13.",
+      "sourceAnchor": "Heavy"
+    },
+    {
+      "slug": "light",
+      "name": "Light",
+      "description": "When you take the Attack action on your turn and attack with a Light weapon, you can make one extra attack as a Bonus Action later on the same turn. That extra attack must be made with a different Light weapon, and you don’t add your ability modifier to the extra attack’s damage unless that modifier is negative.",
+      "sourceAnchor": "Light"
+    },
+    {
+      "slug": "range",
+      "name": "Range",
+      "description": "A Range weapon has a range in parentheses after the Ammunition or Thrown property. The range lists two numbers. The first is the weapon’s normal range in feet, and the second is the weapon’s long range. When attacking a target beyond normal range, you have Disadvantage on the attack roll. You can’t attack a target beyond the long range.",
+      "sourceAnchor": "Range"
+    },
+    {
+      "slug": "recoil",
+      "name": "Recoil",
+      "description": "After you make an attack with this weapon, you can’t make ranged attacks beyond the weapon’s normal range until the end of the current turn.",
+      "sourceAnchor": "Recoil"
+    },
+    {
+      "slug": "reload",
+      "name": "Reload",
+      "description": "This weapon can be used to make a number of attacks before it must be reloaded. If you are proficient with the weapon, reloading it takes an Action or a Bonus Action; otherwise, reloading it takes an Action.",
+      "sourceAnchor": "Reload"
+    },
+    {
+      "slug": "two-handed",
+      "name": "Two-Handed",
+      "description": "A Two-Handed weapon requires two hands when you attack with it.",
+      "sourceAnchor": "TwoHanded"
+    }
+  ],
+  "masteryProperties": [
+    {
+      "slug": "automatic",
+      "name": "Automatic",
+      "description": "When you make an attack with this weapon, you can choose to make two attacks instead. These attacks are always made with Disadvantage, regardless of circumstance. You can’t replace these attacks. If this weapon has the Ammunition property, these attacks use twice the normal amount of ammunition.",
+      "sourceAnchor": "Automatic"
+    },
+    {
+      "slug": "explode",
+      "name": "Explode",
+      "description": "When you take the Attack action, you can replace one of your attacks with an explosion from this weapon’s projectile. This explosion is a 5-foot-radius Sphere centered on a point you choose within the weapon’s normal range. Each creature within the Sphere makes a Dexterity saving throw (DC 8 plus your Strength or Dexterity modifier and your Proficiency Bonus). On a failed save, a creature takes the weapon’s damage, but don’t add your ability modifier to that damage unless that modifier is negative. On a successful save, a creature takes half as much damage. You can create an explosion only once per turn.",
+      "sourceAnchor": "Explode"
+    },
+    {
+      "slug": "push",
+      "name": "Push",
+      "description": "If you hit a creature with this weapon, you can push the creature up to 10 feet straight away from yourself if it is Large or smaller.",
+      "sourceAnchor": "Push"
+    },
+    {
+      "slug": "sap",
+      "name": "Sap",
+      "description": "If you hit a creature with this weapon, that creature has Disadvantage on its next attack roll before the start of your next turn.",
+      "sourceAnchor": "Sap"
+    },
+    {
+      "slug": "scatter",
+      "name": "Scatter",
+      "description": "Being within 5 feet of an enemy doesn’t impose Disadvantage on your ranged attack rolls with this weapon.",
+      "sourceAnchor": "Scatter"
+    },
+    {
+      "slug": "sighted",
+      "name": "Sighted",
+      "description": "Attacking at long range with this weapon doesn’t impose Disadvantage on your attack rolls. When you hit a creature with an attack using this weapon at long range, you can reroll any of the damage dice and must use the new roll.",
+      "sourceAnchor": "Sighted"
+    },
+    {
+      "slug": "slow",
+      "name": "Slow",
+      "description": "If you hit a creature with this weapon and deal damage to it, you can reduce its Speed by 10 feet until the start of your next turn. If the creature is hit more than once by weapons that have this property, the Speed reduction doesn’t exceed 10 feet.",
+      "sourceAnchor": "Slow"
+    },
+    {
+      "slug": "vex",
+      "name": "Vex",
+      "description": "If you hit a creature with this weapon and deal damage to the creature, you have Advantage on your next attack roll against that creature before the end of your next turn.\n\nLucas Ferreira CM",
+      "sourceAnchor": "Vex"
+    }
+  ],
+  "weapons": [],
+  "ammunition": [
+    {
+      "name": "Firearm Ammunition",
+      "description": "Ammunition is required by a weapon that has the Ammunition property. A weapon’s description specifies the type of ammunition used by the weapon. The following Ammunition table lists new types of ammunition used by firearms and the amount you get when you buy them.\n\nFirearm ammunition is destroyed upon use.\n\nType\nAmount\nWeight\nCost\n\nBullets\n10\n1 ½ lb.\n3 GP\n\nCannonballs\n5\n10 lb.\n25 GP\n\nFlares\n5\n5 lb.\n5 GP\n\nShells\n10\n1 ½ lb.\n5 GP\n\nShot\n10\n2 lb.\n1 GP",
+      "sourceAnchor": "FirearmAmmunition"
+    }
+  ],
+  "headings": [
+    {
+      "level": 1,
+      "id": "TheGunslingerClassValdasSpireofSecrets",
+      "title": "The Gunslinger Class: Valda’s Spire of Secrets"
+    },
+    {
+      "level": 2,
+      "id": "Gunslinger",
+      "title": "Gunslinger"
+    },
+    {
+      "level": 3,
+      "id": "GutsandGunpowder",
+      "title": "Guts and Gunpowder"
+    },
+    {
+      "level": 3,
+      "id": "DangerousOutsiders",
+      "title": "Dangerous Outsiders"
+    },
+    {
+      "level": 3,
+      "id": "CoreGunslingerTraits",
+      "title": "Core Gunslinger Traits"
+    },
+    {
+      "level": 3,
+      "id": "BecomingaGunslinger",
+      "title": "Becoming a Gunslinger…"
+    },
+    {
+      "level": 4,
+      "id": "AsaLevel1Character",
+      "title": "As a Level 1 Character"
+    },
+    {
+      "level": 4,
+      "id": "AsaMulticlassCharacter",
+      "title": "As a Multiclass Character"
+    },
+    {
+      "level": 3,
+      "id": "GunslingerClassFeatures",
+      "title": "Gunslinger Class Features"
+    },
+    {
+      "level": 4,
+      "id": "GunslingerFeatures",
+      "title": "Gunslinger Features"
+    },
+    {
+      "level": 4,
+      "id": "Level1FightingStyle",
+      "title": "Level 1: Fighting Style"
+    },
+    {
+      "level": 4,
+      "id": "Level1QuickDraw",
+      "title": "Level 1: Quick Draw"
+    },
+    {
+      "level": 4,
+      "id": "Level1WeaponMastery",
+      "title": "Level 1: Weapon Mastery"
+    },
+    {
+      "level": 4,
+      "id": "Level2CriticalShot",
+      "title": "Level 2: Critical Shot"
+    },
+    {
+      "level": 4,
+      "id": "Level2Risk",
+      "title": "Level 2: Risk"
+    },
+    {
+      "level": 4,
+      "id": "Level3GunslingerSubclass",
+      "title": "Level 3: Gunslinger Subclass"
+    },
+    {
+      "level": 4,
+      "id": "Level4AbilityScoreImprovement",
+      "title": "Level 4: Ability Score Improvement"
+    },
+    {
+      "level": 4,
+      "id": "Level5ExtraAttack",
+      "title": "Level 5: Extra Attack"
+    },
+    {
+      "level": 4,
+      "id": "Level5GutShot",
+      "title": "Level 5: Gut Shot"
+    },
+    {
+      "level": 4,
+      "id": "Level7Evasion",
+      "title": "Level 7: Evasion"
+    },
+    {
+      "level": 4,
+      "id": "Level11Overkill",
+      "title": "Level 11: Overkill"
+    },
+    {
+      "level": 4,
+      "id": "Level13CheatDeath",
+      "title": "Level 13: Cheat Death"
+    },
+    {
+      "level": 4,
+      "id": "Level15DireGambit",
+      "title": "Level 15: Dire Gambit"
+    },
+    {
+      "level": 4,
+      "id": "Level18DeftManeuver",
+      "title": "Level 18: Deft Maneuver"
+    },
+    {
+      "level": 4,
+      "id": "Level19EpicBoon",
+      "title": "Level 19: Epic Boon"
+    },
+    {
+      "level": 4,
+      "id": "Level20Headshot",
+      "title": "Level 20: Headshot"
+    },
+    {
+      "level": 3,
+      "id": "ManeuverOptions",
+      "title": "Maneuver Options"
+    },
+    {
+      "level": 4,
+      "id": "BitetheBullet",
+      "title": "Bite the Bullet"
+    },
+    {
+      "level": 4,
+      "id": "Blindfire",
+      "title": "Blindfire"
+    },
+    {
+      "level": 4,
+      "id": "DodgeRoll",
+      "title": "Dodge Roll"
+    },
+    {
+      "level": 4,
+      "id": "GrazingShot",
+      "title": "Grazing Shot"
+    },
+    {
+      "level": 4,
+      "id": "MaverickSpirit",
+      "title": "Maverick Spirit"
+    },
+    {
+      "level": 4,
+      "id": "SkinofYourTeeth",
+      "title": "Skin of Your Teeth"
+    },
+    {
+      "level": 2,
+      "id": "GunslingerSubclasses",
+      "title": "Gunslinger Subclasses"
+    },
+    {
+      "level": 3,
+      "id": "GunslingerSubclassesTable",
+      "title": "Gunslinger Subclasses"
+    },
+    {
+      "level": 3,
+      "id": "Deadeye",
+      "title": "Deadeye"
+    },
+    {
+      "level": 4,
+      "id": "Level3EagleEyeManeuver",
+      "title": "Level 3: Eagle Eye [Maneuver]"
+    },
+    {
+      "level": 4,
+      "id": "Level3SharpshootersStance",
+      "title": "Level 3: Sharpshooter’s Stance"
+    },
+    {
+      "level": 4,
+      "id": "Level6ConcealedPosition",
+      "title": "Level 6: Concealed Position"
+    },
+    {
+      "level": 4,
+      "id": "Level10Reposition",
+      "title": "Level 10: Reposition"
+    },
+    {
+      "level": 4,
+      "id": "Level14FocusedShot",
+      "title": "Level 14: Focused Shot"
+    },
+    {
+      "level": 3,
+      "id": "HighRoller",
+      "title": "High Roller"
+    },
+    {
+      "level": 4,
+      "id": "Level3PokerFace",
+      "title": "Level 3: Poker Face"
+    },
+    {
+      "level": 4,
+      "id": "Level3LiarsDiceManeuver",
+      "title": "Level 3: Liar’s Dice [Maneuver]"
+    },
+    {
+      "level": 4,
+      "id": "Level6RiskyBusiness",
+      "title": "Level 6: Risky Business"
+    },
+    {
+      "level": 4,
+      "id": "Level10RiskTaker",
+      "title": "Level 10: Risk Taker"
+    },
+    {
+      "level": 4,
+      "id": "Level14DoubleorNothing",
+      "title": "Level 14: Double or Nothing"
+    },
+    {
+      "level": 3,
+      "id": "SecretAgent",
+      "title": "Secret Agent"
+    },
+    {
+      "level": 4,
+      "id": "Level3OperativeTraining",
+      "title": "Level 3: Operative Training"
+    },
+    {
+      "level": 4,
+      "id": "Level3PartingShotManeuver",
+      "title": "Level 3: Parting Shot [Maneuver]"
+    },
+    {
+      "level": 4,
+      "id": "Level6Fieldcraft",
+      "title": "Level 6: Fieldcraft"
+    },
+    {
+      "level": 4,
+      "id": "Level10ExitStrategy",
+      "title": "Level 10: Exit Strategy"
+    },
+    {
+      "level": 4,
+      "id": "Level14LicensetoKill",
+      "title": "Level 14: License to Kill"
+    },
+    {
+      "level": 3,
+      "id": "Spellslinger",
+      "title": "Spellslinger"
+    },
+    {
+      "level": 4,
+      "id": "Level3Spellcasting",
+      "title": "Level 3: Spellcasting"
+    },
+    {
+      "level": 4,
+      "id": "Level3BangYoureDead",
+      "title": "Level 3: Bang, You’re Dead!"
+    },
+    {
+      "level": 4,
+      "id": "Level6Spellshot",
+      "title": "Level 6: Spellshot"
+    },
+    {
+      "level": 4,
+      "id": "Level10CounterMage",
+      "title": "Level 10: Counter-Mage"
+    },
+    {
+      "level": 4,
+      "id": "Level14MagicBulletManeuver",
+      "title": "Level 14: Magic Bullet [Maneuver]"
+    },
+    {
+      "level": 3,
+      "id": "TrickShot",
+      "title": "Trick Shot"
+    },
+    {
+      "level": 4,
+      "id": "Level3CreativeTrajectory",
+      "title": "Level 3: Creative Trajectory"
+    },
+    {
+      "level": 4,
+      "id": "Level3RicochetManeuver",
+      "title": "Level 3: Ricochet [Maneuver]"
+    },
+    {
+      "level": 4,
+      "id": "Level6FancyGunplay",
+      "title": "Level 6: Fancy Gunplay"
+    },
+    {
+      "level": 4,
+      "id": "Level10DeftDeflectionManeuver",
+      "title": "Level 10: Deft Deflection [Maneuver]"
+    },
+    {
+      "level": 4,
+      "id": "Level14PinballShot",
+      "title": "Level 14: Pinball Shot"
+    },
+    {
+      "level": 3,
+      "id": "WhiteHat",
+      "title": "White Hat"
+    },
+    {
+      "level": 4,
+      "id": "Level3LayDowntheLawManeuver",
+      "title": "Level 3: Lay Down the Law [Maneuver]"
+    },
+    {
+      "level": 4,
+      "id": "Level3SteelyEyedAura",
+      "title": "Level 3: Steely-Eyed Aura"
+    },
+    {
+      "level": 4,
+      "id": "Level6ReachfortheSkies",
+      "title": "Level 6: Reach for the Skies"
+    },
+    {
+      "level": 4,
+      "id": "Level10LongArmoftheLaw",
+      "title": "Level 10: Long Arm of the Law"
+    },
+    {
+      "level": 4,
+      "id": "Level14GoldStarHero",
+      "title": "Level 14: Gold Star Hero"
+    },
+    {
+      "level": 2,
+      "id": "Firearms",
+      "title": "Firearms"
+    },
+    {
+      "level": 3,
+      "id": "FirearmEras",
+      "title": "Firearm Eras"
+    },
+    {
+      "level": 4,
+      "id": "RenaissanceFirearms",
+      "title": "Renaissance Firearms"
+    },
+    {
+      "level": 4,
+      "id": "IndustrialAgeFirearms",
+      "title": "Industrial Age Firearms"
+    },
+    {
+      "level": 4,
+      "id": "ModernFirearms",
+      "title": "Modern Firearms"
+    },
+    {
+      "level": 3,
+      "id": "WeaponProperties",
+      "title": "Weapon Properties"
+    },
+    {
+      "level": 4,
+      "id": "Ammunition",
+      "title": "Ammunition"
+    },
+    {
+      "level": 4,
+      "id": "Finesse",
+      "title": "Finesse"
+    },
+    {
+      "level": 4,
+      "id": "Firearm",
+      "title": "Firearm*"
+    },
+    {
+      "level": 4,
+      "id": "Heavy",
+      "title": "Heavy"
+    },
+    {
+      "level": 4,
+      "id": "Light",
+      "title": "Light"
+    },
+    {
+      "level": 4,
+      "id": "Range",
+      "title": "Range"
+    },
+    {
+      "level": 4,
+      "id": "Recoil",
+      "title": "Recoil*"
+    },
+    {
+      "level": 4,
+      "id": "Reload",
+      "title": "Reload"
+    },
+    {
+      "level": 4,
+      "id": "TwoHanded",
+      "title": "Two-Handed"
+    },
+    {
+      "level": 3,
+      "id": "MasteryProperties",
+      "title": "Mastery Properties"
+    },
+    {
+      "level": 4,
+      "id": "Automatic",
+      "title": "Automatic*"
+    },
+    {
+      "level": 4,
+      "id": "Explode",
+      "title": "Explode*"
+    },
+    {
+      "level": 4,
+      "id": "Push",
+      "title": "Push"
+    },
+    {
+      "level": 4,
+      "id": "Sap",
+      "title": "Sap"
+    },
+    {
+      "level": 4,
+      "id": "Scatter",
+      "title": "Scatter*"
+    },
+    {
+      "level": 4,
+      "id": "Sighted",
+      "title": "Sighted*"
+    },
+    {
+      "level": 4,
+      "id": "Slow",
+      "title": "Slow"
+    },
+    {
+      "level": 4,
+      "id": "Vex",
+      "title": "Vex"
+    },
+    {
+      "level": 3,
+      "id": "WeaponDescriptions",
+      "title": "Weapon Descriptions"
+    },
+    {
+      "level": 3,
+      "id": "FirearmAmmunition",
+      "title": "Firearm Ammunition"
+    },
+    {
+      "level": 2,
+      "id": "NewFeats",
+      "title": "New Feats"
+    },
+    {
+      "level": 3,
+      "id": "IronHero",
+      "title": "Iron Hero"
+    },
+    {
+      "level": 3,
+      "id": "MarksmansLuck",
+      "title": "Marksman’s Luck"
+    },
+    {
+      "level": 3,
+      "id": "GunMageAdept",
+      "title": "Gun-Mage Adept"
+    },
+    {
+      "level": 2,
+      "id": "NewSpells",
+      "title": "New Spells"
+    },
+    {
+      "level": 3,
+      "id": "SpellDescriptions",
+      "title": "Spell Descriptions"
+    },
+    {
+      "level": 3,
+      "id": "AntiballisticsField",
+      "title": "Antiballistics Field"
+    },
+    {
+      "level": 3,
+      "id": "BallisticSmite",
+      "title": "Ballistic Smite"
+    },
+    {
+      "level": 3,
+      "id": "ConcealedShot",
+      "title": "Concealed Shot"
+    },
+    {
+      "level": 3,
+      "id": "ConjureCannonball",
+      "title": "Conjure Cannonball"
+    },
+    {
+      "level": 3,
+      "id": "ConjureCover",
+      "title": "Conjure Cover"
+    },
+    {
+      "level": 3,
+      "id": "FingerGuns",
+      "title": "Finger Guns"
+    },
+    {
+      "level": 3,
+      "id": "JamWeapon",
+      "title": "Jam Weapon"
+    },
+    {
+      "level": 3,
+      "id": "JethrosInstantReload",
+      "title": "Jethro’s Instant Reload"
+    },
+    {
+      "level": 3,
+      "id": "PerforatingShot",
+      "title": "Perforating Shot"
+    },
+    {
+      "level": 2,
+      "id": "Credits",
+      "title": "Credits"
+    }
+  ],
+  "meta": {
+    "hitDie": "d8",
+    "primaryAbility": "Dexterity",
+    "primaryAbilitySlug": "destreza",
+    "subclassUnlockLevel": 3,
+    "subclassLabel": "Creed",
+    "skillChoiceCount": 2,
+    "skillSlugs": [
+      "acrobatics",
+      "animal-handling",
+      "athletics",
+      "deception",
+      "insight",
+      "intimidation",
+      "perception",
+      "persuasion",
+      "sleight-of-hand",
+      "stealth"
+    ],
+    "savingThrowSlugs": [
+      "destreza",
+      "carisma"
+    ],
+    "armorCategories": [
+      "light"
+    ],
+    "weaponProficiencies": [
+      "armas-simples",
+      "armas-marciais"
+    ],
+    "weaponNote": "Simple weapons and Martial Ranged weapons (mapped to simple+martial)",
+    "savingThrowsLabel": "Dexterity and Charisma",
+    "armor": "Light armor",
+    "weapons": "Simple weapons and Martial Ranged weapons",
+    "startingEquipment": "Choose A or B: (A) Leather Armor, 2 Daggers, Revolver, 50 Bullets, Explorer’s Pack, and 11 GP; or (B) 175 GP"
+  }
+}

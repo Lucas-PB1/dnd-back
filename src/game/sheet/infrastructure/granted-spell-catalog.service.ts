@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbSpeciesGrantedSpell } from '../../../entities/views/v-phb-species-granted-spell.entity';
 import { VPhbFeatGrantedSpell } from '../../../entities/views/v-phb-feat-granted-spell.entity';
+import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
 import {
   FeatGrantedSpellRow,
   SpeciesGrantedSpellRow,
@@ -15,6 +16,8 @@ export class GrantedSpellCatalogService {
     private readonly speciesGrants: Repository<VPhbSpeciesGrantedSpell>,
     @InjectRepository(VPhbFeatGrantedSpell)
     private readonly featGrants: Repository<VPhbFeatGrantedSpell>,
+    @InjectRepository(VPhbSubclassPreparedSpell)
+    private readonly subclassSpells: Repository<VPhbSubclassPreparedSpell>,
   ) {}
 
   async loadSpeciesCatalog(
@@ -52,13 +55,26 @@ export class GrantedSpellCatalogService {
       }));
   }
 
+  async loadSubclassGrantedSpells(
+    subclassSlug: string | null | undefined,
+  ): Promise<{ unlockLevel: number; spellSlug: string }[]> {
+    if (!subclassSlug) return [];
+    const rows = await this.subclassSpells.find({ where: { subclassSlug } });
+    return rows.map((row) => ({
+      unlockLevel: Number(row.unlockLevel),
+      spellSlug: row.spellSlug,
+    }));
+  }
+
   /** Catálogo completo usado no merge (espécie atual + anterior + talentos). */
   async loadMergeCatalog(input: {
     speciesSlugs: string[];
     featSlugs: string[];
+    subclassSlug?: string | null;
   }): Promise<{
     speciesCatalog: SpeciesGrantedSpellRow[];
     featFixedSpells: FeatGrantedSpellRow[];
+    subclassGrantedSpells: { unlockLevel: number; spellSlug: string }[];
   }> {
     const uniqueSpecies = [...new Set(input.speciesSlugs.filter(Boolean))];
     const speciesCatalog =
@@ -71,7 +87,10 @@ export class GrantedSpellCatalogService {
           ).flat();
 
     const featFixedSpells = await this.loadFeatFixedSpells(input.featSlugs);
+    const subclassGrantedSpells = await this.loadSubclassGrantedSpells(
+      input.subclassSlug,
+    );
 
-    return { speciesCatalog, featFixedSpells };
+    return { speciesCatalog, featFixedSpells, subclassGrantedSpells };
   }
 }

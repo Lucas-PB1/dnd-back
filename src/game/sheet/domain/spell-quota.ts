@@ -84,8 +84,10 @@ export function findSpellQuotaViolation(input: {
   catalog: readonly SpellCatalogLevel[];
   cantripsMax: number | null;
   preparedOrKnownMax: number | null;
+  /** Override do mode derivado de classSlug (ex. subclass caster prepared). */
+  mode?: ClassSpellcastingMode;
 }): SpellQuotaViolation | null {
-  const mode = classSpellcastingMode(input.classSlug);
+  const mode = input.mode ?? classSpellcastingMode(input.classSlug);
   const counts = countSpellsByType(input.characterSpells, input.catalog);
 
   if (

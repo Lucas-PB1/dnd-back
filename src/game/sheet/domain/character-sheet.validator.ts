@@ -849,21 +849,35 @@ export class CharacterSheetValidator {
       ctx.level,
       speciesCatalog,
     );
-    const maxClassSpellLevel = await this.maxSpellLevelForClass(
+    const subclassCasting = await this.loadSubclassSpellcasting(ctx.subclassSlug);
+    const spellListClassSlug =
+      subclassCasting?.spellListClassSlug ?? ctx.classSlug;
+    const maxSpellLevel = await this.maxSpellLevelForCharacter(
       ctx.classSlug,
       ctx.level,
+      ctx.subclassSlug,
     );
 
     for (const spell of spells) {
       if (featGranted.has(spell.spellSlug)) continue;
       if (speciesGranted.has(spell.spellSlug)) continue;
 
-      const inClass = await this.classSpellsRepo.findOne({
+      const inListClass = await this.classSpellsRepo.findOne({
         where: {
-          classSlug: ctx.classSlug,
+          classSlug: spellListClassSlug,
           spellSlug: spell.spellSlug,
         },
       });
+
+      const inClass =
+        spellListClassSlug === ctx.classSlug
+          ? inListClass
+          : await this.classSpellsRepo.findOne({
+              where: {
+                classSlug: ctx.classSlug,
+                spellSlug: spell.spellSlug,
+              },
+            });
 
       const inSubclass =
         ctx.subclassSlug &&
@@ -874,59 +888,137 @@ export class CharacterSheetValidator {
           },
         }));
 
-      if (!inClass && !inSubclass) {
+      if (!inListClass && !inClass && !inSubclass) {
         throw new BadRequestException(
           `Spell '${spell.spellSlug}' is not available for this character's class/subclass/feats/species`,
         );
       }
 
-      // Lista da classe: só círculos com espaço de magia (half/full/pact).
-      // Magias de subclasse/feat/espécie seguem unlock próprio.
-      if (inClass && !inSubclass && inClass.spellLevel > maxClassSpellLevel) {
+      const listMeta = inListClass ?? inClass;
+      if (listMeta && !inSubclass && listMeta.spellLevel > maxSpellLevel) {
         throw new BadRequestException(
-          `Spell '${spell.spellSlug}' (circle ${inClass.spellLevel}) exceeds max circle ${maxClassSpellLevel} for ${ctx.classSlug} level ${ctx.level}`,
+          `Spell '${spell.spellSlug}' (circle ${listMeta.spellLevel}) exceeds max circle ${maxSpellLevel} for ${ctx.classSlug} level ${ctx.level}`,
         );
       }
     }
 
-    await this.assertSpellQuotas(spells, ctx);
+    await this.assertSpellQuotas(spells, ctx, subclassCasting);
   }
 
   private async assertSpellQuotas(
     spells: NonNullable<CharacterSheetInput['characterSpells']>,
     ctx: CharacterSheetContext,
+    subclassCasting: {
+      spellListClassSlug: string;
+      spellcastingMode: 'prepared' | 'known' | 'wizard';
+    } | null,
   ): Promise<void> {
-    const progression = await this.dataSource.query<
-      { cantrips: number | null; prepared_spells: number | null }[]
-    >(
-      `SELECT cantrips, prepared_spells
-       FROM rpg.v_phb_class_progression
-       WHERE class_slug = $1 AND level = $2
-       LIMIT 1`,
-      [ctx.classSlug, ctx.level],
-    );
-    const row = progression[0];
-    if (!row) return;
+    let cantripsMax: number | null = null;
+    let preparedOrKnownMax: number | null = null;
+    let catalogClassSlug = ctx.classSlug;
+    let mode: 'prepared' | 'known' | 'wizard' | undefined;
+
+    if (subclassCasting) {
+      catalogClassSlug = subclassCasting.spellListClassSlug;
+      mode = subclassCasting.spellcastingMode;
+      const subclassProg = await this.dataSource.query<
+        { cantrips: number | null; prepared_spells: number | null }[]
+      >(
+        `SELECT sp.cantrips, sp.prepared_spells
+         FROM rpg.phb_subclass_progression sp
+         JOIN rpg.phb_subclass sc ON sc.id = sp.subclass_id
+         WHERE sc.slug = $1 AND sp.level = $2
+         LIMIT 1`,
+        [ctx.subclassSlug, ctx.level],
+      );
+      const row = subclassProg[0];
+      if (!row) return;
+      cantripsMax = row.cantrips;
+      preparedOrKnownMax = row.prepared_spells;
+    } else {
+      const progression = await this.dataSource.query<
+        { cantrips: number | null; prepared_spells: number | null }[]
+      >(
+        `SELECT cantrips, prepared_spells
+         FROM rpg.v_phb_class_progression
+         WHERE class_slug = $1 AND level = $2
+         LIMIT 1`,
+        [ctx.classSlug, ctx.level],
+      );
+      const row = progression[0];
+      if (!row) return;
+      cantripsMax = row.cantrips;
+      preparedOrKnownMax = row.prepared_spells;
+    }
 
     const catalogRows = await this.classSpellsRepo.find({
-      where: { classSlug: ctx.classSlug },
+      where: { classSlug: catalogClassSlug },
     });
     const violation = findSpellQuotaViolation({
-      classSlug: ctx.classSlug,
+      classSlug: catalogClassSlug,
       level: ctx.level,
       characterSpells: spells,
       catalog: catalogRows.map((item) => ({
         slug: item.spellSlug,
         level: item.spellLevel,
       })),
-      cantripsMax: row.cantrips,
-      preparedOrKnownMax: row.prepared_spells,
+      cantripsMax,
+      preparedOrKnownMax,
+      mode,
     });
     if (violation) {
       throw new BadRequestException(
-        spellQuotaViolationMessage(ctx.classSlug, violation),
+        spellQuotaViolationMessage(catalogClassSlug, violation),
       );
     }
+  }
+
+  private async maxSpellLevelForCharacter(
+    classSlug: string,
+    level: number,
+    subclassSlug: string | null,
+  ): Promise<number> {
+    if (subclassSlug) {
+      const subclassRows = await this.dataSource.query<
+        { spell_slots: Record<string, number> | null }[]
+      >(
+        `SELECT spell_slots
+         FROM rpg.v_subclass_spell_slots
+         WHERE subclass_slug = $1 AND class_level = $2
+         LIMIT 1`,
+        [subclassSlug, level],
+      );
+      if (subclassRows[0]?.spell_slots) {
+        return maxSpellLevelFromSlots(subclassRows[0].spell_slots);
+      }
+    }
+    return this.maxSpellLevelForClass(classSlug, level);
+  }
+
+  private async loadSubclassSpellcasting(
+    subclassSlug: string | null,
+  ): Promise<{
+    spellListClassSlug: string;
+    spellcastingMode: 'prepared' | 'known' | 'wizard';
+  } | null> {
+    if (!subclassSlug) return null;
+    const rows = await this.dataSource.query<
+      { spell_list_class_slug: string }[]
+    >(
+      `SELECT list_c.slug AS spell_list_class_slug
+       FROM rpg.phb_subclass_spellcasting ssc
+       JOIN rpg.phb_subclass sc ON sc.id = ssc.subclass_id
+       JOIN rpg.phb_class list_c ON list_c.id = ssc.spell_list_class_id
+       WHERE sc.slug = $1
+       LIMIT 1`,
+      [subclassSlug],
+    );
+    const row = rows[0];
+    if (!row) return null;
+    return {
+      spellListClassSlug: row.spell_list_class_slug,
+      spellcastingMode: 'prepared',
+    };
   }
 
   private async maxSpellLevelForClass(

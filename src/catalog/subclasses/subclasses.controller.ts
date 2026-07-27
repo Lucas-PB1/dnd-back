@@ -13,7 +13,10 @@ import { FindSubclassBySlugQuery } from './queries/find-subclass-by-slug.query';
 import { FindSubclassMechanicsQuery } from './queries/find-subclass-mechanics.query';
 import { FindSubclassOptionsQuery } from './queries/find-subclass-options.query';
 import { FindSubclassSpellsQuery } from './queries/find-subclass-spells.query';
+import { FindSubclassSpellSlotsQuery } from './queries/find-subclass-spell-slots.query';
+import { FindSubclassSpellcastingQuery } from './queries/find-subclass-spellcasting.query';
 import { SubclassResponseDto } from './dto/subclass-response.dto';
+import { SubclassSpellcastingResponseDto } from './dto/subclass-spellcasting-response.dto';
 
 @ApiTags('catalog-subclasses')
 @Controller('subclasses')
@@ -24,6 +27,8 @@ export class SubclassesController {
     private readonly findSubclassMechanics: FindSubclassMechanicsQuery,
     private readonly findSubclassOptions: FindSubclassOptionsQuery,
     private readonly findSubclassSpells: FindSubclassSpellsQuery,
+    private readonly findSubclassSpellSlots: FindSubclassSpellSlotsQuery,
+    private readonly findSubclassSpellcasting: FindSubclassSpellcastingQuery,
   ) {}
 
   @Get()
@@ -67,6 +72,26 @@ export class SubclassesController {
   @ApiNotFoundResponse({ description: 'Subclass not found or no prepared spells' })
   findSpells(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findSubclassSpells.execute(slug, query.page, query.limit);
+  }
+
+  @Get(':slug/spell-slots')
+  @ApiOperation({ summary: 'Spell slot progression for a casting subclass' })
+  @ApiParam({ name: 'slug', example: 'spellslinger' })
+  @ApiOkResponse({ description: 'Paginated subclass spell slot table' })
+  @ApiNotFoundResponse({ description: 'Subclass not found or no spellcasting slots' })
+  findSpellSlots(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
+    return this.findSubclassSpellSlots.execute(slug, query.page, query.limit);
+  }
+
+  @Get(':slug/spellcasting')
+  @ApiOperation({ summary: 'Subclass spellcasting profile (list class, ability, mode)' })
+  @ApiParam({ name: 'slug', example: 'spellslinger' })
+  @ApiOkResponse({ type: SubclassSpellcastingResponseDto })
+  @ApiNotFoundResponse({ description: 'Subclass not found or no spellcasting' })
+  findSpellcasting(
+    @Param('slug') slug: string,
+  ): Promise<SubclassSpellcastingResponseDto> {
+    return this.findSubclassSpellcasting.execute(slug);
   }
 
   @Get(':slug')
