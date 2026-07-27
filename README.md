@@ -2,7 +2,7 @@
 
 Massa de dados PostgreSQL do **Player's Handbook 2024 (PT-BR)** + API NestJS.
 
-Frontend irmão: **dnd-front** (Next.js) — roadmap [`docs/product-roadmap.md`](docs/product-roadmap.md) · bootstrap [`docs/rpg-web-plan.md`](docs/rpg-web-plan.md).
+Frontend irmão: **dnd-front** (Next.js) — roadmap [`docs/plans/product-roadmap.md`](docs/plans/product-roadmap.md) · bootstrap [`docs/plans/rpg-web-plan.md`](docs/plans/rpg-web-plan.md). · índice [`docs/README.md`](docs/README.md)
 
 ## O que é
 
@@ -56,7 +56,7 @@ npm run db:migrate:supabase
 npm run db:seed:supabase
 ```
 
-Detalhes: [`database/migrations/README.md`](database/migrations/README.md) · [`docs/infrastructure.md`](docs/infrastructure.md)
+Detalhes: [`database/migrations/README.md`](database/migrations/README.md) · [`docs/architecture/infrastructure.md`](docs/architecture/infrastructure.md)
 
 ## API (NestJS)
 
@@ -125,7 +125,7 @@ Query de paginação: `?page=1&limit=20` (default 20, max 100). Slugs em **ingl�
 
 ## Stack (decisão de infra)
 
-Documento completo: [`docs/infrastructure.md`](docs/infrastructure.md) · Arquitetura: [`docs/architecture.md`](docs/architecture.md)
+Documento completo: [`docs/architecture/infrastructure.md`](docs/architecture/infrastructure.md) · Arquitetura: [`docs/architecture/architecture.md`](docs/architecture/architecture.md)
 
 | Camada | Tecnologia |
 |--------|------------|
@@ -133,7 +133,7 @@ Documento completo: [`docs/infrastructure.md`](docs/infrastructure.md) · Arquit
 | DB + Auth | **Supabase** (pooler 6543, Supabase Auth, RLS futuro) |
 | API | NestJS + TypeORM — **modular monolith**, 3 bounded contexts |
 | Padrão | CQRS leve (views = read); DDD tático só em `game/` |
-| Deploy API | **Vercel** (serverless Nest) — ver [`docs/DEPLOY.md`](docs/DEPLOY.md) |
+| Deploy API | **Vercel** (serverless Nest) — ver [`docs/deploy/DEPLOY.md`](docs/deploy/DEPLOY.md) |
 | Frontend | **Next.js em repo separado** |
 
 ## Cursor — rules e skills
@@ -143,10 +143,11 @@ Documento completo: [`docs/infrastructure.md`](docs/infrastructure.md) · Arquit
 | Rules | `.cursor/rules/*.mdc` | SQL, Nest, Supabase, Auth, Vercel, contrato API |
 | Skills | `.cursor/skills/*/SKILL.md` | Workflows detalhados |
 | Referências | `.cursor/skills/*/references/` | Specs por tema |
-| Infra | [`docs/infrastructure.md`](docs/infrastructure.md) | Stack Supabase + Vercel |
-| Arquitetura | [`docs/architecture.md`](docs/architecture.md) | BC, CQRS, DDD |
-| **Plano API** | [`docs/api-plan.md`](docs/api-plan.md) | Módulos, rotas, Swagger, testes |
+| Infra | [`docs/architecture/infrastructure.md`](docs/architecture/infrastructure.md) | Stack Supabase + Vercel |
+| Arquitetura | [`docs/architecture/architecture.md`](docs/architecture/architecture.md) | BC, CQRS, DDD |
+| **Plano API** | [`docs/plans/api-plan.md`](docs/plans/api-plan.md) | Módulos, rotas, Swagger, testes |
+| Índice docs | [`docs/README.md`](docs/README.md) | Pastas e atalhos |
 
 Orquestrador: `.cursor/rules/00-orchestrator.mdc`
 
-Modelo de dados: [`docs/data-model.md`](docs/data-model.md)
+Modelo de dados: [`docs/architecture/data-model.md`](docs/architecture/data-model.md)

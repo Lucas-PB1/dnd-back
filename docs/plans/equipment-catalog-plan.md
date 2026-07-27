@@ -1,4 +1,4 @@
-# Plano — Catálogo de equipamento (PHB 2024 / 5.5)
+﻿# Plano — Catálogo de equipamento (PHB 2024 / 5.5)
 
 Documento de planejamento para completar **dados mecânicos** e a experiência do compêndio em **itens (gear), kits/ferramentas, focos, armas e armaduras**.
 
@@ -7,7 +7,7 @@ Documento de planejamento para completar **dados mecânicos** e a experiência d
 | **Repos** | dnd-api (seeds, views, DTOs) + dnd-front (UI do compêndio) |
 | **Última revisão** | 2026-07-19 |
 | **Status** | Fases 0–5 entregues; weapon DTO = `range` + `propertyDetails` + `mastery` (sem jsonb bruto na response) |
-| **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`data-model.md`](data-model.md) · front [`UX-UI-PLAN.md`](../../dnd-front/docs/UX-UI-PLAN.md) |
+| **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`data-model.md`](../architecture/data-model.md) · front [`UX-UI-PLAN.md`](../../../dnd-front/docs/UX-UI-PLAN.md) |
 
 ### Progresso desta entrega
 
@@ -237,7 +237,7 @@ Alinhar a classes/talentos/magias:
   - **Opção A:** migration `S07x_fix_item_descriptions.sql` com `UPDATE … WHERE slug =` (seguro p/ prod, não depende do gerador).
   - **Opção B:** regenerar `S046` a partir da fonte e documentar o gerador.
 - [ ] Recomendação: **Opção A para conteúdo** + atualizar gerador depois (Opção B) para evitar regressão.
-- [ ] Checklist de apply em **local + Supabase prod** ([`DEPLOY.md`](DEPLOY.md), skill `postgres-apply-catalog`).
+- [ ] Checklist de apply em **local + Supabase prod** ([`DEPLOY.md`](../deploy/DEPLOY.md), skill `postgres-apply-catalog`).
 
 ### Fase 1 — Gear + focus: textos completos (2–4 dias)
 

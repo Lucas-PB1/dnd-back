@@ -1,4 +1,4 @@
-# Plano — Sheet readiness (catálogo → ficha)
+﻿# Plano — Sheet readiness (catálogo → ficha)
 
 Documento de planejamento para **expor e usar na ficha/mesa** dados PHB 2024 que já existem no Postgres (ou quase), mas ainda não chegam à UI de forma confiável: salvaguardas, proficiências, traços de espécie, condições, progressão/cotas de magia e ASI no level-up.
 
@@ -7,7 +7,7 @@ Documento de planejamento para **expor e usar na ficha/mesa** dados PHB 2024 que
 | **Repos** | dnd-api (views, DTOs, endpoints) + dnd-front (ficha, mesa, wizard) |
 | **Última revisão** | 2026-07-19 |
 | **Status** | Planejado — nenhuma fase implementada neste documento |
-| **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`game-advanced-plan.md`](game-advanced-plan.md) · [`data-model.md`](data-model.md) · front [`CHARACTER-SHEET-PLAN.md`](../../dnd-front/docs/CHARACTER-SHEET-PLAN.md) |
+| **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`game-advanced-plan.md`](game-advanced-plan.md) · [`data-model.md`](../architecture/data-model.md) · front [`CHARACTER-SHEET-PLAN.md`](../../../dnd-front/docs/CHARACTER-SHEET-PLAN.md) |
 
 **Princípio:** o front **coleta escolhas** e **exibe**; a API **valida e computa**. Zero regras PHB hardcoded no front.
 
@@ -245,7 +245,7 @@ weaponProficiencyNames: string[];
 - Deploy produção (Fase 6 do [`product-roadmap.md`](product-roadmap.md))
 - Campanha / iniciativa (7D)
 - E2E browser completo
-- Redesign UX/UI (ver [`UX-UI-PLAN.md`](../../dnd-front/docs/UX-UI-PLAN.md))
+- Redesign UX/UI (ver [`UX-UI-PLAN.md`](../../../dnd-front/docs/UX-UI-PLAN.md))
 - Novos catálogos grandes no hub (compêndio feats/skills/equipment já entregues)
 
 ---

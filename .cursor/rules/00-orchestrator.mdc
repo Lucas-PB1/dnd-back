@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Orquestrador dnd-api
 
-Docs: [`docs/infrastructure.md`](../../docs/infrastructure.md) · [`docs/architecture.md`](../../docs/architecture.md)
+Docs: [`docs/architecture/infrastructure.md`](../../docs/architecture/infrastructure.md) · [`docs/architecture/architecture.md`](../../docs/architecture/architecture.md)
 
 Genérico: shared-ai (`nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`, `supabase`, `vercel`, `rest-api`).
 

@@ -1,10 +1,10 @@
-# Plano da REST API — referência técnica
+﻿# Plano da REST API — referência técnica
 
 > **Status:** implementação concluída (jul/2026). Este documento é referência de contrato, testes e Swagger — não um backlog ativo. Roadmap vivo: [`product-roadmap.md`](product-roadmap.md).
 
 Documento de referência para implementação, testes e documentação OpenAPI.
 
-Relacionados: [`architecture.md`](architecture.md) · [`data-model.md`](data-model.md) · [`infrastructure.md`](infrastructure.md) · [`product-roadmap.md`](product-roadmap.md) · **[`DEPLOY.md`](DEPLOY.md)** (Vercel + Supabase)
+Relacionados: [`architecture.md`](../architecture/architecture.md) · [`data-model.md`](../architecture/data-model.md) · [`infrastructure.md`](../architecture/infrastructure.md) · [`product-roadmap.md`](product-roadmap.md) · **[`DEPLOY.md`](../deploy/DEPLOY.md)** (Vercel + Supabase)
 
 ## Princípios
 
@@ -235,7 +235,7 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 
 ### Checklist refatoração application layer (fase 6)
 
-Migrado para handlers + repository + mapper em [`src/game/sheet/`](../src/game/sheet/) (submódulos: `build/`, `progression/`, `inventory/`, `session/`, `shared/`). Ver [`docs/architecture.md`](architecture.md#evitar-fat-services) e rule `application-layer`.
+Migrado para handlers + repository + mapper em [`src/game/sheet/`](../../src/game/sheet/) (submódulos: `build/`, `progression/`, `inventory/`, `session/`, `shared/`). Ver [`architecture.md`](../architecture/architecture.md#evitar-fat-services) e rule `application-layer`.
 
 | Item | Checklist |
 |------|-----------|

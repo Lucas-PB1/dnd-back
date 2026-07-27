@@ -1,4 +1,4 @@
-# Roadmap — produto e entrega
+﻿# Roadmap — produto e entrega
 
 Documento **vivo** do caminho até app consumidor 100% baseado na API.
 
@@ -7,7 +7,7 @@ Documento **vivo** do caminho até app consumidor 100% baseado na API.
 | **dnd-api** | Postgres PHB + API NestJS + regras de ficha |
 | **dnd-front** | Next.js — compêndio, wizard, ficha, mesa |
 
-Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`sheet-readiness-plan.md`](sheet-readiness-plan.md) (catálogo→ficha) · [`equipment-catalog-plan.md`](equipment-catalog-plan.md) (itens/armas/armaduras) · [`game-advanced-plan.md`](game-advanced-plan.md) (mesa/inventário) · [`../dnd-front/docs/CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-PLAN.md) (ficha front)
+Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`sheet-readiness-plan.md`](sheet-readiness-plan.md) (catálogo→ficha) · [`equipment-catalog-plan.md`](equipment-catalog-plan.md) (itens/armas/armaduras) · [`game-advanced-plan.md`](game-advanced-plan.md) (mesa/inventário) · [`CHARACTER-SHEET-PLAN.md`](../../../dnd-front/docs/CHARACTER-SHEET-PLAN.md) (ficha front)
 
 **Última revisão:** 2026-07-19
 
@@ -25,7 +25,7 @@ Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`sheet-readine
 | Game — mesa 7A–7C (API) | **100%** | level-up, inventário, state, cast, rest |
 | **dnd-front** — MVP ficha | **~95%** | Wizard PHB, ficha leitura/edição, mesa |
 | **dnd-front** — compêndio | **~95%** | Hub completo + filtros; gaps mecânicos em [`equipment-catalog-plan.md`](equipment-catalog-plan.md) / ficha em [`sheet-readiness-plan.md`](sheet-readiness-plan.md) |
-| Deploy produção (Fase 6) | **em andamento** | Ver [`DEPLOY.md`](DEPLOY.md) |
+| Deploy produção (Fase 6) | **em andamento** | Ver [`DEPLOY.md`](../deploy/DEPLOY.md) |
 | Campanha / combate (7D) | **0%** | Fora do escopo atual |
 
 **Testes automatizados:** API 88 · Front 35 · ambos passando localmente (jul/2026).
@@ -76,7 +76,7 @@ Ver [`game-advanced-plan.md`](game-advanced-plan.md) para inventário, state e l
 ## Fase 5 — App Next.js (`dnd-front`) — em uso
 
 Plano de bootstrap (stack, ports, env): [`rpg-web-plan.md`](rpg-web-plan.md).  
-Detalhe da ficha: [`CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-PLAN.md).
+Detalhe da ficha: [`CHARACTER-SHEET-PLAN.md`](../../../dnd-front/docs/CHARACTER-SHEET-PLAN.md).
 
 ### 5.1 Setup ✅
 
@@ -131,7 +131,7 @@ Detalhe da ficha: [`CHARACTER-SHEET-PLAN.md`](../dnd-front/docs/CHARACTER-SHEET-
 
 ## Fase 6 — Deploy produção
 
-Guia: **[`DEPLOY.md`](DEPLOY.md)**
+Guia: **[`DEPLOY.md`](../deploy/DEPLOY.md)**
 
 | Item | Status |
 |------|--------|
@@ -165,7 +165,7 @@ Plano detalhado catálogo→ficha: **[`sheet-readiness-plan.md`](sheet-readiness
 
 1. Marcar `[x]` quando **mergeado e testado** (não WIP).
 2. Atualizar **Status geral** e **Última revisão** ao fechar marco.
-3. Detalhes REST → [`api-plan.md`](api-plan.md). SQL → [`data-model.md`](data-model.md).
+3. Detalhes REST → [`api-plan.md`](api-plan.md). SQL → [`data-model.md`](../architecture/data-model.md).
 
 ---
 
@@ -176,4 +176,4 @@ Plano detalhado catálogo→ficha: **[`sheet-readiness-plan.md`](sheet-readiness
 | 2026-07-03 | Catálogo API P0–P3; auth; CRUD fichas; ficha PHB API |
 | 2026-07-03 | Game 7A–7C (level-up, inventário, mesa) |
 | 2026-07-04 | Front: wizard PHB, ficha edição/leitura, feats com opções, Sprint 9 polish |
-| 2026-07-04 | Deploy: `vercel.json`, fix pooler/pnpm, guia [`DEPLOY.md`](DEPLOY.md) |
+| 2026-07-04 | Deploy: `vercel.json`, fix pooler/pnpm, guia [`DEPLOY.md`](../deploy/DEPLOY.md) |

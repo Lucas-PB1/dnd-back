@@ -14,6 +14,10 @@ import {
   PatchInventoryItemDto,
 } from '../dto/inventory.dto';
 import { EquipmentSlotResolver } from './equipment-slot-resolver';
+import {
+  itemRequiresAttunement,
+  MAX_ATTUNED_ITEMS,
+} from '../domain/attunement';
 
 @Injectable()
 export class CharacterInventoryRepository {
@@ -60,6 +64,7 @@ export class CharacterInventoryRepository {
       quantity: dto.quantity ?? 1,
       location: 'backpack',
       equipmentSlot: null,
+      attuned: false,
     });
     await this.items.save(row);
     return this.toDto(row);
@@ -95,6 +100,7 @@ export class CharacterInventoryRepository {
           quantity,
           location: 'backpack',
           equipmentSlot: null,
+          attuned: false,
         }),
       );
     }
@@ -111,21 +117,30 @@ export class CharacterInventoryRepository {
       row.quantity = dto.quantity;
     }
 
-    const targetLocation = dto.location ?? row.location;
-    let targetSlot = dto.equipmentSlot ?? row.equipmentSlot;
+    const touchesLocation =
+      dto.location !== undefined || dto.equipmentSlot !== undefined;
 
-    if (targetLocation === 'backpack') {
-      row.location = 'backpack';
-      row.equipmentSlot = null;
-    } else {
-      targetSlot = await this.slotResolver.resolve(
-        characterId,
-        itemSlug,
-        targetSlot,
-      );
-      await this.clearSlotIfOccupied(characterId, targetSlot, itemSlug);
-      row.location = 'equipped';
-      row.equipmentSlot = targetSlot;
+    if (touchesLocation) {
+      const targetLocation = dto.location ?? row.location;
+      let targetSlot = dto.equipmentSlot ?? row.equipmentSlot;
+
+      if (targetLocation === 'backpack') {
+        row.location = 'backpack';
+        row.equipmentSlot = null;
+      } else {
+        targetSlot = await this.slotResolver.resolve(
+          characterId,
+          itemSlug,
+          targetSlot,
+        );
+        await this.clearSlotIfOccupied(characterId, targetSlot, itemSlug);
+        row.location = 'equipped';
+        row.equipmentSlot = targetSlot;
+      }
+    }
+
+    if (dto.attuned !== undefined) {
+      await this.applyAttunement(characterId, row, dto.attuned);
     }
 
     await this.items.save(row);
@@ -167,6 +182,37 @@ export class CharacterInventoryRepository {
     }
   }
 
+  private async applyAttunement(
+    characterId: string,
+    row: PlayerCharacterItem,
+    attuned: boolean,
+  ): Promise<void> {
+    if (row.attuned === attuned) return;
+
+    if (!attuned) {
+      row.attuned = false;
+      return;
+    }
+
+    const catalog = await this.assertItemExists(row.itemSlug);
+    if (!itemRequiresAttunement(catalog.properties)) {
+      throw new BadRequestException(
+        `Item '${row.itemSlug}' does not require attunement`,
+      );
+    }
+
+    const attunedCount = await this.items.count({
+      where: { characterId, attuned: true },
+    });
+    if (attunedCount >= MAX_ATTUNED_ITEMS) {
+      throw new BadRequestException(
+        `Maximum of ${MAX_ATTUNED_ITEMS} attuned items reached`,
+      );
+    }
+
+    row.attuned = true;
+  }
+
   private async toDto(row: PlayerCharacterItem): Promise<InventoryItemResponseDto> {
     const catalog = await this.catalogItems.findOne({ where: { slug: row.itemSlug } });
     return {
@@ -176,6 +222,8 @@ export class CharacterInventoryRepository {
       quantity: row.quantity,
       location: row.location,
       equipmentSlot: row.equipmentSlot,
+      attuned: row.attuned,
+      requiresAttunement: itemRequiresAttunement(catalog?.properties),
     };
   }
 }

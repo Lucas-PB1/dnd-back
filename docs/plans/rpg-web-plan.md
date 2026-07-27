@@ -1,4 +1,4 @@
-# Referência — `dnd-front` (bootstrap)
+﻿# Referência — `dnd-front` (bootstrap)
 
 Stack, workspace e env do frontend. **Status de entrega e próximos passos:** [`product-roadmap.md`](product-roadmap.md) (Fase 5).
 
@@ -59,7 +59,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 
 **dnd-api `.env`:** `FRONTEND_URL=http://localhost:3001`
 
-Integração detalhada: [`../dnd-front/docs/API-INTEGRATION.md`](../dnd-front/docs/API-INTEGRATION.md)
+Integração detalhada: [`../dnd-front/docs/API-INTEGRATION.md`](../../../dnd-front/docs/API-INTEGRATION.md)
 
 ---
 

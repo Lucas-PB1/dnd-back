@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Varre S022 (benefícios) vs defs em seeds S075+ e migrations 050_data (D002–D010).
- * Saída: docs/feat-options-audit.md
+ * Saída: docs/checklists/feat-options-audit.md
  *
  * Uso: node scripts/audit-feat-options.mjs
  */
@@ -192,7 +192,7 @@ lines.push('- Migrations: `database/migrations/050_data/D002`–`D010`');
 lines.push('- ASI em massa: `D003` (gerado por `npm run db:generate:feat-asi`)');
 lines.push('');
 
-const outPath = path.join(root, 'docs/feat-options-audit.md');
+const outPath = path.join(root, 'docs/checklists/feat-options-audit.md');
 fs.writeFileSync(outPath, lines.join('\n'), 'utf8');
 console.error(`Wrote ${outPath}`);
 console.error(`Covered: ${covered.length}, gaps: ${gaps.length}, ignored: ${ignoredCombat.length}`);

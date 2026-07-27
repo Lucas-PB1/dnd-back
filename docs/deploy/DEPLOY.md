@@ -1,4 +1,4 @@
-# Deploy — Vercel + Supabase
+﻿# Deploy — Vercel + Supabase
 
 Guia para publicar **dnd-api** e **dnd-front** com Supabase já populado.
 
@@ -199,7 +199,7 @@ curl https://sua-api.vercel.app/classes?limit=1
 
 Root Directory: `dnd-front` · Framework: **Next.js**
 
-Detalhes: [`dnd-front/docs/DEPLOY.md`](../../dnd-front/docs/DEPLOY.md)
+Detalhes: [`dnd-front/docs/DEPLOY.md`](../../../dnd-front/docs/DEPLOY.md)
 
 ---
 
@@ -218,5 +218,5 @@ Detalhes: [`dnd-front/docs/DEPLOY.md`](../../dnd-front/docs/DEPLOY.md)
 ## Referências
 
 - [NestJS on Vercel](https://vercel.com/docs/frameworks/backend/nestjs)
-- [infrastructure.md](infrastructure.md)
+- [infrastructure.md](../architecture/infrastructure.md)
 - Skill: `.cursor/skills/nest-vercel-deploy/`

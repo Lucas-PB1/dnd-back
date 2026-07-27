@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Dados PHB
 
-63 tabelas `phb_*` no schema `rpg`. Doc: [`docs/data-model.md`](../../docs/data-model.md).  
+63 tabelas `phb_*` no schema `rpg`. Doc: [`docs/architecture/data-model.md`](../../docs/architecture/data-model.md).  
 Skills: `rpg-catalog-model` · `phb-query-views` · `postgres-apply-catalog`.
 
 ## Modelo

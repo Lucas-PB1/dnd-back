@@ -1,12 +1,12 @@
-# Infraestrutura — decisão
+﻿# Infraestrutura — decisão
 
 Documento de referência para rules, skills e implementação.
 
 **Arquitetura (BC, CQRS, DDD):** [`architecture.md`](architecture.md)
 
-**Plano REST API (checklist mestre):** [`api-plan.md`](api-plan.md)
+**Plano REST API (checklist mestre):** [`api-plan.md`](../plans/api-plan.md)
 
-**Roadmap produto (API + app Next.js):** [`product-roadmap.md`](product-roadmap.md)
+**Roadmap produto (API + app Next.js):** [`product-roadmap.md`](../plans/product-roadmap.md)
 
 ## Decisão (2026-07)
 
@@ -16,7 +16,7 @@ Documento de referência para rules, skills e implementação.
 | **API** | NestJS na Vercel | Serverless, zero-config Nest, escala por request |
 | **ORM** | TypeORM | Mapeamento `rpg.phb_*`, views, `synchronize: false` |
 | **Auth** | Supabase Auth | JWT; RLS no Postgres para dados de jogador |
-| **Frontend** | Next.js — repo **dnd-front** | [`rpg-web-plan.md`](rpg-web-plan.md) |
+| **Frontend** | Next.js — repo **dnd-front** | [`rpg-web-plan.md`](../plans/rpg-web-plan.md) |
 
 ## Diagrama
 
@@ -112,7 +112,7 @@ PORT=3000
 
 ## Rules / skills derivadas
 
-Ver [`README.md`](../README.md#cursor--rules-e-skills) e `.cursor/rules/00-orchestrator.mdc`.
+Ver [`README.md`](../../README.md#cursor--rules-e-skills) e `.cursor/rules/00-orchestrator.mdc`.
 
 | Tema | Rule | Skill |
 |------|------|-------|

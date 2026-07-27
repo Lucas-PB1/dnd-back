@@ -19,4 +19,7 @@ export class PlayerCharacterItem {
 
   @Column({ name: 'equipment_slot', type: 'text', nullable: true })
   equipmentSlot!: EquipmentSlot | null;
+
+  @Column({ type: 'boolean', default: false })
+  attuned!: boolean;
 }

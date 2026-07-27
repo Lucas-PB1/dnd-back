@@ -1,4 +1,4 @@
-# Checklist — opções de talentos (PHB 2024)
+﻿# Checklist — opções de talentos (PHB 2024)
 
 Rastreio de `phb_feat_option_def` + aplicação de **+1** (`abilityIncrease` → `applyFeatAbilityIncreases` na criação).
 
@@ -60,7 +60,7 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 
 ## Lote 5 — Catálogo restante (auditoria S022)
 
-- [x] Varredura: benefícios com “Escolha…” sem `feat_option_def` — [`docs/feat-options-audit.md`](feat-options-audit.md) (`npm run db:audit:feat-options`)
+- [x] Varredura: benefícios com “Escolha…” sem `feat_option_def` — [`feat-options-audit.md`](feat-options-audit.md) (`npm run db:audit:feat-options`)
 - [x] Magias em talentos (lista dinâmica / ritual flag) — documentado na auditoria
 - [x] Sincronizar seeds `S075+` com migrations `050_data` — `S078` via `npm run db:sync:feat-option-seeds`
 

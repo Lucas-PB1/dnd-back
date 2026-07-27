@@ -1,0 +1,499 @@
+{
+  "summary": {
+    "subclasses": 6,
+    "subclassFeatures": 31,
+    "species": 2,
+    "speciesTraits": 5,
+    "feats": 4,
+    "spells": 15,
+    "magicItems": 5
+  },
+  "edition": {
+    "slug": "valda-spire-2024-en",
+    "label": "Valda Spire 2024 EN",
+    "book": "Valda's Spire of Secrets: Player Pack",
+    "language": "en",
+    "notes": "Mage Hand Press — Player Pack on D&D Beyond (2024 rules)"
+  },
+  "citation": {
+    "slug": "valda-spire-2024-en:player-pack",
+    "chapter": 1,
+    "chapterTitle": "Valda's Spire of Secrets: Player Pack"
+  },
+  "subclasses": [
+    {
+      "slug": "path-of-the-muscle-wizard",
+      "classSlug": "barbarian",
+      "name": "Path of the Muscle Wizard",
+      "tagline": "Be a Buff, Angry “Wizard”",
+      "summary": "You’re a wizard! Perhaps you went to wizarding school on a football scholarship or just picked up a book at the gym and started reading. No matter how you got here, you’re a wizard, one that just coincidentally has massive, rippling muscles. You have the big dumb hat and the book",
+      "description": "You’re a wizard! Perhaps you went to wizarding school on a football scholarship or just picked up a book at the gym and started reading. No matter how you got here, you’re a wizard, one that just coincidentally has massive, rippling muscles. You have the big dumb hat and the book filled with gibberish and everything!\n\nLucas Ferreira CM\n\nYou gently remind others, often by beating them to a pulp and cracking their bones, that your magical powers shouldn’t be questioned. You’re a good wizard—the best one, even! And only a fool would say otherwise.",
+      "sourceAnchor": "BarbarianPathoftheMuscleWizard",
+      "features": [
+        {
+          "level": 3,
+          "name": "Unarguable Wizardry",
+          "description": "Your unquestionable legitimacy (and immense pectoral muscles) give you Advantage on Charisma (Intimidation) checks made to convince others that you are, in fact, a wizard.\n\nAdditionally, if someone questions your legitimate magical prowess, you can take a Reaction to enter your Rage until the end of your next turn. This Rage can’t be extended and doesn’t expend a use of your Rage.",
+          "sourceAnchor": "Level3UnarguableWizardry"
+        },
+        {
+          "level": 3,
+          "name": "“Cantrips”",
+          "description": "You can call upon your “magic” to cast “Cantrips” in combat. Once on each of your turns when you hit a target with a Strength-based attack, you can use one of the following “Cantrips” of your choice.\n\nMage Hand. You can push the target up to 5 feet straight away from yourself if it is Large size or smaller. While your Rage is active, you can push the target up to 10 feet instead.\n\nShocking Grasp. The force of your strike is quite shocking. The target can’t make Opportunity Attacks until the end of the current turn. While your Rage is active, it can’t make Opportunity Attacks until the start of your next turn.\n\nTrue Strike. You really, truly strike, dealing an extra 1d6 damage to the target. The damage has the same type as the weapon or Unarmed Strike used for the attack. While your Rage is active, you add half your Barbarian level (round down) to the extra damage.",
+          "sourceAnchor": "Level3Cantrips"
+        },
+        {
+          "level": 6,
+          "name": "“Spells”",
+          "description": "Your “magic” is powerful enough to cast every “spell” that exists (and no one can prove otherwise without broken ribs). However, you only prepared the following “spells” today. While your Rage is active, you can use each of the following “Spells” once. When you do so, you can’t use that “Spell” again until you finish a Long Rest.\n\nBurning Hands. Your backhand slap is legendary. As an action, you can make an Unarmed Strike against each creature within your reach. On a hit, this strike deals Bludgeoning damage equal to 1d8 plus your Strength modifier and the target has Disadvantage on the next attack it makes before the start of your next turn.\n\nMagic Missile. As an action, you can make three ranged attacks using Darts, Daggers, or other weapons with the Thrown property that use Strength for the attack and damage rolls. Because Magic Missile never misses, you have Advantage on these attack rolls.\n\nShield. When you are hit by an attack roll, you can take a Reaction to quickly don a Shield to defend yourself. You gain the Shield’s AC bonus against the triggering attack, potentially causing it to miss. If the attack hits, the damage dealt to you is reduced by an amount equal to your Barbarian level.",
+          "sourceAnchor": "Level6Spells"
+        },
+        {
+          "level": 10,
+          "name": "Magic Resistance",
+          "description": "You’re such an amazing wizard that other wizards can’t even touch you. While your Rage is active, you have Advantage on saving throws against spells and other magical effects.",
+          "sourceAnchor": "Level10MagicResistance"
+        },
+        {
+          "level": 14,
+          "name": "I Cast Fist",
+          "description": "You can crush your enemies with your ultimate “spell”: Fist. When you take the Attack action while your Rage is active, you can replace one of your attacks with a really hard punch. Make an Unarmed Strike with Advantage. On a hit, the target takes Bludgeoning damage equal to 6d6 plus your Strength modifier and has the Prone condition if it is Huge or smaller. You can use this feature once per active Rage.",
+          "sourceAnchor": "Level14ICastFist"
+        }
+      ]
+    },
+    {
+      "slug": "dungeoneer",
+      "classSlug": "fighter",
+      "name": "Dungeoneer",
+      "tagline": "Survive the Dungeon",
+      "summary": "Only fools would dive headfirst into an abandoned crypt filled with monsters and deathtraps, but it seems only fools emerge from such crypts laden with as much loot as they can carry. The archetypal dungeon delver is a veteran of such suicidal dungeon delves, and has become intim",
+      "description": "Only fools would dive headfirst into an abandoned crypt filled with monsters and deathtraps, but it seems only fools emerge from such crypts laden with as much loot as they can carry. The archetypal dungeon delver is a veteran of such suicidal dungeon delves, and has become intimately familiar with the hazards therein. In the course of their adventures, such a Dungeoneer will have adopted countless best practices, along with a litany of unproven superstitions which they believe keeps them alive. Principles from “always be the first one to hit the monster” to “never be the first one to touch a treasure chest” line a Dungeoneer’s journal. However, it’s probably better to be paranoid and superstitious than lying at the bottom of a pit trap, incinerated by a Fireball, or digested by a mimic.\n\nMartin Kirby-Jackson",
+      "sourceAnchor": "FighterDungeoneer",
+      "features": [
+        {
+          "level": 3,
+          "name": "Kick in the Door",
+          "description": "You have Advantage on attack rolls you make during the first round of combat.",
+          "sourceAnchor": "Level3KickintheDoor"
+        },
+        {
+          "level": 3,
+          "name": "Heroic Superstition",
+          "description": "You gain Heroic Inspiration when you do any of the following.\n\nDamage Vulnerability. Deal a type of damage to which a creature has Vulnerability.\n\nFind Weakness. Trigger a creature’s specific weakness, such as Shadow’s Sunlight Weakness or dealing damage that prevents a creature’s Regeneration.\n\nGuess the Monster. Guess a creature’s specific kind (such as a mimic or lich) before seeing it. The GM confirms if you are correct when the creature is revealed. You can’t guess the identity of Humanoids.\n\nSecret Doors. Discover a secret door.\n\nTrapfinder. Detect or disarm a trap.\n\nTreasure Hoard. Find an Uncommon, Rare, Very Rare, or Legendary magic item or treasure worth 100 GP+.",
+          "sourceAnchor": "Level3HeroicSuperstition"
+        },
+        {
+          "level": 7,
+          "name": "Dungeon Precautions",
+          "description": "You can cast any of the following spells without a spell slot: Alarm, Comprehend Languages, Detect Magic, Detect Poison and Disease, Find Traps, Identify, and Purify Food and Drink. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this feature (choose the ability when you cast the spell).\n\nYou can use this feature five times and regain all expended uses when you finish a Long Rest.",
+          "sourceAnchor": "imgpathoftheLevel7DungeonPrecautions"
+        },
+        {
+          "level": 10,
+          "name": "Monster Kill",
+          "description": "Once per turn when you hit an Aberration, Dragon, Fey, Fiend, Monstrosity, Ooze, or Undead with an attack with a weapon, you can deal an extra 1d10 damage to the target. This damage is the same type dealt by the weapon.",
+          "sourceAnchor": "Level10MonsterKill"
+        },
+        {
+          "level": 15,
+          "name": "Avoidance",
+          "description": "When you're subjected to an effect that allows you to make a Strength, Dexterity, or Constitution saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. You can’t use this feature if you have the Incapacitated condition.",
+          "sourceAnchor": "Level15Avoidance"
+        },
+        {
+          "level": 18,
+          "name": "Veteran Hero",
+          "description": "Your dungeoneering expertise gives you the following benefits.\n\nPeerless Heroism. Once per turn when you make a D20 Test, you can expend Heroic Inspiration to turn the roll into a 20, instead of rerolling the d20.\n\nDouble Inspiration. You can have two instances of Heroic Inspiration at one time. You can use only one Heroic Inspiration per roll.",
+          "sourceAnchor": "Level18VeteranHero"
+        }
+      ]
+    },
+    {
+      "slug": "warrior-of-the-street",
+      "classSlug": "monk",
+      "name": "Warrior of the Street",
+      "tagline": "Strike with Combos and Special Moves",
+      "summary": "“Street fighting” is an urban discipline founded on necessity, whose blindingly fast, unique brand of martial arts has been honed and perfected in back-alley brawls and tournaments alike. Monks who adopt this relatively new technique place comparatively little value on spiritual ",
+      "description": "“Street fighting” is an urban discipline founded on necessity, whose blindingly fast, unique brand of martial arts has been honed and perfected in back-alley brawls and tournaments alike. Monks who adopt this relatively new technique place comparatively little value on spiritual enlightenment and inner focus; the thrill of split-second timing, rapid combos, and decisive knock-outs drive them to become the best combatants in the world.",
+      "sourceAnchor": "MonkWarrioroftheStreet",
+      "features": [
+        {
+          "level": 3,
+          "name": "Combo",
+          "description": "When you hit a creature with an Unarmed Strike and deal damage, you can expend 1 Focus Point to begin a combo. Until the end of the current turn, you gain a +2 bonus to attack rolls of your Unarmed Strikes. This bonus increases by 2, up to a maximum of +6, for each successive hit on the current turn. This bonus resets to +2 if you take damage or miss with an attack roll.\n\nLucas Ferreira CM",
+          "sourceAnchor": "Level3Combo"
+        },
+        {
+          "level": 3,
+          "name": "Iron Fist",
+          "description": "Whenever you hit an object with an Unarmed Strike, the hit is a Critical Hit.",
+          "sourceAnchor": "imgpathoftheLevel3IronFist"
+        },
+        {
+          "level": 6,
+          "name": "Special Moves",
+          "description": "You have memorized patterns of discrete movements that allow you to use the following special moves.\n\nEnergy Blast. When you take the Attack action on your turn, you can expend 1 Focus Point to replace one of your attacks with a blast of energy. One creature of your choice that you can see within 60 feet makes a Dexterity saving throw, taking Force damage equal to two rolls of your Martial Arts die, or half as much damage on a successful save.\n\nGuard Breaker. If you make an attack roll with your Unarmed Strike and miss the target, you can expend 1 Focus Point to perform a Guard Breaker. This Unarmed Strike deals damage equal to your Dexterity modifier to the target. This miss doesn’t reset your Combo bonus to attack rolls.\n\nUppercut. When you hit a creature with an Unarmed Strike and deal damage, you can expend 1 Focus point to make an uppercut. You can push the target up to 5 feet away from you and give the target the Prone condition if it is Large or smaller.",
+          "sourceAnchor": "Level6SpecialMoves"
+        },
+        {
+          "level": 11,
+          "name": "Air Dash",
+          "description": "On your turn, you can expend 1 Focus Point to gain a Fly Speed equal to your Speed until the end of your next turn (no action required). You have Advantage on the next melee attack you make before the end of the current turn.",
+          "sourceAnchor": "Level11AirDash"
+        },
+        {
+          "level": 17,
+          "name": "K.O.",
+          "description": "Once per turn when you hit a creature with an Unarmed Strike, you can attempt to knock the target out. The target takes extra Force damage equal to three rolls of your Martial Arts die. If the target has 100 Hit Points or fewer after you deal damage with the Unarmed Strike, it has the Unconscious condition for 10 minutes.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending 5 Focus Points (no action required).",
+          "sourceAnchor": "Level17KO"
+        }
+      ]
+    },
+    {
+      "slug": "oath-of-revelry",
+      "classSlug": "paladin",
+      "name": "Oath of Revelry",
+      "tagline": "Work Hard and Party Harder",
+      "summary": "Paladins who swear the Oath of Revelry make a solemn vow to party day and night until their hearts give out. The antithesis of stuffy, lawful crusaders, these emissaries of carousal travel the land, crashing parties and raising hell wherever they raise a glass. Authorities bristl",
+      "description": "Paladins who swear the Oath of Revelry make a solemn vow to party day and night until their hearts give out. The antithesis of stuffy, lawful crusaders, these emissaries of carousal travel the land, crashing parties and raising hell wherever they raise a glass. Authorities bristle at their arrival, but the youth cheer, for a Party Paladin is always accompanied by a good time.\n\nThese paladins share the following tenets:\n\nAbide by the doctrines of the Codicus Brodicus.\n\nCelebrate every occasion, inviting friend and foe alike.\n\nWhen necessary, fight for your right to party.",
+      "sourceAnchor": "PaladinOathofRevelry",
+      "features": [
+        {
+          "level": 3,
+          "name": "Oath of Revelry Spells",
+          "description": "The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of Revelry Spells table, you thereafter always have the listed spells prepared. New spells are marked with an asterisk (*).\n\n      Oath of Revelry Spells\n\nPaladin Level\nSpells\n\n3\nCharm Person, Hideous Laughter\n\n5\nEnhance Ability, Hangover *\n\n9\nCreate Food And Water, Hypnotic Pattern\n\n13\nCharm Monster, Freedom of Movement\n\n17\nGeas, Telepathic Bond",
+          "sourceAnchor": "Level3OathofRevelrySpells"
+        },
+        {
+          "level": 3,
+          "name": "Conjure Drink",
+          "description": "As a Magic action, you can expend one use of your Channel Divinity to conjure a number of mugs filled with frothy ale up to your Charisma modifier (minimum of one), which appear in spaces within 30 feet of yourself. A creature that drinks the ale as a Bonus Action gains Temporary Hit Points equal to your Charisma modifier and has Advantage on saving throws for 1 minute. When you finish a Long Rest, the mugs and remaining ale vanish.",
+          "sourceAnchor": "Level3ConjureDrink"
+        },
+        {
+          "level": 7,
+          "name": "Aura of Fraternity",
+          "description": "You and your allies deal an extra 1d4 damage on attacks using Melee weapons or Unarmed Strikes while in your Aura of Protection. This damage is the same type dealt by the weapon or Unarmed Strike.",
+          "sourceAnchor": "Level7AuraofFraternity"
+        },
+        {
+          "level": 15,
+          "name": "Merrymaker",
+          "description": "When you or an ally within 30 feet of yourself that can see or hear you makes a D20 Test, you can take a Reaction to give that creature Advantage on the roll.\n\nYou can use this feature a number of times equal to your Charisma modifier (minimum of once), and regain all expended uses when you finish a Long Rest. If the creature still fails the D20 Test, this use of Merrymaker isn’t expended.",
+          "sourceAnchor": "Level15Merrymaker"
+        },
+        {
+          "level": 20,
+          "name": "Party Animal",
+          "description": "As a Bonus Action, you can imbue your Aura of Protection with the many-hued magic of revelry, granting the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can’t use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\n\nExtra Damage. The extra damage from your Aura of Fraternity increases to 1d8.\n\nHeroic Inspiration. At the start of each of your turns, you can give Heroic Inspiration to one ally within the aura.\n\nImmunities. You and your allies have Immunity to the Blinded, Deafened, Exhaustion, and Poisoned conditions while in the aura.\n\nMartin Kirby-Jackson",
+          "sourceAnchor": "Level20PartyAnimal"
+        }
+      ]
+    },
+    {
+      "slug": "arachnoid-stalker",
+      "classSlug": "rogue",
+      "name": "Arachnoid Stalker",
+      "tagline": "Sling Webs and Crawl Walls",
+      "summary": "A life-changing event, such as being cursed by a drider or being bitten by a dangerously transmuted arachnid, has imbued you with the abilities of a spider. This transformation might have left you physically unchanged, or you may have developed a half-dozen eyes, lanky and hairy ",
+      "description": "A life-changing event, such as being cursed by a drider or being bitten by a dangerously transmuted arachnid, has imbued you with the abilities of a spider. This transformation might have left you physically unchanged, or you may have developed a half-dozen eyes, lanky and hairy limbs, or a set of inhuman mandibles. Whatever the side effects, you can now produce deadly poison and ropes of silken web from your palms, and even scale walls with your fingertips.",
+      "sourceAnchor": "RogueArachnoidStalker",
+      "features": [
+        {
+          "level": 3,
+          "name": "Webbing",
+          "description": "You can magically produce sticky, silken spider webs from your hands as a Bonus Action. This web dissolves after 1 minute. When you create the webs, you can use them to do one of the following.\n\nPull Yourself. You project a line of web at a point you can see within 30 feet, pulling yourself to that point in a straight line without provoking Opportunity Attacks. You can use this benefit as a Reaction when you fall to pull yourself up to 10 feet in any direction.\n\nManipulate Objects. You can use a line of web to manipulate an object that isn’t being worn or carried within 30 feet. For example, you can pull an object to your hand, close a door, or snatch a Small or smaller object weighing less than 10 pounds.\n\nCreate Rope. You create a 60-foot-long Rope of web and anchor it to a point you choose.\n\nWeb Spell. You cast Web without a spell slot as a part of the Bonus Action used for this feature (DC equals 8 plus your Dexterity modifier and Proficiency Bonus). When you cast it using this feature, the webs fill a 5-foot Cube, and the spell’s duration becomes 1 minute. You can cast this spell using this feature twice. You regain one expended use when you finish a Short Rest, and you regain all expended uses when you finish a Long Rest.",
+          "sourceAnchor": "Level3Webbing"
+        },
+        {
+          "level": 3,
+          "name": "Venomous Strike",
+          "description": "When you deal Sneak Attack damage to a creature, you can choose for the Sneak Attack to deal d8s of Poison damage instead of d6s of the same type dealt by the weapon.",
+          "sourceAnchor": "Level3VenomousStrike"
+        },
+        {
+          "level": 9,
+          "name": "Wall Crawling",
+          "description": "You’ve become accustomed to moving like a spider, granting you the following benefits.\nClimber. You gain a Climb Speed equal to your Speed.\n\nHiding on Ceilings. If you are on a ceiling and Lightly Obscured, you can take the Hide action as long as any enemy that could see you is below you.\n\nSpider Climb. You can move up, down, and across vertical surfaces and along ceilings, while leaving your hands free.",
+          "sourceAnchor": "Level9WallCrawling"
+        },
+        {
+          "level": 13,
+          "name": "Spider Sense",
+          "description": "When you make a saving throw and take damage, you can take a Reaction to use your Uncanny Dodge, halving the damage you take (round down).",
+          "sourceAnchor": "Level13SpiderSense"
+        },
+        {
+          "level": 17,
+          "name": "Paralytic Venom",
+          "description": "You gain the following Cunning Strike option.\n\nParalyze (Cost: 4d6). When you deal Poison damage with your Venomous Strike, the target must succeed on a Constitution saving throw or have the Paralyzed condition until the end of your next turn.\n\nLucas Ferreira CM",
+          "sourceAnchor": "Level17ParalyticVenom"
+        }
+      ]
+    },
+    {
+      "slug": "future-you-patron",
+      "classSlug": "warlock",
+      "name": "Future You Patron",
+      "tagline": "Manipulate Time with Help from the Future",
+      "summary": "Your patron is you in a decades-distant future. Perhaps your future self found an artifact of great power connecting them to the past, which they must now lead you to discover, or perhaps they were taught the mystic arts by their future self long ago, a cycle you will have to con",
+      "description": "Your patron is you in a decades-distant future. Perhaps your future self found an artifact of great power connecting them to the past, which they must now lead you to discover, or perhaps they were taught the mystic arts by their future self long ago, a cycle you will have to continue someday. Your future self has forgotten the fine details of some things and outright refuses to tell you about things you “can’t know yet,” but nevertheless offers compelling insight and guidance. You’re not quite sure what your future self is planning for your future (and for their past), but one thing is certain—they need you alive.",
+      "sourceAnchor": "WarlockFutureYouPatron",
+      "features": [
+        {
+          "level": 3,
+          "name": "Future You Spells",
+          "description": "The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Future You Spells table, you thereafter always have the listed spells prepared. New spells are marked with an asterisk (*).\n\nFuture You Spells\n\nWarlock Level\nSpells\n\n3\nAccelerate/Decelerate,* Delay,* Enhance Ability, Moment to Think,* Recall\n\n5\nProtection from Energy, Slow\n\n7\nDeath Ward, Dire Warning *\n\n9\nLegend Lore, Telepathic Bond\n\nIn addition, strange effects linger after communicating with your future self. You gain one of the traits from the Future You Quirks table.\n\nFuture You Quirks\n\nd6\nQuirks\n\n1\nYou often speak in the wrong tense or refer to yourself in a plural.\n\n2\nYou sometimes refer to a person by name before they’ve introduced themselves.\n\n3\nYou are unreasonably calm in dire circumstances.\n\n4\nIn certain lighting, you look much older than you are.\n\n5\nSeeing certain people alive instantly reduces you to tears.\n\n6\nYour future fashion sense clashes completely with that of today.",
+          "sourceAnchor": "Level3FutureYouSpells"
+        },
+        {
+          "level": 3,
+          "name": "It Happened Like This",
+          "description": "Your discussions of the future with yourself have given you peripheral knowledge about how events will play out. Whenever you finish a Short or Long Rest, the GM rolls a d20 and a d4 in secret and records the number rolled on the d20. The GM tells you the recorded d20 roll, unless they roll a 4 on the d4; in that case, they lie about the recorded d20 roll.\n\nLucas Ferreira CM\n\nYou can replace any D20 Test made by you or a creature you can see with the recorded d20 roll (no action required). You must choose to do so before the roll. If the GM lied about the roll, they inform you of the actual recorded d20 roll only after you replace the test with it.",
+          "sourceAnchor": "Level3ItHappenedLikeThis"
+        },
+        {
+          "level": 6,
+          "name": "I Could Do With Fewer Scars",
+          "description": "Your future self warns you of particular attacks to watch out for. When a creature you can see hits you with an attack roll, you can take a Reaction to gain a +10 bonus to your AC against that attack, potentially causing it to miss.\n\nYou can use this feature twice. You regain one expended use when you finish a Short Rest, and you regain all expended uses when you finish a Long Rest.",
+          "sourceAnchor": "Level6ICouldDoWithFewerScars"
+        },
+        {
+          "level": 10,
+          "name": "Expect an Ambush",
+          "description": "You have Advantage on Initiative rolls and Resistance to all damage on the first round of combat.",
+          "sourceAnchor": "Level10ExpectanAmbush"
+        },
+        {
+          "level": 14,
+          "name": "Grandfather Paradox",
+          "description": "As a Magic action, you can goad a creature within 60 feet of you that can see or hear you into causing a paradox. The creature must make an Intelligence saving throw against your spell save DC. On a failed save, the creature takes 10d6 Psychic damage and has the Stunned condition for 1 minute as it is locked between opposing timelines. On a successful save, the target takes half as much damage only. The Stunned creature repeats the save at the end of each of its turns, ending the condition on itself on a success.\n\nOnce you use this feature, you can’t use it again until you finish a Long Rest.",
+          "sourceAnchor": "Level14GrandfatherParadox"
+        }
+      ]
+    }
+  ],
+  "species": [
+    {
+      "slug": "geppettin",
+      "name": "Geppettin",
+      "description": "Ever a joy to children, geppettin resemble living playthings made of wood, cloth, or porcelain. Though easily mistaken for puppets, geppettin aren’t manipulated by a just-out-of-sight puppeteer; they are animated, sentient, and independent.\n\nAs a species, the geppettin are an oddity. Though rare, they are numerous enough and share enough similarities that they may be counted as an actual species, and not merely freak mishaps of magic. While there might be dedicated creators of geppettin, as there are with golems, many geppettin come to life on their own.\n\nGeppettin are often shorter than halflings. Their physical features vary greatly from type to type, but they often resemble Humanoids. Despite being made of somewhat flimsy materials, sentience grants them an odd hardiness. They never hunger and rarely tire. Most find some form of work or profession in entertainment, but a few find fantastic success as spies and assassins.\n\nAs Constructs, geppettin don’t age, and mature as soon as they become sentient.",
+      "traits": [
+        {
+          "name": "Bisques",
+          "description": "Bisque geppettin are a form of porcelain doll, crafted with exacting specification and luxurious clothing materials. Though they are designed to look as realistic as possible, they are often the most terrifying geppettin due to their lifeless visages.",
+          "sourceAnchor": "Bisques"
+        },
+        {
+          "name": "Marionettes",
+          "description": "Marionette geppettin are made mostly out of wood, with painted faces and carved clothing. Due to their construction, their jointed limbs are quite flexible, and they are known to be fantastic dancers. The very largest marionettes, called mannequins, stand as tall as a human and bear completely blank, expressionless faces.",
+          "sourceAnchor": "Marionettes"
+        },
+        {
+          "name": "Plushies",
+          "description": "Plushies, also called raggedies, are any form of stuffed or soft geppettin. Though they often look Humanoid, they may also look like animals, monsters, or any other anthropomorphic creature.\n\nMoniek Schilder",
+          "sourceAnchor": "Plushies"
+        },
+        {
+          "name": "Geppettin Traits",
+          "description": "Creature Type: Construct\n\nSize: Small (about 2–3 feet tall) or Medium (about 6 feet tall; Marionette construction only)\n\nSpeed: 30 feet\n\nAs a Geppettin, you have these special traits.\n\nDarkvision. You have Darkvision with a range of 60 feet.\n\nConstruct Nature. You don’t need food, drink, or air. You don’t need to sleep, and magic can’t put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a motionless state, during which you retain consciousness.\n\nHandcrafted Quality. Your design might be unnerving, articulated, or friendly. You have proficiency in the Intimidation, Performance, or Persuasion skill.\n\nGepettin Construction. For simplicity, geppettin are classified by their materials: bisque are porcelain, marionettes are wood, and plushies are made of fabric. Choose one of the following constructions.\n\nBisque. You are indistinguishable from a porcelain doll until the moment you strike. Whenever you deal damage to a creature with a weapon attack roll on your first turn in combat, the creature takes extra damage equal to your Proficiency Bonus. The damage is the same type dealt by the weapon.\n\nMarionette. Loose strings hang from your jointed limbs. During your turn, your reach is 5 feet greater with any Melee weapon that lacks the Reach, Two-Handed, and Versatile properties.\n\nPlushie. You are stuffed with fluff. When you take Bludgeoning damage, you can take a Reaction to gain Resistance to the triggering damage. You are also knocked 5 feet away from the source of the damage. You can’t take this Reaction if you can’t be knocked away from the source of the damage.",
+          "sourceAnchor": "GeppettinTraits"
+        }
+      ],
+      "sourceAnchor": "Geppettin",
+      "creatureType": "Construct",
+      "size": "Small (about 2–3 feet tall) or Medium (about 6 feet tall; Marionette construction only)",
+      "speed": "30 feet"
+    },
+    {
+      "slug": "mandrake",
+      "name": "Mandrake",
+      "description": "With a skin of thick bark and leaves growing at their extremities, you could be forgiven for believing that mandrakes are simply bizarre plants, treants, or animated trees. The truth is far stranger: mandrakes are a bizarre midway between animal and plant. A ruby ichor pumps through their root-veins, and they can equally eat living things or bask in sunlight for nourishment. Depending on the season in which they are harvested, a mandrake might resemble a spry, leafy sapling or thick, woody tree.\n\nCommon folks have long held misconceptions about mandrakes—believing them categorically to be wailing babies—but druids know them as the green emissaries who stand between the realms of animals and plants, making peace for all parties. In druidic lore, mandrakes are bespoke creations of a primordial goddess of nature, intended to act as delegates of her will.\n\nToday, mandrakes are rare and make their homes in the forests near where villages and cities meet the true wilds. They live for hundreds of years, growing wider and more gnarled with age.\n\nMartin Kirby-Jackson",
+      "traits": [
+        {
+          "name": "Mandrake Traits",
+          "description": "Creature Type: Plant\n\nSize: Medium (about 5–7 feet tall)\n\nSpeed: 30 feet\n\nAs a Mandrake, you have these special traits.\n\nPlant Nature. As long as you are in direct sunlight for at least 4 hours a day, you don’t need to eat. Additionally, you can breathe through your leaves and you can absorb water and nutrients through your feet.\n\nNatural Connection. You have proficiency in the Nature or Survival skill.\n\nRoot Magic. You know the Shillelagh cantrip and can target yourself with the spell, treating one of your limbs as a Club for the duration of the spell.\n\nWhen you reach character level 3, you always have Goodberry prepared, and when you reach character level 5, you always have Barkskin prepared. You can cast each of these spells without a spell slot. Once you cast either spell in this way, you can’t cast that spell in this way again until you finish a Long Rest. You can also cast these spells using spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select this species).\n\nEntangling Vines. You can take a Bonus Action to cause grasping weeds and vines to sprout up from the ground around a Large or smaller creature you can see within 30 feet of yourself. Until the end of the creature’s next turn, its Speed is 0 and can’t increase. This effect ends early if the creature replaces one of its attacks with with freeing itself. You can use this Bonus Action a number of times equal to your Proficiency Bonus and you regain all expended uses when you finish a Long Rest.\n\nWhen you reach character level 3, your Entangling Vines gain an additional effect based on the season in which you were harvested (choose when you select this species):\n\nSpring. Your Entangling Vines can target an airborne creature within 30 feet of the ground, which is pulled safely to the ground when you use this trait.\n\nSummer. Your Entangling Vines can move the target up to 10 feet to an unoccupied space on the ground or floor.\n\nAutumn. Your Entangling Vines can affect a second creature within 5 feet of the first target.\n\nWinter. The target takes Cold damage equal to your Proficiency Bonus.",
+          "sourceAnchor": "MandrakeTraits"
+        }
+      ],
+      "sourceAnchor": "Mandrake",
+      "creatureType": "Plant",
+      "size": "Medium (about 5–7 feet tall)",
+      "speed": "30 feet"
+    }
+  ],
+  "feats": [
+    {
+      "slug": "brutal-grip",
+      "name": "Brutal Grip",
+      "description": "General Feat (Prerequisite: Level 4+, Strength 13+)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Strength score by 1, to a maximum of 20.\n\nHeavy Duelist. You can wield a Melee weapon with the Two-Handed property in one hand.\n\nVersatile Dual Wielder. While wielding a Melee weapon with the Versatile property in one hand, the weapon has the Light property for you.",
+      "benefits": [],
+      "sourceAnchor": "BrutalGrip",
+      "categoryHint": "general"
+    },
+    {
+      "slug": "field-commander",
+      "name": "Field Commander",
+      "description": "General Feat (Prerequisite: Level 4+, Charisma 13+)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Charisma score by 1, to a maximum of 20.\n\nCommand. As an action, you can issue a command to an ally within 60 feet that can hear you. It can immediately take an action as a Reaction. That action can be used to take only the Attack (one attack only), Dash, Dodge, Hide, Influence, Search, Study, or Utilize action.\n\nTight Formation. While you are within 5 feet of two or more allies that don’t have the Incapacitated condition, enemies can’t have Advantage on attack rolls against you.",
+      "benefits": [],
+      "sourceAnchor": "FieldCommander",
+      "categoryHint": "general"
+    },
+    {
+      "slug": "focused-critical",
+      "name": "Focused Critical",
+      "description": "General Feat (Prerequisite: Level 4+)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Strength or Dexterity score by 1, to a maximum of 20.\n\nImproved Critical. Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 on the d20.",
+      "benefits": [],
+      "sourceAnchor": "FocusedCritical",
+      "categoryHint": "general"
+    },
+    {
+      "slug": "iron-hero",
+      "name": "Iron Hero",
+      "description": "General Feat (Prerequisite: Level 4+)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Strength or Dexterity score by 1, to a maximum of 20.\n\nUnderdog’s Resolve. When you are attacked by a creature that has a CR higher than your level, you gain a +2 bonus to your Armor Class for that attack.\n\nVengeful Strike. You have Advantage on attack rolls against any creature that has reduced one of your allies to 0 Hit Points since the end of your last turn.\n\nHeroic Intervention. When an enemy you can see takes a Legendary Action, you can take a Reaction to intercede, preventing the Legendary Action from happening. You can take this Reaction a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.\n\nAgustin Marceillac",
+      "benefits": [],
+      "sourceAnchor": "IronHero",
+      "categoryHint": "general"
+    }
+  ],
+  "spells": [
+    {
+      "slug": "accelerate-decelerate",
+      "name": "Accelerate/Decelerate",
+      "levelLabel": null,
+      "description": "Level 1 Transmutation [Chronomancy] (Bard, Cleric, Sorcerer, Wizard)\n\nCasting Time: Reaction, which you take when you see an attack roll hit a creature within 60 feet of yourself\n\nRange: 60 feet\n\nComponents: V, S, M (a drop of oil or molasses)\n\nDuration: Instantaneous\n\nThis spell accelerates or decelerates an attack (see the chosen effect below) the instant before it strikes, lessening or multiplying its force.\n\nAccelerate. The target takes an extra 2d6 damage from the attack. This extra damage is the same type dealt by the triggering attack.\n\nDecelerate. Reduce the damage the target takes by 2d6 (to a minimum of 0 damage).\n\nUsing a Higher-Level Spell Slot. The extra damage or reduction in damage increases by 1d6 for each slot level above 1.",
+      "sourceAnchor": "AccelerateDecelerate"
+    },
+    {
+      "slug": "clue",
+      "name": "Clue",
+      "levelLabel": null,
+      "description": "Level 1 Divination (Bard, Cleric, Druid, Paladin, Ranger, Wizard)\n\nCasting Time: Action or Ritual\n\nRange: Touch\n\nComponents: V, S, M (a magnifying glass and pipe)\n\nDuration: 10 minutes\n\nWhen you cast this spell, all footprints and fingerprints within a 30-foot Emanation originating from you become highlighted and glow faintly for the duration. When you cast the spell, choose any point in time up to 10 days ago. Only footprints and fingerprints left between that time and the present will be highlighted. Each creature that leaves footprints and fingerprints is assigned a unique color, but are not otherwise identified. Any creature that moves or touches objects within the Emanation will also leave colorful footprints and fingerprints, which might reveal invisible creatures in the area.",
+      "sourceAnchor": "Clue"
+    },
+    {
+      "slug": "delay",
+      "name": "Delay",
+      "levelLabel": null,
+      "description": "Level 1 Transmutation [Chronomancy] (Bard, Sorcerer, Wizard)\n\nCasting Time: Action\n\nRange: 60 feet\n\nComponents: V, S, M (an octagonal sign)\n\nDuration: Instantaneous\n\nYou briefly slow time for a creature of your choice that you can see within range. The target must succeed on a Wisdom saving throw or be moved to last place in the Initiative order from the start of the next round onwards.",
+      "sourceAnchor": "Delay"
+    },
+    {
+      "slug": "dire-warning",
+      "name": "Dire Warning",
+      "levelLabel": null,
+      "description": "Level 4 Divination [Chronomancy] (Cleric, Wizard)\n\nCasting Time: Action\n\nRange: Self\n\nComponents: V, S\n\nDuration: Instantaneous\n\nYou receive a message of up to 6 words from yourself in the future, warning you of a critical threat or pointing you toward a fruitful avenue. The GM determines this message. At some point in the future, once you have learned why you sent the message, you must perform a ritual over the course of 10 minutes, which can be done during a Short or Long Rest, to deliver the message back in time to your past self. If you cast this spell and receive no message, it indicates that you will never complete the ritual in the future, possibly owing to your death or another hindrance.\n\nOnce you cast this spell, you can’t cast it again for 7 days or until you perform its ritual.",
+      "sourceAnchor": "DireWarning"
+    },
+    {
+      "slug": "defenestration",
+      "name": "Defenestration",
+      "levelLabel": null,
+      "description": "Level 2 Evocation (Bard, Sorcerer, Wizard)\n\nCasting Time: Action\n\nRange: 30 feet\n\nComponents: V, S\n\nDuration: Instantaneous\n\nA wave of force erupts from your open hand, hurling a creature you can see within range through a window. The target makes a Strength saving throw. On a failure, the target is pushed up to 20 feet and thrown through a window of your choice. If there is no window within 20 feet of the target, it is instead pushed up to 20 feet in a direction of your choice and thrown through a window of arcane force, which materializes behind the creature and vanishes after it shatters. The target takes 4d6 Slashing damage and has the Prone condition when it is thrown through a window. On a successful save, the target is instead only pushed 10 feet and takes no damage.\n\nUsing a Higher-Level Spell Slot. The damage increases by 1d6 and the distance the target is pushed on a success or failure increases by 5 feet for each spell slot level above 2.",
+      "sourceAnchor": "Defenestration"
+    },
+    {
+      "slug": "mandy-s-feral-follower",
+      "name": "Mandy’s Feral Follower",
+      "levelLabel": null,
+      "description": "Level 4 Transmutation (Wizard)\n\nCasting Time: Action\n\nRange: 30 feet\n\nComponents: V, S, M (a small servant’s bell)\n\nDuration: Special\n\nYou touch a Medium or smaller Beast, which shape-shifts into a Humanoid with an appearance of your choice. The Beast’s statistics are replaced by the stat block of a Commoner but retains its Hit Points and Hit Point Dice. You choose the Commoner’s skill proficiency. The commoner wears Fine Clothes but has no other equipment, and has a basic understanding of all unskilled tasks.\n\nThe target gains 10 Temporary Hit Points. The spell ends early on the target if it has no Temporary Hit Points left. When the spell ends, the Fine Clothes dissipate into smoke.\n\nCombat. The commoner is an ally to you and your allies. It rolls its own Initiative and acts on its own turn. It behaves as though it is dutifully employed by you.\n\nDuration. This spell’s duration varies depending upon when and where it was cast. If cast in a location where time passes normally, the spell lasts until the twelfth stroke of the next midnight, however long that may be. Elsewhere, the spell lasts for 24 hours.\n\nUsing a Higher-Level Spell Slot. You can shape-shift one additional Beast for each spell slot level above 4.",
+      "sourceAnchor": "MandysFeralFollower"
+    },
+    {
+      "slug": "finger-guns",
+      "name": "Finger Guns",
+      "levelLabel": null,
+      "description": "Evocation Cantrip (Bard, Sorcerer, Wizard)\n\nCasting Time: Bonus Action\n\nRange: Self\n\nComponents: V, S\n\nDuration: 1 minute\n\nYou extend your forefinger and thumb, a dangerous gesture mimicking a gun. For the duration, your hand counts as a Simple Ranged weapon with a range of 60/240 feet and the Slow mastery property. You can use your spellcasting ability instead of Dexterity for the attack rolls of this weapon. On a hit, the weapon deals 2d6 Force damage and doesn’t add your ability modifier to damage.\n\nCantrip Upgrade. The weapon’s normal range increases by 30 feet and its long range increases by 120 feet when you reach levels 5 (90/360 feet), 11 (120/480 feet), and 17 (150/600 feet).",
+      "sourceAnchor": "FingerGuns"
+    },
+    {
+      "slug": "game-of-fate",
+      "name": "Game of Fate",
+      "levelLabel": null,
+      "description": "Level 6 Enchantment (Bard, Wizard)\n\nCasting Time: Action or Ritual\n\nRange: 60 feet\n\nComponents: V, S, M (a Gaming Set)\n\nDuration: 1 hour\n\nYou magically compel a creature within range that can hear and understand you to a nonmagical game with vital consequences. An unwilling creature must succeed on a Wisdom saving throw or be compelled to join you in the game.\n\nThe loser of the game takes 6d6 Psychic damage. If no player has won or lost by the end of the spell’s duration, both you and the target take this damage. If you or one of your allies harms the target, you forfeit the game, and vice versa if the target or one of its allies harms you.\n\nAdditionally, you and the target creature can negotiate for greater stakes. You can wager for higher Psychic damage (up to a maximum of 12d6), currency, property, or more esoteric rewards, such as bestowal of a noble title. The spell reveals if a creature attempts to place a bet it can’t fulfill. A bet is finalized when you and the target agree on the bet, solidifying the bet with a handshake or similar gesture. Property or currency bet on the game is teleported to the winner at the game’s conclusion. The loser is also magically compelled to take any action (such as bestowing a noble title) wagered as part of a bet.\n\nLastly, no spell, magical effect, or creature other than you and the target can influence the game’s outcome.",
+      "sourceAnchor": "GameofFate"
+    },
+    {
+      "slug": "hangover",
+      "name": "Hangover",
+      "levelLabel": null,
+      "description": "Level 2 Enchantment (Bard, Sorcerer, Wizard)\n\nCasting Time: Action\n\nRange: 30 feet\n\nComponents: V, S, M (a vial of strong liquor)\n\nDuration: Instantaneous\n\nYou emit a drunken aura that quickly washes away, leaving an intense hangover. A creature you choose within range makes a Constitution saving throw. On a failed save, the creature takes 3d8 Psychic damage and has the Poisoned condition until the end of your next turn. On a successful save, the target takes half as much damage only. The target has Disadvantage on Constitution saving throws it makes to maintain Concentration as a result of this damage.\n\nUsing a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 2.",
+      "sourceAnchor": "Hangover"
+    },
+    {
+      "slug": "memorize",
+      "name": "Memorize",
+      "levelLabel": null,
+      "description": "Level 1 Enchantment (Bard, Cleric, Wizard)\n\nCasting Time: Action or Ritual\n\nRange: Touch\n\nComponents: V, S, M (silver string worth 10+ GP, tied in a knot, which the spell consumes)\n\nDuration: Instantaneous\n\nWhen you cast this spell, your eyes pass over a page of written text that is committed to your memory. For the next year, you remember the exact details of all information on the page. After that time, you have Advantage on all Intelligence checks you make to recall this information.",
+      "sourceAnchor": "Memorize"
+    },
+    {
+      "slug": "moment-to-think",
+      "name": "Moment to Think",
+      "levelLabel": null,
+      "description": "Transmutation Cantrip [Chronomancy] (Cleric, Sorcerer, Wizard)\n\nCasting Time: Bonus Action\n\nRange: Self\n\nComponents: V\n\nDuration: Instantaneous\n\nWhen you cast this spell, you briefly stop time for everyone but yourself. You can take one additional action and move around in your space while no time passes for other creatures. That action can be used only to take the Search, Study, or Utilize action. Furthermore, you can’t affect or damage any creature or object, other than objects you are wearing or carrying. If an object leaves your hand, it also becomes frozen in time.",
+      "sourceAnchor": "MomenttoThink"
+    },
+    {
+      "slug": "paradox",
+      "name": "Paradox",
+      "levelLabel": null,
+      "description": "Level 9 Transmutation [Chronomancy] (Sorcerer, Warlock, Wizard)\n\nCasting Time: Action\n\nRange: 60 feet\n\nComponents: V, S\n\nDuration: Instantaneous\n\nBy twisting the flow of time into knots, you cause one action of your choice taken within range within the last round to be undone. Reality then reasserts itself, recoiling from the damage caused by removing an event from time. The direct effects of that action, such as damage dealt by an attack or spell, are undone, but the indirect effects, such as creatures choosing to move to different locations, are not. The creature that took the action takes 10d8 Psychic damage, as it copes with its history being modified.",
+      "sourceAnchor": "Paradox"
+    },
+    {
+      "slug": "polybrachia",
+      "name": "Polybrachia",
+      "levelLabel": null,
+      "description": "Level 3 Conjuration (Druid, Paladin, Ranger, Warlock)\n\nCasting Time: Action\n\nRange: Touch\n\nComponents: V, S, M (a pair of armbands)\n\nDuration: Concentration, up to 10 minutes\n\nTwo muscular arms of brilliant arcane energy appear on a willing creature that you touch. These arms are fully functional and can be used to wield weapons and Shields (allowing the target to simultaneously hold 2 two-handed weapons, or 4 one-handed weapons), perform Somatic components of spells, and perform other actions. For the duration, the target has Advantage on Strength (Athletics) checks. The target can take a Bonus Action to make a melee attack using a weapon wielded by the arms.",
+      "sourceAnchor": "Polybrachia"
+    },
+    {
+      "slug": "recall",
+      "name": "Recall",
+      "levelLabel": null,
+      "description": "Level 2 Conjuration [Chronomancy] (Sorcerer, Wizard)\n\nCasting Time: Bonus Action\n\nRange: Self\n\nComponents: V, S\n\nDuration: 1 round\n\nRecord your location when you cast this spell. Until the end of your next turn, you can take a Reaction in response to an attack roll, a creature casting a spell, or a creature moving within 5 feet of you to teleport back to that location, or to the nearest unoccupied space if that space is occupied. This teleportation precedes the triggering attack or spell. The spell then ends.",
+      "sourceAnchor": "Recall"
+    },
+    {
+      "slug": "rumor",
+      "name": "Rumor",
+      "levelLabel": null,
+      "description": "Level 1 Enchantment (Bard, Wizard)\n\nCasting Time: Action\n\nRange: Self\n\nComponents: V, S\n\nDuration: 1 minute\n\nYou magically spread a rumor of 10 words or less in a 100-foot Emanation originating from you. Any creature within the Emanation that can hear and understand three or more other creatures believes that they hear the rumor being repeated by someone nearby. Different creatures hear the rumor from different people, so a concrete origin is impossible to discern. Generally, creatures won’t become Hostile upon hearing even the most vicious rumors, but hearing a rumor can affect their attitude positively or negatively.",
+      "sourceAnchor": "Rumor"
+    }
+  ],
+  "magicItems": [
+    {
+      "slug": "frog-prince-statuette",
+      "name": "Frog Prince Statuette",
+      "description": "Wondrous Item, Rare\n\nWhile holding this clay statuette of a frog, you can speak its command word and kiss it to cast the spell Mandy’s Feral Follower, transforming the statuette into a Commoner. The commoner created by the statuette retains the memories of each time it is transformed, no matter what appearance you ascribe to it.\n\nOnce it has been used, the statuette can’t transform again until the next dawn.\n\nLucas Ferreira CM",
+      "sourceAnchor": "FrogPrinceStatuette"
+    },
+    {
+      "slug": "leonora-s-throne-of-indolence",
+      "name": "Leonora’s Throne of Indolence",
+      "description": "Wondrous item, Very Rare (Requires Attunement)\n\n            Lucas Ferreira CM\n\n            This high-backed armchair made of oak and gold weighs 100 pounds. When you sit in it and speak its command word as a Magic action, it hovers beneath you and can fly through the air. The throne has a Fly Speed of 50 feet, can hover, and can carry up to 400 pounds. The throne stops hovering when you speak its command word again.\n\n            By speaking a second command word, you can cast Unseen Servant using the throne. The servant can conjure a spectral trumpet to announce your arrival, in addition to its usual tasks.\n\n            Lastly, you can speak a third command word as a Magic action to magically create up to 10 pounds of delicious food of your choice and up to four bottles of wine. Only you can partake of this meal and drink; it instantly becomes stale and sickening in another creature’s mouth. Once you have spoken this third command word, you can’t do so again until the next dawn.",
+      "sourceAnchor": "LeonorasThroneofIndolence"
+    },
+    {
+      "slug": "memento-mori",
+      "name": "Memento Mori",
+      "description": "Wondrous Item, Rare\n\nLucas Ferreira CM\n\nThis sealed letter, infused with Chronomancy magic, contains a written description of how the creature that reads it shall die. The letter always contains specific descriptions, such as “The red-eyed orc drove its blade through Faizon the Blue’s heart,” but may also use cryptic or vague language. It never specifies an exact time. Once a creature has read the letter, it has Advantage on Death Saving Throws, and dies only after gaining five Death Saving Throw failures, instead of three. However, when the creature arrives at the moment of its death described in the letter, it dies without making Death Saving Throws if it is reduced to 0 Hit Points.\n\nOnce a Memento Mori is opened and read, it becomes an ordinary letter. Its effects end only if the creature that read it dies and is later restored to life.",
+      "sourceAnchor": "MementoMori"
+    },
+    {
+      "slug": "portable-cannonballs",
+      "name": "Portable Cannonballs",
+      "description": "Weapon (Bullet), Uncommon\n\nLucas Ferreira CM\n\nThis bag contains twenty iron balls, each measuring one inch in diameter and weighing 1/4 of a pound. When poured out of their bag as a Utilize action, the balls function as Ball Bearings.\n\nAs a Bonus Action, you can speak the command word, which causes a number of the balls that you choose to expand into full-size cannonballs weighing 10 pounds each, suitable for firing from a cannon. A creature in the path of one or more cannonballs rolling downhill must succeed on a DC 13 Dexterity saving throw or take 2d10 Bludgeoning damage and have the Prone condition if it is Large or smaller.\n\nEach iron ball can also be used as a Sling Bullet or a Firearm Bullet. As a Bonus Action when you make an attack with an iron ball as ammunition, you can expand it in midair. On a hit, this attack deals Bludgeoning damage equal to 2d12 plus the ability modifier used for the attack roll instead of the weapon’s normal damage.",
+      "sourceAnchor": "PortableCannonballs"
+    },
+    {
+      "slug": "ring-of-barrels",
+      "name": "Ring of Barrels",
+      "description": "Ring, Uncommon (Requires Attunement)\n\nThis ring has 6 charges and regains 1d6 expended charges daily at dawn. While wearing the ring, you can take a Magic action and expend 1–3 charges to summon a number of empty Barrels in spaces within 5 feet of you equal to the number of charges expended. A Barrel provides Half Cover to a Medium or smaller target behind it and can be moved or set to rolling with a Utilize action. A Barrel has AC 15 and 20 HP.\n\nIf you summon a Barrel into a space occupied by a Medium or smaller creature, the creature must succeed on a DC 13 Dexterity saving throw to be trapped within the Barrel. It has Advantage on its saving throw unless its Speed is 0. A Medium creature trapped within a Barrel has the Restrained condition, whereas a Small or smaller creature has Total Cover from effects outside the Barrel. Bursting free of the Barrel requires a successful DC 20 Strength (Athletics) check as an action.\n\nLucas Ferreira CM",
+      "sourceAnchor": "RingofBarrels"
+    }
+  ]
+}

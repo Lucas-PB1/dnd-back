@@ -13,7 +13,7 @@ description: Explica tabelas, FKs, views e clusters do catálogo PHB 2024 no sch
 
 ## Workflow
 
-1. Ler [`docs/data-model.md`](../../../docs/data-model.md) para visão geral
+1. Ler [`docs/architecture/data-model.md`](../../../docs/architecture/data-model.md) para visão geral
 2. Abrir referência específica em `references/`:
    - [`clusters.md`](references/clusters.md) — 7 domínios
    - [`fk-map.md`](references/fk-map.md) — FKs e chaves compostas

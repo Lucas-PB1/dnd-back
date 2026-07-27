@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Arquitetura
 
-Doc: [`docs/architecture.md`](../../docs/architecture.md)
+Doc: [`docs/architecture/architecture.md`](../../docs/architecture/architecture.md)
 
 ## Bounded contexts
 
