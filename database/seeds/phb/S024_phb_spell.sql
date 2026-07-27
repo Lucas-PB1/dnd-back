@@ -65,16 +65,11 @@ Até que a magia encerre, você pode executar uma
 Ação Bônus para comandar mentalmente qualquer criatura que tenha animado com essa magia se a criatura estiver a até 150 metros de você (se você controlar várias criaturas, pode comandar quaisquer delas ao mesmo tempo, emitindo o mesmo comando para cada uma). Se você não der nenhum comando, a criatura executa a ação Esquivar e se move apenas para evitar danos. Quando a criatura é reduzida a 0 Pontos de
 Vida, ela reverte para sua forma de objeto, e qualquer dano restante é transferido para essa forma.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano de Pancada da criatura aumenta em 1d4 (Médio ou menor), 1d6 (Grande) ou 1d12 (Enorme) para cada círculo de espaço de magia acima de 5.
-Um Braseiro Afetado pela
-Magia
-Animar Objetos
-DAVID AUDEN NASH
 Objetos Animados
 Construto Grande ou Menor, Sem Alinhamento
 CA 15
 PV 10 (Médio ou menor), 20 (Grande), 40 (Enorme)
 Deslocamento 9 m
-MOD SG MOD SG MOD SG
 For 16 +3 +3 Des 10 +0 +0 Con 10 +0 +0
 Int 3 –4 –4 Sab 3 –4 –4 Car 1 –5 –5
 Imunidades Psíquico, Venenoso; Amedrontado, Enfeitiçado,
@@ -154,10 +149,6 @@ Brincar com Fogo. Você acende ou apaga uma vela,
 uma tocha ou uma fogueira.
 Efeito Sensorial. Você cria um efeito sensorial inofensivo, como folhas caindo, fadas dançantes espectrais,
 uma brisa suave, o som de um animal ou o leve odor de gambá. O efeito deve caber em um Cubo de 1,5 metro de lados.
-Um Golias Clérigo conjura
-Arma Espiritual em batalha contra um Tríbulo Brutal.
-JUSTINE CRUZ
-Um sprite conjuraArte Druídica para fazer as flores florescerem.
 Florescimento. Você instantaneamente faz uma flor desabrochar, uma vagem se abrir ou um botão de folha se abrir.
 Sensor Climático. Você cria um efeito sensorial minúsculo e inofensivo que prevê qual será o clima no local onde você está pelas próximas 24 horas. O efeito pode se manifestar como uma esfera dourada para céu claro,
 uma nuvem para chuva, flocos de neve caindo para neve e assim por diante. Esse efeito persiste por 1 rodada.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
@@ -256,7 +247,7 @@ Força para as jogadas de ataque e dano de ataques corpo a corpo com essa arma, 
 (à sua escolha).
 Um elfo Mago demonstra o potencial de resolução de problema da magia
 Bola de Fogo.
-YUHONG DING
+
 A magia encerra se você a conjurar novamente ou se soltar a arma.
 Aprimoramento de Truque. O dado de dano muda quando você atinge os níveis 5 (1d10), 11 (1d12) e 17 (2d6).', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('bracos-de-hadar', 'Braços de Hadar', 1, '1º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Instantânea', FALSE, FALSE, 'Clamando por Hadar, você faz com que tentáculos irrompam em você. Cada criatura em uma Emanação de 3 metros originada em você realiza uma salvaguarda de Força. Se falhar, um alvo sofre 2d6 pontos de dano
@@ -269,12 +260,7 @@ O líquido no caldeirão copia as propriedades de uma poção Comum ou Incomum �
 Poção de Cura). Como uma Ação Bônus, você ou um aliado pode alcançar o caldeirão e retirar dele uma poção desse tipo. A poção está contida em um frasco que desaparece quando a poção é consumida. O caldeirão pode produzir um número dessas poções igual ao seu modificador de atributo de conjuração (mínimo 1).
 Quando a última dessas poções é retirada do caldeirão,
 o caldeirão desaparece e a magia termina.
-Poções obtidas do caldeirão que não são consumidas desaparecem quando você conjura esta magia novamente.
-Um Golias Bruxo convoca a
-Armadura de
-Agathys e os
-Braços de Hadar para combater inimigos das profundezas.
-TUAN DUONG CHU, LINDA LITHEN', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+Poções obtidas do caldeirão que não são consumidas desaparecem quando você conjura esta magia novamente.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('caminhar-no-vento', 'Caminhar no Vento', 6, '6º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), '1 minuto', '9 metros', TRUE, TRUE, TRUE, 'uma vela', 'V, S, M (uma vela)', '8 horas', FALSE, FALSE, 'Você e até dez criaturas voluntárias à sua escolha no alcance da magia assumem formas gasosas pela duração da magia, aparecendo como fiapos de nuvem.
 Enquanto estiver nesta forma de nuvem, um alvo tem um Deslocamento de Voo de 90 metros e pode pairar;
 tem Imunidade à condição Caído; e tem Resistência a dano Contundente, Cortante e Perfurante. As únicas ações que um alvo pode executar nesta forma são a ação Correr ou Usar Magia para começar a reverter à
@@ -284,8 +270,7 @@ Se não conseguir pousar após 1 minuto, ele cai pela distância restante.', NUL
   ('caminhar-sobre-as-aguas', 'Caminhar Sobre as Águas', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), 'Ação ou Ritual', '9 metros', TRUE, TRUE, TRUE, 'um pedaço de cortiça', 'V, S, M (um pedaço de cortiça)', '1 hora', FALSE, TRUE, 'Esta magia concede a capacidade de se mover através de qualquer superfície líquida — como ácido, água,
 areia movediça, lama, lava ou neve — como se fosse um solo sólido inofensivo (criaturas que cruzam a lava derretida ainda podem sofrer dano devido ao calor). Até dez criaturas voluntárias à sua escolha no alcance da magia recebem essa habilidade pela duração da magia.
 Um alvo afetado deve executar uma Ação Bônus para passar da superfície do líquido para dentro dele e vice-versa, mas, se o alvo cair no líquido, ele atravessa a superfície e entra no líquido abaixo.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('campo-antimagia', 'Campo Antimagia', 8, '8º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'abjuracao'), 'Ação', 'Pessoal', TRUE, TRUE, TRUE, 'raspas de ferro', 'V, S, M (raspas de ferro)', 'Concentração, até 1 hora', TRUE, FALSE, 'A lendária bruxa Tasha usa sua magia, oCaldeirão Borbulhante de Tasha, para produzir uma poção mágica.
-Uma aura de antimagia envolve você em uma Emanação de 3 metros. Ninguém pode conjurar magias,
+  ('campo-antimagia', 'Campo Antimagia', 8, '8º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'abjuracao'), 'Ação', 'Pessoal', TRUE, TRUE, TRUE, 'raspas de ferro', 'V, S, M (raspas de ferro)', 'Concentração, até 1 hora', TRUE, FALSE, 'Uma aura de antimagia envolve você em uma Emanação de 3 metros. Ninguém pode conjurar magias,
 executar a ação Usar Magia ou criar outros efeitos mágicos dentro da aura, e esses efeitos não podem ter como alvo ou afetar qualquer coisa dentro dela. As propriedades mágicas dos itens mágicos não funcionam dentro da aura ou em qualquer coisa dentro dela.
 Áreas de efeito criadas por magias ou outros efeitos mágicos não podem se estender para dentro da aura, e ninguém pode se teleportar para dentro ou para fora dela ou usar viagens planares para lá. Os portais se fecham temporariamente enquanto estão na aura.
 Magias em andamento, exceto aquelas conjuradas por um Artefato ou por uma divindade, são suprimidas na área. Enquanto um efeito é suprimido, ele não funciona, mas o tempo que ele gasta suprimido conta para sua duração
@@ -486,11 +471,7 @@ Estágio Condição Estágio Condição
 4 Fresco 4 Vendaval
 5 Frio 5 Tempestade
 6 Frio extremo', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('convocar-celestial', 'Convocar Celestial', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um relicário no valor de 500 ou mais PO', 'V, S, M (um relicário no valor de 500 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Um Dragão de Latão conjura
-Controlar o
-Clima para salvar uma comunidade de uma tempestade destrutiva.
-ALEXANDRE HONORE
-Você invoca um Espírito Celestial. Ele se manifesta em uma forma angelical em um espaço desocupado
+  ('convocar-celestial', 'Convocar Celestial', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um relicário no valor de 500 ou mais PO', 'V, S, M (um relicário no valor de 500 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Celestial. Ele se manifesta em uma forma angelical em um espaço desocupado
 à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Celestial. Ao conjurar a magia, escolha Defensor ou Vingador. Sua escolha determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
 Espírito Celestial
@@ -498,7 +479,6 @@ Celestial Grande, Neutro
 CA 11 + o círculo da magia + 2 (apenas Defensor)
 PV 40 + 10 para cada círculo de magia acima de 5
 Deslocamento 9 m, Voo 12 m
-MOD SG MOD SG MOD SG
 For 16 +3 +3 Des 14 +2 +2 Con 16 +3 +3
 Int 10 +0 +0 Sab 14 +2 +2 Car 16 +3 +3
 Resistências Radiante
@@ -519,16 +499,12 @@ Toque Curativo (1/Dia). O espírito toca outra criatura. O alvo recupera Pontos 
 Água, Ar, Fogo ou Terra. A criatura se assemelha a uma forma bípede envolta no elemento escolhido, o que determina certas características no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0
 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
-Espírito Celestial
-(Vingador)
-ERIC BELISE
 Espírito Elemental
 Elemental Médio, Neutro
 CA 11 + o círculo da magia
 PV 50 + 10 para cada círculo de magia acima de 4
 Deslocamento 12 m; Escavação 12 m (apenas Terra); Natação
 12 m (apenas Água); Voo 12 m (pairar; apenas Ar)
-MOD SG MOD SG MOD SG
 For 18 +4 +4 Des 15 +2 +2 Con 17 +3 +3
 Int 4 –3 –3 Sab 10 +0 +0 Car 16 +3 +3
 Resistências Ácido (apenas Água), Cortante e Perfurante
@@ -556,12 +532,7 @@ Por fim, ao conjurar uma magia com um alcance de toque, seu familiar pode entreg
 Combate. O familiar é um aliado seu e de seus aliados. Ele joga a Iniciativa dele e age no turno dele.
 Um familiar não pode atacar, mas pode realizar outras ações normalmente.
 Desaparecimento do Familiar. Quando o familiar é reduzido a 0 Pontos de Vida, ele desaparece. Ele reaparece depois que você conjura esta magia novamente.
-Como uma ação Usar Magia, você pode descartar
-Espíritos invocados por
-Convocar
-Familiar assumem formas inspiradas pelos magos que os conjuram.
-BRIAN VALEZA
-temporariamente o familiar para uma mini dimensão.
+Como uma ação Usar Magia, você pode descartar temporariamente o familiar para uma mini dimensão.
 Como alternativa, você pode descartá-lo para sempre.
 Como uma ação Usar Magia enquanto está temporariamente descartado, você pode fazer com que ele reapareça em um espaço desocupado a até 9 metros de você. Sempre que o familiar é reduzido a 0 Pontos de
 Vida ou desaparece na mini dimensão, ele deixa para trás no espaço que ocupava qualquer coisa que estivesse vestindo ou carregando.
@@ -569,15 +540,12 @@ Apenas um Familiar. Você não pode ter mais de um familiar ao mesmo tempo. Ao c
   ('convocar-feerico', 'Convocar Feérico', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'uma flor dourada no valor de 300 ou mais PO', 'V, S, M (uma flor dourada no valor de 300 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Feérico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Feérico. Ao conjurar a magia, escolha um humor: Alegre,
 Enfurecido ou Malandro. A criatura se assemelha a uma criatura Feérica à sua escolha definida pelo humor escolhido, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece se reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
-mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é neUm Guardião conjura
-Convocar Feérico,
-conjurando um Espírito Feérico enfurecido para enfrentar um Merrow saqueador.
+mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
 Espírito Feérico
 Feérico Pequeno, Neutro
 CA 12 + o círculo da magia
 PV 30 + 10 para cada círculo de magia acima de 3
 Deslocamento 9 m, Voo 9 m
-MOD SG MOD SG MOD SG
 For 13 +1 +1 Des 16 +3 +3 Con 14 +2 +2
 Int 14 +2 +2 Sab 11 +0 +0 Car 16 +3 +3
 Imunidades Enfeitiçado
@@ -585,62 +553,44 @@ Sentidos Visão no Escuro 18 m, Percepção Passiva 10
 Idiomas Silvestre, compreende os idiomas que você fala
 ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
 Ações
-Ataques Múltiplos. O espírito realiza um número de ataques com Lâmina Feérica igual à metade do círculo da magia
-(arredondado para baixo).
-Lâmina Feérica. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano:
-2d6 + 3 + o círculo da magia pontos de dano Energético.
+Ataques Múltiplos. O espírito realiza um número de ataques com Lâmina Feérica igual à metade do círculo da magia (arredondado para baixo).
+Lâmina Feérica. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 2d6 + 3 + o círculo da magia pontos de dano Energético.
 Ações Bônus
-Passo Feérico. O espírito se teleporta magicamente até 9
-metros para um espaço desocupado à vista dele. Em seguida,
-ocorre um dos seguintes efeitos, com base no humor escolhido para o espírito:
+Passo Feérico. O espírito se teleporta magicamente até 9 metros para um espaço desocupado à vista dele. Em seguida, ocorre um dos seguintes efeitos, com base no humor escolhido para o espírito:
 Alegre. Salvaguarda de Sabedoria: CD é igual a CD para evitar sua magia, uma criatura à vista do espírito e a até 3 metros dele. Falha: O alvo fica Enfeitiçado por você e pelo espírito por 1 minuto ou até que o alvo sofra qualquer dano.
 Enfurecido. O espírito tem Vantagem na próxima jogada de ataque que realizar antes do final deste turno.
-Malandro. O espírito preenche um Cubo de 3 metros de lado a até 1,5 metro dele com Escuridão mágica, que dura até o final do próximo turno dele.
-JOSEPH WESTON
-cessária). Se você não emitir nenhum, ela executa a ação
-Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+Malandro. O espírito preenche um Cubo de 3 metros de lado a até 1,5 metro dele com Escuridão mágica, que dura até o final do próximo turno dele.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('convocar-montaria', 'Convocar Montaria', 2, '2º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '9 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Instantânea', FALSE, FALSE, 'Você convoca um ser sobrenatural que aparece como uma montaria leal em um espaço desocupado à sua escolha no alcance da magia. Essa criatura usa o bloco de estatísticas de Montaria Sobrenatural. Se você já tem uma montaria desta magia, a montaria é substituída pela nova.
 A montaria se assemelha a um animal grande e que se pode montar à sua escolha, como um alce, um camelo, um cavalo ou um lobo atroz. Sempre que conjurar a magia, escolha o tipo de criatura da montaria — Celestial, Feérico ou Ínfero — que determina certas características no bloco de estatísticas.
 Combate. A montaria é um aliado seu e de seus aliados. Em combate, ela compartilha sua contagem de
 Iniciativa e funciona como uma montaria controlada enquanto você a monta (conforme definido nas regras sobre combate montado). Se você tem a condição Incapacitado, a montaria age no turno dela imediatamente após o seu, de forma independente, concentrando-se em protegê-lo.
 Desaparecimento da Montaria. A montaria desaparece se é reduzida a 0 Pontos de Vida ou se você morrer.
-Quando desaparece, deixa para trás qualquer coisa que estivesse vestindo ou carregando. Se você conjurar esta magia novamente, você decide se invoca a montaria que desapareceu ou uma diferente.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('convocar-relampagos', 'Convocar Relâmpagos', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '36 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma nuvem de tempestade aparece em um ponto no alcance da magia à sua vista acima de você. A nuvem tem a forma de um Cilindro com 3 metros de altura e um raio de 18 metros.
-Ao conjurar a magia, escolha um ponto à sua vista sob a nuvem. Um relâmpago é disparado da nuvem até aquele ponto. Cada criatura a até 1,5 metro desse ponto realiza uma salvaguarda de Destreza, sofrendo 3d10
-pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.
-Até que a magia termine, você pode executar uma ação Usar Magia para invocar relâmpagos desse modo novamente, escolhendo o mesmo ponto ou um diferente.
-Se o conjurador estiver ao ar livre durante uma tempestade ao conjurar esta magia, ele passa a controlar a tempestade existente em vez de criar uma nova. Nessas condições, o dano da magia é aumentado em 1d10.', 'Usando um Espaço de Magia de Círculo Superior. O
-dano é aumentado em 1d10 pontos para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('corda-extradimensional', 'Corda Extradimensional', 2, '2º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), 'Ação', 'Toque', TRUE, TRUE, TRUE, 'um pedaço de corda', 'V, S, M (um pedaço de corda)', '1 hora', FALSE, FALSE, 'Montaria Sobrenatural
+Quando desaparece, deixa para trás qualquer coisa que estivesse vestindo ou carregando. Se você conjurar esta magia novamente, você decide se invoca a montaria que desapareceu ou uma diferente.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+Montaria Sobrenatural
 Celestial Grande, Feérico ou Ínfero (À Sua Escolha), Neutro
 CA 10 + 1 por círculo de magia
-PV 5 + 10 por círculo de magia (a montaria tem um número de
-Dados de Vida [d10s] igual ao círculo da magia)
+PV 5 + 10 por círculo de magia (a montaria tem um número de Dados de Vida [d10s] igual ao círculo da magia)
 Deslocamento 18 m, Voo 18 m (requer magia de 4º círculo ou superior)
-MOD SG MOD SG MOD SG
 For 18 +4 +4 Des 12 +1 +1 Con 14 +2 +2
 Int 6 –2 –2 Sab 12 +1 +1 Car 8 –1 –1
 Sentidos Percepção Passiva 11
 Idiomas Telepatia 1,5 km (funciona apenas com você)
 ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
 Traços
-Vínculo Vital. Ao recuperar Pontos de Vida de uma magia 1º
-círculo ou superior, a montaria recupera o mesmo número de
-Pontos de Vida se você estiver a até 1,5 metro dela.
+Vínculo Vital. Ao recuperar Pontos de Vida de uma magia 1º círculo ou superior, a montaria recupera o mesmo número de Pontos de Vida se você estiver a até 1,5 metro dela.
 Ações
-Pancada Sobrenatural. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5
-m. Dano: 1d8 mais o círculo da magia de pontos de dano
-Radiante (Celestial), Psíquico (Feérico) ou Necrótico (Ínfero).
+Pancada Sobrenatural. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 mais o círculo da magia de pontos de dano Radiante (Celestial), Psíquico (Feérico) ou Necrótico (Ínfero).
 Ações Bônus
-Derrubar Brilho (Apenas Ínfero; Recarrega após um Descanso
-Longo). Salvaguarda de Sabedoria: CD é igual a CD para evitar sua magia, uma criatura a até 18 metros à vista da montaria.
-Falha: O alvo tem a condição Amedrontado até o final do seu próximo turno.
-Passo Feérico (Apenas Feérico; Recarrega após um Descanso
-Longo). A montaria se teleporta, junto com seu cavaleiro,
-para um espaço desocupado à sua escolha a até 18 metros de distância de onde está.
-Toque Curativo (Apenas Celestial; Recarrega após um Descanso
-Longo). Uma criatura a até 1,5 metro da montaria recupera um número de Pontos de Vida igual a 2d8 mais o círculo da magia.
-Você toca uma corda. Uma extremidade dela paira para cima até que a corda fique perpendicular ao chão ou alcance um teto. Na extremidade superior da corda,
+Derrubar Brilho (Apenas Ínfero; Recarrega após um Descanso Longo). Salvaguarda de Sabedoria: CD é igual a CD para evitar sua magia, uma criatura a até 18 metros à vista da montaria. Falha: O alvo tem a condição Amedrontado até o final do seu próximo turno.
+Passo Feérico (Apenas Feérico; Recarrega após um Descanso Longo). A montaria se teleporta, junto com seu cavaleiro, para um espaço desocupado à sua escolha a até 18 metros de distância de onde está.
+Toque Curativo (Apenas Celestial; Recarrega após um Descanso Longo). Uma criatura a até 1,5 metro da montaria recupera um número de Pontos de Vida igual a 2d8 mais o círculo da magia.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+  ('convocar-relampagos', 'Convocar Relâmpagos', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '36 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma nuvem de tempestade aparece em um ponto no alcance da magia à sua vista acima de você. A nuvem tem a forma de um Cilindro com 3 metros de altura e um raio de 18 metros.
+Ao conjurar a magia, escolha um ponto à sua vista sob a nuvem. Um relâmpago é disparado da nuvem até aquele ponto. Cada criatura a até 1,5 metro desse ponto realiza uma salvaguarda de Destreza, sofrendo 3d10
+pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.
+Até que a magia termine, você pode executar uma ação Usar Magia para invocar relâmpagos desse modo novamente, escolhendo o mesmo ponto ou um diferente.
+Se o conjurador estiver ao ar livre durante uma tempestade ao conjurar esta magia, ele passa a controlar a tempestade existente em vez de criar uma nova. Nessas condições, o dano da magia é aumentado em 1d10.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano é aumentado em 1d10 pontos para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+  ('corda-extradimensional', 'Corda Extradimensional', 2, '2º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), 'Ação', 'Toque', TRUE, TRUE, TRUE, 'um pedaço de corda', 'V, S, M (um pedaço de corda)', '1 hora', FALSE, FALSE, 'Você toca uma corda. Uma extremidade dela paira para cima até que a corda fique perpendicular ao chão ou alcance um teto. Na extremidade superior da corda,
 um portal Invisível de 1 metro por 1,5 metro se abre para um espaço extradimensional que permanece até que a magia termine. Esse espaço pode ser alcançado escalando a corda, que pode ser puxada para dentro ou para fora dele.
 O espaço pode conter até oito criaturas Médias ou menores. Ataques, magias e outros efeitos não podem passar para dentro ou para fora do espaço, mas as criaturas dentro dele podem ver através do portal. Qualquer coisa dentro do espaço cai quando a magia termina.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('cordao-de-flechas', 'Cordão de Flechas', 2, '2º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), 'Ação', 'Toque', TRUE, TRUE, TRUE, 'uma trança ornamental', 'V, S, M (uma trança ornamental)', '8 horas', FALSE, FALSE, 'Toque até quatro flechas ou virotes não mágicas e finque-os no chão em seu espaço. Até que a magia termine, a munição não pode ser retirada fisicamente.
@@ -759,11 +709,7 @@ Imunidade à Magia. Você concede a até dez criaturas à sua vista imunidade a 
 Refazer Jogada. Você desfaz um único evento recente, forçando uma nova jogada de qualquer jogada de dado realizada no último turno (incluindo o seu último turno). A realidade se remodela para acomodar o novo resultado. Por exemplo, uma magia Desejo pode desfazer uma falha na salvaguarda de um aliado ou um
 Acerto Crítico de um inimigo. Você pode forçar refazer a jogada com Vantagem ou Desvantagem, e escolher se usa o novo resultado ou a jogada original.
 Reformar a Realidade. Você pode expressar um desejo que não se encaixe nos outros efeitos. Para isso,
-declare seu desejo ao Mestre da maneira mais clara
-Um pequenino Clérigo conjura o
-Defensor da Fé para afastar um worg faminto.
-IRINA NORDSOL
-possível. O Mestre possui total liberdade para decidir o que acontece; quanto maior o desejo, maior a chance de algo dar errado. A magia pode falhar, o efeito desejado pode ser apenas parcialmente alcançado ou você
+declare seu desejo ao Mestre da maneira mais clara possível. O Mestre possui total liberdade para decidir o que acontece; quanto maior o desejo, maior a chance de algo dar errado. A magia pode falhar, o efeito desejado pode ser apenas parcialmente alcançado ou você
 pode enfrentar consequências inesperadas devido à
 forma como formulou seu desejo. Por exemplo, desejar que um vilão esteja morto pode levá-lo a um futuro em que o vilão já não está vivo, removendo o seu personagem do jogo. Desejar um item mágico Lendário ou um
 Artefato pode transportá-lo imediatamente ao local do atual proprietário. Se o desejo concedido afetar uma comunidade, região ou o mundo, é provável que você
@@ -828,10 +774,7 @@ dano aumenta em 1d6 pontos para cada círculo de espaço de magia acima de 1.', 
   ('destruicao-radiante', 'Destruição Radiante', 2, '2º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), 'Ação Bônus, que você realiza imediatamente após atingir uma criatura com uma arma
 Corpo a Corpo ou um Ataque Desarmado', 'Pessoal', TRUE, FALSE, FALSE, NULL, 'V', 'Concentração, até 1 minuto', TRUE, FALSE, 'O alvo atingido pelo ataque sofre um adicional de 2d6
 pontos de dano Radiante. Até que a magia termine, o alvo emite Luz Plena em um raio de 1,5 metro, e jogadas de ataque contra ele têm Vantagem e ele não pode se beneficiar da condição Invisível.', 'Usando um Espaço de Magia de Círculo Superior. O
-dano aumenta em 1d6 para cada círculo de espaço de magia acima de 2.
-Uma anã Paladina fortalece sua arma com
-Destruição Divina, desencadeando a ira sagrada em ínferos Mezzoloths.
-BRYAN SOLA', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+dano aumenta em 1d6 para cada círculo de espaço de magia acima de 2.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('detectar-magia', 'Detectar Magia', 1, '1º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'adivinhacao'), 'Ação ou Ritual', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, TRUE, 'Pela duração da magia, você sente a presença de efeitos mágicos a até 9 metros de você. Se você sentir tais efeitos, pode executar a ação Usar Magia para ver uma aura fraca ao redor de qualquer criatura ou objeto visível na área que contém a magia, e se um efeito foi criado por uma magia, você descobre a escola dessa magia.
 A magia é bloqueada por 30 centímetros de pedra,
 terra ou madeira, 2,5 centímetros de metal ou uma folha fina de chumbo.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
@@ -867,10 +810,7 @@ As mudanças causadas por esta magia falham em uma inspeção física. Por exemp
 Para descobrir se você está disfarçado, uma criatura deve executar a ação Analisar para inspecionar sua aparência e ser bem-sucedido em um teste de Inteligência (Investigação) contra a CD para evitar sua magia.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('dissipar-magia', 'Dissipar Magia', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'abjuracao'), 'Ação', '36 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Instantânea', FALSE, FALSE, 'Escolha uma criatura, objeto ou efeito mágico no alcance da magia. Qualquer magia ativa de 3º círculo ou inferior no alvo é encerrada. Para cada magia ativa de
 4º círculo ou superior no alvo, realize um teste de atributo usando seu atributo de conjuração (CD 10 mais o círculo da magia alvo). Se falhar, a magia continua; se for bem-sucedido, a magia se encerra.', 'Usando um Espaço de Magia de Círculo Superior.
-Você encerra automaticamente uma magia no alvo se o círculo da magia for igual ou inferior ao círculo do espaço de magia que você usa.
-Um Mago Vermelho de Thay ordena que servos esqueléticos empilhem tesouros no disco do
-Disco Flutuante de Tenser.
-RALPH HORSLEY', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+Você encerra automaticamente uma magia no alvo se o círculo da magia for igual ou inferior ao círculo do espaço de magia que você usa.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('dissipar-o-bem-e-o-mal', 'Dissipar o Bem e o Mal', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'abjuracao'), 'Ação', 'Pessoal', TRUE, TRUE, TRUE, 'prata e ferro em pó', 'V, S, M (prata e ferro em pó)', 'Concentração, até 1 minuto', TRUE, FALSE, 'Pela duração da magia, Celestiais, Elementais, Feéricos,
 Ínferos e Mortos-Vivos têm Desvantagem em jogadas de ataque contra você. Você pode encerrar a magia mais cedo usando uma das seguintes funções especiais.
 Exorcizar. Como uma ação Usar Magia, você tem como alvo uma criatura a sua vista a até 1,5 metro de você e que seja um dos tipos de criatura acima. O alvo deve ser bem-sucedido em uma salvaguarda de Carisma ou é enviado de volta ao seu plano de origem, se ainda não estiver lá. Se não estiverem em seu plano de origem, Feéricos são enviados para Faéria e Mortos-Vivos são enviadas para o Sombral.
@@ -881,8 +821,7 @@ O alvo tem Vantagem na salvaguarda se você ou seus aliados estiverem lutando co
 Você tem um vínculo telepático com o alvo Enfeitiçado enquanto vocês dois estão no mesmo plano de existência. No seu turno, você pode usar este vínculo para emitir comandos para o alvo (nenhuma ação é necessária), como “Ataque essa criatura”, “Mova-se para lá”
 ou “Busque aquele objeto”. O alvo faz o possível para obedecer no turno dele. Se ele concluir um pedido e não receber mais instruções de você, ele age e se move como quiser, concentrando-se em se proteger.
 Você pode ordenar o alvo a executar uma Reação,
-mas deve executar sua própria Reação para tanto.
-JAVIER CHARRO', 'Usando um Espaço de Magia de Círculo Superior. Sua
+mas deve executar sua própria Reação para tanto.', 'Usando um Espaço de Magia de Círculo Superior. Sua
 Concentração pode durar mais com um espaço de magia de 5º círculo (em até 10 minutos), 6º círculo (em até 1 hora) ou 7º círculo ou superior (em até 8 horas).', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('dominar-monstro', 'Dominar Monstro', 8, '8º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'encantamento'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 1 hora', TRUE, FALSE, 'Uma criatura à sua vista e no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado pela duração da magia.
 O alvo tem Vantagem na salvaguarda se você ou seus aliados estiverem lutando contra ele. Sempre que o alvo sofre dano, ele repete a salvaguarda, encerrando a magia em caso de sucesso.
@@ -929,7 +868,7 @@ Sabedoria no final de cada um dos turnos dele. Se falhar, sofre 5d10 pontos de d
 a magia sentiria a magia Alarme ou Glifo de Proteção ou uma armadilha mecânica, mas não revelaria uma fraqueza natural no chão, um teto instável ou um sumidouro escondido.
 Um draconato Druida usa
 Emaranhar para conter gnolls em frenesi.
-BRIAN VALEZA
+
 Esta magia revela que uma armadilha está presente,
 mas não sua localização. Você aprende a natureza geral do perigo representado por uma armadilha que sente.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('encontrar-o-caminho', 'Encontrar o Caminho', 6, '6º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'adivinhacao'), '1 minuto', 'Pessoal', TRUE, TRUE, TRUE, 'um conjunto de ferramentas de adivinhação — como cartas ou runas — no valor de 100 ou mais PO', 'V, S, M (um conjunto de ferramentas de adivinhação — como cartas ou runas — no valor de 100 ou mais PO)', 'Concentração, até 1 dia', TRUE, FALSE, 'Você sente magicamente a rota física mais direta para um local que você nomeia. Você deve estar familiarizado com o local, e a magia falha se você declarar um destino em outro plano de existência, um destino em movimento (como uma fortaleza móvel) ou um destino inespecífico (como “o covil de um dragão verde”).
@@ -985,10 +924,7 @@ A Esfera não tem peso e é grande o suficiente para conter a criatura ou objeto
 o globo pode ser pego e movido por outras criaturas.
 Uma magia Desintegrar que tenha o globo como alvo o destrói sem prejudicar nada em seu interior.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('esfera-vitriolica', 'Esfera Vitriólica', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'), 'Ação', '45 metros', TRUE, TRUE, TRUE, 'uma gota de bile', 'V, S, M (uma gota de bile)', 'Instantânea', FALSE, FALSE, 'Você aponta para um local no alcance da magia, e uma bola de ácido brilhante de 30 centímetros de diâmetro se espalha lá e explode em uma Esfera de 6 metros de raio. Cada criatura nessa área realiza uma salvaguarda de Destreza. Se falhar, uma criatura sofre 10d4 pontos de dano Ácido e outros 5d4 pontos de dano Ácido no final do próximo turno dela. Em caso de sucesso, uma criatura recebe apenas metade do dano inicial.', 'Usando um Espaço de Magia de Círculo Superior.
-O dano inicial aumenta em 2d4 para cada círculo de espaço de magia acima de 4.
-Um tiferino Feiticeiro libera a
-Esfera Vitriólica em nóticos.
-IGNATIUS BUDI', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+O dano inicial aumenta em 2d4 para cada círculo de espaço de magia acima de 4.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('espada-de-mordenkainen', 'Espada de Mordenkainen', 7, '7º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'uma espada em miniatura no valor de 250 ou mais PO', 'V, S, M (uma espada em miniatura no valor de 250 ou mais PO)', 'Concentração, até 1 minuto', TRUE, FALSE, 'Você cria uma espada espectral que fica suspensa no alcance da magia. Ela permanece pela duração da magia.
 Quando a espada aparece, você realiza um ataque mágico corpo a corpo contra um alvo a até 1,5 metro da espada. Em um acerto, o alvo sofre um dano Energético igual a 4d12 mais o seu modificador de atributo de conjuração.
 Nos turnos seguintes, você pode executar uma Ação
@@ -1049,11 +985,7 @@ pode se comunicar com ela como se compartilhassem um idioma em comum.', NULL, (S
 1d4 pontos de dano Radiante adicionais em um acerto.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('flecha-acida-de-melf', 'Flecha Ácida de Melf', 2, '2º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'folha de ruibarbo em pó', 'V, S, M (folha de ruibarbo em pó)', 'Instantânea', FALSE, FALSE, 'Uma flecha verde brilhante dispara em direção a um alvo no alcance da magia, explodindo em um borrifo de ácido. Realize um ataque mágico à distância contra o alvo. Em caso de acerto, o alvo sofre 4d4 pontos de dano Ácido e 2d4 pontos de dano Ácido no final do próximo turno dele. Se falhar, a flecha respinga ácido no alvo, causando somente metade do dano inicial.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano (inicial e posterior) aumenta em 1d4 para cada círculo de espaço de magia acima de 2.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('flecha-relampago', 'Flecha Relâmpago', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), 'Ação Bônus, que você realiza imediatamente após atingir ou errar um alvo com um ataque à distância usando uma arma', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Instantânea', FALSE, FALSE, 'Um Druida humano usa
-Falar com
-Animais para conversar com seu melhor amigo urso.
-JESPER EJSING
-Quando seu ataque atinge ou erra o alvo, a arma ou munição que você está usando se transforma em um relâmpago. Em vez de sofrer qualquer dano ou outros efeitos do ataque, o alvo sofre 4d8 pontos de dano Elétrico em um acerto ou metade desse dano em um erro.
+  ('flecha-relampago', 'Flecha Relâmpago', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), 'Ação Bônus, que você realiza imediatamente após atingir ou errar um alvo com um ataque à distância usando uma arma', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Instantânea', FALSE, FALSE, 'Quando seu ataque atinge ou erra o alvo, a arma ou munição que você está usando se transforma em um relâmpago. Em vez de sofrer qualquer dano ou outros efeitos do ataque, o alvo sofre 4d8 pontos de dano Elétrico em um acerto ou metade desse dano em um erro.
 Cada criatura em um raio de 3 metros do alvo deve então realizar uma salvaguarda de Destreza, sofrendo
 2d8 pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.
 A arma ou munição retorna então à sua forma normal.', 'Usando um Espaço de Magia de Círculo Superior. O
@@ -1067,10 +999,7 @@ Jogadas de ataque contra uma criatura ou objeto afetado têm Vantagem se o ataca
 uma região infestada de horrores indizíveis. Uma Esfera de Escuridão de 6 metros de raio aparece, centrada em um ponto no alcance e pela duração da magia. A
 Esfera é considerada Terreno Difícil, e está cheia de sussurros estranhos e sons de sucção que podem ser ouvidos a até 9 metros de distância. Nenhuma luz, seja mágica ou não, pode iluminar a área, e criaturas totalmente dentro da área têm a condição Cego.
 Qualquer criatura que comece seu turno na área sofre 2d6 pontos de dano Gélido. Qualquer criatura que termine seu turno na área deve ser bem-sucedida em uma salvaguarda de Destreza ou sofre 2d6 pontos de dano Ácido enquanto tentáculos esbranquiçados de outro mundo se esfregam nela.
-O ousado Mago Melf mira em um troll furioso com a
-Flecha
-Ácida de Melf.
-MARTIN MOTTET', 'Usando um Espaço de Magia de Círculo Superior. O
+', 'Usando um Espaço de Magia de Círculo Superior. O
 dano Ácido ou Gélido (à sua escolha) aumenta em 1d6
 para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('fonte-do-luar', 'Fonte do Luar', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Uma luz fria envolve seu corpo pela duração da magia,
@@ -1083,9 +1012,6 @@ Além disso, imediatamente após sofrer dano de uma criatura à sua vista a até
 O espectro inclui som, temperatura e outros estímulos.
 O alvo pode executar uma ação Analisar para examinar o espectro com um teste de Inteligência (Investigação) contra a CD para evitar sua magia. Em caso de sucesso, o alvo percebe que o espectro é uma ilusão e a magia se encerra.
 Enquanto afetado pela magia, o alvo trata o espectro como se fosse real e racionaliza quaisquer resultados ilógicos da interação com ele. Por exemplo, um alvo que esteja tentando atravessar uma ponte espectral e sobreviva à queda acredita na existência da ponte e tenta achar alguma explicação para a própria queda.
-Um Aasimar Bruxo expõe inimigos à
-Fome de Hadar, que tudo consome.
-JOSEPH WESTON
 Um alvo afetado pode até sofrer dano da ilusão se o espectro representar uma criatura ou risco. Em cada um dos seus turnos, tal espectro pode causar 2d8
 pontos de dano Psíquico ao alvo se estiver na área do espectro ou a até 1,5 metro do espectro. O alvo percebe o dano como um tipo apropriado para a ilusão.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('forma-eterea', 'Forma Etérea', 7, '7º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Até 8 horas', FALSE, FALSE, 'Você entra nas regiões de fronteira do Plano Etéreo,
@@ -1194,7 +1120,7 @@ A interação física com a imagem revela que ela é uma ilusão, pois as coisas
 Um conjurador pode usar
 Ilusão
 Programada para fazer com que um cão de guarda apareça e peça gentilmente para que intrusos saiam.
-JUSTINE CRUZ
+
 criatura que executa uma ação Analisar para examinar a imagem pode determinar que ela é uma ilusão com um teste bem-sucedido de Inteligência (Investigação)
 contra a CD para evitar sua magia. Se uma criatura perceber a ilusão pelo que ela é, ela pode ver através da imagem, e suas outras qualidades sensoriais tornam-se fracas para a criatura.', 'Usando um Espaço de Magia de Círculo Superior. A
 magia dura até ser dissipada, sem exigir Concentração,
@@ -1215,7 +1141,25 @@ dano aumenta em 1d10 para cada círculo de espaço de magia acima de 1.', (SELEC
 forma escolhida determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa,
 mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação
-Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
+Inseto Gigante
+Fera Grande, Sem Alinhamento
+CA 11 + o círculo da magia
+PV 30 + 10 para cada círculo de magia acima do 4
+Deslocamento 12 m, Escalada 12 m, Voo 12 m (apenas Vespa)
+For 17 +3 +3 Des 13 +1 +1 Con 15 +2 +2
+Int 4 –3 –3 Sab 3 –3 –3 Car 14 +2 +2
+Sentidos: Visão no Escuro 18 m, Percepção Passiva 12
+Idiomas Compreende os idiomas que você conhece
+ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
+Traços
+Escalada de Aranha. O inseto pode escalar superfícies difíceis, inclusive ao longo de tetos, sem precisar realizar um teste de atributo.
+Ações
+Ataques Múltiplos. O inseto realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
+Punição Venenosa. Jogada de Ataque Corpo a Corpo. Bônus é igual ao seu modificador de ataque mágico, alcance 3 m. Dano: 1d6 + 3 mais o círculo da magia em pontos de dano Perfurante mais 1d4 pontos de dano Venenoso.
+Raio de Teia (Apenas Aranha). Jogada de Ataque à Distância. Bônus é igual ao seu modificador de ataque mágico, alcance 18 m. Dano: 1d10 + 3 mais o círculo da magia em pontos de dano Contundente, e o Deslocamento do alvo é reduzido a 0 até o início do próximo turno do inseto.
+Ações Bônus
+Cuspe Venenoso (Apenas Centopeia). Salvaguarda de Constituição. Sua CD para evitar magia, uma criatura à vista do inseto a até 3 metros. Falha: O alvo tem a condição Envenenado até o início do próximo turno do inseto.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('inverter-a-gravidade', 'Inverter a Gravidade', 7, '7º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'), 'Ação', '30 metros', TRUE, TRUE, TRUE, 'uma pedra-ímã e raspas de ferro', 'V, S, M (uma pedra-ímã e raspas de ferro)', 'Concentração, até 1 minuto', TRUE, FALSE, 'Esta magia inverte a gravidade em um Cilindro de 15 metros de raio e 30 metros de altura, centrado em um ponto ao alcance da magia. Todas as criaturas e objetos na área que não estão fixos ao chão são levados para cima até o topo do Cilindro. Uma criatura pode realizar uma salvaguarda de Destreza para agarrar um objeto fixo que possa alcançar, evitando assim a queda ascendente.
 Se um teto ou objeto ancorado for encontrado nessa subida, criaturas e objetos colidem com ele como em uma queda normal. Se chegarem ao topo do Cilindro sem colidir com nada, pairam lá pela duração da magia. Quando a magia termina, criaturas e objetos afetados caem.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('invisibilidade', 'Invisibilidade', 2, '2º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'ilusao'), 'Ação', 'Toque', TRUE, TRUE, TRUE, 'um cílio envolto em goma arábica', 'V, S, M (um cílio envolto em goma arábica)', 'Concentração, até 1 hora', TRUE, FALSE, 'Uma criatura que você toca tem a condição Invisível até que a magia termine. A magia se encerra antes se o alvo realizar uma jogada de ataque, causar dano ou conjurar uma magia.', 'Usando um Espaço de Magia de Círculo Superior.
@@ -1226,52 +1170,15 @@ Depois disso, você pode executar uma ação Usar
 Magia para proferir o nome do objeto e esmagar a safira. O objeto aparece instantaneamente em sua mão,
 independentemente das distâncias físicas ou planares, e a magia termina.
 Se outra criatura estiver segurando ou carregando o objeto, esmagar a safira não a transporta, mas, em vez disso, você descobre quem é essa criatura e onde ela está localizada no momento.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-aberracao', 'Invocar Aberração', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de 400 ou mais PO', 'V, S, M (um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de 400 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Inseto Gigante
-Fera Grande, Sem Alinhamento
-CA 11 + o círculo da magia
-PV 30 + 10 para cada círculo de magia acima do 4
-Deslocamento 12 m, Escalada 12 m, Voo 12 m (apenas Vespa)
-MOD SG MOD SG MOD SG
-For 17 +3 +3 Des 13 +1 +1 Con 15 +2 +2
-Int 4 –3 –3 Sab 3 –3 –3 Car 14 +2 +2
-Sentidos: Visão no Escuro 18 m, Percepção Passiva 12
-Idiomas Compreende os idiomas que você conhece
-ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
-Traços
-Escalada de Aranha. O inseto pode escalar superfícies difíceis,
-inclusive ao longo de tetos, sem precisar realizar um teste de atributo.
-Ações
-Ataques Múltiplos. O inseto realiza um número de ataques igual à metade do círculo da magia (arredondado para baixo).
-Punição Venenosa. Jogada de Ataque Corpo a Corpo. Bônus é igual ao seu modificador de ataque mágico, alcance 3 m.
-Dano: 1d6 + 3 mais o círculo da magia em pontos de dano
-Perfurante mais 1d4 pontos de dano Venenoso.
-Raio de Teia (Apenas Aranha). Jogada de Ataque à Distância.
-Bônus é igual ao seu modificador de ataque mágico, alcance
-18 m. Dano: 1d10 + 3 mais o círculo da magia em pontos de dano Contundente, e o Deslocamento do alvo é reduzido a 0
-até o início do próximo turno do inseto.
-Ações Bônus
-Cuspe Venenoso (Apenas Centopeia). Salvaguarda de
-Constituição. Sua CD para evitar magia, uma criatura à vista do inseto a até 3 metros. Falha: O alvo tem a condição
-Envenenado até o início do próximo turno do inseto.
-Você invoca um Espírito Aberrante. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Aberrante. Ao conjurar a magia, escolha entre Devorador de Mentes, Pseudo-observador ou Slaad. A criatura se assemelha a uma Aberração desse tipo, o que determina certos detalhes no bloco de estatísticas da criatura.
+  ('invocar-aberracao', 'Invocar Aberração', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de 400 ou mais PO', 'V, S, M (um tentáculo em conserva e um globo ocular em um frasco incrustado de platina no valor de 400 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Aberrante. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Aberrante. Ao conjurar a magia, escolha entre Devorador de Mentes, Pseudo-observador ou Slaad. A criatura se assemelha a uma Aberração desse tipo, o que determina certos detalhes no bloco de estatísticas da criatura.
 A criatura desaparece ao ser reduzida a 0 Pontos de
 Vida ou quando a magia termina.
-A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-animais', 'Invocar Animais', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos da natureza que aparecem como um grande bando de animais espectrais e intangíveis em um espaço desocupado à sua vista e no alcance da magia. O bando permanece pela duração da magia e você escolhe a forma animal dos espíritos, como lobos,
-serpentes ou pássaros.
-Você tem Vantagem em salvaguardas de Força enquanto estiver a até 1,5 metro do bando e, quando se mover no seu turno, também pode mover o bando até
-9 metros para um espaço desocupado à sua vista.
-Sempre que o bando se mover até 3 metros de uma criatura à sua vista ou quando uma criatura à sua vista entrar ou terminar seu turno a até 3 metros do bando,
-você pode forçá-la a realizar uma salvaguarda de Destreza. Se falhar, a criatura sofre 3d10 pontos de dano
-Cortante. Cada criatura só realiza essa salvaguarda uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
-dano aumenta em 1d10 para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-barragem', 'Invocar Barragem', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, TRUE, 'uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP', 'V, S, M (uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP)', 'Instantânea', FALSE, FALSE, 'Espírito Aberrante (Pseudo-observador)
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ela obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
 Espírito Aberrante
 Aberração Média, Neutra
 CA 11 + o círculo da magia
 PV 40 + 10 para cada círculo de magia acima de 4
 Deslocamento 9 m; Voo 9 m (pairar; apenas Pseudoobservador)
-MOD SG MOD SG MOD SG
 For 16 +3 +3 Des 10 +0 +0 Con 15 +2 +2
 Int 16 +3 +3 Sab 10 +0 +0 Car 6 –2 –2
 Imunidades Psíquico
@@ -1293,9 +1200,16 @@ Pancada Psíquica (Apenas Devorador de Mentes). Jogada de
 Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Psíquico.
 Raio Ocular (Somente Pseudo-observador). Jogada de Ataque à
 Distância: Bônus é igual ao seu modificador de ataque mágico,
-alcance 45 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Psíquico.
-JUSTINE CRUZ
-Você brande a arma usada para conjurar a magia e invoca armas espectrais semelhantes (ou munição apropriada para a arma) que são lançadas adiante e depois desaparecem. Cada criatura à sua escolha à sua vista em um Cone de 18 metros realiza uma salvaguarda de
+alcance 45 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Psíquico.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+  ('invocar-animais', 'Invocar Animais', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos da natureza que aparecem como um grande bando de animais espectrais e intangíveis em um espaço desocupado à sua vista e no alcance da magia. O bando permanece pela duração da magia e você escolhe a forma animal dos espíritos, como lobos,
+serpentes ou pássaros.
+Você tem Vantagem em salvaguardas de Força enquanto estiver a até 1,5 metro do bando e, quando se mover no seu turno, também pode mover o bando até
+9 metros para um espaço desocupado à sua vista.
+Sempre que o bando se mover até 3 metros de uma criatura à sua vista ou quando uma criatura à sua vista entrar ou terminar seu turno a até 3 metros do bando,
+você pode forçá-la a realizar uma salvaguarda de Destreza. Se falhar, a criatura sofre 3d10 pontos de dano
+Cortante. Cada criatura só realiza essa salvaguarda uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
+dano aumenta em 1d10 para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+  ('invocar-barragem', 'Invocar Barragem', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, TRUE, 'uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP', 'V, S, M (uma arma Corpo a Corpo ou à Distância que vale pelo menos 1 PP)', 'Instantânea', FALSE, FALSE, 'Você brande a arma usada para conjurar a magia e invoca armas espectrais semelhantes (ou munição apropriada para a arma) que são lançadas adiante e depois desaparecem. Cada criatura à sua escolha à sua vista em um Cone de 18 metros realiza uma salvaguarda de
 Destreza, sofrendo 5d8 pontos de dano Energético se falhar, ou metade desse dano em caso de sucesso.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano aumenta em 1d8 para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('invocar-celestial', 'Invocar Celestial', 7, '7º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura um espírito dos Planos Superiores, que se manifesta como um pilar de luz em um Cilindro de
@@ -1317,7 +1231,6 @@ Constructo Médio, Neutro
 CA 13 + o círculo da magia
 PV 40 + 15 para cada círculo de magia acima de 4
 Deslocamento 9 m
-MOD SG MOD SG MOD SG
 For 18 +4 +4 Des 10 +0 +0 Con 18 +4 +4
 Int 14 +2 +2 Sab 11 +0 +0 Car 5 –3 –3
 Resistências Venenoso
@@ -1338,38 +1251,26 @@ o círculo da magia pontos de dano Contundente.
 Reações
 Reação Violenta (Apenas Argila). Gatilho: O espírito sofre dano de uma criatura. Reação: O espírito realiza um ataque de Pancada contra essa criatura, se possível, ou o espírito se move até metade do seu Deslocamento em direção a essa criatura sem provocar Ataques de Oportunidade.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('invocar-dragao', 'Invocar Dragão', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '18 metros', TRUE, TRUE, TRUE, 'um objeto com a imagem de um dragão gravado nele no valor de 500 ou mais PO', 'V, S, M (um objeto com a imagem de um dragão gravado nele no valor de 500 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Dracônico. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Dracônico. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
-A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
-  ('invocar-elementais-menores', 'Invocar Elementais Menores', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Espírito do Constructo (Pedra)
-Espírito
-Dracônico
-(Frio)
+A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
 Espírito Dracônico
 Dragão Grande, Neutro
 CA 14 + o círculo da magia
 PV 50 + 10 para cada círculo de magia acima de 5
 Deslocamento 9 m, Natação 9 m; Voo 18 m
-MOD SG MOD SG MOD SG
 For 19 +4 +4 Des 14 +2 +2 Con 17 +3 +3
 Int 10 +0 +0 Sab 14 +2 +2 Car 14 +2 +2
 Resistências Ácido, Elétrico, Gélido, Ígneo, Venenoso
 Imunidades Amedrontado, Enfeitiçado, Envenenado
-Sentidos Visão às Cegas 9 m, Visão no Escuro 18 m, Percepção
-Passiva 12
+Sentidos Visão às Cegas 9 m, Visão no Escuro 18 m, Percepção Passiva 12
 Idiomas Dracônico, compreende os idiomas que você fala
 ND Nenhum (XP 0; BP é igual ao seu Bônus de Proficiência)
 Traços
 Resistências Compartilhadas. Ao invocar o espírito, escolha uma das resistências dele. Você tem Resistência ao tipo de dano escolhido até que a magia termine.
 Ações
 Ataques Múltiplos. O espírito realiza um número de ataques de Dilacerar igual à metade do círculo da magia (arredondado para baixo) e usa o Ataque de Sopro.
-Ataque de Sopro. Salvaguarda de Destreza: CD é igual a CD
-para evitar sua magia, cada criatura em um Cone de 9 metros.
-Falha: 2d6 pontos de dano de um tipo ao qual o espírito tem
-Resistência (à sua escolha quando você conjura a magia).
-Sucesso: Metade do dano.
-Dilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 3 m. Dano: 1d6 + 4
-+ o círculo da magia pontos de dano Perfurante.
-HECTOR ORTIZ, POLAR ENGINE
-Você conjura espíritos dos Planos Elementais que voam ao seu redor em uma Emanação de 4,5 metros pela duração da magia. Até que a magia termine,
+Ataque de Sopro. Salvaguarda de Destreza: CD é igual a CD para evitar sua magia, cada criatura em um Cone de 9 metros. Falha: 2d6 pontos de dano de um tipo ao qual o espírito tem Resistência (à sua escolha quando você conjura a magia). Sucesso: Metade do dano.
+Dilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 3 m. Dano: 1d6 + 4 + o círculo da magia pontos de dano Perfurante.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+  ('invocar-elementais-menores', 'Invocar Elementais Menores', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', 'Concentração, até 10 minutos', TRUE, FALSE, 'Você conjura espíritos dos Planos Elementais que voam ao seu redor em uma Emanação de 4,5 metros pela duração da magia. Até que a magia termine,
 qualquer ataque que você realizar causa 2d8 pontos de dano adicional quando você atinge uma criatura na Emanação. Este dano é Ácido, Elétrico, Gélido ou
 Ígneo (à sua escolha quando realizar o ataque).
 Além disso, o terreno da Emanação é Terreno Difícil para seus inimigos.', 'Usando um Espaço de Magia de Círculo Superior. O
@@ -1405,7 +1306,6 @@ PV 50 (apenas Demônio) ou 40 (apenas Diabo) ou 60 (apenas
 Yugoloth) + 15 para cada círculo de magia acima de 6
 Deslocamento 12 m; Escalada 12 m (apenas Demônio); Voo
 18 m (apenas Diabo)
-MOD SG MOD SG MOD SG
 For 13 +1 +1 Des 16 +3 +3 Con 16 +2 +2
 Int 10 +0 +0 Sab 10 +0 +0 Car 16 +3 +3
 Resistências Ígneo
@@ -1436,7 +1336,6 @@ CA 11 + o círculo da magia
 PV 20 (apenas Ar) ou 30 (apenas Água e Terra) + 5 para cada círculo de magia acima de 2
 Deslocamento 9 m; Escalada 9 m (Apenas Terra); Natação 9 m
 (Apenas água); Voo 18 m (Apenas Ar)
-MOD SG MOD SG MOD SG
 For 13 +1 +1 Des 16 +3 +3 Con 15 +2 +2
 Int 10 +0 +0 Sab 10 +0 +0 Car 16 +3 +3
 Sentidos: Visão no Escuro 18 m, Percepção Passiva 12
@@ -1452,7 +1351,7 @@ Ações
 Ataques Múltiplos. O espírito realiza um número de ataques de Dilacerar igual à metade do círculo da magia (arredondado para baixo).
 Dilacerar. Jogada de Ataque Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 +
 4 mais o círculo da magia em pontos de dano Perfurante.
-ALEXANDRE HONORE', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('invocar-morto-vivo', 'Invocar Morto-Vivo', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'necromancia'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um crânio dourado no valor de 300 ou mais PO', 'V, S, M (um crânio dourado no valor de 300 ou mais PO)', 'Concentração, até 1 hora', TRUE, FALSE, 'Você invoca um Espírito Morto-Vivo. Ele se manifesta em um espaço desocupado à sua vista e no alcance da magia e usa o bloco de estatísticas do Espírito Morto-
 -vivo. Ao conjurar a magia, escolha a forma da criatura: Esquelético, Fantasmagórico ou Pútrido. O espírito se assemelha a uma criatura Morta-viva com a forma escolhida, o que determina certos detalhes no bloco de estatísticas da criatura. A criatura desaparece ao ser reduzida a 0 Pontos de Vida ou quando a magia termina.
 A criatura é uma aliada sua e de seus aliados. Em combate, ela compartilha sua contagem de Iniciativa, mas o turno dela é imediatamente após o seu. Ele obedece aos seus comandos verbais (nenhuma ação é necessária). Se você não emitir nenhum, ela executa a ação Esquivar e usa o movimento dela para evitar o perigo.', 'Usando um Espaço de Magia de Círculo Superior. Use o círculo do espaço de magia para o círculo da magia no bloco de estatísticas.
@@ -1460,7 +1359,6 @@ CA 11 + o círculo da magia
 PV 30 (apenas Fantasmagórico e Pútrido) ou 20 (apenas
 Esquelético) + 10 para cada círculo de magia acima de 3
 Deslocamento 9 m; Voo 12 m (pairar; apenas Fantasmagórico)
-MOD SG MOD SG MOD SG
 For 12 +1 +1 Des 16 +3 +3 Con 15 +2 +2
 Int 4 –3 –3 Sab 10 +0 +0 Car 9 –1 –1
 Imunidades Necrótico, Venenoso; Amedrontado, Envenenado,
@@ -1485,12 +1383,7 @@ Distância: Bônus é igual ao seu modificador de ataque mágico,
 alcance 45 m. Dano: 2d4 + 3 mais o círculo da magia em pontos de dano Necrótico.
 Toque Mortal (Apenas Fantasmagórico). Jogada de Ataque
 Corpo a Corpo: Bônus é igual ao seu modificador de ataque mágico, alcance 1,5 m. Dano: 1d8 + 3 mais o círculo da magia em pontos de dano Necrótico, e o alvo tem a condição
-Amedrontado até o final do próximo turno dele.
-Espírito Morto-Vivo
-Morto-vivo Médio, Neutro
-Espírito Morto-vivo
-(Fantasmagórico)
-JUSTIN SWEET', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+Amedrontado até o final do próximo turno dele.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('invocar-saraivada', 'Invocar Saraivada', 5, '5º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '45 metros', TRUE, TRUE, TRUE, 'uma arma Corpo a Corpo ou à Distância no valor de 1 ou mais PP', 'V, S, M (uma arma Corpo a Corpo ou à Distância no valor de 1 ou mais PP)', 'Instantânea', FALSE, FALSE, 'Você brande a arma usada para conjurar a magia e escolhe um ponto no alcance da magia. Centenas de armas espectrais similares (ou munição apropriada para a arma) caem em uma saraivada e depois desaparecem.
 Cada criatura à sua escolha à sua vista em um Cilindro de 12 metros de raio e 6 metros de altura, centrada nesse ponto, realiza uma salvaguarda de Destreza. Uma criatura sofre 8d8 pontos de dano Energético se falhar,
 ou metade desse dano em caso de sucesso.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
@@ -1593,7 +1486,7 @@ Mão Vigorosa. A mão tenta empurrar uma criatura
 Enorme ou menor a até 1,5 metro dela. O alvo deve ser bem-sucedido em uma salvaguarda de Força, ou a mão empurra o alvo até 1,5 metro mais 1,5 metro multiplicado pelo valor de seu modificador de atributo de conjuração. A mão se move com o alvo, permanecendo a até 1,5 metro dele.
 Punho Cerrado. A mão atinge um alvo a até 1,5
 metro dela. Realize um ataque mágico corpo a corpo.
-BRIAN VALEZA
+
 Em caso de acerto, o alvo sofre 5d8 pontos de dano
 Energético.', 'Usando um Espaço de Magia de Círculo Superior. O
 dano do Punho Cerrado aumenta em 2d8 e o dano da
@@ -1660,10 +1553,7 @@ Enquanto Enfeitiçada, a criatura sofre 5d10 pontos de dano Psíquico se agir de
 Você pode dar qualquer comando à sua escolha,
 exceto uma atividade que resultaria em morte certa. Se você der um comando suicida, a magia se encerra.
 Uma magia Desejo, Remover Maldição ou Restauração
-Maior encerra esta magia.', 'Usando um Espaço de Magia de Círculo Superior. Se você usar um espaço de magia de 7º ou 8º círculo, a duração é de 365 dias. Se você usar um espaço de magia de 9º círculo, a magia dura até que seja encerrada por uma das magias mencionadas acima.
-Magos rivais usam
-Metamorfose para se transformar em um Observador e um Beír durante um duelo mágico.
-MICHAEL BROUSSARD', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+Maior encerra esta magia.', 'Usando um Espaço de Magia de Círculo Superior. Se você usar um espaço de magia de 7º ou 8º círculo, a duração é de 365 dias. Se você usar um espaço de magia de 9º círculo, a magia dura até que seja encerrada por uma das magias mencionadas acima.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('misseis-magicos', 'Mísseis Mágicos', 1, '1º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'), 'Ação', '36 metros', TRUE, TRUE, FALSE, NULL, 'V, S', 'Instantânea', FALSE, FALSE, 'Você cria três dardos brilhantes feitos de pura energia mágica. Cada dardo acerta uma criatura à sua escolha,
 à sua vista e no alcance da magia. Um dardo causa 1d4
 + 1 pontos de dano Energético ao alvo. Os dardos acertam ao mesmo tempo, e você pode direcioná-los para uma mesma criatura ou várias.', 'Usando um Espaço de Magia de Círculo Superior. A
@@ -1674,10 +1564,6 @@ embora possa ouvir você. Se sofrer qualquer dano ou for alvo de outra magia, a 
 Enquanto essa magia durar, você pode manipular a memória do alvo sobre um evento que ele tenha vivenciado nas últimas 24 horas e que tenha durado no máximo 10 minutos. Você pode eliminar permanentemente toda a memória do evento, permitir que o alvo recorde o evento com total clareza, alterar os detalhes da memória do evento ou criar uma memória de outro evento.
 Você deve falar com o alvo para descrever como as memórias dele serão afetadas, e ele deve conseguir entender seu idioma para as memórias modificadas criarem raízes. A mente do alvo preenche qualquer lacuna dos detalhes da sua descrição. Se a magia encerrar antes que você termine de descrever as memórias modificadas, a memória da criatura não é alterada.
 Caso contrário, as memórias modificadas se consolidam quando a magia termina.
-Um Mago humano afasta o perigo com a
-Armadura Arcana e os raios infalíveis dos
-Mísseis Mágicos.
-AARON J RILEY
 Uma memória modificada não afeta necessariamente o comportamento de uma criatura, especialmente se a memória contradiz as inclinações naturais, o alinhamento ou as crenças da criatura. Uma memória modificada ilógica, como uma falsa memória de quanto a criatura gostava de nadar em ácido, é descartada como um pesadelo. O Mestre pode considerar uma memória modificada absurda demais para afetar uma criatura.
 Uma magia Remover Maldição ou Restauração Maior conjurada sobre o alvo restaura a memória verdadeira da criatura.', 'Usando um Espaço de Magia de Círculo Superior.
 Você pode alterar as memórias do alvo em relação a um evento que ocorreu há até 7 dias (espaço de magia de 6º círculo), 30 dias (espaço de magia de 7º círculo), 365 dias (espaço de magia de 8º círculo) ou em qualquer momento do passado da criatura (espaço de magia de 9º círculo).', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
@@ -1828,10 +1714,7 @@ O dano aumenta em 1d8 para cada círculo de espaço de magia acima de 1. O orbe 
 Enfeitiçado pela duração. Enquanto Enfeitiçado, a criatura tem a condição Incapacitado e Deslocamento 0.
 A magia se encerra para uma criatura afetada se ela sofrer algum dano ou se outra pessoa executar uma ação para sacudi-la, removendo-a de seu estupor.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('palavra-curativa', 'Palavra Curativa', 1, '1º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'abjuracao'), 'Ação Bônus', '18 metros', TRUE, FALSE, FALSE, NULL, 'V', 'Instantânea', FALSE, FALSE, 'Uma criatura à sua escolha, à sua vista e no alcance da magia recupera Pontos de Vida iguais a 2d4 mais seu modificador de atributo de conjuração.', 'Usando um Espaço de Magia de Círculo Superior. A
-cura aumenta em 2d4 para cada círculo de espaço de magia acima de 1.
-Um humano Feiticeiro repreende carniçais com a energia imprevisível do
-Orbe Cromático.
-ZUZANNA WUZYK', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+cura aumenta em 2d4 para cada círculo de espaço de magia acima de 1.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('palavra-curativa-em-massa', 'Palavra Curativa em Massa', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'abjuracao'), 'Ação Bônus', '18 metros', TRUE, FALSE, FALSE, NULL, 'V', 'Instantânea', FALSE, FALSE, 'Até seis criaturas à sua escolha, à sua vista e no alcance da magia, recuperam Pontos de Vida iguais a 2d4 mais o seu modificador de atributo de conjuração.', 'Usando um Espaço de Magia de Círculo Superior. A
 cura aumenta em 1d4 para cada círculo de espaço de magia acima de 3.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('palavra-de-poder-atordoar', 'Palavra de Poder: Atordoar', 8, '8º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'encantamento'), 'Ação', '18 metros', TRUE, FALSE, FALSE, NULL, 'V', 'Instantânea', FALSE, FALSE, 'Você domina a mente de uma criatura à sua vista e no alcance da magia. Se o alvo tiver 150 Pontos de Vida ou menos, ele tem a condição Atordoado. Caso contrário, o
@@ -2106,7 +1989,7 @@ Quando a magia termina, o receptáculo é destruído.', NULL, (SELECT id FROM rp
 A criatura reencarnada faz quaisquer escolhas que a descrição de sua nova espécie oferece e mantém as memórias de sua vida anterior. Ela conserva as capacidades que possuía em sua forma original, mas perde os traços da espécie anterior e adquire os traços da nova espécie.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('reflexos', 'Reflexos', 2, '2º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'ilusao'), 'Ação', 'Pessoal', TRUE, TRUE, FALSE, NULL, 'V, S', '1 minuto', FALSE, FALSE, 'Um anão teve um encontro infeliz com o raio anil da
 Rajada Prismática.
-RANDALL MACKEY
+
 Três cópias ilusórias suas aparecem em seu espaço. Até que a magia termine, as cópias se movem com você e imitam suas ações, mudando de posição de forma que seja impossível rastrear qual imagem é a verdadeira.
 Cada vez que uma criatura atinge você com uma jogada de ataque pela duração da magia, jogue um d6
 para cada uma das cópias restantes. Se qualquer um dos d6s resultar em 3 ou mais, uma das cópias é atingida em seu lugar e é destruída. As cópias ignoram todos os outros danos e efeitos. A magia se encerra quando as três cópias são destruídas.
@@ -2146,7 +2029,7 @@ dano aumenta em 1d10 para cada círculo de espaço de magia acima de 1.', (SELEC
 Magias como
 Caminhar Sobre as Águas e
 Respirar na Água auxiliam viagens a reinos aquáticos.
-ANDREW MAR
+
 A criatura retorna à vida com todos os seus Pontos de Vida, e a magia neutraliza quaisquer venenos que a afetavam na hora da morte, fecha feridas letais e restaura partes do corpo ausentes.
 Voltar à vida é um processo difícil. O alvo sofre uma penalidade de −4 em Testes de D20. Sempre que o alvo completar um Descanso Longo, a penalidade é reduzida em 1 até se tornar 0.
 Conjurar essa magia para reviver uma criatura morta há 365 dias ou mais sobrecarrega você. Até completar um Descanso Longo, você não pode conjurar magias novamente e tem Desvantagem nos Testes de D20.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
@@ -2168,7 +2051,7 @@ Bônus.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-p
 A criatura retorna à vida com 1 Ponto de Vida. Esta magia também neutraliza quaisquer venenos que afetavam a criatura no momento da morte.
 Esta magia fecha todas as feridas fatais, mas não restaura membros ou partes do corpo faltantes. Se a criatura estiver sem partes do corpo ou órgãos essenciais para sua sobrevivência — como a cabeça, por exemplo — a magia falha automaticamente.
 Voltar à vida é um processo difícil. O alvo sofre uma penalidade de −4 em Testes de D20. Sempre que o alvo completar um Descanso Longo, a penalidade é reduzida em 1 até se tornar 0.
-MARTIN MOTTET, POLAR ENGINE', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('revivificar', 'Revivificar', 3, '3º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'necromancia'), 'Ação', 'Toque', TRUE, TRUE, TRUE, 'um diamante no valor de 300 ou mais PO, que a magia consome', 'V, S, M (um diamante no valor de 300 ou mais PO, que a magia consome)', 'Instantânea', FALSE, FALSE, 'Você toca uma criatura que morreu no último minuto.
 Essa criatura revive com 1 Ponto de Vida. Esta magia não pode reviver uma criatura que morreu de velhice,
 nem restaura partes do corpo ausentes.', NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
@@ -2391,11 +2274,7 @@ criaturas têm as condições Cego e Surdo, e não podem conjurar magias com um 
 Quando a tempestade aparece, cada criatura dentro dela realiza uma salvaguarda de Constituição, sofrendo
 2d10 pontos de dano Radiante e 2d10 pontos de dano
 Trovejante se falhar, ou metade desse dano em caso de sucesso. Uma criatura também realiza essa salvaguarda quando entra na área da magia pela primeira vez em um turno ou termina o turno dela nela. Uma criatura realiza essa salvaguarda apenas uma vez por turno.', 'Usando um Espaço de Magia de Círculo Superior. O
-dano Radiante e Trovejante aumentam em 1d10 para cada círculo de espaço de magia acima de 5.
-Com sua magia
-Tempestade Radiante de Jallarzi, a Bruxa
-Jallarzi faz vrocks se arrependerem de deixar o Abismo.
-JOSEPH WESTON', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
+dano Radiante e Trovejante aumentam em 1d10 para cada círculo de espaço de magia acima de 5.', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch7:241-349')),
   ('tentaculos-negros-de-evard', 'Tentáculos Negros de Evard', 4, '4º Círculo', (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'), 'Ação', '27 metros', TRUE, TRUE, TRUE, 'um tentáculo', 'V, S, M (um tentáculo)', 'Concentração, até 1 minuto', TRUE, FALSE, 'Tentáculos pretos contorcendo-se enchem um quadrado de 6 metros de lados no chão à sua vista e no alcance da magia. Pela duração da magia, esses tentáculos transformam o terreno nessa área em Terreno Difícil.
 Cada criatura nessa área realiza uma salvaguarda de
 Força. Se falhar, ela sofre 3d6 pontos de dano Contundente e tem a condição Contido até que a magia termine. Uma criatura também realiza essa salvaguarda se entrar na área ou terminar o turno nela. Uma criatura realiza essa salvaguarda apenas uma vez por turno.

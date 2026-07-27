@@ -341,7 +341,7 @@ VALUES
 ON CONFLICT (feat_id, option_key) DO NOTHING;
 
 -- --- D005_feat_artisan_musician_weapon_master.sql ---
--- Artifista, Músico, Mestre das Armas — opções de origem / nível 4
+-- Artesão, Músico, Mestre das Armas — opções de origem / nível 4
 
 INSERT INTO rpg.phb_feat_option_def (feat_id, option_key, label, value_type, sort_order)
 VALUES

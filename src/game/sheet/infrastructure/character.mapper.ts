@@ -115,8 +115,11 @@ export class CharacterMapper {
       languageSlugs: loaded.languageSlugs,
       abilityGenerationMethodSlug: loaded.abilityGenerationMethodSlug,
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
+      backgroundAbilityBoostMode:
+        row.backgroundBoostMode === 'plus1x3' ? 'plus1x3' : 'plus2plus1',
       backgroundAbilityBoostPlus2Slug: row.backgroundBoostPlus2AbilitySlug,
       backgroundAbilityBoostPlus1Slug: row.backgroundBoostPlus1AbilitySlug,
+      backgroundAbilityBoostPlus1Slugs: row.backgroundBoostPlus1Slugs,
       backgroundToolItemSlug: row.backgroundToolItemSlug,
       abilityModifiers: derived.abilityModifiers,
       passivePerception: derived.passivePerception,

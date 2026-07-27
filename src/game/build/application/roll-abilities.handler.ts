@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import {
   assignScoresToAbilities,
   generateAbilityScores,
-  rollAbilityScores,
+  rollAbilityScoreOptions,
   standardArrayScores,
   AbilityGenerationMethodSlug,
 } from '../domain/ability-generation';
@@ -14,11 +14,13 @@ export class RollAbilitiesHandler {
     const method = dto.method as AbilityGenerationMethodSlug;
 
     if (method === 'roll') {
-      const rawValues = rollAbilityScores();
+      const rawValueOptions = rollAbilityScoreOptions();
+      const rawValues = rawValueOptions[0]!;
       return {
         method: dto.method,
         abilityScores: assignScoresToAbilities(rawValues),
         rawValues,
+        rawValueOptions,
       };
     }
 

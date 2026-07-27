@@ -78,7 +78,7 @@
       "rule": "14 + min(DES, 2)",
       "expected": 16,
       "actual": 16,
-      "note": "Couraça Peitoral",
+      "note": "Couraça",
       "ok": true
     },
     {
@@ -159,7 +159,7 @@
       "rule": "14 + min(DES, 3) com DES ≥ 16",
       "expected": 17,
       "actual": 17,
-      "note": "Couraça Peitoral + Mestre em Armadura Média",
+      "note": "Couraça + Mestre em Armadura Média",
       "ok": true
     }
   ]

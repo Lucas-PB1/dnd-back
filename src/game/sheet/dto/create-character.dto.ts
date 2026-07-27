@@ -1,6 +1,10 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsIn,
   IsInt,
   IsNotEmpty,
   IsOptional,
@@ -9,6 +13,7 @@ import {
   MaxLength,
   Min,
   MinLength,
+  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 import { AbilityScoresDto } from './character-response.dto';
@@ -71,21 +76,51 @@ export class CreateCharacterDto extends CharacterSheetInputDto {
   @Min(0)
   hitPointsCurrent?: number;
 
-  @ApiProperty({
-    example: 'sabedoria',
-    description: 'Atributo que recebe +2 do antecedente (entre as opções do PHB)',
+  @ApiPropertyOptional({
+    enum: ['plus2plus1', 'plus1x3'],
+    default: 'plus2plus1',
+    description: 'Distribuição do bônus do antecedente: +2/+1 ou +1 em três atributos',
   })
-  @IsString()
-  @IsNotEmpty()
-  backgroundAbilityBoostPlus2Slug!: string;
+  @IsOptional()
+  @IsIn(['plus2plus1', 'plus1x3'])
+  backgroundAbilityBoostMode?: 'plus2plus1' | 'plus1x3';
 
-  @ApiProperty({
-    example: 'carisma',
-    description: 'Atributo que recebe +1 do antecedente (distinto do +2)',
+  @ApiPropertyOptional({
+    example: 'sabedoria',
+    description: 'Atributo +2 (obrigatório quando mode = plus2plus1)',
   })
+  @ValidateIf(
+    (dto: CreateCharacterDto) =>
+      (dto.backgroundAbilityBoostMode ?? 'plus2plus1') === 'plus2plus1',
+  )
   @IsString()
   @IsNotEmpty()
-  backgroundAbilityBoostPlus1Slug!: string;
+  backgroundAbilityBoostPlus2Slug?: string;
+
+  @ApiPropertyOptional({
+    example: 'carisma',
+    description: 'Atributo +1 (obrigatório quando mode = plus2plus1)',
+  })
+  @ValidateIf(
+    (dto: CreateCharacterDto) =>
+      (dto.backgroundAbilityBoostMode ?? 'plus2plus1') === 'plus2plus1',
+  )
+  @IsString()
+  @IsNotEmpty()
+  backgroundAbilityBoostPlus1Slug?: string;
+
+  @ApiPropertyOptional({
+    example: ['sabedoria', 'carisma', 'inteligencia'],
+    description: 'Três atributos +1 (obrigatório quando mode = plus1x3)',
+  })
+  @ValidateIf(
+    (dto: CreateCharacterDto) => dto.backgroundAbilityBoostMode === 'plus1x3',
+  )
+  @IsArray()
+  @ArrayMinSize(3)
+  @ArrayMaxSize(3)
+  @IsString({ each: true })
+  backgroundAbilityBoostPlus1Slugs?: string[];
 
   @ApiPropertyOptional({
     example: 'ferramentas-de-carpinteiro',

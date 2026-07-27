@@ -121,11 +121,23 @@ export class CharacterResponseDto {
   })
   backgroundSkillSlugs!: string[];
 
+  @ApiPropertyOptional({
+    enum: ['plus2plus1', 'plus1x3'],
+    example: 'plus2plus1',
+  })
+  backgroundAbilityBoostMode!: 'plus2plus1' | 'plus1x3';
+
   @ApiPropertyOptional({ example: 'sabedoria' })
   backgroundAbilityBoostPlus2Slug!: string | null;
 
   @ApiPropertyOptional({ example: 'carisma' })
   backgroundAbilityBoostPlus1Slug!: string | null;
+
+  @ApiPropertyOptional({
+    example: ['sabedoria', 'carisma', 'inteligencia'],
+    description: 'Preenchido quando mode = plus1x3',
+  })
+  backgroundAbilityBoostPlus1Slugs!: string[] | null;
 
   @ApiPropertyOptional({
     example: 'ferramentas-de-cartografo',

@@ -32,7 +32,7 @@ describe('Reference queries', () => {
 
   it('findAllAlignments returns paginated data', async () => {
     alignmentsRepo.find.mockResolvedValue([
-      { id: '1', slug: 'lawful-good', name: 'Ordeiro e Bom', abbreviation: 'OB', description: null },
+      { id: '1', slug: 'lawful-good', name: 'Leal e Bom', abbreviation: 'LB', description: null },
     ]);
     const result = await findAlignments.execute(1, 20);
     expect(result.data[0].slug).toBe('lawful-good');

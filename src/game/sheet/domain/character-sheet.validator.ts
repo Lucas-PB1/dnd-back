@@ -19,8 +19,8 @@ import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity'
 import { CharacterSheetInput } from './character-sheet.types';
 import { FeatOptionDto, CharacterFeatDto, SpeciesChoiceDto } from '../dto/character-sheet.dto';
 import {
-  applyBackgroundAbilityBoosts,
   assertBackgroundBoostSlugsAllowed,
+  resolveBackgroundAbilityBoostInput,
 } from './background-ability-boost';
 import { featInstanceKey } from './character-feat';
 import {
@@ -265,16 +265,21 @@ export class CharacterSheetValidator {
 
   async validateBackgroundAbilityBoosts(
     backgroundSlug: string,
-    boosts: { plus2Slug?: string; plus1Slug?: string },
+    boosts: {
+      mode?: string | null;
+      plus2Slug?: string | null;
+      plus1Slug?: string | null;
+      plus1Slugs?: string[] | null;
+    },
   ): Promise<void> {
     const background = await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
     const allowed = background.abilityOptionSlugs ?? [];
     if (allowed.length === 0) return;
 
-    assertBackgroundBoostSlugsAllowed(allowed, {
-      plus2Slug: boosts.plus2Slug ?? '',
-      plus1Slug: boosts.plus1Slug ?? '',
-    });
+    assertBackgroundBoostSlugsAllowed(
+      allowed,
+      resolveBackgroundAbilityBoostInput(boosts),
+    );
   }
 
   /** PHB: se já tem a perícia do antecedente, escolha outra na classe. */

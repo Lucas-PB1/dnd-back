@@ -9,7 +9,7 @@ import { CharacterMapper } from '../infrastructure/character.mapper';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
-import { applyBackgroundAbilityBoosts } from '../domain/background-ability-boost';
+import { applyBackgroundAbilityBoosts, resolveBackgroundAbilityBoostInput } from '../domain/background-ability-boost';
 import {
   resolveBackgroundToolItemSlug,
 } from '../domain/background-origin';
@@ -201,13 +201,17 @@ export class UpdateCharacterHandler {
       dto.backgroundSlug !== undefined && dto.backgroundSlug !== row.backgroundSlug;
 
     const boostPatch =
+      dto.backgroundAbilityBoostMode !== undefined ||
       dto.backgroundAbilityBoostPlus2Slug !== undefined ||
-      dto.backgroundAbilityBoostPlus1Slug !== undefined;
+      dto.backgroundAbilityBoostPlus1Slug !== undefined ||
+      dto.backgroundAbilityBoostPlus1Slugs !== undefined;
     const scoresAreBase = boostPatch && dto.abilityScores !== undefined;
 
     if (backgroundChanged && !boostPatch) {
+      row.backgroundBoostMode = 'plus2plus1';
       row.backgroundBoostPlus2AbilitySlug = null;
       row.backgroundBoostPlus1AbilitySlug = null;
+      row.backgroundBoostPlus1Slugs = null;
     }
 
     if (backgroundChanged && dto.backgroundToolItemSlug === undefined) {
@@ -237,17 +241,25 @@ export class UpdateCharacterHandler {
     );
 
     if (boostPatch) {
-      const plus2 = row.backgroundBoostPlus2AbilitySlug;
-      const plus1 = row.backgroundBoostPlus1AbilitySlug;
       await this.sheetValidator.validateBackgroundAbilityBoosts(
         effective.backgroundSlug,
-        { plus2Slug: plus2 ?? undefined, plus1Slug: plus1 ?? undefined },
+        {
+          mode: row.backgroundBoostMode,
+          plus2Slug: row.backgroundBoostPlus2AbilitySlug,
+          plus1Slug: row.backgroundBoostPlus1AbilitySlug,
+          plus1Slugs: row.backgroundBoostPlus1Slugs,
+        },
       );
-      if (scoresAreBase && plus2 && plus1 && dto.abilityScores) {
-        row.abilityScores = applyBackgroundAbilityBoosts(dto.abilityScores, {
-          plus2Slug: plus2,
-          plus1Slug: plus1,
-        });
+      if (scoresAreBase && dto.abilityScores) {
+        row.abilityScores = applyBackgroundAbilityBoosts(
+          dto.abilityScores,
+          resolveBackgroundAbilityBoostInput({
+            mode: row.backgroundBoostMode,
+            plus2Slug: row.backgroundBoostPlus2AbilitySlug,
+            plus1Slug: row.backgroundBoostPlus1AbilitySlug,
+            plus1Slugs: row.backgroundBoostPlus1Slugs,
+          }),
+        );
       }
     }
 

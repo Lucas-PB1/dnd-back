@@ -1,9 +1,16 @@
 import {
   assignScoresToAbilities,
   generateAbilityScores,
+  isRollTotalInRange,
   POINT_BUY_BUDGET,
   roll4d6DropLowest,
+  rollAbilityScoreOptions,
+  rollAbilityScores,
+  ROLL_OPTION_COUNT,
+  ROLL_TOTAL_MAX,
+  ROLL_TOTAL_MIN,
   standardArrayScores,
+  sumAbilityValues,
 } from './ability-generation';
 
 describe('ability-generation', () => {
@@ -22,14 +29,28 @@ describe('ability-generation', () => {
     }
   });
 
-  it('roll uses deterministic rng', () => {
+  it('roll uses deterministic rng and stays in 72–80', () => {
     let n = 0;
     const rng = () => {
       n = (n + 0.17) % 1;
       return n;
     };
+    const raw = rollAbilityScores(rng);
+    expect(raw).toHaveLength(6);
+    expect(isRollTotalInRange(raw)).toBe(true);
     const scores = generateAbilityScores('roll', { rng });
     expect(Object.values(scores)).toHaveLength(6);
+  });
+
+  it('roll options returns three sets in 72–80', () => {
+    const options = rollAbilityScoreOptions();
+    expect(options).toHaveLength(ROLL_OPTION_COUNT);
+    for (const option of options) {
+      expect(option).toHaveLength(6);
+      const total = sumAbilityValues(option);
+      expect(total).toBeGreaterThanOrEqual(ROLL_TOTAL_MIN);
+      expect(total).toBeLessThanOrEqual(ROLL_TOTAL_MAX);
+    }
   });
 
   it('point-buy validates budget', () => {
@@ -57,6 +78,7 @@ describe('ability-generation', () => {
       },
     });
     expect(valid.forca).toBe(15);
+    expect(POINT_BUY_BUDGET).toBe(27);
   });
 
   it('assignScoresToAbilities respects custom order', () => {

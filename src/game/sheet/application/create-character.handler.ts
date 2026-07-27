@@ -53,8 +53,10 @@ export class CreateCharacterHandler {
 
     await this.sheetValidator.validateLevelRules(ctx);
     await this.sheetValidator.validateBackgroundAbilityBoosts(dto.backgroundSlug, {
+      mode: dto.backgroundAbilityBoostMode,
       plus2Slug: dto.backgroundAbilityBoostPlus2Slug,
       plus1Slug: dto.backgroundAbilityBoostPlus1Slug,
+      plus1Slugs: dto.backgroundAbilityBoostPlus1Slugs,
     });
 
     const background = await this.catalogLookup.findBackgroundOrFail(dto.backgroundSlug);

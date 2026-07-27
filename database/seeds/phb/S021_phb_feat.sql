@@ -8,7 +8,7 @@ VALUES
   ('alert', 'Alerta', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('observant', 'Analítico', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Inteligência ou Sabedoria 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('archery', 'Arquearia', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'fighting-style'), FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
-  ('artisan', 'Artifista', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('artisan', 'Artesão', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('savage-attacker', 'Atacante Selvagem', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'origin'), FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('spell-sniper', 'Atirador Arcano', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Característica Conjuração ou Magia de Pacto', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('athlete', 'Atleta', (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'), FALSE, 'Nível 4 ou superior, Força ou Destreza 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),

@@ -7,12 +7,52 @@ import { CreateCharacterDto } from '../dto/create-character.dto';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 import {
   applyBackgroundAbilityBoosts,
+  BACKGROUND_BOOST_MODE_PLUS1X3,
+  BACKGROUND_BOOST_MODE_PLUS2_PLUS1,
+  resolveBackgroundAbilityBoostInput,
+  type BackgroundBoostMode,
 } from './background-ability-boost';
 import { applyFeatAbilityIncreases } from './feat-ability-boost';
 import type { FeatOptionDto } from '../dto/character-sheet.dto';
 
 const MIN_LEVEL = 1;
 const MAX_LEVEL = 20;
+
+function boostColumnsFromDto(dto: {
+  backgroundAbilityBoostMode?: string | null;
+  backgroundAbilityBoostPlus2Slug?: string | null;
+  backgroundAbilityBoostPlus1Slug?: string | null;
+  backgroundAbilityBoostPlus1Slugs?: string[] | null;
+}): Pick<
+  PlayerCharacter,
+  | 'backgroundBoostMode'
+  | 'backgroundBoostPlus2AbilitySlug'
+  | 'backgroundBoostPlus1AbilitySlug'
+  | 'backgroundBoostPlus1Slugs'
+> {
+  const input = resolveBackgroundAbilityBoostInput({
+    mode: dto.backgroundAbilityBoostMode,
+    plus2Slug: dto.backgroundAbilityBoostPlus2Slug,
+    plus1Slug: dto.backgroundAbilityBoostPlus1Slug,
+    plus1Slugs: dto.backgroundAbilityBoostPlus1Slugs,
+  });
+
+  if (input.mode === BACKGROUND_BOOST_MODE_PLUS1X3) {
+    return {
+      backgroundBoostMode: BACKGROUND_BOOST_MODE_PLUS1X3,
+      backgroundBoostPlus2AbilitySlug: null,
+      backgroundBoostPlus1AbilitySlug: null,
+      backgroundBoostPlus1Slugs: input.plus1Slugs,
+    };
+  }
+
+  return {
+    backgroundBoostMode: BACKGROUND_BOOST_MODE_PLUS2_PLUS1,
+    backgroundBoostPlus2AbilitySlug: input.plus2Slug,
+    backgroundBoostPlus1AbilitySlug: input.plus1Slug,
+    backgroundBoostPlus1Slugs: null,
+  };
+}
 
 export class CharacterFactory {
   static buildNew(userId: string, dto: CreateCharacterDto): Partial<PlayerCharacter> {
@@ -32,8 +72,7 @@ export class CharacterFactory {
       hitPointsMax: dto.hitPointsMax ?? null,
       hitPointsCurrent: dto.hitPointsCurrent ?? dto.hitPointsMax ?? null,
       abilityGenerationMethodSlug: dto.abilityGenerationMethodSlug ?? null,
-      backgroundBoostPlus2AbilitySlug: dto.backgroundAbilityBoostPlus2Slug ?? null,
-      backgroundBoostPlus1AbilitySlug: dto.backgroundAbilityBoostPlus1Slug ?? null,
+      ...boostColumnsFromDto(dto),
       backgroundToolItemSlug: dto.backgroundToolItemSlug ?? null,
     };
   }
@@ -45,25 +84,29 @@ export class CharacterFactory {
     return { ...entity, backgroundToolItemSlug: toolItemSlug };
   }
 
-  /** Aplica +2/+1 do antecedente sobre scores base (criação). */
+  /** Aplica bônus do antecedente sobre scores base (criação). */
   static withBackgroundBoostsApplied(
     entity: Partial<PlayerCharacter>,
     dto: Pick<
       CreateCharacterDto,
       | 'abilityScores'
+      | 'backgroundAbilityBoostMode'
       | 'backgroundAbilityBoostPlus2Slug'
       | 'backgroundAbilityBoostPlus1Slug'
+      | 'backgroundAbilityBoostPlus1Slugs'
     >,
   ): Partial<PlayerCharacter> {
     const base = dto.abilityScores ?? DEFAULT_ABILITY_SCORES;
+    const boostInput = resolveBackgroundAbilityBoostInput({
+      mode: dto.backgroundAbilityBoostMode,
+      plus2Slug: dto.backgroundAbilityBoostPlus2Slug,
+      plus1Slug: dto.backgroundAbilityBoostPlus1Slug,
+      plus1Slugs: dto.backgroundAbilityBoostPlus1Slugs,
+    });
     return {
       ...entity,
-      abilityScores: applyBackgroundAbilityBoosts(base, {
-        plus2Slug: dto.backgroundAbilityBoostPlus2Slug,
-        plus1Slug: dto.backgroundAbilityBoostPlus1Slug,
-      }),
-      backgroundBoostPlus2AbilitySlug: dto.backgroundAbilityBoostPlus2Slug,
-      backgroundBoostPlus1AbilitySlug: dto.backgroundAbilityBoostPlus1Slug,
+      abilityScores: applyBackgroundAbilityBoosts(base, boostInput),
+      ...boostColumnsFromDto(dto),
     };
   }
 
@@ -101,12 +144,36 @@ export class CharacterFactory {
     if (dto.abilityGenerationMethodSlug !== undefined) {
       row.abilityGenerationMethodSlug = dto.abilityGenerationMethodSlug ?? null;
     }
-    if (dto.backgroundAbilityBoostPlus2Slug !== undefined) {
-      row.backgroundBoostPlus2AbilitySlug = dto.backgroundAbilityBoostPlus2Slug ?? null;
+
+    const boostTouched =
+      dto.backgroundAbilityBoostMode !== undefined ||
+      dto.backgroundAbilityBoostPlus2Slug !== undefined ||
+      dto.backgroundAbilityBoostPlus1Slug !== undefined ||
+      dto.backgroundAbilityBoostPlus1Slugs !== undefined;
+
+    if (boostTouched) {
+      const columns = boostColumnsFromDto({
+        backgroundAbilityBoostMode:
+          dto.backgroundAbilityBoostMode ?? row.backgroundBoostMode,
+        backgroundAbilityBoostPlus2Slug:
+          dto.backgroundAbilityBoostPlus2Slug !== undefined
+            ? dto.backgroundAbilityBoostPlus2Slug
+            : row.backgroundBoostPlus2AbilitySlug,
+        backgroundAbilityBoostPlus1Slug:
+          dto.backgroundAbilityBoostPlus1Slug !== undefined
+            ? dto.backgroundAbilityBoostPlus1Slug
+            : row.backgroundBoostPlus1AbilitySlug,
+        backgroundAbilityBoostPlus1Slugs:
+          dto.backgroundAbilityBoostPlus1Slugs !== undefined
+            ? dto.backgroundAbilityBoostPlus1Slugs
+            : row.backgroundBoostPlus1Slugs,
+      });
+      row.backgroundBoostMode = columns.backgroundBoostMode;
+      row.backgroundBoostPlus2AbilitySlug = columns.backgroundBoostPlus2AbilitySlug;
+      row.backgroundBoostPlus1AbilitySlug = columns.backgroundBoostPlus1AbilitySlug;
+      row.backgroundBoostPlus1Slugs = columns.backgroundBoostPlus1Slugs;
     }
-    if (dto.backgroundAbilityBoostPlus1Slug !== undefined) {
-      row.backgroundBoostPlus1AbilitySlug = dto.backgroundAbilityBoostPlus1Slug ?? null;
-    }
+
     if (dto.backgroundToolItemSlug !== undefined) {
       row.backgroundToolItemSlug = dto.backgroundToolItemSlug ?? null;
     }
@@ -116,5 +183,11 @@ export class CharacterFactory {
     if (level < MIN_LEVEL || level > MAX_LEVEL) {
       throw new BadRequestException(`Level must be between ${MIN_LEVEL} and ${MAX_LEVEL}`);
     }
+  }
+
+  static boostModeOf(row: PlayerCharacter): BackgroundBoostMode {
+    return row.backgroundBoostMode === BACKGROUND_BOOST_MODE_PLUS1X3
+      ? BACKGROUND_BOOST_MODE_PLUS1X3
+      : BACKGROUND_BOOST_MODE_PLUS2_PLUS1;
   }
 }

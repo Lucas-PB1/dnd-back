@@ -39,6 +39,41 @@
 | sabedoria | Sabedoria |
 | carisma | Carisma |
 
+## Tendências / alinhamentos
+
+Eixo de ordem: **Leal** (não Ordeiro), Neutro, Caótico. Eixo moral: Bom, Neutro, Mau.  
+API: `GET /alignments` — slugs EN (`lawful-good`, …); `name` e abreviação em PT.
+
+| slug | name | abbr |
+|------|------|------|
+| `lawful-good` | Leal e Bom | LB |
+| `neutral-good` | Neutro e Bom | NB |
+| `chaotic-good` | Caótico e Bom | CB |
+| `lawful-neutral` | Leal e Neutro | LN |
+| `true-neutral` | Neutro | N |
+| `chaotic-neutral` | Caótico e Neutro | CN |
+| `lawful-evil` | Leal e Mau | LM |
+| `neutral-evil` | Neutro e Mau | NM |
+| `chaotic-evil` | Caótico e Mau | CM |
+
+## Classes e talentos (nomes PT)
+
+| slug | name |
+|------|------|
+| `ranger` | Guardião |
+| `artisan` (feat) | Artesão |
+
+## Armaduras (exemplos)
+
+| slug | name |
+|------|------|
+| `breastplate` | Couraça |
+| `half-plate` | Meia-Placa |
+
+## Condições
+
+Preferir PT oficial: **Caído** (não `Prone`), Vantagem/Desvantagem, etc.
+
 ## Consistência
 
 Preferir termos oficiais PHB 2024 PT-BR nos textos user-facing. Não inventar slug PT para classes (`guerreiro` ❌ → `fighter` ✅).

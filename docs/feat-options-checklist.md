@@ -31,7 +31,7 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 
 ## Lote 2 — Origem e armas *(D005)*
 
-- [x] **Artifista** — 3 ferramentas de artesão distintas (`artisanTool1–3`)
+- [x] **Artesão** — 3 ferramentas de artesão distintas (`artisanTool1–3`)
 - [x] **Músico** — 3 instrumentos distintos (`musicalInstrument1–3`)
 - [x] **Mestre das Armas** — arma simples/marcial com maestria (`masteryWeapon`)
 - [x] Validar escolhas distintas + whitelist na API (artifista/músico)

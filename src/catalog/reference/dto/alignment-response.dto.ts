@@ -4,10 +4,10 @@ export class AlignmentResponseDto {
   @ApiProperty({ example: 'lawful-good' })
   slug!: string;
 
-  @ApiProperty({ example: 'Ordeiro e Bom' })
+  @ApiProperty({ example: 'Leal e Bom' })
   name!: string;
 
-  @ApiPropertyOptional({ example: 'OB' })
+  @ApiPropertyOptional({ example: 'LB' })
   abbreviation!: string | null;
 
   @ApiPropertyOptional()

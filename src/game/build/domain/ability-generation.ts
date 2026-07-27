@@ -32,14 +32,44 @@ export const ABILITY_KEYS: AbilityKey[] = [
   'carisma',
 ];
 
+/** Soma dos 6 atributos na rolagem (4d6 drop lowest) — faixa equilibrada para mesa. */
+export const ROLL_TOTAL_MIN = 72;
+export const ROLL_TOTAL_MAX = 80;
+export const ROLL_OPTION_COUNT = 3;
+const ROLL_MAX_ATTEMPTS = 2000;
+
 export function roll4d6DropLowest(rng: () => number = Math.random): number {
   const rolls = Array.from({ length: 4 }, () => 1 + Math.floor(rng() * 6));
   rolls.sort((a, b) => a - b);
   return rolls[1] + rolls[2] + rolls[3];
 }
 
+export function sumAbilityValues(values: number[]): number {
+  return values.reduce((sum, value) => sum + value, 0);
+}
+
+export function isRollTotalInRange(values: number[]): boolean {
+  const total = sumAbilityValues(values);
+  return total >= ROLL_TOTAL_MIN && total <= ROLL_TOTAL_MAX;
+}
+
 export function rollAbilityScores(rng?: () => number): number[] {
-  return Array.from({ length: 6 }, () => roll4d6DropLowest(rng));
+  for (let attempt = 0; attempt < ROLL_MAX_ATTEMPTS; attempt++) {
+    const values = Array.from({ length: 6 }, () => roll4d6DropLowest(rng));
+    if (isRollTotalInRange(values)) {
+      return values;
+    }
+  }
+  throw new BadRequestException(
+    `Could not generate ability scores with total between ${ROLL_TOTAL_MIN} and ${ROLL_TOTAL_MAX}`,
+  );
+}
+
+export function rollAbilityScoreOptions(
+  count: number = ROLL_OPTION_COUNT,
+  rng?: () => number,
+): number[][] {
+  return Array.from({ length: count }, () => rollAbilityScores(rng));
 }
 
 export function standardArrayScores(): number[] {

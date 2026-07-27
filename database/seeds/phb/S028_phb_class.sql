@@ -20,7 +20,7 @@ e líderes em suas comunidades. Eles se entregam de
 cabeça no perigo para que aqueles sob sua proteção
 não precisem. Sua coragem diante do perigo torna os
 Bárbaros perfeitamente adequados para aventuras.', 'Força', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd12'), 12, 7, 1, TRUE, 3, 'Trilha', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
-  ('bard', 'Bardo', 'Inspirador performista de música, dança e magia', 'Conjure magias que inspiram e curam aliados ou confundem inimigos.', 'Bardos são peritos em inspirar os outros,
+  ('bard', 'Bardo', 'Inspirador artista de música, dança e magia', 'Conjure magias que inspiram e curam aliados ou confundem inimigos.', 'Bardos são peritos em inspirar os outros,
 aliviar ferimentos, desanimar inimigos e criar
 ilusões. Eles acreditam que o multiverso foi trazido à
 existência por meio de palavras pronunciadas e que
@@ -46,7 +46,7 @@ geralmente, esse dom aparece de forma inesperada.
 Aqueles que possuem esse poder logo percebem que
 não conseguem ficar ociosos. A magia de um Feiticeiro
 anseia por ser utilizada.', 'Carisma', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd6'), 6, 4, 1, TRUE, 3, 'Feitiçaria', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full')),
-  ('ranger', 'Guardião', 'Patrulheiro marcial das fronteiras selvagens', 'Una proezas marciais, magia da natureza e habilidades de sobrevivência.', NULL, 'Destreza e Sabedoria', 'and', (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd10'), 10, 6, 1, TRUE, 3, 'Arquétipo', 3, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half')),
+  ('ranger', 'Guardião', 'Explorador marcial das fronteiras selvagens', 'Una proezas marciais, magia da natureza e habilidades de sobrevivência.', NULL, 'Destreza e Sabedoria', 'and', (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd10'), 10, 6, 1, TRUE, 3, 'Arquétipo', 3, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half')),
   ('fighter', 'Guerreiro', 'Mestre de armas e armaduras', 'Domine todas as armas e armaduras.', NULL, 'Força ou Destreza', 'or', (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd10'), 10, 6, 1, TRUE, 3, 'Arquétipo', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
   ('rogue', 'Ladino', 'Especialista furtivo e mortal', 'Desfira Ataques Furtivos mortais enquanto evita danos através da furtividade.', NULL, 'Destreza', NULL, (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd8'), 8, 5, 1, TRUE, 3, 'Arquétipo', 4, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
   ('wizard', 'Mago', 'Estudioso da magia arcana', 'Estude magia arcana e domine magias para todos os propósitos.', 'Magos são reconhecidos por seu estudo

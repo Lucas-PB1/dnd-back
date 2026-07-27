@@ -30,4 +30,14 @@ export class RollAbilitiesResponseDto {
     description: 'Valores brutos antes de atribuir (roll / standard-array)',
   })
   rawValues?: number[];
+
+  @ApiPropertyOptional({
+    example: [
+      [15, 14, 13, 12, 11, 10],
+      [16, 14, 13, 12, 10, 9],
+      [15, 15, 13, 12, 10, 8],
+    ],
+    description: 'Três conjuntos de rolagem (soma 72–80) para o jogador escolher',
+  })
+  rawValueOptions?: number[][];
 }
