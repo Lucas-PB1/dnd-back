@@ -5,8 +5,10 @@ import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity';
 import { VSpellByClass } from '../../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterDomainService } from '../../sheet/domain/character-domain.service';
+import { maxSpellLevelFromSlots } from '../../sheet/domain/max-spell-level';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 
@@ -25,6 +27,8 @@ export class LevelUpService {
     private readonly classSpellsRepo: Repository<VSpellByClass>,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
+    @InjectRepository(VClassSpellSlots)
+    private readonly spellSlotsRepo: Repository<VClassSpellSlots>,
   ) {}
 
   async buildPreview(character: PlayerCharacter): Promise<LevelUpPreviewDto> {
@@ -87,7 +91,10 @@ export class LevelUpService {
     character: PlayerCharacter,
     nextLevel: number,
   ): Promise<LevelUpPreviewDto['newSpellOptions']> {
-    const maxSpellLevel = this.maxSpellLevelForCharacterLevel(nextLevel);
+    const maxSpellLevel = await this.maxSpellLevelForClass(
+      character.classSlug,
+      nextLevel,
+    );
     const options: LevelUpPreviewDto['newSpellOptions'] = [];
 
     const classSpells = await this.classSpellsRepo.find({
@@ -128,17 +135,14 @@ export class LevelUpService {
     });
   }
 
-  /** Tabela simplificada PHB — full caster progression até nível 20. */
-  private maxSpellLevelForCharacterLevel(level: number): number {
-    if (level >= 17) return 9;
-    if (level >= 15) return 8;
-    if (level >= 13) return 7;
-    if (level >= 11) return 6;
-    if (level >= 9) return 5;
-    if (level >= 7) return 4;
-    if (level >= 5) return 3;
-    if (level >= 3) return 2;
-    if (level >= 1) return 1;
-    return 0;
+  /** Círculo máximo com slot > 0 na tabela da classe (full / half / pact). */
+  private async maxSpellLevelForClass(
+    classSlug: string,
+    level: number,
+  ): Promise<number> {
+    const row = await this.spellSlotsRepo.findOne({
+      where: { classSlug, classLevel: level },
+    });
+    return maxSpellLevelFromSlots(row?.spellSlots);
   }
 }

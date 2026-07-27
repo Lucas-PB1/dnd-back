@@ -45,6 +45,7 @@ import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
 } from './granted-spells';
+import { maxSpellLevelFromSlots } from './max-spell-level';
 import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
 
 export interface CharacterSheetContext {
@@ -547,6 +548,10 @@ export class CharacterSheetValidator {
       ctx.level,
       speciesCatalog,
     );
+    const maxClassSpellLevel = await this.maxSpellLevelForClass(
+      ctx.classSlug,
+      ctx.level,
+    );
 
     for (const spell of spells) {
       if (featGranted.has(spell.spellSlug)) continue;
@@ -573,7 +578,31 @@ export class CharacterSheetValidator {
           `Spell '${spell.spellSlug}' is not available for this character's class/subclass/feats/species`,
         );
       }
+
+      // Lista da classe: só círculos com espaço de magia (half/full/pact).
+      // Magias de subclasse/feat/espécie seguem unlock próprio.
+      if (inClass && !inSubclass && inClass.spellLevel > maxClassSpellLevel) {
+        throw new BadRequestException(
+          `Spell '${spell.spellSlug}' (circle ${inClass.spellLevel}) exceeds max circle ${maxClassSpellLevel} for ${ctx.classSlug} level ${ctx.level}`,
+        );
+      }
     }
+  }
+
+  private async maxSpellLevelForClass(
+    classSlug: string,
+    level: number,
+  ): Promise<number> {
+    const rows = await this.dataSource.query<
+      { spell_slots: Record<string, number> | null }[]
+    >(
+      `SELECT spell_slots
+       FROM rpg.v_class_spell_slots
+       WHERE class_slug = $1 AND class_level = $2
+       LIMIT 1`,
+      [classSlug, level],
+    );
+    return maxSpellLevelFromSlots(rows[0]?.spell_slots);
   }
 
   private async validateEquipment(
