@@ -1,5 +1,9 @@
 import { AbilityScores } from '../../shared/infrastructure/player-character.entity';
 import { computeUnarmoredArmorClass } from './armor-class';
+import {
+  skillCheckBonus,
+  skillProficiencyRank,
+} from './character-check-bonuses';
 
 export type AbilityModifiers = AbilityScores;
 
@@ -21,16 +25,28 @@ export function computeAbilityModifiers(scores: AbilityScores): AbilityModifiers
 export function computePassivePerception(
   scores: AbilityScores,
   proficiencyBonus: number,
-  classSkillSlugs: string[],
-  backgroundSkillSlugs: string[],
+  skillSources: {
+    classSkillSlugs?: readonly string[];
+    backgroundSkillSlugs?: readonly string[];
+    speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[];
+    featOptions?: readonly {
+      featSlug: string;
+      optionKey: string;
+      valueId: string;
+    }[];
+    classOptions?: readonly { optionKey: string; valueId: string }[];
+    classSlug?: string | null;
+    level?: number;
+  },
 ): number {
-  const proficient =
-    classSkillSlugs.includes('perception') ||
-    backgroundSkillSlugs.includes('perception');
+  const rank = skillProficiencyRank('perception', skillSources);
   return (
     10 +
-    abilityModifierValue(scores.sabedoria) +
-    (proficient ? proficiencyBonus : 0)
+    skillCheckBonus(
+      abilityModifierValue(scores.sabedoria),
+      proficiencyBonus,
+      rank,
+    )
   );
 }
 
@@ -45,14 +61,30 @@ export function computeDerivedStats(input: {
   proficiencyBonus: number;
   classSkillSlugs: string[];
   backgroundSkillSlugs: string[];
+  speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[];
+  featOptions?: readonly {
+    featSlug: string;
+    optionKey: string;
+    valueId: string;
+  }[];
+  classOptions?: readonly { optionKey: string; valueId: string }[];
+  classSlug?: string | null;
+  level?: number;
 }): CharacterDerivedStats {
   return {
     abilityModifiers: computeAbilityModifiers(input.abilityScores),
     passivePerception: computePassivePerception(
       input.abilityScores,
       input.proficiencyBonus,
-      input.classSkillSlugs,
-      input.backgroundSkillSlugs,
+      {
+        classSkillSlugs: input.classSkillSlugs,
+        backgroundSkillSlugs: input.backgroundSkillSlugs,
+        speciesChoices: input.speciesChoices,
+        featOptions: input.featOptions,
+        classOptions: input.classOptions,
+        classSlug: input.classSlug,
+        level: input.level,
+      },
     ),
     armorClass: computeUnarmoredArmorClass(input.abilityScores),
   };

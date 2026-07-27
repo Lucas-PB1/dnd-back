@@ -42,6 +42,14 @@ export class ClassResponseDto {
   @ApiPropertyOptional()
   skillChoiceFrom!: string | null;
 
+  @ApiPropertyOptional({
+    example: 'melee',
+    nullable: true,
+    enum: ['any', 'melee'],
+    description: 'Restrição de armas elegíveis à Maestria em Arma (PHB 2024)',
+  })
+  weaponMasteryEligibility!: 'any' | 'melee' | null;
+
   @ApiPropertyOptional()
   sourceChapter!: number | null;
 

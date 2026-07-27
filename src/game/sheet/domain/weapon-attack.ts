@@ -11,6 +11,9 @@ export type EquippedWeaponPiece = {
   versatileDamage: string | null;
   propertySlugs: string[];
   equipmentSlot: 'main_hand' | 'off_hand' | string;
+  /** Slug da propriedade de maestria da arma (ex.: `nick`, `graze`). */
+  masterySlug?: string | null;
+  masteryName?: string | null;
 };
 
 export type WeaponAttackContext = {
@@ -22,6 +25,8 @@ export type WeaponAttackContext = {
   sizeCategory?: SizeCategory;
   /** true se há escudo equipado (afeta versatile 2H). */
   hasShield?: boolean;
+  /** Tipos de arma cuja maestria o personagem pode usar. */
+  masteredWeaponSlugs?: readonly string[];
 };
 
 export type WeaponAttackRole = 'main' | 'light_bonus' | 'dual_bonus';
@@ -41,6 +46,21 @@ export type WeaponAttack = {
   role: WeaponAttackRole;
   attackDisadvantage: boolean;
   omitsAbilityDamage: boolean;
+  /** Estilo Luta com Armas Grandes (1–2 → 3 nos dados de dano). */
+  greatWeaponFighting: boolean;
+  /** Maestria ativa nesta arma (personagem escolheu o tipo). */
+  masteryActive: boolean;
+  masterySlug: string | null;
+  masteryName: string | null;
+  /**
+   * Ágil (Nick): ataque adicional da propriedade Leve como parte da ação Atacar.
+   */
+  nickUsesAttackAction: boolean;
+  /**
+   * Garantido (Graze): no erro, dano igual ao modificador de atributo do ataque.
+   * `null` se a maestria não se aplica.
+   */
+  grazeOnMissDamage: number | null;
 };
 
 const SIMPLE_PROFICIENCY = 'armas-simples';
@@ -85,6 +105,15 @@ function isThrownWeapon(piece: EquippedWeaponPiece): boolean {
 
 function isTwoHanded(piece: EquippedWeaponPiece): boolean {
   return hasProperty(piece, 'two-handed');
+}
+
+function qualifiesForGreatWeaponFighting(
+  piece: EquippedWeaponPiece,
+  mode: 'melee' | 'ranged',
+  versatile2h: boolean,
+): boolean {
+  if (mode !== 'melee') return false;
+  return isTwoHanded(piece) || versatile2h;
 }
 
 function isLight(piece: EquippedWeaponPiece): boolean {
@@ -319,13 +348,39 @@ function computeOneAttack(
     ? (piece.versatileDamage ?? piece.damage ?? '1')
     : (piece.damage ?? '1');
 
+  const greatWeaponFighting =
+    hasStyleOrFeat(context, 'great-weapon-fighting') &&
+    qualifiesForGreatWeaponFighting(piece, mode, versatile2h);
+
+  const masterySlug = piece.masterySlug ?? null;
+  const masteryName = piece.masteryName ?? null;
+  const masteryActive =
+    Boolean(masterySlug) &&
+    (context.masteredWeaponSlugs ?? []).includes(piece.itemSlug);
+  const nickUsesAttackAction =
+    masteryActive &&
+    masterySlug === 'nick' &&
+    (role === 'light_bonus' || role === 'dual_bonus');
+  const grazeOnMissDamage =
+    masteryActive && masterySlug === 'graze' ? ability.mod : null;
+
   const modeLabel = mode === 'ranged' ? 'à distância' : 'corpo a corpo';
   const noteExtras: string[] = [];
   if (hasProperty(piece, 'versatile')) {
     noteExtras.push(versatile2h ? 'versátil (2 mãos)' : 'versátil (1 mão)');
   }
-  if (role === 'light_bonus') noteExtras.push('ataque adicional (Leve)');
+  if (role === 'light_bonus') {
+    noteExtras.push(
+      nickUsesAttackAction
+        ? 'ataque adicional (Ágil · ação Atacar)'
+        : 'ataque adicional (Leve)',
+    );
+  }
   if (role === 'dual_bonus') noteExtras.push('ataque adicional (Ambidestro)');
+  if (greatWeaponFighting) noteExtras.push('Luta com Armas Grandes');
+  if (masteryActive && masteryName) {
+    noteExtras.push(`Maestria: ${masteryName}`);
+  }
 
   const attackDisadvantage =
     context.sizeCategory === 'small' && hasProperty(piece, 'heavy');
@@ -339,9 +394,11 @@ function computeOneAttack(
       ? `${attackNoteBase} · ${noteExtras.join(' · ')}`
       : attackNoteBase;
 
+  const damageNoteParts = [...damageParts];
+  if (greatWeaponFighting) damageNoteParts.push('GWF');
   const damageNote =
-    damageParts.length > 0
-      ? `${damageDice} ${formatSigned(damageBonus)} (${damageParts.join(' + ')})`
+    damageNoteParts.length > 0
+      ? `${damageDice} ${formatSigned(damageBonus)} (${damageNoteParts.join(' + ')})`
       : `${damageDice}${damageBonus !== 0 ? ` ${formatSigned(damageBonus)}` : ''}`;
 
   return {
@@ -359,6 +416,12 @@ function computeOneAttack(
     role,
     attackDisadvantage,
     omitsAbilityDamage: omitAbilityDamage,
+    greatWeaponFighting,
+    masteryActive,
+    masterySlug: masteryActive ? masterySlug : null,
+    masteryName: masteryActive ? masteryName : null,
+    nickUsesAttackAction,
+    grazeOnMissDamage,
   };
 }
 

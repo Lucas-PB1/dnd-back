@@ -19,4 +19,7 @@ export class VPhbClassProgression {
 
   @ViewColumn({ name: 'channel_divinity' })
   channelDivinity!: number | null;
+
+  @ViewColumn({ name: 'weapon_mastery' })
+  weaponMastery!: number | null;
 }

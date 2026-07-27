@@ -37,6 +37,19 @@ import {
 } from './ability-score-improvement-feat-options';
 import { RESILIENT_FEAT_SLUG } from './resilient-feat-options';
 import {
+  allowedExpertiseSkillSlugsForClass,
+  classExpertiseSlotsAtLevel,
+  isClassExpertiseOptionKey,
+} from './class-expertise-slots';
+import {
+  classWeaponMasterySlotsAtLevel,
+  isClassWeaponMasteryOptionKey,
+  parseWeaponMasteryEligibility,
+  type ClassProgressionMasteryRow,
+} from './class-weapon-mastery-slots';
+import { collectProficientSkillSlugs } from './character-check-bonuses';
+import { isProficient, type EquippedWeaponPiece } from './weapon-attack';
+import {
   FIGHTING_STYLE_FEAT_CATEGORY,
   collectFightingStyleSlugsFromSubclassOptions,
   isFightingStyleSubclassOptionKey,
@@ -46,6 +59,10 @@ import {
   collectSpeciesGrantedSpellSlugs,
 } from './granted-spells';
 import { maxSpellLevelFromSlots } from './max-spell-level';
+import {
+  findSpellQuotaViolation,
+  spellQuotaViolationMessage,
+} from './spell-quota';
 import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
 
 export interface CharacterSheetContext {
@@ -115,6 +132,17 @@ export class CharacterSheetValidator {
         feats,
         input.subclassOptions,
       );
+    }
+
+    if (input.classOptions !== undefined) {
+      await this.validateClassExpertiseOptions(
+        ctx,
+        input.classOptions,
+        input.classSkillSlugs,
+        input.speciesChoices,
+        input.featOptions,
+      );
+      await this.validateClassWeaponMasteryOptions(ctx, input.classOptions);
     }
 
     const characterFeats = input.characterFeats ?? [];
@@ -221,6 +249,45 @@ export class CharacterSheetValidator {
       createFeats,
       input.subclassOptions,
     );
+
+    const expertiseSlots = classExpertiseSlotsAtLevel(ctx.classSlug, ctx.level);
+    if (expertiseSlots.length > 0) {
+      const provided = input.classOptions ?? [];
+      const providedKeys = new Set(provided.map((option) => option.optionKey));
+      const missing = expertiseSlots
+        .map((slot) => slot.optionKey)
+        .filter((key) => !providedKeys.has(key));
+      if (missing.length > 0) {
+        throw new BadRequestException(
+          `Class '${ctx.classSlug}' requires expertise options: ${missing.join(', ')}`,
+        );
+      }
+      await this.validateClassExpertiseOptions(
+        ctx,
+        provided,
+        input.classSkillSlugs,
+        input.speciesChoices,
+        input.featOptions,
+      );
+    }
+
+    const masterySlots = classWeaponMasterySlotsAtLevel(
+      await this.loadWeaponMasteryProgression(ctx.classSlug),
+      ctx.level,
+    );
+    if (masterySlots.length > 0) {
+      const provided = input.classOptions ?? [];
+      const providedKeys = new Set(provided.map((option) => option.optionKey));
+      const missing = masterySlots
+        .map((slot) => slot.optionKey)
+        .filter((key) => !providedKeys.has(key));
+      if (missing.length > 0) {
+        throw new BadRequestException(
+          `Class '${ctx.classSlug}' requires weapon mastery options: ${missing.join(', ')}`,
+        );
+      }
+      await this.validateClassWeaponMasteryOptions(ctx, provided);
+    }
   }
 
   async validateFightingStyleSelections(
@@ -487,6 +554,240 @@ export class CharacterSheetValidator {
     }
   }
 
+  private async validateClassExpertiseOptions(
+    ctx: CharacterSheetContext,
+    options: NonNullable<CharacterSheetInput['classOptions']>,
+    classSkillSlugs: CharacterSheetInput['classSkillSlugs'],
+    speciesChoices: CharacterSheetInput['speciesChoices'],
+    featOptions: CharacterSheetInput['featOptions'],
+  ): Promise<void> {
+    const expertiseOptions = options.filter((option) =>
+      isClassExpertiseOptionKey(option.optionKey),
+    );
+    const unlocked = classExpertiseSlotsAtLevel(ctx.classSlug, ctx.level);
+    const unlockedKeys = new Set(unlocked.map((slot) => slot.optionKey));
+
+    assertUnique(
+      options.map((option) => option.optionKey),
+      'Duplicate class option keys are not allowed',
+    );
+
+    if (unlocked.length === 0) {
+      if (expertiseOptions.length > 0) {
+        throw new BadRequestException(
+          `Class '${ctx.classSlug}' has no expertise options at level ${ctx.level}`,
+        );
+      }
+      return;
+    }
+
+    for (const option of expertiseOptions) {
+      if (!unlockedKeys.has(option.optionKey)) {
+        throw new BadRequestException(
+          `Class option '${option.optionKey}' is not unlocked for '${ctx.classSlug}' at level ${ctx.level}`,
+        );
+      }
+    }
+
+    const backgroundSkills = await this.dataSource.query<{ slug: string }[]>(
+      `SELECT s.slug
+       FROM rpg.phb_background_skill bs
+       JOIN rpg.phb_background b ON b.id = bs.background_id
+       JOIN rpg.phb_skill s ON s.id = bs.skill_id
+       WHERE b.slug = $1`,
+      [ctx.backgroundSlug],
+    );
+
+    const proficient = new Set(
+      collectProficientSkillSlugs({
+        classSkillSlugs: classSkillSlugs ?? [],
+        backgroundSkillSlugs: backgroundSkills.map((row) => row.slug),
+        speciesChoices,
+        featOptions,
+      }),
+    );
+
+    const whitelist = allowedExpertiseSkillSlugsForClass(ctx.classSlug);
+    const chosen = expertiseOptions.map((option) => option.valueId);
+    assertUnique(chosen, 'Expertise skill choices must be distinct');
+
+    for (const option of expertiseOptions) {
+      const skillRows = await this.dataSource.query<{ ok: number }[]>(
+        `SELECT 1 AS ok FROM rpg.phb_skill WHERE slug = $1 LIMIT 1`,
+        [option.valueId],
+      );
+      if (skillRows.length === 0) {
+        throw new BadRequestException(
+          `Expertise skill '${option.valueId}' is not a valid skill`,
+        );
+      }
+      if (whitelist && !whitelist.includes(option.valueId)) {
+        throw new BadRequestException(
+          `Expertise skill '${option.valueId}' is not allowed for '${ctx.classSlug}'`,
+        );
+      }
+      if (!proficient.has(option.valueId)) {
+        throw new BadRequestException(
+          `Expertise skill '${option.valueId}' requires proficiency`,
+        );
+      }
+    }
+  }
+
+  private async validateClassWeaponMasteryOptions(
+    ctx: CharacterSheetContext,
+    options: NonNullable<CharacterSheetInput['classOptions']>,
+  ): Promise<void> {
+    const masteryOptions = options.filter((option) =>
+      isClassWeaponMasteryOptionKey(option.optionKey),
+    );
+    const unlocked = classWeaponMasterySlotsAtLevel(
+      await this.loadWeaponMasteryProgression(ctx.classSlug),
+      ctx.level,
+    );
+    const unlockedKeys = new Set(unlocked.map((slot) => slot.optionKey));
+
+    assertUnique(
+      options.map((option) => option.optionKey),
+      'Duplicate class option keys are not allowed',
+    );
+
+    if (unlocked.length === 0) {
+      if (masteryOptions.length > 0) {
+        throw new BadRequestException(
+          `Class '${ctx.classSlug}' has no weapon mastery options at level ${ctx.level}`,
+        );
+      }
+      return;
+    }
+
+    for (const option of masteryOptions) {
+      if (!unlockedKeys.has(option.optionKey)) {
+        throw new BadRequestException(
+          `Class option '${option.optionKey}' is not unlocked for '${ctx.classSlug}' at level ${ctx.level}`,
+        );
+      }
+    }
+
+    const eligibility = parseWeaponMasteryEligibility(
+      await this.loadWeaponMasteryEligibility(ctx.classSlug),
+    );
+    const weaponProficiencySlugs = await this.loadClassWeaponProficiencySlugs(
+      ctx.classSlug,
+    );
+    const chosen = masteryOptions.map((option) => option.valueId);
+    assertUnique(chosen, 'Weapon mastery choices must be distinct');
+
+    for (const option of masteryOptions) {
+      const rows = await this.dataSource.query<
+        {
+          slug: string;
+          name: string;
+          category: string;
+          damage: string | null;
+          damage_type: string | null;
+          properties: Record<string, unknown> | null;
+          mastery_slug: string | null;
+        }[]
+      >(
+        `SELECT i.slug, i.name, w.category, w.damage, w.damage_type,
+                i.properties, m.slug AS mastery_slug
+         FROM rpg.phb_weapon w
+         JOIN rpg.phb_item i ON i.id = w.item_id
+         LEFT JOIN rpg.phb_weapon_mastery m ON m.id = w.mastery_id
+         WHERE i.slug = $1
+         LIMIT 1`,
+        [option.valueId],
+      );
+      const row = rows[0];
+      if (!row) {
+        throw new BadRequestException(
+          `Weapon mastery choice '${option.valueId}' is not a valid weapon`,
+        );
+      }
+      if (!row.mastery_slug) {
+        throw new BadRequestException(
+          `Weapon '${option.valueId}' has no mastery property`,
+        );
+      }
+
+      const props = (row.properties ?? {}) as {
+        propertyIds?: string[];
+        versatileDamage?: string;
+      };
+      const propertySlugs = props.propertyIds ?? [];
+      if (
+        eligibility === 'melee' &&
+        propertySlugs.includes('ammunition') &&
+        !propertySlugs.includes('thrown')
+      ) {
+        throw new BadRequestException(
+          `Weapon mastery for '${ctx.classSlug}' requires a melee weapon; '${option.valueId}' is ranged-only`,
+        );
+      }
+
+      const piece: EquippedWeaponPiece = {
+        itemSlug: row.slug,
+        itemName: row.name,
+        category: row.category,
+        damage: row.damage,
+        damageType: row.damage_type,
+        versatileDamage: props.versatileDamage ?? null,
+        propertySlugs,
+        equipmentSlot: 'main_hand',
+      };
+      if (
+        !isProficient(piece, {
+          proficiencyBonus: 2,
+          weaponProficiencySlugs,
+        })
+      ) {
+        throw new BadRequestException(
+          `Weapon mastery choice '${option.valueId}' requires proficiency`,
+        );
+      }
+    }
+  }
+
+  private async loadWeaponMasteryProgression(
+    classSlug: string,
+  ): Promise<ClassProgressionMasteryRow[]> {
+    return this.dataSource.query<ClassProgressionMasteryRow[]>(
+      `SELECT cp.level, cp.weapon_mastery AS "weaponMastery"
+       FROM rpg.phb_class_progression cp
+       JOIN rpg.phb_class c ON c.id = cp.class_id
+       WHERE c.slug = $1
+       ORDER BY cp.level`,
+      [classSlug],
+    );
+  }
+
+  private async loadWeaponMasteryEligibility(
+    classSlug: string,
+  ): Promise<string | null> {
+    const rows = await this.dataSource.query<
+      { weapon_mastery_eligibility: string | null }[]
+    >(
+      `SELECT weapon_mastery_eligibility FROM rpg.phb_class WHERE slug = $1`,
+      [classSlug],
+    );
+    return rows[0]?.weapon_mastery_eligibility ?? null;
+  }
+
+  private async loadClassWeaponProficiencySlugs(
+    classSlug: string,
+  ): Promise<string[]> {
+    const rows = await this.dataSource.query<{ slug: string }[]>(
+      `SELECT wp.slug
+       FROM rpg.phb_class c
+       JOIN rpg.phb_class_weapon_proficiency cwp ON cwp.class_id = c.id
+       JOIN rpg.phb_weapon_proficiency wp ON wp.id = cwp.proficiency_id
+       WHERE c.slug = $1`,
+      [classSlug],
+    );
+    return rows.map((row) => row.slug);
+  }
+
   private async validateCharacterFeats(feats: CharacterFeatDto[]): Promise<void> {
     const keys = feats.map((feat) => featInstanceKey(feat.featSlug, feat.instanceIndex));
     assertUnique(keys, 'Duplicate feat instances are not allowed');
@@ -586,6 +887,45 @@ export class CharacterSheetValidator {
           `Spell '${spell.spellSlug}' (circle ${inClass.spellLevel}) exceeds max circle ${maxClassSpellLevel} for ${ctx.classSlug} level ${ctx.level}`,
         );
       }
+    }
+
+    await this.assertSpellQuotas(spells, ctx);
+  }
+
+  private async assertSpellQuotas(
+    spells: NonNullable<CharacterSheetInput['characterSpells']>,
+    ctx: CharacterSheetContext,
+  ): Promise<void> {
+    const progression = await this.dataSource.query<
+      { cantrips: number | null; prepared_spells: number | null }[]
+    >(
+      `SELECT cantrips, prepared_spells
+       FROM rpg.v_phb_class_progression
+       WHERE class_slug = $1 AND level = $2
+       LIMIT 1`,
+      [ctx.classSlug, ctx.level],
+    );
+    const row = progression[0];
+    if (!row) return;
+
+    const catalogRows = await this.classSpellsRepo.find({
+      where: { classSlug: ctx.classSlug },
+    });
+    const violation = findSpellQuotaViolation({
+      classSlug: ctx.classSlug,
+      level: ctx.level,
+      characterSpells: spells,
+      catalog: catalogRows.map((item) => ({
+        slug: item.spellSlug,
+        level: item.spellLevel,
+      })),
+      cantripsMax: row.cantrips,
+      preparedOrKnownMax: row.prepared_spells,
+    });
+    if (violation) {
+      throw new BadRequestException(
+        spellQuotaViolationMessage(ctx.classSlug, violation),
+      );
     }
   }
 

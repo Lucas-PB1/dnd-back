@@ -5,6 +5,7 @@ import {
   CharacterEquipmentDto,
   CharacterFeatDto,
   CharacterSpellDto,
+  ClassOptionDto,
   FeatOptionDto,
   SpeciesChoiceDto,
   SubclassOptionDto,
@@ -105,6 +106,9 @@ export class CharacterResponseDto {
   @ApiProperty({ type: [SubclassOptionDto] })
   subclassOptions!: SubclassOptionDto[];
 
+  @ApiProperty({ type: [ClassOptionDto] })
+  classOptions!: ClassOptionDto[];
+
   @ApiProperty({ type: [CharacterFeatDto] })
   characterFeats!: CharacterFeatDto[];
 
@@ -202,6 +206,12 @@ export class CharacterResponseDto {
         role: 'main',
         attackDisadvantage: false,
         omitsAbilityDamage: false,
+        greatWeaponFighting: false,
+        masteryActive: true,
+        masterySlug: 'sap',
+        masteryName: 'Drenar',
+        nickUsesAttackAction: false,
+        grazeOnMissDamage: null,
       },
     ],
   })
@@ -220,6 +230,12 @@ export class CharacterResponseDto {
     role: 'main' | 'light_bonus' | 'dual_bonus';
     attackDisadvantage: boolean;
     omitsAbilityDamage: boolean;
+    greatWeaponFighting: boolean;
+    masteryActive: boolean;
+    masterySlug: string | null;
+    masteryName: string | null;
+    nickUsesAttackAction: boolean;
+    grazeOnMissDamage: number | null;
   }>;
 
   @ApiPropertyOptional({

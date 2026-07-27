@@ -24,6 +24,18 @@ export class PlayerCharacterSubclassOption {
   valueId!: string;
 }
 
+@Entity({ schema: 'rpg', name: 'player_character_class_option' })
+export class PlayerCharacterClassOption {
+  @PrimaryColumn({ name: 'character_id', type: 'uuid' })
+  characterId!: string;
+
+  @PrimaryColumn({ name: 'option_key' })
+  optionKey!: string;
+
+  @Column({ name: 'value_id' })
+  valueId!: string;
+}
+
 @Entity({ schema: 'rpg', name: 'player_character_feat' })
 export class PlayerCharacterFeat {
   @PrimaryColumn({ name: 'character_id', type: 'uuid' })

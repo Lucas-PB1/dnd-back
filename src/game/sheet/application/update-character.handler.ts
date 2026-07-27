@@ -183,6 +183,9 @@ export class UpdateCharacterHandler {
     if (classChanged && dto.classSkillSlugs === undefined) {
       await this.sheetRepository.clearClassSkills(row.id);
     }
+    if (classChanged && dto.classOptions === undefined) {
+      await this.sheetRepository.clearClassOptions(row.id);
+    }
     if (speciesChanged && dto.speciesChoices === undefined) {
       await this.sheetRepository.clearSpeciesChoices(row.id);
     }
@@ -296,6 +299,7 @@ export class UpdateCharacterHandler {
       classSkillSlugs: dto.classSkillSlugs,
       speciesChoices: dto.speciesChoices,
       subclassOptions: dto.subclassOptions,
+      classOptions: dto.classOptions,
       characterFeats: dto.characterFeats,
       featOptions: dto.featOptions,
       characterSpells: dto.characterSpells,

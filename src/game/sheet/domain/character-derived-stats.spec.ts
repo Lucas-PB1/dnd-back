@@ -48,6 +48,23 @@ describe('character-derived-stats', () => {
     expect(withPerception.passivePerception).toBe(13);
   });
 
+  it('doubles proficiency on passive perception with expertise', () => {
+    const result = computeDerivedStats({
+      abilityScores: scores,
+      proficiencyBonus: 2,
+      classSkillSlugs: ['perception'],
+      backgroundSkillSlugs: [],
+      featOptions: [
+        {
+          featSlug: 'skill-expert',
+          optionKey: 'expertiseSkill',
+          valueId: 'perception',
+        },
+      ],
+    });
+    expect(result.passivePerception).toBe(15);
+  });
+
   it('computes unarmored armor class', () => {
     const result = computeDerivedStats({
       abilityScores: scores,

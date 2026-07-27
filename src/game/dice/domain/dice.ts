@@ -91,7 +91,12 @@ export function rollExpression(
 export function rollDamageParts(
   diceExpr: string,
   modifier: number,
-  options: { critical?: boolean; rng?: Rng } = {},
+  options: {
+    critical?: boolean;
+    rng?: Rng;
+    /** PHB 2024 GWF: tratar 1 ou 2 como 3. */
+    treatOnesAndTwosAsThree?: boolean;
+  } = {},
 ): DamageRollResult {
   const rng = options.rng ?? Math.random;
   const critical = Boolean(options.critical);
@@ -99,7 +104,10 @@ export function rollDamageParts(
   const parsed = parseDiceExpression(base.includes('d') ? base : `1d${base}`);
   const count = critical ? parsed.count * 2 : parsed.count;
   const rolls = rollDice(count, parsed.sides, rng);
-  const diceSum = rolls.reduce((a, b) => a + b, 0);
+  const kept = options.treatOnesAndTwosAsThree
+    ? rolls.map((face) => (face <= 2 ? 3 : face))
+    : rolls;
+  const diceSum = kept.reduce((a, b) => a + b, 0);
   const expression = `${count}d${parsed.sides}${formatSigned(modifier)}`;
   return {
     expression,
@@ -111,7 +119,7 @@ export function rollDamageParts(
         count,
         sides: parsed.sides,
         rolls,
-        kept: rolls,
+        kept,
       },
     ],
   };

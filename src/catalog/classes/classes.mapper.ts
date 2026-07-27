@@ -34,6 +34,11 @@ export class ClassesMapper {
       hpFixedPerLevel: row.hpFixedPerLevel,
       skillChoiceCount: row.skillChoiceCount,
       skillChoiceFrom: row.skillChoiceFrom,
+      weaponMasteryEligibility:
+        row.weaponMasteryEligibility === 'any' ||
+        row.weaponMasteryEligibility === 'melee'
+          ? row.weaponMasteryEligibility
+          : null,
       sourceChapter: row.sourceChapter,
       editionSlug: row.editionSlug,
       savingThrowSlugs: [],
@@ -112,6 +117,7 @@ export class ClassesMapper {
       cantrips: row.cantrips,
       preparedSpells: row.preparedSpells,
       channelDivinity: row.channelDivinity,
+      weaponMastery: row.weaponMastery,
     };
   }
 }

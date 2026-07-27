@@ -7,6 +7,7 @@ import {
   PlayerCharacterFeat,
   PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
+  PlayerCharacterClassOption,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
   PlayerCharacterSubclassOption,
@@ -28,6 +29,8 @@ export class CharacterSheetRepository {
     private readonly speciesChoices: Repository<PlayerCharacterSpeciesChoice>,
     @InjectRepository(PlayerCharacterSubclassOption)
     private readonly subclassOptions: Repository<PlayerCharacterSubclassOption>,
+    @InjectRepository(PlayerCharacterClassOption)
+    private readonly classOptions: Repository<PlayerCharacterClassOption>,
     @InjectRepository(PlayerCharacterFeat)
     private readonly feats: Repository<PlayerCharacterFeat>,
     @InjectRepository(PlayerCharacterFeatOption)
@@ -45,6 +48,7 @@ export class CharacterSheetRepository {
       skillRows,
       speciesRows,
       subclassRows,
+      classOptionRows,
       featRows,
       featOptionRows,
       spellRows,
@@ -54,6 +58,7 @@ export class CharacterSheetRepository {
       this.skills.find({ where: { characterId }, order: { skillSlug: 'ASC' } }),
       this.speciesChoices.find({ where: { characterId }, order: { choiceKind: 'ASC' } }),
       this.subclassOptions.find({ where: { characterId }, order: { optionKey: 'ASC' } }),
+      this.classOptions.find({ where: { characterId }, order: { optionKey: 'ASC' } }),
       this.feats.find({
         where: { characterId },
         order: { featSlug: 'ASC', instanceIndex: 'ASC' },
@@ -78,6 +83,10 @@ export class CharacterSheetRepository {
         choiceSlug: row.choiceSlug,
       })),
       subclassOptions: subclassRows.map((row) => ({
+        optionKey: row.optionKey,
+        valueId: row.valueId,
+      })),
+      classOptions: classOptionRows.map((row) => ({
         optionKey: row.optionKey,
         valueId: row.valueId,
       })),
@@ -164,6 +173,19 @@ export class CharacterSheetRepository {
       if (input.subclassOptions.length > 0) {
         await this.subclassOptions.insert(
           input.subclassOptions.map((option) => ({
+            characterId,
+            optionKey: option.optionKey,
+            valueId: option.valueId,
+          })),
+        );
+      }
+    }
+
+    if (input.classOptions !== undefined) {
+      await this.classOptions.delete({ characterId });
+      if (input.classOptions.length > 0) {
+        await this.classOptions.insert(
+          input.classOptions.map((option) => ({
             characterId,
             optionKey: option.optionKey,
             valueId: option.valueId,
@@ -262,6 +284,10 @@ export class CharacterSheetRepository {
 
   async clearSubclassOptions(characterId: string): Promise<void> {
     await this.subclassOptions.delete({ characterId });
+  }
+
+  async clearClassOptions(characterId: string): Promise<void> {
+    await this.classOptions.delete({ characterId });
   }
 
   async clearClassSkills(characterId: string): Promise<void> {

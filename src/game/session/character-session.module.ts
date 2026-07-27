@@ -12,6 +12,7 @@ import { GetCharacterStateQuery } from './application/get-character-state.query'
 import { PatchCharacterStateHandler } from './application/patch-character-state.handler';
 import { CastSpellHandler } from './application/cast-spell.handler';
 import { RestHandler } from './application/rest.handler';
+import { UseClassResourceHandler } from './application/use-class-resource.handler';
 
 @Module({
   imports: [
@@ -31,6 +32,8 @@ import { RestHandler } from './application/rest.handler';
     PatchCharacterStateHandler,
     CastSpellHandler,
     RestHandler,
+    UseClassResourceHandler,
   ],
+  exports: [CharacterStateRepository],
 })
 export class CharacterSessionModule {}

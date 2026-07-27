@@ -218,6 +218,40 @@ describe('computeWeaponAttacks', () => {
     expect(attack.damageNote).toContain('Mestre em Armas Grandes');
   });
 
+  it('flags great-weapon-fighting on two-handed melee', () => {
+    const [attack] = computeWeaponAttacks(scores(), [greataxe()], {
+      ...fighterContext,
+      fightingStyleSlugs: ['great-weapon-fighting'],
+    });
+    expect(attack.greatWeaponFighting).toBe(true);
+    expect(attack.damageNote).toContain('GWF');
+  });
+
+  it('flags great-weapon-fighting on versatile 2H melee', () => {
+    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
+      ...fighterContext,
+      featSlugs: ['great-weapon-fighting'],
+    });
+    expect(attack.greatWeaponFighting).toBe(true);
+  });
+
+  it('does not flag GWF when versatile weapon is used one-handed', () => {
+    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
+      ...fighterContext,
+      fightingStyleSlugs: ['great-weapon-fighting'],
+      hasShield: true,
+    });
+    expect(attack.greatWeaponFighting).toBe(false);
+  });
+
+  it('does not flag GWF on ranged attacks', () => {
+    const [attack] = computeWeaponAttacks(scores(), [longbow()], {
+      ...fighterContext,
+      fightingStyleSlugs: ['great-weapon-fighting'],
+    });
+    expect(attack.greatWeaponFighting).toBe(false);
+  });
+
   it('does not apply great-weapon-master without the heavy property', () => {
     const [attack] = computeWeaponAttacks(scores(), [longsword()], {
       ...fighterContext,
@@ -232,6 +266,88 @@ describe('computeWeaponAttacks', () => {
       featSlugs: ['great-weapon-master'],
     });
     expect(attack.damageBonus).toBe(2 + 2);
+  });
+
+  it('activates weapon mastery when the weapon type is mastered', () => {
+    const piece = {
+      ...longsword(),
+      masterySlug: 'sap',
+      masteryName: 'Drenar',
+    };
+    const [attack] = computeWeaponAttacks(scores(), [piece], {
+      ...fighterContext,
+      masteredWeaponSlugs: ['longsword'],
+    });
+    expect(attack.masteryActive).toBe(true);
+    expect(attack.masterySlug).toBe('sap');
+    expect(attack.masteryName).toBe('Drenar');
+    expect(attack.attackNote).toContain('Maestria: Drenar');
+  });
+
+  it('applies Nick note on light bonus attacks', () => {
+    const main = {
+      ...dagger('main_hand'),
+      masterySlug: 'nick',
+      masteryName: 'Ágil',
+    };
+    const off = {
+      ...shortsword('off_hand'),
+      masterySlug: 'vex',
+      masteryName: 'Afligir',
+    };
+    const attack = computeWeaponAttacks(
+      scores({ forca: 10, destreza: 16 }),
+      [main, off],
+      {
+        ...fighterContext,
+        masteredWeaponSlugs: ['dagger', 'shortsword'],
+      },
+    ).find((row) => row.itemSlug === 'shortsword' && row.mode === 'melee')!;
+    expect(attack.nickUsesAttackAction).toBe(false);
+  });
+
+  it('flags Nick on light bonus when off-hand weapon has nick mastery', () => {
+    const main = {
+      ...shortsword('main_hand'),
+      masterySlug: 'vex',
+      masteryName: 'Afligir',
+    };
+    const off = {
+      ...dagger('off_hand'),
+      masterySlug: 'nick',
+      masteryName: 'Ágil',
+    };
+    const attack = computeWeaponAttacks(
+      scores({ forca: 10, destreza: 16 }),
+      [main, off],
+      {
+        ...fighterContext,
+        masteredWeaponSlugs: ['dagger'],
+      },
+    ).find((row) => row.itemSlug === 'dagger' && row.mode === 'melee')!;
+    expect(attack.role).toBe('light_bonus');
+    expect(attack.nickUsesAttackAction).toBe(true);
+    expect(attack.attackNote).toContain('Ágil · ação Atacar');
+  });
+
+  it('exposes graze on-miss damage when mastered', () => {
+    const piece = {
+      itemSlug: 'greatsword',
+      itemName: 'Espada Grande',
+      category: 'martial',
+      damage: '2d6',
+      damageType: 'Cortante',
+      versatileDamage: null,
+      propertySlugs: ['two-handed', 'heavy'],
+      equipmentSlot: 'main_hand' as const,
+      masterySlug: 'graze',
+      masteryName: 'Garantido',
+    };
+    const [attack] = computeWeaponAttacks(scores(), [piece], {
+      ...fighterContext,
+      masteredWeaponSlugs: ['greatsword'],
+    });
+    expect(attack.grazeOnMissDamage).toBe(3);
   });
 
   it('marks light bonus off-hand without ability damage', () => {

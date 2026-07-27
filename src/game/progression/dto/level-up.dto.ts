@@ -21,6 +21,22 @@ export class LevelUpSpellOptionDto {
   spellLevel!: number;
 }
 
+export class LevelUpClassExpertiseSlotDto {
+  @ApiProperty({ example: 'expertiseSkill3' })
+  optionKey!: string;
+
+  @ApiProperty({ example: 6 })
+  unlockLevel!: number;
+}
+
+export class LevelUpWeaponMasterySlotDto {
+  @ApiProperty({ example: 'masteryWeapon4' })
+  optionKey!: string;
+
+  @ApiProperty({ example: 4 })
+  unlockLevel!: number;
+}
+
 export class LevelUpPreviewDto {
   @ApiProperty({ example: 1 })
   currentLevel!: number;
@@ -51,4 +67,16 @@ export class LevelUpPreviewDto {
 
   @ApiProperty({ type: [LevelUpSpellOptionDto] })
   newSpellOptions!: LevelUpSpellOptionDto[];
+
+  @ApiProperty({
+    type: [LevelUpClassExpertiseSlotDto],
+    description: 'Novos slots de Especialização desbloqueados no próximo nível',
+  })
+  newClassExpertiseSlots!: LevelUpClassExpertiseSlotDto[];
+
+  @ApiProperty({
+    type: [LevelUpWeaponMasterySlotDto],
+    description: 'Novos slots de Maestria em Arma desbloqueados no próximo nível',
+  })
+  newWeaponMasterySlots!: LevelUpWeaponMasterySlotDto[];
 }

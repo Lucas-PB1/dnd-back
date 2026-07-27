@@ -39,6 +39,23 @@ export class SpellSlotsMapDto {
   '9'?: number;
 }
 
+export class ClassResourceStateDto {
+  @ApiProperty({ example: 'rage' })
+  slug!: string;
+
+  @ApiProperty({ example: 'Fúria' })
+  name!: string;
+
+  @ApiProperty({ example: 3 })
+  max!: number;
+
+  @ApiProperty({ example: 1 })
+  used!: number;
+
+  @ApiProperty({ example: 2 })
+  remaining!: number;
+}
+
 export class CharacterStateResponseDto {
   @ApiProperty({ example: { '1': 2 } })
   spellSlotsMax!: Record<string, number>;
@@ -48,6 +65,9 @@ export class CharacterStateResponseDto {
 
   @ApiProperty({ example: { '1': 1 } })
   spellSlotsRemaining!: Record<string, number>;
+
+  @ApiProperty({ type: [ClassResourceStateDto] })
+  classResources!: ClassResourceStateDto[];
 
   @ApiPropertyOptional({ example: 'alarme' })
   concentratingOn!: string | null;
@@ -63,6 +83,36 @@ export class CharacterStateResponseDto {
 
   @ApiPropertyOptional({ example: 10 })
   hitPointsMax!: number | null;
+
+  @ApiProperty({
+    example: 3,
+    description: 'Dados de vida restantes (máximo = nível do personagem)',
+  })
+  hitDiceCurrent!: number;
+
+  @ApiProperty({
+    example: 5,
+    description: 'Máximo de dados de vida (= nível)',
+  })
+  hitDiceMax!: number;
+
+  @ApiPropertyOptional({
+    example: 'D10',
+    description: 'Dado de vida da classe (catálogo)',
+  })
+  hitDie!: string | null;
+}
+
+export class UseClassResourceDto {
+  @ApiProperty({ example: 'rage' })
+  @IsString()
+  resourceSlug!: string;
+
+  @ApiPropertyOptional({ example: 1, description: 'Usos a gastar (padrão 1)' })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  amount?: number;
 }
 
 export class PatchCharacterStateDto {
@@ -114,6 +164,16 @@ export class RestDto {
   @ApiProperty({ enum: ['short', 'long'] })
   @IsIn(['short', 'long'])
   type!: 'short' | 'long';
+
+  @ApiPropertyOptional({
+    example: 1,
+    description:
+      'Dados de vida a gastar no descanso curto (ignorado no longo). Padrão 0.',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  hitDiceSpent?: number;
 }
 
 export class RestResponseDto {
@@ -122,4 +182,13 @@ export class RestResponseDto {
 
   @ApiProperty({ type: CharacterStateResponseDto })
   state!: CharacterStateResponseDto;
+
+  @ApiPropertyOptional({ example: 1 })
+  hitDiceSpent?: number;
+
+  @ApiPropertyOptional({ example: [7, 4], description: 'Faces brutas dos dados gastos' })
+  hitDiceRolls?: number[];
+
+  @ApiPropertyOptional({ example: 12 })
+  hitPointsHealed?: number;
 }

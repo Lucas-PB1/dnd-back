@@ -2,9 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
 import { PhbWeapon } from '../../../entities/phb-weapon.entity';
+import { PhbWeaponMastery } from '../../../entities/phb-weapon-mastery.entity';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
 import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
-import { weaponPropsOf } from '../../../catalog/equipment/weapon-props';
+import {
+  loadWeaponMasteryBySlug,
+  weaponPropsOf,
+} from '../../../catalog/equipment/weapon-props';
 import {
   computeWeaponAttacks,
   type EquippedWeaponPiece,
@@ -18,6 +22,7 @@ export type WeaponAttackResolveContext = {
   fightingStyleSlugs?: readonly string[];
   sizeCategory?: import('../domain/creature-size').SizeCategory;
   hasShield?: boolean;
+  masteredWeaponSlugs?: readonly string[];
 };
 
 @Injectable()
@@ -27,6 +32,8 @@ export class EquippedWeaponAttacksService {
     private readonly inventoryItems: Repository<PlayerCharacterItem>,
     @InjectRepository(PhbWeapon)
     private readonly weapons: Repository<PhbWeapon>,
+    @InjectRepository(PhbWeaponMastery)
+    private readonly masteryRepo: Repository<PhbWeaponMastery>,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -49,12 +56,17 @@ export class EquippedWeaponAttacksService {
       relations: ['item'],
     });
     const bySlug = new Map(rows.map((row) => [row.item.slug, row]));
+    const masteryBySlug = await loadWeaponMasteryBySlug(rows, this.masteryRepo);
     const pieces: EquippedWeaponPiece[] = [];
 
     for (const item of equipped) {
       const weapon = bySlug.get(item.itemSlug);
       if (!weapon) continue;
       const props = weaponPropsOf(weapon);
+      const masterySlug = props.masteryId ?? null;
+      const mastery = masterySlug
+        ? (masteryBySlug.get(masterySlug) ?? null)
+        : null;
       pieces.push({
         itemSlug: weapon.item.slug,
         itemName: weapon.item.name,
@@ -64,12 +76,16 @@ export class EquippedWeaponAttacksService {
         versatileDamage: props.versatileDamage ?? null,
         propertySlugs: props.propertyIds ?? [],
         equipmentSlot: item.equipmentSlot ?? 'main_hand',
+        masterySlug,
+        masteryName: mastery?.name ?? null,
       });
     }
 
     if (pieces.length === 0) return [];
 
-    const weaponProficiencySlugs = await this.loadWeaponProficiencySlugs(context.classSlug);
+    const weaponProficiencySlugs = await this.loadWeaponProficiencySlugs(
+      context.classSlug,
+    );
     return computeWeaponAttacks(scores, pieces, {
       proficiencyBonus: context.proficiencyBonus,
       weaponProficiencySlugs,
@@ -77,6 +93,7 @@ export class EquippedWeaponAttacksService {
       fightingStyleSlugs: context.fightingStyleSlugs,
       sizeCategory: context.sizeCategory,
       hasShield: context.hasShield,
+      masteredWeaponSlugs: context.masteredWeaponSlugs,
     });
   }
 

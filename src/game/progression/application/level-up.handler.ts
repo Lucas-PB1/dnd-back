@@ -1,15 +1,23 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { UpdateCharacterHandler } from '../../sheet/application/update-character.handler';
+import { CharacterStateRepository } from '../../session/infrastructure/character-state.repository';
+import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
+import { classExpertiseSlotsNewAtLevel } from '../../sheet/domain/class-expertise-slots';
+import { classWeaponMasterySlotsNewAtLevel } from '../../sheet/domain/class-weapon-mastery-slots';
 import { LevelUpDto } from '../dto/level-up.dto';
 import { CharacterResponseDto } from '../../sheet/dto/character-response.dto';
 import { UpdateCharacterDto } from '../../sheet/dto/update-character.dto';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class LevelUpHandler {
   constructor(
     private readonly repository: CharacterRepository,
     private readonly updateCharacter: UpdateCharacterHandler,
+    private readonly characterState: CharacterStateRepository,
+    private readonly sheetRepository: CharacterSheetRepository,
+    private readonly dataSource: DataSource,
   ) {}
 
   async execute(
@@ -27,12 +35,64 @@ export class LevelUpHandler {
       throw new BadRequestException('Character is already at maximum level');
     }
 
+    const previousLevel = character.level;
+    const nextLevel = previousLevel + 1;
+
+    const masteryProgression = await this.dataSource.query<
+      { level: number; weaponMastery: number | null }[]
+    >(
+      `SELECT cp.level, cp.weapon_mastery AS "weaponMastery"
+       FROM rpg.phb_class_progression cp
+       JOIN rpg.phb_class c ON c.id = cp.class_id
+       WHERE c.slug = $1
+       ORDER BY cp.level`,
+      [character.classSlug],
+    );
+    const newExpertiseSlots = classExpertiseSlotsNewAtLevel(
+      character.classSlug,
+      nextLevel,
+    );
+    const newMasterySlots = classWeaponMasterySlotsNewAtLevel(
+      masteryProgression,
+      nextLevel,
+    );
+
+    let classOptions = dto.classOptions;
+    if (newExpertiseSlots.length > 0 || newMasterySlots.length > 0) {
+      const sheet = await this.sheetRepository.load(character.id);
+      const merged = classOptions ?? sheet.classOptions;
+      const missingExpertise = newExpertiseSlots.filter(
+        (slot) =>
+          !merged.some(
+            (option) => option.optionKey === slot.optionKey && option.valueId,
+          ),
+      );
+      if (missingExpertise.length > 0) {
+        throw new BadRequestException(
+          `Level ${nextLevel} unlocks expertise choices: ${missingExpertise.map((slot) => slot.optionKey).join(', ')}`,
+        );
+      }
+      const missingMastery = newMasterySlots.filter(
+        (slot) =>
+          !merged.some(
+            (option) => option.optionKey === slot.optionKey && option.valueId,
+          ),
+      );
+      if (missingMastery.length > 0) {
+        throw new BadRequestException(
+          `Level ${nextLevel} unlocks weapon mastery choices: ${missingMastery.map((slot) => slot.optionKey).join(', ')}`,
+        );
+      }
+      classOptions = merged;
+    }
+
     const patch: UpdateCharacterDto = {
-      level: character.level + 1,
+      level: nextLevel,
       subclassSlug: dto.subclassSlug,
       classSkillSlugs: dto.classSkillSlugs,
       speciesChoices: dto.speciesChoices,
       subclassOptions: dto.subclassOptions,
+      classOptions,
       characterFeats: dto.characterFeats,
       featOptions: dto.featOptions,
       characterSpells: dto.characterSpells,
@@ -41,6 +101,12 @@ export class LevelUpHandler {
       abilityGenerationMethodSlug: dto.abilityGenerationMethodSlug,
     };
 
-    return this.updateCharacter.execute(userId, characterId, patch);
+    const updated = await this.updateCharacter.execute(userId, characterId, patch);
+    await this.characterState.syncHitDiceOnLevelChange(
+      characterId,
+      previousLevel,
+      nextLevel,
+    );
+    return updated;
   }
 }

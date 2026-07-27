@@ -1,6 +1,7 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 export type SpellSlotsUsed = Record<string, number>;
+export type ResourcesUsed = Record<string, number>;
 
 @Entity({ schema: 'rpg', name: 'player_character_state' })
 export class PlayerCharacterState {
@@ -10,6 +11,9 @@ export class PlayerCharacterState {
   @Column({ name: 'spell_slots_used', type: 'jsonb', default: {} })
   spellSlotsUsed!: SpellSlotsUsed;
 
+  @Column({ name: 'resources_used', type: 'jsonb', default: {} })
+  resourcesUsed!: ResourcesUsed;
+
   @Column({ name: 'concentrating_on', type: 'text', nullable: true })
   concentratingOn!: string | null;
 
@@ -18,4 +22,7 @@ export class PlayerCharacterState {
 
   @Column({ name: 'temp_hp', type: 'int', default: 0 })
   tempHp!: number;
+
+  @Column({ name: 'hit_dice_current', type: 'int', default: 0 })
+  hitDiceCurrent!: number;
 }

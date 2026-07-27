@@ -25,6 +25,7 @@ import { GetCharacterStateQuery } from './application/get-character-state.query'
 import { PatchCharacterStateHandler } from './application/patch-character-state.handler';
 import { CastSpellHandler } from './application/cast-spell.handler';
 import { RestHandler } from './application/rest.handler';
+import { UseClassResourceHandler } from './application/use-class-resource.handler';
 import {
   CastSpellDto,
   CastSpellResponseDto,
@@ -32,6 +33,7 @@ import {
   PatchCharacterStateDto,
   RestDto,
   RestResponseDto,
+  UseClassResourceDto,
 } from './dto/character-state.dto';
 
 @ApiTags('game-characters')
@@ -45,6 +47,7 @@ export class CharacterSessionController {
     private readonly patchState: PatchCharacterStateHandler,
     private readonly castSpell: CastSpellHandler,
     private readonly rest: RestHandler,
+    private readonly useResource: UseClassResourceHandler,
   ) {}
 
   @Get(':id/state')
@@ -94,5 +97,18 @@ export class CharacterSessionController {
     @Body() dto: RestDto,
   ): Promise<RestResponseDto> {
     return this.rest.execute(user.id, id, dto);
+  }
+
+  @Post(':id/resources/use')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Spend a class resource use (rage, surge, etc.)' })
+  @ApiOkResponse({ type: CharacterStateResponseDto })
+  @ApiNotFoundResponse()
+  useClassResource(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseClassResourceDto,
+  ): Promise<CharacterStateResponseDto> {
+    return this.useResource.execute(user.id, id, dto);
   }
 }

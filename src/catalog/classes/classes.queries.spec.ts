@@ -55,6 +55,7 @@ describe('Classes queries', () => {
     hpFixedPerLevel: 6,
     skillChoiceCount: 2,
     skillChoiceFrom: null,
+    weaponMasteryEligibility: 'any',
     sourceChapter: 3,
     editionSlug: 'phb-2024-pt',
   };

@@ -1,10 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
 import { CharacterStateRepository } from '../infrastructure/character-state.repository';
-import { RestDto, RestResponseDto } from '../dto/character-state.dto';
+import {
+  CharacterStateResponseDto,
+  UseClassResourceDto,
+} from '../dto/character-state.dto';
 
 @Injectable()
-export class RestHandler {
+export class UseClassResourceHandler {
   constructor(
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
@@ -13,18 +16,17 @@ export class RestHandler {
   async execute(
     userId: string,
     characterId: string,
-    dto: RestDto,
-  ): Promise<RestResponseDto> {
+    dto: UseClassResourceDto,
+  ): Promise<CharacterStateResponseDto> {
     const character = await this.access.findAccessibleOrFail(
       userId,
       characterId,
       'write',
     );
-
-    if (dto.type === 'long') {
-      return this.state.applyLongRest(character);
-    }
-
-    return this.state.applyShortRest(character, dto.hitDiceSpent ?? 0);
+    return this.state.useClassResource(
+      character,
+      dto.resourceSlug,
+      dto.amount ?? 1,
+    );
   }
 }

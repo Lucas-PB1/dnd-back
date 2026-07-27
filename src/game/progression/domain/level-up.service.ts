@@ -11,8 +11,9 @@ import { CharacterDomainService } from '../../sheet/domain/character-domain.serv
 import { maxSpellLevelFromSlots } from '../../sheet/domain/max-spell-level';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
-
-const ASI_FEAT_LEVELS = new Set([4, 8, 12, 16, 19]);
+import { isAsiOrFeatLevel } from './asi-feat-levels';
+import { classExpertiseSlotsNewAtLevel } from '../../sheet/domain/class-expertise-slots';
+import { classWeaponMasterySlotsNewAtLevel } from '../../sheet/domain/class-weapon-mastery-slots';
 
 @Injectable()
 export class LevelUpService {
@@ -64,6 +65,16 @@ export class LevelUpService {
     const subclassRequired = nextLevel >= subclassUnlockLevel && !character.subclassSlug;
 
     const newSpellOptions = await this.findNewSpellOptions(character, nextLevel);
+    const masteryProgression = await this.dataSource.query<
+      { level: number; weaponMastery: number | null }[]
+    >(
+      `SELECT cp.level, cp.weapon_mastery AS "weaponMastery"
+       FROM rpg.phb_class_progression cp
+       JOIN rpg.phb_class c ON c.id = cp.class_id
+       WHERE c.slug = $1
+       ORDER BY cp.level`,
+      [character.classSlug],
+    );
 
     return {
       currentLevel: character.level,
@@ -74,8 +85,16 @@ export class LevelUpService {
       estimatedHitPointsMax,
       subclassRequired,
       subclassUnlockLevel,
-      isAsiOrFeatLevel: ASI_FEAT_LEVELS.has(nextLevel),
+      isAsiOrFeatLevel: isAsiOrFeatLevel(character.classSlug, nextLevel),
       newSpellOptions,
+      newClassExpertiseSlots: classExpertiseSlotsNewAtLevel(
+        character.classSlug,
+        nextLevel,
+      ),
+      newWeaponMasterySlots: classWeaponMasterySlotsNewAtLevel(
+        masteryProgression,
+        nextLevel,
+      ),
     };
   }
 

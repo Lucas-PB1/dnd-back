@@ -27,6 +27,7 @@ import {
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
   PlayerCharacterSubclassOption,
+  PlayerCharacterClassOption,
 } from './infrastructure/player-sheet.entities';
 import { CharactersController } from './characters.controller';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
@@ -42,6 +43,7 @@ import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
 import { PhbWeapon } from '../../entities/phb-weapon.entity';
+import { PhbWeaponMastery } from '../../entities/phb-weapon-mastery.entity';
 import { PhbSpecies } from '../../entities/phb-species.entity';
 import { VPhbSpeciesGrantedSpell } from '../../entities/views/v-phb-species-granted-spell.entity';
 import { VPhbFeatGrantedSpell } from '../../entities/views/v-phb-feat-granted-spell.entity';
@@ -58,6 +60,7 @@ import { EquippedEquipmentComplianceService } from './infrastructure/equipped-eq
       PlayerCharacterSkill,
       PlayerCharacterSpeciesChoice,
       PlayerCharacterSubclassOption,
+      PlayerCharacterClassOption,
       PlayerCharacterFeat,
       PlayerCharacterFeatOption,
       PlayerCharacterSpell,
@@ -78,6 +81,7 @@ import { EquippedEquipmentComplianceService } from './infrastructure/equipped-eq
       VPhbArmor,
       PlayerCharacterItem,
       PhbWeapon,
+      PhbWeaponMastery,
       PhbSpecies,
       VPhbSpeciesGrantedSpell,
       VPhbFeatGrantedSpell,

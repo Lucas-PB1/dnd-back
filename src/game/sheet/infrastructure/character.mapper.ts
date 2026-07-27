@@ -14,6 +14,7 @@ import { EquippedArmorClassService } from './equipped-armor-class.service';
 import { EquippedWeaponAttacksService } from './equipped-weapon-attacks.service';
 import { EquippedEquipmentComplianceService } from './equipped-equipment-compliance.service';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/fighting-style-feat-options';
+import { collectMasteredWeaponSlugs } from '../domain/class-weapon-mastery-slots';
 import {
   annotateCharacterSpellSources,
   collectFeatGrantedSpellSlugs,
@@ -71,6 +72,11 @@ export class CharacterMapper {
       proficiencyBonus,
       classSkillSlugs: loaded.classSkillSlugs,
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
+      speciesChoices: loaded.speciesChoices,
+      featOptions: loaded.featOptions,
+      classOptions: loaded.classOptions,
+      classSlug: row.classSlug,
+      level: row.level,
     });
     const featSlugs = loaded.characterFeats.map((feat) => feat.featSlug);
     const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
@@ -109,6 +115,10 @@ export class CharacterMapper {
         fightingStyleSlugs,
         sizeCategory,
         hasShield,
+        masteredWeaponSlugs: collectMasteredWeaponSlugs({
+          classOptions: loaded.classOptions,
+          featOptions: loaded.featOptions,
+        }),
       },
     );
 
@@ -168,6 +178,7 @@ export class CharacterMapper {
       classSkillSlugs: loaded.classSkillSlugs,
       speciesChoices: loaded.speciesChoices,
       subclassOptions: loaded.subclassOptions,
+      classOptions: loaded.classOptions,
       characterFeats: loaded.characterFeats,
       featOptions: loaded.featOptions,
       characterSpells,

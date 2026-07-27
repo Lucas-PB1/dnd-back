@@ -36,6 +36,19 @@ export class SubclassOptionDto {
   valueId!: string;
 }
 
+/** Opções da classe (ex.: Especialização / Expertise). */
+export class ClassOptionDto {
+  @ApiProperty({ example: 'expertiseSkill1' })
+  @IsString()
+  @IsNotEmpty()
+  optionKey!: string;
+
+  @ApiProperty({ example: 'stealth' })
+  @IsString()
+  @IsNotEmpty()
+  valueId!: string;
+}
+
 export class CharacterFeatDto {
   @ApiProperty({ example: 'magic-initiate' })
   @IsString()
@@ -145,6 +158,16 @@ export class CharacterSheetInputDto {
   @ValidateNested({ each: true })
   @Type(() => SubclassOptionDto)
   subclassOptions?: SubclassOptionDto[];
+
+  @ApiPropertyOptional({
+    type: [ClassOptionDto],
+    description: 'Escolhas de classe (Especialização etc.)',
+  })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ClassOptionDto)
+  classOptions?: ClassOptionDto[];
 
   @ApiPropertyOptional({ type: [CharacterFeatDto] })
   @IsOptional()

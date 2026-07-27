@@ -38,6 +38,9 @@ export class VPhbClass {
   @ViewColumn({ name: 'skill_choice_from' })
   skillChoiceFrom!: string | null;
 
+  @ViewColumn({ name: 'weapon_mastery_eligibility' })
+  weaponMasteryEligibility!: string | null;
+
   @ViewColumn({ name: 'primary_ability_slugs' })
   primaryAbilitySlugs!: string[] | null;
 

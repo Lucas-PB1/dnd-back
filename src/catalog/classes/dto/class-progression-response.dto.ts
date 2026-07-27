@@ -19,4 +19,11 @@ export class ClassProgressionResponseDto {
 
   @ApiPropertyOptional({ example: 2, nullable: true })
   channelDivinity!: number | null;
+
+  @ApiPropertyOptional({
+    example: 3,
+    nullable: true,
+    description: 'Tipos de arma com maestria disponíveis neste nível',
+  })
+  weaponMastery!: number | null;
 }

@@ -33,6 +33,14 @@ export class RollDamageDto {
   @IsOptional()
   @IsBoolean()
   critical?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Dano de Garantido (Graze) no erro — só modificador de atributo',
+  })
+  @IsOptional()
+  @IsBoolean()
+  grazeMiss?: boolean;
 }
 
 export class RollSkillDto {

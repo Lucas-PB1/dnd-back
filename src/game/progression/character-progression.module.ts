@@ -7,6 +7,7 @@ import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-p
 import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
+import { CharacterSessionModule } from '../session/character-session.module';
 import { LevelUpService } from './domain/level-up.service';
 import { LevelUpPreviewQuery } from './application/level-up-preview.query';
 import { LevelUpHandler } from './application/level-up.handler';
@@ -23,6 +24,7 @@ import { CharacterProgressionController } from './character-progression.controll
     GameSharedModule,
     CatalogModule,
     CharacterSheetModule,
+    CharacterSessionModule,
   ],
   controllers: [CharacterProgressionController],
   providers: [LevelUpService, LevelUpPreviewQuery, LevelUpHandler],
