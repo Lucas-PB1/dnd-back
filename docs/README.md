@@ -7,8 +7,7 @@
 | Pasta | Conteúdo |
 |-------|----------|
 | [`architecture/`](architecture/) | Arquitetura, infra, modelo de dados, Game BC, padrões de código |
-| [`plans/`](plans/) | **Único plano ativo:** o que ainda falta |
-| [`checklists/`](checklists/) | Checklists mecânicos (HP, AC, feats, magias…) |
+| [`plans/`](plans/) | **Plano ativo:** [`backlog.md`](plans/backlog.md) |
 | [`deploy/`](deploy/) | Deploy Vercel + Supabase |
 | [`sources/`](sources/) | Fontes de conteúdo (ex.: Valda) para ingestão no catálogo |
 
@@ -29,18 +28,7 @@ Contrato REST: Swagger em `/api` · `npm run openapi:export`.
 
 | Doc | Para quê |
 |-----|----------|
-| [`plans/backlog.md`](plans/backlog.md) | **Só o que falta** (API + front + ops) |
-
-## Checklists
-
-| Doc | Mecânica |
-|-----|----------|
-| [`checklists/hit-points-checklist.md`](checklists/hit-points-checklist.md) | HP |
-| [`checklists/armor-class-checklist.md`](checklists/armor-class-checklist.md) | CA |
-| [`checklists/attack-bonus-checklist.md`](checklists/attack-bonus-checklist.md) | Ataque |
-| [`checklists/feat-options-checklist.md`](checklists/feat-options-checklist.md) | Opções de talento |
-| [`checklists/feat-options-audit.md`](checklists/feat-options-audit.md) | Auditoria feat options |
-| [`checklists/granted-spells-checklist.md`](checklists/granted-spells-checklist.md) | Magias concedidas |
+| [`plans/backlog.md`](plans/backlog.md) | **Único checklist ativo** — o que ainda falta (API + front + gaps PHB) |
 
 ## Ops / fontes
 

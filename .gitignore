@@ -1,10 +1,18 @@
+# Dependencies / build
 node_modules/
 dist/
-*.pdf
+coverage/
+
+# Env / secrets
 .env
 .env.local
 .env.vercel
 .env.vercel.local
+
+# Deploy
 .vercel
 
-.vercel
+# Misc
+*.pdf
+*.log
+.DS_Store

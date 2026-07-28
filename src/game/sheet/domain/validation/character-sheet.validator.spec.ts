@@ -24,7 +24,11 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
   let catalogLookup: jest.Mocked<
     Pick<
       CatalogLookupService,
-      'findClassOrFail' | 'validateClassSkillChoices' | 'assertFeatInCatalog'
+      | 'findClassOrFail'
+      | 'validateClassSkillChoices'
+      | 'assertFeatInCatalog'
+      | 'findBackgroundOrFail'
+      | 'assertLanguageSlug'
     >
   >;
   let speciesTraitChoicesRepo: jest.Mocked<Pick<Repository<VPhbSpeciesTraitChoices>, 'find'>>;
@@ -45,6 +49,11 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       findClassOrFail: jest.fn().mockResolvedValue({ skillChoiceCount: 2 }),
       validateClassSkillChoices: jest.fn().mockResolvedValue(undefined),
       assertFeatInCatalog: jest.fn().mockResolvedValue({ categorySlug: 'general' }),
+      findBackgroundOrFail: jest.fn().mockResolvedValue({
+        languageChoiceCount: 0,
+        abilityOptionSlugs: [],
+      }),
+      assertLanguageSlug: jest.fn().mockResolvedValue(undefined),
     };
     speciesTraitChoicesRepo = {
       find: jest.fn().mockResolvedValue([]),

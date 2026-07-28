@@ -23,9 +23,8 @@ dnd-work/dnd-api/             # este repo
 │   └── seeds/               # 66 arquivos (PHB + subclass)
 ├── docs/
 │   ├── architecture/        # infra, data-model, code-standards
-│   ├── plans/backlog.md     # o que ainda falta
-│   ├── deploy/              # Vercel + Supabase
-│   └── checklists/          # mecânicas PHB
+│   ├── plans/backlog.md     # o que ainda falta (único checklist ativo)
+│   └── deploy/              # Vercel + Supabase
 ├── src/                     # NestJS API
 ├── .cursor/
 │   ├── rules/               # regras por contexto

@@ -10,8 +10,7 @@ Fonte canônica: [`docs/README.md`](../../docs/README.md).
 | Tipo | Pasta |
 |------|-------|
 | Arquitetura / padrões | `docs/architecture/` |
-| Planos / roadmap / health | `docs/plans/` |
-| Checklists mecânicos | `docs/checklists/` |
+| Planos / backlog ativo | `docs/plans/` (`backlog.md`) |
 | Deploy | `docs/deploy/` |
 | Fontes de catálogo | `docs/sources/` |
 
@@ -19,6 +18,6 @@ Fonte canônica: [`docs/README.md`](../../docs/README.md).
 
 1. **Não** criar `.md` solto na raiz do repo (exceto `README.md`).
 2. Novo doc → pasta certa + **link no** `docs/README.md`.
-3. Planos longos → `docs/plans/`; checklists curtos → `docs/checklists/`.
+3. O que ainda falta → só [`docs/plans/backlog.md`](../../docs/plans/backlog.md). Sem pasta de checklists históricas.
 4. Skills/rules apontam para docs com path relativo; não duplicar o livro inteiro na rule.
 5. Ao achar doc órfão ou desatualizado → mover/atualizar o índice, não deixar esparso.
