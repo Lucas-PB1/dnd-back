@@ -43,6 +43,8 @@ describe('rest', () => {
     characterId: 'char1',
     spellSlotsUsed: { '1': 2 },
     resourcesUsed: { secondWind: 1 },
+    grantedSpellUses: { 'fogo-das-fadas': 1 },
+    highElfCantripSwapAvailable: false,
     concentratingOn: 'bless',
     conditions: ['poisoned'],
     tempHp: 5,
@@ -92,6 +94,8 @@ describe('rest', () => {
       });
 
       expect(state.spellSlotsUsed).toEqual({});
+      expect(state.grantedSpellUses).toEqual({});
+      expect(state.highElfCantripSwapAvailable).toBe(true);
       expect(state.concentratingOn).toBeNull();
       expect(state.conditions).toEqual([]);
       expect(state.tempHp).toBe(0);

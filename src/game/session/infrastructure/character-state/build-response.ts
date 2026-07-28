@@ -3,6 +3,17 @@ import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service
 import { VClassSpellSlots } from '../../../../entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '../../../../entities/views/v-subclass-spell-slots.entity';
 import { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
+import { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
+import { LoadGrantedSpellCatalog } from '../../../spellcasting/application/load-granted-spell-catalog';
+import {
+  annotateCharacterSpellSources,
+  collectFeatGrantedSpellSlugs,
+  collectSpeciesGrantedSpellSlugs,
+} from '../../../spellcasting/domain/granted-spells';
+import {
+  freeCastsRemaining,
+  resolveGrantedSpellCastEconomy,
+} from '../../../spellcasting/domain/resolve-granted-spell-cast-economy';
 import { CharacterStateResponseDto } from '../../dto/character-state.dto';
 import { PlayerCharacterState } from '../player-character-state.entity';
 import { buildClassResourceState } from './class-resources';
@@ -17,6 +28,8 @@ export async function buildCharacterStateResponse(input: {
   subclassSlots: Repository<VSubclassSpellSlots>;
   catalogLookup: CatalogLookupService;
   dataSource: DataSource;
+  sheetRepository: CharacterSheetRepository;
+  grantedSpellCatalog: LoadGrantedSpellCatalog;
 }): Promise<CharacterStateResponseDto> {
   const {
     character,
@@ -26,6 +39,8 @@ export async function buildCharacterStateResponse(input: {
     subclassSlots,
     catalogLookup,
     dataSource,
+    sheetRepository,
+    grantedSpellCatalog,
   } = input;
 
   await clampHitDiceToLevel(stateRepo, state, character.level);
@@ -42,6 +57,13 @@ export async function buildCharacterStateResponse(input: {
     dataSource,
     character,
     state,
+  );
+  const grantedSpellUses = state.grantedSpellUses ?? {};
+  const grantedSpellCastOptions = await buildGrantedSpellCastOptions(
+    character,
+    grantedSpellUses,
+    sheetRepository,
+    grantedSpellCatalog,
   );
 
   return {
@@ -60,5 +82,60 @@ export async function buildCharacterStateResponse(input: {
     deathSaveSuccesses: state.deathSaveSuccesses ?? 0,
     deathSaveFailures: state.deathSaveFailures ?? 0,
     inspiration: state.inspiration ?? false,
+    grantedSpellUses,
+    highElfCantripSwapAvailable: state.highElfCantripSwapAvailable ?? false,
+    grantedSpellCastOptions,
   };
+}
+
+async function buildGrantedSpellCastOptions(
+  character: PlayerCharacter,
+  grantedSpellUses: Record<string, number>,
+  sheetRepository: CharacterSheetRepository,
+  grantedSpellCatalog: LoadGrantedSpellCatalog,
+): Promise<CharacterStateResponseDto['grantedSpellCastOptions']> {
+  const sheet = await sheetRepository.load(character.id, character.backgroundSlug);
+  const { speciesCatalog, featFixedSpells } =
+    await grantedSpellCatalog.loadMergeCatalog({
+      speciesSlugs: [character.speciesSlug],
+      featSlugs: sheet.characterFeats.map((f) => f.featSlug),
+    });
+  const featGrantedSlugs = collectFeatGrantedSpellSlugs(
+    sheet.featOptions,
+    sheet.characterFeats,
+    featFixedSpells,
+  );
+  const speciesGrantedSlugs = collectSpeciesGrantedSpellSlugs(
+    character.speciesSlug,
+    sheet.speciesChoices,
+    character.level,
+    speciesCatalog,
+  );
+  const annotated = annotateCharacterSpellSources(sheet.characterSpells, {
+    featGrantedSlugs,
+    speciesGrantedSlugs,
+  });
+
+  return annotated
+    .filter((spell) => spell.source === 'feat' || spell.source === 'species')
+    .map((spell) => {
+      const castEconomy = resolveGrantedSpellCastEconomy({
+        spellSlug: spell.spellSlug,
+        source: spell.source,
+        featOptions: sheet.featOptions,
+        featFixedSpells,
+        speciesSlug: character.speciesSlug,
+        speciesChoices: sheet.speciesChoices,
+        speciesCatalog,
+      });
+      return {
+        spellSlug: spell.spellSlug,
+        castEconomy,
+        freeCastsRemaining: freeCastsRemaining(
+          castEconomy,
+          spell.spellSlug,
+          grantedSpellUses,
+        ),
+      };
+    });
 }

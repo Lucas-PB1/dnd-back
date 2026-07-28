@@ -5,6 +5,7 @@ import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entit
 import { VSubclassSpellSlots } from '../../entities/views/v-subclass-spell-slots.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
+import { SpellcastingModule } from '../spellcasting/spellcasting.module';
 import { PhbCondition } from './infrastructure/phb-condition.entity';
 import { PlayerCharacterState } from './infrastructure/player-character-state.entity';
 import { CharacterStateRepository } from './infrastructure/character-state.repository';
@@ -25,6 +26,7 @@ import { UseClassResourceHandler } from './application/use-class-resource.handle
     ]),
     GameSharedModule,
     CharacterSheetModule,
+    SpellcastingModule,
     CatalogModule,
   ],
   controllers: [CharacterSessionController],

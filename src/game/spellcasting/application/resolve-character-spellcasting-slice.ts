@@ -6,6 +6,7 @@ import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
 } from '../domain/granted-spells';
+import { enrichSpellsWithSpellcastingStats } from '../domain/enrich-spells-with-spellcasting-stats';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { annotateSpellSources } from './annotate-spell-sources';
 import { LoadGrantedSpellCatalog } from './load-granted-spell-catalog';
@@ -115,10 +116,20 @@ export async function resolveCharacterSpellcastingSlice(input: {
     subclassSpellsRepo,
     subclassSlug,
   );
-  const characterSpells = annotateSpellSources(sheet.characterSpells, {
+  const annotated = annotateSpellSources(sheet.characterSpells, {
     featGrantedSlugs,
     speciesGrantedSlugs,
     subclassSpellSlugs,
+  });
+  const characterSpells = enrichSpellsWithSpellcastingStats(annotated, {
+    classAbilitySlug: spellcasting.spellcastingAbilitySlug,
+    proficiencyBonus,
+    abilityModifiers,
+    featOptions: sheet.featOptions,
+    speciesChoices: sheet.speciesChoices,
+    featFixedSpells,
+    speciesSlug,
+    speciesCatalog,
   });
 
   return {

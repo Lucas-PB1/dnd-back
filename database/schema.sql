@@ -60,7 +60,8 @@ CREATE TYPE rpg.species_choice_kind AS ENUM (
   'gnome_casting_ability',
   'infernal_casting_ability',
   'aasimar_size',
-  'tiefling_size'
+  'tiefling_size',
+  'high_elf_cantrip'
 );
 
 CREATE TYPE rpg.weapon_category AS ENUM ('simple', 'martial');

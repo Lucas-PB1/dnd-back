@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 export type SpellSlotsUsed = Record<string, number>;
 export type ResourcesUsed = Record<string, number>;
+export type GrantedSpellUses = Record<string, number>;
 
 @Entity({ schema: 'rpg', name: 'player_character_state' })
 export class PlayerCharacterState {
@@ -13,6 +14,12 @@ export class PlayerCharacterState {
 
   @Column({ name: 'resources_used', type: 'jsonb', default: {} })
   resourcesUsed!: ResourcesUsed;
+
+  @Column({ name: 'granted_spell_uses', type: 'jsonb', default: {} })
+  grantedSpellUses!: GrantedSpellUses;
+
+  @Column({ name: 'high_elf_cantrip_swap_available', type: 'boolean', default: false })
+  highElfCantripSwapAvailable!: boolean;
 
   @Column({ name: 'concentrating_on', type: 'text', nullable: true })
   concentratingOn!: string | null;

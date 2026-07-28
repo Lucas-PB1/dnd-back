@@ -103,6 +103,35 @@ export class CharacterSpellDto {
   @IsOptional()
   @IsIn(['class', 'subclass', 'feat', 'species'])
   source?: 'class' | 'subclass' | 'feat' | 'species';
+
+  /** Derivado: atributo de conjuração efetivo desta magia (ignorado no input). */
+  @ApiPropertyOptional({ example: 'inteligencia' })
+  @IsOptional()
+  @IsString()
+  spellcastingAbilitySlug?: string;
+
+  /** Derivado: CD desta magia (ignorado no input). */
+  @ApiPropertyOptional({ example: 13 })
+  @IsOptional()
+  @IsInt()
+  spellSaveDc?: number;
+
+  /** Derivado: bônus de ataque mágico desta magia (ignorado no input). */
+  @ApiPropertyOptional({ example: 5 })
+  @IsOptional()
+  @IsInt()
+  spellAttackBonus?: number;
+
+  /**
+   * Derivado: economia de conjuração concedida (ignorado no input).
+   * `at_will` | `once_per_long_rest` | `slot_only`
+   */
+  @ApiPropertyOptional({
+    enum: ['at_will', 'once_per_long_rest', 'slot_only'],
+  })
+  @IsOptional()
+  @IsIn(['at_will', 'once_per_long_rest', 'slot_only'])
+  castEconomy?: 'at_will' | 'once_per_long_rest' | 'slot_only';
 }
 
 export class CharacterEquipmentDto {

@@ -7,6 +7,8 @@ import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-sl
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { CharacterSpellLookup } from '../../sheet/application/character-spell-lookup';
+import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
+import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
 import { PhbCondition } from './phb-condition.entity';
 import { PlayerCharacterState } from './player-character-state.entity';
 import {
@@ -35,6 +37,8 @@ export class CharacterStateRepository {
     private readonly catalogLookup: CatalogLookupService,
     private readonly characters: CharacterRepository,
     private readonly spellLookup: CharacterSpellLookup,
+    private readonly sheetRepository: CharacterSheetRepository,
+    private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -48,6 +52,8 @@ export class CharacterStateRepository {
         characterId,
         spellSlotsUsed: {},
         resourcesUsed: {},
+        grantedSpellUses: {},
+        highElfCantripSwapAvailable: false,
         conditions: [],
         tempHp: 0,
         concentratingOn: null,
@@ -60,6 +66,9 @@ export class CharacterStateRepository {
     }
     if (!row.resourcesUsed) {
       row.resourcesUsed = {};
+    }
+    if (!row.grantedSpellUses) {
+      row.grantedSpellUses = {};
     }
     return row;
   }
@@ -78,6 +87,8 @@ export class CharacterStateRepository {
       subclassSlots: this.subclassSlots,
       catalogLookup: this.catalogLookup,
       dataSource: this.dataSource,
+      sheetRepository: this.sheetRepository,
+      grantedSpellCatalog: this.grantedSpellCatalog,
     });
   }
 
@@ -111,6 +122,8 @@ export class CharacterStateRepository {
       subclassSlots: this.subclassSlots,
       catalogLookup: this.catalogLookup,
       spellLookup: this.spellLookup,
+      sheetRepository: this.sheetRepository,
+      grantedSpellCatalog: this.grantedSpellCatalog,
       buildResponse: (c, s) => this.buildResponse(c, s),
     });
   }

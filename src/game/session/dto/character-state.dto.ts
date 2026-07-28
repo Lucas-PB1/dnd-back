@@ -133,6 +133,28 @@ export class CharacterStateResponseDto {
     description: 'Inspiração (mantida no descanso longo)',
   })
   inspiration!: boolean;
+
+  @ApiProperty({
+    example: { 'repreensao-diabolica': 1 },
+    description: 'Usos free já gastos de magias concedidas (1×/LD)',
+  })
+  grantedSpellUses!: Record<string, number>;
+
+  @ApiProperty({
+    example: false,
+    description: 'Alto Elfo pode trocar o truque L1 após descanso longo',
+  })
+  highElfCantripSwapAvailable!: boolean;
+
+  @ApiProperty({
+    type: 'array',
+    description: 'Economia e usos restantes de magias concedidas com free cast',
+  })
+  grantedSpellCastOptions!: Array<{
+    spellSlug: string;
+    castEconomy: 'at_will' | 'once_per_long_rest' | 'slot_only';
+    freeCastsRemaining: number | null;
+  }>;
 }
 
 export class UseClassResourceDto {
@@ -198,6 +220,15 @@ export class CastSpellDto {
   @IsInt()
   @Min(0)
   slotLevel?: number;
+
+  @ApiPropertyOptional({
+    example: true,
+    description:
+      'Usar conjuração free de magia concedida (1×/LD) em vez de slot de classe',
+  })
+  @IsOptional()
+  @IsBoolean()
+  useFreeCast?: boolean;
 }
 
 export class CastSpellResponseDto {

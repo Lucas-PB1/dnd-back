@@ -7,6 +7,9 @@ jest.mock('./update-character/clear-stale-sheet-choices', () => ({
 jest.mock('./update-character/merge-update-character-spells', () => ({
   mergeUpdateCharacterSpells: jest.fn(),
 }));
+jest.mock('./update-character/assert-high-elf-cantrip-swap', () => ({
+  assertAndConsumeHighElfCantripSwap: jest.fn().mockResolvedValue(undefined),
+}));
 
 import { UpdateCharacterHandler } from './update-character.handler';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';
@@ -90,6 +93,7 @@ describe('UpdateCharacterHandler', () => {
       mapper as never,
       seedStartingInventory as never,
       grantedSpellCatalog as never,
+      { query: jest.fn() } as never,
     );
   });
 

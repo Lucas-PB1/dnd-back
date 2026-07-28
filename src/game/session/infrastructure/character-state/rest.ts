@@ -35,6 +35,8 @@ export async function applyLongRestState(input: {
     input;
   const resources = await resolveClassResources(dataSource, character);
   state.spellSlotsUsed = {};
+  state.grantedSpellUses = {};
+  state.highElfCantripSwapAvailable = true;
   state.resourcesUsed = applyLongRestResourceRecovery(
     state.resourcesUsed ?? {},
     resources,

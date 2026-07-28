@@ -94,6 +94,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       catalogLookup as unknown as CatalogLookupService,
       new CharacterSpeciesChoicesValidator(
         speciesTraitChoicesRepo as unknown as Repository<VPhbSpeciesTraitChoices>,
+        dataSource as unknown as DataSource,
       ),
       new CharacterSubclassOptionsValidator(
         dataSource as unknown as DataSource,

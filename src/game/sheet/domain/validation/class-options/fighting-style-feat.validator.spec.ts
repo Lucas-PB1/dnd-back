@@ -28,7 +28,7 @@ function buildClassOptionsValidator(
   return new CharacterClassOptionsValidator(
     dataSource,
     catalogLookup,
-    new CharacterSpeciesChoicesValidator(speciesTraitChoicesRepo),
+    new CharacterSpeciesChoicesValidator(speciesTraitChoicesRepo, dataSource),
     new CharacterSubclassOptionsValidator(
       dataSource,
       catalogLookup,

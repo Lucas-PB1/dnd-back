@@ -23,6 +23,12 @@ Definição species+feat: `database/migrations/060_views/V039_v_species_feat_gra
 3. Estender `v_phb_species_trait_choices` se houver escolha de UI
 4. Spec em `granted-spells.spec.ts`
 
+## Runtime — CD / economia / Alto Elfo
+
+- CD/ataque por magia: `resolve-granted-spellcasting-ability` + `enrich-spells-with-spellcasting-stats` (campos em `CharacterSpellDto`)
+- Economia: `resolve-granted-spell-cast-economy`; usos em `player_character_state.granted_spell_uses`; `CastSpellDto.useFreeCast`
+- Alto Elfo: choice opcional `high_elf_cantrip`; swap após LD via `high_elf_cantrip_swap_available`
+
 ## Não confundir
 
 `phb_spell_source` = metadado de origem polimórfica (class/species/feat/subclass).  

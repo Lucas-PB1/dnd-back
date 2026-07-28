@@ -11,6 +11,7 @@ function choiceSlugOf(
 /**
  * Slugs de magia concedidos por espécie a partir do catálogo,
  * filtrados por escolhas da ficha e nível.
+ * Alto Elfo: `high_elf_cantrip` substitui o truque L1 default do catálogo.
  */
 export function collectSpeciesGrantedSpellSlugs(
   speciesSlug: string | undefined,
@@ -36,5 +37,30 @@ export function collectSpeciesGrantedSpellSlugs(
     }
   }
 
+  applyHighElfCantripOverride(speciesSlug, speciesChoices, catalogRows, slugs);
   return slugs;
+}
+
+function applyHighElfCantripOverride(
+  speciesSlug: string,
+  speciesChoices: readonly SpeciesChoiceDto[] | undefined,
+  catalogRows: readonly SpeciesGrantedSpellRow[],
+  slugs: Set<string>,
+): void {
+  if (speciesSlug !== 'elf') return;
+  if (choiceSlugOf(speciesChoices, 'elf_lineage') !== 'high-elf') return;
+  const cantrip = choiceSlugOf(speciesChoices, 'high_elf_cantrip');
+  if (!cantrip) return;
+
+  for (const row of catalogRows) {
+    if (
+      row.speciesSlug === 'elf' &&
+      row.choiceKind === 'elf_lineage' &&
+      row.choiceSlug === 'high-elf' &&
+      row.unlockLevel === 1
+    ) {
+      slugs.delete(row.spellSlug);
+    }
+  }
+  slugs.add(cantrip);
 }

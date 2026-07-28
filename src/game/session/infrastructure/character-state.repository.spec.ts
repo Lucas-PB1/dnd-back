@@ -31,6 +31,8 @@ describe('CharacterStateRepository', () => {
       {} as CatalogLookupService,
       {} as CharacterRepository,
       {} as CharacterSpellLookup,
+      {} as never,
+      {} as never,
       {} as DataSource,
     );
   });
@@ -41,6 +43,8 @@ describe('CharacterStateRepository', () => {
         characterId: 'char-1',
         spellSlotsUsed: {},
         resourcesUsed: { rage: 1 },
+        grantedSpellUses: {},
+        highElfCantripSwapAvailable: false,
         conditions: [],
         tempHp: 0,
         concentratingOn: null,
@@ -100,6 +104,8 @@ describe('CharacterStateRepository', () => {
         characterId: 'char-1',
         spellSlotsUsed: {},
         resourcesUsed: {},
+        grantedSpellUses: {},
+        highElfCantripSwapAvailable: false,
         conditions: [],
         tempHp: 0,
         concentratingOn: null,

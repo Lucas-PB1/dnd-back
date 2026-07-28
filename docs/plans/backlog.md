@@ -3,7 +3,7 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **não feitos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-07-28 — gate Jest coverage ≥80% passando (~92% stmts / ~82% branches)
+**Última revisão:** 2026-07-28 — P1 magias concedidas (CD/ataque, economia 1×/LD, Alto Elfo) entregue
 
 ---
 
@@ -13,7 +13,7 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 |------|--------|
 | Ficha / inventário / sessão / dados | Pronto |
 | Campanha + encontro (API + UI) | Pronto |
-| HP / CA / ataque / feat options / granted spells (in-scope) | Fechado; gaps P1 abaixo |
+| HP / CA / ataque / feat options / granted spells | Pronto (P1 magias fechado) |
 | Deploy front / E2E | Pendente |
 
 ---
@@ -23,11 +23,6 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 **P0:** nenhum.
 
 ### P1 — cobertura PHB / mecânica incompleta
-
-#### Magias concedidas / conjuração
-- [ ] Economia: usos sem espaço / 1× por descanso longo
-- [ ] Atributo de conjuração de talento/espécie → CD e bônus de ataque mágico
-- [ ] Troca do truque de Alto Elfo após Descanso Longo (choice persistida)
 
 #### CA / defesa (efeitos não permanentes)
 - [ ] Buffs temporários / reações de CA (`defensive-duelist`, Defesa Gloriosa, magias Escudo/Armadura Arcana, Forma Selvagem, etc.)
@@ -59,11 +54,10 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 ## Ordem sugerida
 
-1. **P1 magias concedidas** (CD/ataque + economia + Alto Elfo)  
-2. **P2 front wizard magias** (precisa endpoints de granted ou preview)  
-3. Deploy front / E2E  
-4. **P1 combate situacional** (lotes)  
-5. Ops restantes  
+1. **P2 front wizard magias** (precisa endpoints de granted ou preview)  
+2. Deploy front / E2E  
+3. **P1 combate situacional** (lotes)  
+4. Ops restantes  
 
 ---
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { DataSource } from 'typeorm';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { CharacterDomainService } from '../domain/core/character-domain.service';
 import { CharacterRepository } from '../../shared/infrastructure/character.repository';
@@ -11,6 +12,7 @@ import { CharacterSheetInput } from '../domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';
+import { assertAndConsumeHighElfCantripSwap } from './update-character/assert-high-elf-cantrip-swap';
 import { clearStaleSheetChoices } from './update-character/clear-stale-sheet-choices';
 import { mergeUpdateCharacterSpells } from './update-character/merge-update-character-spells';
 import {
@@ -31,6 +33,7 @@ export class UpdateCharacterHandler {
     private readonly mapper: CharacterMapper,
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly dataSource: DataSource,
   ) {}
 
   async execute(
@@ -79,6 +82,15 @@ export class UpdateCharacterHandler {
       dto.speciesChoices !== undefined
         ? dto.speciesChoices
         : sheetSnapshot.speciesChoices;
+
+    if (dto.speciesChoices !== undefined) {
+      await assertAndConsumeHighElfCantripSwap(
+        this.dataSource,
+        row.id,
+        sheetSnapshot.speciesChoices,
+        dto.speciesChoices,
+      );
+    }
 
     const levelChanged = dto.level !== undefined && dto.level !== row.level;
     const speciesChanged =

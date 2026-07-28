@@ -83,6 +83,20 @@ const SPECIES_CATALOG: SpeciesGrantedSpellRow[] = [
     unlockLevel: 1,
     spellSlug: 'falar-com-animais',
   },
+  {
+    speciesSlug: 'elf',
+    choiceKind: 'elf_lineage',
+    choiceSlug: 'high-elf',
+    unlockLevel: 1,
+    spellSlug: 'prestidigitacao-arcana',
+  },
+  {
+    speciesSlug: 'elf',
+    choiceKind: 'elf_lineage',
+    choiceSlug: 'high-elf',
+    unlockLevel: 3,
+    spellSlug: 'detectar-magia',
+  },
 ];
 
 describe('granted-spells', () => {
@@ -213,6 +227,27 @@ describe('granted-spells', () => {
         SPECIES_CATALOG,
       );
       expect([...forest].sort()).toEqual(['falar-com-animais', 'ilusao-menor']);
+    });
+
+    it('replaces high-elf L1 cantrip when high_elf_cantrip is chosen', () => {
+      const defaultSlugs = collectSpeciesGrantedSpellSlugs(
+        'elf',
+        [{ choiceKind: 'elf_lineage', choiceSlug: 'high-elf' }],
+        1,
+        SPECIES_CATALOG,
+      );
+      expect([...defaultSlugs]).toEqual(['prestidigitacao-arcana']);
+
+      const swapped = collectSpeciesGrantedSpellSlugs(
+        'elf',
+        [
+          { choiceKind: 'elf_lineage', choiceSlug: 'high-elf' },
+          { choiceKind: 'high_elf_cantrip', choiceSlug: 'raio-de-fogo' },
+        ],
+        3,
+        SPECIES_CATALOG,
+      );
+      expect([...swapped].sort()).toEqual(['detectar-magia', 'raio-de-fogo']);
     });
   });
 
