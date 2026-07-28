@@ -17,14 +17,9 @@ import {
 } from '../dto/character-state.dto';
 import { grantHitDiceOnLevelUp } from '../domain/hit-dice-rest';
 import { applyCastSpell } from './character-state/cast-spell';
-import { buildClassResourceState } from './character-state/class-resources';
-import { clampHitDiceToLevel } from './character-state/hit-dice';
-import {
-  applyPatchState,
-  applyUseClassResource,
-} from './character-state/mutations';
+import { buildCharacterStateResponse } from './character-state/build-response';
+import { applyUseClassResource, applyPatchState } from './character-state/mutations';
 import { applyLongRestState, applyShortRestState } from './character-state/rest';
-import { computeRemaining, loadMaxSlots } from './character-state/spell-slots';
 
 @Injectable()
 export class CharacterStateRepository {
@@ -57,6 +52,9 @@ export class CharacterStateRepository {
         tempHp: 0,
         concentratingOn: null,
         hitDiceCurrent: level,
+        deathSaveSuccesses: 0,
+        deathSaveFailures: 0,
+        inspiration: false,
       });
       await this.state.save(row);
     }
@@ -70,37 +68,17 @@ export class CharacterStateRepository {
     character: PlayerCharacter,
     stateRow?: PlayerCharacterState,
   ): Promise<CharacterStateResponseDto> {
-    const state = stateRow ?? (await this.findOrCreate(character.id, character.level));
-    await clampHitDiceToLevel(this.state, state, character.level);
-    const spellSlotsMax = await loadMaxSlots(
-      this.classSlots,
-      this.subclassSlots,
-      character.classSlug,
-      character.level,
-      character.subclassSlug,
-    );
-    const spellSlotsUsed = state.spellSlotsUsed ?? {};
-    const phbClass = await this.catalogLookup.findClassOrFail(character.classSlug);
-    const classResources = await buildClassResourceState(
-      this.dataSource,
+    const state =
+      stateRow ?? (await this.findOrCreate(character.id, character.level));
+    return buildCharacterStateResponse({
       character,
       state,
-    );
-
-    return {
-      spellSlotsMax,
-      spellSlotsUsed,
-      spellSlotsRemaining: computeRemaining(spellSlotsMax, spellSlotsUsed),
-      classResources,
-      concentratingOn: state.concentratingOn,
-      conditions: state.conditions ?? [],
-      tempHp: state.tempHp,
-      hitPointsCurrent: character.hitPointsCurrent,
-      hitPointsMax: character.hitPointsMax,
-      hitDiceCurrent: state.hitDiceCurrent,
-      hitDiceMax: character.level,
-      hitDie: phbClass.hitDie,
-    };
+      stateRepo: this.state,
+      classSlots: this.classSlots,
+      subclassSlots: this.subclassSlots,
+      catalogLookup: this.catalogLookup,
+      dataSource: this.dataSource,
+    });
   }
 
   async patch(

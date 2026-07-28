@@ -1,6 +1,6 @@
 # Plano — Game avançado (ficha viva + mesa)
 
-> **Status API 7A–7C:** concluído. **7D:** campanha MVP parcial; combate/iniciativa pendente. **Front:** mesa/inventário/level-up. Roadmap: [`product-roadmap.md`](product-roadmap.md).
+> **Status API 7A–7C:** concluído. **7B:** validação dura de treino/proficiência ao equipar ✅. **7D:** campanha MVP API; combate/iniciativa pendente. Death saves + inspiration no state (P019). Roadmap: [`product-roadmap.md`](product-roadmap.md).
 
 Complementa [`product-roadmap.md`](product-roadmap.md) (Fases 1–4 concluídas).
 
@@ -71,7 +71,8 @@ player_character_item (
 - [x] `POST /characters/:id/inventory` — adicionar item
 - [x] `PATCH /characters/:id/inventory/:itemSlug` — equipar / desequipar / quantidade
 - [x] `DELETE /characters/:id/inventory/:itemSlug`
-- [ ] Validação: proficiência, carga (futuro)
+- [x] Validação: treino de armadura / proficiência de arma ao **equipar** (400) — `AssertCanEquipItemService`
+- [ ] Validação: carga/encumbrance (futuro)
 
 ---
 
@@ -96,6 +97,7 @@ player_character_state (
 - [x] `POST /characters/:id/rest` — short (noop slots) / long (recupera slots, HP, condições)
 - [x] Migration `P006_player_character_state` + seed `phb_condition`
 - [x] E2E state + cast + rest
+- [x] Death saves (0–3) + inspiration no state (`P019`); long rest zera death saves
 
 Catálogo: condições em `rpg.phb_condition` (seed na migration).
 

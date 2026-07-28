@@ -5,12 +5,20 @@ import {
   InventoryItemResponseDto,
   PatchInventoryItemDto,
 } from '../dto/inventory.dto';
+import { AssertCanEquipItemService } from './assert-can-equip-item.service';
+
+function isEquipping(dto: PatchInventoryItemDto): boolean {
+  if (dto.location === 'equipped') return true;
+  if (dto.location === 'backpack') return false;
+  return dto.equipmentSlot !== undefined;
+}
 
 @Injectable()
 export class PatchInventoryItemHandler {
   constructor(
     private readonly access: PlayerCharacterAccessService,
     private readonly inventory: CharacterInventoryRepository,
+    private readonly assertCanEquip: AssertCanEquipItemService,
   ) {}
 
   async execute(
@@ -19,7 +27,14 @@ export class PatchInventoryItemHandler {
     itemSlug: string,
     dto: PatchInventoryItemDto,
   ): Promise<InventoryItemResponseDto> {
-    await this.access.findAccessibleOrFail(userId, characterId, 'write');
+    const character = await this.access.findAccessibleOrFail(
+      userId,
+      characterId,
+      'write',
+    );
+    if (isEquipping(dto)) {
+      await this.assertCanEquip.assert(character, itemSlug);
+    }
     return this.inventory.patch(characterId, itemSlug, dto);
   }
 }

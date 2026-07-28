@@ -23,6 +23,8 @@
 | [`architecture/game-module-structure.md`](architecture/game-module-structure.md) | Submódulos Game |
 | [`architecture/code-standards.md`](architecture/code-standards.md) | Tamanho de arquivo, SRP, DRY, legado |
 
+Novidades API (2026-07-27): `GET /fighting-styles`, inventário hard-equip, death saves/inspiration (`P019`), CI + `openapi:export`.
+
 ## Planos
 
 ### Ativos (backlog)

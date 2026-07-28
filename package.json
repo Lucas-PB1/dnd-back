@@ -39,7 +39,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
-    "test:e2e": "jest --config ./test/jest-e2e.config.js --runInBand"
+    "test:e2e": "jest --config ./test/jest-e2e.config.js --runInBand",
+    "openapi:export": "node scripts/export-openapi.mjs",
+    "db:audit:gear-descriptions": "node scripts/audit-gear-descriptions.mjs"
   },
   "engines": {
     "node": "24.x"

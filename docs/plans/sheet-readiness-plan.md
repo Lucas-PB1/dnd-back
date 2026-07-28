@@ -6,7 +6,7 @@ Documento de planejamento para **expor e usar na ficha/mesa** dados PHB 2024 que
 |--|--|
 | **Repos** | dnd-api (views, DTOs, endpoints) + dnd-front (ficha, mesa, wizard) |
 | **Última revisão** | 2026-07-27 |
-| **Status** | Em andamento — Fases 0–5 **API** feitas; front (wizard cotas + ASI UI) e Fase 6 pendentes |
+| **Status** | Em andamento — Fases 0–5 API + parte da Fase 6 API feitas; front e idiomas/feat-content/7D combate pendentes |
 | **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`game-advanced-plan.md`](game-advanced-plan.md) · [`data-model.md`](../architecture/data-model.md) · front [`CHARACTER-SHEET-PLAN.md`](../../../dnd-front/docs/CHARACTER-SHEET-PLAN.md) |
 
 **Princípio:** o front **coleta escolhas** e **exibe**; a API **valida e computa**. Zero regras PHB hardcoded no front.
@@ -19,7 +19,7 @@ Documento de planejamento para **expor e usar na ficha/mesa** dados PHB 2024 que
 - [x] Fase 3 — Mesa: picker de condições (`GET /conditions`)
 - [x] Fase 4 — Progressão / cotas de magia (**API**); front wizard ainda pendente em dnd-front
 - [x] Fase 5 — Level-up ASI guiado (**API**); UI no front pendente
-- [ ] Fase 6 — Backlog (idiomas concedidos, feat options, inventário, mesa avançada)
+- [x] Fase 6 — Backlog **itens API** (fighting styles, equip hard, death saves); restam idiomas concedidos / feat options content / combate 7D
 
 ---
 
@@ -241,15 +241,16 @@ weaponProficiencyNames: string[];
 
 ---
 
-### Fase 6 — Backlog (não bloqueia 1–5)
+### Fase 6 — Backlog API restante
 
-| Item | Notas |
-|------|-------|
-| Idiomas concedidos (espécie / antecedente) | Hoje checklist livre no wizard; pode exigir seed/tabela |
-| Mais `feat_option_def` | Só Magic Initiate, Skilled, Fey/Shadow Touched bem cobertos |
-| Validação de proficiência no inventário | Mencionado em [`game-advanced-plan.md`](game-advanced-plan.md) |
-| Death saves / inspiração / iniciativa | Mesa avançada / campanha |
-| Fighting styles como `GET` dedicado | Hoje indireto via subclass options |
+| Item | Status API |
+|------|------------|
+| Idiomas concedidos (espécie / antecedente) | Pendente (sem tabelas seed) |
+| Mais `feat_option_def` | Parcial — usar `npm run db:audit:feat-options` |
+| Validação de proficiência no inventário | ✅ hard no equip (`AssertCanEquipItemService`) |
+| Death saves / inspiração | ✅ `P019` + state DTO |
+| Fighting styles `GET` dedicado | ✅ `GET /fighting-styles` (+ `?class=`) |
+| Iniciativa / combate de encontro | Fora — 7D combate |
 
 ---
 

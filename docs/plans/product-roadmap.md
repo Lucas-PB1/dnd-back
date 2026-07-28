@@ -9,7 +9,7 @@ Documento **vivo** do caminho até app consumidor 100% baseado na API.
 
 Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`sheet-readiness-plan.md`](sheet-readiness-plan.md) (catálogo→ficha) · [`equipment-catalog-plan.md`](equipment-catalog-plan.md) (itens/armas/armaduras) · [`game-advanced-plan.md`](game-advanced-plan.md) (mesa/inventário) · [`CHARACTER-SHEET-PLAN.md`](../../../dnd-front/docs/CHARACTER-SHEET-PLAN.md) (ficha front)
 
-**Última revisão:** 2026-07-19
+**Última revisão:** 2026-07-27
 
 ---
 
@@ -26,7 +26,7 @@ Relacionados: [`api-plan.md`](api-plan.md) (referência REST) · [`sheet-readine
 | **dnd-front** — MVP ficha | **~95%** | Wizard PHB, ficha leitura/edição, mesa |
 | **dnd-front** — compêndio | **~95%** | Hub completo + filtros; gaps mecânicos em [`equipment-catalog-plan.md`](equipment-catalog-plan.md) / ficha em [`sheet-readiness-plan.md`](sheet-readiness-plan.md) |
 | Deploy produção (Fase 6) | **em andamento** | Ver [`DEPLOY.md`](../deploy/DEPLOY.md) |
-| Campanha / combate (7D) | **0%** | Fora do escopo atual |
+| Campanha / combate (7D) | **parcial** | Campanha MVP API; combate/iniciativa pendente |
 
 **Testes automatizados:** API 88 · Front 35 · ambos passando localmente (jul/2026).
 

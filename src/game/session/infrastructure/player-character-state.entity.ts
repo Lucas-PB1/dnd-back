@@ -25,4 +25,13 @@ export class PlayerCharacterState {
 
   @Column({ name: 'hit_dice_current', type: 'int', default: 0 })
   hitDiceCurrent!: number;
+
+  @Column({ name: 'death_save_successes', type: 'int', default: 0 })
+  deathSaveSuccesses!: number;
+
+  @Column({ name: 'death_save_failures', type: 'int', default: 0 })
+  deathSaveFailures!: number;
+
+  @Column({ type: 'boolean', default: false })
+  inspiration!: boolean;
 }

@@ -2,10 +2,12 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsArray,
+  IsBoolean,
   IsIn,
   IsInt,
   IsOptional,
   IsString,
+  Max,
   Min,
   ValidateNested,
 } from 'class-validator';
@@ -113,6 +115,24 @@ export class CharacterStateResponseDto {
     description: 'Dado de vida da classe (catálogo)',
   })
   hitDie!: string | null;
+
+  @ApiProperty({
+    example: 0,
+    description: 'Sucessos em salvaguardas contra a morte (0–3)',
+  })
+  deathSaveSuccesses!: number;
+
+  @ApiProperty({
+    example: 0,
+    description: 'Falhas em salvaguardas contra a morte (0–3)',
+  })
+  deathSaveFailures!: number;
+
+  @ApiProperty({
+    example: false,
+    description: 'Inspiração (mantida no descanso longo)',
+  })
+  inspiration!: boolean;
 }
 
 export class UseClassResourceDto {
@@ -144,6 +164,25 @@ export class PatchCharacterStateDto {
   @IsOptional()
   @IsString()
   concentratingOn?: string | null;
+
+  @ApiPropertyOptional({ example: 2, description: 'Sucessos em death saves (0–3)' })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(3)
+  deathSaveSuccesses?: number;
+
+  @ApiPropertyOptional({ example: 1, description: 'Falhas em death saves (0–3)' })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(3)
+  deathSaveFailures?: number;
+
+  @ApiPropertyOptional({ example: true })
+  @IsOptional()
+  @IsBoolean()
+  inspiration?: boolean;
 }
 
 export class CastSpellDto {

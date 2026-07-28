@@ -7,6 +7,7 @@ import { BackgroundsModule } from './backgrounds/backgrounds.module';
 import { SpellsModule } from './spells/spells.module';
 import { FeatsModule } from './feats/feats.module';
 import { SkillsModule } from './skills/skills.module';
+import { FightingStylesModule } from './fighting-styles/fighting-styles.module';
 import { AbilitiesModule } from './abilities/abilities.module';
 import { EquipmentModule } from './equipment/equipment.module';
 import { ItemsModule } from './items/items.module';
@@ -22,6 +23,7 @@ import { ReferenceModule } from './reference/reference.module';
     SpellsModule,
     FeatsModule,
     SkillsModule,
+    FightingStylesModule,
     AbilitiesModule,
     EquipmentModule,
     ItemsModule,

@@ -2,11 +2,12 @@ import 'reflect-metadata';
 
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { corsConfig } from './config/cors.config';
 import { swaggerSetupOptions } from './config/swagger.config';
+import { createSwaggerDocument } from './config/swagger-document';
 import { validateDeployEnv } from './config/validate-env';
 
 async function bootstrap() {
@@ -25,13 +26,7 @@ async function bootstrap() {
 
   app.enableCors(corsConfig());
 
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('RPG PHB API')
-    .setDescription('Catálogo D&D 2024 (PHB) + fichas de jogador')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  const document = createSwaggerDocument(app);
   SwaggerModule.setup('api', app, document, swaggerSetupOptions());
 
   await app.listen(process.env.PORT ?? 3000);

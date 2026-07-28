@@ -180,6 +180,8 @@ Legenda: `[ ]` pendente · `[~]` parcial · `[x]` feito
 
 - [x] `HttpExceptionFilter` global
 - [x] Log estruturado server-side (sem vazar stack ao client em prod)
+- [x] `test:cov` no CI (`.github/workflows/ci.yml`)
+- [x] Export OpenAPI: `npm run openapi:export` (requer API up → `/api-json`)
 - [ ] Mensagens em PT para `message` user-facing (opcional v1)
 - [x] Testes E2E: 404 em slug inexistente por recurso
 
@@ -209,7 +211,7 @@ SwaggerModule.setup('api', app, SwaggerModule.createDocument(app, config));
 - [x] `@ApiQuery` para paginação e filtros (`maxLevel`, `page`, `limit`)
 - [x] `@ApiOkResponse({ type: *ResponseDto })`
 - [x] `@ApiNotFoundResponse()` nos GET `:slug`
-- [ ] Export OpenAPI JSON em CI (opcional) → `openapi.json`
+- [x] Export OpenAPI JSON → `npm run openapi:export` (`openapi.json` via `/api-json`)
 - [x] README: link `http://localhost:3000/api` em dev
 
 ---
@@ -279,7 +281,7 @@ Para cada módulo catalog novo:
 - [x] `*.queries.spec.ts` — mock repository, findAll, findBySlug, 404 (todos os BCs catalog)
 - [x] `test/catalog.e2e-spec.ts` — GET lista 200, GET slug válido 200, slug inválido 404 (consolidado; inclui subclasses)
 - [ ] DTO snapshot ou assert campos obrigatórios
-- [ ] `npm run test:cov` no CI
+- [x] `npm run test:cov` no CI (`.github/workflows/ci.yml`)
 
 ### Scripts sugeridos (`package.json`)
 
@@ -349,11 +351,11 @@ Ver `.cursor/rules/` e `.cursor/skills/`.
 | Catálogo P2 | **100%** (feats, skills, abilities, weapons, armor, species traits, **subclasses**) |
 | Catálogo P3 | **100%** (alignments, languages, character-levels) |
 | Application layer | **100%** (catalog queries/mappers; game handlers/repository) |
-| Testes | **~75%** (42 unit + 37 e2e; `test:cov`/CI pendente) |
+| Testes | **~90%** (unit + e2e; CI com `test:cov`) |
 | Auth | **100%** (JWT + RLS Supabase) |
-| Game | **~95%** (ficha PHB completa; aggregate/VOs opcional) |
+| Game | **~97%** (ficha + mesa + ASI level-up + death saves; combate 7D pendente) |
 
-**Última revisão:** 2026-07-04 — checklist concluído; pendências opcionais: `test:cov` CI, OpenAPI export, aggregate/VOs
+**Última revisão:** 2026-07-27 — CI + OpenAPI export + fighting-styles + inventário hard + death saves/inspiration
 
 **Roadmap produto (app + deploy):** [`product-roadmap.md`](product-roadmap.md)
 

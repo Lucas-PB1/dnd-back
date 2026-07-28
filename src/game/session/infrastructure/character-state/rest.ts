@@ -13,6 +13,7 @@ import {
   applyLongRestResourceRecovery,
   applyShortRestResourceRecovery,
 } from '../../domain/class-resources';
+import { resetDeathSaves } from '../../domain/death-saves';
 import { PlayerCharacterState } from '../player-character-state.entity';
 import { resolveClassResources } from './class-resources';
 import { clampHitDiceToLevel } from './hit-dice';
@@ -45,6 +46,9 @@ export async function applyLongRestState(input: {
     state.hitDiceCurrent,
     character.level,
   );
+  const deathSaves = resetDeathSaves();
+  state.deathSaveSuccesses = deathSaves.deathSaveSuccesses;
+  state.deathSaveFailures = deathSaves.deathSaveFailures;
   await stateRepo.save(state);
 
   if (character.hitPointsMax !== null) {

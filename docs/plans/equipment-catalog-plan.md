@@ -6,7 +6,7 @@ Documento de planejamento para completar **dados mecânicos** e a experiência d
 |--|--|
 | **Repos** | dnd-api (seeds, views, DTOs) + dnd-front (UI do compêndio) |
 | **Última revisão** | 2026-07-19 |
-| **Status** | Em andamento — Fases 0–5 feitas; **Fase 6** QA + apply Supabase/prod pendente |
+| **Status** | Fases 0–5 ✅; Fase 6 QA local (script audit) ✅; apply prod pendente |
 | **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`data-model.md`](../architecture/data-model.md) · front [`UX-UI-PLAN.md`](../../../dnd-front/docs/UX-UI-PLAN.md) |
 
 ### Progresso desta entrega
@@ -17,7 +17,8 @@ Documento de planejamento para completar **dados mecânicos** e a experiência d
 - [x] Fase 3 — `propertyDetails` + `mastery` armas (API/UI)
 - [x] Fase 4 — `versatileDamage` + range zarabatana (`S071`)
 - [x] Fase 5 — custo/peso armadura (`V032` + UI)
-- [ ] Fase 6 — QA + apply Supabase/prod
+- [x] Fase 6 — QA local: script `npm run db:audit:gear-descriptions`; DoD API tools/weapons/armor ✅
+- [ ] Fase 6 — apply Supabase/prod (ops)
 
 ---
 
@@ -372,13 +373,9 @@ Cada PR deve ser deployável e melhorar algo visível no compêndio.
 
 ## 11. Definição de pronto (épico)
 
-- [ ] Nenhum gear/focus do seed com description truncada (heurística automatizada no CI ou script documentado).
-- [ ] Detalhe de item mostra uso mecânico completo quando o PHB tem.
-- [ ] Tools expõem atributo/uso via API.
-- [ ] Armas mostram propriedades e maestria com texto oficial da API.
-- [ ] Armaduras mostram custo e peso.
-- [ ] Sem labels de regra hardcoded no front para esses catálogos.
-- [ ] Local + produção com o mesmo conteúdo aplicado.
+- [x] Heurística documentada: `npm run db:audit:gear-descriptions` (S046 ∩ S070)
+- [x] Detalhe de item / tools / armas / armaduras — DoD API (properties, mastery, cost/weight)
+- [ ] Local + produção com o mesmo conteúdo aplicado (ops)
 
 ---
 

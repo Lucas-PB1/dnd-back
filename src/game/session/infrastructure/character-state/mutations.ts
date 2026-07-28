@@ -3,6 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
 import { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
 import { applyResourceSpend } from '../../domain/class-resources';
+import { clampDeathSaveCount } from '../../domain/death-saves';
 import {
   CharacterStateResponseDto,
   PatchCharacterStateDto,
@@ -26,8 +27,15 @@ export async function applyPatchState(input: {
   catalogLookup: CatalogLookupService;
   buildResponse: BuildResponse;
 }): Promise<CharacterStateResponseDto> {
-  const { character, state, dto, stateRepo, conditions, catalogLookup, buildResponse } =
-    input;
+  const {
+    character,
+    state,
+    dto,
+    stateRepo,
+    conditions,
+    catalogLookup,
+    buildResponse,
+  } = input;
 
   if (dto.conditions !== undefined) {
     await assertValidConditions(conditions, dto.conditions);
@@ -48,6 +56,16 @@ export async function applyPatchState(input: {
       }
     }
     state.concentratingOn = dto.concentratingOn;
+  }
+
+  if (dto.deathSaveSuccesses !== undefined) {
+    state.deathSaveSuccesses = clampDeathSaveCount(dto.deathSaveSuccesses);
+  }
+  if (dto.deathSaveFailures !== undefined) {
+    state.deathSaveFailures = clampDeathSaveCount(dto.deathSaveFailures);
+  }
+  if (dto.inspiration !== undefined) {
+    state.inspiration = dto.inspiration;
   }
 
   await stateRepo.save(state);
