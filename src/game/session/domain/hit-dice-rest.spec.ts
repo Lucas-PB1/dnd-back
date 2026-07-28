@@ -48,4 +48,38 @@ describe('hit-dice-rest', () => {
     expect(grantHitDiceOnLevelUp(3, 3, 4)).toBe(4);
     expect(grantHitDiceOnLevelUp(0, 3, 4)).toBe(1);
   });
+
+  it('clamps hit dice when level does not increase', () => {
+    expect(grantHitDiceOnLevelUp(5, 5, 4)).toBe(4);
+  });
+
+  it('returns zero restored dice when max is zero', () => {
+    expect(restoreHitDiceOnLongRest(0, 0)).toBe(0);
+  });
+
+  it('rejects invalid hit dice spend', () => {
+    expect(() =>
+      spendHitDice({
+        hitDiceCurrent: 1,
+        hitDiceMax: 5,
+        hitDiceSpent: 2,
+        hitDieLabel: 'd10',
+        constitutionModifier: 0,
+        hitPointsCurrent: 10,
+        hitPointsMax: 20,
+      }),
+    ).toThrow(/Cannot spend 2 hit dice/);
+
+    expect(() =>
+      spendHitDice({
+        hitDiceCurrent: 1,
+        hitDiceMax: 5,
+        hitDiceSpent: -1,
+        hitDieLabel: 'd10',
+        constitutionModifier: 0,
+        hitPointsCurrent: 10,
+        hitPointsMax: 20,
+      }),
+    ).toThrow(/non-negative integer/);
+  });
 });

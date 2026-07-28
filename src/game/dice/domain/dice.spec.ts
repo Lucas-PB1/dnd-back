@@ -74,4 +74,42 @@ describe('dice domain', () => {
     expect(result.dice[0].kept).toEqual([3, 3]);
     expect(result.total).toBe(10);
   });
+
+  it('rollDie rejects invalid sides', () => {
+    expect(() => rollDie(1)).toThrow(/Invalid die sides/);
+    expect(() => rollDie(6.5)).toThrow(/Invalid die sides/);
+  });
+
+  it('rollDice rejects invalid counts', () => {
+    expect(() => rollDice(0, 6)).toThrow(/Invalid die count/);
+  });
+
+  it('parseDiceExpression supports negative modifiers and whitespace', () => {
+    expect(parseDiceExpression(' 1d10-2 ')).toEqual({
+      count: 1,
+      sides: 10,
+      modifier: -2,
+    });
+    expect(() => parseDiceExpression('2d6+1d4')).toThrow(/Unsupported dice expression/);
+  });
+
+  it('rollD20Check uses a single die in normal mode', () => {
+    const result = rollD20Check(2, 'normal', () => 0.5);
+    expect(result.d20.count).toBe(1);
+    expect(result.d20.rolls).toHaveLength(1);
+    expect(result.total).toBe(result.d20.kept[0] + 2);
+    expect(result.expression).toBe('1d20+2');
+  });
+
+  it('rollDamageParts accepts bare die size without d prefix', () => {
+    const result = rollDamageParts('8', -1, { rng: () => 0 });
+    expect(result.expression).toBe('1d8-1');
+    expect(result.total).toBe(0);
+  });
+
+  it('rollExpression preserves negative modifiers in total', () => {
+    const result = rollExpression('1d6-2', () => 0.99);
+    expect(result.total).toBe(4);
+    expect(result.modifier).toBe(-2);
+  });
 });

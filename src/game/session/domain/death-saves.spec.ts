@@ -8,6 +8,7 @@ describe('death-saves', () => {
     expect(clampDeathSaveCount(3)).toBe(3);
     expect(clampDeathSaveCount(4)).toBe(3);
     expect(clampDeathSaveCount(2.9)).toBe(2);
+    expect(clampDeathSaveCount(Number.NaN)).toBe(0);
   });
 
   it('resets both counters', () => {

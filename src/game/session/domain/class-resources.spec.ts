@@ -119,6 +119,45 @@ describe('class-resources', () => {
     expect(secondWind?.max).toBe(3);
   });
 
+  it('resolves level and level_plus_one formulas', () => {
+    const rows: ClassResourceScheduleRow[] = [
+      {
+        resourceSlug: 'wildShape',
+        resourceName: 'Forma Selvagem',
+        unlockLevel: 2,
+        maxFormula: 'level',
+        fixedMax: null,
+        recoverOneOnShort: false,
+        recoverAllOnShort: false,
+        recoverAllOnLong: true,
+      },
+      {
+        resourceSlug: 'arcaneRecovery',
+        resourceName: 'Recuperação Arcana',
+        unlockLevel: 1,
+        maxFormula: 'level_plus_one',
+        fixedMax: null,
+        recoverOneOnShort: false,
+        recoverAllOnShort: false,
+        recoverAllOnLong: true,
+      },
+    ];
+    const maxima = resolveClassResourceMaxima({
+      rows,
+      level: 5,
+      proficiencyBonus: 3,
+      abilityModifiers: mods,
+    });
+    expect(maxima.find((r) => r.slug === 'wildShape')?.max).toBe(5);
+    expect(maxima.find((r) => r.slug === 'arcaneRecovery')?.max).toBe(6);
+  });
+
+  it('throws when spending beyond resource max', () => {
+    expect(() => applyResourceSpend({}, 'rage', 2, 3)).toThrow(
+      /No remaining uses of resource 'rage'/,
+    );
+  });
+
   it('spends and recovers resources on short/long rest', () => {
     const resources: ClassResourceMax[] = [
       {

@@ -6,16 +6,23 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
-  /** Cobertura de todo o `src`, exceto wiring Nest e specs. Gate global 80%. */
+  /**
+   * Cobertura do código de aplicação/domínio.
+   * DTOs (class-validator) e controllers (wiring HTTP) ficam de fora do unit gate —
+   * contrato HTTP → e2e. Gate global 80%.
+   */
   collectCoverageFrom: [
     '**/*.(t|j)s',
     '!**/*.module.ts',
     '!**/main.ts',
     '!**/*.spec.ts',
     '!**/index.ts',
+    '!**/*.dto.ts',
+    '!**/dto/**',
+    '!**/*.controller.ts',
   ],
   coverageDirectory: '../coverage',
-  coverageReporters: ['text', 'text-summary', 'lcov'],
+  coverageReporters: ['text', 'text-summary', 'lcov', 'json-summary'],
   coverageThreshold: {
     global: {
       statements: 80,

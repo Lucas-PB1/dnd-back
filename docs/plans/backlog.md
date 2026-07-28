@@ -3,7 +3,7 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **não feitos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-07-27 — gate Jest coverage 80% global; baseline ~42%
+**Última revisão:** 2026-07-28 — gate Jest coverage ≥80% passando (~92% stmts / ~82% branches)
 
 ---
 
@@ -49,7 +49,6 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 ### Ops / qualidade
 
-- [ ] **P0 CI:** subir cobertura unitária para **≥80%** (statements/lines/functions/branches) — baseline ~42% / 35% / 37% / 41%; gate já em `jest.config.js`
 - [ ] Deploy Vercel + E2E browser (Cypress/Playwright) — `dnd-front`
 - [ ] E2E Supertest da campanha MVP / encontros — `dnd-api`
 - [ ] Mensagens de erro HTTP em PT (user-facing)
@@ -60,12 +59,11 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 ## Ordem sugerida
 
-1. **P0 coverage ≥80%** (CI já falha o gate até lá)  
-2. **P1 magias concedidas** (CD/ataque + economia + Alto Elfo)  
-3. **P2 front wizard magias** (precisa endpoints de granted ou preview)  
-4. Deploy front / E2E  
-5. **P1 combate situacional** (lotes)  
-6. Ops restantes  
+1. **P1 magias concedidas** (CD/ataque + economia + Alto Elfo)  
+2. **P2 front wizard magias** (precisa endpoints de granted ou preview)  
+3. Deploy front / E2E  
+4. **P1 combate situacional** (lotes)  
+5. Ops restantes  
 
 ---
 
