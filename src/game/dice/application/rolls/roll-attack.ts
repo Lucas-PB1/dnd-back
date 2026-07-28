@@ -1,6 +1,6 @@
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import type { EquippedWeaponAttacksService } from '../../../sheet/infrastructure/equipped-weapon-attacks.service';
+import type { EquippedWeaponAttacksService } from '../../../combat/infrastructure/equipped-weapon-attacks.service';
 import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
 import {
   rollD20Check,

@@ -1,4 +1,4 @@
-import { CharacterSpellDto } from '../../../dto/character-sheet.dto';
+import type { CharacterSpellDto } from '../../../sheet/dto/character-sheet.dto';
 import { collectFeatGrantedSpellSlugs } from './collect-feat-granted-spells';
 import { collectSpeciesGrantedSpellSlugs } from './collect-species-granted-spells';
 import { collectSubclassGrantedSpellSlugs } from './collect-subclass-granted-spells';

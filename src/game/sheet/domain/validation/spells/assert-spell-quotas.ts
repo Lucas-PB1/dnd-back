@@ -6,7 +6,7 @@ import { CharacterSheetInput } from '../../character-sheet.types';
 import {
   findSpellQuotaViolation,
   spellQuotaViolationMessage,
-} from '../../spellcasting/spell-quota';
+} from '../../../../spellcasting/domain/spell-quota';
 import {
   loadSpellProgressionLimits,
   SubclassSpellcastingInfo,

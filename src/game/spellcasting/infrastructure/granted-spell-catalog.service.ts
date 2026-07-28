@@ -7,7 +7,7 @@ import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclas
 import {
   FeatGrantedSpellRow,
   SpeciesGrantedSpellRow,
-} from '../domain/spellcasting/granted-spells';
+} from '../domain/granted-spells';
 
 @Injectable()
 export class GrantedSpellCatalogService {

@@ -9,8 +9,8 @@ import { CharacterSheetContext, CharacterSheetInput } from '../../character-shee
 import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
-} from '../../spellcasting/granted-spells';
-import { GrantedSpellCatalogService } from '../../../infrastructure/granted-spell-catalog.service';
+} from '../../../../spellcasting/domain/granted-spells';
+import { GrantedSpellCatalogService } from '../../../../spellcasting/infrastructure/granted-spell-catalog.service';
 import { assertSpellQuotas } from './assert-spell-quotas';
 import {
   loadSubclassSpellcasting,

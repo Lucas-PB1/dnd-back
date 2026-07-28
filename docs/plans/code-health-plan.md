@@ -76,8 +76,8 @@ Nenhum — ✅ zero críticos após P5.
 | `application/update-character/apply-background-and-identity-update.ts` | ~75 | Background boosts/tool |
 | `application/update-character/clear-stale-sheet-choices.ts` | ~26 | Clears on class/species change |
 | `infrastructure/character.mapper.ts` | ~158 | Orquestra toDto |
-| `infrastructure/mapping/map-character-combat.ts` | ~94 | CA / ataques / compliance |
-| `infrastructure/mapping/map-character-spellcasting.ts` | ~122 | Magias anotadas + DC |
+| `combat/application/resolve-character-combat-slice.ts` | ~90 | CA / ataques / compliance |
+| `spellcasting/application/resolve-character-spellcasting-slice.ts` | ~122 | Magias anotadas + DC |
 
 **Resultado P4 — weapon-attack + rolls:**
 
@@ -156,6 +156,8 @@ Nenhum — ✅ zero críticos após P5.
 7. ~~**P6** — `granted-spells.ts`: split por origem + remover `mergeCharacterSpellsWithFeatGrants` `@deprecated`.~~ ✅ FEITO
 8. ~~**P7** — Auditoria SQL DRY via `rpg-catalog-model`.~~ ✅ FEITO
 9. ~~**P8 (opcional)** — `character-spells.validator.ts` (234) · DTO response se >250.~~ ✅ FEITO
+
+**Próximo (ownership de módulo, não tamanho de arquivo):** [`sheet-submodules-plan.md`](sheet-submodules-plan.md) — M1 `combat/` · M2 `spellcasting/` · use cases.
 
 Cada PR: um concern, specs verdes, sem rename cosmético.
 

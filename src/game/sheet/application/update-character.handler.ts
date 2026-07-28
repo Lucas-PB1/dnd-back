@@ -9,7 +9,7 @@ import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
-import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
+import { GrantedSpellCatalogService } from '../../spellcasting/infrastructure/granted-spell-catalog.service';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';
 import { clearStaleSheetChoices } from './update-character/clear-stale-sheet-choices';
 import { mergeUpdateCharacterSpells } from './update-character/merge-update-character-spells';

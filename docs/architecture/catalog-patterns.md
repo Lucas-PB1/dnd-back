@@ -10,7 +10,7 @@ Repetir **estrutura** entre domínios é aceitável quando cada tabela tem FK e 
 |--------|----------|
 | Escrita (seeds/migrations) | Tabelas normalizadas por entidade pai |
 | Leitura (API/domain) | Views `v_phb_*` e [`phb-query-views`](../../.cursor/skills/phb-query-views/SKILL.md) |
-| Runtime da ficha | [`GrantedSpellCatalogService`](../../src/game/sheet/infrastructure/granted-spell-catalog.service.ts) + views de magia concedida |
+| Runtime da ficha | [`GrantedSpellCatalogService`](../../src/game/spellcasting/infrastructure/granted-spell-catalog.service.ts) + views de magia concedida |
 
 ---
 

@@ -1,4 +1,4 @@
-import { SpeciesChoiceDto } from '../../../dto/character-sheet.dto';
+import type { SpeciesChoiceDto } from '../../../sheet/dto/character-sheet.dto';
 import { SpeciesGrantedSpellRow } from './types';
 
 function choiceSlugOf(

@@ -8,18 +8,20 @@ import { CharacterDomainService } from '../domain/core/character-domain.service'
 import { computeDerivedStats } from '../domain/stats/character-derived-stats';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
-import { EquippedArmorClassService } from './equipped-armor-class.service';
-import { EquippedWeaponAttacksService } from './equipped-weapon-attacks.service';
-import { EquippedEquipmentComplianceService } from './equipped-equipment-compliance.service';
+import { EquippedArmorClassService } from '../../combat/infrastructure/equipped-armor-class.service';
+import { EquippedWeaponAttacksService } from '../../combat/infrastructure/equipped-weapon-attacks.service';
+import { EquippedEquipmentComplianceService } from '../../combat/infrastructure/equipped-equipment-compliance.service';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { GrantedSpellCatalogService } from './granted-spell-catalog.service';
+import { GrantedSpellCatalogService } from '../../spellcasting/infrastructure/granted-spell-catalog.service';
 import {
   resolveSizeCategory,
   sizeCategoryFromChoices,
-} from '../domain/combat/creature-size';
+} from '../../combat/domain/creature-size';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
-import { mapCharacterCombatSlice } from './mapping/map-character-combat';
-import { mapCharacterSpellcastingSlice } from './mapping/map-character-spellcasting';
+import { resolveCharacterCombatSlice } from '../../combat/application/resolve-character-combat-slice';
+import { resolveCharacterSpellcastingSlice } from '../../spellcasting/application/resolve-character-spellcasting-slice';
+import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/validation/class-options/fighting-style-feat-options';
+import { collectMasteredWeaponSlugs } from '../domain/validation/class-options/class-weapon-mastery-slots';
 
 @Injectable()
 export class CharacterMapper {
@@ -72,22 +74,29 @@ export class CharacterMapper {
       sizeCategoryFromChoices(loaded.speciesChoices),
     );
 
-    const combat = await mapCharacterCombatSlice({
+    const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
+      loaded.subclassOptions,
+    );
+    const combat = await resolveCharacterCombatSlice({
       characterId: row.id,
       abilityScores: row.abilityScores,
       classSlug: row.classSlug,
       subclassSlug: row.subclassSlug,
       proficiencyBonus,
       featSlugs,
+      fightingStyleSlugs,
+      masteredWeaponSlugs: collectMasteredWeaponSlugs({
+        classOptions: loaded.classOptions,
+        featOptions: loaded.featOptions,
+      }),
       sizeCategory,
-      sheet: loaded,
       equippedArmorClass: this.equippedArmorClass,
       equippedWeaponAttacks: this.equippedWeaponAttacks,
       equipmentCompliance: this.equipmentCompliance,
       inventoryItems: this.inventoryItems,
     });
 
-    const spellcasting = await mapCharacterSpellcastingSlice({
+    const spellcasting = await resolveCharacterSpellcastingSlice({
       dataSource: this.dataSource,
       subclassSpellsRepo: this.subclassSpellsRepo,
       grantedSpellCatalog: this.grantedSpellCatalog,

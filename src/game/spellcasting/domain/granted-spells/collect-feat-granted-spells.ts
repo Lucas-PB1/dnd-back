@@ -1,8 +1,8 @@
-import {
+import type {
   CharacterFeatDto,
   FeatOptionDto,
-} from '../../../dto/character-sheet.dto';
-import { ritualSpellSlotIndex } from '../../validation/feats/ritual-caster-feat-options';
+} from '../../../sheet/dto/character-sheet.dto';
+import { ritualSpellSlotIndex } from '../ritual-spell-option-key';
 import { FeatGrantedSpellRow } from './types';
 
 const MAGIC_INITIATE_SPELL_KEYS = new Set([

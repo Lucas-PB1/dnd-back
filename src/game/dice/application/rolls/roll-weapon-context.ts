@@ -4,7 +4,7 @@ import { CharacterDomainService } from '../../../sheet/domain/core/character-dom
 import { collectFightingStyleSlugsFromSubclassOptions } from '../../../sheet/domain/validation/class-options/fighting-style-feat-options';
 import { collectMasteredWeaponSlugs } from '../../../sheet/domain/validation/class-options/class-weapon-mastery-slots';
 import { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import { EquippedWeaponAttacksService } from '../../../sheet/infrastructure/equipped-weapon-attacks.service';
+import { EquippedWeaponAttacksService } from '../../../combat/infrastructure/equipped-weapon-attacks.service';
 import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
 
 export type RollWeaponCharacter = {

@@ -31,11 +31,19 @@ Raiz só com tipos compartilhados. Resto por concern:
 |-------|----------|
 | `character-sheet.types.ts` | Tipos da ficha (raiz) |
 | `core/` | Factory + domain service |
-| `combat/` | CA, ataques, compliance, size |
 | `stats/` | Modificadores, bônus, HP |
-| `spellcasting/` | Granted spells, quotas, max level |
 | `origin/` | Background/species origin + ability boosts |
 | `validation/` | Validators Nest por concern (ver abaixo) |
+
+Read-models de combate e conjuração vivem em `game/combat/` e `game/spellcasting/` (ver [`game-module-structure.md`](game-module-structure.md)).
+
+### `spellcasting/domain/` (módulo Nest próprio)
+
+| Arquivo / pasta | Conteúdo |
+|-----------------|----------|
+| `granted-spells/` | Collectors, merge, annotate |
+| `spellcasting-stats.ts` | CD / ataque mágico |
+| `max-spell-level.ts` / `spell-quota.ts` | Limites de magia |
 
 ### `sheet/domain/validation/`
 

@@ -7,7 +7,7 @@ import type { AbilityScores } from '../../shared/infrastructure/player-character
 import {
   computeArmorClassFromEquipment,
   type EquippedArmorPiece,
-} from '../domain/combat/armor-class';
+} from '../domain/armor-class';
 import { CombatCatalogService } from './combat-catalog.service';
 
 export type ArmorClassResolveInput = {

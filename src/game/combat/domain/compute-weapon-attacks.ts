@@ -1,4 +1,4 @@
-import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
+import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
 import type { SizeCategory } from './creature-size';
 import { analyzeDualWield } from './dual-wield';
 import {

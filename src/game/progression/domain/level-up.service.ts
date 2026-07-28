@@ -9,7 +9,7 @@ import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.en
 import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
-import { maxSpellLevelFromSlots } from '../../sheet/domain/spellcasting/max-spell-level';
+import { maxSpellLevelFromSlots } from '../../spellcasting/domain/max-spell-level';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 import { isAsiOrFeatLevel } from './asi-feat-levels';

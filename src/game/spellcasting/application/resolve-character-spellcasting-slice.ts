@@ -1,16 +1,16 @@
 import { DataSource, Repository } from 'typeorm';
-import type { AbilityKey } from '../../../build/domain/ability-generation';
-import type { AbilityModifiers } from '../../domain/stats/character-derived-stats';
-import type { CharacterSheetData } from '../../domain/character-sheet.types';
-import { spellcastingDerivedStats } from '../../domain/spellcasting/spellcasting-stats';
+import type { AbilityKey } from '../../build/domain/ability-generation';
+import type { AbilityModifiers } from '../../sheet/domain/stats/character-derived-stats';
+import type { CharacterSheetData } from '../../sheet/domain/character-sheet.types';
+import { spellcastingDerivedStats } from '../domain/spellcasting-stats';
 import {
   annotateCharacterSpellSources,
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
-} from '../../domain/spellcasting/granted-spells';
-import { VPhbSubclassPreparedSpell } from '../../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { GrantedSpellCatalogService } from '../granted-spell-catalog.service';
-import type { CharacterSpellDto } from '../../dto/character-sheet.dto';
+} from '../domain/granted-spells';
+import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
+import type { CharacterSpellDto } from '../../sheet/dto/character-sheet.dto';
 
 const ABILITY_SLUGS = new Set<AbilityKey>([
   'forca',
@@ -58,7 +58,7 @@ async function loadSubclassSpellSlugs(
   return new Set(rows.map((row) => row.spellSlug));
 }
 
-export async function mapCharacterSpellcastingSlice(input: {
+export async function resolveCharacterSpellcastingSlice(input: {
   dataSource: DataSource;
   subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>;
   grantedSpellCatalog: GrantedSpellCatalogService;

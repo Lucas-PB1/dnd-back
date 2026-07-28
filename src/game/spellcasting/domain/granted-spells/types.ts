@@ -1,8 +1,8 @@
-import {
+import type {
   CharacterFeatDto,
   FeatOptionDto,
   SpeciesChoiceDto,
-} from '../../../dto/character-sheet.dto';
+} from '../../../sheet/dto/character-sheet.dto';
 
 export type CharacterSpellSource = 'class' | 'subclass' | 'feat' | 'species';
 

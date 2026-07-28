@@ -1,4 +1,4 @@
-import { CharacterSpellDto } from '../../../dto/character-sheet.dto';
+import type { CharacterSpellDto } from '../../../sheet/dto/character-sheet.dto';
 import { CharacterSpellSource } from './types';
 
 export function annotateCharacterSpellSources(

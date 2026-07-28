@@ -1,12 +1,9 @@
-import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
-import type { CharacterSheetData } from '../../domain/character-sheet.types';
-import type { SizeCategory } from '../../domain/combat/creature-size';
-import { collectFightingStyleSlugsFromSubclassOptions } from '../../domain/validation/class-options/fighting-style-feat-options';
-import { collectMasteredWeaponSlugs } from '../../domain/validation/class-options/class-weapon-mastery-slots';
-import { EquippedArmorClassService } from '../equipped-armor-class.service';
-import { EquippedWeaponAttacksService } from '../equipped-weapon-attacks.service';
-import { EquippedEquipmentComplianceService } from '../equipped-equipment-compliance.service';
-import { PlayerCharacterItem } from '../../../inventory/infrastructure/player-character-item.entity';
+import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+import type { SizeCategory } from '../domain/creature-size';
+import { EquippedArmorClassService } from '../infrastructure/equipped-armor-class.service';
+import { EquippedWeaponAttacksService } from '../infrastructure/equipped-weapon-attacks.service';
+import { EquippedEquipmentComplianceService } from '../infrastructure/equipped-equipment-compliance.service';
+import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
 import { Repository } from 'typeorm';
 
 export type MappedCombatSlice = {
@@ -22,15 +19,16 @@ export type MappedCombatSlice = {
   >['speedPenaltyMeters'];
 };
 
-export async function mapCharacterCombatSlice(input: {
+export async function resolveCharacterCombatSlice(input: {
   characterId: string;
   abilityScores: AbilityScores;
   classSlug: string;
   subclassSlug: string | null;
   proficiencyBonus: number;
   featSlugs: string[];
+  fightingStyleSlugs: string[];
+  masteredWeaponSlugs: string[];
   sizeCategory: SizeCategory;
-  sheet: CharacterSheetData;
   equippedArmorClass: EquippedArmorClassService;
   equippedWeaponAttacks: EquippedWeaponAttacksService;
   equipmentCompliance: EquippedEquipmentComplianceService;
@@ -43,17 +41,14 @@ export async function mapCharacterCombatSlice(input: {
     subclassSlug,
     proficiencyBonus,
     featSlugs,
+    fightingStyleSlugs,
+    masteredWeaponSlugs,
     sizeCategory,
-    sheet,
     equippedArmorClass,
     equippedWeaponAttacks,
     equipmentCompliance,
     inventoryItems,
   } = input;
-
-  const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
-    sheet.subclassOptions,
-  );
 
   const hasShield = await inventoryItems.exist({
     where: {
@@ -79,10 +74,7 @@ export async function mapCharacterCombatSlice(input: {
       fightingStyleSlugs,
       sizeCategory,
       hasShield,
-      masteredWeaponSlugs: collectMasteredWeaponSlugs({
-        classOptions: sheet.classOptions,
-        featOptions: sheet.featOptions,
-      }),
+      masteredWeaponSlugs,
     },
   );
 

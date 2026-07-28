@@ -15,8 +15,8 @@ import {
   resolveBackgroundToolItemSlug,
 } from '../domain/origin/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../domain/origin/species-origin';
-import { mergeCharacterSpellsWithGrantedSources } from '../domain/spellcasting/granted-spells';
-import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
+import { mergeCharacterSpellsWithGrantedSources } from '../../spellcasting/domain/granted-spells';
+import { GrantedSpellCatalogService } from '../../spellcasting/infrastructure/granted-spell-catalog.service';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 
 @Injectable()

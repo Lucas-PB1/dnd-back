@@ -15,9 +15,10 @@ import {
   PhbFeatOptionValue,
   PhbFeatRef,
 } from '../../entities/phb-feat-option.entity';
-import { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
+import { CombatModule } from '../combat/combat.module';
+import { SpellcastingModule } from '../spellcasting/spellcasting.module';
 import { PlayerCharacterSkill } from './infrastructure/player-character-skill.entity';
 import {
   PlayerCharacterEquipment,
@@ -32,8 +33,6 @@ import {
 import { CharactersController } from './characters.controller';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
-import { EquippedArmorClassService } from './infrastructure/equipped-armor-class.service';
-import { EquippedWeaponAttacksService } from './infrastructure/equipped-weapon-attacks.service';
 import { CharacterDomainService } from './domain/core/character-domain.service';
 import { CharacterSheetValidator } from './domain/validation/character-sheet.validator';
 import { CharacterBackgroundValidator } from './domain/validation/background/character-background.validator';
@@ -54,17 +53,8 @@ import { CreateCharacterHandler } from './application/create-character.handler';
 import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
-import { PhbWeapon } from '../../entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '../../entities/phb-weapon-mastery.entity';
 import { PhbSpecies } from '../../entities/phb-species.entity';
-import { VPhbSpeciesGrantedSpell } from '../../entities/views/v-phb-species-granted-spell.entity';
-import { VPhbFeatGrantedSpell } from '../../entities/views/v-phb-feat-granted-spell.entity';
-import { VPhbHpBonusSource } from '../../entities/views/v-phb-hp-bonus-source.entity';
-import { VPhbUnarmoredDefense } from '../../entities/views/v-phb-unarmored-defense.entity';
-import { GrantedSpellCatalogService } from './infrastructure/granted-spell-catalog.service';
-import { CombatCatalogService } from './infrastructure/combat-catalog.service';
 import { CampaignModule } from '../campaign/campaign.module';
-import { EquippedEquipmentComplianceService } from './infrastructure/equipped-equipment-compliance.service';
 
 @Module({
   imports: [
@@ -90,20 +80,15 @@ import { EquippedEquipmentComplianceService } from './infrastructure/equipped-eq
       PhbFeatRef,
       PhbFeatOptionDef,
       PhbFeatOptionValue,
-      VPhbArmor,
       PlayerCharacterItem,
-      PhbWeapon,
-      PhbWeaponMastery,
       PhbSpecies,
-      VPhbSpeciesGrantedSpell,
-      VPhbFeatGrantedSpell,
-      VPhbHpBonusSource,
-      VPhbUnarmoredDefense,
     ]),
     GameSharedModule,
     CatalogModule,
     CharacterInventoryModule,
     CampaignModule,
+    CombatModule,
+    SpellcastingModule,
   ],
   controllers: [CharactersController],
   providers: [
@@ -123,11 +108,6 @@ import { EquippedEquipmentComplianceService } from './infrastructure/equipped-eq
     CharacterSheetValidator,
     CharacterSheetRepository,
     CharacterMapper,
-    EquippedArmorClassService,
-    EquippedWeaponAttacksService,
-    EquippedEquipmentComplianceService,
-    GrantedSpellCatalogService,
-    CombatCatalogService,
     ListCharactersQuery,
     GetCharacterQuery,
     CreateCharacterHandler,
@@ -140,7 +120,6 @@ import { EquippedEquipmentComplianceService } from './infrastructure/equipped-eq
     UpdateCharacterHandler,
     CharacterSpellLookup,
     CharacterSheetRepository,
-    EquippedWeaponAttacksService,
   ],
 })
 export class CharacterSheetModule {}

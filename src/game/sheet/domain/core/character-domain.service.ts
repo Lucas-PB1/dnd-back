@@ -5,7 +5,7 @@ import { VPhbClass } from '../../../../entities/views/v-phb-class.entity';
 import { PhbCharacterLevel } from '../../../../entities/phb-character-level.entity';
 import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
 import { AbilityScores, PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
-import { CombatCatalogService } from '../../infrastructure/combat-catalog.service';
+import { CombatCatalogService } from '../../../combat/infrastructure/combat-catalog.service';
 import {
   calculateHitPointsMax,
   ClassHpProfile,

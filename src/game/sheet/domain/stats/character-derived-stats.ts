@@ -1,5 +1,5 @@
 import { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
-import { computeUnarmoredArmorClass } from '../combat/armor-class';
+import { computeUnarmoredArmorClass } from '../../../combat/domain/armor-class';
 import {
   skillCheckBonus,
   skillProficiencyRank,

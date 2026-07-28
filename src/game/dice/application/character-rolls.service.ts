@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
 import { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
-import { EquippedWeaponAttacksService } from '../../sheet/infrastructure/equipped-weapon-attacks.service';
+import { EquippedWeaponAttacksService } from '../../combat/infrastructure/equipped-weapon-attacks.service';
 import {
   CharacterRollResponseDto,
   RollAttackDto,

@@ -30,6 +30,7 @@
 | [`plans/product-roadmap.md`](plans/product-roadmap.md) | Roadmap vivo |
 | [`plans/api-plan.md`](plans/api-plan.md) | Contrato REST / Swagger / testes |
 | [`plans/code-health-plan.md`](plans/code-health-plan.md) | Enxugar arquivos gordos e legado |
+| [`plans/sheet-submodules-plan.md`](plans/sheet-submodules-plan.md) | Extrair `combat` + `spellcasting` de `sheet` (use cases) |
 | [`plans/sheet-readiness-plan.md`](plans/sheet-readiness-plan.md) | Prontidão da ficha |
 | [`plans/equipment-catalog-plan.md`](plans/equipment-catalog-plan.md) | Gear / truncados |
 | [`plans/game-advanced-plan.md`](plans/game-advanced-plan.md) | Mesa / sessão avançada |

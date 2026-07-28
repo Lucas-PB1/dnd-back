@@ -4,8 +4,8 @@ import {
 } from '../../domain/character-sheet.types';
 import { CharacterFeatDto, FeatOptionDto, SpeciesChoiceDto } from '../../dto/character-sheet.dto';
 import { UpdateCharacterDto } from '../../dto/update-character.dto';
-import { mergeCharacterSpellsWithGrantedSources } from '../../domain/spellcasting/granted-spells';
-import { GrantedSpellCatalogService } from '../../infrastructure/granted-spell-catalog.service';
+import { mergeCharacterSpellsWithGrantedSources } from '../../../spellcasting/domain/granted-spells';
+import { GrantedSpellCatalogService } from '../../../spellcasting/infrastructure/granted-spell-catalog.service';
 
 export async function mergeUpdateCharacterSpells(input: {
   dto: UpdateCharacterDto;

@@ -75,7 +75,7 @@ Prioridade na marcação: `feat` > `species` > `subclass` > `class`.
 
 ```powershell
 cd dnd-api
-npx jest src/game/sheet/domain/granted-spells.spec.ts --no-coverage
+npx jest src/game/spellcasting/domain/granted-spells.spec.ts --no-coverage
 npx tsc -p tsconfig.json
 node scripts/smoke-granted-spells.mjs
 ```

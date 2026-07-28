@@ -4,8 +4,15 @@ import { Repository } from 'typeorm';
 import { VPhbHpBonusSource } from '../../../entities/views/v-phb-hp-bonus-source.entity';
 import { VPhbUnarmoredDefense } from '../../../entities/views/v-phb-unarmored-defense.entity';
 import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
-import type { HitPointsBonusRow } from '../domain/stats/hit-points.calc';
-import type { UnarmoredDefenseRow } from '../domain/combat/armor-class';
+import type { UnarmoredDefenseRow } from '../domain/armor-class';
+
+/** Shape aligned with sheet `HitPointsBonusRow` (structural; avoids combat→sheet). */
+type HitPointsBonusRow = {
+  label: string;
+  flat?: number;
+  perLevel?: number;
+  fromLevel?: number;
+};
 
 type HitPointsSourceInput = {
   speciesSlug?: string | null;
