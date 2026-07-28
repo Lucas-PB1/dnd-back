@@ -13,7 +13,7 @@ Meta: arquivos focados; **200 linhas** é o teto prático (exceto exceções).
 | ≤ 150 | OK |
 | 151–200 | Soft — extrair ao tocar no arquivo |
 | > 200 | Hard — **não** acrescentar responsabilidade; split antes |
-| ≥ 400 | Dívida — plano em `docs/plans/code-health-plan.md` |
+| ≥ 400 | Dívida — extrair com `split-large-module`; se persistir, criar/atualizar plano em `docs/plans/` |
 
 ## Exceções (não contam como “feature nova”)
 

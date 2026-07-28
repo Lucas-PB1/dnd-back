@@ -5,8 +5,8 @@ Documento de planejamento para **expor e usar na ficha/mesa** dados PHB 2024 que
 | | |
 |--|--|
 | **Repos** | dnd-api (views, DTOs, endpoints) + dnd-front (ficha, mesa, wizard) |
-| **Última revisão** | 2026-07-19 |
-| **Status** | Planejado — nenhuma fase implementada neste documento |
+| **Última revisão** | 2026-07-27 |
+| **Status** | Em andamento — Fases 0–5 **API** feitas; front (wizard cotas + ASI UI) e Fase 6 pendentes |
 | **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`game-advanced-plan.md`](game-advanced-plan.md) · [`data-model.md`](../architecture/data-model.md) · front [`CHARACTER-SHEET-PLAN.md`](../../../dnd-front/docs/CHARACTER-SHEET-PLAN.md) |
 
 **Princípio:** o front **coleta escolhas** e **exibe**; a API **valida e computa**. Zero regras PHB hardcoded no front.
@@ -17,8 +17,8 @@ Documento de planejamento para **expor e usar na ficha/mesa** dados PHB 2024 que
 - [x] Fase 1 — API: salvaguardas + proficiências de classe (`ClassProficienciesQuery` + detalhe)
 - [x] Fase 2 — Ficha: ST + traços de espécie
 - [x] Fase 3 — Mesa: picker de condições (`GET /conditions`)
-- [ ] Fase 4 — Progressão / cotas de magia
-- [ ] Fase 5 — Level-up ASI guiado (+2 / +1)
+- [x] Fase 4 — Progressão / cotas de magia (**API**); front wizard ainda pendente em dnd-front
+- [x] Fase 5 — Level-up ASI guiado (**API**); UI no front pendente
 - [ ] Fase 6 — Backlog (idiomas concedidos, feat options, inventário, mesa avançada)
 
 ---
@@ -208,6 +208,11 @@ weaponProficiencyNames: string[];
 | API validator | Soft (aviso) → hard (400) quando maduro; **não** nesta fase: regras full known vs prepared por arquétipo |
 | Ficha | Exibir cotas no bloco de magias (opcional na mesma fase) |
 
+**Entregue (API):**
+- [x] `GET /classes/:slug/progression` (`FindClassProgressionQuery` + view `v_phb_class_progression`)
+- [x] Cotas hard (400) em `CharacterSpellsValidator` / `assert-spell-quotas` (cantrips / prepared / known conforme progressão)
+- [ ] Front wizard: cotas visíveis + bloqueio/aviso (dnd-front)
+
 **Done when:** mago nível 1 vê limite de cantrips/prepared; API devolve progressão 1–20.
 
 **Fora desta fase:** validação completa de lista prepared vs known por classe/subclasse.
@@ -222,7 +227,15 @@ weaponProficiencyNames: string[];
 |--------|----------|
 | Front | Em [`level-up-section.tsx`](../../dnd-front/src/features/character-sheet/ui/level-up-section.tsx): selects +2 e +1 (atributos distintos) **ou** talento (já existente) |
 | API | Aceitar boosts no payload de `POST .../level-up`; validar no serviço de progression |
-| Regras | Mesmo espírito do boost de antecedente: dois atributos diferentes; não stackar +2 no mesmo |
+| Regras | Mesmo espírito do boost de antecedente / feat ASI: +2 **ou** +1/+1 em atributos distintos; cap 20 |
+
+**Entregue (API):**
+- [x] Campos opcionais em `LevelUpDto`: `asiDistributionMode` (`plus2` \| `plus1plus1`), `asiPrimaryAbilitySlug`, `asiSecondaryAbilitySlug`
+- [x] Domínio `applyLevelUpAsiBoost` / `resolveLevelUpAsiFromDto` (`level-up-asi.ts`); cap `STANDARD_ABILITY_SCORE_CAP` (20)
+- [x] `LevelUpHandler` aplica ASI no patch de `abilityScores` quando os campos estão presentes
+- [x] Se ASI fields presentes e `nextLevel` **não** é `isAsiOrFeatLevel`, retorna 400
+- [x] **Não** força ASI em níveis ASI (backward compatible: omitir campos = comportamento anterior; talento via `characterFeats` / `featOptions` continua ok)
+- [ ] Front: UI de selects +2 / +1 no fluxo de level-up
 
 **Done when:** level-up em nível de ASI aplica +2/+1 numa request; opção talento continua funcionando.
 

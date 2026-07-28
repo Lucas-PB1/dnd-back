@@ -9,6 +9,7 @@ import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entit
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-choice.entity';
 import { VPhbClassFeature } from '../../entities/views/v-phb-class-feature.entity';
+import { VPhbClassProgression } from '../../entities/views/v-phb-class-progression.entity';
 import { CatalogLookupService } from '../catalog-lookup.service';
 import { ClassesMapper } from './classes.mapper';
 import { FindClassesQuery } from './queries/find-classes.query';
@@ -19,6 +20,7 @@ import { FindClassSpellSlotsQuery } from './queries/find-class-spell-slots.query
 import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { FindClassFeaturesQuery } from './queries/find-class-features.query';
+import { FindClassProgressionQuery } from './queries/find-class-progression.query';
 import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
 
 describe('Classes queries', () => {
@@ -30,6 +32,7 @@ describe('Classes queries', () => {
   let findClassEquipment: FindClassEquipmentQuery;
   let findClassSkills: FindClassSkillsQuery;
   let findClassFeatures: FindClassFeaturesQuery;
+  let findClassProgression: FindClassProgressionQuery;
   let classesRepo: jest.Mocked<
     Pick<Repository<VPhbClass>, 'find' | 'findOne' | 'createQueryBuilder'>
   >;
@@ -39,6 +42,7 @@ describe('Classes queries', () => {
   let equipmentRepo: jest.Mocked<Pick<Repository<VPhbClassEquipment>, 'find'>>;
   let skillsRepo: jest.Mocked<Pick<Repository<VPhbClassSkillChoice>, 'find'>>;
   let featuresRepo: jest.Mocked<Pick<Repository<VPhbClassFeature>, 'find'>>;
+  let progressionRepo: jest.Mocked<Pick<Repository<VPhbClassProgression>, 'find'>>;
   let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findClassOrFail'>>;
 
   const sample: VPhbClass = {
@@ -116,6 +120,16 @@ describe('Classes queries', () => {
     featureDescription: 'Você aprendeu a conjurar magias.',
   };
 
+  const sampleProgression: VPhbClassProgression = {
+    classSlug: 'wizard',
+    level: 1,
+    proficiencyBonus: 2,
+    cantrips: 3,
+    preparedSpells: 4,
+    channelDivinity: null,
+    weaponMastery: null,
+  };
+
   beforeEach(async () => {
     const qb = {
       orderBy: jest.fn().mockReturnThis(),
@@ -137,6 +151,7 @@ describe('Classes queries', () => {
     equipmentRepo = { find: jest.fn() };
     skillsRepo = { find: jest.fn() };
     featuresRepo = { find: jest.fn() };
+    progressionRepo = { find: jest.fn() };
     catalogLookup = {
       findClassOrFail: jest.fn(async (slug) => {
         if (slug === 'invalid') throw new NotFoundException();
@@ -166,6 +181,7 @@ describe('Classes queries', () => {
         FindClassEquipmentQuery,
         FindClassSkillsQuery,
         FindClassFeaturesQuery,
+        FindClassProgressionQuery,
         { provide: ClassProficienciesQuery, useValue: proficiencies },
         { provide: getRepositoryToken(VPhbClass), useValue: classesRepo },
         { provide: getRepositoryToken(VPhbSubclass), useValue: subclassesRepo },
@@ -174,6 +190,10 @@ describe('Classes queries', () => {
         { provide: getRepositoryToken(VPhbClassEquipment), useValue: equipmentRepo },
         { provide: getRepositoryToken(VPhbClassSkillChoice), useValue: skillsRepo },
         { provide: getRepositoryToken(VPhbClassFeature), useValue: featuresRepo },
+        {
+          provide: getRepositoryToken(VPhbClassProgression),
+          useValue: progressionRepo,
+        },
         { provide: CatalogLookupService, useValue: catalogLookup },
       ],
     }).compile();
@@ -186,6 +206,7 @@ describe('Classes queries', () => {
     findClassEquipment = module.get(FindClassEquipmentQuery);
     findClassSkills = module.get(FindClassSkillsQuery);
     findClassFeatures = module.get(FindClassFeaturesQuery);
+    findClassProgression = module.get(FindClassProgressionQuery);
   });
 
   it('findAll returns paginated data', async () => {
@@ -279,5 +300,23 @@ describe('Classes queries', () => {
   it('findFeaturesByClassSlug throws when empty', async () => {
     featuresRepo.find.mockResolvedValue([]);
     await expect(findClassFeatures.execute('bard')).rejects.toThrow(NotFoundException);
+  });
+
+  it('findProgressionByClassSlug returns progression rows', async () => {
+    progressionRepo.find.mockResolvedValue([sampleProgression]);
+    const result = await findClassProgression.execute('wizard');
+    expect(result.data[0]).toMatchObject({
+      level: 1,
+      cantrips: 3,
+      preparedSpells: 4,
+      proficiencyBonus: 2,
+    });
+  });
+
+  it('findProgressionByClassSlug throws when empty', async () => {
+    progressionRepo.find.mockResolvedValue([]);
+    await expect(findClassProgression.execute('wizard')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 });

@@ -19,8 +19,8 @@ Pedido de auditoria, “arquivos grandes”, “domínio gordo”, “DRY no ban
    - soft 151–200 · hard >200 · crítico ≥400
 3. Por arquivo hard/crítico: 1 frase da responsabilidade + split sugerido.
 4. Grep sinais de legado: `legacy`, `deprecated`, `TODO.*remov`, reexports mortos.
-5. SQL: clusters repetidos em `database/` (mesmas colunas/FKs em 3+ tabelas sem view) — anotar em `rpg-catalog-model`.
-6. Atualizar ou criar seção em [`docs/plans/code-health-plan.md`](../../../docs/plans/code-health-plan.md).
+5. SQL: clusters repetidos em `database/` (mesmas colunas/FKs em 3+ tabelas sem view) — anotar em `rpg-catalog-model` / [`catalog-patterns.md`](../../../docs/architecture/catalog-patterns.md).
+6. Se houver dívida ≥400 ou vários hard: criar ou atualizar um plano curto em [`docs/plans/`](../../../docs/plans/) (ou anexar ao roadmap). Caso contrário, basta o relatório abaixo + splits com `split-large-module`.
 
 ## Output (obrigatório)
 
@@ -52,4 +52,4 @@ Pedido de auditoria, “arquivos grandes”, “domínio gordo”, “DRY no ban
 
 - [file-size](../../rules/file-size.mdc) · [refactor-triggers](../../rules/refactor-triggers.mdc)
 - [code-standards.md](../../../docs/architecture/code-standards.md)
-- [code-health-plan.md](../../../docs/plans/code-health-plan.md)
+- [catalog-patterns.md](../../../docs/architecture/catalog-patterns.md)

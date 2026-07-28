@@ -6,7 +6,7 @@ Documento de planejamento para completar **dados mecânicos** e a experiência d
 |--|--|
 | **Repos** | dnd-api (seeds, views, DTOs) + dnd-front (UI do compêndio) |
 | **Última revisão** | 2026-07-19 |
-| **Status** | Fases 0–5 entregues; weapon DTO = `range` + `propertyDetails` + `mastery` (sem jsonb bruto na response) |
+| **Status** | Em andamento — Fases 0–5 feitas; **Fase 6** QA + apply Supabase/prod pendente |
 | **Relacionados** | [`product-roadmap.md`](product-roadmap.md) · [`data-model.md`](../architecture/data-model.md) · front [`UX-UI-PLAN.md`](../../../dnd-front/docs/UX-UI-PLAN.md) |
 
 ### Progresso desta entrega

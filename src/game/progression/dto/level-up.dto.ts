@@ -1,6 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsOptional, ValidateNested } from 'class-validator';
+import { IsIn, IsOptional, IsString } from 'class-validator';
 import { CharacterSheetInputDto } from '../../sheet/dto/character-sheet.dto';
 
 /** Escolhas opcionais ao subir de nível (mesmos campos parciais da ficha). */
@@ -8,6 +7,31 @@ export class LevelUpDto extends CharacterSheetInputDto {
   @ApiPropertyOptional({ example: 'champion' })
   @IsOptional()
   subclassSlug?: string;
+
+  @ApiPropertyOptional({
+    enum: ['plus2', 'plus1plus1'],
+    description:
+      'ASI no level-up: +2 em um atributo ou +1 em dois distintos. Só válido em níveis ASI/talento.',
+  })
+  @IsOptional()
+  @IsIn(['plus2', 'plus1plus1'])
+  asiDistributionMode?: 'plus2' | 'plus1plus1';
+
+  @ApiPropertyOptional({
+    example: 'forca',
+    description: 'Atributo principal do ASI (+2 ou primeiro +1)',
+  })
+  @IsOptional()
+  @IsString()
+  asiPrimaryAbilitySlug?: string;
+
+  @ApiPropertyOptional({
+    example: 'destreza',
+    description: 'Segundo atributo (+1); obrigatório quando asiDistributionMode = plus1plus1',
+  })
+  @IsOptional()
+  @IsString()
+  asiSecondaryAbilitySlug?: string;
 }
 
 export class LevelUpSpellOptionDto {

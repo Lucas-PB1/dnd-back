@@ -1,6 +1,6 @@
 # Plano — Game avançado (ficha viva + mesa)
 
-> **Status API 7A–7C:** concluído. **Front:** consumido em `character-sheet` (mesa, inventário, level-up). Roadmap: [`product-roadmap.md`](product-roadmap.md).
+> **Status API 7A–7C:** concluído. **7D:** campanha MVP parcial; combate/iniciativa pendente. **Front:** mesa/inventário/level-up. Roadmap: [`product-roadmap.md`](product-roadmap.md).
 
 Complementa [`product-roadmap.md`](product-roadmap.md) (Fases 1–4 concluídas).
 
@@ -21,7 +21,7 @@ Complementa [`product-roadmap.md`](product-roadmap.md) (Fases 1–4 concluídas)
 | Slots de magia (gastos / short rest) | **7C** | ✅ | ✅ |
 | Concentração + condições | **7C** | ✅ | ✅ (condições: texto livre) |
 | Conjurar / efeitos ativos | **7C** | ✅ (cast básico) | ✅ |
-| Campanha / combate / iniciativa | **7D** | pendente | pendente |
+| Campanha / combate / iniciativa | **7D** | parcial (campanha MVP) | pendente |
 
 ---
 
@@ -101,16 +101,17 @@ Catálogo: condições em `rpg.phb_condition` (seed na migration).
 
 ---
 
-## Fase 7D — Campanha (futuro)
+## Fase 7D — Campanha / combate (pendente)
 
-- Mesas, iniciativa, combate — repo separado ou BC `campaign/`.
+- [~] MVP campanha (`src/game/campaign/`: membros dm/player/assistant, vínculo N:N) — parcial
+- [ ] Combate / iniciativa / mesa de encontro — futuro
 
 ---
 
 ## Ordem de execução
 
 ```
-7A (agora) → 7B inventário → 7C mesa → front rpg-web em paralelo após 7A
+7A → 7B inventário → 7C mesa → 7D campanha/combate
 ```
 
-**Última revisão:** 2026-07-04
+**Última revisão:** 2026-07-27

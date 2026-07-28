@@ -9,7 +9,7 @@ Complementa [`architecture.md`](architecture.md) e as rules `.cursor/rules/file-
 | OK | ≤ 150 | Seguir |
 | Soft | 151–200 | Extrair ao editar |
 | Hard | > 200 | Split antes de crescer |
-| Crítico | ≥ 400 | Entrada obrigatória no [code-health-plan](../plans/code-health-plan.md) |
+| Crítico | ≥ 400 | Dívida — extrair com `split-large-module` / registrar em plano ativo se persistir |
 
 Exceções: specs densas, seeds/migrations SQL. DTOs Swagger: preferir split > 250.
 
@@ -77,7 +77,7 @@ Catalog permanece **thin**: Query + view + mapper.
 ## Legado
 
 - Não expandir caminhos marcados `legacy` / mortos.
-- Remover em PR dedicado ou listar no code-health-plan.
+- Remover em PR dedicado ou listar no roadmap / plano ativo relevante.
 - Reexports “compat” só com data de remoção no plano.
 
 ## Skills

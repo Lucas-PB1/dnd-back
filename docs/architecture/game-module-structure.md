@@ -23,7 +23,7 @@ BC Game (modular monolith)
 └── dice/             # motor de dados + rolls da ficha (ataque, dano, perícia, ST, iniciativa)
 ```
 
-Ownership M1+M2+M3 feitos: [`sheet-submodules-plan.md`](../plans/sheet-submodules-plan.md).
+Ownership combat/spellcasting: módulos Nest `combat/` e `spellcasting/` (use cases em `application/`).
 
 Cada submódulo:
 

@@ -9,6 +9,11 @@ import { LevelUpDto } from '../dto/level-up.dto';
 import { CharacterResponseDto } from '../../sheet/dto/character-response.dto';
 import { UpdateCharacterDto } from '../../sheet/dto/update-character.dto';
 import { DataSource } from 'typeorm';
+import { isAsiOrFeatLevel } from '../domain/asi-feat-levels';
+import {
+  applyLevelUpAsiBoost,
+  resolveLevelUpAsiFromDto,
+} from '../domain/level-up-asi';
 
 @Injectable()
 export class LevelUpHandler {
@@ -86,6 +91,13 @@ export class LevelUpHandler {
       classOptions = merged;
     }
 
+    const asiInput = resolveLevelUpAsiFromDto(dto);
+    if (asiInput && !isAsiOrFeatLevel(character.classSlug, nextLevel)) {
+      throw new BadRequestException(
+        `Level ${nextLevel} is not an ASI/feat level for class '${character.classSlug}'`,
+      );
+    }
+
     const patch: UpdateCharacterDto = {
       level: nextLevel,
       subclassSlug: dto.subclassSlug,
@@ -100,6 +112,9 @@ export class LevelUpHandler {
       languageSlugs: dto.languageSlugs,
       abilityGenerationMethodSlug: dto.abilityGenerationMethodSlug,
     };
+    if (asiInput) {
+      patch.abilityScores = applyLevelUpAsiBoost(character.abilityScores, asiInput);
+    }
 
     const updated = await this.updateCharacter.execute(userId, characterId, patch);
     await this.characterState.syncHitDiceOnLevelChange(
