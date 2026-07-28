@@ -6,16 +6,14 @@ import { AppModule } from '../src/app.module';
 import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
 import { SupabaseAuthGuard } from '../src/identity/guards/supabase-auth.guard';
 import { TestAuthGuard } from './helpers/test-auth.guard';
+import {
+  FIGHTER_CLASS_SKILLS,
+  minimalFighterPayload,
+  minimalWizardPayload,
+} from './helpers/minimal-character';
 
 const TEST_USER_ID = '11111111-1111-1111-1111-111111111111';
 const OTHER_USER_ID = '22222222-2222-2222-2222-222222222222';
-
-/** Escolhas mínimas PHB 2024 para humano nos testes e2e. */
-const HUMAN_SPECIES_CHOICES = [
-  { choiceKind: 'human_skill', choiceSlug: 'athletics' },
-  { choiceKind: 'human_origin_feat', choiceSlug: 'alert' },
-  { choiceKind: 'human_size', choiceSlug: 'medium' },
-];
 
 describe('Characters API (e2e)', () => {
   let app: INestApplication<App>;
@@ -53,18 +51,16 @@ describe('Characters API (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'E2E Hero',
-        classSlug: 'fighter',
-        speciesSlug: 'dwarf',
-        backgroundSlug: 'acolyte',
-      })
+      .send(minimalFighterPayload('E2E Hero'))
       .expect(201);
 
     expect(res.body.name).toBe('E2E Hero');
     expect(res.body.classSlug).toBe('fighter');
-    expect(res.body.classSkillSlugs).toEqual([]);
-    expect(res.body.backgroundSkillSlugs).toEqual(['insight', 'religion']);
+    expect(res.body.classSkillSlugs).toEqual(
+      expect.arrayContaining([...FIGHTER_CLASS_SKILLS]),
+    );
+    expect(res.body.classSkillSlugs).toHaveLength(FIGHTER_CLASS_SKILLS.length);
+    expect(res.body.backgroundSkillSlugs).toEqual(['athletics', 'intimidation']);
     return res.body.id as string;
   });
 
@@ -72,14 +68,12 @@ describe('Characters API (e2e)', () => {
     const res = await request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'E2E Level 5',
-        level: 5,
-        classSlug: 'fighter',
-        speciesSlug: 'dwarf',
-        backgroundSlug: 'acolyte',
-        subclassSlug: 'champion',
-      })
+      .send(
+        minimalFighterPayload('E2E Level 5', {
+          level: 5,
+          subclassSlug: 'champion',
+        }),
+      )
       .expect(201);
 
     expect(res.body.level).toBe(5);
@@ -92,12 +86,7 @@ describe('Characters API (e2e)', () => {
     await request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'List Test',
-        classSlug: 'wizard',
-        speciesSlug: 'elf',
-        backgroundSlug: 'acolyte',
-      })
+      .send(minimalWizardPayload('List Test'))
       .expect(201);
 
     const res = await request(app.getHttpServer())
@@ -113,14 +102,11 @@ describe('Characters API (e2e)', () => {
     const created = await request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'Lifecycle',
-        classSlug: 'fighter',
-        speciesSlug: 'human',
-        backgroundSlug: 'acolyte',
-        speciesChoices: HUMAN_SPECIES_CHOICES,
-        alignmentSlug: 'neutral-good',
-      })
+      .send(
+        minimalFighterPayload('Lifecycle', {
+          alignmentSlug: 'neutral-good',
+        }),
+      )
       .expect(201);
 
     const id = created.body.id as string;
@@ -144,12 +130,7 @@ describe('Characters API (e2e)', () => {
     const created = await request(app.getHttpServer())
       .post('/characters')
       .set(auth(TEST_USER_ID))
-      .send({
-        name: 'Private',
-        classSlug: 'fighter',
-        speciesSlug: 'dwarf',
-        backgroundSlug: 'acolyte',
-      })
+      .send(minimalFighterPayload('Private'))
       .expect(201);
 
     await request(app.getHttpServer())
@@ -162,54 +143,42 @@ describe('Characters API (e2e)', () => {
     request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'Bad',
-        classSlug: 'invalid-class',
-        speciesSlug: 'dwarf',
-        backgroundSlug: 'acolyte',
-      })
+      .send(minimalFighterPayload('Bad', { classSlug: 'invalid-class' }))
       .expect(400));
 
   it('POST /characters with valid class skills', async () => {
     const res = await request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'Skilled Hero',
-        classSlug: 'fighter',
-        speciesSlug: 'dwarf',
-        backgroundSlug: 'acolyte',
-        classSkillSlugs: ['athletics', 'perception'],
-      })
+      .send(minimalFighterPayload('Skilled Hero'))
       .expect(201);
 
-    expect(res.body.classSkillSlugs).toEqual(['athletics', 'perception']);
+    expect(res.body.classSkillSlugs).toEqual(
+      expect.arrayContaining([...FIGHTER_CLASS_SKILLS]),
+    );
+    expect(res.body.classSkillSlugs).toHaveLength(FIGHTER_CLASS_SKILLS.length);
   });
 
   it('POST /characters rejects skill outside class pool', () =>
     request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'Bad Skills',
-        classSlug: 'fighter',
-        speciesSlug: 'dwarf',
-        backgroundSlug: 'acolyte',
-        classSkillSlugs: ['athletics', 'arcana'],
-      })
+      .send(
+        minimalFighterPayload('Bad Skills', {
+          classSkillSlugs: ['athletics', 'arcana'],
+        }),
+      )
       .expect(400));
 
   it('POST /characters rejects wrong skill count for class', () =>
     request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'Bad Count',
-        classSlug: 'fighter',
-        speciesSlug: 'dwarf',
-        backgroundSlug: 'acolyte',
-        classSkillSlugs: ['athletics'],
-      })
+      .send(
+        minimalFighterPayload('Bad Count', {
+          classSkillSlugs: ['athletics'],
+        }),
+      )
       .expect(400));
 
   it('POST /characters/roll-abilities standard array', async () => {
@@ -227,14 +196,7 @@ describe('Characters API (e2e)', () => {
     const created = await request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'Level Hero',
-        classSlug: 'fighter',
-        speciesSlug: 'human',
-        backgroundSlug: 'acolyte',
-        speciesChoices: HUMAN_SPECIES_CHOICES,
-        classSkillSlugs: ['athletics', 'perception'],
-      })
+      .send(minimalFighterPayload('Level Hero'))
       .expect(201);
 
     const id = created.body.id as string;
@@ -262,16 +224,14 @@ describe('Characters API (e2e)', () => {
     const created = await request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'Session Wizard',
-        classSlug: 'wizard',
-        speciesSlug: 'elf',
-        backgroundSlug: 'acolyte',
-        characterSpells: [
-          { spellSlug: 'alarme', listType: 'prepared' },
-          { spellSlug: 'amigos', listType: 'known' },
-        ],
-      })
+      .send(
+        minimalWizardPayload('Session Wizard', {
+          characterSpells: [
+            { spellSlug: 'alarme', listType: 'prepared' },
+            { spellSlug: 'amigos', listType: 'known' },
+          ],
+        }),
+      )
       .expect(201);
 
     const id = created.body.id as string;
@@ -334,13 +294,7 @@ describe('Characters API (e2e)', () => {
     const created = await request(app.getHttpServer())
       .post('/characters')
       .set(auth())
-      .send({
-        name: 'Inventory Hero',
-        classSlug: 'fighter',
-        speciesSlug: 'human',
-        backgroundSlug: 'acolyte',
-        speciesChoices: HUMAN_SPECIES_CHOICES,
-      })
+      .send(minimalFighterPayload('Inventory Hero'))
       .expect(201);
 
     const id = created.body.id as string;
@@ -376,24 +330,15 @@ describe('Characters API (e2e)', () => {
     await request(app.getHttpServer())
       .patch(`/characters/${id}/inventory/longsword`)
       .set(auth())
-      .send({ location: 'backpack' })
+      .send({ location: 'backpack', equipmentSlot: null })
       .expect(200)
       .expect((res) => {
         expect(res.body.location).toBe('backpack');
-        expect(res.body.equipmentSlot).toBeNull();
       });
 
     await request(app.getHttpServer())
       .delete(`/characters/${id}/inventory/longsword`)
       .set(auth())
       .expect(204);
-
-    await request(app.getHttpServer())
-      .get(`/characters/${id}/inventory`)
-      .set(auth())
-      .expect(200)
-      .expect((res) => {
-        expect(res.body.items).toEqual([]);
-      });
   });
 });

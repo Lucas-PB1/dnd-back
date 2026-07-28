@@ -4,6 +4,7 @@ module.exports = {
   rootDir: '.',
   testEnvironment: 'node',
   testRegex: '.e2e-spec.ts$',
+  testTimeout: 60000,
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },

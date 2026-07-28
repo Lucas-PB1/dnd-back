@@ -14,7 +14,7 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 | Ficha / inventário / sessão / dados | Pronto |
 | Campanha + encontro (API + UI) | Pronto |
 | HP / CA / ataque / feat options / granted spells | Pronto (P1 magias fechado) |
-| Deploy front / E2E | Front prod OK; E2E browser ainda pendente |
+| Deploy front / E2E | Pronto (API campaign e2e + Cypress smoke) |
 
 ---
 
@@ -43,8 +43,6 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 ### Ops / qualidade
 
-- [ ] E2E browser (Cypress/Playwright) — `dnd-front`
-- [ ] E2E Supertest da campanha MVP / encontros — `dnd-api`
 - [ ] Mensagens de erro HTTP em PT (user-facing)
 - [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)
 - [ ] Iniciativa PC: fontes além de DEX + Alerta (quando modeladas)
@@ -53,9 +51,8 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 ## Ordem sugerida
 
-1. E2E browser / Supertest  
-2. **P1 combate situacional** (lotes)  
-3. Ops restantes  
+1. **P1 combate situacional** (lotes)  
+2. Ops restantes  
 
 ---
 
