@@ -28,6 +28,8 @@ describe('mutations', () => {
     deathSaveFailures: 0,
     inspiration: false,
     resourcesUsed: {},
+    grantedSpellUses: {},
+    highElfCantripSwapAvailable: false,
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });
