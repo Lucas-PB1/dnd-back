@@ -1,6 +1,6 @@
 ﻿# Arquitetura — bounded contexts e camadas
 
-Complementa [`infrastructure.md`](infrastructure.md) (stack), [`data-model.md`](data-model.md) (schema SQL) e [`api-plan.md`](../plans/api-plan.md) (REST, Swagger, testes).
+Complementa [`infrastructure.md`](infrastructure.md) (stack), [`data-model.md`](data-model.md) (schema SQL), [`code-standards.md`](code-standards.md) (tamanho/SRP) e [`api-plan.md`](../plans/api-plan.md) (REST, Swagger, testes).
 
 ## Estilo adotado
 
@@ -178,7 +178,14 @@ Layout típico de `sheet/`:
 ```
 src/game/sheet/
 ├── application/     # create/update/delete handlers, list/get queries
-├── domain/          # validator, HP, feats, armor class, …
+├── domain/
+│   ├── character-sheet.types.ts
+│   ├── core/        # factory, domain service
+│   ├── combat/      # CA, ataques, compliance
+│   ├── stats/       # mods, bônus, HP
+│   ├── spellcasting/
+│   ├── origin/      # background/species origin
+│   └── validation/  # validators por concern
 ├── infrastructure/  # character-sheet.repository, character.mapper
 ├── dto/
 ├── characters.controller.ts

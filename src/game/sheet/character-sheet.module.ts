@@ -34,8 +34,20 @@ import { CharacterSheetRepository } from './infrastructure/character-sheet.repos
 import { CharacterMapper } from './infrastructure/character.mapper';
 import { EquippedArmorClassService } from './infrastructure/equipped-armor-class.service';
 import { EquippedWeaponAttacksService } from './infrastructure/equipped-weapon-attacks.service';
-import { CharacterDomainService } from './domain/character-domain.service';
-import { CharacterSheetValidator } from './domain/character-sheet.validator';
+import { CharacterDomainService } from './domain/core/character-domain.service';
+import { CharacterSheetValidator } from './domain/validation/character-sheet.validator';
+import { CharacterBackgroundValidator } from './domain/validation/background/character-background.validator';
+import { CharacterEquipmentValidator } from './domain/validation/equipment/character-equipment.validator';
+import { CharacterSpellsValidator } from './domain/validation/spells/character-spells.validator';
+import { CharacterClassOptionsValidator } from './domain/validation/class-options/character-class-options.validator';
+import { CharacterSpeciesChoicesValidator } from './domain/validation/class-options/character-species-choices.validator';
+import { CharacterSubclassOptionsValidator } from './domain/validation/class-options/character-subclass-options.validator';
+import { CharacterClassExpertiseValidator } from './domain/validation/class-options/character-class-expertise.validator';
+import { CharacterWeaponMasteryValidator } from './domain/validation/class-options/character-weapon-mastery.validator';
+import { CharacterFeatOptionValueValidator } from './domain/validation/feats/character-feat-option-value.validator';
+import { CharacterFeatOptionsValidator } from './domain/validation/feats/character-feat-options.validator';
+import { CharacterFeatsValidator } from './domain/validation/feats/character-feats.validator';
+import { CharacterCreateRequirementsValidator } from './domain/validation/character-create-requirements.validator';
 import { ListCharactersQuery } from './application/list-characters.query';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CreateCharacterHandler } from './application/create-character.handler';
@@ -96,6 +108,18 @@ import { EquippedEquipmentComplianceService } from './infrastructure/equipped-eq
   controllers: [CharactersController],
   providers: [
     CharacterDomainService,
+    CharacterBackgroundValidator,
+    CharacterEquipmentValidator,
+    CharacterSpellsValidator,
+    CharacterSpeciesChoicesValidator,
+    CharacterSubclassOptionsValidator,
+    CharacterClassExpertiseValidator,
+    CharacterWeaponMasteryValidator,
+    CharacterClassOptionsValidator,
+    CharacterFeatOptionValueValidator,
+    CharacterFeatOptionsValidator,
+    CharacterFeatsValidator,
+    CharacterCreateRequirementsValidator,
     CharacterSheetValidator,
     CharacterSheetRepository,
     CharacterMapper,

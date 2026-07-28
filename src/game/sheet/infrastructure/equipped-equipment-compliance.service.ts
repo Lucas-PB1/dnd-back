@@ -7,13 +7,13 @@ import {
   computeEquipmentCompliance,
   type EquipmentComplianceResult,
   type EquippedArmorCompliancePiece,
-} from '../domain/equipment-compliance';
+} from '../domain/combat/equipment-compliance';
 import {
   analyzeDualWield,
   heavyWeaponSlugsForSmallSize,
   type EquippedWeaponPiece,
-} from '../domain/weapon-attack';
-import type { SizeCategory } from '../domain/creature-size';
+} from '../domain/combat/weapon-attack';
+import type { SizeCategory } from '../domain/combat/creature-size';
 import { PhbWeapon } from '../../../entities/phb-weapon.entity';
 import { weaponPropsOf } from '../../../catalog/equipment/weapon-props';
 

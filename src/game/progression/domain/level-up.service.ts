@@ -8,13 +8,13 @@ import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclas
 import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
-import { CharacterDomainService } from '../../sheet/domain/character-domain.service';
-import { maxSpellLevelFromSlots } from '../../sheet/domain/max-spell-level';
+import { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
+import { maxSpellLevelFromSlots } from '../../sheet/domain/spellcasting/max-spell-level';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 import { isAsiOrFeatLevel } from './asi-feat-levels';
-import { classExpertiseSlotsNewAtLevel } from '../../sheet/domain/class-expertise-slots';
-import { classWeaponMasterySlotsNewAtLevel } from '../../sheet/domain/class-weapon-mastery-slots';
+import { classExpertiseSlotsNewAtLevel } from '../../sheet/domain/validation/class-options/class-expertise-slots';
+import { classWeaponMasterySlotsNewAtLevel } from '../../sheet/domain/validation/class-options/class-weapon-mastery-slots';
 
 @Injectable()
 export class LevelUpService {

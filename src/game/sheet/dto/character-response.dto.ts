@@ -1,6 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsInt, IsOptional, Max, Min, ValidateNested } from 'class-validator';
+import { IsOptional, ValidateNested } from 'class-validator';
 import {
   CharacterEquipmentDto,
   CharacterFeatDto,
@@ -10,52 +10,19 @@ import {
   SpeciesChoiceDto,
   SubclassOptionDto,
 } from './character-sheet.dto';
+import { AbilityScoresDto } from './ability-scores.dto';
+import { CharacterCampaignRefDto } from './character-campaign-ref.dto';
+import {
+  EquipmentWarningResponseDto,
+  WeaponAttackResponseDto,
+} from './character-combat-response.dto';
 
-export class AbilityScoresDto {
-  @ApiProperty({ example: 15 })
-  @IsInt()
-  @Min(1)
-  @Max(30)
-  forca!: number;
-
-  @ApiProperty({ example: 14 })
-  @IsInt()
-  @Min(1)
-  @Max(30)
-  destreza!: number;
-
-  @ApiProperty({ example: 13 })
-  @IsInt()
-  @Min(1)
-  @Max(30)
-  constituicao!: number;
-
-  @ApiProperty({ example: 10 })
-  @IsInt()
-  @Min(1)
-  @Max(30)
-  inteligencia!: number;
-
-  @ApiProperty({ example: 12 })
-  @IsInt()
-  @Min(1)
-  @Max(30)
-  sabedoria!: number;
-
-  @ApiProperty({ example: 8 })
-  @IsInt()
-  @Min(1)
-  @Max(30)
-  carisma!: number;
-}
-
-export class CharacterCampaignRefDto {
-  @ApiProperty({ format: 'uuid' })
-  id!: string;
-
-  @ApiProperty({ example: 'Ruínas de Shadowdale' })
-  name!: string;
-}
+export { AbilityScoresDto } from './ability-scores.dto';
+export { CharacterCampaignRefDto } from './character-campaign-ref.dto';
+export {
+  EquipmentWarningResponseDto,
+  WeaponAttackResponseDto,
+} from './character-combat-response.dto';
 
 export class CharacterResponseDto {
   @ApiProperty({ format: 'uuid' })
@@ -187,56 +154,8 @@ export class CharacterResponseDto {
   })
   armorClassNote!: string;
 
-  @ApiProperty({
-    type: 'array',
-    description: 'Ataques passivos das armas equipadas (main_hand / off_hand)',
-    example: [
-      {
-        itemSlug: 'longsword',
-        itemName: 'Espada Longa',
-        mode: 'melee',
-        attackBonus: 5,
-        abilitySlug: 'forca',
-        proficient: true,
-        damageDice: '1d10',
-        damageBonus: 3,
-        damageType: 'Cortante',
-        attackNote: 'corpo a corpo: FOR + PB · versátil (2 mãos)',
-        damageNote: '1d10 +3 (FOR)',
-        role: 'main',
-        attackDisadvantage: false,
-        omitsAbilityDamage: false,
-        greatWeaponFighting: false,
-        masteryActive: true,
-        masterySlug: 'sap',
-        masteryName: 'Drenar',
-        nickUsesAttackAction: false,
-        grazeOnMissDamage: null,
-      },
-    ],
-  })
-  weaponAttacks!: Array<{
-    itemSlug: string;
-    itemName: string;
-    mode: 'melee' | 'ranged';
-    attackBonus: number;
-    abilitySlug: 'forca' | 'destreza';
-    proficient: boolean;
-    damageDice: string;
-    damageBonus: number;
-    damageType: string | null;
-    attackNote: string;
-    damageNote: string;
-    role: 'main' | 'light_bonus' | 'dual_bonus';
-    attackDisadvantage: boolean;
-    omitsAbilityDamage: boolean;
-    greatWeaponFighting: boolean;
-    masteryActive: boolean;
-    masterySlug: string | null;
-    masteryName: string | null;
-    nickUsesAttackAction: boolean;
-    grazeOnMissDamage: number | null;
-  }>;
+  @ApiProperty({ type: [WeaponAttackResponseDto] })
+  weaponAttacks!: WeaponAttackResponseDto[];
 
   @ApiPropertyOptional({
     example: 'sabedoria',
@@ -256,22 +175,8 @@ export class CharacterResponseDto {
   })
   spellAttackBonus!: number | null;
 
-  @ApiProperty({
-    type: 'array',
-    description: 'Avisos de conformidade de equipamento (treino, Força, dual wield, etc.)',
-    example: [
-      {
-        code: 'lacks_armor_training',
-        message: 'Sem treino com Cota de Malha…',
-        itemSlug: 'chain-mail',
-      },
-    ],
-  })
-  equipmentWarnings!: Array<{
-    code: string;
-    message: string;
-    itemSlug?: string;
-  }>;
+  @ApiProperty({ type: [EquipmentWarningResponseDto] })
+  equipmentWarnings!: EquipmentWarningResponseDto[];
 
   @ApiProperty({
     example: false,
@@ -286,9 +191,6 @@ export class CharacterResponseDto {
   })
   speedPenaltyMeters!: 0 | 3;
 
-  @ApiProperty({
-    type: [CharacterCampaignRefDto],
-    description: 'Campanhas em que o personagem está vinculado',
-  })
+  @ApiProperty({ type: [CharacterCampaignRefDto] })
   campaigns!: CharacterCampaignRefDto[];
 }

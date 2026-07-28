@@ -1,0 +1,168 @@
+import { DataSource, Repository } from 'typeorm';
+import {
+  CharacterSheetData,
+  EMPTY_SHEET_DATA,
+} from '../../domain/character-sheet.types';
+import { PlayerCharacterSkill } from '../player-character-skill.entity';
+import {
+  PlayerCharacterClassOption,
+  PlayerCharacterEquipment,
+  PlayerCharacterFeat,
+  PlayerCharacterFeatOption,
+  PlayerCharacterLanguage,
+  PlayerCharacterSpeciesChoice,
+  PlayerCharacterSpell,
+  PlayerCharacterSubclassOption,
+} from '../player-sheet.entities';
+
+export type CharacterSheetLoadDeps = {
+  dataSource: DataSource;
+  skills: Repository<PlayerCharacterSkill>;
+  speciesChoices: Repository<PlayerCharacterSpeciesChoice>;
+  subclassOptions: Repository<PlayerCharacterSubclassOption>;
+  classOptions: Repository<PlayerCharacterClassOption>;
+  feats: Repository<PlayerCharacterFeat>;
+  featOptions: Repository<PlayerCharacterFeatOption>;
+  spells: Repository<PlayerCharacterSpell>;
+  equipment: Repository<PlayerCharacterEquipment>;
+  languages: Repository<PlayerCharacterLanguage>;
+};
+
+export async function loadCharacterSheet(
+  deps: CharacterSheetLoadDeps,
+  characterId: string,
+  backgroundSlug?: string,
+): Promise<CharacterSheetData> {
+  const [
+    skillRows,
+    speciesRows,
+    subclassRows,
+    classOptionRows,
+    featRows,
+    featOptionRows,
+    spellRows,
+    equipmentRows,
+    languageRows,
+  ] = await Promise.all([
+    deps.skills.find({ where: { characterId }, order: { skillSlug: 'ASC' } }),
+    deps.speciesChoices.find({
+      where: { characterId },
+      order: { choiceKind: 'ASC' },
+    }),
+    deps.subclassOptions.find({
+      where: { characterId },
+      order: { optionKey: 'ASC' },
+    }),
+    deps.classOptions.find({
+      where: { characterId },
+      order: { optionKey: 'ASC' },
+    }),
+    deps.feats.find({
+      where: { characterId },
+      order: { featSlug: 'ASC', instanceIndex: 'ASC' },
+    }),
+    deps.featOptions.find({
+      where: { characterId },
+      order: { featSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
+    }),
+    deps.spells.find({ where: { characterId }, order: { spellSlug: 'ASC' } }),
+    deps.equipment.find({
+      where: { characterId },
+      order: { sortOrder: 'ASC' },
+    }),
+    deps.languages.find({
+      where: { characterId },
+      order: { languageSlug: 'ASC' },
+    }),
+  ]);
+
+  const backgroundSkillSlugs = backgroundSlug
+    ? await loadBackgroundSkillSlugs(deps, backgroundSlug)
+    : [];
+
+  return {
+    classSkillSlugs: skillRows.map((row) => row.skillSlug),
+    speciesChoices: speciesRows.map((row) => ({
+      choiceKind: row.choiceKind,
+      choiceSlug: row.choiceSlug,
+    })),
+    subclassOptions: subclassRows.map((row) => ({
+      optionKey: row.optionKey,
+      valueId: row.valueId,
+    })),
+    classOptions: classOptionRows.map((row) => ({
+      optionKey: row.optionKey,
+      valueId: row.valueId,
+    })),
+    characterFeats: featRows.map((row) => ({
+      featSlug: row.featSlug,
+      instanceIndex: row.instanceIndex,
+    })),
+    featOptions: featOptionRows.map((row) => ({
+      featSlug: row.featSlug,
+      instanceIndex: row.instanceIndex,
+      optionKey: row.optionKey,
+      valueId: row.valueId,
+    })),
+    characterSpells: spellRows.map((row) => ({
+      spellSlug: row.spellSlug,
+      listType: row.listType as 'known' | 'prepared' | 'always_prepared',
+    })),
+    equipment: equipmentRows.map((row) => ({
+      source: row.source as 'class' | 'background',
+      packageSlug: row.packageSlug,
+      itemSlug: row.itemSlug ?? undefined,
+      quantity: row.quantity,
+      sortOrder: row.sortOrder,
+    })),
+    languageSlugs: languageRows.map((row) => row.languageSlug),
+    abilityGenerationMethodSlug: null,
+    backgroundSkillSlugs,
+  };
+}
+
+export async function loadManyCharacterSheets(
+  deps: CharacterSheetLoadDeps,
+  characterIds: string[],
+  backgroundByCharacterId: Map<string, string>,
+): Promise<Map<string, CharacterSheetData>> {
+  const map = new Map<string, CharacterSheetData>();
+  if (characterIds.length === 0) return map;
+
+  await Promise.all(
+    characterIds.map(async (id) => {
+      map.set(id, await loadCharacterSheet(deps, id, backgroundByCharacterId.get(id)));
+    }),
+  );
+  return map;
+}
+
+export async function loadBackgroundSkillSlugs(
+  deps: Pick<CharacterSheetLoadDeps, 'dataSource'>,
+  backgroundSlug: string,
+): Promise<string[]> {
+  const rows = await deps.dataSource.query<{ slug: string }[]>(
+    `SELECT s.slug
+     FROM rpg.phb_background_skill bs
+     JOIN rpg.phb_background b ON b.id = bs.background_id
+     JOIN rpg.phb_skill s ON s.id = bs.skill_id
+     WHERE b.slug = $1
+     ORDER BY s.slug`,
+    [backgroundSlug],
+  );
+  return rows.map((row) => row.slug);
+}
+
+export function mergeSheetData(
+  base: CharacterSheetData,
+  abilityGenerationMethodSlug: string | null,
+): CharacterSheetData {
+  return {
+    ...base,
+    abilityGenerationMethodSlug,
+  };
+}
+
+export function emptySheetData(): CharacterSheetData {
+  return { ...EMPTY_SHEET_DATA };
+}

@@ -19,6 +19,9 @@ description: Explica tabelas, FKs, views e clusters do catálogo PHB 2024 no sch
    - [`fk-map.md`](references/fk-map.md) — FKs e chaves compostas
    - [`views.md`](references/views.md) — read models
    - [`conventions.md`](references/conventions.md) — slug, ENUMs, audit
+   - [`option-def-pattern.md`](references/option-def-pattern.md) — def/value (species/feat/subclass)
+   - [`granted-spells-read-model.md`](references/granted-spells-read-model.md) — views de magia concedida
+3. Padrões DRY completos: [`docs/architecture/catalog-patterns.md`](../../../docs/architecture/catalog-patterns.md)
 
 ## Regras rápidas
 

@@ -13,14 +13,14 @@ import {
   computeWeaponAttacks,
   type EquippedWeaponPiece,
   type WeaponAttack,
-} from '../domain/weapon-attack';
+} from '../domain/combat/weapon-attack';
 
 export type WeaponAttackResolveContext = {
   classSlug: string;
   proficiencyBonus: number;
   featSlugs?: readonly string[];
   fightingStyleSlugs?: readonly string[];
-  sizeCategory?: import('../domain/creature-size').SizeCategory;
+  sizeCategory?: import('../domain/combat/creature-size').SizeCategory;
   hasShield?: boolean;
   masteredWeaponSlugs?: readonly string[];
 };

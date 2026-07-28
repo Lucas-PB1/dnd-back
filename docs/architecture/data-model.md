@@ -4,6 +4,8 @@ Schema PostgreSQL `rpg` — 63 tabelas, 9 ENUMs, 15 views, 1 materialized view.
 
 Fonte: [`database/schema.sql`](../database/schema.sql) · Contagens: [`database/seed-manifest.json`](../database/seed-manifest.json)
 
+Padrões DRY (option_def, linhagens, granted spells): [`catalog-patterns.md`](catalog-patterns.md)
+
 ## Convenções
 
 | Regra | Detalhe |
@@ -118,6 +120,8 @@ Fonte: [`database/schema.sql`](../database/schema.sql) · Contagens: [`database/
 | `v_phb_subclass_mechanics` | Mecânicas de subclasse |
 | `v_phb_subclass_prepared_spell` | Magias preparadas de subclasse |
 | `v_phb_subclass_spells_expected` | Magias esperadas por subclasse |
+| `v_phb_species_granted_spell` | Magias always_prepared de espécie/linhagem |
+| `v_phb_feat_granted_spell` | Magias fixas de talento |
 | `mv_spell_by_class` | Materialized — refresh manual ou cron |
 
 ## Polimorfismo

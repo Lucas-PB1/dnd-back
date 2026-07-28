@@ -1,0 +1,35 @@
+---
+description: Limites de tamanho de arquivo TS — soft 150 / hard 200
+globs: src/**/*.ts
+alwaysApply: false
+---
+
+# Tamanho de arquivo
+
+Meta: arquivos focados; **200 linhas** é o teto prático (exceto exceções).
+
+| Faixa | Ação |
+|-------|------|
+| ≤ 150 | OK |
+| 151–200 | Soft — extrair ao tocar no arquivo |
+| > 200 | Hard — **não** acrescentar responsabilidade; split antes |
+| ≥ 400 | Dívida — plano em `docs/plans/code-health-plan.md` |
+
+## Exceções (não contam como “feature nova”)
+
+- Specs e2e / fixtures densas
+- DTOs Swagger só com `@ApiProperty` (ainda preferir split > 250)
+- Seeds/migrations SQL (outro critério)
+
+## Ao editar arquivo > soft
+
+1. Identificar 2+ responsabilidades no mesmo arquivo.
+2. Extrair módulo/função com nome honesto (skill `split-large-module`).
+3. Diff mínimo: mover + reexport se necessário; não refatorar “de brinde”.
+
+## Anti-padrão
+
+```typescript
+// ❌ God file: validar + mapear + regra HP + magias + inventário
+// ✅ Um concern por arquivo (validator de slot, granted-spells, …)
+```

@@ -4,38 +4,22 @@ import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { PhbSpecies } from '../../../entities/phb-species.entity';
 import { CharacterResponseDto } from '../dto/character-response.dto';
-import { CharacterDomainService } from '../domain/character-domain.service';
-import { computeDerivedStats } from '../domain/character-derived-stats';
-import { spellcastingDerivedStats } from '../domain/spellcasting-stats';
-import type { AbilityKey } from '../../build/domain/ability-generation';
+import { CharacterDomainService } from '../domain/core/character-domain.service';
+import { computeDerivedStats } from '../domain/stats/character-derived-stats';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 import { EquippedArmorClassService } from './equipped-armor-class.service';
 import { EquippedWeaponAttacksService } from './equipped-weapon-attacks.service';
 import { EquippedEquipmentComplianceService } from './equipped-equipment-compliance.service';
-import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/fighting-style-feat-options';
-import { collectMasteredWeaponSlugs } from '../domain/class-weapon-mastery-slots';
-import {
-  annotateCharacterSpellSources,
-  collectFeatGrantedSpellSlugs,
-  collectSpeciesGrantedSpellSlugs,
-} from '../domain/granted-spells';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { GrantedSpellCatalogService } from './granted-spell-catalog.service';
 import {
   resolveSizeCategory,
   sizeCategoryFromChoices,
-} from '../domain/creature-size';
+} from '../domain/combat/creature-size';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
-
-const ABILITY_SLUGS = new Set<AbilityKey>([
-  'forca',
-  'destreza',
-  'constituicao',
-  'inteligencia',
-  'sabedoria',
-  'carisma',
-]);
+import { mapCharacterCombatSlice } from './mapping/map-character-combat';
+import { mapCharacterSpellcastingSlice } from './mapping/map-character-spellcasting';
 
 @Injectable()
 export class CharacterMapper {
@@ -79,9 +63,6 @@ export class CharacterMapper {
       level: row.level,
     });
     const featSlugs = loaded.characterFeats.map((feat) => feat.featSlug);
-    const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
-      loaded.subclassOptions,
-    );
 
     const species = await this.speciesRepo.findOne({
       where: { slug: row.speciesSlug },
@@ -91,75 +72,33 @@ export class CharacterMapper {
       sizeCategoryFromChoices(loaded.speciesChoices),
     );
 
-    const hasShield = await this.inventoryItems.exist({
-      where: {
-        characterId: row.id,
-        location: 'equipped',
-        equipmentSlot: 'shield',
-      },
-    });
-
-    const armor = await this.equippedArmorClass.resolve(row.id, row.abilityScores, {
+    const combat = await mapCharacterCombatSlice({
+      characterId: row.id,
+      abilityScores: row.abilityScores,
       classSlug: row.classSlug,
       subclassSlug: row.subclassSlug,
-      featSlugs,
-      fightingStyleSlugs,
-    });
-    const weaponAttacks = await this.equippedWeaponAttacks.resolve(
-      row.id,
-      row.abilityScores,
-      {
-        classSlug: row.classSlug,
-        proficiencyBonus,
-        featSlugs,
-        fightingStyleSlugs,
-        sizeCategory,
-        hasShield,
-        masteredWeaponSlugs: collectMasteredWeaponSlugs({
-          classOptions: loaded.classOptions,
-          featOptions: loaded.featOptions,
-        }),
-      },
-    );
-
-    const compliance = await this.equipmentCompliance.resolve(row.id, {
-      classSlug: row.classSlug,
-      strengthScore: row.abilityScores.forca,
+      proficiencyBonus,
       featSlugs,
       sizeCategory,
-      hasShield,
+      sheet: loaded,
+      equippedArmorClass: this.equippedArmorClass,
+      equippedWeaponAttacks: this.equippedWeaponAttacks,
+      equipmentCompliance: this.equipmentCompliance,
+      inventoryItems: this.inventoryItems,
     });
 
-    const spellcastingAbilitySlug = await this.loadSpellcastingAbilitySlug(
-      row.classSlug,
-    );
-    const spellcasting = spellcastingDerivedStats({
-      spellcastingAbilitySlug,
+    const spellcasting = await mapCharacterSpellcastingSlice({
+      dataSource: this.dataSource,
+      subclassSpellsRepo: this.subclassSpellsRepo,
+      grantedSpellCatalog: this.grantedSpellCatalog,
+      sheet: loaded,
+      speciesSlug: row.speciesSlug,
+      subclassSlug: row.subclassSlug,
+      level: row.level,
+      classSlug: row.classSlug,
       proficiencyBonus,
       abilityModifiers: derived.abilityModifiers,
-    });
-
-    const { speciesCatalog, featFixedSpells } =
-      await this.grantedSpellCatalog.loadMergeCatalog({
-        speciesSlugs: [row.speciesSlug],
-        featSlugs,
-      });
-    const featGrantedSlugs = collectFeatGrantedSpellSlugs(
-      loaded.featOptions,
-      loaded.characterFeats,
-      featFixedSpells,
-    );
-    const speciesGrantedSlugs = collectSpeciesGrantedSpellSlugs(
-      row.speciesSlug,
-      loaded.speciesChoices,
-      row.level,
-      speciesCatalog,
-    );
-    const subclassSpellSlugs = await this.loadSubclassSpellSlugs(row.subclassSlug);
-    const characterSpells = annotateCharacterSpellSources(loaded.characterSpells, {
-      featGrantedSlugs,
-      speciesGrantedSlugs,
-      subclassSpellSlugs,
+      featSlugs,
     });
 
     return {
@@ -181,7 +120,7 @@ export class CharacterMapper {
       classOptions: loaded.classOptions,
       characterFeats: loaded.characterFeats,
       featOptions: loaded.featOptions,
-      characterSpells,
+      characterSpells: spellcasting.characterSpells,
       equipment: loaded.equipment,
       languageSlugs: loaded.languageSlugs,
       abilityGenerationMethodSlug: loaded.abilityGenerationMethodSlug,
@@ -194,12 +133,12 @@ export class CharacterMapper {
       backgroundToolItemSlug: row.backgroundToolItemSlug,
       abilityModifiers: derived.abilityModifiers,
       passivePerception: derived.passivePerception,
-      armorClass: armor.armorClass,
-      armorClassNote: armor.armorClassNote,
-      weaponAttacks,
-      equipmentWarnings: compliance.warnings,
-      cannotCastSpellsInArmor: compliance.cannotCastSpells,
-      speedPenaltyMeters: compliance.speedPenaltyMeters,
+      armorClass: combat.armorClass,
+      armorClassNote: combat.armorClassNote,
+      weaponAttacks: combat.weaponAttacks,
+      equipmentWarnings: combat.equipmentWarnings,
+      cannotCastSpellsInArmor: combat.cannotCastSpellsInArmor,
+      speedPenaltyMeters: combat.speedPenaltyMeters,
       spellcastingAbilitySlug: spellcasting.spellcastingAbilitySlug,
       spellSaveDc: spellcasting.spellSaveDc,
       spellAttackBonus: spellcasting.spellAttackBonus,
@@ -207,23 +146,6 @@ export class CharacterMapper {
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     };
-  }
-
-  private async loadSpellcastingAbilitySlug(
-    classSlug: string,
-  ): Promise<AbilityKey | null> {
-    const rows = await this.dataSource.query<{ ability_slug: string }[]>(
-      `SELECT a.slug AS ability_slug
-       FROM rpg.phb_class_spellcasting cs
-       JOIN rpg.phb_class c ON c.id = cs.class_id
-       JOIN rpg.phb_ability a ON a.id = cs.ability_id
-       WHERE c.slug = $1
-       LIMIT 1`,
-      [classSlug],
-    );
-    const slug = rows[0]?.ability_slug;
-    if (!slug || !ABILITY_SLUGS.has(slug as AbilityKey)) return null;
-    return slug as AbilityKey;
   }
 
   async toDtoList(rows: PlayerCharacter[]): Promise<CharacterResponseDto[]> {
@@ -235,19 +157,11 @@ export class CharacterMapper {
     return Promise.all(
       rows.map((row) => {
         const base = sheetMap.get(row.id) ?? this.sheet.empty();
-        return this.toDto(row, this.sheet.mergeSheetData(base, row.abilityGenerationMethodSlug));
+        return this.toDto(
+          row,
+          this.sheet.mergeSheetData(base, row.abilityGenerationMethodSlug),
+        );
       }),
     );
-  }
-
-  private async loadSubclassSpellSlugs(
-    subclassSlug: string | null,
-  ): Promise<Set<string>> {
-    if (!subclassSlug) return new Set();
-    const rows = await this.subclassSpellsRepo.find({
-      where: { subclassSlug },
-      select: ['spellSlug'],
-    });
-    return new Set(rows.map((row) => row.spellSlug));
   }
 }

@@ -1,0 +1,179 @@
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
+import { CharacterSheetInput, CharacterSheetContext } from '../character-sheet.types';
+import { FeatOptionDto, CharacterFeatDto } from '../../dto/character-sheet.dto';
+import { CharacterBackgroundValidator } from './background/character-background.validator';
+import { CharacterEquipmentValidator } from './equipment/character-equipment.validator';
+import { CharacterSpellsValidator } from './spells/character-spells.validator';
+import { CharacterClassOptionsValidator } from './class-options/character-class-options.validator';
+import { CharacterFeatsValidator } from './feats/character-feats.validator';
+import { CharacterCreateRequirementsValidator } from './character-create-requirements.validator';
+
+export type { CharacterSheetContext } from '../character-sheet.types';
+
+@Injectable()
+export class CharacterSheetValidator {
+  constructor(
+    private readonly catalogLookup: CatalogLookupService,
+    private readonly backgroundValidator: CharacterBackgroundValidator,
+    private readonly equipmentValidator: CharacterEquipmentValidator,
+    private readonly spellsValidator: CharacterSpellsValidator,
+    private readonly classOptionsValidator: CharacterClassOptionsValidator,
+    private readonly featsValidator: CharacterFeatsValidator,
+    private readonly createRequirementsValidator: CharacterCreateRequirementsValidator,
+  ) {}
+
+  async validateSheetInput(
+    input: CharacterSheetInput,
+    ctx: CharacterSheetContext,
+  ): Promise<void> {
+    if (input.classSkillSlugs !== undefined) {
+      await this.catalogLookup.validateClassSkillChoices(ctx.classSlug, input.classSkillSlugs);
+      if (ctx.backgroundSlug) {
+        await this.backgroundValidator.assertClassSkillsDoNotOverlapBackground(
+          ctx.backgroundSlug,
+          input.classSkillSlugs,
+        );
+      }
+    }
+
+    if (input.speciesChoices !== undefined) {
+      await this.classOptionsValidator.validateSpeciesChoices(ctx.speciesSlug, input.speciesChoices);
+    }
+
+    if (input.subclassOptions !== undefined) {
+      await this.classOptionsValidator.validateSubclassOptions(ctx.subclassSlug, input.subclassOptions);
+      const feats = input.characterFeats ?? ctx.characterFeats ?? [];
+      await this.classOptionsValidator.validateFightingStyleSelections(
+        ctx.classSlug,
+        feats,
+        input.subclassOptions,
+      );
+    }
+
+    if (input.classOptions !== undefined) {
+      await this.classOptionsValidator.validateClassExpertiseOptions(
+        ctx,
+        input.classOptions,
+        input.classSkillSlugs,
+        input.speciesChoices,
+        input.featOptions,
+      );
+      await this.classOptionsValidator.validateClassWeaponMasteryOptions(ctx, input.classOptions);
+    }
+
+    const characterFeats = input.characterFeats ?? [];
+    if (input.characterFeats !== undefined) {
+      await this.featsValidator.validateCharacterFeats(characterFeats);
+    }
+
+    if (input.featOptions !== undefined) {
+      const feats = ctx.characterFeats ?? characterFeats;
+      if (!feats.length) {
+        throw new BadRequestException('characterFeats required when updating featOptions');
+      }
+      await this.featsValidator.validateFeatOptions(feats, input.featOptions, ctx.level, ctx.classSlug);
+    }
+
+    if (input.characterSpells !== undefined) {
+      await this.spellsValidator.validateCharacterSpells(
+        input.characterSpells,
+        ctx,
+        input.featOptions,
+        input.characterFeats ?? ctx.characterFeats,
+        input.speciesChoices,
+      );
+    }
+
+    if (input.equipment !== undefined) {
+      await this.equipmentValidator.validateEquipment(input.equipment, ctx);
+    }
+
+    if (input.languageSlugs !== undefined) {
+      await this.equipmentValidator.validateLanguageSlugs(input.languageSlugs);
+    }
+
+    if (input.abilityGenerationMethodSlug !== undefined) {
+      await this.equipmentValidator.validateAbilityGenerationMethod(
+        input.abilityGenerationMethodSlug,
+      );
+    }
+  }
+
+  async validateCreateRequiredFields(
+    input: CharacterSheetInput,
+    ctx: CharacterSheetContext,
+  ): Promise<void> {
+    return this.createRequirementsValidator.validateCreateRequiredFields(input, ctx);
+  }
+
+  async validateFightingStyleSelections(
+    classSlug: string,
+    characterFeats: CharacterFeatDto[],
+    subclassOptions: CharacterSheetInput['subclassOptions'],
+  ): Promise<void> {
+    return this.classOptionsValidator.validateFightingStyleSelections(
+      classSlug,
+      characterFeats,
+      subclassOptions,
+    );
+  }
+
+  async validateBackgroundAbilityBoosts(
+    backgroundSlug: string,
+    boosts: {
+      mode?: string | null;
+      plus2Slug?: string | null;
+      plus1Slug?: string | null;
+      plus1Slugs?: string[] | null;
+    },
+  ): Promise<void> {
+    return this.backgroundValidator.validateBackgroundAbilityBoosts(backgroundSlug, boosts);
+  }
+
+  async assertClassSkillsDoNotOverlapBackground(
+    backgroundSlug: string,
+    classSkillSlugs: string[],
+  ): Promise<void> {
+    return this.backgroundValidator.assertClassSkillsDoNotOverlapBackground(
+      backgroundSlug,
+      classSkillSlugs,
+    );
+  }
+
+  async validateBackgroundOriginFeat(
+    background: { featSlug: string | null },
+    characterFeats: CharacterFeatDto[],
+  ): Promise<void> {
+    return this.backgroundValidator.validateBackgroundOriginFeat(background, characterFeats);
+  }
+
+  async validateBackgroundToolChoice(
+    background: {
+      backgroundSlug: string;
+      toolProficiencyKind: string | null;
+      toolItemSlug: string | null;
+    },
+    toolItemSlug: string | null,
+  ): Promise<void> {
+    return this.backgroundValidator.validateBackgroundToolChoice(background, toolItemSlug);
+  }
+
+  async validateLevelRules(ctx: CharacterSheetContext): Promise<void> {
+    return this.classOptionsValidator.validateLevelRules(ctx);
+  }
+
+  async validateFeatOptions(
+    characterFeats: CharacterFeatDto[],
+    options: FeatOptionDto[],
+    characterLevel?: number,
+    classSlug?: string,
+  ): Promise<void> {
+    return this.featsValidator.validateFeatOptions(
+      characterFeats,
+      options,
+      characterLevel,
+      classSlug,
+    );
+  }
+}

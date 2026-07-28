@@ -17,10 +17,12 @@ Genérico: shared-ai (`nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`,
 | Tabelas, FKs, views PHB | `rpg-catalog-model` |
 | Queries prontas nas views | `phb-query-views` |
 | `db:setup` / migrate / seed | `postgres-apply-catalog` |
+| Arquivos grandes / dívida | `audit-code-health` |
+| Split SRP de módulo TS | `split-large-module` |
 
 ## Rules locais
 
-`architecture` · `api-contract` · `phb-data`
+`architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `docs-hub`
 
 ## Ops rápidos
 
@@ -28,3 +30,5 @@ Genérico: shared-ai (`nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`,
 - JWT: `jsonwebtoken` + JWKS — sem `jose` no runtime
 - Testes: `*.queries.spec.ts` / `*.application.spec.ts` / e2e; `npm run test:cov`
 - Migrations: não editar aplicadas; seeds FK-safe; `dev-reset` só em dev
+- Docs: índice [`docs/README.md`](../../docs/README.md); padrões [`code-standards.md`](../../docs/architecture/code-standards.md)
+- Tamanho TS: soft 150 / hard **200** linhas (rule `file-size`)

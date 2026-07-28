@@ -1,0 +1,32 @@
+---
+description: Gatilhos de refactor — SRP, domínio gordo, DRY SQL/TS
+globs: src/**/*.{ts,sql}
+alwaysApply: false
+---
+
+# Gatilhos de refactor
+
+Antes de **adicionar** código, se qualquer sinal bater → extrair ou abrir plano.
+
+| Sinal | Ação |
+|-------|------|
+| Arquivo > 200 linhas | Split (rule `file-size`) |
+| Classe/função com “e” no nome (valida **e** calcula **e** persiste) | Quebrar SRP |
+| `domain/` importa TypeORM / HTTP | Inverter: domain puro |
+| Mesma regra D&D em 2+ arquivos TS | Uma função/domínio canônico |
+| Mesmo padrão SQL em 3+ tabelas sem view/helper | Unificar (skill `audit-code-health`) |
+| Handler > ~120 linhas | Extrair domain + repository |
+| Query catalog > ~80 linhas | Mapper / query dedicada |
+| Comentário `legacy` / código morto sem uso | Remover ou marcar + issue no plano |
+
+## SOLID (prático)
+
+- **S**: um motivo para mudar por arquivo.
+- **D**: Game domain não depende de Nest/TypeORM.
+- Não dogmático em scripts one-off.
+
+## DRY
+
+Duplicar **estrutura** de wiring Nest é OK; duplicar **regra de jogo** ou **contrato de coluna** não.
+
+Skills: `clean-code` · `solid` · `dry` (shared-ai) + locais `split-large-module` · `audit-code-health`.

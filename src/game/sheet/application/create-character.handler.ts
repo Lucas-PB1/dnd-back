@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
-import { CharacterFactory } from '../domain/character.factory';
-import { CharacterDomainService } from '../domain/character-domain.service';
+import { CharacterFactory } from '../domain/core/character.factory';
+import { CharacterDomainService } from '../domain/core/character-domain.service';
 import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { CharacterSheetRepository } from '../infrastructure/character-sheet.repository';
-import { CharacterSheetValidator } from '../domain/character-sheet.validator';
+import { CharacterSheetValidator } from '../domain/validation/character-sheet.validator';
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { CreateCharacterDto } from '../dto/create-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
@@ -13,9 +13,9 @@ import { CharacterFeatDto } from '../dto/character-sheet.dto';
 import {
   resolveBackgroundOriginCharacterFeats,
   resolveBackgroundToolItemSlug,
-} from '../domain/background-origin';
-import { resolveHumanOriginCharacterFeats } from '../domain/species-origin';
-import { mergeCharacterSpellsWithGrantedSources } from '../domain/granted-spells';
+} from '../domain/origin/background-origin';
+import { resolveHumanOriginCharacterFeats } from '../domain/origin/species-origin';
+import { mergeCharacterSpellsWithGrantedSources } from '../domain/spellcasting/granted-spells';
 import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 

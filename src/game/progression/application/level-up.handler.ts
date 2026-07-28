@@ -3,8 +3,8 @@ import { CharacterRepository } from '../../shared/infrastructure/character.repos
 import { UpdateCharacterHandler } from '../../sheet/application/update-character.handler';
 import { CharacterStateRepository } from '../../session/infrastructure/character-state.repository';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
-import { classExpertiseSlotsNewAtLevel } from '../../sheet/domain/class-expertise-slots';
-import { classWeaponMasterySlotsNewAtLevel } from '../../sheet/domain/class-weapon-mastery-slots';
+import { classExpertiseSlotsNewAtLevel } from '../../sheet/domain/validation/class-options/class-expertise-slots';
+import { classWeaponMasterySlotsNewAtLevel } from '../../sheet/domain/validation/class-options/class-weapon-mastery-slots';
 import { LevelUpDto } from '../dto/level-up.dto';
 import { CharacterResponseDto } from '../../sheet/dto/character-response.dto';
 import { UpdateCharacterDto } from '../../sheet/dto/update-character.dto';

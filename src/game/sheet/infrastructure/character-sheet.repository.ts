@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, In, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacterSkill } from './player-character-skill.entity';
 import {
+  PlayerCharacterClassOption,
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
   PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
-  PlayerCharacterClassOption,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
   PlayerCharacterSubclassOption,
@@ -15,9 +15,21 @@ import {
 import {
   CharacterSheetData,
   CharacterSheetInput,
-  EMPTY_SHEET_DATA,
 } from '../domain/character-sheet.types';
-import { featInstanceKey } from '../domain/character-feat';
+import {
+  emptySheetData,
+  loadBackgroundSkillSlugs,
+  loadCharacterSheet,
+  loadManyCharacterSheets,
+  mergeSheetData as mergeAbilityGeneration,
+} from './character-sheet/load-character-sheet';
+import {
+  clearClassOptions,
+  clearClassSkills,
+  clearSpeciesChoices,
+  clearSubclassOptions,
+  syncCharacterSheet,
+} from './character-sheet/sync-character-sheet';
 
 @Injectable()
 export class CharacterSheetRepository {
@@ -43,272 +55,85 @@ export class CharacterSheetRepository {
     private readonly languages: Repository<PlayerCharacterLanguage>,
   ) {}
 
-  async load(characterId: string, backgroundSlug?: string): Promise<CharacterSheetData> {
-    const [
-      skillRows,
-      speciesRows,
-      subclassRows,
-      classOptionRows,
-      featRows,
-      featOptionRows,
-      spellRows,
-      equipmentRows,
-      languageRows,
-    ] = await Promise.all([
-      this.skills.find({ where: { characterId }, order: { skillSlug: 'ASC' } }),
-      this.speciesChoices.find({ where: { characterId }, order: { choiceKind: 'ASC' } }),
-      this.subclassOptions.find({ where: { characterId }, order: { optionKey: 'ASC' } }),
-      this.classOptions.find({ where: { characterId }, order: { optionKey: 'ASC' } }),
-      this.feats.find({
-        where: { characterId },
-        order: { featSlug: 'ASC', instanceIndex: 'ASC' },
-      }),
-      this.featOptions.find({
-        where: { characterId },
-        order: { featSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
-      }),
-      this.spells.find({ where: { characterId }, order: { spellSlug: 'ASC' } }),
-      this.equipment.find({ where: { characterId }, order: { sortOrder: 'ASC' } }),
-      this.languages.find({ where: { characterId }, order: { languageSlug: 'ASC' } }),
-    ]);
-
-    const backgroundSkillSlugs = backgroundSlug
-      ? await this.loadBackgroundSkillSlugs(backgroundSlug)
-      : [];
-
+  private loadDeps() {
     return {
-      classSkillSlugs: skillRows.map((row) => row.skillSlug),
-      speciesChoices: speciesRows.map((row) => ({
-        choiceKind: row.choiceKind,
-        choiceSlug: row.choiceSlug,
-      })),
-      subclassOptions: subclassRows.map((row) => ({
-        optionKey: row.optionKey,
-        valueId: row.valueId,
-      })),
-      classOptions: classOptionRows.map((row) => ({
-        optionKey: row.optionKey,
-        valueId: row.valueId,
-      })),
-      characterFeats: featRows.map((row) => ({
-        featSlug: row.featSlug,
-        instanceIndex: row.instanceIndex,
-      })),
-      featOptions: featOptionRows.map((row) => ({
-        featSlug: row.featSlug,
-        instanceIndex: row.instanceIndex,
-        optionKey: row.optionKey,
-        valueId: row.valueId,
-      })),
-      characterSpells: spellRows.map((row) => ({
-        spellSlug: row.spellSlug,
-        listType: row.listType as 'known' | 'prepared' | 'always_prepared',
-      })),
-      equipment: equipmentRows.map((row) => ({
-        source: row.source as 'class' | 'background',
-        packageSlug: row.packageSlug,
-        itemSlug: row.itemSlug ?? undefined,
-        quantity: row.quantity,
-        sortOrder: row.sortOrder,
-      })),
-      languageSlugs: languageRows.map((row) => row.languageSlug),
-      abilityGenerationMethodSlug: null,
-      backgroundSkillSlugs,
+      dataSource: this.dataSource,
+      skills: this.skills,
+      speciesChoices: this.speciesChoices,
+      subclassOptions: this.subclassOptions,
+      classOptions: this.classOptions,
+      feats: this.feats,
+      featOptions: this.featOptions,
+      spells: this.spells,
+      equipment: this.equipment,
+      languages: this.languages,
     };
+  }
+
+  private syncDeps() {
+    return {
+      skills: this.skills,
+      speciesChoices: this.speciesChoices,
+      subclassOptions: this.subclassOptions,
+      classOptions: this.classOptions,
+      feats: this.feats,
+      featOptions: this.featOptions,
+      spells: this.spells,
+      equipment: this.equipment,
+      languages: this.languages,
+    };
+  }
+
+  async load(
+    characterId: string,
+    backgroundSlug?: string,
+  ): Promise<CharacterSheetData> {
+    return loadCharacterSheet(this.loadDeps(), characterId, backgroundSlug);
   }
 
   async loadMany(
     characterIds: string[],
     backgroundByCharacterId: Map<string, string>,
   ): Promise<Map<string, CharacterSheetData>> {
-    const map = new Map<string, CharacterSheetData>();
-    if (characterIds.length === 0) return map;
-
-    await Promise.all(
-      characterIds.map(async (id) => {
-        map.set(id, await this.load(id, backgroundByCharacterId.get(id)));
-      }),
+    return loadManyCharacterSheets(
+      this.loadDeps(),
+      characterIds,
+      backgroundByCharacterId,
     );
-    return map;
   }
 
   async loadBackgroundSkillSlugs(backgroundSlug: string): Promise<string[]> {
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT s.slug
-       FROM rpg.phb_background_skill bs
-       JOIN rpg.phb_background b ON b.id = bs.background_id
-       JOIN rpg.phb_skill s ON s.id = bs.skill_id
-       WHERE b.slug = $1
-       ORDER BY s.slug`,
-      [backgroundSlug],
-    );
-    return rows.map((row) => row.slug);
+    return loadBackgroundSkillSlugs(this.loadDeps(), backgroundSlug);
   }
 
   async sync(characterId: string, input: CharacterSheetInput): Promise<void> {
-    if (input.classSkillSlugs !== undefined) {
-      await this.skills.delete({ characterId });
-      if (input.classSkillSlugs.length > 0) {
-        await this.skills.insert(
-          input.classSkillSlugs.map((skillSlug) => ({ characterId, skillSlug })),
-        );
-      }
-    }
-
-    if (input.speciesChoices !== undefined) {
-      await this.speciesChoices.delete({ characterId });
-      if (input.speciesChoices.length > 0) {
-        await this.speciesChoices.insert(
-          input.speciesChoices.map((choice) => ({
-            characterId,
-            choiceKind: choice.choiceKind,
-            choiceSlug: choice.choiceSlug,
-          })),
-        );
-      }
-    }
-
-    if (input.subclassOptions !== undefined) {
-      await this.subclassOptions.delete({ characterId });
-      if (input.subclassOptions.length > 0) {
-        await this.subclassOptions.insert(
-          input.subclassOptions.map((option) => ({
-            characterId,
-            optionKey: option.optionKey,
-            valueId: option.valueId,
-          })),
-        );
-      }
-    }
-
-    if (input.classOptions !== undefined) {
-      await this.classOptions.delete({ characterId });
-      if (input.classOptions.length > 0) {
-        await this.classOptions.insert(
-          input.classOptions.map((option) => ({
-            characterId,
-            optionKey: option.optionKey,
-            valueId: option.valueId,
-          })),
-        );
-      }
-    }
-
-    if (input.characterFeats !== undefined) {
-      await this.feats.delete({ characterId });
-      if (input.characterFeats.length > 0) {
-        await this.feats.insert(
-          input.characterFeats.map((feat) => ({
-            characterId,
-            featSlug: feat.featSlug,
-            instanceIndex: feat.instanceIndex,
-          })),
-        );
-      }
-
-      const validKeys = new Set(
-        input.characterFeats.map((feat) =>
-          featInstanceKey(feat.featSlug, feat.instanceIndex),
-        ),
-      );
-      const existingOptions = await this.featOptions.find({ where: { characterId } });
-      const orphanIds = existingOptions.filter(
-        (option) =>
-          !validKeys.has(featInstanceKey(option.featSlug, option.instanceIndex)),
-      );
-      if (orphanIds.length > 0) {
-        await this.featOptions.delete(
-          orphanIds.map((option) => ({
-            characterId,
-            featSlug: option.featSlug,
-            instanceIndex: option.instanceIndex,
-            optionKey: option.optionKey,
-          })),
-        );
-      }
-    }
-
-    if (input.featOptions !== undefined) {
-      await this.featOptions.delete({ characterId });
-      if (input.featOptions.length > 0) {
-        await this.featOptions.insert(
-          input.featOptions.map((option) => ({
-            characterId,
-            featSlug: option.featSlug,
-            instanceIndex: option.instanceIndex ?? 0,
-            optionKey: option.optionKey,
-            valueId: option.valueId,
-          })),
-        );
-      }
-    }
-
-    if (input.characterSpells !== undefined) {
-      await this.spells.delete({ characterId });
-      if (input.characterSpells.length > 0) {
-        await this.spells.insert(
-          input.characterSpells.map((spell) => ({
-            characterId,
-            spellSlug: spell.spellSlug,
-            listType: spell.listType,
-          })),
-        );
-      }
-    }
-
-    if (input.equipment !== undefined) {
-      await this.equipment.delete({ characterId });
-      if (input.equipment.length > 0) {
-        await this.equipment.insert(
-          input.equipment.map((item, index) => ({
-            characterId,
-            source: item.source,
-            packageSlug: item.packageSlug,
-            itemSlug: item.itemSlug ?? null,
-            quantity: item.quantity ?? 1,
-            sortOrder: item.sortOrder ?? index,
-          })),
-        );
-      }
-    }
-
-    if (input.languageSlugs !== undefined) {
-      await this.languages.delete({ characterId });
-      if (input.languageSlugs.length > 0) {
-        await this.languages.insert(
-          input.languageSlugs.map((languageSlug) => ({ characterId, languageSlug })),
-        );
-      }
-    }
+    return syncCharacterSheet(this.syncDeps(), characterId, input);
   }
 
   async clearSubclassOptions(characterId: string): Promise<void> {
-    await this.subclassOptions.delete({ characterId });
+    return clearSubclassOptions(this.syncDeps(), characterId);
   }
 
   async clearClassOptions(characterId: string): Promise<void> {
-    await this.classOptions.delete({ characterId });
+    return clearClassOptions(this.syncDeps(), characterId);
   }
 
   async clearClassSkills(characterId: string): Promise<void> {
-    await this.skills.delete({ characterId });
+    return clearClassSkills(this.syncDeps(), characterId);
   }
 
   async clearSpeciesChoices(characterId: string): Promise<void> {
-    await this.speciesChoices.delete({ characterId });
+    return clearSpeciesChoices(this.syncDeps(), characterId);
   }
 
   mergeSheetData(
     base: CharacterSheetData,
     abilityGenerationMethodSlug: string | null,
   ): CharacterSheetData {
-    return {
-      ...base,
-      abilityGenerationMethodSlug,
-    };
+    return mergeAbilityGeneration(base, abilityGenerationMethodSlug);
   }
 
   empty(): CharacterSheetData {
-    return { ...EMPTY_SHEET_DATA };
+    return emptySheetData();
   }
 }

@@ -1,12 +1,9 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { PhbItem } from '../../../entities/phb-item.entity';
-import {
-  EquipmentSlot,
-  PlayerCharacterItem,
-} from './player-character-item.entity';
+import { PlayerCharacterItem } from './player-character-item.entity';
 import {
   AddInventoryItemDto,
   CharacterInventoryResponseDto,
@@ -15,9 +12,11 @@ import {
 } from '../dto/inventory.dto';
 import { EquipmentSlotResolver } from './equipment-slot-resolver';
 import {
-  itemRequiresAttunement,
-  MAX_ATTUNED_ITEMS,
-} from '../domain/attunement';
+  applyInventoryAttunement,
+  clearEquippedSlotIfOccupied,
+  findInventoryItemOrFail,
+  inventoryItemToDto,
+} from './inventory/inventory-item-ops';
 
 @Injectable()
 export class CharacterInventoryRepository {
@@ -35,13 +34,17 @@ export class CharacterInventoryRepository {
       where: { characterId },
       order: { location: 'ASC', itemSlug: 'ASC' },
     });
-
-    const dtos = await Promise.all(rows.map((row) => this.toDto(row)));
+    const dtos = await Promise.all(
+      rows.map((row) => inventoryItemToDto(this.catalogItems, row)),
+    );
     return { items: dtos };
   }
 
-  async add(characterId: string, dto: AddInventoryItemDto): Promise<InventoryItemResponseDto> {
-    await this.assertItemExists(dto.itemSlug);
+  async add(
+    characterId: string,
+    dto: AddInventoryItemDto,
+  ): Promise<InventoryItemResponseDto> {
+    await this.catalogLookup.assertItemInCatalog(dto.itemSlug);
 
     const existing = await this.items.findOne({
       where: { characterId, itemSlug: dto.itemSlug },
@@ -55,7 +58,7 @@ export class CharacterInventoryRepository {
       }
       existing.quantity += dto.quantity ?? 1;
       await this.items.save(existing);
-      return this.toDto(existing);
+      return inventoryItemToDto(this.catalogItems, existing);
     }
 
     const row = this.items.create({
@@ -67,7 +70,7 @@ export class CharacterInventoryRepository {
       attuned: false,
     });
     await this.items.save(row);
-    return this.toDto(row);
+    return inventoryItemToDto(this.catalogItems, row);
   }
 
   /**
@@ -92,7 +95,7 @@ export class CharacterInventoryRepository {
       });
       if (existing) continue;
 
-      await this.assertItemExists(itemSlug);
+      await this.catalogLookup.assertItemInCatalog(itemSlug);
       await this.items.save(
         this.items.create({
           characterId,
@@ -111,7 +114,7 @@ export class CharacterInventoryRepository {
     itemSlug: string,
     dto: PatchInventoryItemDto,
   ): Promise<InventoryItemResponseDto> {
-    const row = await this.findItemOrFail(characterId, itemSlug);
+    const row = await findInventoryItemOrFail(this.items, characterId, itemSlug);
 
     if (dto.quantity !== undefined) {
       row.quantity = dto.quantity;
@@ -133,97 +136,33 @@ export class CharacterInventoryRepository {
           itemSlug,
           targetSlot,
         );
-        await this.clearSlotIfOccupied(characterId, targetSlot, itemSlug);
+        await clearEquippedSlotIfOccupied(
+          this.items,
+          characterId,
+          targetSlot,
+          itemSlug,
+        );
         row.location = 'equipped';
         row.equipmentSlot = targetSlot;
       }
     }
 
     if (dto.attuned !== undefined) {
-      await this.applyAttunement(characterId, row, dto.attuned);
+      await applyInventoryAttunement({
+        items: this.items,
+        catalogLookup: this.catalogLookup,
+        characterId,
+        row,
+        attuned: dto.attuned,
+      });
     }
 
     await this.items.save(row);
-    return this.toDto(row);
+    return inventoryItemToDto(this.catalogItems, row);
   }
 
   async remove(characterId: string, itemSlug: string): Promise<void> {
-    const row = await this.findItemOrFail(characterId, itemSlug);
+    const row = await findInventoryItemOrFail(this.items, characterId, itemSlug);
     await this.items.remove(row);
-  }
-
-  private async findItemOrFail(
-    characterId: string,
-    itemSlug: string,
-  ): Promise<PlayerCharacterItem> {
-    const row = await this.items.findOne({ where: { characterId, itemSlug } });
-    if (!row) {
-      throw new NotFoundException(`Inventory item '${itemSlug}' not found on this character`);
-    }
-    return row;
-  }
-
-  private async assertItemExists(itemSlug: string): Promise<PhbItem> {
-    return this.catalogLookup.assertItemInCatalog(itemSlug);
-  }
-
-  private async clearSlotIfOccupied(
-    characterId: string,
-    slot: EquipmentSlot,
-    exceptItemSlug: string,
-  ): Promise<void> {
-    const occupant = await this.items.findOne({
-      where: { characterId, location: 'equipped', equipmentSlot: slot },
-    });
-    if (occupant && occupant.itemSlug !== exceptItemSlug) {
-      occupant.location = 'backpack';
-      occupant.equipmentSlot = null;
-      await this.items.save(occupant);
-    }
-  }
-
-  private async applyAttunement(
-    characterId: string,
-    row: PlayerCharacterItem,
-    attuned: boolean,
-  ): Promise<void> {
-    if (row.attuned === attuned) return;
-
-    if (!attuned) {
-      row.attuned = false;
-      return;
-    }
-
-    const catalog = await this.assertItemExists(row.itemSlug);
-    if (!itemRequiresAttunement(catalog.properties)) {
-      throw new BadRequestException(
-        `Item '${row.itemSlug}' does not require attunement`,
-      );
-    }
-
-    const attunedCount = await this.items.count({
-      where: { characterId, attuned: true },
-    });
-    if (attunedCount >= MAX_ATTUNED_ITEMS) {
-      throw new BadRequestException(
-        `Maximum of ${MAX_ATTUNED_ITEMS} attuned items reached`,
-      );
-    }
-
-    row.attuned = true;
-  }
-
-  private async toDto(row: PlayerCharacterItem): Promise<InventoryItemResponseDto> {
-    const catalog = await this.catalogItems.findOne({ where: { slug: row.itemSlug } });
-    return {
-      itemSlug: row.itemSlug,
-      itemName: catalog?.name ?? row.itemSlug,
-      itemType: catalog?.itemType ?? 'unknown',
-      quantity: row.quantity,
-      location: row.location,
-      equipmentSlot: row.equipmentSlot,
-      attuned: row.attuned,
-      requiresAttunement: itemRequiresAttunement(catalog?.properties),
-    };
   }
 }

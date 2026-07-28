@@ -48,3 +48,12 @@ export interface CharacterSheetInput {
   languageSlugs?: string[];
   abilityGenerationMethodSlug?: string;
 }
+
+export interface CharacterSheetContext {
+  level: number;
+  classSlug: string;
+  speciesSlug: string;
+  backgroundSlug: string;
+  subclassSlug: string | null;
+  characterFeats?: CharacterFeatDto[];
+}

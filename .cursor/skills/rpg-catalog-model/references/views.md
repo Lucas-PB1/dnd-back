@@ -19,6 +19,15 @@ Preferir views para endpoints read-only da API.
 | `v_phb_subclass_mechanics` | Mecânicas de subclasse |
 | `v_phb_subclass_prepared_spell` | Magias preparadas |
 | `v_phb_subclass_spells_expected` | Magias esperadas |
+| `v_phb_species_granted_spell` | Magias always_prepared de espécie/linhagem |
+| `v_phb_feat_granted_spell` | Magias fixas de talento (fey/shadow touched etc.) |
+| `v_phb_background_flavor` | Tagline/summary de antecedente |
+| `v_phb_background_tool_option` | Whitelist de ferramentas por antecedente |
+| `v_phb_background_tool_option_whitelist` | Alias agregado para validação |
+| `v_class_spell_slots_progression` | Progressão de slots (fixes Valda/third) |
+| `v_phb_spell_save_attack` | CD/ataque de magia enriquecido |
 | `mv_spell_by_class` | Materialized — refresh manual/cron |
 
 Definições SQL: `database/migrations/060_views/` e `070_materialized/`
+
+Magias concedidas na ficha → [`granted-spells-read-model.md`](granted-spells-read-model.md)

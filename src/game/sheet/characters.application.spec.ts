@@ -11,8 +11,8 @@ import { EquippedWeaponAttacksService } from './infrastructure/equipped-weapon-a
 import { EquippedEquipmentComplianceService } from './infrastructure/equipped-equipment-compliance.service';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
-import { CharacterDomainService } from './domain/character-domain.service';
-import { CharacterSheetValidator } from './domain/character-sheet.validator';
+import { CharacterDomainService } from './domain/core/character-domain.service';
+import { CharacterSheetValidator } from './domain/validation/character-sheet.validator';
 import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { PhbSpecies } from '../../entities/phb-species.entity';
