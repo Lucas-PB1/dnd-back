@@ -107,4 +107,72 @@ export class CharacterBackgroundValidator {
       }
     }
   }
+
+  /**
+   * PHB 2024: idiomas fixos do antecedente + exatamente `languageChoiceCount` escolhas.
+   * Escolhas = qualquer idioma do catálogo que não seja já concedido.
+   */
+  async validateBackgroundLanguages(
+    backgroundSlug: string,
+    languageSlugs: string[] | undefined,
+    options?: { required?: boolean },
+  ): Promise<void> {
+    const background = await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
+    const choiceCount = background.languageChoiceCount ?? 0;
+    const fixedRows = await this.dataSource.query<{ slug: string }[]>(
+      `SELECT l.slug
+       FROM rpg.phb_background_language bl
+       JOIN rpg.phb_background b ON b.id = bl.background_id
+       JOIN rpg.phb_language l ON l.id = bl.language_id
+       WHERE b.slug = $1
+       ORDER BY l.slug`,
+      [backgroundSlug],
+    );
+    const fixed = fixedRows.map((row) => row.slug);
+    const requiredTotal = fixed.length + choiceCount;
+
+    if (requiredTotal === 0) {
+      return;
+    }
+
+    if (languageSlugs === undefined) {
+      if (options?.required) {
+        throw new BadRequestException(
+          `Background '${backgroundSlug}' requires ${requiredTotal} language(s) (fixed + choices)`,
+        );
+      }
+      return;
+    }
+
+    const unique = [...new Set(languageSlugs)];
+    if (unique.length !== languageSlugs.length) {
+      throw new BadRequestException('Duplicate language slugs are not allowed');
+    }
+
+    if (unique.length !== requiredTotal) {
+      throw new BadRequestException(
+        `Background '${backgroundSlug}' requires exactly ${requiredTotal} language(s) ` +
+          `(${fixed.length} fixed + ${choiceCount} choice)`,
+      );
+    }
+
+    for (const slug of fixed) {
+      if (!unique.includes(slug)) {
+        throw new BadRequestException(
+          `Background '${backgroundSlug}' grants fixed language '${slug}'`,
+        );
+      }
+    }
+
+    const choices = unique.filter((slug) => !fixed.includes(slug));
+    if (choices.length !== choiceCount) {
+      throw new BadRequestException(
+        `Background '${backgroundSlug}' requires exactly ${choiceCount} language choice(s)`,
+      );
+    }
+
+    for (const slug of choices) {
+      await this.catalogLookup.assertLanguageSlug(slug);
+    }
+  }
 }

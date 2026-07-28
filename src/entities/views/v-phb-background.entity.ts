@@ -20,6 +20,9 @@ export class VPhbBackground {
   @ViewColumn({ name: 'equipment_gold_option' })
   equipmentGoldOption!: number | null;
 
+  @ViewColumn({ name: 'language_choice_count' })
+  languageChoiceCount!: number;
+
   @ViewColumn({ name: 'source_chapter' })
   sourceChapter!: number | null;
 

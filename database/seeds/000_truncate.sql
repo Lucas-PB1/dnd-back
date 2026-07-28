@@ -23,6 +23,7 @@ TRUNCATE TABLE
   rpg.phb_background_starting_package,
   rpg.phb_background_ability_option,
   rpg.phb_background_skill,
+  rpg.phb_background_language,
   rpg.phb_background_tool_option,
   rpg.phb_species_trait,
   rpg.phb_feat_granted_spell,

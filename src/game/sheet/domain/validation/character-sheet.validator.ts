@@ -91,6 +91,12 @@ export class CharacterSheetValidator {
 
     if (input.languageSlugs !== undefined) {
       await this.equipmentValidator.validateLanguageSlugs(input.languageSlugs);
+      if (ctx.backgroundSlug) {
+        await this.backgroundValidator.validateBackgroundLanguages(
+          ctx.backgroundSlug,
+          input.languageSlugs,
+        );
+      }
     }
 
     if (input.abilityGenerationMethodSlug !== undefined) {

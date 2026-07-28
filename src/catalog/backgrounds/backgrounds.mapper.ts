@@ -3,10 +3,12 @@ import { VPhbBackground } from '../../entities/views/v-phb-background.entity';
 import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
 import { VPhbBackgroundSkill } from '../../entities/views/v-phb-background-skill.entity';
 import { VPhbBackgroundToolOption } from '../../entities/views/v-phb-background-tool-option.entity';
+import { VPhbBackgroundLanguage } from '../../entities/views/v-phb-background-language.entity';
 import { BackgroundResponseDto } from './dto/background-response.dto';
 import { BackgroundEquipmentResponseDto } from './dto/background-equipment-response.dto';
 import { BackgroundSkillResponseDto } from './dto/background-skill-response.dto';
 import { BackgroundToolResponseDto } from './dto/background-tool-response.dto';
+import { BackgroundLanguageResponseDto } from './dto/background-language-response.dto';
 
 @Injectable()
 export class BackgroundsMapper {
@@ -18,6 +20,7 @@ export class BackgroundsMapper {
       summary: row.summary,
       description: row.description,
       equipmentGoldOption: row.equipmentGoldOption,
+      languageChoiceCount: row.languageChoiceCount ?? 0,
       abilityOptionSlugs: row.abilityOptionSlugs ?? [],
       abilityOptionNames: row.abilityOptionNames ?? [],
       sourceChapter: row.sourceChapter,
@@ -60,6 +63,14 @@ export class BackgroundsMapper {
       itemName: row.itemName,
       categorySlug: row.categorySlug,
       categoryName: row.categoryName,
+    };
+  }
+
+  toLanguageDto(row: VPhbBackgroundLanguage): BackgroundLanguageResponseDto {
+    return {
+      slug: row.languageSlug,
+      name: row.languageName,
+      isRare: row.languageIsRare,
     };
   }
 }

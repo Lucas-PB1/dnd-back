@@ -1,6 +1,6 @@
 ﻿# Arquitetura — bounded contexts e camadas
 
-Complementa [`infrastructure.md`](infrastructure.md) (stack), [`data-model.md`](data-model.md) (schema SQL), [`code-standards.md`](code-standards.md) (tamanho/SRP) e [`api-plan.md`](../plans/api-plan.md) (REST, Swagger, testes).
+Complementa [`infrastructure.md`](infrastructure.md) (stack), [`data-model.md`](data-model.md) (schema SQL), [`code-standards.md`](code-standards.md) (tamanho/SRP). REST: Swagger `/api`. Pendências: [`backlog.md`](../plans/backlog.md).
 
 ## Estilo adotado
 

@@ -6,8 +6,8 @@
 
 | Pasta | Conteúdo |
 |-------|----------|
-| [`architecture/`](architecture/) | Arquitetura, infra, modelo de dados, Game BC, **padrões de código** |
-| [`plans/`](plans/) | Roadmap, planos REST/ficha/equipamento/mesa/**code health** |
+| [`architecture/`](architecture/) | Arquitetura, infra, modelo de dados, Game BC, padrões de código |
+| [`plans/`](plans/) | **Único plano ativo:** o que ainda falta |
 | [`checklists/`](checklists/) | Checklists mecânicos (HP, AC, feats, magias…) |
 | [`deploy/`](deploy/) | Deploy Vercel + Supabase |
 | [`sources/`](sources/) | Fontes de conteúdo (ex.: Valda) para ingestão no catálogo |
@@ -23,25 +23,13 @@
 | [`architecture/game-module-structure.md`](architecture/game-module-structure.md) | Submódulos Game |
 | [`architecture/code-standards.md`](architecture/code-standards.md) | Tamanho de arquivo, SRP, DRY, legado |
 
-Novidades API (2026-07-27): `GET /fighting-styles`, inventário hard-equip, death saves/inspiration (`P019`), CI + `openapi:export`.
+Contrato REST: Swagger em `/api` · `npm run openapi:export`.
 
 ## Planos
 
-### Ativos (backlog)
-
-| Doc | Para quê | Pendência principal |
-|-----|----------|---------------------|
-| [`plans/product-roadmap.md`](plans/product-roadmap.md) | Roadmap vivo | Deploy, cobertura CI, front gaps |
-| [`plans/sheet-readiness-plan.md`](plans/sheet-readiness-plan.md) | Catálogo → ficha | Fases 4–6 (cotas, ASI, backlog) |
-| [`plans/equipment-catalog-plan.md`](plans/equipment-catalog-plan.md) | Gear / armas / armaduras | Fase 6 QA + apply prod |
-| [`plans/game-advanced-plan.md`](plans/game-advanced-plan.md) | Mesa / sessão | Fase 7D campanha/combate |
-
-### Referência (não backlog)
-
 | Doc | Para quê |
 |-----|----------|
-| [`plans/api-plan.md`](plans/api-plan.md) | Contrato REST / Swagger / testes (API catálogo+game base **feita**) |
-| [`plans/rpg-web-plan.md`](plans/rpg-web-plan.md) | Bootstrap `dnd-front` (stack, ports, env) |
+| [`plans/backlog.md`](plans/backlog.md) | **Só o que falta** (API + front + ops) |
 
 ## Checklists
 

@@ -76,7 +76,7 @@ Padrões DRY (option_def, linhagens, granted spells): [`catalog-patterns.md`](ca
 ### 6. Backgrounds
 
 - `phb_background` → feat, tool_item, tool_category, source_citation
-- `phb_background_skill`, `phb_background_ability_option`
+- `phb_background_skill`, `phb_background_ability_option`, `phb_background_language` (+ `language_choice_count` no antecedente)
 - `phb_background_starting_package` → `phb_background_starting_item`
 - `phb_background_boost_option`, `phb_ability_generation_method`
 
@@ -109,7 +109,8 @@ Padrões DRY (option_def, linhagens, granted spells): [`catalog-patterns.md`](ca
 | `v_phb_spell` | Magias com escola e edição |
 | `v_phb_subclass` | Subclasses com classe pai |
 | `v_spell_by_class` | Magias por classe e nível |
-| `v_phb_background` | Antecedentes enriquecidos |
+| `v_phb_background` | Antecedentes enriquecidos (incl. `language_choice_count`) |
+| `v_phb_background_language` | Idiomas fixos concedidos pelo antecedente |
 | `v_phb_background_equipment` | Equipamento inicial de antecedente |
 | `v_phb_class_equipment` | Equipamento inicial de classe |
 | `v_phb_feat` | Talentos com benefícios |

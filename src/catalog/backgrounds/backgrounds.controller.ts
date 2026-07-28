@@ -13,6 +13,7 @@ import { FindBackgroundBySlugQuery } from './queries/find-background-by-slug.que
 import { FindBackgroundEquipmentQuery } from './queries/find-background-equipment.query';
 import { FindBackgroundSkillsQuery } from './queries/find-background-skills.query';
 import { FindBackgroundToolsQuery } from './queries/find-background-tools.query';
+import { FindBackgroundLanguagesQuery } from './queries/find-background-languages.query';
 import { BackgroundResponseDto } from './dto/background-response.dto';
 
 @ApiTags('catalog-backgrounds')
@@ -24,6 +25,7 @@ export class BackgroundsController {
     private readonly findBackgroundEquipment: FindBackgroundEquipmentQuery,
     private readonly findBackgroundSkills: FindBackgroundSkillsQuery,
     private readonly findBackgroundTools: FindBackgroundToolsQuery,
+    private readonly findBackgroundLanguages: FindBackgroundLanguagesQuery,
   ) {}
 
   @Get()
@@ -58,6 +60,17 @@ export class BackgroundsController {
   @ApiNotFoundResponse({ description: 'Background not found or no tool choices' })
   findTools(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findBackgroundTools.execute(slug, query.page, query.limit);
+  }
+
+  @Get(':slug/languages')
+  @ApiOperation({
+    summary: 'Fixed languages granted by a background (paginated)',
+  })
+  @ApiParam({ name: 'slug', example: 'acolyte' })
+  @ApiOkResponse({ description: 'Paginated fixed languages list' })
+  @ApiNotFoundResponse({ description: 'Background not found or no language grants' })
+  findLanguages(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
+    return this.findBackgroundLanguages.execute(slug, query.page, query.limit);
   }
 
   @Get(':slug')

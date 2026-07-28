@@ -87,6 +87,12 @@ export class CharacterCreateRequirementsValidator {
       input.subclassOptions,
     );
 
+    await this.backgroundValidator.validateBackgroundLanguages(
+      ctx.backgroundSlug,
+      input.languageSlugs,
+      { required: true },
+    );
+
     const expertiseSlots = classExpertiseSlotsAtLevel(ctx.classSlug, ctx.level);
     if (expertiseSlots.length > 0) {
       const provided = input.classOptions ?? [];

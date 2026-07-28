@@ -1,6 +1,6 @@
 ﻿# Game BC — submódulos e domínios
 
-Complementa [`architecture.md`](architecture.md) e [`game-advanced-plan.md`](../plans/game-advanced-plan.md).
+Complementa [`architecture.md`](architecture.md). Pendências de mesa/combate: [`backlog.md`](../plans/backlog.md).
 
 ## Problema (histórico — resolvido)
 

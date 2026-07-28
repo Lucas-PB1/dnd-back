@@ -23,6 +23,12 @@ export class BackgroundResponseDto {
   @ApiPropertyOptional()
   equipmentGoldOption!: number | null;
 
+  @ApiProperty({
+    example: 2,
+    description: 'Quantidade de idiomas à escolha além dos fixos (PHB 2024)',
+  })
+  languageChoiceCount!: number;
+
   @ApiPropertyOptional({ type: [String] })
   abilityOptionSlugs!: string[];
 

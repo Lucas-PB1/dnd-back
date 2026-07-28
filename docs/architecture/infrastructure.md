@@ -4,9 +4,9 @@ Documento de referência para rules, skills e implementação.
 
 **Arquitetura (BC, CQRS, DDD):** [`architecture.md`](architecture.md)
 
-**Plano REST API (checklist mestre):** [`api-plan.md`](../plans/api-plan.md)
+**Contrato REST:** Swagger `/api` · `npm run openapi:export`
 
-**Roadmap produto (API + app Next.js):** [`product-roadmap.md`](../plans/product-roadmap.md)
+**O que falta:** [`backlog.md`](../plans/backlog.md)
 
 ## Decisão (2026-07)
 
@@ -16,7 +16,7 @@ Documento de referência para rules, skills e implementação.
 | **API** | NestJS na Vercel | Serverless, zero-config Nest, escala por request |
 | **ORM** | TypeORM | Mapeamento `rpg.phb_*`, views, `synchronize: false` |
 | **Auth** | Supabase Auth | JWT; RLS no Postgres para dados de jogador |
-| **Frontend** | Next.js — repo **dnd-front** | [`rpg-web-plan.md`](../plans/rpg-web-plan.md) |
+| **Frontend** | Next.js — repo **dnd-front** | Backlog em [`backlog.md`](../plans/backlog.md) |
 
 ## Diagrama
 

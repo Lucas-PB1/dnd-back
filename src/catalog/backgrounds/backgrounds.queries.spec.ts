@@ -27,6 +27,7 @@ describe('Backgrounds queries', () => {
     summary: 'Devoto de um culto que aprendeu a canalizar um pouco do poder divino.',
     description: 'Você se dedicou ao serviço em um templo…',
     equipmentGoldOption: 50,
+    languageChoiceCount: 2,
     sourceChapter: 4,
     sourceChapterTitle: null,
     editionSlug: 'phb-2024-pt',

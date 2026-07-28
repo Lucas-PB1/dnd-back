@@ -2,7 +2,7 @@
 
 Massa de dados PostgreSQL do **Player's Handbook 2024 (PT-BR)** + API NestJS.
 
-Frontend irmão: **dnd-front** (Next.js) — roadmap [`docs/plans/product-roadmap.md`](docs/plans/product-roadmap.md) · bootstrap [`docs/plans/rpg-web-plan.md`](docs/plans/rpg-web-plan.md). · índice [`docs/README.md`](docs/README.md)
+Frontend irmão: **dnd-front** (Next.js) — backlog [`docs/plans/backlog.md`](docs/plans/backlog.md) · índice [`docs/README.md`](docs/README.md)
 
 ## O que é
 
@@ -22,11 +22,10 @@ dnd-work/dnd-api/             # este repo
 │   ├── migrations/          # 84 arquivos granulares
 │   └── seeds/               # 66 arquivos (PHB + subclass)
 ├── docs/
-│   ├── data-model.md        # clusters, FKs, views
-│   ├── infrastructure.md    # stack Supabase + Vercel
-│   ├── architecture.md      # bounded contexts, CQRS, DDD
-│   ├── api-plan.md          # checklist REST, Swagger, testes
-│   └── product-roadmap.md   # marcos API + app Next.js
+│   ├── architecture/        # infra, data-model, code-standards
+│   ├── plans/backlog.md     # o que ainda falta
+│   ├── deploy/              # Vercel + Supabase
+│   └── checklists/          # mecânicas PHB
 ├── src/                     # NestJS API
 ├── .cursor/
 │   ├── rules/               # regras por contexto
@@ -145,7 +144,7 @@ Documento completo: [`docs/architecture/infrastructure.md`](docs/architecture/in
 | Referências | `.cursor/skills/*/references/` | Specs por tema |
 | Infra | [`docs/architecture/infrastructure.md`](docs/architecture/infrastructure.md) | Stack Supabase + Vercel |
 | Arquitetura | [`docs/architecture/architecture.md`](docs/architecture/architecture.md) | BC, CQRS, DDD |
-| **Plano API** | [`docs/plans/api-plan.md`](docs/plans/api-plan.md) | Módulos, rotas, Swagger, testes |
+| **Backlog** | [`docs/plans/backlog.md`](docs/plans/backlog.md) | O que ainda falta |
 | Índice docs | [`docs/README.md`](docs/README.md) | Pastas e atalhos |
 
 Orquestrador: `.cursor/rules/00-orchestrator.mdc`
