@@ -36,7 +36,8 @@ describe('HttpExceptionFilter', () => {
     expect(json).toHaveBeenCalledWith(
       expect.objectContaining({
         statusCode: HttpStatus.BAD_REQUEST,
-        message: 'Invalid slug',
+        message: 'slug inválido(a)',
+        error: 'Requisição inválida',
         path: '/items',
         timestamp: expect.any(String),
       }),
@@ -54,7 +55,7 @@ describe('HttpExceptionFilter', () => {
       expect.objectContaining({
         statusCode: 422,
         message: ['a', 'b'],
-        error: 'Validation Error',
+        error: 'Erro de validação',
       }),
     );
   });
@@ -66,9 +67,22 @@ describe('HttpExceptionFilter', () => {
     expect(json).toHaveBeenCalledWith(
       expect.objectContaining({
         statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-        message: 'Internal server error',
-        error: 'Internal Server Error',
+        message: 'Erro interno do servidor',
+        error: 'Erro interno do servidor',
         path: '/boom',
+      }),
+    );
+  });
+
+  it('keeps Portuguese inventory messages', () => {
+    const { host, json } = mockHost('/inventory');
+    filter.catch(
+      new BadRequestException('Sem proficiência com armadura: não pode equipar.'),
+      host,
+    );
+    expect(json).toHaveBeenCalledWith(
+      expect.objectContaining({
+        message: 'Sem proficiência com armadura: não pode equipar.',
       }),
     );
   });

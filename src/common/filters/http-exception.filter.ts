@@ -7,6 +7,10 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
+import {
+  translateErrorLabel,
+  translateHttpMessages,
+} from './translate-http-message';
 
 export interface ApiErrorBody {
   statusCode: number;
@@ -49,8 +53,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     const payload: ApiErrorBody = {
       statusCode,
-      message,
-      error,
+      message: translateHttpMessages(message),
+      error: translateErrorLabel(error),
       path: request.url,
       timestamp: new Date().toISOString(),
     };

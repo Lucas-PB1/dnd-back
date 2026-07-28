@@ -3,7 +3,7 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **não feitos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-07-28 — P1 magias concedidas (CD/ataque, economia 1×/LD, Alto Elfo) entregue
+**Última revisão:** 2026-07-28 — UI ataques + erros HTTP PT entregues
 
 ---
 
@@ -13,8 +13,10 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 |------|--------|
 | Ficha / inventário / sessão / dados | Pronto |
 | Campanha + encontro (API + UI) | Pronto |
-| HP / CA / ataque / feat options / granted spells | Pronto (P1 magias fechado) |
+| HP / CA / ataque / feat options / granted spells | Pronto (magias concedidas fechado) |
 | Deploy front / E2E | Pronto (API campaign e2e + Cypress smoke) |
+| UI ataques (aba Ações) + erros HTTP PT | Pronto |
+| Combate situacional / monstros / iniciativa extra | **Adiado** |
 
 ---
 
@@ -22,7 +24,20 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 **P0:** nenhum.
 
-### P1 — cobertura PHB / mecânica incompleta
+### Ativo
+
+*(nenhum — próximos itens só sob pedido)*
+
+### Adiado — polish / ops
+
+Não priorizar. Só retomar com pedido explícito.
+
+- [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)
+- [ ] Iniciativa PC: fontes além de DEX + Alerta — **traços** e **condições** (não magias)
+
+### Adiado — combate situacional (ex-P1)
+
+Não priorizar. Só retomar com pedido explícito.
 
 #### CA / defesa (efeitos não permanentes)
 - [ ] Buffs temporários / reações de CA (`defensive-duelist`, Defesa Gloriosa, magias Escudo/Armadura Arcana, Forma Selvagem, etc.)
@@ -37,22 +52,12 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 - [ ] Maestria de arma como sistema de combate (além da escolha na ficha)
 - [ ] Vantagem / desvantagem / cobertura no cálculo de ataque (mesa)
 
-### P2 — polish / front
-
-- [ ] **Front:** UI de ataques além do mínimo na aba Ações
-
-### Ops / qualidade
-
-- [ ] Mensagens de erro HTTP em PT (user-facing)
-- [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)
-- [ ] Iniciativa PC: fontes além de DEX + Alerta (quando modeladas)
-
 ---
 
 ## Ordem sugerida
 
-1. **P1 combate situacional** (lotes)  
-2. Ops restantes  
+1. ~~UI de ataques / erros PT~~ — feito  
+2. ~~Resto~~ — adiado (só sob pedido)  
 
 ---
 
