@@ -1,56 +1,77 @@
 # Backlog — o que ainda falta
 
 Único plano ativo do **dnd-api**. Só itens **não feitos**.  
-Referência de arquitetura: [`docs/architecture/`](../architecture/) · Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
+Referência: [`docs/architecture/`](../architecture/) · Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-07-27
+**Última revisão:** 2026-07-27 (encontros P022 no ar)
+
+---
+
+## Estado atual (snapshot)
+
+| Área | Status |
+|------|--------|
+| Ficha / inventário / sessão / dados | Pronto na API |
+| Campanha (membros, links) | Pronto na API |
+| Encontro + iniciativa (PCs) | Pronto — `P020`/`P021` |
+| Criaturas manuais + visão jogador (PV%) | Pronto — `P022` |
+| UI de encontro no front | **Próximo** |
+| Catálogo de monstros no tracker | Fora / opcional depois |
+
+**Encontro (API) — contrato resumido**
+
+- Base: `/campaigns/:campaignId/encounters`
+- DM: create, creatures, patch settings (`playersCanView`, `creatureHpVisibility`), patch/delete combatant, roll-all, next-turn, close
+- PC: roll iniciativa via `combatants/:combatantId` (DEX + Alerta; mesma lógica de `/characters/:id/rolls/initiative`)
+- Player: GET só se `playersCanView`; PV de criatura conforme `hidden` \| `percent` \| `exact`
 
 ---
 
 ## API (`dnd-api`)
 
-### Conteúdo / catálogo
-
-- [ ] **Mais `feat_option_def`** — estender seeds para talentos com opções incompletas (`npm run db:audit:feat-options`)
-
-### Game
-
-- [ ] **Carga / encumbrance** ao carregar inventário (peso vs Força) — flag ou 400
-- [ ] **Combate / iniciativa / encontro** (7D) — modelo + rotas; campanha MVP já existe em `src/game/campaign/`
-
 ### Opcional (baixa prioridade)
 
 - [ ] Mensagens de erro HTTP em PT (user-facing)
-- [ ] E2E Supertest da campanha MVP
-- [ ] Threshold de coverage no CI (hoje roda `test:cov` sem gate ≥80%)
+- [ ] E2E Supertest da campanha MVP / encontros
+- [ ] Threshold de coverage no CI (hoje `test:cov` sem gate ≥80%)
+- [ ] Monstros de catálogo no tracker (hoje: criaturas manuais nome/PV/CA)
+- [ ] Iniciativa PC: fontes além de DEX + Alerta (itens/traços, se modelados)
 
 ---
 
 ## Front (`dnd-front`)
 
-- [ ] Consumir `GET /fighting-styles` onde fizer sentido
+### Próximo (alta prioridade)
+
+- [ ] **UI de encontro / iniciativa**
+  - [ ] Painel DM: criar/fechar, adicionar criatura, ajustar PV/CA, next turn, roll-all
+  - [ ] Toggle `playersCanView` + modo de PV de criatura
+  - [ ] Lista ordenada: nome, iniciativa, CA, PV (exato no DM; % no player)
+  - [ ] PC: botão “rolar iniciativa” (próprio personagem)
+  - [ ] Player: ver encontro ativo só quando DM permitir
+
+### Depois
+
 - [ ] Deploy Vercel + E2E browser (Cypress/Playwright)
 
 ---
 
 ## Ordem sugerida
 
-1. Feat options faltantes  
-2. Encumbrance  
-3. Fighting styles no front  
-4. Combate 7D (épico)  
-5. Deploy front / E2E
+1. Front: UI do encontro (DM + visão jogador)
+2. Deploy front / E2E
+3. Opcionais API (E2E encontros, erros PT, coverage gate)
 
 ---
 
 ## Como usar
 
 1. Marcar `[x]` só quando **feito e testado**.  
-2. Não recolocar itens concluídos neste arquivo.  
-3. Detalhe de rotas/Swagger: app em `/api` + `npm run openapi:export`.
+2. Não recolocar itens concluídos na lista principal.  
+3. Contrato: Swagger `/api` · `npm run openapi:export`.
 
 ### Feito recentemente (não reabrir)
 
-- Apply prod `P019` (death saves / inspiration)
-- Front: cotas progression (já existia), ASI no level-up, death saves + inspiration na mesa
-- Idiomas concedidos pelo antecedente (`phb_background_language`, `GET /backgrounds/:slug/languages`, validação na ficha)
+- Apply prod `P019`; ASI / death saves / idiomas / encumbrance / fighting-styles
+- Encontro PCs: `P020`/`P021`
+- Encontro + criaturas manuais + visão jogador (PV%): `P022` — settings, POST creatures, `combatantId`, enriquecimento PC (PV/CA/nível/talentos/condições)

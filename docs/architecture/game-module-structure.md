@@ -20,7 +20,8 @@ BC Game (modular monolith)
 ├── progression/      # level-up, preview
 ├── inventory/        # mochila + equipado
 ├── session/          # slots, condições, concentração
-└── dice/             # motor de dados + rolls da ficha (ataque, dano, perícia, ST, iniciativa)
+├── dice/             # motor de dados + rolls da ficha (ataque, dano, perícia, ST, iniciativa)
+└── campaign/         # mesa + encontro (PCs enriquecidos + criaturas manuais; visão jogador)
 ```
 
 Ownership combat/spellcasting: módulos Nest `combat/` e `spellcasting/` (use cases em `application/`).

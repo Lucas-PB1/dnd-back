@@ -1,6 +1,6 @@
 # Auditoria — opções de talentos (S022)
 
-Gerado em 2026-07-21 por `npm run db:audit:feat-options`.
+Gerado em 2026-07-28 por `npm run db:audit:feat-options`.
 
 ## Resumo
 

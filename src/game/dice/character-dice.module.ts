@@ -13,5 +13,6 @@ import { CharacterRollsService } from './application/character-rolls.service';
   imports: [GameSharedModule, CombatModule, CharacterSheetModule],
   controllers: [CharacterDiceController],
   providers: [CharacterRollsService],
+  exports: [CharacterRollsService],
 })
 export class CharacterDiceModule {}

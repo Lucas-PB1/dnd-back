@@ -36,11 +36,37 @@ export class InventoryItemResponseDto {
     description: 'True when phb_item.properties.requiresAttunement',
   })
   requiresAttunement!: boolean;
+
+  @ApiPropertyOptional({
+    example: 1.5,
+    description: 'Peso unitário em kg (parseado de phb_item.weight)',
+  })
+  weightKg!: number;
+}
+
+export class InventoryEncumbranceDto {
+  @ApiProperty({ example: 12.5, description: 'Peso total carregado (kg)' })
+  totalWeightKg!: number;
+
+  @ApiProperty({
+    example: 75,
+    description: 'Capacidade de carga = Força × 7,5 kg',
+  })
+  carryingCapacityKg!: number;
+
+  @ApiProperty({
+    example: false,
+    description: 'True quando totalWeightKg > carryingCapacityKg',
+  })
+  encumbered!: boolean;
 }
 
 export class CharacterInventoryResponseDto {
   @ApiProperty({ type: [InventoryItemResponseDto] })
   items!: InventoryItemResponseDto[];
+
+  @ApiProperty({ type: InventoryEncumbranceDto })
+  encumbrance!: InventoryEncumbranceDto;
 }
 
 export class AddInventoryItemDto {

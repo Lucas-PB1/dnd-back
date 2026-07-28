@@ -21,9 +21,14 @@ export class GetCharacterInventoryQuery {
     userId: string,
     characterId: string,
   ): Promise<CharacterInventoryResponseDto> {
-    await this.access.findAccessibleOrFail(userId, characterId, 'read');
+    const character = await this.access.findAccessibleOrFail(
+      userId,
+      characterId,
+      'read',
+    );
+    const strength = character.abilityScores?.forca ?? 10;
 
-    let result = await this.inventory.list(characterId);
+    let result = await this.inventory.list(characterId, strength);
     if (result.items.length > 0) return result;
 
     const rows = await this.equipment.find({ where: { characterId } });
@@ -37,7 +42,7 @@ export class GetCharacterInventoryQuery {
       })),
     );
 
-    result = await this.inventory.list(characterId);
+    result = await this.inventory.list(characterId, strength);
     return result;
   }
 }

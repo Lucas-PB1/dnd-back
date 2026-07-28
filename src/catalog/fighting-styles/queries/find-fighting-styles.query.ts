@@ -21,10 +21,19 @@ export class FindFightingStylesQuery {
     page = 1,
     limit = 20,
     classSlug?: string,
+    q?: string,
   ): Promise<PaginatedResponseDto<FightingStyleResponseDto>> {
     const qb = this.stylesRepo
       .createQueryBuilder('style')
       .orderBy('style.name', 'ASC');
+
+    const trimmedQ = q?.trim();
+    if (trimmedQ) {
+      qb.andWhere(
+        '(style.slug ILIKE :q OR style.name ILIKE :q OR style.description ILIKE :q)',
+        { q: `%${trimmedQ}%` },
+      );
+    }
 
     const trimmedClass = classSlug?.trim();
     if (trimmedClass) {

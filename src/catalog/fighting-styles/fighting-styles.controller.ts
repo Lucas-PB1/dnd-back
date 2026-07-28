@@ -25,7 +25,12 @@ export class FightingStylesController {
   })
   @ApiOkResponse({ description: 'Paginated fighting style list' })
   findAll(@Query() query: FightingStylesQueryDto) {
-    return this.findFightingStyles.execute(query.page, query.limit, query.class);
+    return this.findFightingStyles.execute(
+      query.page,
+      query.limit,
+      query.class,
+      query.q,
+    );
   }
 
   @Get(':slug')

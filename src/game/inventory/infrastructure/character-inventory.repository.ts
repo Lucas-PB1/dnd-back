@@ -17,6 +17,10 @@ import {
   findInventoryItemOrFail,
   inventoryItemToDto,
 } from './inventory/inventory-item-ops';
+import {
+  assertInventoryAddFits,
+  encumbranceFromInventoryDtos,
+} from './inventory/inventory-encumbrance';
 
 @Injectable()
 export class CharacterInventoryRepository {
@@ -29,7 +33,10 @@ export class CharacterInventoryRepository {
     private readonly slotResolver: EquipmentSlotResolver,
   ) {}
 
-  async list(characterId: string): Promise<CharacterInventoryResponseDto> {
+  async list(
+    characterId: string,
+    strengthScore: number,
+  ): Promise<CharacterInventoryResponseDto> {
     const rows = await this.items.find({
       where: { characterId },
       order: { location: 'ASC', itemSlug: 'ASC' },
@@ -37,14 +44,28 @@ export class CharacterInventoryRepository {
     const dtos = await Promise.all(
       rows.map((row) => inventoryItemToDto(this.catalogItems, row)),
     );
-    return { items: dtos };
+    return {
+      items: dtos,
+      encumbrance: encumbranceFromInventoryDtos(dtos, strengthScore),
+    };
   }
 
   async add(
     characterId: string,
     dto: AddInventoryItemDto,
+    strengthScore: number,
   ): Promise<InventoryItemResponseDto> {
-    await this.catalogLookup.assertItemInCatalog(dto.itemSlug);
+    const catalog = await this.catalogLookup.assertItemInCatalog(dto.itemSlug);
+    const delta = dto.quantity ?? 1;
+    await assertInventoryAddFits({
+      items: this.items,
+      catalogItems: this.catalogItems,
+      characterId,
+      strengthScore,
+      weight: catalog.weight,
+      deltaQuantity: delta,
+      itemSlug: dto.itemSlug,
+    });
 
     const existing = await this.items.findOne({
       where: { characterId, itemSlug: dto.itemSlug },
@@ -56,7 +77,7 @@ export class CharacterInventoryRepository {
           'Item is equipped; unequip before adding more quantity',
         );
       }
-      existing.quantity += dto.quantity ?? 1;
+      existing.quantity += delta;
       await this.items.save(existing);
       return inventoryItemToDto(this.catalogItems, existing);
     }
@@ -64,7 +85,7 @@ export class CharacterInventoryRepository {
     const row = this.items.create({
       characterId,
       itemSlug: dto.itemSlug,
-      quantity: dto.quantity ?? 1,
+      quantity: delta,
       location: 'backpack',
       equipmentSlot: null,
       attuned: false,
@@ -73,10 +94,7 @@ export class CharacterInventoryRepository {
     return inventoryItemToDto(this.catalogItems, row);
   }
 
-  /**
-   * Expande equipamento inicial (pacotes) em itens da mochila — estilo Beyond.
-   * Não sobrescreve itens já presentes (o jogador pode ter gasto/movido).
-   */
+  /** Seed mochila a partir do equipamento inicial; não sobrescreve itens existentes. */
   async ensureFromStartingEquipment(
     characterId: string,
     equipment: Array<{ itemSlug?: string; quantity?: number }>,
@@ -113,8 +131,22 @@ export class CharacterInventoryRepository {
     characterId: string,
     itemSlug: string,
     dto: PatchInventoryItemDto,
+    strengthScore: number,
   ): Promise<InventoryItemResponseDto> {
     const row = await findInventoryItemOrFail(this.items, characterId, itemSlug);
+
+    if (dto.quantity !== undefined && dto.quantity > row.quantity) {
+      const catalog = await this.catalogLookup.assertItemInCatalog(itemSlug);
+      await assertInventoryAddFits({
+        items: this.items,
+        catalogItems: this.catalogItems,
+        characterId,
+        strengthScore,
+        weight: catalog.weight,
+        deltaQuantity: dto.quantity - row.quantity,
+        itemSlug,
+      });
+    }
 
     if (dto.quantity !== undefined) {
       row.quantity = dto.quantity;

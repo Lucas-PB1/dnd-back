@@ -62,7 +62,7 @@ flowchart TB
 - **API:** `src/game/` — submódulos `sheet/`, `build/`, `progression/`, `inventory/`, `session/`, `shared/`
 - **Segurança:** ownership por `userId` + `SupabaseAuthGuard`
 - **Referência ao catálogo:** slug de classe/espécie/antecedente — não duplicar regras PHB no domínio
-- **Campanha / combate (7D):** MVP de campanhas (`campaign`, membros dm/player/assistant, vínculo N:N de personagens) em `src/game/campaign/`; combate/iniciativa ainda futuro
+- **Campanha / combate (7D):** campanhas + encontros (`campaign_encounter`) com PCs enriquecidos (PV/CA/nível/talentos/condições) e **criaturas manuais** (nome/PV/CA); jogadores veem se `players_can_view` (PV de criatura: hidden/percent/exact) — catálogo de monstros ainda fora de escopo
 
 ## CQRS leve
 

@@ -35,6 +35,11 @@ export class PatchInventoryItemHandler {
     if (isEquipping(dto)) {
       await this.assertCanEquip.assert(character, itemSlug);
     }
-    return this.inventory.patch(characterId, itemSlug, dto);
+    return this.inventory.patch(
+      characterId,
+      itemSlug,
+      dto,
+      character.abilityScores?.forca ?? 10,
+    );
   }
 }

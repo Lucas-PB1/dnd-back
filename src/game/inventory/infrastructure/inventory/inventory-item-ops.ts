@@ -11,6 +11,7 @@ import {
   itemRequiresAttunement,
   MAX_ATTUNED_ITEMS,
 } from '../../domain/attunement';
+import { parseItemWeightKg } from '../../domain/encumbrance';
 
 export async function findInventoryItemOrFail(
   items: Repository<PlayerCharacterItem>,
@@ -90,5 +91,6 @@ export async function inventoryItemToDto(
     equipmentSlot: row.equipmentSlot,
     attuned: row.attuned,
     requiresAttunement: itemRequiresAttunement(catalog?.properties),
+    weightKg: parseItemWeightKg(catalog?.weight),
   };
 }
