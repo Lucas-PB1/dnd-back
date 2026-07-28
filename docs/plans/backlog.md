@@ -39,7 +39,6 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 ### P2 — polish / front
 
-- [ ] **Front:** wizard auto-preencher magias de feat/espécie (API já sync no create; falta catálogo no client)
 - [ ] **Front:** UI de ataques além do mínimo na aba Ações
 
 ### Ops / qualidade
@@ -54,10 +53,9 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 ## Ordem sugerida
 
-1. **P2 front wizard magias** (precisa endpoints de granted ou preview)  
-2. Deploy front / E2E  
-3. **P1 combate situacional** (lotes)  
-4. Ops restantes  
+1. Deploy front / E2E  
+2. **P1 combate situacional** (lotes)  
+3. Ops restantes  
 
 ---
 

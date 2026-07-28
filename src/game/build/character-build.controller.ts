@@ -15,7 +15,12 @@ import {
 } from '@nestjs/swagger';
 import { SupabaseAuthGuard } from '../../identity/guards/supabase-auth.guard';
 import { RollAbilitiesHandler } from './application/roll-abilities.handler';
+import { PreviewGrantedSpellsHandler } from './application/preview-granted-spells.handler';
 import { RollAbilitiesDto, RollAbilitiesResponseDto } from './dto/roll-abilities.dto';
+import {
+  PreviewGrantedSpellsDto,
+  PreviewGrantedSpellsResponseDto,
+} from './dto/preview-granted-spells.dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()
@@ -23,7 +28,10 @@ import { RollAbilitiesDto, RollAbilitiesResponseDto } from './dto/roll-abilities
 @UseGuards(SupabaseAuthGuard)
 @Controller('characters')
 export class CharacterBuildController {
-  constructor(private readonly rollAbilities: RollAbilitiesHandler) {}
+  constructor(
+    private readonly rollAbilities: RollAbilitiesHandler,
+    private readonly previewGrantedSpells: PreviewGrantedSpellsHandler,
+  ) {}
 
   @Post('roll-abilities')
   @HttpCode(HttpStatus.OK)
@@ -33,5 +41,18 @@ export class CharacterBuildController {
     @Body() dto: RollAbilitiesDto,
   ): RollAbilitiesResponseDto {
     return this.rollAbilities.execute(dto);
+  }
+
+  @Post('granted-spells/preview')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary:
+      'Preview granted spells merge (feat/species/subclass) without persisting',
+  })
+  @ApiOkResponse({ type: PreviewGrantedSpellsResponseDto })
+  previewGranted(
+    @Body() dto: PreviewGrantedSpellsDto,
+  ): Promise<PreviewGrantedSpellsResponseDto> {
+    return this.previewGrantedSpells.execute(dto);
   }
 }

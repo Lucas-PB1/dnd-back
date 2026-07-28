@@ -29,7 +29,9 @@ export class CharacterSpeciesChoicesValidator {
       throw new BadRequestException(`Species '${speciesSlug}' has no trait choices`);
     }
 
-    const requiredKinds = [...new Set(rows.map((row) => row.choiceKind))];
+    const requiredKinds = [...new Set(rows.map((row) => row.choiceKind))].filter(
+      (kind) => !OPTIONAL_KINDS.has(kind),
+    );
     const providedKinds = requiredChoices.map((choice) => choice.choiceKind);
     const allProvidedKinds = choices.map((choice) => choice.choiceKind);
 
