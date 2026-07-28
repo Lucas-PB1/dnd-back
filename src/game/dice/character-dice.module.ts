@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CombatModule } from '../combat/combat.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
@@ -10,7 +10,11 @@ import { CharacterRollsService } from './application/character-rolls.service';
  * Sheet permanece para CharacterDomainService + CharacterSheetRepository (perícias/ST/etc.).
  */
 @Module({
-  imports: [GameSharedModule, CombatModule, CharacterSheetModule],
+  imports: [
+    GameSharedModule,
+    CombatModule,
+    forwardRef(() => CharacterSheetModule),
+  ],
   controllers: [CharacterDiceController],
   providers: [CharacterRollsService],
   exports: [CharacterRollsService],
