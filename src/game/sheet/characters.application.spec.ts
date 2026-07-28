@@ -6,9 +6,9 @@ import { DataSource } from 'typeorm';
 import { CharacterRepository } from '../shared/infrastructure/character.repository';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
-import { EquippedArmorClassService } from '../combat/infrastructure/equipped-armor-class.service';
-import { EquippedWeaponAttacksService } from '../combat/infrastructure/equipped-weapon-attacks.service';
-import { EquippedEquipmentComplianceService } from '../combat/infrastructure/equipped-equipment-compliance.service';
+import { ResolveEquippedArmorClass } from '../combat/application/resolve-equipped-armor-class';
+import { ResolveEquippedWeaponAttacks } from '../combat/application/resolve-equipped-weapon-attacks';
+import { ResolveEquipmentCompliance } from '../combat/application/resolve-equipment-compliance';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CharacterDomainService } from './domain/core/character-domain.service';
@@ -20,7 +20,7 @@ import { CatalogLookupService } from '../../catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { GrantedSpellCatalogService } from '../spellcasting/infrastructure/granted-spell-catalog.service';
+import { LoadGrantedSpellCatalog } from '../spellcasting/application/load-granted-spell-catalog';
 import { CampaignCharacterAccessService } from '../campaign/infrastructure/campaign-character-access.service';
 import { CampaignService } from '../campaign/application/campaign.service';
 
@@ -149,7 +149,7 @@ describe('Characters application layer', () => {
         { provide: CharacterSheetRepository, useValue: sheetRepo },
         { provide: CharacterDomainService, useValue: domain },
         {
-          provide: EquippedArmorClassService,
+          provide: ResolveEquippedArmorClass,
           useValue: {
             resolve: jest.fn().mockResolvedValue({
               armorClass: 10,
@@ -158,13 +158,13 @@ describe('Characters application layer', () => {
           },
         },
         {
-          provide: EquippedWeaponAttacksService,
+          provide: ResolveEquippedWeaponAttacks,
           useValue: {
             resolve: jest.fn().mockResolvedValue([]),
           },
         },
         {
-          provide: EquippedEquipmentComplianceService,
+          provide: ResolveEquipmentCompliance,
           useValue: {
             resolve: jest.fn().mockResolvedValue({
               lacksArmorTraining: false,
@@ -198,7 +198,7 @@ describe('Characters application layer', () => {
           useValue: { find: jest.fn().mockResolvedValue([]) },
         },
         {
-          provide: GrantedSpellCatalogService,
+          provide: LoadGrantedSpellCatalog,
           useValue: {
             loadMergeCatalog: jest.fn().mockResolvedValue({
               speciesCatalog: [],

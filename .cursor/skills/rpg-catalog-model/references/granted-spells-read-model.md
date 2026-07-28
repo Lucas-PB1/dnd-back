@@ -12,8 +12,9 @@ Definição species+feat: `database/migrations/060_views/V039_v_species_feat_gra
 
 ## Runtime
 
-- `GrantedSpellCatalogService` → entities das views
+- `LoadGrantedSpellCatalog` → entities das views
 - Domain: `spellcasting/granted-spells/*` — merge/annotate; **sem** SQL duplicado
+- Application aliases: `mergeGrantedSpells`, `annotateSpellSources`, `resolveSpellcastingStats`
 
 ## Ao adicionar espécie/linhagem
 

@@ -4,7 +4,7 @@ import { CharacterDomainService } from '../../../sheet/domain/core/character-dom
 import { collectFightingStyleSlugsFromSubclassOptions } from '../../../sheet/domain/validation/class-options/fighting-style-feat-options';
 import { collectMasteredWeaponSlugs } from '../../../sheet/domain/validation/class-options/class-weapon-mastery-slots';
 import { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import { EquippedWeaponAttacksService } from '../../../combat/infrastructure/equipped-weapon-attacks.service';
+import { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
 import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
 
 export type RollWeaponCharacter = {
@@ -19,7 +19,7 @@ export async function findEquippedWeaponAttack(
   deps: {
     sheet: CharacterSheetRepository;
     domain: CharacterDomainService;
-    weaponAttacks: EquippedWeaponAttacksService;
+    weaponAttacks: ResolveEquippedWeaponAttacks;
   },
   character: RollWeaponCharacter,
   itemSlug: string,

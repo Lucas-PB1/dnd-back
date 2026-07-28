@@ -129,7 +129,7 @@ Nenhum — ✅ zero críticos após P5.
 | `session/dto/character-state.dto.ts` | 161 |
 | `sheet/domain/character-sheet.validator.ts` | 159 |
 | `dice/domain/dice.ts` | 153 |
-| `sheet/domain/spell-quota.ts` | 153 |
+| `spellcasting/domain/spell-quota.ts` | 153 |
 
 ### P0 feito (referência)
 
@@ -157,7 +157,7 @@ Nenhum — ✅ zero críticos após P5.
 8. ~~**P7** — Auditoria SQL DRY via `rpg-catalog-model`.~~ ✅ FEITO
 9. ~~**P8 (opcional)** — `character-spells.validator.ts` (234) · DTO response se >250.~~ ✅ FEITO
 
-**Próximo (ownership de módulo, não tamanho de arquivo):** [`sheet-submodules-plan.md`](sheet-submodules-plan.md) — M1 `combat/` · M2 `spellcasting/` · use cases.
+**Próximo (ownership):** [`sheet-submodules-plan.md`](sheet-submodules-plan.md) — M1+M2 feitos; M3 naming use cases opcional.
 
 Cada PR: um concern, specs verdes, sem rename cosmético.
 

@@ -8,11 +8,11 @@ import { CharacterDomainService } from '../domain/core/character-domain.service'
 import { computeDerivedStats } from '../domain/stats/character-derived-stats';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
-import { EquippedArmorClassService } from '../../combat/infrastructure/equipped-armor-class.service';
-import { EquippedWeaponAttacksService } from '../../combat/infrastructure/equipped-weapon-attacks.service';
-import { EquippedEquipmentComplianceService } from '../../combat/infrastructure/equipped-equipment-compliance.service';
+import { ResolveEquippedArmorClass } from '../../combat/application/resolve-equipped-armor-class';
+import { ResolveEquippedWeaponAttacks } from '../../combat/application/resolve-equipped-weapon-attacks';
+import { ResolveEquipmentCompliance } from '../../combat/application/resolve-equipment-compliance';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { GrantedSpellCatalogService } from '../../spellcasting/infrastructure/granted-spell-catalog.service';
+import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
 import {
   resolveSizeCategory,
   sizeCategoryFromChoices,
@@ -29,12 +29,12 @@ export class CharacterMapper {
     private readonly dataSource: DataSource,
     private readonly domain: CharacterDomainService,
     private readonly sheet: CharacterSheetRepository,
-    private readonly equippedArmorClass: EquippedArmorClassService,
-    private readonly equippedWeaponAttacks: EquippedWeaponAttacksService,
-    private readonly equipmentCompliance: EquippedEquipmentComplianceService,
+    private readonly equippedArmorClass: ResolveEquippedArmorClass,
+    private readonly equippedWeaponAttacks: ResolveEquippedWeaponAttacks,
+    private readonly equipmentCompliance: ResolveEquipmentCompliance,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
-    private readonly grantedSpellCatalog: GrantedSpellCatalogService,
+    private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
     @InjectRepository(PhbSpecies)
     private readonly speciesRepo: Repository<PhbSpecies>,
     @InjectRepository(PlayerCharacterItem)

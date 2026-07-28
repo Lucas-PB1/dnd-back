@@ -27,7 +27,7 @@ export type EquipmentComplianceResolveInput = {
 };
 
 @Injectable()
-export class EquippedEquipmentComplianceService {
+export class ResolveEquipmentCompliance {
   constructor(
     @InjectRepository(PlayerCharacterItem)
     private readonly inventoryItems: Repository<PlayerCharacterItem>,

@@ -24,7 +24,7 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 - [x] Fontes passivas de classe / subclasse / talento
 - [x] Defesa sem Armadura no banco (`phb_unarmored_defense` → `v_phb_unarmored_defense`); domínio só aplica
 
-Código: `armor-class.ts` + `combat-catalog.service.ts` + `equipped-armor-class.service.ts` + `character.mapper.ts`
+Código: `armor-class.ts` + `combat-catalog.service.ts` + `resolve-equipped-armor-class.ts` + `character.mapper.ts`
 
 ---
 

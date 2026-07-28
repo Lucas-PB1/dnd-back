@@ -10,7 +10,7 @@ import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
 } from '../../../../spellcasting/domain/granted-spells';
-import { GrantedSpellCatalogService } from '../../../../spellcasting/infrastructure/granted-spell-catalog.service';
+import { LoadGrantedSpellCatalog } from '../../../../spellcasting/application/load-granted-spell-catalog';
 import { assertSpellQuotas } from './assert-spell-quotas';
 import {
   loadSubclassSpellcasting,
@@ -27,7 +27,7 @@ export class CharacterSpellsValidator {
     private readonly classSpellsRepo: Repository<VSpellByClass>,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
-    private readonly grantedSpellCatalog: GrantedSpellCatalogService,
+    private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
   ) {}
 
   async validateCharacterSpells(

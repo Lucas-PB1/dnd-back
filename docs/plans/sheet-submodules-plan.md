@@ -2,7 +2,7 @@
 
 Complementa [`game-module-structure.md`](../architecture/game-module-structure.md) e o code health (P0–P8 em [`code-health-plan.md`](code-health-plan.md)).
 
-**Status:** M1+M2 feitos · M3 opcional · **Última revisão:** 2026-07-27
+**Status:** M1+M2+M3 feitos · **Última revisão:** 2026-07-27
 
 ## Problema
 
@@ -24,7 +24,7 @@ game/
 ├── sheet/          # CRUD ficha + validação + persistência de escolhas
 ├── combat/         # read-model equipado (CA / ataques / compliance)
 ├── spellcasting/   # grants + merge + stats de conjuração (CD/ataque)
-├── dice/           # rolls → importa combat (não sheet)
+├── dice/           # rolls → combat (equipped) + sheet (domain/repo)
 ├── inventory/
 ├── …
 ```
@@ -63,7 +63,7 @@ game/
 | `ResolveEquipmentCompliance` | Avisos + flags de treino/Força | personagem + equipamento | `{ warnings, cannotCast…, speedPenalty… }` |
 | `ResolveCharacterCombatSlice` *(opcional facade)* | Agrega os três acima | mesmo input do mapper | slice do response DTO |
 
-Implementação sugerida: thin `application/*.ts` que delegam aos services/domain já existentes (hoje `Equipped*Service`), **renomeando só se o rename for barato no mesmo PR**; senão manter classes atuais e documentar o use case no plano até um PR de naming.
+Implementação: classes Nest em `combat/application/` (`ResolveEquippedArmorClass`, `ResolveEquippedWeaponAttacks`, `ResolveEquipmentCompliance`) + facade `resolveCharacterCombatSlice`.
 
 ### Novos / explicitados em `spellcasting`
 
@@ -82,7 +82,7 @@ Domain puro (`mergeCharacterSpellsWithGrantedSources`, collectors) **move** para
 
 | Use case | Depende de |
 |----------|------------|
-| `RollAttack` / `RollDamage` | `ResolveEquippedWeaponAttacks` (via `EquippedWeaponAttacksService` exportado por `combat`) |
+| `RollAttack` / `RollDamage` | `ResolveEquippedWeaponAttacks` (exportado por `combat`) |
 | `RollSkill` / `RollSavingThrow` / `RollInitiative` | sheet/shared (sem combat) |
 
 ---
@@ -134,15 +134,16 @@ flowchart TB
   sheet --> inv
   dice --> shared
   dice --> combat
-  dice -.->|sem import direto| sheet
+  dice --> sheet
 ```
 
 | De | Para | Permitido |
 |----|------|-----------|
 | `dice` | `combat`, `shared` | sim |
-| `dice` | `sheet` | **não** (meta do M1) |
+| `dice` | `sheet` (domain/repo) | sim — ainda necessário para perícia/ST |
+| `dice` | `sheet/infrastructure/equipped-*` | **não** |
 | `sheet` | `combat`, `spellcasting` | sim |
-| `combat` / `spellcasting` | `sheet` | **não** |
+| `combat` / `spellcasting` | `sheet` Nest providers | **não** |
 | `progression` | `spellcasting` (ex. `maxSpellLevelFromSlots`) | sim |
 
 ---
@@ -156,14 +157,14 @@ flowchart TB
 | `sheet/domain/combat/*` | `combat/domain/` |
 | `sheet/domain/creature-size.ts` | `combat/domain/` (hoje na raiz de `sheet/domain`) |
 | `sheet/infrastructure/combat-catalog.service.ts` | `combat/infrastructure/` |
-| `sheet/infrastructure/equipped-armor-class.service.ts` | `combat/infrastructure/` ou `application/` |
-| `sheet/infrastructure/equipped-weapon-attacks.service.ts` | idem |
-| `sheet/infrastructure/equipped-equipment-compliance.service.ts` | idem |
+| `sheet/infrastructure/equipped-armor-class.service.ts` | `combat/application/resolve-equipped-armor-class.ts` (`ResolveEquippedArmorClass`) |
+| `sheet/infrastructure/equipped-weapon-attacks.service.ts` | `combat/application/resolve-equipped-weapon-attacks.ts` (`ResolveEquippedWeaponAttacks`) |
+| `sheet/infrastructure/equipped-equipment-compliance.service.ts` | `combat/application/resolve-equipment-compliance.ts` (`ResolveEquipmentCompliance`) |
 | `sheet/infrastructure/mapping/map-character-combat.ts` | `combat/application/resolve-character-combat-slice.ts` (ou mapping/) |
 
 **Fica em sheet:** validators de equipment/weapon mastery (podem importar **tipos/funções puras** de `combat/domain`).
 
-**Exports do `CombatModule`:** `EquippedWeaponAttacksService` (mínimo para dice) + os três resolve + facade do slice se existir.
+**Exports do `CombatModule`:** `ResolveEquippedWeaponAttacks` (mínimo para dice) + os três resolve + facade do slice + `CombatCatalogService`.
 
 **Specs:** mover `armor-class.spec`, `weapon-attack.spec`, compliance specs junto.
 
@@ -172,14 +173,14 @@ flowchart TB
 | De (hoje) | Para |
 |-----------|------|
 | `sheet/domain/spellcasting/*` | `spellcasting/domain/` |
-| `sheet/infrastructure/granted-spell-catalog.service.ts` | `spellcasting/infrastructure/` |
+| `sheet/infrastructure/granted-spell-catalog.service.ts` | `spellcasting/application/load-granted-spell-catalog.ts` (`LoadGrantedSpellCatalog`) |
 | `sheet/infrastructure/mapping/map-character-spellcasting.ts` | `spellcasting/application/…` |
 
 **Fica em sheet:** `validation/spells/*` (injeta catálogo/use cases).
 
 **Ajustar:** `progression` → importar `maxSpellLevelFromSlots` de `spellcasting/domain`.
 
-**Exports:** `GrantedSpellCatalogService`, merge/annotate/stats helpers ou use-case facades.
+**Exports:** `LoadGrantedSpellCatalog` + re-exports application (`mergeGrantedSpells`, `annotateSpellSources`, `resolveSpellcastingStats`).
 
 ### Fora de escopo (não extrair Nest module)
 
@@ -195,7 +196,7 @@ flowchart TB
 1. Criar `src/game/combat/` (`combat.module.ts` + pastas).
 2. Mover domain + infra de combate; barrel/reexport temporário em `sheet` **só se** necessário para verde rápido — preferir atualizar imports de uma vez.
 3. `CharacterSheetModule` importa `CombatModule`.
-4. `CharacterDiceModule` importa `CombatModule`; **remove** import de `CharacterSheetModule` se nada mais precisar.
+4. `CharacterDiceModule` importa `CombatModule` **e** `CharacterSheetModule` (ainda precisa de domain/repo para perícia/ST; só `equipped-*` sai do sheet).
 5. Atualizar `character.mapper` / specs / `game-module-structure.md`.
 6. Testes: `sheet` + `dice` + specs de combat.
 
@@ -211,9 +212,9 @@ flowchart TB
 
 **DoD M2:** pasta `sheet/domain/spellcasting` vazia/removida; grants não vivem sob sheet.
 
-### PR M3 (opcional) — Naming use cases
+### PR M3 — Naming use cases ✅
 
-Renomear `Equipped*Service` → `ResolveEquipped*` (ou wrappers application) **sem** mudar comportamento. Só se o time quiser linguagem ubíqua explícita.
+Renomear `Equipped*Service` → `ResolveEquipped*` / `ResolveEquipmentCompliance` e `GrantedSpellCatalogService` → `LoadGrantedSpellCatalog` **sem** mudar comportamento. Application wrappers para merge/annotate/stats.
 
 ---
 
@@ -233,20 +234,20 @@ src/game/combat/
 │   ├── equipment-compliance.ts
 │   └── …
 └── infrastructure/
-    ├── combat-catalog.service.ts
-    └── …
+    └── combat-catalog.service.ts  # adapter de suporte
 
 src/game/spellcasting/
 ├── spellcasting.module.ts
 ├── application/
 │   ├── load-granted-spell-catalog.ts
 │   ├── merge-granted-spells.ts             # thin wrap domain
+│   ├── annotate-spell-sources.ts
 │   ├── resolve-spellcasting-stats.ts
 │   └── resolve-character-spellcasting-slice.ts
 ├── domain/
 │   └── granted-spells/ …
 └── infrastructure/
-    └── granted-spell-catalog.service.ts
+    └── (vazio — catálogo Nest vive em application/)
 ```
 
 Convenção de nome: preferir verbo + substantivo (`resolve-…`, `merge-…`, `load-…`). Sufixo `.use-case.ts` **opcional** — só se o time adotar de forma consistente.
@@ -259,16 +260,16 @@ Convenção de nome: preferir verbo + substantivo (`resolve-…`, `merge-…`, `
 |-------|-----------|
 | Ciclo `sheet` ↔ `combat` | Combat não importa sheet; sheet só DI |
 | Domain sheet importa infra combat (`CharacterDomainService` → HP bonus via `CombatCatalogService`) | Mover dependência: domain sheet chama use case/port de combat, ou mover HP-bonus catalog para shared/combat export |
-| Specs de application sheet mockam Equipped* | Atualizar providers para tokens do `CombatModule` |
+| Specs de application sheet mockam Resolve* | Atualizar providers para tokens do `CombatModule` |
 | Weapon mastery validator usa `weapon-attack` | Import de `combat/domain` (puro) OK |
 
 ---
 
 ## Definition of done (rolling)
 
-- [x] `CombatModule` existe; `dice` depende dele, não de `sheet`
+- [x] `CombatModule` existe; `dice` usa `combat` para equipped (ainda importa `sheet` para domain/repo)
 - [x] `SpellcastingModule` existe; grants fora de `sheet/domain`
-- [ ] Use cases listados acima existem como arquivos `application/` **ou** estão documentados como alias das classes atuais até M3
+- [x] Use cases listados acima existem como arquivos `application/` (M3 naming feito)
 - [x] [`game-module-structure.md`](../architecture/game-module-structure.md) atualizado
 - [x] Specs sheet + dice + combat/spellcasting verdes
 - [x] URLs REST inalteradas

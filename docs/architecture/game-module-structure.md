@@ -23,7 +23,7 @@ BC Game (modular monolith)
 └── dice/             # motor de dados + rolls da ficha (ataque, dano, perícia, ST, iniciativa)
 ```
 
-Ownership M1+M2 feitos: [`sheet-submodules-plan.md`](../plans/sheet-submodules-plan.md) (M3 naming opcional).
+Ownership M1+M2+M3 feitos: [`sheet-submodules-plan.md`](../plans/sheet-submodules-plan.md).
 
 Cada submódulo:
 
@@ -51,11 +51,11 @@ flowchart TB
   end
 
   subgraph combat [game/combat]
-    C[Equipped* / CombatCatalog]
+    C[ResolveEquipped* / CombatCatalog]
   end
 
   subgraph spell [game/spellcasting]
-    S[GrantedSpellCatalog / stats]
+    S[LoadGrantedSpellCatalog / stats]
   end
 
   sheet --> shared
@@ -74,6 +74,7 @@ flowchart TB
   session --> catalog
   dice --> shared
   dice --> combat
+  dice --> sheet
 ```
 
 | De | Para | Permitido |
@@ -82,8 +83,8 @@ flowchart TB
 | `combat` | `shared`, `catalog`, `inventory` (entity) | sim |
 | `spellcasting` | `catalog` (views); DTO/tipos type-only de sheet | sim |
 | `spellcasting` | `sheet` Nest providers / infra | **não** |
-| `dice` | `shared`, `combat` | sim |
-| `dice` | `sheet` | **não** |
+| `dice` | `shared`, `combat`, `sheet` (domain/repo para perícia/ST) | sim |
+| `dice` | `sheet/infrastructure/equipped-*` | **não** — usar `combat` |
 | `combat` | `sheet` | **não** |
 | `inventory` | `shared`, `catalog` | sim |
 | `progression` | `shared`, `catalog`, `sheet` (domain), `spellcasting` (domain) | sim |

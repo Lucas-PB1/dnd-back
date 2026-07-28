@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
 import { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
-import { EquippedWeaponAttacksService } from '../../combat/infrastructure/equipped-weapon-attacks.service';
+import { ResolveEquippedWeaponAttacks } from '../../combat/application/resolve-equipped-weapon-attacks';
 import {
   CharacterRollResponseDto,
   RollAttackDto,
@@ -24,7 +24,7 @@ export class CharacterRollsService {
     private readonly access: PlayerCharacterAccessService,
     private readonly sheet: CharacterSheetRepository,
     private readonly domain: CharacterDomainService,
-    private readonly weaponAttacks: EquippedWeaponAttacksService,
+    private readonly weaponAttacks: ResolveEquippedWeaponAttacks,
     private readonly dataSource: DataSource,
   ) {}
 

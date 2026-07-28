@@ -15,8 +15,8 @@ import {
   resolveBackgroundToolItemSlug,
 } from '../domain/origin/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../domain/origin/species-origin';
-import { mergeCharacterSpellsWithGrantedSources } from '../../spellcasting/domain/granted-spells';
-import { GrantedSpellCatalogService } from '../../spellcasting/infrastructure/granted-spell-catalog.service';
+import { mergeGrantedSpells } from '../../spellcasting/application/merge-granted-spells';
+import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
 
 @Injectable()
@@ -29,7 +29,7 @@ export class CreateCharacterHandler {
     private readonly sheetRepository: CharacterSheetRepository,
     private readonly mapper: CharacterMapper,
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
-    private readonly grantedSpellCatalog: GrantedSpellCatalogService,
+    private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
   ) {}
 
   async execute(userId: string, dto: CreateCharacterDto): Promise<CharacterResponseDto> {
@@ -85,7 +85,7 @@ export class CreateCharacterHandler {
         featSlugs,
         subclassSlug: dto.subclassSlug,
       });
-    sheetInput.characterSpells = mergeCharacterSpellsWithGrantedSources(
+    sheetInput.characterSpells = mergeGrantedSpells(
       sheetInput.characterSpells ?? [],
       {
         featOptions: sheetInput.featOptions,

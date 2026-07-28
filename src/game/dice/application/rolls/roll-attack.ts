@@ -1,6 +1,6 @@
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import type { EquippedWeaponAttacksService } from '../../../combat/infrastructure/equipped-weapon-attacks.service';
+import type { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
 import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
 import {
   rollD20Check,
@@ -16,7 +16,7 @@ export async function executeRollAttack(input: {
   access: PlayerCharacterAccessService;
   sheet: CharacterSheetRepository;
   domain: CharacterDomainService;
-  weaponAttacks: EquippedWeaponAttacksService;
+  weaponAttacks: ResolveEquippedWeaponAttacks;
   userId: string;
   characterId: string;
   dto: RollAttackDto;

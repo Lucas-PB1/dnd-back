@@ -7,10 +7,10 @@ import { VPhbHpBonusSource } from '../../entities/views/v-phb-hp-bonus-source.en
 import { VPhbUnarmoredDefense } from '../../entities/views/v-phb-unarmored-defense.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
+import { ResolveEquippedArmorClass } from './application/resolve-equipped-armor-class';
+import { ResolveEquippedWeaponAttacks } from './application/resolve-equipped-weapon-attacks';
+import { ResolveEquipmentCompliance } from './application/resolve-equipment-compliance';
 import { CombatCatalogService } from './infrastructure/combat-catalog.service';
-import { EquippedArmorClassService } from './infrastructure/equipped-armor-class.service';
-import { EquippedEquipmentComplianceService } from './infrastructure/equipped-equipment-compliance.service';
-import { EquippedWeaponAttacksService } from './infrastructure/equipped-weapon-attacks.service';
 
 @Module({
   imports: [
@@ -26,15 +26,15 @@ import { EquippedWeaponAttacksService } from './infrastructure/equipped-weapon-a
   ],
   providers: [
     CombatCatalogService,
-    EquippedArmorClassService,
-    EquippedWeaponAttacksService,
-    EquippedEquipmentComplianceService,
+    ResolveEquippedArmorClass,
+    ResolveEquippedWeaponAttacks,
+    ResolveEquipmentCompliance,
   ],
   exports: [
     CombatCatalogService,
-    EquippedArmorClassService,
-    EquippedWeaponAttacksService,
-    EquippedEquipmentComplianceService,
+    ResolveEquippedArmorClass,
+    ResolveEquippedWeaponAttacks,
+    ResolveEquipmentCompliance,
   ],
 })
 export class CombatModule {}

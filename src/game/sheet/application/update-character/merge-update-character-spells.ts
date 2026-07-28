@@ -4,8 +4,8 @@ import {
 } from '../../domain/character-sheet.types';
 import { CharacterFeatDto, FeatOptionDto, SpeciesChoiceDto } from '../../dto/character-sheet.dto';
 import { UpdateCharacterDto } from '../../dto/update-character.dto';
-import { mergeCharacterSpellsWithGrantedSources } from '../../../spellcasting/domain/granted-spells';
-import { GrantedSpellCatalogService } from '../../../spellcasting/infrastructure/granted-spell-catalog.service';
+import { mergeGrantedSpells } from '../../../spellcasting/application/merge-granted-spells';
+import { LoadGrantedSpellCatalog } from '../../../spellcasting/application/load-granted-spell-catalog';
 
 export async function mergeUpdateCharacterSpells(input: {
   dto: UpdateCharacterDto;
@@ -24,7 +24,7 @@ export async function mergeUpdateCharacterSpells(input: {
   effectiveCharacterFeats: CharacterFeatDto[];
   effectiveFeatOptions: FeatOptionDto[];
   effectiveSpeciesChoices: SpeciesChoiceDto[] | undefined;
-  grantedSpellCatalog: GrantedSpellCatalogService;
+  grantedSpellCatalog: LoadGrantedSpellCatalog;
 }): Promise<void> {
   const {
     dto,
@@ -51,7 +51,7 @@ export async function mergeUpdateCharacterSpells(input: {
   const previousSubclassGrantedSpells =
     await grantedSpellCatalog.loadSubclassGrantedSpells(previous.subclassSlug);
 
-  sheetInput.characterSpells = mergeCharacterSpellsWithGrantedSources(
+  sheetInput.characterSpells = mergeGrantedSpells(
     dto.characterSpells ?? sheetSnapshot.characterSpells,
     {
       featOptions: effectiveFeatOptions,

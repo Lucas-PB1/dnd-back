@@ -8,7 +8,7 @@ import {
   computeArmorClassFromEquipment,
   type EquippedArmorPiece,
 } from '../domain/armor-class';
-import { CombatCatalogService } from './combat-catalog.service';
+import { CombatCatalogService } from '../infrastructure/combat-catalog.service';
 
 export type ArmorClassResolveInput = {
   classSlug?: string | null;
@@ -18,7 +18,7 @@ export type ArmorClassResolveInput = {
 };
 
 @Injectable()
-export class EquippedArmorClassService {
+export class ResolveEquippedArmorClass {
   constructor(
     @InjectRepository(PlayerCharacterItem)
     private readonly inventoryItems: Repository<PlayerCharacterItem>,

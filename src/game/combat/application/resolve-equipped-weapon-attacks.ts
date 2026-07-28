@@ -26,7 +26,7 @@ export type WeaponAttackResolveContext = {
 };
 
 @Injectable()
-export class EquippedWeaponAttacksService {
+export class ResolveEquippedWeaponAttacks {
   constructor(
     @InjectRepository(PlayerCharacterItem)
     private readonly inventoryItems: Repository<PlayerCharacterItem>,

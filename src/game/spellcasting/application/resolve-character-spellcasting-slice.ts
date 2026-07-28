@@ -2,14 +2,14 @@ import { DataSource, Repository } from 'typeorm';
 import type { AbilityKey } from '../../build/domain/ability-generation';
 import type { AbilityModifiers } from '../../sheet/domain/stats/character-derived-stats';
 import type { CharacterSheetData } from '../../sheet/domain/character-sheet.types';
-import { spellcastingDerivedStats } from '../domain/spellcasting-stats';
 import {
-  annotateCharacterSpellSources,
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
 } from '../domain/granted-spells';
 import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { GrantedSpellCatalogService } from '../infrastructure/granted-spell-catalog.service';
+import { annotateSpellSources } from './annotate-spell-sources';
+import { LoadGrantedSpellCatalog } from './load-granted-spell-catalog';
+import { resolveSpellcastingStats } from './resolve-spellcasting-stats';
 import type { CharacterSpellDto } from '../../sheet/dto/character-sheet.dto';
 
 const ABILITY_SLUGS = new Set<AbilityKey>([
@@ -61,7 +61,7 @@ async function loadSubclassSpellSlugs(
 export async function resolveCharacterSpellcastingSlice(input: {
   dataSource: DataSource;
   subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>;
-  grantedSpellCatalog: GrantedSpellCatalogService;
+  grantedSpellCatalog: LoadGrantedSpellCatalog;
   sheet: CharacterSheetData;
   speciesSlug: string;
   subclassSlug: string | null;
@@ -89,7 +89,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     dataSource,
     classSlug,
   );
-  const spellcasting = spellcastingDerivedStats({
+  const spellcasting = resolveSpellcastingStats({
     spellcastingAbilitySlug,
     proficiencyBonus,
     abilityModifiers,
@@ -115,7 +115,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     subclassSpellsRepo,
     subclassSlug,
   );
-  const characterSpells = annotateCharacterSpellSources(sheet.characterSpells, {
+  const characterSpells = annotateSpellSources(sheet.characterSpells, {
     featGrantedSlugs,
     speciesGrantedSlugs,
     subclassSpellSlugs,

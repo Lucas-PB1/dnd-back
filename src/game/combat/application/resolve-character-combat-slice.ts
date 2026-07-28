@@ -1,21 +1,21 @@
 import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
 import type { SizeCategory } from '../domain/creature-size';
-import { EquippedArmorClassService } from '../infrastructure/equipped-armor-class.service';
-import { EquippedWeaponAttacksService } from '../infrastructure/equipped-weapon-attacks.service';
-import { EquippedEquipmentComplianceService } from '../infrastructure/equipped-equipment-compliance.service';
+import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
+import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
+import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
 import { Repository } from 'typeorm';
 
 export type MappedCombatSlice = {
   armorClass: number;
   armorClassNote: string;
-  weaponAttacks: Awaited<ReturnType<EquippedWeaponAttacksService['resolve']>>;
+  weaponAttacks: Awaited<ReturnType<ResolveEquippedWeaponAttacks['resolve']>>;
   equipmentWarnings: Awaited<
-    ReturnType<EquippedEquipmentComplianceService['resolve']>
+    ReturnType<ResolveEquipmentCompliance['resolve']>
   >['warnings'];
   cannotCastSpellsInArmor: boolean;
   speedPenaltyMeters: Awaited<
-    ReturnType<EquippedEquipmentComplianceService['resolve']>
+    ReturnType<ResolveEquipmentCompliance['resolve']>
   >['speedPenaltyMeters'];
 };
 
@@ -29,9 +29,9 @@ export async function resolveCharacterCombatSlice(input: {
   fightingStyleSlugs: string[];
   masteredWeaponSlugs: string[];
   sizeCategory: SizeCategory;
-  equippedArmorClass: EquippedArmorClassService;
-  equippedWeaponAttacks: EquippedWeaponAttacksService;
-  equipmentCompliance: EquippedEquipmentComplianceService;
+  equippedArmorClass: ResolveEquippedArmorClass;
+  equippedWeaponAttacks: ResolveEquippedWeaponAttacks;
+  equipmentCompliance: ResolveEquipmentCompliance;
   inventoryItems: Repository<PlayerCharacterItem>;
 }): Promise<MappedCombatSlice> {
   const {

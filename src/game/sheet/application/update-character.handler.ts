@@ -9,7 +9,7 @@ import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
-import { GrantedSpellCatalogService } from '../../spellcasting/infrastructure/granted-spell-catalog.service';
+import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';
 import { clearStaleSheetChoices } from './update-character/clear-stale-sheet-choices';
 import { mergeUpdateCharacterSpells } from './update-character/merge-update-character-spells';
@@ -30,7 +30,7 @@ export class UpdateCharacterHandler {
     private readonly sheetRepository: CharacterSheetRepository,
     private readonly mapper: CharacterMapper,
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
-    private readonly grantedSpellCatalog: GrantedSpellCatalogService,
+    private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
   ) {}
 
   async execute(

@@ -10,7 +10,7 @@ import {
 } from '../domain/granted-spells';
 
 @Injectable()
-export class GrantedSpellCatalogService {
+export class LoadGrantedSpellCatalog {
   constructor(
     @InjectRepository(VPhbSpeciesGrantedSpell)
     private readonly speciesGrants: Repository<VPhbSpeciesGrantedSpell>,

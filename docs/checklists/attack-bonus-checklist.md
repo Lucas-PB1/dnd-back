@@ -30,7 +30,7 @@ Legenda: `[x]` feito · `[ ]` pendente · `[~]` parcial
 - [x] Treinamento com Armas Marciais (proficiência)
 - [x] Aba Ações consome `weaponAttacks`
 
-Código: `weapon-attack.ts` + `equipped-weapon-attacks.service.ts` + `character.mapper.ts`
+Código: `weapon-attack.ts` + `resolve-equipped-weapon-attacks.ts` + `character.mapper.ts`
 
 ---
 
