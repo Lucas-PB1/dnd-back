@@ -5,6 +5,11 @@ export interface FeatBenefit {
   description?: string;
 }
 
+export interface FeatAbilityPrerequisite {
+  abilitySlug: string;
+  minimumScore: number;
+}
+
 @ViewEntity({ schema: 'rpg', name: 'v_phb_feat' })
 export class VPhbFeat {
   @ViewColumn({ name: 'feat_slug' })
@@ -27,6 +32,21 @@ export class VPhbFeat {
 
   @ViewColumn({ name: 'prerequisite' })
   prerequisite!: string | null;
+
+  @ViewColumn({ name: 'minimum_level' })
+  minimumLevel!: number | null;
+
+  @ViewColumn({ name: 'ability_prerequisites' })
+  abilityPrerequisites!: FeatAbilityPrerequisite[];
+
+  @ViewColumn({ name: 'requires_spellcasting' })
+  requiresSpellcasting!: boolean;
+
+  @ViewColumn({ name: 'required_armor_training_slug' })
+  requiredArmorTrainingSlug!: string | null;
+
+  @ViewColumn({ name: 'requires_fighting_style' })
+  requiresFightingStyle!: boolean;
 
   @ViewColumn({ name: 'source_chapter' })
   sourceChapter!: number | null;

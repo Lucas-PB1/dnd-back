@@ -54,13 +54,13 @@ function checkSeq(dir, prefix, expectedCount) {
   console.log(`OK ${dir}: ${files.length} file(s)`);
 }
 
-checkSeq('database/migrations/020_tables', 'T', 77);
-checkSeq('database/migrations/060_views', 'V', 30);
+checkSeq('database/migrations/020_tables', 'T', 78);
+checkSeq('database/migrations/060_views', 'V', 31);
 checkSeq('database/migrations/090_player', 'P', 13);
-checkSeq('database/seeds/phb', 'S', 78);
+checkSeq('database/seeds/phb', 'S', 79);
 checkSeq('database/seeds/subclass', 'S', 7);
-checkSeq('database/seeds/valda', 'V', 13);
-checkSeq('database/seeds/valda-gunslinger', 'G', 26);
+checkSeq('database/seeds/valda', 'V', 14);
+checkSeq('database/seeds/valda-gunslinger', 'G', 27);
 
 // Stale path references
 const stale = [

@@ -8,6 +8,14 @@ export class FeatBenefitDto {
   description?: string;
 }
 
+export class FeatAbilityPrerequisiteDto {
+  @ApiProperty({ example: 'destreza' })
+  abilitySlug!: string;
+
+  @ApiProperty({ example: 13 })
+  minimumScore!: number;
+}
+
 export class FeatResponseDto {
   @ApiProperty({ example: 'alert' })
   slug!: string;
@@ -29,6 +37,21 @@ export class FeatResponseDto {
 
   @ApiPropertyOptional()
   prerequisite!: string | null;
+
+  @ApiPropertyOptional({ example: 4 })
+  minimumLevel!: number | null;
+
+  @ApiProperty({ type: [FeatAbilityPrerequisiteDto] })
+  abilityPrerequisites!: FeatAbilityPrerequisiteDto[];
+
+  @ApiProperty()
+  requiresSpellcasting!: boolean;
+
+  @ApiPropertyOptional({ example: 'medium' })
+  requiredArmorTrainingSlug!: string | null;
+
+  @ApiProperty()
+  requiresFightingStyle!: boolean;
 
   @ApiPropertyOptional()
   sourceChapter!: number | null;
