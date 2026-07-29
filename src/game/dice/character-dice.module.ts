@@ -10,13 +10,14 @@ import { CharacterRollsService } from './application/character-rolls.service';
  * Combat (ataques equipados) vem de CombatModule.
  * Sheet permanece para CharacterDomainService + CharacterSheetRepository (perícias/ST/etc.).
  * Session exporta CharacterStateRepository para gasto unificado de recursos/slots nas rolls.
+ * forwardRef evita ciclo Sheet → Campaign → Dice → Session → Sheet.
  */
 @Module({
   imports: [
     GameSharedModule,
     CombatModule,
     forwardRef(() => CharacterSheetModule),
-    CharacterSessionModule,
+    forwardRef(() => CharacterSessionModule),
   ],
   controllers: [CharacterDiceController],
   providers: [CharacterRollsService],

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '../../catalog/catalog.module';
 import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
@@ -32,7 +32,7 @@ import { RangerActionsHandler } from './application/ranger-actions.handler';
       VSubclassSpellSlots,
     ]),
     GameSharedModule,
-    CharacterSheetModule,
+    forwardRef(() => CharacterSheetModule),
     SpellcastingModule,
     CatalogModule,
   ],
@@ -55,4 +55,3 @@ import { RangerActionsHandler } from './application/ranger-actions.handler';
   exports: [CharacterStateRepository],
 })
 export class CharacterSessionModule {}
-
