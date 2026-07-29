@@ -477,6 +477,51 @@ describe('computeWeaponAttacks', () => {
     expect(attack.damageNote).toContain('Fúria +3');
     expect(attack.brutalStrikeDice).toBe('1d10');
   });
+
+  it('adds a synthetic Unarmed Strike with the Martial Arts die for monks', () => {
+    const attacks = computeWeaponAttacks(scores({ forca: 10, destreza: 16 }), [], {
+      proficiencyBonus: 3,
+      weaponProficiencySlugs: [],
+      classSlug: 'monk',
+      level: 5,
+    });
+    const unarmed = attacks.find((a) => a.itemSlug === 'unarmed-strike')!;
+    expect(unarmed).toBeDefined();
+    expect(unarmed.proficient).toBe(true);
+    expect(unarmed.abilitySlug).toBe('destreza');
+    expect(unarmed.attackBonus).toBe(3 + 3); // DES + PB
+    expect(unarmed.damageDice).toBe('1d8');
+    expect(unarmed.martialArtsDie).toBe('1d8');
+  });
+
+  it('upgrades a monk weapon die and allows DEX', () => {
+    const [attack] = computeWeaponAttacks(
+      scores({ forca: 10, destreza: 16 }),
+      [dagger('main_hand')],
+      {
+        proficiencyBonus: 2,
+        weaponProficiencySlugs: ['armas-simples'],
+        classSlug: 'monk',
+        level: 11,
+      },
+    ).filter((a) => a.itemSlug === 'dagger' && a.mode === 'melee');
+    expect(attack.abilitySlug).toBe('destreza');
+    expect(attack.damageDice).toBe('1d10'); // Martial Arts die beats 1d4
+    expect(attack.martialArtsDie).toBe('1d10');
+  });
+
+  it('does not grant Martial Arts benefits while a shield is equipped', () => {
+    const attacks = computeWeaponAttacks(scores(), [], {
+      proficiencyBonus: 3,
+      weaponProficiencySlugs: [],
+      classSlug: 'monk',
+      level: 5,
+      hasShield: true,
+    });
+    const unarmed = attacks.find((a) => a.itemSlug === 'unarmed-strike')!;
+    expect(unarmed.martialArtsDie).toBeNull();
+    expect(unarmed.damageDice).toBe('1'); // fica com o dano base 1
+  });
 });
 
 describe('analyzeDualWield', () => {

@@ -10,6 +10,14 @@ import {
   resolveAttackCritThreshold,
 } from './gunslinger-firearm';
 import {
+  MONK_UNARMED_ITEM_SLUG,
+  isMonkClass,
+  isMonkWeaponForAttack,
+  martialArtsDie,
+  martialArtsDieFaces,
+} from './monk-features';
+import { abilityMod } from './weapon-attack-predicates';
+import {
   abilityShortLabel,
   buildModes,
   formatDamageNote,
@@ -37,8 +45,26 @@ function computeOneAttack(
   equippedWeapons: EquippedWeaponPiece[],
   role: WeaponAttackRole,
 ): WeaponAttack {
-  const proficient = isProficient(piece, context);
+  const monkEligible =
+    isMonkClass(context.classSlug) &&
+    !context.hasShield &&
+    isMonkWeaponForAttack(piece, mode);
+  const proficient =
+    piece.itemSlug === MONK_UNARMED_ITEM_SLUG
+      ? true
+      : isProficient(piece, context);
   const ability = pickAbility(scores, piece, mode);
+  if (monkEligible) {
+    const str = abilityMod(scores.forca);
+    const dex = abilityMod(scores.destreza);
+    if (dex > ability.mod) {
+      ability.slug = 'destreza';
+      ability.mod = dex;
+    } else if (str >= dex && str > ability.mod) {
+      ability.slug = 'forca';
+      ability.mod = str;
+    }
+  }
   const attackParts: string[] = [abilityShortLabel(ability.slug)];
   let attackBonus = ability.mod;
 
@@ -137,9 +163,16 @@ function computeOneAttack(
     equippedWeapons,
     Boolean(context.hasShield),
   );
-  const damageDice = versatile2h
+  let damageDice = versatile2h
     ? (piece.versatileDamage ?? piece.damage ?? '1')
     : (piece.damage ?? '1');
+  let monkMartialArtsDie: string | null = null;
+  if (monkEligible) {
+    const maFaces = martialArtsDieFaces(context.level ?? 1);
+    const weaponFaces = Number(/d(\d+)/i.exec(damageDice)?.[1] ?? '0');
+    if (maFaces > weaponFaces) damageDice = martialArtsDie(context.level ?? 1);
+    monkMartialArtsDie = martialArtsDie(context.level ?? 1);
+  }
   const overkillExtraDice =
     mode === 'ranged' && !isFirearm && !omitAbilityDamage
       ? overkill.extraDamageDice
@@ -218,6 +251,10 @@ function computeOneAttack(
     noteExtras.push(`Golpe Brutal ${brutalDice}`);
   }
 
+  if (monkMartialArtsDie) {
+    noteExtras.push(`Artes Marciais ${monkMartialArtsDie}`);
+  }
+
   const attackNoteBase = `${modeLabel}: ${attackParts.join(' + ')}`;
   const attackNote =
     noteExtras.length > 0
@@ -261,8 +298,24 @@ function computeOneAttack(
     hasRecoil: hasProperty(piece, 'recoil'),
     rageDamageBonus: rageBonus,
     brutalStrikeDice: brutalDice,
+    sneakAttackEligible: mode === 'ranged' || hasProperty(piece, 'finesse'),
+    martialArtsDie: monkMartialArtsDie,
   };
 }
+
+const MONK_UNARMED_PIECE: EquippedWeaponPiece = {
+  itemSlug: MONK_UNARMED_ITEM_SLUG,
+  itemName: 'Ataque Desarmado',
+  category: 'simple',
+  damage: '1',
+  damageType: 'Contundente',
+  versatileDamage: null,
+  propertySlugs: [],
+  equipmentSlot: 'main_hand',
+  masterySlug: null,
+  masteryName: null,
+  reloadCapacity: null,
+};
 
 /** Calcula ataques passivos das armas equipadas (main_hand / off_hand). */
 export function computeWeaponAttacks(
@@ -276,6 +329,11 @@ export function computeWeaponAttacks(
   );
   const dual = analyzeDualWield(weapons, context);
   const attacks: WeaponAttack[] = [];
+  if (isMonkClass(context.classSlug)) {
+    attacks.push(
+      computeOneAttack(scores, MONK_UNARMED_PIECE, 'melee', context, weapons, 'main'),
+    );
+  }
   for (const piece of weapons) {
     const role: WeaponAttackRole =
       piece.equipmentSlot === 'off_hand' && dual.bonusRole

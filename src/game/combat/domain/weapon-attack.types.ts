@@ -95,4 +95,11 @@ export type WeaponAttack = {
   rageDamageBonus: number;
   /** Dados de Golpe Brutal disponíveis neste nível (`1d10` / `2d10`). */
   brutalStrikeDice: string | null;
+  /** Elegível para Ataque Furtivo: arma com Acuidade ou ataque à distância. */
+  sneakAttackEligible: boolean;
+  /**
+   * Dado de Artes Marciais do Monge aplicado a este ataque (`1d6`…`1d12`);
+   * `null` quando não é arma de Monge ou o personagem não é Monge.
+   */
+  martialArtsDie: string | null;
 };

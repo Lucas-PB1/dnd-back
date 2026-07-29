@@ -128,6 +128,11 @@ export function resolveClassResourceMaxima(input: {
       max = input.channelDivinityFromProgression;
     }
 
+    // Mãos Consagradas do Paladino: reserva de cura = 5 × nível.
+    if (slug === 'layOnHands') {
+      max = 5 * input.level;
+    }
+
     if (max <= 0) continue;
 
     result.push({

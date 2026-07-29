@@ -35,6 +35,22 @@ VALUES
     NULL,
     (SELECT id FROM rpg.phb_class WHERE slug = 'bard'),
     1
+  ),
+  (
+    'strokeOfLuck',
+    'Golpe de Sorte',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'),
+    20
+  ),
+  (
+    'layOnHands',
+    'Mãos Consagradas',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'),
+    1
   )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -142,6 +158,18 @@ JOIN rpg.phb_resource_definition rd ON rd.slug = 'bardicInspiration' AND rd.clas
 WHERE c.slug = 'bard'
 ON CONFLICT DO NOTHING;
 
+-- Ladino — Golpe de Sorte (recupera em Descanso Curto ou Longo)
+INSERT INTO rpg.phb_class_resource (
+  class_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT c.id, rd.id, 20, 'fixed'::rpg.resource_max_formula, 1,
+       FALSE, TRUE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'strokeOfLuck' AND rd.class_id = c.id
+WHERE c.slug = 'rogue'
+ON CONFLICT DO NOTHING;
+
 -- Clérigo / Paladino — Canalizar Divindade
 INSERT INTO rpg.phb_class_resource (
   class_id, resource_id, unlock_level, max_formula, fixed_max,
@@ -153,4 +181,16 @@ FROM rpg.phb_class c
 CROSS JOIN rpg.phb_resource_definition rd
 WHERE rd.slug = 'channelDivinity'
   AND c.slug IN ('cleric', 'paladin')
+ON CONFLICT DO NOTHING;
+
+-- Paladino — Mãos Consagradas (pool = 5 × nível; máximo ajustado no runtime)
+INSERT INTO rpg.phb_class_resource (
+  class_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT c.id, rd.id, 1, 'fixed'::rpg.resource_max_formula, 0,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'layOnHands' AND rd.class_id = c.id
+WHERE c.slug = 'paladin'
 ON CONFLICT DO NOTHING;

@@ -5,7 +5,7 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 **Última revisão:** 2026-07-29 — mecânica por classe em [`class-mechanics.md`](class-mechanics.md)
 
-Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mechanics.md)** (Pistoleiro, Bárbaro e Guerreiro feitos; 10 PHB pendentes).
+Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mechanics.md)** (Pistoleiro, Bárbaro, Guerreiro, Ladino, Monge e Paladino feitos; 7 PHB pendentes).
 
 ---
 

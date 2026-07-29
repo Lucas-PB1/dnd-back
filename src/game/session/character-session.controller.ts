@@ -29,6 +29,9 @@ import { UseClassResourceHandler } from './application/use-class-resource.handle
 import { GunslingerActionsHandler } from './application/gunslinger-actions.handler';
 import { BarbarianActionsHandler } from './application/barbarian-actions.handler';
 import { FighterActionsHandler } from './application/fighter-actions.handler';
+import { RogueActionsHandler } from './application/rogue-actions.handler';
+import { MonkActionsHandler } from './application/monk-actions.handler';
+import { PaladinActionsHandler } from './application/paladin-actions.handler';
 import {
   ActionSurgeResponseDto,
   CastSpellDto,
@@ -52,6 +55,9 @@ import {
   UseManeuverDto,
   UseManeuverResponseDto,
   UsePsiWarriorActionDto,
+  UseRogueTableActionDto,
+  UseMonkTableActionDto,
+  UsePaladinTableActionDto,
 } from './dto/character-state.dto';
 
 @ApiTags('game-characters')
@@ -69,6 +75,9 @@ export class CharacterSessionController {
     private readonly gunslinger: GunslingerActionsHandler,
     private readonly barbarian: BarbarianActionsHandler,
     private readonly fighter: FighterActionsHandler,
+    private readonly rogue: RogueActionsHandler,
+    private readonly monk: MonkActionsHandler,
+    private readonly paladin: PaladinActionsHandler,
   ) {}
 
   @Get(':id/state')
@@ -321,5 +330,47 @@ export class CharacterSessionController {
     @Body() dto: UseDungeonPrecautionDto,
   ): Promise<FighterTableActionResponseDto> {
     return this.fighter.useDungeonPrecaution(user.id, id, dto);
+  }
+
+  @Post(':id/rogue/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Rogue or Rogue-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useRogueTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseRogueTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.rogue.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/monk/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Monk or Monk-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useMonkTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseMonkTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.monk.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/paladin/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Paladin or Paladin-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  usePaladinTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UsePaladinTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.paladin.useTableAction(user.id, id, dto);
   }
 }

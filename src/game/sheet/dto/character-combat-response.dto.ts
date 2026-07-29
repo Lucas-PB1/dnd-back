@@ -92,4 +92,16 @@ export class WeaponAttackResponseDto {
 
   @ApiPropertyOptional({ example: '1d10' })
   brutalStrikeDice!: string | null;
+
+  @ApiProperty({
+    example: true,
+    description: 'Arma com Acuidade ou ataque à distância, elegível para Ataque Furtivo',
+  })
+  sneakAttackEligible!: boolean;
+
+  @ApiPropertyOptional({
+    example: '1d6',
+    description: 'Dado de Artes Marciais do Monge aplicado neste ataque',
+  })
+  martialArtsDie!: string | null;
 }

@@ -1,6 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { isFighterClass } from '../../../combat/domain/fighter-features';
+import {
+  auraOfProtectionBonus,
+  hasAuraOfProtection,
+  isPaladinClass,
+} from '../../../combat/domain/paladin-features';
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import { collectSaveProficiencyAbilities } from '../../../sheet/domain/stats/character-check-bonuses';
 import { computeAbilityModifiers } from '../../../sheet/domain/stats/character-derived-stats';
@@ -18,6 +23,10 @@ import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-ite
 import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
 import { applyResourceSpend } from '../../../session/domain/class-resources';
 import { resolveClassResources } from '../../../session/infrastructure/character-state/class-resources';
+import {
+  spendStrokeOfLuck,
+  turnCheckIntoNaturalTwenty,
+} from './stroke-of-luck';
 
 const ABILITY_LABELS: Record<AbilityKey, string> = {
   forca: 'Força',
@@ -59,6 +68,15 @@ export async function executeRollSavingThrow(input: {
       sheet.featOptions,
     ),
   );
+  if (character.classSlug === 'rogue' && character.level >= 15) {
+    saveProficiencies.add('sabedoria');
+    saveProficiencies.add('carisma');
+  }
+  if (character.classSlug === 'monk' && character.level >= 14) {
+    for (const slug of Object.keys(ABILITY_LABELS) as AbilityKey[]) {
+      saveProficiencies.add(slug);
+    }
+  }
   const proficient = saveProficiencies.has(ability);
   const pb = await input.domain.getProficiencyBonus(character.level);
   const itemEffects = await input.permanentItemEffects.resolve(character.id);
@@ -77,6 +95,23 @@ export async function executeRollSavingThrow(input: {
   const itemSaveBonus = itemEffects.savingThrowBonuses[ability] ?? 0;
   let bonus = mods[ability] + (proficient ? pb : 0) + itemSaveBonus;
   const notes: string[] = [];
+
+  if (
+    isPaladinClass(character.classSlug) &&
+    hasAuraOfProtection(character.level)
+  ) {
+    const auraBonus = auraOfProtectionBonus(mods.carisma);
+    bonus += auraBonus;
+    notes.push(
+      `Aura de Proteção: +${auraBonus} (mod. de Carisma; aliados no alcance também)`,
+    );
+  }
+
+  if (input.dto.indomitable && input.dto.strokeOfLuck) {
+    throw new BadRequestException(
+      'Choose either Indomitable or Stroke of Luck for this roll',
+    );
+  }
 
   if (input.dto.indomitable) {
     if (!isFighterClass(character.classSlug) || character.level < 9) {
@@ -115,7 +150,21 @@ export async function executeRollSavingThrow(input: {
     notes.push(`Indomável: +${character.level} (rerrolagem)`);
   }
 
-  const result = rollD20Check(bonus, input.dto.advantage ?? 'normal');
+  let result = rollD20Check(bonus, input.dto.advantage ?? 'normal');
+  if (input.dto.strokeOfLuck) {
+    await spendStrokeOfLuck(input.dataSource, character);
+    result = turnCheckIntoNaturalTwenty(result);
+    notes.push('Golpe de Sorte: resultado do d20 transformado em 20');
+  }
+  if (
+    (character.classSlug === 'rogue' || character.classSlug === 'monk') &&
+    character.level >= 7 &&
+    ability === 'destreza'
+  ) {
+    notes.push(
+      'Evasão: sucesso = nenhum dano; falha = metade (quando a salvaguarda normalmente reduz à metade)',
+    );
+  }
   return {
     kind: 'saving_throw',
     label: `Salvaguarda — ${ABILITY_LABELS[ability]}`,

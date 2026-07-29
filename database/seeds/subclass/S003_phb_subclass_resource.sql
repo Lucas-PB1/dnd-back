@@ -632,6 +632,20 @@ INSERT INTO rpg.phb_subclass_resource (subclass_id, resource_id, unlock_level, m
          feature_id = EXCLUDED.feature_id;
 
 INSERT INTO rpg.phb_subclass_resource (subclass_id, resource_id, unlock_level, max_formula, fixed_max, feature_id)
+       SELECT s.id, rd.id, 3, 'fixed'::rpg.resource_max_formula,
+         1,
+         sf.id
+       FROM rpg.phb_subclass s
+       JOIN rpg.phb_resource_definition rd ON rd.slug = 'psychic-whispers'
+       LEFT JOIN rpg.phb_subclass_feature sf ON sf.subclass_id = s.id
+         AND sf.name = 'Poder Psiônico'
+       WHERE s.slug = 'soulknife'
+       ON CONFLICT (subclass_id, resource_id, unlock_level) DO UPDATE SET
+         max_formula = EXCLUDED.max_formula,
+         fixed_max = EXCLUDED.fixed_max,
+         feature_id = EXCLUDED.feature_id;
+
+INSERT INTO rpg.phb_subclass_resource (subclass_id, resource_id, unlock_level, max_formula, fixed_max, feature_id)
        SELECT s.id, rd.id, 13, 'fixed'::rpg.resource_max_formula,
          1,
          sf.id
@@ -723,3 +737,23 @@ WHERE sr.subclass_id = s.id
   AND sr.resource_id = rd.id
   AND s.slug = 'psi-warrior'
   AND rd.slug IN ('energy-bulwark', 'telekinetic-master');
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = TRUE,
+    recover_all_on_short = FALSE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'soulknife'
+  AND rd.slug = 'soulknife-psi-dice';
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = FALSE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'soulknife'
+  AND rd.slug IN ('psychic-whispers', 'psychic-veil', 'rend-mind');

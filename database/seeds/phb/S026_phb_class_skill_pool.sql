@@ -59,6 +59,7 @@ VALUES
   ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'investigation')),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'perception')),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'persuasion')),
+  ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'sleight-of-hand')),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_skill WHERE slug = 'stealth')),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'arcana')),
   ((SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_skill WHERE slug = 'history')),

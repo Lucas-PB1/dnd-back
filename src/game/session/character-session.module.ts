@@ -18,6 +18,9 @@ import { UseClassResourceHandler } from './application/use-class-resource.handle
 import { GunslingerActionsHandler } from './application/gunslinger-actions.handler';
 import { BarbarianActionsHandler } from './application/barbarian-actions.handler';
 import { FighterActionsHandler } from './application/fighter-actions.handler';
+import { RogueActionsHandler } from './application/rogue-actions.handler';
+import { MonkActionsHandler } from './application/monk-actions.handler';
+import { PaladinActionsHandler } from './application/paladin-actions.handler';
 
 @Module({
   imports: [
@@ -43,6 +46,9 @@ import { FighterActionsHandler } from './application/fighter-actions.handler';
     GunslingerActionsHandler,
     BarbarianActionsHandler,
     FighterActionsHandler,
+    RogueActionsHandler,
+    MonkActionsHandler,
+    PaladinActionsHandler,
   ],
   exports: [CharacterStateRepository],
 })

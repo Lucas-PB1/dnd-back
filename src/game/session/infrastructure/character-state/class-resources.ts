@@ -38,7 +38,9 @@ export async function buildClassResourceState(
     const spent = used[resource.slug] ?? 0;
     const isRisk = resource.slug === 'risk';
     const isSuperiority = resource.slug === 'superiority-dice';
-    const isPsi = resource.slug === 'psi-energy-dice';
+    const isPsi =
+      resource.slug === 'psi-energy-dice' ||
+      resource.slug === 'soulknife-psi-dice';
     const dieExtras = isRisk
       ? {
           dieFaces: riskDieFaces(character.level),

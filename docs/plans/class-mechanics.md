@@ -43,12 +43,12 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 | Druida | `druid` | `[ ]` |
 | Feiticeiro | `sorcerer` | `[ ]` |
 | Guardião | `ranger` | `[ ]` |
-| Ladino | `rogue` | `[ ]` |
+| Ladino | `rogue` | `[x]` feito |
 | Mago | `wizard` | `[ ]` |
-| Monge | `monk` | `[ ]` |
-| Paladino | `paladin` | `[ ]` |
+| Monge | `monk` | `[x]` feito |
+| Paladino | `paladin` | `[x]` feito |
 
-**Progresso:** 3 feitas · **10** por conferir (PHB) + subclasses Valda das classes não feitas.
+**Progresso:** 6 feitas · **7** por conferir (PHB) + subclasses Valda das classes não feitas.
 
 ---
 
@@ -74,11 +74,62 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 - [x] Campeão e Cavaleiro Místico: bônus numéricos nas rolagens + notas de mesa
 - [x] UI: ações/toggles e atualização dos recursos
 
+O Dado de Superioridade só é rolado/gasto pela ação de manobra; o resultado entra
+no dano manualmente, então não existe um segundo caminho na rolagem de dano.
+
 Fora de escopo de propósito: controlar 1×/turno, rastrear alvo, posição,
 condições do inimigo ou Regeneração como tick automático.
 
 Subclasses PHB: Campeão, Cavaleiro Místico, Combatente Psíquico, Mestre da Batalha  
 Valda: Explorador de Masmorras (`dungeoneer`)
+
+### Ladino (`rogue`) — `[x]`
+
+- [x] Base: Ataque Furtivo, Golpe Astuto, Mira Firme, Esquiva Sobrenatural, Evasão, Talento Confiável, Mente Escorregadia e Golpe de Sorte
+- [x] Adaga Espiritual: dados psiônicos, aptidão, sussurros, lâminas, teleguiado, teleporte, véu e Rasgar Mente
+- [x] Assassino: iniciativa, Assassinar, dano surpresa, veneno e Golpe Mortal
+- [x] Ladrão: Mão Leve no catálogo, Ataque Escondido, cargas de item mágico e notas de mesa
+- [x] Trapaceiro Arcano: conjuração de 1/3, Mãos Mágicas e Ladrão de Magias
+- [x] Perseguidor Aracnídeo: Golpe Venenoso, Correia/Teia, Sentido de Aranha e Paralisar
+- [x] UI: painel, toggles de ataque/dano/perícia/salvaguarda e atualização de recursos
+
+Fora de escopo de propósito: persistir alvo/turno, posição, duração de condições,
+invisibilidade ou limite de uma vez por turno. A ficha rola, gasta recursos e
+descreve o efeito que jogador e Mestre aplicam na mesa.
+
+### Monge (`monk`) — `[x]`
+
+- [x] Base: Artes Marciais (Ataque Desarmado sintético, dado 1d6→1d12, melhor de FOR/DES sem armadura/escudo), Ataque Extra, Movimento sem Armadura, Evasão e Sobrevivente Disciplinado (proficiência em todas as salvaguardas)
+- [x] Foco: Torrente de Golpes, Defesa Paciente, Passo do Vento e Golpe Atordoante (CD 8 + SAB + PB) gastando Pontos de Foco
+- [x] Mão Espalmada: Técnica da Mão Espalmada (CD de Caído/empurrão)
+- [x] Combatente dos Elementos: Explosão Elemental à distância com o dado de Artes Marciais
+- [x] Misericórdia: Mão de Cura e Mão de Dolo (SAB + dado de Artes Marciais)
+- [x] Combatente das Sombras: Passo da Sombra
+- [x] Guerreiro das Ruas (Valda): notas de mesa
+- [x] UI: `combat-monk-panel`, Ataque Desarmado nas Ações e atualização de Foco
+
+O catálogo já trazia `focusPoints` (máx = nível, recupera em curto/longo) e a Defesa
+sem Armadura DES+SAB; o dado de Artes Marciais e a CD de Foco vivem no código.
+
+Fora de escopo de propósito: rastrear 1×/turno da Mão de Dolo, posição do teleporte,
+duração das condições e restauração automática de Foco na iniciativa.
+
+---
+
+### Paladino (`paladin`) — `[x]`
+
+- [x] Base: Mãos Consagradas (reserva = 5 × nível, com Curar Veneno por 5 PV), Ataque Extra, Aura de Proteção (+CAR nas salvaguardas, 9 m no nível 18) e Golpes Radiantes (+1d8 Radiante corpo a corpo no nível 11)
+- [x] Destruição Divina (Divine Smite): gasta um espaço de magia na rolagem de dano para +2d8 Radiante (+1d8 por círculo acima do 1º; +1d8 vs Corruptor/Morto-vivo), debitando o slot no estado
+- [x] Canalizar Divindade: Sentido Divino, Repudiar Inimigos (CD 8 + CAR + PB) e a opção do juramento gastando usos de Canalizar
+- [x] Devoção, Glória, Anciões e Vingança: notas de mesa e nome/efeito da Canalizar do juramento
+- [x] Valda: Juramento da Folia (`oath-of-revelry`) — notas de mesa
+- [x] UI: `combat-paladin-panel`, seletor de Golpe Divino no card de ataque e reservas de cura/Canalizar
+
+O catálogo já trazia a progressão half-caster (CAR) e `channelDivinity`; a reserva de
+Mãos Consagradas usa o recurso `layOnHands` com máximo = 5 × nível ajustado no runtime.
+
+Fora de escopo de propósito: alcance/alvos das auras, duração de Voto de Inimizade e
+demais efeitos de 1 minuto, e persistência de quem está dentro da aura.
 
 ---
 
@@ -133,15 +184,6 @@ Valda: Explorador de Masmorras (`dungeoneer`)
 - [ ] Senhor das Feras (`beast-master`)
 - [ ] Vigilante das Sombras (`gloom-stalker`)
 
-### Ladino (`rogue`) — `[ ]`
-
-- [ ] Classe-base (Ataque Furtivo, Ação Astuta, Expertise)
-- [ ] Adaga Espiritual (`soulknife`)
-- [ ] Assassino (`assassin`)
-- [ ] Ladrão (`thief`)
-- [ ] Trapaceiro Arcano (`arcane-trickster`)
-- [ ] Valda: Perseguidor Aracnídeo (`arachnoid-stalker`)
-
 ### Mago (`wizard`) — `[ ]`
 
 - [ ] Classe-base (grimório, preparação, recuperação arcana)
@@ -150,40 +192,17 @@ Valda: Explorador de Masmorras (`dungeoneer`)
 - [ ] Evocador (`evoker`)
 - [ ] Ilusionista (`illusionist`)
 
-### Monge (`monk`) — `[ ]`
-
-- [ ] Classe-base (Pontos de Foco, Artes Marciais, etc.)
-- [ ] Elementos (`elements`)
-- [ ] Mão Espalmada (`open-hand`)
-- [ ] Misericórdia (`mercy`)
-- [ ] Sombras (`shadow`)
-- [ ] Valda: Guerreiro das Ruas (`warrior-of-the-street`)
-
-### Paladino (`paladin`) — `[ ]`
-
-- [ ] Classe-base (Canalizar, Imposição das Mãos, Aura, etc.)
-- [ ] Anciões (`ancients`)
-- [ ] Devoção (`devotion`)
-- [ ] Glória (`glory`)
-- [ ] Vingança (`vengeance`)
-- [ ] Valda: Juramento da Folia (`oath-of-revelry`)
-
----
-
 ## Ordem sugerida (próximas)
 
 Marciais / half-casters costumam destravar a mesa mais rápido:
 
-1. Ladino  
-2. Monge  
-3. Paladino  
-4. Guardião  
-5. Clérigo  
-6. Bardo  
-7. Feiticeiro  
-8. Bruxo  
-9. Mago  
-10. Druida  
+1. Guardião  
+2. Clérigo  
+3. Bardo  
+4. Feiticeiro  
+5. Bruxo  
+6. Mago  
+7. Druida  
 
 Ajustar sob pedido da mesa.
 

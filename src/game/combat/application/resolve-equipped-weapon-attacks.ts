@@ -48,6 +48,7 @@ export class ResolveEquippedWeaponAttacks {
     scores: AbilityScores,
     context: WeaponAttackResolveContext,
   ): Promise<WeaponAttack[]> {
+    const isMonk = context.classSlug === 'monk';
     const equipped = await this.inventoryItems.find({
       where: {
         characterId,
@@ -55,7 +56,9 @@ export class ResolveEquippedWeaponAttacks {
         equipmentSlot: In(['main_hand', 'off_hand']),
       },
     });
-    if (equipped.length === 0) return [];
+    if (equipped.length === 0) {
+      return isMonk ? this.computeAttacks(scores, [], context, []) : [];
+    }
 
     const rows = await this.weapons.find({
       where: { item: { slug: In(equipped.map((row) => row.itemSlug)) } },
@@ -89,11 +92,22 @@ export class ResolveEquippedWeaponAttacks {
       });
     }
 
-    if (pieces.length === 0) return [];
+    if (pieces.length === 0) {
+      return isMonk ? this.computeAttacks(scores, [], context, []) : [];
+    }
 
     const weaponProficiencySlugs = await this.loadWeaponProficiencySlugs(
       context.classSlug,
     );
+    return this.computeAttacks(scores, pieces, context, weaponProficiencySlugs);
+  }
+
+  private computeAttacks(
+    scores: AbilityScores,
+    pieces: EquippedWeaponPiece[],
+    context: WeaponAttackResolveContext,
+    weaponProficiencySlugs: string[],
+  ): WeaponAttack[] {
     return computeWeaponAttacks(scores, pieces, {
       proficiencyBonus: context.proficiencyBonus,
       weaponProficiencySlugs,

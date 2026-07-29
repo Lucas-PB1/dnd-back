@@ -1,5 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsIn, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 import type { AdvantageMode } from '../domain/dice';
 
 export class RollAttackDto {
@@ -44,6 +53,30 @@ export class RollAttackDto {
   @IsOptional()
   @IsBoolean()
   doorKick?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Mira Firme (Ladino nv.3+): vantagem; deslocamento 0 neste turno',
+  })
+  @IsOptional()
+  @IsBoolean()
+  steadyAim?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Golpe de Sorte (Ladino nv.20): transforma o d20 em 20 e gasta o uso',
+  })
+  @IsOptional()
+  @IsBoolean()
+  strokeOfLuck?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Assassinar: vantagem contra criatura que ainda não agiu na primeira rodada',
+  })
+  @IsOptional()
+  @IsBoolean()
+  assassinate?: boolean;
 }
 
 export class RollDamageDto {
@@ -120,12 +153,102 @@ export class RollDamageDto {
 
   @ApiPropertyOptional({
     default: false,
-    description:
-      'Ataque Preciso (Mestre da Batalha): adiciona Dado de Superioridade (já gasto na sessão)',
+    description: 'Ataque Furtivo (Ladino): adiciona os dados permitidos pelo nível',
   })
   @IsOptional()
   @IsBoolean()
-  precisionAttack?: boolean;
+  sneakAttack?: boolean;
+
+  @ApiPropertyOptional({
+    type: [String],
+    enum: [
+      'poison',
+      'withdraw',
+      'trip',
+      'hidden-attack',
+      'daze',
+      'knock-out',
+      'obscure',
+      'paralyze',
+    ],
+    description: 'Efeitos de Golpe Astuto; o custo é removido dos dados de Ataque Furtivo',
+  })
+  @IsOptional()
+  @IsArray()
+  @IsIn(
+    [
+      'poison',
+      'withdraw',
+      'trip',
+      'hidden-attack',
+      'daze',
+      'knock-out',
+      'obscure',
+      'paralyze',
+    ],
+    { each: true },
+  )
+  cunningStrikeEffects?: string[];
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Golpe Venenoso (Perseguidor Aracnídeo): Ataque Furtivo usa d8 Venenoso',
+  })
+  @IsOptional()
+  @IsBoolean()
+  poisonousSneak?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Golpe Surpreendente (Assassino): soma o nível de Ladino na primeira rodada',
+  })
+  @IsOptional()
+  @IsBoolean()
+  assassinSurprise?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Golpe Mortal (Assassino nv.17): dobra o dano quando o alvo falha na salvaguarda',
+  })
+  @IsOptional()
+  @IsBoolean()
+  assassinDeathStrike?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Armas Venenosas (Assassino nv.13): +2d6 quando Envenenar falha',
+  })
+  @IsOptional()
+  @IsBoolean()
+  assassinPoisonFailedSave?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Destruição Divina (Paladino): gasta um espaço de magia e adiciona dano Radiante',
+  })
+  @IsOptional()
+  @IsBoolean()
+  divineSmite?: boolean;
+
+  @ApiPropertyOptional({
+    minimum: 1,
+    maximum: 5,
+    description: 'Círculo do espaço de magia gasto na Destruição Divina',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(5)
+  smiteSlotLevel?: number;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Destruição Divina contra Corruptor ou Morto-vivo: +1d8',
+  })
+  @IsOptional()
+  @IsBoolean()
+  smiteVsUndeadOrFiend?: boolean;
 }
 
 export class RollSkillDto {
@@ -140,6 +263,14 @@ export class RollSkillDto {
   @IsOptional()
   @IsIn(['normal', 'advantage', 'disadvantage'])
   advantage?: AdvantageMode;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Golpe de Sorte (Ladino nv.20): transforma o d20 em 20 e gasta o uso',
+  })
+  @IsOptional()
+  @IsBoolean()
+  strokeOfLuck?: boolean;
 }
 
 export class RollSavingThrowDto {
@@ -166,6 +297,14 @@ export class RollSavingThrowDto {
   @IsOptional()
   @IsBoolean()
   indomitable?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Golpe de Sorte (Ladino nv.20): transforma o d20 em 20 e gasta o uso',
+  })
+  @IsOptional()
+  @IsBoolean()
+  strokeOfLuck?: boolean;
 }
 
 export class RollInitiativeDto {
@@ -176,6 +315,14 @@ export class RollInitiativeDto {
   @IsOptional()
   @IsIn(['normal', 'advantage', 'disadvantage'])
   advantage?: AdvantageMode;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Golpe de Sorte (Ladino nv.20): transforma o d20 em 20 e gasta o uso',
+  })
+  @IsOptional()
+  @IsBoolean()
+  strokeOfLuck?: boolean;
 }
 
 export class CharacterRollResponseDto {

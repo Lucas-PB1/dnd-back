@@ -8,7 +8,10 @@ jest.mock('./roll-weapon-context', () => ({
 }));
 
 import { executeRollAttack } from './roll-attack';
-import { findEquippedWeaponAttack } from './roll-weapon-context';
+import {
+  findEquippedWeaponAttack,
+  loadAccessibleCharacter,
+} from './roll-weapon-context';
 
 describe('executeRollAttack', () => {
   const base = {
@@ -63,5 +66,37 @@ describe('executeRollAttack', () => {
     });
     expect(result.mode).toBe('advantage');
     expect(result.label).toContain('corpo a corpo');
+  });
+
+  it('applies Mobile Aim for an Assassin without setting movement to zero', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'rogue',
+      subclassSlug: 'assassin',
+      level: 9,
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Shortbow',
+        attackBonus: 7,
+        attackDisadvantage: false,
+        abilitySlug: 'destreza',
+        critThreshold: 20,
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollAttack({
+      ...base,
+      dto: {
+        itemSlug: 'shortbow',
+        mode: 'ranged',
+        steadyAim: true,
+      },
+    });
+
+    expect(result.mode).toBe('advantage');
+    expect(result.note).toContain('Mira Móvel');
+    expect(result.note).not.toContain('Deslocamento 0');
   });
 });

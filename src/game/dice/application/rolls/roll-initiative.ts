@@ -11,6 +11,10 @@ import type {
   RollInitiativeDto,
 } from '../../dto/character-roll.dto';
 import { loadAccessibleCharacter } from './roll-weapon-context';
+import {
+  spendStrokeOfLuck,
+  turnCheckIntoNaturalTwenty,
+} from './stroke-of-luck';
 
 export async function executeRollInitiative(input: {
   access: PlayerCharacterAccessService;
@@ -44,7 +48,26 @@ export async function executeRollInitiative(input: {
   ) {
     mode = 'advantage';
   }
-  const result = rollD20Check(bonus, mode);
+  if (
+    character.subclassSlug === 'assassin' &&
+    character.level >= 3 &&
+    mode === 'normal'
+  ) {
+    mode = 'advantage';
+  }
+  let result = rollD20Check(bonus, mode);
+  const notes: string[] = [];
+  if (input.dto.strokeOfLuck) {
+    await spendStrokeOfLuck(input.dataSource, character);
+    result = turnCheckIntoNaturalTwenty(result);
+    notes.push('Golpe de Sorte: resultado do d20 transformado em 20');
+  }
+  if (mode === 'advantage' && character.subclassSlug === 'champion') {
+    notes.push('Atleta Extraordinário: Vantagem na Iniciativa');
+  }
+  if (mode === 'advantage' && character.subclassSlug === 'assassin') {
+    notes.push('Assassinar: Vantagem na Iniciativa');
+  }
   return {
     kind: 'initiative',
     label: 'Iniciativa',
@@ -54,9 +77,6 @@ export async function executeRollInitiative(input: {
     mode: result.mode,
     rolls: result.d20.rolls,
     kept: result.d20.kept,
-    note:
-      mode === 'advantage' && character.subclassSlug === 'champion'
-        ? 'Atleta Extraordinário: Vantagem na Iniciativa'
-        : undefined,
+    note: notes.length > 0 ? notes.join(' · ') : undefined,
   };
 }

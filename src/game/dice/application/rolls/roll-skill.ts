@@ -13,6 +13,10 @@ import type { AbilityKey } from '../../../build/domain/ability-generation';
 import { rollD20Check } from '../../domain/dice';
 import type { CharacterRollResponseDto, RollSkillDto } from '../../dto/character-roll.dto';
 import { loadAccessibleCharacter } from './roll-weapon-context';
+import {
+  spendStrokeOfLuck,
+  turnCheckIntoNaturalTwenty,
+} from './stroke-of-luck';
 
 export async function executeRollSkill(input: {
   access: PlayerCharacterAccessService;
@@ -71,7 +75,34 @@ export async function executeRollSkill(input: {
   ) {
     mode = 'advantage';
   }
-  const result = rollD20Check(bonus, mode);
+  let result = rollD20Check(bonus, mode);
+  const notes: string[] = [];
+  const reliableTalent =
+    character.classSlug === 'rogue' &&
+    character.level >= 7 &&
+    (rank === 'proficient' || rank === 'expertise');
+  const kept = result.d20.kept[0] ?? 0;
+  if (reliableTalent && kept < 10) {
+    result = {
+      ...result,
+      expression: `${result.expression} (mín. 10)`,
+      total: 10 + bonus,
+      d20: { ...result.d20, kept: [10] },
+    };
+    notes.push(`Talento Confiável: ${kept} tratado como 10`);
+  }
+  if (input.dto.strokeOfLuck) {
+    await spendStrokeOfLuck(input.dataSource, character);
+    result = turnCheckIntoNaturalTwenty(result);
+    notes.push('Golpe de Sorte: resultado do d20 transformado em 20');
+  }
+  if (
+    mode === 'advantage' &&
+    character.subclassSlug === 'champion' &&
+    input.dto.skillSlug === 'athletics'
+  ) {
+    notes.push('Atleta Extraordinário: Vantagem em Atletismo');
+  }
   return {
     kind: 'skill',
     label: `Perícia — ${skill.name}`,
@@ -81,11 +112,6 @@ export async function executeRollSkill(input: {
     mode: result.mode,
     rolls: result.d20.rolls,
     kept: result.d20.kept,
-    note:
-      mode === 'advantage' &&
-      character.subclassSlug === 'champion' &&
-      input.dto.skillSlug === 'athletics'
-        ? 'Atleta Extraordinário: Vantagem em Atletismo'
-        : undefined,
+    note: notes.length > 0 ? notes.join(' · ') : undefined,
   };
 }
