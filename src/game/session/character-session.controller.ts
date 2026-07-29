@@ -33,6 +33,7 @@ import { RogueActionsHandler } from './application/rogue-actions.handler';
 import { MonkActionsHandler } from './application/monk-actions.handler';
 import { PaladinActionsHandler } from './application/paladin-actions.handler';
 import { RangerActionsHandler } from './application/ranger-actions.handler';
+import { ClericActionsHandler } from './application/cleric-actions.handler';
 import {
   ActionSurgeResponseDto,
   CastSpellDto,
@@ -60,6 +61,7 @@ import {
   UseMonkTableActionDto,
   UsePaladinTableActionDto,
   UseRangerTableActionDto,
+  UseClericTableActionDto,
 } from './dto/character-state.dto';
 
 @ApiTags('game-characters')
@@ -81,6 +83,7 @@ export class CharacterSessionController {
     private readonly monk: MonkActionsHandler,
     private readonly paladin: PaladinActionsHandler,
     private readonly ranger: RangerActionsHandler,
+    private readonly cleric: ClericActionsHandler,
   ) {}
 
   @Get(':id/state')
@@ -389,5 +392,19 @@ export class CharacterSessionController {
     @Body() dto: UseRangerTableActionDto,
   ): Promise<FighterTableActionResponseDto> {
     return this.ranger.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/cleric/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Cleric or Cleric-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useClericTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseClericTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.cleric.useTableAction(user.id, id, dto);
   }
 }

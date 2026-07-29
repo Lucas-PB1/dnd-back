@@ -1,4 +1,5 @@
 import { applyBarbarianFighterExtras } from './apply-barbarian-fighter';
+import { applyClericExtras } from './apply-cleric';
 import { applyPaladinExtras } from './apply-paladin';
 import { applyRangerExtras } from './apply-ranger';
 import { applySneakAttack } from './apply-sneak-attack';
@@ -15,4 +16,5 @@ export const DAMAGE_EFFECT_PIPELINE: readonly DamageEffect[] = [
   applySneakAttack,
   applyPaladinExtras,
   applyRangerExtras,
+  applyClericExtras,
 ];

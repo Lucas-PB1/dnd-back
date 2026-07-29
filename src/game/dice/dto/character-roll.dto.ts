@@ -294,6 +294,15 @@ export class RollDamageDto {
   @IsOptional()
   @IsBoolean()
   dreadAmbusher?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Golpe Divino (Clérigo nv.7+): +1d8/+2d8 Necrótico ou Radiante com arma',
+  })
+  @IsOptional()
+  @IsBoolean()
+  divineStrike?: boolean;
 }
 
 export class RollSkillDto {

@@ -586,6 +586,28 @@ export class UseRangerTableActionDto {
     | 'primal-companion';
 }
 
+const CLERIC_TABLE_ACTION_SLUGS = [
+  'divine-spark-heal',
+  'divine-spark-damage',
+  'turn-undead',
+  'divine-intervention',
+  'preserve-life',
+  'radiance-of-dawn',
+  'warding-flare',
+  'crown-of-light',
+  'tricksters-blessing',
+  'invoke-duplicity',
+  'guided-strike',
+  'war-priest',
+  'war-gods-blessing',
+] as const;
+
+export class UseClericTableActionDto {
+  @ApiProperty({ enum: CLERIC_TABLE_ACTION_SLUGS })
+  @IsIn(CLERIC_TABLE_ACTION_SLUGS)
+  actionSlug!: (typeof CLERIC_TABLE_ACTION_SLUGS)[number];
+}
+
 export class FirearmChamberDto {
   @ApiProperty({ example: 'revolver' })
   itemSlug!: string;

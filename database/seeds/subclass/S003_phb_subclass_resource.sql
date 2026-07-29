@@ -226,6 +226,21 @@ INSERT INTO rpg.phb_subclass_resource (subclass_id, resource_id, unlock_level, m
          feature_id = EXCLUDED.feature_id;
 
 INSERT INTO rpg.phb_subclass_resource (subclass_id, resource_id, unlock_level, max_formula, fixed_max, feature_id)
+       SELECT s.id, rd.id, v.unlock_level, 'wisdom_mod'::rpg.resource_max_formula,
+         NULL,
+         sf.id
+       FROM rpg.phb_subclass s
+       JOIN rpg.phb_resource_definition rd ON rd.slug = 'warding-flare'
+       LEFT JOIN rpg.phb_subclass_feature sf ON sf.subclass_id = s.id
+         AND sf.name = 'Labareda Protetora'
+       CROSS JOIN (VALUES (3), (6)) AS v(unlock_level)
+       WHERE s.slug = 'light'
+       ON CONFLICT (subclass_id, resource_id, unlock_level) DO UPDATE SET
+         max_formula = EXCLUDED.max_formula,
+         fixed_max = EXCLUDED.fixed_max,
+         feature_id = EXCLUDED.feature_id;
+
+INSERT INTO rpg.phb_subclass_resource (subclass_id, resource_id, unlock_level, max_formula, fixed_max, feature_id)
        SELECT s.id, rd.id, 3, 'fixed'::rpg.resource_max_formula,
          1,
          sf.id
@@ -757,3 +772,33 @@ WHERE sr.subclass_id = s.id
   AND sr.resource_id = rd.id
   AND s.slug = 'soulknife'
   AND rd.slug IN ('psychic-whispers', 'psychic-veil', 'rend-mind');
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = sr.unlock_level >= 6,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'light'
+  AND rd.slug = 'warding-flare';
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = TRUE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'war'
+  AND rd.slug = 'war-priest';
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = FALSE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug IN ('light', 'trickery')
+  AND rd.slug IN ('corona-of-light', 'tricksters-blessing');

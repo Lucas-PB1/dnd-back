@@ -25,6 +25,7 @@ import {
   rangerCombatNotes,
   rangerSpeedBonusMeters,
 } from '../domain/ranger-features';
+import { clericCombatNotes } from '../domain/cleric-features';
 
 export type ClassCombatContribution = {
   notes: string[];
@@ -54,6 +55,7 @@ export function aggregateClassCombatContributions(
     ...monkCombatNotes({ classSlug, subclassSlug, level }),
     ...paladinCombatNotes({ classSlug, subclassSlug, level }),
     ...rangerCombatNotes({ classSlug, subclassSlug, level }),
+    ...clericCombatNotes({ classSlug, subclassSlug, level }),
   ];
 
   const speedBonusMeters =

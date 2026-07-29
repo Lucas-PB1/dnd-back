@@ -75,6 +75,14 @@ VALUES
     NULL,
     (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'),
     14
+  ),
+  (
+    'divineIntervention',
+    'Intervenção Divina',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'),
+    10
   )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -205,6 +213,19 @@ FROM rpg.phb_class c
 CROSS JOIN rpg.phb_resource_definition rd
 WHERE rd.slug = 'channelDivinity'
   AND c.slug IN ('cleric', 'paladin')
+ON CONFLICT DO NOTHING;
+
+-- Clérigo — Intervenção Divina (1× por Descanso Longo)
+INSERT INTO rpg.phb_class_resource (
+  class_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT c.id, rd.id, 10, 'fixed'::rpg.resource_max_formula, 1,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd
+  ON rd.slug = 'divineIntervention' AND rd.class_id = c.id
+WHERE c.slug = 'cleric'
 ON CONFLICT DO NOTHING;
 
 -- Paladino — Mãos Consagradas (pool = 5 × nível; máximo ajustado no runtime)

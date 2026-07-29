@@ -39,7 +39,7 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 | Guerreiro | `fighter` | `[x]` feito |
 | Bardo | `bard` | `[ ]` |
 | Bruxo | `warlock` | `[ ]` |
-| Clérigo | `cleric` | `[ ]` |
+| Clérigo | `cleric` | `[x]` feito |
 | Druida | `druid` | `[ ]` |
 | Feiticeiro | `sorcerer` | `[ ]` |
 | Guardião | `ranger` | `[x]` feito |
@@ -48,7 +48,7 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 | Monge | `monk` | `[x]` feito |
 | Paladino | `paladin` | `[x]` feito |
 
-**Progresso:** 7 feitas · **6** por conferir (PHB) + subclasses Valda das classes não feitas.
+**Progresso:** 8 feitas · **5** por conferir (PHB) + subclasses Valda das classes não feitas.
 
 ---
 
@@ -151,6 +151,25 @@ Destruidor de Hordas e duração do Véu da Natureza além da nota de mesa.
 
 ---
 
+### Clérigo (`cleric`) — `[x]`
+
+- [x] Base: Canalizar Divindade com Centelha Divina (cura ou dano), Expulsar/Fulminar Mortos-Vivos, Golpes Abençoados e Intervenção Divina
+- [x] Vida: Discípulo da Vida, Preservar a Vida (reserva = 5 × nível), Curandeiro Abençoado e Cura Suprema
+- [x] Luz: Brilho do Amanhecer, Labareda Protetora/Aprimorada e Coroa de Luz
+- [x] Trapaça: Bênção do Trapaceiro, Invocar Duplicidade, Transposição e Duplicidade Aprimorada
+- [x] Guerra: Ataque Direcionado, Sacerdote da Guerra, Bênção do Deus da Guerra e Avatar da Guerra
+- [x] UI: `combat-cleric-panel`, recursos, ações de Canalizar e toggle de Golpe Divino no card de arma
+
+O catálogo já trazia a progressão de `channelDivinity`, magias de domínio e recursos
+de Coroa de Luz, Bênção do Trapaceiro e Sacerdote da Guerra. Foram completados os
+recursos de Intervenção Divina e Labareda Protetora, incluindo suas recuperações.
+
+Fora de escopo de propósito: persistir alvo/duração de Expulsar, Duplicidade, bênçãos
+e auras; escolher automaticamente alvos de cura/dano; validar 1×/turno do Golpe
+Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
+
+---
+
 ## Não conferidas (PHB)
 
 ### Bardo (`bard`) — `[ ]`
@@ -169,14 +188,6 @@ Destruidor de Hordas e duração do Véu da Natureza além da nota de mesa.
 - [ ] Grande Antigo (`great-old-one`)
 - [ ] Ínfero (`fiend`)
 - [ ] Valda: Eu do Futuro (`future-you-patron`)
-
-### Clérigo (`cleric`) — `[ ]`
-
-- [ ] Classe-base (Canalizar Divindade, etc.)
-- [ ] Vida (`life`)
-- [ ] Luz (`light`)
-- [ ] Trapaça (`trickery`)
-- [ ] Guerra (`war`)
 
 ### Druida (`druid`) — `[ ]`
 
@@ -208,12 +219,11 @@ Destruidor de Hordas e duração do Véu da Natureza além da nota de mesa.
 
 Marciais / half-casters costumam destravar a mesa mais rápido:
 
-1. Clérigo  
-2. Bardo  
-3. Feiticeiro  
-4. Bruxo  
-5. Mago  
-6. Druida  
+1. Bardo  
+2. Feiticeiro  
+3. Bruxo  
+4. Mago  
+5. Druida  
 
 Ajustar sob pedido da mesa.
 

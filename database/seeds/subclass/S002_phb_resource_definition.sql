@@ -162,6 +162,16 @@ INSERT INTO rpg.phb_resource_definition (slug, name, scope, subclass_id, min_lev
          min_level = EXCLUDED.min_level;
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, subclass_id, min_level)
+       VALUES ('warding-flare', 'Labareda Protetora', 'subclass'::rpg.resource_scope,
+         (SELECT id FROM rpg.phb_subclass WHERE slug = 'light'),
+         3)
+       ON CONFLICT (slug) DO UPDATE SET
+         name = EXCLUDED.name,
+         scope = EXCLUDED.scope,
+         subclass_id = EXCLUDED.subclass_id,
+         min_level = EXCLUDED.min_level;
+
+INSERT INTO rpg.phb_resource_definition (slug, name, scope, subclass_id, min_level)
        VALUES ('tricksters-blessing', 'Bênção do Trapaceiro', 'subclass'::rpg.resource_scope,
          (SELECT id FROM rpg.phb_subclass WHERE slug = 'trickery'),
          3)

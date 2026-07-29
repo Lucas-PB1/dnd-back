@@ -474,4 +474,47 @@ describe('executeRollDamage', () => {
       1,
     );
   });
+
+  it('adds the Cleric Divine Strike dice at level 14', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'cleric',
+      subclassSlug: 'war',
+      level: 14,
+      abilityScores: {
+        forca: 16,
+        destreza: 10,
+        constituicao: 14,
+        inteligencia: 10,
+        sabedoria: 18,
+        carisma: 8,
+      },
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Mace',
+        grazeOnMissDamage: null,
+        damageDice: '1d6',
+        damageBonus: 3,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        abilitySlug: 'forca',
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollDamage({
+      ...base,
+      dto: {
+        itemSlug: 'mace',
+        mode: 'melee',
+        divineStrike: true,
+      },
+    });
+
+    expect(result.expression).toContain('+2d8');
+    expect(result.note).toContain('Golpe Divino');
+  });
 });
