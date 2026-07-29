@@ -50,158 +50,158 @@
   },
   "edition": {
     "slug": "valda-spire-2024-en",
-    "label": "Valda Spire 2024 EN",
+    "label": "Valda Spire 2024",
     "book": "Valda's Spire of Secrets: The Gunslinger Class",
-    "language": "en",
-    "notes": "Mage Hand Press — Gunslinger Class on D&D Beyond (2024 rules)"
+    "language": "pt",
+    "notes": "Mage Hand Press — conteúdo traduzido para PT-BR do catálogo Grimoire (regras 2024)"
   },
   "citation": {
     "slug": "valda-spire-2024-en:gunslinger",
     "chapter": 2,
-    "chapterTitle": "Valda's Spire of Secrets: The Gunslinger Class"
+    "chapterTitle": "Valda's Spire of Secrets: A Classe do Pistoleiro"
   },
   "class": {
     "slug": "gunslinger",
-    "name": "Gunslinger",
-    "tagline": "## Guts and Gunpowder",
-    "summary": "Risk is in a Gunslinger’s blood. They are bold renegades, bucking tradition and forging a new path with dangerous and inelegant firearms. Gunslingers are infamous for surviving by their wits and relying on split-second timing and a considerable amount of luck to survive.",
-    "description": "Risk is in a Gunslinger’s blood. They are bold renegades, bucking tradition and forging a new path with dangerous and inelegant firearms. Gunslingers are infamous for surviving by their wits and relying on split-second timing and a considerable amount of luck to survive.\n\n## Guts and Gunpowder\n\nBlack powder isn’t for the faint of heart. Its thunderous applause is volatile and imprecise—a barely controlled explosion directed at an enemy. Only the truly fearless seek to master it. But Gunslingers have nerves of steel, hurling death from their guns in a roaring cacophony. Adapted for shootouts, gunslingers are mobile and daring, knowing that life or death hangs on snap decision-making and one’s own mettle.\n\n## Dangerous Outsiders\n\nA Gunslinger’s explosive lifestyle lends well to wandering and adventuring. Gunslingers often shoot first and ask questions later, an attitude which earns them few friends and bountiful enemies. In their travels, most gunslingers are secretive and take great lengths to go unnoticed, lest they be spotted by old foes with scores to settle.",
+    "name": "Pistoleiro",
+    "tagline": "## Tripas e Pólvora",
+    "summary": "O risco está no sangue de um Pistoleiro. Eles são renegados ousados, contrariando a tradição e abrindo um novo caminho com armas de fogo perigosas e deselegantes. Os pistoleiros são famosos por sobreviverem com sua inteligência e por dependerem de uma fração de segundo e de uma quantidade considerável de sorte para sobreviver.",
+    "description": "O risco está no sangue de um Pistoleiro. Eles são renegados ousados, contrariando a tradição e abrindo um novo caminho com armas de fogo perigosas e deselegantes. Os pistoleiros são famosos por sobreviverem com sua inteligência e por dependerem de uma fração de segundo e de uma quantidade considerável de sorte para sobreviver.\n\n## Tripas e Pólvora\n\nA pólvora negra não é para os fracos de coração. Seus aplausos estrondosos são voláteis e imprecisos – uma explosão mal controlada dirigida a um inimigo. Somente os verdadeiramente destemidos procuram dominá-lo. Mas os Pistoleiros têm nervos de aço, lançando a morte com suas armas em uma cacofonia estrondosa. Adaptados para tiroteios, os pistoleiros são móveis e ousados, sabendo que a vida ou a morte depende da tomada de decisões instantâneas e da própria coragem.\n\n## Forasteiros Perigosos\n\nO estilo de vida explosivo de um Pistoleiro é propício para perambulações e aventuras. Os pistoleiros muitas vezes atiram primeiro e perguntam depois, uma atitude que lhes rende poucos amigos e numerosos inimigos. Em suas viagens, a maioria dos pistoleiros são reservados e fazem de tudo para passar despercebidos, para não serem avistados por velhos inimigos com contas a acertar.\n\n## Características principais\n\nDestreza\n\nDado de Vida\nD8 por nível de Pistoleiro\n\nProficiências em salvaguardas\nDestreza e Carisma\n\nEscolha 2: Acrobacia, Manejo de Animais, Atletismo, Enganação, Intuição, Intimidação, Percepção, Persuasão, Prestidigitação e Furtividade\n\nArmas simples e armas marciais de longo alcance\n\nArmadura leve\n\nEscolha A ou B: (A) Armadura de Couro, 2 Adagas, Revólver, 50 Balas, Kit de Aventureiro e 11 PO; ou (B) 175 PO",
     "sourceAnchor": "Gunslinger",
-    "coreTraits": "Primary Ability\nDexterity\n\nHit Point Die\nD8 per Gunslinger level\n\nSaving Throw Proficiencies\nDexterity and Charisma\n\nSkill Proficiencies\nChoose 2: Acrobatics, Animal Handling, Athletics, Deception, Insight, Intimidation, Perception, Persuasion, Sleight of Hand, and Stealth\n\nWeapon Proficiencies\nSimple weapons and Martial Ranged weapons\n\nArmor Training\nLight armor\n\nStarting Equipment\nChoose A or B: (A) Leather Armor, 2 Daggers, Revolver, 50 Bullets, Explorer’s Pack, and 11 GP; or (B) 175 GP\n\nMartin Kirby-Jackson"
+    "coreTraits": "Destreza\n\nDado de Vida\nD8 por nível de Pistoleiro\n\nProficiências em salvaguardas\nDestreza e Carisma\n\nEscolha 2: Acrobacia, Manejo de Animais, Atletismo, Enganação, Intuição, Intimidação, Percepção, Persuasão, Prestidigitação e Furtividade\n\nArmas simples e armas marciais de longo alcance\n\nArmadura leve\n\nEscolha A ou B: (A) Armadura de Couro, 2 Adagas, Revólver, 50 Balas, Kit de Aventureiro e 11 PO; ou (B) 175 PO"
   },
   "features": [
     {
       "level": 1,
-      "name": "Fighting Style",
-      "description": "You gain a Fighting Style feat of your choice. If you choose a feat, such as Great Weapon Fighting, that requires you to hold a Melee weapon in one or two hands, you can use that feat with Ranged weapons.\n\nWhenever you gain a Gunslinger level, you can replace the feat you chose with a different Fighting Style feat.",
+      "name": "Estilo de Luta",
+      "description": "Você ganha um talento Estilo de Luta à sua escolha. Se você escolher um talento, como Lutar com Armas Grandes, que exige que você segure uma arma corpo a corpo com uma ou duas mãos, você pode usar esse talento com armas de longo alcance.\n\nSempre que você ganha um nível de Pistoleiro, você pode substituir o talento escolhido por um talento Estilo de Luta diferente.",
       "sourceAnchor": "Level1FightingStyle"
     },
     {
       "level": 1,
-      "name": "Quick Draw",
-      "description": "You’re adept at drawing and firing before others have time to react, granting you the following benefits.\n\nInitiative. You have Advantage on Initiative rolls.\n\nDouble Draw. You can draw or stow two weapons that lack the Two-Handed property when you would normally be able to draw or stow only one.",
+      "name": "Sorteio rápido",
+      "description": "Você é adepto de sacar e atirar antes que os outros tenham tempo de reagir, o que lhe garante os seguintes benefícios.\n\nIniciativa. Você tem Vantagem em testes de Iniciativa.\n\nSorteio Duplo. Você pode sacar ou guardar duas armas que não tenham a propriedade Duas Mãos, quando normalmente seria capaz de sacar ou guardar apenas uma.",
       "sourceAnchor": "Level1QuickDraw"
     },
     {
       "level": 1,
-      "name": "Weapon Mastery",
-      "description": "Your training with weapons allows you to use the mastery properties of two kinds of Simple or Martial Ranged weapons of your choice. Whenever you finish a Long Rest, you can practice weapon drills and change one of those weapon choices.\n\nWhen you reach certain Gunslinger levels, you gain the ability to use the mastery properties of more kinds of weapons, as shown in the Weapon Mastery column of the Gunslinger Features table.",
+      "name": "Maestria em Armas",
+      "description": "Seu treinamento com armas permite que você use as propriedades de maestria de dois tipos de armas de longo alcance simples ou marciais de sua escolha. Sempre que você terminar um Descanso Longo, poderá praticar exercícios com armas e alterar uma dessas opções de armas.\n\nAo atingir determinados níveis de Pistoleiro, você ganha a capacidade de usar as propriedades de maestria de mais tipos de armas, conforme mostrado na coluna Maestria em Armas da tabela Características do Pistoleiro.",
       "sourceAnchor": "Level1WeaponMastery"
     },
     {
       "level": 2,
-      "name": "Critical Shot",
-      "description": "Your attack rolls with Ranged weapons can score a Critical Hit on a roll of 19 or 20 on the d20.\n\nAt Gunslinger level 9, your attack rolls with Ranged weapons score a Critical Hit on a roll of 18–20. At Gunslinger level 17, they score a Critical Hit on a roll of 17–20.",
+      "name": "Tiro Crítico",
+      "description": "Suas jogadas de ataque com armas de longo alcance podem pontuar Acerto Crítico em uma jogada de 19 ou 20 no d20.\n\nNo nível 9 do Pistoleiro, suas jogadas de ataque com armas de longo alcance pontuam Acerto Crítico em uma jogada de 18–20. No nível 17 do Pistoleiro, eles marcam um Acerto Crítico em um resultado de 17–20.",
       "sourceAnchor": "Level2CriticalShot"
     },
     {
       "level": 2,
-      "name": "Risk",
-      "description": "You can perform incredible feats of daring fueled by special dice called Risk Dice.\n\nRisk Dice. You have four Risk Dice, which are d8s. A Risk Die is expended when you use it. You regain all expended Risk Dice when you finish a Short or Long Rest. Your Risk Die changes and more Risk Dice become available as shown on the Risk Dice column of the Gunslinger Features table.\n\nManeuvers. You can expend Risk Dice to perform maneuvers. Your maneuver options are detailed later in the class description.\n\nSaving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Dexterity modifier and Proficiency Bonus.\n\nLucas Ferreira CM",
+      "name": "Risco",
+      "description": "Você pode realizar feitos incríveis de ousadia alimentados por dados especiais chamados Dados de Risco.\n\nDados de Risco. Você tem quatro Dados de Risco, que são d8s. Um Dado de Risco é gasto quando você o usa. Você recupera todos os Dados de Risco gastos ao finalizar um Descanso Curto ou Longo. Suas alterações no Dado de Risco e mais Dados de Risco ficam disponíveis conforme mostrado na coluna Dados de Risco da tabela Recursos do Pistoleiro.\n\nManobras. Você pode gastar Dados de Risco para realizar manobras. Suas opções de manobra são detalhadas posteriormente na descrição da classe.\n\nSalvando lances. Se uma manobra exigir uma salvaguarda, a CD é igual a 8 mais seu modificador de Destreza e Bônus de Proficiência.",
       "sourceAnchor": "Level2Risk"
     },
     {
       "level": 3,
-      "name": "Gunslinger Subclass",
-      "description": "You gain a Gunslinger subclass of your choice. A subclass is a specialization that grants you features at certain Gunslinger levels. For the rest of your career, you gain each of your subclass’s features that are of your Gunslinger level or lower.",
+      "name": "Subclasse Pistoleiro",
+      "description": "Você ganha uma subclasse Pistoleiro de sua escolha. Uma subclasse é uma especialização que concede recursos em determinados níveis de Pistoleiro. Pelo resto de sua carreira, você ganha cada uma das características de sua subclasse que sejam do seu nível de Pistoleiro ou inferior.",
       "sourceAnchor": "Level3GunslingerSubclass"
     },
     {
       "level": 4,
-      "name": "Ability Score Improvement",
-      "description": "You gain the Ability Score Improvement feat or another feat of your choice for which you qualify. You gain this feature again at Gunslinger levels 8, 12, and 16.",
+      "name": "Aprimoramento de Atributo",
+      "description": "Você ganha o talento Aprimoramento de Atributo ou outro talento de sua escolha para o qual você se qualifica. Você ganha esse recurso novamente nos níveis 8, 12 e 16 do Pistoleiro.",
       "sourceAnchor": "Level4AbilityScoreImprovement"
     },
     {
       "level": 5,
-      "name": "Extra Attack",
-      "description": "You can attack twice instead of once whenever you take the Attack action on your turn.",
+      "name": "Ataque Extra",
+      "description": "Você pode atacar duas vezes em vez de uma sempre que usar a ação Atacar no seu turno.",
       "sourceAnchor": "Level5ExtraAttack"
     },
     {
       "level": 5,
-      "name": "Gut Shot",
-      "description": "Whenever you score a Critical Hit against a Large or smaller creature with a ranged attack using a weapon, the projectile lodges itself in the target. For 1 minute or until the target replaces one of its attacks with dislodging the projectile, its Speed is halved and it has Disadvantage on attack rolls.",
+      "name": "Tiro intestinal",
+      "description": "Sempre que você obtiver um Acerto Crítico contra uma criatura Grande ou menor com um ataque à distância usando uma arma, o projétil se aloja no alvo. Por 1 minuto ou até que o alvo substitua um de seus ataques pelo desalojamento do projétil, sua Velocidade é reduzida pela metade e ele tem Desvantagem nas jogadas de ataque.",
       "sourceAnchor": "Level5GutShot"
     },
     {
       "level": 7,
-      "name": "Evasion",
-      "description": "When you’re subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail.\n\nYou don’t benefit from this feature if you have the Incapacitated condition.",
+      "name": "Evasão",
+      "description": "Quando você está sujeito a um efeito que lhe permite fazer uma salvaguarda de Destreza para sofrer apenas metade do dano, você não sofre nenhum dano se tiver sucesso na salvaguarda e apenas metade do dano se falhar.\n\nVocê não se beneficia desse recurso se tiver a condição Incapacitado.",
       "sourceAnchor": "Level7Evasion"
     },
     {
       "level": 11,
-      "name": "Overkill",
-      "description": "When you deal damage with a Ranged weapon that doesn’t add your ability modifier to the roll, you add your ability modifier nonetheless. If you already add your modifier to the damage roll, the target takes an extra 1d8 damage of the weapon’s type.\n\nNote that weapons that have the Firearm property don’t add your ability modifier to damage rolls.",
+      "name": "Exagero",
+      "description": "Quando você causa dano com uma arma de longo alcance que não adiciona seu modificador de habilidade à rolagem, você adiciona seu modificador de habilidade mesmo assim. Se você já adicionou seu modificador à jogada de dano, o alvo sofre 1d8 de dano extra do tipo da arma.\n\nObserve que as armas que possuem a propriedade arma de fogo não adicionam seu modificador de habilidade às jogadas de dano.",
       "sourceAnchor": "Level11Overkill"
     },
     {
       "level": 13,
-      "name": "Cheat Death",
-      "description": "When you are reduced to 0 Hit Points and not killed outright, you can drop to 1 Hit Point instead, and you regain a number of Hit Points equal to your Gunslinger level.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest.",
+      "name": "Trapacear a morte",
+      "description": "Quando você é reduzido a 0 Pontos de Vida e não é morto imediatamente, você pode cair para 1 Ponto de Vida e recuperar um número de Pontos de Vida igual ao seu nível de Pistoleiro.\n\nDepois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Curto ou Longo.",
       "sourceAnchor": "Level13CheatDeath"
     },
     {
       "level": 15,
-      "name": "Dire Gambit",
-      "description": "Whenever you roll Initiative or score a Critical Hit, you regain one expended Risk Die.",
+      "name": "Gambito Terrível",
+      "description": "Sempre que você rola Iniciativa ou obtém um Acerto Crítico, você recupera um Dado de Risco gasto.",
       "sourceAnchor": "Level15DireGambit"
     },
     {
       "level": 18,
-      "name": "Deft Maneuver",
-      "description": "You gain a special additional Bonus Action that you can take once on each of your turns. You can take this special Bonus Action only to use a maneuver.",
+      "name": "Manobra hábil",
+      "description": "Você ganha uma Ação Bônus adicional especial que pode realizar uma vez em cada um dos seus turnos. Você pode realizar esta Ação Bônus especial apenas para usar uma manobra.",
       "sourceAnchor": "Level18DeftManeuver"
     },
     {
       "level": 19,
-      "name": "Epic Boon",
-      "description": "You gain an Epic Boon feat or another feat of your choice for which you qualify. Boon of Irresistible Offense is recommended.",
+      "name": "Dádiva Épica",
+      "description": "Você ganha um talento Dádiva Épica ou outro talento de sua escolha para o qual você se qualifica. Dádiva da Ofensa Irresistível é recomendada.",
       "sourceAnchor": "Level19EpicBoon"
     },
     {
       "level": 20,
-      "name": "Headshot",
-      "description": "When you score a Critical Hit against a creature using a Ranged weapon, you can choose for it to be a Headshot. If the creature has less than 100 Hit Points, it dies. Otherwise, it takes an extra 10d10 damage of the weapon’s type.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending three Risk Dice (no action required).\n\nLucas Ferreira CM",
+      "name": "Tiro na cabeça",
+      "description": "Quando você marca um Acerto Crítico contra uma criatura usando uma arma de longo alcance, você pode escolher que seja um tiro na cabeça. Se a criatura tiver menos de 100 Pontos de Vida, ela morre. Caso contrário, sofre 10d10 de dano extra do tipo da arma.\n\nDepois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Curto ou Longo. Você também pode restaurar o uso dele gastando três Dados de Risco (nenhuma ação necessária).",
       "sourceAnchor": "Level20Headshot"
     }
   ],
   "maneuvers": [
     {
       "slug": "bite-the-bullet",
-      "name": "Bite the Bullet",
-      "description": "As a Bonus Action, you can expend one Risk Die to gain Temporary Hit Points equal to the number rolled on the die plus your Gunslinger level.",
+      "name": "Morda a Bala",
+      "description": "Como Ação Bônus, você pode gastar um Dado de Risco para ganhar Pontos de Vida Temporáriossss igual ao número lançado no dado mais seu nível de Pistoleiro.",
       "sourceAnchor": "BitetheBullet"
     },
     {
       "slug": "blindfire",
-      "name": "Blindfire",
-      "description": "You can take a Bonus Action and expend one Risk Die to gain Blindsight with a range of 30 feet until the end of the current turn.",
+      "name": "Fogo cego",
+      "description": "Você pode realizar uma Ação Bônus e gastar um Dado de Risco para ganhar Visão Cega com um alcance de 30 pés até o final do turno atual.",
       "sourceAnchor": "Blindfire"
     },
     {
       "slug": "dodge-roll",
-      "name": "Dodge Roll",
-      "description": "You can expend one Risk Die as a Bonus Action to move up to 15 feet and reload any Ranged weapon you are holding. This movement doesn’t provoke Opportunity Attacks and is unaffected by Difficult Terrain.",
+      "name": "Rolamento Evasivo",
+      "description": "Você pode gastar um Dado de Risco como uma Ação Bônus para se mover até 15 pés e recarregar qualquer arma de longo alcance que estiver segurando. Este movimento não provoca Ataques de Oportunidade e não é afetado por Terreno Difícil.",
       "sourceAnchor": "DodgeRoll"
     },
     {
       "slug": "grazing-shot",
-      "name": "Grazing Shot",
-      "description": "When you miss with a ranged attack roll using a weapon, you can expend one Risk Die (no action required) to deal damage to that creature equal to a roll of the die plus your Dexterity modifier (minimum of 1). This damage is the same type dealt by the weapon, and the damage can be increased only by increasing the ability modifier. You can only use this maneuver once per turn.",
+      "name": "Tiro Rasante",
+      "description": "Quando você erra uma jogada de ataque à distância usando uma arma, você pode gastar um Dado de Risco (nenhuma ação necessária) para causar dano àquela criatura igual a uma jogada do dado mais seu modificador de Destreza (mínimo de 1). Este dano é do mesmo tipo causado pela arma, e o dano só pode ser aumentado aumentando o modificador de habilidade. Você só pode usar esta manobra uma vez por turno.",
       "sourceAnchor": "GrazingShot"
     },
     {
       "slug": "maverick-spirit",
-      "name": "Maverick Spirit",
-      "description": "When you fail an Intelligence, Wisdom, or Charisma ability check or saving throw, you can expend one Risk Die to add it to the roll, potentially turning it into a success. You can only use this maneuver once per turn.",
+      "name": "Espírito Independente",
+      "description": "Quando você falha em um teste de habilidade ou salvaguarda de Inteligência, Sabedoria ou Carisma, você pode gastar um Dado de Risco para adicioná-lo ao teste, potencialmente transformando-o em um sucesso. Você só pode usar esta manobra uma vez por turno.",
       "sourceAnchor": "MaverickSpirit"
     },
     {
       "slug": "skin-of-your-teeth",
-      "name": "Skin of Your Teeth",
-      "description": "When a creature you can see hits you with an attack roll, you can take a Reaction and expend one Risk Die to dodge out of harm’s way. Roll the die and add the number rolled to your AC against this attack, potentially causing it to miss.",
+      "name": "Por um Triz",
+      "description": "Quando uma criatura que você pode ver atinge você com uma jogada de ataque, você pode realizar uma Reação e gastar um Dado de Risco para se esquivar e sair do caminho do perigo. Jogue o dado e some o número obtido à sua CA contra este ataque, potencialmente fazendo com que ele erre.",
       "sourceAnchor": "SkinofYourTeeth"
     }
   ],
@@ -209,40 +209,40 @@
     {
       "slug": "deadeye",
       "classSlug": "gunslinger",
-      "name": "Deadeye",
-      "tagline": "Shoot with Bullseye Precision",
-      "summary": "A well-placed bullet is more powerful than a sword, arrow, or spell. Indeed, you believe that every violent conflict should sound like a single loud crack followed by a long silence. Such shots demand perfection, even at range, for when they are done right, they are as deadly for",
-      "description": "Shoot with Bullseye Precision\n\nA well-placed bullet is more powerful than a sword, arrow, or spell. Indeed, you believe that every violent conflict should sound like a single loud crack followed by a long silence. Such shots demand perfection, even at range, for when they are done right, they are as deadly for the target as they are stupendous for the audience.\n\nLucas Ferreira CM",
+      "name": "Olho Morto",
+      "tagline": "Atire com precisão no alvo",
+      "summary": "Uma bala bem posicionada é mais poderosa que uma espada, flecha ou magia. Na verdade, você acredita que todo conflito violento deveria soar como um único estalo seguido de um longo silêncio. Esses tiros exigem perfeição, mesmo à distância, pois, quando bem executados, são tão mortais para",
+      "description": "Atire com precisão no alvo\n\nUma bala bem posicionada é mais poderosa que uma espada, flecha ou magia. Na verdade, você acredita que todo conflito violento deveria soar como um único estalo seguido de um longo silêncio. Esses tiros exigem perfeição, mesmo à distância, pois quando bem executados, são tão mortais para o alvo quanto estupendos para o público.",
       "sourceAnchor": "Deadeye",
       "features": [
         {
           "level": 3,
-          "name": "Eagle Eye [Maneuver]",
-          "description": "Once per turn when you miss with a ranged attack roll, you can expend one Risk Die and add it to the attack roll, potentially causing the attack to hit.",
+          "name": "Olho de Águia [Manobra]",
+          "description": "Uma vez por turno, quando você errar uma jogada de ataque à distância, você pode gastar um Dado de Risco e adicioná-lo à jogada de ataque, potencialmente fazendo com que o ataque acerte.",
           "sourceAnchor": "Level3EagleEyeManeuver"
         },
         {
           "level": 3,
-          "name": "Sharpshooter’s Stance",
-          "description": "You have trained to fire from a stable Prone position, granting the following conditions.\n\nFire While Prone. You don’t have Disadvantage on ranged attack rolls as a result of the Prone condition.\n\nQuick Stand. When you have the Prone condition, you can right yourself and thereby end the condition with only 5 feet of movement.",
+          "name": "Postura do atirador",
+          "description": "Você treinou para atirar de uma posição Caído estável, atendendo às seguintes condições.\n\nAtirar Enquanto Caído. Você não tem Desvantagem em jogadas de ataque à distância como resultado da condição Caído.\n\nSuporte rápido. Quando você tem a condição Caído, você pode se endireitar e, assim, encerrar a condição com apenas 5 pés de movimento.",
           "sourceAnchor": "Level3SharpshootersStance"
         },
         {
           "level": 6,
-          "name": "Concealed Position",
-          "description": "You excel at firing from concealment, granting you the following benefits.\n\nCamouflage. You can take the Hide action even if you aren’t Heavily Obscured or behind Three-Quarters Cover or Total Cover, as long as you have the Prone condition. The Invisible condition of this Hide action ends if you don’t have the Prone condition.\n\nSniper’s Nest. If you make an attack roll while hidden and the roll misses, making the attack roll doesn’t reveal your location.",
+          "name": "Posição oculta",
+          "description": "Você é excelente em atirar escondido, garantindo os seguintes benefícios.\n\nCamuflar. Você pode realizar a ação Esconder-se mesmo se não estiver Fortemente Obscurecido ou atrás de Cobertura de Três Quartos ou Cobertura Total, desde que tenha a condição Caído. A condição Invisível desta ação Ocultar termina se você não tiver a condição Caído.\n\nNinho do Atirador. Se você fizer uma jogada de ataque enquanto estiver escondido e a jogada falhar, fazer a jogada de ataque não revelará sua localização.",
           "sourceAnchor": "Level6ConcealedPosition"
         },
         {
           "level": 10,
-          "name": "Reposition",
-          "description": "Whenever a creature misses you with an attack roll, you can take a Reaction to end the Prone condition on yourself and move up to half your Speed.",
+          "name": "Reposicionar",
+          "description": "Sempre que uma criatura erra você em uma jogada de ataque, você pode realizar uma Reação para encerrar a condição Caído em si mesmo e aumentar até metade de sua Velocidade.",
           "sourceAnchor": "Level10Reposition"
         },
         {
           "level": 14,
-          "name": "Focused Shot",
-          "description": "When you take the Attack action, you can choose to make only one ranged attack roll using a weapon to make a Focused Shot. You have Advantage on this attack roll and, on a hit, score a Critical Hit.",
+          "name": "Tiro Focado",
+          "description": "Ao usar a ação Atacar, você pode optar por fazer apenas uma jogada de ataque à distância usando uma arma para fazer um Tiro Focado. Você tem Vantagem nesta jogada de ataque e, ao acertar, obtém Acerto Crítico.",
           "sourceAnchor": "Level14FocusedShot"
         }
       ]
@@ -250,40 +250,40 @@
     {
       "slug": "high-roller",
       "classSlug": "gunslinger",
-      "name": "High Roller",
-      "tagline": "Gamble with Life and Death",
-      "summary": "Fortune is a fickle thing—unless you’re a High Roller. These Gunslingers are master card sharps and dice throwers that mix their love of risk with their talent for gunplay. High Rollers push their luck until it runs out, then push harder. Why settle for a win when you could bet i",
-      "description": "Gamble with Life and Death\n\nFortune is a fickle thing—unless you’re a High Roller. These Gunslingers are master card sharps and dice throwers that mix their love of risk with their talent for gunplay. High Rollers push their luck until it runs out, then push harder. Why settle for a win when you could bet it all and win big?\n\nNoa Kriukova",
+      "name": "Grande Apostador",
+      "tagline": "Jogue com a vida e a morte",
+      "summary": "A fortuna é algo inconstante – a menos que você seja um High Roller. Esses Pistoleiros são mestres em cartas e lançadores de dados que misturam seu amor pelo risco com seu talento para o uso de armas. Os High Rollers abusam da sorte até que ela acabe e depois empurram com mais força. Por que se contentar com uma vitória quando você pode apostar que eu",
+      "description": "Jogue com a vida e a morte\n\nA fortuna é algo inconstante – a menos que você seja um High Roller. Esses Pistoleiros são mestres em cartas e lançadores de dados que misturam seu amor pelo risco com seu talento para o uso de armas. Os High Rollers abusam da sorte até que ela acabe e depois empurram com mais força. Por que se contentar com uma vitória quando você pode apostar tudo e ganhar muito?",
       "sourceAnchor": "HighRoller",
       "features": [
         {
           "level": 3,
-          "name": "Poker Face",
-          "description": "You gain proficiency with all Gaming Sets and in one of the following skills of your choice: Deception, Insight, or Perception.",
+          "name": "Cara de Pôquer",
+          "description": "Você ganha proficiência com todos os Kit de Jogos e em uma das seguintes habilidades de sua escolha: Enganação, Intuição ou Percepção.",
           "sourceAnchor": "Level3PokerFace"
         },
         {
           "level": 3,
-          "name": "Liar’s Dice [Maneuver]",
-          "description": "When you make a damage roll with a Ranged weapon, you can expend one Risk Die as a Bonus Action and declare it to be a hidden roll. Roll the damage in secret and declare any total you wish. The GM has the option to call your bluff, in which case you reveal the damage dice you rolled. This has different consequences based on whether or not you lied.\n\nThe GM Calls Your Bluff; You Lied. The damage you deal is halved.\n\nThe GM Calls Your Bluff; You Told the Truth. The damage you deal is doubled.\n\nThe GM Doesn’t Call Your Bluff. Use the total damage you declared, even if you rolled a different total.",
+          "name": "Dados do Mentiroso [Manobra]",
+          "description": "Quando você faz uma jogada de dano com uma arma de longo alcance, você pode gastar um Dado de Risco como Ação Bônus e declarar que é uma jogada oculta. Role o dano em segredo e declare o total que desejar. O Mestre tem a opção de denunciar seu blefe e, nesse caso, você revela os dados de dano que rolou. Isso tem consequências diferentes dependendo de você ter mentido ou não.\n\nO Mestre chama seu blefe; Você mentiu. O dano que você causa é reduzido pela metade.\n\nO Mestre chama seu blefe; Você disse a verdade. O dano que você causa é duplicado.\n\nO Mestre não chama seu blefe. Use o dano total que você declarou, mesmo que tenha obtido um total diferente.",
           "sourceAnchor": "Level3LiarsDiceManeuver"
         },
         {
           "level": 6,
-          "name": "Risky Business",
-          "description": "Once per turn when you make an attack roll against an enemy and the roll doesn’t have Disadvantage, you can choose to make the roll with Disadvantage. When you do, you regain one expended Risk Die.",
+          "name": "Negócio arriscado",
+          "description": "Uma vez por turno, quando você fizer uma jogada de ataque contra um inimigo e a jogada não tiver Desvantagem, você pode escolher fazer a jogada com Desvantagem. Ao fazer isso, você recupera um Dado de Risco gasto.",
           "sourceAnchor": "Level6RiskyBusiness"
         },
         {
           "level": 10,
-          "name": "Risk Taker",
-          "description": "You can use your Maverick Spirit and Skin of Your Teeth maneuvers without expending a Risk Die. When you do so, roll a d6 instead of a Risk Die.",
+          "name": "Assumidor de risco",
+          "description": "Você pode usar suas manobras Espírito Independente e Por um Triz sem gastar um Dado de Risco. Ao fazer isso, role um d6 em vez de Dado de Risco.",
           "sourceAnchor": "Level10RiskTaker"
         },
         {
           "level": 14,
-          "name": "Double or Nothing",
-          "description": "When you score a Critical Hit using a Ranged weapon, you can gamble for a higher result. Roll a d20. If the roll is a 10 or higher, roll all of the attack’s damage dice four times and add them together, instead of only two times as normal for a Critical Hit. If you roll a 9 or lower on the d20, the Critical Hit becomes a normal hit.\n\nAgustin Marceillac",
+          "name": "Duplo ou nada",
+          "description": "Ao marcar um Acerto Crítico usando uma arma de longo alcance, você pode apostar para obter um resultado mais alto. Role um d20. Se o resultado for 10 ou superior, jogue todos os dados de dano do ataque quatro vezes e some-os, em vez de apenas duas vezes como normal para um Acerto Crítico. Se você tirar 9 ou menos no d20, o Acerto Crítico se torna um acerto normal.",
           "sourceAnchor": "Level14DoubleorNothing"
         }
       ]
@@ -291,40 +291,40 @@
     {
       "slug": "secret-agent",
       "classSlug": "gunslinger",
-      "name": "Secret Agent",
-      "tagline": "Engage in Espionage and Assassination",
-      "summary": "Knowledge is power. The best way to defeat your enemies is by stealing what they know and replacing it with misinformation. To that end, you have been trained in the ways of covert warfare, giving you a broad range of abilities to complement your fearsome gunnery skills.",
-      "description": "Engage in Espionage and Assassination\n\nKnowledge is power. The best way to defeat your enemies is by stealing what they know and replacing it with misinformation. To that end, you have been trained in the ways of covert warfare, giving you a broad range of abilities to complement your fearsome gunnery skills.",
+      "name": "Agente Secreto",
+      "tagline": "Envolva-se em espionagem e assassinato",
+      "summary": "Conhecimento é poder. A melhor maneira de derrotar seus inimigos é roubar o que eles sabem e substituí-lo por desinformação. Para esse fim, você foi treinado nas formas de guerra secreta, o que lhe dá uma ampla gama de habilidades para complementar suas temíveis habilidades de artilharia.",
+      "description": "Envolva-se em espionagem e assassinato\n\nConhecimento é poder. A melhor maneira de derrotar seus inimigos é roubar o que eles sabem e substituí-lo por desinformação. Para esse fim, você foi treinado nas formas de guerra secreta, o que lhe dá uma ampla gama de habilidades para complementar suas temíveis habilidades de artilharia.",
       "sourceAnchor": "SecretAgent",
       "features": [
         {
           "level": 3,
-          "name": "Operative Training",
-          "description": "Your covert training grants you the following benefits:\n\nConcealed Shot. You learn the Concealed Shot cantrip. Intelligence, Wisdom, or Charisma is your spellcasting ability for this cantrip (choose when you select this subclass).\n\nOperative Tools. You gain a Disguise Kit and Thieves’ Tools, and you have proficiency with them.\n\nSkill Proficiencies. You gain proficiency in two of these skills of your choice: Deception, Investigation, Persuasion, Sleight of Hand, or Stealth.\n\nLucas Ferreira CM",
+          "name": "Treinamento Operativo",
+          "description": "Seu treinamento secreto concede os seguintes benefícios:\n\nTiro oculto. Você aprende o truque Disparo Oculto. Inteligência, Sabedoria ou Carisma é sua habilidade de conjuração para este truque (escolha quando selecionar esta subclasse).\n\nFerramentas operativas. Você ganha um Kit de Disfarce e Ferramentas de Ladrão e tem proficiência com eles.\n\nProficiências em habilidades. Você ganha proficiência em duas dessas perícias à sua escolha: Enganação, Investigação, Persuasão, Prestidigitação ou Furtividade.",
           "sourceAnchor": "Level3OperativeTraining"
         },
         {
           "level": 3,
-          "name": "Parting Shot [Maneuver]",
-          "description": "When you take the Dash, Disengage, or Dodge action on your turn, you can expend one Risk Die to make a ranged attack using a weapon as a Bonus Action. Add the Risk Die to the damage roll on a hit.",
+          "name": "Tiro de despedida [Manobra]",
+          "description": "Quando você realiza a ação Correr, Desengajar ou Esquivar em seu turno, você pode gastar um Dado de Risco para fazer um ataque à distância usando uma arma como Ação Bônus. Adicione o Dado de Risco à jogada de dano em um acerto.",
           "sourceAnchor": "Level3PartingShotManeuver"
         },
         {
           "level": 6,
-          "name": "Fieldcraft",
-          "description": "Your experience in the field grants you the following benefits.\n\nQuick Change. Using a Disguise Kit, you can create a Costume and don it as a Bonus Action.\n\nSlick Talker. Whenever you make a Charisma (Deception) or Charisma (Persuasion) check, you can treat a d20 roll of 9 or lower as a 10.",
+          "name": "Artesanato de campo",
+          "description": "Sua experiência na área concede os seguintes benefícios.\n\nMudança rápida. Usando um Kit de Disfarce, você pode criar uma fantasia e vesti-la como Ação Bônus.\n\nFalador habilidoso. Sempre que você fizer um teste de Carisma (Enganação) ou Carisma (Persuasão), você pode tratar um resultado de 20 ou menos no d9 como 10.",
           "sourceAnchor": "Level6Fieldcraft"
         },
         {
           "level": 10,
-          "name": "Exit Strategy",
-          "description": "When you take damage, you can take a Reaction to evade further harm. You have the Invisible condition until the start of your next turn, and you can immediately move up to 10 feet.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending one Risk Die (no action required).",
+          "name": "Estratégia de saída",
+          "description": "Ao sofrer dano, você pode realizar uma Reação para evitar mais danos. Você tem a condição Invisível até o início do seu próximo turno e pode mover-se imediatamente até 10 pés.\n\nDepois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Curto ou Longo. Você também pode restaurar o uso dele gastando um Dado de Risco (nenhuma ação necessária).",
           "sourceAnchor": "Level10ExitStrategy"
         },
         {
           "level": 14,
-          "name": "License to Kill",
-          "description": "Whenever you deal damage with a Ranged weapon, you can expend either one or two Risk Dice and add them to the damage roll. If you roll the highest number on a Risk Die, you can roll the die again and add it to the damage without expending it, rolling again if it is the highest number again, and so on. The maximum number of Risk Dice you can add to the damage equals your Proficiency Bonus.",
+          "name": "Licença para matar",
+          "description": "Sempre que você causa dano com uma arma de longo alcance, você pode gastar um ou dois Dados de Risco e adicioná-los à jogada de dano. Se você lançar o número mais alto em Dado de Risco, poderá lançar o dado novamente e adicioná-lo ao dano sem gastá-lo, jogando novamente se for o número mais alto novamente e assim por diante. O número máximo de Dados de Risco que você pode adicionar ao dano é igual ao seu Bônus de Proficiência.",
           "sourceAnchor": "Level14LicensetoKill"
         }
       ]
@@ -332,40 +332,40 @@
     {
       "slug": "spellslinger",
       "classSlug": "gunslinger",
-      "name": "Spellslinger",
-      "tagline": "Complement Your Gunslinging with Arcana",
-      "summary": "Magic and guns aren’t so different—arcane power is like gunpowder, a spell is like a bullet, and you are like a gun, directing your spells with precision at unfortunate targets. Spellslingers mix the disciplines of gunplay and spellcasting, sometimes loading arcane charges with y",
-      "description": "Complement Your Gunslinging with Arcana\n\nMagic and guns aren’t so different—arcane power is like gunpowder, a spell is like a bullet, and you are like a gun, directing your spells with precision at unfortunate targets. Spellslingers mix the disciplines of gunplay and spellcasting, sometimes loading arcane charges with your shots and firing bullets enhanced with lighting, frost, or flame.\n\nLucas Ferreira CM",
+      "name": "Pistoleiro Arcano",
+      "tagline": "Complemente seu Gunslinging com Arcana",
+      "summary": "Magia e armas não são tão diferentes – o poder arcano é como a pólvora, uma magia é como uma bala e você é como uma arma, direcionando suas magias com precisão para alvos infelizes. Pistoleiros Arcanos misturam as disciplinas de uso de armas e lançamento de magias, às vezes carregando cargas arcanas com y",
+      "description": "Complemente seu Gunslinging com Arcana\n\nMagia e armas não são tão diferentes – o poder arcano é como a pólvora, uma magia é como uma bala e você é como uma arma, direcionando suas magias com precisão para alvos infelizes. Pistoleiros Arcanos misturam as disciplinas de uso de armas e lançamento de magias, às vezes carregando cargas arcanas com seus tiros e disparando balas aprimoradas com iluminação, gelo ou chamas.",
       "sourceAnchor": "Spellslinger",
       "features": [
         {
           "level": 3,
-          "name": "Spellcasting",
-          "description": "You complement your bullets with the ability to cast spells.\n\nCantrips. You know two cantrips of your choice from the Wizard spell list (see that class’s section for its list). Fire Bolt and Message are recommended. Whenever you gain a Gunslinger level, you can replace one of these cantrips with another cantrip of your choice from the Wizard spell list.\n\nWhen you reach Gunslinger level 10, you learn another Wizard cantrip of your choice.\n\nSpell Slots. The Spellslinger Spellcasting table shows how many spell slots you have to cast your level 1+ spells. You regain all expended slots when you finish a Long Rest.\n\nPrepared Spells of Level 1+. You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose three level 1 spells from the Wizard spell list. Chromatic Orb, Jump, and Shield are recommended.\n\nThe number of spells on your list increases as you gain Gunslinger levels, as shown in the Prepared Spells column of the Spellslinger Spellcasting table. Whenever that number increases, choose additional spells from the Wizard spell list until the number of spells on your list matches the number on the table. The chosen spells must be of a level for which you have spell slots. For example, if you’re a level 7 Gunslinger, your list of prepared spells can include five Wizard spells of levels 1 and 2 in any combination.\n\nChanging your Prepared Spells. Whenever you gain a Gunslinger level, you can replace one spell on your list with another Wizard spell for which you have spell slots.\n\nSpellcasting Ability. Intelligence is your spellcasting ability for your Wizard spells.\n\nSpellcasting Focus. You can use an Arcane Focus or a Ranged weapon as a Spellcasting Focus for your Wizard spells.\n\n    Spellslinger Spellcasting\n\n        —Spell Slots per Spell Level—\n\nGunslinger Level\nPrepared Spells\n1\n2\n3\n4\n\n3\n3\n2\n—\n—\n—\n\n4\n4\n3\n—\n—\n—\n\n5\n4\n3\n—\n—\n—\n\n6\n4\n3\n—\n—\n—\n\n7\n5\n4\n2\n—\n—\n\n8\n6\n4\n2\n—\n—\n\n9\n6\n4\n2\n—\n—\n\n10\n7\n4\n3\n—\n—\n\n11\n8\n4\n3\n—\n—\n\n12\n8\n4\n3\n—\n—\n\n13\n9\n4\n3\n2\n—\n\n14\n10\n4\n3\n2\n—\n\n15\n10\n4\n3\n2\n—\n\n16\n11\n4\n3\n3\n—\n\n17\n11\n4\n3\n3\n—\n\n18\n11\n4\n3\n3\n—\n\n19\n12\n4\n3\n3\n1\n\n20\n13\n4\n3\n3\n1",
+          "name": "Magias",
+          "description": "Você complementa suas balas com a habilidade de lançar magias.\n\nTruques. Você conhece dois truques à sua escolha da lista de magias do Mago (veja a seção dessa classe para consultar a lista). Raio de Fogo e Mensagem são recomendados. Sempre que você ganha um nível de Pistoleiro, você pode substituir um desses truques por outro truque de sua escolha da lista de magias do Mago.\n\nAo atingir o nível 10 de Pistoleiro, você aprende outro truque de Mago de sua escolha.\n\nEspaços de Magia. A tabela Conjuração do Pistoleiro Arcano mostra quantos espaços de magia você tem para lançar suas magias de nível 1+. Você recupera todos os espaços gastos ao terminar um Descanso Longo.\n\nMagias Preparadas de Nível 1+. Você prepara a lista de magias de nível 1+ que estão disponíveis para serem lançadas com esse recurso. Para começar, escolha três magias de nível 1 da lista de magias do Mago. Orbe cromático, salto e escudo são recomendados.\n\nO número de magias em sua lista aumenta à medida que você ganha níveis de Pistoleiro, conforme mostrado na coluna Magias Preparadas da tabela Conjuração de Magias do Pistoleiro Arcano. Sempre que esse número aumentar, escolha magias adicionais da lista de magias do Mago até que o número de magias em sua lista corresponda ao número na tabela. As magias escolhidas devem ser de um nível para o qual você possui espaços de magia. Por exemplo, se você for um Pistoleiro de nível 7, sua lista de magias preparadas pode incluir cinca magias de Mago de níveis 1 e 2 em qualquer combinação.\n\nAlterando suas magias preparadas. Sempre que você ganha um nível de Pistoleiro, você pode substituir uma magia de sua lista por outra magia de Mago para o qual você tenha espaços de magia.\n\nAtributo de Conjuração. Inteligência é a sua habilidade de lançar magias para suas magias de Mago.\n\nFoco de Conjuração. Você pode usar um Foco Arcano ou uma arma de longo alcance como Foco de Conjuração para suas magias de mago.\n\n—Espaços de Magia por nível de magia—\n\n1\n2\n3\n4\n\n3\n3\n2\n-\n-\n-\n\n4\n4\n3\n-\n-\n-\n\n5\n4\n3\n-\n-\n-\n\n6\n4\n3\n-\n-\n-\n\n7\n5\n4\n2\n-\n-\n\n8\n6\n4\n2\n-\n-\n\n9\n6\n4\n2\n-\n-\n\n10\n7\n4\n3\n-\n-\n\n11\n8\n4\n3\n-\n-\n\n12\n8\n4\n3\n-\n-\n\n13\n9\n4\n3\n2\n-\n\n14\n10\n4\n3\n2\n-\n\n15\n10\n4\n3\n2\n-\n\n16\n11\n4\n3\n3\n-\n\n17\n11\n4\n3\n3\n-\n\n18\n11\n4\n3\n3\n-\n\n19\n12\n4\n3\n3\n1\n\n20\n13\n4\n3\n3\n1",
           "sourceAnchor": "Level3Spellcasting"
         },
         {
           "level": 3,
-          "name": "Bang, You’re Dead!",
-          "description": "You can use magic in place of guns.\n\nFinger Guns. You learn the Finger Guns cantrip. See the New Spells section for details.\n\nArcane Shot. When you hit a target with a Finger Guns attack, you can expend one Risk Die as a Bonus Action and add it to the damage roll.",
+          "name": "Bang, você está morto!",
+          "description": "Você pode usar magia no lugar de armas.\n\nPistolas de Dedo. Você aprende o truque Pistolas de Dedo. Veja a seção Novos Magias para detalhes.\n\nTiro Arcano. Ao atingir um alvo com um ataque de Pistolas de Dedo, você pode gastar um Dado de Risco como Ação Bônus e adicioná-lo à jogada de dano.",
           "sourceAnchor": "Level3BangYoureDead"
         },
         {
           "level": 6,
-          "name": "Spellshot",
-          "description": "When you take the Attack action on your turn, you can replace one of the attacks with a casting of one of your Wizard cantrips that has a casting time of an action.",
+          "name": "Magia",
+          "description": "Ao usar a ação Atacar no seu turno, você pode substituir um dos ataques por lançar um de seus truques de Mago que tenha um tempo de conjuração de uma ação.",
           "sourceAnchor": "Level6Spellshot"
         },
         {
           "level": 10,
-          "name": "Counter-Mage",
-          "description": "Your experience in combating spellcasters grants you the following benefits.\n\nAbjuration-Breaker. Whenever you make a ranged attack roll, you temporarily disrupt protective magic affecting the target. For the duration of the attack, the effects of spells targeting the creature, such as Mage Armor, as well as the properties and powers of magic items worn or carried by the creature, are suppressed and don’t function. The target of the attack can’t take a Reaction to cast spells such as Shield in response to the attack or damage.\n\nAntimagic Shot. When you score a Critical Hit and the target is affected by your Gut Shot feature, it also impedes the target’s ability to cast spells. While the projectile is lodged in the target, it can’t cast spells or take the Magic action. Additionally, the target has Disadvantage on Constitution saving throws it makes to maintain Concentration.\n\nInured to Magic. When you fail a saving throw against a spell or magical effect, you can take a Reaction to roll 1d6 and add it to the roll, potentially turning the failure into a success.",
+          "name": "Contra-Mago",
+          "description": "Sua experiência no combate a conjuradores lhe concede os seguintes benefícios.\n\nQuebrador de Abjuração. Sempre que você faz uma jogada de ataque à distância, você interrompe temporariamente a magia protetora que afeta o alvo. Durante o ataque, os efeitos das magias direcionados à criatura, como a Armadura do Mago, bem como as propriedades e poderes dos itens mágicos usados ​​ou carregados pela criatura, são suprimidos e não funcionam. O alvo do ataque não pode realizar uma Reação para lançar magias como Escudo em resposta ao ataque ou dano.\n\nTiro Antimágico. Quando você marca um Acerto Crítico e o alvo é afetado pelo seu recurso Tiro Intestinal, isso também impede a capacidade do alvo de lançar magias. Enquanto o projétil estiver alojado no alvo, ele não poderá lançar magias nem realizar a Ação Mágica. Além disso, o alvo tem Desvantagem nos salvaguardas de Constituição que faz para manter a Concentração.\n\nHabituado à magia. Quando você falha em uma salvaguarda contra uma magia ou efeito mágico, você pode realizar uma Reação para rolar 1d6 e adicioná-lo à jogada, potencialmente transformando a falha em um sucesso.",
           "sourceAnchor": "Level10CounterMage"
         },
         {
           "level": 14,
-          "name": "Magic Bullet [Maneuver]",
-          "description": "When you make a spell attack roll, you can expend one Risk Die as a Bonus Action to substitute the spell attack with a ranged attack using a weapon. Add the Risk Die to the attack roll. On a hit, the attack deals the weapon’s normal damage, in addition to the effects of the spell attack roll.",
+          "name": "Bala Mágica [Manobra]",
+          "description": "Quando você faz uma jogada de ataque mágico, você pode gastar um Dado de Risco como uma Ação Bônus para substituir o ataque mágico por um ataque à distância usando uma arma. Adicione o Dado de Risco à jogada de ataque. Se acertar, o ataque causa o dano normal da arma, além dos efeitos da jogada de ataque da magia.",
           "sourceAnchor": "Level14MagicBulletManeuver"
         }
       ]
@@ -373,40 +373,40 @@
     {
       "slug": "trick-shot",
       "classSlug": "gunslinger",
-      "name": "Trick Shot",
-      "tagline": "Ricochet Bullets from Every Angle",
+      "name": "Tiro de Trucagem",
+      "tagline": "Ricochete de balas de todos os ângulos",
       "summary": "Noa Kriukova",
-      "description": "Ricochet Bullets from Every Angle\n\nNoa Kriukova\n\nAccuracy means different things to different people. For you, true accuracy isn’t necessarily in hitting a target on the first shot, but might include hitting the mark after the bullet bounces around a dozen times. Your attacks are just as dangerous if they miss, or even after hitting their mark, as others’ are while they’re still in the air.",
+      "description": "Ricochete de balas de todos os ângulos\n\nPrecisão significa coisas diferentes para pessoas diferentes. Para você, a verdadeira precisão não consiste necessariamente em acertar um alvo no primeiro tiro, mas pode incluir acertar o alvo depois que a bala quica uma dúzia de vezes. Seus ataques são tão perigosos se errarem, ou mesmo depois de atingirem o alvo, quanto os de outros enquanto ainda estão no ar.",
       "sourceAnchor": "TrickShot",
       "features": [
         {
           "level": 3,
-          "name": "Creative Trajectory",
-          "description": "You can make your projectiles travel in unexpected ways. Your ranged attacks with weapons ignore Half Cover and Three-Quarters Cover.",
+          "name": "Trajetória Criativa",
+          "description": "Você pode fazer seus projéteis viajarem de maneiras inesperadas. Seus ataques à distância com armas ignoram Meia Cobertura e Cobertura de Três Quartos.",
           "sourceAnchor": "Level3CreativeTrajectory"
         },
         {
           "level": 3,
-          "name": "Ricochet [Maneuver]",
-          "description": "When you miss with a ranged attack using a weapon, you can take a Bonus Action and expend one Risk Die to reroll the attack and add the Risk Die to the roll. You must use the new roll.",
+          "name": "Ricochete [Manobra]",
+          "description": "Quando você erra um ataque à distância usando uma arma, você pode realizar uma Ação Bônus e gastar um Dado de Risco para rolar novamente o ataque e adicionar o Dado de Risco à jogada. Você deve usar o novo resultado.",
           "sourceAnchor": "Level3RicochetManeuver"
         },
         {
           "level": 6,
-          "name": "Fancy Gunplay",
-          "description": "Your flashy weapon tricks grant you the following benefits.\n\nGun Spinning. Once per turn when you make a Charisma (Performance) check or a Dexterity (Sleight of Hand) check using one of your Ranged weapons, you can roll a Risk Die and add it to the ability check without expending it.\n\nSpeed Loader. On your turn, you can reload a weapon with the Reload property without taking an action or Bonus Action.",
+          "name": "Tiroteio extravagante",
+          "description": "Seus truques chamativos com armas garantem os seguintes benefícios.\n\nGirando Arma. Uma vez por turno, quando você faz um teste de Carisma (Desempenho) ou um teste de Destreza (Prestidigitação) usando uma de suas armas de longo alcance, você pode rolar um Dado de Risco e adicioná-lo ao teste de habilidade sem gastá-lo.\n\nCarregador rápido. No seu turno, você pode recarregar uma arma com a propriedade Recarregar sem realizar uma ação ou Ação Bônus.",
           "sourceAnchor": "Level6FancyGunplay"
         },
         {
           "level": 10,
-          "name": "Deft Deflection [Maneuver]",
-          "description": "You can shoot projectiles out of the air. When an ally within 30 feet of you is hit by an attack, you can take a Reaction and expend one Risk Die to grant that ally the benefit of the Skin of Your Teeth maneuver against that attack. You must be holding a Ranged weapon to use this maneuver.",
+          "name": "Deflexão Hábil [Manobra]",
+          "description": "Você pode atirar projéteis no ar. Quando um aliado a até 30 pés de você é atingido por um ataque, você pode realizar uma Reação e gastar um Dado de Risco para conceder a esse aliado o benefício da manobra Por um Triz contra esse ataque. Você deve possuir uma arma de longo alcance para usar esta manobra.",
           "sourceAnchor": "Level10DeftDeflectionManeuver"
         },
         {
           "level": 14,
-          "name": "Pinball Shot",
-          "description": "Once on each of your turns when you hit a creature with a ranged attack using a weapon, you can deflect the projectile at additional targets. Choose a different target within 30 feet of the first and make an attack roll against it. On a hit, you can repeat this attack against a new target within 30 feet until you miss or make a total of five attacks. You can’t target the same creature with more than one attack each time you use this feature.\n\nOnce you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending two Risk Dice (no action required).",
+          "name": "Tiro de pinball",
+          "description": "Uma vez em cada um de seus turnos, ao atingir uma criatura com um ataque à distância usando uma arma, você pode desviar o projétil em alvos adicionais. Escolha um alvo diferente a até 30 pés do primeiro e faça uma jogada de ataque contra ele. Se acertar, você pode repetir este ataque contra um novo alvo em um raio de 30 pés até errar ou realizar um total de cinco ataques. Você não pode atingir a mesma criatura com mais de um ataque cada vez que usar este recurso.\n\nDepois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Curto ou Longo. Você também pode restaurar seu uso gastando dois Dados de Risco (nenhuma ação necessária).",
           "sourceAnchor": "Level14PinballShot"
         }
       ]
@@ -414,40 +414,40 @@
     {
       "slug": "white-hat",
       "classSlug": "gunslinger",
-      "name": "White Hat",
-      "tagline": "Protect Your Allies and Uphold the Law",
-      "summary": "Some Gunslingers live by a code and expect others to do the same. These Gunslingers, known as White Hats, sometimes serve as officers of the law but never hesitate to do what’s right when the law says otherwise. Despite their affinity for deadly weapons, White Hats prefer to keep",
-      "description": "Protect Your Allies and Uphold the Law\n\nSome Gunslingers live by a code and expect others to do the same. These Gunslingers, known as White Hats, sometimes serve as officers of the law but never hesitate to do what’s right when the law says otherwise. Despite their affinity for deadly weapons, White Hats prefer to keep their friends safe and subdue their enemies nonviolently—a preference their enemies don’t often oblige.",
+      "name": "Chapéu Branco",
+      "tagline": "Proteja seus aliados e cumpra a lei",
+      "summary": "Alguns Pistoleiros vivem de acordo com um código e esperam que outros façam o mesmo. Esses Pistoleiros, conhecidos como Chapéus Brancos, às vezes atuam como oficiais da lei, mas nunca hesitam em fazer o que é certo quando a lei diz o contrário. Apesar de sua afinidade com armas mortais, os Chapéus Brancos preferem manter",
+      "description": "Proteja seus aliados e cumpra a lei\n\nAlguns Pistoleiros vivem de acordo com um código e esperam que outros façam o mesmo. Esses Pistoleiros, conhecidos como Chapéus Brancos, às vezes atuam como oficiais da lei, mas nunca hesitam em fazer o que é certo quando a lei diz o contrário. Apesar de sua afinidade com armas mortais, os Chapéus Brancos preferem manter seus amigos seguros e subjugar seus inimigos de forma não violenta – uma preferência que seus inimigos nem sempre atendem.",
       "sourceAnchor": "WhiteHat",
       "features": [
         {
           "level": 3,
-          "name": "Lay Down the Law [Maneuver]",
-          "description": "You can take a Bonus Action and expend one Risk Die to keep an eye out for dangers that threaten your companions. Choose an ally that you can see within 60 feet of you. That ally gains Temporary Hit Points equal to the number rolled on the Risk Die. Until the start of your next turn, if the ally is hit by an attack, you can take a Reaction to make a ranged attack using a weapon against the attacker.",
+          "name": "Estabeleça a Lei [Manobra]",
+          "description": "Você pode realizar uma Ação Bônus e gastar um Dado de Risco para ficar atento aos perigos que ameaçam seus companheiros. Escolha um aliado que você possa ver a até 60 pés de você. Esse aliado ganha Pontos de Vida Temporáriossss igual ao número obtido no Dado de Risco. Até o início do seu próximo turno, se o aliado for atingido por um ataque, você pode realizar uma Reação para realizar um ataque à distância usando uma arma contra o atacante.",
           "sourceAnchor": "Level3LayDowntheLawManeuver"
         },
         {
           "level": 3,
-          "name": "Steely-Eyed Aura",
-          "description": "An aura of stoic confidence radiates from you in a 10-foot Emanantion. You and allies within the Emanantion have Advantage on saving throws made to avoid or end the Frightened condition. The aura is inactive while you have the Incapacitated condition.",
+          "name": "Aura de Olhos de Aço",
+          "description": "Uma aura de confiança estóica irradia de você em uma Emanação de 10 pés. Você e aliados dentro da Emanação têm Vantagem nos salvaguardas feitos para evitar ou encerrar a condição Amedrontado. A aura fica inativa enquanto você estiver na condição Incapacitado.",
           "sourceAnchor": "Level3SteelyEyedAura"
         },
         {
           "level": 6,
-          "name": "Reach for the Skies",
-          "description": "When you score a Critical Hit against a creature, you call for the target to surrender instead of lodging a projectile in it. The target must succeed on a Wisdom saving throw against your Maneuver save DC or have the Frightened and Incapacitated conditions for 1 minute. These conditions end early if the creature takes any damage, if you have the Incapacitated condition, or if you die. The creature can repeat the Wisdom saving throw at the end of each of its turns, ending the conditions on itself on a success.",
+          "name": "Alcance os céus",
+          "description": "Quando você marca um Acerto Crítico contra uma criatura, você pede que o alvo se renda em vez de alojar um projétil nele. O alvo deve ser bem sucedido em uma salvaguarda de Sabedoria contra sua CD de resistência de Manobra ou ter as condições Amedrontado e Incapacitado por 1 minuto. Essas condições terminam mais cedo se a criatura sofrer algum dano, se você tiver a condição Incapacitado ou se morrer. A criatura pode repetir a salvaguarda de Sabedoria no final de cada um de seus turnos, encerrando as condições em caso de sucesso.",
           "sourceAnchor": "Level6ReachfortheSkies"
         },
         {
           "level": 10,
-          "name": "Long Arm of the Law",
-          "description": "Once per turn when you hit a Large or smaller creature with a ranged attack using a weapon, you can hobble the target. The creature can’t move on its next turn unless it first takes the Disengage action.",
+          "name": "Longo braço da lei",
+          "description": "Uma vez por turno, quando você atingir uma criatura Grande ou menor com um ataque à distância usando uma arma, você pode mancar o alvo. A criatura não pode se mover no próximo turno, a menos que primeiro realize a ação de Desengajar.",
           "sourceAnchor": "Level10LongArmoftheLaw"
         },
         {
           "level": 14,
-          "name": "Gold Star Hero",
-          "description": "Though gunslinging heroism, you gain the following benefits.\n\nImproved Aura. The range of your Steely-Eyed Aura feature increases to 30 feet.\n\nIron-Clad Law. When you use your Lay Down the Law maneuver, the ally has Resistance to Bludgeoning, Piercing, and Slashing damage until the start of your next turn.\n\nStunned Surrender. When a creature fails its saving throw against your Reach for the Skies feature, it has the Stunned condition instead of the Incapacitated condition.\n\nLucas Ferreira CM",
+          "name": "Herói Estrela Dourada",
+          "description": "Apesar do heroísmo armado, você ganha os seguintes benefícios.\n\nAura melhorada. O alcance do recurso Aura de Olhos de Aço aumenta para 30 pés.\n\nLei revestida de ferro. Quando você usa sua manobra Estabeleça a Lei, o aliado tem Resistência aos danos Contundente, Perfurante e Cortante até o início do seu próximo turno.\n\nRendição Atordoado. Quando uma criatura falha na salvaguarda contra seu recurso Alcançar os Céus, ela tem a condição Atordoado em vez da condição Incapacitado.",
           "sourceAnchor": "Level14GoldStarHero"
         }
       ]
@@ -456,65 +456,109 @@
   "feats": [
     {
       "slug": "marksman-s-luck",
-      "name": "Marksman’s Luck",
-      "description": "General Feat (Prerequisite: Level 4+, Dexterity 13+)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Dexterity score by 1, to a maximum of 20.\n\nFlip Die. Once per turn, when you roll for damage with a Ranged weapon, you can flip one of the damage dice over and use the number on the bottom. You can’t use this ability on d4s. Note that for a balanced die, the top and bottom numbers add up to one more than the die’s largest number.\n\nEnhanced Critical. When you score a Critical Hit with a Ranged weapon, the target’s Speed is 0 until the end of its next turn.",
-      "sourceAnchor": "MarksmansLuck"
+      "name": "Sorte do Atirador",
+      "description": "Aumento de Atributo. Aumente seu valor de Destreza em 1, até um máximo de 20.\n\nVirar o Dado. Uma vez por turno, ao rolar o dano com uma arma de longo alcance, você pode virar um dos dados de dano e usar o número na parte inferior. Você não pode usar esta habilidade em d4s. Observe que, para um dado equilibrado, os números superior e inferior somam um a mais do que o maior número do dado.\n\nCrítico aprimorado. Quando você obtém um Acerto Crítico com uma arma de longo alcance, a velocidade do alvo é 0 até o final do próximo turno.",
+      "sourceAnchor": "MarksmansLuck",
+      "benefits": [
+        {
+          "name": "Aumento de Atributo",
+          "description": "Aumento de Atributo. Aumente seu valor de Destreza em 1, até um máximo de 20."
+        },
+        {
+          "name": "Virar o Dado",
+          "description": "Virar o Dado. Uma vez por turno, ao rolar o dano com uma arma de longo alcance, você pode virar um dos dados de dano e usar o número na parte inferior. Você não pode usar esta habilidade em d4s. Observe que, para um dado equilibrado, os números superior e inferior somam um a mais do que o maior número do dado."
+        },
+        {
+          "name": "Crítico aprimorado",
+          "description": "Crítico aprimorado. Quando você obtém um Acerto Crítico com uma arma de longo alcance, a velocidade do alvo é 0 até o final do próximo turno."
+        }
+      ]
     },
     {
       "slug": "gun-mage-adept",
-      "name": "Gun-Mage Adept",
-      "description": "General Feat (Prerequisites: Level 4+, Spellcasting or Pact Magic Feature)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Dexterity by 1, to a maximum of 20.\n\nRanged Weapon Proficiency. You gain proficiency with Ranged Martial weapons.\n\nCantrip. You learn the Finger Guns cantrip.\n\nExpanded Spell List. The following spells are added to your spell list: Antiballistics Field, Ballistic Smite, Conjure Cannonball, Conjure Cover, Jam Weapon, Jethro’s Instant Reload, and Perforating Shot.\n\nSpells Prepared. Choose a number of spells equal to your Proficiency Bonus from among those in the Expanded Spell List benefit. You always have these spells prepared. Whenever you gain a new level, you can replace one of these spells with a different spell from the Expanded Spell List.",
-      "sourceAnchor": "GunMageAdept"
+      "name": "Adepto do Mago-Pistoleiro",
+      "description": "Aumento de Atributo. Aumente sua Destreza em 1, até um máximo de 20.\n\nProficiência em Armas de Longo Alcance. Você ganha proficiência com armas marciais de longo alcance.\n\nTruque. Você aprende o truque Pistolas de Dedo.\n\nLista de magias expandida. Os seguintes magias são adicionados à sua lista de magias: Campo Antibalístico, Golpe Balístico, Conjurar Bala de Canhão, Conjurar Cobertura, Emperrar Arma, Recarga Instantânea de Jethro e Tiro Perfurante.\n\nMagias Preparadas. Escolha um número de magias igual ao seu Bônus de Proficiência dentre aqueles no benefício Lista Expandida de Magias. Você sempre tem esses magias preparadas. Sempre que você ganha um novo nível, você pode substituir um desses magias por uma magia diferente da Lista Expandida de Magias.",
+      "sourceAnchor": "GunMageAdept",
+      "benefits": [
+        {
+          "name": "Aumento de Atributo",
+          "description": "Aumento de Atributo. Aumente sua Destreza em 1, até um máximo de 20."
+        },
+        {
+          "name": "Proficiência em Armas de Longo Alcance",
+          "description": "Proficiência em Armas de Longo Alcance. Você ganha proficiência com armas marciais de longo alcance."
+        },
+        {
+          "name": "Truque",
+          "description": "Truque. Você aprende o truque Pistolas de Dedo."
+        },
+        {
+          "name": "Lista de magias expandida",
+          "description": "Lista de magias expandida. Os seguintes magias são adicionados à sua lista de magias: Campo Antibalístico, Golpe Balístico, Conjurar Bala de Canhão, Conjurar Cobertura, Emperrar Arma, Recarga Instantânea de Jethro e Tiro Perfurante."
+        },
+        {
+          "name": "Magias Preparadas",
+          "description": "Magias Preparadas. Escolha um número de magias igual ao seu Bônus de Proficiência dentre aqueles no benefício Lista Expandida de Magias. Você sempre tem esses magias preparadas. Sempre que você ganha um novo nível, você pode substituir um desses magias por uma magia diferente da Lista Expandida de Magias."
+        }
+      ]
     }
   ],
   "spells": [
     {
       "slug": "antiballistics-field",
-      "name": "Antiballistics Field",
-      "description": "Level 6 Abjuration (Cleric, Wizard)\n\nCasting Time: Action\n\nRange: Self\n\nComponents: V, S, M (a pinch of wet gunpowder)\n\nDuration: Concentration, up to 10 minutes\n\nA 40-foot Emanation extends from you, disrupting projectiles and causing Ranged weapons to malfunction. Within the Emanation, whenever a Ranged weapon is used for an attack, the weapon immediately malfunctions and the attack is lost. A malfunctioning weapon can’t be used to make an attack until a creature takes the Utilize action to fix the weapon malfunction. Ranged attacks using weapons whose projectiles pass through the Emanation have Disadvantage and deal only half damage on a hit.",
-      "sourceAnchor": "AntiballisticsField"
+      "name": "Campo Antibalístico",
+      "description": "Uma Emanação de 40 pés se estende de você, destruindo projéteis e causando mau funcionamento de armas de longo alcance. Dentro da Emanação, sempre que uma arma de longo alcance é usada para um ataque, a arma imediatamente funciona mal e o ataque é perdido. Uma arma com defeito não pode ser usada para realizar um ataque até que uma criatura execute a ação Utilizar para consertar o mau funcionamento da arma. Ataques à distância usando armas cujos projéteis passam pela Emanação têm Desvantagem e causam apenas metade do dano ao acertar.",
+      "sourceAnchor": "AntiballisticsField",
+      "levelLabel": "6º Círculo"
     },
     {
       "slug": "ballistic-smite",
-      "name": "Ballistic Smite",
-      "description": "Level 1 Evocation (Paladin)\n\nMariana Livraes\n\nCasting Time: Bonus Action, which you take immediately after hitting a creature with a Ranged weapon\n\nRange: Self\n\nComponents: V\n\nDuration: Instantaneous\n\nChoose Acid, Cold, Fire, Lightning, Poison, or Thunder damage. The target hit by the attack takes an extra 2d6 damage of the chosen type. The triggering attack can deal the chosen damage type or its normal damage type (your choice).\n\nUsing a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 1.",
-      "sourceAnchor": "BallisticSmite"
+      "name": "Golpe Balístico",
+      "description": "Escolha o dano Ácido, Gélido, Ígneo, Elétrico, Venenoso ou Trovejante. O alvo atingido pelo ataque sofre 2d6 de dano extra do tipo escolhido. O ataque desencadeador pode causar o tipo de dano escolhido ou o tipo de dano normal (sua escolha).",
+      "sourceAnchor": "BallisticSmite",
+      "levelLabel": "1º Círculo"
     },
     {
       "slug": "concealed-shot",
-      "name": "Concealed Shot",
-      "description": "Illusion Cantrip (Bard, Druid, Sorcerer, Warlock, Wizard)\n\nCasting Time: Action\n\nRange: Touch\n\nComponents: S, M (a Ranged weapon)\n\nDuration: 1 minute\n\nA Ranged weapon you touch is made supernaturally subtle. For the duration, when you make a ranged attack using the weapon, the weapon or ammunition you’re using becomes invisible while in flight and the weapon becomes silent. If the weapon produces smoke or light, the spell suppresses these effects. The weapon or projectile you’re using becomes visible again after the attack hits or misses. If you are hidden and the target is 80 feet or further from you, the attack doesn’t reveal your location.",
-      "sourceAnchor": "ConcealedShot"
+      "name": "Tiro Oculto",
+      "description": "Uma arma de longo alcance que você toca torna-se sobrenaturalmente sutil. Enquanto você faz um ataque à distância usando a arma, a arma ou munição que você está usando fica invisível durante o vôo e a arma fica silenciosa. Se a arma produzir fumaça ou luz, a magia suprime esses efeitos. A arma ou projétil que você está usando fica visível novamente após o ataque acertar ou errar. Se você estiver escondido e o alvo estiver a 80 pés ou mais de você, o ataque não revelará sua localização.",
+      "sourceAnchor": "ConcealedShot",
+      "levelLabel": "Truque"
     },
     {
       "slug": "conjure-cannonball",
-      "name": "Conjure Cannonball",
-      "description": "Level 3 Conjuration (Sorcerer, Wizard)\n\nCasting Time: Action\n\nRange: 600 feet\n\nComponents: V, S, M (a small replica cannon)\n\nDuration: Instantaneous\n\nYou summon a cannonball, mid-flight and at full velocity, which explodes on impact. Make a ranged spell attack roll against a target you can see within range. On a hit, the target takes 5d10 Bludgeoning damage and an explosion extends from it in a 5-foot Emanation. Each creature other than the target within the Emanation makes a Dexterity saving throw, taking half as much damage as the target on a failed save.\n\nUsing a Higher-Level Spell Slot. The damage increases by 1d10 for each slot level above 3.",
-      "sourceAnchor": "ConjureCannonball"
+      "name": "Conjurar Bola de Canhão",
+      "description": "Você invoca uma bala de canhão, no meio do vôo e a toda velocidade, que explode com o impacto. Faça uma jogada de ataque mágico à distância contra um alvo que você possa ver dentro do alcance. Se acertar, o alvo sofre 5d10 de dano Contundente e uma explosão se estende dele em uma Emanação de 5 pés. Cada criatura que não seja o alvo dentro da Emanação faz uma salvaguarda de Destreza, sofrendo metade do dano que o alvo em caso de falha na resistência.",
+      "sourceAnchor": "ConjureCannonball",
+      "levelLabel": "3º Círculo"
     },
     {
       "slug": "conjure-cover",
-      "name": "Conjure Cover",
-      "description": "Level 1 Conjuration (Druid, Paladin, Sorcerer, Wizard)\n\nCasting Time: Bonus Action\n\nRange: 10 feet\n\nComponents: V, S, M (a duck figurine)\n\nDuration: Concentration, up to 1 hour\n\nYou conjure a low cobblestone wall along the ground at a point you can see within range. The wall is 18 inches thick and is composed of three 5-foot-long, 3-foot-high segments. Each segment must be contiguous with at least one other segment.\n\nA Medium creature that hunkers behind the wall has Half Cover, and a Small creature that hunkers behind it has Three-Quarters Cover. The wall can be leapt over without spending any additional movement.\n\nEach segment has AC 10 and 30 hit points. Reducing a segment of the wall to 0 hit points causes it to crumble, destroying it. The wall disappears when all the segments are destroyed or the spell ends.",
-      "sourceAnchor": "ConjureCover"
+      "name": "Conjurar Cobertura",
+      "description": "Você conjura uma parede baixa de paralelepípedos ao longo do chão em um ponto que você possa ver dentro do alcance. A parede tem 18 polegadas de espessura e é composta por três segmentos de 5 pés de comprimento e 3 pés de altura. Cada segmento deve ser contíguo a pelo menos um outro segmento.\n\nUma criatura Média que se esconde atrás da parede tem Meia Cobertura, e uma criatura Pequena que se esconde atrás dela tem Três Quartos de Cobertura. A parede pode ser saltada sem gastar nenhum movimento adicional.\n\nCada segmento tem CA 10 e 30 pontos de vida. Reduzir um segmento da parede a 0 pontos de vida faz com que ela desmorone, destruindo-a. A parede desaparece quando todos os segmentos são destruídos ou a magia termina.",
+      "sourceAnchor": "ConjureCover",
+      "levelLabel": "1º Círculo"
     },
     {
       "slug": "jam-weapon",
-      "name": "Jam Weapon",
-      "description": "Level 2 Transmutation (Bard, Wizard)\n\nCasting Time: Reaction, which you take when a creature you can see within range makes an attack using a Ranged weapon\n\nRange: 60 feet\n\nComponents: V, S, M (a pinch of wet gunpowder)\n\nDuration: Instantaneous\n\nThe weapon you target suffers a malfunction and the attack fails. A malfunctioning weapon can’t be used to make an attack until a creature takes the Utilize action to fix the weapon malfunction.",
-      "sourceAnchor": "JamWeapon"
+      "name": "Emperrar Arma",
+      "description": "A arma que você mira sofre um mau funcionamento e o ataque falha. Uma arma com defeito não pode ser usada para realizar um ataque até que uma criatura execute a ação Utilizar para consertar o mau funcionamento da arma.",
+      "sourceAnchor": "JamWeapon",
+      "levelLabel": "2º Círculo"
     },
     {
       "slug": "jethro-s-instant-reload",
-      "name": "Jethro’s Instant Reload",
-      "description": "Level 2 Conjuration (Bard, Ranger, Wizard)\n\nCasting Time: Action\n\nRange: Touch\n\nComponents: V, S, M (a spent bullet casing)\n\nDuration: 8 hours\n\nOne Ranged weapon you touch becomes enchanted to reload itself automatically. If the weapon has the Loading or Reload property, you ignore the property for the duration. When the weapon’s ammunition is depleted, ammunition you are carrying teleports into the weapon.",
-      "sourceAnchor": "JethrosInstantReload"
+      "name": "Recarga Instantânea de Jethro",
+      "description": "Uma arma de longo alcance que você toca fica encantada para recarregar automaticamente. Se a arma tiver a propriedade Carregando ou Recarregar, você ignora a propriedade enquanto durar. Quando a munição da arma acaba, a munição que você carrega se teletransporta para dentro da arma.",
+      "sourceAnchor": "JethrosInstantReload",
+      "levelLabel": "2º Círculo"
     },
     {
       "slug": "perforating-shot",
-      "name": "Perforating Shot",
-      "description": "Level 1 Evocation (Paladin, Ranger)\n\nCasting Time: Bonus Action, which you take immediately after hitting or missing with a ranged attack using a weapon\n\nRange: Self\n\nComponents: V\n\nDuration: Instantaneous\n\nAs your attack hits or misses the target, the weapon or ammunition transforms into a 5-foot-wide Line of magical energy that extends out to the weapon’s normal range. The Line includes the attack’s original target. Each creature within the Line makes a Dexterity saving throw, taking Force damage equal to the weapon’s normal damage on a failed save or half as much damage on a successful one.\n\nUsing a Higher-Level Spell Slot. The weapon’s damage increases by 1d8 for each slot level above 1.",
-      "sourceAnchor": "PerforatingShot"
+      "name": "Tiro Perfurante",
+      "description": "Conforme seu ataque atinge ou erra o alvo, a arma ou munição se transforma em uma linha de energia mágica de 5 pés de largura que se estende até o alcance normal da arma. A Linha inclui o alvo original do ataque. Cada criatura dentro da Linha faz uma salvaguarda de Destreza, sofrendo Energético de dano igual ao dano normal da arma em caso de falha na resistência ou metade do dano em caso de sucesso.",
+      "sourceAnchor": "PerforatingShot",
+      "levelLabel": "1º Círculo"
     }
   ],
   "firearmEras": [
@@ -554,8 +598,8 @@
     },
     {
       "slug": "firearm",
-      "name": "Firearm",
-      "description": "You don’t add your ability modifier to the weapon’s damage, unless otherwise stated. Firearm ammunition is destroyed upon use.",
+      "name": "Arma de Fogo",
+      "description": "Você não adiciona seu modificador de habilidade ao dano da arma, salvo indicação em contrário. A munição arma de fogo é destruída após o uso.",
       "sourceAnchor": "Firearm"
     },
     {
@@ -578,14 +622,14 @@
     },
     {
       "slug": "recoil",
-      "name": "Recoil",
-      "description": "After you make an attack with this weapon, you can’t make ranged attacks beyond the weapon’s normal range until the end of the current turn.",
+      "name": "Recuo",
+      "description": "Depois de realizar um ataque com esta arma, você não poderá realizar ataques à distância além do alcance normal da arma até o final do turno atual.",
       "sourceAnchor": "Recoil"
     },
     {
       "slug": "reload",
-      "name": "Reload",
-      "description": "This weapon can be used to make a number of attacks before it must be reloaded. If you are proficient with the weapon, reloading it takes an Action or a Bonus Action; otherwise, reloading it takes an Action.",
+      "name": "Recarga",
+      "description": "Esta arma pode ser usada para realizar vários ataques antes de ser recarregada. Se você for proficiente com a arma, recarregá-la exige uma Ação ou Ação Bônus; caso contrário, recarregá-lo requer uma Ação.",
       "sourceAnchor": "Reload"
     },
     {
@@ -598,14 +642,14 @@
   "masteryProperties": [
     {
       "slug": "automatic",
-      "name": "Automatic",
-      "description": "When you make an attack with this weapon, you can choose to make two attacks instead. These attacks are always made with Disadvantage, regardless of circumstance. You can’t replace these attacks. If this weapon has the Ammunition property, these attacks use twice the normal amount of ammunition.",
+      "name": "Automática",
+      "description": "Ao realizar um ataque com esta arma, você pode optar por realizar dois ataques. Esses ataques são sempre feitos com Desvantagem, independente das circunstâncias. Você não pode substituir esses ataques. Se esta arma tiver a propriedade Munição, esses ataques usam o dobro da quantidade normal de munição.",
       "sourceAnchor": "Automatic"
     },
     {
       "slug": "explode",
-      "name": "Explode",
-      "description": "When you take the Attack action, you can replace one of your attacks with an explosion from this weapon’s projectile. This explosion is a 5-foot-radius Sphere centered on a point you choose within the weapon’s normal range. Each creature within the Sphere makes a Dexterity saving throw (DC 8 plus your Strength or Dexterity modifier and your Proficiency Bonus). On a failed save, a creature takes the weapon’s damage, but don’t add your ability modifier to that damage unless that modifier is negative. On a successful save, a creature takes half as much damage. You can create an explosion only once per turn.",
+      "name": "Explosiva",
+      "description": "Ao usar a ação Atacar, você pode substituir um de seus ataques por uma explosão do projétil desta arma. Esta explosão é uma esfera de 5 pés de raio centrada em um ponto que você escolher dentro do alcance normal da arma. Cada criatura dentro da Esfera faz uma salvaguarda de Destreza (CD 8 mais seu modificador de Força ou Destreza e seu Bônus de Proficiência). Se falhar na resistência, uma criatura sofre o dano da arma, mas não adicione seu modificador de habilidade a esse dano, a menos que esse modificador seja negativo. Em um teste bem-sucedido, a criatura sofre metade do dano. Você pode criar uma explosão apenas uma vez por turno.",
       "sourceAnchor": "Explode"
     },
     {
@@ -622,14 +666,14 @@
     },
     {
       "slug": "scatter",
-      "name": "Scatter",
-      "description": "Being within 5 feet of an enemy doesn’t impose Disadvantage on your ranged attack rolls with this weapon.",
+      "name": "Dispersão",
+      "description": "Estar a 5 pés de um inimigo não impõe Desvantagem em suas jogadas de ataque à distância com esta arma.",
       "sourceAnchor": "Scatter"
     },
     {
       "slug": "sighted",
-      "name": "Sighted",
-      "description": "Attacking at long range with this weapon doesn’t impose Disadvantage on your attack rolls. When you hit a creature with an attack using this weapon at long range, you can reroll any of the damage dice and must use the new roll.",
+      "name": "Mira",
+      "description": "Atacar de longa distância com esta arma não impõe Desvantagem em suas jogadas de ataque. Quando você acerta uma criatura com um ataque usando esta arma a longa distância, você pode rolar novamente qualquer um dos dados de dano e deve usar a nova jogada.",
       "sourceAnchor": "Sighted"
     },
     {
@@ -645,11 +689,107 @@
       "sourceAnchor": "Vex"
     }
   ],
-  "weapons": [],
+  "weapons": [
+    {
+      "slug": "blunderbuss",
+      "name": "Bacamarte",
+      "description": "Esta distinta arma de fogo de curto alcance apresenta um cano dramaticamente alargado projetado para lançar tiros em um spray amplo."
+    },
+    {
+      "slug": "double-barrel-shotgun",
+      "name": "Escopeta de Cano Duplo",
+      "description": "Um design clássico com dois canos carregados, trocando capacidade e alcance de munição por confiabilidade e poder de fogo."
+    },
+    {
+      "slug": "hunting-rifle",
+      "name": "Rifle de Caça",
+      "description": "Projetados para caça de grande porte, os rifles de caça são lentos, mas precisos, exigindo ação de ferrolho entre os tiros."
+    },
+    {
+      "slug": "parlor-gun",
+      "name": "Pistola de Salão",
+      "description": "A menor arma de fogo utilizável; pode ser enfiado em uma meia ou escondido em uma manga."
+    },
+    {
+      "slug": "revolver",
+      "name": "Revólver",
+      "description": "Uma pistola icônica que armazena seis balas em um cilindro giratório; favorecido por pistoleiros."
+    },
+    {
+      "slug": "cannon",
+      "name": "Canhão",
+      "description": "Canhões de carregamento pela boca de cano liso, comuns em navios piratas e fortificações."
+    },
+    {
+      "slug": "gatling-gun",
+      "name": "Metralhadora Gatling",
+      "description": "Gira e dispara seis ou mais barris em sucessão; incômodo e assustador."
+    },
+    {
+      "slug": "magnum",
+      "name": "Magnum",
+      "description": "Compartimentado para balas de grande calibre; concentra o chute máximo em um único tiro."
+    },
+    {
+      "slug": "flare-gun",
+      "name": "Pistola Sinalizadora",
+      "description": "Uma ferramenta de sobrevivência que dispara um único sinalizador incandescente para sinais de socorro ou defesa de última hora."
+    },
+    {
+      "slug": "handgun",
+      "name": "Pistola",
+      "description": "Portátil e confiável com um carregador generoso; ir para autodefesa."
+    },
+    {
+      "slug": "assault-rifle",
+      "name": "Rifle de Assalto",
+      "description": "Alta cadência de tiro com balística de rifle; flexível e formidável."
+    },
+    {
+      "slug": "pump-shotgun",
+      "name": "Escopeta de Ação por Bomba",
+      "description": "Aperto deslizante distinto no cano que é 'bombeado' para armazenar uma nova rodada."
+    },
+    {
+      "slug": "sniper-rifle",
+      "name": "Rifle de Precisão",
+      "description": "Instrumento de precisão de longo alcance para tiros distantes e quase invisíveis."
+    },
+    {
+      "slug": "submachine-gun",
+      "name": "Submetralhadora",
+      "description": "Ígneos são cartuchos mais leves e fáceis de controlar como uma alternativa às armas automáticas maiores."
+    }
+  ],
   "ammunition": [
     {
-      "name": "Firearm Ammunition",
-      "description": "Ammunition is required by a weapon that has the Ammunition property. A weapon’s description specifies the type of ammunition used by the weapon. The following Ammunition table lists new types of ammunition used by firearms and the amount you get when you buy them.\n\nFirearm ammunition is destroyed upon use.\n\nType\nAmount\nWeight\nCost\n\nBullets\n10\n1 ½ lb.\n3 GP\n\nCannonballs\n5\n10 lb.\n25 GP\n\nFlares\n5\n5 lb.\n5 GP\n\nShells\n10\n1 ½ lb.\n5 GP\n\nShot\n10\n2 lb.\n1 GP",
+      "slug": "bullets",
+      "name": "Balas (10)",
+      "description": "Munição arma de fogo (balas). Destruído após uso.",
+      "sourceAnchor": "FirearmAmmunition"
+    },
+    {
+      "slug": "cannonballs",
+      "name": "Bolas de Canhão (5)",
+      "description": "Munição arma de fogo (balas de canhão). Destruído após uso.",
+      "sourceAnchor": "FirearmAmmunition"
+    },
+    {
+      "slug": "flares",
+      "name": "Sinalizadores (5)",
+      "description": "Munição arma de fogo (flares). Destruído após uso.",
+      "sourceAnchor": "FirearmAmmunition"
+    },
+    {
+      "slug": "shells",
+      "name": "Cartuchos (10)",
+      "description": "Munição arma de fogo (cartuchos). Destruído após uso.",
+      "sourceAnchor": "FirearmAmmunition"
+    },
+    {
+      "slug": "shot",
+      "name": "Chumbos (10)",
+      "description": "Munição arma de fogo (tiro). Destruído após uso.",
       "sourceAnchor": "FirearmAmmunition"
     }
   ],
@@ -1222,10 +1362,10 @@
   ],
   "meta": {
     "hitDie": "d8",
-    "primaryAbility": "Dexterity",
+    "primaryAbility": "Destreza",
     "primaryAbilitySlug": "destreza",
     "subclassUnlockLevel": 3,
-    "subclassLabel": "Creed",
+    "subclassLabel": "Credo",
     "skillChoiceCount": 2,
     "skillSlugs": [
       "acrobatics",

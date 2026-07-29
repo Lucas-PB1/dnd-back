@@ -10,28 +10,28 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'accelerate-decelerate',
-  'Accelerate/Decelerate',
+  'Acelerar/Desacelerar',
   1,
-  'Level 1',
+  '1º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'),
-  'Reaction, which you take when you see an attack roll hit a creature within 60 feet of yourself',
-  '60 feet',
+  'Reação, que você realiza quando vê uma jogada de ataque atingir uma criatura a até 60 pés de você',
+  '60 pés',
   true,
   true,
   true,
-  'a drop of oil or molasses',
-  'V, S, M (a drop of oil or molasses)',
-  'Instantaneous',
+  'uma gota de óleo ou melaço',
+  'V, S, M (uma gota de óleo ou melaço)',
+  'Instantânea',
   false,
   false,
-  '[Chronomancy]
+  '[Cronomancia]
 
-This spell accelerates or decelerates an attack (see the chosen effect below) the instant before it strikes, lessening or multiplying its force.
+Este magia acelera ou desacelera um ataque (veja o efeito escolhido abaixo) no instante anterior ao ataque, diminuindo ou multiplicando sua força.
 
-Accelerate. The target takes an extra 2d6 damage from the attack. This extra damage is the same type dealt by the triggering attack.
+Acelerar. O alvo sofre 2d6 de dano extra pelo ataque. Este dano extra é do mesmo tipo causado pelo ataque desencadeador.
 
-Decelerate. Reduce the damage the target takes by 2d6 (to a minimum of 0 damage).',
-  'Using a Higher-Level Spell Slot. The extra damage or reduction in damage increases by 1d6 for each slot level above 1.',
+Desacelerar. Reduza o dano que o alvo sofre em 2d6 (até um mínimo de 0 de dano).',
+  'Usando um Espaço de Magia de Círculo Superior. O dano extra ou redução de dano aumenta em 1d6 para cada nível de espaço acima de 1.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -62,21 +62,21 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'clue',
-  'Clue',
+  'Pista',
   1,
-  'Level 1',
+  '1º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'adivinhacao'),
-  'Action or Ritual',
-  'Touch',
+  'Ação ou Ritual',
+  'Toque',
   true,
   true,
   true,
-  'a magnifying glass and pipe',
-  'V, S, M (a magnifying glass and pipe)',
-  '10 minutes',
+  'uma lupa e um cachimbo',
+  'V, S, M (uma lupa e um cachimbo)',
+  '10 minutos',
   false,
   true,
-  'When you cast this spell, all footprints and fingerprints within a 30-foot Emanation originating from you become highlighted and glow faintly for the duration. When you cast the spell, choose any point in time up to 10 days ago. Only footprints and fingerprints left between that time and the present will be highlighted. Each creature that leaves footprints and fingerprints is assigned a unique color, but are not otherwise identified. Any creature that moves or touches objects within the Emanation will also leave colorful footprints and fingerprints, which might reveal invisible creatures in the area.',
+  'Quando você conjura esta magia, todas as pegadas e impressões digitais dentro de uma Emanação de 30 pés proveniente de você ficam destacadas e brilham fracamente enquanto durar. Ao lançar a magia, escolha qualquer momento até 10 dias atrás. Apenas pegadas e impressões digitais deixadas entre aquela época e o presente serão destacadas. Cada criatura que deixa pegadas e impressões digitais recebe uma cor única, mas não é identificada de outra forma. Qualquer criatura que se mova ou toque objetos dentro da Emanação também deixará pegadas e impressões digitais coloridas, que podem revelar criaturas invisíveis na área.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -108,23 +108,23 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'delay',
-  'Delay',
+  'Atrasar',
   1,
-  'Level 1',
+  '1º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'),
-  'Action',
-  '60 feet',
+  'Ação',
+  '60 pés',
   true,
   true,
   true,
-  'an octagonal sign',
-  'V, S, M (an octagonal sign)',
-  'Instantaneous',
+  'um sinal octogonal',
+  'V, S, M (um sinal octogonal)',
+  'Instantânea',
   false,
   false,
-  '[Chronomancy]
+  '[Cronomancia]
 
-You briefly slow time for a creature of your choice that you can see within range. The target must succeed on a Wisdom saving throw or be moved to last place in the Initiative order from the start of the next round onwards.',
+Você retarda brevemente o tempo de uma criatura de sua escolha que você possa ver dentro do alcance. O alvo deve ser bem sucedido em uma salvaguarda de Sabedoria ou será movido para o último lugar na ordem de Iniciativa a partir do início da próxima rodada.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -156,25 +156,25 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'dire-warning',
-  'Dire Warning',
+  'Aviso Terrível',
   4,
-  'Level 4',
+  '4º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'adivinhacao'),
-  'Action',
-  'Self',
+  'Ação',
+  'Pessoal',
   true,
   true,
   false,
   NULL,
   'V, S',
-  'Instantaneous',
+  'Instantânea',
   false,
   false,
-  '[Chronomancy]
+  '[Cronomancia]
 
-You receive a message of up to 6 words from yourself in the future, warning you of a critical threat or pointing you toward a fruitful avenue. The GM determines this message. At some point in the future, once you have learned why you sent the message, you must perform a ritual over the course of 10 minutes, which can be done during a Short or Long Rest, to deliver the message back in time to your past self. If you cast this spell and receive no message, it indicates that you will never complete the ritual in the future, possibly owing to your death or another hindrance.
+Você receberá uma mensagem sua de até 6 palavras no futuro, avisando-o sobre uma ameaça crítica ou apontando-o para um caminho frutífero. O Mestre determina esta mensagem. Em algum momento no futuro, depois de saber por que enviou a mensagem, você deverá realizar um ritual ao longo de 10 minutos, que pode ser feito durante um Descanso Curto ou Longo, para entregar a mensagem de volta no tempo ao seu eu passado. Se você lançar esta magia e não receber nenhuma mensagem, isso indica que você nunca completará o ritual no futuro, possivelmente devido à sua morte ou outro obstáculo.
 
-Once you cast this spell, you can’t cast it again for 7 days or until you perform its ritual.',
+Depois de lançar esta magia, você não poderá lançá-lo novamente por 7 dias ou até realizar seu ritual.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -206,22 +206,22 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'defenestration',
-  'Defenestration',
+  'Defenestração',
   2,
-  'Level 2',
+  '2º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'),
-  'Action',
-  '30 feet',
+  'Ação',
+  '30 pés',
   true,
   true,
   false,
   NULL,
   'V, S',
-  'Instantaneous',
+  'Instantânea',
   false,
   false,
-  'A wave of force erupts from your open hand, hurling a creature you can see within range through a window. The target makes a Strength saving throw. On a failure, the target is pushed up to 20 feet and thrown through a window of your choice. If there is no window within 20 feet of the target, it is instead pushed up to 20 feet in a direction of your choice and thrown through a window of arcane force, which materializes behind the creature and vanishes after it shatters. The target takes 4d6 Slashing damage and has the Prone condition when it is thrown through a window. On a successful save, the target is instead only pushed 10 feet and takes no damage.',
-  'Using a Higher-Level Spell Slot. The damage increases by 1d6 and the distance the target is pushed on a success or failure increases by 5 feet for each spell slot level above 2.',
+  'Uma onda de força irrompe de sua mão aberta, arremessando uma criatura que você pode ver dentro do alcance através de uma janela. O alvo faz uma salvaguarda de Força. Se falhar, o alvo é empurrado até 20 pés e lançado através de uma janela à sua escolha. Se não houver nenhuma janela a até 20 pés do alvo, ela é empurrada até 20 pés em uma direção de sua escolha e lançada através de uma janela de força arcana, que se materializa atrás da criatura e desaparece após ser quebrada. O alvo sofre 4d6 de dano Cortante e tem a condição Caído quando é lançado através de uma janela. Em um teste bem-sucedido, o alvo é empurrado apenas 10 pés e não sofre dano.',
+  'Usando um Espaço de Magia de Círculo Superior. O dano aumenta em 1d6 e a distância que o alvo é empurrado em caso de sucesso ou falha aumenta em 5 pés para cada nível de espaço de magia acima de 2.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -252,28 +252,28 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'mandy-s-feral-follower',
-  'Mandy’s Feral Follower',
+  'Seguidor Feral de Mandy',
   4,
-  'Level 4',
+  '4º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'),
-  'Action',
-  '30 feet',
+  'Ação',
+  '30 pés',
   true,
   true,
   true,
-  'a small servant’s bell',
-  'V, S, M (a small servant’s bell)',
-  'Special',
+  'um pequeno sino de servo',
+  'V, S, M (um pequeno sino de servo)',
+  'Especial',
   false,
   false,
-  'You touch a Medium or smaller Beast, which shape-shifts into a Humanoid with an appearance of your choice. The Beast’s statistics are replaced by the stat block of a Commoner but retains its Hit Points and Hit Point Dice. You choose the Commoner’s skill proficiency. The commoner wears Fine Clothes but has no other equipment, and has a basic understanding of all unskilled tasks.
+  'Você toca uma Besta Média ou menor, que muda para um Humanoide com uma aparência de sua escolha. As estatísticas da Besta são substituídas pelo bloco de estatísticas de um Commoner, mas mantém seu Pontos de Vida e Dados de Vida. Você escolhe a proficiência na habilidade do Plebeu. O plebeu usa roupas finas, mas não possui outros equipamentos e possui um conhecimento básico de todas as tarefas não qualificadas.
 
-The target gains 10 Temporary Hit Points. The spell ends early on the target if it has no Temporary Hit Points left. When the spell ends, the Fine Clothes dissipate into smoke.
+O alvo ganha 10 Pontos de Vida Temporáriosssss. A magia termina mais cedo no alvo se ele não tiver mais nenhum Pontos de Vida Temporáriossss. Quando a magia termina, as Roupas Finas se dissipam em fumaça.
 
-Combat. The commoner is an ally to you and your allies. It rolls its own Initiative and acts on its own turn. It behaves as though it is dutifully employed by you.
+Combate. O plebeu é um aliado para você e seus aliados. Ele lança sua própria Iniciativa e age por seu próprio turno. Ele se comporta como se fosse devidamente empregado por você.
 
-Duration. This spell’s duration varies depending upon when and where it was cast. If cast in a location where time passes normally, the spell lasts until the twelfth stroke of the next midnight, however long that may be. Elsewhere, the spell lasts for 24 hours.',
-  'Using a Higher-Level Spell Slot. You can shape-shift one additional Beast for each spell slot level above 4.',
+Duração. A duração desta magia varia dependendo de quando e onde foi lançado. Se lançado em um local onde o tempo passa normalmente, a magia dura até a décima segunda badalada da meia-noite seguinte, por mais longo que seja. Em outros lugares, a magia dura 24 horas.',
+  'Usando um Espaço de Magia de Círculo Superior. Você pode mudar de forma uma Besta adicional para cada nível de espaço de magia acima de 4.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -304,22 +304,22 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'finger-guns',
-  'Finger Guns',
+  'Pistolas de Dedo',
   0,
-  'Cantrip',
+  'Truque',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'),
-  'Bonus Action',
-  'Self',
+  'Ação Bônus',
+  'Pessoal',
   true,
   true,
   false,
   NULL,
   'V, S',
-  '1 minute',
+  '1 minuto',
   false,
   false,
-  'You extend your forefinger and thumb, a dangerous gesture mimicking a gun. For the duration, your hand counts as a Simple Ranged weapon with a range of 60/240 feet and the Slow mastery property. You can use your spellcasting ability instead of Dexterity for the attack rolls of this weapon. On a hit, the weapon deals 2d6 Force damage and doesn’t add your ability modifier to damage.',
-  'Cantrip Upgrade. The weapon’s normal range increases by 30 feet and its long range increases by 120 feet when you reach levels 5 (90/360 feet), 11 (120/480 feet), and 17 (150/600 feet).',
+  'Você estende o indicador e o polegar, um gesto perigoso mímico ao usar uma arma. Durante todo o tempo, sua mão conta como uma arma simples de longo alcance com alcance de 60/240 pés e propriedade de maestria lenta. Você pode usar sua habilidade de conjuração em vez de Destreza para as jogadas de ataque desta arma. Se acertar, a arma causa 2d6 Energético de dano e não adiciona seu modificador de habilidade ao dano.',
+  'Aprimoramento de Truque. O alcance normal da arma aumenta em 30 pés e seu longo alcance aumenta em 120 pés quando você atinge os níveis 5 (90/360 pés), 11 (120/480 pés) e 17 (150/600 pés).',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -350,27 +350,27 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'game-of-fate',
-  'Game of Fate',
+  'Jogo do Destino',
   6,
-  'Level 6',
+  '6º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'encantamento'),
-  'Action or Ritual',
-  '60 feet',
+  'Ação ou Ritual',
+  '60 pés',
   true,
   true,
   true,
-  'a Gaming Set',
-  'V, S, M (a Gaming Set)',
-  '1 hour',
+  'um Kit de Jogo',
+  'V, S, M (um Kit de Jogo)',
+  '1 hora',
   false,
   true,
-  'You magically compel a creature within range that can hear and understand you to a nonmagical game with vital consequences. An unwilling creature must succeed on a Wisdom saving throw or be compelled to join you in the game.
+  'Você magicamente compele uma criatura dentro do alcance que pode ouvi-lo e entendê-lo a um jogo não-mágico com consequências vitais. Uma criatura relutante deve ter sucesso em uma salvaguarda de Sabedoria ou será compelida a se juntar a você no jogo.
 
-The loser of the game takes 6d6 Psychic damage. If no player has won or lost by the end of the spell’s duration, both you and the target take this damage. If you or one of your allies harms the target, you forfeit the game, and vice versa if the target or one of its allies harms you.
+O perdedor do jogo sofre 6d6 Psíquico de dano. Se nenhum jogador tiver vencido ou perdido até o final da duração da magia, você e o alvo sofrem este dano. Se você ou um de seus aliados ferir o alvo, você perde o jogo e vice-versa se o alvo ou um de seus aliados ferir você.
 
-Additionally, you and the target creature can negotiate for greater stakes. You can wager for higher Psychic damage (up to a maximum of 12d6), currency, property, or more esoteric rewards, such as bestowal of a noble title. The spell reveals if a creature attempts to place a bet it can’t fulfill. A bet is finalized when you and the target agree on the bet, solidifying the bet with a handshake or similar gesture. Property or currency bet on the game is teleported to the winner at the game’s conclusion. The loser is also magically compelled to take any action (such as bestowing a noble title) wagered as part of a bet.
+Além disso, você e a criatura alvo podem negociar apostas maiores. Você pode apostar em danos Psíquico maiores (até um máximo de 12d6), dinheiro, propriedade ou recompensas mais esotéricas, como a concessão de um título de nobreza. A magia revela se uma criatura tenta fazer uma aposta que não pode cumprir. Uma aposta é finalizada quando você e o alvo concordam com a aposta, solidificando a aposta com um aperto de mão ou gesto semelhante. A aposta de propriedade ou moeda no jogo é teletransportada para o vencedor no final do jogo. O perdedor também é magicamente compelido a realizar qualquer ação (como conceder um título de nobreza) apostada como parte de uma aposta.
 
-Lastly, no spell, magical effect, or creature other than you and the target can influence the game’s outcome.',
+Por último, nenhuma magia, efeito mágico ou criatura além de você e do alvo pode influenciar o resultado do jogo.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -402,22 +402,22 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'hangover',
-  'Hangover',
+  'Ressaca',
   2,
-  'Level 2',
+  '2º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'encantamento'),
-  'Action',
-  '30 feet',
+  'Ação',
+  '30 pés',
   true,
   true,
   true,
-  'a vial of strong liquor',
-  'V, S, M (a vial of strong liquor)',
-  'Instantaneous',
+  'um frasco de licor forte',
+  'V, S, M (um frasco de bebida forte)',
+  'Instantânea',
   false,
   false,
-  'You emit a drunken aura that quickly washes away, leaving an intense hangover. A creature you choose within range makes a Constitution saving throw. On a failed save, the creature takes 3d8 Psychic damage and has the Poisoned condition until the end of your next turn. On a successful save, the target takes half as much damage only. The target has Disadvantage on Constitution saving throws it makes to maintain Concentration as a result of this damage.',
-  'Using a Higher-Level Spell Slot. The damage increases by 1d8 for each spell slot level above 2.',
+  'Você emite uma aura de embriaguez que desaparece rapidamente, deixando uma ressaca intensa. Uma criatura que você escolher dentro do alcance realiza uma salvaguarda de Constituição. Se falhar na resistência, a criatura sofre 3d8 de dano Psíquico e fica com a condição Envenenado até o final do seu próximo turno. Em um teste bem-sucedido, o alvo sofre apenas metade do dano. O alvo tem Desvantagem nos salvaguardas de Constituição que faz para manter a Concentração como resultado deste dano.',
+  'Usando um Espaço de Magia de Círculo Superior. O dano aumenta em 1d8 para cada nível de espaço de magia acima de 2.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -448,21 +448,21 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'memorize',
-  'Memorize',
+  'Memorizar',
   1,
-  'Level 1',
+  '1º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'encantamento'),
-  'Action or Ritual',
-  'Touch',
+  'Ação ou Ritual',
+  'Toque',
   true,
   true,
   true,
-  'silver string worth 10+ GP, tied in a knot, which the spell consumes',
-  'V, S, M (silver string worth 10+ GP, tied in a knot, which the spell consumes)',
-  'Instantaneous',
+  'cordão de prata no valor de 10+ PO, amarrado com um nó, que a magia consome',
+  'V, S, M (cordão de prata no valor de 10+ PO, amarrado com um nó, que a magia consome)',
+  'Instantânea',
   false,
   true,
-  'When you cast this spell, your eyes pass over a page of written text that is committed to your memory. For the next year, you remember the exact details of all information on the page. After that time, you have Advantage on all Intelligence checks you make to recall this information.',
+  'Quando você lança esse magia, seus olhos passam por uma página de texto escrito que está guardada em sua memória. No próximo ano, você se lembrará dos detalhes exatos de todas as informações da página. Após esse tempo, você terá Vantagem em todos os testes de Inteligência que fizer para recuperar esta informação.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -494,23 +494,23 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'moment-to-think',
-  'Moment to Think',
+  'Momento para Pensar',
   0,
-  'Cantrip',
+  'Truque',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'),
-  'Bonus Action',
-  'Self',
+  'Ação Bônus',
+  'Pessoal',
   true,
   false,
   false,
   NULL,
   'V',
-  'Instantaneous',
+  'Instantânea',
   false,
   false,
-  '[Chronomancy]
+  '[Cronomancia]
 
-When you cast this spell, you briefly stop time for everyone but yourself. You can take one additional action and move around in your space while no time passes for other creatures. That action can be used only to take the Search, Study, or Utilize action. Furthermore, you can’t affect or damage any creature or object, other than objects you are wearing or carrying. If an object leaves your hand, it also becomes frozen in time.',
+Ao lançar esta magia, você para brevemente o tempo para todos, menos para você. Você pode realizar uma ação adicional e se mover em seu espaço enquanto não passa tempo para outras criaturas. Essa ação só pode ser usada para realizar a ação Pesquisar, Estudar ou Utilizar. Além disso, você não pode afetar ou danificar qualquer criatura ou objeto, exceto objetos que você esteja vestindo ou carregando. Se um objeto sair da sua mão, ele também ficará congelado no tempo.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -542,23 +542,23 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'paradox',
-  'Paradox',
+  'Paradoxo',
   9,
-  'Level 9',
+  '9º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'),
-  'Action',
-  '60 feet',
+  'Ação',
+  '60 pés',
   true,
   true,
   false,
   NULL,
   'V, S',
-  'Instantaneous',
+  'Instantânea',
   false,
   false,
-  '[Chronomancy]
+  '[Cronomancia]
 
-By twisting the flow of time into knots, you cause one action of your choice taken within range within the last round to be undone. Reality then reasserts itself, recoiling from the damage caused by removing an event from time. The direct effects of that action, such as damage dealt by an attack or spell, are undone, but the indirect effects, such as creatures choosing to move to different locations, are not. The creature that took the action takes 10d8 Psychic damage, as it copes with its history being modified.',
+Ao distorcer o fluxo do tempo em nós, você faz com que uma ação de sua escolha, realizada dentro do alcance da última rodada, seja desfeita. A realidade então se reafirma, recuando diante do dano causado pela remoção de um evento do tempo. Os efeitos diretos dessa ação, como o dano causado por um ataque ou magia, são desfeitos, mas os efeitos indiretos, como criaturas escolhendo se mover para locais diferentes, não são. A criatura que realizou a ação sofre 10d8 de dano Psíquico, pois lida com a modificação de seu histórico.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -590,21 +590,21 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'polybrachia',
-  'Polybrachia',
+  'Polibraquia',
   3,
-  'Level 3',
+  '3º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'),
-  'Action',
-  'Touch',
+  'Ação',
+  'Toque',
   true,
   true,
   true,
-  'a pair of armbands',
-  'V, S, M (a pair of armbands)',
-  'Concentration, up to 10 minutes',
+  'um par de braçadeiras',
+  'V, S, M (um par de braçadeiras)',
+  'Concentração, até 10 minutos',
   true,
   false,
-  'Two muscular arms of brilliant arcane energy appear on a willing creature that you touch. These arms are fully functional and can be used to wield weapons and Shields (allowing the target to simultaneously hold 2 two-handed weapons, or 4 one-handed weapons), perform Somatic components of spells, and perform other actions. For the duration, the target has Advantage on Strength (Athletics) checks. The target can take a Bonus Action to make a melee attack using a weapon wielded by the arms.',
+  'Dois braços musculosos de energia arcana brilhante aparecem em uma criatura voluntária que você toca. Esses braços são totalmente funcionais e podem ser usados ​​para empunhar armas e escudos (permitindo ao alvo segurar simultaneamente 2 armas de duas mãos ou 4 armas de uma mão), executar componentes somáticos de magias e realizar outras ações. Durante a duração, o alvo tem Vantagem em testes de Força (Atletismo). O alvo pode realizar uma Ação Bônus para realizar um ataque corpo a corpo usando uma arma empunhada pelos braços.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -636,23 +636,23 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'recall',
-  'Recall',
+  'Retorno',
   2,
-  'Level 2',
+  '2º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'),
-  'Bonus Action',
-  'Self',
+  'Ação Bônus',
+  'Pessoal',
   true,
   true,
   false,
   NULL,
   'V, S',
-  '1 round',
+  '1 rodada',
   false,
   false,
-  '[Chronomancy]
+  '[Cronomancia]
 
-Record your location when you cast this spell. Until the end of your next turn, you can take a Reaction in response to an attack roll, a creature casting a spell, or a creature moving within 5 feet of you to teleport back to that location, or to the nearest unoccupied space if that space is occupied. This teleportation precedes the triggering attack or spell. The spell then ends.',
+Registre sua localização ao lançar esta magia. Até o final do seu próximo turno, você pode realizar uma Reação em resposta a uma jogada de ataque, a uma criatura lançando uma magia ou a uma criatura se movendo a até 5 pés de você para se teletransportar de volta para aquele local ou para o espaço desocupado mais próximo, se esse espaço estiver ocupado. Este teletransporte precede o ataque ou magia desencadeador. A magia então termina.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
@@ -686,19 +686,19 @@ VALUES (
   'rumor',
   'Rumor',
   1,
-  'Level 1',
+  '1º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'encantamento'),
-  'Action',
-  'Self',
+  'Ação',
+  'Pessoal',
   true,
   true,
   false,
   NULL,
   'V, S',
-  '1 minute',
+  '1 minuto',
   false,
   false,
-  'You magically spread a rumor of 10 words or less in a 100-foot Emanation originating from you. Any creature within the Emanation that can hear and understand three or more other creatures believes that they hear the rumor being repeated by someone nearby. Different creatures hear the rumor from different people, so a concrete origin is impossible to discern. Generally, creatures won’t become Hostile upon hearing even the most vicious rumors, but hearing a rumor can affect their attitude positively or negatively.',
+  'Você espalha magicamente um boato de 10 palavras ou menos em uma Emanação de 100 pés originada de você. Qualquer criatura dentro da Emanação que possa ouvir e compreender três ou mais outras criaturas acredita ter ouvido o boato sendo repetido por alguém próximo. Criaturas diferentes ouvem rumores de pessoas diferentes, portanto é impossível discernir uma origem concreta. Geralmente, as criaturas não se tornarão hostis ao ouvirem até mesmo os rumores mais cruéis, mas ouvir um boato pode afetar sua atitude positiva ou negativamente.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )

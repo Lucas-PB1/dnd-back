@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbSubclass } from '../../../entities/views/v-phb-subclass.entity';
 import {
+  applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
@@ -23,6 +24,7 @@ export class FindSubclassesQuery {
     limit = 20,
     q?: string,
     classSlug?: string,
+    editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<SubclassResponseDto>> {
     const qb = this.subclassesRepo
       .createQueryBuilder('sc')
@@ -42,6 +44,7 @@ export class FindSubclassesQuery {
     if (klass) {
       qb.andWhere('sc.classSlug = :classSlug', { classSlug: klass });
     }
+    applyEditionSlugFilter(qb, 'sc.editionSlug', editionSlugs);
 
     const { rows, meta } = await paginateQb(qb, page, limit);
     return { data: rows.map((row) => this.mapper.toSubclassDto(row)), meta };

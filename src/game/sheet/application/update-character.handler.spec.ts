@@ -180,6 +180,25 @@ describe('UpdateCharacterHandler', () => {
     );
   });
 
+  it('injects snapshot classSkillSlugs when validating classOptions alone', async () => {
+    sheetRepository.load.mockResolvedValue({
+      ...EMPTY_SHEET_DATA,
+      classSkillSlugs: ['arcana', 'history'],
+    });
+    repository.findAccessibleOrFail.mockResolvedValue(character({ classSlug: 'wizard', level: 1 }));
+    await handler.execute('u1', 'ch1', {
+      level: 2,
+      classOptions: [{ optionKey: 'expertiseSkill1', valueId: 'arcana' }],
+    });
+    expect(sheetValidator.validateSheetInput).toHaveBeenCalledWith(
+      expect.objectContaining({
+        classOptions: [{ optionKey: 'expertiseSkill1', valueId: 'arcana' }],
+        classSkillSlugs: ['arcana', 'history'],
+      }),
+      expect.any(Object),
+    );
+  });
+
   it('reports ability and feat changes to domain HP refresh', async () => {
     const row = character();
     repository.findAccessibleOrFail.mockResolvedValue(row);

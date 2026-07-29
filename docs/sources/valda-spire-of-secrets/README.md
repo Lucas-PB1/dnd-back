@@ -1,36 +1,36 @@
-# Valda’s Spire of Secrets — Player Pack
+# Valda's Spire of Secrets — Player Pack
 
-Fonte salva (compra D&D Beyond / Mage Hand Press) para ingestão no catálogo Grimoire.
+Fonte do catálogo Grimoire (regras 2024). Uso interno; respeitar direitos do publisher.
 
-## Conteúdo desta pasta
+## Organização
 
-| Arquivo / pasta | Uso |
-|-----------------|-----|
-| [`page.html`](page.html) | Página salva do Beyond |
-| [`images/`](images/) | Arte do pack |
-| [`extracted.json`](extracted.json) | Extração estruturada (fonte dos seeds) |
-| [`INVENTORY.md`](INVENTORY.md) | Inventário legível |
+| Arquivo | Papel |
+|---------|--------|
+| `page.html` + `images/` | Arquivo bruto EN (Beyond) — referência, não editar para o catálogo |
+| **`extracted.json`** | **Fonte canônica do catálogo (PT-BR)** — editar textos aqui |
+| `INVENTORY.md` | Inventário legível (gerado/auxiliar) |
 
-## Escopo do pack (2024)
+Seeds em `database/seeds/valda/` são **artefatos gerados** a partir do JSON. Não editar SQL à mão.
 
-| Tipo | Extraído | No DB |
-|------|----------|-------|
-| Subclasses | 6 | ✅ seeds `database/seeds/valda/` |
-| Features | 31 | ✅ |
-| Espécies | 2 | ✅ Geppettin, Mandrake |
-| Feats | 4 | ✅ Brutal Grip, Field Commander, Focused Critical, Iron Hero |
-| Magias | 15 | ✅ `V009` + `V010` (listas de classe) |
-| Itens mágicos | 5 | ✅ `V011` (`properties.requiresAttunement` / raridade) |
+## Escopo
+
+| Tipo | No DB |
+|------|-------|
+| Subclasses | 6 → `V001`–`V002` |
+| Espécies | Geppettin, Mandrake → `V003`–`V006` |
+| Feats | 4 → `V007`–`V008` |
+| Magias | 15 → `V009`–`V010` |
+| Itens mágicos | 5 → `V011` |
 
 Edição: `valda-spire-2024-en` · citação: `valda-spire-2024-en:player-pack`
 
 ## Pipeline
 
 ```bash
-node scripts/extract-valda-source.mjs   # HTML → extracted.json + INVENTORY.md
-node scripts/generate-valda-seeds.mjs   # JSON → D018 + seeds/valda/*.sql
-npm run db:migrate                      # aplica D018 se pendente
-# seeds Valda (sem truncate): aplicar database/seeds/valda/*.sql
-```
+# Só se precisar re-extrair do HTML EN (depois traduza de novo o JSON):
+# node scripts/extract-valda-source.mjs
 
-Uso interno do projeto; respeitar direitos do publisher.
+node scripts/generate-valda-seeds.mjs   # JSON PT → D018 + seeds/valda/*.sql
+npm run db:migrate                      # aplica D018 se pendente
+npm run db:seed:valda                   # aplica seeds
+```

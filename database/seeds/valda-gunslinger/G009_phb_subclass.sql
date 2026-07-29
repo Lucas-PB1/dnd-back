@@ -1,4 +1,4 @@
--- Seed Gunslinger subclasses
+-- Seed Pistoleiro subclasses
 -- Gerado de docs/sources/valda-gunslinger/extracted.json
 
 INSERT INTO rpg.phb_subclass (
@@ -7,12 +7,12 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'deadeye',
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
-  'Deadeye',
-  'Shoot with Bullseye Precision',
-  'A well-placed bullet is more powerful than a sword, arrow, or spell. Indeed, you believe that every violent conflict should sound like a single loud crack followed by a long silence. Such shots demand perfection, even at range, for when they are done right, they are as deadly for',
-  'Shoot with Bullseye Precision
+  'Olho Morto',
+  'Atire com precisão no alvo',
+  'Uma bala bem posicionada é mais poderosa que uma espada, flecha ou magia. Na verdade, você acredita que todo conflito violento deveria soar como um único estalo seguido de um longo silêncio. Esses tiros exigem perfeição, mesmo à distância, pois, quando bem executados, são tão mortais para',
+  'Atire com precisão no alvo
 
-A well-placed bullet is more powerful than a sword, arrow, or spell. Indeed, you believe that every violent conflict should sound like a single loud crack followed by a long silence. Such shots demand perfection, even at range, for when they are done right, they are as deadly for the target as they are stupendous for the audience.',
+Uma bala bem posicionada é mais poderosa que uma espada, flecha ou magia. Na verdade, você acredita que todo conflito violento deveria soar como um único estalo seguido de um longo silêncio. Esses tiros exigem perfeição, mesmo à distância, pois quando bem executados, são tão mortais para o alvo quanto estupendos para o público.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -28,12 +28,12 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'high-roller',
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
-  'High Roller',
-  'Gamble with Life and Death',
-  'Fortune is a fickle thing—unless you’re a High Roller. These Gunslingers are master card sharps and dice throwers that mix their love of risk with their talent for gunplay. High Rollers push their luck until it runs out, then push harder. Why settle for a win when you could bet i',
-  'Gamble with Life and Death
+  'Grande Apostador',
+  'Jogue com a vida e a morte',
+  'A fortuna é algo inconstante – a menos que você seja um High Roller. Esses Pistoleiros são mestres em cartas e lançadores de dados que misturam seu amor pelo risco com seu talento para o uso de armas. Os High Rollers abusam da sorte até que ela acabe e depois empurram com mais força. Por que se contentar com uma vitória quando você pode apostar que eu',
+  'Jogue com a vida e a morte
 
-Fortune is a fickle thing—unless you’re a High Roller. These Gunslingers are master card sharps and dice throwers that mix their love of risk with their talent for gunplay. High Rollers push their luck until it runs out, then push harder. Why settle for a win when you could bet it all and win big?',
+A fortuna é algo inconstante – a menos que você seja um High Roller. Esses Pistoleiros são mestres em cartas e lançadores de dados que misturam seu amor pelo risco com seu talento para o uso de armas. Os High Rollers abusam da sorte até que ela acabe e depois empurram com mais força. Por que se contentar com uma vitória quando você pode apostar tudo e ganhar muito?',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -49,12 +49,12 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'secret-agent',
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
-  'Secret Agent',
-  'Engage in Espionage and Assassination',
-  'Knowledge is power. The best way to defeat your enemies is by stealing what they know and replacing it with misinformation. To that end, you have been trained in the ways of covert warfare, giving you a broad range of abilities to complement your fearsome gunnery skills.',
-  'Engage in Espionage and Assassination
+  'Agente Secreto',
+  'Envolva-se em espionagem e assassinato',
+  'Conhecimento é poder. A melhor maneira de derrotar seus inimigos é roubar o que eles sabem e substituí-lo por desinformação. Para esse fim, você foi treinado nas formas de guerra secreta, o que lhe dá uma ampla gama de habilidades para complementar suas temíveis habilidades de artilharia.',
+  'Envolva-se em espionagem e assassinato
 
-Knowledge is power. The best way to defeat your enemies is by stealing what they know and replacing it with misinformation. To that end, you have been trained in the ways of covert warfare, giving you a broad range of abilities to complement your fearsome gunnery skills.',
+Conhecimento é poder. A melhor maneira de derrotar seus inimigos é roubar o que eles sabem e substituí-lo por desinformação. Para esse fim, você foi treinado nas formas de guerra secreta, o que lhe dá uma ampla gama de habilidades para complementar suas temíveis habilidades de artilharia.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -70,12 +70,12 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'spellslinger',
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
-  'Spellslinger',
-  'Complement Your Gunslinging with Arcana',
-  'Magic and guns aren’t so different—arcane power is like gunpowder, a spell is like a bullet, and you are like a gun, directing your spells with precision at unfortunate targets. Spellslingers mix the disciplines of gunplay and spellcasting, sometimes loading arcane charges with y',
-  'Complement Your Gunslinging with Arcana
+  'Pistoleiro Arcano',
+  'Complemente seu Gunslinging com Arcana',
+  'Magia e armas não são tão diferentes – o poder arcano é como a pólvora, uma magia é como uma bala e você é como uma arma, direcionando suas magias com precisão para alvos infelizes. Pistoleiros Arcanos misturam as disciplinas de uso de armas e lançamento de magias, às vezes carregando cargas arcanas com y',
+  'Complemente seu Gunslinging com Arcana
 
-Magic and guns aren’t so different—arcane power is like gunpowder, a spell is like a bullet, and you are like a gun, directing your spells with precision at unfortunate targets. Spellslingers mix the disciplines of gunplay and spellcasting, sometimes loading arcane charges with your shots and firing bullets enhanced with lighting, frost, or flame.',
+Magia e armas não são tão diferentes – o poder arcano é como a pólvora, uma magia é como uma bala e você é como uma arma, direcionando suas magias com precisão para alvos infelizes. Pistoleiros Arcanos misturam as disciplinas de uso de armas e lançamento de magias, às vezes carregando cargas arcanas com seus tiros e disparando balas aprimoradas com iluminação, gelo ou chamas.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -91,12 +91,12 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'trick-shot',
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
-  'Trick Shot',
-  'Ricochet Bullets from Every Angle',
+  'Tiro de Trucagem',
+  'Ricochete de balas de todos os ângulos',
   'Noa Kriukova',
-  'Ricochet Bullets from Every Angle
+  'Ricochete de balas de todos os ângulos
 
-Accuracy means different things to different people. For you, true accuracy isn’t necessarily in hitting a target on the first shot, but might include hitting the mark after the bullet bounces around a dozen times. Your attacks are just as dangerous if they miss, or even after hitting their mark, as others’ are while they’re still in the air.',
+Precisão significa coisas diferentes para pessoas diferentes. Para você, a verdadeira precisão não consiste necessariamente em acertar um alvo no primeiro tiro, mas pode incluir acertar o alvo depois que a bala quica uma dúzia de vezes. Seus ataques são tão perigosos se errarem, ou mesmo depois de atingirem o alvo, quanto os de outros enquanto ainda estão no ar.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -112,12 +112,12 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'white-hat',
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
-  'White Hat',
-  'Protect Your Allies and Uphold the Law',
-  'Some Gunslingers live by a code and expect others to do the same. These Gunslingers, known as White Hats, sometimes serve as officers of the law but never hesitate to do what’s right when the law says otherwise. Despite their affinity for deadly weapons, White Hats prefer to keep',
-  'Protect Your Allies and Uphold the Law
+  'Chapéu Branco',
+  'Proteja seus aliados e cumpra a lei',
+  'Alguns Pistoleiros vivem de acordo com um código e esperam que outros façam o mesmo. Esses Pistoleiros, conhecidos como Chapéus Brancos, às vezes atuam como oficiais da lei, mas nunca hesitam em fazer o que é certo quando a lei diz o contrário. Apesar de sua afinidade com armas mortais, os Chapéus Brancos preferem manter',
+  'Proteja seus aliados e cumpra a lei
 
-Some Gunslingers live by a code and expect others to do the same. These Gunslingers, known as White Hats, sometimes serve as officers of the law but never hesitate to do what’s right when the law says otherwise. Despite their affinity for deadly weapons, White Hats prefer to keep their friends safe and subdue their enemies nonviolently—a preference their enemies don’t often oblige.',
+Alguns Pistoleiros vivem de acordo com um código e esperam que outros façam o mesmo. Esses Pistoleiros, conhecidos como Chapéus Brancos, às vezes atuam como oficiais da lei, mas nunca hesitam em fazer o que é certo quando a lei diz o contrário. Apesar de sua afinidade com armas mortais, os Chapéus Brancos preferem manter seus amigos seguros e subjugar seus inimigos de forma não violenta – uma preferência que seus inimigos nem sempre atendem.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET

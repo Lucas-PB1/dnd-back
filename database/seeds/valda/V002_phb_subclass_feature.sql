@@ -7,10 +7,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
   3,
-  'Unarguable Wizardry',
-  'Your unquestionable legitimacy (and immense pectoral muscles) give you Advantage on Charisma (Intimidation) checks made to convince others that you are, in fact, a wizard.
+  'Magia indiscutível',
+  'Sua legitimidade inquestionável (e imensos músculos peitorais) lhe dão Vantagem em testes de Carisma (Intimidação) feitos para convencer os outros de que você é, de fato, um mago.
 
-Additionally, if someone questions your legitimate magical prowess, you can take a Reaction to enter your Rage until the end of your next turn. This Rage can’t be extended and doesn’t expend a use of your Rage.'
+Além disso, se alguém questionar sua legítima habilidade mágica, você pode realizar uma Reação para entrar em sua Fúria até o final do seu próximo turno. Esta Fúria não pode ser estendida e não gasta um uso de sua Fúria.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -21,14 +21,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
   3,
-  '“Cantrips”',
-  'You can call upon your “magic” to cast “Cantrips” in combat. Once on each of your turns when you hit a target with a Strength-based attack, you can use one of the following “Cantrips” of your choice.
+  '“Truques”',
+  'Você pode invocar sua “magia” para lançar “Truques” em combate. Uma vez em cada um de seus turnos, ao atingir um alvo com um ataque baseado em Força, você pode usar um dos seguintes “Truques” de sua escolha.
 
-Mage Hand. You can push the target up to 5 feet straight away from yourself if it is Large size or smaller. While your Rage is active, you can push the target up to 10 feet instead.
+Mãos Mágicas. Você pode empurrar o alvo até 5 pés de distância de você, se ele for grande ou menor. Enquanto sua Fúria estiver ativa, você pode empurrar o alvo até 10 pés.
 
-Shocking Grasp. The force of your strike is quite shocking. The target can’t make Opportunity Attacks until the end of the current turn. While your Rage is active, it can’t make Opportunity Attacks until the start of your next turn.
+Toque Chocante. A força do seu ataque é bastante chocante. O alvo não pode fazer Ataques de Oportunidade até o final do turno atual. Enquanto sua Fúria estiver ativa, ela não poderá atingir Ataques de Oportunidade até o início do seu próximo turno.
 
-True Strike. You really, truly strike, dealing an extra 1d6 damage to the target. The damage has the same type as the weapon or Unarmed Strike used for the attack. While your Rage is active, you add half your Barbarian level (round down) to the extra damage.'
+Ataque Certeiro. Você realmente ataca, causando 1d6 de dano extra ao alvo. O dano é do mesmo tipo da arma ou Ataque Desarmado usada para o ataque. Enquanto sua Fúria estiver ativa, você adiciona metade do seu nível de Bárbaro (arredondado para baixo) ao dano extra.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -39,14 +39,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
   6,
-  '“Spells”',
-  'Your “magic” is powerful enough to cast every “spell” that exists (and no one can prove otherwise without broken ribs). However, you only prepared the following “spells” today. While your Rage is active, you can use each of the following “Spells” once. When you do so, you can’t use that “Spell” again until you finish a Long Rest.
+  '“Magias”',
+  'Sua “magia” é poderosa o suficiente para lançar todos os “magias” que existem (e ninguém pode provar o contrário sem costelas quebradas). No entanto, você só preparou os seguintes “magias” hoje. Enquanto sua Fúria estiver ativa, você pode usar cada um dos seguintes “Magias” uma vez. Ao fazer isso, você não poderá usar aquele “Magia” novamente até terminar um Descanso Longo.
 
-Burning Hands. Your backhand slap is legendary. As an action, you can make an Unarmed Strike against each creature within your reach. On a hit, this strike deals Bludgeoning damage equal to 1d8 plus your Strength modifier and the target has Disadvantage on the next attack it makes before the start of your next turn.
+Mãos Flamejantes. Seu tapa de backhand é lendário. Com uma ação, você pode realizar um Ataque Desarmado contra cada criatura ao seu alcance. Se acertar, este golpe causa Contundente de dano igual a 1d8 mais seu modificador de Força e o alvo tem Desvantagem no próximo ataque que realizar antes do início do seu próximo turno.
 
-Magic Missile. As an action, you can make three ranged attacks using Darts, Daggers, or other weapons with the Thrown property that use Strength for the attack and damage rolls. Because Magic Missile never misses, you have Advantage on these attack rolls.
+Mísseis Mágicos. Como uma ação, você pode fazer três ataques à distância usando Dardos, Adagas ou outras armas com a propriedade Arremesso que usem Força para as jogadas de ataque e dano. Como Mísseis Mágicos nunca erra, você tem Vantagem nessas jogadas de ataque.
 
-Shield. When you are hit by an attack roll, you can take a Reaction to quickly don a Shield to defend yourself. You gain the Shield’s AC bonus against the triggering attack, potentially causing it to miss. If the attack hits, the damage dealt to you is reduced by an amount equal to your Barbarian level.'
+Escudo. Quando você é atingido por uma jogada de ataque, você pode realizar uma Reação para vestir rapidamente um Escudo para se defender. Você ganha o bônus de CA do Escudo contra o ataque desencadeador, potencialmente fazendo com que ele erre. Se o ataque acertar, o dano causado a você será reduzido em uma quantidade igual ao seu nível de Bárbaro.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -57,8 +57,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
   10,
-  'Magic Resistance',
-  'You’re such an amazing wizard that other wizards can’t even touch you. While your Rage is active, you have Advantage on saving throws against spells and other magical effects.'
+  'Resistência Mágica',
+  'Você é um bruxo tão incrível que outros bruxos nem conseguem tocar em você. Enquanto sua Fúria estiver ativa, você terá Vantagem em salvaguardas contra magias e outros efeitos mágicos.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -69,8 +69,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-muscle-wizard'),
   14,
-  'I Cast Fist',
-  'You can crush your enemies with your ultimate “spell”: Fist. When you take the Attack action while your Rage is active, you can replace one of your attacks with a really hard punch. Make an Unarmed Strike with Advantage. On a hit, the target takes Bludgeoning damage equal to 6d6 plus your Strength modifier and has the Prone condition if it is Huge or smaller. You can use this feature once per active Rage.'
+  'Eu lancei o punho',
+  'Você pode esmagar seus inimigos com seu “magia” definitivo: Punho. Ao usar a ação Atacar enquanto sua Fúria está ativa, você pode substituir um de seus ataques por um soco realmente forte. Faça um Ataque Desarmado com Vantagem. Se acertar, o alvo sofre dano Contundente igual a 6d6 mais seu modificador de Força e tem a condição Caído se for Enorme ou menor. Você pode usar esse recurso uma vez por Fúria ativa.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -81,8 +81,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'dungeoneer'),
   3,
-  'Kick in the Door',
-  'You have Advantage on attack rolls you make during the first round of combat.'
+  'Chute na porta',
+  'Você tem Vantagem nas jogadas de ataque que faz durante a primeira rodada de combate.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -93,20 +93,20 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'dungeoneer'),
   3,
-  'Heroic Superstition',
-  'You gain Heroic Inspiration when you do any of the following.
+  'Superstição Heroica',
+  'Você ganha Inspiração Heroica ao realizar qualquer uma das ações a seguir.
 
-Damage Vulnerability. Deal a type of damage to which a creature has Vulnerability.
+Vulnerabilidade a danos. Causa um tipo de dano ao qual uma criatura tem Vulnerabilidade.
 
-Find Weakness. Trigger a creature’s specific weakness, such as Shadow’s Sunlight Weakness or dealing damage that prevents a creature’s Regeneration.
+Encontre fraqueza. Aciona a fraqueza específica de uma criatura, como a Fraqueza à Luz Solar de Shadow ou causa dano que impede a Regeneração de uma criatura.
 
-Guess the Monster. Guess a creature’s specific kind (such as a mimic or lich) before seeing it. The GM confirms if you are correct when the creature is revealed. You can’t guess the identity of Humanoids.
+Adivinhe o monstro. Adivinhe o tipo específico de uma criatura (como mímico ou lich) antes de vê-la. O Mestre confirma se você está correto quando a criatura é revelada. Você não consegue adivinhar a identidade dos Humanoides.
 
-Secret Doors. Discover a secret door.
+Portas Secretas. Descubra uma porta secreta.
 
-Trapfinder. Detect or disarm a trap.
+Localizador de armadilhas. Detecte ou desarme uma armadilha.
 
-Treasure Hoard. Find an Uncommon, Rare, Very Rare, or Legendary magic item or treasure worth 100 GP+.'
+Tesouro. Encontre um item mágico ou tesouro incomum, raro, muito raro ou lendário no valor de 100 PO+.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -117,10 +117,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'dungeoneer'),
   7,
-  'Dungeon Precautions',
-  'You can cast any of the following spells without a spell slot: Alarm, Comprehend Languages, Detect Magic, Detect Poison and Disease, Find Traps, Identify, and Purify Food and Drink. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this feature (choose the ability when you cast the spell).
+  'Precauções na masmorra',
+  'Você pode lançar qualquer uma das seguintes magias sem espaço de magia: Alarme, Compreender Idiomas, Detectar Magia, Detectar Veneno e Doença, Encontrar Armadilhas, Identificação e Purificar Alimentos e Bebidas. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias que você conjura com este recurso (escolha o atributo ao conjurar a magia).
 
-You can use this feature five times and regain all expended uses when you finish a Long Rest.'
+Você pode usar esse recurso cinco vezes e recuperar todos os usos gastos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -131,8 +131,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'dungeoneer'),
   10,
-  'Monster Kill',
-  'Once per turn when you hit an Aberration, Dragon, Fey, Fiend, Monstrosity, Ooze, or Undead with an attack with a weapon, you can deal an extra 1d10 damage to the target. This damage is the same type dealt by the weapon.'
+  'Matar Monstro',
+  'Uma vez por turno, quando você atinge um Aberração, Dragão, Feérico, Corruptor, Monstruosidade, Gosma ou Morto-vivo com um ataque com uma arma, você pode causar 1d10 de dano extra ao alvo. Este dano é do mesmo tipo causado pela arma.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -143,8 +143,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'dungeoneer'),
   15,
-  'Avoidance',
-  'When you''re subjected to an effect that allows you to make a Strength, Dexterity, or Constitution saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail. You can’t use this feature if you have the Incapacitated condition.'
+  'Evitar',
+  'Quando você está sujeito a um efeito que permite que você faça uma salvaguarda de Força, Destreza ou Constituição para sofrer apenas metade do dano, você não sofre nenhum dano se tiver sucesso na salvaguarda e apenas metade do dano se falhar. Você não pode usar esse recurso se tiver a condição Incapacitado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -155,12 +155,12 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'dungeoneer'),
   18,
-  'Veteran Hero',
-  'Your dungeoneering expertise gives you the following benefits.
+  'Herói Veterano',
+  'Sua experiência em masmorras oferece os seguintes benefícios.
 
-Peerless Heroism. Once per turn when you make a D20 Test, you can expend Heroic Inspiration to turn the roll into a 20, instead of rerolling the d20.
+Heroísmo incomparável. Uma vez por turno, ao fazer um Teste de D20, você pode gastar Inspiração Heroica para transformar o lançamento em 20, em vez de rolar novamente o d20.
 
-Double Inspiration. You can have two instances of Heroic Inspiration at one time. You can use only one Heroic Inspiration per roll.'
+Dupla inspiração. Você pode ter duas instâncias de Inspiração Heroica ao mesmo tempo. Você pode usar apenas um Inspiração Heroica por rolo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -171,8 +171,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
   3,
-  'Combo',
-  'When you hit a creature with an Unarmed Strike and deal damage, you can expend 1 Focus Point to begin a combo. Until the end of the current turn, you gain a +2 bonus to attack rolls of your Unarmed Strikes. This bonus increases by 2, up to a maximum of +6, for each successive hit on the current turn. This bonus resets to +2 if you take damage or miss with an attack roll.
+  'Combinação',
+  'Ao atingir uma criatura com Ataque Desarmado e causar dano, você pode gastar 1 Ponto de Foco para iniciar um combo. Até o final do turno atual, você ganha +2 de bônus nas jogadas de ataque de seus Ataque Desarmados. Este bônus aumenta em 2, até um máximo de +6, para cada acerto sucessivo no turno atual. Este bônus é redefinido para +2 se você sofrer dano ou errar uma jogada de ataque.
 
 Lucas Ferreira CM'
 )
@@ -185,8 +185,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
   3,
-  'Iron Fist',
-  'Whenever you hit an object with an Unarmed Strike, the hit is a Critical Hit.'
+  'Punho de Ferro',
+  'Sempre que você atinge um objeto com um Ataque Desarmado, o acerto é um Acerto Crítico.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -197,14 +197,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
   6,
-  'Special Moves',
-  'You have memorized patterns of discrete movements that allow you to use the following special moves.
+  'Movimentos Especiais',
+  'Você memorizou padrões de movimentos discretos que lhe permitem usar os seguintes movimentos especiais.
 
-Energy Blast. When you take the Attack action on your turn, you can expend 1 Focus Point to replace one of your attacks with a blast of energy. One creature of your choice that you can see within 60 feet makes a Dexterity saving throw, taking Force damage equal to two rolls of your Martial Arts die, or half as much damage on a successful save.
+Explosão de Energia. Ao usar a ação Atacar no seu turno, você pode gastar 1 Ponto de Foco para substituir um de seus ataques por uma explosão de energia. Uma criatura de sua escolha que você possa ver a até 60 pés faz uma salvaguarda de Destreza, sofrendo Energético de dano igual a duas jogadas de seu dado de Artes Marciais, ou metade do dano em um teste bem-sucedido.
 
-Guard Breaker. If you make an attack roll with your Unarmed Strike and miss the target, you can expend 1 Focus Point to perform a Guard Breaker. This Unarmed Strike deals damage equal to your Dexterity modifier to the target. This miss doesn’t reset your Combo bonus to attack rolls.
+Quebrador de guarda. Se você fizer uma jogada de ataque com seu Ataque Desarmado e errar o alvo, você pode gastar 1 Focus Point para realizar um Guard Breaker. Este Ataque Desarmado causa dano igual ao seu modificador de Destreza ao alvo. Esta falha não redefine seu bônus de Combo nas jogadas de ataque.
 
-Uppercut. When you hit a creature with an Unarmed Strike and deal damage, you can expend 1 Focus point to make an uppercut. You can push the target up to 5 feet away from you and give the target the Prone condition if it is Large or smaller.'
+Corte superior. Ao acertar uma criatura com um Ataque Desarmado e causar dano, você pode gastar 1 ponto de foco para dar um soco. Você pode empurrar o alvo até 5 pés de distância de você e dar ao alvo a condição Caído se ele for Grande ou menor.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -215,8 +215,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
   11,
-  'Air Dash',
-  'On your turn, you can expend 1 Focus Point to gain a Fly Speed equal to your Speed until the end of your next turn (no action required). You have Advantage on the next melee attack you make before the end of the current turn.'
+  'Traço aéreo',
+  'No seu turno, você pode gastar 1 Ponto de Foco para ganhar Deslocamento de Voo igual à sua Velocidade até o final do seu próximo turno (nenhuma ação é necessária). Você tem Vantagem no próximo ataque corpo a corpo que fizer antes do final do turno atual.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -228,9 +228,9 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-street'),
   17,
   'K.O.',
-  'Once per turn when you hit a creature with an Unarmed Strike, you can attempt to knock the target out. The target takes extra Force damage equal to three rolls of your Martial Arts die. If the target has 100 Hit Points or fewer after you deal damage with the Unarmed Strike, it has the Unconscious condition for 10 minutes.
+  'Uma vez por turno, ao atingir uma criatura com um Ataque Desarmado, você pode tentar nocautear o alvo. O alvo sofre dano Energético extra igual a três jogadas de seu dado de Artes Marciais. Se o alvo tiver 100 Pontos de Vida ou menos após você causar dano com o Ataque Desarmado, ele terá a condição Inconsciente por 10 minutos.
 
-Once you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending 5 Focus Points (no action required).'
+Depois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Curto ou Longo. Você também pode restaurar seu uso gastando 5 Pontos de Foco (nenhuma ação necessária).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -241,28 +241,28 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oath-of-revelry'),
   3,
-  'Oath of Revelry Spells',
-  'The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of Revelry Spells table, you thereafter always have the listed spells prepared. New spells are marked with an asterisk (*).
+  'Magias de Juramento de Folia',
+  'A magia do seu juramento garante que você sempre tenha certas magias prontas; quando você atinge um nível de Paladino especificado na tabela Magias de Juramento de Folia, você sempre terá as magias listadas preparados. Novas magias são marcados com um asterisco (*).
 
-      Oath of Revelry Spells
+Magias de Juramento de Folia
 
-Paladin Level
-Spells
+Nível Paladino
+Magias
 
 3
-Charm Person, Hideous Laughter
+Pessoa encantadora, risada horrível
 
 5
-Enhance Ability, Hangover *
+Melhorar a capacidade, ressaca *
 
 9
-Create Food And Water, Hypnotic Pattern
+Crie comida e água, padrão hipnótico
 
 13
-Charm Monster, Freedom of Movement
+Monstro Charmoso, Liberdade de Movimento
 
 17
-Geas, Telepathic Bond'
+Missão, Ligação Telepática'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -273,8 +273,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oath-of-revelry'),
   3,
-  'Conjure Drink',
-  'As a Magic action, you can expend one use of your Channel Divinity to conjure a number of mugs filled with frothy ale up to your Charisma modifier (minimum of one), which appear in spaces within 30 feet of yourself. A creature that drinks the ale as a Bonus Action gains Temporary Hit Points equal to your Charisma modifier and has Advantage on saving throws for 1 minute. When you finish a Long Rest, the mugs and remaining ale vanish.'
+  'Conjurar bebida',
+  'Como Ação Mágica, você pode gastar um uso de seu Canalizar Divindade para conjurar um número de canecas cheias de cerveja espumosa até seu modificador de Carisma (mínimo de um), que aparecem em espaços a até 30 pés de você. Uma criatura que bebe a cerveja como Ação Bônus ganha Pontos de Vida Temporáriossss igual ao seu modificador de Carisma e tem Vantagem em salvaguardas por 1 minuto. Quando você termina um Descanso Longo, as canecas e a cerveja restante desaparecem.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -285,8 +285,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oath-of-revelry'),
   7,
-  'Aura of Fraternity',
-  'You and your allies deal an extra 1d4 damage on attacks using Melee weapons or Unarmed Strikes while in your Aura of Protection. This damage is the same type dealt by the weapon or Unarmed Strike.'
+  'Aura de Fraternidade',
+  'Você e seus aliados causam 1d4 de dano extra em ataques usando armas corpo a corpo ou Ataque Desarmados enquanto estiverem em sua Aura de Proteção. Este dano é do mesmo tipo causado pela arma ou Ataque Desarmado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -297,10 +297,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oath-of-revelry'),
   15,
-  'Merrymaker',
-  'When you or an ally within 30 feet of yourself that can see or hear you makes a D20 Test, you can take a Reaction to give that creature Advantage on the roll.
+  'Folião',
+  'Quando você ou um aliado a até 30 pés de você que pode ver ou ouvir você faz um Teste de D20, você pode realizar uma Reação para dar Vantagem àquela criatura no teste.
 
-You can use this feature a number of times equal to your Charisma modifier (minimum of once), and regain all expended uses when you finish a Long Rest. If the creature still fails the D20 Test, this use of Merrymaker isn’t expended.'
+Você pode usar esse recurso um número de vezes igual ao seu modificador de Carisma (no mínimo uma vez) e recuperar todos os usos gastos ao terminar um Descanso Longo. Se a criatura ainda falhar no Teste de D20, este uso do Folião não será gasto.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -311,14 +311,14 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'oath-of-revelry'),
   20,
-  'Party Animal',
-  'As a Bonus Action, you can imbue your Aura of Protection with the many-hued magic of revelry, granting the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can’t use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).
+  'Animal de festa',
+  'Como Ação Bônus, você pode imbuir sua Aura de Proteção com a magia multicolorida da folia, concedendo os benefícios abaixo por 10 minutos ou até terminá-los (nenhuma ação necessária). Depois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Longo. Você também pode restaurar seu uso gastando um espaço de magia de nível 5 (nenhuma ação necessária).
 
-Extra Damage. The extra damage from your Aura of Fraternity increases to 1d8.
+Dano Extra. O dano extra da sua Aura de Fraternidade aumenta para 1d8.
 
-Heroic Inspiration. At the start of each of your turns, you can give Heroic Inspiration to one ally within the aura.
+Inspiração Heroica. No início de cada um dos seus turnos, você pode dar Inspiração Heroica a um aliado dentro da aura.
 
-Immunities. You and your allies have Immunity to the Blinded, Deafened, Exhaustion, and Poisoned conditions while in the aura.
+Imunidades. Você e seus aliados têm imunidade às condições Cego, Surdo, Exaustão e Envenenado enquanto estiverem na aura.
 
 Martin Kirby-Jackson'
 )
@@ -331,16 +331,16 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'),
   3,
-  'Webbing',
-  'You can magically produce sticky, silken spider webs from your hands as a Bonus Action. This web dissolves after 1 minute. When you create the webs, you can use them to do one of the following.
+  'Correia',
+  'Você pode produzir magicamente teias de aranha pegajosas e sedosas com suas mãos como uma Ação Bônus. Esta teia se dissolve após 1 minuto. Ao criar as teias, você pode usá-las para executar uma das ações a seguir.
 
-Pull Yourself. You project a line of web at a point you can see within 30 feet, pulling yourself to that point in a straight line without provoking Opportunity Attacks. You can use this benefit as a Reaction when you fall to pull yourself up to 10 feet in any direction.
+Puxe-se. Você projeta uma linha de teia em um ponto que pode ver a até 30 pés, puxando-se até esse ponto em linha reta sem provocar Ataques de Oportunidade. Você pode usar esse benefício como uma reação ao cair para se elevar até 10 pés em qualquer direção.
 
-Manipulate Objects. You can use a line of web to manipulate an object that isn’t being worn or carried within 30 feet. For example, you can pull an object to your hand, close a door, or snatch a Small or smaller object weighing less than 10 pounds.
+Manipular objetos. Você pode usar uma linha de teia para manipular um objeto que não esteja sendo usado ou carregado em um raio de 30 pés. Por exemplo, você pode puxar um objeto para sua mão, fechar uma porta ou pegar um objeto pequeno ou menor que pese menos de 10 libras.
 
-Create Rope. You create a 60-foot-long Rope of web and anchor it to a point you choose.
+Crie uma corda. Você cria uma corda de teia de 60 pés de comprimento e a ancora em um ponto de sua escolha.
 
-Web Spell. You cast Web without a spell slot as a part of the Bonus Action used for this feature (DC equals 8 plus your Dexterity modifier and Proficiency Bonus). When you cast it using this feature, the webs fill a 5-foot Cube, and the spell’s duration becomes 1 minute. You can cast this spell using this feature twice. You regain one expended use when you finish a Short Rest, and you regain all expended uses when you finish a Long Rest.'
+Magia Teia. Você conjura Teia sem espaço de magia como parte da Ação Bônus usada para esse recurso (a CD é igual a 8 mais seu modificador de Destreza e seu Bônus de Proficiência). Quando você a conjura usando esse recurso, as teias preenchem um cubo de 5 pés e a duração da magia passa a ser de 1 minuto. Você pode conjurar esta magia usando este recurso duas vezes. Você recupera um uso gasto ao terminar um Descanso Curto e recupera todos os usos gastos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -351,8 +351,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'),
   3,
-  'Venomous Strike',
-  'When you deal Sneak Attack damage to a creature, you can choose for the Sneak Attack to deal d8s of Poison damage instead of d6s of the same type dealt by the weapon.'
+  'Golpe Venenoso',
+  'Quando você causa dano Ataque Furtivo a uma criatura, você pode escolher que Ataque Furtivo cause d8s de dano Venenoso em vez de d6s do mesmo tipo causados ​​pela arma.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -363,13 +363,13 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'),
   9,
-  'Wall Crawling',
-  'You’ve become accustomed to moving like a spider, granting you the following benefits.
-Climber. You gain a Climb Speed equal to your Speed.
+  'Rastejando na parede',
+  'Você se acostumou a se mover como uma aranha, o que lhe concede os seguintes benefícios.
+Alpinista. Você ganha uma Velocidade de Escalada igual à sua Velocidade.
 
-Hiding on Ceilings. If you are on a ceiling and Lightly Obscured, you can take the Hide action as long as any enemy that could see you is below you.
+Escondendo-se nos tetos. Se você estiver no teto e levemente obscurecido, você pode realizar a ação Esconder-se enquanto qualquer inimigo que possa vê-lo estiver abaixo de você.
 
-Spider Climb. You can move up, down, and across vertical surfaces and along ceilings, while leaving your hands free.'
+Escalada de aranha. Você pode mover-se para cima, para baixo e através de superfícies verticais e ao longo de tetos, deixando as mãos livres.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -380,8 +380,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'),
   13,
-  'Spider Sense',
-  'When you make a saving throw and take damage, you can take a Reaction to use your Uncanny Dodge, halving the damage you take (round down).'
+  'Sentido de Aranha',
+  'Quando você faz uma salvaguarda e sofre dano, você pode realizar uma Reação para usar sua Esquiva Sobrenatural, reduzindo pela metade o dano sofrido (arredondado para baixo).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -392,10 +392,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'),
   17,
-  'Paralytic Venom',
-  'You gain the following Cunning Strike option.
+  'Veneno Paralítico',
+  'Você ganha a seguinte opção Ataque Astuto.
 
-Paralyze (Cost: 4d6). When you deal Poison damage with your Venomous Strike, the target must succeed on a Constitution saving throw or have the Paralyzed condition until the end of your next turn.
+Paralisar (Custo: 4d6). Quando você causa dano Venenoso com seu Golpe Venenoso, o alvo deve ser bem sucedido em uma salvaguarda de Constituição ou ter a condição Paralisado até o final do seu próximo turno.
 
 Lucas Ferreira CM'
 )
@@ -408,50 +408,50 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'future-you-patron'),
   3,
-  'Future You Spells',
-  'The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Future You Spells table, you thereafter always have the listed spells prepared. New spells are marked with an asterisk (*).
+  'Magias do futuro para você',
+  'A magia do seu patrono garante que você sempre tenha certas magias prontas; quando você atinge um nível de Bruxo especificado na tabela Magias do Eu do Futuro, você sempre terá as magias listadas preparados. Novas magias são marcados com um asterisco (*).
 
-Future You Spells
+Magias do futuro para você
 
-Warlock Level
-Spells
+Nível de Bruxo
+Magias
 
 3
-Accelerate/Decelerate,* Delay,* Enhance Ability, Moment to Think,* Recall
+Acelerar/Desacelerar,* Atrasar,* Aumentar a capacidade, Momento para pensar,* Relembrar
 
 5
-Protection from Energy, Slow
+Proteção contra energia, lenta
 
 7
-Death Ward, Dire Warning *
+Proteção da Morte, Aviso Terrível *
 
 9
-Legend Lore, Telepathic Bond
+Conhecimento Lendário, Ligação Telepática
 
-In addition, strange effects linger after communicating with your future self. You gain one of the traits from the Future You Quirks table.
+Além disso, efeitos estranhos persistem após a comunicação com o seu eu futuro. Você ganha uma das características da tabela Peculiaridades do Eu do Futuro.
 
-Future You Quirks
+Futuro, suas peculiaridades
 
 d6
-Quirks
+Peculiaridades
 
 1
-You often speak in the wrong tense or refer to yourself in a plural.
+Muitas vezes você fala no tempo errado ou se refere a si mesmo no plural.
 
 2
-You sometimes refer to a person by name before they’ve introduced themselves.
+Às vezes você se refere a uma pessoa pelo nome antes dela se apresentar.
 
 3
-You are unreasonably calm in dire circumstances.
+Você fica excessivamente calmo em circunstâncias terríveis.
 
 4
-In certain lighting, you look much older than you are.
+Sob certas condições de iluminação, você parece muito mais velho do que é.
 
 5
-Seeing certain people alive instantly reduces you to tears.
+Ver certas pessoas vivas leva você instantaneamente às lágrimas.
 
 6
-Your future fashion sense clashes completely with that of today.'
+Seu senso de moda futuro entra em conflito completamente com o de hoje.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -462,12 +462,12 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'future-you-patron'),
   3,
-  'It Happened Like This',
-  'Your discussions of the future with yourself have given you peripheral knowledge about how events will play out. Whenever you finish a Short or Long Rest, the GM rolls a d20 and a d4 in secret and records the number rolled on the d20. The GM tells you the recorded d20 roll, unless they roll a 4 on the d4; in that case, they lie about the recorded d20 roll.
+  'Aconteceu assim',
+  'Suas discussões sobre o futuro consigo mesmo lhe deram um conhecimento periférico sobre como os eventos acontecerão. Sempre que você termina um Descanso Curto ou Longo, o Mestre rola um d20 e um d4 em segredo e registra o número obtido no d20. O Mestre conta a você o lançamento do d20 registrado, a menos que ele tire um 4 no d4; nesse caso, eles mentem sobre o lançamento d20 registrado.
 
 Lucas Ferreira CM
 
-You can replace any D20 Test made by you or a creature you can see with the recorded d20 roll (no action required). You must choose to do so before the roll. If the GM lied about the roll, they inform you of the actual recorded d20 roll only after you replace the test with it.'
+Você pode substituir qualquer Teste de D20 feito por você ou por uma criatura que você possa ver pela jogada d20 registrada (nenhuma ação é necessária). Você deve optar por fazer isso antes do lançamento. Se o Mestre mentiu sobre o teste, ele informará você sobre o teste real registrado do d20 somente depois que você substituir o teste por ele.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -478,10 +478,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'future-you-patron'),
   6,
-  'I Could Do With Fewer Scars',
-  'Your future self warns you of particular attacks to watch out for. When a creature you can see hits you with an attack roll, you can take a Reaction to gain a +10 bonus to your AC against that attack, potentially causing it to miss.
+  'Eu poderia fazer com menos cicatrizes',
+  'Seu eu futuro avisa sobre ataques específicos aos quais você deve estar atento. Quando uma criatura que você pode ver atinge você com uma jogada de ataque, você pode realizar uma Reação para ganhar um bônus de +10 em sua CA contra esse ataque, potencialmente fazendo com que ele erre.
 
-You can use this feature twice. You regain one expended use when you finish a Short Rest, and you regain all expended uses when you finish a Long Rest.'
+Você pode usar esse recurso duas vezes. Você recupera um uso gasto ao terminar um Descanso Curto e recupera todos os usos gastos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -492,8 +492,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'future-you-patron'),
   10,
-  'Expect an Ambush',
-  'You have Advantage on Initiative rolls and Resistance to all damage on the first round of combat.'
+  'Espere uma emboscada',
+  'Você tem Vantagem nas jogadas de Iniciativa e Resistência a todos os danos na primeira rodada de combate.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -504,10 +504,10 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'future-you-patron'),
   14,
-  'Grandfather Paradox',
-  'As a Magic action, you can goad a creature within 60 feet of you that can see or hear you into causing a paradox. The creature must make an Intelligence saving throw against your spell save DC. On a failed save, the creature takes 10d6 Psychic damage and has the Stunned condition for 1 minute as it is locked between opposing timelines. On a successful save, the target takes half as much damage only. The Stunned creature repeats the save at the end of each of its turns, ending the condition on itself on a success.
+  'Paradoxo do Avô',
+  'Como Ação Mágica, você pode incitar uma criatura a até 60 pés de você que possa ver ou ouvir você a causar um paradoxo. A criatura deve fazer uma salvaguarda de Inteligência contra sua CD de resistência de magia. Se falhar, a criatura sofre 10d6 de dano Psíquico e fica com a condição Atordoado por 1 minuto, pois está bloqueada entre linhas de tempo opostas. Em um teste bem-sucedido, o alvo sofre apenas metade do dano. A criatura Atordoado repete a salvaguarda no final de cada um de seus turnos, encerrando a condição em caso de sucesso.
 
-Once you use this feature, you can’t use it again until you finish a Long Rest.'
+Depois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;

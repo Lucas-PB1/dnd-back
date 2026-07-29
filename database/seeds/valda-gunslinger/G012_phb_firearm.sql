@@ -4,10 +4,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'blunderbuss',
   'weapon'::rpg.item_type,
-  'Blunderbuss',
-  '{"text":"750 GP"}'::jsonb,
+  'Bacamarte',
+  '{"text":"750 PO"}'::jsonb,
   '15 lb.',
-  'This distinctive short-range firearm features a dramatically flared muzzle designed to launch shot in a wide spray.',
+  'Esta distinta arma de fogo de curto alcance apresenta um cano dramaticamente alargado projetado para lançar tiros em um spray amplo.',
   '{"propertyIds":["ammunition","heavy","loading","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shot","era":"renaissance","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -63,10 +63,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'double-barrel-shotgun',
   'weapon'::rpg.item_type,
-  'Double-Barrel Shotgun',
-  '{"text":"175 GP"}'::jsonb,
+  'Escopeta de Cano Duplo',
+  '{"text":"175 PO"}'::jsonb,
   '8 lb.',
-  'A classic design with two loaded barrels, trading ammo capacity and range for reliability and firepower.',
+  'Um design clássico com dois canos carregados, trocando capacidade e alcance de munição por confiabilidade e poder de fogo.',
   '{"propertyIds":["ammunition","firearm","recoil","reload","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shell","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":2}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -129,10 +129,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'hunting-rifle',
   'weapon'::rpg.item_type,
-  'Hunting Rifle',
-  '{"text":"150 GP"}'::jsonb,
+  'Rifle de Caça',
+  '{"text":"150 PO"}'::jsonb,
   '8 lb.',
-  'Designed for big game, Hunting Rifles are slow but accurate, requiring bolt action between shots.',
+  'Projetados para caça de grande porte, os rifles de caça são lentos, mas precisos, exigindo ação de ferrolho entre os tiros.',
   '{"propertyIds":["ammunition","firearm","reload","two-handed"],"masteryId":"sighted","range":{"normal":80,"max":320},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":4}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -188,10 +188,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'parlor-gun',
   'weapon'::rpg.item_type,
-  'Parlor Gun',
-  '{"text":"75 GP"}'::jsonb,
+  'Pistola de Salão',
+  '{"text":"75 PO"}'::jsonb,
   '1 lb.',
-  'The smallest usable firearm; can be tucked into a stocking or hidden down a sleeve.',
+  'A menor arma de fogo utilizável; pode ser enfiado em uma meia ou escondido em uma manga.',
   '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"vex","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":2}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -247,10 +247,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'revolver',
   'weapon'::rpg.item_type,
-  'Revolver',
-  '{"text":"125 GP"}'::jsonb,
+  'Revólver',
+  '{"text":"125 PO"}'::jsonb,
   '3 lb.',
-  'An iconic handgun storing six bullets in a rotating cylinder; favored by Gunslingers.',
+  'Uma pistola icônica que armazena seis balas em um cilindro giratório; favorecido por pistoleiros.',
   '{"propertyIds":["ammunition","firearm","recoil","reload"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":6}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -306,10 +306,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'cannon',
   'weapon'::rpg.item_type,
-  'Cannon',
-  '{"text":"1500 GP"}'::jsonb,
+  'Canhão',
+  '{"text":"1500 PO"}'::jsonb,
   '225 lb.',
-  'Smoothbore muzzleloading Cannons common on pirate ships and fortifications.',
+  'Canhões de carregamento pela boca de cano liso, comuns em navios piratas e fortificações.',
   '{"propertyIds":["ammunition","firearm","heavy","loading","two-handed"],"masteryId":"explode","range":{"normal":100,"max":400},"ammoType":"cannonball","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -372,10 +372,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'gatling-gun',
   'weapon'::rpg.item_type,
-  'Gatling Gun',
-  '{"text":"750 GP"}'::jsonb,
+  'Metralhadora Gatling',
+  '{"text":"750 PO"}'::jsonb,
   '125 lb.',
-  'Rotates and fires six or more barrels in succession; cumbersome and terrifying.',
+  'Gira e dispara seis ou mais barris em sucessão; incômodo e assustador.',
   '{"propertyIds":["ammunition","firearm","heavy","reload","two-handed"],"masteryId":"automatic","range":{"normal":60,"max":240},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":40}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -439,9 +439,9 @@ VALUES (
   'magnum',
   'weapon'::rpg.item_type,
   'Magnum',
-  '{"text":"600 GP"}'::jsonb,
+  '{"text":"600 PO"}'::jsonb,
   '6 lb.',
-  'Chambered for large-caliber bullets; packs maximum kick into a single shot.',
+  'Compartimentado para balas de grande calibre; concentra o chute máximo em um único tiro.',
   '{"propertyIds":["ammunition","firearm","heavy","recoil","reload"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":6}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -504,10 +504,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'flare-gun',
   'weapon'::rpg.item_type,
-  'Flare Gun',
-  '{"text":"100 GP"}'::jsonb,
+  'Pistola Sinalizadora',
+  '{"text":"100 PO"}'::jsonb,
   '1 lb.',
-  'A survival tool that fires a single white-hot flare for distress signals or last-ditch defense.',
+  'Uma ferramenta de sobrevivência que dispara um único sinalizador incandescente para sinais de socorro ou defesa de última hora.',
   '{"propertyIds":["ammunition","firearm","loading"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"flare","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -556,10 +556,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'handgun',
   'weapon'::rpg.item_type,
-  'Handgun',
-  '{"text":"125 GP"}'::jsonb,
+  'Pistola',
+  '{"text":"125 PO"}'::jsonb,
   '3 lb.',
-  'Portable and reliable with a generous magazine; go-to for self-defense.',
+  'Portátil e confiável com um carregador generoso; ir para autodefesa.',
   '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"vex","range":{"normal":30,"max":120},"ammoType":"bullet","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":10}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -615,10 +615,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'assault-rifle',
   'weapon'::rpg.item_type,
-  'Assault Rifle',
-  '{"text":"300 GP"}'::jsonb,
+  'Rifle de Assalto',
+  '{"text":"300 PO"}'::jsonb,
   '7 lb.',
-  'High rate of fire with rifle-grade ballistics; flexible and formidable.',
+  'Alta cadência de tiro com balística de rifle; flexível e formidável.',
   '{"propertyIds":["ammunition","firearm","reload","two-handed"],"masteryId":"automatic","range":{"normal":80,"max":320},"ammoType":"bullet","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":20}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -674,10 +674,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'pump-shotgun',
   'weapon'::rpg.item_type,
-  'Pump Shotgun',
-  '{"text":"550 GP"}'::jsonb,
+  'Escopeta de Ação por Bomba',
+  '{"text":"550 PO"}'::jsonb,
   '7 lb.',
-  'Distinctive sliding grip on the barrel that is ''pumped'' to chamber a new round.',
+  'Aperto deslizante distinto no cano que é ''bombeado'' para armazenar uma nova rodada.',
   '{"propertyIds":["ammunition","firearm","heavy","recoil","reload","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shell","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":8}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -747,10 +747,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'sniper-rifle',
   'weapon'::rpg.item_type,
-  'Sniper Rifle',
-  '{"text":"450 GP"}'::jsonb,
+  'Rifle de Precisão',
+  '{"text":"450 PO"}'::jsonb,
   '8 lb.',
-  'Instrument of ranged precision for distant, nearly invisible shots.',
+  'Instrumento de precisão de longo alcance para tiros distantes e quase invisíveis.',
   '{"propertyIds":["ammunition","firearm","heavy","loading","two-handed"],"masteryId":"sighted","range":{"normal":100,"max":400},"ammoType":"bullet","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -813,10 +813,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'submachine-gun',
   'weapon'::rpg.item_type,
-  'Submachine Gun',
-  '{"text":"250 GP"}'::jsonb,
+  'Submetralhadora',
+  '{"text":"250 PO"}'::jsonb,
   '6 lb.',
-  'Fires lighter, easier-to-control rounds as an alternative to larger automatic weapons.',
+  'Ígneos são cartuchos mais leves e fáceis de controlar como uma alternativa às armas automáticas maiores.',
   '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"automatic","range":{"normal":20,"max":60},"ammoType":"bullet","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":16}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET

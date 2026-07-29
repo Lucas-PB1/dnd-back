@@ -1,8 +1,28 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { Type } from 'class-transformer';
-import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import {
+  IsArray,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 import { SelectQueryBuilder } from 'typeorm';
 import { requireNonEmpty } from '../require-found';
+
+/** Fallback when species/source_meta omit editionSlug (PHB seeds). */
+export const DEFAULT_PHB_EDITION_SLUG = 'phb-2024-pt';
+
+/** Parse `editionSlugs=a,b` or repeated query keys into a string[]. */
+export function parseEditionSlugsParam(value: unknown): string[] | undefined {
+  if (value == null || value === '') return undefined;
+  const parts = Array.isArray(value)
+    ? value.flatMap((entry) => String(entry).split(','))
+    : String(value).split(',');
+  const slugs = parts.map((part) => part.trim()).filter(Boolean);
+  return slugs.length > 0 ? slugs : undefined;
+}
 
 export class PaginationQueryDto {
   @ApiPropertyOptional({ default: 1, minimum: 1 })
@@ -19,6 +39,17 @@ export class PaginationQueryDto {
   @Min(1)
   @Max(100)
   limit?: number = 20;
+
+  @ApiPropertyOptional({
+    description:
+      'Comma-separated edition slugs (e.g. phb-2024-pt,valda-spire-2024-en). Omit for all.',
+    example: 'phb-2024-pt,valda-spire-2024-en',
+  })
+  @IsOptional()
+  @Transform(({ value }) => parseEditionSlugsParam(value))
+  @IsArray()
+  @IsString({ each: true })
+  editionSlugs?: string[];
 }
 
 /** Listagens de catálogo com busca textual `q`. */
@@ -80,6 +111,30 @@ export function applyIlikeSearch<T extends object>(
   if (!term || columns.length === 0) return;
   const clause = columns.map((col) => `${col} ILIKE :q`).join(' OR ');
   qb.andWhere(`(${clause})`, { q: `%${term}%` });
+}
+
+/** Filtra por `editionSlug` (coluna da view ou expressão SQL). */
+export function applyEditionSlugFilter<T extends object>(
+  qb: SelectQueryBuilder<T>,
+  columnExpr: string,
+  editionSlugs?: string[],
+): void {
+  const slugs = editionSlugs?.map((slug) => slug.trim()).filter(Boolean);
+  if (!slugs?.length) return;
+  qb.andWhere(`${columnExpr} IN (:...editionSlugs)`, { editionSlugs: slugs });
+}
+
+export function filterRowsByEditionSlug<T extends { editionSlug?: string | null }>(
+  rows: T[],
+  editionSlugs?: string[],
+): T[] {
+  const slugs = editionSlugs?.map((slug) => slug.trim()).filter(Boolean);
+  if (!slugs?.length) return rows;
+  const allowed = new Set(slugs);
+  return rows.filter((row) => {
+    const edition = row.editionSlug ?? DEFAULT_PHB_EDITION_SLUG;
+    return allowed.has(edition);
+  });
 }
 
 /**

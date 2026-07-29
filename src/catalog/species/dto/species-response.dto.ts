@@ -26,4 +26,10 @@ export class SpeciesResponseDto {
 
   @ApiProperty()
   description!: string;
+
+  @ApiPropertyOptional({
+    example: 'phb-2024-pt',
+    description: 'Rulebook edition slug (from source_meta or PHB default)',
+  })
+  editionSlug!: string | null;
 }

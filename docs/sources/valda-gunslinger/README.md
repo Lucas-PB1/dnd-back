@@ -1,52 +1,47 @@
-# Valda’s Spire of Secrets — The Gunslinger Class
+# Valda's Spire of Secrets — The Gunslinger Class
 
-Fonte salva (compra D&D Beyond / Mage Hand Press) para ingestão no catálogo Grimoire.
+Fonte do catálogo Grimoire (classe Pistoleiro, regras 2024). Uso interno; respeitar direitos do publisher.
 
-## Conteúdo desta pasta
+## Organização
 
-| Arquivo / pasta | Uso |
-|-----------------|-----|
-| [`page.html`](page.html) | Página salva do Beyond |
-| [`images/`](images/) | Arte do pack |
-| [`extracted.json`](extracted.json) | Extração estruturada (fonte dos seeds) |
-| [`INVENTORY.md`](INVENTORY.md) | Inventário legível |
+| Arquivo | Papel |
+|---------|--------|
+| `page.html` + `images/` | Arquivo bruto EN (Beyond) — referência, não editar para o catálogo |
+| **`extracted.json`** | **Fonte canônica do catálogo (PT-BR)** — editar textos aqui |
+| `INVENTORY.md` | Inventário legível (gerado/auxiliar) |
 
-## Escopo (2024)
+Seeds em `database/seeds/valda-gunslinger/` são **artefatos gerados** a partir do JSON. Não editar SQL à mão.
 
-| Tipo | Extraído | No DB |
-|------|----------|-------|
-| Classe | Gunslinger | ✅ `G001`–`G007` |
-| Features | 16 + 6 maneuvers (todas conhecidas RAW) | ✅ `G008` |
-| Subclasses (Creeds) | 6 | ✅ `G009`–`G010` |
-| Props / masteries Valda | Firearm, Recoil, Reload, Automatic… | ✅ `G011` / `G011b` |
-| Firearms + munição | 14 armas + 5 ammo | ✅ `G012`–`G013` |
-| Feats do pack | Marksman’s Luck, Gun-Mage Adept | ✅ `G014`–`G015` |
-| Magias do pack | 8 (sem Finger Guns) | ✅ `G016`–`G017` |
-| Equipamento A/B | A + B 175 GP | ✅ `G018` |
-| Weapon Mastery + Risk | progressão + recurso | ✅ `G019` |
-| Fighting Style allowlist | amplitude do fighter | ✅ `G020` |
-| **Spellslinger casting** | pattern `third`, cotas, lista Wizard, Finger Guns | ✅ `G021`–`G024` |
-| Proficiência armas | Simple + Martial Ranged | ✅ `G005` (`armas-marciais-a-distancia`) |
+## Escopo
+
+| Tipo | No DB |
+|------|-------|
+| Classe Pistoleiro | `G001`–`G007` |
+| Features + manobras | `G008` |
+| Creeds (subclasses) | `G009`–`G010` |
+| Props / masteries | `G011` / `G011b` |
+| Firearms + munição | `G012`–`G013` |
+| Feats | `G014`–`G015` |
+| Magias | `G016`–`G017` |
+| Equipamento / casting | `G018`–`G024` |
 
 Edição: `valda-spire-2024-en` · citação: `valda-spire-2024-en:gunslinger`
 
-### Jogável
+### Jogável (resumo)
 
-- Create: skills, mastery (só armas com proficiência), Estilo de Luta L1, pacotes A/B
-- Proficiência: Simple + Martial Ranged (não martial melee)
-- Risk (nv.2+): usos + `dieLabel` (d8/d10/d12) no combat hub; as 6 manobras de classe são todas conhecidas (RAW — não há “choose X” como Battle Master); creeds podem conceder manobras adicionais
-- **Spellslinger (nv.3+):** slots `third`, prepared da lista Wizard, Finger Guns `always_prepared`; passo Magias no create quando Creed = Spellslinger
-- Reload/Recoil: só catálogo/texto (engine não automatiza)
+- Create: skills, mastery (armas com proficiência), Estilo de Luta L1, pacotes A/B
+- Proficiência: Simple + Martial Ranged
+- Risk (nv.2+): usos + `dieLabel`; 6 manobras de classe conhecidas
+- Spellslinger (nv.3+): slots `third`, lista Wizard, Finger Guns `always_prepared`
 
 ## Pipeline
 
 ```bash
-npm run db:extract:gunslinger
+# Só se precisar re-extrair do HTML EN (depois traduza de novo o JSON):
+# npm run db:extract:gunslinger
+
 npm run db:generate:gunslinger
-npm run db:migrate:schema   # inclui T084/T085 + V041 + casting_type third
+npm run db:migrate:schema
 npm run db:seed:gunslinger
 node scripts/smoke-gunslinger.mjs
-node scripts/smoke-spellslinger.mjs
 ```
-
-Uso interno do projeto; respeitar direitos do publisher.

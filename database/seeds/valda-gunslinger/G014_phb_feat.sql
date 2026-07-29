@@ -1,14 +1,14 @@
--- Seed Gunslinger pack feats
+-- Seed Pistoleiro pack feats
 
 INSERT INTO rpg.phb_feat (
   slug, name, category_id, repeatable, prerequisite, source_citation_id
 )
 VALUES (
   'marksman-s-luck',
-  'Marksman’s Luck',
+  'Sorte do Atirador',
   (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'),
   FALSE,
-  'Level 4+, Dexterity 13+',
+  'Nível 4+, Destreza 13+',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -21,10 +21,10 @@ INSERT INTO rpg.phb_feat (
 )
 VALUES (
   'gun-mage-adept',
-  'Gun-Mage Adept',
+  'Adepto do Mago-Pistoleiro',
   (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'),
   FALSE,
-  'Level 4+, Spellcasting or Pact Magic Feature',
+  'Nível 4+, recurso Conjuração ou Magia de Pacto',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET

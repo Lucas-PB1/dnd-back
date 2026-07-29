@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbFeat } from '../../../entities/views/v-phb-feat.entity';
 import {
+  applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
@@ -23,6 +24,7 @@ export class FindFeatsQuery {
     limit = 20,
     q?: string,
     category?: string,
+    editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<FeatResponseDto>> {
     const qb = this.featsRepo
       .createQueryBuilder('feat')
@@ -40,6 +42,7 @@ export class FindFeatsQuery {
     if (categorySlug) {
       qb.andWhere('feat.categorySlug = :categorySlug', { categorySlug });
     }
+    applyEditionSlugFilter(qb, 'feat.editionSlug', editionSlugs);
 
     const { rows, meta } = await paginateQb(qb, page, limit);
     return { data: rows.map((row) => this.mapper.toDto(row)), meta };

@@ -4,10 +4,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'bullets',
   'gear'::rpg.item_type,
-  'Bullets (10)',
-  '{"text":"3 GP"}'::jsonb,
+  'Balas (10)',
+  '{"text":"3 PO"}'::jsonb,
   '1 lb.',
-  'Firearm ammunition (bullets). Destroyed upon use.',
+  'Munição arma de fogo (balas). Destruído após uso.',
   '{"magic":false,"ammunition":true,"amount":10,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -21,10 +21,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'cannonballs',
   'gear'::rpg.item_type,
-  'Cannonballs (5)',
-  '{"text":"25 GP"}'::jsonb,
+  'Bolas de Canhão (5)',
+  '{"text":"25 PO"}'::jsonb,
   '10 lb.',
-  'Firearm ammunition (cannonballs). Destroyed upon use.',
+  'Munição arma de fogo (balas de canhão). Destruído após uso.',
   '{"magic":false,"ammunition":true,"amount":5,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -38,10 +38,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'flares',
   'gear'::rpg.item_type,
-  'Flares (5)',
-  '{"text":"5 GP"}'::jsonb,
+  'Sinalizadores (5)',
+  '{"text":"5 PO"}'::jsonb,
   '5 lb.',
-  'Firearm ammunition (flares). Destroyed upon use.',
+  'Munição arma de fogo (flares). Destruído após uso.',
   '{"magic":false,"ammunition":true,"amount":5,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -55,10 +55,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'shells',
   'gear'::rpg.item_type,
-  'Shells (10)',
-  '{"text":"5 GP"}'::jsonb,
+  'Cartuchos (10)',
+  '{"text":"5 PO"}'::jsonb,
   '1 lb.',
-  'Firearm ammunition (shells). Destroyed upon use.',
+  'Munição arma de fogo (cartuchos). Destruído após uso.',
   '{"magic":false,"ammunition":true,"amount":10,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -72,10 +72,10 @@ INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, prop
 VALUES (
   'shot',
   'gear'::rpg.item_type,
-  'Shot (10)',
-  '{"text":"1 GP"}'::jsonb,
+  'Chumbos (10)',
+  '{"text":"1 PO"}'::jsonb,
   '2 lb.',
-  'Firearm ammunition (shot). Destroyed upon use.',
+  'Munição arma de fogo (tiro). Destruído após uso.',
   '{"magic":false,"ammunition":true,"amount":10,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET

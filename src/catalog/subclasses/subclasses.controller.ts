@@ -40,6 +40,7 @@ export class SubclassesController {
       query.limit,
       query.q,
       query.class,
+      query.editionSlugs,
     );
   }
 

@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbSubclass } from '../../../entities/views/v-phb-subclass.entity';
 import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
+import {
+  filterRowsByEditionSlug,
+  PaginatedResponseDto,
+  paginate,
+} from '../../../common/dto/pagination.dto';
 import { SubclassResponseDto } from '../../subclasses/dto/subclass-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 
@@ -20,6 +24,7 @@ export class FindClassSubclassesQuery {
     classSlug: string,
     page = 1,
     limit = 20,
+    editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<SubclassResponseDto>> {
     await this.catalogLookup.findClassOrFail(classSlug);
 
@@ -27,6 +32,11 @@ export class FindClassSubclassesQuery {
       where: { classSlug },
       order: { subclassName: 'ASC' },
     });
-    return paginate(rows.map((row) => this.mapper.toSubclassDto(row)), page, limit);
+    const filtered = filterRowsByEditionSlug(rows, editionSlugs);
+    return paginate(
+      filtered.map((row) => this.mapper.toSubclassDto(row)),
+      page,
+      limit,
+    );
   }
 }

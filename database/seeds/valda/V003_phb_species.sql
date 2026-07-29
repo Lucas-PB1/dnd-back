@@ -7,16 +7,16 @@ INSERT INTO rpg.phb_species (
 VALUES (
   'geppettin',
   'Geppettin',
-  'Construct',
-  'Small or Medium (Marionette construction only for Medium)',
-  '30 feet',
-  'Ever a joy to children, geppettin resemble living playthings made of wood, cloth, or porcelain. Though easily mistaken for puppets, geppettin aren’t manipulated by a just-out-of-sight puppeteer; they are animated, sentient, and independent.
+  'Constructo',
+  'Pequeno ou Médio (apenas a construção Marionete pode ser Média)',
+  '30 pés',
+  'Sempre uma alegria para as crianças, os geppettin lembram brinquedos vivos feitos de madeira, tecido ou porcelana. Embora facilmente confundidos com fantoches, os geppettin não são manipulados por um marionetista que está fora de vista; eles são animados, sencientes e independentes.
 
-As a species, the geppettin are an oddity. Though rare, they are numerous enough and share enough similarities that they may be counted as an actual species, and not merely freak mishaps of magic. While there might be dedicated creators of geppettin, as there are with golems, many geppettin come to life on their own.
+Como espécie, os geppettin são uma raridade. Embora raros, eles são numerosos o suficiente e compartilham semelhanças suficientes para que possam ser considerados uma espécie real, e não apenas acidentes mágicos estranhos. Embora possa haver criadores dedicados de geppettin, como acontece com os golems, muitos geppettin ganham vida por conta própria.
 
-Geppettin are often shorter than halflings. Their physical features vary greatly from type to type, but they often resemble Humanoids. Despite being made of somewhat flimsy materials, sentience grants them an odd hardiness. They never hunger and rarely tire. Most find some form of work or profession in entertainment, but a few find fantastic success as spies and assassins.
+Os Geppettin costumam ser mais baixos que os halflings. Suas características físicas variam muito de tipo para tipo, mas muitas vezes se assemelham a Humanoides. Apesar de serem feitos de materiais um tanto frágeis, a senciência lhes confere uma resistência estranha. Eles nunca têm fome e raramente se cansam. A maioria encontra alguma forma de trabalho ou profissão no entretenimento, mas alguns obtêm um sucesso fantástico como espiões e assassinos.
 
-As Constructs, geppettin don’t age, and mature as soon as they become sentient.',
+Como Construtos, os geppettin não envelhecem e amadurecem assim que se tornam sencientes.',
   '{"editionSlug":"valda-spire-2024-en","book":"Valda''s Spire of Secrets: Player Pack","language":"en","citationSlug":"valda-spire-2024-en:player-pack","source":"valda-spire-player-pack"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -32,15 +32,15 @@ INSERT INTO rpg.phb_species (
 )
 VALUES (
   'mandrake',
-  'Mandrake',
-  'Plant',
-  'Medium',
-  '30 feet',
-  'With a skin of thick bark and leaves growing at their extremities, you could be forgiven for believing that mandrakes are simply bizarre plants, treants, or animated trees. The truth is far stranger: mandrakes are a bizarre midway between animal and plant. A ruby ichor pumps through their root-veins, and they can equally eat living things or bask in sunlight for nourishment. Depending on the season in which they are harvested, a mandrake might resemble a spry, leafy sapling or thick, woody tree.
+  'Mandrágora',
+  'Planta',
+  'Médio',
+  '30 pés',
+  'Com uma casca grossa e folhas crescendo nas extremidades, você poderia ser perdoado por acreditar que as mandrágoras são simplesmente plantas bizarras, entes ou árvores animadas. A verdade é muito mais estranha: as mandrágoras são um meio-termo bizarro entre o animal e a planta. Um icor rubi bombeia através de suas veias radiculares, e eles podem igualmente comer coisas vivas ou aproveitar a luz do sol para se alimentar. Dependendo da época em que são colhidas, uma mandrágora pode se assemelhar a uma muda vigorosa e frondosa ou a uma árvore espessa e lenhosa.
 
-Common folks have long held misconceptions about mandrakes—believing them categorically to be wailing babies—but druids know them as the green emissaries who stand between the realms of animals and plants, making peace for all parties. In druidic lore, mandrakes are bespoke creations of a primordial goddess of nature, intended to act as delegates of her will.
+As pessoas comuns há muito tempo têm conceitos errados sobre as mandrágoras – acreditando categoricamente que elas sejam bebês chorões – mas os druidas as conhecem como os emissários verdes que ficam entre os reinos dos animais e das plantas, fazendo a paz para todas as partes. Na tradição druídica, as mandrágoras são criações personalizadas de uma deusa primordial da natureza, destinadas a atuar como delegadas de sua vontade.
 
-Today, mandrakes are rare and make their homes in the forests near where villages and cities meet the true wilds. They live for hundreds of years, growing wider and more gnarled with age.
+Hoje, as mandrágoras são raras e vivem nas florestas perto de onde as aldeias e cidades encontram a verdadeira natureza selvagem. Eles vivem centenas de anos, tornando-se mais largos e nodosos com a idade.
 
 Martin Kirby-Jackson',
   '{"editionSlug":"valda-spire-2024-en","book":"Valda''s Spire of Secrets: Player Pack","language":"en","citationSlug":"valda-spire-2024-en:player-pack","source":"valda-spire-player-pack"}'::jsonb

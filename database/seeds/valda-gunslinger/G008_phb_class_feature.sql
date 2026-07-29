@@ -1,14 +1,14 @@
--- Seed Gunslinger class features + maneuvers
+-- Seed Pistoleiro class features + maneuvers
 -- Gerado de docs/sources/valda-gunslinger/extracted.json
 
 INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   1,
-  'Fighting Style',
-  'You gain a Fighting Style feat of your choice. If you choose a feat, such as Great Weapon Fighting, that requires you to hold a Melee weapon in one or two hands, you can use that feat with Ranged weapons.
+  'Estilo de Luta',
+  'Você ganha um talento Estilo de Luta à sua escolha. Se você escolher um talento, como Lutar com Armas Grandes, que exige que você segure uma arma corpo a corpo com uma ou duas mãos, você pode usar esse talento com armas de longo alcance.
 
-Whenever you gain a Gunslinger level, you can replace the feat you chose with a different Fighting Style feat.'
+Sempre que você ganha um nível de Pistoleiro, você pode substituir o talento escolhido por um talento Estilo de Luta diferente.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -16,12 +16,12 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   1,
-  'Quick Draw',
-  'You’re adept at drawing and firing before others have time to react, granting you the following benefits.
+  'Sorteio rápido',
+  'Você é adepto de sacar e atirar antes que os outros tenham tempo de reagir, o que lhe garante os seguintes benefícios.
 
-Initiative. You have Advantage on Initiative rolls.
+Iniciativa. Você tem Vantagem em testes de Iniciativa.
 
-Double Draw. You can draw or stow two weapons that lack the Two-Handed property when you would normally be able to draw or stow only one.'
+Sorteio Duplo. Você pode sacar ou guardar duas armas que não tenham a propriedade Duas Mãos, quando normalmente seria capaz de sacar ou guardar apenas uma.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -29,10 +29,10 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   1,
-  'Weapon Mastery',
-  'Your training with weapons allows you to use the mastery properties of two kinds of Simple or Martial Ranged weapons of your choice. Whenever you finish a Long Rest, you can practice weapon drills and change one of those weapon choices.
+  'Maestria em Armas',
+  'Seu treinamento com armas permite que você use as propriedades de maestria de dois tipos de armas de longo alcance simples ou marciais de sua escolha. Sempre que você terminar um Descanso Longo, poderá praticar exercícios com armas e alterar uma dessas opções de armas.
 
-When you reach certain Gunslinger levels, you gain the ability to use the mastery properties of more kinds of weapons, as shown in the Weapon Mastery column of the Gunslinger Features table.'
+Ao atingir determinados níveis de Pistoleiro, você ganha a capacidade de usar as propriedades de maestria de mais tipos de armas, conforme mostrado na coluna Maestria em Armas da tabela Características do Pistoleiro.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -40,10 +40,10 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
-  'Critical Shot',
-  'Your attack rolls with Ranged weapons can score a Critical Hit on a roll of 19 or 20 on the d20.
+  'Tiro Crítico',
+  'Suas jogadas de ataque com armas de longo alcance podem pontuar Acerto Crítico em uma jogada de 19 ou 20 no d20.
 
-At Gunslinger level 9, your attack rolls with Ranged weapons score a Critical Hit on a roll of 18–20. At Gunslinger level 17, they score a Critical Hit on a roll of 17–20.'
+No nível 9 do Pistoleiro, suas jogadas de ataque com armas de longo alcance pontuam Acerto Crítico em uma jogada de 18–20. No nível 17 do Pistoleiro, eles marcam um Acerto Crítico em um resultado de 17–20.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -51,14 +51,14 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
-  'Risk',
-  'You can perform incredible feats of daring fueled by special dice called Risk Dice.
+  'Risco',
+  'Você pode realizar feitos incríveis de ousadia alimentados por dados especiais chamados Dados de Risco.
 
-Risk Dice. You have four Risk Dice, which are d8s. A Risk Die is expended when you use it. You regain all expended Risk Dice when you finish a Short or Long Rest. Your Risk Die changes and more Risk Dice become available as shown on the Risk Dice column of the Gunslinger Features table.
+Dados de Risco. Você tem quatro Dados de Risco, que são d8s. Um Dado de Risco é gasto quando você o usa. Você recupera todos os Dados de Risco gastos ao finalizar um Descanso Curto ou Longo. Suas alterações no Dado de Risco e mais Dados de Risco ficam disponíveis conforme mostrado na coluna Dados de Risco da tabela Recursos do Pistoleiro.
 
-Maneuvers. You can expend Risk Dice to perform maneuvers. Your maneuver options are detailed later in the class description.
+Manobras. Você pode gastar Dados de Risco para realizar manobras. Suas opções de manobra são detalhadas posteriormente na descrição da classe.
 
-Saving Throws. If a maneuver requires a saving throw, the DC equals 8 plus your Dexterity modifier and Proficiency Bonus.'
+Salvando lances. Se uma manobra exigir uma salvaguarda, a CD é igual a 8 mais seu modificador de Destreza e Bônus de Proficiência.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -66,8 +66,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   3,
-  'Gunslinger Subclass',
-  'You gain a Gunslinger subclass of your choice. A subclass is a specialization that grants you features at certain Gunslinger levels. For the rest of your career, you gain each of your subclass’s features that are of your Gunslinger level or lower.'
+  'Subclasse Pistoleiro',
+  'Você ganha uma subclasse Pistoleiro de sua escolha. Uma subclasse é uma especialização que concede recursos em determinados níveis de Pistoleiro. Pelo resto de sua carreira, você ganha cada uma das características de sua subclasse que sejam do seu nível de Pistoleiro ou inferior.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -75,8 +75,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   4,
-  'Ability Score Improvement',
-  'You gain the Ability Score Improvement feat or another feat of your choice for which you qualify. You gain this feature again at Gunslinger levels 8, 12, and 16.'
+  'Aprimoramento de Atributo',
+  'Você ganha o talento Aprimoramento de Atributo ou outro talento de sua escolha para o qual você se qualifica. Você ganha esse recurso novamente nos níveis 8, 12 e 16 do Pistoleiro.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -84,8 +84,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   5,
-  'Extra Attack',
-  'You can attack twice instead of once whenever you take the Attack action on your turn.'
+  'Ataque Extra',
+  'Você pode atacar duas vezes em vez de uma sempre que usar a ação Atacar no seu turno.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -93,8 +93,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   5,
-  'Gut Shot',
-  'Whenever you score a Critical Hit against a Large or smaller creature with a ranged attack using a weapon, the projectile lodges itself in the target. For 1 minute or until the target replaces one of its attacks with dislodging the projectile, its Speed is halved and it has Disadvantage on attack rolls.'
+  'Tiro intestinal',
+  'Sempre que você obtiver um Acerto Crítico contra uma criatura Grande ou menor com um ataque à distância usando uma arma, o projétil se aloja no alvo. Por 1 minuto ou até que o alvo substitua um de seus ataques pelo desalojamento do projétil, sua Velocidade é reduzida pela metade e ele tem Desvantagem nas jogadas de ataque.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -102,10 +102,10 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   7,
-  'Evasion',
-  'When you’re subjected to an effect that allows you to make a Dexterity saving throw to take only half damage, you instead take no damage if you succeed on the saving throw and only half damage if you fail.
+  'Evasão',
+  'Quando você está sujeito a um efeito que lhe permite fazer uma salvaguarda de Destreza para sofrer apenas metade do dano, você não sofre nenhum dano se tiver sucesso na salvaguarda e apenas metade do dano se falhar.
 
-You don’t benefit from this feature if you have the Incapacitated condition.'
+Você não se beneficia desse recurso se tiver a condição Incapacitado.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -113,10 +113,10 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   11,
-  'Overkill',
-  'When you deal damage with a Ranged weapon that doesn’t add your ability modifier to the roll, you add your ability modifier nonetheless. If you already add your modifier to the damage roll, the target takes an extra 1d8 damage of the weapon’s type.
+  'Exagero',
+  'Quando você causa dano com uma arma de longo alcance que não adiciona seu modificador de habilidade à rolagem, você adiciona seu modificador de habilidade mesmo assim. Se você já adicionou seu modificador à jogada de dano, o alvo sofre 1d8 de dano extra do tipo da arma.
 
-Note that weapons that have the Firearm property don’t add your ability modifier to damage rolls.'
+Observe que as armas que possuem a propriedade arma de fogo não adicionam seu modificador de habilidade às jogadas de dano.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -124,10 +124,10 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   13,
-  'Cheat Death',
-  'When you are reduced to 0 Hit Points and not killed outright, you can drop to 1 Hit Point instead, and you regain a number of Hit Points equal to your Gunslinger level.
+  'Trapacear a morte',
+  'Quando você é reduzido a 0 Pontos de Vida e não é morto imediatamente, você pode cair para 1 Ponto de Vida e recuperar um número de Pontos de Vida igual ao seu nível de Pistoleiro.
 
-Once you use this feature, you can’t use it again until you finish a Short or Long Rest.'
+Depois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Curto ou Longo.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -135,8 +135,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   15,
-  'Dire Gambit',
-  'Whenever you roll Initiative or score a Critical Hit, you regain one expended Risk Die.'
+  'Gambito Terrível',
+  'Sempre que você rola Iniciativa ou obtém um Acerto Crítico, você recupera um Dado de Risco gasto.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -144,8 +144,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   18,
-  'Deft Maneuver',
-  'You gain a special additional Bonus Action that you can take once on each of your turns. You can take this special Bonus Action only to use a maneuver.'
+  'Manobra hábil',
+  'Você ganha uma Ação Bônus adicional especial que pode realizar uma vez em cada um dos seus turnos. Você pode realizar esta Ação Bônus especial apenas para usar uma manobra.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -153,8 +153,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   19,
-  'Epic Boon',
-  'You gain an Epic Boon feat or another feat of your choice for which you qualify. Boon of Irresistible Offense is recommended.'
+  'Dádiva Épica',
+  'Você ganha um talento Dádiva Épica ou outro talento de sua escolha para o qual você se qualifica. Dádiva da Ofensa Irresistível é recomendada.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -162,10 +162,10 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   20,
-  'Headshot',
-  'When you score a Critical Hit against a creature using a Ranged weapon, you can choose for it to be a Headshot. If the creature has less than 100 Hit Points, it dies. Otherwise, it takes an extra 10d10 damage of the weapon’s type.
+  'Tiro na cabeça',
+  'Quando você marca um Acerto Crítico contra uma criatura usando uma arma de longo alcance, você pode escolher que seja um tiro na cabeça. Se a criatura tiver menos de 100 Pontos de Vida, ela morre. Caso contrário, sofre 10d10 de dano extra do tipo da arma.
 
-Once you use this feature, you can’t use it again until you finish a Short or Long Rest. You can also restore your use of it by expending three Risk Dice (no action required).'
+Depois de usar esse recurso, você não poderá usá-lo novamente até terminar um Descanso Curto ou Longo. Você também pode restaurar o uso dele gastando três Dados de Risco (nenhuma ação necessária).'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -173,8 +173,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
-  'Maneuver: Bite the Bullet',
-  'As a Bonus Action, you can expend one Risk Die to gain Temporary Hit Points equal to the number rolled on the die plus your Gunslinger level.'
+  'Manobra: Morda a Bala',
+  'Como Ação Bônus, você pode gastar um Dado de Risco para ganhar Pontos de Vida Temporáriossss igual ao número lançado no dado mais seu nível de Pistoleiro.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -182,8 +182,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
-  'Maneuver: Blindfire',
-  'You can take a Bonus Action and expend one Risk Die to gain Blindsight with a range of 30 feet until the end of the current turn.'
+  'Manobra: Fogo cego',
+  'Você pode realizar uma Ação Bônus e gastar um Dado de Risco para ganhar Visão Cega com um alcance de 30 pés até o final do turno atual.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -191,8 +191,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
-  'Maneuver: Dodge Roll',
-  'You can expend one Risk Die as a Bonus Action to move up to 15 feet and reload any Ranged weapon you are holding. This movement doesn’t provoke Opportunity Attacks and is unaffected by Difficult Terrain.'
+  'Manobra: Rolamento Evasivo',
+  'Você pode gastar um Dado de Risco como uma Ação Bônus para se mover até 15 pés e recarregar qualquer arma de longo alcance que estiver segurando. Este movimento não provoca Ataques de Oportunidade e não é afetado por Terreno Difícil.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -200,8 +200,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
-  'Maneuver: Grazing Shot',
-  'When you miss with a ranged attack roll using a weapon, you can expend one Risk Die (no action required) to deal damage to that creature equal to a roll of the die plus your Dexterity modifier (minimum of 1). This damage is the same type dealt by the weapon, and the damage can be increased only by increasing the ability modifier. You can only use this maneuver once per turn.'
+  'Manobra: Tiro Rasante',
+  'Quando você erra uma jogada de ataque à distância usando uma arma, você pode gastar um Dado de Risco (nenhuma ação necessária) para causar dano àquela criatura igual a uma jogada do dado mais seu modificador de Destreza (mínimo de 1). Este dano é do mesmo tipo causado pela arma, e o dano só pode ser aumentado aumentando o modificador de habilidade. Você só pode usar esta manobra uma vez por turno.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -209,8 +209,8 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
-  'Maneuver: Maverick Spirit',
-  'When you fail an Intelligence, Wisdom, or Charisma ability check or saving throw, you can expend one Risk Die to add it to the roll, potentially turning it into a success. You can only use this maneuver once per turn.'
+  'Manobra: Espírito Independente',
+  'Quando você falha em um teste de habilidade ou salvaguarda de Inteligência, Sabedoria ou Carisma, você pode gastar um Dado de Risco para adicioná-lo ao teste, potencialmente transformando-o em um sucesso. Você só pode usar esta manobra uma vez por turno.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -218,7 +218,7 @@ INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
-  'Maneuver: Skin of Your Teeth',
-  'When a creature you can see hits you with an attack roll, you can take a Reaction and expend one Risk Die to dodge out of harm’s way. Roll the die and add the number rolled to your AC against this attack, potentially causing it to miss.'
+  'Manobra: Por um Triz',
+  'Quando uma criatura que você pode ver atinge você com uma jogada de ataque, você pode realizar uma Reação e gastar um Dado de Risco para se esquivar e sair do caminho do perigo. Jogue o dado e some o número obtido à sua CA contra este ataque, potencialmente fazendo com que ele erre.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;

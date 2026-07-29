@@ -28,7 +28,12 @@ export class SpeciesController {
   @ApiOperation({ summary: 'List PHB species (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated species list' })
   findAll(@Query() query: SpeciesQueryDto) {
-    return this.findSpecies.execute(query.page, query.limit, query.q);
+    return this.findSpecies.execute(
+      query.page,
+      query.limit,
+      query.q,
+      query.editionSlugs,
+    );
   }
 
   @Get(':slug/traits')

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbSpell } from '../../../entities/views/v-phb-spell.entity';
 import {
+  applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
@@ -24,6 +25,7 @@ export class FindSpellsQuery {
     q?: string,
     level?: number,
     school?: string,
+    editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<SpellResponseDto>> {
     const qb = this.spellsRepo
       .createQueryBuilder('spell')
@@ -45,6 +47,7 @@ export class FindSpellsQuery {
     if (schoolSlug) {
       qb.andWhere('spell.schoolSlug = :schoolSlug', { schoolSlug });
     }
+    applyEditionSlugFilter(qb, 'spell.editionSlug', editionSlugs);
 
     const { rows, meta } = await paginateQb(qb, page, limit);
     return { data: rows.map((row) => this.mapper.toDto(row)), meta };

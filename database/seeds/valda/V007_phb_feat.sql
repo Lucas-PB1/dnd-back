@@ -6,10 +6,10 @@ INSERT INTO rpg.phb_feat (
 )
 VALUES (
   'brutal-grip',
-  'Brutal Grip',
+  'Empunhadura Brutal',
   (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'),
   FALSE,
-  'Level 4+, Strength 13+',
+  'Nível 4+, Força 13+',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -23,10 +23,10 @@ INSERT INTO rpg.phb_feat (
 )
 VALUES (
   'field-commander',
-  'Field Commander',
+  'Comandante de Campo',
   (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'),
   FALSE,
-  'Level 4+, Charisma 13+',
+  'Nível 4+, Carisma 13+',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -40,10 +40,10 @@ INSERT INTO rpg.phb_feat (
 )
 VALUES (
   'focused-critical',
-  'Focused Critical',
+  'Crítico Focado',
   (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'),
   FALSE,
-  'Level 4+',
+  'Nível 4+',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -57,10 +57,10 @@ INSERT INTO rpg.phb_feat (
 )
 VALUES (
   'iron-hero',
-  'Iron Hero',
+  'Herói de Ferro',
   (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'),
   FALSE,
-  'Level 4+',
+  'Nível 4+',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET

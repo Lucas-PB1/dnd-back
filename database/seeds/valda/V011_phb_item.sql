@@ -7,13 +7,13 @@ INSERT INTO rpg.phb_item (
 VALUES (
   'frog-prince-statuette',
   'other'::rpg.item_type,
-  'Frog Prince Statuette',
+  'Estatueta do Príncipe Sapo',
   NULL,
   NULL,
-  'While holding this clay statuette of a frog, you can speak its command word and kiss it to cast the spell Mandy’s Feral Follower, transforming the statuette into a Commoner. The commoner created by the statuette retains the memories of each time it is transformed, no matter what appearance you ascribe to it.
+  'Enquanto segura esta estatueta de argila de um sapo, você pode falar sua palavra de comando e beijá-la para lançar a magia Seguidor Feral de Mandy, transformando a estatueta em um Plebeu. O plebeu criado pela estatueta retém as memórias de cada vez que ela é transformada, não importa a aparência que você atribua a ele.
 
-Once it has been used, the statuette can’t transform again until the next dawn.',
-  '{"magic":true,"category":"Wondrous Item","rarity":"rare","rarityLabel":"Rare","requiresAttunement":false,"source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
+Depois de usada, a estatueta não poderá se transformar novamente até o próximo amanhecer.',
+  '{"magic":true,"category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,
@@ -29,15 +29,15 @@ INSERT INTO rpg.phb_item (
 VALUES (
   'leonora-s-throne-of-indolence',
   'other'::rpg.item_type,
-  'Leonora’s Throne of Indolence',
+  'Trono da Indolência de Leonora',
   NULL,
-  '100 pounds',
-  'This high-backed armchair made of oak and gold weighs 100 pounds. When you sit in it and speak its command word as a Magic action, it hovers beneath you and can fly through the air. The throne has a Fly Speed of 50 feet, can hover, and can carry up to 400 pounds. The throne stops hovering when you speak its command word again.
+  '100 libras',
+  'Esta poltrona de encosto alto feita de carvalho e ouro pesa 100 libras. Quando você se senta nele e fala sua palavra de comando como uma Ação Mágica, ele paira abaixo de você e pode voar pelo ar. O trono tem um Deslocamento de Voo de 50 pés, pode pairar e carregar até 400 libras. O trono para de pairar quando você pronuncia sua palavra de comando novamente.
 
-By speaking a second command word, you can cast Unseen Servant using the throne. The servant can conjure a spectral trumpet to announce your arrival, in addition to its usual tasks.
+Ao falar uma segunda palavra de comando, você pode lançar Servo Invisível usando o trono. O servo pode conjurar uma trombeta espectral para anunciar sua chegada, além de suas tarefas habituais.
 
-Lastly, you can speak a third command word as a Magic action to magically create up to 10 pounds of delicious food of your choice and up to four bottles of wine. Only you can partake of this meal and drink; it instantly becomes stale and sickening in another creature’s mouth. Once you have spoken this third command word, you can’t do so again until the next dawn.',
-  '{"magic":true,"category":"Wondrous item","rarity":"very-rare","rarityLabel":"Very Rare","requiresAttunement":true,"attunement":"Requires Attunement","source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
+Por último, você pode falar uma terceira palavra de comando como Ação Mágica para criar magicamente até 10 libras de comida deliciosa de sua escolha e até quatro garrafas de vinho. Só você pode participar desta refeição e beber; torna-se instantaneamente rançoso e nauseante na boca de outra criatura. Depois de ter falado esta terceira palavra de comando, você não poderá fazê-lo novamente até o próximo amanhecer.',
+  '{"magic":true,"category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"attunement":"Requer Sintonização","source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,
@@ -56,10 +56,10 @@ VALUES (
   'Memento Mori',
   NULL,
   NULL,
-  'This sealed letter, infused with Chronomancy magic, contains a written description of how the creature that reads it shall die. The letter always contains specific descriptions, such as “The red-eyed orc drove its blade through Faizon the Blue’s heart,” but may also use cryptic or vague language. It never specifies an exact time. Once a creature has read the letter, it has Advantage on Death Saving Throws, and dies only after gaining five Death Saving Throw failures, instead of three. However, when the creature arrives at the moment of its death described in the letter, it dies without making Death Saving Throws if it is reduced to 0 Hit Points.
+  'Esta carta selada, infundida com magia de Cronomancia, contém uma descrição escrita de como a criatura que a lê morrerá. A carta sempre contém descrições específicas, como “O orc de olhos vermelhos enfiou sua lâmina no coração de Faizon, o Azul”, mas também pode usar linguagem enigmática ou vaga. Nunca especifica uma hora exata. Uma vez que uma criatura tenha lido a carta, ela terá Vantagem em Salvaguardas contra a Morte e morrerá somente após obter cinco falhas no Salvaguarda contra a Morte, em vez de três. Porém, quando a criatura chega ao momento de sua morte descrito na carta, ela morre sem fazer Salvaguardas contra a Morte se for reduzida a 0 Pontos de Vida.
 
-Once a Memento Mori is opened and read, it becomes an ordinary letter. Its effects end only if the creature that read it dies and is later restored to life.',
-  '{"magic":true,"category":"Wondrous Item","rarity":"rare","rarityLabel":"Rare","requiresAttunement":false,"source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
+Depois que um Memento Mori é aberto e lido, ele se torna uma carta comum. Seus efeitos terminam apenas se a criatura que o leu morrer e mais tarde for restaurada à vida.',
+  '{"magic":true,"category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,
@@ -75,15 +75,15 @@ INSERT INTO rpg.phb_item (
 VALUES (
   'portable-cannonballs',
   'weapon'::rpg.item_type,
-  'Portable Cannonballs',
+  'Bolas de Canhão Portáteis',
   NULL,
   NULL,
-  'This bag contains twenty iron balls, each measuring one inch in diameter and weighing 1/4 of a pound. When poured out of their bag as a Utilize action, the balls function as Ball Bearings.
+  'Este saco contém vinte bolas de ferro, cada uma medindo uma polegada de diâmetro e pesando 1/4 de libra. Quando retiradas do saco como uma ação Utilizar, as bolas funcionam como rolamentos de esferas.
 
-As a Bonus Action, you can speak the command word, which causes a number of the balls that you choose to expand into full-size cannonballs weighing 10 pounds each, suitable for firing from a cannon. A creature in the path of one or more cannonballs rolling downhill must succeed on a DC 13 Dexterity saving throw or take 2d10 Bludgeoning damage and have the Prone condition if it is Large or smaller.
+Como uma Ação Bônus, você pode falar a palavra de comando, o que faz com que várias bolas que você escolher se expandam em balas de canhão de tamanho real, pesando 10 libras cada, adequadas para disparar de um canhão. Uma criatura no caminho de uma ou mais balas de canhão rolando colina abaixo deve ser bem sucedida em uma salvaguarda de Destreza CD 13 ou sofrerá 2d10 de dano Contundente e terá a condição Caído se for Grande ou menor.
 
-Each iron ball can also be used as a Sling Bullet or a Firearm Bullet. As a Bonus Action when you make an attack with an iron ball as ammunition, you can expand it in midair. On a hit, this attack deals Bludgeoning damage equal to 2d12 plus the ability modifier used for the attack roll instead of the weapon’s normal damage.',
-  '{"magic":true,"category":"Weapon (Bullet)","rarity":"uncommon","rarityLabel":"Uncommon","requiresAttunement":false,"weaponSubtype":"Bullet","source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
+Cada bola de ferro também pode ser usada como Bala de Funda ou Bala de Arma de Fogo. Como uma Ação Bônus, ao fazer um ataque com uma bola de ferro como munição, você pode expandi-la no ar. Se acertar, este ataque causa dano Contundente igual a 2d12 mais o modificador de habilidade usado para a jogada de ataque em vez do dano normal da arma.',
+  '{"magic":true,"category":"Arma (Bala)","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"weaponSubtype":"Bala","source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,
@@ -99,13 +99,13 @@ INSERT INTO rpg.phb_item (
 VALUES (
   'ring-of-barrels',
   'other'::rpg.item_type,
-  'Ring of Barrels',
+  'Anel dos Barris',
   NULL,
   NULL,
-  'This ring has 6 charges and regains 1d6 expended charges daily at dawn. While wearing the ring, you can take a Magic action and expend 1–3 charges to summon a number of empty Barrels in spaces within 5 feet of you equal to the number of charges expended. A Barrel provides Half Cover to a Medium or smaller target behind it and can be moved or set to rolling with a Utilize action. A Barrel has AC 15 and 20 HP.
+  'Este anel tem 6 cargas e recupera 1d6 cargas gastas diariamente ao amanhecer. Enquanto estiver usando o anel, você pode realizar uma Ação Mágica e gastar de 1–3 cargas para invocar um número de barris vazios em espaços a até 5 pés de você, igual ao número de cargas gastas. Um Barril fornece Meia Cobertura para um alvo Médio ou menor atrás dele e pode ser movido ou colocado em movimento com uma ação Utilizar. Um Barril tem CA 15 e 20 PV.
 
-If you summon a Barrel into a space occupied by a Medium or smaller creature, the creature must succeed on a DC 13 Dexterity saving throw to be trapped within the Barrel. It has Advantage on its saving throw unless its Speed is 0. A Medium creature trapped within a Barrel has the Restrained condition, whereas a Small or smaller creature has Total Cover from effects outside the Barrel. Bursting free of the Barrel requires a successful DC 20 Strength (Athletics) check as an action.',
-  '{"magic":true,"category":"Ring","rarity":"uncommon","rarityLabel":"Uncommon","requiresAttunement":true,"attunement":"Requires Attunement","source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
+Se você invocar um Barril em um espaço ocupado por uma criatura Média ou menor, a criatura deve ser bem sucedida em uma salvaguarda de Destreza CD 13 para ficar presa dentro do Barril. Ele tem Vantagem em sua salvaguarda, a menos que sua Velocidade seja 0. Uma criatura Média presa dentro de um Barril tem a condição Contido, enquanto uma criatura Pequena ou menor tem Cobertura Total contra efeitos fora do Barril. Libertar-se do Barril requer um teste bem sucedido de Força (Atletismo) CD 20 como uma ação.',
+  '{"magic":true,"category":"Anel","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"attunement":"Requer Sintonização","source":"valda-spire-player-pack","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:player-pack"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,

@@ -1,11 +1,11 @@
--- Seed Gunslinger pack feat benefits
+-- Seed Pistoleiro pack feat benefits
 
 INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'marksman-s-luck'),
   1,
-  'Ability Score Increase',
-  'Ability Score Increase. Increase your Dexterity score by 1, to a maximum of 20.'
+  'Aumento de Atributo',
+  'Aumento de Atributo. Aumente seu valor de Destreza em 1, até um máximo de 20.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -15,8 +15,8 @@ INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'marksman-s-luck'),
   2,
-  'Flip Die',
-  'Flip Die. Once per turn, when you roll for damage with a Ranged weapon, you can flip one of the damage dice over and use the number on the bottom. You can’t use this ability on d4s. Note that for a balanced die, the top and bottom numbers add up to one more than the die’s largest number.'
+  'Virar o Dado',
+  'Virar o Dado. Uma vez por turno, ao rolar o dano com uma arma de longo alcance, você pode virar um dos dados de dano e usar o número na parte inferior. Você não pode usar esta habilidade em d4s. Observe que, para um dado equilibrado, os números superior e inferior somam um a mais do que o maior número do dado.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -26,8 +26,8 @@ INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'marksman-s-luck'),
   3,
-  'Enhanced Critical',
-  'Enhanced Critical. When you score a Critical Hit with a Ranged weapon, the target’s Speed is 0 until the end of its next turn.'
+  'Crítico aprimorado',
+  'Crítico aprimorado. Quando você obtém um Acerto Crítico com uma arma de longo alcance, a velocidade do alvo é 0 até o final do próximo turno.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -37,8 +37,8 @@ INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'gun-mage-adept'),
   1,
-  'Ability Score Increase',
-  'Ability Score Increase. Increase your Dexterity by 1, to a maximum of 20.'
+  'Aumento de Atributo',
+  'Aumento de Atributo. Aumente sua Destreza em 1, até um máximo de 20.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -48,8 +48,8 @@ INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'gun-mage-adept'),
   2,
-  'Ranged Weapon Proficiency',
-  'Ranged Weapon Proficiency. You gain proficiency with Ranged Martial weapons.'
+  'Proficiência em Armas de Longo Alcance',
+  'Proficiência em Armas de Longo Alcance. Você ganha proficiência com armas marciais de longo alcance.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -59,8 +59,8 @@ INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'gun-mage-adept'),
   3,
-  'Cantrip',
-  'Cantrip. You learn the Finger Guns cantrip.'
+  'Truque',
+  'Truque. Você aprende o truque Pistolas de Dedo.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -70,8 +70,8 @@ INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'gun-mage-adept'),
   4,
-  'Expanded Spell List',
-  'Expanded Spell List. The following spells are added to your spell list: Antiballistics Field, Ballistic Smite, Conjure Cannonball, Conjure Cover, Jam Weapon, Jethro’s Instant Reload, and Perforating Shot.'
+  'Lista de magias expandida',
+  'Lista de magias expandida. Os seguintes magias são adicionados à sua lista de magias: Campo Antibalístico, Golpe Balístico, Conjurar Bala de Canhão, Conjurar Cobertura, Emperrar Arma, Recarga Instantânea de Jethro e Tiro Perfurante.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -81,8 +81,8 @@ INSERT INTO rpg.phb_feat_benefit (feat_id, sort_order, name, description)
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'gun-mage-adept'),
   5,
-  'Spells Prepared',
-  'Spells Prepared. Choose a number of spells equal to your Proficiency Bonus from among those in the Expanded Spell List benefit. You always have these spells prepared. Whenever you gain a new level, you can replace one of these spells with a different spell from the Expanded Spell List.'
+  'Magias Preparadas',
+  'Magias Preparadas. Escolha um número de magias igual ao seu Bônus de Proficiência dentre aqueles no benefício Lista Expandida de Magias. Você sempre tem esses magias preparadas. Sempre que você ganha um novo nível, você pode substituir um desses magias por uma magia diferente da Lista Expandida de Magias.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,

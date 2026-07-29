@@ -128,12 +128,23 @@ export class UpdateCharacterHandler {
       });
     }
 
+    // Expertise/weapon mastery patches often omit skills/feats already on the sheet.
+    // Validation still needs those sources or proficient checks fail (e.g. level-up).
+    const needsProficiencyContext = sheetInput.classOptions !== undefined;
+    const injectFeatOptions =
+      (shouldResyncSpells || needsProficiencyContext) &&
+      sheetInput.featOptions === undefined;
+    const injectSpeciesChoices =
+      (shouldResyncSpells || needsProficiencyContext) &&
+      sheetInput.speciesChoices === undefined;
+
     const validationInput: CharacterSheetInput = {
       ...sheetInput,
-      ...(shouldResyncSpells && sheetInput.featOptions === undefined
-        ? { featOptions: effectiveFeatOptions }
+      ...(needsProficiencyContext && sheetInput.classSkillSlugs === undefined
+        ? { classSkillSlugs: sheetSnapshot.classSkillSlugs }
         : {}),
-      ...(shouldResyncSpells && sheetInput.speciesChoices === undefined
+      ...(injectFeatOptions ? { featOptions: effectiveFeatOptions } : {}),
+      ...(injectSpeciesChoices
         ? { speciesChoices: effectiveSpeciesChoices }
         : {}),
     };

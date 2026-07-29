@@ -6,8 +6,8 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
-  'Darkvision',
-  'Darkvision. You have Darkvision with a range of 60 feet.',
+  'Visão no escuro',
+  'Visão no escuro. Você tem Visão no Escuro com alcance de 60 pés.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -18,8 +18,8 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
-  'Construct Nature',
-  'Construct Nature. You don’t need food, drink, or air. You don’t need to sleep, and magic can’t put you to sleep. You can finish a Long Rest in 4 hours if you spend those hours in a motionless state, during which you retain consciousness.',
+  'Construir a Natureza',
+  'Construa a Natureza. Você não precisa de comida, bebida ou ar. Você não precisa dormir, e a magia não pode fazer você dormir. Você pode terminar um Descanso Longo em 4 horas se passar essas horas em um estado imóvel, durante o qual mantém a consciência.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -30,8 +30,8 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
-  'Handcrafted Quality',
-  'Handcrafted Quality. Your design might be unnerving, articulated, or friendly. You have proficiency in the Intimidation, Performance, or Persuasion skill.',
+  'Qualidade artesanal',
+  'Qualidade artesanal. Seu design pode ser enervante, articulado ou amigável. Você tem proficiência nas perícias Intimidação, Atuação ou Persuasão.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -42,14 +42,14 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
-  'Gepettin Construction',
-  'Gepettin Construction. For simplicity, geppettin are classified by their materials: bisque are porcelain, marionettes are wood, and plushies are made of fabric. Choose one of the following constructions.
+  'Gepettin Construções',
+  'Construção Gepettin. Para simplificar, os geppettin são classificados por seus materiais: bisque são de porcelana, marionetes são de madeira e peluches são feitos de tecido. Escolha uma das seguintes construções.
 
-Bisque. You are indistinguishable from a porcelain doll until the moment you strike. Whenever you deal damage to a creature with a weapon attack roll on your first turn in combat, the creature takes extra damage equal to your Proficiency Bonus. The damage is the same type dealt by the weapon.
+Bisque. Você é indistinguível de uma boneca de porcelana até o momento em que ataca. Sempre que você causa dano a uma criatura com uma jogada de ataque com arma em seu primeiro turno de combate, a criatura sofre dano extra igual ao seu Bônus de Proficiência. O dano é do mesmo tipo causado pela arma.
 
-Marionette. Loose strings hang from your jointed limbs. During your turn, your reach is 5 feet greater with any Melee weapon that lacks the Reach, Two-Handed, and Versatile properties.
+Marionete. Cordas soltas pendem de seus membros articulados. Durante o seu turno, seu alcance é 5 pés maior com qualquer arma corpo a corpo que não tenha as propriedades Alcance, Duas Mãos e Versátil.
 
-Plushie. You are stuffed with fluff. When you take Bludgeoning damage, you can take a Reaction to gain Resistance to the triggering damage. You are also knocked 5 feet away from the source of the damage. You can’t take this Reaction if you can’t be knocked away from the source of the damage.',
+Pelúcia. Você está cheio de penugem. Ao sofrer dano Contundente, você pode realizar uma Reação para ganhar Resistência ao dano desencadeado. Você também é derrubado a 5 pés da fonte do dano. Você não pode realizar esta Reação se não puder ser afastado da fonte do dano.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -61,7 +61,7 @@ INSERT INTO rpg.phb_species_trait (
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
   'Bisques',
-  'Bisque geppettin are a form of porcelain doll, crafted with exacting specification and luxurious clothing materials. Though they are designed to look as realistic as possible, they are often the most terrifying geppettin due to their lifeless visages.',
+  'Bisque geppettin é uma forma de boneca de porcelana, feita com especificações exatas e materiais de roupas luxuosos. Embora sejam projetados para parecerem o mais realistas possível, eles costumam ser os geppettin mais aterrorizantes devido ao seu rosto sem vida.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -72,8 +72,8 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
-  'Marionettes',
-  'Marionette geppettin are made mostly out of wood, with painted faces and carved clothing. Due to their construction, their jointed limbs are quite flexible, and they are known to be fantastic dancers. The very largest marionettes, called mannequins, stand as tall as a human and bear completely blank, expressionless faces.',
+  'Marionetas',
+  'Os marionetes geppettin são feitos principalmente de madeira, com rostos pintados e roupas esculpidas. Devido à sua construção, seus membros articulados são bastante flexíveis e são conhecidos por serem dançarinos fantásticos. As maiores marionetes, chamadas manequins, são tão altas quanto um ser humano e apresentam rostos completamente vazios e inexpressivos.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -84,8 +84,8 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'geppettin'),
-  'Plushies',
-  'Plushies, also called raggedies, are any form of stuffed or soft geppettin. Though they often look Humanoid, they may also look like animals, monsters, or any other anthropomorphic creature.',
+  'Peluches',
+  'Peluches, também chamados de trapos, são qualquer forma de geppettin recheado ou macio. Embora muitas vezes pareçam Humanoide, eles também podem se parecer com animais, monstros ou qualquer outra criatura antropomórfica.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -96,8 +96,8 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'mandrake'),
-  'Plant Nature',
-  'Plant Nature. As long as you are in direct sunlight for at least 4 hours a day, you don’t need to eat. Additionally, you can breathe through your leaves and you can absorb water and nutrients through your feet.',
+  'Natureza vegetal',
+  'Natureza Vegetal. Contanto que você esteja exposto à luz solar direta por pelo menos 4 horas por dia, você não precisa comer. Além disso, você pode respirar pelas folhas e absorver água e nutrientes pelos pés.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -108,8 +108,8 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'mandrake'),
-  'Natural Connection',
-  'Natural Connection. You have proficiency in the Nature or Survival skill.',
+  'Conexão Natural',
+  'Conexão Natural. Você tem proficiência na perícia Natureza ou Sobrevivência.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -120,10 +120,10 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'mandrake'),
-  'Root Magic',
-  'Root Magic. You know the Shillelagh cantrip and can target yourself with the spell, treating one of your limbs as a Club for the duration of the spell.
+  'Magia Raiz',
+  'Magia Raiz. Você conhece o truque Shillelagh e pode usar a magia como alvo, tratando um de seus membros como uma clava durante a duração da magia.
 
-When you reach character level 3, you always have Goodberry prepared, and when you reach character level 5, you always have Barkskin prepared. You can cast each of these spells without a spell slot. Once you cast either spell in this way, you can’t cast that spell in this way again until you finish a Long Rest. You can also cast these spells using spell slots you have of the appropriate level. Intelligence, Wisdom, or Charisma is your spellcasting ability for the spells you cast with this trait (choose the ability when you select this species).',
+Quando você atinge o nível de personagem 3, você sempre tem Goodberry preparado, e quando você atinge o nível de personagem 5, você sempre tem Barkskin preparado. Você pode lançar cada uma dessas magias sem um espaço de magia. Depois de conjurar qualquer magia dessa forma, você não poderá lançá-la dessa forma novamente até terminar um Descanso Longo. Você também pode lançar esses magias usando espaços de magia do nível apropriado. Inteligência, Sabedoria ou Carisma é sua habilidade de conjuração para as magias que você conjurou com esta característica (escolha a habilidade ao selecionar esta espécie).',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET
@@ -134,18 +134,18 @@ INSERT INTO rpg.phb_species_trait (
 )
 VALUES (
   (SELECT id FROM rpg.phb_species WHERE slug = 'mandrake'),
-  'Entangling Vines',
-  'Entangling Vines. You can take a Bonus Action to cause grasping weeds and vines to sprout up from the ground around a Large or smaller creature you can see within 30 feet of yourself. Until the end of the creature’s next turn, its Speed is 0 and can’t increase. This effect ends early if the creature replaces one of its attacks with with freeing itself. You can use this Bonus Action a number of times equal to your Proficiency Bonus and you regain all expended uses when you finish a Long Rest.
+  'Vinhas Enredadas',
+  'Enredando Vinhas. Você pode usar uma Ação Bônus para fazer com que ervas daninhas e trepadeiras brotem do solo ao redor de uma criatura grande ou menor que você possa ver a até 30 pés de você. Até o final do próximo turno da criatura, sua Velocidade é 0 e não pode aumentar. Este efeito termina mais cedo se a criatura substituir um de seus ataques por se libertar. Você pode usar este Ação Bônus um número de vezes igual ao seu Bônus de Proficiência e recuperar todos os usos gastos ao terminar um Descanso Longo.
 
-When you reach character level 3, your Entangling Vines gain an additional effect based on the season in which you were harvested (choose when you select this species):
+Quando você atinge o nível 3 do personagem, suas Vinhas Enredantes ganham um efeito adicional com base na estação em que você foi colhida (escolha quando selecionar esta espécie):
 
-Spring. Your Entangling Vines can target an airborne creature within 30 feet of the ground, which is pulled safely to the ground when you use this trait.
+Primavera. Suas Vinhas Enredantes podem atingir uma criatura aérea a até 30 pés do solo, que é puxada com segurança para o solo quando você usa esta característica.
 
-Summer. Your Entangling Vines can move the target up to 10 feet to an unoccupied space on the ground or floor.
+Verão. Suas vinhas enredadas podem mover o alvo até 10 pés para um espaço desocupado no chão ou no chão.
 
-Autumn. Your Entangling Vines can affect a second creature within 5 feet of the first target.
+Outono. Suas Vinhas Enredantes podem afetar uma segunda criatura a até 5 pés do primeiro alvo.
 
-Winter. The target takes Cold damage equal to your Proficiency Bonus.',
+Inverno. O alvo sofre dano Gélido igual ao seu Bônus de Proficiência.',
   NULL
 )
 ON CONFLICT (species_id, name) DO UPDATE SET

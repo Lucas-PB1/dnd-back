@@ -41,7 +41,12 @@ export class ClassesController {
   @ApiOperation({ summary: 'List PHB classes (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated class list' })
   findAll(@Query() query: ClassesQueryDto) {
-    return this.findClasses.execute(query.page, query.limit, query.q);
+    return this.findClasses.execute(
+      query.page,
+      query.limit,
+      query.q,
+      query.editionSlugs,
+    );
   }
 
   @Get(':slug/subclasses')
@@ -50,7 +55,12 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated subclass list' })
   @ApiNotFoundResponse({ description: 'Class not found' })
   findSubclasses(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findClassSubclasses.execute(slug, query.page, query.limit);
+    return this.findClassSubclasses.execute(
+      slug,
+      query.page,
+      query.limit,
+      query.editionSlugs,
+    );
   }
 
   @Get(':slug/spells')

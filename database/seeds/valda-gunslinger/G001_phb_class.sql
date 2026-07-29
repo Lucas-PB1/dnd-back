@@ -1,4 +1,4 @@
--- Seed Valda Gunslinger class
+-- Seed Valda Pistoleiro class
 -- Gerado de docs/sources/valda-gunslinger/extracted.json
 
 INSERT INTO rpg.phb_class (
@@ -12,37 +12,37 @@ INSERT INTO rpg.phb_class (
 )
 VALUES (
   'gunslinger',
-  'Gunslinger',
-  '## Guts and Gunpowder',
-  'Risk is in a Gunslinger’s blood. They are bold renegades, bucking tradition and forging a new path with dangerous and inelegant firearms. Gunslingers are infamous for surviving by their wits and relying on split-second timing and a considerable amount of luck to survive.',
-  'Risk is in a Gunslinger’s blood. They are bold renegades, bucking tradition and forging a new path with dangerous and inelegant firearms. Gunslingers are infamous for surviving by their wits and relying on split-second timing and a considerable amount of luck to survive.
+  'Pistoleiro',
+  '## Tripas e Pólvora',
+  'O risco está no sangue de um Pistoleiro. Eles são renegados ousados, contrariando a tradição e abrindo um novo caminho com armas de fogo perigosas e deselegantes. Os pistoleiros são famosos por sobreviverem com sua inteligência e por dependerem de uma fração de segundo e de uma quantidade considerável de sorte para sobreviver.',
+  'O risco está no sangue de um Pistoleiro. Eles são renegados ousados, contrariando a tradição e abrindo um novo caminho com armas de fogo perigosas e deselegantes. Os pistoleiros são famosos por sobreviverem com sua inteligência e por dependerem de uma fração de segundo e de uma quantidade considerável de sorte para sobreviver.
 
-## Guts and Gunpowder
+## Tripas e Pólvora
 
-Black powder isn’t for the faint of heart. Its thunderous applause is volatile and imprecise—a barely controlled explosion directed at an enemy. Only the truly fearless seek to master it. But Gunslingers have nerves of steel, hurling death from their guns in a roaring cacophony. Adapted for shootouts, gunslingers are mobile and daring, knowing that life or death hangs on snap decision-making and one’s own mettle.
+A pólvora negra não é para os fracos de coração. Seus aplausos estrondosos são voláteis e imprecisos – uma explosão mal controlada dirigida a um inimigo. Somente os verdadeiramente destemidos procuram dominá-lo. Mas os Pistoleiros têm nervos de aço, lançando a morte com suas armas em uma cacofonia estrondosa. Adaptados para tiroteios, os pistoleiros são móveis e ousados, sabendo que a vida ou a morte depende da tomada de decisões instantâneas e da própria coragem.
 
-## Dangerous Outsiders
+## Forasteiros Perigosos
 
-A Gunslinger’s explosive lifestyle lends well to wandering and adventuring. Gunslingers often shoot first and ask questions later, an attitude which earns them few friends and bountiful enemies. In their travels, most gunslingers are secretive and take great lengths to go unnoticed, lest they be spotted by old foes with scores to settle.
+O estilo de vida explosivo de um Pistoleiro é propício para perambulações e aventuras. Os pistoleiros muitas vezes atiram primeiro e perguntam depois, uma atitude que lhes rende poucos amigos e numerosos inimigos. Em suas viagens, a maioria dos pistoleiros são reservados e fazem de tudo para passar despercebidos, para não serem avistados por velhos inimigos com contas a acertar.
 
-## Core Traits
+## Características principais
 
-Dexterity
+Destreza
 
-Hit Point Die
-D8 per Gunslinger level
+Dado de Vida
+D8 por nível de Pistoleiro
 
-Saving Throw Proficiencies
-Dexterity and Charisma
+Proficiências em salvaguardas
+Destreza e Carisma
 
-Choose 2: Acrobatics, Animal Handling, Athletics, Deception, Insight, Intimidation, Perception, Persuasion, Sleight of Hand, and Stealth
+Escolha 2: Acrobacia, Manejo de Animais, Atletismo, Enganação, Intuição, Intimidação, Percepção, Persuasão, Prestidigitação e Furtividade
 
-Simple weapons and Martial Ranged weapons
+Armas simples e armas marciais de longo alcance
 
-Light armor
+Armadura leve
 
-Choose A or B: (A) Leather Armor, 2 Daggers, Revolver, 50 Bullets, Explorer’s Pack, and 11 GP; or (B) 175 GP',
-  'Dexterity',
+Escolha A ou B: (A) Armadura de Couro, 2 Adagas, Revólver, 50 Balas, Kit de Aventureiro e 11 PO; ou (B) 175 PO',
+  'Destreza',
   NULL,
   (SELECT id FROM rpg.phb_hit_die WHERE slug = 'd8'),
   8,
@@ -50,7 +50,7 @@ Choose A or B: (A) Leather Armor, 2 Daggers, Revolver, 50 Bullets, Explorer’s 
   1,
   TRUE,
   3,
-  'Creed',
+  'Credo',
   2,
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger'),

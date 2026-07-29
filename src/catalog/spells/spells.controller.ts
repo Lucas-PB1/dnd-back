@@ -29,6 +29,7 @@ export class SpellsController {
       query.q,
       query.level,
       query.school,
+      query.editionSlugs,
     );
   }
 

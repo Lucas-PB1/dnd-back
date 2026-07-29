@@ -32,7 +32,12 @@ export class BackgroundsController {
   @ApiOperation({ summary: 'List PHB backgrounds (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated backgrounds list' })
   findAll(@Query() query: BackgroundsQueryDto) {
-    return this.findBackgrounds.execute(query.page, query.limit, query.q);
+    return this.findBackgrounds.execute(
+      query.page,
+      query.limit,
+      query.q,
+      query.editionSlugs,
+    );
   }
 
   @Get(':slug/equipment')

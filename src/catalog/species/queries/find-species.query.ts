@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { PhbSpecies } from '../../../entities/phb-species.entity';
 import {
   applyIlikeSearch,
+  DEFAULT_PHB_EDITION_SLUG,
   PaginatedResponseDto,
   paginateQb,
 } from '../../../common/dto/pagination.dto';
@@ -22,6 +23,7 @@ export class FindSpeciesQuery {
     page = 1,
     limit = 20,
     q?: string,
+    editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<SpeciesResponseDto>> {
     const qb = this.speciesRepo
       .createQueryBuilder('species')
@@ -35,6 +37,17 @@ export class FindSpeciesQuery {
       'species.creatureType',
       'species.size',
     ], q);
+
+    const slugs = editionSlugs?.map((slug) => slug.trim()).filter(Boolean);
+    if (slugs?.length) {
+      qb.andWhere(
+        `COALESCE(species.source_meta->>'editionSlug', :defaultEdition) IN (:...editionSlugs)`,
+        {
+          defaultEdition: DEFAULT_PHB_EDITION_SLUG,
+          editionSlugs: slugs,
+        },
+      );
+    }
 
     const { rows, meta } = await paginateQb(qb, page, limit);
     return { data: rows.map((row) => this.mapper.toDto(row)), meta };

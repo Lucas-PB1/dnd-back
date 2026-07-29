@@ -7,8 +7,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'brutal-grip'),
   1,
-  'Ability Score Increase',
-  'Ability Score Increase. Increase your Strength score by 1, to a maximum of 20.'
+  'Aumento de Atributo',
+  'Aumento de Atributo. Aumente seu valor de Força em 1, até um máximo de 20.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -20,8 +20,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'brutal-grip'),
   2,
-  'Heavy Duelist',
-  'Heavy Duelist. You can wield a Melee weapon with the Two-Handed property in one hand.'
+  'Duelista Pesado',
+  'Duelista Pesado. Você pode empunhar uma arma corpo a corpo com a propriedade Duas mãos em uma mão.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -33,8 +33,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'brutal-grip'),
   3,
-  'Versatile Dual Wielder',
-  'Versatile Dual Wielder. While wielding a Melee weapon with the Versatile property in one hand, the weapon has the Light property for you.'
+  'Portador Duplo Versátil',
+  'Portador duplo versátil. Ao empunhar uma arma corpo a corpo com a propriedade Versátil em uma mão, a arma tem a propriedade Leve para você.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -46,8 +46,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'field-commander'),
   1,
-  'Ability Score Increase',
-  'Ability Score Increase. Increase your Charisma score by 1, to a maximum of 20.'
+  'Aumento de Atributo',
+  'Aumento de Atributo. Aumente seu valor de Carisma em 1, até um máximo de 20.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -59,8 +59,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'field-commander'),
   2,
-  'Command',
-  'Command. As an action, you can issue a command to an ally within 60 feet that can hear you. It can immediately take an action as a Reaction. That action can be used to take only the Attack (one attack only), Dash, Dodge, Hide, Influence, Search, Study, or Utilize action.'
+  'Comando',
+  'Comando. Como uma ação, você pode emitir um comando para um aliado a até 60 pés que possa ouvi-lo. Ele pode realizar imediatamente uma ação como uma reação. Essa ação pode ser usada para realizar apenas as ações de Ataque (apenas um ataque), Correr, Esquivar, Esconder-se, Influenciar, Procurar, Estudar ou Utilizar.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -72,8 +72,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'field-commander'),
   3,
-  'Tight Formation',
-  'Tight Formation. While you are within 5 feet of two or more allies that don’t have the Incapacitated condition, enemies can’t have Advantage on attack rolls against you.'
+  'Formação Apertada',
+  'Formação apertada. Enquanto você estiver a 5 pés de dois ou mais aliados que não tenham a condição Incapacitado, os inimigos não poderão ter Vantagem nas jogadas de ataque contra você.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -85,8 +85,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'focused-critical'),
   1,
-  'Ability Score Increase',
-  'Ability Score Increase. Increase your Strength or Dexterity score by 1, to a maximum of 20.'
+  'Aumento de Atributo',
+  'Aumento de Atributo. Aumente seu valor de Força ou Destreza em 1, até um máximo de 20.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -98,8 +98,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'focused-critical'),
   2,
-  'Improved Critical',
-  'Improved Critical. Your attack rolls with weapons and Unarmed Strikes can score a Critical Hit on a roll of 19 or 20 on the d20.'
+  'Crítico aprimorado',
+  'Crítico aprimorado. Suas jogadas de ataque com armas e Ataque Desarmados podem obter um Acerto Crítico em uma jogada de 19 ou 20 no d20.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -111,8 +111,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'iron-hero'),
   1,
-  'Ability Score Increase',
-  'Ability Score Increase. Increase your Strength or Dexterity score by 1, to a maximum of 20.'
+  'Aumento de Atributo',
+  'Aumento de Atributo. Aumente seu valor de Força ou Destreza em 1, até um máximo de 20.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -124,8 +124,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'iron-hero'),
   2,
-  'Underdog’s Resolve',
-  'Underdog’s Resolve. When you are attacked by a creature that has a CR higher than your level, you gain a +2 bonus to your Armor Class for that attack.'
+  'A determinação do azarão',
+  'A resolução do azarão. Quando você é atacado por uma criatura que possui um ND maior que o seu nível, você ganha +2 de bônus em seu Classe de Armadura por esse ataque.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -137,8 +137,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'iron-hero'),
   3,
-  'Vengeful Strike',
-  'Vengeful Strike. You have Advantage on attack rolls against any creature that has reduced one of your allies to 0 Hit Points since the end of your last turn.'
+  'Ataque Vingativo',
+  'Golpe Vingativo. Você tem Vantagem nas jogadas de ataque contra qualquer criatura que tenha reduzido um de seus aliados a 0 Pontos de Vida desde o final do seu último turno.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,
@@ -150,8 +150,8 @@ INSERT INTO rpg.phb_feat_benefit (
 VALUES (
   (SELECT id FROM rpg.phb_feat WHERE slug = 'iron-hero'),
   4,
-  'Heroic Intervention',
-  'Heroic Intervention. When an enemy you can see takes a Legendary Action, you can take a Reaction to intercede, preventing the Legendary Action from happening. You can take this Reaction a number of times equal to your Proficiency Bonus and regain all expended uses when you finish a Long Rest.'
+  'Intervenção Heroica',
+  'Intervenção Heroica. Quando um inimigo que você pode ver realiza uma Ação Lendária, você pode realizar uma Reação para interceder, evitando que a Ação Lendária aconteça. Você pode realizar esta Reação um número de vezes igual ao seu Bônus de Proficiência e recuperar todos os usos gastos ao terminar um Descanso Longo.'
 )
 ON CONFLICT (feat_id, sort_order) DO UPDATE SET
   name = EXCLUDED.name,

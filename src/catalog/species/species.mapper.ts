@@ -2,9 +2,19 @@ import { Injectable } from '@nestjs/common';
 import { PhbSpecies } from '../../entities/phb-species.entity';
 import { PhbSpeciesTrait } from '../../entities/phb-species-trait.entity';
 import { VPhbSpeciesTraitChoices } from '../../entities/views/v-phb-species-trait-choices.entity';
+import { DEFAULT_PHB_EDITION_SLUG } from '../../common/dto/pagination.dto';
 import { SpeciesResponseDto } from './dto/species-response.dto';
 import { SpeciesTraitResponseDto } from './dto/species-trait-response.dto';
 import { SpeciesTraitChoiceResponseDto } from './dto/species-trait-choice-response.dto';
+
+function editionSlugFromSourceMeta(
+  sourceMeta: Record<string, unknown> | null,
+): string {
+  const raw = sourceMeta?.editionSlug;
+  return typeof raw === 'string' && raw.trim()
+    ? raw.trim()
+    : DEFAULT_PHB_EDITION_SLUG;
+}
 
 @Injectable()
 export class SpeciesMapper {
@@ -18,6 +28,7 @@ export class SpeciesMapper {
       size: row.size,
       speed: row.speed,
       description: row.description,
+      editionSlug: editionSlugFromSourceMeta(row.sourceMeta),
     };
   }
 

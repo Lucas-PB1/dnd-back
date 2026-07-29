@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbBackground } from '../../../entities/views/v-phb-background.entity';
 import {
+  applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
@@ -22,6 +23,7 @@ export class FindBackgroundsQuery {
     page = 1,
     limit = 20,
     q?: string,
+    editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<BackgroundResponseDto>> {
     const qb = this.backgroundsRepo
       .createQueryBuilder('background')
@@ -33,6 +35,7 @@ export class FindBackgroundsQuery {
       'background.tagline',
       'background.summary',
     ], q);
+    applyEditionSlugFilter(qb, 'background.editionSlug', editionSlugs);
 
     const { rows, meta } = await paginateQb(qb, page, limit);
     return { data: rows.map((row) => this.mapper.toDto(row)), meta };

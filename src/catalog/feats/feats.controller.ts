@@ -32,6 +32,7 @@ export class FeatsController {
       query.limit,
       query.q,
       query.category,
+      query.editionSlugs,
     );
   }
 

@@ -1,4 +1,4 @@
--- Seed Gunslinger pack spells
+-- Seed Pistoleiro pack spells
 
 INSERT INTO rpg.phb_spell (
   slug, name, level, level_label, school_id,
@@ -9,21 +9,21 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'antiballistics-field',
-  'Antiballistics Field',
+  'Campo Antibalístico',
   6,
-  'Level 6',
+  '6º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'abjuracao'),
-  'Action',
-  'Self',
+  'Ação',
+  'Pessoal',
   true,
   true,
   true,
-  'a pinch of wet gunpowder',
-  'V, S, M (a pinch of wet gunpowder)',
-  'Concentration, up to 10 minutes',
+  'uma pitada de pólvora molhada',
+  'V, S, M (uma pitada de pólvora úmida)',
+  'Concentração, até 10 minutos',
   true,
   false,
-  'A 40-foot Emanation extends from you, disrupting projectiles and causing Ranged weapons to malfunction. Within the Emanation, whenever a Ranged weapon is used for an attack, the weapon immediately malfunctions and the attack is lost. A malfunctioning weapon can’t be used to make an attack until a creature takes the Utilize action to fix the weapon malfunction. Ranged attacks using weapons whose projectiles pass through the Emanation have Disadvantage and deal only half damage on a hit.',
+  'Uma Emanação de 40 pés se estende de você, destruindo projéteis e causando mau funcionamento de armas de longo alcance. Dentro da Emanação, sempre que uma arma de longo alcance é usada para um ataque, a arma imediatamente funciona mal e o ataque é perdido. Uma arma com defeito não pode ser usada para realizar um ataque até que uma criatura execute a ação Utilizar para consertar o mau funcionamento da arma. Ataques à distância usando armas cujos projéteis passam pela Emanação têm Desvantagem e causam apenas metade do dano ao acertar.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
@@ -55,22 +55,22 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'ballistic-smite',
-  'Ballistic Smite',
+  'Golpe Balístico',
   1,
-  'Level 1',
+  '1º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'),
-  'Bonus Action, which you take immediately after hitting a creature with a Ranged weapon',
-  'Self',
+  'Ação Bônus, que você pega imediatamente após acertar uma criatura com uma arma de longo alcance',
+  'Pessoal',
   true,
   false,
   false,
   NULL,
   'V',
-  'Instantaneous',
+  'Instantânea',
   false,
   false,
-  'Choose Acid, Cold, Fire, Lightning, Poison, or Thunder damage. The target hit by the attack takes an extra 2d6 damage of the chosen type. The triggering attack can deal the chosen damage type or its normal damage type (your choice).',
-  'Using a Higher-Level Spell Slot. The damage increases by 1d6 for each spell slot level above 1.',
+  'Escolha o dano Ácido, Gélido, Ígneo, Elétrico, Venenoso ou Trovejante. O alvo atingido pelo ataque sofre 2d6 de dano extra do tipo escolhido. O ataque desencadeador pode causar o tipo de dano escolhido ou o tipo de dano normal (sua escolha).',
+  'Usando um Espaço de Magia de Círculo Superior. O dano aumenta em 1d6 para cada nível de espaço de magia acima de 1.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -101,21 +101,21 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'concealed-shot',
-  'Concealed Shot',
+  'Tiro Oculto',
   0,
-  'Cantrip',
+  'Truque',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'ilusao'),
-  'Action',
-  'Touch',
+  'Ação',
+  'Toque',
   false,
   true,
   true,
-  'a Ranged weapon',
-  'S, M (a Ranged weapon)',
-  '1 minute',
+  'uma arma de longo alcance',
+  'S, M (uma arma de longo alcance)',
+  '1 minuto',
   false,
   false,
-  'A Ranged weapon you touch is made supernaturally subtle. For the duration, when you make a ranged attack using the weapon, the weapon or ammunition you’re using becomes invisible while in flight and the weapon becomes silent. If the weapon produces smoke or light, the spell suppresses these effects. The weapon or projectile you’re using becomes visible again after the attack hits or misses. If you are hidden and the target is 80 feet or further from you, the attack doesn’t reveal your location.',
+  'Uma arma de longo alcance que você toca torna-se sobrenaturalmente sutil. Enquanto você faz um ataque à distância usando a arma, a arma ou munição que você está usando fica invisível durante o vôo e a arma fica silenciosa. Se a arma produzir fumaça ou luz, a magia suprime esses efeitos. A arma ou projétil que você está usando fica visível novamente após o ataque acertar ou errar. Se você estiver escondido e o alvo estiver a 80 pés ou mais de você, o ataque não revelará sua localização.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
@@ -147,22 +147,22 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'conjure-cannonball',
-  'Conjure Cannonball',
+  'Conjurar Bola de Canhão',
   3,
-  'Level 3',
+  '3º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'),
-  'Action',
-  '600 feet',
+  'Ação',
+  '600 pés',
   true,
   true,
   true,
-  'a small replica cannon',
-  'V, S, M (a small replica cannon)',
-  'Instantaneous',
+  'uma pequena réplica de canhão',
+  'V, S, M (uma pequena réplica de canhão)',
+  'Instantânea',
   false,
   false,
-  'You summon a cannonball, mid-flight and at full velocity, which explodes on impact. Make a ranged spell attack roll against a target you can see within range. On a hit, the target takes 5d10 Bludgeoning damage and an explosion extends from it in a 5-foot Emanation. Each creature other than the target within the Emanation makes a Dexterity saving throw, taking half as much damage as the target on a failed save.',
-  'Using a Higher-Level Spell Slot. The damage increases by 1d10 for each slot level above 3.',
+  'Você invoca uma bala de canhão, no meio do vôo e a toda velocidade, que explode com o impacto. Faça uma jogada de ataque mágico à distância contra um alvo que você possa ver dentro do alcance. Se acertar, o alvo sofre 5d10 de dano Contundente e uma explosão se estende dele em uma Emanação de 5 pés. Cada criatura que não seja o alvo dentro da Emanação faz uma salvaguarda de Destreza, sofrendo metade do dano que o alvo em caso de falha na resistência.',
+  'Usando um Espaço de Magia de Círculo Superior. O dano aumenta em 1d10 para cada nível de espaço acima de 3.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -193,25 +193,25 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'conjure-cover',
-  'Conjure Cover',
+  'Conjurar Cobertura',
   1,
-  'Level 1',
+  '1º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'),
-  'Bonus Action',
-  '10 feet',
+  'Ação Bônus',
+  '10 pés',
   true,
   true,
   true,
-  'a duck figurine',
-  'V, S, M (a duck figurine)',
-  'Concentration, up to 1 hour',
+  'uma estatueta de pato',
+  'V, S, M (uma estatueta de pato)',
+  'Concentração, até 1 hora',
   true,
   false,
-  'You conjure a low cobblestone wall along the ground at a point you can see within range. The wall is 18 inches thick and is composed of three 5-foot-long, 3-foot-high segments. Each segment must be contiguous with at least one other segment.
+  'Você conjura uma parede baixa de paralelepípedos ao longo do chão em um ponto que você possa ver dentro do alcance. A parede tem 18 polegadas de espessura e é composta por três segmentos de 5 pés de comprimento e 3 pés de altura. Cada segmento deve ser contíguo a pelo menos um outro segmento.
 
-A Medium creature that hunkers behind the wall has Half Cover, and a Small creature that hunkers behind it has Three-Quarters Cover. The wall can be leapt over without spending any additional movement.
+Uma criatura Média que se esconde atrás da parede tem Meia Cobertura, e uma criatura Pequena que se esconde atrás dela tem Três Quartos de Cobertura. A parede pode ser saltada sem gastar nenhum movimento adicional.
 
-Each segment has AC 10 and 30 hit points. Reducing a segment of the wall to 0 hit points causes it to crumble, destroying it. The wall disappears when all the segments are destroyed or the spell ends.',
+Cada segmento tem CA 10 e 30 pontos de vida. Reduzir um segmento da parede a 0 pontos de vida faz com que ela desmorone, destruindo-a. A parede desaparece quando todos os segmentos são destruídos ou a magia termina.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
@@ -243,21 +243,21 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'jam-weapon',
-  'Jam Weapon',
+  'Emperrar Arma',
   2,
-  'Level 2',
+  '2º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'transmutacao'),
-  'Reaction, which you take when a creature you can see within range makes an attack using a Ranged weapon',
-  '60 feet',
+  'Reação, que você executa quando uma criatura que você pode ver dentro do alcance faz um ataque usando uma arma de longo alcance',
+  '60 pés',
   true,
   true,
   true,
-  'a pinch of wet gunpowder',
-  'V, S, M (a pinch of wet gunpowder)',
-  'Instantaneous',
+  'uma pitada de pólvora molhada',
+  'V, S, M (uma pitada de pólvora úmida)',
+  'Instantânea',
   false,
   false,
-  'The weapon you target suffers a malfunction and the attack fails. A malfunctioning weapon can’t be used to make an attack until a creature takes the Utilize action to fix the weapon malfunction.',
+  'A arma que você mira sofre um mau funcionamento e o ataque falha. Uma arma com defeito não pode ser usada para realizar um ataque até que uma criatura execute a ação Utilizar para consertar o mau funcionamento da arma.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
@@ -289,21 +289,21 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'jethro-s-instant-reload',
-  'Jethro’s Instant Reload',
+  'Recarga Instantânea de Jethro',
   2,
-  'Level 2',
+  '2º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'invocacao'),
-  'Action',
-  'Touch',
+  'Ação',
+  'Toque',
   true,
   true,
   true,
-  'a spent bullet casing',
-  'V, S, M (a spent bullet casing)',
-  '8 hours',
+  'um invólucro de bala gasto',
+  'V, S, M (um invólucro de bala gasto)',
+  '8 horas',
   false,
   false,
-  'One Ranged weapon you touch becomes enchanted to reload itself automatically. If the weapon has the Loading or Reload property, you ignore the property for the duration. When the weapon’s ammunition is depleted, ammunition you are carrying teleports into the weapon.',
+  'Uma arma de longo alcance que você toca fica encantada para recarregar automaticamente. Se a arma tiver a propriedade Carregando ou Recarregar, você ignora a propriedade enquanto durar. Quando a munição da arma acaba, a munição que você carrega se teletransporta para dentro da arma.',
   NULL,
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
@@ -335,22 +335,22 @@ INSERT INTO rpg.phb_spell (
 )
 VALUES (
   'perforating-shot',
-  'Perforating Shot',
+  'Tiro Perfurante',
   1,
-  'Level 1',
+  '1º Círculo',
   (SELECT id FROM rpg.phb_spell_school WHERE slug = 'evocacao'),
-  'Bonus Action, which you take immediately after hitting or missing with a ranged attack using a weapon',
-  'Self',
+  'Ação Bônus, que você pega imediatamente após acertar ou errar com um ataque à distância usando uma arma',
+  'Pessoal',
   true,
   false,
   false,
   NULL,
   'V',
-  'Instantaneous',
+  'Instantânea',
   false,
   false,
-  'As your attack hits or misses the target, the weapon or ammunition transforms into a 5-foot-wide Line of magical energy that extends out to the weapon’s normal range. The Line includes the attack’s original target. Each creature within the Line makes a Dexterity saving throw, taking Force damage equal to the weapon’s normal damage on a failed save or half as much damage on a successful one.',
-  'Using a Higher-Level Spell Slot. The weapon’s damage increases by 1d8 for each slot level above 1.',
+  'Conforme seu ataque atinge ou erra o alvo, a arma ou munição se transforma em uma linha de energia mágica de 5 pés de largura que se estende até o alcance normal da arma. A Linha inclui o alvo original do ataque. Cada criatura dentro da Linha faz uma salvaguarda de Destreza, sofrendo Energético de dano igual ao dano normal da arma em caso de falha na resistência ou metade do dano em caso de sucesso.',
+  'Usando um Espaço de Magia de Círculo Superior. O dano da arma aumenta em 1d8 para cada nível de espaço acima de 1.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET

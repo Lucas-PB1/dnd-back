@@ -7,14 +7,14 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'path-of-the-muscle-wizard',
   (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'),
-  'Path of the Muscle Wizard',
-  'Be a Buff, Angry “Wizard”',
-  'You’re a wizard! Perhaps you went to wizarding school on a football scholarship or just picked up a book at the gym and started reading. No matter how you got here, you’re a wizard, one that just coincidentally has massive, rippling muscles. You have the big dumb hat and the book',
-  'You’re a wizard! Perhaps you went to wizarding school on a football scholarship or just picked up a book at the gym and started reading. No matter how you got here, you’re a wizard, one that just coincidentally has massive, rippling muscles. You have the big dumb hat and the book filled with gibberish and everything!
+  'Caminho do Mago Musculoso',
+  'Seja um “mago” musculoso e furioso',
+  'Você é um mago! Talvez você tenha ido para uma escola de magia com uma bolsa de futebol ou simplesmente tenha pegado um livro na academia e começado a ler. Não importa como você chegou aqui, você é um mago, que por coincidência tem músculos enormes e ondulantes. Você tem o grande chapéu idiota e o livro',
+  'Você é um mago! Talvez você tenha ido para uma escola de magia com uma bolsa de futebol ou simplesmente tenha pegado um livro na academia e começado a ler. Não importa como você chegou aqui, você é um mago, que por coincidência tem músculos enormes e ondulantes. Você tem o grande chapéu idiota e o livro cheio de bobagens e tudo mais!
 
 Lucas Ferreira CM
 
-You gently remind others, often by beating them to a pulp and cracking their bones, that your magical powers shouldn’t be questioned. You’re a good wizard—the best one, even! And only a fool would say otherwise.',
+Você gentilmente lembra aos outros, muitas vezes batendo neles até virar polpa e quebrando seus ossos, que seus poderes mágicos não devem ser questionados. Você é um bom mago – o melhor até! E só um tolo diria o contrário.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -30,10 +30,10 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'dungeoneer',
   (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'),
-  'Dungeoneer',
-  'Survive the Dungeon',
-  'Only fools would dive headfirst into an abandoned crypt filled with monsters and deathtraps, but it seems only fools emerge from such crypts laden with as much loot as they can carry. The archetypal dungeon delver is a veteran of such suicidal dungeon delves, and has become intim',
-  'Only fools would dive headfirst into an abandoned crypt filled with monsters and deathtraps, but it seems only fools emerge from such crypts laden with as much loot as they can carry. The archetypal dungeon delver is a veteran of such suicidal dungeon delves, and has become intimately familiar with the hazards therein. In the course of their adventures, such a Dungeoneer will have adopted countless best practices, along with a litany of unproven superstitions which they believe keeps them alive. Principles from “always be the first one to hit the monster” to “never be the first one to touch a treasure chest” line a Dungeoneer’s journal. However, it’s probably better to be paranoid and superstitious than lying at the bottom of a pit trap, incinerated by a Fireball, or digested by a mimic.
+  'Explorador de Masmorras',
+  'Sobreviva à masmorra',
+  'Apenas os tolos mergulhariam de cabeça em uma cripta abandonada cheia de monstros e armadilhas mortais, mas parece que apenas os tolos emergem de tais criptas carregados com tanto saque quanto podem carregar. O explorador de masmorras arquetípico é um veterano dessas investigações suicidas em masmorras e tornou-se íntimo',
+  'Apenas os tolos mergulhariam de cabeça em uma cripta abandonada cheia de monstros e armadilhas mortais, mas parece que apenas os tolos emergem de tais criptas carregados com tanto saque quanto podem carregar. O explorador de masmorras arquetípico é um veterano nessas incursões suicidas em masmorras e tornou-se intimamente familiarizado com os perigos que elas representam. No decorrer de suas aventuras, tal Explorador de Masmorras terá adotado inúmeras práticas recomendadas, juntamente com uma litania de superstições não comprovadas que eles acreditam que os mantêm vivos. Princípios que vão de “seja sempre o primeiro a acertar o monstro” a “nunca seja o primeiro a tocar em um baú de tesouro” estão no diário do Explorador de Masmorras. No entanto, provavelmente é melhor ser paranóico e supersticioso do que ficar deitado no fundo de uma armadilha de fosso, incinerado por uma Bola de Fogo ou digerido por um mímico.
 
 Martin Kirby-Jackson',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
@@ -51,10 +51,10 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'warrior-of-the-street',
   (SELECT id FROM rpg.phb_class WHERE slug = 'monk'),
-  'Warrior of the Street',
-  'Strike with Combos and Special Moves',
-  '“Street fighting” is an urban discipline founded on necessity, whose blindingly fast, unique brand of martial arts has been honed and perfected in back-alley brawls and tournaments alike. Monks who adopt this relatively new technique place comparatively little value on spiritual ',
-  '“Street fighting” is an urban discipline founded on necessity, whose blindingly fast, unique brand of martial arts has been honed and perfected in back-alley brawls and tournaments alike. Monks who adopt this relatively new technique place comparatively little value on spiritual enlightenment and inner focus; the thrill of split-second timing, rapid combos, and decisive knock-outs drive them to become the best combatants in the world.',
+  'Guerreiro das Ruas',
+  'Ataque com combos e movimentos especiais',
+  '“Luta de rua” é uma disciplina urbana fundada na necessidade, cujo tipo único e incrivelmente rápido de artes marciais foi aprimorado e aperfeiçoado tanto em brigas de beco quanto em torneios. Os monges que adotam esta técnica relativamente nova dão comparativamente pouco valor à espiritualidade.',
+  '“Luta de rua” é uma disciplina urbana fundada na necessidade, cujo tipo único e incrivelmente rápido de artes marciais foi aprimorado e aperfeiçoado tanto em brigas de beco quanto em torneios. Os monges que adotam esta técnica relativamente nova dão comparativamente pouco valor à iluminação espiritual e ao foco interior; a emoção do timing em frações de segundo, combos rápidos e nocautes decisivos os levam a se tornarem os melhores combatentes do mundo.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -70,18 +70,18 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'oath-of-revelry',
   (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'),
-  'Oath of Revelry',
-  'Work Hard and Party Harder',
-  'Paladins who swear the Oath of Revelry make a solemn vow to party day and night until their hearts give out. The antithesis of stuffy, lawful crusaders, these emissaries of carousal travel the land, crashing parties and raising hell wherever they raise a glass. Authorities bristl',
-  'Paladins who swear the Oath of Revelry make a solemn vow to party day and night until their hearts give out. The antithesis of stuffy, lawful crusaders, these emissaries of carousal travel the land, crashing parties and raising hell wherever they raise a glass. Authorities bristle at their arrival, but the youth cheer, for a Party Paladin is always accompanied by a good time.
+  'Juramento da Folia',
+  'Trabalhe Duro e Festeje Mais Ainda',
+  'Paladinos que fazem o Juramento da Folia fazem um voto solene de festejar dia e noite até que seus corações desistam. Antítese dos cruzados formais e ordeiros, esses emissários da farra viajam pela terra, invadindo festas e causando confusão onde quer que levantem um copo. Como um',
+  'Paladinos que fazem o Juramento da Folia fazem um voto solene de festejar dia e noite até que seus corações desistam. Antítese dos cruzados formais e ordeiros, esses emissários da farra viajam pela terra, invadindo festas e causando confusão onde quer que levantem um copo. As autoridades se irritam com sua chegada, mas os jovens comemoram, pois um Paladino da Festa sempre vem acompanhado de diversão.
 
-These paladins share the following tenets:
+Esses paladinos compartilham os seguintes preceitos:
 
-Abide by the doctrines of the Codicus Brodicus.
+Respeite as doutrinas do Codicus Brodicus.
 
-Celebrate every occasion, inviting friend and foe alike.
+Celebre toda ocasião, convidando amigos e inimigos igualmente.
 
-When necessary, fight for your right to party.',
+Quando necessário, lute pelo seu direito de festejar.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -97,10 +97,10 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'arachnoid-stalker',
   (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'),
-  'Arachnoid Stalker',
-  'Sling Webs and Crawl Walls',
-  'A life-changing event, such as being cursed by a drider or being bitten by a dangerously transmuted arachnid, has imbued you with the abilities of a spider. This transformation might have left you physically unchanged, or you may have developed a half-dozen eyes, lanky and hairy ',
-  'A life-changing event, such as being cursed by a drider or being bitten by a dangerously transmuted arachnid, has imbued you with the abilities of a spider. This transformation might have left you physically unchanged, or you may have developed a half-dozen eyes, lanky and hairy limbs, or a set of inhuman mandibles. Whatever the side effects, you can now produce deadly poison and ropes of silken web from your palms, and even scale walls with your fingertips.',
+  'Perseguidor Aracnídeo',
+  'Dispare Teias e Escale Paredes',
+  'Um evento que mudará sua vida, como ser amaldiçoado por um drider ou ser mordido por um aracnídeo perigosamente transmutado, imbuiu você das habilidades de uma aranha. Essa transformação pode ter deixado você fisicamente inalterado, ou você pode ter desenvolvido meia dúzia de olhos, esguios e peludos.',
+  'Um evento que mudará sua vida, como ser amaldiçoado por um drider ou ser mordido por um aracnídeo perigosamente transmutado, imbuiu você das habilidades de uma aranha. Essa transformação pode ter deixado você fisicamente inalterado, ou você pode ter desenvolvido meia dúzia de olhos, membros esguios e peludos ou um conjunto de mandíbulas desumanas. Quaisquer que sejam os efeitos colaterais, agora você pode produzir veneno mortal e cordas de teia de seda com as palmas das mãos e até escalar paredes com as pontas dos dedos.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -116,10 +116,10 @@ INSERT INTO rpg.phb_subclass (
 VALUES (
   'future-you-patron',
   (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'),
-  'Future You Patron',
-  'Manipulate Time with Help from the Future',
-  'Your patron is you in a decades-distant future. Perhaps your future self found an artifact of great power connecting them to the past, which they must now lead you to discover, or perhaps they were taught the mystic arts by their future self long ago, a cycle you will have to con',
-  'Your patron is you in a decades-distant future. Perhaps your future self found an artifact of great power connecting them to the past, which they must now lead you to discover, or perhaps they were taught the mystic arts by their future self long ago, a cycle you will have to continue someday. Your future self has forgotten the fine details of some things and outright refuses to tell you about things you “can’t know yet,” but nevertheless offers compelling insight and guidance. You’re not quite sure what your future self is planning for your future (and for their past), but one thing is certain—they need you alive.',
+  'Patrono Eu do Futuro',
+  'Manipule o tempo com a ajuda do futuro',
+  'Seu patrono é você em um futuro distante. Talvez o seu eu futuro tenha encontrado um artefato de grande poder conectando-os ao passado, que agora eles devem levá-lo a descobrir, ou talvez eles tenham aprendido as artes místicas com o seu eu futuro há muito tempo, um ciclo que você terá que enfrentar.',
+  'Seu patrono é você em um futuro distante. Talvez o seu eu futuro tenha encontrado um artefato de grande poder conectando-os ao passado, que agora eles devem levá-lo a descobrir, ou talvez eles tenham aprendido as artes místicas com o seu eu futuro há muito tempo, um ciclo que você terá que continuar algum dia. Seu eu futuro esqueceu os detalhes de algumas coisas e se recusa abertamente a lhe contar sobre coisas que você “ainda não pode saber”, mas mesmo assim oferece uma visão e orientação convincentes. Você não tem certeza do que o seu eu futuro está planejando para o seu futuro (e para o passado dele), mas uma coisa é certa: eles precisam de você vivo.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
