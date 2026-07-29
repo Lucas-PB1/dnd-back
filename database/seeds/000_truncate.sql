@@ -2,6 +2,7 @@
 -- Gerado automaticamente
 
 TRUNCATE TABLE
+  rpg.phb_class_resource,
   rpg.phb_hp_bonus_source,
   rpg.phb_unarmored_defense,
   rpg.phb_subclass_progression,
@@ -25,10 +26,13 @@ TRUNCATE TABLE
   rpg.phb_background_skill,
   rpg.phb_background_language,
   rpg.phb_background_tool_option,
+  rpg.phb_species_granted_spell,
   rpg.phb_species_trait,
   rpg.phb_feat_granted_spell,
   rpg.phb_dragon_ancestry,
   rpg.phb_giant_ancestry,
+  rpg.phb_geppettin_construction,
+  rpg.phb_mandrake_season,
   rpg.phb_gnome_lineage,
   rpg.phb_infernal_legacy,
   rpg.phb_elf_lineage,

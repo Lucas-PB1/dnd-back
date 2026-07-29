@@ -9,6 +9,7 @@ CREATE TABLE rpg.player_character_item (
     equipment_slot IS NULL
     OR equipment_slot IN ('armor', 'main_hand', 'off_hand', 'shield')
   ),
+  attuned BOOLEAN NOT NULL DEFAULT FALSE,
   PRIMARY KEY (character_id, item_slug),
   CONSTRAINT player_character_item_slot_when_equipped CHECK (
     (location = 'backpack' AND equipment_slot IS NULL)
@@ -22,6 +23,10 @@ CREATE INDEX idx_player_character_item_character
 CREATE INDEX idx_player_character_item_equipped
   ON rpg.player_character_item(character_id, equipment_slot)
   WHERE location = 'equipped';
+
+CREATE INDEX idx_player_character_item_attuned
+  ON rpg.player_character_item(character_id)
+  WHERE attuned = TRUE;
 
 -- RLS (Supabase)
 DO $$

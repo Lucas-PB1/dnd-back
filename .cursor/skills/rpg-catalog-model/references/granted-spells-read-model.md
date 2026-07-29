@@ -8,7 +8,7 @@
 | `v_phb_feat_granted_spell` | `phb_feat_granted_spell` |
 | `v_phb_subclass_prepared_spell` | `phb_subclass_prepared_spell` |
 
-Definição species+feat: `database/migrations/060_views/V039_v_species_feat_granted_spell.sql`
+Definição species+feat: `database/migrations/060_views/V028_v_phb_species_and_feat_granted_spell.sql`
 
 ## Runtime
 

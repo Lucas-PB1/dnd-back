@@ -4,7 +4,7 @@ Documento de referência para rules, skills e implementação.
 
 **Arquitetura (BC, CQRS, DDD):** [`architecture.md`](architecture.md)
 
-**Contrato REST:** Swagger `/api` · `npm run openapi:export`
+**Contrato REST:** Swagger `/api`
 
 **O que falta:** [`backlog.md`](../plans/backlog.md)
 
@@ -65,8 +65,9 @@ flowchart LR
 | `db:migrate` | Migrations pendentes em `DATABASE_URL` (local) |
 | `db:migrate:supabase` | Migrations pendentes só no Supabase |
 | `db:migrate:all` | Local **e** Supabase (incremental, rastreia `rpg.schema_migration`) |
-| `db:seed` / `db:seed:all` | Seeds PHB (após reset ou banco vazio) |
-| `db:reset` | `dev-reset.sql` — **só local**, nunca Supabase |
+| `db:seed` / `db:seed:all` | Seeds PHB + Valda (após reset ou banco vazio) |
+| `db:reset` | `dev-reset.sql` — **só local** por padrão |
+| `db:reset -- --target=supabase` | Reset Supabase (requer confirmação `CONFIRM_DROP_RPG=yes`) |
 | `db:setup` | reset + migrate + seed local |
 | `db:setup:all` | setup local + migrate + seed no Supabase (primeira carga remota) |
 

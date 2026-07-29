@@ -28,15 +28,3 @@ export function requiredAbilityScoreImprovementDefs(
     return true;
   });
 }
-
-export function optionsForAsiFeatInstance(
-  featSlug: string,
-  instanceIndex: number,
-  options: FeatOptionDto[],
-): FeatOptionDto[] {
-  return options.filter(
-    (o) =>
-      o.featSlug === featSlug &&
-      (o.instanceIndex ?? 0) === instanceIndex,
-  );
-}

@@ -16,7 +16,7 @@ Três famílias — **não unificar** em tabela genérica.
 
 ## ENUM
 
-`rpg.option_value_type` — compartilhado (`database/migrations/010_types/003_feat_option_value_types.sql`).
+`rpg.option_value_type` — compartilhado (`database/migrations/010_types/002_types.sql`).
 
 ## Doc canônica
 

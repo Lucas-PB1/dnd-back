@@ -1,11 +1,24 @@
-# Seeds — catálogo PHB
+# Seeds — catálogo PHB + Valda
 
-Dados do catálogo PHB 2024. **Um arquivo por tabela.**
+Dados do catálogo PHB 2024 e Valda's Spire of Secrets. **Um arquivo por tabela.**
 
 | Caminho | Conteúdo |
 |---------|----------|
 | `000_truncate.sql` | `TRUNCATE` global (ordem FK-safe) |
-| `phb/S###_<tabela>.sql` | `INSERT` do catálogo PHB |
-| `subclass/S###_<tabela>.sql` | Mecânicas de subclasse (`UPDATE`/`INSERT`) |
+| `phb/S###_<tabela>.sql` | `INSERT` do catálogo PHB (`S001`–`S078`) |
+| `subclass/S###_<tabela>.sql` | Mecânicas de subclasse (`S001`–`S007`) |
+| `valda/V###_<tabela>.sql` | Pack Valda (`V001`–`V013`, edição em `V001`) |
+| `valda-gunslinger/G###_<tabela>.sql` | Classe Gunslinger (`G001`–`G026`) |
 
 Metadados: `database/seed-manifest.json`
+
+## Baseline canônico
+
+Numeração sequencial sem lacunas (ordem de dependência). Exemplos:
+
+- `S074_phb_species_trait_choice_kind.sql` — choice_kinds PHB
+- `S075`–`S077` — weapon mastery + class resources
+- `V001_phb_edition_citation.sql` — edição/citações Valda
+- `V011`–`V013` — construções Geppettin, estações Mandrágora, grants
+
+Ordem de aplicação dos packs: `phb` → `subclass` → `valda` → `valda-gunslinger`.

@@ -17,10 +17,9 @@ Contagens: [`database/seed-manifest.json`](database/seed-manifest.json)
 ```
 dnd-work/dnd-api/             # este repo
 ├── database/
-│   ├── schema.sql           # DDL completo
 │   ├── dev-reset.sql        # DROP SCHEMA (só dev)
-│   ├── migrations/          # 84 arquivos granulares
-│   └── seeds/               # 66 arquivos (PHB + subclass)
+│   ├── migrations/          # 90+ arquivos granulares
+│   └── seeds/               # 90+ arquivos (PHB + Valda)
 ├── docs/
 │   ├── architecture/        # infra, data-model, code-standards
 │   ├── plans/backlog.md     # o que ainda falta (único checklist ativo)

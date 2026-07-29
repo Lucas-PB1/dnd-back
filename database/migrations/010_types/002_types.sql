@@ -1,4 +1,4 @@
--- ENUMs do catálogo PHB
+-- ENUMs do catálogo PHB (baseline canônico)
 
 CREATE TYPE rpg.item_type AS ENUM (
   'weapon','armor','gear','tool','focus','other'
@@ -34,15 +34,41 @@ CREATE TYPE rpg.spell_source_origin AS ENUM (
 );
 
 CREATE TYPE rpg.option_value_type AS ENUM (
-  'catalog','skill','ability','fighting_style','terrain','skill_list','json'
+  'catalog',
+  'skill',
+  'ability',
+  'fighting_style',
+  'terrain',
+  'skill_list',
+  'json',
+  'spell',
+  'proficiency'
 );
 
 CREATE TYPE rpg.species_choice_kind AS ENUM (
   'elf_lineage',
   'infernal_legacy',
-  'dragon_ancestry'
+  'dragon_ancestry',
+  'human_skill',
+  'human_origin_feat',
+  'human_size',
+  'gnome_lineage',
+  'giant_ancestry',
+  'elf_keen_senses',
+  'elf_casting_ability',
+  'gnome_casting_ability',
+  'infernal_casting_ability',
+  'aasimar_size',
+  'tiefling_size',
+  'high_elf_cantrip',
+  'geppettin_skill',
+  'geppettin_construction',
+  'geppettin_size',
+  'mandrake_skill',
+  'mandrake_casting_ability',
+  'mandrake_season'
 );
 
 CREATE TYPE rpg.weapon_category AS ENUM ('simple', 'martial');
 
-CREATE TYPE rpg.casting_type AS ENUM ('full', 'half', 'pact', 'none');
+CREATE TYPE rpg.casting_type AS ENUM ('full', 'half', 'pact', 'third', 'none');

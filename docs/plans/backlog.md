@@ -64,4 +64,4 @@ Não priorizar. Só retomar com pedido explícito.
 ## Como usar
 
 1. Remover o item da lista quando **feito e testado** (não deixar `[x]` histórico).  
-2. Contrato: Swagger `/api` · `npm run openapi:export`.
+2. Contrato: Swagger `/api`.

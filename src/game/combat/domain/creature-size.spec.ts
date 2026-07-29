@@ -51,6 +51,9 @@ describe('sizeCategoryFromChoices', () => {
     ['size', 'large', 'large'],
     ['size', 'grande', 'large'],
     ['size', 'unknown', null],
+    ['human_size', 'small', 'small'],
+    ['tiefling_size', 'medium', 'medium'],
+    ['aasimar_size', 'small', 'small'],
   ] as const)(
     'maps %s/%s → %s',
     (kind, slug, expected) => {

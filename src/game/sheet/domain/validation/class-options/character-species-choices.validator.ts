@@ -63,6 +63,24 @@ export class CharacterSpeciesChoicesValidator {
     }
 
     await this.validateOptionalHighElfCantrip(speciesSlug, choices, optionalChoices);
+    this.validateGeppettinSizeRequiresMarionette(speciesSlug, choices);
+  }
+
+  private validateGeppettinSizeRequiresMarionette(
+    speciesSlug: string,
+    choices: NonNullable<CharacterSheetInput['speciesChoices']>,
+  ): void {
+    if (speciesSlug !== 'geppettin') return;
+    const size = choices.find((c) => c.choiceKind === 'geppettin_size')?.choiceSlug;
+    if (size !== 'medium') return;
+    const construction = choices.find(
+      (c) => c.choiceKind === 'geppettin_construction',
+    )?.choiceSlug;
+    if (construction !== 'marionette') {
+      throw new BadRequestException(
+        `Geppettin size 'medium' requires construction 'marionette'`,
+      );
+    }
   }
 
   private async validateOptionalHighElfCantrip(

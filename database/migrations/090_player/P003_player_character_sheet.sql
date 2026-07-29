@@ -1,9 +1,5 @@
 -- Extensões da ficha: espécie, subclasse, feats, magias, equipamento, idiomas
 
-ALTER TABLE rpg.player_character
-  ADD COLUMN IF NOT EXISTS ability_generation_method_slug TEXT
-    REFERENCES rpg.phb_ability_generation_method(slug);
-
 CREATE TABLE rpg.player_character_species_choice (
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   choice_kind TEXT NOT NULL,
@@ -21,7 +17,8 @@ CREATE TABLE rpg.player_character_subclass_option (
 CREATE TABLE rpg.player_character_feat (
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   feat_slug TEXT NOT NULL REFERENCES rpg.phb_feat(slug),
-  PRIMARY KEY (character_id, feat_slug)
+  instance_index INTEGER NOT NULL DEFAULT 0 CHECK (instance_index >= 0),
+  PRIMARY KEY (character_id, feat_slug, instance_index)
 );
 
 CREATE TABLE rpg.player_character_spell (

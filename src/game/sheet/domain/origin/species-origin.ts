@@ -30,12 +30,3 @@ export function resolveHumanOriginCharacterFeats(
   }
   return feats;
 }
-
-export function humanOriginFeatSlugFromChoices(
-  speciesChoices: SpeciesChoiceDto[] | undefined,
-): string | null {
-  const match = speciesChoices?.find(
-    (choice) => choice.choiceKind === HUMAN_ORIGIN_FEAT_KIND,
-  );
-  return match?.choiceSlug?.trim() || null;
-}

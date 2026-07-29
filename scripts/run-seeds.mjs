@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 /**
- * Aplica seeds SQL (catálogo PHB). Destrutivo se tabelas já tiverem dados — preferir após dev-reset.
+ * Aplica seeds SQL (catálogo PHB + Valda). Destrutivo se tabelas já tiverem dados — preferir após dev-reset.
+ *
+ * Ordem de pastas (não lexicográfica pura entre packs):
+ *   000_truncate → phb → subclass → valda → valda-gunslinger
+ * Gunslinger depende de magias do Player Pack (ex.: finger-guns).
  *
  * Uso:
  *   node scripts/run-seeds.mjs
@@ -16,6 +20,9 @@ import { listSqlFiles } from './lib/sql-files.mjs';
 loadEnv();
 
 const seedsDir = path.join(rootDir, 'database/seeds');
+
+/** Packs na ordem de dependência (após 000_truncate.sql na raiz). */
+const SEED_PACKS = ['phb', 'subclass', 'valda', 'valda-gunslinger'];
 
 /** @param {string} arg */
 function parseTarget(arg) {
@@ -52,6 +59,21 @@ function resolveTargets(target) {
   return targets;
 }
 
+/** @returns {string[]} */
+function listSeedFilesInOrder() {
+  const files = [];
+  const truncate = path.join(seedsDir, '000_truncate.sql');
+  if (fs.existsSync(truncate)) files.push(truncate);
+
+  for (const pack of SEED_PACKS) {
+    const packDir = path.join(seedsDir, pack);
+    if (!fs.existsSync(packDir)) continue;
+    files.push(...listSqlFiles(packDir));
+  }
+
+  return files;
+}
+
 /**
  * @param {string} label
  * @param {string} url
@@ -63,7 +85,7 @@ async function seedOne(label, url) {
   await client.connect();
 
   try {
-    const files = listSqlFiles(seedsDir);
+    const files = listSeedFilesInOrder();
 
     for (const filePath of files) {
       const relative = path.relative(rootDir, filePath).replace(/\\/g, '/');

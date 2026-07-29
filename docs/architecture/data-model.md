@@ -2,7 +2,7 @@
 
 Schema PostgreSQL `rpg` — 63 tabelas, 9 ENUMs, 15 views, 1 materialized view.
 
-Fonte: [`database/schema.sql`](../database/schema.sql) · Contagens: [`database/seed-manifest.json`](../database/seed-manifest.json)
+Fonte: [`database/migrations/`](../database/migrations/) · Contagens: [`database/seed-manifest.json`](../database/seed-manifest.json)
 
 Padrões DRY (option_def, linhagens, granted spells): [`catalog-patterns.md`](catalog-patterns.md)
 

@@ -26,16 +26,18 @@ export function resolveSizeCategory(
   return 'medium';
 }
 
+const GENERIC_SIZE_CHOICE_KINDS = new Set(['size', 'creature_size', 'tamanho']);
+
+/** Cada espécie com tamanho escolhível tem seu kind (`human_size`, `tiefling_size`…). */
+function isSizeChoiceKind(choiceKind: string): boolean {
+  return GENERIC_SIZE_CHOICE_KINDS.has(choiceKind) || choiceKind.endsWith('_size');
+}
+
 /** Lê escolha de tamanho em speciesChoices, se existir. */
 export function sizeCategoryFromChoices(
   choices: readonly { choiceKind: string; choiceSlug: string }[] | undefined,
 ): SizeCategory | null {
-  const match = choices?.find(
-    (c) =>
-      c.choiceKind === 'size' ||
-      c.choiceKind === 'creature_size' ||
-      c.choiceKind === 'tamanho',
-  );
+  const match = choices?.find((c) => isSizeChoiceKind(c.choiceKind));
   if (!match) return null;
   const slug = match.choiceSlug.toLowerCase();
   if (slug === 'small' || slug === 'pequeno') return 'small';

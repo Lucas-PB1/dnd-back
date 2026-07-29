@@ -12,7 +12,6 @@ Fonte canônica: [`docs/README.md`](../../docs/README.md).
 | Arquitetura / padrões | `docs/architecture/` |
 | Planos / backlog ativo | `docs/plans/` (`backlog.md`) |
 | Deploy | `docs/deploy/` |
-| Fontes de catálogo | `docs/sources/` |
 
 ## Regras
 

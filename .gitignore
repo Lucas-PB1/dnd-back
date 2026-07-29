@@ -2,6 +2,7 @@
 node_modules/
 dist/
 coverage/
+*.tsbuildinfo
 
 # Env / secrets
 .env
@@ -15,4 +16,5 @@ coverage/
 # Misc
 *.pdf
 *.log
+scripts/smoke-*-report.json
 .DS_Store

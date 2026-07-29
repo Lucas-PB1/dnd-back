@@ -8,12 +8,13 @@ Schema do **catálogo PHB** em migrations granulares.
 |-----------------|----------|
 | `001_schema.sql` | `CREATE SCHEMA rpg` + extensão `pg_trgm` |
 | `010_types/` | ENUMs |
-| `020_tables/T###_<nome>.sql` | Uma tabela por arquivo (+ índices inline) |
+| `020_tables/T###_<nome>.sql` | Uma tabela por arquivo (`T001`–`T077`) |
 | `040_functions/` | Funções PL/pgSQL |
 | `050_triggers/` | Triggers |
-| `060_views/V###_<nome>.sql` | Uma view por arquivo |
+| `060_views/V###_<nome>.sql` | Uma view por arquivo (`V001`–`V030`) |
 | `070_materialized/` | Materialized views |
 | `080_indexes/` | Índices adicionais |
+| `090_player/P###_<nome>.sql` | Jogador + RLS (`P001`–`P013`) |
 
 Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 
@@ -25,9 +26,9 @@ Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 npm run db:setup
 ```
 
-Ordem: reset → migrations de schema → seeds (PHB) → migrations `050_data` (opções de talento, humano, etc.).
+Ordem: reset → migrations → seeds (PHB + Valda).
 
-**Incremental** — `npm run db:migrate` aplica tudo pendente; em banco **só com schema**, rode `db:seed` antes de aplicar `050_data`, ou use `db:migrate:data` após seed.
+**Incremental:**
 
 ```bash
 npm run db:migrate          # DATABASE_URL
@@ -37,18 +38,18 @@ npm run db:migrate:all      # os dois
 
 O runner registra versões em `rpg.schema_migration` e só aplica arquivos pendentes.
 
-**Banco já existente** (aplicado antes via psql):
-
-```bash
-npm run db:migrate:baseline      # marca tudo como aplicado, sem reexecutar SQL
-npm run db:migrate:baseline:all  # local + Supabase
-```
-
 **Seeds** (banco vazio ou após `db:reset`):
 
 ```bash
 npm run db:seed
 npm run db:seed:supabase
+```
+
+**Dev reset com confirmação:**
+
+```bash
+npm run db:reset                    # LOCAL apenas
+npm run db:reset -- --target=supabase # Supabase (requer CONFIRM_DROP_RPG=yes)
 ```
 
 Sem tabelas `player_character_*` no fluxo padrão de catálogo — ver `090_player/` para dados de jogador (fase 5+).

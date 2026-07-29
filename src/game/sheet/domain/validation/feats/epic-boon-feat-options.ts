@@ -1,5 +1,3 @@
-export const EPIC_BOON_FEAT_CATEGORY = 'epic-boon';
-
 export const STANDARD_ABILITY_SCORE_CAP = 20;
 export const EPIC_BOON_ABILITY_SCORE_CAP = 30;
 

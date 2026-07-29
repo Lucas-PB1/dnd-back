@@ -1,6 +1,6 @@
 # Padrões do catálogo — DRY SQL
 
-Auditoria P7 (2026-07-27). Fonte de verdade: [`database/schema.sql`](../../database/schema.sql).
+Auditoria P7 (2026-07-27). Fonte de verdade: [`database/migrations/`](../../database/migrations/) + [`database/seeds/`](../../database/seeds/).
 
 ## Princípio
 
@@ -72,7 +72,7 @@ Ao adicionar linhagem nova: estender **as duas views** + ENUM `species_choice_ki
 
 Colunas em entidades raiz (paridade PHB):
 
-- `phb_class`, `phb_subclass`, `phb_background`, `phb_species` (migration `T076_phb_species_flavor`)
+- `phb_class`, `phb_subclass`, `phb_background`, `phb_species` (colunas `tagline`/`summary` no CREATE)
 
 Views enriquecidas: `v_phb_class`, `v_phb_background`, `v_phb_subclass` — flavor já incluído onde a API precisa.
 

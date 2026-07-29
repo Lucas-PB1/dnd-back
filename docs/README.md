@@ -9,7 +9,6 @@
 | [`architecture/`](architecture/) | Arquitetura, infra, modelo de dados, Game BC, padrões de código |
 | [`plans/`](plans/) | **Plano ativo:** [`backlog.md`](plans/backlog.md) |
 | [`deploy/`](deploy/) | Deploy Vercel + Supabase |
-| [`sources/`](sources/) | Fontes de conteúdo (ex.: Valda) para ingestão no catálogo |
 
 ## Arquitetura
 
@@ -22,7 +21,7 @@
 | [`architecture/game-module-structure.md`](architecture/game-module-structure.md) | Submódulos Game |
 | [`architecture/code-standards.md`](architecture/code-standards.md) | Tamanho de arquivo, SRP, DRY, legado |
 
-Contrato REST: Swagger em `/api` · `npm run openapi:export`.
+Contrato REST: Swagger em `/api`.
 
 ## Planos
 
@@ -30,12 +29,9 @@ Contrato REST: Swagger em `/api` · `npm run openapi:export`.
 |-----|----------|
 | [`plans/backlog.md`](plans/backlog.md) | **Único checklist ativo** — o que ainda falta (API + front + gaps PHB) |
 
-## Ops / fontes
+## Ops
 
 - Deploy → [`deploy/DEPLOY.md`](deploy/DEPLOY.md)
-- Fontes → [`sources/README.md`](sources/README.md)
-- Valda Spire → [`sources/valda-spire-of-secrets/`](sources/valda-spire-of-secrets/)
-- Valda Gunslinger → [`sources/valda-gunslinger/`](sources/valda-gunslinger/)
 
 ## Cursor (agente)
 

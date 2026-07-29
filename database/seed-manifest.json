@@ -1,26 +1,17 @@
 {
-  "generatedAt": "2026-07-03T01:27:18.925Z",
-  "phb": {
-    "alignments": 9,
-    "abilities": 6,
-    "languages": 19,
-    "skills": 18,
-    "feats": 75,
-    "featBenefits": 190,
-    "spells": 391,
-    "classes": 12,
-    "subclasses": 48,
-    "subclassFeatures": 240,
-    "species": 10,
-    "backgrounds": 16,
-    "sourceCitations": 4,
-    "backgroundStartingPackages": 16,
-    "backgroundStartingItems": 81,
-    "items": 158,
-    "armorCategories": 4,
-    "toolCategories": 6,
-    "spellClassLinks": 987,
-    "subclassPreparedSpells": 217
+  "generatedAt": "2026-07-29T13:30:00.000Z",
+  "note": "Baseline canônico renumerado — contagens pós-squash",
+  "migrations": {
+    "tables": "T001-T077",
+    "views": "V001-V030",
+    "player": "P001-P013",
+    "totalFiles": 126
   },
-  "seedFiles": 59
+  "seeds": {
+    "phb": "S001-S078",
+    "subclass": "S001-S007",
+    "valda": "V001-V013",
+    "valdaGunslinger": "G001-G026",
+    "totalFiles": 125
+  }
 }

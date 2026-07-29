@@ -191,14 +191,6 @@ export function collectSaveProficiencyAbilities(
   return [...set] as AbilityKey[];
 }
 
-export function savingThrowBonus(
-  abilityModifier: number,
-  proficiencyBonus: number,
-  proficient: boolean,
-): number {
-  return abilityModifier + (proficient ? proficiencyBonus : 0);
-}
-
 export function hasAlertFeat(
   characterFeats: readonly CharacterFeatLike[] | undefined,
 ): boolean {
