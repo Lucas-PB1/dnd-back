@@ -64,6 +64,13 @@ function resolveFormulaMax(
   if (row.maxFormula === 'level') return level;
   if (row.maxFormula === 'level_plus_one') return level + 1;
   if (row.maxFormula === 'proficiency_bonus') return proficiencyBonus;
+  if (row.maxFormula === 'zealot_healing_dice_count') {
+    if (level >= 17) return 7;
+    if (level >= 12) return 6;
+    if (level >= 6) return 5;
+    if (level >= 3) return 4;
+    return 0;
+  }
   const ability = abilityModFromFormula(row.maxFormula, mods);
   if (ability != null) return Math.max(1, ability);
   return row.fixedMax ?? 0;

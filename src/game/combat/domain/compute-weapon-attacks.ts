@@ -2,6 +2,10 @@ import type { AbilityScores } from '../../shared/infrastructure/player-character
 import type { SizeCategory } from './creature-size';
 import { analyzeDualWield } from './dual-wield';
 import {
+  appliesRageDamageBonus,
+  brutalStrikeDice as resolveBrutalStrikeDice,
+} from './barbarian-rage';
+import {
   applyOverkillDamageBonus,
   resolveAttackCritThreshold,
 } from './gunslinger-firearm';
@@ -105,6 +109,18 @@ function computeOneAttack(
     damageParts.push('Mestre em Armas Grandes');
   }
 
+  const rageBonus = appliesRageDamageBonus({
+    classSlug: context.classSlug,
+    level: context.level,
+    rageActive: context.rageActive,
+    mode,
+    abilitySlug: ability.slug,
+  });
+  if (rageBonus > 0) {
+    damageBonus += rageBonus;
+    damageParts.push(`Fúria +${rageBonus}`);
+  }
+
   const itemAttackBonus = context.itemAttackBonus ?? 0;
   if (itemAttackBonus !== 0) {
     attackBonus += itemAttackBonus;
@@ -193,6 +209,14 @@ function computeOneAttack(
     noteExtras.push(`crítico ${critThreshold}–20`);
   }
 
+  const brutalDice =
+    mode === 'melee' && ability.slug === 'forca'
+      ? resolveBrutalStrikeDice(context.level ?? 0)
+      : null;
+  if (brutalDice) {
+    noteExtras.push(`Golpe Brutal ${brutalDice}`);
+  }
+
   const attackNoteBase = `${modeLabel}: ${attackParts.join(' + ')}`;
   const attackNote =
     noteExtras.length > 0
@@ -234,6 +258,8 @@ function computeOneAttack(
       ? (piece.reloadCapacity ?? null)
       : null,
     hasRecoil: hasProperty(piece, 'recoil'),
+    rageDamageBonus: rageBonus,
+    brutalStrikeDice: brutalDice,
   };
 }
 

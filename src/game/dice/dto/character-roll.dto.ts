@@ -65,6 +65,22 @@ export class RollDamageDto {
   @IsOptional()
   @IsBoolean()
   sightedReroll?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Golpe Brutal (Bárbaro nv.9+): dados extras; abre mão da vantagem do Imprudente',
+  })
+  @IsOptional()
+  @IsBoolean()
+  brutalStrike?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Fúria Divina (Fanático): 1d6 + metade do nível enquanto enfurecido',
+  })
+  @IsOptional()
+  @IsBoolean()
+  divineFury?: boolean;
 }
 
 export class RollSkillDto {

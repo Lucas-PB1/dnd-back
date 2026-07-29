@@ -19,6 +19,27 @@ export type RollWeaponCharacter = {
   level: number;
 };
 
+async function loadBarbarianCombatFlags(
+  dataSource: DataSource | undefined,
+  characterId: string,
+): Promise<{ rageActive: boolean; recklessActive: boolean }> {
+  if (!dataSource) return { rageActive: false, recklessActive: false };
+  const rows = await dataSource.query<
+    { rage_active: boolean; reckless_active: boolean }[]
+  >(
+    `SELECT rage_active, reckless_active
+     FROM rpg.player_character_state
+     WHERE character_id = $1
+     LIMIT 1`,
+    [characterId],
+  );
+  const row = rows[0];
+  return {
+    rageActive: Boolean(row?.rage_active),
+    recklessActive: Boolean(row?.reckless_active),
+  };
+}
+
 export async function findEquippedWeaponAttack(
   deps: {
     sheet: CharacterSheetRepository;
@@ -55,8 +76,13 @@ export async function findEquippedWeaponAttack(
         itemEffects.abilityScoreCaps,
       )
     : classScores;
+  const combatFlags = await loadBarbarianCombatFlags(
+    deps.dataSource,
+    character.id,
+  );
   const attacks = await deps.weaponAttacks.resolve(character.id, scores, {
     classSlug: character.classSlug,
+    subclassSlug: character.subclassSlug,
     level: character.level,
     proficiencyBonus: pb,
     featSlugs,
@@ -67,6 +93,8 @@ export async function findEquippedWeaponAttack(
     }),
     itemAttackBonus: itemEffects?.attackBonus,
     itemDamageBonus: itemEffects?.damageBonus,
+    rageActive: combatFlags.rageActive,
+    recklessActive: combatFlags.recklessActive,
   });
   const attack = attacks.find(
     (row) => row.itemSlug === itemSlug && row.mode === mode,
@@ -76,7 +104,7 @@ export async function findEquippedWeaponAttack(
       `No equipped weapon attack for '${itemSlug}' (${mode})`,
     );
   }
-  return attack;
+  return { attack, combatFlags };
 }
 
 export async function loadAccessibleCharacter(

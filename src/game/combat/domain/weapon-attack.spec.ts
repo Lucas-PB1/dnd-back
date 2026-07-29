@@ -463,6 +463,20 @@ describe('computeWeaponAttacks', () => {
     expect(attack.omitsAbilityDamage).toBe(false);
     expect(attack.damageNote).toContain('Exagero');
   });
+
+  it('adds rage damage on barbarian melee Strength while raging', () => {
+    const [attack] = computeWeaponAttacks(scores({ forca: 16 }), [greataxe()], {
+      proficiencyBonus: 3,
+      weaponProficiencySlugs: ['armas-simples', 'armas-marciais'],
+      classSlug: 'barbarian',
+      level: 9,
+      rageActive: true,
+    });
+    expect(attack.rageDamageBonus).toBe(3);
+    expect(attack.damageBonus).toBe(3 + 3); // FOR + Fúria
+    expect(attack.damageNote).toContain('Fúria +3');
+    expect(attack.brutalStrikeDice).toBe('1d10');
+  });
 });
 
 describe('analyzeDualWield', () => {

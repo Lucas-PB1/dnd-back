@@ -176,6 +176,7 @@ export class CharacterMapper {
       cannotCastSpellsInArmor: combat.cannotCastSpellsInArmor,
       speedPenaltyMeters: combat.speedPenaltyMeters,
       itemSpeedBonusMeters: combat.itemSpeedBonusMeters,
+      classCombatNotes: combat.classCombatNotes,
       spellcastingAbilitySlug: spellcasting.spellcastingAbilitySlug,
       spellSaveDc: spellcasting.spellSaveDc,
       spellAttackBonus: spellcasting.spellAttackBonus,

@@ -27,6 +27,7 @@ import { CastSpellHandler } from './application/cast-spell.handler';
 import { RestHandler } from './application/rest.handler';
 import { UseClassResourceHandler } from './application/use-class-resource.handler';
 import { GunslingerActionsHandler } from './application/gunslinger-actions.handler';
+import { BarbarianActionsHandler } from './application/barbarian-actions.handler';
 import {
   CastSpellDto,
   CastSpellResponseDto,
@@ -36,6 +37,8 @@ import {
   ReloadFirearmDto,
   RestDto,
   RestResponseDto,
+  ToggleRageDto,
+  ToggleRecklessDto,
   UseClassResourceDto,
   UseClassResourceResponseDto,
   UseManeuverDto,
@@ -55,6 +58,7 @@ export class CharacterSessionController {
     private readonly rest: RestHandler,
     private readonly useResource: UseClassResourceHandler,
     private readonly gunslinger: GunslingerActionsHandler,
+    private readonly barbarian: BarbarianActionsHandler,
   ) {}
 
   @Get(':id/state')
@@ -177,5 +181,44 @@ export class CharacterSessionController {
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<CharacterStateResponseDto> {
     return this.gunslinger.recoverRisk(user.id, id);
+  }
+
+  @Post(':id/rage/toggle')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Enter/exit Rage (spends 1 use when entering)',
+  })
+  @ApiOkResponse({ type: CharacterStateResponseDto })
+  toggleRage(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ToggleRageDto,
+  ): Promise<CharacterStateResponseDto> {
+    return this.barbarian.toggleRage(user.id, id, dto);
+  }
+
+  @Post(':id/reckless/toggle')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Toggle Reckless Attack (Barbarian nv.2+)' })
+  @ApiOkResponse({ type: CharacterStateResponseDto })
+  toggleReckless(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ToggleRecklessDto,
+  ): Promise<CharacterStateResponseDto> {
+    return this.barbarian.toggleReckless(user.id, id, dto);
+  }
+
+  @Post(':id/resources/rage/recover-all')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Persistent Rage — recover all Rage uses (nv.15+, on initiative)',
+  })
+  @ApiOkResponse({ type: CharacterStateResponseDto })
+  recoverAllRage(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<CharacterStateResponseDto> {
+    return this.barbarian.recoverAllRage(user.id, id);
   }
 }

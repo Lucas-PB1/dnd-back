@@ -1,5 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import type { DataSource } from 'typeorm';
+import {
+  divineFuryExtraDice,
+  hasDivineFury,
+} from '../../../combat/domain/barbarian-rage';
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
 import type { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
@@ -28,7 +32,7 @@ export async function executeRollDamage(input: {
     input.userId,
     input.characterId,
   );
-  const attack = await findEquippedWeaponAttack(
+  const { attack, combatFlags } = await findEquippedWeaponAttack(
     {
       sheet: input.sheet,
       domain: input.domain,
@@ -68,6 +72,10 @@ export async function executeRollDamage(input: {
   const rolls = [...(result.dice[0]?.rolls ?? [])];
   const notes: string[] = [];
 
+  if (attack.rageDamageBonus > 0) {
+    notes.push(`Fúria +${attack.rageDamageBonus}`);
+  }
+
   if (attack.overkillExtraDice) {
     const extra = rollDamageParts(attack.overkillExtraDice, 0, {
       critical: input.dto.critical,
@@ -84,7 +92,10 @@ export async function executeRollDamage(input: {
     rolls.length > 0
   ) {
     const idx = rolls.indexOf(Math.min(...rolls));
-    const reroll = rollDamageParts(`1d${attack.damageDice.replace(/^\d+d/i, '').replace(/[+-].*$/, '') || '8'}`, 0);
+    const reroll = rollDamageParts(
+      `1d${attack.damageDice.replace(/^\d+d/i, '').replace(/[+-].*$/, '') || '8'}`,
+      0,
+    );
     const newFace = reroll.dice[0]?.rolls[0] ?? rolls[idx];
     total = total - rolls[idx] + newFace;
     rolls[idx] = newFace;
@@ -104,9 +115,51 @@ export async function executeRollDamage(input: {
     notes.push('Tiro na cabeça: morte se <100 PV; senão +10d10');
   }
 
+  if (
+    input.dto.brutalStrike &&
+    attack.brutalStrikeDice &&
+    input.dto.mode === 'melee' &&
+    attack.abilitySlug === 'forca'
+  ) {
+    const brutal = rollDamageParts(attack.brutalStrikeDice, 0, {
+      critical: input.dto.critical,
+    });
+    total += brutal.total;
+    expression = `${expression}+${brutal.expression}`;
+    rolls.push(...(brutal.dice[0]?.rolls ?? []));
+    notes.push(
+      'Golpe Brutal: efeito à escolha (empurrão/lentidão — narrativo); sem vantagem do Imprudente neste ataque',
+    );
+  }
+
+  if (
+    input.dto.divineFury &&
+    combatFlags.rageActive &&
+    hasDivineFury({
+      subclassSlug: character.subclassSlug,
+      level: character.level,
+    })
+  ) {
+    const dice = divineFuryExtraDice(character.level);
+    const divine = rollDamageParts(dice, 0, { critical: false });
+    total += divine.total;
+    expression = `${expression}+${divine.expression}`;
+    rolls.push(...(divine.dice[0]?.rolls ?? []));
+    notes.push('Fúria Divina (Necrótico ou Radiante, à escolha)');
+  }
+
+  const labelExtras = [
+    input.dto.critical ? ' (crítico)' : '',
+    attack.greatWeaponFighting ? ' (GWF)' : '',
+    attack.overkillExtraDice ? ' (Exagero)' : '',
+    input.dto.headShot ? ' (Tiro na cabeça)' : '',
+    input.dto.brutalStrike ? ' (Golpe Brutal)' : '',
+    input.dto.divineFury ? ' (Fúria Divina)' : '',
+  ].join('');
+
   return {
     kind: 'damage',
-    label: `Dano — ${attack.itemName}${input.dto.critical ? ' (crítico)' : ''}${attack.greatWeaponFighting ? ' (GWF)' : ''}${attack.overkillExtraDice ? ' (Exagero)' : ''}${input.dto.headShot ? ' (Tiro na cabeça)' : ''}`,
+    label: `Dano — ${attack.itemName}${labelExtras}`,
     expression,
     total,
     modifier: result.modifier,

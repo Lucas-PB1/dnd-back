@@ -56,7 +56,7 @@ function checkSeq(dir, prefix, expectedCount) {
 
 checkSeq('database/migrations/020_tables', 'T', 80);
 checkSeq('database/migrations/060_views', 'V', 32);
-checkSeq('database/migrations/090_player', 'P', 15);
+checkSeq('database/migrations/090_player', 'P', 16);
 checkSeq('database/seeds/phb', 'S', 80);
 checkSeq('database/seeds/subclass', 'S', 7);
 checkSeq('database/seeds/valda', 'V', 15);

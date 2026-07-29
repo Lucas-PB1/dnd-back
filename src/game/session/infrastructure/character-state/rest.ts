@@ -44,6 +44,8 @@ export async function applyLongRestState(input: {
   state.concentratingOn = null;
   state.conditions = [];
   state.tempHp = 0;
+  state.rageActive = false;
+  state.recklessActive = false;
   state.hitDiceCurrent = restoreHitDiceOnLongRest(
     state.hitDiceCurrent,
     character.level,

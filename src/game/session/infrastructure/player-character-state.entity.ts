@@ -45,4 +45,12 @@ export class PlayerCharacterState {
   /** Tiros restantes por arma equipada com Recarga: `{ [itemSlug]: remaining }`. */
   @Column({ name: 'firearm_chambers', type: 'jsonb', default: {} })
   firearmChambers!: Record<string, number>;
+
+  /** Fúria do Bárbaro ativa. */
+  @Column({ name: 'rage_active', type: 'boolean', default: false })
+  rageActive!: boolean;
+
+  /** Ataque Imprudente ativo. */
+  @Column({ name: 'reckless_active', type: 'boolean', default: false })
+  recklessActive!: boolean;
 }

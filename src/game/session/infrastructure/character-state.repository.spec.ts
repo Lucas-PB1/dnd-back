@@ -53,6 +53,8 @@ describe('CharacterStateRepository', () => {
         deathSaveFailures: 0,
         inspiration: false,
         firearmChambers: {},
+        rageActive: false,
+        recklessActive: false,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 
@@ -115,6 +117,8 @@ describe('CharacterStateRepository', () => {
         deathSaveFailures: 0,
         inspiration: false,
         firearmChambers: {},
+        rageActive: false,
+        recklessActive: false,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 

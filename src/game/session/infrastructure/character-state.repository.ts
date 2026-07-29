@@ -24,8 +24,11 @@ import { applyCastSpell } from './character-state/cast-spell';
 import { buildCharacterStateResponse } from './character-state/build-response';
 import {
   applyFireChamber,
+  applyRecoverAllRage,
   applyRecoverClassResource,
   applyReloadFirearm,
+  applyToggleRage,
+  applyToggleReckless,
   applyUseClassResource,
   applyUseManeuver,
   applyPatchState,
@@ -72,6 +75,8 @@ export class CharacterStateRepository {
         deathSaveFailures: 0,
         inspiration: false,
         firearmChambers: {},
+        rageActive: false,
+        recklessActive: false,
       });
       await this.state.save(row);
     }
@@ -83,6 +88,12 @@ export class CharacterStateRepository {
     }
     if (!row.firearmChambers) {
       row.firearmChambers = {};
+    }
+    if (row.rageActive == null) {
+      row.rageActive = false;
+    }
+    if (row.recklessActive == null) {
+      row.recklessActive = false;
     }
     return row;
   }
@@ -232,6 +243,47 @@ export class CharacterStateRepository {
       itemSlug,
       capacity,
       shots,
+      stateRepo: this.state,
+      buildResponse: (c, s) => this.buildResponse(c, s),
+    });
+  }
+
+  async toggleRage(
+    character: PlayerCharacter,
+    active?: boolean,
+  ): Promise<CharacterStateResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applyToggleRage({
+      character,
+      state,
+      active,
+      stateRepo: this.state,
+      dataSource: this.dataSource,
+      buildResponse: (c, s) => this.buildResponse(c, s),
+    });
+  }
+
+  async toggleReckless(
+    character: PlayerCharacter,
+    active?: boolean,
+  ): Promise<CharacterStateResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applyToggleReckless({
+      character,
+      state,
+      active,
+      stateRepo: this.state,
+      buildResponse: (c, s) => this.buildResponse(c, s),
+    });
+  }
+
+  async recoverAllRage(
+    character: PlayerCharacter,
+  ): Promise<CharacterStateResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applyRecoverAllRage({
+      character,
+      state,
       stateRepo: this.state,
       buildResponse: (c, s) => this.buildResponse(c, s),
     });

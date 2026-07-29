@@ -1,5 +1,10 @@
 jest.mock('./roll-weapon-context', () => ({
-  loadAccessibleCharacter: jest.fn().mockResolvedValue({ id: 'c1' }),
+  loadAccessibleCharacter: jest.fn().mockResolvedValue({
+    id: 'c1',
+    classSlug: 'fighter',
+    subclassSlug: null,
+    level: 5,
+  }),
   findEquippedWeaponAttack: jest.fn(),
 }));
 
@@ -25,11 +30,18 @@ describe('executeRollDamage', () => {
 
   it('returns graze-on-miss flat damage', async () => {
     (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
-      itemName: 'Greataxe',
-      grazeOnMissDamage: 3,
-      damageDice: '1d12',
-      damageBonus: 3,
-      greatWeaponFighting: false,
+      attack: {
+        itemName: 'Greataxe',
+        grazeOnMissDamage: 3,
+        damageDice: '1d12',
+        damageBonus: 3,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        abilitySlug: 'forca',
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
     });
     const result = await executeRollDamage({
       ...base,
@@ -45,8 +57,12 @@ describe('executeRollDamage', () => {
 
   it('rejects graze when mastery inactive', async () => {
     (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
-      itemName: 'Longsword',
-      grazeOnMissDamage: null,
+      attack: {
+        itemName: 'Longsword',
+        grazeOnMissDamage: null,
+        rageDamageBonus: 0,
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
     });
     await expect(
       executeRollDamage({
@@ -58,11 +74,18 @@ describe('executeRollDamage', () => {
 
   it('rolls normal and critical damage with GWF label', async () => {
     (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
-      itemName: 'Greataxe',
-      grazeOnMissDamage: null,
-      damageDice: '1d12',
-      damageBonus: 4,
-      greatWeaponFighting: true,
+      attack: {
+        itemName: 'Greataxe',
+        grazeOnMissDamage: null,
+        damageDice: '1d12',
+        damageBonus: 4,
+        greatWeaponFighting: true,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: '1d10',
+        abilitySlug: 'forca',
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
     });
     const result = await executeRollDamage({
       ...base,

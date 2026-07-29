@@ -53,6 +53,8 @@ describe('rest', () => {
     deathSaveFailures: 2,
     inspiration: true,
     firearmChambers: {},
+    rageActive: false,
+    recklessActive: false,
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });

@@ -86,4 +86,10 @@ export class WeaponAttackResponseDto {
 
   @ApiProperty({ example: false })
   hasRecoil!: boolean;
+
+  @ApiProperty({ example: 2, description: 'Dano da Fúria aplicado (0 se inativa)' })
+  rageDamageBonus!: number;
+
+  @ApiPropertyOptional({ example: '1d10' })
+  brutalStrikeDice!: string | null;
 }

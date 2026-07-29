@@ -1,12 +1,16 @@
-import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
-import type { SizeCategory } from '../domain/creature-size';
+import { applyItemAbilityBonuses } from '../../inventory/domain/permanent-item-effects';
+import {
+  barbarianCombatNotes,
+  fastMovementBonusMeters,
+} from '../domain/barbarian-rage';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
 import { Repository } from 'typeorm';
 import type { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
-import { applyItemAbilityBonuses } from '../../inventory/domain/permanent-item-effects';
+import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+import type { SizeCategory } from '../domain/creature-size';
 
 export type MappedCombatSlice = {
   armorClass: number;
@@ -23,6 +27,8 @@ export type MappedCombatSlice = {
   itemSpeedBonusMeters: number;
   /** Bônus de PV máximos de itens ativos. */
   itemHpBonus: number;
+  /** Notas de combate de classe (Bárbaro etc.). */
+  classCombatNotes: string[];
 };
 
 export async function resolveCharacterCombatSlice(input: {
@@ -88,6 +94,7 @@ export async function resolveCharacterCombatSlice(input: {
     combatScores,
     {
       classSlug,
+      subclassSlug,
       level,
       proficiencyBonus,
       featSlugs,
@@ -108,6 +115,8 @@ export async function resolveCharacterCombatSlice(input: {
     hasShield,
   });
 
+  const classSpeedBonus = fastMovementBonusMeters({ classSlug, level });
+
   return {
     armorClass: armor.armorClass,
     armorClassNote: armor.armorClassNote,
@@ -115,7 +124,8 @@ export async function resolveCharacterCombatSlice(input: {
     equipmentWarnings: compliance.warnings,
     cannotCastSpellsInArmor: compliance.cannotCastSpells,
     speedPenaltyMeters: compliance.speedPenaltyMeters,
-    itemSpeedBonusMeters: itemEffects.speedBonusMeters,
+    itemSpeedBonusMeters: itemEffects.speedBonusMeters + classSpeedBonus,
     itemHpBonus: itemEffects.hpBonus,
+    classCombatNotes: barbarianCombatNotes({ classSlug, level }),
   };
 }

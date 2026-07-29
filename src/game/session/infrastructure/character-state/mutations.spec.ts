@@ -31,6 +31,8 @@ describe('mutations', () => {
     grantedSpellUses: {},
     highElfCantripSwapAvailable: false,
     firearmChambers: {},
+    rageActive: false,
+    recklessActive: false,
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });

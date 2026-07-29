@@ -51,7 +51,13 @@ export async function resolveClassResources(
   dataSource: DataSource,
   character: PlayerCharacter,
 ): Promise<ClassResourceMax[]> {
-  const rows = await loadClassResourceSchedule(dataSource, character.classSlug);
+  const classRows = await loadClassResourceSchedule(
+    dataSource,
+    character.classSlug,
+  );
+  const subclassRows = character.subclassSlug
+    ? await loadSubclassResourceSchedule(dataSource, character.subclassSlug)
+    : [];
   const progression = await loadClassProgressionSnapshot(
     dataSource,
     character.classSlug,
@@ -60,7 +66,7 @@ export async function resolveClassResources(
   const mods = computeAbilityModifiers(character.abilityScores);
 
   return resolveClassResourceMaxima({
-    rows,
+    rows: [...classRows, ...subclassRows],
     level: character.level,
     proficiencyBonus: progression?.proficiencyBonus ?? 2,
     abilityModifiers: mods,
@@ -113,6 +119,40 @@ export async function loadClassResourceSchedule(
      WHERE c.slug = $1
      ORDER BY rd.slug, cr.unlock_level`,
     [classSlug],
+  );
+
+  return rows.map((row) => ({
+    resourceSlug: row.resource_slug,
+    resourceName: row.resource_name,
+    unlockLevel: row.unlock_level,
+    maxFormula: row.max_formula,
+    fixedMax: row.fixed_max,
+    recoverOneOnShort: row.recover_one_on_short,
+    recoverAllOnShort: row.recover_all_on_short,
+    recoverAllOnLong: row.recover_all_on_long,
+  }));
+}
+
+export async function loadSubclassResourceSchedule(
+  dataSource: DataSource,
+  subclassSlug: string,
+): Promise<ClassResourceScheduleRow[]> {
+  const rows = await dataSource.query<ClassResourceDbRow[]>(
+    `SELECT
+       rd.slug AS resource_slug,
+       rd.name AS resource_name,
+       sr.unlock_level,
+       sr.max_formula::text AS max_formula,
+       sr.fixed_max,
+       false AS recover_one_on_short,
+       false AS recover_all_on_short,
+       true AS recover_all_on_long
+     FROM rpg.phb_subclass_resource sr
+     JOIN rpg.phb_subclass s ON s.id = sr.subclass_id
+     JOIN rpg.phb_resource_definition rd ON rd.id = sr.resource_id
+     WHERE s.slug = $1
+     ORDER BY rd.slug, sr.unlock_level`,
+    [subclassSlug],
   );
 
   return rows.map((row) => ({

@@ -161,6 +161,15 @@ export class CharacterStateResponseDto {
     description: 'Tiros restantes na câmara por arma com Recarga',
   })
   firearmChambers!: Record<string, number>;
+
+  @ApiProperty({ example: false, description: 'Fúria do Bárbaro ativa' })
+  rageActive!: boolean;
+
+  @ApiProperty({
+    example: false,
+    description: 'Ataque Imprudente ativo',
+  })
+  recklessActive!: boolean;
 }
 
 export class UseClassResourceDto {
@@ -233,6 +242,26 @@ export class UseManeuverResponseDto {
 
   @ApiProperty({ example: '+12 PV Temporários' })
   note!: string;
+}
+
+export class ToggleRageDto {
+  @ApiPropertyOptional({
+    example: true,
+    description: 'true = entrar (gasta 1 Fúria); false = sair; omitido = alternar',
+  })
+  @IsOptional()
+  @IsBoolean()
+  active?: boolean;
+}
+
+export class ToggleRecklessDto {
+  @ApiPropertyOptional({
+    example: true,
+    description: 'true = ativar; false = desativar; omitido = alternar',
+  })
+  @IsOptional()
+  @IsBoolean()
+  active?: boolean;
 }
 
 export class FirearmChamberDto {

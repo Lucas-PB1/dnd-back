@@ -24,7 +24,7 @@ VALUES (
   '“Truques”',
   'Você pode invocar sua “magia” para lançar “Truques” em combate. Uma vez em cada um de seus turnos, ao atingir um alvo com um ataque baseado em Força, você pode usar um dos seguintes “Truques” de sua escolha.
 
-Mãos Mágicas. Você pode empurrar o alvo até 5 pés de distância de você, se ele for grande ou menor. Enquanto sua Fúria estiver ativa, você pode empurrar o alvo até 10 pés.
+Mãos Mágicas. Você pode empurrar o alvo até 1,5 metro de distância de você, se ele for grande ou menor. Enquanto sua Fúria estiver ativa, você pode empurrar o alvo até 3 metros.
 
 Toque Chocante. A força do seu ataque é bastante chocante. O alvo não pode fazer Ataques de Oportunidade até o final do turno atual. Enquanto sua Fúria estiver ativa, ela não poderá atingir Ataques de Oportunidade até o início do seu próximo turno.
 

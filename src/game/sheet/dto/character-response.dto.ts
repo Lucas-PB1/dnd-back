@@ -200,9 +200,17 @@ export class CharacterResponseDto {
 
   @ApiProperty({
     example: 0,
-    description: 'Bônus de deslocamento em metros de itens mágicos ativos',
+    description:
+      'Bônus de deslocamento em metros (itens + Movimento Rápido do Bárbaro)',
   })
   itemSpeedBonusMeters!: number;
+
+  @ApiProperty({
+    type: [String],
+    example: ['Sentido de Perigo: Vantagem em salvaguardas de Destreza'],
+    description: 'Notas de combate de classe (Bárbaro etc.)',
+  })
+  classCombatNotes!: string[];
 
   @ApiProperty({ type: [CharacterCampaignRefDto] })
   campaigns!: CharacterCampaignRefDto[];

@@ -26,6 +26,9 @@ export type WeaponAttackResolveContext = {
   itemAttackBonus?: number;
   itemDamageBonus?: number;
   level?: number;
+  subclassSlug?: string | null;
+  rageActive?: boolean;
+  recklessActive?: boolean;
 };
 
 @Injectable()
@@ -103,6 +106,9 @@ export class ResolveEquippedWeaponAttacks {
       itemDamageBonus: context.itemDamageBonus,
       classSlug: context.classSlug,
       level: context.level,
+      subclassSlug: context.subclassSlug,
+      rageActive: context.rageActive,
+      recklessActive: context.recklessActive,
     });
   }
 

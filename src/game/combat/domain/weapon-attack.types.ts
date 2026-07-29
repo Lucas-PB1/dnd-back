@@ -36,6 +36,12 @@ export type WeaponAttackContext = {
   classSlug?: string | null;
   /** Nível do personagem. */
   level?: number;
+  /** Subclasse (efeitos numéricos de trilha, ex. Fanático). */
+  subclassSlug?: string | null;
+  /** Fúria do Bárbaro ativa no estado da sessão. */
+  rageActive?: boolean;
+  /** Ataque Imprudente ativo no estado da sessão. */
+  recklessActive?: boolean;
 };
 
 export type WeaponAttackRole = 'main' | 'light_bonus' | 'dual_bonus';
@@ -85,4 +91,8 @@ export type WeaponAttack = {
   reloadCapacity: number | null;
   /** Propriedade Recuo ativa nesta arma. */
   hasRecoil: boolean;
+  /** Dano da Fúria já aplicado neste ataque (0 se inativa / inelegível). */
+  rageDamageBonus: number;
+  /** Dados de Golpe Brutal disponíveis neste nível (`1d10` / `2d10`). */
+  brutalStrikeDice: string | null;
 };

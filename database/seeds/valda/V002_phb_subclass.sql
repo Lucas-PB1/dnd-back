@@ -9,10 +9,8 @@ VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'),
   'Caminho do Mago Musculoso',
   'Seja um “mago” musculoso e furioso',
-  'Você é um mago! Talvez você tenha ido para uma escola de magia com uma bolsa de futebol ou simplesmente tenha pegado um livro na academia e começado a ler. Não importa como você chegou aqui, você é um mago, que por coincidência tem músculos enormes e ondulantes. Você tem o grande chapéu idiota e o livro',
+  'Você é um “mago” de músculos enormes: chapéu pontudo, livro de bobagens e a convicção inabalável de que ninguém deve questionar sua magia.',
   'Você é um mago! Talvez você tenha ido para uma escola de magia com uma bolsa de futebol ou simplesmente tenha pegado um livro na academia e começado a ler. Não importa como você chegou aqui, você é um mago, que por coincidência tem músculos enormes e ondulantes. Você tem o grande chapéu idiota e o livro cheio de bobagens e tudo mais!
-
-Lucas Ferreira CM
 
 Você gentilmente lembra aos outros, muitas vezes batendo neles até virar polpa e quebrando seus ossos, que seus poderes mágicos não devem ser questionados. Você é um bom mago – o melhor até! E só um tolo diria o contrário.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')

@@ -30,7 +30,7 @@ export async function executeRollAttack(input: {
     input.userId,
     input.characterId,
   );
-  const attack = await findEquippedWeaponAttack(
+  const { attack, combatFlags } = await findEquippedWeaponAttack(
     {
       sheet: input.sheet,
       domain: input.domain,
@@ -54,6 +54,15 @@ export async function executeRollAttack(input: {
   ) {
     mode = 'disadvantage';
   }
+  if (
+    combatFlags.recklessActive &&
+    character.classSlug === 'barbarian' &&
+    input.dto.mode === 'melee' &&
+    attack.abilitySlug === 'forca' &&
+    mode === 'normal'
+  ) {
+    mode = 'advantage';
+  }
   const result = rollD20Check(attack.attackBonus, mode);
   const kept = result.d20.kept[0] ?? 0;
   const critical = kept >= (attack.critThreshold ?? 20);
@@ -65,6 +74,11 @@ export async function executeRollAttack(input: {
   }
   if (input.dto.automatic) {
     notes.push('Automática: 2 ataques / 2× munição');
+  }
+  if (mode === 'advantage' && combatFlags.recklessActive) {
+    notes.push(
+      'Imprudente: vantagem ofensiva; ataques contra você têm vantagem',
+    );
   }
   return {
     kind: 'attack',

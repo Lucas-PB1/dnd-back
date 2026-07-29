@@ -1,5 +1,9 @@
 jest.mock('./roll-weapon-context', () => ({
-  loadAccessibleCharacter: jest.fn().mockResolvedValue({ id: 'c1' }),
+  loadAccessibleCharacter: jest.fn().mockResolvedValue({
+    id: 'c1',
+    classSlug: 'fighter',
+    level: 5,
+  }),
   findEquippedWeaponAttack: jest.fn(),
 }));
 
@@ -24,9 +28,14 @@ describe('executeRollAttack', () => {
 
   it('forces disadvantage when attack has disadvantage and mode normal', async () => {
     (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
-      itemName: 'Longbow',
-      attackBonus: 5,
-      attackDisadvantage: true,
+      attack: {
+        itemName: 'Longbow',
+        attackBonus: 5,
+        attackDisadvantage: true,
+        abilitySlug: 'destreza',
+        critThreshold: 20,
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
     });
     const result = await executeRollAttack({
       ...base,
@@ -39,9 +48,14 @@ describe('executeRollAttack', () => {
 
   it('keeps explicit advantage and melee label', async () => {
     (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
-      itemName: 'Longsword',
-      attackBonus: 4,
-      attackDisadvantage: true,
+      attack: {
+        itemName: 'Longsword',
+        attackBonus: 4,
+        attackDisadvantage: true,
+        abilitySlug: 'forca',
+        critThreshold: 20,
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
     });
     const result = await executeRollAttack({
       ...base,
