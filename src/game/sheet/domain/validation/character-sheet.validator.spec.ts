@@ -48,7 +48,12 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
     catalogLookup = {
       findClassOrFail: jest.fn().mockResolvedValue({ skillChoiceCount: 2 }),
       validateClassSkillChoices: jest.fn().mockResolvedValue(undefined),
-      assertFeatInCatalog: jest.fn().mockResolvedValue({ categorySlug: 'general' }),
+      assertFeatInCatalog: jest.fn().mockImplementation((slug: string) =>
+        Promise.resolve({
+          categorySlug:
+            slug === 'dueling' || slug === 'defense' ? 'fighting-style' : 'general',
+        }),
+      ),
       findBackgroundOrFail: jest.fn().mockResolvedValue({
         languageChoiceCount: 0,
         abilityOptionSlugs: [],
@@ -77,7 +82,11 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
           return Promise.resolve([{ optionKey: 'fighting_style' }]);
         }
         if (sql.includes('phb_class_fighting_style') || sql.includes('phb_fighting_style')) {
-          return Promise.resolve([{ slug: 'defense' }, { ok: 1 }]);
+          return Promise.resolve([
+            { slug: 'defense' },
+            { slug: 'archery' },
+            { ok: 1 },
+          ]);
         }
         return Promise.resolve([]);
       }),
@@ -163,7 +172,8 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         {
           ...emptyInput,
           classSkillSlugs: ['athletics', 'perception'],
-          subclassOptions: [{ optionKey: 'fighting_style', valueId: 'defense' }],
+          characterFeats: [{ featSlug: 'defense', instanceIndex: 0 }],
+          subclassOptions: [{ optionKey: 'fighting_style', valueId: 'archery' }],
         },
         ctx,
       ),

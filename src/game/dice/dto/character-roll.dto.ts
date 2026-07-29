@@ -26,6 +26,24 @@ export class RollAttackDto {
   @IsOptional()
   @IsBoolean()
   automatic?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Ataques Estudados (Guerreiro nv.13+): vantagem após errar o mesmo alvo',
+  })
+  @IsOptional()
+  @IsBoolean()
+  studiedAttack?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Chute na Porta (Explorador de Masmorras): vantagem na 1ª rodada',
+  })
+  @IsOptional()
+  @IsBoolean()
+  doorKick?: boolean;
 }
 
 export class RollDamageDto {
@@ -81,6 +99,33 @@ export class RollDamageDto {
   @IsOptional()
   @IsBoolean()
   divineFury?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Golpe Psiônico (Combatente Psíquico): gasta 1 Dado de Energia + INT',
+  })
+  @IsOptional()
+  @IsBoolean()
+  psiStrike?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Matar Monstro (Explorador de Masmorras): +1d10 vs tipos elegíveis',
+  })
+  @IsOptional()
+  @IsBoolean()
+  monsterSlayer?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Ataque Preciso (Mestre da Batalha): adiciona Dado de Superioridade (já gasto na sessão)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  precisionAttack?: boolean;
 }
 
 export class RollSkillDto {
@@ -112,6 +157,15 @@ export class RollSavingThrowDto {
   @IsOptional()
   @IsIn(['normal', 'advantage', 'disadvantage'])
   advantage?: AdvantageMode;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Indomável (Guerreiro nv.9+): rerrola salvaguarda com +nível (gasta uso)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  indomitable?: boolean;
 }
 
 export class RollInitiativeDto {

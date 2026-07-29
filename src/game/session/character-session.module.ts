@@ -17,6 +17,7 @@ import { RestHandler } from './application/rest.handler';
 import { UseClassResourceHandler } from './application/use-class-resource.handler';
 import { GunslingerActionsHandler } from './application/gunslinger-actions.handler';
 import { BarbarianActionsHandler } from './application/barbarian-actions.handler';
+import { FighterActionsHandler } from './application/fighter-actions.handler';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { BarbarianActionsHandler } from './application/barbarian-actions.handler
     UseClassResourceHandler,
     GunslingerActionsHandler,
     BarbarianActionsHandler,
+    FighterActionsHandler,
   ],
   exports: [CharacterStateRepository],
 })

@@ -4,7 +4,7 @@ INSERT INTO rpg.phb_spell_slot_pattern (slug, name, description)
 VALUES (
   'third',
   'Conjurador de um terço',
-  'Slots de magia de 1/3 caster (Spellslinger; futuro EK/AT). Começa no nível 3.'
+  'Slots de magia de 1/3 caster (Cavaleiro Místico, Spellslinger, etc.). Começa no nível 3.'
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,

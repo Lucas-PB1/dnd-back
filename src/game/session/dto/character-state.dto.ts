@@ -264,6 +264,76 @@ export class ToggleRecklessDto {
   active?: boolean;
 }
 
+export class SecondWindResponseDto {
+  @ApiProperty({ type: () => CharacterStateResponseDto })
+  state!: CharacterStateResponseDto;
+
+  @ApiProperty({ example: '1d10+5' })
+  expression!: string;
+
+  @ApiProperty({ example: 12 })
+  healAmount!: number;
+
+  @ApiProperty({ example: 8 })
+  hitPointsCurrent!: number;
+
+  @ApiPropertyOptional({
+    example: 'Ajuste Tático: mova-se até metade do Deslocamento sem provocar AO',
+  })
+  note?: string;
+}
+
+export class TacticalMindDto {
+  @ApiProperty({
+    example: 14,
+    description: 'Total atual do teste de atributo (já com modificadores)',
+  })
+  @IsInt()
+  @Min(1)
+  checkTotal!: number;
+
+  @ApiProperty({
+    example: 15,
+    description: 'CD do teste (sucesso se total+1d10 >= DC)',
+  })
+  @IsInt()
+  @Min(1)
+  dc!: number;
+}
+
+export class TacticalMindResponseDto {
+  @ApiProperty({ type: () => CharacterStateResponseDto })
+  state!: CharacterStateResponseDto;
+
+  @ApiProperty({ example: '1d10' })
+  expression!: string;
+
+  @ApiProperty({ example: 7 })
+  roll!: number;
+
+  @ApiProperty({ example: 21 })
+  newTotal!: number;
+
+  @ApiProperty({ example: true })
+  success!: boolean;
+
+  @ApiProperty({ example: true })
+  resourceSpent!: boolean;
+
+  @ApiProperty({ example: 'Mente Tática: sucesso; uso de Recuperar Fôlego gasto' })
+  note!: string;
+}
+
+export class ActionSurgeResponseDto {
+  @ApiProperty({ type: () => CharacterStateResponseDto })
+  state!: CharacterStateResponseDto;
+
+  @ApiProperty({
+    example: 'Surto de Ação: execute uma ação adicional (exceto Usar Magia)',
+  })
+  note!: string;
+}
+
 export class FirearmChamberDto {
   @ApiProperty({ example: 'revolver' })
   itemSlug!: string;

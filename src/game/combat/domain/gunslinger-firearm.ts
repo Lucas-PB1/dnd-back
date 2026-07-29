@@ -3,6 +3,8 @@
  * Fonte: features de classe; o motor só aplica números.
  */
 
+import { resolveFighterAttackCritThreshold } from './fighter-features';
+
 /** Limiar mínimo no d20 para crítico à distância (Pistoleiro). */
 export function gunslingerCritThreshold(level: number): number {
   if (level >= 17) return 17;
@@ -13,7 +15,6 @@ export function gunslingerCritThreshold(level: number): number {
 
 export function isGunslingerClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'gunslinger';
-
 }
 
 /**
@@ -57,18 +58,34 @@ export function applyOverkillDamageBonus(input: {
   };
 }
 
-/** Limiar de crítico efetivo para um ataque à distância do Pistoleiro. */
+/**
+ * Limiar de crítico efetivo: Pistoleiro (à distância) ou Campeão (qualquer).
+ * O menor limiar (melhor crítico) vence se ambos se aplicarem.
+ */
 export function resolveAttackCritThreshold(input: {
   classSlug?: string | null;
+  subclassSlug?: string | null;
   level?: number;
   mode: 'melee' | 'ranged';
 }): number {
+  let threshold = 20;
+
   if (
-    input.mode !== 'ranged' ||
-    !isGunslingerClass(input.classSlug) ||
-    input.level == null
+    input.mode === 'ranged' &&
+    isGunslingerClass(input.classSlug) &&
+    input.level != null
   ) {
-    return 20;
+    threshold = Math.min(threshold, gunslingerCritThreshold(input.level));
   }
-  return gunslingerCritThreshold(input.level);
+
+  threshold = Math.min(
+    threshold,
+    resolveFighterAttackCritThreshold({
+      classSlug: input.classSlug,
+      subclassSlug: input.subclassSlug,
+      level: input.level,
+    }),
+  );
+
+  return threshold;
 }

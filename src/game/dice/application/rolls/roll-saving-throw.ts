@@ -1,4 +1,6 @@
+import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { isFighterClass } from '../../../combat/domain/fighter-features';
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import { collectSaveProficiencyAbilities } from '../../../sheet/domain/stats/character-check-bonuses';
 import { computeAbilityModifiers } from '../../../sheet/domain/stats/character-derived-stats';
@@ -14,6 +16,8 @@ import { loadAccessibleCharacter } from './roll-weapon-context';
 import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
 import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-item-effects';
 import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
+import { applyResourceSpend } from '../../../session/domain/class-resources';
+import { resolveClassResources } from '../../../session/infrastructure/character-state/class-resources';
 
 const ABILITY_LABELS: Record<AbilityKey, string> = {
   forca: 'Força',
@@ -71,7 +75,46 @@ export async function executeRollSavingThrow(input: {
   );
   const mods = computeAbilityModifiers(scores);
   const itemSaveBonus = itemEffects.savingThrowBonuses[ability] ?? 0;
-  const bonus = mods[ability] + (proficient ? pb : 0) + itemSaveBonus;
+  let bonus = mods[ability] + (proficient ? pb : 0) + itemSaveBonus;
+  const notes: string[] = [];
+
+  if (input.dto.indomitable) {
+    if (!isFighterClass(character.classSlug) || character.level < 9) {
+      throw new BadRequestException('Indomitable requires Fighter level 9+');
+    }
+    const resources = await resolveClassResources(
+      input.dataSource,
+      character,
+    );
+    const indomitable = resources.find((item) => item.slug === 'indomitable');
+    if (!indomitable) {
+      throw new BadRequestException('Indomitable is not available');
+    }
+    const stateRows = await input.dataSource.query<
+      { resources_used: Record<string, number> }[]
+    >(
+      `SELECT resources_used FROM rpg.player_character_state WHERE character_id = $1`,
+      [character.id],
+    );
+    const used = stateRows[0]?.resources_used ?? {};
+    let nextUsed: Record<string, number>;
+    try {
+      nextUsed = applyResourceSpend(used, 'indomitable', indomitable.max, 1);
+    } catch (error) {
+      throw new BadRequestException(
+        error instanceof Error ? error.message : 'Cannot spend Indomitable',
+      );
+    }
+    await input.dataSource.query(
+      `UPDATE rpg.player_character_state
+       SET resources_used = $2::jsonb
+       WHERE character_id = $1`,
+      [character.id, JSON.stringify(nextUsed)],
+    );
+    bonus += character.level;
+    notes.push(`Indomável: +${character.level} (rerrolagem)`);
+  }
+
   const result = rollD20Check(bonus, input.dto.advantage ?? 'normal');
   return {
     kind: 'saving_throw',
@@ -82,5 +125,6 @@ export async function executeRollSavingThrow(input: {
     mode: result.mode,
     rolls: result.d20.rolls,
     kept: result.d20.kept,
+    note: notes.length > 0 ? notes.join(' · ') : undefined,
   };
 }

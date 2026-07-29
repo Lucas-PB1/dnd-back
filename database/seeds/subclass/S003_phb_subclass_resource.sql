@@ -672,3 +672,44 @@ INSERT INTO rpg.phb_subclass_resource (subclass_id, resource_id, unlock_level, m
          max_formula = EXCLUDED.max_formula,
          fixed_max = EXCLUDED.fixed_max,
          feature_id = EXCLUDED.feature_id;
+
+-- Recuperação data-driven (após T081)
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = TRUE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'battle-master'
+  AND rd.slug = 'superiority-dice';
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = FALSE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'battle-master'
+  AND rd.slug = 'know-your-enemy';
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = TRUE,
+    recover_all_on_short = FALSE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'psi-warrior'
+  AND rd.slug = 'psi-energy-dice';
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = TRUE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'psi-warrior'
+  AND rd.slug IN ('psychic-leap', 'energy-bulwark', 'telekinetic-master');

@@ -8,6 +8,12 @@ import {
   type ClassResourceScheduleRow,
 } from '../../domain/class-resources';
 import { riskDieFaces, riskDieLabel } from '../../domain/risk-die';
+import {
+  psiEnergyDieFaces,
+  psiEnergyDieLabel,
+  superiorityDieFaces,
+  superiorityDieLabel,
+} from '../../../combat/domain/fighter-features';
 import { PlayerCharacterState } from '../player-character-state.entity';
 
 export type ClassResourceDbRow = {
@@ -31,18 +37,31 @@ export async function buildClassResourceState(
   return resources.map((resource) => {
     const spent = used[resource.slug] ?? 0;
     const isRisk = resource.slug === 'risk';
+    const isSuperiority = resource.slug === 'superiority-dice';
+    const isPsi = resource.slug === 'psi-energy-dice';
+    const dieExtras = isRisk
+      ? {
+          dieFaces: riskDieFaces(character.level),
+          dieLabel: riskDieLabel(character.level),
+        }
+      : isSuperiority
+        ? {
+            dieFaces: superiorityDieFaces(character.level),
+            dieLabel: superiorityDieLabel(character.level),
+          }
+        : isPsi
+          ? {
+              dieFaces: psiEnergyDieFaces(character.level),
+              dieLabel: psiEnergyDieLabel(character.level),
+            }
+          : {};
     return {
       slug: resource.slug,
       name: resource.name,
       max: resource.max,
       used: spent,
       remaining: Math.max(0, resource.max - spent),
-      ...(isRisk
-        ? {
-            dieFaces: riskDieFaces(character.level),
-            dieLabel: riskDieLabel(character.level),
-          }
-        : {}),
+      ...dieExtras,
     };
   });
 }
@@ -144,9 +163,9 @@ export async function loadSubclassResourceSchedule(
        sr.unlock_level,
        sr.max_formula::text AS max_formula,
        sr.fixed_max,
-       false AS recover_one_on_short,
-       false AS recover_all_on_short,
-       true AS recover_all_on_long
+       sr.recover_one_on_short,
+       sr.recover_all_on_short,
+       sr.recover_all_on_long
      FROM rpg.phb_subclass_resource sr
      JOIN rpg.phb_subclass s ON s.id = sr.subclass_id
      JOIN rpg.phb_resource_definition rd ON rd.id = sr.resource_id

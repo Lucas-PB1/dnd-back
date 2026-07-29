@@ -4,6 +4,12 @@ import {
   divineFuryExtraDice,
   hasDivineFury,
 } from '../../../combat/domain/barbarian-rage';
+import {
+  DUNGEONEER_SLAYER_TYPES,
+  psiEnergyDieFaces,
+  superiorityDieFaces,
+} from '../../../combat/domain/fighter-features';
+import { abilityModifier } from '../../../sheet/domain/stats/ability-modifier';
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
 import type { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
@@ -148,6 +154,59 @@ export async function executeRollDamage(input: {
     notes.push('Fúria Divina (Necrótico ou Radiante, à escolha)');
   }
 
+  if (
+    input.dto.psiStrike &&
+    character.subclassSlug === 'psi-warrior' &&
+    character.level >= 3
+  ) {
+    const faces = psiEnergyDieFaces(character.level);
+    if (faces != null) {
+      const intMod = abilityModifier(character.abilityScores.inteligencia);
+      const psi = rollDamageParts(`1d${faces}+${intMod}`, 0, {
+        critical: false,
+      });
+      total += psi.total;
+      expression = `${expression}+${psi.expression}`;
+      rolls.push(...(psi.dice[0]?.rolls ?? []));
+      notes.push(
+        'Golpe Psiônico: dano Energético (gaste 1 Dado de Energia Psiônica)',
+      );
+    }
+  }
+
+  if (
+    input.dto.monsterSlayer &&
+    character.subclassSlug === 'dungeoneer' &&
+    character.level >= 10
+  ) {
+    const slayer = rollDamageParts('1d10', 0, {
+      critical: input.dto.critical,
+    });
+    total += slayer.total;
+    expression = `${expression}+${slayer.expression}`;
+    rolls.push(...(slayer.dice[0]?.rolls ?? []));
+    notes.push(
+      `Matar Monstro: +1d10 vs ${DUNGEONEER_SLAYER_TYPES.join(', ')} (1×/turno)`,
+    );
+  }
+
+  if (
+    input.dto.precisionAttack &&
+    character.subclassSlug === 'battle-master' &&
+    character.level >= 3
+  ) {
+    const faces = superiorityDieFaces(character.level);
+    if (faces != null) {
+      const precision = rollDamageParts(`1d${faces}`, 0, { critical: false });
+      total += precision.total;
+      expression = `${expression}+${precision.expression}`;
+      rolls.push(...(precision.dice[0]?.rolls ?? []));
+      notes.push(
+        'Ataque Preciso / manobra: Dado de Superioridade (gaste 1 uso)',
+      );
+    }
+  }
+
   const labelExtras = [
     input.dto.critical ? ' (crítico)' : '',
     attack.greatWeaponFighting ? ' (GWF)' : '',
@@ -155,6 +214,9 @@ export async function executeRollDamage(input: {
     input.dto.headShot ? ' (Tiro na cabeça)' : '',
     input.dto.brutalStrike ? ' (Golpe Brutal)' : '',
     input.dto.divineFury ? ' (Fúria Divina)' : '',
+    input.dto.psiStrike ? ' (Golpe Psiônico)' : '',
+    input.dto.monsterSlayer ? ' (Matar Monstro)' : '',
+    input.dto.precisionAttack ? ' (Superioridade)' : '',
   ].join('');
 
   return {

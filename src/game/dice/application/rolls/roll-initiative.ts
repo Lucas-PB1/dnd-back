@@ -36,7 +36,15 @@ export async function executeRollInitiative(input: {
   );
   const mods = computeAbilityModifiers(scores);
   const bonus = initiativeBonus(mods.destreza, pb, sheet.characterFeats);
-  const result = rollD20Check(bonus, input.dto.advantage ?? 'normal');
+  let mode = input.dto.advantage ?? 'normal';
+  if (
+    character.subclassSlug === 'champion' &&
+    character.level >= 3 &&
+    mode === 'normal'
+  ) {
+    mode = 'advantage';
+  }
+  const result = rollD20Check(bonus, mode);
   return {
     kind: 'initiative',
     label: 'Iniciativa',
@@ -46,5 +54,9 @@ export async function executeRollInitiative(input: {
     mode: result.mode,
     rolls: result.d20.rolls,
     kept: result.d20.kept,
+    note:
+      mode === 'advantage' && character.subclassSlug === 'champion'
+        ? 'Atleta Extraordinário: Vantagem na Iniciativa'
+        : undefined,
   };
 }

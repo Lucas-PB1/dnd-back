@@ -71,6 +71,21 @@ function resolveFormulaMax(
     if (level >= 3) return 4;
     return 0;
   }
+  if (row.maxFormula === 'superiority_dice_count') {
+    if (level >= 15) return 6;
+    if (level >= 7) return 5;
+    if (level >= 3) return 4;
+    return 0;
+  }
+  if (row.maxFormula === 'psi_energy_dice_count') {
+    if (level >= 17) return 12;
+    if (level >= 13) return 10;
+    if (level >= 11) return 8;
+    if (level >= 9) return 8;
+    if (level >= 5) return 6;
+    if (level >= 3) return 4;
+    return 0;
+  }
   const ability = abilityModFromFormula(row.maxFormula, mods);
   if (ability != null) return Math.max(1, ability);
   return row.fixedMax ?? 0;

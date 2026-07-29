@@ -12,10 +12,13 @@ import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-gra
 import { PhbCondition } from './phb-condition.entity';
 import { PlayerCharacterState } from './player-character-state.entity';
 import {
+  ActionSurgeResponseDto,
   CastSpellDto,
   CharacterStateResponseDto,
   PatchCharacterStateDto,
   RestResponseDto,
+  SecondWindResponseDto,
+  TacticalMindResponseDto,
   UseClassResourceResponseDto,
   UseManeuverResponseDto,
 } from '../dto/character-state.dto';
@@ -23,10 +26,13 @@ import { grantHitDiceOnLevelUp } from '../domain/hit-dice-rest';
 import { applyCastSpell } from './character-state/cast-spell';
 import { buildCharacterStateResponse } from './character-state/build-response';
 import {
+  applyActionSurge,
   applyFireChamber,
   applyRecoverAllRage,
   applyRecoverClassResource,
   applyReloadFirearm,
+  applySecondWind,
+  applyTacticalMind,
   applyToggleRage,
   applyToggleReckless,
   applyUseClassResource,
@@ -285,6 +291,50 @@ export class CharacterStateRepository {
       character,
       state,
       stateRepo: this.state,
+      buildResponse: (c, s) => this.buildResponse(c, s),
+    });
+  }
+
+  async useSecondWind(
+    character: PlayerCharacter,
+  ): Promise<SecondWindResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applySecondWind({
+      character,
+      state,
+      stateRepo: this.state,
+      characters: this.characters,
+      dataSource: this.dataSource,
+      buildResponse: (c, s) => this.buildResponse(c, s),
+    });
+  }
+
+  async useTacticalMind(
+    character: PlayerCharacter,
+    checkTotal: number,
+    dc: number,
+  ): Promise<TacticalMindResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applyTacticalMind({
+      character,
+      state,
+      checkTotal,
+      dc,
+      stateRepo: this.state,
+      dataSource: this.dataSource,
+      buildResponse: (c, s) => this.buildResponse(c, s),
+    });
+  }
+
+  async useActionSurge(
+    character: PlayerCharacter,
+  ): Promise<ActionSurgeResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applyActionSurge({
+      character,
+      state,
+      stateRepo: this.state,
+      dataSource: this.dataSource,
       buildResponse: (c, s) => this.buildResponse(c, s),
     });
   }

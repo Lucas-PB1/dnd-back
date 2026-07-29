@@ -63,6 +63,22 @@ export async function executeRollAttack(input: {
   ) {
     mode = 'advantage';
   }
+  if (
+    input.dto.studiedAttack &&
+    character.classSlug === 'fighter' &&
+    character.level >= 13 &&
+    mode === 'normal'
+  ) {
+    mode = 'advantage';
+  }
+  if (
+    input.dto.doorKick &&
+    character.subclassSlug === 'dungeoneer' &&
+    character.level >= 3 &&
+    mode === 'normal'
+  ) {
+    mode = 'advantage';
+  }
   const result = rollD20Check(attack.attackBonus, mode);
   const kept = result.d20.kept[0] ?? 0;
   const critical = kept >= (attack.critThreshold ?? 20);
@@ -79,6 +95,12 @@ export async function executeRollAttack(input: {
     notes.push(
       'Imprudente: vantagem ofensiva; ataques contra você têm vantagem',
     );
+  }
+  if (input.dto.studiedAttack) {
+    notes.push('Ataques Estudados: vantagem contra o mesmo alvo');
+  }
+  if (input.dto.doorKick) {
+    notes.push('Chute na Porta: vantagem na primeira rodada');
   }
   return {
     kind: 'attack',

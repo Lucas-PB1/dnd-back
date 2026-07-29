@@ -97,14 +97,24 @@ describe('class-resources', () => {
     expect(bardic?.max).toBe(1);
   });
 
-  it('resolves second wind from proficiency bonus', () => {
+  it('resolves second wind from fixed table (PHB 2024)', () => {
     const rows: ClassResourceScheduleRow[] = [
       {
         resourceSlug: 'secondWind',
         resourceName: 'Recuperar Fôlego',
         unlockLevel: 1,
-        maxFormula: 'proficiency_bonus',
-        fixedMax: null,
+        maxFormula: 'fixed',
+        fixedMax: 2,
+        recoverOneOnShort: true,
+        recoverAllOnShort: false,
+        recoverAllOnLong: true,
+      },
+      {
+        resourceSlug: 'secondWind',
+        resourceName: 'Recuperar Fôlego',
+        unlockLevel: 4,
+        maxFormula: 'fixed',
+        fixedMax: 3,
         recoverOneOnShort: true,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
@@ -117,6 +127,39 @@ describe('class-resources', () => {
       abilityModifiers: mods,
     });
     expect(secondWind?.max).toBe(3);
+  });
+
+  it('resolves superiority and psi energy dice counts', () => {
+    const rows: ClassResourceScheduleRow[] = [
+      {
+        resourceSlug: 'superiority-dice',
+        resourceName: 'Superioridade',
+        unlockLevel: 3,
+        maxFormula: 'superiority_dice_count',
+        fixedMax: null,
+        recoverOneOnShort: false,
+        recoverAllOnShort: true,
+        recoverAllOnLong: true,
+      },
+      {
+        resourceSlug: 'psi-energy-dice',
+        resourceName: 'Psi',
+        unlockLevel: 3,
+        maxFormula: 'psi_energy_dice_count',
+        fixedMax: null,
+        recoverOneOnShort: true,
+        recoverAllOnShort: false,
+        recoverAllOnLong: true,
+      },
+    ];
+    const resolved = resolveClassResourceMaxima({
+      rows,
+      level: 7,
+      proficiencyBonus: 3,
+      abilityModifiers: mods,
+    });
+    expect(resolved.find((r) => r.slug === 'superiority-dice')?.max).toBe(5);
+    expect(resolved.find((r) => r.slug === 'psi-energy-dice')?.max).toBe(6);
   });
 
   it('resolves level and level_plus_one formulas', () => {

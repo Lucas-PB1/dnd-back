@@ -202,6 +202,7 @@ function computeOneAttack(
 
   const critThreshold = resolveAttackCritThreshold({
     classSlug: context.classSlug,
+    subclassSlug: context.subclassSlug,
     level: context.level,
     mode,
   });

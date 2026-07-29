@@ -376,6 +376,59 @@ INSERT INTO rpg.phb_subclass_option_value (subclass_id, option_key, value_id, la
            'maneuver3', 'precision-attack', 'Ataque Preciso', 6)
          ON CONFLICT (subclass_id, option_key, value_id) DO UPDATE SET label = EXCLUDED.label;
 
+-- Manobras adicionais PHB 2024 (slots 1–3)
+INSERT INTO rpg.phb_subclass_option_value (subclass_id, option_key, value_id, label, sort_order)
+SELECT s.id, k.option_key, v.value_id, v.label, v.sort_order
+FROM rpg.phb_subclass s
+CROSS JOIN (VALUES ('maneuver1'), ('maneuver2'), ('maneuver3')) AS k(option_key)
+CROSS JOIN (VALUES
+  ('trip-attack', 'Ataque Derrubador', 7),
+  ('pushing-attack', 'Ataque Empurrão', 8),
+  ('riposte', 'Repostagem', 9),
+  ('rally', 'Reunir', 10),
+  ('commanders-strike', 'Golpe do Comandante', 11),
+  ('maneuvering-attack', 'Ataque de Manobra', 12),
+  ('goading-attack', 'Ataque Provocador', 13),
+  ('feinting-attack', 'Ataque Fintado', 14),
+  ('evasive-footwork', 'Pés Escorregadios', 15),
+  ('ambush', 'Emboscada', 16),
+  ('bait-and-switch', 'Isca e Troca', 17),
+  ('commanding-presence', 'Presença Comandante', 18),
+  ('tactical-assessment', 'Avaliação Tática', 19),
+  ('disarming-attack', 'Ataque Desarmador', 20)
+) AS v(value_id, label, sort_order)
+WHERE s.slug = 'battle-master'
+ON CONFLICT (subclass_id, option_key, value_id) DO UPDATE SET label = EXCLUDED.label;
+
+-- Slots extras de manobra (nv.7/10/15: +2 cada)
+INSERT INTO rpg.phb_subclass_option_def (subclass_id, option_key, label, unlock_level, value_type)
+SELECT s.id, v.option_key, v.label, v.unlock_level, 'catalog'::rpg.option_value_type
+FROM rpg.phb_subclass s
+CROSS JOIN (VALUES
+  ('maneuver4', 'Manobra 4', 7),
+  ('maneuver5', 'Manobra 5', 7),
+  ('maneuver6', 'Manobra 6', 10),
+  ('maneuver7', 'Manobra 7', 10),
+  ('maneuver8', 'Manobra 8', 15),
+  ('maneuver9', 'Manobra 9', 15)
+) AS v(option_key, label, unlock_level)
+WHERE s.slug = 'battle-master'
+ON CONFLICT (subclass_id, option_key) DO UPDATE SET
+  label = EXCLUDED.label,
+  unlock_level = EXCLUDED.unlock_level;
+
+INSERT INTO rpg.phb_subclass_option_value (subclass_id, option_key, value_id, label, sort_order)
+SELECT s.id, k.option_key, src.value_id, src.label, src.sort_order
+FROM rpg.phb_subclass s
+CROSS JOIN (VALUES
+  ('maneuver4'), ('maneuver5'), ('maneuver6'),
+  ('maneuver7'), ('maneuver8'), ('maneuver9')
+) AS k(option_key)
+JOIN rpg.phb_subclass_option_value src
+  ON src.subclass_id = s.id AND src.option_key = 'maneuver1'
+WHERE s.slug = 'battle-master'
+ON CONFLICT (subclass_id, option_key, value_id) DO UPDATE SET label = EXCLUDED.label;
+
 INSERT INTO rpg.phb_subclass_option_value (subclass_id, option_key, value_id, label, sort_order)
          VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'wild-heart'),
            'wildRageAspect', 'eagle', 'Águia', 1)

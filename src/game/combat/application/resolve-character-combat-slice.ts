@@ -3,6 +3,11 @@ import {
   barbarianCombatNotes,
   fastMovementBonusMeters,
 } from '../domain/barbarian-rage';
+import {
+  attacksPerAction as resolveAttacksPerAction,
+  fighterCombatNotes,
+  isFighterClass,
+} from '../domain/fighter-features';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
@@ -27,8 +32,10 @@ export type MappedCombatSlice = {
   itemSpeedBonusMeters: number;
   /** Bônus de PV máximos de itens ativos. */
   itemHpBonus: number;
-  /** Notas de combate de classe (Bárbaro etc.). */
+  /** Notas de combate de classe (Bárbaro, Guerreiro etc.). */
   classCombatNotes: string[];
+  /** Ataques por Ação Atacar (Guerreiro Extra Attack). */
+  attacksPerAction: number;
 };
 
 export async function resolveCharacterCombatSlice(input: {
@@ -116,6 +123,10 @@ export async function resolveCharacterCombatSlice(input: {
   });
 
   const classSpeedBonus = fastMovementBonusMeters({ classSlug, level });
+  const notes = [
+    ...barbarianCombatNotes({ classSlug, level }),
+    ...fighterCombatNotes({ classSlug, subclassSlug, level }),
+  ];
 
   return {
     armorClass: armor.armorClass,
@@ -126,6 +137,9 @@ export async function resolveCharacterCombatSlice(input: {
     speedPenaltyMeters: compliance.speedPenaltyMeters,
     itemSpeedBonusMeters: itemEffects.speedBonusMeters + classSpeedBonus,
     itemHpBonus: itemEffects.hpBonus,
-    classCombatNotes: barbarianCombatNotes({ classSlug, level }),
+    classCombatNotes: notes,
+    attacksPerAction: isFighterClass(classSlug)
+      ? resolveAttacksPerAction(level)
+      : 1,
   };
 }

@@ -28,7 +28,9 @@ import { RestHandler } from './application/rest.handler';
 import { UseClassResourceHandler } from './application/use-class-resource.handler';
 import { GunslingerActionsHandler } from './application/gunslinger-actions.handler';
 import { BarbarianActionsHandler } from './application/barbarian-actions.handler';
+import { FighterActionsHandler } from './application/fighter-actions.handler';
 import {
+  ActionSurgeResponseDto,
   CastSpellDto,
   CastSpellResponseDto,
   CharacterStateResponseDto,
@@ -37,6 +39,9 @@ import {
   ReloadFirearmDto,
   RestDto,
   RestResponseDto,
+  SecondWindResponseDto,
+  TacticalMindDto,
+  TacticalMindResponseDto,
   ToggleRageDto,
   ToggleRecklessDto,
   UseClassResourceDto,
@@ -59,6 +64,7 @@ export class CharacterSessionController {
     private readonly useResource: UseClassResourceHandler,
     private readonly gunslinger: GunslingerActionsHandler,
     private readonly barbarian: BarbarianActionsHandler,
+    private readonly fighter: FighterActionsHandler,
   ) {}
 
   @Get(':id/state')
@@ -220,5 +226,54 @@ export class CharacterSessionController {
     @Param('id', ParseUUIDPipe) id: string,
   ): Promise<CharacterStateResponseDto> {
     return this.barbarian.recoverAllRage(user.id, id);
+  }
+
+  @Post(':id/fighter/second-wind')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Recuperar Fôlego — gasta 1 uso e cura 1d10 + nível',
+  })
+  @ApiOkResponse({ type: SecondWindResponseDto })
+  useSecondWind(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<SecondWindResponseDto> {
+    return this.fighter.useSecondWind(user.id, id);
+  }
+
+  @Post(':id/fighter/tactical-mind')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary:
+      'Mente Tática — +1d10 em teste; gasta Recuperar Fôlego só se virar sucesso',
+  })
+  @ApiOkResponse({ type: TacticalMindResponseDto })
+  useTacticalMind(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: TacticalMindDto,
+  ): Promise<TacticalMindResponseDto> {
+    return this.fighter.useTacticalMind(user.id, id, dto);
+  }
+
+  @Post(':id/fighter/action-surge')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Surto de Ação — gasta 1 uso' })
+  @ApiOkResponse({ type: ActionSurgeResponseDto })
+  useActionSurge(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<ActionSurgeResponseDto> {
+    return this.fighter.useActionSurge(user.id, id);
+  }
+
+  @Get(':id/fighter/maneuvers')
+  @ApiOperation({ summary: 'List Battle Master maneuvers' })
+  @ApiNotFoundResponse()
+  listBattleMasterManeuvers(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ) {
+    return this.fighter.listBattleMasterManeuvers(user.id, id);
   }
 }

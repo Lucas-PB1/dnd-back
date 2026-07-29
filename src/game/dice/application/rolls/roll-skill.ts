@@ -62,7 +62,16 @@ export async function executeRollSkill(input: {
     level: character.level,
   });
   const bonus = skillCheckBonus(mods[ability], pb, rank);
-  const result = rollD20Check(bonus, input.dto.advantage ?? 'normal');
+  let mode = input.dto.advantage ?? 'normal';
+  if (
+    character.subclassSlug === 'champion' &&
+    character.level >= 3 &&
+    input.dto.skillSlug === 'athletics' &&
+    mode === 'normal'
+  ) {
+    mode = 'advantage';
+  }
+  const result = rollD20Check(bonus, mode);
   return {
     kind: 'skill',
     label: `Perícia — ${skill.name}`,
@@ -72,5 +81,11 @@ export async function executeRollSkill(input: {
     mode: result.mode,
     rolls: result.d20.rolls,
     kept: result.d20.kept,
+    note:
+      mode === 'advantage' &&
+      character.subclassSlug === 'champion' &&
+      input.dto.skillSlug === 'athletics'
+        ? 'Atleta Extraordinário: Vantagem em Atletismo'
+        : undefined,
   };
 }

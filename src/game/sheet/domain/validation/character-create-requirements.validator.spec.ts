@@ -8,7 +8,12 @@ import { CharacterFeatsValidator } from './feats/character-feats.validator';
 
 describe('CharacterCreateRequirementsValidator', () => {
   let validator: CharacterCreateRequirementsValidator;
-  let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findClassOrFail' | 'validateClassSkillChoices'>>;
+  let catalogLookup: jest.Mocked<
+    Pick<
+      CatalogLookupService,
+      'findClassOrFail' | 'validateClassSkillChoices' | 'assertFeatInCatalog'
+    >
+  >;
   let backgroundValidator: jest.Mocked<
     Pick<
       CharacterBackgroundValidator,
@@ -42,6 +47,12 @@ describe('CharacterCreateRequirementsValidator', () => {
     catalogLookup = {
       findClassOrFail: jest.fn().mockResolvedValue({ skillChoiceCount: 2 }),
       validateClassSkillChoices: jest.fn().mockResolvedValue(undefined),
+      assertFeatInCatalog: jest.fn().mockImplementation((slug: string) =>
+        Promise.resolve({
+          featSlug: slug,
+          categorySlug: slug === 'dueling' ? 'fighting-style' : 'general',
+        }),
+      ),
     };
     backgroundValidator = {
       assertClassSkillsDoNotOverlapBackground: jest.fn().mockResolvedValue(undefined),
@@ -76,7 +87,10 @@ describe('CharacterCreateRequirementsValidator', () => {
     const fighterCtx = { ...ctx, classSlug: 'fighter', subclassSlug: null };
     catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 2 } as never);
     await validator.validateCreateRequiredFields(
-      { classSkillSlugs: ['stealth', 'perception'] },
+      {
+        classSkillSlugs: ['stealth', 'perception'],
+        characterFeats: [{ featSlug: 'dueling', instanceIndex: 0 }],
+      },
       fighterCtx,
     );
     expect(catalogLookup.validateClassSkillChoices).toHaveBeenCalledWith('fighter', [

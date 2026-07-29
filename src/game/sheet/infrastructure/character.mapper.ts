@@ -177,6 +177,7 @@ export class CharacterMapper {
       speedPenaltyMeters: combat.speedPenaltyMeters,
       itemSpeedBonusMeters: combat.itemSpeedBonusMeters,
       classCombatNotes: combat.classCombatNotes,
+      attacksPerAction: combat.attacksPerAction,
       spellcastingAbilitySlug: spellcasting.spellcastingAbilitySlug,
       spellSaveDc: spellcasting.spellSaveDc,
       spellAttackBonus: spellcasting.spellAttackBonus,

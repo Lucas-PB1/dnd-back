@@ -5,8 +5,10 @@ import { classExpertiseSlotsAtLevel } from './class-options/class-expertise-slot
 import { classWeaponMasterySlotsAtLevel } from './class-options/class-weapon-mastery-slots';
 import { CharacterBackgroundValidator } from './background/character-background.validator';
 import { CharacterClassOptionsValidator } from './class-options/character-class-options.validator';
+import { FIGHTING_STYLE_FEAT_CATEGORY } from './class-options/fighting-style-feat-options';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterSheetContext } from '../character-sheet.types';
+import type { CharacterFeatDto } from '../../dto/character-sheet.dto';
 
 /**
  * Valida escolhas obrigatórias no POST /characters quando o catálogo exige.
@@ -87,6 +89,15 @@ export class CharacterCreateRequirementsValidator {
       input.subclassOptions,
     );
 
+    if (ctx.classSlug === 'fighter') {
+      const hasFightingStyleFeat = await this.hasFightingStyleFeat(createFeats);
+      if (!hasFightingStyleFeat) {
+        throw new BadRequestException(
+          `Class '${ctx.classSlug}' requires a Fighting Style feat at level 1`,
+        );
+      }
+    }
+
     await this.backgroundValidator.validateBackgroundLanguages(
       ctx.backgroundSlug,
       input.languageSlugs,
@@ -131,5 +142,15 @@ export class CharacterCreateRequirementsValidator {
       }
       await this.classOptionsValidator.validateClassWeaponMasteryOptions(ctx, provided);
     }
+  }
+
+  private async hasFightingStyleFeat(
+    feats: CharacterFeatDto[],
+  ): Promise<boolean> {
+    for (const feat of feats) {
+      const meta = await this.catalogLookup.assertFeatInCatalog(feat.featSlug);
+      if (meta.categorySlug === FIGHTING_STYLE_FEAT_CATEGORY) return true;
+    }
+    return false;
   }
 }

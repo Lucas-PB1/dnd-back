@@ -21,6 +21,14 @@ VALUES
     1
   ),
   (
+    'indomitable',
+    'Indomável',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'),
+    9
+  ),
+  (
     'bardicInspiration',
     'Inspiração de Bardo',
     'class'::rpg.resource_scope,
@@ -28,7 +36,11 @@ VALUES
     (SELECT id FROM rpg.phb_class WHERE slug = 'bard'),
     1
   )
-ON CONFLICT (slug) DO NOTHING;
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name,
+  scope = EXCLUDED.scope,
+  class_id = EXCLUDED.class_id,
+  min_level = EXCLUDED.min_level;
 
 -- Bárbaro — Fúrias (PHB 2024)
 INSERT INTO rpg.phb_class_resource (
@@ -49,15 +61,27 @@ CROSS JOIN (VALUES
 WHERE c.slug = 'barbarian'
 ON CONFLICT DO NOTHING;
 
--- Guerreiro — Recuperar Fôlego (= bônus de proficiência)
+-- Guerreiro — Recuperar Fôlego (coluna PHB 2024: 2 → 3 → 4)
+DELETE FROM rpg.phb_class_resource cr
+USING rpg.phb_class c, rpg.phb_resource_definition rd
+WHERE cr.class_id = c.id
+  AND cr.resource_id = rd.id
+  AND c.slug = 'fighter'
+  AND rd.slug = 'secondWind';
+
 INSERT INTO rpg.phb_class_resource (
   class_id, resource_id, unlock_level, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT c.id, rd.id, 1, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+SELECT c.id, rd.id, v.unlock_level, 'fixed'::rpg.resource_max_formula, v.fixed_max,
        TRUE, FALSE, TRUE
 FROM rpg.phb_class c
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'secondWind' AND rd.class_id = c.id
+CROSS JOIN (VALUES
+  (1, 2),
+  (4, 3),
+  (10, 4)
+) AS v(unlock_level, fixed_max)
 WHERE c.slug = 'fighter'
 ON CONFLICT DO NOTHING;
 
@@ -73,6 +97,23 @@ JOIN rpg.phb_resource_definition rd ON rd.slug = 'actionSurge' AND rd.class_id =
 CROSS JOIN (VALUES
   (2, 1),
   (17, 2)
+) AS v(unlock_level, fixed_max)
+WHERE c.slug = 'fighter'
+ON CONFLICT DO NOTHING;
+
+-- Guerreiro — Indomável
+INSERT INTO rpg.phb_class_resource (
+  class_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT c.id, rd.id, v.unlock_level, 'fixed'::rpg.resource_max_formula, v.fixed_max,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'indomitable' AND rd.class_id = c.id
+CROSS JOIN (VALUES
+  (9, 1),
+  (13, 2),
+  (17, 3)
 ) AS v(unlock_level, fixed_max)
 WHERE c.slug = 'fighter'
 ON CONFLICT DO NOTHING;

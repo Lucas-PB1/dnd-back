@@ -208,9 +208,15 @@ export class CharacterResponseDto {
   @ApiProperty({
     type: [String],
     example: ['Sentido de Perigo: Vantagem em salvaguardas de Destreza'],
-    description: 'Notas de combate de classe (Bárbaro etc.)',
+    description: 'Notas de combate de classe (Bárbaro, Guerreiro etc.)',
   })
   classCombatNotes!: string[];
+
+  @ApiProperty({
+    example: 2,
+    description: 'Ataques por Ação Atacar (Ataque Extra do Guerreiro)',
+  })
+  attacksPerAction!: number;
 
   @ApiProperty({ type: [CharacterCampaignRefDto] })
   campaigns!: CharacterCampaignRefDto[];
