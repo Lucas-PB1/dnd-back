@@ -7,6 +7,7 @@ import {
 } from '../../../sheet/domain/stats/character-check-bonuses';
 import { computeAbilityModifiers } from '../../../sheet/domain/stats/character-derived-stats';
 import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
+import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
 import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
 import type { AbilityKey } from '../../../build/domain/ability-generation';
 import { rollD20Check } from '../../domain/dice';
@@ -44,7 +45,13 @@ export async function executeRollSkill(input: {
   const ability = skill.ability_slug as AbilityKey;
   const sheet = await input.sheet.load(character.id, character.backgroundSlug);
   const pb = await input.domain.getProficiencyBonus(character.level);
-  const mods = computeAbilityModifiers(character.abilityScores);
+  const scores = await resolveEffectiveAbilityScores(
+    input.dataSource,
+    character.classSlug,
+    character.level,
+    character.abilityScores,
+  );
+  const mods = computeAbilityModifiers(scores);
   const rank = skillProficiencyRank(input.dto.skillSlug, {
     classSkillSlugs: sheet.classSkillSlugs,
     backgroundSkillSlugs: sheet.backgroundSkillSlugs,

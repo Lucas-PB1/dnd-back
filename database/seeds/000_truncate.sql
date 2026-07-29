@@ -2,6 +2,7 @@
 -- Gerado automaticamente
 
 TRUNCATE TABLE
+  rpg.phb_class_ability_boost,
   rpg.phb_class_resource,
   rpg.phb_hp_bonus_source,
   rpg.phb_unarmored_defense,

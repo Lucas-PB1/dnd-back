@@ -54,10 +54,10 @@ function checkSeq(dir, prefix, expectedCount) {
   console.log(`OK ${dir}: ${files.length} file(s)`);
 }
 
-checkSeq('database/migrations/020_tables', 'T', 78);
-checkSeq('database/migrations/060_views', 'V', 31);
+checkSeq('database/migrations/020_tables', 'T', 79);
+checkSeq('database/migrations/060_views', 'V', 32);
 checkSeq('database/migrations/090_player', 'P', 14);
-checkSeq('database/seeds/phb', 'S', 79);
+checkSeq('database/seeds/phb', 'S', 80);
 checkSeq('database/seeds/subclass', 'S', 7);
 checkSeq('database/seeds/valda', 'V', 15);
 checkSeq('database/seeds/valda-gunslinger', 'G', 28);

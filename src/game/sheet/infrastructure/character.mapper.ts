@@ -6,6 +6,11 @@ import { PhbSpecies } from '../../../entities/phb-species.entity';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterDomainService } from '../domain/core/character-domain.service';
 import { computeDerivedStats } from '../domain/stats/character-derived-stats';
+import {
+  applyClassAbilityBoosts,
+  classHitPointsBonus,
+} from '../domain/stats/class-ability-boost';
+import { loadClassAbilityBoosts } from './load-class-ability-boosts';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 import { ResolveEquippedArmorClass } from '../../combat/application/resolve-equipped-armor-class';
@@ -55,8 +60,22 @@ export class CharacterMapper {
       );
 
     const proficiencyBonus = await this.domain.getProficiencyBonus(row.level);
+    const classBoosts = await loadClassAbilityBoosts(
+      this.dataSource,
+      row.classSlug,
+    );
+    const { scores: effectiveAbilityScores } = applyClassAbilityBoosts(
+      row.abilityScores,
+      row.level,
+      classBoosts,
+    );
+    const classHpBonus = classHitPointsBonus(
+      row.abilityScores.constituicao,
+      effectiveAbilityScores.constituicao,
+      row.level,
+    );
     const derived = computeDerivedStats({
-      abilityScores: row.abilityScores,
+      abilityScores: effectiveAbilityScores,
       proficiencyBonus,
       classSkillSlugs: loaded.classSkillSlugs,
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
@@ -81,7 +100,7 @@ export class CharacterMapper {
     );
     const combat = await resolveCharacterCombatSlice({
       characterId: row.id,
-      abilityScores: row.abilityScores,
+      abilityScores: effectiveAbilityScores,
       classSlug: row.classSlug,
       subclassSlug: row.subclassSlug,
       proficiencyBonus,
@@ -123,10 +142,11 @@ export class CharacterMapper {
       subclassSlug: row.subclassSlug,
       alignmentSlug: row.alignmentSlug,
       abilityScores: row.abilityScores,
+      effectiveAbilityScores,
       hitPointsMax:
         row.hitPointsMax === null
           ? null
-          : row.hitPointsMax + combat.itemHpBonus,
+          : row.hitPointsMax + combat.itemHpBonus + classHpBonus,
       hitPointsCurrent: row.hitPointsCurrent,
       proficiencyBonus,
       classSkillSlugs: loaded.classSkillSlugs,

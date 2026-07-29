@@ -14,6 +14,7 @@ describe('executeRollDamage', () => {
     domain: {} as never,
     weaponAttacks: {} as never,
     permanentItemEffects: {} as never,
+    dataSource: {} as never,
     userId: 'u1',
     characterId: 'c1',
   };

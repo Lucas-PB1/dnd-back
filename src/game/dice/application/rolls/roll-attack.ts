@@ -1,3 +1,4 @@
+import type { DataSource } from 'typeorm';
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
 import type { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
@@ -19,6 +20,7 @@ export async function executeRollAttack(input: {
   domain: CharacterDomainService;
   weaponAttacks: ResolveEquippedWeaponAttacks;
   permanentItemEffects: ResolveActivePermanentItemEffects;
+  dataSource: DataSource;
   userId: string;
   characterId: string;
   dto: RollAttackDto;
@@ -34,6 +36,7 @@ export async function executeRollAttack(input: {
       domain: input.domain,
       weaponAttacks: input.weaponAttacks,
       permanentItemEffects: input.permanentItemEffects,
+      dataSource: input.dataSource,
     },
     character,
     input.dto.itemSlug,

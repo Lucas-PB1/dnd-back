@@ -52,6 +52,13 @@ export class CharacterResponseDto {
   @ApiProperty({ type: AbilityScoresDto })
   abilityScores!: AbilityScoresDto;
 
+  @ApiProperty({
+    type: AbilityScoresDto,
+    description:
+      'Atributos após aumentos permanentes de classe (ex.: nível 20). Iguais a abilityScores quando não há aumento.',
+  })
+  effectiveAbilityScores!: AbilityScoresDto;
+
   @ApiPropertyOptional()
   hitPointsMax!: number | null;
 

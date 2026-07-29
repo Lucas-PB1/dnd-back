@@ -13,6 +13,7 @@ import type {
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
 import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-item-effects';
+import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
 
 const ABILITY_LABELS: Record<AbilityKey, string> = {
   forca: 'Força',
@@ -57,9 +58,16 @@ export async function executeRollSavingThrow(input: {
   const proficient = saveProficiencies.has(ability);
   const pb = await input.domain.getProficiencyBonus(character.level);
   const itemEffects = await input.permanentItemEffects.resolve(character.id);
-  const scores = applyItemAbilityBonuses(
+  const classScores = await resolveEffectiveAbilityScores(
+    input.dataSource,
+    character.classSlug,
+    character.level,
     character.abilityScores,
+  );
+  const scores = applyItemAbilityBonuses(
+    classScores,
     itemEffects.abilityBonuses,
+    itemEffects.abilityScoreCaps,
   );
   const mods = computeAbilityModifiers(scores);
   const itemSaveBonus = itemEffects.savingThrowBonuses[ability] ?? 0;

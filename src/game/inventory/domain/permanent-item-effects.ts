@@ -1,4 +1,5 @@
 import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+import { STANDARD_ABILITY_SCORE_CAP } from '../../sheet/domain/validation/feats/epic-boon-feat-options';
 import { itemRequiresAttunement } from './attunement';
 import { itemEffectsActive } from './item-effects-active';
 
@@ -31,6 +32,11 @@ export type PermanentItemEffects = {
   >;
   speedBonusMeters: number;
   hpBonus: number;
+  /**
+   * Teto para os atributos aumentados por este item. Só ultrapassa 20 quando o
+   * item declara explicitamente (ex.: Manual do Vigor Corporal).
+   */
+  abilityScoreMax: number;
 };
 
 export const EMPTY_PERMANENT_ITEM_EFFECTS: PermanentItemEffects = {
@@ -41,6 +47,7 @@ export const EMPTY_PERMANENT_ITEM_EFFECTS: PermanentItemEffects = {
   savingThrowBonuses: {},
   speedBonusMeters: 0,
   hpBonus: 0,
+  abilityScoreMax: STANDARD_ABILITY_SCORE_CAP,
 };
 
 function asFiniteNumber(value: unknown): number {
@@ -85,6 +92,10 @@ export function parsePermanentItemEffects(
     savingThrowBonuses: parseAbilityMap(source.savingThrowBonuses),
     speedBonusMeters: asFiniteNumber(source.speedBonusMeters),
     hpBonus: asFiniteNumber(source.hpBonus),
+    abilityScoreMax: Math.max(
+      STANDARD_ABILITY_SCORE_CAP,
+      asFiniteNumber(source.abilityScoreMax),
+    ),
   };
 }
 
@@ -109,10 +120,25 @@ function mergeAbilityMaps(
   return result;
 }
 
-/** Aplica bônus de atributo de itens ativos sobre uma cópia das pontuações. */
+export type AbilityScoreCaps = Partial<Record<keyof AbilityScores, number>>;
+
+export type ResolvedPermanentItemEffects = Omit<
+  PermanentItemEffects,
+  'abilityScoreMax'
+> & {
+  /** Teto por atributo aumentado: 20 salvo item que declare mais. */
+  abilityScoreCaps: AbilityScoreCaps;
+  sourceNames: string[];
+};
+
+/**
+ * Aplica bônus de atributo de itens ativos sobre uma cópia das pontuações,
+ * respeitando o teto de cada atributo (20 por padrão).
+ */
 export function applyItemAbilityBonuses(
   scores: AbilityScores,
   abilityBonuses: PermanentItemEffects['abilityBonuses'],
+  abilityScoreCaps: AbilityScoreCaps = {},
 ): AbilityScores {
   const next: AbilityScores = { ...scores };
   for (const [key, amount] of Object.entries(abilityBonuses) as [
@@ -120,7 +146,8 @@ export function applyItemAbilityBonuses(
     number | undefined,
   ][]) {
     if (!amount) continue;
-    next[key] = (next[key] ?? 0) + amount;
+    const cap = abilityScoreCaps[key] ?? STANDARD_ABILITY_SCORE_CAP;
+    next[key] = Math.min(Math.max(cap, scores[key]), scores[key] + amount);
   }
   return next;
 }
@@ -128,8 +155,9 @@ export function applyItemAbilityBonuses(
 /** Soma efeitos permanentes só dos itens ativos (equipados + sintonizados se preciso). */
 export function resolveActivePermanentItemEffects(
   items: readonly InventoryItemForEffects[],
-): PermanentItemEffects & { sourceNames: string[] } {
+): ResolvedPermanentItemEffects {
   let total: PermanentItemEffects = { ...EMPTY_PERMANENT_ITEM_EFFECTS };
+  const abilityScoreCaps: AbilityScoreCaps = {};
   const sourceNames: string[] = [];
 
   for (const item of items) {
@@ -169,9 +197,17 @@ export function resolveActivePermanentItemEffects(
       ),
       speedBonusMeters: total.speedBonusMeters + effects.speedBonusMeters,
       hpBonus: total.hpBonus + effects.hpBonus,
+      abilityScoreMax: STANDARD_ABILITY_SCORE_CAP,
     };
+    for (const key of Object.keys(effects.abilityBonuses) as (keyof AbilityScores)[]) {
+      abilityScoreCaps[key] = Math.max(
+        abilityScoreCaps[key] ?? STANDARD_ABILITY_SCORE_CAP,
+        effects.abilityScoreMax,
+      );
+    }
     if (item.itemName) sourceNames.push(item.itemName);
   }
 
-  return { ...total, sourceNames };
+  const { abilityScoreMax: _ignored, ...totals } = total;
+  return { ...totals, abilityScoreCaps, sourceNames };
 }

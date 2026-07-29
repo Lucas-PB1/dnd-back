@@ -62,6 +62,7 @@ export async function resolveCharacterCombatSlice(input: {
   const combatScores = applyItemAbilityBonuses(
     abilityScores,
     itemEffects.abilityBonuses,
+    itemEffects.abilityScoreCaps,
   );
 
   const hasShield = await inventoryItems.exist({

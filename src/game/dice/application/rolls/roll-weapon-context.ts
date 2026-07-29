@@ -1,9 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
+import type { DataSource } from 'typeorm';
 import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
 import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../../../sheet/domain/validation/class-options/fighting-style-feat-options';
 import { collectMasteredWeaponSlugs } from '../../../sheet/domain/validation/class-options/class-weapon-mastery-slots';
 import { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
+import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
 import { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
 import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
 import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-item-effects';
@@ -23,6 +25,7 @@ export async function findEquippedWeaponAttack(
     domain: CharacterDomainService;
     weaponAttacks: ResolveEquippedWeaponAttacks;
     permanentItemEffects?: ResolveActivePermanentItemEffects;
+    dataSource?: DataSource;
   },
   character: RollWeaponCharacter,
   itemSlug: string,
@@ -37,9 +40,21 @@ export async function findEquippedWeaponAttack(
   const itemEffects = deps.permanentItemEffects
     ? await deps.permanentItemEffects.resolve(character.id)
     : null;
-  const scores = itemEffects
-    ? applyItemAbilityBonuses(character.abilityScores, itemEffects.abilityBonuses)
+  const classScores = deps.dataSource
+    ? await resolveEffectiveAbilityScores(
+        deps.dataSource,
+        character.classSlug,
+        character.level,
+        character.abilityScores,
+      )
     : character.abilityScores;
+  const scores = itemEffects
+    ? applyItemAbilityBonuses(
+        classScores,
+        itemEffects.abilityBonuses,
+        itemEffects.abilityScoreCaps,
+      )
+    : classScores;
   const attacks = await deps.weaponAttacks.resolve(character.id, scores, {
     classSlug: character.classSlug,
     proficiencyBonus: pb,

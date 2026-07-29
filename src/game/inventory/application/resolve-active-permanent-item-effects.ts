@@ -4,13 +4,11 @@ import { In, Repository } from 'typeorm';
 import { PhbItem } from '../../../entities/phb-item.entity';
 import {
   resolveActivePermanentItemEffects,
-  type PermanentItemEffects,
+  type ResolvedPermanentItemEffects,
 } from '../domain/permanent-item-effects';
 import { PlayerCharacterItem } from '../infrastructure/player-character-item.entity';
 
-export type ActivePermanentItemEffects = PermanentItemEffects & {
-  sourceNames: string[];
-};
+export type ActivePermanentItemEffects = ResolvedPermanentItemEffects;
 
 @Injectable()
 export class ResolveActivePermanentItemEffects {

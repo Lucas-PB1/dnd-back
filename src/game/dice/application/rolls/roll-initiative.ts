@@ -1,7 +1,9 @@
+import type { DataSource } from 'typeorm';
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import { initiativeBonus } from '../../../sheet/domain/stats/character-check-bonuses';
 import { computeAbilityModifiers } from '../../../sheet/domain/stats/character-derived-stats';
 import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
+import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
 import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
 import { rollD20Check } from '../../domain/dice';
 import type {
@@ -14,6 +16,7 @@ export async function executeRollInitiative(input: {
   access: PlayerCharacterAccessService;
   sheet: CharacterSheetRepository;
   domain: CharacterDomainService;
+  dataSource: DataSource;
   userId: string;
   characterId: string;
   dto: RollInitiativeDto;
@@ -25,7 +28,13 @@ export async function executeRollInitiative(input: {
   );
   const sheet = await input.sheet.load(character.id);
   const pb = await input.domain.getProficiencyBonus(character.level);
-  const mods = computeAbilityModifiers(character.abilityScores);
+  const scores = await resolveEffectiveAbilityScores(
+    input.dataSource,
+    character.classSlug,
+    character.level,
+    character.abilityScores,
+  );
+  const mods = computeAbilityModifiers(scores);
   const bonus = initiativeBonus(mods.destreza, pb, sheet.characterFeats);
   const result = rollD20Check(bonus, input.dto.advantage ?? 'normal');
   return {
