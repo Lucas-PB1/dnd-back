@@ -10,13 +10,16 @@ jest.mock('./roll-weapon-context', () => ({
 
 import { BadRequestException } from '@nestjs/common';
 import { executeRollDamage } from './roll-damage';
-import { findEquippedWeaponAttack } from './roll-weapon-context';
+import {
+  findEquippedWeaponAttack,
+  loadAccessibleCharacter,
+} from './roll-weapon-context';
 
 describe('executeRollDamage', () => {
   const base = {
     access: {} as never,
     sheet: {} as never,
-    domain: {} as never,
+    domain: { getProficiencyBonus: jest.fn().mockResolvedValue(3) } as never,
     weaponAttacks: {} as never,
     permanentItemEffects: {} as never,
     dataSource: {} as never,
@@ -95,5 +98,45 @@ describe('executeRollDamage', () => {
     expect(result.label).toContain('crítico');
     expect(result.label).toContain('GWF');
     expect(result.rolls.length).toBeGreaterThan(0);
+  });
+
+  it('adds Psi Strike damage and reports Telekinetic Thrust DC', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'fighter',
+      subclassSlug: 'psi-warrior',
+      level: 7,
+      abilityScores: {
+        forca: 16,
+        destreza: 12,
+        constituicao: 14,
+        inteligencia: 16,
+        sabedoria: 10,
+        carisma: 8,
+      },
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Longsword',
+        grazeOnMissDamage: null,
+        damageDice: '1d8',
+        damageBonus: 3,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        abilitySlug: 'forca',
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollDamage({
+      ...base,
+      dto: { itemSlug: 'longsword', mode: 'melee', psiStrike: true },
+    });
+
+    expect(result.label).toContain('Golpe Psiônico');
+    expect(result.expression).toContain('1d8+3');
+    expect(result.note).toContain('Estocada Telecinética CD 14');
   });
 });

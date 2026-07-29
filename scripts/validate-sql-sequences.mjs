@@ -58,7 +58,7 @@ checkSeq('database/migrations/020_tables', 'T', 81);
 checkSeq('database/migrations/060_views', 'V', 32);
 checkSeq('database/migrations/090_player', 'P', 16);
 checkSeq('database/seeds/phb', 'S', 80);
-checkSeq('database/seeds/subclass', 'S', 8);
+checkSeq('database/seeds/subclass', 'S', 9);
 checkSeq('database/seeds/valda', 'V', 16);
 checkSeq('database/seeds/valda-gunslinger', 'G', 28);
 

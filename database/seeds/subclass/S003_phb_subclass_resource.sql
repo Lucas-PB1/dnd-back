@@ -712,4 +712,14 @@ FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
 WHERE sr.subclass_id = s.id
   AND sr.resource_id = rd.id
   AND s.slug = 'psi-warrior'
-  AND rd.slug IN ('psychic-leap', 'energy-bulwark', 'telekinetic-master');
+  AND rd.slug = 'psychic-leap';
+
+UPDATE rpg.phb_subclass_resource sr
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = FALSE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE sr.subclass_id = s.id
+  AND sr.resource_id = rd.id
+  AND s.slug = 'psi-warrior'
+  AND rd.slug IN ('energy-bulwark', 'telekinetic-master');

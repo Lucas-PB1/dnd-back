@@ -168,8 +168,12 @@ export async function executeRollDamage(input: {
       total += psi.total;
       expression = `${expression}+${psi.expression}`;
       rolls.push(...(psi.dice[0]?.rolls ?? []));
+      const telekineticThrust =
+        character.level >= 7
+          ? `; Estocada Telecinética CD ${8 + (await input.domain.getProficiencyBonus(character.level)) + intMod}: Caído ou mova 3 m`
+          : '';
       notes.push(
-        'Golpe Psiônico: dano Energético (gaste 1 Dado de Energia Psiônica)',
+        `Golpe Psiônico: dano Energético (1 Dado de Energia Psiônica gasto na ficha)${telekineticThrust}`,
       );
     }
   }

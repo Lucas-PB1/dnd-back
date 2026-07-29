@@ -7,7 +7,7 @@
 | Pasta | Conteúdo |
 |-------|----------|
 | [`architecture/`](architecture/) | Arquitetura, infra, modelo de dados, Game BC, padrões de código |
-| [`plans/`](plans/) | **Plano ativo:** [`backlog.md`](plans/backlog.md) |
+| [`plans/`](plans/) | Backlog geral + acompanhamento de mecânica por classe |
 | [`deploy/`](deploy/) | Deploy Vercel + Supabase |
 
 ## Arquitetura
@@ -27,7 +27,8 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |-----|----------|
-| [`plans/backlog.md`](plans/backlog.md) | **Único checklist ativo** — o que ainda falta (API + front + gaps PHB) |
+| [`plans/backlog.md`](plans/backlog.md) | Checklist geral — o que ainda falta (API + front + gaps) |
+| [`plans/class-mechanics.md`](plans/class-mechanics.md) | Mecânica por classe/subclasse (feito / parcial / pendente) |
 
 ## Ops
 

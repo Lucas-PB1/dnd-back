@@ -334,6 +334,94 @@ export class ActionSurgeResponseDto {
   note!: string;
 }
 
+export class UseBattleMasterManeuverDto {
+  @ApiProperty({ example: 'trip-attack' })
+  @IsString()
+  maneuverSlug!: string;
+
+  @ApiPropertyOptional({
+    example: false,
+    description:
+      'Implacável (nível 15+): usa 1d8 sem gastar Superioridade; controle de 1×/turno fica na mesa',
+  })
+  @IsOptional()
+  @IsBoolean()
+  useRelentless?: boolean;
+}
+
+export class FighterTableActionResponseDto {
+  @ApiProperty({ type: () => CharacterStateResponseDto })
+  state!: CharacterStateResponseDto;
+
+  @ApiProperty({ example: 'Ataque Derrubador' })
+  actionName!: string;
+
+  @ApiPropertyOptional({ example: '1d8' })
+  expression?: string;
+
+  @ApiPropertyOptional({ example: 6 })
+  roll?: number;
+
+  @ApiPropertyOptional({ example: 9 })
+  total?: number;
+
+  @ApiPropertyOptional({ example: 15 })
+  saveDc?: number;
+
+  @ApiProperty({ example: true })
+  resourceSpent!: boolean;
+
+  @ApiProperty({
+    example:
+      'Ataque Derrubador: Dado de Superioridade = 6. CD 15, quando aplicável.',
+  })
+  note!: string;
+}
+
+export class UsePsiWarriorActionDto {
+  @ApiProperty({
+    enum: [
+      'protective-field',
+      'telekinetic-movement',
+      'psychic-leap',
+      'mental-guard',
+      'energy-bulwark',
+      'telekinetic-master',
+    ],
+    example: 'protective-field',
+  })
+  @IsIn([
+    'protective-field',
+    'telekinetic-movement',
+    'psychic-leap',
+    'mental-guard',
+    'energy-bulwark',
+    'telekinetic-master',
+  ])
+  actionSlug!:
+    | 'protective-field'
+    | 'telekinetic-movement'
+    | 'psychic-leap'
+    | 'mental-guard'
+    | 'energy-bulwark'
+    | 'telekinetic-master';
+
+  @ApiPropertyOptional({
+    example: false,
+    description:
+      'Gasta Energia Psiônica em vez do uso gratuito da característica',
+  })
+  @IsOptional()
+  @IsBoolean()
+  usePsiDie?: boolean;
+}
+
+export class UseDungeonPrecautionDto {
+  @ApiProperty({ example: 'detectar-magia' })
+  @IsString()
+  spellSlug!: string;
+}
+
 export class FirearmChamberDto {
   @ApiProperty({ example: 'revolver' })
   itemSlug!: string;

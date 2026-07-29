@@ -34,6 +34,7 @@ import {
   CastSpellDto,
   CastSpellResponseDto,
   CharacterStateResponseDto,
+  FighterTableActionResponseDto,
   FireChamberDto,
   PatchCharacterStateDto,
   ReloadFirearmDto,
@@ -46,8 +47,11 @@ import {
   ToggleRecklessDto,
   UseClassResourceDto,
   UseClassResourceResponseDto,
+  UseBattleMasterManeuverDto,
+  UseDungeonPrecautionDto,
   UseManeuverDto,
   UseManeuverResponseDto,
+  UsePsiWarriorActionDto,
 } from './dto/character-state.dto';
 
 @ApiTags('game-characters')
@@ -275,5 +279,47 @@ export class CharacterSessionController {
     @Param('id', ParseUUIDPipe) id: string,
   ) {
     return this.fighter.listBattleMasterManeuvers(user.id, id);
+  }
+
+  @Post(':id/fighter/maneuvers/use')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Roll and spend a Battle Master maneuver for tabletop use',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useBattleMasterManeuver(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseBattleMasterManeuverDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.fighter.useBattleMasterManeuver(user.id, id, dto);
+  }
+
+  @Post(':id/fighter/psi-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Psi Warrior tabletop action and spend its resource',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  usePsiWarriorAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UsePsiWarriorActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.fighter.usePsiWarriorAction(user.id, id, dto);
+  }
+
+  @Post(':id/fighter/dungeon-precaution')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Cast a Dungeoneer precaution and spend one of its five uses',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useDungeonPrecaution(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseDungeonPrecautionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.fighter.useDungeonPrecaution(user.id, id, dto);
   }
 }

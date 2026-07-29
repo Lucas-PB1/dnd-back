@@ -3,7 +3,9 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **não feitos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-07-28 — UI ataques + erros HTTP PT entregues
+**Última revisão:** 2026-07-29 — mecânica por classe em [`class-mechanics.md`](class-mechanics.md)
+
+Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mechanics.md)** (Pistoleiro, Bárbaro e Guerreiro feitos; 10 PHB pendentes).
 
 ---
 
