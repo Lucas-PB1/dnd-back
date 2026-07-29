@@ -21,12 +21,8 @@ import { loadAccessibleCharacter } from './roll-weapon-context';
 import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
 import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-item-effects';
 import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
-import { applyResourceSpend } from '../../../session/domain/class-resources';
-import { resolveClassResources } from '../../../session/infrastructure/character-state/class-resources';
-import {
-  spendStrokeOfLuck,
-  turnCheckIntoNaturalTwenty,
-} from './stroke-of-luck';
+import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
+import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 
 const ABILITY_LABELS: Record<AbilityKey, string> = {
   forca: 'Força',
@@ -43,6 +39,7 @@ export async function executeRollSavingThrow(input: {
   domain: CharacterDomainService;
   dataSource: DataSource;
   permanentItemEffects: ResolveActivePermanentItemEffects;
+  resourceSpender: CharacterResourceSpender;
   userId: string;
   characterId: string;
   dto: RollSavingThrowDto;
@@ -117,45 +114,23 @@ export async function executeRollSavingThrow(input: {
     if (!isFighterClass(character.classSlug) || character.level < 9) {
       throw new BadRequestException('Indomitable requires Fighter level 9+');
     }
-    const resources = await resolveClassResources(
-      input.dataSource,
+    await input.resourceSpender.spendClassResource(
       character,
-    );
-    const indomitable = resources.find((item) => item.slug === 'indomitable');
-    if (!indomitable) {
-      throw new BadRequestException('Indomitable is not available');
-    }
-    const stateRows = await input.dataSource.query<
-      { resources_used: Record<string, number> }[]
-    >(
-      `SELECT resources_used FROM rpg.player_character_state WHERE character_id = $1`,
-      [character.id],
-    );
-    const used = stateRows[0]?.resources_used ?? {};
-    let nextUsed: Record<string, number>;
-    try {
-      nextUsed = applyResourceSpend(used, 'indomitable', indomitable.max, 1);
-    } catch (error) {
-      throw new BadRequestException(
-        error instanceof Error ? error.message : 'Cannot spend Indomitable',
-      );
-    }
-    await input.dataSource.query(
-      `UPDATE rpg.player_character_state
-       SET resources_used = $2::jsonb
-       WHERE character_id = $1`,
-      [character.id, JSON.stringify(nextUsed)],
+      'indomitable',
+      1,
     );
     bonus += character.level;
     notes.push(`Indomável: +${character.level} (rerrolagem)`);
   }
 
   let result = rollD20Check(bonus, input.dto.advantage ?? 'normal');
-  if (input.dto.strokeOfLuck) {
-    await spendStrokeOfLuck(input.dataSource, character);
-    result = turnCheckIntoNaturalTwenty(result);
-    notes.push('Golpe de Sorte: resultado do d20 transformado em 20');
-  }
+  result = await applyStrokeOfLuckIfRequested({
+    requested: input.dto.strokeOfLuck,
+    spender: input.resourceSpender,
+    character,
+    result,
+    notes,
+  });
   if (
     (character.classSlug === 'rogue' || character.classSlug === 'monk') &&
     character.level >= 7 &&

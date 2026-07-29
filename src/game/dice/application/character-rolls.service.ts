@@ -18,6 +18,7 @@ import { executeRollInitiative } from './rolls/roll-initiative';
 import { executeRollSavingThrow } from './rolls/roll-saving-throw';
 import { executeRollSkill } from './rolls/roll-skill';
 import { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
+import { CharacterStateRepository } from '../../session/infrastructure/character-state.repository';
 
 @Injectable()
 export class CharacterRollsService {
@@ -28,6 +29,7 @@ export class CharacterRollsService {
     private readonly weaponAttacks: ResolveEquippedWeaponAttacks,
     private readonly permanentItemEffects: ResolveActivePermanentItemEffects,
     private readonly dataSource: DataSource,
+    private readonly state: CharacterStateRepository,
   ) {}
 
   async rollAttack(
@@ -42,6 +44,7 @@ export class CharacterRollsService {
       weaponAttacks: this.weaponAttacks,
       permanentItemEffects: this.permanentItemEffects,
       dataSource: this.dataSource,
+      resourceSpender: this.state,
       userId,
       characterId,
       dto,
@@ -60,6 +63,7 @@ export class CharacterRollsService {
       weaponAttacks: this.weaponAttacks,
       permanentItemEffects: this.permanentItemEffects,
       dataSource: this.dataSource,
+      resourceSpender: this.state,
       userId,
       characterId,
       dto,
@@ -76,6 +80,7 @@ export class CharacterRollsService {
       sheet: this.sheet,
       domain: this.domain,
       dataSource: this.dataSource,
+      resourceSpender: this.state,
       userId,
       characterId,
       dto,
@@ -93,6 +98,7 @@ export class CharacterRollsService {
       domain: this.domain,
       dataSource: this.dataSource,
       permanentItemEffects: this.permanentItemEffects,
+      resourceSpender: this.state,
       userId,
       characterId,
       dto,
@@ -109,6 +115,7 @@ export class CharacterRollsService {
       sheet: this.sheet,
       domain: this.domain,
       dataSource: this.dataSource,
+      resourceSpender: this.state,
       userId,
       characterId,
       dto,

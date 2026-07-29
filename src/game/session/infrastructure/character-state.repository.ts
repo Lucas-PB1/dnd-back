@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
@@ -22,9 +22,11 @@ import {
   UseClassResourceResponseDto,
   UseManeuverResponseDto,
 } from '../dto/character-state.dto';
+import { applyResourceSpend } from '../domain/class-resources';
 import { grantHitDiceOnLevelUp } from '../domain/hit-dice-rest';
 import { applyCastSpell } from './character-state/cast-spell';
 import { buildCharacterStateResponse } from './character-state/build-response';
+import { resolveClassResources } from './character-state/class-resources';
 import {
   applyActionSurge,
   applyFireChamber,
@@ -41,6 +43,10 @@ import {
   listAvailableManeuvers,
 } from './character-state/mutations';
 import { applyLongRestState, applyShortRestState } from './character-state/rest';
+import {
+  consumeSpellSlot,
+  loadMaxSlots,
+} from './character-state/spell-slots';
 
 @Injectable()
 export class CharacterStateRepository {
@@ -174,6 +180,52 @@ export class CharacterStateRepository {
       dataSource: this.dataSource,
       buildResponse: (c, s) => this.buildResponse(c, s),
     });
+  }
+
+  /** Gasta recurso de classe sem montar a resposta de sessão (usado pelas rolls). */
+  async spendClassResource(
+    character: PlayerCharacter,
+    resourceSlug: string,
+    amount = 1,
+  ): Promise<void> {
+    const state = await this.findOrCreate(character.id, character.level);
+    const resources = await resolveClassResources(this.dataSource, character);
+    const resource = resources.find((item) => item.slug === resourceSlug);
+    if (!resource) {
+      throw new BadRequestException(
+        `Resource '${resourceSlug}' is not available for this character`,
+      );
+    }
+    try {
+      state.resourcesUsed = applyResourceSpend(
+        state.resourcesUsed ?? {},
+        resourceSlug,
+        resource.max,
+        amount,
+      );
+    } catch (error) {
+      throw new BadRequestException(
+        error instanceof Error ? error.message : 'Cannot spend resource',
+      );
+    }
+    await this.state.save(state);
+  }
+
+  /** Debita um espaço de magia (classe ou subclasse) sem lançar magia. */
+  async consumeSpellSlotLevel(
+    character: PlayerCharacter,
+    slotLevel: number,
+  ): Promise<void> {
+    const state = await this.findOrCreate(character.id, character.level);
+    const maxSlots = await loadMaxSlots(
+      this.classSlots,
+      this.subclassSlots,
+      character.classSlug,
+      character.level,
+      character.subclassSlug,
+    );
+    consumeSpellSlot(state, maxSlots, slotLevel, slotLevel);
+    await this.state.save(state);
   }
 
   async recoverClassResource(

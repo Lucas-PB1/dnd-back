@@ -1,52 +1,33 @@
 import { BadRequestException } from '@nestjs/common';
-import type { DataSource } from 'typeorm';
-import {
-  applyResourceSpend,
-} from '../../../session/domain/class-resources';
-import { resolveClassResources } from '../../../session/infrastructure/character-state/class-resources';
+import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
 import type { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
 import type { CheckRollResult } from '../../domain/dice';
 
 export async function spendStrokeOfLuck(
-  dataSource: DataSource,
+  spender: CharacterResourceSpender,
   character: PlayerCharacter,
 ): Promise<void> {
   if (character.classSlug !== 'rogue' || character.level < 20) {
     throw new BadRequestException('Stroke of Luck requires Rogue level 20');
   }
 
-  const resources = await resolveClassResources(dataSource, character);
-  const resource = resources.find((item) => item.slug === 'strokeOfLuck');
-  if (!resource) {
-    throw new BadRequestException('Stroke of Luck is not available');
-  }
-
-  const rows = await dataSource.query<
-    { resources_used: Record<string, number> }[]
-  >(
-    `SELECT resources_used
-     FROM rpg.player_character_state
-     WHERE character_id = $1
-     LIMIT 1`,
-    [character.id],
-  );
-  const used = rows[0]?.resources_used ?? {};
-
-  let nextUsed: Record<string, number>;
   try {
-    nextUsed = applyResourceSpend(used, resource.slug, resource.max, 1);
+    await spender.spendClassResource(character, 'strokeOfLuck', 1);
   } catch (error) {
-    throw new BadRequestException(
-      error instanceof Error ? error.message : 'Cannot spend Stroke of Luck',
-    );
+    if (error instanceof BadRequestException) {
+      const response = error.getResponse();
+      const text =
+        typeof response === 'string'
+          ? response
+          : Array.isArray((response as { message?: unknown }).message)
+            ? ((response as { message: string[] }).message).join(' ')
+            : String((response as { message?: unknown }).message ?? '');
+      if (/strokeOfLuck|not available/i.test(text)) {
+        throw new BadRequestException('Stroke of Luck is not available');
+      }
+    }
+    throw error;
   }
-
-  await dataSource.query(
-    `UPDATE rpg.player_character_state
-     SET resources_used = $2::jsonb
-     WHERE character_id = $1`,
-    [character.id, JSON.stringify(nextUsed)],
-  );
 }
 
 export function turnCheckIntoNaturalTwenty(
@@ -67,4 +48,20 @@ export function turnCheckIntoNaturalTwenty(
 function formatSigned(value: number): string {
   if (value === 0) return '';
   return value > 0 ? `+${value}` : String(value);
+}
+
+/** Aplica Golpe de Sorte quando solicitado no DTO, mutando notes. */
+export async function applyStrokeOfLuckIfRequested(input: {
+  requested: boolean | undefined;
+  spender: CharacterResourceSpender;
+  character: PlayerCharacter;
+  result: CheckRollResult;
+  notes: string[];
+}): Promise<CheckRollResult> {
+  if (!input.requested) {
+    return input.result;
+  }
+  await spendStrokeOfLuck(input.spender, input.character);
+  input.notes.push('Golpe de Sorte: resultado do d20 transformado em 20');
+  return turnCheckIntoNaturalTwenty(input.result);
 }

@@ -14,6 +14,10 @@ import {
 } from '../dto/character-state.dto';
 import { CharacterStateRepository } from '../infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
+import {
+  assertCharacterLevel,
+  assertCharacterSubclass,
+} from './table-action-guards';
 
 const FOCUS_RESOURCE_SLUG = 'focusPoints';
 
@@ -64,7 +68,7 @@ export class MonkActionsHandler {
   private async resolveFlurryOfBlows(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 2, 'Torrente de Golpes');
+    assertCharacterLevel(character, 2, 'Monk', 'Torrente de Golpes');
     const strikes = character.level >= 10 ? 3 : 2;
     const state = await this.spendFocus(character, 1);
     return {
@@ -80,7 +84,7 @@ export class MonkActionsHandler {
   private async resolvePatientDefense(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 2, 'Defesa Paciente');
+    assertCharacterLevel(character, 2, 'Monk', 'Defesa Paciente');
     const state = await this.spendFocus(character, 1);
     return {
       state,
@@ -93,7 +97,7 @@ export class MonkActionsHandler {
   private async resolveStepOfTheWind(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 2, 'Passo do Vento');
+    assertCharacterLevel(character, 2, 'Monk', 'Passo do Vento');
     const state = await this.spendFocus(character, 1);
     return {
       state,
@@ -106,7 +110,7 @@ export class MonkActionsHandler {
   private async resolveStunningStrike(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 5, 'Golpe Atordoante');
+    assertCharacterLevel(character, 5, 'Monk', 'Golpe Atordoante');
     const saveDc = await this.focusDc(character);
     const state = await this.spendFocus(character, 1);
     return {
@@ -121,8 +125,8 @@ export class MonkActionsHandler {
   private async resolveOpenHandTechnique(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertSubclass(character, 'open-hand', 'Mão Espalmada');
-    this.assertLevel(character, 3, 'Técnica da Mão Espalmada');
+    assertCharacterSubclass(character, 'open-hand', 'Mão Espalmada');
+    assertCharacterLevel(character, 3, 'Monk', 'Técnica da Mão Espalmada');
     const saveDc = await this.focusDc(character);
     return {
       state: await this.state.buildResponse(character),
@@ -136,8 +140,8 @@ export class MonkActionsHandler {
   private async resolveElementalBlast(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertSubclass(character, 'elements', 'Combatente dos Elementos');
-    this.assertLevel(character, 3, 'Explosão Elemental');
+    assertCharacterSubclass(character, 'elements', 'Combatente dos Elementos');
+    assertCharacterLevel(character, 3, 'Monk', 'Explosão Elemental');
     const dexterity = abilityModifier(character.abilityScores.destreza);
     const damage = rollDamageParts(martialArtsDie(character.level), dexterity);
     const state = await this.spendFocus(character, 1);
@@ -155,8 +159,8 @@ export class MonkActionsHandler {
   private async resolveHandOfHealing(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertSubclass(character, 'mercy', 'Combatente da Misericórdia');
-    this.assertLevel(character, 3, 'Mão de Cura');
+    assertCharacterSubclass(character, 'mercy', 'Combatente da Misericórdia');
+    assertCharacterLevel(character, 3, 'Monk', 'Mão de Cura');
     const wisdom = abilityModifier(character.abilityScores.sabedoria);
     const heal = rollDamageParts(martialArtsDie(character.level), wisdom);
     const state = await this.spendFocus(character, 1);
@@ -174,8 +178,8 @@ export class MonkActionsHandler {
   private async resolveHandOfHarm(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertSubclass(character, 'mercy', 'Combatente da Misericórdia');
-    this.assertLevel(character, 3, 'Mão de Dolo');
+    assertCharacterSubclass(character, 'mercy', 'Combatente da Misericórdia');
+    assertCharacterLevel(character, 3, 'Monk', 'Mão de Dolo');
     const wisdom = abilityModifier(character.abilityScores.sabedoria);
     const damage = rollDamageParts(martialArtsDie(character.level), wisdom);
     const state = await this.spendFocus(character, 1);
@@ -193,8 +197,8 @@ export class MonkActionsHandler {
   private async resolveShadowStep(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertSubclass(character, 'shadow', 'Combatente das Sombras');
-    this.assertLevel(character, 6, 'Passo da Sombra');
+    assertCharacterSubclass(character, 'shadow', 'Combatente das Sombras');
+    assertCharacterLevel(character, 6, 'Monk', 'Passo da Sombra');
     return {
       state: await this.state.buildResponse(character),
       actionName: 'Passo da Sombra',
@@ -223,25 +227,5 @@ export class MonkActionsHandler {
     });
   }
 
-  private assertLevel(
-    character: PlayerCharacter,
-    minimumLevel: number,
-    actionName: string,
-  ): void {
-    if (character.level < minimumLevel) {
-      throw new BadRequestException(
-        `${actionName} requires Monk level ${minimumLevel}`,
-      );
-    }
-  }
 
-  private assertSubclass(
-    character: PlayerCharacter,
-    subclassSlug: string,
-    subclassName: string,
-  ): void {
-    if (character.subclassSlug !== subclassSlug) {
-      throw new BadRequestException(`${subclassName} action is not available`);
-    }
-  }
 }

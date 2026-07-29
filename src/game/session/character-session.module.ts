@@ -21,6 +21,7 @@ import { FighterActionsHandler } from './application/fighter-actions.handler';
 import { RogueActionsHandler } from './application/rogue-actions.handler';
 import { MonkActionsHandler } from './application/monk-actions.handler';
 import { PaladinActionsHandler } from './application/paladin-actions.handler';
+import { RangerActionsHandler } from './application/ranger-actions.handler';
 
 @Module({
   imports: [
@@ -49,7 +50,9 @@ import { PaladinActionsHandler } from './application/paladin-actions.handler';
     RogueActionsHandler,
     MonkActionsHandler,
     PaladinActionsHandler,
+    RangerActionsHandler,
   ],
   exports: [CharacterStateRepository],
 })
 export class CharacterSessionModule {}
+

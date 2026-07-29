@@ -77,6 +77,15 @@ export class RollAttackDto {
   @IsOptional()
   @IsBoolean()
   assassinate?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Caçador Preciso (Guardião nv.17): vantagem contra a criatura marcada',
+  })
+  @IsOptional()
+  @IsBoolean()
+  preciseHunter?: boolean;
 }
 
 export class RollDamageDto {
@@ -249,6 +258,42 @@ export class RollDamageDto {
   @IsOptional()
   @IsBoolean()
   smiteVsUndeadOrFiend?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Marca do Predador (Guardião): adiciona o dado da marca (1d6 ou 1d10 no nv.20)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  huntersMark?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Assassino de Colossos (Caçador): +1d8 1×/turno contra alvo abaixo do máximo de PV',
+  })
+  @IsOptional()
+  @IsBoolean()
+  colossusSlayer?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Golpes Terríveis (Andarilho Feérico): +1d4/+1d6 Psíquico 1×/turno',
+  })
+  @IsOptional()
+  @IsBoolean()
+  dreadfulStrikes?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Golpe Terrível (Vigilante das Sombras): +2d6/+2d8 Psíquico; gasta 1 uso',
+  })
+  @IsOptional()
+  @IsBoolean()
+  dreadAmbusher?: boolean;
 }
 
 export class RollSkillDto {

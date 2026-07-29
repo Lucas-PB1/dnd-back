@@ -349,7 +349,7 @@ export class UseBattleMasterManeuverDto {
   useRelentless?: boolean;
 }
 
-export class FighterTableActionResponseDto {
+export class TableActionResponseDto {
   @ApiProperty({ type: () => CharacterStateResponseDto })
   state!: CharacterStateResponseDto;
 
@@ -377,6 +377,9 @@ export class FighterTableActionResponseDto {
   })
   note!: string;
 }
+
+/** @deprecated Use TableActionResponseDto — alias de compatibilidade. */
+export class FighterTableActionResponseDto extends TableActionResponseDto {}
 
 export class UsePsiWarriorActionDto {
   @ApiProperty({
@@ -553,6 +556,34 @@ export class UsePaladinTableActionDto {
   @IsInt()
   @Min(1)
   amount?: number;
+}
+
+export class UseRangerTableActionDto {
+  @ApiProperty({
+    enum: [
+      'hunters-mark-free',
+      'tireless',
+      'natures-veil',
+      'fey-reinforcements',
+      'misty-wanderer',
+      'primal-companion',
+    ],
+  })
+  @IsIn([
+    'hunters-mark-free',
+    'tireless',
+    'natures-veil',
+    'fey-reinforcements',
+    'misty-wanderer',
+    'primal-companion',
+  ])
+  actionSlug!:
+    | 'hunters-mark-free'
+    | 'tireless'
+    | 'natures-veil'
+    | 'fey-reinforcements'
+    | 'misty-wanderer'
+    | 'primal-companion';
 }
 
 export class FirearmChamberDto {

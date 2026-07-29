@@ -51,6 +51,30 @@ VALUES
     NULL,
     (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'),
     1
+  ),
+  (
+    'favoredEnemy',
+    'Inimigo Favorito',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'),
+    1
+  ),
+  (
+    'tireless',
+    'Incansável',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'),
+    10
+  ),
+  (
+    'naturesVeil',
+    'Véu da Natureza',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'),
+    14
   )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -193,4 +217,40 @@ SELECT c.id, rd.id, 1, 'fixed'::rpg.resource_max_formula, 0,
 FROM rpg.phb_class c
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'layOnHands' AND rd.class_id = c.id
 WHERE c.slug = 'paladin'
+ON CONFLICT DO NOTHING;
+
+-- Guardião — Inimigo Favorito (usos gratuitos de Marca do Predador = PB)
+INSERT INTO rpg.phb_class_resource (
+  class_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT c.id, rd.id, 1, 'proficiency_bonus'::rpg.resource_max_formula, NULL,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'favoredEnemy' AND rd.class_id = c.id
+WHERE c.slug = 'ranger'
+ON CONFLICT DO NOTHING;
+
+-- Guardião — Incansável (usos = mod. Sabedoria)
+INSERT INTO rpg.phb_class_resource (
+  class_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT c.id, rd.id, 10, 'wisdom_mod'::rpg.resource_max_formula, NULL,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'tireless' AND rd.class_id = c.id
+WHERE c.slug = 'ranger'
+ON CONFLICT DO NOTHING;
+
+-- Guardião — Véu da Natureza (usos = mod. Sabedoria)
+INSERT INTO rpg.phb_class_resource (
+  class_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT c.id, rd.id, 14, 'wisdom_mod'::rpg.resource_max_formula, NULL,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'naturesVeil' AND rd.class_id = c.id
+WHERE c.slug = 'ranger'
 ON CONFLICT DO NOTHING;

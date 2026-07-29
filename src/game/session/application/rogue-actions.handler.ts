@@ -14,6 +14,10 @@ import {
 } from '../dto/character-state.dto';
 import { CharacterStateRepository } from '../infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
+import {
+  assertCharacterLevel,
+  assertCharacterSubclass,
+} from './table-action-guards';
 
 @Injectable()
 export class RogueActionsHandler {
@@ -38,7 +42,7 @@ export class RogueActionsHandler {
     }
 
     if (dto.actionSlug.startsWith('psychic-')) {
-      this.assertSubclass(character, 'soulknife', 'Soulknife');
+      assertCharacterSubclass(character, 'soulknife', 'Soulknife');
     }
 
     switch (dto.actionSlug) {
@@ -71,7 +75,7 @@ export class RogueActionsHandler {
     character: PlayerCharacter,
     bonusAttack: boolean,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 3, 'Psychic Blades');
+    assertCharacterLevel(character, 3, 'Rogue', 'Psychic Blades');
     const pb = await this.domain.getProficiencyBonus(character.level);
     const dexterity = abilityModifier(character.abilityScores.destreza);
     const attack = rollD20Check(dexterity + pb);
@@ -97,8 +101,8 @@ export class RogueActionsHandler {
   ): Promise<FighterTableActionResponseDto> {
     const minimumLevel = attack ? 9 : 3;
     const actionName = attack ? 'Golpes Teleguiados' : 'Aptidão Reforçada';
-    this.assertSubclass(character, 'soulknife', 'Soulknife');
-    this.assertLevel(character, minimumLevel, actionName);
+    assertCharacterSubclass(character, 'soulknife', 'Soulknife');
+    assertCharacterLevel(character, minimumLevel, 'Rogue', actionName);
     if (dto.checkTotal == null || dto.dc == null) {
       throw new BadRequestException(`${actionName} requires checkTotal and dc`);
     }
@@ -137,7 +141,7 @@ export class RogueActionsHandler {
     character: PlayerCharacter,
     usePsiDie = false,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 3, 'Psychic Whispers');
+    assertCharacterLevel(character, 3, 'Rogue', 'Psychic Whispers');
     const faces = this.psiDieFaces(character);
     const dieRoll = rollDie(faces);
     const pb = await this.domain.getProficiencyBonus(character.level);
@@ -168,7 +172,7 @@ export class RogueActionsHandler {
   private async resolvePsychicTeleport(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 9, 'Psychic Teleportation');
+    assertCharacterLevel(character, 9, 'Rogue', 'Psychic Teleportation');
     const faces = this.psiDieFaces(character);
     const dieRoll = rollDie(faces);
     const tableAction = await this.resolveSoulknifeAction(
@@ -199,7 +203,7 @@ export class RogueActionsHandler {
     character: PlayerCharacter,
     usePsiDie = false,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 13, 'Psychic Veil');
+    assertCharacterLevel(character, 13, 'Rogue', 'Psychic Veil');
     const tableAction = await this.resolveSoulknifeAction(
       character,
       'psychic-veil',
@@ -224,7 +228,7 @@ export class RogueActionsHandler {
     character: PlayerCharacter,
     usePsiDie = false,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 17, 'Rend Mind');
+    assertCharacterLevel(character, 17, 'Rogue', 'Rend Mind');
     const tableAction = await this.resolveSoulknifeAction(
       character,
       'rend-mind',
@@ -252,8 +256,8 @@ export class RogueActionsHandler {
   private async resolveSpellThief(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertSubclass(character, 'arcane-trickster', 'Arcane Trickster');
-    this.assertLevel(character, 17, 'Spell Thief');
+    assertCharacterSubclass(character, 'arcane-trickster', 'Arcane Trickster');
+    assertCharacterLevel(character, 17, 'Rogue', 'Spell Thief');
     const state = (
       await this.state.useClassResource(character, 'spell-thief', 1)
     ).state;
@@ -272,12 +276,12 @@ export class RogueActionsHandler {
   private async resolveArachnoidWeb(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertSubclass(
+    assertCharacterSubclass(
       character,
       'arachnoid-stalker',
       'Arachnid Stalker',
     );
-    this.assertLevel(character, 3, 'Webbing');
+    assertCharacterLevel(character, 3, 'Rogue', 'Webbing');
     const state = (
       await this.state.useClassResource(character, 'arachnoid-web', 1)
     ).state;
@@ -296,8 +300,8 @@ export class RogueActionsHandler {
   private async resolveMagicDeviceCharge(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertSubclass(character, 'thief', 'Thief');
-    this.assertLevel(character, 13, 'Use Magic Device');
+    assertCharacterSubclass(character, 'thief', 'Thief');
+    assertCharacterLevel(character, 13, 'Rogue', 'Use Magic Device');
     const dieRoll = rollDie(6);
     return {
       state: await this.state.buildResponse(character),
@@ -340,27 +344,5 @@ export class RogueActionsHandler {
     });
   }
 
-  private assertLevel(
-    character: PlayerCharacter,
-    minimumLevel: number,
-    actionName: string,
-  ): void {
-    if (character.level < minimumLevel) {
-      throw new BadRequestException(
-        `${actionName} requires Rogue level ${minimumLevel}`,
-      );
-    }
-  }
 
-  private assertSubclass(
-    character: PlayerCharacter,
-    subclassSlug: string,
-    subclassName: string,
-  ): void {
-    if (character.subclassSlug !== subclassSlug) {
-      throw new BadRequestException(
-        `${subclassName} action is not available`,
-      );
-    }
-  }
 }

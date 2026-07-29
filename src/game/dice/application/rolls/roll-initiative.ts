@@ -10,17 +10,19 @@ import type {
   CharacterRollResponseDto,
   RollInitiativeDto,
 } from '../../dto/character-roll.dto';
+import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
+import { forceAdvantageIfNormal } from './advantage-mode';
 import { loadAccessibleCharacter } from './roll-weapon-context';
-import {
-  spendStrokeOfLuck,
-  turnCheckIntoNaturalTwenty,
-} from './stroke-of-luck';
+import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
+import { abilityModifier } from '../../../sheet/domain/stats/ability-modifier';
+import { isRangerClass } from '../../../combat/domain/ranger-features';
 
 export async function executeRollInitiative(input: {
   access: PlayerCharacterAccessService;
   sheet: CharacterSheetRepository;
   domain: CharacterDomainService;
   dataSource: DataSource;
+  resourceSpender: CharacterResourceSpender;
   userId: string;
   characterId: string;
   dto: RollInitiativeDto;
@@ -39,29 +41,32 @@ export async function executeRollInitiative(input: {
     character.abilityScores,
   );
   const mods = computeAbilityModifiers(scores);
-  const bonus = initiativeBonus(mods.destreza, pb, sheet.characterFeats);
-  let mode = input.dto.advantage ?? 'normal';
+  let bonus = initiativeBonus(mods.destreza, pb, sheet.characterFeats);
+  const notes: string[] = [];
   if (
-    character.subclassSlug === 'champion' &&
-    character.level >= 3 &&
-    mode === 'normal'
+    isRangerClass(character.classSlug) &&
+    character.subclassSlug === 'gloom-stalker' &&
+    character.level >= 3
   ) {
-    mode = 'advantage';
+    const wisdom = abilityModifier(scores.sabedoria);
+    bonus += wisdom;
+    notes.push(`Emboscador das Sombras: +${wisdom} (mod. de Sabedoria) na Iniciativa`);
   }
-  if (
-    character.subclassSlug === 'assassin' &&
-    character.level >= 3 &&
-    mode === 'normal'
-  ) {
-    mode = 'advantage';
+  let mode = input.dto.advantage ?? 'normal';
+  if (character.subclassSlug === 'champion' && character.level >= 3) {
+    mode = forceAdvantageIfNormal(mode);
+  }
+  if (character.subclassSlug === 'assassin' && character.level >= 3) {
+    mode = forceAdvantageIfNormal(mode);
   }
   let result = rollD20Check(bonus, mode);
-  const notes: string[] = [];
-  if (input.dto.strokeOfLuck) {
-    await spendStrokeOfLuck(input.dataSource, character);
-    result = turnCheckIntoNaturalTwenty(result);
-    notes.push('Golpe de Sorte: resultado do d20 transformado em 20');
-  }
+  result = await applyStrokeOfLuckIfRequested({
+    requested: input.dto.strokeOfLuck,
+    spender: input.resourceSpender,
+    character,
+    result,
+    notes,
+  });
   if (mode === 'advantage' && character.subclassSlug === 'champion') {
     notes.push('Atleta Extraordinário: Vantagem na Iniciativa');
   }

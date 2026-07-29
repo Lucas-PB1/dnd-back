@@ -10,14 +10,17 @@ import {
 } from '../../domain/dice';
 import type { CharacterRollResponseDto, RollAttackDto } from '../../dto/character-roll.dto';
 import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
+import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
 import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,
 } from './roll-weapon-context';
 import {
-  spendStrokeOfLuck,
-  turnCheckIntoNaturalTwenty,
-} from './stroke-of-luck';
+  forceAdvantageIfNormal,
+  upgradeTowardAdvantage,
+} from './advantage-mode';
+import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
+import { hasPreciseHunter, isRangerClass } from '../../../combat/domain/ranger-features';
 
 export async function executeRollAttack(input: {
   access: PlayerCharacterAccessService;
@@ -26,6 +29,7 @@ export async function executeRollAttack(input: {
   weaponAttacks: ResolveEquippedWeaponAttacks;
   permanentItemEffects: ResolveActivePermanentItemEffects;
   dataSource: DataSource;
+  resourceSpender: CharacterResourceSpender;
   userId: string;
   characterId: string;
   dto: RollAttackDto;
@@ -63,50 +67,56 @@ export async function executeRollAttack(input: {
     combatFlags.recklessActive &&
     character.classSlug === 'barbarian' &&
     input.dto.mode === 'melee' &&
-    attack.abilitySlug === 'forca' &&
-    mode === 'normal'
+    attack.abilitySlug === 'forca'
   ) {
-    mode = 'advantage';
+    mode = forceAdvantageIfNormal(mode);
   }
   if (
     input.dto.studiedAttack &&
     character.classSlug === 'fighter' &&
-    character.level >= 13 &&
-    mode === 'normal'
+    character.level >= 13
   ) {
-    mode = 'advantage';
+    mode = forceAdvantageIfNormal(mode);
   }
   if (
     input.dto.doorKick &&
     character.subclassSlug === 'dungeoneer' &&
-    character.level >= 3 &&
-    mode === 'normal'
+    character.level >= 3
   ) {
-    mode = 'advantage';
+    mode = forceAdvantageIfNormal(mode);
   }
   if (input.dto.steadyAim) {
     if (character.classSlug !== 'rogue' || character.level < 3) {
       throw new BadRequestException('Steady Aim requires Rogue level 3');
     }
-    mode = mode === 'disadvantage' ? 'normal' : 'advantage';
+    mode = upgradeTowardAdvantage(mode);
   }
   if (input.dto.assassinate) {
-    if (
-      character.subclassSlug !== 'assassin' ||
-      character.level < 3
-    ) {
+    if (character.subclassSlug !== 'assassin' || character.level < 3) {
       throw new BadRequestException('Assassinate requires Assassin level 3');
     }
-    mode = mode === 'disadvantage' ? 'normal' : 'advantage';
+    mode = upgradeTowardAdvantage(mode);
+  }
+  if (input.dto.preciseHunter) {
+    if (
+      !isRangerClass(character.classSlug) ||
+      !hasPreciseHunter(character.level)
+    ) {
+      throw new BadRequestException('Precise Hunter requires Ranger level 17');
+    }
+    mode = upgradeTowardAdvantage(mode);
   }
   let result = rollD20Check(attack.attackBonus, mode);
-  if (input.dto.strokeOfLuck) {
-    await spendStrokeOfLuck(input.dataSource, character);
-    result = turnCheckIntoNaturalTwenty(result);
-  }
+  const notes: string[] = [];
+  result = await applyStrokeOfLuckIfRequested({
+    requested: input.dto.strokeOfLuck,
+    spender: input.resourceSpender,
+    character,
+    result,
+    notes,
+  });
   const kept = result.d20.kept[0] ?? 0;
   const critical = kept >= (attack.critThreshold ?? 20);
-  const notes: string[] = [];
   if (critical && character.classSlug === 'gunslinger' && character.level >= 5) {
     notes.push(
       'Tiro intestinal: Velocidade pela metade e Desvantagem nos ataques (1 min; criatura Grande ou menor)',
@@ -138,8 +148,10 @@ export async function executeRollAttack(input: {
       'Assassinar: vantagem contra criatura que ainda não agiu na primeira rodada',
     );
   }
-  if (input.dto.strokeOfLuck) {
-    notes.push('Golpe de Sorte: resultado do d20 transformado em 20');
+  if (input.dto.preciseHunter) {
+    notes.push(
+      'Caçador Preciso: vantagem contra a criatura marcada pela Marca do Predador',
+    );
   }
   return {
     kind: 'attack',

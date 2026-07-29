@@ -53,6 +53,10 @@ describe('executeRollSkill', () => {
           },
         ]),
       } as never,
+      resourceSpender: {
+        spendClassResource: jest.fn(),
+        consumeSpellSlotLevel: jest.fn(),
+      },
       userId: 'user-1',
       characterId: 'rogue-1',
       dto: { skillSlug: 'stealth' },

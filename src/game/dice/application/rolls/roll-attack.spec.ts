@@ -21,6 +21,10 @@ describe('executeRollAttack', () => {
     weaponAttacks: {} as never,
     permanentItemEffects: {} as never,
     dataSource: {} as never,
+    resourceSpender: {
+      spendClassResource: jest.fn(),
+      consumeSpellSlotLevel: jest.fn(),
+    },
     userId: 'u1',
     characterId: 'c1',
   };
@@ -98,5 +102,70 @@ describe('executeRollAttack', () => {
     expect(result.mode).toBe('advantage');
     expect(result.note).toContain('Mira Móvel');
     expect(result.note).not.toContain('Deslocamento 0');
+  });
+
+  it('does not apply Studied Attack when already at disadvantage', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'fighter',
+      subclassSlug: 'champion',
+      level: 13,
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Longsword',
+        attackBonus: 6,
+        attackDisadvantage: true,
+        abilitySlug: 'forca',
+        critThreshold: 20,
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollAttack({
+      ...base,
+      dto: {
+        itemSlug: 'longsword',
+        mode: 'melee',
+        advantage: 'normal',
+        studiedAttack: true,
+      },
+    });
+
+    expect(result.mode).toBe('disadvantage');
+    expect(result.note).toContain('Ataques Estudados');
+  });
+
+  it('upgrades disadvantage to normal with Steady Aim', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'rogue',
+      subclassSlug: 'thief',
+      level: 3,
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Shortbow',
+        attackBonus: 5,
+        attackDisadvantage: true,
+        abilitySlug: 'destreza',
+        critThreshold: 20,
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollAttack({
+      ...base,
+      dto: {
+        itemSlug: 'shortbow',
+        mode: 'ranged',
+        advantage: 'normal',
+        steadyAim: true,
+      },
+    });
+
+    expect(result.mode).toBe('normal');
+    expect(result.note).toContain('Mira Firme');
+    expect(result.note).toContain('Deslocamento 0');
   });
 });

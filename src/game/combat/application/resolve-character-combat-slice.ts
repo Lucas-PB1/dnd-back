@@ -1,25 +1,5 @@
 import { applyItemAbilityBonuses } from '../../inventory/domain/permanent-item-effects';
-import {
-  barbarianCombatNotes,
-  fastMovementBonusMeters,
-} from '../domain/barbarian-rage';
-import {
-  attacksPerAction as resolveAttacksPerAction,
-  fighterCombatNotes,
-  isFighterClass,
-} from '../domain/fighter-features';
-import { rogueCombatNotes } from '../domain/rogue-features';
-import {
-  isMonkClass,
-  monkAttacksPerAction,
-  monkCombatNotes,
-  unarmoredMovementBonusMeters,
-} from '../domain/monk-features';
-import {
-  isPaladinClass,
-  paladinAttacksPerAction,
-  paladinCombatNotes,
-} from '../domain/paladin-features';
+import { aggregateClassCombatContributions } from '../domain/aggregate-class-combat';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
@@ -134,16 +114,11 @@ export async function resolveCharacterCombatSlice(input: {
     hasShield,
   });
 
-  const classSpeedBonus =
-    fastMovementBonusMeters({ classSlug, level }) +
-    unarmoredMovementBonusMeters({ classSlug, level });
-  const notes = [
-    ...barbarianCombatNotes({ classSlug, level }),
-    ...fighterCombatNotes({ classSlug, subclassSlug, level }),
-    ...rogueCombatNotes({ classSlug, subclassSlug, level }),
-    ...monkCombatNotes({ classSlug, subclassSlug, level }),
-    ...paladinCombatNotes({ classSlug, subclassSlug, level }),
-  ];
+  const classCombat = aggregateClassCombatContributions({
+    classSlug,
+    subclassSlug,
+    level,
+  });
 
   return {
     armorClass: armor.armorClass,
@@ -152,15 +127,10 @@ export async function resolveCharacterCombatSlice(input: {
     equipmentWarnings: compliance.warnings,
     cannotCastSpellsInArmor: compliance.cannotCastSpells,
     speedPenaltyMeters: compliance.speedPenaltyMeters,
-    itemSpeedBonusMeters: itemEffects.speedBonusMeters + classSpeedBonus,
+    itemSpeedBonusMeters:
+      itemEffects.speedBonusMeters + classCombat.speedBonusMeters,
     itemHpBonus: itemEffects.hpBonus,
-    classCombatNotes: notes,
-    attacksPerAction: isFighterClass(classSlug)
-      ? resolveAttacksPerAction(level)
-      : isMonkClass(classSlug)
-        ? monkAttacksPerAction(level)
-        : isPaladinClass(classSlug)
-          ? paladinAttacksPerAction(level)
-          : 1,
+    classCombatNotes: classCombat.notes,
+    attacksPerAction: classCombat.attacksPerAction,
   };
 }

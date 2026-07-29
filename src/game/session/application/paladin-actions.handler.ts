@@ -9,6 +9,7 @@ import {
 } from '../dto/character-state.dto';
 import { CharacterStateRepository } from '../infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
+import { assertCharacterLevel } from './table-action-guards';
 
 const LAY_ON_HANDS_SLUG = 'layOnHands';
 const CHANNEL_DIVINITY_SLUG = 'channelDivinity';
@@ -92,7 +93,7 @@ export class PaladinActionsHandler {
   private async resolveDivineSense(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 3, 'Sentido Divino');
+    assertCharacterLevel(character, 3, 'Paladin', 'Sentido Divino');
     const state = (
       await this.state.useClassResource(character, CHANNEL_DIVINITY_SLUG, 1)
     ).state;
@@ -107,7 +108,7 @@ export class PaladinActionsHandler {
   private async resolveAbjureEnemies(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 9, 'Repudiar Inimigos');
+    assertCharacterLevel(character, 9, 'Paladin', 'Repudiar Inimigos');
     const saveDc = await this.paladinSaveDc(character);
     const state = (
       await this.state.useClassResource(character, CHANNEL_DIVINITY_SLUG, 1)
@@ -124,7 +125,7 @@ export class PaladinActionsHandler {
   private async resolveOathChannel(
     character: PlayerCharacter,
   ): Promise<FighterTableActionResponseDto> {
-    this.assertLevel(character, 3, 'Canalizar Divindade do Juramento');
+    assertCharacterLevel(character, 3, 'Paladin', 'Canalizar Divindade do Juramento');
     const saveDc = await this.paladinSaveDc(character);
     const state = (
       await this.state.useClassResource(character, CHANNEL_DIVINITY_SLUG, 1)
@@ -177,15 +178,4 @@ export class PaladinActionsHandler {
     return 8 + abilityModifier(character.abilityScores.carisma) + pb;
   }
 
-  private assertLevel(
-    character: PlayerCharacter,
-    minimumLevel: number,
-    actionName: string,
-  ): void {
-    if (character.level < minimumLevel) {
-      throw new BadRequestException(
-        `${actionName} requires Paladin level ${minimumLevel}`,
-      );
-    }
-  }
 }

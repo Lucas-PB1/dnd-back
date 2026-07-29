@@ -42,13 +42,13 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 | Clérigo | `cleric` | `[ ]` |
 | Druida | `druid` | `[ ]` |
 | Feiticeiro | `sorcerer` | `[ ]` |
-| Guardião | `ranger` | `[ ]` |
+| Guardião | `ranger` | `[x]` feito |
 | Ladino | `rogue` | `[x]` feito |
 | Mago | `wizard` | `[ ]` |
 | Monge | `monk` | `[x]` feito |
 | Paladino | `paladin` | `[x]` feito |
 
-**Progresso:** 6 feitas · **7** por conferir (PHB) + subclasses Valda das classes não feitas.
+**Progresso:** 7 feitas · **6** por conferir (PHB) + subclasses Valda das classes não feitas.
 
 ---
 
@@ -133,6 +133,24 @@ demais efeitos de 1 minuto, e persistência de quem está dentro da aura.
 
 ---
 
+### Guardião (`ranger`) — `[x]`
+
+- [x] Base: Inimigo Favorito (usos gratuitos de Marca do Predador = PB), Ataque Extra, Errante (+3 m), Incansável (1d8 + SAB PV temporários), Véu da Natureza, Caçador Preciso (vantagem vs marcado) e Matador de Inimigos Favoritos (dado d10)
+- [x] Marca do Predador: cast gratuito com concentração + toggle de dano 1d6/1d10 no acerto
+- [x] Caçador: Assassino de Colossos (+1d8) e notas de Hordas/Defesas
+- [x] Andarilho Feérico: Golpes Terríveis (+1d4/+1d6), Reforços Feéricos e Andarilho Nebuloso
+- [x] Vigilante das Sombras: +SAB na Iniciativa, Golpe Terrível (+2d6/+2d8 gastando uso) e notas
+- [x] Senhor das Feras: nota de Companheiro Primal / comandar a fera
+- [x] UI: `combat-ranger-panel`, toggles de Marca/Colossos/Terríveis e botão de Golpe Terrível
+
+Recursos novos de classe: `favoredEnemy`, `tireless`, `naturesVeil`. Subclasses já tinham
+`dread-strike`, `fey-reinforcements` e `misty-wanderer` no catálogo.
+
+Fora de escopo de propósito: estado do Companheiro Primal, rastrear 1×/turno, alcance do
+Destruidor de Hordas e duração do Véu da Natureza além da nota de mesa.
+
+---
+
 ## Não conferidas (PHB)
 
 ### Bardo (`bard`) — `[ ]`
@@ -176,14 +194,6 @@ demais efeitos de 1 minuto, e persistência de quem está dentro da aura.
 - [ ] Mecânica (`clockwork`)
 - [ ] Selvagem (`wild-magic`)
 
-### Guardião (`ranger`) — `[ ]`
-
-- [ ] Classe-base (Inimigo Favorito, etc. PHB 2024)
-- [ ] Andarilho Feérico (`fey-wanderer`)
-- [ ] Caçador (`hunter`)
-- [ ] Senhor das Feras (`beast-master`)
-- [ ] Vigilante das Sombras (`gloom-stalker`)
-
 ### Mago (`wizard`) — `[ ]`
 
 - [ ] Classe-base (grimório, preparação, recuperação arcana)
@@ -192,17 +202,18 @@ demais efeitos de 1 minuto, e persistência de quem está dentro da aura.
 - [ ] Evocador (`evoker`)
 - [ ] Ilusionista (`illusionist`)
 
+---
+
 ## Ordem sugerida (próximas)
 
 Marciais / half-casters costumam destravar a mesa mais rápido:
 
-1. Guardião  
-2. Clérigo  
-3. Bardo  
-4. Feiticeiro  
-5. Bruxo  
-6. Mago  
-7. Druida  
+1. Clérigo  
+2. Bardo  
+3. Feiticeiro  
+4. Bruxo  
+5. Mago  
+6. Druida  
 
 Ajustar sob pedido da mesa.
 

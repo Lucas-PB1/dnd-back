@@ -16,6 +16,11 @@ import {
 } from './roll-weapon-context';
 
 describe('executeRollDamage', () => {
+  const resourceSpender = {
+    spendClassResource: jest.fn().mockResolvedValue(undefined),
+    consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
+  };
+
   const base = {
     access: {} as never,
     sheet: {} as never,
@@ -23,6 +28,7 @@ describe('executeRollDamage', () => {
     weaponAttacks: {} as never,
     permanentItemEffects: {} as never,
     dataSource: {} as never,
+    resourceSpender,
     userId: 'u1',
     characterId: 'c1',
   };
@@ -229,5 +235,243 @@ describe('executeRollDamage', () => {
         },
       }),
     ).rejects.toThrow(/Finesse weapon or a ranged attack/);
+  });
+
+  it('doubles pre-smite damage for Death Strike and wraps the expression', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'rogue',
+      subclassSlug: 'assassin',
+      level: 17,
+      abilityScores: {
+        forca: 8,
+        destreza: 20,
+        constituicao: 12,
+        inteligencia: 12,
+        sabedoria: 10,
+        carisma: 10,
+      },
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Rapier',
+        grazeOnMissDamage: null,
+        damageDice: '1d8',
+        damageBonus: 5,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        abilitySlug: 'destreza',
+        sneakAttackEligible: true,
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollDamage({
+      ...base,
+      dto: {
+        itemSlug: 'rapier',
+        mode: 'melee',
+        sneakAttack: true,
+        assassinDeathStrike: true,
+      },
+    });
+
+    expect(result.expression).toMatch(/^2×\(/);
+    expect(result.note).toContain('Golpe Mortal');
+    expect(result.label).toContain('Ataque Furtivo');
+  });
+
+  it('adds Radiant Strikes automatically for Paladin level 11 melee', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'paladin',
+      subclassSlug: 'devotion',
+      level: 11,
+      abilityScores: {
+        forca: 16,
+        destreza: 10,
+        constituicao: 14,
+        inteligencia: 8,
+        sabedoria: 10,
+        carisma: 16,
+      },
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Longsword',
+        grazeOnMissDamage: null,
+        damageDice: '1d8',
+        damageBonus: 3,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        abilitySlug: 'forca',
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollDamage({
+      ...base,
+      dto: { itemSlug: 'longsword', mode: 'melee' },
+    });
+
+    expect(result.note).toContain('Golpes Radiantes');
+    expect(result.expression).toContain('1d8');
+  });
+
+  it('does not add Radiant Strikes below level 11 or on ranged attacks', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'paladin',
+      subclassSlug: 'devotion',
+      level: 10,
+      abilityScores: {
+        forca: 16,
+        destreza: 10,
+        constituicao: 14,
+        inteligencia: 8,
+        sabedoria: 10,
+        carisma: 16,
+      },
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Longsword',
+        grazeOnMissDamage: null,
+        damageDice: '1d8',
+        damageBonus: 3,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        abilitySlug: 'forca',
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const melee = await executeRollDamage({
+      ...base,
+      dto: { itemSlug: 'longsword', mode: 'melee' },
+    });
+    expect(melee.note ?? '').not.toContain('Golpes Radiantes');
+
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'paladin',
+      subclassSlug: 'devotion',
+      level: 11,
+      abilityScores: {
+        forca: 16,
+        destreza: 10,
+        constituicao: 14,
+        inteligencia: 8,
+        sabedoria: 10,
+        carisma: 16,
+      },
+    });
+    const ranged = await executeRollDamage({
+      ...base,
+      dto: { itemSlug: 'longsword', mode: 'ranged' },
+    });
+    expect(ranged.note ?? '').not.toContain('Golpes Radiantes');
+  });
+
+  it('debits a spell slot when Divine Smite is used', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'paladin',
+      subclassSlug: 'devotion',
+      level: 5,
+      abilityScores: {
+        forca: 16,
+        destreza: 10,
+        constituicao: 14,
+        inteligencia: 8,
+        sabedoria: 10,
+        carisma: 16,
+      },
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Longsword',
+        grazeOnMissDamage: null,
+        damageDice: '1d8',
+        damageBonus: 3,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        abilitySlug: 'forca',
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollDamage({
+      ...base,
+      dto: {
+        itemSlug: 'longsword',
+        mode: 'melee',
+        divineSmite: true,
+        smiteSlotLevel: 1,
+      },
+    });
+
+    expect(result.label).toContain('Destruição Divina');
+    expect(result.note).toContain('Destruição Divina');
+    expect(resourceSpender.consumeSpellSlotLevel).toHaveBeenCalledWith(
+      expect.objectContaining({ classSlug: 'paladin' }),
+      1,
+    );
+  });
+
+  it('spends dread-strike for Dread Ambusher and adds psychic damage', async () => {
+    (loadAccessibleCharacter as jest.Mock).mockResolvedValueOnce({
+      id: 'c1',
+      classSlug: 'ranger',
+      subclassSlug: 'gloom-stalker',
+      level: 3,
+      abilityScores: {
+        forca: 12,
+        destreza: 16,
+        constituicao: 14,
+        inteligencia: 10,
+        sabedoria: 14,
+        carisma: 8,
+      },
+    });
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Longbow',
+        grazeOnMissDamage: null,
+        damageDice: '1d8',
+        damageBonus: 3,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        abilitySlug: 'destreza',
+      },
+      combatFlags: { rageActive: false, recklessActive: false },
+    });
+
+    const result = await executeRollDamage({
+      ...base,
+      dto: {
+        itemSlug: 'longbow',
+        mode: 'ranged',
+        dreadAmbusher: true,
+      },
+    });
+
+    expect(result.label).toContain('Golpe Terrível');
+    expect(result.note).toContain('Golpe Terrível');
+    expect(resourceSpender.spendClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ subclassSlug: 'gloom-stalker' }),
+      'dread-strike',
+      1,
+    );
   });
 });
