@@ -8,7 +8,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'spellslinger'),
   'third'::rpg.casting_type,
   (SELECT id FROM rpg.phb_ability WHERE slug = 'inteligencia'),
-  'Arcane Focus or a Ranged weapon',
+  'Foco Arcano ou uma arma à distância',
   (SELECT id FROM rpg.phb_item WHERE slug = 'foco-arcano'),
   (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'),
   (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'third'),

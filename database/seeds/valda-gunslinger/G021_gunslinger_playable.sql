@@ -1,7 +1,7 @@
 -- Gunslinger P0: mastery eligibility/progression + Risk resource
 
 UPDATE rpg.phb_class
-SET weapon_mastery_eligibility = 'any'
+SET weapon_mastery_eligibility = 'ranged'
 WHERE slug = 'gunslinger';
 
 UPDATE rpg.phb_class_progression cp
@@ -17,7 +17,7 @@ WHERE cp.class_id = c.id AND c.slug = 'gunslinger';
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, species_id, class_id, min_level)
 VALUES (
   'risk',
-  'Risk',
+  'Risco',
   'class'::rpg.resource_scope,
   NULL,
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),

@@ -41,4 +41,8 @@ export class PlayerCharacterState {
 
   @Column({ type: 'boolean', default: false })
   inspiration!: boolean;
+
+  /** Tiros restantes por arma equipada com Recarga: `{ [itemSlug]: remaining }`. */
+  @Column({ name: 'firearm_chambers', type: 'jsonb', default: {} })
+  firearmChambers!: Record<string, number>;
 }

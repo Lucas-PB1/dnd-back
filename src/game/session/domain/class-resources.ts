@@ -134,6 +134,22 @@ export function applyResourceSpend(
   return { ...used, [slug]: current + amount };
 }
 
+/** Recupera usos gastos (ex.: Gambito Terrível — 1 Dado de Risco). */
+export function applyResourceRecover(
+  used: Record<string, number>,
+  slug: string,
+  amount = 1,
+): Record<string, number> {
+  const current = used[slug] ?? 0;
+  if (current <= 0) return { ...used };
+  const next = Math.max(0, current - amount);
+  if (next <= 0) {
+    const { [slug]: _removed, ...rest } = used;
+    return rest;
+  }
+  return { ...used, [slug]: next };
+}
+
 export function applyShortRestResourceRecovery(
   used: Record<string, number>,
   resources: readonly ClassResourceMax[],

@@ -8,13 +8,13 @@ Schema do **catálogo PHB** em migrations granulares.
 |-----------------|----------|
 | `001_schema.sql` | `CREATE SCHEMA rpg` + extensão `pg_trgm` |
 | `010_types/` | ENUMs |
-| `020_tables/T###_<nome>.sql` | Uma tabela por arquivo (`T001`–`T079`) |
+| `020_tables/T###_<nome>.sql` | Uma tabela por arquivo (`T001`–`T080`) |
 | `040_functions/` | Funções PL/pgSQL |
 | `050_triggers/` | Triggers |
 | `060_views/V###_<nome>.sql` | Uma view por arquivo (`V001`–`V032`) |
 | `070_materialized/` | Materialized views |
 | `080_indexes/` | Índices adicionais |
-| `090_player/P###_<nome>.sql` | Jogador + RLS (`P001`–`P014`) |
+| `090_player/P###_<nome>.sql` | Jogador + RLS (`P001`–`P015`) |
 
 Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 

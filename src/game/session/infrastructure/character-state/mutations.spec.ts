@@ -30,6 +30,7 @@ describe('mutations', () => {
     resourcesUsed: {},
     grantedSpellUses: {},
     highElfCantripSwapAvailable: false,
+    firearmChambers: {},
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });

@@ -71,4 +71,19 @@ export class WeaponAttackResponseDto {
 
   @ApiPropertyOptional({ example: null })
   grazeOnMissDamage!: number | null;
+
+  @ApiProperty({ example: false })
+  isFirearm!: boolean;
+
+  @ApiProperty({ example: 20 })
+  critThreshold!: number;
+
+  @ApiPropertyOptional({ example: null })
+  overkillExtraDice!: string | null;
+
+  @ApiPropertyOptional({ example: 6 })
+  reloadCapacity!: number | null;
+
+  @ApiProperty({ example: false })
+  hasRecoil!: boolean;
 }

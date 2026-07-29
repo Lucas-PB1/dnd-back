@@ -176,7 +176,7 @@ VALUES (
 
 Mudança rápida. Usando um Kit de Disfarce, você pode criar uma fantasia e vesti-la como Ação Bônus.
 
-Falador habilidoso. Sempre que você fizer um teste de Carisma (Enganação) ou Carisma (Persuasão), você pode tratar um resultado de 20 ou menos no d9 como 10.'
+Falador habilidoso. Sempre que você fizer um teste de Carisma (Enganação) ou Carisma (Persuasão), você pode tratar um resultado de 20 ou menos no d20 como 10.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -224,7 +224,7 @@ Espaços de Magia. A tabela Conjuração do Pistoleiro Arcano mostra quantos esp
 
 Magias Preparadas de Nível 1+. Você prepara a lista de magias de nível 1+ que estão disponíveis para serem lançadas com esse recurso. Para começar, escolha três magias de nível 1 da lista de magias do Mago. Orbe cromático, salto e escudo são recomendados.
 
-O número de magias em sua lista aumenta à medida que você ganha níveis de Pistoleiro, conforme mostrado na coluna Magias Preparadas da tabela Conjuração de Magias do Pistoleiro Arcano. Sempre que esse número aumentar, escolha magias adicionais da lista de magias do Mago até que o número de magias em sua lista corresponda ao número na tabela. As magias escolhidas devem ser de um nível para o qual você possui espaços de magia. Por exemplo, se você for um Pistoleiro de nível 7, sua lista de magias preparadas pode incluir cinca magias de Mago de níveis 1 e 2 em qualquer combinação.
+O número de magias em sua lista aumenta à medida que você ganha níveis de Pistoleiro, conforme mostrado na coluna Magias Preparadas da tabela Conjuração de Magias do Pistoleiro Arcano. Sempre que esse número aumentar, escolha magias adicionais da lista de magias do Mago até que o número de magias em sua lista corresponda ao número na tabela. As magias escolhidas devem ser de um nível para o qual você possui espaços de magia. Por exemplo, se você for um Pistoleiro de nível 7, sua lista de magias preparadas pode incluir cinco magias de Mago de níveis 1 e 2 em qualquer combinação.
 
 Alterando suas magias preparadas. Sempre que você ganha um nível de Pistoleiro, você pode substituir uma magia de sua lista por outra magia de Mago para o qual você tenha espaços de magia.
 
@@ -499,7 +499,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'white-hat'),
   3,
   'Estabeleça a Lei [Manobra]',
-  'Você pode realizar uma Ação Bônus e gastar um Dado de Risco para ficar atento aos perigos que ameaçam seus companheiros. Escolha um aliado que você possa ver a até 60 pés de você. Esse aliado ganha Pontos de Vida Temporáriossss igual ao número obtido no Dado de Risco. Até o início do seu próximo turno, se o aliado for atingido por um ataque, você pode realizar uma Reação para realizar um ataque à distância usando uma arma contra o atacante.'
+  'Você pode realizar uma Ação Bônus e gastar um Dado de Risco para ficar atento aos perigos que ameaçam seus companheiros. Escolha um aliado que você possa ver a até 60 pés de você. Esse aliado ganha Pontos de Vida Temporários igual ao número obtido no Dado de Risco. Até o início do seu próximo turno, se o aliado for atingido por um ataque, você pode realizar uma Reação para realizar um ataque à distância usando uma arma contra o atacante.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;

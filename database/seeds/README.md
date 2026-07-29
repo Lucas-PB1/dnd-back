@@ -8,7 +8,7 @@ Dados do catálogo PHB 2024 e Valda's Spire of Secrets. **Um arquivo por tabela.
 | `phb/S###_<tabela>.sql` | `INSERT` do catálogo PHB (`S001`–`S078`) |
 | `subclass/S###_<tabela>.sql` | Mecânicas de subclasse (`S001`–`S007`) |
 | `valda/V###_<tabela>.sql` | Pack Valda (`V001`–`V013`, edição em `V001`) |
-| `valda-gunslinger/G###_<tabela>.sql` | Classe Gunslinger (`G001`–`G026`) |
+| `valda-gunslinger/G###_<tabela>.sql` | Classe Gunslinger (`G001`–`G028`) |
 
 Metadados: `database/seed-manifest.json`
 

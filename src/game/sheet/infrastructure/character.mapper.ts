@@ -103,6 +103,7 @@ export class CharacterMapper {
       abilityScores: effectiveAbilityScores,
       classSlug: row.classSlug,
       subclassSlug: row.subclassSlug,
+      level: row.level,
       proficiencyBonus,
       featSlugs,
       fightingStyleSlugs,

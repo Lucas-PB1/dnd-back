@@ -155,6 +155,12 @@ export class CharacterStateResponseDto {
     castEconomy: 'at_will' | 'once_per_long_rest' | 'slot_only';
     freeCastsRemaining: number | null;
   }>;
+
+  @ApiProperty({
+    example: { revolver: 4 },
+    description: 'Tiros restantes na câmara por arma com Recarga',
+  })
+  firearmChambers!: Record<string, number>;
 }
 
 export class UseClassResourceDto {
@@ -167,6 +173,98 @@ export class UseClassResourceDto {
   @IsInt()
   @Min(1)
   amount?: number;
+}
+
+export class ResourceDieRollDto {
+  @ApiProperty({ example: 'risk' })
+  resourceSlug!: string;
+
+  @ApiProperty({ example: 8 })
+  faces!: number;
+
+  @ApiProperty({ example: 5 })
+  value!: number;
+
+  @ApiProperty({ example: '1d8' })
+  expression!: string;
+}
+
+export class UseClassResourceResponseDto {
+  @ApiProperty({ type: CharacterStateResponseDto })
+  state!: CharacterStateResponseDto;
+
+  @ApiPropertyOptional({ type: ResourceDieRollDto })
+  roll?: ResourceDieRollDto | null;
+}
+
+export class UseManeuverDto {
+  @ApiProperty({ example: 'bite-the-bullet' })
+  @IsString()
+  maneuverSlug!: string;
+}
+
+export class UseManeuverResponseDto {
+  @ApiProperty({ type: CharacterStateResponseDto })
+  state!: CharacterStateResponseDto;
+
+  @ApiProperty({ example: 'bite-the-bullet' })
+  maneuverSlug!: string;
+
+  @ApiProperty({ example: 'Morda a Bala' })
+  maneuverName!: string;
+
+  @ApiProperty({ example: 'temp_hp' })
+  effectKind!: string;
+
+  @ApiProperty({ type: ResourceDieRollDto })
+  riskRoll!: ResourceDieRollDto;
+
+  @ApiPropertyOptional({ example: 12 })
+  tempHpGained?: number;
+
+  @ApiPropertyOptional({ example: 7 })
+  missDamage?: number;
+
+  @ApiPropertyOptional({ example: 4 })
+  acBonus?: number;
+
+  @ApiPropertyOptional({ example: 3 })
+  checkBonus?: number;
+
+  @ApiProperty({ example: '+12 PV Temporários' })
+  note!: string;
+}
+
+export class FirearmChamberDto {
+  @ApiProperty({ example: 'revolver' })
+  itemSlug!: string;
+
+  @ApiProperty({ example: 4 })
+  remaining!: number;
+
+  @ApiProperty({ example: 6 })
+  capacity!: number;
+}
+
+export class ReloadFirearmDto {
+  @ApiProperty({ example: 'revolver' })
+  @IsString()
+  itemSlug!: string;
+}
+
+export class FireChamberDto {
+  @ApiProperty({ example: 'revolver' })
+  @IsString()
+  itemSlug!: string;
+
+  @ApiPropertyOptional({
+    example: 1,
+    description: 'Tiros a gastar (Automática = 2)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  shots?: number;
 }
 
 export class PatchCharacterStateDto {

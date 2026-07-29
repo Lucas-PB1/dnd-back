@@ -30,6 +30,7 @@ export async function resolveCharacterCombatSlice(input: {
   abilityScores: AbilityScores;
   classSlug: string;
   subclassSlug: string | null;
+  level: number;
   proficiencyBonus: number;
   featSlugs: string[];
   fightingStyleSlugs: string[];
@@ -46,6 +47,7 @@ export async function resolveCharacterCombatSlice(input: {
     abilityScores,
     classSlug,
     subclassSlug,
+    level,
     proficiencyBonus,
     featSlugs,
     fightingStyleSlugs,
@@ -86,6 +88,7 @@ export async function resolveCharacterCombatSlice(input: {
     combatScores,
     {
       classSlug,
+      level,
       proficiencyBonus,
       featSlugs,
       fightingStyleSlugs,

@@ -57,6 +57,7 @@ export async function findEquippedWeaponAttack(
     : classScores;
   const attacks = await deps.weaponAttacks.resolve(character.id, scores, {
     classSlug: character.classSlug,
+    level: character.level,
     proficiencyBonus: pb,
     featSlugs,
     fightingStyleSlugs,

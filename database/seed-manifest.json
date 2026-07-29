@@ -1,17 +1,17 @@
 {
-  "generatedAt": "2026-07-29T13:30:00.000Z",
-  "note": "Baseline canônico renumerado — contagens pós-squash",
+  "generatedAt": "2026-07-29T17:00:00.000Z",
+  "note": "Baseline canônico — contagens atuais (G028 + T080)",
   "migrations": {
-    "tables": "T001-T077",
-    "views": "V001-V030",
-    "player": "P001-P013",
+    "tables": "T001-T080",
+    "views": "V001-V032",
+    "player": "P001-P014",
     "totalFiles": 126
   },
   "seeds": {
-    "phb": "S001-S078",
+    "phb": "S001-S080",
     "subclass": "S001-S007",
-    "valda": "V001-V013",
-    "valdaGunslinger": "G001-G026",
-    "totalFiles": 125
+    "valda": "V001-V015",
+    "valdaGunslinger": "G001-G028",
+    "totalFiles": 130
   }
 }

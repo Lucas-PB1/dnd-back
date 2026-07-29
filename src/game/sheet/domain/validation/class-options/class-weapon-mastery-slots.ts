@@ -8,7 +8,7 @@ export type ClassWeaponMasterySlot = {
   unlockLevel: number;
 };
 
-export type WeaponMasteryEligibility = 'any' | 'melee';
+export type WeaponMasteryEligibility = 'any' | 'melee' | 'ranged';
 
 export type ClassProgressionMasteryRow = {
   level: number;
@@ -65,7 +65,7 @@ export function isClassWeaponMasteryOptionKey(optionKey: string): boolean {
 export function parseWeaponMasteryEligibility(
   value: string | null | undefined,
 ): WeaponMasteryEligibility | null {
-  if (value === 'any' || value === 'melee') return value;
+  if (value === 'any' || value === 'melee' || value === 'ranged') return value;
   return null;
 }
 

@@ -26,14 +26,20 @@ import { PatchCharacterStateHandler } from './application/patch-character-state.
 import { CastSpellHandler } from './application/cast-spell.handler';
 import { RestHandler } from './application/rest.handler';
 import { UseClassResourceHandler } from './application/use-class-resource.handler';
+import { GunslingerActionsHandler } from './application/gunslinger-actions.handler';
 import {
   CastSpellDto,
   CastSpellResponseDto,
   CharacterStateResponseDto,
+  FireChamberDto,
   PatchCharacterStateDto,
+  ReloadFirearmDto,
   RestDto,
   RestResponseDto,
   UseClassResourceDto,
+  UseClassResourceResponseDto,
+  UseManeuverDto,
+  UseManeuverResponseDto,
 } from './dto/character-state.dto';
 
 @ApiTags('game-characters')
@@ -48,6 +54,7 @@ export class CharacterSessionController {
     private readonly castSpell: CastSpellHandler,
     private readonly rest: RestHandler,
     private readonly useResource: UseClassResourceHandler,
+    private readonly gunslinger: GunslingerActionsHandler,
   ) {}
 
   @Get(':id/state')
@@ -101,14 +108,74 @@ export class CharacterSessionController {
 
   @Post(':id/resources/use')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ summary: 'Spend a class resource use (rage, surge, etc.)' })
-  @ApiOkResponse({ type: CharacterStateResponseDto })
+  @ApiOperation({ summary: 'Spend a class resource use (rage, surge, Risk…)' })
+  @ApiOkResponse({ type: UseClassResourceResponseDto })
   @ApiNotFoundResponse()
   useClassResource(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseClassResourceDto,
-  ): Promise<CharacterStateResponseDto> {
+  ): Promise<UseClassResourceResponseDto> {
     return this.useResource.execute(user.id, id, dto);
+  }
+
+  @Get(':id/maneuvers')
+  @ApiOperation({ summary: 'List Gunslinger maneuvers available at current level' })
+  @ApiNotFoundResponse()
+  listManeuvers(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ) {
+    return this.gunslinger.listManeuvers(user.id, id);
+  }
+
+  @Post(':id/maneuvers/use')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Spend Risk and resolve a Gunslinger maneuver' })
+  @ApiOkResponse({ type: UseManeuverResponseDto })
+  @ApiNotFoundResponse()
+  useManeuver(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseManeuverDto,
+  ): Promise<UseManeuverResponseDto> {
+    return this.gunslinger.useManeuver(user.id, id, dto);
+  }
+
+  @Post(':id/firearms/reload')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Reload a firearm chamber to full capacity' })
+  @ApiOkResponse({ type: CharacterStateResponseDto })
+  reloadFirearm(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: ReloadFirearmDto,
+  ): Promise<CharacterStateResponseDto> {
+    return this.gunslinger.reloadFirearm(user.id, id, dto);
+  }
+
+  @Post(':id/firearms/fire')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Spend shots from a firearm chamber' })
+  @ApiOkResponse({ type: CharacterStateResponseDto })
+  fireChamber(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: FireChamberDto,
+  ): Promise<CharacterStateResponseDto> {
+    return this.gunslinger.fireChamber(user.id, id, dto);
+  }
+
+  @Post(':id/resources/risk/recover')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Gambito Terrível — recover 1 Risk die (nv.15+, on init/crit)',
+  })
+  @ApiOkResponse({ type: CharacterStateResponseDto })
+  recoverRisk(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<CharacterStateResponseDto> {
+    return this.gunslinger.recoverRisk(user.id, id);
   }
 }

@@ -46,15 +46,36 @@ export async function executeRollAttack(input: {
   if (attack.attackDisadvantage && mode === 'normal') {
     mode = 'disadvantage';
   }
+  if (
+    input.dto.automatic &&
+    attack.masteryActive &&
+    attack.masterySlug === 'automatic' &&
+    mode === 'normal'
+  ) {
+    mode = 'disadvantage';
+  }
   const result = rollD20Check(attack.attackBonus, mode);
+  const kept = result.d20.kept[0] ?? 0;
+  const critical = kept >= (attack.critThreshold ?? 20);
+  const notes: string[] = [];
+  if (critical && character.classSlug === 'gunslinger' && character.level >= 5) {
+    notes.push(
+      'Tiro intestinal: Velocidade pela metade e Desvantagem nos ataques (1 min; criatura Grande ou menor)',
+    );
+  }
+  if (input.dto.automatic) {
+    notes.push('Automática: 2 ataques / 2× munição');
+  }
   return {
     kind: 'attack',
-    label: `Ataque — ${attack.itemName} (${input.dto.mode === 'ranged' ? 'à distância' : 'corpo a corpo'})`,
+    label: `Ataque — ${attack.itemName} (${input.dto.mode === 'ranged' ? 'à distância' : 'corpo a corpo'})${critical ? ' (crítico)' : ''}`,
     expression: result.expression,
     total: result.total,
     modifier: result.modifier,
     mode: result.mode,
+    critical,
     rolls: result.d20.rolls,
     kept: result.d20.kept,
+    note: notes.length > 0 ? notes.join(' · ') : undefined,
   };
 }

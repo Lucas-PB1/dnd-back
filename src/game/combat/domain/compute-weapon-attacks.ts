@@ -2,6 +2,10 @@ import type { AbilityScores } from '../../shared/infrastructure/player-character
 import type { SizeCategory } from './creature-size';
 import { analyzeDualWield } from './dual-wield';
 import {
+  applyOverkillDamageBonus,
+  resolveAttackCritThreshold,
+} from './gunslinger-firearm';
+import {
   abilityShortLabel,
   buildModes,
   formatDamageNote,
@@ -46,15 +50,41 @@ function computeOneAttack(
   const isBonusAttack = role === 'light_bonus' || role === 'dual_bonus';
   const hasTwf = hasStyleOrFeat(context, 'two-weapon-fighting');
   const omitAbilityDamage = isBonusAttack && !hasTwf && ability.mod >= 0;
-  let damageBonus = omitAbilityDamage ? 0 : ability.mod;
-  const damageParts: string[] = omitAbilityDamage
-    ? []
-    : [abilityShortLabel(ability.slug)];
+  const isFirearm = hasProperty(piece, 'firearm');
+  const overkill =
+    mode === 'ranged'
+      ? applyOverkillDamageBonus({
+          level: context.level ?? 1,
+          isFirearm,
+          abilityMod: ability.mod,
+        })
+      : {
+          abilityDamageBonus: ability.mod,
+          extraDamageDice: null as string | null,
+        };
 
-  if (omitAbilityDamage && ability.mod < 0) {
-    damageBonus = ability.mod;
+  let damageBonus = 0;
+  const damageParts: string[] = [];
+
+  if (omitAbilityDamage) {
+    if (ability.mod < 0) {
+      damageBonus = ability.mod;
+      damageParts.push(abilityShortLabel(ability.slug));
+    }
+  } else if (isFirearm && mode === 'ranged') {
+    damageBonus = overkill.abilityDamageBonus;
+    if (damageBonus !== 0) {
+      damageParts.push(abilityShortLabel(ability.slug));
+      if ((context.level ?? 1) >= 11) damageParts.push('Exagero');
+    } else {
+      damageParts.push('arma de fogo');
+    }
+  } else {
+    damageBonus = overkill.abilityDamageBonus;
     damageParts.push(abilityShortLabel(ability.slug));
+    if (overkill.extraDamageDice) damageParts.push('Exagero');
   }
+
   if (
     hasStyleOrFeat(context, 'dueling') &&
     qualifiesForDueling(piece, mode, equippedWeapons)
@@ -94,6 +124,10 @@ function computeOneAttack(
   const damageDice = versatile2h
     ? (piece.versatileDamage ?? piece.damage ?? '1')
     : (piece.damage ?? '1');
+  const overkillExtraDice =
+    mode === 'ranged' && !isFirearm && !omitAbilityDamage
+      ? overkill.extraDamageDice
+      : null;
   const greatWeaponFighting =
     hasStyleOrFeat(context, 'great-weapon-fighting') &&
     qualifiesForGreatWeaponFighting(piece, mode, versatile2h);
@@ -115,6 +149,12 @@ function computeOneAttack(
   if (hasProperty(piece, 'versatile')) {
     noteExtras.push(versatile2h ? 'versátil (2 mãos)' : 'versátil (1 mão)');
   }
+  if (isFirearm) noteExtras.push('arma de fogo');
+  if (hasProperty(piece, 'recoil')) noteExtras.push('recuo');
+  if (hasProperty(piece, 'reload')) {
+    const cap = piece.reloadCapacity;
+    noteExtras.push(cap != null ? `recarga (${cap})` : 'recarga');
+  }
   if (role === 'light_bonus') {
     noteExtras.push(
       nickUsesAttackAction
@@ -125,11 +165,32 @@ function computeOneAttack(
   if (role === 'dual_bonus') noteExtras.push('ataque adicional (Ambidestro)');
   if (greatWeaponFighting) noteExtras.push('Luta com Armas Grandes');
   if (masteryActive && masteryName) noteExtras.push(`Maestria: ${masteryName}`);
+  if (masteryActive && masterySlug === 'scatter') {
+    noteExtras.push('Dispersão: sem desv. a 1,5 m');
+  }
+  if (masteryActive && masterySlug === 'sighted') {
+    noteExtras.push('Mira: sem desv. a longa distância');
+  }
+  if (masteryActive && masterySlug === 'automatic') {
+    noteExtras.push('Automática: opção 2 ataques c/ desv.');
+  }
+  if (masteryActive && masterySlug === 'explode') {
+    noteExtras.push('Explosiva: opção esfera 1,5 m');
+  }
 
   const attackDisadvantage =
     context.sizeCategory === 'small' && hasProperty(piece, 'heavy');
   if (attackDisadvantage) {
     noteExtras.push('desvantagem (Pesada / tamanho Pequeno)');
+  }
+
+  const critThreshold = resolveAttackCritThreshold({
+    classSlug: context.classSlug,
+    level: context.level,
+    mode,
+  });
+  if (critThreshold < 20) {
+    noteExtras.push(`crítico ${critThreshold}–20`);
   }
 
   const attackNoteBase = `${modeLabel}: ${attackParts.join(' + ')}`;
@@ -140,6 +201,9 @@ function computeOneAttack(
   const damageNoteParts = greatWeaponFighting
     ? [...damageParts, 'GWF']
     : damageParts;
+  const damageNoteDice = overkillExtraDice
+    ? `${damageDice}+${overkillExtraDice}`
+    : damageDice;
 
   return {
     itemSlug: piece.itemSlug,
@@ -152,16 +216,24 @@ function computeOneAttack(
     damageBonus,
     damageType: piece.damageType,
     attackNote,
-    damageNote: formatDamageNote(damageDice, damageBonus, damageNoteParts),
+    damageNote: formatDamageNote(damageNoteDice, damageBonus, damageNoteParts),
     role,
     attackDisadvantage,
-    omitsAbilityDamage: omitAbilityDamage,
+    omitsAbilityDamage:
+      omitAbilityDamage || (isFirearm && mode === 'ranged' && overkill.abilityDamageBonus === 0),
     greatWeaponFighting,
     masteryActive,
     masterySlug: masteryActive ? masterySlug : null,
     masteryName: masteryActive ? masteryName : null,
     nickUsesAttackAction,
     grazeOnMissDamage,
+    isFirearm,
+    critThreshold,
+    overkillExtraDice,
+    reloadCapacity: hasProperty(piece, 'reload')
+      ? (piece.reloadCapacity ?? null)
+      : null,
+    hasRecoil: hasProperty(piece, 'recoil'),
   };
 }
 

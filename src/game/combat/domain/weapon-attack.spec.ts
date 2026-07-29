@@ -415,6 +415,54 @@ describe('computeWeaponAttacks', () => {
   it('returns an empty list without equipped weapons', () => {
     expect(computeWeaponAttacks(scores(), [], fighterContext)).toEqual([]);
   });
+
+  it('omits ability damage on firearms and expands crit for gunslinger', () => {
+    const revolver: EquippedWeaponPiece = {
+      itemSlug: 'revolver',
+      itemName: 'Revólver',
+      category: 'martial',
+      damage: '2d8',
+      damageType: 'Perfurante',
+      versatileDamage: null,
+      propertySlugs: ['ammunition', 'firearm', 'reload'],
+      equipmentSlot: 'main_hand',
+      reloadCapacity: 6,
+    };
+    const [attack] = computeWeaponAttacks(scores({ destreza: 16 }), [revolver], {
+      proficiencyBonus: 2,
+      weaponProficiencySlugs: ['armas-simples', 'armas-marciais-a-distancia'],
+      classSlug: 'gunslinger',
+      level: 5,
+    });
+    expect(attack.isFirearm).toBe(true);
+    expect(attack.damageBonus).toBe(0);
+    expect(attack.omitsAbilityDamage).toBe(true);
+    expect(attack.critThreshold).toBe(19);
+    expect(attack.reloadCapacity).toBe(6);
+  });
+
+  it('applies overkill ability mod on firearms at level 11+', () => {
+    const revolver: EquippedWeaponPiece = {
+      itemSlug: 'revolver',
+      itemName: 'Revólver',
+      category: 'martial',
+      damage: '2d8',
+      damageType: 'Perfurante',
+      versatileDamage: null,
+      propertySlugs: ['ammunition', 'firearm', 'reload'],
+      equipmentSlot: 'main_hand',
+      reloadCapacity: 6,
+    };
+    const [attack] = computeWeaponAttacks(scores({ destreza: 16 }), [revolver], {
+      proficiencyBonus: 4,
+      weaponProficiencySlugs: ['armas-simples', 'armas-marciais-a-distancia'],
+      classSlug: 'gunslinger',
+      level: 11,
+    });
+    expect(attack.damageBonus).toBe(3);
+    expect(attack.omitsAbilityDamage).toBe(false);
+    expect(attack.damageNote).toContain('Exagero');
+  });
 });
 
 describe('analyzeDualWield', () => {

@@ -25,6 +25,7 @@ export type WeaponAttackResolveContext = {
   masteredWeaponSlugs?: readonly string[];
   itemAttackBonus?: number;
   itemDamageBonus?: number;
+  level?: number;
 };
 
 @Injectable()
@@ -80,6 +81,8 @@ export class ResolveEquippedWeaponAttacks {
         equipmentSlot: item.equipmentSlot ?? 'main_hand',
         masterySlug,
         masteryName: mastery?.name ?? null,
+        reloadCapacity:
+          typeof props.reload === 'number' ? props.reload : null,
       });
     }
 
@@ -98,6 +101,8 @@ export class ResolveEquippedWeaponAttacks {
       masteredWeaponSlugs: context.masteredWeaponSlugs,
       itemAttackBonus: context.itemAttackBonus,
       itemDamageBonus: context.itemDamageBonus,
+      classSlug: context.classSlug,
+      level: context.level,
     });
   }
 

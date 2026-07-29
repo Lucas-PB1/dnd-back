@@ -43,7 +43,7 @@ VALUES (
   'Tiro Crítico',
   'Suas jogadas de ataque com armas de longo alcance podem pontuar Acerto Crítico em uma jogada de 19 ou 20 no d20.
 
-No nível 9 do Pistoleiro, suas jogadas de ataque com armas de longo alcance pontuam Acerto Crítico em uma jogada de 18–20. No nível 17 do Pistoleiro, eles marcam um Acerto Crítico em um resultado de 17–20.'
+No nível 9 do Pistoleiro, suas jogadas de ataque com armas de longo alcance pontuam Acerto Crítico em uma jogada de 18–20. No nível 17 do Pistoleiro, elas marcam um Acerto Crítico em um resultado de 17–20.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -54,11 +54,11 @@ VALUES (
   'Risco',
   'Você pode realizar feitos incríveis de ousadia alimentados por dados especiais chamados Dados de Risco.
 
-Dados de Risco. Você tem quatro Dados de Risco, que são d8s. Um Dado de Risco é gasto quando você o usa. Você recupera todos os Dados de Risco gastos ao finalizar um Descanso Curto ou Longo. Suas alterações no Dado de Risco e mais Dados de Risco ficam disponíveis conforme mostrado na coluna Dados de Risco da tabela Recursos do Pistoleiro.
+Dados de Risco. Você tem quatro Dados de Risco, que são d8s. Um Dado de Risco é gasto quando você o usa. Você recupera todos os Dados de Risco gastos ao finalizar um Descanso Curto ou Longo. O tamanho do Dado de Risco e mais Dados de Risco ficam disponíveis conforme mostrado na coluna Dados de Risco da tabela Recursos do Pistoleiro.
 
 Manobras. Você pode gastar Dados de Risco para realizar manobras. Suas opções de manobra são detalhadas posteriormente na descrição da classe.
 
-Salvando lances. Se uma manobra exigir uma salvaguarda, a CD é igual a 8 mais seu modificador de Destreza e Bônus de Proficiência.'
+Salvaguardas. Se uma manobra exigir uma salvaguarda, a CD é igual a 8 mais seu modificador de Destreza e Bônus de Proficiência.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 
@@ -174,7 +174,7 @@ VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
   2,
   'Manobra: Morda a Bala',
-  'Como Ação Bônus, você pode gastar um Dado de Risco para ganhar Pontos de Vida Temporáriossss igual ao número lançado no dado mais seu nível de Pistoleiro.'
+  'Como Ação Bônus, você pode gastar um Dado de Risco para ganhar Pontos de Vida Temporários igual ao número lançado no dado mais seu nível de Pistoleiro.'
 )
 ON CONFLICT (class_id, level, name) DO UPDATE SET description = EXCLUDED.description;
 

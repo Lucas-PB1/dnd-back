@@ -18,6 +18,14 @@ export class RollAttackDto {
   @IsOptional()
   @IsIn(['normal', 'advantage', 'disadvantage'])
   advantage?: AdvantageMode;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Maestria Automática: forçar desvantagem (2 ataques / 2× munição)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  automatic?: boolean;
 }
 
 export class RollDamageDto {
@@ -41,6 +49,22 @@ export class RollDamageDto {
   @IsOptional()
   @IsBoolean()
   grazeMiss?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Tiro na cabeça (Pistoleiro nv.20, no crítico): +10d10 ou morte se <100 PV',
+  })
+  @IsOptional()
+  @IsBoolean()
+  headShot?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Maestria Mira: rerrolar um dado de dano',
+  })
+  @IsOptional()
+  @IsBoolean()
+  sightedReroll?: boolean;
 }
 
 export class RollSkillDto {
@@ -113,4 +137,9 @@ export class CharacterRollResponseDto {
 
   @ApiPropertyOptional({ description: 'Faces mantidas (vantagem/desvantagem)' })
   kept?: number[];
+
+  @ApiPropertyOptional({
+    description: 'Nota situacional (Tiro intestinal, Tiro na cabeça, etc.)',
+  })
+  note?: string;
 }

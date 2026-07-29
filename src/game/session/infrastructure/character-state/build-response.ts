@@ -85,6 +85,7 @@ export async function buildCharacterStateResponse(input: {
     grantedSpellUses,
     highElfCantripSwapAvailable: state.highElfCantripSwapAvailable ?? false,
     grantedSpellCastOptions,
+    firearmChambers: state.firearmChambers ?? {},
   };
 }
 

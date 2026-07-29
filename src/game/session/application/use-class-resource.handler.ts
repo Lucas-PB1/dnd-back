@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
 import { CharacterStateRepository } from '../infrastructure/character-state.repository';
 import {
-  CharacterStateResponseDto,
   UseClassResourceDto,
+  UseClassResourceResponseDto,
 } from '../dto/character-state.dto';
 
 @Injectable()
@@ -17,7 +17,7 @@ export class UseClassResourceHandler {
     userId: string,
     characterId: string,
     dto: UseClassResourceDto,
-  ): Promise<CharacterStateResponseDto> {
+  ): Promise<UseClassResourceResponseDto> {
     const character = await this.access.findAccessibleOrFail(
       userId,
       characterId,

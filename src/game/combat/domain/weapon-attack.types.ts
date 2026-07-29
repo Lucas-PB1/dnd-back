@@ -13,6 +13,8 @@ export type EquippedWeaponPiece = {
   /** Slug da propriedade de maestria da arma (ex.: `nick`, `graze`). */
   masterySlug?: string | null;
   masteryName?: string | null;
+  /** Capacidade de câmara (`reload` no JSON do item). */
+  reloadCapacity?: number | null;
 };
 
 export type WeaponAttackContext = {
@@ -30,6 +32,10 @@ export type WeaponAttackContext = {
   itemAttackBonus?: number;
   /** Bônus de dano de itens mágicos ativos. */
   itemDamageBonus?: number;
+  /** Classe do personagem (regras por classe, ex. Pistoleiro). */
+  classSlug?: string | null;
+  /** Nível do personagem. */
+  level?: number;
 };
 
 export type WeaponAttackRole = 'main' | 'light_bonus' | 'dual_bonus';
@@ -64,4 +70,19 @@ export type WeaponAttack = {
    * `null` se a maestria não se aplica.
    */
   grazeOnMissDamage: number | null;
+  /** Arma com propriedade `firearm`. */
+  isFirearm: boolean;
+  /**
+   * Limiar mínimo no d20 para acerto crítico neste ataque (20 padrão;
+   * Pistoleiro à distância: 19/18/17).
+   */
+  critThreshold: number;
+  /**
+   * Dados extras de Exagero (Pistoleiro nv.11+), ex. `1d8`, somados ao dano.
+   */
+  overkillExtraDice: string | null;
+  /** Capacidade de câmara (`reload: N` no item); null se sem Recarga. */
+  reloadCapacity: number | null;
+  /** Propriedade Recuo ativa nesta arma. */
+  hasRecoil: boolean;
 };

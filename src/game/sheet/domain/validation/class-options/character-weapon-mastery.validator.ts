@@ -124,6 +124,11 @@ export class CharacterWeaponMasteryValidator {
         `Weapon mastery for '${classSlug}' requires a melee weapon; '${weaponSlug}' is ranged-only`,
       );
     }
+    if (eligibility === 'ranged' && !propertySlugs.includes('ammunition')) {
+      throw new BadRequestException(
+        `Weapon mastery for '${classSlug}' requires a ranged weapon; '${weaponSlug}' is melee-only`,
+      );
+    }
 
     const piece: EquippedWeaponPiece = {
       itemSlug: row.slug,
