@@ -17,6 +17,7 @@ import { executeRollDamage } from './rolls/roll-damage';
 import { executeRollInitiative } from './rolls/roll-initiative';
 import { executeRollSavingThrow } from './rolls/roll-saving-throw';
 import { executeRollSkill } from './rolls/roll-skill';
+import { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
 
 @Injectable()
 export class CharacterRollsService {
@@ -25,6 +26,7 @@ export class CharacterRollsService {
     private readonly sheet: CharacterSheetRepository,
     private readonly domain: CharacterDomainService,
     private readonly weaponAttacks: ResolveEquippedWeaponAttacks,
+    private readonly permanentItemEffects: ResolveActivePermanentItemEffects,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -38,6 +40,7 @@ export class CharacterRollsService {
       sheet: this.sheet,
       domain: this.domain,
       weaponAttacks: this.weaponAttacks,
+      permanentItemEffects: this.permanentItemEffects,
       userId,
       characterId,
       dto,
@@ -54,6 +57,7 @@ export class CharacterRollsService {
       sheet: this.sheet,
       domain: this.domain,
       weaponAttacks: this.weaponAttacks,
+      permanentItemEffects: this.permanentItemEffects,
       userId,
       characterId,
       dto,
@@ -86,6 +90,7 @@ export class CharacterRollsService {
       sheet: this.sheet,
       domain: this.domain,
       dataSource: this.dataSource,
+      permanentItemEffects: this.permanentItemEffects,
       userId,
       characterId,
       dto,

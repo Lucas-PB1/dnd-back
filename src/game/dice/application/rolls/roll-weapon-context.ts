@@ -5,6 +5,8 @@ import { collectFightingStyleSlugsFromSubclassOptions } from '../../../sheet/dom
 import { collectMasteredWeaponSlugs } from '../../../sheet/domain/validation/class-options/class-weapon-mastery-slots';
 import { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
 import { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
+import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
+import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-item-effects';
 import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
 
 export type RollWeaponCharacter = {
@@ -20,6 +22,7 @@ export async function findEquippedWeaponAttack(
     sheet: CharacterSheetRepository;
     domain: CharacterDomainService;
     weaponAttacks: ResolveEquippedWeaponAttacks;
+    permanentItemEffects?: ResolveActivePermanentItemEffects;
   },
   character: RollWeaponCharacter,
   itemSlug: string,
@@ -31,20 +34,24 @@ export async function findEquippedWeaponAttack(
   const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
     sheet.subclassOptions,
   );
-  const attacks = await deps.weaponAttacks.resolve(
-    character.id,
-    character.abilityScores,
-    {
-      classSlug: character.classSlug,
-      proficiencyBonus: pb,
-      featSlugs,
-      fightingStyleSlugs,
-      masteredWeaponSlugs: collectMasteredWeaponSlugs({
-        classOptions: sheet.classOptions,
-        featOptions: sheet.featOptions,
-      }),
-    },
-  );
+  const itemEffects = deps.permanentItemEffects
+    ? await deps.permanentItemEffects.resolve(character.id)
+    : null;
+  const scores = itemEffects
+    ? applyItemAbilityBonuses(character.abilityScores, itemEffects.abilityBonuses)
+    : character.abilityScores;
+  const attacks = await deps.weaponAttacks.resolve(character.id, scores, {
+    classSlug: character.classSlug,
+    proficiencyBonus: pb,
+    featSlugs,
+    fightingStyleSlugs,
+    masteredWeaponSlugs: collectMasteredWeaponSlugs({
+      classOptions: sheet.classOptions,
+      featOptions: sheet.featOptions,
+    }),
+    itemAttackBonus: itemEffects?.attackBonus,
+    itemDamageBonus: itemEffects?.damageBonus,
+  });
   const attack = attacks.find(
     (row) => row.itemSlug === itemSlug && row.mode === mode,
   );

@@ -191,6 +191,12 @@ export class CharacterResponseDto {
   })
   speedPenaltyMeters!: 0 | 3;
 
+  @ApiProperty({
+    example: 0,
+    description: 'Bônus de deslocamento em metros de itens mágicos ativos',
+  })
+  itemSpeedBonusMeters!: number;
+
   @ApiProperty({ type: [CharacterCampaignRefDto] })
   campaigns!: CharacterCampaignRefDto[];
 }

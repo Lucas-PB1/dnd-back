@@ -1,7 +1,21 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 export type InventoryLocation = 'equipped' | 'backpack';
-export type EquipmentSlot = 'armor' | 'main_hand' | 'off_hand' | 'shield';
+export type EquipmentSlot =
+  | 'armor'
+  | 'main_hand'
+  | 'off_hand'
+  | 'shield'
+  | 'worn'
+  | 'carried';
+
+/** Slots com no máximo um item; worn/carried permitem vários. */
+export const EXCLUSIVE_EQUIPMENT_SLOTS: ReadonlySet<EquipmentSlot> = new Set([
+  'armor',
+  'main_hand',
+  'off_hand',
+  'shield',
+]);
 
 @Entity({ schema: 'rpg', name: 'player_character_item' })
 export class PlayerCharacterItem {

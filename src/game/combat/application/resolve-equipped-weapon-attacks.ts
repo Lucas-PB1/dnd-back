@@ -23,6 +23,8 @@ export type WeaponAttackResolveContext = {
   sizeCategory?: import('../domain/creature-size').SizeCategory;
   hasShield?: boolean;
   masteredWeaponSlugs?: readonly string[];
+  itemAttackBonus?: number;
+  itemDamageBonus?: number;
 };
 
 @Injectable()
@@ -94,6 +96,8 @@ export class ResolveEquippedWeaponAttacks {
       sizeCategory: context.sizeCategory,
       hasShield: context.hasShield,
       masteredWeaponSlugs: context.masteredWeaponSlugs,
+      itemAttackBonus: context.itemAttackBonus,
+      itemDamageBonus: context.itemDamageBonus,
     });
   }
 

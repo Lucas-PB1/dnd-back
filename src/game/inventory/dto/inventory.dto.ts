@@ -25,7 +25,9 @@ export class InventoryItemResponseDto {
   @ApiProperty({ enum: ['equipped', 'backpack'] })
   location!: 'equipped' | 'backpack';
 
-  @ApiPropertyOptional({ enum: ['armor', 'main_hand', 'off_hand', 'shield'] })
+  @ApiPropertyOptional({
+    enum: ['armor', 'main_hand', 'off_hand', 'shield', 'worn', 'carried'],
+  })
   equipmentSlot!: string | null;
 
   @ApiProperty({ example: false })
@@ -36,6 +38,19 @@ export class InventoryItemResponseDto {
     description: 'True when phb_item.properties.requiresAttunement',
   })
   requiresAttunement!: boolean;
+
+  @ApiProperty({
+    example: false,
+    description:
+      'True when equipped and (no attunement required or currently attuned)',
+  })
+  effectsActive!: boolean;
+
+  @ApiProperty({
+    enum: ['active', 'inactive_unequipped', 'inactive_unattuned'],
+    description: 'Estado dos efeitos permanentes do item',
+  })
+  effectsStatus!: 'active' | 'inactive_unequipped' | 'inactive_unattuned';
 
   @ApiPropertyOptional({
     example: 1.5,
@@ -88,10 +103,18 @@ export class PatchInventoryItemDto {
   @IsIn(['equipped', 'backpack'])
   location?: 'equipped' | 'backpack';
 
-  @ApiPropertyOptional({ enum: ['armor', 'main_hand', 'off_hand', 'shield'] })
+  @ApiPropertyOptional({
+    enum: ['armor', 'main_hand', 'off_hand', 'shield', 'worn', 'carried'],
+  })
   @IsOptional()
-  @IsIn(['armor', 'main_hand', 'off_hand', 'shield'])
-  equipmentSlot?: 'armor' | 'main_hand' | 'off_hand' | 'shield';
+  @IsIn(['armor', 'main_hand', 'off_hand', 'shield', 'worn', 'carried'])
+  equipmentSlot?:
+    | 'armor'
+    | 'main_hand'
+    | 'off_hand'
+    | 'shield'
+    | 'worn'
+    | 'carried';
 
   @ApiPropertyOptional({ example: 2 })
   @IsOptional()

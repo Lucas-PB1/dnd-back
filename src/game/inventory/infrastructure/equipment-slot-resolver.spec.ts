@@ -41,7 +41,22 @@ describe('EquipmentSlotResolver', () => {
     await expect(resolver.resolve('c1', 'dagger')).resolves.toBe('main_hand');
   });
 
-  it('requires slot for non-armor non-weapon items', async () => {
+  it('maps other/magic ring to worn and other magic to carried', async () => {
+    armorCatalog.findOne.mockResolvedValue(null);
+    catalogItems.findOne.mockResolvedValueOnce({
+      itemType: 'other',
+      properties: { magic: true, category: 'Anel' },
+    });
+    await expect(resolver.resolve('c1', 'ring-of-barrels')).resolves.toBe('worn');
+
+    catalogItems.findOne.mockResolvedValueOnce({
+      itemType: 'other',
+      properties: { magic: true, category: 'Maravilhoso' },
+    });
+    await expect(resolver.resolve('c1', 'memento-mori')).resolves.toBe('carried');
+  });
+
+  it('requires slot for non-armor non-weapon non-magic items', async () => {
     armorCatalog.findOne.mockResolvedValue(null);
     catalogItems.findOne.mockResolvedValue({ itemType: 'gear' });
     await expect(resolver.resolve('c1', 'rope')).rejects.toThrow(BadRequestException);

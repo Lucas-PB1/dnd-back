@@ -10,7 +10,7 @@ Baseline canônico em fases (lexicográfico por path):
 6. `060_views/V001`–`V030` — uma view = definição final
 7. `070_materialized/MV001_mv_spell_by_class.sql`
 8. `080_indexes/IX001_catalog.sql`
-9. `090_player/P001`–`P013` — tabelas de jogador + RLS
+9. `090_player/P001`–`P014` — tabelas de jogador + RLS + slots mágicos
 
 Não há migrations de dados corretivos — isso fica nos seeds.
 

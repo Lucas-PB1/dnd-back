@@ -7,6 +7,7 @@ import {
   type AdvantageMode,
 } from '../../domain/dice';
 import type { CharacterRollResponseDto, RollAttackDto } from '../../dto/character-roll.dto';
+import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
 import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,
@@ -17,6 +18,7 @@ export async function executeRollAttack(input: {
   sheet: CharacterSheetRepository;
   domain: CharacterDomainService;
   weaponAttacks: ResolveEquippedWeaponAttacks;
+  permanentItemEffects: ResolveActivePermanentItemEffects;
   userId: string;
   characterId: string;
   dto: RollAttackDto;
@@ -31,6 +33,7 @@ export async function executeRollAttack(input: {
       sheet: input.sheet,
       domain: input.domain,
       weaponAttacks: input.weaponAttacks,
+      permanentItemEffects: input.permanentItemEffects,
     },
     character,
     input.dto.itemSlug,

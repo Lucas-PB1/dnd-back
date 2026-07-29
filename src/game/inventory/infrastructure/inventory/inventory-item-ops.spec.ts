@@ -91,6 +91,23 @@ describe('inventory-item-ops', () => {
       );
       expect(items.save).not.toHaveBeenCalled();
     });
+
+    it('does nothing for non-exclusive worn/carried slots', async () => {
+      await clearEquippedSlotIfOccupied(
+        items as unknown as Repository<PlayerCharacterItem>,
+        'ch1',
+        'worn',
+        'ring-a',
+      );
+      await clearEquippedSlotIfOccupied(
+        items as unknown as Repository<PlayerCharacterItem>,
+        'ch1',
+        'carried',
+        'trinket',
+      );
+      expect(items.findOne).not.toHaveBeenCalled();
+      expect(items.save).not.toHaveBeenCalled();
+    });
   });
 
   describe('applyInventoryAttunement', () => {
@@ -172,7 +189,18 @@ describe('inventory-item-ops', () => {
         quantity: 2,
         weightKg: 5,
         attuned: true,
+        effectsActive: false,
+        effectsStatus: 'inactive_unequipped',
       });
+    });
+
+    it('marks effects active when equipped without attunement', async () => {
+      const dto = await inventoryItemToDto(
+        catalogItems as unknown as Repository<PhbItem>,
+        itemRow({ location: 'equipped', equipmentSlot: 'carried', attuned: false }),
+      );
+      expect(dto.effectsActive).toBe(true);
+      expect(dto.effectsStatus).toBe('active');
     });
 
     it('falls back when catalog row is missing', async () => {

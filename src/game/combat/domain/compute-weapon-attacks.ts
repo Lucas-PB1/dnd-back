@@ -75,6 +75,17 @@ function computeOneAttack(
     damageParts.push('Mestre em Armas Grandes');
   }
 
+  const itemAttackBonus = context.itemAttackBonus ?? 0;
+  if (itemAttackBonus !== 0) {
+    attackBonus += itemAttackBonus;
+    attackParts.push('item');
+  }
+  const itemDamageBonus = context.itemDamageBonus ?? 0;
+  if (itemDamageBonus !== 0) {
+    damageBonus += itemDamageBonus;
+    damageParts.push('item');
+  }
+
   const versatile2h = usesVersatileTwoHanded(
     piece,
     equippedWeapons,

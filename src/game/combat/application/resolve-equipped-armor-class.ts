@@ -15,6 +15,8 @@ export type ArmorClassResolveInput = {
   subclassSlug?: string | null;
   featSlugs?: string[];
   fightingStyleSlugs?: string[];
+  itemAcBonus?: number;
+  itemAcBonusNames?: readonly string[];
 };
 
 @Injectable()
@@ -63,6 +65,8 @@ export class ResolveEquippedArmorClass {
       featSlugs: context.featSlugs,
       fightingStyleSlugs: context.fightingStyleSlugs,
       unarmoredDefenses,
+      itemAcBonus: context.itemAcBonus,
+      itemAcBonusNames: context.itemAcBonusNames,
     });
   }
 }

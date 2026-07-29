@@ -12,6 +12,7 @@ describe('executeRollAttack', () => {
     sheet: {} as never,
     domain: {} as never,
     weaponAttacks: {} as never,
+    permanentItemEffects: {} as never,
     userId: 'u1',
     characterId: 'c1',
   };

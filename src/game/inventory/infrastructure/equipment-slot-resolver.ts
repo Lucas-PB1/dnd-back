@@ -6,6 +6,15 @@ import { VPhbArmor } from '../../../entities/views/v-phb-armor.entity';
 import type { EquipmentSlot } from './player-character-item.entity';
 import { PlayerCharacterItem } from './player-character-item.entity';
 
+function magicWearSlot(
+  properties: Record<string, unknown> | null | undefined,
+): EquipmentSlot {
+  const category =
+    typeof properties?.category === 'string' ? properties.category : '';
+  if (category.toLowerCase().includes('anel')) return 'worn';
+  return 'carried';
+}
+
 @Injectable()
 export class EquipmentSlotResolver {
   constructor(
@@ -38,6 +47,10 @@ export class EquipmentSlotResolver {
         return 'main_hand';
       }
       return 'off_hand';
+    }
+
+    if (item?.itemType === 'other' || item?.properties?.magic === true) {
+      return magicWearSlot(item.properties);
     }
 
     throw new BadRequestException(

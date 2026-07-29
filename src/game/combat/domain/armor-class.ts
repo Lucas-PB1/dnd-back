@@ -24,6 +24,10 @@ export type ArmorClassContext = {
   fightingStyleSlugs?: string[];
   /** Defesas sem Armadura aplicáveis, carregadas do catálogo. */
   unarmoredDefenses?: readonly UnarmoredDefenseRow[];
+  /** Bônus de CA de itens mágicos ativos. */
+  itemAcBonus?: number;
+  /** Nomes dos itens que contribuíram para itemAcBonus. */
+  itemAcBonusNames?: readonly string[];
 };
 
 const BODY_ARMOR = new Set(['light', 'medium', 'heavy']);
@@ -127,6 +131,17 @@ export function computeArmorClassFromEquipment(
   if (bodyArmor && hasStyleOrFeat(context, 'defense')) {
     armorClass += 1;
     noteParts.push('Defensivo');
+  }
+
+  const itemAcBonus = context?.itemAcBonus ?? 0;
+  if (itemAcBonus !== 0) {
+    armorClass += itemAcBonus;
+    const itemNames = context?.itemAcBonusNames ?? [];
+    if (itemNames.length > 0) {
+      noteParts.push(...itemNames);
+    } else {
+      noteParts.push(`itens ${itemAcBonus > 0 ? '+' : ''}${itemAcBonus}`);
+    }
   }
 
   return {

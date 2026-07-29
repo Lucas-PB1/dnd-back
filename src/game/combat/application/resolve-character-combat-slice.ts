@@ -5,6 +5,8 @@ import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks'
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
 import { Repository } from 'typeorm';
+import type { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
+import { applyItemAbilityBonuses } from '../../inventory/domain/permanent-item-effects';
 
 export type MappedCombatSlice = {
   armorClass: number;
@@ -17,6 +19,10 @@ export type MappedCombatSlice = {
   speedPenaltyMeters: Awaited<
     ReturnType<ResolveEquipmentCompliance['resolve']>
   >['speedPenaltyMeters'];
+  /** Bônus de deslocamento de itens ativos (metros). */
+  itemSpeedBonusMeters: number;
+  /** Bônus de PV máximos de itens ativos. */
+  itemHpBonus: number;
 };
 
 export async function resolveCharacterCombatSlice(input: {
@@ -33,6 +39,7 @@ export async function resolveCharacterCombatSlice(input: {
   equippedWeaponAttacks: ResolveEquippedWeaponAttacks;
   equipmentCompliance: ResolveEquipmentCompliance;
   inventoryItems: Repository<PlayerCharacterItem>;
+  permanentItemEffects: ResolveActivePermanentItemEffects;
 }): Promise<MappedCombatSlice> {
   const {
     characterId,
@@ -48,7 +55,14 @@ export async function resolveCharacterCombatSlice(input: {
     equippedWeaponAttacks,
     equipmentCompliance,
     inventoryItems,
+    permanentItemEffects,
   } = input;
+
+  const itemEffects = await permanentItemEffects.resolve(characterId);
+  const combatScores = applyItemAbilityBonuses(
+    abilityScores,
+    itemEffects.abilityBonuses,
+  );
 
   const hasShield = await inventoryItems.exist({
     where: {
@@ -58,15 +72,17 @@ export async function resolveCharacterCombatSlice(input: {
     },
   });
 
-  const armor = await equippedArmorClass.resolve(characterId, abilityScores, {
+  const armor = await equippedArmorClass.resolve(characterId, combatScores, {
     classSlug,
     subclassSlug,
     featSlugs,
     fightingStyleSlugs,
+    itemAcBonus: itemEffects.acBonus,
+    itemAcBonusNames: itemEffects.sourceNames,
   });
   const weaponAttacks = await equippedWeaponAttacks.resolve(
     characterId,
-    abilityScores,
+    combatScores,
     {
       classSlug,
       proficiencyBonus,
@@ -75,12 +91,14 @@ export async function resolveCharacterCombatSlice(input: {
       sizeCategory,
       hasShield,
       masteredWeaponSlugs,
+      itemAttackBonus: itemEffects.attackBonus,
+      itemDamageBonus: itemEffects.damageBonus,
     },
   );
 
   const compliance = await equipmentCompliance.resolve(characterId, {
     classSlug,
-    strengthScore: abilityScores.forca,
+    strengthScore: combatScores.forca,
     featSlugs,
     sizeCategory,
     hasShield,
@@ -93,5 +111,7 @@ export async function resolveCharacterCombatSlice(input: {
     equipmentWarnings: compliance.warnings,
     cannotCastSpellsInArmor: compliance.cannotCastSpells,
     speedPenaltyMeters: compliance.speedPenaltyMeters,
+    itemSpeedBonusMeters: itemEffects.speedBonusMeters,
+    itemHpBonus: itemEffects.hpBonus,
   };
 }

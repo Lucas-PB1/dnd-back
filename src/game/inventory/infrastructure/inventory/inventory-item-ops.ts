@@ -4,6 +4,7 @@ import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service
 import { PhbItem } from '../../../../entities/phb-item.entity';
 import {
   EquipmentSlot,
+  EXCLUSIVE_EQUIPMENT_SLOTS,
   PlayerCharacterItem,
 } from '../player-character-item.entity';
 import { InventoryItemResponseDto } from '../../dto/inventory.dto';
@@ -11,6 +12,10 @@ import {
   itemRequiresAttunement,
   MAX_ATTUNED_ITEMS,
 } from '../../domain/attunement';
+import {
+  itemEffectsActive,
+  itemEffectsStatus,
+} from '../../domain/item-effects-active';
 import { parseItemWeightKg } from '../../domain/encumbrance';
 
 export async function findInventoryItemOrFail(
@@ -33,6 +38,8 @@ export async function clearEquippedSlotIfOccupied(
   slot: EquipmentSlot,
   exceptItemSlug: string,
 ): Promise<void> {
+  if (!EXCLUSIVE_EQUIPMENT_SLOTS.has(slot)) return;
+
   const occupant = await items.findOne({
     where: { characterId, location: 'equipped', equipmentSlot: slot },
   });
@@ -82,6 +89,12 @@ export async function inventoryItemToDto(
   row: PlayerCharacterItem,
 ): Promise<InventoryItemResponseDto> {
   const catalog = await catalogItems.findOne({ where: { slug: row.itemSlug } });
+  const requiresAttunement = itemRequiresAttunement(catalog?.properties);
+  const activation = {
+    location: row.location,
+    attuned: row.attuned,
+    requiresAttunement,
+  };
   return {
     itemSlug: row.itemSlug,
     itemName: catalog?.name ?? row.itemSlug,
@@ -90,7 +103,9 @@ export async function inventoryItemToDto(
     location: row.location,
     equipmentSlot: row.equipmentSlot,
     attuned: row.attuned,
-    requiresAttunement: itemRequiresAttunement(catalog?.properties),
+    requiresAttunement,
+    effectsActive: itemEffectsActive(activation),
+    effectsStatus: itemEffectsStatus(activation),
     weightKg: parseItemWeightKg(catalog?.weight),
   };
 }

@@ -18,6 +18,7 @@ import {
   sizeCategoryFromChoices,
 } from '../../combat/domain/creature-size';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
+import { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
 import { resolveCharacterCombatSlice } from '../../combat/application/resolve-character-combat-slice';
 import { resolveCharacterSpellcastingSlice } from '../../spellcasting/application/resolve-character-spellcasting-slice';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/validation/class-options/fighting-style-feat-options';
@@ -32,6 +33,7 @@ export class CharacterMapper {
     private readonly equippedArmorClass: ResolveEquippedArmorClass,
     private readonly equippedWeaponAttacks: ResolveEquippedWeaponAttacks,
     private readonly equipmentCompliance: ResolveEquipmentCompliance,
+    private readonly permanentItemEffects: ResolveActivePermanentItemEffects,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
@@ -94,6 +96,7 @@ export class CharacterMapper {
       equippedWeaponAttacks: this.equippedWeaponAttacks,
       equipmentCompliance: this.equipmentCompliance,
       inventoryItems: this.inventoryItems,
+      permanentItemEffects: this.permanentItemEffects,
     });
 
     const spellcasting = await resolveCharacterSpellcastingSlice({
@@ -120,7 +123,10 @@ export class CharacterMapper {
       subclassSlug: row.subclassSlug,
       alignmentSlug: row.alignmentSlug,
       abilityScores: row.abilityScores,
-      hitPointsMax: row.hitPointsMax,
+      hitPointsMax:
+        row.hitPointsMax === null
+          ? null
+          : row.hitPointsMax + combat.itemHpBonus,
       hitPointsCurrent: row.hitPointsCurrent,
       proficiencyBonus,
       classSkillSlugs: loaded.classSkillSlugs,
@@ -148,6 +154,7 @@ export class CharacterMapper {
       equipmentWarnings: combat.equipmentWarnings,
       cannotCastSpellsInArmor: combat.cannotCastSpellsInArmor,
       speedPenaltyMeters: combat.speedPenaltyMeters,
+      itemSpeedBonusMeters: combat.itemSpeedBonusMeters,
       spellcastingAbilitySlug: spellcasting.spellcastingAbilitySlug,
       spellSaveDc: spellcasting.spellSaveDc,
       spellAttackBonus: spellcasting.spellAttackBonus,

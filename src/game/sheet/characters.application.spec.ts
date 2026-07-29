@@ -9,6 +9,7 @@ import { CharacterMapper } from './infrastructure/character.mapper';
 import { ResolveEquippedArmorClass } from '../combat/application/resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from '../combat/application/resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from '../combat/application/resolve-equipment-compliance';
+import { ResolveActivePermanentItemEffects } from '../inventory/application/resolve-active-permanent-item-effects';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CharacterDomainService } from './domain/core/character-domain.service';
@@ -174,6 +175,21 @@ describe('Characters application layer', () => {
               strDexTestDisadvantage: false,
               speedPenaltyMeters: 0,
               warnings: [],
+            }),
+          },
+        },
+        {
+          provide: ResolveActivePermanentItemEffects,
+          useValue: {
+            resolve: jest.fn().mockResolvedValue({
+              acBonus: 0,
+              attackBonus: 0,
+              damageBonus: 0,
+              abilityBonuses: {},
+              savingThrowBonuses: {},
+              speedBonusMeters: 0,
+              hpBonus: 0,
+              sourceNames: [],
             }),
           },
         },

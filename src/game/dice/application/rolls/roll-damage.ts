@@ -5,6 +5,7 @@ import type { ResolveEquippedWeaponAttacks } from '../../../combat/application/r
 import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
 import { rollDamageParts } from '../../domain/dice';
 import type { CharacterRollResponseDto, RollDamageDto } from '../../dto/character-roll.dto';
+import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
 import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,
@@ -15,6 +16,7 @@ export async function executeRollDamage(input: {
   sheet: CharacterSheetRepository;
   domain: CharacterDomainService;
   weaponAttacks: ResolveEquippedWeaponAttacks;
+  permanentItemEffects: ResolveActivePermanentItemEffects;
   userId: string;
   characterId: string;
   dto: RollDamageDto;
@@ -29,6 +31,7 @@ export async function executeRollDamage(input: {
       sheet: input.sheet,
       domain: input.domain,
       weaponAttacks: input.weaponAttacks,
+      permanentItemEffects: input.permanentItemEffects,
     },
     character,
     input.dto.itemSlug,

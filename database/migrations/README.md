@@ -14,7 +14,7 @@ Schema do **catálogo PHB** em migrations granulares.
 | `060_views/V###_<nome>.sql` | Uma view por arquivo (`V001`–`V030`) |
 | `070_materialized/` | Materialized views |
 | `080_indexes/` | Índices adicionais |
-| `090_player/P###_<nome>.sql` | Jogador + RLS (`P001`–`P013`) |
+| `090_player/P###_<nome>.sql` | Jogador + RLS (`P001`–`P014`) |
 
 Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 

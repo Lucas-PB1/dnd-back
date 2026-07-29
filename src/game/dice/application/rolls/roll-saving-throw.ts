@@ -11,6 +11,8 @@ import type {
   RollSavingThrowDto,
 } from '../../dto/character-roll.dto';
 import { loadAccessibleCharacter } from './roll-weapon-context';
+import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
+import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-item-effects';
 
 const ABILITY_LABELS: Record<AbilityKey, string> = {
   forca: 'Força',
@@ -26,6 +28,7 @@ export async function executeRollSavingThrow(input: {
   sheet: CharacterSheetRepository;
   domain: CharacterDomainService;
   dataSource: DataSource;
+  permanentItemEffects: ResolveActivePermanentItemEffects;
   userId: string;
   characterId: string;
   dto: RollSavingThrowDto;
@@ -53,8 +56,14 @@ export async function executeRollSavingThrow(input: {
   );
   const proficient = saveProficiencies.has(ability);
   const pb = await input.domain.getProficiencyBonus(character.level);
-  const mods = computeAbilityModifiers(character.abilityScores);
-  const bonus = mods[ability] + (proficient ? pb : 0);
+  const itemEffects = await input.permanentItemEffects.resolve(character.id);
+  const scores = applyItemAbilityBonuses(
+    character.abilityScores,
+    itemEffects.abilityBonuses,
+  );
+  const mods = computeAbilityModifiers(scores);
+  const itemSaveBonus = itemEffects.savingThrowBonuses[ability] ?? 0;
+  const bonus = mods[ability] + (proficient ? pb : 0) + itemSaveBonus;
   const result = rollD20Check(bonus, input.dto.advantage ?? 'normal');
   return {
     kind: 'saving_throw',

@@ -26,6 +26,10 @@ export type WeaponAttackContext = {
   hasShield?: boolean;
   /** Tipos de arma cuja maestria o personagem pode usar. */
   masteredWeaponSlugs?: readonly string[];
+  /** Bônus de ataque de itens mágicos ativos. */
+  itemAttackBonus?: number;
+  /** Bônus de dano de itens mágicos ativos. */
+  itemDamageBonus?: number;
 };
 
 export type WeaponAttackRole = 'main' | 'light_bonus' | 'dual_bonus';
