@@ -34,6 +34,11 @@ import { MonkActionsHandler } from './application/monk-actions.handler';
 import { PaladinActionsHandler } from './application/paladin-actions.handler';
 import { RangerActionsHandler } from './application/ranger-actions.handler';
 import { ClericActionsHandler } from './application/cleric-actions.handler';
+import { BardActionsHandler } from './application/bard-actions.handler';
+import { SorcererActionsHandler } from './application/sorcerer-actions.handler';
+import { WarlockActionsHandler } from './application/warlock-actions.handler';
+import { DruidActionsHandler } from './application/druid-actions.handler';
+import { WizardActionsHandler } from './application/wizard-actions.handler';
 import {
   ActionSurgeResponseDto,
   CastSpellDto,
@@ -62,6 +67,11 @@ import {
   UsePaladinTableActionDto,
   UseRangerTableActionDto,
   UseClericTableActionDto,
+  UseBardTableActionDto,
+  UseSorcererTableActionDto,
+  UseWarlockTableActionDto,
+  UseDruidTableActionDto,
+  UseWizardTableActionDto,
 } from './dto/character-state.dto';
 
 @ApiTags('game-characters')
@@ -84,6 +94,11 @@ export class CharacterSessionController {
     private readonly paladin: PaladinActionsHandler,
     private readonly ranger: RangerActionsHandler,
     private readonly cleric: ClericActionsHandler,
+    private readonly bard: BardActionsHandler,
+    private readonly sorcerer: SorcererActionsHandler,
+    private readonly warlock: WarlockActionsHandler,
+    private readonly druid: DruidActionsHandler,
+    private readonly wizard: WizardActionsHandler,
   ) {}
 
   @Get(':id/state')
@@ -406,5 +421,75 @@ export class CharacterSessionController {
     @Body() dto: UseClericTableActionDto,
   ): Promise<FighterTableActionResponseDto> {
     return this.cleric.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/bard/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Bard or Bard-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useBardTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseBardTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.bard.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/sorcerer/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Sorcerer or Sorcerer-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useSorcererTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseSorcererTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.sorcerer.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/warlock/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Warlock or Warlock-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useWarlockTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseWarlockTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.warlock.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/druid/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Druid or Druid-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useDruidTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseDruidTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.druid.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/wizard/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Wizard or Wizard-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  useWizardTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseWizardTableActionDto,
+  ): Promise<FighterTableActionResponseDto> {
+    return this.wizard.useTableAction(user.id, id, dto);
   }
 }

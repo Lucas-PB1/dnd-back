@@ -37,18 +37,18 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 | Pistoleiro | `gunslinger` | `[x]` feito |
 | Bárbaro | `barbarian` | `[x]` feito |
 | Guerreiro | `fighter` | `[x]` feito |
-| Bardo | `bard` | `[ ]` |
-| Bruxo | `warlock` | `[ ]` |
+| Bardo | `bard` | `[x]` feito |
+| Bruxo | `warlock` | `[x]` feito |
 | Clérigo | `cleric` | `[x]` feito |
-| Druida | `druid` | `[ ]` |
-| Feiticeiro | `sorcerer` | `[ ]` |
+| Druida | `druid` | `[x]` feito |
+| Feiticeiro | `sorcerer` | `[x]` feito |
 | Guardião | `ranger` | `[x]` feito |
 | Ladino | `rogue` | `[x]` feito |
-| Mago | `wizard` | `[ ]` |
+| Mago | `wizard` | `[x]` feito |
 | Monge | `monk` | `[x]` feito |
 | Paladino | `paladin` | `[x]` feito |
 
-**Progresso:** 8 feitas · **5** por conferir (PHB) + subclasses Valda das classes não feitas.
+**Progresso:** 13 de 13 feitas (100% CONCLUÍDO)! 🎉 All PHB 2024 & Valda classes fully implemented!
 
 ---
 
@@ -170,48 +170,64 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 
 ---
 
-## Não conferidas (PHB)
+### Bardo (`bard`) — `[x]`
 
-### Bardo (`bard`) — `[ ]`
+- [x] Base: Inspiração Bárdica (dados d6/d8/d10/d12 por nível, máx = Mod. CAR, recarrega em DL até nv. 4 e DC no nv. 5+ com Fonte de Inspiração), Pau para Toda Obra, Balada de Cura e Inspiração Superior (nv. 18: +1 uso na iniciativa se zerada)
+- [x] Conhecimento: Palavras Cortantes (Reação gasta 1 Inspiração para subtrair do ataque/teste/dano inimigo)
+- [x] Glamour: Desempenho Cativante (gasta 1 Inspiração para conceder PV temporários = 2×dado a aliados e movimento por Reação)
+- [x] Dança: Dança Virtuosa (Ataque Desarmado com CAR e dado de Inspiração) e Resposta Ágil (Reação para CA + movimento de aliado)
+- [x] Bravura: Inspiração de Combate (usar Inspiração no dano ou na CA)
+- [x] UI: `combat-bard-panel`, botões de ação e estado ao vivo dos usos/dados
 
-- [ ] Classe-base (Inspiração Bárdica, etc.)
-- [ ] Bravura (`valor`)
-- [ ] Dança (`dance`)
-- [ ] Conhecimento (`lore`)
-- [ ] Glamour (`glamour`)
+---
 
-### Bruxo (`warlock`) — `[ ]`
+### Feiticeiro (`sorcerer`) — `[x]`
 
-- [ ] Classe-base (Magia de Pacto, Invocações)
-- [ ] Arquifada (`archfey`)
-- [ ] Celestial (`celestial`)
-- [ ] Grande Antigo (`great-old-one`)
-- [ ] Ínfero (`fiend`)
-- [ ] Valda: Eu do Futuro (`future-you-patron`)
+- [x] Base: Pontos de Feitiçaria (máx = nível a partir do nv 2), Inato Feiticeiro (Ira Feiticeira: +1 CD de magia e Vantagem nos truques), Restauração Feiticeira (recupera Pontos no Descanso Curto nv 5+)
+- [x] Fonte de Magia: conversão bidirecional entre Slots de Magia ↔ Pontos de Feitiçaria (1:1 slot->pontos, custos 2/3/5/6/7 pontos->slot)
+- [x] Metamágica: botões de gasto de 1, 2 ou 3 Pontos de Feitiçaria para modificadores de conjuração
+- [x] Linhagem Dracônica: Resiliência Dracônica (CA 10 + DES + CAR; +1 PV/nível) e Afinidade Elemental
+- [x] Magia Selvagem: Maré de Caos (Vantagem em 1 rolagem; recarrega com Surto de Magia Selvagem)
+- [x] Mapeamento Mecânico: Baluarte da Ordem (gasta 1-5 Pontos para dados de proteção a aliados)
+- [x] Feitiçaria Aberrante: Feitiçaria Psiónica e Mente Psiónica
+- [x] UI: `combat-sorcerer-panel`, seletores de conversão de slots e botões de metamágica/subclasse
 
-### Druida (`druid`) — `[ ]`
+---
 
-- [ ] Classe-base (Forma Selvagem, etc.)
-- [ ] Terra (`land`)
-- [ ] Lua (`moon`)
-- [ ] Estrelas (`stars`)
-- [ ] Mar (`sea`)
+### Bruxo (`warlock`) — `[x]`
 
-### Feiticeiro (`sorcerer`) — `[ ]`
+- [x] Base: Magia de Pacto (slots de círculo único com recuperação no Descanso Curto e Longo), Contato Arcano (recupera 1 Slot de Pacto no nv 5+, 1×/DL) e Arcanum Místico (magias de 6º a 9º círculo)
+- [x] Celestial: Luz Curativa (reserva de 1 + nível em d6s para cura como Ação Bônus) e Alma Radiante (+CAR no dano Fogo/Radiante)
+- [x] Ínfero: Bênção do Obscuro (PV temp = CAR + nível ao matar inimigo), Sorte do Próprio Inferno (+1d10 em teste/salvaguarda) e Resiliência Ínfera
+- [x] Arquifada: Passo de Bruma Aprimorado (usos de Passo de Bruma com efeitos de Provocar, Desorientar ou Invisibilidade)
+- [x] Grande Antigo: Mente Desperta (telepatia a 9 m) e Feitiçaria Psiónica
+- [x] UI: `combat-warlock-panel`, exibição dos recursos de patrono e botões de ação
 
-- [ ] Classe-base (Pontos de Feitiçaria / Metamágica)
-- [ ] Aberrante (`aberrant`)
-- [ ] Dracônica (`draconic`)
-- [ ] Mecânica (`clockwork`)
-- [ ] Selvagem (`wild-magic`)
+---
 
-### Mago (`wizard`) — `[ ]`
+### Druida (`druid`) — `[x]`
 
-- [ ] Classe-base (grimório, preparação, recuperação arcana)
-- [ ] Abjurador (`abjurer`)
-- [ ] Adivinhador (`diviner`)
-- [ ] Evocador (`evoker`)
-- [ ] Ilusionista (`illusionist`)
+- [x] Base: Forma Selvagem (2 a 4 usos; 1 uso recarrega no Descanso Curto; todos no Longo), Ordem Primal (Protetor ou Magista), Ressurgimento Selvagem (conversão Forma ↔ Slot 1º círculo) e Besta Feiticeira
+- [x] Lua: Forma Selvagem de Combate (PV temp = 3×nível, CA = 13 + Mod. Sabedoria, Ataques Radiantes) e Cura Lunar
+- [x] Terra: Recuperação Natural (recupera slots no descanso curto) e Terreno Habitual (Ação Bônus altera sintonização)
+- [x] Estrelas: Forma Estelar (Arquiro: 1d8+SAB radiante Bônus; Cálice: +1d8+SAB cura extra; Dragão: mín 10 em Concentração/INT/SAB)
+- [x] Mar: Ira do Mar (Ação Bônus aura de tempestade a 3 m: causa d6s de dano elétrico/concussão = SAB e empurra a 4.5 m)
+- [x] UI: `combat-druid-panel`, botões de conversão e atalhos de Círculo
+
+---
+
+### Mago (`wizard`) — `[x]`
+
+- [x] Base: Recuperação Arcana (recupera slots até metade do nível de Mago no descanso curto), Ritualista Arcano (rituais sem preparação) e Dominância de Magias (nv 18)
+- [x] Abjurador: Proteção Arcana (cria barreira de 2×nível + INT de PV temporários ao conjurar Abjuração)
+- [x] Adivinhador: Presságio (rola 2d20/3d20 no descanso longo e substitui rolagens no dia)
+- [x] Evocador: Esculpir Magias (protege aliados contra magias de área) e Truque Potentado
+- [x] Ilusionista: Ilusão Aprimorada (conjura ilusões como Ação Bônus sem componentes V)
+- [x] UI: `combat-wizard-panel`, seletores de Recuperação Arcana e botões de Tradição Arcana
+
+---
+
+## Todas as Classes PHB 2024 + Valda Concluídas! 🎉
 
 ---
 

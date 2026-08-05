@@ -46,6 +46,7 @@ import { applyLongRestState, applyShortRestState } from './character-state/rest'
 import {
   consumeSpellSlot,
   loadMaxSlots,
+  recoverSpellSlot,
 } from './character-state/spell-slots';
 
 @Injectable()
@@ -225,6 +226,16 @@ export class CharacterStateRepository {
       character.subclassSlug,
     );
     consumeSpellSlot(state, maxSlots, slotLevel, slotLevel);
+    await this.state.save(state);
+  }
+
+  /** Restaura/cria um espaço de magia gasto (ex.: conversão de Pontos de Feitiçaria). */
+  async recoverSpellSlotLevel(
+    character: PlayerCharacter,
+    slotLevel: number,
+  ): Promise<void> {
+    const state = await this.findOrCreate(character.id, character.level);
+    recoverSpellSlot(state, slotLevel);
     await this.state.save(state);
   }
 

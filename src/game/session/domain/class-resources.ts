@@ -135,12 +135,17 @@ export function resolveClassResourceMaxima(input: {
 
     if (max <= 0) continue;
 
+    const recoverAllOnShort =
+      top.recoverAllOnShort ||
+      ((slug === 'bardicInspiration' || slug === 'bardic-inspiration') &&
+        input.level >= 5);
+
     result.push({
       slug,
       name: top.resourceName,
       max,
       recoverOneOnShort: top.recoverOneOnShort,
-      recoverAllOnShort: top.recoverAllOnShort,
+      recoverAllOnShort,
       recoverAllOnLong: top.recoverAllOnLong,
     });
   }

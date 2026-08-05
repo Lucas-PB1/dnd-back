@@ -26,6 +26,11 @@ import {
   rangerSpeedBonusMeters,
 } from '../domain/ranger-features';
 import { clericCombatNotes } from '../domain/cleric-features';
+import { bardCombatNotes } from '../domain/bard-features';
+import { sorcererCombatNotes } from '../domain/sorcerer-features';
+import { warlockCombatNotes } from '../domain/warlock-features';
+import { druidCombatNotes } from '../domain/druid-features';
+import { wizardCombatNotes } from '../domain/wizard-features';
 
 export type ClassCombatContribution = {
   notes: string[];
@@ -56,6 +61,11 @@ export function aggregateClassCombatContributions(
     ...paladinCombatNotes({ classSlug, subclassSlug, level }),
     ...rangerCombatNotes({ classSlug, subclassSlug, level }),
     ...clericCombatNotes({ classSlug, subclassSlug, level }),
+    ...bardCombatNotes({ classSlug, subclassSlug, level }),
+    ...sorcererCombatNotes({ classSlug, subclassSlug, level }),
+    ...warlockCombatNotes({ classSlug, subclassSlug, level }),
+    ...druidCombatNotes({ classSlug, subclassSlug, level }),
+    ...wizardCombatNotes({ classSlug, subclassSlug, level }),
   ];
 
   const speedBonusMeters =

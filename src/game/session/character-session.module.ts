@@ -23,6 +23,11 @@ import { MonkActionsHandler } from './application/monk-actions.handler';
 import { PaladinActionsHandler } from './application/paladin-actions.handler';
 import { RangerActionsHandler } from './application/ranger-actions.handler';
 import { ClericActionsHandler } from './application/cleric-actions.handler';
+import { BardActionsHandler } from './application/bard-actions.handler';
+import { SorcererActionsHandler } from './application/sorcerer-actions.handler';
+import { WarlockActionsHandler } from './application/warlock-actions.handler';
+import { DruidActionsHandler } from './application/druid-actions.handler';
+import { WizardActionsHandler } from './application/wizard-actions.handler';
 
 @Module({
   imports: [
@@ -53,6 +58,11 @@ import { ClericActionsHandler } from './application/cleric-actions.handler';
     PaladinActionsHandler,
     RangerActionsHandler,
     ClericActionsHandler,
+    BardActionsHandler,
+    SorcererActionsHandler,
+    WarlockActionsHandler,
+    DruidActionsHandler,
+    WizardActionsHandler,
   ],
   exports: [CharacterStateRepository],
 })

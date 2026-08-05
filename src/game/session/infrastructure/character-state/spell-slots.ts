@@ -72,3 +72,18 @@ export function consumeSpellSlot(
   };
   return slotLevel;
 }
+
+/** Recupa/desfaz o gasto de um espaço de magia. */
+export function recoverSpellSlot(
+  state: PlayerCharacterState,
+  slotLevel: number,
+): void {
+  const key = String(slotLevel);
+  const used = state.spellSlotsUsed[key] ?? 0;
+  if (used > 0) {
+    state.spellSlotsUsed = {
+      ...state.spellSlotsUsed,
+      [key]: used - 1,
+    };
+  }
+}
