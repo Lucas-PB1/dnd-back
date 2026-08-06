@@ -57,6 +57,22 @@ session/
 └── domain/
 ```
 
+### `combat/domain/` (organização interna)
+
+```
+combat/domain/
+├── aggregate-class-combat.ts     # orquestra notas / ataques / deslocamento
+├── *-features.ts · armor-class.ts · weapon-attack.ts · …  # barrels públicos
+├── barbarian/ · bard/ · cleric/ · druid/ · fighter/ · gunslinger/
+├── monk/ · paladin/ · ranger/ · rogue/ · sorcerer/ · warlock/ · wizard/
+├── equipment/                    # CA, dual-wield, compliance, charm, size
+├── weapon-attacks/               # compute + predicates + assemble
+├── catalog/                      # subclass-table-action (transversal)
+└── __fixtures__/                 # catálogo mecânico para testes
+```
+
+Imports externos preferem os barrels na raiz (`combat/domain/fighter-features`); a implementação vive nas pastas.
+
 ## Dependências
 
 ```mermaid

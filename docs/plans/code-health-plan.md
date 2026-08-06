@@ -3,7 +3,7 @@
 Skills: `audit-code-health` · `split-large-module`  
 Standards: [`../architecture/code-standards.md`](../architecture/code-standards.md)
 
-## Inventário (2026-08-06, pós splits de table-actions)
+## Inventário (2026-08-06, pós reorg `combat/domain`)
 
 ### Feito
 
@@ -14,6 +14,7 @@ Standards: [`../architecture/code-standards.md`](../architecture/code-standards.
 | `fighter-actions.handler` | facade ≤100 + `actions/fighter/{core,battle-master,psi-warrior,dungeoneer}` |
 | Handlers HARD (bard, druid, monk, ranger, sorcerer) | facades + `actions/<classe>/` ≤150 |
 | Softs paladin / warlock | mesmo padrão (`actions/paladin/`, `actions/warlock/`) |
+| `combat/domain` em subpastas | pastas por classe + `equipment/` + `weapon-attacks/` + `catalog/`; barrels na raiz |
 
 ### Ainda soft / próximo
 
@@ -33,4 +34,4 @@ Standards: [`../architecture/code-standards.md`](../architecture/code-standards.
 | Data | Estado |
 |------|--------|
 | 2026-07-27 | Pós P0–P5: **0** críticos |
-| 2026-08-06 | Session + weapon-attacks + catálogo mecânico + MartialFacade + fighter + handlers de mesa |
+| 2026-08-06 | Session + weapon-attacks + catálogo mecânico + MartialFacade + fighter + handlers + reorg `combat/domain` |
