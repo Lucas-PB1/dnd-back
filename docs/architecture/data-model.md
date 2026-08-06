@@ -29,6 +29,9 @@ Padrões DRY (option_def, linhagens, granted spells): [`catalog-patterns.md`](ca
 | `species_choice_kind` | elf_lineage, infernal_legacy, dragon_ancestry |
 | `weapon_category` | simple, martial |
 | `casting_type` | full, half, pact, none |
+| `maneuver_effect_kind` | temp_hp, miss_damage, ac_bonus, ability_check_bonus, descriptive, reload_move |
+| `battle_master_maneuver_timing` | on_hit, on_miss, reaction, bonus_action, other |
+| `save_ability` | strength…charisma |
 
 ## Clusters (7 domínios)
 
@@ -86,6 +89,16 @@ Padrões DRY (option_def, linhagens, granted spells): [`catalog-patterns.md`](ca
 - `phb_subclass_option_def` → `phb_subclass_option_value`
 - `phb_subclass_resource`, `phb_subclass_prepared_spell`
 - `phb_druid_land_terrain`, `phb_divine_order`
+
+### 8. Combat mechanical catalog
+
+SSOT tipado para a engine de mesa/dados (não só prosa de feature). Plano: [`../plans/combat-mechanical-catalog.md`](../plans/combat-mechanical-catalog.md).
+
+- `phb_gunslinger_maneuver`, `phb_battle_master_maneuver`
+- `phb_cunning_strike_effect`
+- `phb_subclass_table_action`
+- `phb_persona_mask`, `phb_beastborne_aspect_benefit`
+- `phb_dungeoneer_slayer_type`, `phb_subclass_precaution_spell`
 
 ### Feats
 

@@ -56,7 +56,7 @@ export const applySneakAttack: DamageEffect = async (ctx, acc) => {
 
   let selection: ReturnType<typeof validateCunningStrikeSelection>;
   try {
-    selection = validateCunningStrikeSelection({
+    selection = validateCunningStrikeSelection(ctx.cunningStrikeEffects, {
       level: character.level,
       subclassSlug: character.subclassSlug,
       effectSlugs: cunningStrikeEffects,

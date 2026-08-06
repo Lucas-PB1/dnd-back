@@ -5,9 +5,9 @@ import { PlayerCharacter } from '../../../shared/infrastructure/player-character
 import { PhbCondition } from '../phb-condition.entity';
 import { PlayerCharacterState } from '../player-character-state.entity';
 import { applyPatchState, applyUseClassResource } from './mutations';
-import { resolveClassResources } from './class-resources';
+import { resolveClassResources } from './resources/class-resources';
 
-jest.mock('./class-resources', () => ({
+jest.mock('./resources/class-resources', () => ({
   resolveClassResources: jest.fn(),
 }));
 

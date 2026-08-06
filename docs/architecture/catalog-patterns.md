@@ -112,6 +112,27 @@ Repetição estrutural OK: cada uma amarra entidades distintas. Views agregadora
 
 ---
 
+## 8. Catálogo mecânico de combate
+
+Tabelas tipadas para a **engine** (mesa/dados), distintas da prosa em `phb_class_feature`.
+
+| Tabela | View |
+|--------|------|
+| `phb_gunslinger_maneuver` | `v_phb_gunslinger_maneuver` |
+| `phb_battle_master_maneuver` | `v_phb_battle_master_maneuver` |
+| `phb_cunning_strike_effect` | `v_phb_cunning_strike_effect` |
+| `phb_subclass_table_action` | `v_phb_subclass_table_action` |
+| `phb_persona_mask` | `v_phb_persona_mask` |
+| `phb_beastborne_aspect_benefit` | `v_phb_beastborne_aspect_benefit` |
+| `phb_dungeoneer_slayer_type` | `v_phb_dungeoneer_slayer_type` |
+| `phb_subclass_precaution_spell` | `v_phb_subclass_precaution_spell` |
+
+Seeds: `database/seeds/combat/C00*.sql`. Plano: [`docs/plans/combat-mechanical-catalog.md`](../plans/combat-mechanical-catalog.md).
+
+**Não** colocar mecânica em JSONB genérico. `option_value` do Battle Master continua como escolha da ficha; a tabela tipada é SSOT de timing/efeitos.
+
+---
+
 ## Checklist — nova tabela de catálogo
 
 1. Existe entidade pai clara (`phb_*` + FK)?

@@ -2,10 +2,7 @@ import {
   divineFuryExtraDice,
   hasDivineFury,
 } from '../../../../combat/domain/barbarian-rage';
-import {
-  DUNGEONEER_SLAYER_TYPES,
-  psiEnergyDieFaces,
-} from '../../../../combat/domain/fighter-features';
+import { psiEnergyDieFaces } from '../../../../combat/domain/fighter-features';
 import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
@@ -69,9 +66,12 @@ export const applyBarbarianFighterExtras: DamageEffect = async (ctx, acc) => {
     character.subclassSlug === 'dungeoneer' &&
     character.level >= 10
   ) {
+    const labels = ctx.dungeoneerSlayerLabels;
     addDamagePart(acc, '1d10', { critical: dto.critical });
     acc.notes.push(
-      `Matar Monstro: +1d10 vs ${DUNGEONEER_SLAYER_TYPES.join(', ')} (1×/turno)`,
+      labels.length > 0
+        ? `Matar Monstro: +1d10 vs ${labels.join(', ')} (1×/turno)`
+        : 'Matar Monstro: +1d10 (1×/turno)',
     );
   }
 };

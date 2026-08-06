@@ -1,37 +1,37 @@
 import {
   barbarianCombatNotes,
   fastMovementBonusMeters,
-} from '../domain/barbarian-rage';
+} from './barbarian-rage';
 import {
   attacksPerAction as fighterAttacksPerAction,
   fighterCombatNotes,
   isFighterClass,
-} from '../domain/fighter-features';
-import { rogueCombatNotes } from '../domain/rogue-features';
+} from './fighter-features';
+import { rogueCombatNotes } from './rogue-features';
 import {
   isMonkClass,
   monkAttacksPerAction,
   monkCombatNotes,
   unarmoredMovementBonusMeters,
-} from '../domain/monk-features';
+} from './monk-features';
 import {
   isPaladinClass,
   paladinAttacksPerAction,
   paladinCombatNotes,
-} from '../domain/paladin-features';
+} from './paladin-features';
 import {
   isRangerClass,
   rangerAttacksPerAction,
   rangerCombatNotes,
   rangerSpeedBonusMeters,
-} from '../domain/ranger-features';
-import { clericCombatNotes } from '../domain/cleric-features';
-import { bardCombatNotes } from '../domain/bard-features';
-import { sorcererCombatNotes } from '../domain/sorcerer-features';
-import { warlockCombatNotes } from '../domain/warlock-features';
-import { druidCombatNotes } from '../domain/druid-features';
-import { wizardCombatNotes } from '../domain/wizard-features';
-import { gunslingerCombatNotes } from '../domain/gunslinger-features';
+} from './ranger-features';
+import { clericCombatNotes } from './cleric-features';
+import { bardCombatNotes } from './bard-features';
+import { sorcererCombatNotes } from './sorcerer-features';
+import { warlockCombatNotes } from './warlock-features';
+import { druidCombatNotes } from './druid-features';
+import { wizardCombatNotes } from './wizard-features';
+import { gunslingerCombatNotes } from './gunslinger-features';
 
 export type ClassCombatContribution = {
   notes: string[];

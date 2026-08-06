@@ -30,12 +30,31 @@ Cada submódulo:
 
 ```
 <submodulo>/
-├── application/      # handlers / queries
+├── application/        # handlers / queries (subpastas por concern se >~10 arquivos)
 ├── domain/             # regras D&D deste agregado
-├── infrastructure/     # entities + repos deste agregado
-├── dto/
-├── *.controller.ts     # @Controller('characters') — mesmas URLs
+├── infrastructure/     # entities + repos (helpers em subpastas)
+├── controllers/        # @Controller('characters') — mesmas URLs
+├── dto/                # barrels + subpastas por família
 └── *.module.ts
+```
+
+### `session/` (organização interna)
+
+```
+session/
+├── controllers/          # core / fighter / gunslinger-barbarian / table-actions
+├── application/
+│   ├── core/             # state, cast, rest, resources
+│   └── actions/          # *-actions.handler por classe
+├── dto/
+│   ├── character-state.dto.ts   # barrel
+│   ├── core/ · fighter/ · martial/ · table-actions/
+├── infrastructure/
+│   ├── character-state.repository.ts   # facade fina
+│   └── character-state/
+│       ├── core/ · resources/ · rest/ · spell/ · martial/
+│       └── mutations.ts                # barrel
+└── domain/
 ```
 
 ## Dependências
@@ -134,4 +153,4 @@ Já está dividido — **12 módulos** (`classes/`, `spells/`, …). Game deve e
 - [x] `game/combat` — M1 (`CombatModule`; dice → combat)
 - [x] `game/spellcasting` — M2 (`SpellcastingModule`; grants fora de sheet)
 
-**Última revisão:** 2026-07-27 — M1 combat + M2 spellcasting extraídos de sheet
+**Última revisão:** 2026-08-06 — session reorg (controllers/dto/application/character-state em subpastas)

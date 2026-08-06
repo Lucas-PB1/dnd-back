@@ -3,6 +3,7 @@ import type { DataSource } from 'typeorm';
 import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
 import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
+import type { LoadCombatMechanicalCatalog } from '../../../combat/application/load-combat-mechanical-catalog';
 import type { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
 import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
 import { rollDamageParts } from '../../domain/dice';
@@ -28,6 +29,7 @@ export async function executeRollDamage(input: {
   permanentItemEffects: ResolveActivePermanentItemEffects;
   dataSource: DataSource;
   resourceSpender: CharacterResourceSpender;
+  mechanicalCatalog: LoadCombatMechanicalCatalog;
   userId: string;
   characterId: string;
   dto: RollDamageDto;
@@ -79,6 +81,7 @@ export async function executeRollDamage(input: {
   );
   noteRageBonus(acc, attack.rageDamageBonus);
 
+  const mechanical = await input.mechanicalCatalog.load();
   const ctx = {
     character,
     attack,
@@ -86,6 +89,8 @@ export async function executeRollDamage(input: {
     dto: input.dto,
     domain: input.domain,
     resourceSpender: input.resourceSpender,
+    cunningStrikeEffects: mechanical.cunningStrikeEffects,
+    dungeoneerSlayerLabels: mechanical.dungeoneerSlayerLabels,
   };
   for (const effect of DAMAGE_EFFECT_PIPELINE) {
     await effect(ctx, acc);

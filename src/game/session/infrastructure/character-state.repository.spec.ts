@@ -33,6 +33,18 @@ describe('CharacterStateRepository', () => {
       {} as CharacterSpellLookup,
       {} as never,
       {} as never,
+      {
+        load: async () => ({
+          gunslingerManeuvers: [],
+          battleMasterManeuvers: [],
+          cunningStrikeEffects: [],
+          tableActions: [],
+          personaMaskSlugs: [],
+          beastborneAspectBenefits: [],
+          dungeoneerSlayerLabels: [],
+          precautionSpells: [],
+        }),
+      } as never,
       {} as DataSource,
     );
   });

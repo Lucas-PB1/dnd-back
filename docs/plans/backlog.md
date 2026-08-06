@@ -30,6 +30,10 @@ Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mecha
 
 *(nenhum — próximos itens só sob pedido)*
 
+### Referência (feito)
+
+- Catálogo mecânico de combate no banco — [`combat-mechanical-catalog.md`](combat-mechanical-catalog.md)
+
 ### Adiado — polish / ops
 
 Não priorizar. Só retomar com pedido explícito.

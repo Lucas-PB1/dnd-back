@@ -3,6 +3,7 @@ import { DataSource } from 'typeorm';
 import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
 import { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
+import { LoadCombatMechanicalCatalog } from '../../combat/application/load-combat-mechanical-catalog';
 import { ResolveEquippedWeaponAttacks } from '../../combat/application/resolve-equipped-weapon-attacks';
 import {
   CharacterRollResponseDto,
@@ -29,6 +30,7 @@ export class CharacterRollsService {
     private readonly weaponAttacks: ResolveEquippedWeaponAttacks,
     private readonly permanentItemEffects: ResolveActivePermanentItemEffects,
     private readonly dataSource: DataSource,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
     @Inject(forwardRef(() => CharacterStateRepository))
     private readonly state: CharacterStateRepository,
   ) {}
@@ -65,6 +67,7 @@ export class CharacterRollsService {
       permanentItemEffects: this.permanentItemEffects,
       dataSource: this.dataSource,
       resourceSpender: this.state,
+      mechanicalCatalog: this.mechanicalCatalog,
       userId,
       characterId,
       dto,

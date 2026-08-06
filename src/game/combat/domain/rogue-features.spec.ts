@@ -1,7 +1,7 @@
+import { FIXTURE_CUNNING_STRIKE_EFFECTS } from './__fixtures__/mechanical-catalog.fixtures';
 import { psiEnergyDiceSchedule } from './fighter-features';
 import {
   availableCunningStrikeEffects,
-  CUNNING_STRIKE_EFFECTS,
   cunningStrikeSaveDc,
   hasSlipperyMind,
   rogueCombatNotes,
@@ -44,7 +44,7 @@ describe('rogue features', () => {
 
   it('defines every requested Cunning Strike cost and unlock', () => {
     expect(
-      CUNNING_STRIKE_EFFECTS.map(({ slug, cost, unlockLevel }) => ({
+      FIXTURE_CUNNING_STRIKE_EFFECTS.map(({ slug, cost, unlockLevel }) => ({
         slug,
         cost,
         unlockLevel,
@@ -72,16 +72,18 @@ describe('rogue features', () => {
 
   it('offers only effects unlocked for the Rogue and subclass', () => {
     expect(
-      availableCunningStrikeEffects({ level: 5 }).map((effect) => effect.slug),
+      availableCunningStrikeEffects(FIXTURE_CUNNING_STRIKE_EFFECTS, {
+        level: 5,
+      }).map((effect) => effect.slug),
     ).toEqual(['poison', 'withdraw', 'trip']);
     expect(
-      availableCunningStrikeEffects({
+      availableCunningStrikeEffects(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 17,
         subclassSlug: 'arachnoid-stalker',
       }).map((effect) => effect.slug),
     ).toContain('paralyze');
     expect(
-      availableCunningStrikeEffects({
+      availableCunningStrikeEffects(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 17,
         subclassSlug: 'assassin',
       }).map((effect) => effect.slug),
@@ -90,7 +92,7 @@ describe('rogue features', () => {
 
   it('allows two paid Cunning Strike effects from level 11 onward', () => {
     expect(
-      validateCunningStrikeSelection({
+      validateCunningStrikeSelection(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 14,
         effectSlugs: ['daze', 'obscure'],
       }),
@@ -102,7 +104,7 @@ describe('rogue features', () => {
 
   it('rejects two Cunning Strike effects before level 11', () => {
     expect(() =>
-      validateCunningStrikeSelection({
+      validateCunningStrikeSelection(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 10,
         effectSlugs: ['poison', 'withdraw'],
       }),
@@ -111,7 +113,7 @@ describe('rogue features', () => {
 
   it('rejects effects that cost more than the available Sneak Attack dice', () => {
     expect(() =>
-      validateCunningStrikeSelection({
+      validateCunningStrikeSelection(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 14,
         effectSlugs: ['knock-out', 'obscure'],
       }),
@@ -120,14 +122,14 @@ describe('rogue features', () => {
 
   it('restricts Paralyze to level 17 arachnoid stalkers', () => {
     expect(() =>
-      validateCunningStrikeSelection({
+      validateCunningStrikeSelection(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 17,
         subclassSlug: 'assassin',
         effectSlugs: ['paralyze'],
       }),
     ).toThrow(/arachnoid-stalker/);
     expect(
-      validateCunningStrikeSelection({
+      validateCunningStrikeSelection(FIXTURE_CUNNING_STRIKE_EFFECTS, {
         level: 17,
         subclassSlug: 'arachnoid-stalker',
         effectSlugs: ['paralyze'],

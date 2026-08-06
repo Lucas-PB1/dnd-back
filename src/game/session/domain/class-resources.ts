@@ -1,7 +1,10 @@
 /**
  * Resolve máximos e recuperação de recursos de classe (PHB 2024).
  * Cotas vêm de `phb_class_resource` + `phb_class_progression.channel_divinity`.
+ * Tabelas nível→quantidade: [`resource-max-formulas.ts`](./resource-max-formulas.ts).
  */
+
+import { resolveFormulaMax } from './resource-max-formulas';
 
 export type ResourceMaxFormula =
   | 'fixed'
@@ -43,54 +46,6 @@ export type AbilityMods = {
   carisma: number;
 };
 
-function abilityModFromFormula(
-  formula: ResourceMaxFormula,
-  mods: AbilityMods,
-): number | null {
-  if (formula === 'charisma_mod') return mods.carisma;
-  if (formula === 'wisdom_mod') return mods.sabedoria;
-  if (formula === 'constitution_mod') return mods.constituicao;
-  if (formula === 'intelligence_mod') return mods.inteligencia;
-  return null;
-}
-
-function resolveFormulaMax(
-  row: ClassResourceScheduleRow,
-  level: number,
-  proficiencyBonus: number,
-  mods: AbilityMods,
-): number {
-  if (row.maxFormula === 'fixed') return row.fixedMax ?? 0;
-  if (row.maxFormula === 'level') return level;
-  if (row.maxFormula === 'level_plus_one') return level + 1;
-  if (row.maxFormula === 'proficiency_bonus') return proficiencyBonus;
-  if (row.maxFormula === 'zealot_healing_dice_count') {
-    if (level >= 17) return 7;
-    if (level >= 12) return 6;
-    if (level >= 6) return 5;
-    if (level >= 3) return 4;
-    return 0;
-  }
-  if (row.maxFormula === 'superiority_dice_count') {
-    if (level >= 15) return 6;
-    if (level >= 7) return 5;
-    if (level >= 3) return 4;
-    return 0;
-  }
-  if (row.maxFormula === 'psi_energy_dice_count') {
-    if (level >= 17) return 12;
-    if (level >= 13) return 10;
-    if (level >= 11) return 8;
-    if (level >= 9) return 8;
-    if (level >= 5) return 6;
-    if (level >= 3) return 4;
-    return 0;
-  }
-  const ability = abilityModFromFormula(row.maxFormula, mods);
-  if (ability != null) return Math.max(1, ability);
-  return row.fixedMax ?? 0;
-}
-
 /** Maior cota desbloqueada ≤ nível atual por slug. */
 export function resolveClassResourceMaxima(input: {
   rows: readonly ClassResourceScheduleRow[];
@@ -128,9 +83,10 @@ export function resolveClassResourceMaxima(input: {
       max = input.channelDivinityFromProgression;
     }
 
-    // Mãos Consagradas do Paladino: reserva de cura = 5 × nível.
+    // Mãos Consagradas do Paladino: reserva de cura = 5 × nível (PHB).
     if (slug === 'layOnHands') {
-      max = 5 * input.level;
+      const LAY_ON_HANDS_HP_PER_LEVEL = 5;
+      max = LAY_ON_HANDS_HP_PER_LEVEL * input.level;
     }
 
     if (max <= 0) continue;

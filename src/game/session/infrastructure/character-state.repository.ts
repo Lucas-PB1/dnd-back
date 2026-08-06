@@ -1,58 +1,45 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
 import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
+import { LoadCombatMechanicalCatalog } from '../../combat/application/load-combat-mechanical-catalog';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { CharacterRepository } from '../../shared/infrastructure/character.repository';
 import { CharacterSpellLookup } from '../../sheet/application/character-spell-lookup';
 import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
-import { PhbCondition } from './phb-condition.entity';
-import { PlayerCharacterState } from './player-character-state.entity';
 import {
-  ActionSurgeResponseDto,
   CastSpellDto,
   CharacterStateResponseDto,
   PatchCharacterStateDto,
   RestResponseDto,
-  SecondWindResponseDto,
-  TacticalMindResponseDto,
   UseClassResourceResponseDto,
-  UseManeuverResponseDto,
 } from '../dto/character-state.dto';
-import { applyResourceSpend } from '../domain/class-resources';
-import { grantHitDiceOnLevelUp } from '../domain/hit-dice-rest';
-import { applyCastSpell } from './character-state/cast-spell';
-import { buildCharacterStateResponse } from './character-state/build-response';
-import { resolveClassResources } from './character-state/class-resources';
+import { PhbCondition } from './phb-condition.entity';
+import { PlayerCharacterState } from './player-character-state.entity';
+import { buildCharacterStateResponse } from './character-state/core/build-response';
 import {
-  applyActionSurge,
-  applyFireChamber,
-  applyRecoverAllRage,
-  applyRecoverClassResource,
-  applyReloadFirearm,
-  applySecondWind,
-  applyTacticalMind,
-  applyToggleRage,
-  applyToggleReckless,
-  applySetPersonaMasks,
-  applySetBestialAspectLevel,
-  applyUseClassResource,
-  applyUseManeuver,
-  applyPatchState,
-  listAvailableManeuvers,
-} from './character-state/mutations';
-import { applyLongRestState, applyShortRestState } from './character-state/rest';
-import {
-  consumeSpellSlot,
-  loadMaxSlots,
-  recoverSpellSlot,
-} from './character-state/spell-slots';
+  applyLongRestOp,
+  applyShortRestOp,
+  castSpellOp,
+  patchStateOp,
+  syncHitDiceOnLevelChangeOp,
+  type CoreSessionDeps,
+} from './character-state/core/core-session-ops';
+import { findOrCreateCharacterState } from './character-state/core/ensure-state';
+import { MartialSessionFacade } from './character-state/martial/martial-session.facade';
+import type { MartialSessionDeps } from './character-state/martial/martial-deps';
+import { ResourceSessionFacade } from './character-state/resources/resource-session.facade';
+import type { ResourceSessionDeps } from './character-state/resources/resource-session-ops';
 
 @Injectable()
 export class CharacterStateRepository {
+  /** Ops marciais (gunslinger / bárbaro / fighter / máscaras / beastborne). */
+  readonly martial: MartialSessionFacade;
+  readonly resources: ResourceSessionFacade;
+
   constructor(
     @InjectRepository(PlayerCharacterState)
     private readonly state: Repository<PlayerCharacterState>,
@@ -67,58 +54,15 @@ export class CharacterStateRepository {
     private readonly spellLookup: CharacterSpellLookup,
     private readonly sheetRepository: CharacterSheetRepository,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
     private readonly dataSource: DataSource,
-  ) {}
+  ) {
+    this.martial = new MartialSessionFacade(() => this.martialDeps());
+    this.resources = new ResourceSessionFacade(() => this.resourceDeps());
+  }
 
-  async findOrCreate(
-    characterId: string,
-    level = 1,
-  ): Promise<PlayerCharacterState> {
-    let row = await this.state.findOne({ where: { characterId } });
-    if (!row) {
-      row = this.state.create({
-        characterId,
-        spellSlotsUsed: {},
-        resourcesUsed: {},
-        grantedSpellUses: {},
-        highElfCantripSwapAvailable: false,
-        conditions: [],
-        tempHp: 0,
-        concentratingOn: null,
-        hitDiceCurrent: level,
-        deathSaveSuccesses: 0,
-        deathSaveFailures: 0,
-        inspiration: false,
-        firearmChambers: {},
-        rageActive: false,
-        recklessActive: false,
-        personaMasks: [],
-        bestialAspectLevel: 0,
-      });
-      await this.state.save(row);
-    }
-    if (!row.resourcesUsed) {
-      row.resourcesUsed = {};
-    }
-    if (!row.grantedSpellUses) {
-      row.grantedSpellUses = {};
-    }
-    if (!row.firearmChambers) {
-      row.firearmChambers = {};
-    }
-    if (row.rageActive == null) {
-      row.rageActive = false;
-    }
-    if (row.recklessActive == null) {
-      row.recklessActive = false;
-    }
-    if (!row.personaMasks) {
-      row.personaMasks = [];
-    }
-    if (row.bestialAspectLevel == null) {
-      row.bestialAspectLevel = 0;
-    }
-    return row;
+  findOrCreate(characterId: string, level = 1): Promise<PlayerCharacterState> {
+    return findOrCreateCharacterState(this.state, characterId, level);
   }
 
   async buildResponse(
@@ -140,376 +84,113 @@ export class CharacterStateRepository {
     });
   }
 
-  async patch(
-    character: PlayerCharacter,
-    dto: PatchCharacterStateDto,
-  ): Promise<CharacterStateResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyPatchState({
-      character,
-      state,
-      dto,
-      stateRepo: this.state,
-      conditions: this.conditions,
-      catalogLookup: this.catalogLookup,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
+  private bindResponse() {
+    return (c: PlayerCharacter, s?: PlayerCharacterState) =>
+      this.buildResponse(c, s);
   }
 
-  async castSpell(
-    character: PlayerCharacter,
-    dto: CastSpellDto,
-  ): Promise<{ slotLevelUsed: number | null; state: CharacterStateResponseDto }> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyCastSpell({
-      character,
-      state,
-      dto,
+  private coreDeps(): CoreSessionDeps {
+    return {
       stateRepo: this.state,
+      conditions: this.conditions,
       classSlots: this.classSlots,
       subclassSlots: this.subclassSlots,
       catalogLookup: this.catalogLookup,
+      characters: this.characters,
       spellLookup: this.spellLookup,
       sheetRepository: this.sheetRepository,
       grantedSpellCatalog: this.grantedSpellCatalog,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
+      dataSource: this.dataSource,
+      findOrCreate: (id, level) => this.findOrCreate(id, level),
+      buildResponse: this.bindResponse(),
+    };
   }
 
-  async useClassResource(
+  private resourceDeps(): ResourceSessionDeps {
+    return {
+      stateRepo: this.state,
+      classSlots: this.classSlots,
+      subclassSlots: this.subclassSlots,
+      dataSource: this.dataSource,
+      findOrCreate: (id, level) => this.findOrCreate(id, level),
+      buildResponse: this.bindResponse(),
+    };
+  }
+
+  private martialDeps(): MartialSessionDeps {
+    return {
+      stateRepo: this.state,
+      dataSource: this.dataSource,
+      characters: this.characters,
+      findOrCreate: (id, level) => this.findOrCreate(id, level),
+      buildResponse: this.bindResponse(),
+      loadMechanicalCatalog: () => this.mechanicalCatalog.load(),
+    };
+  }
+
+  patch(character: PlayerCharacter, dto: PatchCharacterStateDto) {
+    return patchStateOp(this.coreDeps(), character, dto);
+  }
+
+  castSpell(character: PlayerCharacter, dto: CastSpellDto) {
+    return castSpellOp(this.coreDeps(), character, dto);
+  }
+
+  /** Aliases de recurso (porta CharacterResourceSpender + handlers). */
+  useClassResource(
     character: PlayerCharacter,
     resourceSlug: string,
     amount = 1,
   ): Promise<UseClassResourceResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyUseClassResource({
-      character,
-      state,
-      resourceSlug,
-      amount,
-      stateRepo: this.state,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
+    return this.resources.useClassResource(character, resourceSlug, amount);
   }
 
-  /** Gasta recurso de classe sem montar a resposta de sessão (usado pelas rolls). */
-  async spendClassResource(
+  spendClassResource(
     character: PlayerCharacter,
     resourceSlug: string,
     amount = 1,
-  ): Promise<void> {
-    const state = await this.findOrCreate(character.id, character.level);
-    const resources = await resolveClassResources(this.dataSource, character);
-    const resource = resources.find((item) => item.slug === resourceSlug);
-    if (!resource) {
-      throw new BadRequestException(
-        `Resource '${resourceSlug}' is not available for this character`,
-      );
-    }
-    try {
-      state.resourcesUsed = applyResourceSpend(
-        state.resourcesUsed ?? {},
-        resourceSlug,
-        resource.max,
-        amount,
-      );
-    } catch (error) {
-      throw new BadRequestException(
-        error instanceof Error ? error.message : 'Cannot spend resource',
-      );
-    }
-    await this.state.save(state);
+  ) {
+    return this.resources.spendClassResource(character, resourceSlug, amount);
   }
 
-  /** Debita um espaço de magia (classe ou subclasse) sem lançar magia. */
-  async consumeSpellSlotLevel(
-    character: PlayerCharacter,
-    slotLevel: number,
-  ): Promise<void> {
-    const state = await this.findOrCreate(character.id, character.level);
-    const maxSlots = await loadMaxSlots(
-      this.classSlots,
-      this.subclassSlots,
-      character.classSlug,
-      character.level,
-      character.subclassSlug,
-    );
-    consumeSpellSlot(state, maxSlots, slotLevel, slotLevel);
-    await this.state.save(state);
+  consumeSpellSlotLevel(character: PlayerCharacter, slotLevel: number) {
+    return this.resources.consumeSpellSlotLevel(character, slotLevel);
   }
 
-  /** Restaura/cria um espaço de magia gasto (ex.: conversão de Pontos de Feitiçaria). */
-  async recoverSpellSlotLevel(
-    character: PlayerCharacter,
-    slotLevel: number,
-  ): Promise<void> {
-    const state = await this.findOrCreate(character.id, character.level);
-    recoverSpellSlot(state, slotLevel);
-    await this.state.save(state);
+  recoverSpellSlotLevel(character: PlayerCharacter, slotLevel: number) {
+    return this.resources.recoverSpellSlotLevel(character, slotLevel);
   }
 
-  async recoverClassResource(
+  recoverClassResource(
     character: PlayerCharacter,
     resourceSlug: string,
     amount = 1,
-  ): Promise<CharacterStateResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyRecoverClassResource({
+  ) {
+    return this.resources.recoverClassResource(
       character,
-      state,
       resourceSlug,
       amount,
-      stateRepo: this.state,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async useManeuver(
-    character: PlayerCharacter,
-    maneuverSlug: string,
-  ): Promise<UseManeuverResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    const result = await applyUseManeuver({
-      character,
-      state,
-      maneuverSlug,
-      stateRepo: this.state,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-    if (result.effectKind === 'reload_move') {
-      await this.reloadAllFirearms(character);
-      result.state = await this.buildResponse(
-        character,
-        await this.findOrCreate(character.id, character.level),
-      );
-    }
-    return result;
-  }
-
-  listManeuvers(character: PlayerCharacter) {
-    return listAvailableManeuvers(character);
-  }
-
-  async reloadFirearm(
-    character: PlayerCharacter,
-    itemSlug: string,
-  ): Promise<CharacterStateResponseDto> {
-    const capacity = await this.loadReloadCapacity(itemSlug);
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyReloadFirearm({
-      character,
-      state,
-      itemSlug,
-      capacity,
-      stateRepo: this.state,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async fireChamber(
-    character: PlayerCharacter,
-    itemSlug: string,
-    shots = 1,
-  ): Promise<CharacterStateResponseDto> {
-    const capacity = await this.loadReloadCapacity(itemSlug);
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyFireChamber({
-      character,
-      state,
-      itemSlug,
-      capacity,
-      shots,
-      stateRepo: this.state,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async toggleRage(
-    character: PlayerCharacter,
-    active?: boolean,
-  ): Promise<CharacterStateResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyToggleRage({
-      character,
-      state,
-      active,
-      stateRepo: this.state,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async toggleReckless(
-    character: PlayerCharacter,
-    active?: boolean,
-  ): Promise<CharacterStateResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyToggleReckless({
-      character,
-      state,
-      active,
-      stateRepo: this.state,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async setPersonaMasks(
-    character: PlayerCharacter,
-    masks: string[],
-  ): Promise<CharacterStateResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applySetPersonaMasks({
-      character,
-      state,
-      masks,
-      stateRepo: this.state,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async setBestialAspectLevel(
-    character: PlayerCharacter,
-    level: number,
-  ): Promise<CharacterStateResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applySetBestialAspectLevel({
-      character,
-      state,
-      level,
-      stateRepo: this.state,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async recoverAllRage(
-    character: PlayerCharacter,
-  ): Promise<CharacterStateResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyRecoverAllRage({
-      character,
-      state,
-      stateRepo: this.state,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async useSecondWind(
-    character: PlayerCharacter,
-  ): Promise<SecondWindResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applySecondWind({
-      character,
-      state,
-      stateRepo: this.state,
-      characters: this.characters,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async useTacticalMind(
-    character: PlayerCharacter,
-    checkTotal?: number,
-    dc?: number,
-  ): Promise<TacticalMindResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyTacticalMind({
-      character,
-      state,
-      checkTotal,
-      dc,
-      stateRepo: this.state,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  async useActionSurge(
-    character: PlayerCharacter,
-  ): Promise<ActionSurgeResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyActionSurge({
-      character,
-      state,
-      stateRepo: this.state,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
-  }
-
-  private async reloadAllFirearms(character: PlayerCharacter): Promise<void> {
-    const state = await this.findOrCreate(character.id, character.level);
-    const slugs = Object.keys(state.firearmChambers ?? {});
-    for (const itemSlug of slugs) {
-      const capacity = await this.loadReloadCapacity(itemSlug);
-      if (capacity > 0) {
-        state.firearmChambers = {
-          ...(state.firearmChambers ?? {}),
-          [itemSlug]: capacity,
-        };
-      }
-    }
-    await this.state.save(state);
-  }
-
-  private async loadReloadCapacity(itemSlug: string): Promise<number> {
-    const rows = await this.dataSource.query<{ reload: number | null }[]>(
-      `SELECT CASE
-         WHEN jsonb_typeof(i.properties->'reload') = 'number'
-           THEN (i.properties->>'reload')::int
-         ELSE NULL
-       END AS reload
-       FROM rpg.phb_item i
-       WHERE i.slug = $1
-       LIMIT 1`,
-      [itemSlug],
     );
-    return Number(rows[0]?.reload ?? 0);
   }
 
-  async applyLongRest(character: PlayerCharacter): Promise<RestResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyLongRestState({
-      character,
-      state,
-      stateRepo: this.state,
-      characters: this.characters,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
+  applyLongRest(character: PlayerCharacter): Promise<RestResponseDto> {
+    return applyLongRestOp(this.coreDeps(), character);
   }
 
-  async applyShortRest(
-    character: PlayerCharacter,
-    hitDiceSpent = 0,
-  ): Promise<RestResponseDto> {
-    const state = await this.findOrCreate(character.id, character.level);
-    return applyShortRestState({
-      character,
-      state,
-      hitDiceSpent,
-      stateRepo: this.state,
-      characters: this.characters,
-      catalogLookup: this.catalogLookup,
-      dataSource: this.dataSource,
-      buildResponse: (c, s) => this.buildResponse(c, s),
-    });
+  applyShortRest(character: PlayerCharacter, hitDiceSpent = 0) {
+    return applyShortRestOp(this.coreDeps(), character, hitDiceSpent);
   }
 
-  async syncHitDiceOnLevelChange(
+  syncHitDiceOnLevelChange(
     characterId: string,
     previousLevel: number,
     newLevel: number,
-  ): Promise<void> {
-    const state = await this.findOrCreate(characterId, previousLevel);
-    state.hitDiceCurrent = grantHitDiceOnLevelUp(
-      state.hitDiceCurrent,
+  ) {
+    return syncHitDiceOnLevelChangeOp(
+      this.coreDeps(),
+      characterId,
       previousLevel,
       newLevel,
     );
-    await this.state.save(state);
   }
 }

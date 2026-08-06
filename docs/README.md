@@ -29,6 +29,8 @@ Contrato REST: Swagger em `/api`.
 |-----|----------|
 | [`plans/backlog.md`](plans/backlog.md) | Checklist geral — o que ainda falta (API + front + gaps) |
 | [`plans/class-mechanics.md`](plans/class-mechanics.md) | Mecânica por classe/subclasse (feito / parcial / pendente) |
+| [`plans/code-health-plan.md`](plans/code-health-plan.md) | Inventário de arquivos gordos / hardcodes / próximos PRs |
+| [`plans/combat-mechanical-catalog.md`](plans/combat-mechanical-catalog.md) | Migrar catálogos mecânicos de combate (TS → tabelas tipadas) |
 
 ## Ops
 

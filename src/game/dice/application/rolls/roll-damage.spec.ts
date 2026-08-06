@@ -9,6 +9,10 @@ jest.mock('./roll-weapon-context', () => ({
 }));
 
 import { BadRequestException } from '@nestjs/common';
+import {
+  FIXTURE_CUNNING_STRIKE_EFFECTS,
+  FIXTURE_DUNGEONEER_SLAYER_LABELS,
+} from '../../../combat/domain/__fixtures__/mechanical-catalog.fixtures';
 import { executeRollDamage } from './roll-damage';
 import {
   findEquippedWeaponAttack,
@@ -21,6 +25,19 @@ describe('executeRollDamage', () => {
     consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
   };
 
+  const mechanicalCatalog = {
+    load: async () => ({
+      cunningStrikeEffects: FIXTURE_CUNNING_STRIKE_EFFECTS,
+      dungeoneerSlayerLabels: FIXTURE_DUNGEONEER_SLAYER_LABELS,
+      gunslingerManeuvers: [],
+      battleMasterManeuvers: [],
+      tableActions: [],
+      personaMaskSlugs: [],
+      beastborneAspectBenefits: [],
+      precautionSpells: [],
+    }),
+  };
+
   const base = {
     access: {} as never,
     sheet: {} as never,
@@ -29,6 +46,7 @@ describe('executeRollDamage', () => {
     permanentItemEffects: {} as never,
     dataSource: {} as never,
     resourceSpender,
+    mechanicalCatalog: mechanicalCatalog as never,
     userId: 'u1',
     characterId: 'c1',
   };
