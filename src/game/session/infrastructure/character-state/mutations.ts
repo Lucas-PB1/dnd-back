@@ -462,8 +462,8 @@ export async function applySecondWind(input: {
 export async function applyTacticalMind(input: {
   character: PlayerCharacter;
   state: PlayerCharacterState;
-  checkTotal: number;
-  dc: number;
+  checkTotal?: number;
+  dc?: number;
   stateRepo: Repository<PlayerCharacterState>;
   dataSource: DataSource;
   buildResponse: BuildResponse;
@@ -497,35 +497,62 @@ export async function applyTacticalMind(input: {
   }
 
   const roll = rollDie(10);
-  const newTotal = checkTotal + roll;
-  const success = newTotal >= dc;
+  const hasCheckContext =
+    typeof checkTotal === 'number' && typeof dc === 'number';
 
-  if (success) {
-    try {
-      state.resourcesUsed = applyResourceSpend(
-        state.resourcesUsed ?? {},
-        'secondWind',
-        secondWind.max,
-        1,
-      );
-    } catch (error) {
-      throw new BadRequestException(
-        error instanceof Error ? error.message : 'Cannot spend Second Wind',
-      );
+  if (hasCheckContext) {
+    const newTotal = checkTotal + roll;
+    const success = newTotal >= dc;
+
+    if (success) {
+      try {
+        state.resourcesUsed = applyResourceSpend(
+          state.resourcesUsed ?? {},
+          'secondWind',
+          secondWind.max,
+          1,
+        );
+      } catch (error) {
+        throw new BadRequestException(
+          error instanceof Error ? error.message : 'Cannot spend Second Wind',
+        );
+      }
+      await stateRepo.save(state);
     }
-    await stateRepo.save(state);
+
+    return {
+      state: await buildResponse(character, state),
+      expression: '1d10',
+      roll,
+      newTotal,
+      success,
+      resourceSpent: success,
+      note: success
+        ? 'Mente Tática: sucesso; uso de Recuperar Fôlego gasto'
+        : 'Mente Tática: ainda falhou; uso de Recuperar Fôlego devolvido',
+    };
   }
+
+  try {
+    state.resourcesUsed = applyResourceSpend(
+      state.resourcesUsed ?? {},
+      'secondWind',
+      secondWind.max,
+      1,
+    );
+  } catch (error) {
+    throw new BadRequestException(
+      error instanceof Error ? error.message : 'Cannot spend Second Wind',
+    );
+  }
+  await stateRepo.save(state);
 
   return {
     state: await buildResponse(character, state),
     expression: '1d10',
     roll,
-    newTotal,
-    success,
-    resourceSpent: success,
-    note: success
-      ? 'Mente Tática: sucesso; uso de Recuperar Fôlego gasto'
-      : 'Mente Tática: ainda falhou; uso de Recuperar Fôlego devolvido',
+    resourceSpent: true,
+    note: `Mente Tática: +${roll} (1d10). Some ao teste; se ainda falhar, devolva o uso de Recuperar Fôlego.`,
   };
 }
 

@@ -284,21 +284,25 @@ export class SecondWindResponseDto {
 }
 
 export class TacticalMindDto {
-  @ApiProperty({
+  /** Opcional: se enviados check+CD, só gasta Fôlego se virar sucesso. */
+  @ApiPropertyOptional({
     example: 14,
-    description: 'Total atual do teste de atributo (já com modificadores)',
+    description:
+      'Total atual do teste (opcional). Sem check/CD, gasta 1 uso e só rola o +1d10.',
   })
+  @IsOptional()
   @IsInt()
   @Min(1)
-  checkTotal!: number;
+  checkTotal?: number;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     example: 15,
-    description: 'CD do teste (sucesso se total+1d10 >= DC)',
+    description: 'CD do teste (opcional; exige checkTotal).',
   })
+  @IsOptional()
   @IsInt()
   @Min(1)
-  dc!: number;
+  dc?: number;
 }
 
 export class TacticalMindResponseDto {
@@ -311,16 +315,22 @@ export class TacticalMindResponseDto {
   @ApiProperty({ example: 7 })
   roll!: number;
 
-  @ApiProperty({ example: 21 })
-  newTotal!: number;
+  @ApiPropertyOptional({
+    example: 21,
+    description: 'Total com bônus; só quando checkTotal foi informado',
+  })
+  newTotal?: number;
 
-  @ApiProperty({ example: true })
-  success!: boolean;
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Sucesso vs CD; só quando check+CD foram informados',
+  })
+  success?: boolean;
 
   @ApiProperty({ example: true })
   resourceSpent!: boolean;
 
-  @ApiProperty({ example: 'Mente Tática: sucesso; uso de Recuperar Fôlego gasto' })
+  @ApiProperty({ example: 'Mente Tática: +7 (1d10). Some ao teste.' })
   note!: string;
 }
 

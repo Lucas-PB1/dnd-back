@@ -279,13 +279,13 @@ export class CharacterSessionController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary:
-      'Mente Tática — +1d10 em teste; gasta Recuperar Fôlego só se virar sucesso',
+      'Mente Tática — gasta Recuperar Fôlego e rola +1d10 (opcional: check+CD para gastar só em sucesso)',
   })
   @ApiOkResponse({ type: TacticalMindResponseDto })
   useTacticalMind(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: TacticalMindDto,
+    @Body() dto: TacticalMindDto = {},
   ): Promise<TacticalMindResponseDto> {
     return this.fighter.useTacticalMind(user.id, id, dto);
   }

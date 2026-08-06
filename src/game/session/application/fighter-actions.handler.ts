@@ -50,7 +50,7 @@ export class FighterActionsHandler {
   async useTacticalMind(
     userId: string,
     characterId: string,
-    dto: TacticalMindDto,
+    dto: TacticalMindDto = {},
   ): Promise<TacticalMindResponseDto> {
     const character = await this.access.findAccessibleOrFail(
       userId,

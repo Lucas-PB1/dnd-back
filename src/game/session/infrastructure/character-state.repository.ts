@@ -374,8 +374,8 @@ export class CharacterStateRepository {
 
   async useTacticalMind(
     character: PlayerCharacter,
-    checkTotal: number,
-    dc: number,
+    checkTotal?: number,
+    dc?: number,
   ): Promise<TacticalMindResponseDto> {
     const state = await this.findOrCreate(character.id, character.level);
     return applyTacticalMind({
