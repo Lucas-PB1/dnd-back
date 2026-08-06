@@ -26,6 +26,7 @@ import { PatchCharacterStateHandler } from './application/patch-character-state.
 import { CastSpellHandler } from './application/cast-spell.handler';
 import { RestHandler } from './application/rest.handler';
 import { UseClassResourceHandler } from './application/use-class-resource.handler';
+import { RecoverClassResourceHandler } from './application/recover-class-resource.handler';
 import { GunslingerActionsHandler } from './application/gunslinger-actions.handler';
 import { BarbarianActionsHandler } from './application/barbarian-actions.handler';
 import { FighterActionsHandler } from './application/fighter-actions.handler';
@@ -86,6 +87,7 @@ export class CharacterSessionController {
     private readonly castSpell: CastSpellHandler,
     private readonly rest: RestHandler,
     private readonly useResource: UseClassResourceHandler,
+    private readonly recoverResource: RecoverClassResourceHandler,
     private readonly gunslinger: GunslingerActionsHandler,
     private readonly barbarian: BarbarianActionsHandler,
     private readonly fighter: FighterActionsHandler,
@@ -161,6 +163,21 @@ export class CharacterSessionController {
     @Body() dto: UseClassResourceDto,
   ): Promise<UseClassResourceResponseDto> {
     return this.useResource.execute(user.id, id, dto);
+  }
+
+  @Post(':id/resources/recover')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Recover a class resource use manually (table adjustment)',
+  })
+  @ApiOkResponse({ type: CharacterStateResponseDto })
+  @ApiNotFoundResponse()
+  recoverClassResource(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseClassResourceDto,
+  ): Promise<CharacterStateResponseDto> {
+    return this.recoverResource.execute(user.id, id, dto);
   }
 
   @Get(':id/maneuvers')

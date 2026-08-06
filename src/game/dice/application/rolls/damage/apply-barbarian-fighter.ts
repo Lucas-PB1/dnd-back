@@ -12,7 +12,7 @@ import type { DamageEffect } from './damage-roll-context';
 
 /** Golpe Brutal, Fúria Divina, Golpe Psiônico e Matar Monstro. */
 export const applyBarbarianFighterExtras: DamageEffect = async (ctx, acc) => {
-  const { attack, combatFlags, dto, character, domain } = ctx;
+  const { attack, combatFlags, dto, character, domain, resourceSpender } = ctx;
 
   if (
     dto.brutalStrike &&
@@ -47,6 +47,11 @@ export const applyBarbarianFighterExtras: DamageEffect = async (ctx, acc) => {
   ) {
     const faces = psiEnergyDieFaces(character.level);
     if (faces != null) {
+      await resourceSpender.spendClassResource(
+        character,
+        'psi-energy-dice',
+        1,
+      );
       const intMod = abilityModifier(character.abilityScores.inteligencia);
       addDamagePart(acc, `1d${faces}+${intMod}`, { critical: false });
       const telekineticThrust =
@@ -54,7 +59,7 @@ export const applyBarbarianFighterExtras: DamageEffect = async (ctx, acc) => {
           ? `; Estocada Telecinética CD ${8 + (await domain.getProficiencyBonus(character.level)) + intMod}: Caído ou mova 3 m`
           : '';
       acc.notes.push(
-        `Golpe Psiônico: dano Energético (1 Dado de Energia Psiônica gasto na ficha)${telekineticThrust}`,
+        `Golpe Psiônico: +1d${faces}+INT Energético (1 Dado de Energia Psiônica)${telekineticThrust}`,
       );
     }
   }

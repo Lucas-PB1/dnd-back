@@ -144,6 +144,11 @@ describe('executeRollDamage', () => {
     expect(result.label).toContain('Golpe Psiônico');
     expect(result.expression).toContain('1d8+3');
     expect(result.note).toContain('Estocada Telecinética CD 14');
+    expect(resourceSpender.spendClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ subclassSlug: 'psi-warrior' }),
+      'psi-energy-dice',
+      1,
+    );
   });
 
   it('rolls remaining Sneak Attack dice and doubles those dice on a critical', async () => {
