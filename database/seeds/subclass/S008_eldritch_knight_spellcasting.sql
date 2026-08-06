@@ -1,5 +1,5 @@
 -- Cavaleiro Místico: conjuração de 1/3 (lista Mago, INT)
--- Garante o pattern `third` aqui (pack subclass roda antes de valda-gunslinger/G023).
+-- Garante o pattern `third` aqui (pack subclass roda antes de valdas-gunslinger/G023).
 
 INSERT INTO rpg.phb_spell_slot_pattern (slug, name, description)
 VALUES (

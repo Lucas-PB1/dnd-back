@@ -1,4 +1,4 @@
--- Recursos jogáveis do Perseguidor Aracnídeo (Valda)
+-- Recursos jogáveis do Perseguidor Aracnídeo (Valdas)
 -- Correia conjura Teia sem espaço de magia: 2 usos, 1 no Curto e todos no Longo.
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, subclass_id, min_level)

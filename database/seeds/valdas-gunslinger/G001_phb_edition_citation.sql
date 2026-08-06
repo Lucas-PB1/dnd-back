@@ -1,11 +1,11 @@
--- Valda Gunslinger — citação (reusa edição valda-spire-2024-en)
+-- Valdas Gunslinger — citação (reusa edição valdas-spire-2024-en)
 -- Edição e citação compartilhadas pelo db:seed completo.
 
 INSERT INTO rpg.phb_edition (slug, label, book, language, extracted_at, notes)
 VALUES (
-  'valda-spire-2024-en',
-  'Valda Spire 2024',
-  'Valda''s Spire of Secrets',
+  'valdas-spire-2024-en',
+  'Valdas Spire 2024',
+  'Valdas Spire of Secrets',
   'pt',
   NOW(),
   'Mage Hand Press — conteúdo traduzido para PT-BR do catálogo Grimoire (regras 2024)'
@@ -20,10 +20,10 @@ INSERT INTO rpg.phb_source_citation (
   slug, edition_id, chapter, chapter_title, extracted_at
 )
 VALUES (
-  'valda-spire-2024-en:gunslinger',
-  (SELECT id FROM rpg.phb_edition WHERE slug = 'valda-spire-2024-en'),
+  'valdas-spire-2024-en:gunslinger',
+  (SELECT id FROM rpg.phb_edition WHERE slug = 'valdas-spire-2024-en'),
   2,
-  'Valda''s Spire of Secrets: A Classe do Pistoleiro',
+  'Valdas Spire of Secrets: A Classe do Pistoleiro',
   NOW()
 )
 ON CONFLICT (slug) DO UPDATE SET

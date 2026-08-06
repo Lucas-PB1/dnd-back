@@ -7,13 +7,13 @@ import {
 
 describe('edition slug catalog helpers', () => {
   it('parses CSV and repeated values', () => {
-    expect(parseEditionSlugsParam('phb-2024-pt,valda-spire-2024-en')).toEqual([
+    expect(parseEditionSlugsParam('phb-2024-pt,valdas-spire-2024-en')).toEqual([
       'phb-2024-pt',
-      'valda-spire-2024-en',
+      'valdas-spire-2024-en',
     ]);
-    expect(parseEditionSlugsParam(['phb-2024-pt', 'valda-spire-2024-en'])).toEqual([
+    expect(parseEditionSlugsParam(['phb-2024-pt', 'valdas-spire-2024-en'])).toEqual([
       'phb-2024-pt',
-      'valda-spire-2024-en',
+      'valdas-spire-2024-en',
     ]);
     expect(parseEditionSlugsParam('')).toBeUndefined();
   });
@@ -21,14 +21,14 @@ describe('edition slug catalog helpers', () => {
   it('filters rows with PHB default when editionSlug is null', () => {
     const rows = [
       { slug: 'fighter', editionSlug: 'phb-2024-pt' },
-      { slug: 'gunslinger', editionSlug: 'valda-spire-2024-en' },
+      { slug: 'gunslinger', editionSlug: 'valdas-spire-2024-en' },
       { slug: 'human', editionSlug: null },
     ];
     expect(
       filterRowsByEditionSlug(rows, ['phb-2024-pt']).map((row) => row.slug),
     ).toEqual(['fighter', 'human']);
     expect(
-      filterRowsByEditionSlug(rows, ['valda-spire-2024-en']).map((row) => row.slug),
+      filterRowsByEditionSlug(rows, ['valdas-spire-2024-en']).map((row) => row.slug),
     ).toEqual(['gunslinger']);
   });
 

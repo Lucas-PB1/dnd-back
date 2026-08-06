@@ -6,7 +6,7 @@ describe('riskDie', () => {
     expect(riskDieLabel(1)).toBeNull();
   });
 
-  it('follows Valda die schedule', () => {
+  it('follows Valdas die schedule', () => {
     expect(riskDieFaces(2)).toBe(8);
     expect(riskDieFaces(9)).toBe(8);
     expect(riskDieFaces(10)).toBe(10);

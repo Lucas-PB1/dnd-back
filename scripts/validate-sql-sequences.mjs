@@ -59,8 +59,8 @@ checkSeq('database/migrations/060_views', 'V', 32);
 checkSeq('database/migrations/090_player', 'P', 16);
 checkSeq('database/seeds/phb', 'S', 80);
 checkSeq('database/seeds/subclass', 'S', 10);
-checkSeq('database/seeds/valda', 'V', 17);
-checkSeq('database/seeds/valda-gunslinger', 'G', 28);
+checkSeq('database/seeds/valdas', 'V', 17);
+checkSeq('database/seeds/valdas-gunslinger', 'G', 28);
 
 // Stale path references
 const stale = [

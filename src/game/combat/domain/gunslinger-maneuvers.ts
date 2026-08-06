@@ -1,5 +1,5 @@
 /**
- * Manobras do Pistoleiro (Valda) — catálogo de domínio.
+ * Manobras do Pistoleiro (Valdas) — catálogo de domínio.
  * Efeitos numéricos são aplicados pelo handler; narrativas só retornam o dado.
  */
 

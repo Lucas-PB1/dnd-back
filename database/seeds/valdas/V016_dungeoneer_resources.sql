@@ -1,4 +1,4 @@
--- Recursos jogáveis do Explorador de Masmorras (Valda)
+-- Recursos jogáveis do Explorador de Masmorras (Valdas)
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, subclass_id, min_level)
 VALUES (

@@ -1,5 +1,5 @@
--- Seed Valda spells
--- Conteúdo canônico Valda: Spire of Secrets
+-- Seed Valdas spells
+-- Conteúdo canônico Valdas: Spire of Secrets
 
 INSERT INTO rpg.phb_spell (
   slug, name, level, level_label, school_id,
@@ -32,7 +32,7 @@ Acelerar. O alvo sofre 2d6 de dano extra pelo ataque. Este dano extra é do mesm
 
 Desacelerar. Reduza o dano que o alvo sofre em 2d6 (até um mínimo de 0 de dano).',
   'Usando um Espaço de Magia de Círculo Superior. O dano extra ou redução de dano aumenta em 1d6 para cada nível de espaço acima de 1.',
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -78,7 +78,7 @@ VALUES (
   true,
   'Quando você conjura esta magia, todas as pegadas e impressões digitais dentro de uma Emanação de 30 pés proveniente de você ficam destacadas e brilham fracamente enquanto durar. Ao lançar a magia, escolha qualquer momento até 10 dias atrás. Apenas pegadas e impressões digitais deixadas entre aquela época e o presente serão destacadas. Cada criatura que deixa pegadas e impressões digitais recebe uma cor única, mas não é identificada de outra forma. Qualquer criatura que se mova ou toque objetos dentro da Emanação também deixará pegadas e impressões digitais coloridas, que podem revelar criaturas invisíveis na área.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -126,7 +126,7 @@ VALUES (
 
 Você retarda brevemente o tempo de uma criatura de sua escolha que você possa ver dentro do alcance. O alvo deve ser bem sucedido em uma salvaguarda de Sabedoria ou será movido para o último lugar na ordem de Iniciativa a partir do início da próxima rodada.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -176,7 +176,7 @@ Você receberá uma mensagem sua de até 6 palavras no futuro, avisando-o sobre 
 
 Depois de lançar esta magia, você não poderá lançá-lo novamente por 7 dias ou até realizar seu ritual.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -222,7 +222,7 @@ VALUES (
   false,
   'Uma onda de força irrompe de sua mão aberta, arremessando uma criatura que você pode ver dentro do alcance através de uma janela. O alvo faz uma salvaguarda de Força. Se falhar, o alvo é empurrado até 20 pés e lançado através de uma janela à sua escolha. Se não houver nenhuma janela a até 20 pés do alvo, ela é empurrada até 20 pés em uma direção de sua escolha e lançada através de uma janela de força arcana, que se materializa atrás da criatura e desaparece após ser quebrada. O alvo sofre 4d6 de dano Cortante e tem a condição Caído quando é lançado através de uma janela. Em um teste bem-sucedido, o alvo é empurrado apenas 10 pés e não sofre dano.',
   'Usando um Espaço de Magia de Círculo Superior. O dano aumenta em 1d6 e a distância que o alvo é empurrado em caso de sucesso ou falha aumenta em 5 pés para cada nível de espaço de magia acima de 2.',
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -274,7 +274,7 @@ Combate. O plebeu é um aliado para você e seus aliados. Ele lança sua própri
 
 Duração. A duração desta magia varia dependendo de quando e onde foi lançado. Se lançado em um local onde o tempo passa normalmente, a magia dura até a décima segunda badalada da meia-noite seguinte, por mais longo que seja. Em outros lugares, a magia dura 24 horas.',
   'Usando um Espaço de Magia de Círculo Superior. Você pode mudar de forma uma Besta adicional para cada nível de espaço de magia acima de 4.',
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -320,7 +320,7 @@ VALUES (
   false,
   'Você estende o indicador e o polegar, um gesto perigoso mímico ao usar uma arma. Durante todo o tempo, sua mão conta como uma arma simples de longo alcance com alcance de 60/240 pés e propriedade de maestria lenta. Você pode usar sua habilidade de conjuração em vez de Destreza para as jogadas de ataque desta arma. Se acertar, a arma causa 2d6 Energético de dano e não adiciona seu modificador de habilidade ao dano.',
   'Aprimoramento de Truque. O alcance normal da arma aumenta em 30 pés e seu longo alcance aumenta em 120 pés quando você atinge os níveis 5 (90/360 pés), 11 (120/480 pés) e 17 (150/600 pés).',
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -372,7 +372,7 @@ Além disso, você e a criatura alvo podem negociar apostas maiores. Você pode 
 
 Por último, nenhuma magia, efeito mágico ou criatura além de você e do alvo pode influenciar o resultado do jogo.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -418,7 +418,7 @@ VALUES (
   false,
   'Você emite uma aura de embriaguez que desaparece rapidamente, deixando uma ressaca intensa. Uma criatura que você escolher dentro do alcance realiza uma salvaguarda de Constituição. Se falhar na resistência, a criatura sofre 3d8 de dano Psíquico e fica com a condição Envenenado até o final do seu próximo turno. Em um teste bem-sucedido, o alvo sofre apenas metade do dano. O alvo tem Desvantagem nos salvaguardas de Constituição que faz para manter a Concentração como resultado deste dano.',
   'Usando um Espaço de Magia de Círculo Superior. O dano aumenta em 1d8 para cada nível de espaço de magia acima de 2.',
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -464,7 +464,7 @@ VALUES (
   true,
   'Quando você lança esse magia, seus olhos passam por uma página de texto escrito que está guardada em sua memória. No próximo ano, você se lembrará dos detalhes exatos de todas as informações da página. Após esse tempo, você terá Vantagem em todos os testes de Inteligência que fizer para recuperar esta informação.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -512,7 +512,7 @@ VALUES (
 
 Ao lançar esta magia, você para brevemente o tempo para todos, menos para você. Você pode realizar uma ação adicional e se mover em seu espaço enquanto não passa tempo para outras criaturas. Essa ação só pode ser usada para realizar a ação Pesquisar, Estudar ou Utilizar. Além disso, você não pode afetar ou danificar qualquer criatura ou objeto, exceto objetos que você esteja vestindo ou carregando. Se um objeto sair da sua mão, ele também ficará congelado no tempo.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -560,7 +560,7 @@ VALUES (
 
 Ao distorcer o fluxo do tempo em nós, você faz com que uma ação de sua escolha, realizada dentro do alcance da última rodada, seja desfeita. A realidade então se reafirma, recuando diante do dano causado pela remoção de um evento do tempo. Os efeitos diretos dessa ação, como o dano causado por um ataque ou magia, são desfeitos, mas os efeitos indiretos, como criaturas escolhendo se mover para locais diferentes, não são. A criatura que realizou a ação sofre 10d8 de dano Psíquico, pois lida com a modificação de seu histórico.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -606,7 +606,7 @@ VALUES (
   false,
   'Dois braços musculosos de energia arcana brilhante aparecem em uma criatura voluntária que você toca. Esses braços são totalmente funcionais e podem ser usados ​​para empunhar armas e escudos (permitindo ao alvo segurar simultaneamente 2 armas de duas mãos ou 4 armas de uma mão), executar componentes somáticos de magias e realizar outras ações. Durante a duração, o alvo tem Vantagem em testes de Força (Atletismo). O alvo pode realizar uma Ação Bônus para realizar um ataque corpo a corpo usando uma arma empunhada pelos braços.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -654,7 +654,7 @@ VALUES (
 
 Registre sua localização ao lançar esta magia. Até o final do seu próximo turno, você pode realizar uma Reação em resposta a uma jogada de ataque, a uma criatura lançando uma magia ou a uma criatura se movendo a até 5 pés de você para se teletransportar de volta para aquele local ou para o espaço desocupado mais próximo, se esse espaço estiver ocupado. Este teletransporte precede o ataque ou magia desencadeador. A magia então termina.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -700,7 +700,7 @@ VALUES (
   false,
   'Você espalha magicamente um boato de 10 palavras ou menos em uma Emanação de 100 pés originada de você. Qualquer criatura dentro da Emanação que possa ouvir e compreender três ou mais outras criaturas acredita ter ouvido o boato sendo repetido por alguém próximo. Criaturas diferentes ouvem rumores de pessoas diferentes, portanto é impossível discernir uma origem concreta. Geralmente, as criaturas não se tornarão hostis ao ouvirem até mesmo os rumores mais cruéis, mas ouvir um boato pode afetar sua atitude positiva ou negativamente.',
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:player-pack')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:player-pack')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,

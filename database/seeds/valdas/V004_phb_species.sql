@@ -1,5 +1,5 @@
--- Seed Valda species
--- Conteúdo canônico Valda: Spire of Secrets
+-- Seed Valdas species
+-- Conteúdo canônico Valdas: Spire of Secrets
 
 INSERT INTO rpg.phb_species (
   slug, name, creature_type, size, speed, description, source_meta
@@ -17,7 +17,7 @@ Como espécie, os geppettin são uma raridade. Embora raros, eles são numerosos
 Os Geppettin costumam ser mais baixos que os halflings. Suas características físicas variam muito de tipo para tipo, mas muitas vezes se assemelham a Humanoides. Apesar de serem feitos de materiais um tanto frágeis, a senciência lhes confere uma resistência estranha. Eles nunca têm fome e raramente se cansam. A maioria encontra alguma forma de trabalho ou profissão no entretenimento, mas alguns obtêm um sucesso fantástico como espiões e assassinos.
 
 Como Construtos, os geppettin não envelhecem e amadurecem assim que se tornam sencientes.',
-  '{"editionSlug":"valda-spire-2024-en","book":"Valda''s Spire of Secrets: Player Pack","language":"en","citationSlug":"valda-spire-2024-en:player-pack","source":"valda-spire-player-pack"}'::jsonb
+  '{"editionSlug":"valdas-spire-2024-en","book":"Valdas Spire of Secrets: Player Pack","language":"en","citationSlug":"valdas-spire-2024-en:player-pack","source":"valdas-spire-player-pack"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -43,7 +43,7 @@ As pessoas comuns há muito tempo têm conceitos errados sobre as mandrágoras �
 Hoje, as mandrágoras são raras e vivem nas florestas perto de onde as aldeias e cidades encontram a verdadeira natureza selvagem. Eles vivem centenas de anos, tornando-se mais largos e nodosos com a idade.
 
 Martin Kirby-Jackson',
-  '{"editionSlug":"valda-spire-2024-en","book":"Valda''s Spire of Secrets: Player Pack","language":"en","citationSlug":"valda-spire-2024-en:player-pack","source":"valda-spire-player-pack"}'::jsonb
+  '{"editionSlug":"valdas-spire-2024-en","book":"Valdas Spire of Secrets: Player Pack","language":"en","citationSlug":"valdas-spire-2024-en:player-pack","source":"valdas-spire-player-pack"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,

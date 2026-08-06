@@ -1,4 +1,4 @@
--- Seed Valda firearm mastery properties
+-- Seed Valdas firearm mastery properties
 
 INSERT INTO rpg.phb_weapon_mastery (slug, name, description)
 VALUES

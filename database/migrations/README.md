@@ -26,7 +26,7 @@ Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 npm run db:setup
 ```
 
-Ordem: reset → migrations → seeds (PHB + Valda).
+Ordem: reset → migrations → seeds (PHB + Valdas).
 
 **Incremental:**
 

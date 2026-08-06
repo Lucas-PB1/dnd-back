@@ -1,4 +1,4 @@
--- Seed Valda firearm weapon properties
+-- Seed Valdas firearm weapon properties
 
 INSERT INTO rpg.phb_weapon_property (slug, name, description)
 VALUES

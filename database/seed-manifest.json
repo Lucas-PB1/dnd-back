@@ -10,8 +10,8 @@
   "seeds": {
     "phb": "S001-S080",
     "subclass": "S001-S007",
-    "valda": "V001-V015",
-    "valdaGunslinger": "G001-G028",
+    "valdas": "V001-V015",
+    "valdasGunslinger": "G001-G028",
     "totalFiles": 130
   }
 }

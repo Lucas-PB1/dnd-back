@@ -8,7 +8,7 @@ export type WeaponPropsJson = {
   masteryId?: string;
   versatileDamage?: string;
   range?: { normal?: number; max?: number };
-  /** Capacidade de câmara (propriedade Recarga Valda). */
+  /** Capacidade de câmara (propriedade Recarga Valdas). */
   reload?: number;
   [key: string]: unknown;
 };

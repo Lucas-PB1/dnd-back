@@ -1,4 +1,4 @@
-﻿# Infraestrutura — decisão
+# Infraestrutura — decisão
 
 Documento de referência para rules, skills e implementação.
 
@@ -65,7 +65,7 @@ flowchart LR
 | `db:migrate` | Migrations pendentes em `DATABASE_URL` (local) |
 | `db:migrate:supabase` | Migrations pendentes só no Supabase |
 | `db:migrate:all` | Local **e** Supabase (incremental, rastreia `rpg.schema_migration`) |
-| `db:seed` / `db:seed:all` | Seeds PHB + Valda (após reset ou banco vazio) |
+| `db:seed` / `db:seed:all` | Seeds PHB + Valdas (após reset ou banco vazio) |
 | `db:reset` | `dev-reset.sql` — **só local** por padrão |
 | `db:reset -- --target=supabase` | Reset Supabase (requer confirmação `CONFIRM_DROP_RPG=yes`) |
 | `db:setup` | reset + migrate + seed local |

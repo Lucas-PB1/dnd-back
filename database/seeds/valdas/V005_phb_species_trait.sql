@@ -1,4 +1,4 @@
--- Seed Valda species traits
+-- Seed Valdas species traits
 -- Apenas traços mecânicos, sem descrições de subtipo
 
 -- Geppettin

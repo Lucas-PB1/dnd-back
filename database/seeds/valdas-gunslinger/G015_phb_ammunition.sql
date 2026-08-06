@@ -1,4 +1,4 @@
--- Seed Valda firearm ammunition
+-- Seed Valdas firearm ammunition
 
 INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, properties)
 VALUES (
@@ -8,7 +8,7 @@ VALUES (
   '{"text":"3 PO"}'::jsonb,
   '1 lb.',
   'Munição arma de fogo (balas). Destruído após uso.',
-  '{"magic":false,"ammunition":true,"amount":10,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"magic":false,"ammunition":true,"amount":10,"source":"valdas-gunslinger","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -25,7 +25,7 @@ VALUES (
   '{"text":"25 PO"}'::jsonb,
   '10 lb.',
   'Munição arma de fogo (balas de canhão). Destruído após uso.',
-  '{"magic":false,"ammunition":true,"amount":5,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"magic":false,"ammunition":true,"amount":5,"source":"valdas-gunslinger","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -42,7 +42,7 @@ VALUES (
   '{"text":"5 PO"}'::jsonb,
   '5 lb.',
   'Munição arma de fogo (flares). Destruído após uso.',
-  '{"magic":false,"ammunition":true,"amount":5,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"magic":false,"ammunition":true,"amount":5,"source":"valdas-gunslinger","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -59,7 +59,7 @@ VALUES (
   '{"text":"5 PO"}'::jsonb,
   '1 lb.',
   'Munição arma de fogo (cartuchos). Destruído após uso.',
-  '{"magic":false,"ammunition":true,"amount":10,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"magic":false,"ammunition":true,"amount":10,"source":"valdas-gunslinger","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -76,7 +76,7 @@ VALUES (
   '{"text":"1 PO"}'::jsonb,
   '2 lb.',
   'Munição arma de fogo (tiro). Destruído após uso.',
-  '{"magic":false,"ammunition":true,"amount":10,"source":"valda-gunslinger","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"magic":false,"ammunition":true,"amount":10,"source":"valdas-gunslinger","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,

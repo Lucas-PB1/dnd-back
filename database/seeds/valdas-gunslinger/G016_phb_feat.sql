@@ -9,7 +9,7 @@ VALUES (
   (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'),
   FALSE,
   'Nível 4+, Destreza 13+',
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -25,7 +25,7 @@ VALUES (
   (SELECT id FROM rpg.phb_feat_category WHERE slug = 'general'),
   FALSE,
   'Nível 4+, recurso Conjuração ou Magia de Pacto',
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger')
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:gunslinger')
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,

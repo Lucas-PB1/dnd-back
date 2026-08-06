@@ -48,7 +48,7 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 | Monge | `monk` | `[x]` feito |
 | Paladino | `paladin` | `[x]` feito |
 
-**Progresso:** 13 de 13 feitas (100% CONCLUÍDO)! 🎉 All PHB 2024 & Valda classes fully implemented!
+**Progresso:** 13 de 13 feitas (100% CONCLUÍDO)! 🎉 All PHB 2024 & Valdas classes fully implemented!
 
 ---
 
@@ -63,7 +63,7 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 
 - Fúria, Imprudente, recursos, subclasses PHB + painel UI
 - Subclasses PHB: Árvore do Mundo, Berserker, Coração Selvagem, Fanático
-- Valda: Mago Musculoso — conferir se entrou no mesmo pacote ou ficou só catálogo
+- Valdas: Mago Musculoso — conferir se entrou no mesmo pacote ou ficou só catálogo
 
 ### Guerreiro (`fighter`) — `[x]`
 
@@ -81,7 +81,7 @@ Fora de escopo de propósito: controlar 1×/turno, rastrear alvo, posição,
 condições do inimigo ou Regeneração como tick automático.
 
 Subclasses PHB: Campeão, Cavaleiro Místico, Combatente Psíquico, Mestre da Batalha  
-Valda: Explorador de Masmorras (`dungeoneer`)
+Valdas: Explorador de Masmorras (`dungeoneer`)
 
 ### Ladino (`rogue`) — `[x]`
 
@@ -105,7 +105,7 @@ descreve o efeito que jogador e Mestre aplicam na mesa.
 - [x] Combatente dos Elementos: Explosão Elemental à distância com o dado de Artes Marciais
 - [x] Misericórdia: Mão de Cura e Mão de Dolo (SAB + dado de Artes Marciais)
 - [x] Combatente das Sombras: Passo da Sombra
-- [x] Guerreiro das Ruas (Valda): notas de mesa
+- [x] Guerreiro das Ruas (Valdas): notas de mesa
 - [x] UI: `combat-monk-panel`, Ataque Desarmado nas Ações e atualização de Foco
 
 O catálogo já trazia `focusPoints` (máx = nível, recupera em curto/longo) e a Defesa
@@ -122,7 +122,7 @@ duração das condições e restauração automática de Foco na iniciativa.
 - [x] Destruição Divina (Divine Smite): gasta um espaço de magia na rolagem de dano para +2d8 Radiante (+1d8 por círculo acima do 1º; +1d8 vs Corruptor/Morto-vivo), debitando o slot no estado
 - [x] Canalizar Divindade: Sentido Divino, Repudiar Inimigos (CD 8 + CAR + PB) e a opção do juramento gastando usos de Canalizar
 - [x] Devoção, Glória, Anciões e Vingança: notas de mesa e nome/efeito da Canalizar do juramento
-- [x] Valda: Juramento da Folia (`oath-of-revelry`) — notas de mesa
+- [x] Valdas: Juramento da Folia (`oath-of-revelry`) — notas de mesa
 - [x] UI: `combat-paladin-panel`, seletor de Golpe Divino no card de ataque e reservas de cura/Canalizar
 
 O catálogo já trazia a progressão half-caster (CAR) e `channelDivinity`; a reserva de
@@ -227,7 +227,7 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 
 ---
 
-## Todas as Classes PHB 2024 + Valda Concluídas! 🎉
+## Todas as Classes PHB 2024 + Valdas Concluídas! 🎉
 
 ---
 

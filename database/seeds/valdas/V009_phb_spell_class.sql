@@ -1,5 +1,5 @@
--- Seed Valda spell ↔ class
--- Conteúdo canônico Valda: Spire of Secrets
+-- Seed Valdas spell ↔ class
+-- Conteúdo canônico Valdas: Spire of Secrets
 
 INSERT INTO rpg.phb_spell_class (spell_id, class_id)
 VALUES

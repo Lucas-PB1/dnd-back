@@ -1,4 +1,4 @@
--- Permite elegibilidade de maestria só para armas à distância (Pistoleiro Valda).
+-- Permite elegibilidade de maestria só para armas à distância (Pistoleiro Valdas).
 DO $$
 DECLARE
   constraint_name text;

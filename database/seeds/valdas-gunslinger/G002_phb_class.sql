@@ -1,5 +1,5 @@
--- Seed Valda Pistoleiro class
--- Conteúdo canônico Valda: Gunslinger
+-- Seed Valdas Pistoleiro class
+-- Conteúdo canônico Valdas: Gunslinger
 
 INSERT INTO rpg.phb_class (
   slug, name, tagline, summary, description,
@@ -53,7 +53,7 @@ Escolha A ou B: (A) Armadura de Couro, 2 Adagas, Revólver, 50 Balas, Kit de Ave
   'Credo',
   2,
   NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valda-spire-2024-en:gunslinger'),
+  (SELECT id FROM rpg.phb_source_citation WHERE slug = 'valdas-spire-2024-en:gunslinger'),
   NULL
 )
 ON CONFLICT (slug) DO UPDATE SET

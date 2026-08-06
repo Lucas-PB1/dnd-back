@@ -1,5 +1,5 @@
 -- Seed Pistoleiro class features + maneuvers
--- Conteúdo canônico Valda: Gunslinger
+-- Conteúdo canônico Valdas: Gunslinger
 
 INSERT INTO rpg.phb_class_feature (class_id, level, name, description)
 VALUES (

@@ -1,4 +1,4 @@
--- Pré-requisitos estruturados dos talentos Valda.
+-- Pré-requisitos estruturados dos talentos Valdas.
 
 INSERT INTO rpg.phb_feat_requirement (feat_id, minimum_level)
 SELECT id, 4

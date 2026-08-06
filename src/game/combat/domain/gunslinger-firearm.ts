@@ -1,5 +1,5 @@
 /**
- * Regras de combate do Pistoleiro (Valda) para armas de fogo e Tiro Crítico.
+ * Regras de combate do Pistoleiro (Valdas) para armas de fogo e Tiro Crítico.
  * Fonte: features de classe; o motor só aplica números.
  */
 
@@ -20,7 +20,7 @@ export function isGunslingerClass(classSlug: string | null | undefined): boolean
 /**
  * Dano base de arma de fogo: não soma o modificador de atributo
  * (exceto se negativo — o RAW omite só o bônus positivo implícito;
- * Valda: "não adiciona seu modificador", então zeroamos positivos e
+ * Valdas: "não adiciona seu modificador", então zeroamos positivos e
  * negativos para bater o texto; negativos ficam 0 também).
  *
  * Exagero (nv.11+) reintroduz o modificador via `applyOverkillDamageBonus`.

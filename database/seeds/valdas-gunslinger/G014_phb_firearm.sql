@@ -1,4 +1,4 @@
--- Seed Valda firearms (items + weapons + property links)
+-- Seed Valdas firearms (items + weapons + property links)
 
 INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, properties)
 VALUES (
@@ -8,7 +8,7 @@ VALUES (
   '{"text":"750 PO"}'::jsonb,
   '15 lb.',
   'Esta distinta arma de fogo de curto alcance apresenta um cano dramaticamente alargado projetado para lançar tiros em um spray amplo.',
-  '{"propertyIds":["ammunition","heavy","loading","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shot","era":"renaissance","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"propertyIds":["ammunition","heavy","loading","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shot","era":"renaissance","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -67,7 +67,7 @@ VALUES (
   '{"text":"175 PO"}'::jsonb,
   '8 lb.',
   'Um design clássico com dois canos carregados, trocando capacidade e alcance de munição por confiabilidade e poder de fogo.',
-  '{"propertyIds":["ammunition","firearm","recoil","reload","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shell","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":2}'::jsonb
+  '{"propertyIds":["ammunition","firearm","recoil","reload","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shell","era":"industrial","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":2}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -133,7 +133,7 @@ VALUES (
   '{"text":"150 PO"}'::jsonb,
   '8 lb.',
   'Projetados para caça de grande porte, os rifles de caça são lentos, mas precisos, exigindo ação de ferrolho entre os tiros.',
-  '{"propertyIds":["ammunition","firearm","reload","two-handed"],"masteryId":"sighted","range":{"normal":80,"max":320},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":4}'::jsonb
+  '{"propertyIds":["ammunition","firearm","reload","two-handed"],"masteryId":"sighted","range":{"normal":80,"max":320},"ammoType":"bullet","era":"industrial","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":4}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -192,7 +192,7 @@ VALUES (
   '{"text":"75 PO"}'::jsonb,
   '1 lb.',
   'A menor arma de fogo utilizável; pode ser enfiado em uma meia ou escondido em uma manga.',
-  '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"vex","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":2}'::jsonb
+  '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"vex","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":2}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -251,7 +251,7 @@ VALUES (
   '{"text":"125 PO"}'::jsonb,
   '3 lb.',
   'Uma pistola icônica que armazena seis balas em um cilindro giratório; favorecido por pistoleiros.',
-  '{"propertyIds":["ammunition","firearm","recoil","reload"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":6}'::jsonb
+  '{"propertyIds":["ammunition","firearm","recoil","reload"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":6}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -310,7 +310,7 @@ VALUES (
   '{"text":"1500 PO"}'::jsonb,
   '225 lb.',
   'Canhões de carregamento pela boca de cano liso, comuns em navios piratas e fortificações.',
-  '{"propertyIds":["ammunition","firearm","heavy","loading","two-handed"],"masteryId":"explode","range":{"normal":100,"max":400},"ammoType":"cannonball","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"propertyIds":["ammunition","firearm","heavy","loading","two-handed"],"masteryId":"explode","range":{"normal":100,"max":400},"ammoType":"cannonball","era":"industrial","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -376,7 +376,7 @@ VALUES (
   '{"text":"750 PO"}'::jsonb,
   '125 lb.',
   'Gira e dispara seis ou mais barris em sucessão; incômodo e assustador.',
-  '{"propertyIds":["ammunition","firearm","heavy","reload","two-handed"],"masteryId":"automatic","range":{"normal":60,"max":240},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":40}'::jsonb
+  '{"propertyIds":["ammunition","firearm","heavy","reload","two-handed"],"masteryId":"automatic","range":{"normal":60,"max":240},"ammoType":"bullet","era":"industrial","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":40}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -442,7 +442,7 @@ VALUES (
   '{"text":"600 PO"}'::jsonb,
   '6 lb.',
   'Compartimentado para balas de grande calibre; concentra o chute máximo em um único tiro.',
-  '{"propertyIds":["ammunition","firearm","heavy","recoil","reload"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":6}'::jsonb
+  '{"propertyIds":["ammunition","firearm","heavy","recoil","reload"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"bullet","era":"industrial","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":6}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -508,7 +508,7 @@ VALUES (
   '{"text":"100 PO"}'::jsonb,
   '1 lb.',
   'Uma ferramenta de sobrevivência que dispara um único sinalizador incandescente para sinais de socorro ou defesa de última hora.',
-  '{"propertyIds":["ammunition","firearm","loading"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"flare","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"propertyIds":["ammunition","firearm","loading"],"masteryId":"slow","range":{"normal":30,"max":120},"ammoType":"flare","era":"modern","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -560,7 +560,7 @@ VALUES (
   '{"text":"125 PO"}'::jsonb,
   '3 lb.',
   'Portátil e confiável com um carregador generoso; ir para autodefesa.',
-  '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"vex","range":{"normal":30,"max":120},"ammoType":"bullet","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":10}'::jsonb
+  '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"vex","range":{"normal":30,"max":120},"ammoType":"bullet","era":"modern","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":10}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -619,7 +619,7 @@ VALUES (
   '{"text":"300 PO"}'::jsonb,
   '7 lb.',
   'Alta cadência de tiro com balística de rifle; flexível e formidável.',
-  '{"propertyIds":["ammunition","firearm","reload","two-handed"],"masteryId":"automatic","range":{"normal":80,"max":320},"ammoType":"bullet","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":20}'::jsonb
+  '{"propertyIds":["ammunition","firearm","reload","two-handed"],"masteryId":"automatic","range":{"normal":80,"max":320},"ammoType":"bullet","era":"modern","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":20}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -678,7 +678,7 @@ VALUES (
   '{"text":"550 PO"}'::jsonb,
   '7 lb.',
   'Aperto deslizante distinto no cano que é ''bombeado'' para armazenar uma nova rodada.',
-  '{"propertyIds":["ammunition","firearm","heavy","recoil","reload","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shell","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":8}'::jsonb
+  '{"propertyIds":["ammunition","firearm","heavy","recoil","reload","two-handed"],"masteryId":"scatter","range":{"normal":20,"max":60},"ammoType":"shell","era":"modern","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":8}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -751,7 +751,7 @@ VALUES (
   '{"text":"450 PO"}'::jsonb,
   '8 lb.',
   'Instrumento de precisão de longo alcance para tiros distantes e quase invisíveis.',
-  '{"propertyIds":["ammunition","firearm","heavy","loading","two-handed"],"masteryId":"sighted","range":{"normal":100,"max":400},"ammoType":"bullet","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger"}'::jsonb
+  '{"propertyIds":["ammunition","firearm","heavy","loading","two-handed"],"masteryId":"sighted","range":{"normal":100,"max":400},"ammoType":"bullet","era":"modern","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -817,7 +817,7 @@ VALUES (
   '{"text":"250 PO"}'::jsonb,
   '6 lb.',
   'Ígneos são cartuchos mais leves e fáceis de controlar como uma alternativa às armas automáticas maiores.',
-  '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"automatic","range":{"normal":20,"max":60},"ammoType":"bullet","era":"modern","source":"valda-gunslinger","editionSlug":"valda-spire-2024-en","citationSlug":"valda-spire-2024-en:gunslinger","reload":16}'::jsonb
+  '{"propertyIds":["ammunition","firearm","light","reload"],"masteryId":"automatic","range":{"normal":20,"max":60},"ammoType":"bullet","era":"modern","source":"valdas-gunslinger","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:gunslinger","reload":16}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,

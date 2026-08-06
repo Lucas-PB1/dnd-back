@@ -1,5 +1,5 @@
--- Seed Valda subclass features
--- Conteúdo canônico Valda: Spire of Secrets
+-- Seed Valdas subclass features
+-- Conteúdo canônico Valdas: Spire of Secrets
 
 INSERT INTO rpg.phb_subclass_feature (
   subclass_id, level, name, description

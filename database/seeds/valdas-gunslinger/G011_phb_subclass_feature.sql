@@ -1,5 +1,5 @@
 -- Seed Pistoleiro subclass features
--- Conteúdo canônico Valda: Gunslinger
+-- Conteúdo canônico Valdas: Gunslinger
 
 INSERT INTO rpg.phb_subclass_feature (
   subclass_id, level, name, description

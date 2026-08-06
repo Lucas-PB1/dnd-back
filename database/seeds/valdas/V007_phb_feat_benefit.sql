@@ -1,5 +1,5 @@
--- Seed Valda feat benefits
--- Conteúdo canônico Valda: Spire of Secrets
+-- Seed Valdas feat benefits
+-- Conteúdo canônico Valdas: Spire of Secrets
 
 INSERT INTO rpg.phb_feat_benefit (
   feat_id, sort_order, name, description

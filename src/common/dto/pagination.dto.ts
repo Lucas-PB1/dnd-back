@@ -42,8 +42,8 @@ export class PaginationQueryDto {
 
   @ApiPropertyOptional({
     description:
-      'Comma-separated edition slugs (e.g. phb-2024-pt,valda-spire-2024-en). Omit for all.',
-    example: 'phb-2024-pt,valda-spire-2024-en',
+      'Comma-separated edition slugs (e.g. phb-2024-pt,valdas-spire-2024-en). Omit for all.',
+    example: 'phb-2024-pt,valdas-spire-2024-en',
   })
   @IsOptional()
   @Transform(({ value }) => parseEditionSlugsParam(value))

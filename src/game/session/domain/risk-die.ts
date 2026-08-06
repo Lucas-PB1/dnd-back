@@ -1,5 +1,5 @@
 /**
- * Tamanho do Risk die do Gunslinger (Valda) por nível.
+ * Tamanho do Risk die do Gunslinger (Valdas) por nível.
  * Contagens (4/5/6) vêm de `phb_class_resource`; o dado não cabe no modelo de usos.
  */
 

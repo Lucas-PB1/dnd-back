@@ -1,4 +1,4 @@
--- Opções de +1 de atributo dos talentos Valda.
+-- Opções de +1 de atributo dos talentos Valdas.
 -- Sem isso o texto do benefício existe, mas applyFeatAbilityIncreases não aplica o ponto.
 
 INSERT INTO rpg.phb_feat_option_def (feat_id, option_key, label, value_type, sort_order)

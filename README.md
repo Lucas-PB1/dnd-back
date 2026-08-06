@@ -19,7 +19,7 @@ dnd-work/dnd-api/             # este repo
 ├── database/
 │   ├── dev-reset.sql        # DROP SCHEMA (só dev)
 │   ├── migrations/          # 90+ arquivos granulares
-│   └── seeds/               # 90+ arquivos (PHB + Valda)
+│   └── seeds/               # 90+ arquivos (PHB + Valdas)
 ├── docs/
 │   ├── architecture/        # infra, data-model, code-standards
 │   ├── plans/backlog.md     # o que ainda falta (único checklist ativo)

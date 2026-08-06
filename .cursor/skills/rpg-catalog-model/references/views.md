@@ -24,7 +24,7 @@ Preferir views para endpoints read-only da API.
 | `v_phb_background_flavor` | Tagline/summary de antecedente |
 | `v_phb_background_tool_option` | Whitelist de ferramentas por antecedente |
 | `v_phb_background_tool_option_whitelist` | Alias agregado para validação |
-| `v_class_spell_slots_progression` | Progressão de slots (fixes Valda/third) |
+| `v_class_spell_slots_progression` | Progressão de slots (fixes Valdas/third) |
 | `v_phb_spell_save_attack` | CD/ataque de magia enriquecido |
 | `mv_spell_by_class` | Materialized — refresh manual/cron |
 
