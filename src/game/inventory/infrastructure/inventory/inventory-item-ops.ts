@@ -95,6 +95,13 @@ export async function inventoryItemToDto(
     attuned: row.attuned,
     requiresAttunement,
   };
+  let attachedCharmName: string | null = null;
+  if (row.attachedCharmSlug) {
+    const charm = await catalogItems.findOne({
+      where: { slug: row.attachedCharmSlug },
+    });
+    attachedCharmName = charm?.name ?? row.attachedCharmSlug;
+  }
   return {
     itemSlug: row.itemSlug,
     itemName: catalog?.name ?? row.itemSlug,
@@ -107,5 +114,7 @@ export async function inventoryItemToDto(
     effectsActive: itemEffectsActive(activation),
     effectsStatus: itemEffectsStatus(activation),
     weightKg: parseItemWeightKg(catalog?.weight),
+    attachedCharmSlug: row.attachedCharmSlug ?? null,
+    attachedCharmName,
   };
 }

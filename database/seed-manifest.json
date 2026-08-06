@@ -4,14 +4,15 @@
   "migrations": {
     "tables": "T001-T080",
     "views": "V001-V032",
-    "player": "P001-P014",
-    "totalFiles": 126
+    "player": "P001-P018",
+    "totalFiles": 130
   },
   "seeds": {
     "phb": "S001-S080",
     "subclass": "S001-S007",
     "valdas": "V001-V015",
     "valdasGunslinger": "G001-G028",
-    "totalFiles": 130
+    "valdasPlayerPack2": "P001-P011",
+    "totalFiles": 141
   }
 }

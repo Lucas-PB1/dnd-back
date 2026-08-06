@@ -26,11 +26,14 @@ import { CurrentUser } from '../../identity/decorators/current-user.decorator';
 import { AuthUser } from '../../identity/auth-user';
 import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
 import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
+import { AttachWeaponCharmHandler } from './application/attach-weapon-charm.handler';
 import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
 import { RemoveInventoryItemHandler } from './application/remove-inventory-item.handler';
 import {
   AddInventoryItemDto,
+  AttachWeaponCharmDto,
   CharacterInventoryResponseDto,
+  DetachWeaponCharmDto,
   InventoryItemResponseDto,
   PatchInventoryItemDto,
 } from './dto/inventory.dto';
@@ -46,6 +49,7 @@ export class CharacterInventoryController {
     private readonly addInventoryItem: AddInventoryItemHandler,
     private readonly patchInventoryItem: PatchInventoryItemHandler,
     private readonly removeInventoryItem: RemoveInventoryItemHandler,
+    private readonly weaponCharm: AttachWeaponCharmHandler,
   ) {}
 
   @Get(':id/inventory')
@@ -69,6 +73,30 @@ export class CharacterInventoryController {
     @Body() dto: AddInventoryItemDto,
   ): Promise<InventoryItemResponseDto> {
     return this.addInventoryItem.execute(user.id, id, dto);
+  }
+
+  @Post(':id/inventory/weapon-charm/attach')
+  @ApiOperation({ summary: 'Attach a weapon charm from backpack to a weapon' })
+  @ApiOkResponse({ type: InventoryItemResponseDto })
+  @ApiNotFoundResponse()
+  attachWeaponCharm(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: AttachWeaponCharmDto,
+  ): Promise<InventoryItemResponseDto> {
+    return this.weaponCharm.attach(user.id, id, dto);
+  }
+
+  @Post(':id/inventory/weapon-charm/detach')
+  @ApiOperation({ summary: 'Detach a weapon charm back to backpack' })
+  @ApiOkResponse({ type: InventoryItemResponseDto })
+  @ApiNotFoundResponse()
+  detachWeaponCharm(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: DetachWeaponCharmDto,
+  ): Promise<InventoryItemResponseDto> {
+    return this.weaponCharm.detach(user.id, id, dto);
   }
 
   @Patch(':id/inventory/:itemSlug')

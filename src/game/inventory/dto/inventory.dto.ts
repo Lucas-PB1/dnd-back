@@ -57,6 +57,18 @@ export class InventoryItemResponseDto {
     description: 'Peso unitário em kg (parseado de phb_item.weight)',
   })
   weightKg!: number;
+
+  @ApiPropertyOptional({
+    example: 'weapon-charm-blade-1',
+    description: 'Encanto de arma preso a este item (slug do catálogo)',
+  })
+  attachedCharmSlug!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Encanto de Arma: Lâmina +1',
+    description: 'Nome do encanto preso (quando attachedCharmSlug está definido)',
+  })
+  attachedCharmName!: string | null;
 }
 
 export class InventoryEncumbranceDto {
@@ -129,4 +141,23 @@ export class PatchInventoryItemDto {
   @IsOptional()
   @IsBoolean()
   attuned?: boolean;
+}
+
+export class AttachWeaponCharmDto {
+  @ApiProperty({ example: 'longsword' })
+  @IsString()
+  @IsNotEmpty()
+  weaponSlug!: string;
+
+  @ApiProperty({ example: 'weapon-charm-blade-1' })
+  @IsString()
+  @IsNotEmpty()
+  charmSlug!: string;
+}
+
+export class DetachWeaponCharmDto {
+  @ApiProperty({ example: 'longsword' })
+  @IsString()
+  @IsNotEmpty()
+  weaponSlug!: string;
 }

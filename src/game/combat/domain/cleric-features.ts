@@ -139,4 +139,23 @@ function addClericSubclassNotes(
       );
     }
   }
+
+  if (subclassSlug === 'dragon-domain') {
+    notes.push(
+      'Domínio do Dragão: após Descanso Longo escolha Ácido/Frio/Fogo/Elétrico/Veneno; troque Necrótico/Radiante de Clérigo por esse tipo e cause dano extra = nível (usos = mod. SAB).',
+    );
+    notes.push(
+      'Majestade Dracônica: Canalizar Divindade — Emanação 9 m Enfeitiçado ou Amedrontado (salvaguarda SAB).',
+    );
+    if (level >= 6) {
+      notes.push(
+        'Bênção da Serpe: Canalizar para Sopro do Dragão ou Proteção contra Energia em você sem Concentração.',
+      );
+    }
+    if (level >= 17) {
+      notes.push(
+        'Aspecto Lendário: 3 ações lendárias/LR (Rasgar, Cauda, Asas) — veja recurso.',
+      );
+    }
+  }
 }

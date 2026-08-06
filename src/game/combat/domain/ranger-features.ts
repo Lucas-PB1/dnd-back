@@ -119,6 +119,30 @@ function addRangerSubclassNotes(
   if (subclassSlug === 'beast-master') addBeastMasterNotes(notes, level);
   if (subclassSlug === 'fey-wanderer') addFeyWandererNotes(notes, level);
   if (subclassSlug === 'gloom-stalker') addGloomStalkerNotes(notes, level);
+  if (subclassSlug === 'beastborne') addBeastborneNotes(notes, level);
+}
+
+function addBeastborneNotes(notes: string[], level: number): void {
+  if (level < 3) return;
+  notes.push(
+    'Portador Bestial: garras (1d6 Cortante, DES/FOR), Escalada e Visão no Escuro +9 m.',
+  );
+  notes.push(
+    'Aspecto Bestial: na mesa, suba o nível (0–5) ao causar dano (Ação Bônus); zera se 1 min sem dano. Níveis: Carnificina +2, Velocidade +3 m, Frenesi de Sangue, Pele +2 CA, Retaliação.',
+  );
+  if (level >= 7) {
+    notes.push('Uivo Feral: na Iniciativa, role 1d4 e defina o Aspecto Bestial nesse valor.');
+  }
+  if (level >= 11) {
+    notes.push(
+      'Fúria Sedenta: Marca do Predador na Ação Bônus que sobe o Aspecto; Carnificina +3.',
+    );
+  }
+  if (level >= 15) {
+    notes.push(
+      'Resiliência Monstruosa: 1×/turno reduza dano em mod. CON + nível de Aspecto (mín. 0).',
+    );
+  }
 }
 
 function addHunterNotes(notes: string[], level: number): void {

@@ -89,6 +89,7 @@ export class CharacterInventoryRepository {
       location: 'backpack',
       equipmentSlot: null,
       attuned: false,
+      attachedCharmSlug: null,
     });
     await this.items.save(row);
     return inventoryItemToDto(this.catalogItems, row);
@@ -122,6 +123,7 @@ export class CharacterInventoryRepository {
           location: 'backpack',
           equipmentSlot: null,
           attuned: false,
+          attachedCharmSlug: null,
         }),
       );
     }

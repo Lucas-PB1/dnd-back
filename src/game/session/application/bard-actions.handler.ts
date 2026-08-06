@@ -3,6 +3,10 @@ import {
   bardicInspirationDie,
   isBardClass,
 } from '../../combat/domain/bard-features';
+import {
+  assertValidPersonaMasks,
+  maxEquippedPersonaMasks,
+} from '../../combat/domain/college-of-masks';
 import { rollDamageParts } from '../../dice/domain/dice';
 import { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
 import { abilityModifier } from '../../sheet/domain/stats/ability-modifier';
@@ -57,7 +61,39 @@ export class BardActionsHandler {
         return this.resolveCombatInspiration(character);
       case 'superior-inspiration':
         return this.resolveSuperiorInspiration(character);
+      case 'set-persona-masks':
+        return this.resolveSetPersonaMasks(character, dto.masks ?? []);
     }
+  }
+
+  private async resolveSetPersonaMasks(
+    character: PlayerCharacter,
+    masks: string[],
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(
+      character,
+      'college-of-masks',
+      'Colégio das Máscaras',
+    );
+    assertCharacterLevel(character, 3, 'Bardo', 'Máscaras de Persona');
+    try {
+      assertValidPersonaMasks(masks, character.level);
+    } catch (error) {
+      throw new BadRequestException(
+        error instanceof Error ? error.message : 'Invalid persona masks',
+      );
+    }
+
+    const max = maxEquippedPersonaMasks(character.level);
+    const state = await this.state.setPersonaMasks(character, masks);
+    const label = masks.length === 0 ? 'nenhuma máscara' : masks.join(', ');
+
+    return {
+      state,
+      actionName: 'Vestir Máscaras de Persona',
+      resourceSpent: false,
+      note: `Máscaras de Persona (${masks.length}/${max}): ${label}.`,
+    };
   }
 
   private async resolveGrantInspiration(

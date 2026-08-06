@@ -90,4 +90,25 @@ function addWizardSubclassNotes(
       'Escola de Ilusão: Ilusão Aprimorada (conjure truques e magias de ilusão como Ação Bônus sem componentes V e com maior alcance).',
     );
   }
+
+  if (subclassSlug === 'magic-missile-mage') {
+    notes.push(
+      'Mago dos Mísseis: dardos extras (1→4 nos nv. 3/6/10/14), penetram Escudo e usos gratuitos de Mísseis Mágicos (mod. INT; 1 no Curto).',
+    );
+    if (level >= 6) {
+      notes.push(
+        'Mísseis Versáteis: troque dardos por efeitos (Tropeço 1, Cegar 3, Atordoar 5) na mesa.',
+      );
+    }
+    if (level >= 10) {
+      notes.push(
+        'Escudo de Mísseis: gaste o uso para orbitar dardos (+CA até +5, 1 min) — veja recurso.',
+      );
+    }
+    if (level >= 14) {
+      notes.push(
+        'Giga-Míssil: +mod. INT de Força em cada dardo (1×/LR ou espaço 6º+).',
+      );
+    }
+  }
 }

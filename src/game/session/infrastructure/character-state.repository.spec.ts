@@ -55,6 +55,8 @@ describe('CharacterStateRepository', () => {
         firearmChambers: {},
         rageActive: false,
         recklessActive: false,
+        personaMasks: [],
+        bestialAspectLevel: 0,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 
@@ -119,6 +121,8 @@ describe('CharacterStateRepository', () => {
         firearmChambers: {},
         rageActive: false,
         recklessActive: false,
+        personaMasks: [],
+        bestialAspectLevel: 0,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 

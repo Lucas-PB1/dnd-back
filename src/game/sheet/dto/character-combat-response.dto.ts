@@ -104,4 +104,16 @@ export class WeaponAttackResponseDto {
     description: 'Dado de Artes Marciais do Monge aplicado neste ataque',
   })
   martialArtsDie!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'weapon-charm-blade-1',
+    description: 'Encanto de arma preso a esta arma',
+  })
+  attachedCharmSlug!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Encanto de Arma: Lâmina +1',
+    description: 'Nome do encanto para exibição na ficha',
+  })
+  attachedCharmName!: string | null;
 }

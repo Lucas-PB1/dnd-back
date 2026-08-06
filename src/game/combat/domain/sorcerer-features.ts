@@ -103,4 +103,25 @@ function addSorcererSubclassNotes(
       'Magia Selvagem: Maré de Caos (Vantagem em 1 rolagem; recarrega quando o Mestre dispara um Surto de Magia Selvagem).',
     );
   }
+
+  if (subclassSlug === 'heroic-sorcery') {
+    notes.push(
+      'Feitiçaria Heróica: Alma Heróica (1 Ponto de Feitiçaria no início do turno → PV temp. 1d6 + nível); treino marcial e Lâmina Inata (CAR no ataque com Feitiçaria Inata).',
+    );
+    if (level >= 6) {
+      notes.push(
+        'Ataque Extra: dois ataques; pode trocar um por um Truque de Feiticeiro.',
+      );
+    }
+    if (level >= 14) {
+      notes.push(
+        'Manobras Místicas (2 SP): Cegar, Ruinoso (−3 CA) ou Ferimento (sangramento) +2d8 no dano — gaste na economia.',
+      );
+    }
+    if (level >= 18) {
+      notes.push(
+        'Aceleração Heróica: Acelerar em você sem Concentração (sem letargia ao terminar).',
+      );
+    }
+  }
 }

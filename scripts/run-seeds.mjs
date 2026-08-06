@@ -3,7 +3,7 @@
  * Aplica seeds SQL (catálogo PHB + Valdas). Destrutivo se tabelas já tiverem dados — preferir após dev-reset.
  *
  * Ordem de pastas (não lexicográfica pura entre packs):
- *   000_truncate → phb → subclass → valdas → valdas-gunslinger
+ *   000_truncate → phb → subclass → valdas → valdas-gunslinger → valdas-player-pack-2
  * Gunslinger depende de magias do Player Pack (ex.: finger-guns).
  *
  * Uso:
@@ -22,7 +22,7 @@ loadEnv();
 const seedsDir = path.join(rootDir, 'database/seeds');
 
 /** Packs na ordem de dependência (após 000_truncate.sql na raiz). */
-const SEED_PACKS = ['phb', 'subclass', 'valdas', 'valdas-gunslinger'];
+const SEED_PACKS = ['phb', 'subclass', 'valdas', 'valdas-gunslinger', 'valdas-player-pack-2'];
 
 /** @param {string} arg */
 function parseTarget(arg) {

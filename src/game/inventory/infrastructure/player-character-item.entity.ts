@@ -36,4 +36,8 @@ export class PlayerCharacterItem {
 
   @Column({ type: 'boolean', default: false })
   attuned!: boolean;
+
+  /** Slug do encanto de arma preso a este item (`weapon-charm-*`). */
+  @Column({ name: 'attached_charm_slug', type: 'text', nullable: true })
+  attachedCharmSlug!: string | null;
 }

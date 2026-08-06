@@ -1,9 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import {
+  bestialAspectBenefits,
+  clampBestialAspectLevel,
+} from '../../combat/domain/beastborne';
+import {
   HUNTERS_MARK_SPELL_SLUG,
   isRangerClass,
 } from '../../combat/domain/ranger-features';
-import { rollDamageParts } from '../../dice/domain/dice';
+import { rollDamageParts, rollDie } from '../../dice/domain/dice';
 import { abilityModifier } from '../../sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import {
@@ -57,7 +61,55 @@ export class RangerActionsHandler {
         return this.resolveMistyWanderer(character);
       case 'primal-companion':
         return this.resolvePrimalCompanion(character);
+      case 'set-bestial-aspect':
+        return this.resolveSetBestialAspect(character, dto.level);
+      case 'feral-howl':
+        return this.resolveFeralHowl(character);
     }
+  }
+
+  private async resolveSetBestialAspect(
+    character: PlayerCharacter,
+    level: number | undefined,
+  ): Promise<FighterTableActionResponseDto> {
+    assertCharacterSubclass(character, 'beastborne', 'Beastborne');
+    assertCharacterLevel(character, 3, 'Ranger', 'Aspecto Bestial');
+    if (level === undefined) {
+      throw new BadRequestException('Bestial aspect level is required');
+    }
+    const clamped = clampBestialAspectLevel(level);
+    const state = await this.state.setBestialAspectLevel(character, clamped);
+    const benefits = bestialAspectBenefits(clamped);
+    const benefitNote =
+      benefits.length > 0
+        ? ` Benefícios: ${benefits.map((b) => b.split(':')[0]).join(', ')}.`
+        : '';
+
+    return {
+      state,
+      actionName: 'Aspecto Bestial',
+      resourceSpent: false,
+      note: `Aspecto Bestial definido em ${clamped}.${benefitNote}`,
+    };
+  }
+
+  private async resolveFeralHowl(
+    character: PlayerCharacter,
+  ): Promise<FighterTableActionResponseDto> {
+    assertCharacterSubclass(character, 'beastborne', 'Beastborne');
+    assertCharacterLevel(character, 7, 'Ranger', 'Uivo Feral');
+    const roll = rollDie(4);
+    const state = await this.state.setBestialAspectLevel(character, roll);
+
+    return {
+      state,
+      actionName: 'Uivo Feral',
+      expression: '1d4',
+      roll,
+      total: roll,
+      resourceSpent: false,
+      note: `Uivo Feral: 1d4 = ${roll}. Aspecto Bestial definido em ${roll}.`,
+    };
   }
 
   private async resolveHuntersMarkFree(

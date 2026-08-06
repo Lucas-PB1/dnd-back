@@ -170,6 +170,18 @@ export class CharacterStateResponseDto {
     description: 'Ataque Imprudente ativo',
   })
   recklessActive!: boolean;
+
+  @ApiProperty({
+    example: ['persona-mask-angel'],
+    description: 'Máscaras de Persona equipadas (Colégio das Máscaras)',
+  })
+  personaMasks!: string[];
+
+  @ApiProperty({
+    example: 0,
+    description: 'Nível de Aspecto Bestial (Beastborne), 0–5',
+  })
+  bestialAspectLevel!: number;
 }
 
 export class UseClassResourceDto {
@@ -577,6 +589,8 @@ export class UseRangerTableActionDto {
       'fey-reinforcements',
       'misty-wanderer',
       'primal-companion',
+      'set-bestial-aspect',
+      'feral-howl',
     ],
   })
   @IsIn([
@@ -586,6 +600,8 @@ export class UseRangerTableActionDto {
     'fey-reinforcements',
     'misty-wanderer',
     'primal-companion',
+    'set-bestial-aspect',
+    'feral-howl',
   ])
   actionSlug!:
     | 'hunters-mark-free'
@@ -593,7 +609,20 @@ export class UseRangerTableActionDto {
     | 'natures-veil'
     | 'fey-reinforcements'
     | 'misty-wanderer'
-    | 'primal-companion';
+    | 'primal-companion'
+    | 'set-bestial-aspect'
+    | 'feral-howl';
+
+  @ApiPropertyOptional({
+    minimum: 0,
+    maximum: 5,
+    description: 'Nível de Aspecto Bestial (set-bestial-aspect)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  @Max(5)
+  level?: number;
 }
 
 const CLERIC_TABLE_ACTION_SLUGS = [
@@ -626,12 +655,23 @@ const BARD_TABLE_ACTION_SLUGS = [
   'unarmed-dance',
   'combat-inspiration',
   'superior-inspiration',
+  'set-persona-masks',
 ] as const;
 
 export class UseBardTableActionDto {
   @ApiProperty({ enum: BARD_TABLE_ACTION_SLUGS })
   @IsIn(BARD_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof BARD_TABLE_ACTION_SLUGS)[number];
+
+  @ApiPropertyOptional({
+    type: [String],
+    description: 'Máscaras a vestir (set-persona-masks)',
+    example: ['persona-mask-angel'],
+  })
+  @IsOptional()
+  @IsArray()
+  @IsString({ each: true })
+  masks?: string[];
 }
 
 const SORCERER_TABLE_ACTION_SLUGS = [

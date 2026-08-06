@@ -227,21 +227,33 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 
 ---
 
-## Todas as Classes PHB 2024 + Valdas Concluídas! 🎉
+## Todas as Classes PHB 2024 + Valdas Pack 1 Concluídas
+
+---
+
+## Valdas Player Pack 2 — jogável A/B + trackers
+
+Critério mesa: recursos + Usar/economia + notes. Familiares: **adiados** (só catálogo P009).
+
+| Subclasse | Slug | Status |
+|-----------|------|--------|
+| Pistolero | `pistolero` | `[x]` manobras Abrir o Leque / Confronto + notes |
+| Colégio das Máscaras | `college-of-masks` | `[x]` Virtuoso + tracker `personaMasks` (vestir 1–2) |
+| Domínio do Dragão | `dragon-domain` | `[~]` Majestade/Aspecto Lendário (spend) + notes |
+| Círculo da Cidade | `circle-of-the-city` | `[~]` Forma da Cidade / Distorção de Muro + notes |
+| Portador Bestial | `beastborne` | `[x]` tracker `bestialAspectLevel` 0–5 + Uivo Feral |
+| Feitiçaria Heróica | `heroic-sorcery` | `[~]` Alma Heróica / Manobras Místicas (SP) + notes |
+| Mago dos Mísseis | `magic-missile-mage` | `[x]` free / Escudo / Giga (recursos + Usar) |
+
+**Encantos de Arma:** `[x]` itens `weapon-charm-*` (P011), `attached_charm_slug` no inventário, bônus por arma, attach/detach API + UI.
+
+Seeds: `valdas-player-pack-2/P001`–`P011`. Migrations player: `P017` (charm), `P018` (trackers).
 
 ---
 
 ## Ordem sugerida (próximas)
 
-Marciais / half-casters costumam destravar a mesa mais rápido:
-
-1. Bardo  
-2. Feiticeiro  
-3. Bruxo  
-4. Mago  
-5. Druida  
-
-Ajustar sob pedido da mesa.
+Familiares como sistema; hooks de Mísseis no cast; aprofundar Domínio do Dragão / Círculo da Cidade.
 
 ---
 

@@ -9,6 +9,7 @@ Dados do catálogo PHB 2024 e Valdas Spire of Secrets. **Um arquivo por tabela.*
 | `subclass/S###_<tabela>.sql` | Mecânicas de subclasse (`S001`–`S007`) |
 | `valdas/V###_<tabela>.sql` | Pack Valdas (`V001`–`V013`, edição em `V001`) |
 | `valdas-gunslinger/G###_<tabela>.sql` | Classe Gunslinger (`G001`–`G028`) |
+| `valdas-player-pack-2/P###_<tabela>.sql` | Valdas Player Pack 2 (`P001`–`P011`) |
 
 Metadados: `database/seed-manifest.json`
 
@@ -21,4 +22,4 @@ Numeração sequencial sem lacunas (ordem de dependência). Exemplos:
 - `V001_phb_edition_citation.sql` — edição/citações Valdas
 - `V011`–`V013` — construções Geppettin, estações Mandrágora, grants
 
-Ordem de aplicação dos packs: `phb` → `subclass` → `valdas` → `valdas-gunslinger`.
+Ordem de aplicação dos packs: `phb` → `subclass` → `valdas` → `valdas-gunslinger` → `valdas-player-pack-2`.

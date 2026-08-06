@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
+import { PhbItem } from '../../../entities/phb-item.entity';
 import { PhbWeapon } from '../../../entities/phb-weapon.entity';
 import { PhbWeaponMastery } from '../../../entities/phb-weapon-mastery.entity';
 import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
@@ -14,6 +15,7 @@ import {
   type EquippedWeaponPiece,
   type WeaponAttack,
 } from '../domain/weapon-attack';
+import { parseWeaponCharm } from '../domain/weapon-charm';
 
 export type WeaponAttackResolveContext = {
   classSlug: string;
@@ -40,6 +42,8 @@ export class ResolveEquippedWeaponAttacks {
     private readonly weapons: Repository<PhbWeapon>,
     @InjectRepository(PhbWeaponMastery)
     private readonly masteryRepo: Repository<PhbWeaponMastery>,
+    @InjectRepository(PhbItem)
+    private readonly catalogItems: Repository<PhbItem>,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -66,6 +70,7 @@ export class ResolveEquippedWeaponAttacks {
     });
     const bySlug = new Map(rows.map((row) => [row.item.slug, row]));
     const masteryBySlug = await loadWeaponMasteryBySlug(rows, this.masteryRepo);
+    const charmBySlug = await this.loadCharmsBySlug(equipped);
     const pieces: EquippedWeaponPiece[] = [];
 
     for (const item of equipped) {
@@ -76,6 +81,8 @@ export class ResolveEquippedWeaponAttacks {
       const mastery = masterySlug
         ? (masteryBySlug.get(masterySlug) ?? null)
         : null;
+      const charmSlug = item.attachedCharmSlug ?? null;
+      const charmRow = charmSlug ? charmBySlug.get(charmSlug) : undefined;
       pieces.push({
         itemSlug: weapon.item.slug,
         itemName: weapon.item.name,
@@ -89,6 +96,9 @@ export class ResolveEquippedWeaponAttacks {
         masteryName: mastery?.name ?? null,
         reloadCapacity:
           typeof props.reload === 'number' ? props.reload : null,
+        attachedCharmSlug: charmSlug,
+        attachedCharmName: charmRow?.name ?? null,
+        weaponCharm: charmRow?.charm ?? null,
       });
     }
 
@@ -100,6 +110,37 @@ export class ResolveEquippedWeaponAttacks {
       context.classSlug,
     );
     return this.computeAttacks(scores, pieces, context, weaponProficiencySlugs);
+  }
+
+  private async loadCharmsBySlug(
+    equipped: PlayerCharacterItem[],
+  ): Promise<
+    Map<string, { name: string; charm: NonNullable<ReturnType<typeof parseWeaponCharm>> }>
+  > {
+    const slugs = [
+      ...new Set(
+        equipped
+          .map((row) => row.attachedCharmSlug)
+          .filter((slug): slug is string => Boolean(slug)),
+      ),
+    ];
+    const result = new Map<
+      string,
+      { name: string; charm: NonNullable<ReturnType<typeof parseWeaponCharm>> }
+    >();
+    if (slugs.length === 0) return result;
+
+    const items = await this.catalogItems.find({
+      where: { slug: In(slugs) },
+    });
+    for (const item of items) {
+      const charm = parseWeaponCharm(
+        (item.properties ?? null) as Record<string, unknown> | null,
+      );
+      if (!charm) continue;
+      result.set(item.slug, { name: item.name, charm });
+    }
+    return result;
   }
 
   private computeAttacks(

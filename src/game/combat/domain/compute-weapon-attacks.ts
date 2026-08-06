@@ -36,6 +36,7 @@ import type {
   WeaponAttackContext,
   WeaponAttackRole,
 } from './weapon-attack.types';
+import { applyWeaponCharmToAttack } from './weapon-charm';
 
 function computeOneAttack(
   scores: AbilityScores,
@@ -267,7 +268,7 @@ function computeOneAttack(
     ? `${damageDice}+${overkillExtraDice}`
     : damageDice;
 
-  return {
+  const baseAttack: WeaponAttack = {
     itemSlug: piece.itemSlug,
     itemName: piece.itemName,
     mode,
@@ -300,7 +301,10 @@ function computeOneAttack(
     brutalStrikeDice: brutalDice,
     sneakAttackEligible: mode === 'ranged' || hasProperty(piece, 'finesse'),
     martialArtsDie: monkMartialArtsDie,
+    attachedCharmSlug: piece.attachedCharmSlug ?? null,
+    attachedCharmName: piece.attachedCharmName ?? null,
   };
+  return applyWeaponCharmToAttack(piece, baseAttack);
 }
 
 const MONK_UNARMED_PIECE: EquippedWeaponPiece = {

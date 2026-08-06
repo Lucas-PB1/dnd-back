@@ -46,6 +46,8 @@ export async function applyLongRestState(input: {
   state.tempHp = 0;
   state.rageActive = false;
   state.recklessActive = false;
+  state.bestialAspectLevel = 0;
+  // personaMasks: mantidas no descanso longo (escolha de máscaras conhecidas/vestidas)
   state.hitDiceCurrent = restoreHitDiceOnLongRest(
     state.hitDiceCurrent,
     character.level,

@@ -119,4 +119,21 @@ function addBardSubclassNotes(
     );
     }
   }
+
+  if (subclassSlug === 'college-of-masks') {
+    notes.push(
+      'Colégio das Máscaras: escolha Máscaras de Persona na mesa (3→4→5 nos nv. 3/6/14). Vestir/trocar como Ação Bônus; efeitos usam Inspiração Bárdica conforme a máscara.',
+    );
+    notes.push(
+      'Artista Teatral: proficiência em Kit de Disfarce; some o dado de Inspiração em Performance sem gastar uso.',
+    );
+    if (level >= 6) {
+      notes.push(
+        'Habilidade de Virtuoso: 1×/turno faça um Teste d20 com Carisma (usos = mod. CAR; veja recurso).',
+      );
+    }
+    if (level >= 14) {
+      notes.push('Mestre de Muitas Faces: use duas máscaras ao mesmo tempo.');
+    }
+  }
 }

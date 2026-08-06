@@ -31,6 +31,7 @@ import { sorcererCombatNotes } from '../domain/sorcerer-features';
 import { warlockCombatNotes } from '../domain/warlock-features';
 import { druidCombatNotes } from '../domain/druid-features';
 import { wizardCombatNotes } from '../domain/wizard-features';
+import { gunslingerCombatNotes } from '../domain/gunslinger-features';
 
 export type ClassCombatContribution = {
   notes: string[];
@@ -66,6 +67,7 @@ export function aggregateClassCombatContributions(
     ...warlockCombatNotes({ classSlug, subclassSlug, level }),
     ...druidCombatNotes({ classSlug, subclassSlug, level }),
     ...wizardCombatNotes({ classSlug, subclassSlug, level }),
+    ...gunslingerCombatNotes({ classSlug, subclassSlug, level }),
   ];
 
   const speedBonusMeters =

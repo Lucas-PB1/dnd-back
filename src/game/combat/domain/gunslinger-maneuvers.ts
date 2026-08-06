@@ -77,6 +77,26 @@ export const GUNSLINGER_MANEUVERS: readonly GunslingerManeuver[] = [
     riskCost: 1,
     fromLevel: 2,
   },
+  {
+    slug: 'fan-the-hammer',
+    name: 'Abrir o Leque',
+    description:
+      'Ação Bônus (Pistolero): ao Atacar com arma à distância sem Duas mãos, gaste 1 Dado de Risco para dois ataques extras com Desvantagem (mão livre; sem Automática).',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 3,
+    subclassSlug: 'pistolero',
+  },
+  {
+    slug: 'showdown',
+    name: 'Confronto',
+    description:
+      'Na Iniciativa (Pistolero): gaste 1 Dado de Risco, saque uma arma à distância e ataque; some o dado ao dano. No 1º turno, o alvo tem Desvantagem em ataques contra outros.',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 10,
+    subclassSlug: 'pistolero',
+  },
 ];
 
 export function listGunslingerManeuvers(input: {

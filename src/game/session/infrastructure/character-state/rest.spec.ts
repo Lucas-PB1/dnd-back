@@ -55,6 +55,8 @@ describe('rest', () => {
     firearmChambers: {},
     rageActive: false,
     recklessActive: false,
+    personaMasks: [],
+    bestialAspectLevel: 0,
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });
@@ -87,6 +89,9 @@ describe('rest', () => {
 
   describe('applyLongRestState', () => {
     it('resets state, restores HP and returns long rest dto', async () => {
+      state.bestialAspectLevel = 3;
+      state.personaMasks = ['persona-mask-angel'];
+
       const result = await applyLongRestState({
         character,
         state,
@@ -102,6 +107,8 @@ describe('rest', () => {
       expect(state.concentratingOn).toBeNull();
       expect(state.conditions).toEqual([]);
       expect(state.tempHp).toBe(0);
+      expect(state.bestialAspectLevel).toBe(0);
+      expect(state.personaMasks).toEqual(['persona-mask-angel']);
       expect(state.deathSaveSuccesses).toBe(0);
       expect(state.deathSaveFailures).toBe(0);
       expect(character.hitPointsCurrent).toBe(44);

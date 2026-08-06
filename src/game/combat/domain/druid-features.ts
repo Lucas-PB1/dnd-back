@@ -95,4 +95,25 @@ function addDruidSubclassNotes(
       'Círculo do Mar: Ira do Mar (Ação Bônus emana aura de tempestade a 3 m: causa d6s de dano elétrico/concussão = Mod. Sabedoria e empurra a 4.5 m).',
     );
   }
+
+  if (subclassSlug === 'circle-of-the-city') {
+    notes.push(
+      'Círculo da Cidade: gaste Forma Selvagem para Fundir-se na Pedra, Passagem ou Moldar Rocha sem espaço; magias urbanas usam estética de cidade.',
+    );
+    if (level >= 6) {
+      notes.push(
+        'Forma de Objeto: Forma Selvagem como Objeto Animado (até Grande; Enorme no nv. 10).',
+      );
+    }
+    if (level >= 10) {
+      notes.push(
+        'Distorção de Muro: Reação cria painel de Muralha de Pedra (1×/LR ou espaço 3º+) — veja recurso.',
+      );
+    }
+    if (level >= 14) {
+      notes.push(
+        'Colosso Urbano: na forma de objeto, CA 18, limiar de dano, Multiataque e atravessar criaturas.',
+      );
+    }
+  }
 }

@@ -374,6 +374,32 @@ export async function applyToggleReckless(input: {
   return buildResponse(character, state);
 }
 
+export async function applySetPersonaMasks(input: {
+  character: PlayerCharacter;
+  state: PlayerCharacterState;
+  masks: string[];
+  stateRepo: Repository<PlayerCharacterState>;
+  buildResponse: BuildResponse;
+}): Promise<CharacterStateResponseDto> {
+  const { character, state, masks, stateRepo, buildResponse } = input;
+  state.personaMasks = masks;
+  await stateRepo.save(state);
+  return buildResponse(character, state);
+}
+
+export async function applySetBestialAspectLevel(input: {
+  character: PlayerCharacter;
+  state: PlayerCharacterState;
+  level: number;
+  stateRepo: Repository<PlayerCharacterState>;
+  buildResponse: BuildResponse;
+}): Promise<CharacterStateResponseDto> {
+  const { character, state, level, stateRepo, buildResponse } = input;
+  state.bestialAspectLevel = level;
+  await stateRepo.save(state);
+  return buildResponse(character, state);
+}
+
 /** Fúria Persistente (nv.15): recupera todos os usos de Fúria na iniciativa. */
 export async function applyRecoverAllRage(input: {
   character: PlayerCharacter;

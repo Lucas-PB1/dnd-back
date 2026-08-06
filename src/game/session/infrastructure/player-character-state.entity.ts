@@ -53,4 +53,12 @@ export class PlayerCharacterState {
   /** Ataque Imprudente ativo. */
   @Column({ name: 'reckless_active', type: 'boolean', default: false })
   recklessActive!: boolean;
+
+  /** Máscaras de Persona equipadas (Colégio das Máscaras). */
+  @Column({ name: 'persona_masks', type: 'jsonb', default: [] })
+  personaMasks!: string[];
+
+  /** Nível de Aspecto Bestial (Beastborne), 0–5. */
+  @Column({ name: 'bestial_aspect_level', type: 'int', default: 0 })
+  bestialAspectLevel!: number;
 }

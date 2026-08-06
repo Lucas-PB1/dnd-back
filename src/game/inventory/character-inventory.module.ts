@@ -15,6 +15,7 @@ import { CharacterInventoryRepository } from './infrastructure/character-invento
 import { EquipmentSlotResolver } from './infrastructure/equipment-slot-resolver';
 import { CharacterInventoryController } from './character-inventory.controller';
 import { AssertCanEquipItemService } from './application/assert-can-equip-item.service';
+import { AttachWeaponCharmHandler } from './application/attach-weapon-charm.handler';
 import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
 import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
 import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
@@ -40,6 +41,7 @@ import { SeedStartingInventoryHandler } from './application/seed-starting-invent
     CharacterInventoryRepository,
     EquipmentSlotResolver,
     AssertCanEquipItemService,
+    AttachWeaponCharmHandler,
     GetCharacterInventoryQuery,
     AddInventoryItemHandler,
     PatchInventoryItemHandler,

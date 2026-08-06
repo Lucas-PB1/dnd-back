@@ -37,6 +37,8 @@ import {
   applyTacticalMind,
   applyToggleRage,
   applyToggleReckless,
+  applySetPersonaMasks,
+  applySetBestialAspectLevel,
   applyUseClassResource,
   applyUseManeuver,
   applyPatchState,
@@ -90,6 +92,8 @@ export class CharacterStateRepository {
         firearmChambers: {},
         rageActive: false,
         recklessActive: false,
+        personaMasks: [],
+        bestialAspectLevel: 0,
       });
       await this.state.save(row);
     }
@@ -107,6 +111,12 @@ export class CharacterStateRepository {
     }
     if (row.recklessActive == null) {
       row.recklessActive = false;
+    }
+    if (!row.personaMasks) {
+      row.personaMasks = [];
+    }
+    if (row.bestialAspectLevel == null) {
+      row.bestialAspectLevel = 0;
     }
     return row;
   }
@@ -341,6 +351,34 @@ export class CharacterStateRepository {
       character,
       state,
       active,
+      stateRepo: this.state,
+      buildResponse: (c, s) => this.buildResponse(c, s),
+    });
+  }
+
+  async setPersonaMasks(
+    character: PlayerCharacter,
+    masks: string[],
+  ): Promise<CharacterStateResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applySetPersonaMasks({
+      character,
+      state,
+      masks,
+      stateRepo: this.state,
+      buildResponse: (c, s) => this.buildResponse(c, s),
+    });
+  }
+
+  async setBestialAspectLevel(
+    character: PlayerCharacter,
+    level: number,
+  ): Promise<CharacterStateResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applySetBestialAspectLevel({
+      character,
+      state,
+      level,
       stateRepo: this.state,
       buildResponse: (c, s) => this.buildResponse(c, s),
     });

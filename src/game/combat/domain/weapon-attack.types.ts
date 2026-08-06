@@ -1,4 +1,5 @@
 import type { SizeCategory } from './creature-size';
+import type { WeaponCharm } from './weapon-charm';
 
 export type EquippedWeaponPiece = {
   itemSlug: string;
@@ -15,6 +16,11 @@ export type EquippedWeaponPiece = {
   masteryName?: string | null;
   /** Capacidade de câmara (`reload` no JSON do item). */
   reloadCapacity?: number | null;
+  /** Encanto preso a esta arma (`player_character_item.attached_charm_slug`). */
+  attachedCharmSlug?: string | null;
+  attachedCharmName?: string | null;
+  /** Dados estruturados do encanto (catálogo), se carregados. */
+  weaponCharm?: WeaponCharm | null;
 };
 
 export type WeaponAttackContext = {
@@ -102,4 +108,8 @@ export type WeaponAttack = {
    * `null` quando não é arma de Monge ou o personagem não é Monge.
    */
   martialArtsDie: string | null;
+  /** Encanto de arma preso a esta peça (slug do catálogo). */
+  attachedCharmSlug: string | null;
+  /** Nome do encanto para exibição na ficha. */
+  attachedCharmName: string | null;
 };
