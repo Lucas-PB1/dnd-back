@@ -19,10 +19,13 @@ describe('RangerActionsHandler', () => {
       battleMasterManeuvers: [],
       cunningStrikeEffects: [],
       tableActions: [],
+      personaMasks: [],
       personaMaskSlugs: [],
       beastborneAspectBenefits: [...FIXTURE_BESTIAL_ASPECT_BENEFITS],
       dungeoneerSlayerLabels: [],
       precautionSpells: [],
+      economyActions: [],
+      panelActions: [],
     }),
   };
   const handler = new RangerActionsHandler(

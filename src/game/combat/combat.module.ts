@@ -13,6 +13,8 @@ import { VPhbHpBonusSource } from '../../entities/views/v-phb-hp-bonus-source.en
 import { VPhbPersonaMask } from '../../entities/views/v-phb-persona-mask.entity';
 import { VPhbSubclassPrecautionSpell } from '../../entities/views/v-phb-subclass-precaution-spell.entity';
 import { VPhbSubclassTableAction } from '../../entities/views/v-phb-subclass-table-action.entity';
+import { VPhbClassEconomyAction } from '../../entities/views/v-phb-class-economy-action.entity';
+import { VPhbClassPanelAction } from '../../entities/views/v-phb-class-panel-action.entity';
 import { VPhbUnarmoredDefense } from '../../entities/views/v-phb-unarmored-defense.entity';
 import { ResolveActivePermanentItemEffects } from '../inventory/application/resolve-active-permanent-item-effects';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
@@ -41,6 +43,8 @@ import { CombatCatalogService } from './infrastructure/combat-catalog.service';
       VPhbBeastborneAspectBenefit,
       VPhbDungeoneerSlayerType,
       VPhbSubclassPrecautionSpell,
+      VPhbClassEconomyAction,
+      VPhbClassPanelAction,
     ]),
     GameSharedModule,
   ],

@@ -12,6 +12,7 @@ import { AbilitiesModule } from './abilities/abilities.module';
 import { EquipmentModule } from './equipment/equipment.module';
 import { ItemsModule } from './items/items.module';
 import { ReferenceModule } from './reference/reference.module';
+import { CombatMechanicalModule } from './combat-mechanical/combat-mechanical.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ReferenceModule } from './reference/reference.module';
     EquipmentModule,
     ItemsModule,
     ReferenceModule,
+    CombatMechanicalModule,
   ],
   exports: [CatalogLookupModule],
 })

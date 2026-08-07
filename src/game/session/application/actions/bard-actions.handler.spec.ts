@@ -17,10 +17,16 @@ describe('BardActionsHandler', () => {
       battleMasterManeuvers: [],
       cunningStrikeEffects: [],
       tableActions: [],
+      personaMasks: FIXTURE_PERSONA_MASK_SLUGS.map((slug) => ({
+        slug,
+        name: slug,
+      })),
       personaMaskSlugs: [...FIXTURE_PERSONA_MASK_SLUGS],
       beastborneAspectBenefits: [],
       dungeoneerSlayerLabels: [],
       precautionSpells: [],
+      economyActions: [],
+      panelActions: [],
     }),
   };
   const handler = new BardActionsHandler(

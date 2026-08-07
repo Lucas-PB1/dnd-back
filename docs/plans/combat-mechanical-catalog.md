@@ -27,10 +27,14 @@ SSOT no schema `rpg` para listas mecânicas que a engine de mesa/dados consome (
 | `phb_beastborne_aspect_benefit` | Benefícios por nível de aspecto |
 | `phb_dungeoneer_slayer_type` | Tipos de Matar Monstro |
 | `phb_subclass_precaution_spell` | Allowlist Precaução → `phb_spell` |
+| `phb_class_economy_action` | Catálogo da aba Ações (economia de turno) |
+| `phb_class_panel_action` | Botões dos painéis de combate por classe |
 
-ENUMs: `maneuver_effect_kind`, `battle_master_maneuver_timing`, `save_ability` (`010_types/003_combat_mechanical_enums.sql`).
+ENUMs: `maneuver_effect_kind`, `battle_master_maneuver_timing`, `save_ability` (`010_types/003_combat_mechanical_enums.sql`); `action_economy_bucket`, `panel_action_section` (`004_class_action_ui_enums.sql`).
 
-Seeds: `database/seeds/combat/C00*.sql`.
+Seeds: `database/seeds/combat/C00*.sql` (inclui C009 economy + C010 panels).
+
+HTTP: `GET /combat-mechanical-catalog` inclui `economyActions` + `panelActions`.
 
 ## Fica no TS
 

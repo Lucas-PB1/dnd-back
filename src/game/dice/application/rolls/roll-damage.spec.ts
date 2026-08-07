@@ -32,9 +32,12 @@ describe('executeRollDamage', () => {
       gunslingerManeuvers: [],
       battleMasterManeuvers: [],
       tableActions: [],
+      personaMasks: [],
       personaMaskSlugs: [],
       beastborneAspectBenefits: [],
       precautionSpells: [],
+      economyActions: [],
+      panelActions: [],
     }),
   };
 

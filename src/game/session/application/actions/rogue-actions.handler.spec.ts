@@ -21,10 +21,13 @@ describe('RogueActionsHandler', () => {
       battleMasterManeuvers: [],
       cunningStrikeEffects: [],
       tableActions: [...FIXTURE_SOULKNIFE_ACTIONS],
+      personaMasks: [],
       personaMaskSlugs: [],
       beastborneAspectBenefits: [],
       dungeoneerSlayerLabels: [],
       precautionSpells: [],
+      economyActions: [],
+      panelActions: [],
     }),
   };
   const handler = new RogueActionsHandler(

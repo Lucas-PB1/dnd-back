@@ -47,10 +47,13 @@ describe('FighterActionsHandler tabletop actions', () => {
       battleMasterManeuvers: [...FIXTURE_BATTLE_MASTER_MANEUVERS],
       cunningStrikeEffects: [],
       tableActions: [...FIXTURE_PSI_ACTIONS],
+      personaMasks: [],
       personaMaskSlugs: [],
       beastborneAspectBenefits: [],
       dungeoneerSlayerLabels: [],
       precautionSpells: [...FIXTURE_DUNGEONEER_PRECAUTION_SPELLS],
+      economyActions: [],
+      panelActions: [],
     }),
   };
 

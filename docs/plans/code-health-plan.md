@@ -10,6 +10,7 @@ Standards: [`../architecture/code-standards.md`](../architecture/code-standards.
 | Item | Resultado |
 |------|-----------|
 | Catálogo mecânico → DB | tabelas + views + `LoadCombatMechanicalCatalog` |
+| GET catálogo mecânico | `GET /combat-mechanical-catalog` (Catalog BC) |
 | `character-state.repository.ts` | ~178 soft; `martial` + `resources` facades |
 | `fighter-actions.handler` | facade ≤100 + `actions/fighter/{core,battle-master,psi-warrior,dungeoneer}` |
 | Handlers HARD (bard, druid, monk, ranger, sorcerer) | facades + `actions/<classe>/` ≤150 |
@@ -25,7 +26,7 @@ Standards: [`../architecture/code-standards.md`](../architecture/code-standards.
 
 ## Próximos PRs (máx 3)
 
-1. Expor GET catálogo mecânico no BC Catalog (se o front precisar)
+1. ~~Expor GET catálogo mecânico no BC Catalog~~ → `GET /combat-mechanical-catalog` (2026-08-06)
 2. Softs ≤150 só se crescerem (cleric subclass-actions)
 3. — 
 

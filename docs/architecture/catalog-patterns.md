@@ -126,13 +126,16 @@ Tabelas tipadas para a **engine** (mesa/dados), distintas da prosa em `phb_class
 | `phb_beastborne_aspect_benefit` | `v_phb_beastborne_aspect_benefit` |
 | `phb_dungeoneer_slayer_type` | `v_phb_dungeoneer_slayer_type` |
 | `phb_subclass_precaution_spell` | `v_phb_subclass_precaution_spell` |
+| `phb_class_economy_action` | `v_phb_class_economy_action` |
+| `phb_class_panel_action` | `v_phb_class_panel_action` |
 
 Seeds: `database/seeds/combat/C00*.sql`. Plano: [`docs/plans/combat-mechanical-catalog.md`](../plans/combat-mechanical-catalog.md).
 
 **Não** colocar mecânica em JSONB genérico. `option_value` do Battle Master continua como escolha da ficha; a tabela tipada é SSOT de timing/efeitos.
 
----
+HTTP público: `GET /combat-mechanical-catalog` (Catalog BC → `LoadCombatMechanicalCatalog`).
 
+---
 ## Checklist — nova tabela de catálogo
 
 1. Existe entidade pai clara (`phb_*` + FK)?
