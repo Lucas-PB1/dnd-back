@@ -13,14 +13,15 @@ export async function validateFeatProficiencyOption(
 ): Promise<void> {
   const allowed = await featOptionValueRepo.findOne({
     where: {
-      featId: def.featId,
+      scope: 'feat' as const,
+      ownerId: def.ownerId,
       optionKey: def.optionKey,
       valueId: option.valueId,
     },
   });
   if (!allowed) {
     const hasWhitelist = await featOptionValueRepo.exists({
-      where: { featId: def.featId, optionKey: def.optionKey },
+      where: { scope: 'feat' as const, ownerId: def.ownerId, optionKey: def.optionKey },
     });
     if (hasWhitelist) {
       throw new BadRequestException(

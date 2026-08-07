@@ -95,32 +95,27 @@ export async function syncCharacterSheet(
         featInstanceKey(feat.featSlug, feat.instanceIndex),
       ),
     );
+    // Lote C: featOptions now use ownerSlug + scope
     const existingOptions = await deps.featOptions.find({
-      where: { characterId },
+      where: { characterId, scope: 'feat' },
     });
     const orphanIds = existingOptions.filter(
       (option) =>
-        !validKeys.has(featInstanceKey(option.featSlug, option.instanceIndex)),
+        !validKeys.has(featInstanceKey(option.ownerSlug, option.instanceIndex)),
     );
     if (orphanIds.length > 0) {
-      await deps.featOptions.delete(
-        orphanIds.map((option) => ({
-          characterId,
-          featSlug: option.featSlug,
-          instanceIndex: option.instanceIndex,
-          optionKey: option.optionKey,
-        })),
-      );
+      await deps.featOptions.delete(orphanIds.map((o) => o.id));
     }
   }
 
   if (input.featOptions !== undefined) {
-    await deps.featOptions.delete({ characterId });
+    await deps.featOptions.delete({ characterId, scope: 'feat' });
     if (input.featOptions.length > 0) {
       await deps.featOptions.insert(
         input.featOptions.map((option) => ({
           characterId,
-          featSlug: option.featSlug,
+          scope: 'feat' as const,
+          ownerSlug: option.featSlug, // API uses featSlug, DB uses ownerSlug
           instanceIndex: option.instanceIndex ?? 0,
           optionKey: option.optionKey,
           valueId: option.valueId,

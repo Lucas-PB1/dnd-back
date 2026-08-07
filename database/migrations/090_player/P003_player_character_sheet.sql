@@ -1,4 +1,5 @@
 -- Extensões da ficha: espécie, subclasse, feats, magias, equipamento, idiomas
+-- Lote C: player_character_option unificado
 
 CREATE TABLE rpg.player_character_species_choice (
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
@@ -7,11 +8,16 @@ CREATE TABLE rpg.player_character_species_choice (
   PRIMARY KEY (character_id, choice_kind)
 );
 
-CREATE TABLE rpg.player_character_subclass_option (
+-- Lote C: unified runtime option storage (subclass | species | feat | class)
+CREATE TABLE rpg.player_character_option (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
+  scope rpg.option_scope NOT NULL,
+  owner_slug TEXT NOT NULL,
   option_key TEXT NOT NULL,
   value_id TEXT NOT NULL,
-  PRIMARY KEY (character_id, option_key)
+  instance_index INTEGER NOT NULL DEFAULT 0 CHECK (instance_index >= 0),
+  UNIQUE (character_id, scope, owner_slug, instance_index, option_key)
 );
 
 CREATE TABLE rpg.player_character_feat (
@@ -32,6 +38,7 @@ CREATE TABLE rpg.player_character_equipment (
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   source TEXT NOT NULL CHECK (source IN ('class', 'background')),
   package_slug TEXT NOT NULL,
+  package_id BIGINT REFERENCES rpg.phb_starting_package(id),
   item_slug TEXT REFERENCES rpg.phb_item(slug),
   quantity INTEGER NOT NULL DEFAULT 1 CHECK (quantity >= 1),
   sort_order INTEGER NOT NULL DEFAULT 0,
@@ -46,8 +53,10 @@ CREATE TABLE rpg.player_character_language (
 
 CREATE INDEX idx_player_character_species_choice_character
   ON rpg.player_character_species_choice(character_id);
-CREATE INDEX idx_player_character_subclass_option_character
-  ON rpg.player_character_subclass_option(character_id);
+CREATE INDEX idx_player_character_option_character
+  ON rpg.player_character_option(character_id);
+CREATE INDEX idx_player_character_option_scope_owner
+  ON rpg.player_character_option(character_id, scope, owner_slug);
 CREATE INDEX idx_player_character_feat_character
   ON rpg.player_character_feat(character_id);
 CREATE INDEX idx_player_character_spell_character

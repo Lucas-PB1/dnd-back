@@ -100,8 +100,9 @@ describe('load-character-sheet', () => {
         { optionKey: 'expertiseSkill1', valueId: 'stealth' },
       ]);
       (deps.feats.find as jest.Mock).mockResolvedValue([{ featSlug: 'alert', instanceIndex: 0 }]);
+      // Lote C: DB entity uses ownerSlug, function maps to featSlug
       (deps.featOptions.find as jest.Mock).mockResolvedValue([
-        { featSlug: 'alert', instanceIndex: 0, optionKey: 'pick', valueId: 'perception' },
+        { ownerSlug: 'alert', instanceIndex: 0, optionKey: 'pick', valueId: 'perception' },
       ]);
       (deps.spells.find as jest.Mock).mockResolvedValue([
         { spellSlug: 'fire-bolt', listType: 'known' },

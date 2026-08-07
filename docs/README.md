@@ -18,6 +18,8 @@
 | [`architecture/infrastructure.md`](architecture/infrastructure.md) | Stack, env, TypeORM |
 | [`architecture/data-model.md`](architecture/data-model.md) | Schema `rpg` / PHB |
 | [`architecture/catalog-patterns.md`](architecture/catalog-patterns.md) | Padrões DRY SQL do catálogo |
+| [`architecture/adr-schema-consolidation.md`](architecture/adr-schema-consolidation.md) | ADR — consolidação A→G (Aceito) |
+| [`architecture/schema-equivalence-map.md`](architecture/schema-equivalence-map.md) | Mapa tabela atual → alvo consolidado |
 | [`architecture/game-module-structure.md`](architecture/game-module-structure.md) | Submódulos Game |
 | [`architecture/code-standards.md`](architecture/code-standards.md) | Tamanho de arquivo, SRP, DRY, legado |
 
@@ -31,6 +33,7 @@ Contrato REST: Swagger em `/api`.
 | [`plans/class-mechanics.md`](plans/class-mechanics.md) | Mecânica por classe/subclasse (feito / parcial / pendente) |
 | [`plans/code-health-plan.md`](plans/code-health-plan.md) | Inventário de arquivos gordos / hardcodes / próximos PRs |
 | [`plans/combat-mechanical-catalog.md`](plans/combat-mechanical-catalog.md) | Migrar catálogos mecânicos de combate (TS → tabelas tipadas) |
+| [`plans/schema-consolidation-plan.md`](plans/schema-consolidation-plan.md) | Plano de lotes A→G (meta ~45–60 tabelas) |
 
 ## Ops
 

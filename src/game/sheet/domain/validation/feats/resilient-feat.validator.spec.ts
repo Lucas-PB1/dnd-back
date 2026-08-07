@@ -28,7 +28,8 @@ describe('CharacterFeatsValidator resilient feat', () => {
     featOptionDefRepo = {
       find: jest.fn().mockResolvedValue([
         {
-          featId: '5',
+          scope: 'feat',
+          ownerId: '5',
           optionKey: 'abilityIncrease',
           label: 'Atributo',
           valueType: 'ability',

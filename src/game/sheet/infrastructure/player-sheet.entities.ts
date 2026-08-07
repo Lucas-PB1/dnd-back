@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { OptionScope } from '../../../entities/phb-option.entity';
 
 @Entity({ schema: 'rpg', name: 'player_character_species_choice' })
 export class PlayerCharacterSpeciesChoice {
@@ -12,29 +13,40 @@ export class PlayerCharacterSpeciesChoice {
   choiceSlug!: string;
 }
 
-@Entity({ schema: 'rpg', name: 'player_character_subclass_option' })
-export class PlayerCharacterSubclassOption {
-  @PrimaryColumn({ name: 'character_id', type: 'uuid' })
+// Lote C: unified runtime option storage
+@Entity({ schema: 'rpg', name: 'player_character_option' })
+export class PlayerCharacterOption {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
+
+  @Column({ name: 'character_id', type: 'uuid' })
   characterId!: string;
 
-  @PrimaryColumn({ name: 'option_key' })
+  @Column({ type: 'text' })
+  scope!: OptionScope;
+
+  @Column({ name: 'owner_slug' })
+  ownerSlug!: string;
+
+  @Column({ name: 'option_key' })
   optionKey!: string;
 
   @Column({ name: 'value_id' })
   valueId!: string;
+
+  @Column({ name: 'instance_index', type: 'int', default: 0 })
+  instanceIndex!: number;
 }
 
-@Entity({ schema: 'rpg', name: 'player_character_class_option' })
-export class PlayerCharacterClassOption {
-  @PrimaryColumn({ name: 'character_id', type: 'uuid' })
-  characterId!: string;
+// Lote C: Legacy class aliases for backward compatibility (TypeORM requires classes)
+@Entity({ schema: 'rpg', name: 'player_character_option' })
+export class PlayerCharacterSubclassOption extends PlayerCharacterOption {}
 
-  @PrimaryColumn({ name: 'option_key' })
-  optionKey!: string;
+@Entity({ schema: 'rpg', name: 'player_character_option' })
+export class PlayerCharacterClassOption extends PlayerCharacterOption {}
 
-  @Column({ name: 'value_id' })
-  valueId!: string;
-}
+@Entity({ schema: 'rpg', name: 'player_character_option' })
+export class PlayerCharacterFeatOption extends PlayerCharacterOption {}
 
 @Entity({ schema: 'rpg', name: 'player_character_feat' })
 export class PlayerCharacterFeat {
@@ -46,24 +58,6 @@ export class PlayerCharacterFeat {
 
   @PrimaryColumn({ name: 'instance_index', type: 'int' })
   instanceIndex!: number;
-}
-
-@Entity({ schema: 'rpg', name: 'player_character_feat_option' })
-export class PlayerCharacterFeatOption {
-  @PrimaryColumn({ name: 'character_id', type: 'uuid' })
-  characterId!: string;
-
-  @PrimaryColumn({ name: 'feat_slug' })
-  featSlug!: string;
-
-  @PrimaryColumn({ name: 'instance_index', type: 'int' })
-  instanceIndex!: number;
-
-  @PrimaryColumn({ name: 'option_key' })
-  optionKey!: string;
-
-  @Column({ name: 'value_id' })
-  valueId!: string;
 }
 
 @Entity({ schema: 'rpg', name: 'player_character_spell' })
@@ -91,6 +85,9 @@ export class PlayerCharacterEquipment {
 
   @Column({ name: 'package_slug' })
   packageSlug!: string;
+
+  @Column({ name: 'package_id', type: 'bigint', nullable: true })
+  packageId!: number | null;
 
   @Column({ name: 'item_slug', type: 'text', nullable: true })
   itemSlug!: string | null;

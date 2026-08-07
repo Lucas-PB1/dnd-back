@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
-import { PhbSubclassOptionValue, PhbSubclassRef } from '../../../../entities/phb-subclass-option-value.entity';
+import { PhbSubclassRef, PhbSubclassOptionValue } from '../../../../entities/phb-subclass-option-value.entity';
 import { VPhbSpeciesTraitChoices } from '../../../../entities/views/v-phb-species-trait-choices.entity';
 import { VPhbBackgroundToolOption } from '../../../../entities/views/v-phb-background-tool-option.entity';
 import { CharacterSheetValidator } from './character-sheet.validator';
@@ -79,7 +79,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         if (sql.includes('subclass_unlock_level')) {
           return Promise.resolve([{ subclass_unlock_level: 3 }]);
         }
-        if (sql.includes('phb_subclass_option_def')) {
+        if (sql.includes('phb_option_def')) {
           return Promise.resolve([{ optionKey: 'fighting_style' }]);
         }
         if (sql.includes('phb_class_fighting_style') || sql.includes('phb_fighting_style')) {

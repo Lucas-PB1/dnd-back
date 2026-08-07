@@ -2,9 +2,11 @@
 
 CREATE INDEX idx_phb_species_trait_choice ON rpg.phb_species_trait(choice_kind);
 
-CREATE INDEX idx_phb_elf_lineage_spells ON rpg.phb_elf_lineage(spell_level3_id, spell_level5_id);
+-- Lote B: índice de lineage movido para species_option_value
+CREATE INDEX idx_phb_option_value_spells ON rpg.phb_option_value(spell_level1_id, spell_level3_id, spell_level5_id)
+  WHERE spell_level1_id IS NOT NULL OR spell_level3_id IS NOT NULL OR spell_level5_id IS NOT NULL;
 
-CREATE INDEX idx_phb_feat_category ON rpg.phb_feat(category_id);
+CREATE INDEX idx_phb_feat_category ON rpg.phb_feat(category);
 
 CREATE INDEX idx_phb_feat_source ON rpg.phb_feat(source_citation_id);
 
@@ -32,7 +34,7 @@ CREATE INDEX idx_phb_item_type ON rpg.phb_item (item_type);
 
 CREATE INDEX idx_phb_skill_ability ON rpg.phb_skill(ability_id);
 
-CREATE INDEX idx_phb_class_hit_die ON rpg.phb_class(hit_die_id);
+CREATE INDEX idx_phb_class_hit_die ON rpg.phb_class(hit_die);
 
 CREATE INDEX idx_phb_class_source ON rpg.phb_class(source_citation_id);
 

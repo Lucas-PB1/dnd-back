@@ -1,25 +1,22 @@
 -- Seed Gunslinger weapon proficiencies
 -- RAW: Simple weapons and Martial Ranged weapons
 
-INSERT INTO rpg.phb_weapon_proficiency (slug, label)
-VALUES ('armas-marciais-a-distancia', 'Armas Marciais (à Distância)')
-ON CONFLICT (slug) DO UPDATE SET label = EXCLUDED.label;
-
 -- Corrige seed antigo que usava armas-marciais (corpo a corpo inclusive)
-DELETE FROM rpg.phb_class_weapon_proficiency
+DELETE FROM rpg.phb_class_proficiency
 WHERE class_id = (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger')
-  AND proficiency_id = (
-    SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-marciais'
-  );
+  AND kind = 'weapon'::rpg.class_proficiency_kind
+  AND ref_slug = 'armas-marciais';
 
-INSERT INTO rpg.phb_class_weapon_proficiency (class_id, proficiency_id)
+INSERT INTO rpg.phb_class_proficiency (class_id, kind, ref_slug)
 VALUES
   (
     (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
-    (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-simples')
+    'weapon'::rpg.class_proficiency_kind,
+    'armas-simples'
   ),
   (
     (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'),
-    (SELECT id FROM rpg.phb_weapon_proficiency WHERE slug = 'armas-marciais-a-distancia')
+    'weapon'::rpg.class_proficiency_kind,
+    'armas-marciais-a-distancia'
   )
-ON CONFLICT DO NOTHING;
+ON CONFLICT (class_id, kind, ref_slug) WHERE ref_slug IS NOT NULL DO NOTHING;

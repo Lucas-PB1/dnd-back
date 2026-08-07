@@ -1,10 +1,10 @@
-import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { ViewEntity, ViewColumn } from 'typeorm';
 
-@Entity({ schema: 'rpg', name: 'phb_condition' })
+@ViewEntity({ schema: 'rpg', name: 'v_phb_condition' })
 export class PhbCondition {
-  @PrimaryColumn()
+  @ViewColumn()
   slug!: string;
 
-  @Column()
+  @ViewColumn()
   name!: string;
 }

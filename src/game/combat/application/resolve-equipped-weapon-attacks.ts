@@ -169,12 +169,11 @@ export class ResolveEquippedWeaponAttacks {
 
   private async loadWeaponProficiencySlugs(classSlug: string): Promise<string[]> {
     const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT wp.slug
+      `SELECT cwp.proficiency_slug AS slug
        FROM rpg.phb_class c
        JOIN rpg.phb_class_weapon_proficiency cwp ON cwp.class_id = c.id
-       JOIN rpg.phb_weapon_proficiency wp ON wp.id = cwp.proficiency_id
        WHERE c.slug = $1
-       ORDER BY wp.id`,
+       ORDER BY cwp.proficiency_slug`,
       [classSlug],
     );
     return rows.map((row) => row.slug);

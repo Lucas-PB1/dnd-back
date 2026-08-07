@@ -32,8 +32,9 @@ export class ClassProficienciesQuery {
       this.dataSource.query<{ slug: string; name: string }[]>(
         `SELECT a.slug, a.name
          FROM rpg.phb_class c
-         JOIN rpg.phb_class_saving_throw cst ON cst.class_id = c.id
-         JOIN rpg.phb_ability a ON a.id = cst.ability_id
+         JOIN rpg.phb_class_proficiency cp
+           ON cp.class_id = c.id AND cp.kind = 'saving_throw'::rpg.class_proficiency_kind
+         JOIN rpg.phb_ability a ON a.id = cp.ref_id
          WHERE c.slug = $1
          ORDER BY a.id`,
         [classSlug],
@@ -41,26 +42,29 @@ export class ClassProficienciesQuery {
       this.dataSource.query<{ slug: string; name: string }[]>(
         `SELECT ac.slug, ac.name
          FROM rpg.phb_class c
-         JOIN rpg.phb_class_armor_training cat ON cat.class_id = c.id
-         JOIN rpg.phb_armor_category ac ON ac.id = cat.category_id
+         JOIN rpg.phb_class_proficiency cp
+           ON cp.class_id = c.id AND cp.kind = 'armor_training'::rpg.class_proficiency_kind
+         JOIN rpg.phb_armor_category ac ON ac.id = cp.ref_id
          WHERE c.slug = $1
          ORDER BY ac.sort_order, ac.id`,
         [classSlug],
       ),
       this.dataSource.query<{ slug: string; label: string }[]>(
-        `SELECT wp.slug, wp.label
+        `SELECT cp.ref_slug AS slug, wp.label
          FROM rpg.phb_class c
-         JOIN rpg.phb_class_weapon_proficiency cwp ON cwp.class_id = c.id
-         JOIN rpg.phb_weapon_proficiency wp ON wp.id = cwp.proficiency_id
+         JOIN rpg.phb_class_proficiency cp
+           ON cp.class_id = c.id AND cp.kind = 'weapon'::rpg.class_proficiency_kind
+         JOIN rpg.v_phb_weapon_proficiency wp ON wp.slug = cp.ref_slug
          WHERE c.slug = $1
-         ORDER BY wp.id`,
+         ORDER BY cp.ref_slug`,
         [classSlug],
       ),
       this.dataSource.query<{ slug: string; name: string }[]>(
         `SELECT fs.slug, fs.name
          FROM rpg.phb_class c
-         JOIN rpg.phb_class_fighting_style cfs ON cfs.class_id = c.id
-         JOIN rpg.phb_fighting_style fs ON fs.id = cfs.fighting_style_id
+         JOIN rpg.phb_class_proficiency cp
+           ON cp.class_id = c.id AND cp.kind = 'fighting_style'::rpg.class_proficiency_kind
+         JOIN rpg.phb_fighting_style fs ON fs.id = cp.ref_id
          WHERE c.slug = $1
          ORDER BY fs.slug`,
         [classSlug],

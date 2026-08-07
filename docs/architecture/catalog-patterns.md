@@ -16,43 +16,25 @@ Repetir **estrutura** entre domínios é aceitável quando cada tabela tem FK e 
 
 ## 1. Padrão `option_def` / `option_value`
 
-Três famílias paralelas — **intencional**, não unificar em tabela genérica:
+**ADR consolidação (Aceito):** unificar famílias em `phb_option_def` / `phb_option_value` com `scope` (`subclass` | `species` | `feat`) — Lote C em andamento.
 
-| Tabela | Pai | Colunas extras |
-|--------|-----|----------------|
-| `phb_species_option_def` / `_value` | `species_id` | mínimo (sem label na def) |
-| `phb_feat_option_def` / `_value` | `feat_id` | `label`, `sort_order`, `depends_on_option_key`, `spell_max_level`, `spell_school_slugs[]`, `spell_ritual_only` |
-| `phb_subclass_option_def` / `_value` | `subclass_id` | `label`, `unlock_level`, `sort_order` |
+Até o Lote C fechar, o código pode ainda referenciar as três famílias legadas. Pós-C: um par genérico + colunas nullable por scope (filtros de magia no feat, `unlock_level` na subclass, lineages tipadas na species — Lote B).
 
 **ENUM compartilhado:** `rpg.option_value_type` (`catalog`, `skill`, `ability`, …).
 
-**Regra ao estender:** novas opções de talento → colunas em `phb_feat_option_def` (como filtros de magia) **antes** de criar tabela satélite. Novas opções de espécie/subclasse → par def/value existente.
-
-Migrations: `T069`–`T074`, `T040`–`T041`.
-
 ---
 
-## 2. Linhagens e legados de espécie
+## 2. Linhagens e legados de espécie (Lote B — DONE)
 
-Catálogos de escolha com shapes parecidos:
+Tabelas dedicadas (`phb_elf_lineage`, …) **removidas**. Dados em `phb_species_option_value` (colunas tipadas: spells L1/L3/L5, `damage_type`, `benefit`, …).
 
-| Tabela | Magias estruturadas | Outros |
-|--------|---------------------|--------|
-| `phb_elf_lineage` | L1 / L3 / L5 (`spell_level*_id`) | `level1_benefit` |
-| `phb_infernal_legacy` | idem | idem |
-| `phb_gnome_lineage` | L1 (`spell_1_id`, `spell_2_id`) | `level1_benefit` |
-| `phb_dragon_ancestry` | — | `damage_type` |
-| `phb_giant_ancestry` | — | `benefit` |
+**DRY de leitura:**
 
-**Não consolidar** em uma mega-tabela: shapes PHB diferem; custo de migration > ganho.
+- `v_phb_species_trait_choices` — UI/API de escolhas
+- `v_phb_species_granted_spell` — magias always_prepared
+- Domain: `collectSpeciesGrantedSpellSlugs` consome só a view
 
-**DRY de leitura (obrigatório para novos conteúdos):**
-
-- `v_phb_species_trait_choices` — UI/API de escolhas (evolução incremental V024 → V036; estado final = última migration aplicada).
-- `v_phb_species_granted_spell` — merge de magias always_prepared na ficha (trait fixo + linhagens).
-- Domain: `collectSpeciesGrantedSpellSlugs` consome só a view via catálogo.
-
-Ao adicionar linhagem nova: estender **as duas views** + ENUM `species_choice_kind` se necessário — não copiar UNION em TypeScript.
+`species_choice_kind` permanece estável no TS.
 
 ---
 

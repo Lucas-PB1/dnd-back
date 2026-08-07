@@ -25,13 +25,16 @@ describe('FindFeatOptionsQuery', () => {
           useValue: {
             find: jest.fn().mockResolvedValue([
               {
-                featId: '1',
+                scope: 'feat',
+                ownerId: '1',
                 optionKey: 'proficiency1',
                 label: 'Proficiência 1',
                 valueType: 'proficiency',
                 sortOrder: 1,
                 dependsOnOptionKey: null,
                 spellMaxLevel: null,
+                spellSchoolSlugs: null,
+                spellRitualOnly: false,
               },
             ]),
           },

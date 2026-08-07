@@ -10,7 +10,7 @@ BEGIN
   ALTER TABLE rpg.player_character ENABLE ROW LEVEL SECURITY;
   ALTER TABLE rpg.player_character_skill ENABLE ROW LEVEL SECURITY;
   ALTER TABLE rpg.player_character_species_choice ENABLE ROW LEVEL SECURITY;
-  ALTER TABLE rpg.player_character_subclass_option ENABLE ROW LEVEL SECURITY;
+  ALTER TABLE rpg.player_character_option ENABLE ROW LEVEL SECURITY;
   ALTER TABLE rpg.player_character_feat ENABLE ROW LEVEL SECURITY;
   ALTER TABLE rpg.player_character_spell ENABLE ROW LEVEL SECURITY;
   ALTER TABLE rpg.player_character_equipment ENABLE ROW LEVEL SECURITY;
@@ -32,8 +32,8 @@ BEGIN
       character_id IN (SELECT id FROM rpg.player_character WHERE user_id = auth.uid())
     );
 
-  DROP POLICY IF EXISTS player_character_subclass_option_own ON rpg.player_character_subclass_option;
-  CREATE POLICY player_character_subclass_option_own ON rpg.player_character_subclass_option
+  DROP POLICY IF EXISTS player_character_option_own ON rpg.player_character_option;
+  CREATE POLICY player_character_option_own ON rpg.player_character_option
     FOR ALL USING (
       character_id IN (SELECT id FROM rpg.player_character WHERE user_id = auth.uid())
     );

@@ -28,7 +28,8 @@ describe('CharacterFeatsValidator.validateFeatOptions', () => {
     featOptionDefRepo = {
       find: jest.fn().mockResolvedValue([
         {
-          featId: '10',
+          scope: 'feat',
+          ownerId: '10',
           optionKey: 'spellList',
           label: 'Lista',
           valueType: 'catalog',
@@ -36,9 +37,11 @@ describe('CharacterFeatsValidator.validateFeatOptions', () => {
           dependsOnOptionKey: null,
           spellMaxLevel: null,
           spellSchoolSlugs: null,
+          spellRitualOnly: false,
         },
         {
-          featId: '10',
+          scope: 'feat',
+          ownerId: '10',
           optionKey: 'cantrip1',
           label: 'Truque',
           valueType: 'spell',
@@ -46,6 +49,7 @@ describe('CharacterFeatsValidator.validateFeatOptions', () => {
           dependsOnOptionKey: 'spellList',
           spellMaxLevel: 0,
           spellSchoolSlugs: null,
+          spellRitualOnly: false,
         },
       ] as PhbFeatOptionDef[]),
     };

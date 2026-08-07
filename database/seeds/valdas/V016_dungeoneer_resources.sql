@@ -14,11 +14,12 @@ ON CONFLICT (slug) DO UPDATE SET
   subclass_id = EXCLUDED.subclass_id,
   min_level = EXCLUDED.min_level;
 
-INSERT INTO rpg.phb_subclass_resource (
-  subclass_id, resource_id, unlock_level, max_formula, fixed_max, feature_id,
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max, feature_id,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
 SELECT
+  'subclass'::rpg.resource_owner_kind,
   s.id,
   rd.id,
   7,
@@ -33,7 +34,7 @@ JOIN rpg.phb_resource_definition rd ON rd.slug = 'dungeon-precautions'
 LEFT JOIN rpg.phb_subclass_feature sf
   ON sf.subclass_id = s.id AND sf.name = 'Precauções na masmorra'
 WHERE s.slug = 'dungeoneer'
-ON CONFLICT (subclass_id, resource_id, unlock_level) DO UPDATE SET
+ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
   max_formula = EXCLUDED.max_formula,
   fixed_max = EXCLUDED.fixed_max,
   feature_id = EXCLUDED.feature_id,

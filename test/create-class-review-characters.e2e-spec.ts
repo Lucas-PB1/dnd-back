@@ -365,11 +365,12 @@ describe('Create class review characters (L20)', () => {
         );
       }
 
+      // Lote C: query unified phb_option_def/value with scope='subclass'
       const optionKeys = await db.query<{ option_key: string }[]>(
         `SELECT def.option_key
-         FROM rpg.phb_subclass_option_def def
-         JOIN rpg.phb_subclass s ON s.id = def.subclass_id
-         WHERE s.slug = $1 AND def.unlock_level <= $2
+         FROM rpg.phb_option_def def
+         JOIN rpg.phb_subclass s ON s.id = def.owner_id
+         WHERE def.scope = 'subclass' AND s.slug = $1 AND def.unlock_level <= $2
          ORDER BY def.option_key`,
         [subclassSlug, LEVEL],
       );
@@ -378,9 +379,9 @@ describe('Create class review characters (L20)', () => {
       for (const { option_key } of optionKeys) {
         const values = await db.query<{ value_id: string }[]>(
           `SELECT v.value_id
-           FROM rpg.phb_subclass_option_value v
-           JOIN rpg.phb_subclass s ON s.id = v.subclass_id
-           WHERE s.slug = $1 AND v.option_key = $2
+           FROM rpg.phb_option_value v
+           JOIN rpg.phb_subclass s ON s.id = v.owner_id
+           WHERE v.scope = 'subclass' AND s.slug = $1 AND v.option_key = $2
            ORDER BY v.sort_order, v.value_id`,
           [subclassSlug, option_key],
         );

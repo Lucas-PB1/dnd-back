@@ -15,8 +15,8 @@ export class FeatOptionResponseDto {
   @ApiProperty({ example: 'spellList' })
   optionKey!: string;
 
-  @ApiProperty({ example: 'Lista de magias' })
-  label!: string;
+  @ApiPropertyOptional({ example: 'Lista de magias' })
+  label!: string | null;
 
   @ApiProperty({ example: 'catalog' })
   valueType!: string;

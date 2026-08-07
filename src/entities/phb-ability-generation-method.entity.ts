@@ -1,16 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { ViewEntity, ViewColumn } from 'typeorm';
 
-@Entity({ schema: 'rpg', name: 'phb_ability_generation_method' })
+@ViewEntity({ schema: 'rpg', name: 'v_phb_ability_generation_method' })
 export class PhbAbilityGenerationMethod {
-  @PrimaryGeneratedColumn({ type: 'bigint' })
-  id!: string;
-
-  @Column({ unique: true })
+  @ViewColumn()
   slug!: string;
 
-  @Column()
+  @ViewColumn()
   name!: string;
 
-  @Column()
+  @ViewColumn()
   description!: string;
 }

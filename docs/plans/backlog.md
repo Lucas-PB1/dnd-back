@@ -38,6 +38,14 @@ Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mecha
 
 Não priorizar. Só retomar com pedido explícito.
 
+### Referência — modelo de dados (proposta)
+
+Consolidação de schema pós-auditoria (`analise`):  
+[`adr-schema-consolidation.md`](../architecture/adr-schema-consolidation.md) ·  
+[`schema-equivalence-map.md`](../architecture/schema-equivalence-map.md) ·  
+[`schema-consolidation-plan.md`](schema-consolidation-plan.md)  
+Status: **Aceito** — consolidação agressiva A→G em andamento (`db:setup`).
+
 - [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)
 - [ ] Iniciativa PC: fontes além de DEX + Alerta — **traços** e **condições** (não magias)
 

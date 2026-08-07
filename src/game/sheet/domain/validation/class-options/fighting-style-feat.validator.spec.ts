@@ -129,7 +129,8 @@ describe('CharacterFeatsValidator fighting_style feat option value', () => {
     featOptionDefRepo = {
       find: jest.fn().mockResolvedValue([
         {
-          featId: '9',
+          scope: 'feat',
+          ownerId: '9',
           optionKey: 'fightingStyle',
           label: 'Estilo',
           valueType: 'fighting_style',

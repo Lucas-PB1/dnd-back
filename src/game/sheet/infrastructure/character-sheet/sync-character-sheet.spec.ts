@@ -85,23 +85,18 @@ describe('syncCharacterSheet', () => {
   });
 
   it('removes orphan feat options when feats shrink', async () => {
+    // Lote C: entity uses ownerSlug, delete by id
     (deps.featOptions.find as jest.Mock).mockResolvedValue([
-      { featSlug: 'alert', instanceIndex: 0, optionKey: 'pick' },
-      { featSlug: 'lucky', instanceIndex: 0, optionKey: 'pick' },
+      { id: 'opt-1', ownerSlug: 'alert', instanceIndex: 0, optionKey: 'pick' },
+      { id: 'opt-2', ownerSlug: 'lucky', instanceIndex: 0, optionKey: 'pick' },
     ]);
 
     await syncCharacterSheet(deps, characterId, {
       characterFeats: [{ featSlug: 'alert', instanceIndex: 0 }],
     });
 
-    expect(deps.featOptions.delete).toHaveBeenCalledWith([
-      {
-        characterId,
-        featSlug: 'lucky',
-        instanceIndex: 0,
-        optionKey: 'pick',
-      },
-    ]);
+    // Lote C: delete by ID now
+    expect(deps.featOptions.delete).toHaveBeenCalledWith(['opt-2']);
   });
 
   it('skips undefined sections', async () => {

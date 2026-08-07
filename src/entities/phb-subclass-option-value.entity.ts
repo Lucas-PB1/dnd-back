@@ -1,22 +1,16 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { PhbOptionDef, PhbOptionValue } from './phb-option.entity';
 
-@Entity({ schema: 'rpg', name: 'phb_subclass_option_value' })
-export class PhbSubclassOptionValue {
-  @PrimaryColumn({ name: 'subclass_id', type: 'bigint' })
-  subclassId!: string;
+// Re-export base classes
+export { PhbOptionDef, PhbOptionValue };
 
-  @PrimaryColumn({ name: 'option_key' })
-  optionKey!: string;
+// Lote C: backward-compatible class aliases that ARE proper classes
+// (for TypeORM and type annotations)
+@Entity({ schema: 'rpg', name: 'phb_option_def' })
+export class PhbSubclassOptionDef extends PhbOptionDef {}
 
-  @PrimaryColumn({ name: 'value_id' })
-  valueId!: string;
-
-  @Column()
-  label!: string;
-
-  @Column({ name: 'sort_order', type: 'int' })
-  sortOrder!: number;
-}
+@Entity({ schema: 'rpg', name: 'phb_option_value' })
+export class PhbSubclassOptionValue extends PhbOptionValue {}
 
 @Entity({ schema: 'rpg', name: 'phb_subclass' })
 export class PhbSubclassRef {

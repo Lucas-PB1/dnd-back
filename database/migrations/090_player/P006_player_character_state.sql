@@ -1,26 +1,26 @@
 -- Estado de mesa (slots gastos, concentração, condições, HP temporário)
+-- Lote A: phb_condition is now a VALUES view (enum rpg.condition_slug defined in 002_types)
 
-CREATE TABLE rpg.phb_condition (
-  slug TEXT PRIMARY KEY,
-  name TEXT NOT NULL
-);
+DROP VIEW IF EXISTS rpg.v_phb_condition;
 
-INSERT INTO rpg.phb_condition (slug, name) VALUES
-  ('blinded', 'Cegueira'),
-  ('charmed', 'Enfeitiçado'),
-  ('deafened', 'Surdez'),
-  ('exhaustion', 'Exaustão'),
-  ('frightened', 'Amedrontado'),
-  ('grappled', 'Agarrado'),
-  ('incapacitated', 'Incapacitado'),
-  ('invisible', 'Invisível'),
-  ('paralyzed', 'Paralisado'),
-  ('petrified', 'Petrificado'),
-  ('poisoned', 'Envenenado'),
-  ('prone', 'Caído'),
-  ('restrained', 'Restringido'),
-  ('stunned', 'Atordoado'),
-  ('unconscious', 'Inconsciente');
+CREATE VIEW rpg.v_phb_condition AS
+SELECT slug, name FROM (VALUES
+  ('blinded'::rpg.condition_slug, 'Cegueira'),
+  ('charmed'::rpg.condition_slug, 'Enfeitiçado'),
+  ('deafened'::rpg.condition_slug, 'Surdez'),
+  ('exhaustion'::rpg.condition_slug, 'Exaustão'),
+  ('frightened'::rpg.condition_slug, 'Amedrontado'),
+  ('grappled'::rpg.condition_slug, 'Agarrado'),
+  ('incapacitated'::rpg.condition_slug, 'Incapacitado'),
+  ('invisible'::rpg.condition_slug, 'Invisível'),
+  ('paralyzed'::rpg.condition_slug, 'Paralisado'),
+  ('petrified'::rpg.condition_slug, 'Petrificado'),
+  ('poisoned'::rpg.condition_slug, 'Envenenado'),
+  ('prone'::rpg.condition_slug, 'Caído'),
+  ('restrained'::rpg.condition_slug, 'Restringido'),
+  ('stunned'::rpg.condition_slug, 'Atordoado'),
+  ('unconscious'::rpg.condition_slug, 'Inconsciente')
+) AS t(slug, name);
 
 CREATE TABLE rpg.player_character_state (
   character_id UUID PRIMARY KEY REFERENCES rpg.player_character(id) ON DELETE CASCADE,

@@ -54,7 +54,7 @@ CROSS JOIN (VALUES
 WHERE sc.slug = 'arcane-trickster';
 
 -- Mãos Mágicas é sempre conhecida/preparada e não pode ser trocada
-INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain_id)
+INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
 SELECT s.id, 3, sp.id, NULL
 FROM rpg.phb_subclass s, rpg.phb_spell sp
 WHERE s.slug = 'arcane-trickster' AND sp.slug = 'maos-magicas'

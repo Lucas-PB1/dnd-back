@@ -161,7 +161,7 @@ export class CharacterFeatOptionsValidator {
     const feat = await this.featRefRepo.findOne({ where: { slug: featSlug } });
     if (!feat) return [];
     return this.featOptionDefRepo.find({
-      where: { featId: feat.id },
+      where: { scope: 'feat' as const, ownerId: feat.id },
       order: { sortOrder: 'ASC', optionKey: 'ASC' },
     });
   }

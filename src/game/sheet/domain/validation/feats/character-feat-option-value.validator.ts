@@ -79,7 +79,8 @@ export class CharacterFeatOptionValueValidator {
   ): Promise<void> {
     const valid = await this.featOptionValueRepo.findOne({
       where: {
-        featId: def.featId,
+        scope: 'feat' as const,
+        ownerId: def.ownerId,
         optionKey: def.optionKey,
         valueId: option.valueId,
       },

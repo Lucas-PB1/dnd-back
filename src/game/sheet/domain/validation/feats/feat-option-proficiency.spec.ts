@@ -7,7 +7,7 @@ import type { FeatOptionDto } from '../../../dto/character-sheet.dto';
 describe('validateFeatProficiencyOption', () => {
   let dataSource: { query: jest.Mock };
   let featOptionValueRepo: { findOne: jest.Mock; exists: jest.Mock };
-  const def = { featId: '1', optionKey: 'proficiency1' } as PhbFeatOptionDef;
+  const def = { scope: 'feat', ownerId: '1', optionKey: 'proficiency1' } as PhbFeatOptionDef;
 
   beforeEach(() => {
     dataSource = { query: jest.fn() };

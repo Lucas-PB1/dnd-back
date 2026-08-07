@@ -28,11 +28,11 @@ ON CONFLICT (slug) DO UPDATE SET
   class_id = EXCLUDED.class_id,
   min_level = EXCLUDED.min_level;
 
-INSERT INTO rpg.phb_class_resource (
-  class_id, resource_id, unlock_level, max_formula, fixed_max,
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
 )
-SELECT c.id, rd.id, v.unlock_level, 'fixed'::rpg.resource_max_formula, v.fixed_max,
+SELECT 'class'::rpg.resource_owner_kind, c.id, rd.id, v.unlock_level, 'fixed'::rpg.resource_max_formula, v.fixed_max,
        FALSE, TRUE, TRUE
 FROM rpg.phb_class c
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'risk' AND rd.class_id = c.id

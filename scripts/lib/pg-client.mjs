@@ -5,19 +5,46 @@ export function isSupabaseUrl(connectionString) {
   return /supabase\.(co|com)/i.test(connectionString);
 }
 
+/**
+ * Pooler (mesmo em :5432) pode descartar DDL entre commits.
+ * Preferir host direto db.<project>.supabase.co para migrate/seed/reset.
+ * @param {string} connectionString
+ */
+export function resolveDirectDatabaseUrl(connectionString) {
+  try {
+    const u = new URL(connectionString);
+    if (!u.hostname.includes('pooler.supabase')) {
+      return connectionString;
+    }
+    const project = u.username.includes('.')
+      ? u.username.split('.')[1]
+      : null;
+    if (!project) return connectionString;
+    u.username = 'postgres';
+    u.hostname = `db.${project}.supabase.co`;
+    u.port = '5432';
+    return u.toString();
+  } catch {
+    return connectionString;
+  }
+}
+
 /** @param {string} connectionString */
 export function createPgClient(connectionString) {
   const ssl = isSupabaseUrl(connectionString)
     ? { rejectUnauthorized: false }
     : undefined;
 
-  return new pg.Client({ connectionString, ssl });
+  return new pg.Client({
+    connectionString: resolveDirectDatabaseUrl(connectionString),
+    ssl,
+  });
 }
 
 /** @param {string} connectionString */
 export function maskDatabaseUrl(connectionString) {
   try {
-    const url = new URL(connectionString);
+    const url = new URL(resolveDirectDatabaseUrl(connectionString));
     if (url.password) url.password = '****';
     return `${url.hostname}:${url.port || '5432'}${url.pathname}`;
   } catch {

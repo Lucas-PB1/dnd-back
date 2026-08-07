@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbSubclassOptionValue, PhbSubclassRef } from '../../../entities/phb-subclass-option-value.entity';
+import { PhbSubclassRef, PhbOptionValue } from '../../../entities/phb-subclass-option-value.entity';
 import { CatalogLookupService } from '../../catalog-lookup.service';
 import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
 import { SubclassOptionResponseDto } from '../dto/subclass-option-response.dto';
@@ -11,8 +11,8 @@ export class FindSubclassOptionsQuery {
   constructor(
     @InjectRepository(PhbSubclassRef)
     private readonly subclassRepo: Repository<PhbSubclassRef>,
-    @InjectRepository(PhbSubclassOptionValue)
-    private readonly optionValuesRepo: Repository<PhbSubclassOptionValue>,
+    @InjectRepository(PhbOptionValue)
+    private readonly optionValuesRepo: Repository<PhbOptionValue>,
     private readonly catalogLookup: CatalogLookupService,
   ) {}
 
@@ -56,10 +56,13 @@ export class FindSubclassOptionsQuery {
               val.value_id AS "valueId",
               val.label AS "valueLabel",
               val.sort_order AS "sortOrder"
-       FROM rpg.phb_subclass_option_def def
-       JOIN rpg.phb_subclass_option_value val
-         ON val.subclass_id = def.subclass_id AND val.option_key = def.option_key
-       WHERE def.subclass_id = $1
+       FROM rpg.phb_option_def def
+       JOIN rpg.phb_option_value val
+         ON val.scope = def.scope
+        AND val.owner_id = def.owner_id
+        AND val.option_key = def.option_key
+       WHERE def.scope = 'subclass'::rpg.option_scope
+         AND def.owner_id = $1
          AND def.unlock_level <= $2
        ORDER BY def.unlock_level ASC, def.option_key ASC, val.sort_order ASC`,
       [subclassId, characterLevel],

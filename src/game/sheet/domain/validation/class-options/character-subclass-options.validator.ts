@@ -4,8 +4,8 @@ import { DataSource, Repository } from 'typeorm';
 import { assertUnique } from '../../../../../common/assert';
 import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
 import {
-  PhbSubclassOptionValue,
   PhbSubclassRef,
+  PhbOptionValue,
 } from '../../../../../entities/phb-subclass-option-value.entity';
 import { CharacterSheetInput, CharacterSheetContext } from '../../character-sheet.types';
 import { isFightingStyleSubclassOptionKey } from './fighting-style-feat-options';
@@ -17,8 +17,8 @@ export class CharacterSubclassOptionsValidator {
     private readonly catalogLookup: CatalogLookupService,
     @InjectRepository(PhbSubclassRef)
     private readonly subclassRefRepo: Repository<PhbSubclassRef>,
-    @InjectRepository(PhbSubclassOptionValue)
-    private readonly subclassOptionValuesRepo: Repository<PhbSubclassOptionValue>,
+    @InjectRepository(PhbOptionValue)
+    private readonly optionValuesRepo: Repository<PhbOptionValue>,
   ) {}
 
   async validateLevelRules(ctx: CharacterSheetContext): Promise<void> {
@@ -53,10 +53,12 @@ export class CharacterSubclassOptionsValidator {
     const subclass = await this.subclassRefRepo.findOne({ where: { slug: subclassSlug } });
     if (!subclass) return [];
 
+    // Lote C: query unified phb_option_def with scope='subclass'
     const rows = await this.dataSource.query<{ optionKey: string }[]>(
       `SELECT DISTINCT def.option_key AS "optionKey"
-       FROM rpg.phb_subclass_option_def def
-       WHERE def.subclass_id = $1
+       FROM rpg.phb_option_def def
+       WHERE def.scope = 'subclass'
+         AND def.owner_id = $1
          AND def.unlock_level <= $2
        ORDER BY def.option_key ASC`,
       [subclass.id, level],
@@ -85,9 +87,11 @@ export class CharacterSubclassOptionsValidator {
     }
 
     for (const option of options) {
-      const valid = await this.subclassOptionValuesRepo.findOne({
+      // Lote C: query unified phb_option_value with scope='subclass'
+      const valid = await this.optionValuesRepo.findOne({
         where: {
-          subclassId: subclass.id,
+          scope: 'subclass',
+          ownerId: subclass.id,
           optionKey: option.optionKey,
           valueId: option.valueId,
         },

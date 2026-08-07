@@ -1,7 +1,7 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindSubclassOptionsQuery } from './find-subclass-options.query';
 import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PhbSubclassRef, PhbSubclassOptionValue } from '../../../entities/phb-subclass-option-value.entity';
+import { PhbSubclassRef, PhbOptionValue } from '../../../entities/phb-subclass-option-value.entity';
 
 describe('FindSubclassOptionsQuery', () => {
   let query: FindSubclassOptionsQuery;
@@ -62,7 +62,7 @@ describe('FindSubclassOptionsQuery', () => {
 
     expect(catalogLookup.findSubclassOrFail).toHaveBeenCalledWith('champion');
     expect(optionValuesRepo.manager.query).toHaveBeenCalledWith(
-      expect.stringContaining('phb_subclass_option_def'),
+      expect.stringContaining('phb_option_def'),
       ['sub-1', 20],
     );
     expect(result.data).toHaveLength(2);

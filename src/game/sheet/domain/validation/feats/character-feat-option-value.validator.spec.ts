@@ -10,7 +10,7 @@ import { validateFeatProficiencyOption } from './feat-option-proficiency';
 import { RESILIENT_FEAT_SLUG } from './resilient-feat-options';
 
 function def(partial: Partial<PhbFeatOptionDef>): PhbFeatOptionDef {
-  return { featId: '1', optionKey: 'pick', label: 'Pick', valueType: 'catalog', sortOrder: 0, dependsOnOptionKey: null, spellMaxLevel: null, spellSchoolSlugs: null, spellRitualOnly: false, ...partial };
+  return { scope: 'feat', ownerId: '1', optionKey: 'pick', label: 'Pick', valueType: 'catalog', sortOrder: 0, unlockLevel: null, dependsOnOptionKey: null, spellMaxLevel: null, spellSchoolSlugs: null, spellRitualOnly: false, ...partial };
 }
 
 describe('CharacterFeatOptionValueValidator', () => {

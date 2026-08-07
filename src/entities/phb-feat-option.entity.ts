@@ -1,52 +1,16 @@
 import { Entity, Column, PrimaryColumn } from 'typeorm';
+import { PhbOptionDef, PhbOptionValue } from './phb-option.entity';
 
-@Entity({ schema: 'rpg', name: 'phb_feat_option_def' })
-export class PhbFeatOptionDef {
-  @PrimaryColumn({ name: 'feat_id', type: 'bigint' })
-  featId!: string;
+// Re-export base classes
+export { PhbOptionDef, PhbOptionValue };
 
-  @PrimaryColumn({ name: 'option_key' })
-  optionKey!: string;
+// Lote C: backward-compatible class aliases that ARE proper classes
+// (for TypeORM and type annotations)
+@Entity({ schema: 'rpg', name: 'phb_option_def' })
+export class PhbFeatOptionDef extends PhbOptionDef {}
 
-  @Column()
-  label!: string;
-
-  @Column({ name: 'value_type' })
-  valueType!: string;
-
-  @Column({ name: 'sort_order', type: 'int' })
-  sortOrder!: number;
-
-  @Column({ name: 'depends_on_option_key', type: 'text', nullable: true })
-  dependsOnOptionKey!: string | null;
-
-  @Column({ name: 'spell_max_level', type: 'int', nullable: true })
-  spellMaxLevel!: number | null;
-
-  @Column({ name: 'spell_school_slugs', type: 'text', array: true, nullable: true })
-  spellSchoolSlugs!: string[] | null;
-
-  @Column({ name: 'spell_ritual_only', type: 'boolean', default: false })
-  spellRitualOnly!: boolean;
-}
-
-@Entity({ schema: 'rpg', name: 'phb_feat_option_value' })
-export class PhbFeatOptionValue {
-  @PrimaryColumn({ name: 'feat_id', type: 'bigint' })
-  featId!: string;
-
-  @PrimaryColumn({ name: 'option_key' })
-  optionKey!: string;
-
-  @PrimaryColumn({ name: 'value_id' })
-  valueId!: string;
-
-  @Column()
-  label!: string;
-
-  @Column({ name: 'sort_order', type: 'int' })
-  sortOrder!: number;
-}
+@Entity({ schema: 'rpg', name: 'phb_option_value' })
+export class PhbFeatOptionValue extends PhbOptionValue {}
 
 @Entity({ schema: 'rpg', name: 'phb_feat' })
 export class PhbFeatRef {

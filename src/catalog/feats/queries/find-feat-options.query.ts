@@ -30,13 +30,14 @@ export class FindFeatOptionsQuery {
       throw new NotFoundException(`Feat '${featSlug}' not found`);
     }
 
+    // Lote C: unified option tables use scope + ownerId
     const defs = await this.optionDefRepo.find({
-      where: { featId: feat.id },
+      where: { scope: 'feat', ownerId: feat.id },
       order: { sortOrder: 'ASC', optionKey: 'ASC' },
     });
 
     const values = await this.optionValueRepo.find({
-      where: { featId: feat.id },
+      where: { scope: 'feat', ownerId: feat.id },
       order: { sortOrder: 'ASC', valueId: 'ASC' },
     });
 

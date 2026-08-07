@@ -62,8 +62,8 @@ export async function loadCharacterSheet(
       order: { featSlug: 'ASC', instanceIndex: 'ASC' },
     }),
     deps.featOptions.find({
-      where: { characterId },
-      order: { featSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
+      where: { characterId, scope: 'feat' },
+      order: { ownerSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
     }),
     deps.spells.find({ where: { characterId }, order: { spellSlug: 'ASC' } }),
     deps.equipment.find({
@@ -99,7 +99,7 @@ export async function loadCharacterSheet(
       instanceIndex: row.instanceIndex,
     })),
     featOptions: featOptionRows.map((row) => ({
-      featSlug: row.featSlug,
+      featSlug: row.ownerSlug, // Lote C: ownerSlug replaces featSlug
       instanceIndex: row.instanceIndex,
       optionKey: row.optionKey,
       valueId: row.valueId,

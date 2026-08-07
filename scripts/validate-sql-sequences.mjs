@@ -54,14 +54,14 @@ function checkSeq(dir, prefix, expectedCount) {
   console.log(`OK ${dir}: ${files.length} file(s)`);
 }
 
-checkSeq('database/migrations/020_tables', 'T', 81);
-checkSeq('database/migrations/060_views', 'V', 32);
-checkSeq('database/migrations/090_player', 'P', 18);
-checkSeq('database/seeds/phb', 'S', 80);
+checkSeq('database/migrations/020_tables', 'T', 65);  // Lote G: resource_grant + combat_modifier
+checkSeq('database/migrations/060_views', 'V', 46);
+checkSeq('database/migrations/090_player', 'P', 19);
+checkSeq('database/seeds/phb', 'S', 70);  // Lote B: -5 (lineage/ancestry seeds)
 checkSeq('database/seeds/subclass', 'S', 10);
 checkSeq('database/seeds/valdas', 'V', 17);
 checkSeq('database/seeds/valdas-gunslinger', 'G', 28);
-checkSeq('database/seeds/valdas-player-pack-2', 'P', 11);
+checkSeq('database/seeds/valdas-player-pack-2', 'P', 12);
 
 // Stale path references
 const stale = [
