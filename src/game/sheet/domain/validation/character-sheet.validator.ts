@@ -60,6 +60,11 @@ export class CharacterSheetValidator {
         input.featOptions,
       );
       await this.classOptionsValidator.validateClassWeaponMasteryOptions(ctx, input.classOptions);
+      await this.classOptionsValidator.validateSpellMasteryOptions(
+        ctx,
+        input.classOptions,
+        input.characterSpells,
+      );
     }
 
     const characterFeats = input.characterFeats ?? [];

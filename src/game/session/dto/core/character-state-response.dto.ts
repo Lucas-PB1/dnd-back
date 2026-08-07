@@ -170,4 +170,16 @@ export class CharacterStateResponseDto {
     description: 'Nível de Aspecto Bestial (Beastborne), 0–5',
   })
   bestialAspectLevel!: number;
+
+  @ApiProperty({
+    example: false,
+    description: 'Escudo de Mísseis armado (próximo cast de Mísseis Mágicos)',
+  })
+  missileShieldArmed!: boolean;
+
+  @ApiProperty({
+    example: false,
+    description: 'Giga-Míssil armado (próximo cast de Mísseis Mágicos)',
+  })
+  gigaMissileArmed!: boolean;
 }

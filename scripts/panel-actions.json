@@ -59,7 +59,6 @@
   {"classSlug":"wizard","subclassSlug":"diviner","slug":"portent","name":"Rolar Presságio","title":null,"unlockLevel":3,"resourceSlug":null,"section":"subclass","spendsFocus":false,"sortOrder":2},
   {"classSlug":"wizard","subclassSlug":"evoker","slug":"sculpt-spells","name":"Esculpir Magias","title":null,"unlockLevel":3,"resourceSlug":null,"section":"subclass","spendsFocus":false,"sortOrder":3},
   {"classSlug":"wizard","subclassSlug":"illusionist","slug":"improved-illusions","name":"Ilusão Aprimorada","title":null,"unlockLevel":3,"resourceSlug":null,"section":"subclass","spendsFocus":false,"sortOrder":4},
-  {"classSlug":"wizard","subclassSlug":null,"slug":"spell-mastery","name":"Dominância de Magias","title":null,"unlockLevel":18,"resourceSlug":null,"section":"subclass","spendsFocus":false,"sortOrder":5},
   {"classSlug":"paladin","subclassSlug":null,"slug":"divine-sense","name":"Sentido Divino","title":null,"unlockLevel":3,"resourceSlug":null,"section":"channel","spendsFocus":false,"sortOrder":1},
   {"classSlug":"paladin","subclassSlug":null,"slug":"oath-channel","name":"Canalizar do Juramento","title":null,"unlockLevel":3,"resourceSlug":null,"section":"channel","spendsFocus":false,"sortOrder":2},
   {"classSlug":"paladin","subclassSlug":null,"slug":"abjure-enemies","name":"Repudiar Inimigos","title":null,"unlockLevel":9,"resourceSlug":null,"section":"channel","spendsFocus":false,"sortOrder":3}

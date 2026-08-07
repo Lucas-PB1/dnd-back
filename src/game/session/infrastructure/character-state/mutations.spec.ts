@@ -35,6 +35,8 @@ describe('mutations', () => {
     recklessActive: false,
     personaMasks: [],
     bestialAspectLevel: 0,
+    missileShieldArmed: false,
+    gigaMissileArmed: false,
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });

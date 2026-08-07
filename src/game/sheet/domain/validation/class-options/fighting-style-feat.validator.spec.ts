@@ -14,6 +14,7 @@ import { CharacterSpeciesChoicesValidator } from './character-species-choices.va
 import { CharacterSubclassOptionsValidator } from './character-subclass-options.validator';
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
+import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
 import { CharacterFeatOptionValueValidator } from '../feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from '../feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from '../feats/character-feats.validator';
@@ -37,6 +38,7 @@ function buildClassOptionsValidator(
     ),
     new CharacterClassExpertiseValidator(dataSource),
     new CharacterWeaponMasteryValidator(dataSource),
+    new CharacterSpellMasteryValidator(dataSource),
   );
 }
 

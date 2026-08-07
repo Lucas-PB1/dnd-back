@@ -72,10 +72,37 @@ INSERT INTO rpg.phb_class_economy_action (
 ('warlock-healing-light', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'celestial'), 'Luz Curativa', 'bonus'::rpg.action_economy_bucket, 3, 'healing-light', NULL, false, 'Cura com reserva de d6s', NULL, NULL, NULL, 64),
 ('warlock-dark-ones-luck', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'fiend'), 'Sorte do Próprio Inferno', 'free'::rpg.action_economy_bucket, 3, 'dark-ones-own-luck', NULL, false, '+1d10 em teste ou salvaguarda', NULL, NULL, NULL, 65),
 ('wizard-improved-illusions', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'illusionist'), 'Ilusão Aprimorada', 'bonus'::rpg.action_economy_bucket, 3, NULL, NULL, false, 'Conjurar ilusões como Ação Bônus (sem componente V)', NULL, NULL, NULL, 66),
-('wizard-mm-free', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'magic-missile-mage'), 'Mísseis Mágicos Gratuitos', 'action'::rpg.action_economy_bucket, 3, 'magic-missile-free', NULL, true, 'Conjure Mísseis sem espaço (gasta 1 uso)', 'Gaste 1 uso para conjurar Mísseis Mágicos sem espaço de magia. Aplique dardos extras e penetração na mesa.', 'spend-resource', NULL, 67),
-('wizard-missile-shield', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'magic-missile-mage'), 'Escudo de Mísseis', 'action'::rpg.action_economy_bucket, 10, 'missile-shield', NULL, true, 'Orbitar dardos (+CA) por até 1 min', 'Ao conjurar Mísseis Mágicos, gaste o uso para orbitar os dardos (+CA até +5, Emanação 3 m, até 1 min).', 'spend-resource', NULL, 68),
-('wizard-giga-missile', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'magic-missile-mage'), 'Giga-Míssil', 'free'::rpg.action_economy_bucket, 14, 'giga-missile', NULL, true, '+mod. INT de Força por dardo', 'Ao conjurar Mísseis Mágicos, gaste o uso para adicionar seu modificador de Inteligência (mín. 1) de dano de Força a cada dardo.', 'spend-resource', NULL, 69),
-('gunslinger-bullet-time', (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'pistolero'), 'Tempo Bala', 'free'::rpg.action_economy_bucket, 14, NULL, NULL, false, '1×/turno: Vantagem em um ataque à distância com arma', 'Uma vez em cada um dos seus turnos, ao fazer um ataque à distância com arma, você pode ter Vantagem na jogada (mesa).', NULL, NULL, 70)
+('wizard-mm-free', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'magic-missile-mage'), 'Mísseis Mágicos Gratuitos', 'action'::rpg.action_economy_bucket, 3, 'magic-missile-free', NULL, true, 'Conjura Mísseis sem espaço (gasta 1 uso)', $mm_free$Na ficha, Conjurar gasta 1 uso gratuito e conjura Mísseis Mágicos sem espaço. Dardos extras e penetração entram na nota de mesa.
+
+Sábio dos Mísseis Mágicos. Adicione a magia Mísseis Mágicos ao seu grimório gratuitamente. Sua expertise nesta magia concede os seguintes benefícios.
+
+Dardos Extra. Quando você conjura Mísseis Mágicos, cria um dardo extra de força mágica. Você cria dois dardos extras no nível 6 de Mago, três dardos extras no nível 10 de Mago e quatro dardos extras no nível 14 de Mago.
+
+Conjuração Livre. Você pode conjurar Mísseis Mágicos sem um espaço de magia. Você pode fazer isso um número de vezes igual ao seu modificador de Inteligência (mínimo de uma vez). Você recupera um uso gasto ao terminar um Descanso Curto e recupera todos os usos gastos ao terminar um Descanso Longo.
+
+Dardos Penetrantes. Seus dardos de Mísseis Mágicos ignoram qualquer efeito, como a magia Escudo, que bloqueie especificamente a magia Mísseis Mágicos.$mm_free$, 'cast:misseis-magicos-free', NULL, 67),
+('wizard-mm-versatile', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'magic-missile-mage'), 'Mísseis Versáteis', 'free'::rpg.action_economy_bucket, 6, NULL, NULL, false, 'Ao conjurar: Tombo 1 / Cegar 3 / Atordoar 5 dardos', $mm_vers$Você pode guiar com precisão seus dardos de Mísseis Mágicos para atingir um alvo onde escolher. Quando você conjura Mísseis Mágicos, pode adicionar um dos seguintes efeitos de Míssil Versátil a um alvo atingido pelos dardos. Cada efeito tem um custo, que é o número de dardos que você deve abrir mão para adicionar o efeito ao alvo. Você pode adicionar efeitos diferentes a alvos diferentes, pagando o custo de cada efeito separadamente.
+
+Míssil de Tombo (Custo: 1 Dardo). O alvo deve ser bem-sucedido em uma salvaguarda de Força contra sua CD de magia ou ter a condição Caído.
+
+Míssil Cegante (Custo: 3 Dardos). O alvo deve ser bem-sucedido em uma salvaguarda de Constituição contra sua CD de magia ou ter a condição Cego até o início do seu próximo turno.
+
+Míssil Atordoante (Custo: 5 Dardos). O alvo deve ser bem-sucedido em uma salvaguarda de Constituição contra sua CD de magia ou ter a condição Atordoado até o início do seu próximo turno.$mm_vers$, NULL, NULL, 68),
+('wizard-missile-shield', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'magic-missile-mage'), 'Escudo de Mísseis', 'free'::rpg.action_economy_bucket, 10, 'missile-shield', NULL, true, 'Armar para o próximo cast (gasta o uso no cast)', $mm_shield$Arme na ficha antes de conjurar Mísseis Mágicos. O uso é gasto no cast (ou restaure com espaço de 3º+).
+
+Quando você conjura Mísseis Mágicos, pode direcionar os dardos em uma órbita apertada ao seu redor, criando uma Emanação protetora de 3 m originada de você, que dura até 1 minuto.
+
+Você ganha um bônus na sua Classe de Armadura igual ao número de dardos orbitando você (bônus máximo de +5). Sempre que uma criatura a até 36 m errar você com uma jogada de ataque, um dardo atinge o atacante, causando dano normalmente e diminuindo em um o número de dardos orbitando você.
+
+Sempre que a Emanação entrar no espaço de uma criatura que você possa ver e sempre que uma criatura que você possa ver entrar na Emanação ou terminar seu turno nela, você pode atingir o alvo com qualquer número de dardos orbitando você, causando dano normalmente e diminuindo o número de dardos orbitando você. Você só pode causar dano a uma criatura com a Emanação uma vez por turno.
+
+Depois de usar este recurso, você não pode usá-lo novamente até terminar um Descanso Longo. Você também pode restaurar seu uso gastando um espaço de magia de nível 3+ (nenhuma ação necessária).$mm_shield$, 'arm:missile-shield', NULL, 69),
+('wizard-giga-missile', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'magic-missile-mage'), 'Giga-Míssil', 'free'::rpg.action_economy_bucket, 14, 'giga-missile', NULL, true, 'Armar para o próximo cast (+mod. INT por dardo)', $mm_giga$Arme na ficha antes de conjurar Mísseis Mágicos. O uso é gasto no cast (ou restaure com espaço de 6º+).
+
+Quando você conjura Mísseis Mágicos, pode aprimorar o dano da magia. Você causa dano de Força extra com cada dardo igual ao seu modificador de Inteligência (mínimo de 1).
+
+Depois de usar este recurso, você não pode usá-lo novamente até terminar um Descanso Longo. Você também pode restaurar seu uso gastando um espaço de magia de nível 6+ (nenhuma ação necessária).$mm_giga$, 'arm:giga-missile', NULL, 70),
+('gunslinger-bullet-time', (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'pistolero'), 'Tempo Bala', 'free'::rpg.action_economy_bucket, 14, NULL, NULL, false, '1×/turno: Vantagem em um ataque à distância com arma', 'Uma vez em cada um dos seus turnos, ao fazer um ataque à distância com arma, você pode ter Vantagem na jogada (mesa).', NULL, NULL, 71)
 ON CONFLICT (action_id) DO UPDATE SET
   class_id = EXCLUDED.class_id,
   subclass_id = EXCLUDED.subclass_id,

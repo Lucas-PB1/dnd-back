@@ -61,4 +61,12 @@ export class PlayerCharacterState {
   /** Nível de Aspecto Bestial (Beastborne), 0–5. */
   @Column({ name: 'bestial_aspect_level', type: 'int', default: 0 })
   bestialAspectLevel!: number;
+
+  /** Escudo de Mísseis armado para o próximo cast de Mísseis Mágicos. */
+  @Column({ name: 'missile_shield_armed', type: 'boolean', default: false })
+  missileShieldArmed!: boolean;
+
+  /** Giga-Míssil armado para o próximo cast de Mísseis Mágicos. */
+  @Column({ name: 'giga_missile_armed', type: 'boolean', default: false })
+  gigaMissileArmed!: boolean;
 }

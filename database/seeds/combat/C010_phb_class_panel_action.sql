@@ -1,6 +1,8 @@
 -- Seed: Class panel actions (combat class panels)
 -- Generated from dnd-front combat-*-panel.tsx ACTION arrays
 
+DELETE FROM rpg.phb_class_panel_action WHERE panel_key = 'wizard|spell-mastery';
+
 INSERT INTO rpg.phb_class_panel_action (
   panel_key, class_id, subclass_id, slug, name, title, unlock_level,
   resource_slug, section, spends_focus, sort_order
@@ -65,7 +67,6 @@ INSERT INTO rpg.phb_class_panel_action (
 ('wizard|diviner|portent', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'diviner'), 'portent', 'Rolar Presságio', NULL, 3, NULL, 'subclass'::rpg.panel_action_section, false, 2),
 ('wizard|evoker|sculpt-spells', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'evoker'), 'sculpt-spells', 'Esculpir Magias', NULL, 3, NULL, 'subclass'::rpg.panel_action_section, false, 3),
 ('wizard|illusionist|improved-illusions', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'illusionist'), 'improved-illusions', 'Ilusão Aprimorada', NULL, 3, NULL, 'subclass'::rpg.panel_action_section, false, 4),
-('wizard|spell-mastery', (SELECT id FROM rpg.phb_class WHERE slug = 'wizard'), NULL, 'spell-mastery', 'Dominância de Magias', NULL, 18, NULL, 'subclass'::rpg.panel_action_section, false, 5),
 ('paladin|divine-sense', (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), NULL, 'divine-sense', 'Sentido Divino', NULL, 3, NULL, 'channel'::rpg.panel_action_section, false, 1),
 ('paladin|oath-channel', (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), NULL, 'oath-channel', 'Canalizar do Juramento', NULL, 3, NULL, 'channel'::rpg.panel_action_section, false, 2),
 ('paladin|abjure-enemies', (SELECT id FROM rpg.phb_class WHERE slug = 'paladin'), NULL, 'abjure-enemies', 'Repudiar Inimigos', NULL, 9, NULL, 'channel'::rpg.panel_action_section, false, 3)

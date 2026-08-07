@@ -33,6 +33,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       | 'validateFightingStyleSelections'
       | 'validateClassExpertiseOptions'
       | 'validateClassWeaponMasteryOptions'
+      | 'validateSpellMasteryOptions'
     >
   >;
   let featsValidator: jest.Mocked<
@@ -66,6 +67,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       validateFightingStyleSelections: jest.fn().mockResolvedValue(undefined),
       validateClassExpertiseOptions: jest.fn().mockResolvedValue(undefined),
       validateClassWeaponMasteryOptions: jest.fn().mockResolvedValue(undefined),
+      validateSpellMasteryOptions: jest.fn().mockResolvedValue(undefined),
     };
     featsValidator = {
       validateCharacterFeats: jest.fn().mockResolvedValue(undefined),

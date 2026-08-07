@@ -90,6 +90,8 @@ export async function buildCharacterStateResponse(input: {
     recklessActive: state.recklessActive ?? false,
     personaMasks: state.personaMasks ?? [],
     bestialAspectLevel: state.bestialAspectLevel ?? 0,
+    missileShieldArmed: state.missileShieldArmed ?? false,
+    gigaMissileArmed: state.gigaMissileArmed ?? false,
   };
 }
 

@@ -26,6 +26,8 @@ export async function findOrCreateCharacterState(
       recklessActive: false,
       personaMasks: [],
       bestialAspectLevel: 0,
+      missileShieldArmed: false,
+      gigaMissileArmed: false,
     });
     await stateRepo.save(row);
   }
@@ -49,6 +51,12 @@ export async function findOrCreateCharacterState(
   }
   if (row.bestialAspectLevel == null) {
     row.bestialAspectLevel = 0;
+  }
+  if (row.missileShieldArmed == null) {
+    row.missileShieldArmed = false;
+  }
+  if (row.gigaMissileArmed == null) {
+    row.gigaMissileArmed = false;
   }
   return row;
 }

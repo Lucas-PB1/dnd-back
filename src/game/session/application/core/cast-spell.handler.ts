@@ -24,6 +24,7 @@ export class CastSpellHandler {
     return {
       spellSlug: dto.spellSlug,
       slotLevelUsed: result.slotLevelUsed,
+      note: result.note,
       state: result.state,
     };
   }

@@ -12,6 +12,7 @@ import { CharacterSpeciesChoicesValidator } from './character-species-choices.va
 import { CharacterSubclassOptionsValidator } from './character-subclass-options.validator';
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
+import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
 import type { ClassProgressionMasteryRow } from './class-weapon-mastery-slots';
 
 /** Facade estável: fighting styles + delegação para validators por concern. */
@@ -24,6 +25,7 @@ export class CharacterClassOptionsValidator {
     private readonly subclassOptionsValidator: CharacterSubclassOptionsValidator,
     private readonly expertiseValidator: CharacterClassExpertiseValidator,
     private readonly weaponMasteryValidator: CharacterWeaponMasteryValidator,
+    private readonly spellMasteryValidator: CharacterSpellMasteryValidator,
   ) {}
 
   async validateFightingStyleSelections(
@@ -130,6 +132,18 @@ export class CharacterClassOptionsValidator {
     options: NonNullable<CharacterSheetInput['classOptions']>,
   ): Promise<void> {
     return this.weaponMasteryValidator.validateClassWeaponMasteryOptions(ctx, options);
+  }
+
+  async validateSpellMasteryOptions(
+    ctx: CharacterSheetContext,
+    options: NonNullable<CharacterSheetInput['classOptions']>,
+    characterSpells: CharacterSheetInput['characterSpells'],
+  ): Promise<void> {
+    return this.spellMasteryValidator.validateSpellMasteryOptions(
+      ctx,
+      options,
+      characterSpells,
+    );
   }
 
   async loadWeaponMasteryProgression(

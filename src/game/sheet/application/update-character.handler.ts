@@ -143,6 +143,9 @@ export class UpdateCharacterHandler {
       ...(needsProficiencyContext && sheetInput.classSkillSlugs === undefined
         ? { classSkillSlugs: sheetSnapshot.classSkillSlugs }
         : {}),
+      ...(needsProficiencyContext && sheetInput.characterSpells === undefined
+        ? { characterSpells: sheetSnapshot.characterSpells }
+        : {}),
       ...(injectFeatOptions ? { featOptions: effectiveFeatOptions } : {}),
       ...(injectSpeciesChoices
         ? { speciesChoices: effectiveSpeciesChoices }

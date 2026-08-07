@@ -13,6 +13,7 @@ import { CharacterSpeciesChoicesValidator } from './class-options/character-spec
 import { CharacterSubclassOptionsValidator } from './class-options/character-subclass-options.validator';
 import { CharacterClassExpertiseValidator } from './class-options/character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './class-options/character-weapon-mastery.validator';
+import { CharacterSpellMasteryValidator } from './class-options/character-spell-mastery.validator';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterCreateRequirementsValidator } from './character-create-requirements.validator';
 import { EMPTY_SHEET_DATA, type CharacterSheetInput } from '../character-sheet.types';
@@ -113,6 +114,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       ),
       new CharacterClassExpertiseValidator(dataSource as unknown as DataSource),
       new CharacterWeaponMasteryValidator(dataSource as unknown as DataSource),
+      new CharacterSpellMasteryValidator(dataSource as unknown as DataSource),
     );
 
     const featsValidator = {

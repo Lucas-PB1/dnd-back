@@ -119,6 +119,10 @@ const WIZARD_TABLE_ACTION_SLUGS = [
   'sculpt-spells',
   'improved-illusions',
   'spell-mastery',
+  'arm-missile-shield',
+  'disarm-missile-shield',
+  'arm-giga-missile',
+  'disarm-giga-missile',
 ] as const;
 
 export class UseWizardTableActionDto {

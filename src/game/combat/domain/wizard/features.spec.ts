@@ -38,5 +38,15 @@ describe('wizard-features', () => {
 
     const divinerNotes = wizardCombatNotes({ classSlug: 'wizard', subclassSlug: 'diviner', level: 3 });
     expect(divinerNotes.some((n) => n.includes('Presságio'))).toBe(true);
+
+    const mmNotes = wizardCombatNotes({
+      classSlug: 'wizard',
+      subclassSlug: 'magic-missile-mage',
+      level: 14,
+    });
+    expect(mmNotes.some((n) => n.includes('Mago dos Mísseis'))).toBe(true);
+    expect(mmNotes.some((n) => n.includes('Mísseis Versáteis'))).toBe(false);
+    expect(mmNotes.some((n) => n.includes('Escudo de Mísseis'))).toBe(false);
+    expect(mmNotes.some((n) => n.includes('Giga-Míssil'))).toBe(false);
   });
 });

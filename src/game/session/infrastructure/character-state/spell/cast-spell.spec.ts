@@ -1,20 +1,33 @@
 import { BadRequestException } from '@nestjs/common';
 import { applyCastSpell } from './cast-spell';
+import { resolveClassResources } from '../resources/class-resources';
+
+jest.mock('../resources/class-resources', () => ({
+  resolveClassResources: jest.fn(),
+}));
+
+const resolveClassResourcesMock = resolveClassResources as jest.MockedFunction<
+  typeof resolveClassResources
+>;
 
 describe('applyCastSpell', () => {
   const character = {
     id: 'c1',
     classSlug: 'fighter',
-    subclassSlug: null,
+    subclassSlug: null as string | null,
     level: 3,
     speciesSlug: 'elf',
     backgroundSlug: 'soldier',
-  } as never;
+    abilityScores: { inteligencia: 10 },
+  };
 
   let state: {
     grantedSpellUses: Record<string, number>;
     spellSlotsUsed: Record<string, number>;
+    resourcesUsed: Record<string, number>;
     concentratingOn: string | null;
+    missileShieldArmed: boolean;
+    gigaMissileArmed: boolean;
   };
   let spellLookup: { hasSpell: jest.Mock };
   let catalogLookup: { findSpellOrFail: jest.Mock };
@@ -29,7 +42,10 @@ describe('applyCastSpell', () => {
     state = {
       grantedSpellUses: {},
       spellSlotsUsed: {},
+      resourcesUsed: {},
       concentratingOn: null,
+      missileShieldArmed: false,
+      gigaMissileArmed: false,
     };
     spellLookup = { hasSpell: jest.fn().mockResolvedValue(true) };
     catalogLookup = {
@@ -46,6 +62,7 @@ describe('applyCastSpell', () => {
         characterSpells: [
           { spellSlug: 'fogo-das-fadas', listType: 'always_prepared' },
         ],
+        classOptions: [],
       }),
     };
     grantedSpellCatalog = {
@@ -66,15 +83,21 @@ describe('applyCastSpell', () => {
     subclassSlots = { findOne: jest.fn().mockResolvedValue(null) };
     stateRepo = { save: jest.fn().mockResolvedValue(state) };
     buildResponse = jest.fn().mockResolvedValue({ ok: true });
+    resolveClassResourcesMock.mockReset();
+    resolveClassResourcesMock.mockResolvedValue([]);
   });
 
-  async function cast(dto: {
-    spellSlug: string;
-    useFreeCast?: boolean;
-    slotLevel?: number;
-  }) {
+  async function cast(
+    dto: {
+      spellSlug: string;
+      useFreeCast?: boolean;
+      freeCastResourceSlug?: string;
+      slotLevel?: number;
+    },
+    characterOverride?: Record<string, unknown>,
+  ) {
     return applyCastSpell({
-      character,
+      character: { ...character, ...(characterOverride ?? {}) } as never,
       state: state as never,
       dto: dto as never,
       stateRepo: stateRepo as never,
@@ -84,6 +107,7 @@ describe('applyCastSpell', () => {
       spellLookup: spellLookup as never,
       sheetRepository: sheetRepository as never,
       grantedSpellCatalog: grantedSpellCatalog as never,
+      dataSource: { query: jest.fn() } as never,
       buildResponse,
     });
   }
@@ -122,5 +146,104 @@ describe('applyCastSpell', () => {
     await expect(
       cast({ spellSlug: 'alarme', useFreeCast: true }),
     ).rejects.toThrow(BadRequestException);
+  });
+
+  describe('magic-missile-mage free cast', () => {
+    const mage = {
+      classSlug: 'wizard',
+      subclassSlug: 'magic-missile-mage',
+      level: 14,
+      abilityScores: { inteligencia: 18 },
+    };
+
+    beforeEach(() => {
+      catalogLookup.findSpellOrFail.mockResolvedValue({
+        level: 1,
+        concentration: false,
+      });
+      resolveClassResourcesMock.mockResolvedValue([
+        { slug: 'magic-missile-free', name: 'Mísseis Gratuitos', max: 4 },
+        { slug: 'missile-shield', name: 'Escudo', max: 1 },
+        { slug: 'giga-missile', name: 'Giga', max: 1 },
+      ] as never);
+    });
+
+    it('spends magic-missile-free and returns dart note', async () => {
+      const result = await cast(
+        {
+          spellSlug: 'misseis-magicos',
+          freeCastResourceSlug: 'magic-missile-free',
+        },
+        mage,
+      );
+      expect(result.slotLevelUsed).toBeNull();
+      expect(state.resourcesUsed['magic-missile-free']).toBe(1);
+      expect(result.note).toMatch(/7 dardo/i);
+      expect(result.note).toMatch(/uso gratuito/i);
+    });
+
+    it('rejects free cast without remaining uses', async () => {
+      state.resourcesUsed = { 'magic-missile-free': 4 };
+      await expect(
+        cast(
+          {
+            spellSlug: 'misseis-magicos',
+            freeCastResourceSlug: 'magic-missile-free',
+          },
+          mage,
+        ),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('applies armed shield and giga then clears flags', async () => {
+      state.missileShieldArmed = true;
+      state.gigaMissileArmed = true;
+      const result = await cast(
+        {
+          spellSlug: 'misseis-magicos',
+          freeCastResourceSlug: 'magic-missile-free',
+        },
+        mage,
+      );
+      expect(state.missileShieldArmed).toBe(false);
+      expect(state.gigaMissileArmed).toBe(false);
+      expect(state.resourcesUsed['missile-shield']).toBe(1);
+      expect(state.resourcesUsed['giga-missile']).toBe(1);
+      expect(result.note).toMatch(/Escudo de Mísseis/i);
+      expect(result.note).toMatch(/Giga-Míssil/i);
+    });
+  });
+
+  describe('spell mastery', () => {
+    it('casts mastery spell without spending a slot', async () => {
+      sheetRepository.load.mockResolvedValue({
+        characterFeats: [],
+        featOptions: [],
+        speciesChoices: [],
+        characterSpells: [
+          { spellSlug: 'alarme', listType: 'prepared' },
+        ],
+        classOptions: [
+          { optionKey: 'spellMastery1', valueId: 'alarme' },
+        ],
+      });
+      catalogLookup.findSpellOrFail.mockResolvedValue({
+        level: 1,
+        concentration: false,
+      });
+      classSlots.findOne.mockResolvedValue({
+        level1: 4,
+        level2: 3,
+      });
+
+      const result = await cast(
+        { spellSlug: 'alarme', slotLevel: 1 },
+        { classSlug: 'wizard', level: 18, subclassSlug: null },
+      );
+
+      expect(result.slotLevelUsed).toBeNull();
+      expect(state.spellSlotsUsed).toEqual({});
+      expect(result.note).toMatch(/Dominância/i);
+    });
   });
 });

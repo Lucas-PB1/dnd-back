@@ -143,6 +143,15 @@ export class CastSpellDto {
   @IsOptional()
   @IsBoolean()
   useFreeCast?: boolean;
+
+  @ApiPropertyOptional({
+    example: 'magic-missile-free',
+    description:
+      'Gasta este recurso de classe em vez de slot (ex.: Mísseis Mágicos gratuitos)',
+  })
+  @IsOptional()
+  @IsString()
+  freeCastResourceSlug?: string;
 }
 
 export class CastSpellResponseDto {
@@ -151,6 +160,11 @@ export class CastSpellResponseDto {
 
   @ApiPropertyOptional({ example: 1 })
   slotLevelUsed!: number | null;
+
+  @ApiPropertyOptional({
+    example: 'Mísseis Mágicos: 7 dardo(s) · penetram Escudo',
+  })
+  note?: string | null;
 
   @ApiProperty({ type: CharacterStateResponseDto })
   state!: CharacterStateResponseDto;

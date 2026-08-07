@@ -43,6 +43,7 @@ import { CharacterSpeciesChoicesValidator } from './domain/validation/class-opti
 import { CharacterSubclassOptionsValidator } from './domain/validation/class-options/character-subclass-options.validator';
 import { CharacterClassExpertiseValidator } from './domain/validation/class-options/character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './domain/validation/class-options/character-weapon-mastery.validator';
+import { CharacterSpellMasteryValidator } from './domain/validation/class-options/character-spell-mastery.validator';
 import { CharacterFeatOptionValueValidator } from './domain/validation/feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from './domain/validation/feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from './domain/validation/feats/character-feats.validator';
@@ -100,6 +101,7 @@ import { CampaignModule } from '../campaign/campaign.module';
     CharacterSubclassOptionsValidator,
     CharacterClassExpertiseValidator,
     CharacterWeaponMasteryValidator,
+    CharacterSpellMasteryValidator,
     CharacterClassOptionsValidator,
     CharacterFeatOptionValueValidator,
     CharacterFeatOptionsValidator,

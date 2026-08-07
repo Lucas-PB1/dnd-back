@@ -63,6 +63,14 @@ export class WizardActionsHandler {
         return this.resolveImprovedIllusions(character);
       case 'spell-mastery':
         return this.resolveSpellMastery(character);
+      case 'arm-missile-shield':
+        return this.resolveMissileFlag(character, 'shield', true);
+      case 'disarm-missile-shield':
+        return this.resolveMissileFlag(character, 'shield', false);
+      case 'arm-giga-missile':
+        return this.resolveMissileFlag(character, 'giga', true);
+      case 'disarm-giga-missile':
+        return this.resolveMissileFlag(character, 'giga', false);
     }
   }
 
@@ -153,6 +161,34 @@ export class WizardActionsHandler {
       actionName: 'Dominância de Magias',
       resourceSpent: false,
       note: 'Dominância de Magias: 1 magia de 1º círculo e 1 de 2º círculo preparadas podem ser conjuradas sem consumir espaço de magia.',
+    };
+  }
+
+  private async resolveMissileFlag(
+    character: PlayerCharacter,
+    kind: 'shield' | 'giga',
+    armed: boolean,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'magic-missile-mage', 'Mago dos Mísseis');
+    if (kind === 'shield') {
+      assertCharacterLevel(character, 10, 'Mago', 'Escudo de Mísseis');
+    } else {
+      assertCharacterLevel(character, 14, 'Mago', 'Giga-Míssil');
+    }
+
+    const state = await this.state.setMissileMageArmedFlags(character, {
+      missileShieldArmed: kind === 'shield' ? armed : undefined,
+      gigaMissileArmed: kind === 'giga' ? armed : undefined,
+    });
+
+    const label = kind === 'shield' ? 'Escudo de Mísseis' : 'Giga-Míssil';
+    return {
+      state: await this.state.buildResponse(character, state),
+      actionName: label,
+      resourceSpent: false,
+      note: armed
+        ? `${label} armado: aplica no próximo Mísseis Mágicos (gasta o uso no cast).`
+        : `${label} desarmado.`,
     };
   }
 }

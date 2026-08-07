@@ -181,6 +181,23 @@ export class CharacterStateRepository {
     return applyShortRestOp(this.coreDeps(), character, hitDiceSpent);
   }
 
+  async setMissileMageArmedFlags(
+    character: PlayerCharacter,
+    flags: {
+      missileShieldArmed?: boolean;
+      gigaMissileArmed?: boolean;
+    },
+  ): Promise<PlayerCharacterState> {
+    const state = await this.findOrCreate(character.id, character.level);
+    if (flags.missileShieldArmed !== undefined) {
+      state.missileShieldArmed = flags.missileShieldArmed;
+    }
+    if (flags.gigaMissileArmed !== undefined) {
+      state.gigaMissileArmed = flags.gigaMissileArmed;
+    }
+    return this.state.save(state);
+  }
+
   syncHitDiceOnLevelChange(
     characterId: string,
     previousLevel: number,

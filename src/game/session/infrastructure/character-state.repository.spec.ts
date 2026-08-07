@@ -72,6 +72,8 @@ describe('CharacterStateRepository', () => {
         recklessActive: false,
         personaMasks: [],
         bestialAspectLevel: 0,
+        missileShieldArmed: false,
+        gigaMissileArmed: false,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 
@@ -138,6 +140,8 @@ describe('CharacterStateRepository', () => {
         recklessActive: false,
         personaMasks: [],
         bestialAspectLevel: 0,
+        missileShieldArmed: false,
+        gigaMissileArmed: false,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 

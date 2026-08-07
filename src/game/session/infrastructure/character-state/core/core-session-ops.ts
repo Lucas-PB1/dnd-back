@@ -57,7 +57,11 @@ export async function castSpellOp(
   deps: CoreSessionDeps,
   character: PlayerCharacter,
   dto: CastSpellDto,
-): Promise<{ slotLevelUsed: number | null; state: CharacterStateResponseDto }> {
+): Promise<{
+  slotLevelUsed: number | null;
+  note: string | null;
+  state: CharacterStateResponseDto;
+}> {
   const state = await deps.findOrCreate(character.id, character.level);
   return applyCastSpell({
     character,
@@ -70,6 +74,7 @@ export async function castSpellOp(
     spellLookup: deps.spellLookup,
     sheetRepository: deps.sheetRepository,
     grantedSpellCatalog: deps.grantedSpellCatalog,
+    dataSource: deps.dataSource,
     buildResponse: deps.buildResponse,
   });
 }
