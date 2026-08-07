@@ -1,11 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { FindFeatOptionsQuery } from './queries/find-feat-options.query';
-import {
-  PhbFeatOptionDef,
-  PhbFeatOptionValue,
-  PhbFeatRef,
-} from '../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../entities/phb-option.entity';
+import { PhbFeatRef } from '../../entities/phb-feat-ref.entity';
 
 describe('FindFeatOptionsQuery', () => {
   let query: FindFeatOptionsQuery;
@@ -21,7 +18,7 @@ describe('FindFeatOptionsQuery', () => {
           },
         },
         {
-          provide: getRepositoryToken(PhbFeatOptionDef),
+          provide: getRepositoryToken(PhbOptionDef),
           useValue: {
             find: jest.fn().mockResolvedValue([
               {
@@ -40,7 +37,7 @@ describe('FindFeatOptionsQuery', () => {
           },
         },
         {
-          provide: getRepositoryToken(PhbFeatOptionValue),
+          provide: getRepositoryToken(PhbOptionValue),
           useValue: { find: jest.fn().mockResolvedValue([]) },
         },
       ],

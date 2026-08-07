@@ -134,8 +134,8 @@ export async function loadClassResourceSchedule(
        cr.recover_one_on_short,
        cr.recover_all_on_short,
        cr.recover_all_on_long
-     FROM rpg.phb_class_resource cr
-     JOIN rpg.phb_class c ON c.id = cr.class_id
+     FROM rpg.phb_resource_grant cr
+     JOIN rpg.phb_class c ON c.id = cr.owner_id AND cr.owner_kind = 'class'::rpg.resource_owner_kind
      JOIN rpg.phb_resource_definition rd ON rd.id = cr.resource_id
      WHERE c.slug = $1
      ORDER BY rd.slug, cr.unlock_level`,
@@ -168,8 +168,8 @@ export async function loadSubclassResourceSchedule(
        sr.recover_one_on_short,
        sr.recover_all_on_short,
        sr.recover_all_on_long
-     FROM rpg.phb_subclass_resource sr
-     JOIN rpg.phb_subclass s ON s.id = sr.subclass_id
+     FROM rpg.phb_resource_grant sr
+     JOIN rpg.phb_subclass s ON s.id = sr.owner_id AND sr.owner_kind = 'subclass'::rpg.resource_owner_kind
      JOIN rpg.phb_resource_definition rd ON rd.id = sr.resource_id
      WHERE s.slug = $1
      ORDER BY rd.slug, sr.unlock_level`,

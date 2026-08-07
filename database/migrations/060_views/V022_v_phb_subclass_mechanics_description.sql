@@ -1,4 +1,5 @@
--- View rpg.v_phb_subclass_mechanics
+-- Recria a view para incluir feature_description (CREATE OR REPLACE
+-- não permite inserir coluna no meio da lista existente).
 
 DROP VIEW IF EXISTS rpg.v_phb_subclass_mechanics;
 
@@ -19,5 +20,8 @@ SELECT
 FROM rpg.phb_subclass_feature sf
 JOIN rpg.phb_subclass s ON s.id = sf.subclass_id
 JOIN rpg.phb_class c ON c.id = s.class_id
-LEFT JOIN rpg.phb_subclass_resource psr ON psr.feature_id = sf.id
+LEFT JOIN rpg.phb_resource_grant psr
+  ON psr.owner_kind = 'subclass'::rpg.resource_owner_kind
+ AND psr.owner_id = s.id
+ AND psr.feature_id = sf.id
 LEFT JOIN rpg.phb_resource_definition rd ON rd.id = psr.resource_id;

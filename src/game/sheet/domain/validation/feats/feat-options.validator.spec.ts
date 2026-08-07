@@ -1,11 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import {
-  PhbFeatOptionDef,
-  PhbFeatOptionValue,
-  PhbFeatRef,
-} from '../../../../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
+import { PhbFeatRef } from '../../../../../entities/phb-feat-ref.entity';
 import { VSpellByClass } from '../../../../../entities/views/v-spell-by-class.entity';
 import { PhbCharacterLevel } from '../../../../../entities/phb-character-level.entity';
 import { CharacterFeatOptionValueValidator } from './character-feat-option-value.validator';
@@ -15,8 +12,8 @@ import { CharacterFeatsValidator } from './character-feats.validator';
 describe('CharacterFeatsValidator.validateFeatOptions', () => {
   let validator: CharacterFeatsValidator;
   let featRefRepo: jest.Mocked<Pick<Repository<PhbFeatRef>, 'findOne'>>;
-  let featOptionDefRepo: jest.Mocked<Pick<Repository<PhbFeatOptionDef>, 'find'>>;
-  let featOptionValueRepo: jest.Mocked<Pick<Repository<PhbFeatOptionValue>, 'findOne'>>;
+  let featOptionDefRepo: jest.Mocked<Pick<Repository<PhbOptionDef>, 'find'>>;
+  let featOptionValueRepo: jest.Mocked<Pick<Repository<PhbOptionValue>, 'findOne'>>;
   let classSpellsRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'findOne'>>;
   let characterLevelsRepo: jest.Mocked<Pick<Repository<PhbCharacterLevel>, 'findOne'>>;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
@@ -51,12 +48,12 @@ describe('CharacterFeatsValidator.validateFeatOptions', () => {
           spellSchoolSlugs: null,
           spellRitualOnly: false,
         },
-      ] as PhbFeatOptionDef[]),
+      ] as PhbOptionDef[]),
     };
     featOptionValueRepo = {
       findOne: jest.fn().mockResolvedValue({ valueId: 'cleric' }),
       exists: jest.fn().mockResolvedValue(false),
-    } as unknown as jest.Mocked<Pick<Repository<PhbFeatOptionValue>, 'findOne'>>;
+    } as unknown as jest.Mocked<Pick<Repository<PhbOptionValue>, 'findOne'>>;
     characterLevelsRepo = {
       findOne: jest.fn().mockResolvedValue({ level: 1, proficiencyBonus: 2 }),
     };
@@ -70,12 +67,12 @@ describe('CharacterFeatsValidator.validateFeatOptions', () => {
     const valueValidator = new CharacterFeatOptionValueValidator(
       dataSource as unknown as DataSource,
       classSpellsRepo as unknown as Repository<VSpellByClass>,
-      featOptionValueRepo as unknown as Repository<PhbFeatOptionValue>,
+      featOptionValueRepo as unknown as Repository<PhbOptionValue>,
     );
     const optionsValidator = new CharacterFeatOptionsValidator(
       dataSource as unknown as DataSource,
       featRefRepo as unknown as Repository<PhbFeatRef>,
-      featOptionDefRepo as unknown as Repository<PhbFeatOptionDef>,
+      featOptionDefRepo as unknown as Repository<PhbOptionDef>,
       characterLevelsRepo as unknown as Repository<PhbCharacterLevel>,
       valueValidator,
     );

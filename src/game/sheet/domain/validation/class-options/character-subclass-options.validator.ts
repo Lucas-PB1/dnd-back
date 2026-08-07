@@ -3,10 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { assertUnique } from '../../../../../common/assert';
 import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import {
-  PhbSubclassRef,
-  PhbOptionValue,
-} from '../../../../../entities/phb-subclass-option-value.entity';
+import { PhbOptionValue } from '../../../../../entities/phb-option.entity';
+import { PhbSubclassRef } from '../../../../../entities/phb-subclass-ref.entity';
 import { CharacterSheetInput, CharacterSheetContext } from '../../character-sheet.types';
 import { isFightingStyleSubclassOptionKey } from './fighting-style-feat-options';
 

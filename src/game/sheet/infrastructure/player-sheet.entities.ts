@@ -38,16 +38,6 @@ export class PlayerCharacterOption {
   instanceIndex!: number;
 }
 
-// Lote C: Legacy class aliases for backward compatibility (TypeORM requires classes)
-@Entity({ schema: 'rpg', name: 'player_character_option' })
-export class PlayerCharacterSubclassOption extends PlayerCharacterOption {}
-
-@Entity({ schema: 'rpg', name: 'player_character_option' })
-export class PlayerCharacterClassOption extends PlayerCharacterOption {}
-
-@Entity({ schema: 'rpg', name: 'player_character_option' })
-export class PlayerCharacterFeatOption extends PlayerCharacterOption {}
-
 @Entity({ schema: 'rpg', name: 'player_character_feat' })
 export class PlayerCharacterFeat {
   @PrimaryColumn({ name: 'character_id', type: 'uuid' })

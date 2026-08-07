@@ -22,11 +22,9 @@ Repetir **estrutura** entre domínios é aceitável quando cada tabela tem FK e 
 
 Colunas extras nullable por scope (filtros de magia no feat, `unlock_level` na subclass, spells/benefits tipados na species — Lote B).
 
-**Compat:** views `phb_subclass_option_*`, `phb_species_option_*`, `phb_feat_option_*` (V001). Seeds escrevem nas tabelas unificadas.
-
 **ENUM:** `rpg.option_value_type`, `rpg.option_scope`.
 
-Runtime: `player_character_option` (+ views compat de escolha tipada em P007).
+Runtime: `player_character_option` (RLS em P004).
 
 ---
 
@@ -78,7 +76,7 @@ Runtime: `player_character_equipment.package_id` FK nullable + `package_slug` / 
 ## 6. Recursos e modifiers (Lote G — DONE)
 
 - `phb_resource_definition` — definição
-- `phb_resource_grant` — cotas class/subclass (compat views `phb_class_resource` / `phb_subclass_resource`)
+- `phb_resource_grant` — cotas class/subclass
 - `phb_combat_modifier` — HP bonus + unarmored defense (views `v_phb_hp_bonus_source` / `v_phb_unarmored_defense`)
 
 ---
@@ -87,8 +85,7 @@ Runtime: `player_character_equipment.package_id` FK nullable + `package_slug` / 
 
 `phb_class_proficiency` com `kind` (`saving_throw`, `primary_ability`, `armor_training`, `weapon`, `fighting_style`).
 
-Compat views com nomes legados para SQL existente em combat/sheet.  
-`class-proficiencies.query.ts` lê a tabela unificada.
+`class-proficiencies.query.ts` e SQL de combat/sheet leem a tabela unificada diretamente.
 
 **KEEP separados:** `phb_class_skill_pool`, `phb_class_spellcasting`, `phb_subclass_spellcasting`.
 

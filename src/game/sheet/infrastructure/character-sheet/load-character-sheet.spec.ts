@@ -1,14 +1,12 @@
 import { ObjectLiteral, Repository } from 'typeorm';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
-  PlayerCharacterClassOption,
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
-  PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
+  PlayerCharacterOption,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
-  PlayerCharacterSubclassOption,
 } from '../player-sheet.entities';
 import { EMPTY_SHEET_DATA } from '../../domain/character-sheet.types';
 import {
@@ -35,13 +33,8 @@ describe('load-character-sheet', () => {
       skills: repo<PlayerCharacterSkill>() as unknown as Repository<PlayerCharacterSkill>,
       speciesChoices:
         repo<PlayerCharacterSpeciesChoice>() as unknown as Repository<PlayerCharacterSpeciesChoice>,
-      subclassOptions:
-        repo<PlayerCharacterSubclassOption>() as unknown as Repository<PlayerCharacterSubclassOption>,
-      classOptions:
-        repo<PlayerCharacterClassOption>() as unknown as Repository<PlayerCharacterClassOption>,
+      options: repo<PlayerCharacterOption>() as unknown as Repository<PlayerCharacterOption>,
       feats: repo<PlayerCharacterFeat>() as unknown as Repository<PlayerCharacterFeat>,
-      featOptions:
-        repo<PlayerCharacterFeatOption>() as unknown as Repository<PlayerCharacterFeatOption>,
       spells: repo<PlayerCharacterSpell>() as unknown as Repository<PlayerCharacterSpell>,
       equipment:
         repo<PlayerCharacterEquipment>() as unknown as Repository<PlayerCharacterEquipment>,
@@ -93,17 +86,21 @@ describe('load-character-sheet', () => {
       (deps.speciesChoices.find as jest.Mock).mockResolvedValue([
         { choiceKind: 'language', choiceSlug: 'elvish' },
       ]);
-      (deps.subclassOptions.find as jest.Mock).mockResolvedValue([
-        { optionKey: 'feature', valueId: 'fire' },
-      ]);
-      (deps.classOptions.find as jest.Mock).mockResolvedValue([
-        { optionKey: 'expertiseSkill1', valueId: 'stealth' },
-      ]);
+      (deps.options.find as jest.Mock).mockImplementation((opts: { where: { scope?: string } }) => {
+        if (opts.where.scope === 'subclass') {
+          return Promise.resolve([{ optionKey: 'feature', valueId: 'fire' }]);
+        }
+        if (opts.where.scope === 'class') {
+          return Promise.resolve([{ optionKey: 'expertiseSkill1', valueId: 'stealth' }]);
+        }
+        if (opts.where.scope === 'feat') {
+          return Promise.resolve([
+            { ownerSlug: 'alert', instanceIndex: 0, optionKey: 'pick', valueId: 'perception' },
+          ]);
+        }
+        return Promise.resolve([]);
+      });
       (deps.feats.find as jest.Mock).mockResolvedValue([{ featSlug: 'alert', instanceIndex: 0 }]);
-      // Lote C: DB entity uses ownerSlug, function maps to featSlug
-      (deps.featOptions.find as jest.Mock).mockResolvedValue([
-        { ownerSlug: 'alert', instanceIndex: 0, optionKey: 'pick', valueId: 'perception' },
-      ]);
       (deps.spells.find as jest.Mock).mockResolvedValue([
         { spellSlug: 'fire-bolt', listType: 'known' },
       ]);

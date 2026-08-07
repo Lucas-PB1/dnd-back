@@ -72,10 +72,10 @@ export class CharacterClassOptionsValidator {
   async loadClassFightingStyleSlugs(classSlug: string): Promise<string[]> {
     const rows = await this.dataSource.query<{ slug: string }[]>(
       `SELECT fs.slug
-       FROM rpg.phb_class_fighting_style cfs
-       JOIN rpg.phb_class c ON c.id = cfs.class_id
-       JOIN rpg.phb_fighting_style fs ON fs.id = cfs.fighting_style_id
-       WHERE c.slug = $1
+       FROM rpg.phb_class_proficiency cp
+       JOIN rpg.phb_class c ON c.id = cp.class_id
+       JOIN rpg.phb_fighting_style fs ON fs.id = cp.ref_id
+       WHERE c.slug = $1 AND cp.kind = 'fighting_style'::rpg.class_proficiency_kind
        ORDER BY fs.slug`,
       [classSlug],
     );

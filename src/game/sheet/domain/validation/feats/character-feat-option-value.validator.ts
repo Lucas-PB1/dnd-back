@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { PhbFeatOptionDef, PhbFeatOptionValue } from '../../../../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
 import { VSpellByClass } from '../../../../../entities/views/v-spell-by-class.entity';
 import { FeatOptionDto } from '../../../dto/character-sheet.dto';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
@@ -13,12 +13,12 @@ export class CharacterFeatOptionValueValidator {
     private readonly dataSource: DataSource,
     @InjectRepository(VSpellByClass)
     private readonly classSpellsRepo: Repository<VSpellByClass>,
-    @InjectRepository(PhbFeatOptionValue)
-    private readonly featOptionValueRepo: Repository<PhbFeatOptionValue>,
+    @InjectRepository(PhbOptionValue)
+    private readonly featOptionValueRepo: Repository<PhbOptionValue>,
   ) {}
 
   async validate(
-    def: PhbFeatOptionDef,
+    def: PhbOptionDef,
     option: FeatOptionDto,
     featOptions: FeatOptionDto[],
     featSlug: string,
@@ -53,7 +53,7 @@ export class CharacterFeatOptionValueValidator {
   }
 
   private async validateFightingStyle(
-    def: PhbFeatOptionDef,
+    def: PhbOptionDef,
     option: FeatOptionDto,
     classFightingStyleSlugs: string[],
   ): Promise<void> {
@@ -74,7 +74,7 @@ export class CharacterFeatOptionValueValidator {
   }
 
   private async assertCatalogValue(
-    def: PhbFeatOptionDef,
+    def: PhbOptionDef,
     option: FeatOptionDto,
   ): Promise<void> {
     const valid = await this.featOptionValueRepo.findOne({
@@ -93,7 +93,7 @@ export class CharacterFeatOptionValueValidator {
   }
 
   private async validateAbility(
-    def: PhbFeatOptionDef,
+    def: PhbOptionDef,
     option: FeatOptionDto,
     featSlug: string,
     classSavingThrowSlugs: string[],
@@ -111,7 +111,7 @@ export class CharacterFeatOptionValueValidator {
   }
 
   private async validateSpell(
-    def: PhbFeatOptionDef,
+    def: PhbOptionDef,
     option: FeatOptionDto,
     featOptions: FeatOptionDto[],
   ): Promise<void> {

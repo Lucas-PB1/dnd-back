@@ -1,13 +1,13 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { assertUnique } from '../../../../../common/assert';
-import { PhbFeatOptionDef, PhbFeatOptionValue } from '../../../../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
 import { FeatOptionDto } from '../../../dto/character-sheet.dto';
 
 export async function validateFeatProficiencyOption(
   dataSource: DataSource,
-  featOptionValueRepo: Repository<PhbFeatOptionValue>,
-  def: PhbFeatOptionDef,
+  featOptionValueRepo: Repository<PhbOptionValue>,
+  def: PhbOptionDef,
   option: FeatOptionDto,
   featOptions: FeatOptionDto[],
 ): Promise<void> {

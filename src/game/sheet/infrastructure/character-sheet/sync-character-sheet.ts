@@ -3,23 +3,19 @@ import { CharacterSheetInput } from '../../domain/character-sheet.types';
 import { featInstanceKey } from '../../domain/validation/feats/character-feat';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
-  PlayerCharacterClassOption,
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
-  PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
+  PlayerCharacterOption,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
-  PlayerCharacterSubclassOption,
 } from '../player-sheet.entities';
 
 export type CharacterSheetSyncDeps = {
   skills: Repository<PlayerCharacterSkill>;
   speciesChoices: Repository<PlayerCharacterSpeciesChoice>;
-  subclassOptions: Repository<PlayerCharacterSubclassOption>;
-  classOptions: Repository<PlayerCharacterClassOption>;
+  options: Repository<PlayerCharacterOption>;
   feats: Repository<PlayerCharacterFeat>;
-  featOptions: Repository<PlayerCharacterFeatOption>;
   spells: Repository<PlayerCharacterSpell>;
   equipment: Repository<PlayerCharacterEquipment>;
   languages: Repository<PlayerCharacterLanguage>;
@@ -53,11 +49,14 @@ export async function syncCharacterSheet(
   }
 
   if (input.subclassOptions !== undefined) {
-    await deps.subclassOptions.delete({ characterId });
+    await deps.options.delete({ characterId, scope: 'subclass' });
     if (input.subclassOptions.length > 0) {
-      await deps.subclassOptions.insert(
+      await deps.options.insert(
         input.subclassOptions.map((option) => ({
           characterId,
+          scope: 'subclass' as const,
+          ownerSlug: '',
+          instanceIndex: 0,
           optionKey: option.optionKey,
           valueId: option.valueId,
         })),
@@ -66,11 +65,14 @@ export async function syncCharacterSheet(
   }
 
   if (input.classOptions !== undefined) {
-    await deps.classOptions.delete({ characterId });
+    await deps.options.delete({ characterId, scope: 'class' });
     if (input.classOptions.length > 0) {
-      await deps.classOptions.insert(
+      await deps.options.insert(
         input.classOptions.map((option) => ({
           characterId,
+          scope: 'class' as const,
+          ownerSlug: '',
+          instanceIndex: 0,
           optionKey: option.optionKey,
           valueId: option.valueId,
         })),
@@ -95,8 +97,7 @@ export async function syncCharacterSheet(
         featInstanceKey(feat.featSlug, feat.instanceIndex),
       ),
     );
-    // Lote C: featOptions now use ownerSlug + scope
-    const existingOptions = await deps.featOptions.find({
+    const existingOptions = await deps.options.find({
       where: { characterId, scope: 'feat' },
     });
     const orphanIds = existingOptions.filter(
@@ -104,18 +105,18 @@ export async function syncCharacterSheet(
         !validKeys.has(featInstanceKey(option.ownerSlug, option.instanceIndex)),
     );
     if (orphanIds.length > 0) {
-      await deps.featOptions.delete(orphanIds.map((o) => o.id));
+      await deps.options.delete(orphanIds.map((o) => o.id));
     }
   }
 
   if (input.featOptions !== undefined) {
-    await deps.featOptions.delete({ characterId, scope: 'feat' });
+    await deps.options.delete({ characterId, scope: 'feat' });
     if (input.featOptions.length > 0) {
-      await deps.featOptions.insert(
+      await deps.options.insert(
         input.featOptions.map((option) => ({
           characterId,
           scope: 'feat' as const,
-          ownerSlug: option.featSlug, // API uses featSlug, DB uses ownerSlug
+          ownerSlug: option.featSlug,
           instanceIndex: option.instanceIndex ?? 0,
           optionKey: option.optionKey,
           valueId: option.valueId,
@@ -170,14 +171,14 @@ export async function clearSubclassOptions(
   deps: CharacterSheetSyncDeps,
   characterId: string,
 ): Promise<void> {
-  await deps.subclassOptions.delete({ characterId });
+  await deps.options.delete({ characterId, scope: 'subclass' });
 }
 
 export async function clearClassOptions(
   deps: CharacterSheetSyncDeps,
   characterId: string,
 ): Promise<void> {
-  await deps.classOptions.delete({ characterId });
+  await deps.options.delete({ characterId, scope: 'class' });
 }
 
 export async function clearClassSkills(

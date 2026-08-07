@@ -55,7 +55,7 @@ function checkSeq(dir, prefix, expectedCount) {
 }
 
 checkSeq('database/migrations/020_tables', 'T', 65);  // Lote G: resource_grant + combat_modifier
-checkSeq('database/migrations/060_views', 'V', 46);
+checkSeq('database/migrations/060_views', 'V', 45);
 checkSeq('database/migrations/090_player', 'P', 19);
 checkSeq('database/seeds/phb', 'S', 70);  // Lote B: -5 (lineage/ancestry seeds)
 checkSeq('database/seeds/subclass', 'S', 10);

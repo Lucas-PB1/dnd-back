@@ -52,10 +52,10 @@ export async function executeRollSavingThrow(input: {
   const ability = input.dto.abilitySlug as AbilityKey;
   const stRows = await input.dataSource.query<{ slug: string }[]>(
     `SELECT a.slug
-     FROM rpg.phb_class_saving_throw cst
-     JOIN rpg.phb_class c ON c.id = cst.class_id
-     JOIN rpg.phb_ability a ON a.id = cst.ability_id
-     WHERE c.slug = $1`,
+     FROM rpg.phb_class_proficiency cp
+     JOIN rpg.phb_class c ON c.id = cp.class_id
+     JOIN rpg.phb_ability a ON a.id = cp.ref_id
+     WHERE c.slug = $1 AND cp.kind = 'saving_throw'::rpg.class_proficiency_kind`,
     [character.classSlug],
   );
   const sheet = await input.sheet.load(character.id, character.backgroundSlug);

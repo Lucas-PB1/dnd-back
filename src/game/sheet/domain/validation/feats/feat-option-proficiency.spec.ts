@@ -1,13 +1,13 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
-import { PhbFeatOptionDef, PhbFeatOptionValue } from '../../../../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
 import type { FeatOptionDto } from '../../../dto/character-sheet.dto';
 
 describe('validateFeatProficiencyOption', () => {
   let dataSource: { query: jest.Mock };
   let featOptionValueRepo: { findOne: jest.Mock; exists: jest.Mock };
-  const def = { scope: 'feat', ownerId: '1', optionKey: 'proficiency1' } as PhbFeatOptionDef;
+  const def = { scope: 'feat', ownerId: '1', optionKey: 'proficiency1' } as PhbOptionDef;
 
   beforeEach(() => {
     dataSource = { query: jest.fn() };
@@ -20,7 +20,7 @@ describe('validateFeatProficiencyOption', () => {
   ): Promise<void> {
     await validateFeatProficiencyOption(
       dataSource as unknown as DataSource,
-      featOptionValueRepo as unknown as Repository<PhbFeatOptionValue>,
+      featOptionValueRepo as unknown as Repository<PhbOptionValue>,
       def,
       option,
       featOptions,

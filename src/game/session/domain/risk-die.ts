@@ -1,6 +1,6 @@
 /**
  * Tamanho do Risk die do Gunslinger (Valdas) por nível.
- * Contagens (4/5/6) vêm de `phb_class_resource`; o dado não cabe no modelo de usos.
+ * Contagens (4/5/6) vêm de `phb_resource_grant`; o dado não cabe no modelo de usos.
  */
 
 const RISK_DIE_FACES_BY_LEVEL: ReadonlyArray<{

@@ -5,24 +5,20 @@ import {
 } from '../../domain/character-sheet.types';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
-  PlayerCharacterClassOption,
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
-  PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
+  PlayerCharacterOption,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
-  PlayerCharacterSubclassOption,
 } from '../player-sheet.entities';
 
 export type CharacterSheetLoadDeps = {
   dataSource: DataSource;
   skills: Repository<PlayerCharacterSkill>;
   speciesChoices: Repository<PlayerCharacterSpeciesChoice>;
-  subclassOptions: Repository<PlayerCharacterSubclassOption>;
-  classOptions: Repository<PlayerCharacterClassOption>;
+  options: Repository<PlayerCharacterOption>;
   feats: Repository<PlayerCharacterFeat>;
-  featOptions: Repository<PlayerCharacterFeatOption>;
   spells: Repository<PlayerCharacterSpell>;
   equipment: Repository<PlayerCharacterEquipment>;
   languages: Repository<PlayerCharacterLanguage>;
@@ -49,19 +45,19 @@ export async function loadCharacterSheet(
       where: { characterId },
       order: { choiceKind: 'ASC' },
     }),
-    deps.subclassOptions.find({
-      where: { characterId },
+    deps.options.find({
+      where: { characterId, scope: 'subclass' },
       order: { optionKey: 'ASC' },
     }),
-    deps.classOptions.find({
-      where: { characterId },
+    deps.options.find({
+      where: { characterId, scope: 'class' },
       order: { optionKey: 'ASC' },
     }),
     deps.feats.find({
       where: { characterId },
       order: { featSlug: 'ASC', instanceIndex: 'ASC' },
     }),
-    deps.featOptions.find({
+    deps.options.find({
       where: { characterId, scope: 'feat' },
       order: { ownerSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
     }),
@@ -99,7 +95,7 @@ export async function loadCharacterSheet(
       instanceIndex: row.instanceIndex,
     })),
     featOptions: featOptionRows.map((row) => ({
-      featSlug: row.ownerSlug, // Lote C: ownerSlug replaces featSlug
+      featSlug: row.ownerSlug,
       instanceIndex: row.instanceIndex,
       optionKey: row.optionKey,
       valueId: row.valueId,

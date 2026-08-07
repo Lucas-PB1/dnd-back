@@ -1,4 +1,4 @@
-import { PhbFeatOptionDef } from '../../../../../entities/phb-feat-option.entity';
+import { PhbOptionDef } from '../../../../../entities/phb-option.entity';
 import { ritualSpellSlotIndex } from '../../../../spellcasting/domain/ritual-spell-option-key';
 
 export { ritualSpellSlotIndex };
@@ -8,9 +8,9 @@ export const RITUAL_CASTER_FEAT_SLUG = 'ritual-caster';
 /** Opções exigidas para Conjurador Ritualista conforme o BP; demais talentos retornam todas as defs. */
 export function requiredFeatOptionDefsForInstance(
   featSlug: string,
-  defs: PhbFeatOptionDef[],
+  defs: PhbOptionDef[],
   proficiencyBonus: number,
-): PhbFeatOptionDef[] {
+): PhbOptionDef[] {
   if (featSlug !== RITUAL_CASTER_FEAT_SLUG) {
     return defs;
   }

@@ -2,10 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { assertUnique } from '../../../../../common/assert';
-import {
-  PhbFeatOptionDef,
-  PhbFeatRef,
-} from '../../../../../entities/phb-feat-option.entity';
+import { PhbOptionDef } from '../../../../../entities/phb-option.entity';
+import { PhbFeatRef } from '../../../../../entities/phb-feat-ref.entity';
 import { PhbCharacterLevel } from '../../../../../entities/phb-character-level.entity';
 import { FeatOptionDto, CharacterFeatDto } from '../../../dto/character-sheet.dto';
 import { requiredAbilityScoreImprovementDefs } from './ability-score-improvement-feat-options';
@@ -28,8 +26,8 @@ export class CharacterFeatOptionsValidator {
     private readonly dataSource: DataSource,
     @InjectRepository(PhbFeatRef)
     private readonly featRefRepo: Repository<PhbFeatRef>,
-    @InjectRepository(PhbFeatOptionDef)
-    private readonly featOptionDefRepo: Repository<PhbFeatOptionDef>,
+    @InjectRepository(PhbOptionDef)
+    private readonly featOptionDefRepo: Repository<PhbOptionDef>,
     @InjectRepository(PhbCharacterLevel)
     private readonly characterLevelsRepo: Repository<PhbCharacterLevel>,
     private readonly optionValueValidator: CharacterFeatOptionValueValidator,
@@ -126,10 +124,10 @@ export class CharacterFeatOptionsValidator {
   private async loadClassFightingStyleSlugs(classSlug: string): Promise<string[]> {
     const rows = await this.dataSource.query<{ slug: string }[]>(
       `SELECT fs.slug
-       FROM rpg.phb_class_fighting_style cfs
-       JOIN rpg.phb_class c ON c.id = cfs.class_id
-       JOIN rpg.phb_fighting_style fs ON fs.id = cfs.fighting_style_id
-       WHERE c.slug = $1
+       FROM rpg.phb_class_proficiency cp
+       JOIN rpg.phb_class c ON c.id = cp.class_id
+       JOIN rpg.phb_fighting_style fs ON fs.id = cp.ref_id
+       WHERE c.slug = $1 AND cp.kind = 'fighting_style'::rpg.class_proficiency_kind
        ORDER BY fs.slug`,
       [classSlug],
     );
@@ -139,10 +137,10 @@ export class CharacterFeatOptionsValidator {
   private async loadClassSavingThrowSlugs(classSlug: string): Promise<string[]> {
     const rows = await this.dataSource.query<{ slug: string }[]>(
       `SELECT a.slug
-       FROM rpg.phb_class_saving_throw cst
-       JOIN rpg.phb_class c ON c.id = cst.class_id
-       JOIN rpg.phb_ability a ON a.id = cst.ability_id
-       WHERE c.slug = $1
+       FROM rpg.phb_class_proficiency cp
+       JOIN rpg.phb_class c ON c.id = cp.class_id
+       JOIN rpg.phb_ability a ON a.id = cp.ref_id
+       WHERE c.slug = $1 AND cp.kind = 'saving_throw'::rpg.class_proficiency_kind
        ORDER BY a.slug`,
       [classSlug],
     );
@@ -157,7 +155,7 @@ export class CharacterFeatOptionsValidator {
     return row.proficiencyBonus;
   }
 
-  private async loadFeatOptionDefs(featSlug: string): Promise<PhbFeatOptionDef[]> {
+  private async loadFeatOptionDefs(featSlug: string): Promise<PhbOptionDef[]> {
     const feat = await this.featRefRepo.findOne({ where: { slug: featSlug } });
     if (!feat) return [];
     return this.featOptionDefRepo.find({

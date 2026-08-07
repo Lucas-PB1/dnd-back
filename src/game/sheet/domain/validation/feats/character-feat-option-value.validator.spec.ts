@@ -3,13 +3,13 @@ jest.mock('./feat-option-proficiency', () => ({
 }));
 
 import { DataSource, Repository } from 'typeorm';
-import { PhbFeatOptionDef, PhbFeatOptionValue } from '../../../../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
 import { VSpellByClass } from '../../../../../entities/views/v-spell-by-class.entity';
 import { CharacterFeatOptionValueValidator } from './character-feat-option-value.validator';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
 import { RESILIENT_FEAT_SLUG } from './resilient-feat-options';
 
-function def(partial: Partial<PhbFeatOptionDef>): PhbFeatOptionDef {
+function def(partial: Partial<PhbOptionDef>): PhbOptionDef {
   return { scope: 'feat', ownerId: '1', optionKey: 'pick', label: 'Pick', valueType: 'catalog', sortOrder: 0, unlockLevel: null, dependsOnOptionKey: null, spellMaxLevel: null, spellSchoolSlugs: null, spellRitualOnly: false, ...partial };
 }
 
@@ -17,7 +17,7 @@ describe('CharacterFeatOptionValueValidator', () => {
   let validator: CharacterFeatOptionValueValidator;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
   let classSpellsRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'findOne'>>;
-  let featOptionValueRepo: jest.Mocked<Pick<Repository<PhbFeatOptionValue>, 'findOne'>>;
+  let featOptionValueRepo: jest.Mocked<Pick<Repository<PhbOptionValue>, 'findOne'>>;
 
   beforeEach(() => {
     dataSource = { query: jest.fn().mockResolvedValue([{ ok: 1 }]) };

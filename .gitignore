@@ -17,4 +17,5 @@ coverage/
 *.pdf
 *.log
 scripts/smoke-*-report.json
+tmp/
 .DS_Store

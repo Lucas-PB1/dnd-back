@@ -1,7 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
-import { PhbSubclassRef, PhbSubclassOptionValue } from '../../../../entities/phb-subclass-option-value.entity';
+import { PhbOptionValue } from '../../../../entities/phb-option.entity';
+import { PhbSubclassRef } from '../../../../entities/phb-subclass-ref.entity';
 import { VPhbSpeciesTraitChoices } from '../../../../entities/views/v-phb-species-trait-choices.entity';
 import { VPhbBackgroundToolOption } from '../../../../entities/views/v-phb-background-tool-option.entity';
 import { CharacterSheetValidator } from './character-sheet.validator';
@@ -34,7 +35,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
   >;
   let speciesTraitChoicesRepo: jest.Mocked<Pick<Repository<VPhbSpeciesTraitChoices>, 'find'>>;
   let subclassRefRepo: jest.Mocked<Pick<Repository<PhbSubclassRef>, 'findOne'>>;
-  let subclassOptionValuesRepo: jest.Mocked<Pick<Repository<PhbSubclassOptionValue>, 'findOne'>>;
+  let subclassOptionValuesRepo: jest.Mocked<Pick<Repository<PhbOptionValue>, 'findOne'>>;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
 
   const ctx = {
@@ -82,7 +83,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         if (sql.includes('phb_option_def')) {
           return Promise.resolve([{ optionKey: 'fighting_style' }]);
         }
-        if (sql.includes('phb_class_fighting_style') || sql.includes('phb_fighting_style')) {
+        if (sql.includes('phb_class_proficiency') || sql.includes('phb_fighting_style')) {
           return Promise.resolve([
             { slug: 'defense' },
             { slug: 'archery' },
@@ -110,7 +111,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         dataSource as unknown as DataSource,
         catalogLookup as unknown as CatalogLookupService,
         subclassRefRepo as unknown as Repository<PhbSubclassRef>,
-        subclassOptionValuesRepo as unknown as Repository<PhbSubclassOptionValue>,
+        subclassOptionValuesRepo as unknown as Repository<PhbOptionValue>,
       ),
       new CharacterClassExpertiseValidator(dataSource as unknown as DataSource),
       new CharacterWeaponMasteryValidator(dataSource as unknown as DataSource),

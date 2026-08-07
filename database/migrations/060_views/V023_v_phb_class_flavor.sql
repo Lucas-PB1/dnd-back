@@ -24,8 +24,9 @@ SELECT
 FROM rpg.phb_class c
 LEFT JOIN rpg.phb_source_citation sc ON sc.id = c.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id
-LEFT JOIN rpg.phb_class_primary_ability cpa ON cpa.class_id = c.id
-LEFT JOIN rpg.phb_ability pa ON pa.id = cpa.ability_id
+LEFT JOIN rpg.phb_class_proficiency cpa
+  ON cpa.class_id = c.id AND cpa.kind = 'primary_ability'::rpg.class_proficiency_kind
+LEFT JOIN rpg.phb_ability pa ON pa.id = cpa.ref_id
 GROUP BY c.id, c.slug, c.name, c.tagline, c.summary, c.description,
   c.primary_ability_label, c.primary_ability_operator,
   c.hit_die, c.hp_level1_die_value, c.hp_fixed_per_level, c.skill_choice_count,

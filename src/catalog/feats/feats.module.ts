@@ -1,11 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { VPhbFeat } from '../../entities/views/v-phb-feat.entity';
-import {
-  PhbFeatOptionDef,
-  PhbFeatOptionValue,
-  PhbFeatRef,
-} from '../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../entities/phb-option.entity';
+import { PhbFeatRef } from '../../entities/phb-feat-ref.entity';
 import { FeatsController } from './feats.controller';
 import { FeatsMapper } from './feats.mapper';
 import { FindFeatsQuery } from './queries/find-feats.query';
@@ -17,8 +14,8 @@ import { FindFeatOptionsQuery } from './queries/find-feat-options.query';
     TypeOrmModule.forFeature([
       VPhbFeat,
       PhbFeatRef,
-      PhbFeatOptionDef,
-      PhbFeatOptionValue,
+      PhbOptionDef,
+      PhbOptionValue,
     ]),
   ],
   controllers: [FeatsController],

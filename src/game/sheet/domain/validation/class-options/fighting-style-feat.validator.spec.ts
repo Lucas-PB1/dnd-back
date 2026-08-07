@@ -1,13 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import {
-  PhbFeatOptionDef,
-  PhbFeatOptionValue,
-  PhbFeatRef,
-} from '../../../../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
+import { PhbFeatRef } from '../../../../../entities/phb-feat-ref.entity';
 import { VPhbSpeciesTraitChoices } from '../../../../../entities/views/v-phb-species-trait-choices.entity';
-import { PhbSubclassRef, PhbSubclassOptionValue } from '../../../../../entities/phb-subclass-option-value.entity';
+import { PhbSubclassRef } from '../../../../../entities/phb-subclass-ref.entity';
 import { PhbCharacterLevel } from '../../../../../entities/phb-character-level.entity';
 import { CharacterClassOptionsValidator } from './character-class-options.validator';
 import { CharacterSpeciesChoicesValidator } from './character-species-choices.validator';
@@ -24,7 +21,7 @@ function buildClassOptionsValidator(
   catalogLookup: CatalogLookupService,
   speciesTraitChoicesRepo: Repository<VPhbSpeciesTraitChoices> = {} as Repository<VPhbSpeciesTraitChoices>,
   subclassRefRepo: Repository<PhbSubclassRef> = {} as Repository<PhbSubclassRef>,
-  subclassOptionValuesRepo: Repository<PhbSubclassOptionValue> = {} as Repository<PhbSubclassOptionValue>,
+  subclassOptionValuesRepo: Repository<PhbOptionValue> = {} as Repository<PhbOptionValue>,
 ): CharacterClassOptionsValidator {
   return new CharacterClassOptionsValidator(
     dataSource,
@@ -58,7 +55,7 @@ describe('CharacterClassOptionsValidator fighting styles', () => {
     };
     dataSource = {
       query: jest.fn().mockImplementation((sql: string) => {
-        if (sql.includes('phb_class_fighting_style')) {
+        if (sql.includes('phb_class_proficiency') && sql.includes('fighting_style')) {
           return Promise.resolve([{ slug: 'defense' }, { slug: 'dueling' }]);
         }
         if (sql.includes('phb_fighting_style')) {
@@ -86,7 +83,7 @@ describe('CharacterClassOptionsValidator fighting styles', () => {
 
   it('rejects fighting style feat not allowed for class', async () => {
     dataSource.query.mockImplementation((sql: string) => {
-      if (sql.includes('phb_class_fighting_style')) {
+      if (sql.includes('phb_class_proficiency') && sql.includes('fighting_style')) {
         return Promise.resolve([{ slug: 'defense' }]);
       }
       return Promise.resolve([]);
@@ -115,9 +112,9 @@ describe('CharacterClassOptionsValidator fighting styles', () => {
 describe('CharacterFeatsValidator fighting_style feat option value', () => {
   let validator: CharacterFeatsValidator;
   let featRefRepo: jest.Mocked<Pick<Repository<PhbFeatRef>, 'findOne'>>;
-  let featOptionDefRepo: jest.Mocked<Pick<Repository<PhbFeatOptionDef>, 'find'>>;
+  let featOptionDefRepo: jest.Mocked<Pick<Repository<PhbOptionDef>, 'find'>>;
   let featOptionValueRepo: jest.Mocked<
-    Pick<Repository<PhbFeatOptionValue>, 'findOne' | 'exists'>
+    Pick<Repository<PhbOptionValue>, 'findOne' | 'exists'>
   >;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
   let characterLevelsRepo: jest.Mocked<Pick<Repository<PhbCharacterLevel>, 'findOne'>>;
@@ -140,7 +137,7 @@ describe('CharacterFeatsValidator fighting_style feat option value', () => {
           spellSchoolSlugs: null,
           spellRitualOnly: false,
         },
-      ] as PhbFeatOptionDef[]),
+      ] as PhbOptionDef[]),
     };
     featOptionValueRepo = {
       findOne: jest.fn(),
@@ -148,7 +145,7 @@ describe('CharacterFeatsValidator fighting_style feat option value', () => {
     };
     dataSource = {
       query: jest.fn().mockImplementation((sql: string) => {
-        if (sql.includes('phb_class_fighting_style')) {
+        if (sql.includes('phb_class_proficiency') && sql.includes('fighting_style')) {
           return Promise.resolve([{ slug: 'defense' }]);
         }
         if (sql.includes('phb_fighting_style')) {
@@ -164,12 +161,12 @@ describe('CharacterFeatsValidator fighting_style feat option value', () => {
     const valueValidator = new CharacterFeatOptionValueValidator(
       dataSource as unknown as DataSource,
       {} as never,
-      featOptionValueRepo as unknown as Repository<PhbFeatOptionValue>,
+      featOptionValueRepo as unknown as Repository<PhbOptionValue>,
     );
     const optionsValidator = new CharacterFeatOptionsValidator(
       dataSource as unknown as DataSource,
       featRefRepo as unknown as Repository<PhbFeatRef>,
-      featOptionDefRepo as unknown as Repository<PhbFeatOptionDef>,
+      featOptionDefRepo as unknown as Repository<PhbOptionDef>,
       characterLevelsRepo as unknown as Repository<PhbCharacterLevel>,
       valueValidator,
     );

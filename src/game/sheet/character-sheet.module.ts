@@ -3,18 +3,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CatalogModule } from '../../catalog/catalog.module';
 import { CharacterInventoryModule } from '../inventory/character-inventory.module';
 import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
-import { PhbSubclassOptionValue, PhbSubclassRef } from '../../entities/phb-subclass-option-value.entity';
+import { PhbSubclassRef } from '../../entities/phb-subclass-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../entities/phb-option.entity';
 import { VPhbSpeciesTraitChoices } from '../../entities/views/v-phb-species-trait-choices.entity';
 import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
 import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
 import { VPhbBackgroundToolOption } from '../../entities/views/v-phb-background-tool-option.entity';
-import {
-  PhbFeatOptionDef,
-  PhbFeatOptionValue,
-  PhbFeatRef,
-} from '../../entities/phb-feat-option.entity';
+import { PhbFeatRef } from '../../entities/phb-feat-ref.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CombatModule } from '../combat/combat.module';
@@ -23,12 +20,10 @@ import { PlayerCharacterSkill } from './infrastructure/player-character-skill.en
 import {
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
-  PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
+  PlayerCharacterOption,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
-  PlayerCharacterSubclassOption,
-  PlayerCharacterClassOption,
 } from './infrastructure/player-sheet.entities';
 import { CharactersController } from './characters.controller';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
@@ -62,10 +57,8 @@ import { CampaignModule } from '../campaign/campaign.module';
     TypeOrmModule.forFeature([
       PlayerCharacterSkill,
       PlayerCharacterSpeciesChoice,
-      PlayerCharacterSubclassOption,
-      PlayerCharacterClassOption,
+      PlayerCharacterOption,
       PlayerCharacterFeat,
-      PlayerCharacterFeatOption,
       PlayerCharacterSpell,
       PlayerCharacterEquipment,
       PlayerCharacterLanguage,
@@ -74,13 +67,12 @@ import { CampaignModule } from '../campaign/campaign.module';
       VSpellByClass,
       VPhbSubclassPreparedSpell,
       PhbSubclassRef,
-      PhbSubclassOptionValue,
+      PhbOptionValue,
       VPhbClassEquipment,
       VPhbBackgroundEquipment,
       VPhbBackgroundToolOption,
       PhbFeatRef,
-      PhbFeatOptionDef,
-      PhbFeatOptionValue,
+      PhbOptionDef,
       PlayerCharacterItem,
       PhbSpecies,
     ]),

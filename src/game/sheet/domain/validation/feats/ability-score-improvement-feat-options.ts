@@ -1,4 +1,4 @@
-import type { PhbFeatOptionDef } from '../../../../../entities/phb-feat-option.entity';
+import type { PhbOptionDef } from '../../../../../entities/phb-option.entity';
 import type { FeatOptionDto } from '../../../dto/character-sheet.dto';
 
 export const ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG = 'ability-score-improvement';
@@ -14,9 +14,9 @@ export function asiDistributionMode(
 
 export function requiredAbilityScoreImprovementDefs(
   featSlug: string,
-  defs: PhbFeatOptionDef[],
+  defs: PhbOptionDef[],
   featOptions: FeatOptionDto[],
-): PhbFeatOptionDef[] {
+): PhbOptionDef[] {
   if (featSlug !== ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG) {
     return defs;
   }

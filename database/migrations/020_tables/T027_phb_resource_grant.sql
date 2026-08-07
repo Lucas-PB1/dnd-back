@@ -23,31 +23,3 @@ CREATE TABLE rpg.phb_resource_grant (
 
 CREATE INDEX idx_phb_resource_grant_owner
   ON rpg.phb_resource_grant(owner_kind, owner_id);
-
--- Compat: leitura legada por classe / subclasse (class-resources.ts, views)
-CREATE OR REPLACE VIEW rpg.phb_class_resource AS
-SELECT
-  owner_id AS class_id,
-  resource_id,
-  unlock_level,
-  max_formula,
-  fixed_max,
-  recover_one_on_short,
-  recover_all_on_short,
-  recover_all_on_long
-FROM rpg.phb_resource_grant
-WHERE owner_kind = 'class';
-
-CREATE OR REPLACE VIEW rpg.phb_subclass_resource AS
-SELECT
-  owner_id AS subclass_id,
-  resource_id,
-  unlock_level,
-  max_formula,
-  fixed_max,
-  feature_id,
-  recover_one_on_short,
-  recover_all_on_short,
-  recover_all_on_long
-FROM rpg.phb_resource_grant
-WHERE owner_kind = 'subclass';

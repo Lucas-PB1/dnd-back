@@ -92,8 +92,9 @@ export class ResolveEquipmentCompliance {
     const rows = await this.dataSource.query<{ slug: string }[]>(
       `SELECT ac.slug
        FROM rpg.phb_class c
-       JOIN rpg.phb_class_armor_training cat ON cat.class_id = c.id
-       JOIN rpg.phb_armor_category ac ON ac.id = cat.category_id
+       JOIN rpg.phb_class_proficiency cat
+         ON cat.class_id = c.id AND cat.kind = 'armor_training'::rpg.class_proficiency_kind
+       JOIN rpg.phb_armor_category ac ON ac.id = cat.ref_id
        WHERE c.slug = $1
        ORDER BY ac.id`,
       [classSlug],

@@ -32,7 +32,7 @@ describe('CharacterWeaponMasteryValidator', () => {
       if (sql.includes('weapon_mastery_eligibility')) {
         return Promise.resolve([{ weapon_mastery_eligibility: 'any' }]);
       }
-      if (sql.includes('phb_class_weapon_proficiency')) {
+      if (sql.includes('phb_class_proficiency') && sql.includes('weapon')) {
         return Promise.resolve([
           { slug: 'armas-simples' },
           { slug: 'armas-marciais' },
@@ -96,7 +96,7 @@ describe('CharacterWeaponMasteryValidator', () => {
       if (sql.includes('weapon_mastery_eligibility')) {
         return Promise.resolve([{ weapon_mastery_eligibility: 'any' }]);
       }
-      if (sql.includes('phb_class_weapon_proficiency')) {
+      if (sql.includes('phb_class_proficiency') && sql.includes('weapon')) {
         return Promise.resolve([
           { slug: 'armas-simples' },
           { slug: 'armas-marciais' },
@@ -152,7 +152,7 @@ describe('CharacterWeaponMasteryValidator', () => {
       if (sql.includes('weapon_mastery_eligibility')) {
         return Promise.resolve([{ weapon_mastery_eligibility: 'any' }]);
       }
-      if (sql.includes('phb_class_weapon_proficiency')) {
+      if (sql.includes('phb_class_proficiency') && sql.includes('weapon')) {
         return Promise.resolve([{ slug: 'simple-weapons' }]);
       }
       if (sql.includes('phb_weapon w')) return Promise.resolve([]);

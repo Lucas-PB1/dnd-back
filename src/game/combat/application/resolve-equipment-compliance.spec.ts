@@ -35,7 +35,7 @@ describe('ResolveEquipmentCompliance', () => {
 
   it('loadArmorTrainingSlugs returns class armor categories', async () => {
     await expect(service.loadArmorTrainingSlugs('fighter')).resolves.toEqual(['light', 'medium']);
-    expect(dataSource.query).toHaveBeenCalledWith(expect.stringContaining('phb_class_armor_training'), ['fighter']);
+    expect(dataSource.query).toHaveBeenCalledWith(expect.stringContaining('phb_class_proficiency'), ['fighter']);
   });
 
   it('resolve loads armor/weapons and honors weaponPieces override', async () => {

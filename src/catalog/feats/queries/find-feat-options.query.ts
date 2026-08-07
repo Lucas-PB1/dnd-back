@@ -1,11 +1,8 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import {
-  PhbFeatOptionDef,
-  PhbFeatOptionValue,
-  PhbFeatRef,
-} from '../../../entities/phb-feat-option.entity';
+import { PhbOptionDef, PhbOptionValue } from '../../../entities/phb-option.entity';
+import { PhbFeatRef } from '../../../entities/phb-feat-ref.entity';
 import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
 import { FeatOptionResponseDto } from '../dto/feat-option-response.dto';
 
@@ -14,10 +11,10 @@ export class FindFeatOptionsQuery {
   constructor(
     @InjectRepository(PhbFeatRef)
     private readonly featRepo: Repository<PhbFeatRef>,
-    @InjectRepository(PhbFeatOptionDef)
-    private readonly optionDefRepo: Repository<PhbFeatOptionDef>,
-    @InjectRepository(PhbFeatOptionValue)
-    private readonly optionValueRepo: Repository<PhbFeatOptionValue>,
+    @InjectRepository(PhbOptionDef)
+    private readonly optionDefRepo: Repository<PhbOptionDef>,
+    @InjectRepository(PhbOptionValue)
+    private readonly optionValueRepo: Repository<PhbOptionValue>,
   ) {}
 
   async execute(

@@ -60,10 +60,10 @@ Legenda da coluna **Ação**:
 | `phb_subclass_option_def` / `_value` | MERGE→option | `phb_option_def` / `phb_option_value` | `scope='subclass'` |
 | `phb_species_option_def` / `_value` | MERGE→option | idem | `scope='species'` (+ colunas Lote B) |
 | `phb_feat_option_def` / `_value` | MERGE→option | idem | `scope='feat'` (filtros de magia em def) |
-| Runtime choices | MERGE→option | `player_character_option` | Views compat + INSTEAD OF em P007 |
+| Runtime choices | MERGE→option | `player_character_option` | Sem views compat (P007 stub) |
 | `player_character_species_choice` | KEEP | tipado | Ainda separado |
 
-**Delta real:** −4 tabelas catálogo; views `phb_*_option_*` de compat (V001); migrate+seed validados
+**Delta real:** −4 tabelas catálogo; **views compat removidas** (código aponta só a `phb_option_*` / `player_character_option`)
 
 ---
 
@@ -109,7 +109,7 @@ Legenda da coluna **Ação**:
 | `phb_subclass_spellcasting` | KEEP | — | |
 | `phb_class` / `phb_subclass` | KEEP | + UNIQUE(id, class_id) p/ FK composta | Critical PC |
 
-**Delta real:** −4 tabelas catálogo (`phb_class_proficiency` unifica 5 afinidades; T039–T067); views compat em V001; seeds S018–S021/S050 + G003–G006/G022; `class-proficiencies.query.ts` lê tabela unificada; migrate+seed validados
+**Delta real:** −4 tabelas catálogo (`phb_class_proficiency`); **sem** views compat — SQL/TS usam a tabela unificada
 
 ---
 
@@ -118,8 +118,8 @@ Legenda da coluna **Ação**:
 | Atual | Ação | Alvo sugerido | Notas |
 |-------|------|---------------|-------|
 | `phb_resource_definition` | KEEP | — | catálogo de definição |
-| `phb_class_resource` | MERGE→grant | `phb_resource_grant` | view compat em T027 |
-| `phb_subclass_resource` | MERGE→grant | idem | recover_* incluídos |
+| `phb_class_resource` | MERGE→grant | `phb_resource_grant` | sem view compat |
+| `phb_subclass_resource` | MERGE→grant | idem | sem view compat |
 | `phb_hp_bonus_source` | MERGE→modifier | `phb_combat_modifier` | kind=hp_bonus |
 | `phb_unarmored_defense` | MERGE→modifier | idem | kind=unarmored_defense |
 

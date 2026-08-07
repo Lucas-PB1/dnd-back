@@ -1,16 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
 import { PlayerCharacterSkill } from './player-character-skill.entity';
 import {
-  PlayerCharacterClassOption,
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
-  PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
+  PlayerCharacterOption,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
-  PlayerCharacterSubclassOption,
 } from './player-sheet.entities';
 import {
   CharacterSheetData,
@@ -39,14 +37,10 @@ export class CharacterSheetRepository {
     private readonly skills: Repository<PlayerCharacterSkill>,
     @InjectRepository(PlayerCharacterSpeciesChoice)
     private readonly speciesChoices: Repository<PlayerCharacterSpeciesChoice>,
-    @InjectRepository(PlayerCharacterSubclassOption)
-    private readonly subclassOptions: Repository<PlayerCharacterSubclassOption>,
-    @InjectRepository(PlayerCharacterClassOption)
-    private readonly classOptions: Repository<PlayerCharacterClassOption>,
+    @InjectRepository(PlayerCharacterOption)
+    private readonly options: Repository<PlayerCharacterOption>,
     @InjectRepository(PlayerCharacterFeat)
     private readonly feats: Repository<PlayerCharacterFeat>,
-    @InjectRepository(PlayerCharacterFeatOption)
-    private readonly featOptions: Repository<PlayerCharacterFeatOption>,
     @InjectRepository(PlayerCharacterSpell)
     private readonly spells: Repository<PlayerCharacterSpell>,
     @InjectRepository(PlayerCharacterEquipment)
@@ -60,10 +54,8 @@ export class CharacterSheetRepository {
       dataSource: this.dataSource,
       skills: this.skills,
       speciesChoices: this.speciesChoices,
-      subclassOptions: this.subclassOptions,
-      classOptions: this.classOptions,
+      options: this.options,
       feats: this.feats,
-      featOptions: this.featOptions,
       spells: this.spells,
       equipment: this.equipment,
       languages: this.languages,
@@ -74,10 +66,8 @@ export class CharacterSheetRepository {
     return {
       skills: this.skills,
       speciesChoices: this.speciesChoices,
-      subclassOptions: this.subclassOptions,
-      classOptions: this.classOptions,
+      options: this.options,
       feats: this.feats,
-      featOptions: this.featOptions,
       spells: this.spells,
       equipment: this.equipment,
       languages: this.languages,

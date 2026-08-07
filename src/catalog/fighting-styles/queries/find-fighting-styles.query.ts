@@ -40,9 +40,10 @@ export class FindFightingStylesQuery {
       qb.andWhere(
         `EXISTS (
           SELECT 1
-          FROM rpg.phb_class_fighting_style cfs
-          JOIN rpg.phb_class c ON c.id = cfs.class_id
-          WHERE cfs.fighting_style_id = style.id
+          FROM rpg.phb_class_proficiency cp
+          JOIN rpg.phb_class c ON c.id = cp.class_id
+          WHERE cp.ref_id = style.id
+            AND cp.kind = 'fighting_style'::rpg.class_proficiency_kind
             AND c.slug = :classSlug
         )`,
         { classSlug: trimmedClass },

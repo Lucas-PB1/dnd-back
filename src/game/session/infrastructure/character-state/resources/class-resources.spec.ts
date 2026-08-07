@@ -88,7 +88,7 @@ describe('character-state/class-resources', () => {
 
     it('builds remaining and risk die extras', async () => {
       dataSource.query.mockImplementation(async (sql: string) => {
-        if (String(sql).includes('phb_class_resource')) return scheduleRows;
+        if (String(sql).includes('phb_resource_grant')) return scheduleRows;
         if (String(sql).includes('v_phb_class_progression')) {
           return [{ proficiency_bonus: 2, channel_divinity: null }];
         }

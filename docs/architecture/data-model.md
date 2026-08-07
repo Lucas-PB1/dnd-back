@@ -50,7 +50,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_class` (`hit_die` ENUM), `phb_subclass` (FK composta)
 - `phb_class_feature`, `phb_class_progression`, `phb_subclass_feature`, `phb_subclass_progression`
 - `phb_class_skill_pool`, `phb_class_spellcasting`, `phb_subclass_spellcasting`
-- `phb_class_proficiency` — unifica saving throw, primary ability, armor, weapon, fighting style (views compat legadas)
+- `phb_class_proficiency` — unifica saving throw, primary ability, armor, weapon, fighting style
 - `phb_class_ability_boost`
 - `phb_starting_package` / `phb_starting_item` (`source` class|background)
 
@@ -72,8 +72,8 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 
 ### 7. Options / resources / modifiers
 
-- `phb_option_def` / `phb_option_value` — scope unificado (compat views: `phb_*_option_*`)
-- `phb_resource_definition` + `phb_resource_grant` (compat: `phb_class_resource`, `phb_subclass_resource`)
+- `phb_option_def` / `phb_option_value` — scope unificado
+- `phb_resource_definition` + `phb_resource_grant`
 - `phb_combat_modifier` — HP bonus + unarmored defense (views `v_phb_hp_bonus_source`, `v_phb_unarmored_defense`)
 
 ### 8. Combat mechanical catalog

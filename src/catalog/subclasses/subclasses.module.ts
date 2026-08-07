@@ -3,10 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { VPhbSubclass } from '../../entities/views/v-phb-subclass.entity';
 import { VPhbSubclassMechanics } from '../../entities/views/v-phb-subclass-mechanics.entity';
 import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
-import {
-  PhbSubclassOptionValue,
-  PhbSubclassRef,
-} from '../../entities/phb-subclass-option-value.entity';
+import { PhbOptionValue } from '../../entities/phb-option.entity';
+import { PhbSubclassRef } from '../../entities/phb-subclass-ref.entity';
 import { CatalogLookupModule } from '../catalog-lookup.module';
 import { SubclassesController } from './subclasses.controller';
 import { SubclassesMapper } from './subclasses.mapper';
@@ -27,7 +25,7 @@ import { VSubclassSpellSlots } from '../../entities/views/v-subclass-spell-slots
       VPhbSubclassPreparedSpell,
       VSubclassSpellSlots,
       PhbSubclassRef,
-      PhbSubclassOptionValue,
+      PhbOptionValue,
     ]),
     CatalogLookupModule,
   ],

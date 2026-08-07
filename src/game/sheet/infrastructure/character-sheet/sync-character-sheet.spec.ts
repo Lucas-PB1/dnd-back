@@ -9,12 +9,10 @@ import {
 } from './sync-character-sheet';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
-  PlayerCharacterClassOption,
   PlayerCharacterFeat,
-  PlayerCharacterFeatOption,
   PlayerCharacterLanguage,
+  PlayerCharacterOption,
   PlayerCharacterSpeciesChoice,
-  PlayerCharacterSubclassOption,
 } from '../player-sheet.entities';
 
 function repo<T extends ObjectLiteral>(): jest.Mocked<
@@ -36,13 +34,8 @@ describe('syncCharacterSheet', () => {
       skills: repo<PlayerCharacterSkill>() as unknown as Repository<PlayerCharacterSkill>,
       speciesChoices:
         repo<PlayerCharacterSpeciesChoice>() as unknown as Repository<PlayerCharacterSpeciesChoice>,
-      subclassOptions:
-        repo<PlayerCharacterSubclassOption>() as unknown as Repository<PlayerCharacterSubclassOption>,
-      classOptions:
-        repo<PlayerCharacterClassOption>() as unknown as Repository<PlayerCharacterClassOption>,
+      options: repo<PlayerCharacterOption>() as unknown as Repository<PlayerCharacterOption>,
       feats: repo<PlayerCharacterFeat>() as unknown as Repository<PlayerCharacterFeat>,
-      featOptions:
-        repo<PlayerCharacterFeatOption>() as unknown as Repository<PlayerCharacterFeatOption>,
       spells: repo() as never,
       equipment: repo() as never,
       languages:
@@ -79,14 +72,18 @@ describe('syncCharacterSheet', () => {
       { characterId, languageSlug: 'common' },
       { characterId, languageSlug: 'elvish' },
     ]);
-    expect(deps.classOptions.insert).toHaveBeenCalledWith([
-      { characterId, optionKey: 'expertiseSkill1', valueId: 'stealth' },
+    expect(deps.options.insert).toHaveBeenCalledWith([
+      expect.objectContaining({
+        characterId,
+        scope: 'class',
+        optionKey: 'expertiseSkill1',
+        valueId: 'stealth',
+      }),
     ]);
   });
 
   it('removes orphan feat options when feats shrink', async () => {
-    // Lote C: entity uses ownerSlug, delete by id
-    (deps.featOptions.find as jest.Mock).mockResolvedValue([
+    (deps.options.find as jest.Mock).mockResolvedValue([
       { id: 'opt-1', ownerSlug: 'alert', instanceIndex: 0, optionKey: 'pick' },
       { id: 'opt-2', ownerSlug: 'lucky', instanceIndex: 0, optionKey: 'pick' },
     ]);
@@ -95,8 +92,7 @@ describe('syncCharacterSheet', () => {
       characterFeats: [{ featSlug: 'alert', instanceIndex: 0 }],
     });
 
-    // Lote C: delete by ID now
-    expect(deps.featOptions.delete).toHaveBeenCalledWith(['opt-2']);
+    expect(deps.options.delete).toHaveBeenCalledWith(['opt-2']);
   });
 
   it('skips undefined sections', async () => {
@@ -113,7 +109,7 @@ describe('syncCharacterSheet', () => {
       classOptions: [{ optionKey: 'expertiseSkill1', valueId: 'stealth' }],
     });
     expect(deps.speciesChoices.insert).toHaveBeenCalled();
-    expect(deps.subclassOptions.insert).toHaveBeenCalled();
+    expect(deps.options.insert).toHaveBeenCalled();
 
     await syncCharacterSheet(deps, characterId, { speciesChoices: [] });
     expect(deps.speciesChoices.delete).toHaveBeenCalledWith({ characterId });
@@ -130,8 +126,8 @@ describe('syncCharacterSheet', () => {
     });
 
     expect(deps.feats.insert).toHaveBeenCalled();
-    expect(deps.featOptions.insert).toHaveBeenCalledWith([
-      expect.objectContaining({ optionKey: 'pick', instanceIndex: 0 }),
+    expect(deps.options.insert).toHaveBeenCalledWith([
+      expect.objectContaining({ scope: 'feat', optionKey: 'pick', instanceIndex: 0 }),
     ]);
     expect(deps.spells.insert).toHaveBeenCalled();
     expect(deps.equipment.insert).toHaveBeenCalledWith([
@@ -140,10 +136,10 @@ describe('syncCharacterSheet', () => {
   });
 
   it('clears feat options when characterFeats is empty', async () => {
-    (deps.featOptions.find as jest.Mock).mockResolvedValue([]);
+    (deps.options.find as jest.Mock).mockResolvedValue([]);
     await syncCharacterSheet(deps, characterId, { characterFeats: [] });
     expect(deps.feats.delete).toHaveBeenCalledWith({ characterId });
-    expect(deps.featOptions.delete).not.toHaveBeenCalled();
+    expect(deps.options.delete).not.toHaveBeenCalled();
   });
 
   it('defaults feat option instanceIndex and equipment quantity', async () => {
@@ -151,8 +147,8 @@ describe('syncCharacterSheet', () => {
       featOptions: [{ featSlug: 'alert', optionKey: 'pick', valueId: 'perception' }],
       equipment: [{ source: 'background', packageSlug: 'pack' }],
     });
-    expect(deps.featOptions.insert).toHaveBeenCalledWith([
-      expect.objectContaining({ instanceIndex: 0 }),
+    expect(deps.options.insert).toHaveBeenCalledWith([
+      expect.objectContaining({ scope: 'feat', instanceIndex: 0 }),
     ]);
     expect(deps.equipment.insert).toHaveBeenCalledWith([
       expect.objectContaining({ quantity: 1, itemSlug: null }),
@@ -168,23 +164,31 @@ describe('clearCharacterSheet helpers', () => {
     deps = {
       skills: repo() as never,
       speciesChoices: repo() as never,
-      subclassOptions: repo() as never,
-      classOptions: repo() as never,
+      options: repo() as never,
       feats: repo() as never,
-      featOptions: repo() as never,
       spells: repo() as never,
       equipment: repo() as never,
       languages: repo() as never,
     };
   });
 
-  it.each([
-    ['clearSubclassOptions', clearSubclassOptions, 'subclassOptions'],
-    ['clearClassOptions', clearClassOptions, 'classOptions'],
-    ['clearClassSkills', clearClassSkills, 'skills'],
-    ['clearSpeciesChoices', clearSpeciesChoices, 'speciesChoices'],
-  ])('%s deletes by characterId', async (_label, fn, key) => {
-    await fn(deps, characterId);
-    expect(deps[key as keyof CharacterSheetSyncDeps].delete).toHaveBeenCalledWith({ characterId });
+  it('clearSubclassOptions deletes scoped rows', async () => {
+    await clearSubclassOptions(deps, characterId);
+    expect(deps.options.delete).toHaveBeenCalledWith({ characterId, scope: 'subclass' });
+  });
+
+  it('clearClassOptions deletes scoped rows', async () => {
+    await clearClassOptions(deps, characterId);
+    expect(deps.options.delete).toHaveBeenCalledWith({ characterId, scope: 'class' });
+  });
+
+  it('clearClassSkills deletes skills', async () => {
+    await clearClassSkills(deps, characterId);
+    expect(deps.skills.delete).toHaveBeenCalledWith({ characterId });
+  });
+
+  it('clearSpeciesChoices deletes species choices', async () => {
+    await clearSpeciesChoices(deps, characterId);
+    expect(deps.speciesChoices.delete).toHaveBeenCalledWith({ characterId });
   });
 });

@@ -114,7 +114,7 @@ describe('AssertCanEquipItemService', () => {
     await service.assert(character(), 'longsword');
 
     expect(dataSource.query).toHaveBeenCalledWith(
-      expect.stringContaining('phb_class_weapon_proficiency'),
+      expect.stringContaining('phb_class_proficiency'),
       ['fighter'],
     );
     expect(mockedAssert).toHaveBeenCalledWith(
