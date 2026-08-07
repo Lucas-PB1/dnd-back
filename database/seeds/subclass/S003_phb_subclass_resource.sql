@@ -702,7 +702,7 @@ INSERT INTO rpg.phb_resource_grant (owner_kind, owner_id, resource_id, unlock_le
          fixed_max = EXCLUDED.fixed_max,
          feature_id = EXCLUDED.feature_id;
 
--- Recuperação data-driven (após T081)
+-- Recuperação data-driven (phb_resource_grant)
 UPDATE rpg.phb_resource_grant rg
 SET recover_one_on_short = FALSE,
     recover_all_on_short = TRUE,

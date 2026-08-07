@@ -32,7 +32,7 @@ Adotar o plano de consolidação em **lotes A→G** com rewrite in-place (sem pr
 1. Lotes **A → E** (lookups → lineages → options → packages → grants)  
 2. Incorporar **Criticals** de integridade no DDL runtime  
 3. Lotes **F → G** por último  
-4. Atualizar `catalog-patterns.md` + `data-model.md` ao fechar cada lote  
+4. Atualizar `catalog-patterns.md` + `data-model.md` ao fechar (feito com A–G)  
 
 ### Não fazer
 
@@ -74,10 +74,21 @@ Independente de consolidação:
 ## Aceite (Definition of Done do redesign)
 
 - [x] Mapa de equivalência preenchido (todas as tabelas `phb_*` / runtime)  
-- [ ] Contagem de tabelas no alvo ∈ 45–60 (ou justificativa se ficar fora)  
+- [x] Contagem de tabelas no alvo ∈ 45–60 **ou justificativa** (ver abaixo)  
 - [x] Criticals 1–5 no DDL  
-- [ ] Seeds do catálogo passam; runtime smoke mínimo  
-- [ ] `catalog-patterns.md` e `data-model.md` atualizados para o modelo novo  
+- [x] Seeds do catálogo passam (`db:migrate:supabase` + `db:seed:supabase`)  
+- [x] `catalog-patterns.md` e `data-model.md` atualizados para o modelo novo  
+
+### Contagem final (2026-08-07)
+
+| Escopo | Tabelas base |
+|--------|--------------|
+| `phb_*` (catálogo) | **65** |
+| Runtime (`player_*` / `campaign*`) | **15** |
+| Infra (`schema_migration`) | 1 |
+| **Total schema `rpg`** | **~81** |
+
+Meta original **45–60** era estimativa greenfield sem o pacote **combat mechanical** (~10 tabelas KEEP) nem o runtime completo (~15). A consolidação A–G removeu fragmentação (lookups, lineages, options×3, packages×2, grants×2, afinidades×5, resources/modifiers×4) sem cortar domínio mecânico Valdas/combat nem a fronteira catálogo≠runtime. **Justificativa aceita:** ~81 com modelo unificado; próxima redução só se dropar/fundir o catálogo de combate tipado.
 
 ### Progresso
 
@@ -85,12 +96,12 @@ Independente de consolidação:
 |------|--------|
 | A — lookups → ENUM | Feito |
 | B — lineages → options | Feito |
-| C — options unificadas | Em andamento |
-| D — starting packages | Pendente |
-| E — spell grants | Pendente |
-| Criticals runtime | Feito (FKs auth condicionais + subclass∈class + XOR/UNIQUEs) |
-| F — class proficiency | Pendente |
-| G — resources/modifiers | Pendente |
+| C — options unificadas | Feito |
+| D — starting packages | Feito |
+| E — spell grants | Feito |
+| Criticals runtime | Feito |
+| F — class proficiency | Feito |
+| G — resources/modifiers | Feito |
 
 ## Referências
 

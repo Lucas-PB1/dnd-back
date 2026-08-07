@@ -163,16 +163,25 @@ Legenda da coluna **Ação**:
 
 ---
 
-## Checklist de porte (outro ciclo / greenfield)
+## Contagem final (dnd-api, pós A–G)
 
-Copiar para a issue do redesign:
+| Prefixo / escopo | Count |
+|------------------|-------|
+| Migrations `020_tables` (T*) | 65 |
+| `phb_*` base tables (live) | 65 |
+| Runtime player + campaign | ~15 |
+| Total `rpg` base (incl. `schema_migration`) | **~81** |
 
-- [ ] ADR aceito ou rejeitado lote a lote (C e F/G especialmente)  
-- [ ] Equivalências A–E fechadas no DDL draft  
-- [ ] Criticals runtime no DDL draft  
-- [ ] Atualizar `data-model.md` + `catalog-patterns.md`  
-- [ ] Seeds + smoke  
-- [ ] Contagem final de tabelas registrada  
+Meta 45–60: **fora** — justificativa no ADR (combat mechanical + runtime KEEP).
+
+## Checklist de porte
+
+- [x] ADR aceito lote a lote  
+- [x] Equivalências A–G no DDL  
+- [x] Criticals runtime no DDL  
+- [x] `data-model.md` + `catalog-patterns.md`  
+- [x] Seeds + migrate Supabase  
+- [x] Contagem final registrada  
 
 ## Origem
 

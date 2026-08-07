@@ -1,147 +1,101 @@
 # Modelo de dados — catálogo PHB 2024
 
-Schema PostgreSQL `rpg` — 63 tabelas, 9 ENUMs, 15 views, 1 materialized view.
+Schema PostgreSQL `rpg` — **~81 tabelas base** (65 `phb_*` + runtime + `schema_migration`), views `v_phb_*`, 1 materialized view.
 
-Fonte: [`database/migrations/`](../database/migrations/) · Contagens: [`database/seed-manifest.json`](../database/seed-manifest.json)
+Fonte: [`database/migrations/`](../database/migrations/) · Consolidação: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) · [`schema-equivalence-map.md`](schema-equivalence-map.md)
 
-Padrões DRY (option_def, linhagens, granted spells): [`catalog-patterns.md`](catalog-patterns.md)
+Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 
 ## Convenções
 
 | Regra | Detalhe |
 |-------|---------|
 | Identidade | `BIGSERIAL id` interno + `slug TEXT UNIQUE` para API/contratos |
-| Prefixo | Todas as tabelas `phb_*` |
-| Audit | `created_at`, `updated_at` em entidades principais (spell, class, subclass, species, background, item) |
-| API | URLs e DTOs usam **slug**; joins SQL usam **id** |
-| Catálogo | **Read-only** na aplicação — dados vêm dos seeds em `database/seeds/` |
+| Prefixo | Catálogo `phb_*`; runtime `player_character_*` / `campaign_*` |
+| Audit | `created_at`, `updated_at` em entidades principais |
+| API | URLs/DTOs usam **slug**; joins SQL usam **id** |
+| Catálogo | **Read-only** na aplicação — seeds em `database/seeds/` |
 
-## ENUMs (`010_types/`)
+## ENUMs (amostra — `010_types/`)
 
-| Tipo | Valores |
-|------|---------|
-| `item_type` | weapon, armor, gear, tool, focus, other |
-| `resource_scope` | species, class, subclass |
-| `subclass_feature_kind` | passive, resource, choice, always_prepared, spellcasting, spellbook_bonus |
-| `resource_max_formula` | fixed, proficiency_bonus, charisma_mod, … |
-| `spell_source_origin` | class_list, subclass, species, feat |
-| `option_value_type` | catalog, skill, ability, fighting_style, terrain, skill_list, json |
-| `species_choice_kind` | elf_lineage, infernal_legacy, dragon_ancestry |
-| `weapon_category` | simple, martial |
-| `casting_type` | full, half, pact, none |
-| `maneuver_effect_kind` | temp_hp, miss_damage, ac_bonus, ability_check_bonus, descriptive, reload_move |
-| `battle_master_maneuver_timing` | on_hit, on_miss, reaction, bonus_action, other |
-| `save_ability` | strength…charisma |
+| Tipo | Uso |
+|------|-----|
+| `option_scope` | subclass, species, feat, class |
+| `option_value_type` | catalog, skill, ability, spell, … |
+| `starting_package_source` | class, background |
+| `spell_grant_origin` | feat, species |
+| `class_proficiency_kind` | saving_throw, primary_ability, armor_training, weapon, fighting_style |
+| `resource_owner_kind` | class, subclass |
+| `combat_modifier_kind` | hp_bonus, unarmored_defense |
+| `hit_die`, `feat_category`, `condition_slug`, … | Lote A (lookups → ENUM) |
 
-## Clusters (7 domínios)
+## Clusters
 
 ### 1. Core
 
-- `phb_edition` — edição do livro (PHB 2024 PT-BR)
-- `phb_source_citation` → edition
-- `phb_ability`, `phb_alignment`, `phb_language`, `phb_skill` → ability
+- `phb_edition`, `phb_source_citation`
+- `phb_ability`, `phb_alignment`, `phb_language`, `phb_skill`
 - `phb_fighting_style`, `phb_weapon_property`, `phb_weapon_mastery`
-- `phb_character_level` — níveis 1–20, proficiency bonus, XP
+- `phb_character_level`
 
 ### 2. Spells
 
-- `phb_spell_school`, `phb_spell` → school, source_citation
-- `phb_spell_class` — M:N spell ↔ class
+- `phb_spell_school`, `phb_spell`, `phb_spell_class`
 - `phb_spell_slot_pattern`, `phb_spell_slot_by_level`
-- `phb_spell_source` — origem polimórfica (class/species/feat/subclass)
+- `phb_spell_source` — metadado de origem (listas/subclass)
+- `phb_spell_grant` — magias concedidas (feat/species); views `v_phb_*_granted_spell`
 
 ### 3. Classes
 
-- `phb_hit_die`, `phb_weapon_proficiency`
-- `phb_class` → hit_die, spell_slot_pattern, source_citation
-- `phb_subclass` → class (FK composta `class_id + id`)
-- `phb_subclass_feature`, `phb_class_progression`, `phb_class_feature`
-- `phb_class_skill_pool`, `phb_class_saving_throw`, `phb_class_primary_ability`
-- `phb_class_armor_training`, `phb_class_weapon_proficiency`
-- `phb_class_spellcasting`, `phb_class_fighting_style`
-- `phb_class_starting_package` → `phb_class_starting_item`
+- `phb_class` (`hit_die` ENUM), `phb_subclass` (FK composta)
+- `phb_class_feature`, `phb_class_progression`, `phb_subclass_feature`, `phb_subclass_progression`
+- `phb_class_skill_pool`, `phb_class_spellcasting`, `phb_subclass_spellcasting`
+- `phb_class_proficiency` — unifica saving throw, primary ability, armor, weapon, fighting style (views compat legadas)
+- `phb_class_ability_boost`
+- `phb_starting_package` / `phb_starting_item` (`source` class|background)
 
 ### 4. Species
 
-- `phb_species`
-- `phb_species_trait`, `phb_species_option_def` → `phb_species_option_value`
-- `phb_elf_lineage`, `phb_infernal_legacy`, `phb_dragon_ancestry` (catálogos de escolha)
+- `phb_species`, `phb_species_trait`
+- Escolhas (incl. lineages): `phb_option_def` / `phb_option_value` com `scope='species'`
+- Views: `v_phb_species_trait_choices`, `v_phb_species_granted_spell`
 
-### 5. Equipment (herança table-per-type)
+### 5. Equipment
 
-- `phb_item` — base (name, slug, item_type, cost, weight)
-- `phb_weapon` → item_id PK, mastery, damage
-- `phb_armor` → item_id PK, category, AC
-- `phb_tool` → item_id PK, category
-- `phb_weapon_property_link` — M:N weapon ↔ property
-- `phb_armor_category`, `phb_tool_category`
+- `phb_item` + `phb_weapon` / `phb_armor` / `phb_tool`
+- `phb_weapon_property_link`, `phb_armor_category`, `phb_tool_category`
 
 ### 6. Backgrounds
 
-- `phb_background` → feat, tool_item, tool_category, source_citation
-- `phb_background_skill`, `phb_background_ability_option`, `phb_background_language` (+ `language_choice_count` no antecedente)
-- `phb_background_starting_package` → `phb_background_starting_item`
-- `phb_background_boost_option`, `phb_ability_generation_method`
+- `phb_background` + skill / ability_option / language / tool_option / boost_option
+- Packages via `phb_starting_*` com `source='background'`
 
-### 7. Subclass mechanics
+### 7. Options / resources / modifiers
 
-- `phb_resource_definition` — polimórfico via `resource_scope` + species/class/subclass_id
-- `phb_subclass_option_def` → `phb_subclass_option_value`
-- `phb_subclass_resource`, `phb_subclass_prepared_spell`
-- `phb_druid_land_terrain`, `phb_divine_order`
+- `phb_option_def` / `phb_option_value` — scope unificado (compat views: `phb_*_option_*`)
+- `phb_resource_definition` + `phb_resource_grant` (compat: `phb_class_resource`, `phb_subclass_resource`)
+- `phb_combat_modifier` — HP bonus + unarmored defense (views `v_phb_hp_bonus_source`, `v_phb_unarmored_defense`)
 
 ### 8. Combat mechanical catalog
 
-SSOT tipado para a engine de mesa/dados (não só prosa de feature). Plano: [`../plans/combat-mechanical-catalog.md`](../plans/combat-mechanical-catalog.md).
+- Maneuvers, table actions, masks, aspect benefits, economy/panel actions, etc.
+- Views `v_phb_*` + seeds `database/seeds/combat/`
 
-- `phb_gunslinger_maneuver`, `phb_battle_master_maneuver`
-- `phb_cunning_strike_effect`
-- `phb_subclass_table_action`
-- `phb_persona_mask`, `phb_beastborne_aspect_benefit`
-- `phb_dungeoneer_slayer_type`, `phb_subclass_precaution_spell`
+### 9. Feats
 
-### Feats
+- `phb_feat` (`category` ENUM), `phb_feat_benefit`, `phb_feat_requirement` (+ ability)
+- Opções via `phb_option_*` (`scope='feat'`)
 
-- `phb_feat_category`, `phb_feat` → category, source_citation
-- `phb_feat_benefit` → feat
+## Runtime (ficha / campanha)
 
-## FKs compostas
+- `player_character` (+ skill, spell, language, feat, item, equipment, state, species_choice, option)
+- `campaign`, `campaign_member`, `campaign_character`, `campaign_encounter`, `campaign_encounter_combatant`
+- Criticals: FKs ownership, subclass∈class, XOR combatant, UNIQUEs de membership
 
-| Tabela | Chave |
-|--------|-------|
-| `phb_subclass` | `(class_id, id)` — subclass id único por classe |
-| `phb_subclass_option_def` | `(subclass_id, option_key)` |
-| `phb_subclass_option_value` | FK para `(subclass_id, option_key)` |
-| `phb_spell_source` | `(class_id, subclass_id)` → subclass |
+## Views (read models)
 
-## Views (read models para API)
+Contratos estáveis para a API — ver pasta `060_views/` e skill `phb-query-views`. Principais: `v_phb_class_equipment`, `v_phb_background_equipment`, `v_phb_species_trait_choices`, `v_phb_species_granted_spell`, `v_phb_feat_granted_spell`, `mv_spell_by_class`.
 
-| View | Uso |
-|------|-----|
-| `v_phb_class` | Lista/detalhe de classes com hit die e primary abilities |
-| `v_phb_spell` | Magias com escola e edição |
-| `v_phb_subclass` | Subclasses com classe pai |
-| `v_spell_by_class` | Magias por classe e nível |
-| `v_phb_background` | Antecedentes enriquecidos (incl. `language_choice_count`) |
-| `v_phb_background_language` | Idiomas fixos concedidos pelo antecedente |
-| `v_phb_background_equipment` | Equipamento inicial de antecedente |
-| `v_phb_class_equipment` | Equipamento inicial de classe |
-| `v_phb_feat` | Talentos com benefícios |
-| `v_phb_armor` | Armaduras com categoria |
-| `v_class_spell_slots` | Slots de magia por classe/nível |
-| `v_phb_class_skill_choice` | Pool de perícias por classe |
-| `v_phb_species_trait_choices` | Escolhas de traço de espécie |
-| `v_phb_subclass_mechanics` | Mecânicas de subclasse |
-| `v_phb_subclass_prepared_spell` | Magias preparadas de subclasse |
-| `v_phb_subclass_spells_expected` | Magias esperadas por subclasse |
-| `v_phb_species_granted_spell` | Magias always_prepared de espécie/linhagem |
-| `v_phb_feat_granted_spell` | Magias fixas de talento |
-| `mv_spell_by_class` | Materialized — refresh manual ou cron |
+## Contagem vs meta 45–60
 
-## Polimorfismo
-
-**`phb_resource_definition`:** exatamente um de `species_id`, `class_id`, `subclass_id` conforme `resource_scope`.
-
-**`phb_spell_source`:** origem via `origin` enum + FKs opcionais (class, species, feat, subclass).
-
-**Itens:** subtipo determinado por existência em `phb_weapon` / `phb_armor` / `phb_tool`.
+Após lotes A–G o schema ficou em **~81** tabelas base (não 45–60). Justificativa no ADR: pacote de combate tipado + runtime completo + cobertura PHB/Valdas mantidos de propósito; a consolidação removeu fragmentação (lookups, lineages, options, packages, grants, afinidades, modifiers), não o domínio mecânico.

@@ -44,7 +44,7 @@ Consolidação de schema pós-auditoria (`analise`):
 [`adr-schema-consolidation.md`](../architecture/adr-schema-consolidation.md) ·  
 [`schema-equivalence-map.md`](../architecture/schema-equivalence-map.md) ·  
 [`schema-consolidation-plan.md`](schema-consolidation-plan.md)  
-Status: **Aceito** — consolidação agressiva A→G em andamento (`db:setup`).
+Status: **Concluído** (A→G + criticals + docs) — schema `rpg` ~81 tabelas base; ver ADR DoD.
 
 - [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)
 - [ ] Iniciativa PC: fontes além de DEX + Alerta — **traços** e **condições** (não magias)
