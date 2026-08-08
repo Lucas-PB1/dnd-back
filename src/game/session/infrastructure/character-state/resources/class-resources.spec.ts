@@ -88,6 +88,8 @@ describe('character-state/class-resources', () => {
 
     it('builds remaining and risk die extras', async () => {
       dataSource.query.mockImplementation(async (sql: string) => {
+        if (String(sql).includes('player_character_feat')) return [];
+        if (String(sql).includes('player_character_item')) return [];
         if (String(sql).includes('phb_resource_grant')) return scheduleRows;
         if (String(sql).includes('v_phb_class_progression')) {
           return [{ proficiency_bonus: 2, channel_divinity: null }];
@@ -96,7 +98,9 @@ describe('character-state/class-resources', () => {
       });
 
       const character = {
+        id: 'char-1',
         classSlug: 'barbarian',
+        speciesSlug: 'human',
         level: 3,
         abilityScores: DEFAULT_ABILITY_SCORES,
       } as never;
@@ -122,7 +126,9 @@ describe('character-state/class-resources', () => {
     it('defaults proficiency when progression missing', async () => {
       dataSource.query.mockResolvedValue([]);
       const resources = await resolveClassResources(dataSource as never, {
+        id: 'char-2',
         classSlug: 'fighter',
+        speciesSlug: 'human',
         level: 1,
         abilityScores: DEFAULT_ABILITY_SCORES,
       } as never);

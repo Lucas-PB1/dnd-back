@@ -4,7 +4,7 @@ CREATE TYPE rpg.item_type AS ENUM (
   'weapon','armor','gear','tool','focus','other'
 );
 
-CREATE TYPE rpg.resource_scope AS ENUM ('species','class','subclass');
+CREATE TYPE rpg.resource_scope AS ENUM ('species','class','subclass','feat','item');
 
 CREATE TYPE rpg.subclass_feature_kind AS ENUM (
   'passive',
@@ -107,7 +107,7 @@ CREATE TYPE rpg.class_proficiency_kind AS ENUM (
 );
 
 -- Lote G: recursos e modificadores de combate unificados
-CREATE TYPE rpg.resource_owner_kind AS ENUM ('class', 'subclass');
+CREATE TYPE rpg.resource_owner_kind AS ENUM ('class', 'subclass', 'species', 'feat', 'item');
 
 CREATE TYPE rpg.combat_modifier_kind AS ENUM ('hp_bonus', 'unarmored_defense');
 

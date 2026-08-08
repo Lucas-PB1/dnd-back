@@ -132,14 +132,29 @@ export class ClassEconomyActionDto {
   @ApiProperty({ example: 'bonus' })
   economy!: string;
 
-  @ApiProperty({ example: 'fighter' })
-  classSlug!: string;
+  @ApiPropertyOptional({ example: 'fighter', nullable: true })
+  classSlug?: string | null;
 
   @ApiProperty({ example: 1 })
   minLevel!: number;
 
   @ApiPropertyOptional({ example: 'psi-warrior' })
   subclassSlug?: string;
+
+  @ApiPropertyOptional({ example: 'dwarf', nullable: true })
+  speciesSlug?: string | null;
+
+  @ApiPropertyOptional({ example: 'lucky', nullable: true })
+  featSlug?: string | null;
+
+  @ApiPropertyOptional({ example: 'ring-of-barrels', nullable: true })
+  itemSlug?: string | null;
+
+  @ApiPropertyOptional({ example: 'giantAncestryId' })
+  requiresOptionKey?: string;
+
+  @ApiPropertyOptional({ example: 'cloud' })
+  requiresOptionValue?: string;
 
   @ApiPropertyOptional({ example: 'secondWind' })
   resourceSlug?: string;

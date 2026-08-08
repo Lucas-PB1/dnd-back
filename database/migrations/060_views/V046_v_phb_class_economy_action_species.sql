@@ -1,4 +1,9 @@
-CREATE OR REPLACE VIEW rpg.v_phb_class_economy_action AS
+-- Atualiza a view de economia após T066 (species_id + requires_option_*).
+-- DROP necessário: CREATE OR REPLACE não permite inserir colunas no meio.
+
+DROP VIEW IF EXISTS rpg.v_phb_class_economy_action;
+
+CREATE VIEW rpg.v_phb_class_economy_action AS
 SELECT
   a.action_id,
   c.slug AS class_slug,

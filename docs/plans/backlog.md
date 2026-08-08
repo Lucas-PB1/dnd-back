@@ -38,6 +38,8 @@ Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mecha
 
 Não priorizar. Só retomar com pedido explícito.
 
+- [ ] Mísseis Mágicos: escolhas Escudo/Giga no cast (modal) — [`mm-cast-options-modal.md`](mm-cast-options-modal.md)
+
 ### Referência — modelo de dados (proposta)
 
 Consolidação de schema pós-auditoria (`analise`):  

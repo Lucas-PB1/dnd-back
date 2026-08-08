@@ -6,10 +6,19 @@ export class VPhbClassEconomyAction {
   actionId!: string;
 
   @ViewColumn({ name: 'class_slug' })
-  classSlug!: string;
+  classSlug!: string | null;
 
   @ViewColumn({ name: 'subclass_slug' })
   subclassSlug!: string | null;
+
+  @ViewColumn({ name: 'species_slug' })
+  speciesSlug!: string | null;
+
+  @ViewColumn({ name: 'feat_slug' })
+  featSlug!: string | null;
+
+  @ViewColumn({ name: 'item_slug' })
+  itemSlug!: string | null;
 
   @ViewColumn()
   name!: string;
@@ -43,4 +52,10 @@ export class VPhbClassEconomyAction {
 
   @ViewColumn({ name: 'sort_order' })
   sortOrder!: number;
+
+  @ViewColumn({ name: 'requires_option_key' })
+  requiresOptionKey!: string | null;
+
+  @ViewColumn({ name: 'requires_option_value' })
+  requiresOptionValue!: string | null;
 }

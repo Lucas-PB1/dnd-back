@@ -79,6 +79,20 @@ export async function resolveClassResources(
   const subclassRows = character.subclassSlug
     ? await loadSubclassResourceSchedule(dataSource, character.subclassSlug)
     : [];
+  const speciesRows = await loadSpeciesResourceSchedule(
+    dataSource,
+    character.speciesSlug,
+  );
+  const featSlugs = await loadCharacterFeatSlugs(dataSource, character.id);
+  const featRows =
+    featSlugs.length > 0
+      ? await loadFeatResourceSchedule(dataSource, featSlugs)
+      : [];
+  const itemSlugs = await loadActiveItemSlugs(dataSource, character.id);
+  const itemRows =
+    itemSlugs.length > 0
+      ? await loadItemResourceSchedule(dataSource, itemSlugs)
+      : [];
   const progression = await loadClassProgressionSnapshot(
     dataSource,
     character.classSlug,
@@ -87,12 +101,33 @@ export async function resolveClassResources(
   const mods = computeAbilityModifiers(character.abilityScores);
 
   return resolveClassResourceMaxima({
-    rows: [...classRows, ...subclassRows],
+    rows: [
+      ...classRows,
+      ...subclassRows,
+      ...speciesRows,
+      ...featRows,
+      ...itemRows,
+    ],
     level: character.level,
     proficiencyBonus: progression?.proficiencyBonus ?? 2,
     abilityModifiers: mods,
     channelDivinityFromProgression: progression?.channelDivinity ?? null,
   });
+}
+
+export async function loadCharacterFeatSlugs(
+  dataSource: DataSource,
+  characterId: string,
+): Promise<string[]> {
+  if (!characterId) return [];
+  const rows = await dataSource.query<{ feat_slug: string }[]>(
+    `SELECT DISTINCT feat_slug
+     FROM rpg.player_character_feat
+     WHERE character_id = $1
+     ORDER BY feat_slug`,
+    [characterId],
+  );
+  return rows.map((row) => row.feat_slug);
 }
 
 export async function loadClassProgressionSnapshot(
@@ -174,6 +209,143 @@ export async function loadSubclassResourceSchedule(
      WHERE s.slug = $1
      ORDER BY rd.slug, sr.unlock_level`,
     [subclassSlug],
+  );
+
+  return rows.map((row) => ({
+    resourceSlug: row.resource_slug,
+    resourceName: row.resource_name,
+    unlockLevel: row.unlock_level,
+    maxFormula: row.max_formula,
+    fixedMax: row.fixed_max,
+    recoverOneOnShort: row.recover_one_on_short,
+    recoverAllOnShort: row.recover_all_on_short,
+    recoverAllOnLong: row.recover_all_on_long,
+  }));
+}
+
+export async function loadSpeciesResourceSchedule(
+  dataSource: DataSource,
+  speciesSlug: string,
+): Promise<ClassResourceScheduleRow[]> {
+  const rows = await dataSource.query<ClassResourceDbRow[]>(
+    `SELECT
+       rd.slug AS resource_slug,
+       rd.name AS resource_name,
+       gr.unlock_level,
+       gr.max_formula::text AS max_formula,
+       gr.fixed_max,
+       gr.recover_one_on_short,
+       gr.recover_all_on_short,
+       gr.recover_all_on_long
+     FROM rpg.phb_resource_grant gr
+     JOIN rpg.phb_species sp
+       ON sp.id = gr.owner_id AND gr.owner_kind = 'species'::rpg.resource_owner_kind
+     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
+     WHERE sp.slug = $1
+     ORDER BY rd.slug, gr.unlock_level`,
+    [speciesSlug],
+  );
+
+  return rows.map((row) => ({
+    resourceSlug: row.resource_slug,
+    resourceName: row.resource_name,
+    unlockLevel: row.unlock_level,
+    maxFormula: row.max_formula,
+    fixedMax: row.fixed_max,
+    recoverOneOnShort: row.recover_one_on_short,
+    recoverAllOnShort: row.recover_all_on_short,
+    recoverAllOnLong: row.recover_all_on_long,
+  }));
+}
+
+export async function loadFeatResourceSchedule(
+  dataSource: DataSource,
+  featSlugs: readonly string[],
+): Promise<ClassResourceScheduleRow[]> {
+  if (featSlugs.length === 0) return [];
+  const rows = await dataSource.query<ClassResourceDbRow[]>(
+    `SELECT
+       rd.slug AS resource_slug,
+       rd.name AS resource_name,
+       gr.unlock_level,
+       gr.max_formula::text AS max_formula,
+       gr.fixed_max,
+       gr.recover_one_on_short,
+       gr.recover_all_on_short,
+       gr.recover_all_on_long
+     FROM rpg.phb_resource_grant gr
+     JOIN rpg.phb_feat f
+       ON f.id = gr.owner_id AND gr.owner_kind = 'feat'::rpg.resource_owner_kind
+     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
+     WHERE f.slug = ANY($1::text[])
+     ORDER BY rd.slug, gr.unlock_level`,
+    [featSlugs],
+  );
+
+  return rows.map((row) => ({
+    resourceSlug: row.resource_slug,
+    resourceName: row.resource_name,
+    unlockLevel: row.unlock_level,
+    maxFormula: row.max_formula,
+    fixedMax: row.fixed_max,
+    recoverOneOnShort: row.recover_one_on_short,
+    recoverAllOnShort: row.recover_all_on_short,
+    recoverAllOnLong: row.recover_all_on_long,
+  }));
+}
+
+/** Itens equipados (+ sintonizados se exigir) e charms anexados a armas equipadas. */
+export async function loadActiveItemSlugs(
+  dataSource: DataSource,
+  characterId: string,
+): Promise<string[]> {
+  if (!characterId) return [];
+  const rows = await dataSource.query<{ item_slug: string }[]>(
+    `SELECT DISTINCT item_slug FROM (
+       SELECT pci.item_slug
+       FROM rpg.player_character_item pci
+       JOIN rpg.phb_item i ON i.slug = pci.item_slug
+       WHERE pci.character_id = $1
+         AND pci.location = 'equipped'
+         AND (
+           COALESCE((i.properties->>'requiresAttunement')::boolean, false) = false
+           OR pci.attuned = true
+         )
+       UNION ALL
+       SELECT pci.attached_charm_slug AS item_slug
+       FROM rpg.player_character_item pci
+       WHERE pci.character_id = $1
+         AND pci.location = 'equipped'
+         AND pci.attached_charm_slug IS NOT NULL
+     ) active
+     ORDER BY item_slug`,
+    [characterId],
+  );
+  return rows.map((row) => row.item_slug);
+}
+
+export async function loadItemResourceSchedule(
+  dataSource: DataSource,
+  itemSlugs: readonly string[],
+): Promise<ClassResourceScheduleRow[]> {
+  if (itemSlugs.length === 0) return [];
+  const rows = await dataSource.query<ClassResourceDbRow[]>(
+    `SELECT
+       rd.slug AS resource_slug,
+       rd.name AS resource_name,
+       gr.unlock_level,
+       gr.max_formula::text AS max_formula,
+       gr.fixed_max,
+       gr.recover_one_on_short,
+       gr.recover_all_on_short,
+       gr.recover_all_on_long
+     FROM rpg.phb_resource_grant gr
+     JOIN rpg.phb_item i
+       ON i.id = gr.owner_id AND gr.owner_kind = 'item'::rpg.resource_owner_kind
+     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
+     WHERE i.slug = ANY($1::text[])
+     ORDER BY rd.slug, gr.unlock_level`,
+    [itemSlugs],
   );
 
   return rows.map((row) => ({

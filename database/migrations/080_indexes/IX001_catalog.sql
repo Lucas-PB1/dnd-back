@@ -51,6 +51,12 @@ CREATE UNIQUE INDEX uq_resource_class ON rpg.phb_resource_definition (class_id, 
 CREATE UNIQUE INDEX uq_resource_subclass ON rpg.phb_resource_definition (subclass_id, slug)
   WHERE scope = 'subclass';
 
+CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_feat ON rpg.phb_resource_definition (feat_id, slug)
+  WHERE scope = 'feat';
+
+CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_item ON rpg.phb_resource_definition (item_id, slug)
+  WHERE scope = 'item';
+
 CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_ops);
 
 CREATE INDEX idx_phb_feat_name_trgm ON rpg.phb_feat USING gin (name gin_trgm_ops);

@@ -26,6 +26,7 @@ import { PlayerCharacterItem } from '../../inventory/infrastructure/player-chara
 import { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
 import { resolveCharacterCombatSlice } from '../../combat/application/resolve-character-combat-slice';
 import { resolveCharacterSpellcastingSlice } from '../../spellcasting/application/resolve-character-spellcasting-slice';
+import { loadActiveItemSlugs } from '../../session/infrastructure/character-state/resources/class-resources';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/validation/class-options/fighting-style-feat-options';
 import { collectMasteredWeaponSlugs } from '../domain/validation/class-options/class-weapon-mastery-slots';
 
@@ -98,15 +99,19 @@ export class CharacterMapper {
     const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
       loaded.subclassOptions,
     );
+    const activeItemSlugs = await loadActiveItemSlugs(this.dataSource, row.id);
     const combat = await resolveCharacterCombatSlice({
       characterId: row.id,
       abilityScores: effectiveAbilityScores,
       classSlug: row.classSlug,
       subclassSlug: row.subclassSlug,
+      speciesSlug: row.speciesSlug,
+      speciesChoices: loaded.speciesChoices,
       level: row.level,
       proficiencyBonus,
       featSlugs,
       fightingStyleSlugs,
+      activeItemSlugs,
       masteredWeaponSlugs: collectMasteredWeaponSlugs({
         classOptions: loaded.classOptions,
         featOptions: loaded.featOptions,
