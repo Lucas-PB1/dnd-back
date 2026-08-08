@@ -9,6 +9,7 @@ import {
   paginateQb,
 } from '../../../common/dto/pagination.dto';
 import { BackgroundResponseDto } from '../dto/background-response.dto';
+import { BackgroundSummaryResponseDto } from '../dto/background-summary-response.dto';
 import { BackgroundsMapper } from '../backgrounds.mapper';
 
 @Injectable()
@@ -24,10 +25,21 @@ export class FindBackgroundsQuery {
     limit = 20,
     q?: string,
     editionSlugs?: string[],
-  ): Promise<PaginatedResponseDto<BackgroundResponseDto>> {
+    fields?: 'summary',
+  ): Promise<
+    PaginatedResponseDto<BackgroundResponseDto | BackgroundSummaryResponseDto>
+  > {
     const qb = this.backgroundsRepo
       .createQueryBuilder('background')
       .orderBy('background.backgroundName', 'ASC');
+
+    if (fields === 'summary') {
+      qb.select([
+        'background.backgroundSlug',
+        'background.backgroundName',
+        'background.editionSlug',
+      ]);
+    }
 
     applyIlikeSearch(qb, [
       'background.backgroundName',
@@ -38,6 +50,10 @@ export class FindBackgroundsQuery {
     applyEditionSlugFilter(qb, 'background.editionSlug', editionSlugs);
 
     const { rows, meta } = await paginateQb(qb, page, limit);
-    return { data: rows.map((row) => this.mapper.toDto(row)), meta };
+    const data =
+      fields === 'summary'
+        ? rows.map((row) => this.mapper.toSummaryDto(row))
+        : rows.map((row) => this.mapper.toDto(row));
+    return { data, meta };
   }
 }

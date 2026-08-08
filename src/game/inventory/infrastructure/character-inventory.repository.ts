@@ -16,6 +16,7 @@ import {
   clearEquippedSlotIfOccupied,
   findInventoryItemOrFail,
   inventoryItemToDto,
+  inventoryItemsToDtos,
 } from './inventory/inventory-item-ops';
 import {
   assertInventoryAddFits,
@@ -41,9 +42,7 @@ export class CharacterInventoryRepository {
       where: { characterId },
       order: { location: 'ASC', itemSlug: 'ASC' },
     });
-    const dtos = await Promise.all(
-      rows.map((row) => inventoryItemToDto(this.catalogItems, row)),
-    );
+    const dtos = await inventoryItemsToDtos(this.catalogItems, rows);
     return {
       items: dtos,
       encumbrance: encumbranceFromInventoryDtos(dtos, strengthScore),

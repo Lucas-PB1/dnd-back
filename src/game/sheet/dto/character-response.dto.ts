@@ -221,3 +221,36 @@ export class CharacterResponseDto {
   @ApiProperty({ type: [CharacterCampaignRefDto] })
   campaigns!: CharacterCampaignRefDto[];
 }
+
+/** Resumo para GET /characters — sem sheet/combat/magias. */
+export class CharacterSummaryResponseDto {
+  @ApiProperty({ format: 'uuid' })
+  id!: string;
+
+  @ApiProperty({ example: 'Thorin' })
+  name!: string;
+
+  @ApiProperty({ example: 1 })
+  level!: number;
+
+  @ApiProperty({ example: 'fighter' })
+  classSlug!: string;
+
+  @ApiProperty({ example: 'dwarf' })
+  speciesSlug!: string;
+
+  @ApiProperty({ example: 'acolyte' })
+  backgroundSlug!: string;
+
+  @ApiPropertyOptional({ example: 'champion' })
+  subclassSlug!: string | null;
+
+  @ApiProperty()
+  createdAt!: string;
+
+  @ApiProperty()
+  updatedAt!: string;
+
+  @ApiProperty({ type: [CharacterCampaignRefDto] })
+  campaigns!: CharacterCampaignRefDto[];
+}

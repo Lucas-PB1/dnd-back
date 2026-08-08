@@ -101,7 +101,7 @@ async function buildGrantedSpellCastOptions(
   sheetRepository: CharacterSheetRepository,
   grantedSpellCatalog: LoadGrantedSpellCatalog,
 ): Promise<CharacterStateResponseDto['grantedSpellCastOptions']> {
-  const sheet = await sheetRepository.load(character.id, character.backgroundSlug);
+  const sheet = await sheetRepository.loadGrantedSpellSlice(character.id);
   const { speciesCatalog, featFixedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: [character.speciesSlug],

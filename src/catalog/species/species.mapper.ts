@@ -4,6 +4,7 @@ import { PhbSpeciesTrait } from '../../entities/phb-species-trait.entity';
 import { VPhbSpeciesTraitChoices } from '../../entities/views/v-phb-species-trait-choices.entity';
 import { DEFAULT_PHB_EDITION_SLUG } from '../../common/dto/pagination.dto';
 import { SpeciesResponseDto } from './dto/species-response.dto';
+import { SpeciesSummaryResponseDto } from './dto/species-summary-response.dto';
 import { SpeciesTraitResponseDto } from './dto/species-trait-response.dto';
 import { SpeciesTraitChoiceResponseDto } from './dto/species-trait-choice-response.dto';
 
@@ -18,6 +19,14 @@ function editionSlugFromSourceMeta(
 
 @Injectable()
 export class SpeciesMapper {
+  toSummaryDto(row: PhbSpecies): SpeciesSummaryResponseDto {
+    return {
+      slug: row.slug,
+      name: row.name,
+      editionSlug: editionSlugFromSourceMeta(row.sourceMeta),
+    };
+  }
+
   toDto(row: PhbSpecies): SpeciesResponseDto {
     return {
       slug: row.slug,

@@ -8,6 +8,7 @@ import {
 } from '../../../common/dto/pagination.dto';
 import { PhbItem } from '../../../entities/phb-item.entity';
 import { ItemResponseDto } from '../dto/item-response.dto';
+import { ItemSummaryResponseDto } from '../dto/item-summary-response.dto';
 import { ItemsMapper } from '../items.mapper';
 
 @Injectable()
@@ -23,10 +24,15 @@ export class FindItemsQuery {
     limit = 20,
     q?: string,
     itemType?: string,
-  ): Promise<PaginatedResponseDto<ItemResponseDto>> {
+    fields?: 'summary',
+  ): Promise<PaginatedResponseDto<ItemResponseDto | ItemSummaryResponseDto>> {
     const qb = this.itemsRepo
       .createQueryBuilder('item')
       .orderBy('item.name', 'ASC');
+
+    if (fields === 'summary') {
+      qb.select(['item.slug', 'item.name', 'item.itemType']);
+    }
 
     applyIlikeSearch(qb, ['item.name', 'item.slug'], q);
 
@@ -41,6 +47,10 @@ export class FindItemsQuery {
     }
 
     const { rows, meta } = await paginateQb(qb, page, limit);
-    return { data: rows.map((row) => this.mapper.toDto(row)), meta };
+    const data =
+      fields === 'summary'
+        ? rows.map((row) => this.mapper.toSummaryDto(row))
+        : rows.map((row) => this.mapper.toDto(row));
+    return { data, meta };
   }
 }

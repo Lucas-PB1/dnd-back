@@ -18,9 +18,11 @@ import {
   emptySheetData,
   loadBackgroundSkillSlugs,
   loadCharacterSheet,
+  loadGrantedSpellSheetSlice,
   loadManyCharacterSheets,
   mergeSheetData as mergeAbilityGeneration,
 } from './character-sheet/load-character-sheet';
+import type { GrantedSpellSheetSlice } from '../domain/character-sheet.types';
 import {
   clearClassOptions,
   clearClassSkills,
@@ -79,6 +81,12 @@ export class CharacterSheetRepository {
     backgroundSlug?: string,
   ): Promise<CharacterSheetData> {
     return loadCharacterSheet(this.loadDeps(), characterId, backgroundSlug);
+  }
+
+  async loadGrantedSpellSlice(
+    characterId: string,
+  ): Promise<GrantedSpellSheetSlice> {
+    return loadGrantedSpellSheetSlice(this.loadDeps(), characterId);
   }
 
   async loadMany(

@@ -8,6 +8,7 @@ import { VPhbClassSkillChoice } from '../../entities/views/v-phb-class-skill-cho
 import { VPhbClassFeature } from '../../entities/views/v-phb-class-feature.entity';
 import { VPhbClassProgression } from '../../entities/views/v-phb-class-progression.entity';
 import { ClassResponseDto } from './dto/class-response.dto';
+import { ClassSummaryResponseDto } from './dto/class-summary-response.dto';
 import { SubclassResponseDto } from '../subclasses/dto/subclass-response.dto';
 import { mapSubclassDto } from '../subclasses/map-subclass-dto';
 import { ClassSpellResponseDto } from './dto/class-spell-response.dto';
@@ -19,6 +20,14 @@ import { ClassProgressionResponseDto } from './dto/class-progression-response.dt
 
 @Injectable()
 export class ClassesMapper {
+  toClassSummaryDto(row: VPhbClass): ClassSummaryResponseDto {
+    return {
+      slug: row.classSlug,
+      name: row.className,
+      editionSlug: row.editionSlug,
+    };
+  }
+
   toClassDto(row: VPhbClass): ClassResponseDto {
     return {
       slug: row.classSlug,

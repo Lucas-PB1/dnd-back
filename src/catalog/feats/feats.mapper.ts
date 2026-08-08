@@ -1,9 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { VPhbFeat } from '../../entities/views/v-phb-feat.entity';
 import { FeatResponseDto } from './dto/feat-response.dto';
+import { FeatSummaryResponseDto } from './dto/feat-summary-response.dto';
 
 @Injectable()
 export class FeatsMapper {
+  toSummaryDto(row: VPhbFeat): FeatSummaryResponseDto {
+    return {
+      slug: row.featSlug,
+      name: row.featName,
+      categorySlug: row.categorySlug,
+    };
+  }
+
   toDto(row: VPhbFeat): FeatResponseDto {
     return {
       slug: row.featSlug,

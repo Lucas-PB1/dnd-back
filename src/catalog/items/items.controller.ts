@@ -23,7 +23,13 @@ export class ItemsController {
   @ApiOperation({ summary: 'List PHB items (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated item list' })
   findAll(@Query() query: ItemsQueryDto) {
-    return this.findItems.execute(query.page, query.limit, query.q, query.itemType);
+    return this.findItems.execute(
+      query.page,
+      query.limit,
+      query.q,
+      query.itemType,
+      query.fields,
+    );
   }
 
   @Get(':slug')

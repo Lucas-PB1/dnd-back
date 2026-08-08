@@ -9,6 +9,7 @@ import {
   paginateQb,
 } from '../../../common/dto/pagination.dto';
 import { ClassResponseDto } from '../dto/class-response.dto';
+import { ClassSummaryResponseDto } from '../dto/class-summary-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 
 @Injectable()
@@ -24,10 +25,19 @@ export class FindClassesQuery {
     limit = 20,
     q?: string,
     editionSlugs?: string[],
-  ): Promise<PaginatedResponseDto<ClassResponseDto>> {
+    fields?: 'summary',
+  ): Promise<PaginatedResponseDto<ClassResponseDto | ClassSummaryResponseDto>> {
     const qb = this.classesRepo
       .createQueryBuilder('klass')
       .orderBy('klass.className', 'ASC');
+
+    if (fields === 'summary') {
+      qb.select([
+        'klass.classSlug',
+        'klass.className',
+        'klass.editionSlug',
+      ]);
+    }
 
     applyIlikeSearch(qb, [
       'klass.className',
@@ -38,6 +48,10 @@ export class FindClassesQuery {
     applyEditionSlugFilter(qb, 'klass.editionSlug', editionSlugs);
 
     const { rows, meta } = await paginateQb(qb, page, limit);
-    return { data: rows.map((row) => this.mapper.toClassDto(row)), meta };
+    const data =
+      fields === 'summary'
+        ? rows.map((row) => this.mapper.toClassSummaryDto(row))
+        : rows.map((row) => this.mapper.toClassDto(row));
+    return { data, meta };
   }
 }

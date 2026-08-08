@@ -24,7 +24,7 @@ function itemRow(overrides: Partial<PlayerCharacterItem> = {}): PlayerCharacterI
 
 describe('inventory-item-ops', () => {
   let items: { findOne: jest.Mock; save: jest.Mock; count: jest.Mock };
-  let catalogItems: { findOne: jest.Mock };
+  let catalogItems: { find: jest.Mock; findOne: jest.Mock };
   let catalogLookup: { assertItemInCatalog: jest.Mock };
 
   beforeEach(() => {
@@ -33,14 +33,16 @@ describe('inventory-item-ops', () => {
       save: jest.fn(async (row) => row),
       count: jest.fn().mockResolvedValue(0),
     };
+    const ropeCatalog = {
+      slug: 'rope',
+      name: 'Corda',
+      itemType: 'gear',
+      weight: '5 kg',
+      properties: null,
+    };
     catalogItems = {
-      findOne: jest.fn().mockResolvedValue({
-        slug: 'rope',
-        name: 'Corda',
-        itemType: 'gear',
-        weight: '5 kg',
-        properties: null,
-      }),
+      find: jest.fn().mockResolvedValue([ropeCatalog]),
+      findOne: jest.fn().mockResolvedValue(ropeCatalog),
     };
     catalogLookup = {
       assertItemInCatalog: jest.fn().mockResolvedValue({
@@ -204,7 +206,7 @@ describe('inventory-item-ops', () => {
     });
 
     it('falls back when catalog row is missing', async () => {
-      catalogItems.findOne.mockResolvedValue(null);
+      catalogItems.find.mockResolvedValue([]);
       const dto = await inventoryItemToDto(
         catalogItems as unknown as Repository<PhbItem>,
         itemRow({ itemSlug: 'unknown-item' }),

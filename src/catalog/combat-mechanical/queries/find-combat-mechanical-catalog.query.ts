@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '../../../game/combat/application/load-combat-mechanical-catalog';
 import { CombatMechanicalCatalogResponseDto } from '../dto/combat-mechanical-catalog-response.dto';
+import {
+  filterCombatMechanicalCatalog,
+  type CombatMechanicalCatalogFilters,
+} from './filter-combat-mechanical-catalog';
 
 @Injectable()
 export class FindCombatMechanicalCatalogQuery {
@@ -8,10 +12,12 @@ export class FindCombatMechanicalCatalogQuery {
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
-  async execute(): Promise<CombatMechanicalCatalogResponseDto> {
+  async execute(
+    filters: CombatMechanicalCatalogFilters = {},
+  ): Promise<CombatMechanicalCatalogResponseDto> {
     const catalog = await this.mechanicalCatalog.load();
 
-    return {
+    const dto: CombatMechanicalCatalogResponseDto = {
       gunslingerManeuvers: catalog.gunslingerManeuvers,
       battleMasterManeuvers: catalog.battleMasterManeuvers,
       cunningStrikeEffects: catalog.cunningStrikeEffects.map((effect) => ({
@@ -31,5 +37,7 @@ export class FindCombatMechanicalCatalogQuery {
       economyActions: catalog.economyActions,
       panelActions: catalog.panelActions,
     };
+
+    return filterCombatMechanicalCatalog(dto, filters);
   }
 }

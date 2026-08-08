@@ -30,6 +30,7 @@ export class SpellsController {
       query.level,
       query.school,
       query.editionSlugs,
+      query.fields,
     );
   }
 

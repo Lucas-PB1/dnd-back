@@ -9,6 +9,7 @@ import {
   paginateQb,
 } from '../../../common/dto/pagination.dto';
 import { FeatResponseDto } from '../dto/feat-response.dto';
+import { FeatSummaryResponseDto } from '../dto/feat-summary-response.dto';
 import { FeatsMapper } from '../feats.mapper';
 
 @Injectable()
@@ -25,10 +26,15 @@ export class FindFeatsQuery {
     q?: string,
     category?: string,
     editionSlugs?: string[],
-  ): Promise<PaginatedResponseDto<FeatResponseDto>> {
+    fields?: 'summary',
+  ): Promise<PaginatedResponseDto<FeatResponseDto | FeatSummaryResponseDto>> {
     const qb = this.featsRepo
       .createQueryBuilder('feat')
       .orderBy('feat.featName', 'ASC');
+
+    if (fields === 'summary') {
+      qb.select(['feat.featSlug', 'feat.featName', 'feat.categorySlug']);
+    }
 
     applyIlikeSearch(qb, [
       'feat.featName',
@@ -45,6 +51,10 @@ export class FindFeatsQuery {
     applyEditionSlugFilter(qb, 'feat.editionSlug', editionSlugs);
 
     const { rows, meta } = await paginateQb(qb, page, limit);
-    return { data: rows.map((row) => this.mapper.toDto(row)), meta };
+    const data =
+      fields === 'summary'
+        ? rows.map((row) => this.mapper.toSummaryDto(row))
+        : rows.map((row) => this.mapper.toDto(row));
+    return { data, meta };
   }
 }

@@ -46,6 +46,7 @@ export class ClassesController {
       query.limit,
       query.q,
       query.editionSlugs,
+      query.fields,
     );
   }
 

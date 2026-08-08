@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
+import { IsIn, IsInt, IsOptional, IsString, Max, Min } from 'class-validator';
 import { SearchQueryDto } from '../../../common/dto/pagination.dto';
 
 export class SpellsQueryDto extends SearchQueryDto {
@@ -23,4 +23,13 @@ export class SpellsQueryDto extends SearchQueryDto {
   @IsOptional()
   @IsString()
   school?: string;
+
+  @ApiPropertyOptional({
+    description:
+      'summary = slug/name/level/school only (labels). Omit for full DTO.',
+    enum: ['summary'],
+  })
+  @IsOptional()
+  @IsIn(['summary'])
+  fields?: 'summary';
 }

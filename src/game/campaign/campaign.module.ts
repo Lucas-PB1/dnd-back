@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterDiceModule } from '../dice/character-dice.module';
 import { CombatModule } from '../combat/combat.module';
-import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { PlayerCharacterState } from '../session/infrastructure/player-character-state.entity';
 import { Campaign } from './infrastructure/campaign.entity';
 import { CampaignMember } from './infrastructure/campaign-member.entity';
@@ -25,7 +24,6 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
     GameSharedModule,
     CombatModule,
     forwardRef(() => CharacterDiceModule),
-    forwardRef(() => CharacterSheetModule),
     TypeOrmModule.forFeature([
       Campaign,
       CampaignMember,

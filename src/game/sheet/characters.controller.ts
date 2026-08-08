@@ -31,7 +31,10 @@ import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
-import { CharacterResponseDto } from './dto/character-response.dto';
+import {
+  CharacterResponseDto,
+  CharacterSummaryResponseDto,
+} from './dto/character-response.dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()
@@ -48,9 +51,13 @@ export class CharactersController {
   ) {}
 
   @Get()
-  @ApiOperation({ summary: 'List characters for the authenticated user' })
-  @ApiOkResponse({ type: [CharacterResponseDto] })
-  findAll(@CurrentUser() user: AuthUser): Promise<CharacterResponseDto[]> {
+  @ApiOperation({
+    summary: 'List characters for the authenticated user (summary only)',
+  })
+  @ApiOkResponse({ type: [CharacterSummaryResponseDto] })
+  findAll(
+    @CurrentUser() user: AuthUser,
+  ): Promise<CharacterSummaryResponseDto[]> {
     return this.listCharacters.execute(user.id);
   }
 

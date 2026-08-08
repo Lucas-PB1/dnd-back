@@ -9,6 +9,7 @@ import {
   paginateQb,
 } from '../../../common/dto/pagination.dto';
 import { SpellResponseDto } from '../dto/spell-response.dto';
+import { SpellSummaryResponseDto } from '../dto/spell-summary-response.dto';
 import { SpellsMapper } from '../spells.mapper';
 
 @Injectable()
@@ -26,11 +27,25 @@ export class FindSpellsQuery {
     level?: number,
     school?: string,
     editionSlugs?: string[],
-  ): Promise<PaginatedResponseDto<SpellResponseDto>> {
+    fields?: 'summary',
+  ): Promise<
+    PaginatedResponseDto<SpellResponseDto | SpellSummaryResponseDto>
+  > {
     const qb = this.spellsRepo
       .createQueryBuilder('spell')
       .orderBy('spell.level', 'ASC')
       .addOrderBy('spell.name', 'ASC');
+
+    if (fields === 'summary') {
+      qb.select([
+        'spell.slug',
+        'spell.name',
+        'spell.level',
+        'spell.schoolSlug',
+        'spell.schoolName',
+        'spell.ritual',
+      ]);
+    }
 
     applyIlikeSearch(qb, [
       'spell.name',
@@ -50,6 +65,10 @@ export class FindSpellsQuery {
     applyEditionSlugFilter(qb, 'spell.editionSlug', editionSlugs);
 
     const { rows, meta } = await paginateQb(qb, page, limit);
-    return { data: rows.map((row) => this.mapper.toDto(row)), meta };
+    const data =
+      fields === 'summary'
+        ? rows.map((row) => this.mapper.toSummaryDto(row))
+        : rows.map((row) => this.mapper.toDto(row));
+    return { data, meta };
   }
 }

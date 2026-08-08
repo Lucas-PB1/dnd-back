@@ -9,6 +9,7 @@ import {
   paginateQb,
 } from '../../../common/dto/pagination.dto';
 import { SpeciesResponseDto } from '../dto/species-response.dto';
+import { SpeciesSummaryResponseDto } from '../dto/species-summary-response.dto';
 import { SpeciesMapper } from '../species.mapper';
 
 @Injectable()
@@ -24,10 +25,21 @@ export class FindSpeciesQuery {
     limit = 20,
     q?: string,
     editionSlugs?: string[],
-  ): Promise<PaginatedResponseDto<SpeciesResponseDto>> {
+    fields?: 'summary',
+  ): Promise<
+    PaginatedResponseDto<SpeciesResponseDto | SpeciesSummaryResponseDto>
+  > {
     const qb = this.speciesRepo
       .createQueryBuilder('species')
       .orderBy('species.name', 'ASC');
+
+    if (fields === 'summary') {
+      qb.select([
+        'species.slug',
+        'species.name',
+        'species.sourceMeta',
+      ]);
+    }
 
     applyIlikeSearch(qb, [
       'species.name',
@@ -50,6 +62,10 @@ export class FindSpeciesQuery {
     }
 
     const { rows, meta } = await paginateQb(qb, page, limit);
-    return { data: rows.map((row) => this.mapper.toDto(row)), meta };
+    const data =
+      fields === 'summary'
+        ? rows.map((row) => this.mapper.toSummaryDto(row))
+        : rows.map((row) => this.mapper.toDto(row));
+    return { data, meta };
   }
 }

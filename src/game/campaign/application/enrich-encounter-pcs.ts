@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { DataSource, In, Repository } from 'typeorm';
 import { ResolveEquippedArmorClass } from '../../combat/application/resolve-equipped-armor-class';
 import { PlayerCharacterState } from '../../session/infrastructure/player-character-state.entity';
-import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
+import { loadFeatSlugsByCharacterIds } from '../../sheet/infrastructure/load-feat-slugs-by-character-ids';
 import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import type { PcCombatantEnrichment } from '../domain/build-encounter-dto';
 
 @Injectable()
 export class EnrichEncounterPcs {
   constructor(
-    private readonly sheets: CharacterSheetRepository,
+    private readonly dataSource: DataSource,
     private readonly armorClass: ResolveEquippedArmorClass,
     @InjectRepository(PlayerCharacterState)
     private readonly states: Repository<PlayerCharacterState>,
@@ -23,20 +23,14 @@ export class EnrichEncounterPcs {
     if (characters.length === 0) return result;
 
     const ids = characters.map((row) => row.id);
-    const backgroundById = new Map(
-      characters.map((row) => [row.id, row.backgroundSlug]),
-    );
-    const sheets = await this.sheets.loadMany(ids, backgroundById);
+    const featsById = await loadFeatSlugsByCharacterIds(this.dataSource, ids);
     const states = await this.states.find({
       where: { characterId: In(ids) },
     });
     const stateById = new Map(states.map((row) => [row.characterId, row]));
 
     for (const character of characters) {
-      const sheet = sheets.get(character.id);
-      const featSlugs = (sheet?.characterFeats ?? []).map(
-        (feat) => feat.featSlug,
-      );
+      const featSlugs = featsById.get(character.id) ?? [];
       const { armorClass } = await this.armorClass.resolve(
         character.id,
         character.abilityScores,

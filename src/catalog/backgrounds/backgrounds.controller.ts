@@ -37,6 +37,7 @@ export class BackgroundsController {
       query.limit,
       query.q,
       query.editionSlugs,
+      query.fields,
     );
   }
 

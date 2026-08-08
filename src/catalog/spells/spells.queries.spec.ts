@@ -41,6 +41,7 @@ describe('Spells queries', () => {
 
   function mockQb(rows: VPhbSpell[], total: number) {
     return {
+      select: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
       addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
@@ -74,6 +75,30 @@ describe('Spells queries', () => {
     const result = await findSpells.execute(1, 20);
     expect(result.data[0].slug).toBe('alarme');
     expect(result.meta.total).toBe(1);
+    expect(result.data[0]).toHaveProperty('description');
+  });
+
+  it('findAll with fields=summary omits description', async () => {
+    const qb = mockQb([sample], 1);
+    repo.createQueryBuilder.mockReturnValue(qb as never);
+    const result = await findSpells.execute(
+      1,
+      20,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      'summary',
+    );
+    expect(qb.select).toHaveBeenCalled();
+    expect(result.data[0]).toEqual({
+      slug: 'alarme',
+      name: 'Alarme',
+      level: 1,
+      schoolSlug: 'abjuracao',
+      schoolName: 'Abjuração',
+      ritual: true,
+    });
   });
 
   it('findAll applies search filter', async () => {

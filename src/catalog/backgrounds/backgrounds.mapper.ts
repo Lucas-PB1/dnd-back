@@ -5,6 +5,7 @@ import { VPhbBackgroundSkill } from '../../entities/views/v-phb-background-skill
 import { VPhbBackgroundToolOption } from '../../entities/views/v-phb-background-tool-option.entity';
 import { VPhbBackgroundLanguage } from '../../entities/views/v-phb-background-language.entity';
 import { BackgroundResponseDto } from './dto/background-response.dto';
+import { BackgroundSummaryResponseDto } from './dto/background-summary-response.dto';
 import { BackgroundEquipmentResponseDto } from './dto/background-equipment-response.dto';
 import { BackgroundSkillResponseDto } from './dto/background-skill-response.dto';
 import { BackgroundToolResponseDto } from './dto/background-tool-response.dto';
@@ -12,6 +13,14 @@ import { BackgroundLanguageResponseDto } from './dto/background-language-respons
 
 @Injectable()
 export class BackgroundsMapper {
+  toSummaryDto(row: VPhbBackground): BackgroundSummaryResponseDto {
+    return {
+      slug: row.backgroundSlug,
+      name: row.backgroundName,
+      editionSlug: row.editionSlug,
+    };
+  }
+
   toDto(row: VPhbBackground): BackgroundResponseDto {
     return {
       slug: row.backgroundSlug,

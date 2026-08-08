@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import { PhbSpecies } from '../../../entities/phb-species.entity';
-import { CharacterResponseDto } from '../dto/character-response.dto';
+import {
+  CharacterResponseDto,
+  CharacterSummaryResponseDto,
+} from '../dto/character-response.dto';
 import { CharacterDomainService } from '../domain/core/character-domain.service';
 import { computeDerivedStats } from '../domain/stats/character-derived-stats';
 import {
@@ -192,20 +195,22 @@ export class CharacterMapper {
     };
   }
 
-  async toDtoList(rows: PlayerCharacter[]): Promise<CharacterResponseDto[]> {
-    const sheetMap = await this.sheet.loadMany(
-      rows.map((row) => row.id),
-      new Map(rows.map((row) => [row.id, row.backgroundSlug])),
-    );
+  toSummaryDto(row: PlayerCharacter): CharacterSummaryResponseDto {
+    return {
+      id: row.id,
+      name: row.name,
+      level: row.level,
+      classSlug: row.classSlug,
+      speciesSlug: row.speciesSlug,
+      backgroundSlug: row.backgroundSlug,
+      subclassSlug: row.subclassSlug,
+      createdAt: row.createdAt.toISOString(),
+      updatedAt: row.updatedAt.toISOString(),
+      campaigns: [],
+    };
+  }
 
-    return Promise.all(
-      rows.map((row) => {
-        const base = sheetMap.get(row.id) ?? this.sheet.empty();
-        return this.toDto(
-          row,
-          this.sheet.mergeSheetData(base, row.abilityGenerationMethodSlug),
-        );
-      }),
-    );
+  toSummaryList(rows: PlayerCharacter[]): CharacterSummaryResponseDto[] {
+    return rows.map((row) => this.toSummaryDto(row));
   }
 }

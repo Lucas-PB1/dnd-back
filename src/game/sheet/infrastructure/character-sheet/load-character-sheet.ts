@@ -2,6 +2,7 @@ import { DataSource, Repository } from 'typeorm';
 import {
   CharacterSheetData,
   EMPTY_SHEET_DATA,
+  type GrantedSpellSheetSlice,
 } from '../../domain/character-sheet.types';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
@@ -114,6 +115,52 @@ export async function loadCharacterSheet(
     languageSlugs: languageRows.map((row) => row.languageSlug),
     abilityGenerationMethodSlug: null,
     backgroundSkillSlugs,
+  };
+}
+
+/** Só feats/options/species choices/spells — para GET state (granted casts). */
+export async function loadGrantedSpellSheetSlice(
+  deps: Pick<
+    CharacterSheetLoadDeps,
+    'speciesChoices' | 'options' | 'feats' | 'spells'
+  >,
+  characterId: string,
+): Promise<GrantedSpellSheetSlice> {
+  const [speciesRows, featRows, featOptionRows, spellRows] = await Promise.all([
+    deps.speciesChoices.find({
+      where: { characterId },
+      order: { choiceKind: 'ASC' },
+    }),
+    deps.feats.find({
+      where: { characterId },
+      order: { featSlug: 'ASC', instanceIndex: 'ASC' },
+    }),
+    deps.options.find({
+      where: { characterId, scope: 'feat' },
+      order: { ownerSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
+    }),
+    deps.spells.find({ where: { characterId }, order: { spellSlug: 'ASC' } }),
+  ]);
+
+  return {
+    speciesChoices: speciesRows.map((row) => ({
+      choiceKind: row.choiceKind,
+      choiceSlug: row.choiceSlug,
+    })),
+    characterFeats: featRows.map((row) => ({
+      featSlug: row.featSlug,
+      instanceIndex: row.instanceIndex,
+    })),
+    featOptions: featOptionRows.map((row) => ({
+      featSlug: row.ownerSlug,
+      instanceIndex: row.instanceIndex,
+      optionKey: row.optionKey,
+      valueId: row.valueId,
+    })),
+    characterSpells: spellRows.map((row) => ({
+      spellSlug: row.spellSlug,
+      listType: row.listType as 'known' | 'prepared' | 'always_prepared',
+    })),
   };
 }
 

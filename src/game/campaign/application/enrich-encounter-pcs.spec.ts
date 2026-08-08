@@ -1,6 +1,6 @@
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { EnrichEncounterPcs } from './enrich-encounter-pcs';
-import type { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
+import * as featSlugsLoader from '../../sheet/infrastructure/load-feat-slugs-by-character-ids';
 import type { ResolveEquippedArmorClass } from '../../combat/application/resolve-equipped-armor-class';
 import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
 import type { PlayerCharacterState } from '../../session/infrastructure/player-character-state.entity';
@@ -25,28 +25,17 @@ function character(overrides: Partial<PlayerCharacter> = {}): PlayerCharacter {
     },
     hitPointsCurrent: 38,
     hitPointsMax: 44,
+    ...overrides,
   } as PlayerCharacter;
 }
 
 describe('EnrichEncounterPcs', () => {
   let enricher: EnrichEncounterPcs;
-  let sheets: jest.Mocked<Pick<CharacterSheetRepository, 'loadMany'>>;
   let armorClass: jest.Mocked<Pick<ResolveEquippedArmorClass, 'resolve'>>;
   let states: jest.Mocked<Pick<Repository<PlayerCharacterState>, 'find'>>;
+  let loadFeatSlugs: jest.SpyInstance;
 
   beforeEach(() => {
-    sheets = {
-      loadMany: jest.fn().mockResolvedValue(
-        new Map([
-          [
-            'char1',
-            {
-              characterFeats: [{ featSlug: 'alert' }, { featSlug: 'tough' }],
-            },
-          ],
-        ]),
-      ),
-    };
     armorClass = {
       resolve: jest.fn().mockResolvedValue({ armorClass: 18 }),
     };
@@ -59,27 +48,33 @@ describe('EnrichEncounterPcs', () => {
         } as PlayerCharacterState,
       ]),
     };
+    loadFeatSlugs = jest
+      .spyOn(featSlugsLoader, 'loadFeatSlugsByCharacterIds')
+      .mockResolvedValue(
+        new Map([['char1', ['alert', 'tough']]]),
+      );
     enricher = new EnrichEncounterPcs(
-      sheets as unknown as CharacterSheetRepository,
+      {} as DataSource,
       armorClass as unknown as ResolveEquippedArmorClass,
       states as unknown as Repository<PlayerCharacterState>,
     );
   });
 
+  afterEach(() => {
+    loadFeatSlugs.mockRestore();
+  });
+
   it('returns empty map when no characters', async () => {
     const result = await enricher.enrich([]);
     expect(result.size).toBe(0);
-    expect(sheets.loadMany).not.toHaveBeenCalled();
+    expect(loadFeatSlugs).not.toHaveBeenCalled();
   });
 
-  it('enriches PCs with sheet feats, AC, HP and state', async () => {
+  it('enriches PCs with feat slugs, AC, HP and state', async () => {
     const pc = character();
     const result = await enricher.enrich([pc]);
 
-    expect(sheets.loadMany).toHaveBeenCalledWith(
-      ['char1'],
-      new Map([['char1', 'soldier']]),
-    );
+    expect(loadFeatSlugs).toHaveBeenCalledWith({}, ['char1']);
     expect(states.find).toHaveBeenCalled();
     expect(armorClass.resolve).toHaveBeenCalledWith(
       'char1',
@@ -103,9 +98,7 @@ describe('EnrichEncounterPcs', () => {
 
   it('defaults conditions and inspiration when state row is missing', async () => {
     states.find.mockResolvedValue([]);
-    sheets.loadMany.mockResolvedValue(
-      new Map([['char1', { characterFeats: [] }]]) as never,
-    );
+    loadFeatSlugs.mockResolvedValue(new Map([['char1', []]]));
 
     const result = await enricher.enrich([character()]);
     expect(result.get('char1')).toMatchObject({

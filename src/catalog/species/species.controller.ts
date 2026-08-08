@@ -33,6 +33,7 @@ export class SpeciesController {
       query.limit,
       query.q,
       query.editionSlugs,
+      query.fields,
     );
   }
 

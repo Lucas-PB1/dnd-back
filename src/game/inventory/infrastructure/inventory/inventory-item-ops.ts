@@ -1,5 +1,5 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
 import { PhbItem } from '../../../../entities/phb-item.entity';
 import {
@@ -84,24 +84,19 @@ export async function applyInventoryAttunement(input: {
   row.attuned = true;
 }
 
-export async function inventoryItemToDto(
-  catalogItems: Repository<PhbItem>,
+export function inventoryItemToDtoFromCatalog(
+  catalogBySlug: Map<string, PhbItem>,
   row: PlayerCharacterItem,
-): Promise<InventoryItemResponseDto> {
-  const catalog = await catalogItems.findOne({ where: { slug: row.itemSlug } });
+): InventoryItemResponseDto {
+  const catalog = catalogBySlug.get(row.itemSlug);
   const requiresAttunement = itemRequiresAttunement(catalog?.properties);
   const activation = {
     location: row.location,
     attuned: row.attuned,
     requiresAttunement,
   };
-  let attachedCharmName: string | null = null;
-  if (row.attachedCharmSlug) {
-    const charm = await catalogItems.findOne({
-      where: { slug: row.attachedCharmSlug },
-    });
-    attachedCharmName = charm?.name ?? row.attachedCharmSlug;
-  }
+  const charmSlug = row.attachedCharmSlug ?? null;
+  const charm = charmSlug ? catalogBySlug.get(charmSlug) : undefined;
   return {
     itemSlug: row.itemSlug,
     itemName: catalog?.name ?? row.itemSlug,
@@ -114,7 +109,40 @@ export async function inventoryItemToDto(
     effectsActive: itemEffectsActive(activation),
     effectsStatus: itemEffectsStatus(activation),
     weightKg: parseItemWeightKg(catalog?.weight),
-    attachedCharmSlug: row.attachedCharmSlug ?? null,
-    attachedCharmName,
+    attachedCharmSlug: charmSlug,
+    attachedCharmName: charmSlug
+      ? (charm?.name ?? charmSlug)
+      : null,
   };
+}
+
+export async function loadInventoryCatalogBySlugs(
+  catalogItems: Repository<PhbItem>,
+  slugs: readonly string[],
+): Promise<Map<string, PhbItem>> {
+  const unique = [...new Set(slugs.filter(Boolean))];
+  if (unique.length === 0) return new Map();
+  const rows = await catalogItems.find({ where: { slug: In(unique) } });
+  return new Map(rows.map((item) => [item.slug, item]));
+}
+
+export async function inventoryItemsToDtos(
+  catalogItems: Repository<PhbItem>,
+  rows: readonly PlayerCharacterItem[],
+): Promise<InventoryItemResponseDto[]> {
+  const slugs = rows.flatMap((row) =>
+    row.attachedCharmSlug
+      ? [row.itemSlug, row.attachedCharmSlug]
+      : [row.itemSlug],
+  );
+  const catalogBySlug = await loadInventoryCatalogBySlugs(catalogItems, slugs);
+  return rows.map((row) => inventoryItemToDtoFromCatalog(catalogBySlug, row));
+}
+
+export async function inventoryItemToDto(
+  catalogItems: Repository<PhbItem>,
+  row: PlayerCharacterItem,
+): Promise<InventoryItemResponseDto> {
+  const [dto] = await inventoryItemsToDtos(catalogItems, [row]);
+  return dto;
 }

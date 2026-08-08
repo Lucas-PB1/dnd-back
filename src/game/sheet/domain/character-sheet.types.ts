@@ -36,6 +36,12 @@ export const EMPTY_SHEET_DATA: CharacterSheetData = {
   backgroundSkillSlugs: [],
 };
 
+/** Subconjunto da sheet para granted spell cast options no state. */
+export type GrantedSpellSheetSlice = Pick<
+  CharacterSheetData,
+  'characterFeats' | 'featOptions' | 'speciesChoices' | 'characterSpells'
+>;
+
 export interface CharacterSheetInput {
   classSkillSlugs?: string[];
   speciesChoices?: SpeciesChoiceDto[];

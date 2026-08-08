@@ -1,3 +1,8 @@
+import { IntersectionType } from '@nestjs/swagger';
+import { CatalogFieldsQueryDto } from '../../../common/dto/catalog-fields.dto';
 import { SearchQueryDto } from '../../../common/dto/pagination.dto';
 
-export class BackgroundsQueryDto extends SearchQueryDto {}
+export class BackgroundsQueryDto extends IntersectionType(
+  SearchQueryDto,
+  CatalogFieldsQueryDto,
+) {}

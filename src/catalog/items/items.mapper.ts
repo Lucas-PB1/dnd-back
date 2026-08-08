@@ -1,9 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { PhbItem } from '../../entities/phb-item.entity';
 import { ItemResponseDto } from './dto/item-response.dto';
+import { ItemSummaryResponseDto } from './dto/item-summary-response.dto';
 
 @Injectable()
 export class ItemsMapper {
+  toSummaryDto(row: PhbItem): ItemSummaryResponseDto {
+    return {
+      slug: row.slug,
+      name: row.name,
+      itemType: row.itemType,
+    };
+  }
+
   toDto(row: PhbItem): ItemResponseDto {
     const cost = row.cost as { text?: string } | null;
     return {
