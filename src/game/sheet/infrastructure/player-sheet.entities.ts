@@ -25,13 +25,13 @@ export class PlayerCharacterOption {
   @Column({ type: 'text' })
   scope!: OptionScope;
 
-  @Column({ name: 'owner_slug' })
+  @Column({ name: 'owner_slug', type: 'text' })
   ownerSlug!: string;
 
-  @Column({ name: 'option_key' })
+  @Column({ name: 'option_key', type: 'text' })
   optionKey!: string;
 
-  @Column({ name: 'value_id' })
+  @Column({ name: 'value_id', type: 'text' })
   valueId!: string;
 
   @Column({ name: 'instance_index', type: 'int', default: 0 })

@@ -11,13 +11,13 @@ export class PhbOptionDef {
   @PrimaryColumn({ name: 'owner_id', type: 'bigint' })
   ownerId!: string;
 
-  @PrimaryColumn({ name: 'option_key' })
+  @PrimaryColumn({ name: 'option_key', type: 'text' })
   optionKey!: string;
 
-  @Column({ name: 'value_type' })
+  @Column({ name: 'value_type', type: 'text' })
   valueType!: string;
 
-  @Column({ nullable: true })
+  @Column({ type: 'text', nullable: true })
   label!: string | null;
 
   @Column({ name: 'sort_order', type: 'int', default: 0 })
@@ -47,13 +47,13 @@ export class PhbOptionValue {
   @PrimaryColumn({ name: 'owner_id', type: 'bigint' })
   ownerId!: string;
 
-  @PrimaryColumn({ name: 'option_key' })
+  @PrimaryColumn({ name: 'option_key', type: 'text' })
   optionKey!: string;
 
-  @PrimaryColumn({ name: 'value_id' })
+  @PrimaryColumn({ name: 'value_id', type: 'text' })
   valueId!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   label!: string;
 
   @Column({ name: 'sort_order', type: 'int', default: 0 })
