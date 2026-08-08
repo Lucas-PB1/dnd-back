@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { PhbItem } from '../../entities/phb-item.entity';
+import { ItemResponseDto } from './dto/item-response.dto';
 import { ItemsMapper } from './items.mapper';
 import { FindItemBySlugQuery } from './queries/find-item-by-slug.query';
 import { FindItemsQuery } from './queries/find-items.query';
@@ -54,8 +55,9 @@ describe('Items queries', () => {
 
   it('findAll maps rows', async () => {
     const result = await findItems.execute(1, 20);
-    expect(result.data[0].name).toBe('Espada Longa');
-    expect(result.data[0].costText).toBe('15 PO');
+    const item = result.data[0] as ItemResponseDto;
+    expect(item.name).toBe('Espada Longa');
+    expect(item.costText).toBe('15 PO');
   });
 
   it('findAll applies search filter', async () => {
