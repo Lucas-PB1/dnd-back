@@ -53,7 +53,7 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 |----------|---------|
 | Pastas, seeds, HTTP | [`references/camadas.md`](references/camadas.md) |
 | Economy / panel / XOR | [`references/economia-painel.md`](references/economia-painel.md) |
-| Mago · Guerreiro · Feiticeiro · Bruxo | [`references/exemplares.md`](references/exemplares.md) |
+| Mago · Guerreiro · Feiticeiro · Bruxo · Patrulheiro (**concluídas**) | [`references/exemplares.md`](references/exemplares.md) |
 
 ## Anti-padrões
 

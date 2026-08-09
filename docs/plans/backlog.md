@@ -18,7 +18,8 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 | HP / CA / ataque / feat options / granted spells | Pronto |
 | Deploy front / E2E | Pronto |
 | UI ataques (aba Ações) + erros HTTP PT | Pronto |
-| Classes PHB + Valdas (critério mesa) | Pronto — seguir skills mesa; Patrulheiro alinhado 2026-08-09 |
+| Classes mesa **concluídas** | Guerreiro · Feiticeiro · Bruxo · Mago · Patrulheiro (skills `rpg-class-mesa-*` / exemplares) |
+| Demais classes PHB / Valdas | Seguir skills mesa sob pedido |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
 ---
@@ -35,6 +36,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 
 - Catálogo mecânico de combate no banco — skill `rpg-catalog-model` · `GET /combat-mechanical-catalog`
 - Padrão classe mesa — skills `rpg-class-mesa-api` / `rpg-class-mesa-front`
+- Classes **concluídas** (critério mesa): Guerreiro, Feiticeiro, Bruxo, Mago, Patrulheiro — ver `references/exemplares.md` nas skills
 - Invocações do Bruxo: catálogo + seleção + free_cast no painel/aba Magias
 
 ### Adiado — polish / ops

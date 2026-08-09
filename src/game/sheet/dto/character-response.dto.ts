@@ -236,14 +236,23 @@ export class CharacterSummaryResponseDto {
   @ApiProperty({ example: 'fighter' })
   classSlug!: string;
 
+  @ApiProperty({ example: 'Guerreiro' })
+  className!: string;
+
   @ApiProperty({ example: 'dwarf' })
   speciesSlug!: string;
+
+  @ApiProperty({ example: 'Anão' })
+  speciesName!: string;
 
   @ApiProperty({ example: 'acolyte' })
   backgroundSlug!: string;
 
   @ApiPropertyOptional({ example: 'champion' })
   subclassSlug!: string | null;
+
+  @ApiPropertyOptional({ example: 'Campeão', nullable: true })
+  subclassName!: string | null;
 
   @ApiProperty()
   createdAt!: string;

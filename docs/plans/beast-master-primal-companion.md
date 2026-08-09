@@ -94,9 +94,22 @@ Começar por **A**; B/C/D só sob pedido.
 
 - Simular turno da fera no servidor / iniciativa automática.
 - Pathfinding, alcance, concentração da fera.
-- Familiars / outras invocações (padrão pode reaproveitar depois).
+- Familiars / outras invocações genéricas (ver **Reuso** abaixo).
 - Substituir criaturas manuais do DM no encontro (fase C é opt-in).
 
+## Reuso depois (subclasses das classes já concluídas)
+
+Mesmo “sabor” (criatura conjurada na mesa), em geral **mais simples** que o Companheiro Primal (sem comando todo turno / vínculo permanente):
+
+| Classe · subclasse | Feature | Mesa hoje | Depois do tracker |
+|--------------------|---------|-----------|-------------------|
+| Mago **Ilusionista** | Criaturas Espectrais L6 (`spectral-summon`) | Uso + nota (Feérico ou Fera, PV metade, 1×/DL) | Spawn PV metade + tipo |
+| Patrulheiro **Andarilho Feérico** | Reforços Feéricos L11 (`fey-reinforcements`) | Uso + nota (Feérico 1 min, sem Conc.) | Spawn 1 min |
+| Feiticeiro **Dracônico** | Companheiro Dracônico L18 (`dragon-companion` no grant) | Recurso no catálogo; **sem** linha C009 Usar ainda — conjura via Magias | Uso 1×/DL + spawn 1 min (espelha Fey) |
+| Bruxo **GOO** | Criar Servo L14 | Modifica Invocar Aberração no cast (nota/magia) | Opcional: flag no cast + PV temp. na nota |
+| Guerreiro | — | Nada equivalente | — |
+
+Não priorizar até a fase A/B do Beast Master existir. Asas de Dragão / Pact Blade / misty-wanderer **não** entram neste bucket.
 ## Arquivos-alvo (referência)
 
 - `dnd-api/.../actions/ranger/subclass-actions.ts`
