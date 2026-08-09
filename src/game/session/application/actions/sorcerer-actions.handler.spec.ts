@@ -86,6 +86,18 @@ describe('SorcererActionsHandler', () => {
   });
 
   it('spends sorcery points for a known Metamagic option', async () => {
+    dataSource.query
+      .mockResolvedValueOnce([
+        {
+          slug: 'subtle-spell',
+          name: 'Magia Sutil',
+          description: 'Sem componentes V/S/M',
+          cost: 1,
+          stacks_with_other: false,
+        },
+      ])
+      .mockResolvedValueOnce([{ value_id: 'subtle-spell' }]);
+
     const result = await handler.useTableAction('user-1', 'sorc-1', {
       actionSlug: 'use-metamagic',
       metamagicSlug: 'subtle-spell',
@@ -110,6 +122,61 @@ describe('SorcererActionsHandler', () => {
       1,
     );
     expect(result.actionName).toBe('Feitiçaria Inata');
+  });
+
+  it('spends tides-of-chaos resource for Marés do Caos', async () => {
+    state.buildResponse.mockResolvedValue({
+      classResources: [
+        { slug: 'tides-of-chaos', remaining: 1, max: 1, used: 0, name: 'Marés do Caos' },
+        { slug: 'sorceryPoints', remaining: 5, max: 5, used: 0, name: 'Pontos de Feitiçaria' },
+      ],
+    });
+
+    const result = await handler.useTableAction('user-1', 'sorc-1', {
+      actionSlug: 'tides-of-chaos',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'sorc-1' }),
+      'tides-of-chaos',
+      1,
+    );
+    expect(result.actionName).toBe('Marés do Caos');
+  });
+
+  it('spends variable sorcery points for Bastião da Lei', async () => {
+    access.findAccessibleOrFail.mockResolvedValue({
+      ...sorcerer,
+      subclassSlug: 'clockwork',
+      level: 6,
+    });
+
+    const result = await handler.useTableAction('user-1', 'sorc-1', {
+      actionSlug: 'bastion-of-law',
+      pointsSpent: 4,
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'sorc-1' }),
+      'sorceryPoints',
+      4,
+    );
+    expect(result.note).toContain('4d8');
+  });
+
+  it('rejects bastion cost outside 1–5', async () => {
+    access.findAccessibleOrFail.mockResolvedValue({
+      ...sorcerer,
+      subclassSlug: 'clockwork',
+      level: 6,
+    });
+
+    await expect(
+      handler.useTableAction('user-1', 'sorc-1', {
+        actionSlug: 'bastion-of-law',
+        pointsSpent: 6,
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
   });
 
   it('rejects Sorcerer actions for non-sorcerer characters', async () => {

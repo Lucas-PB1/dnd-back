@@ -23,6 +23,8 @@
     "db:seed:all": "node scripts/run-seeds.mjs --target=all",
     "db:setup:all": "npm run db:setup && node scripts/dev-reset.mjs --target=supabase --confirm && npm run db:migrate:supabase && npm run db:seed:supabase",
     "sheets:l20": "node scripts/generate-l20-sheets.mjs",
+    "sheets:review": "node scripts/create-review-l20.mjs",
+    "catalog:audit": "node scripts/audit-combat-catalog.mjs",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",

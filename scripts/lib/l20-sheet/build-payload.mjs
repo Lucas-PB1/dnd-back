@@ -51,16 +51,21 @@ const EXPERTISE_SLOTS = {
 /**
  * @param {import('pg').Client} client
  * @param {ReturnType<import('./catalog.mjs').indexCatalog>} idx
- * @param {{ classSlug: string, seedLabel?: string }} opts
+ * @param {{ classSlug: string, seedLabel?: string, preferredSubclassSlug?: string }} opts
  */
 export async function buildL20Payload(client, idx, opts) {
   const classSlug = opts.classSlug;
   const cls = idx.classes.find((c) => c.slug === classSlug);
   if (!cls) throw new Error(`Classe desconhecida: ${classSlug}`);
 
-  const subclassSlug = pickRandom(idx.subclassByClass.get(classSlug) ?? []);
+  const subclassPool = idx.subclassByClass.get(classSlug) ?? [];
+  const subclassSlug =
+    opts.preferredSubclassSlug && subclassPool.includes(opts.preferredSubclassSlug)
+      ? opts.preferredSubclassSlug
+      : pickRandom(subclassPool);
+  if (!subclassSlug) throw new Error(`Sem subclasse para ${classSlug}`);
   const species = pickSpecies(idx);
-  const background = pickRandom(idx.backgrounds);
+  const background = pickBackground(idx);
   const bgSkillSet = new Set(idx.bgSkills.get(background.slug) ?? []);
 
   let skillPool = (idx.poolByClass.get(classSlug) ?? []).filter((s) => !bgSkillSet.has(s));
@@ -76,16 +81,17 @@ export async function buildL20Payload(client, idx, opts) {
 
   const speciesChoices = pickSpeciesChoices(idx, species.slug);
   const subclassOptions = await loadSubclassOptions(client, subclassSlug);
+  const characterSpells = buildSpells(idx, classSlug);
   const classOptions = await buildClassOptions(
     client,
     idx,
     classSlug,
     classSkillSlugs,
     bgSkillSet,
+    characterSpells,
   );
   const { characterFeats, featOptions } = buildFeats(idx, classSlug, background);
   const languageSlugs = pickLanguages(idx, background);
-  const characterSpells = buildSpells(idx, classSlug);
   const equipment = buildEquipment(idx, classSlug, background.slug);
 
   const boost = pickBoostAbility(idx, background.slug, classSlug);
@@ -103,7 +109,12 @@ export async function buildL20Payload(client, idx, opts) {
     speciesSlug: species.slug,
     backgroundSlug: background.slug,
     subclassSlug,
-    alignmentSlug: pickRandom(['lawful-good', 'neutral', 'chaotic-neutral', 'lawful-neutral']),
+    alignmentSlug: pickRandom([
+      'lawful-good',
+      'true-neutral',
+      'chaotic-neutral',
+      'lawful-neutral',
+    ]),
     classSkillSlugs,
     languageSlugs,
     backgroundAbilityBoostMode: 'plus2plus1',
@@ -129,14 +140,74 @@ function pickSpecies(idx) {
   return pickRandom(pool);
 }
 
+/** Antecedentes com feat de origem simples (sem options obrigatórias complexas). */
+const SAFE_BACKGROUND_SLUGS = [
+  'soldier',
+  'farmer',
+  'sailor',
+  'criminal',
+  'charlatan',
+  'guard',
+  'merchant',
+  'noble',
+];
+
+function pickBackground(idx) {
+  const safe = idx.backgrounds.filter((b) => SAFE_BACKGROUND_SLUGS.includes(b.slug));
+  const pool = safe.length > 0 ? safe : idx.backgrounds;
+  for (let attempt = 0; attempt < 20; attempt += 1) {
+    const background = pickRandom(pool);
+    const featSlug = background.originFeatSlug;
+    if (!featSlug) return background;
+    // Feats com opções de magia (Magic Initiate etc.) — evitar no gerador L20.
+    const defs = (idx.featDefsBySlug.get(featSlug) ?? []).filter(
+      (d) => featSlug !== 'ability-score-improvement',
+    );
+    if (defs.some((d) => d.valueType === 'spell')) continue;
+    if (defs.length === 0) return background;
+    const filled = pickFeatOptions(idx, featSlug, 0);
+    if (filled.length >= defs.length) return background;
+  }
+  const soldier = idx.backgrounds.find((b) => b.slug === 'soldier');
+  return soldier ?? pickRandom(idx.backgrounds);
+}
+
 function pickSpeciesChoices(idx, speciesSlug) {
   const byKind = idx.choicesBySpecies.get(speciesSlug);
   if (!byKind) return [];
 
+  const BLOCKED_ORIGIN_FEATS = new Set([
+    'magic-initiate',
+    'musician',
+    'artisan',
+    'crafter',
+  ]);
+
   const choices = [];
   for (const [kind, slugs] of byKind) {
     if (OPTIONAL_SPECIES_KINDS.has(kind)) continue;
-    let choiceSlug = pickRandom(slugs);
+    let pool = slugs;
+    if (kind === 'human_origin_feat') {
+      pool = slugs.filter((slug) => {
+        if (BLOCKED_ORIGIN_FEATS.has(slug)) return false;
+        const defs = (idx.featDefsBySlug.get(slug) ?? []).filter(
+          (d) => d.valueType !== 'spell',
+        );
+        if ((idx.featDefsBySlug.get(slug) ?? []).some((d) => d.valueType === 'spell')) {
+          return false;
+        }
+        if (defs.length === 0) return true;
+        return pickFeatOptions(idx, slug, 0).length >= defs.length;
+      });
+      if (!pool.length) {
+        pool = ['alert', 'tough', 'lucky', 'savage-attacker'].filter((s) =>
+          slugs.includes(s),
+        );
+      }
+      if (!pool.length) pool = slugs.filter((s) => !BLOCKED_ORIGIN_FEATS.has(s));
+      if (!pool.length) pool = slugs;
+    }
+    let choiceSlug = pickRandom(pool);
     // geppettin medium exige marionette
     if (speciesSlug === 'geppettin' && kind === 'geppettin_size' && choiceSlug === 'medium') {
       const constructions = byKind.get('geppettin_construction') ?? [];
@@ -203,7 +274,62 @@ async function loadSubclassOptions(client, subclassSlug) {
   return out;
 }
 
-async function buildClassOptions(client, idx, classSlug, classSkillSlugs, bgSkillSet) {
+const MASTERY_PICKS = {
+  barbarian: [
+    'greataxe',
+    'battleaxe',
+    'maul',
+    'longsword',
+    'handaxe',
+    'javelin',
+    'greatsword',
+    'flail',
+  ],
+  fighter: [
+    'longsword',
+    'greataxe',
+    'longbow',
+    'rapier',
+    'battleaxe',
+    'greatsword',
+    'dagger',
+    'warhammer',
+  ],
+  gunslinger: [
+    'pistol',
+    'revolver',
+    'musket',
+    'longbow',
+    'handgun',
+    'light-crossbow',
+  ],
+  paladin: [
+    'longsword',
+    'warhammer',
+    'battleaxe',
+    'javelin',
+    'flail',
+    'greatsword',
+  ],
+  ranger: [
+    'longbow',
+    'shortsword',
+    'longsword',
+    'dagger',
+    'scimitar',
+    'handaxe',
+  ],
+  rogue: ['rapier', 'shortsword', 'dagger', 'shortbow', 'hand-crossbow'],
+};
+
+async function buildClassOptions(
+  client,
+  idx,
+  classSlug,
+  classSkillSlugs,
+  bgSkillSet,
+  characterSpells = [],
+) {
   const options = [];
   const expertiseCount = EXPERTISE_SLOTS[classSlug] ?? 0;
   if (expertiseCount > 0) {
@@ -220,24 +346,37 @@ async function buildClassOptions(client, idx, classSlug, classSkillSlugs, bgSkil
   const prog = idx.progByClass.get(classSlug);
   const masteryCount = prog?.weaponMastery ?? 0;
   if (masteryCount > 0) {
-    const weapons = pickN(idx.masteryWeapons, masteryCount);
+    const curated = MASTERY_PICKS[classSlug];
+    const pool =
+      curated?.filter((slug) => idx.masteryWeapons.includes(slug)) ??
+      idx.masteryWeapons;
+    const weapons = pickN(pool.length ? pool : idx.masteryWeapons, masteryCount);
     weapons.forEach((weapon, i) => {
       options.push({ optionKey: `masteryWeapon${i + 1}`, valueId: weapon });
     });
   }
 
   if (classSlug === 'wizard') {
-    const leveled = (idx.spellsByClass.get('wizard') ?? []).filter((s) => s.spellLevel >= 1);
-    const l1 = leveled.filter((s) => s.spellLevel === 1);
-    const l2 = leveled.filter((s) => s.spellLevel === 2);
-    options.push({
-      optionKey: 'spellMastery1',
-      valueId: (l1[0] ?? leveled[0]).spellSlug,
-    });
-    options.push({
-      optionKey: 'spellMastery2',
-      valueId: (l2[0] ?? leveled[1] ?? leveled[0]).spellSlug,
-    });
+    const prepared = characterSpells
+      .filter((s) => s.listType === 'prepared' || s.listType === 'always_prepared')
+      .map((s) => s.spellSlug);
+    const byLevel = new Map();
+    for (const row of idx.spellsByClass.get('wizard') ?? []) {
+      byLevel.set(row.spellSlug, row.spellLevel);
+    }
+    const preparedL1 = prepared.filter((slug) => byLevel.get(slug) === 1);
+    const preparedL2 = prepared.filter((slug) => byLevel.get(slug) === 2);
+    const mastery1 = preparedL1[0] ?? prepared[0];
+    const mastery2 =
+      preparedL2.find((slug) => slug !== mastery1) ??
+      prepared.find((slug) => slug !== mastery1) ??
+      mastery1;
+    if (mastery1) {
+      options.push({ optionKey: 'spellMastery1', valueId: mastery1 });
+    }
+    if (mastery2) {
+      options.push({ optionKey: 'spellMastery2', valueId: mastery2 });
+    }
   }
 
   if (classSlug === 'warlock') {
@@ -245,7 +384,36 @@ async function buildClassOptions(client, idx, classSlug, classSkillSlugs, bgSkil
     options.push(...invocations);
   }
 
+  if (classSlug === 'sorcerer') {
+    options.push(...(await loadAndPickMetamagicOptions(client, LEVEL)));
+  }
+
   return options;
+}
+
+/** L2: 2 · L10: 4 · L17: 6 */
+function sorcererMetamagicLimit(level) {
+  if (level >= 17) return 6;
+  if (level >= 10) return 4;
+  if (level >= 2) return 2;
+  return 0;
+}
+
+async function loadAndPickMetamagicOptions(client, level) {
+  const limit = sorcererMetamagicLimit(level);
+  if (limit <= 0) return [];
+  const { rows } = await client.query(
+    `SELECT slug FROM rpg.phb_metamagic ORDER BY sort_order, slug`,
+  );
+  const picks = pickN(
+    rows.map((row) => row.slug),
+    limit,
+  );
+  return picks.map((slug, instanceIndex) => ({
+    optionKey: 'metamagic',
+    valueId: slug,
+    instanceIndex,
+  }));
 }
 
 function asiSlotCount(classSlug) {
@@ -372,21 +540,29 @@ function buildSpells(idx, classSlug) {
   const leveled = shuffle(list.filter((s) => s.spellLevel >= 1));
 
   const spells = [];
-  const pickCantrips = cantrips.slice(0, cantripMax);
+  const preferredCantrips =
+    classSlug === 'warlock' ? ['raio-mistico'] : classSlug === 'wizard' ? ['raio-de-fogo'] : [];
+  const pickCantrips = [
+    ...preferredCantrips.filter((slug) => cantrips.includes(slug)),
+    ...cantrips.filter((slug) => !preferredCantrips.includes(slug)),
+  ].slice(0, cantripMax);
   for (const slug of pickCantrips) {
     spells.push({ spellSlug: slug, listType: 'known' });
   }
 
   if (classSlug === 'wizard') {
-    const bookMax = (preparedMax ?? 0) + LEVEL;
+    const bookMax = wizardSpellbookLimitAtLevel(LEVEL, preparedMax);
     const preparedQuota = preparedMax ?? 0;
     const book = leveled.slice(0, bookMax);
     const prepared = book.slice(0, preparedQuota);
+    const preparedSlugs = new Set(prepared.map((s) => s.spellSlug));
+    // prepared conta no grimório — não duplicar como known+prepared (senão estoura a cota).
     for (const s of book) {
-      spells.push({ spellSlug: s.spellSlug, listType: 'known' });
-    }
-    for (const s of prepared) {
-      spells.push({ spellSlug: s.spellSlug, listType: 'prepared' });
+      if (preparedSlugs.has(s.spellSlug)) {
+        spells.push({ spellSlug: s.spellSlug, listType: 'prepared' });
+      } else {
+        spells.push({ spellSlug: s.spellSlug, listType: 'known' });
+      }
     }
     return spells;
   }
@@ -400,11 +576,19 @@ function buildSpells(idx, classSlug) {
   }
 
   // known casters (bard, ranger, sorcerer, warlock, …)
-  const known = leveled.slice(0, knownMax ?? preparedMax ?? 0);
+  const maxCircle = classSlug === 'warlock' ? 5 : 9;
+  const knownPool = leveled.filter((s) => s.spellLevel <= maxCircle);
+  const known = knownPool.slice(0, knownMax ?? preparedMax ?? 0);
   for (const s of known) {
     spells.push({ spellSlug: s.spellSlug, listType: 'known' });
   }
   return spells;
+}
+
+function wizardSpellbookLimitAtLevel(level, preparedQuota) {
+  if (preparedQuota == null) return 6;
+  if (level === 1) return Math.max(preparedQuota + 2, 6);
+  return preparedQuota + level;
 }
 
 function buildEquipment(idx, classSlug, backgroundSlug) {

@@ -66,6 +66,11 @@ const SORCERER_TABLE_ACTION_SLUGS = [
   'sorcerous-restoration',
   'tides-of-chaos',
   'bastion-of-law',
+  'restore-balance',
+  'dragon-wings',
+  'bend-luck',
+  'heroic-soul',
+  'mystical-maneuver',
 ] as const;
 
 export class UseSorcererTableActionDto {
@@ -80,6 +85,15 @@ export class UseSorcererTableActionDto {
   @IsOptional()
   @IsString()
   metamagicSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 3,
+    description: 'Pontos de Feitiçaria gastos (bastion-of-law: 1–5)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  pointsSpent?: number;
 }
 
 const WARLOCK_TABLE_ACTION_SLUGS = [

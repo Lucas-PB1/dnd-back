@@ -186,10 +186,11 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 - [x] Base: Pontos de Feitiçaria (máx = nível a partir do nv 2), Feitiçaria Inata (+1 CD de magia e Vantagem nos ataques de magia de Feiticeiro), Restauração Feiticeira (recupera Pontos no Descanso Curto nv 5+)
 - [x] Fonte de Magia: conversão bidirecional entre Slots de Magia ↔ Pontos de Feitiçaria (1:1 slot->pontos, custos 2/3/5/6/7 pontos->slot)
 - [x] Metamagia: catálogo `phb_metamagic` (SSOT), picks em `classOptions`, gasto por opção conhecida (custos 1–2 SP; sem botão genérico de 3 pts)
-- [x] Linhagem Dracônica: Resiliência Dracônica (CA 10 + DES + CAR; +1 PV/nível) e Afinidade Elemental
-- [x] Feitiçaria Selvagem: Marés do Caos (Vantagem em 1 Teste de D20; recarrega com Surto de Magia Selvagem)
-- [x] Feitiçaria Mecânica: Bastião da Lei (gasta 1-5 Pontos para dados de proteção a aliados)
-- [x] Feitiçaria Aberrante: Feitiçaria Psiónica e Mente Psiónica
+- [x] Linhagem Dracônica: Resiliência Dracônica (CA 10 + DES + CAR; +1 PV/nível), Afinidade Elemental e Asas de Dragão L14 (painel/economia)
+- [x] Feitiçaria Selvagem: Marés do Caos (gasta recurso) e Distorcer a Sorte L6 (1 SP)
+- [x] Feitiçaria Mecânica: Restaurar Equilíbrio (usos CAR) e Bastião da Lei (1–5 SP → N d8)
+- [x] Feitiçaria Aberrante: Feitiçaria Psiónica e Mente Psiónica (notas de mesa)
+- [x] Feitiçaria Heróica: Alma Heróica / Manobra Mística (painel + handler SP)
 - [x] UI: `combat-sorcerer-panel`, seletores de conversão de slots e botões de metamagia/subclasse
 
 ---
@@ -244,7 +245,7 @@ Critério mesa: recursos + Usar/economia + notes. Familiares: **adiados** (só c
 | Domínio do Dragão | `dragon-domain` | `[~]` Majestade/Aspecto Lendário (spend) + notes |
 | Círculo da Cidade | `circle-of-the-city` | `[~]` Forma da Cidade / Distorção de Muro + notes |
 | Portador Bestial | `beastborne` | `[x]` tracker `bestialAspectLevel` 0–5 + Uivo Feral |
-| Feitiçaria Heróica | `heroic-sorcery` | `[~]` Alma Heróica / Manobras Místicas (SP) + notes |
+| Feitiçaria Heróica | `heroic-sorcery` | `[x]` Alma Heróica / Manobra Mística (SP) + painel |
 | Mago dos Mísseis | `magic-missile-mage` | `[x]` free / Escudo / Giga (recursos + Usar) |
 
 **Encantos de Arma:** `[x]` itens `weapon-charm-*` (P011), `attached_charm_slug` no inventário, bônus por arma, attach/detach API + UI.

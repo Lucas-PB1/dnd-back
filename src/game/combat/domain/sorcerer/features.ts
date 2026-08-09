@@ -80,9 +80,9 @@ function addSorcererSubclassNotes(
     notes.push(
       'Linhagem Dracônica: Resiliência Dracônica (CA sem armadura = 10 + DES + CAR; +1 PV por nível) e Afinidade Elemental (+CAR no dano de magias do elemento ancestral).',
     );
-    if (level >= 6) {
+    if (level >= 14) {
       notes.push(
-        'Asas Dracônicas: Ação Bônus ganha deslocamento de voo igual ao seu deslocamento terrestre.',
+        'Asas de Dragão (L14): Ação Bônus — voo 18 m por 1 h (1×/DL ou 3 Pontos de Feitiçaria para restaurar o uso).',
       );
     }
   }
@@ -95,14 +95,19 @@ function addSorcererSubclassNotes(
 
   if (subclassSlug === 'clockwork') {
     notes.push(
-      'Feitiçaria Mecânica: Bastião da Lei (gaste 1–5 Pontos de Feitiçaria para conceder d8s de proteção a um aliado) e Restaurar Equilíbrio (cancela Vantagem/Desvantagem).',
+      'Feitiçaria Mecânica: Restaurar Equilíbrio (Reação; usos = CAR) e Bastião da Lei (1–5 Pontos → N d8 de proteção).',
     );
   }
 
   if (subclassSlug === 'wild-magic') {
     notes.push(
-      'Feitiçaria Selvagem: Marés do Caos (Vantagem em 1 Teste de D20; recarrega quando o Mestre dispara um Surto de Magia Selvagem).',
+      'Feitiçaria Selvagem: Marés do Caos (Vantagem em 1 Teste de D20; 1 uso).',
     );
+    if (level >= 6) {
+      notes.push(
+        'Distorcer a Sorte (L6): Reação — 1 Ponto de Feitiçaria → ±1d4 no d20 de outra criatura.',
+      );
+    }
   }
 
   if (subclassSlug === 'heroic-sorcery') {

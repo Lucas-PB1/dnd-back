@@ -20,7 +20,12 @@ import {
 } from './sorcerer/font-of-magic-actions';
 import {
   resolveBastionOfLaw,
+  resolveBendLuck,
+  resolveDragonWings,
+  resolveHeroicSoul,
   resolveInnateSorcery,
+  resolveMysticalManeuver,
+  resolveRestoreBalance,
   resolveSorcerousRestoration,
   resolveTidesOfChaos,
 } from './sorcerer/feature-actions';
@@ -141,7 +146,17 @@ export class SorcererActionsHandler {
       case 'tides-of-chaos':
         return resolveTidesOfChaos(deps, character);
       case 'bastion-of-law':
-        return resolveBastionOfLaw(deps, character);
+        return resolveBastionOfLaw(deps, character, dto.pointsSpent);
+      case 'restore-balance':
+        return resolveRestoreBalance(deps, character);
+      case 'dragon-wings':
+        return resolveDragonWings(deps, character);
+      case 'bend-luck':
+        return resolveBendLuck(deps, character);
+      case 'heroic-soul':
+        return resolveHeroicSoul(deps, character);
+      case 'mystical-maneuver':
+        return resolveMysticalManeuver(deps, character);
     }
   }
 }
