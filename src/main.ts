@@ -1,4 +1,5 @@
 import './register-path-aliases';
+import './entities/trace-entities-for-vercel';
 import 'reflect-metadata';
 
 import { NestFactory } from '@nestjs/core';

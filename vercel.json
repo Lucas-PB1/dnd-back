@@ -1,5 +1,10 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "npm ci --include=dev",
-  "regions": ["gru1"]
+  "regions": ["gru1"],
+  "functions": {
+    "src/main.ts": {
+      "includeFiles": "src/**"
+    }
+  }
 }
