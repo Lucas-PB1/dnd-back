@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UseRogueTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -46,7 +46,7 @@ export class RogueActionsHandler {
     userId: string,
     characterId: string,
     dto: UseRogueTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     const character = await this.access.findAccessibleOrFail(
       userId,
       characterId,

@@ -1,7 +1,7 @@
 import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UseRangerTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -17,5 +17,5 @@ export type RangerActionDeps = {
   mechanicalCatalog: LoadCombatMechanicalCatalog;
 };
 
-export type RangerTableActionResult = FighterTableActionResponseDto;
+export type RangerTableActionResult = TableActionResponseDto;
 export type { PlayerCharacter, UseRangerTableActionDto };

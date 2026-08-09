@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isRangerClass } from '@game/combat/domain/ranger';
 import {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UseRangerTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -40,7 +40,7 @@ export class RangerActionsHandler {
     userId: string,
     characterId: string,
     dto: UseRangerTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     const character = await this.access.findAccessibleOrFail(
       userId,
       characterId,

@@ -2,7 +2,7 @@ import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UsePaladinTableActionDto,
 } from '@game/session/dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -14,7 +14,7 @@ export type PaladinActionDeps = {
   domain: CharacterDomainService;
 };
 
-export type PaladinTableActionResult = FighterTableActionResponseDto;
+export type PaladinTableActionResult = TableActionResponseDto;
 export type { PlayerCharacter, UsePaladinTableActionDto };
 
 export const LAY_ON_HANDS_SLUG = 'layOnHands';

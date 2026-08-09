@@ -3,7 +3,7 @@ import { CharacterDomainService } from '@game/sheet/domain/core/character-domain
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UseMonkTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -15,14 +15,14 @@ export type MonkActionDeps = {
   domain: CharacterDomainService;
 };
 
-export type MonkTableActionResult = FighterTableActionResponseDto;
+export type MonkTableActionResult = TableActionResponseDto;
 export type { PlayerCharacter, UseMonkTableActionDto };
 
 export async function spendFocus(
   deps: MonkActionDeps,
   character: PlayerCharacter,
   amount: number,
-): Promise<FighterTableActionResponseDto['state']> {
+): Promise<TableActionResponseDto['state']> {
   const result = await deps.state.useClassResource(
     character,
     FOCUS_RESOURCE_SLUG,

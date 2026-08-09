@@ -32,7 +32,7 @@ SSOT no schema `rpg` para listas mecânicas que a engine de mesa/dados consome (
 
 ENUMs: `maneuver_effect_kind`, `battle_master_maneuver_timing`, `save_ability` (`010_types/003_combat_mechanical_enums.sql`); `action_economy_bucket`, `panel_action_section` (`004_class_action_ui_enums.sql`).
 
-Seeds: `database/seeds/combat/C00*.sql` — base **C009** (economy) + **C010** (panels); patches idempotentes **C014**–**C018** (wizard / warlock / sorcerer / patronos).
+Seeds: `database/seeds/combat/C00*.sql` — base **C009** (economy) + **C010** (panels); patches idempotentes **C014**–**C019** (wizard / warlock / sorcerer / patronos / fighter panel).
 
 HTTP: `GET /combat-mechanical-catalog` inclui `economyActions` + `panelActions`.
 

@@ -28,11 +28,13 @@ import { SorcererActionsHandler } from '../application/actions/sorcerer-actions.
 import { WarlockActionsHandler } from '../application/actions/warlock-actions.handler';
 import { DruidActionsHandler } from '../application/actions/druid-actions.handler';
 import { WizardActionsHandler } from '../application/actions/wizard-actions.handler';
+import { FighterActionsHandler } from '../application/actions/fighter-actions.handler';
 import {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UseBardTableActionDto,
   UseClericTableActionDto,
   UseDruidTableActionDto,
+  UseFighterTableActionDto,
   UseMonkTableActionDto,
   UsePaladinTableActionDto,
   UseRangerTableActionDto,
@@ -59,19 +61,34 @@ export class TableActionsController {
     private readonly warlock: WarlockActionsHandler,
     private readonly druid: DruidActionsHandler,
     private readonly wizard: WizardActionsHandler,
+    private readonly fighter: FighterActionsHandler,
   ) {}
+
+  @Post(':id/fighter/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Fighter or Fighter-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: TableActionResponseDto })
+  useFighterTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseFighterTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.fighter.useTableAction(user.id, id, dto);
+  }
 
   @Post(':id/rogue/table-action')
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Resolve a Rogue or Rogue-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useRogueTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseRogueTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.rogue.useTableAction(user.id, id, dto);
   }
 
@@ -80,12 +97,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Monk or Monk-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useMonkTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseMonkTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.monk.useTableAction(user.id, id, dto);
   }
 
@@ -94,12 +111,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Paladin or Paladin-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   usePaladinTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UsePaladinTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.paladin.useTableAction(user.id, id, dto);
   }
 
@@ -108,12 +125,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Ranger or Ranger-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useRangerTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseRangerTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.ranger.useTableAction(user.id, id, dto);
   }
 
@@ -122,12 +139,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Cleric or Cleric-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useClericTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseClericTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.cleric.useTableAction(user.id, id, dto);
   }
 
@@ -136,12 +153,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Bard or Bard-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useBardTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseBardTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.bard.useTableAction(user.id, id, dto);
   }
 
@@ -150,12 +167,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Sorcerer or Sorcerer-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useSorcererTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseSorcererTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.sorcerer.useTableAction(user.id, id, dto);
   }
 
@@ -164,12 +181,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Warlock or Warlock-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useWarlockTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseWarlockTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.warlock.useTableAction(user.id, id, dto);
   }
 
@@ -178,12 +195,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Druid or Druid-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useDruidTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseDruidTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.druid.useTableAction(user.id, id, dto);
   }
 
@@ -192,12 +209,12 @@ export class TableActionsController {
   @ApiOperation({
     summary: 'Resolve a Wizard or Wizard-subclass tabletop action',
   })
-  @ApiOkResponse({ type: FighterTableActionResponseDto })
+  @ApiOkResponse({ type: TableActionResponseDto })
   useWizardTableAction(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Body() dto: UseWizardTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     return this.wizard.useTableAction(user.id, id, dto);
   }
 }

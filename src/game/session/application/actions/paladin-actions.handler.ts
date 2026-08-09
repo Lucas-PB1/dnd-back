@@ -3,7 +3,7 @@ import { isPaladinClass } from '@game/combat/domain/paladin';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UsePaladinTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -36,7 +36,7 @@ export class PaladinActionsHandler {
     userId: string,
     characterId: string,
     dto: UsePaladinTableActionDto,
-  ): Promise<FighterTableActionResponseDto> {
+  ): Promise<TableActionResponseDto> {
     const character = await this.access.findAccessibleOrFail(
       userId,
       characterId,

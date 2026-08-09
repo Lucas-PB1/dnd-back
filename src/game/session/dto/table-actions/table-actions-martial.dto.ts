@@ -1,5 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsIn, IsInt, IsOptional, Max, Min } from 'class-validator';
+import {
+  IsBoolean,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 
 export class UseRogueTableActionDto {
   @ApiProperty({
@@ -177,4 +185,70 @@ export class UseRangerTableActionDto {
   @Min(0)
   @Max(5)
   level?: number;
+}
+
+const FIGHTER_TABLE_ACTION_SLUGS = [
+  'second-wind',
+  'action-surge',
+  'tactical-mind',
+  'use-maneuver',
+  'dungeon-precaution',
+  'psi:protective-field',
+  'psi:telekinetic-movement',
+  'psi:psychic-leap',
+  'psi:mental-guard',
+  'psi:energy-bulwark',
+  'psi:telekinetic-master',
+] as const;
+
+export class UseFighterTableActionDto {
+  @ApiProperty({ enum: FIGHTER_TABLE_ACTION_SLUGS })
+  @IsIn([...FIGHTER_TABLE_ACTION_SLUGS])
+  actionSlug!: (typeof FIGHTER_TABLE_ACTION_SLUGS)[number];
+
+  @ApiPropertyOptional({
+    example: 'trip-attack',
+    description: 'Slug da manobra (use-maneuver)',
+  })
+  @IsOptional()
+  @IsString()
+  maneuverSlug?: string;
+
+  @ApiPropertyOptional({
+    description: 'Implacável: 1d8 sem gastar Superioridade (use-maneuver)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  useRelentless?: boolean;
+
+  @ApiPropertyOptional({
+    example: 'detectar-magia',
+    description: 'Magia de Precaução (dungeon-precaution)',
+  })
+  @IsOptional()
+  @IsString()
+  spellSlug?: string;
+
+  @ApiPropertyOptional({
+    description: 'Gasta Energia Psiônica em vez do uso gratuito (psi:*)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  usePsiDie?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'Mente Tática: total atual do teste (opcional)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  checkTotal?: number;
+
+  @ApiPropertyOptional({
+    description: 'Mente Tática: CD do teste (opcional; exige checkTotal)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  dc?: number;
 }

@@ -9,7 +9,6 @@ Ao implementar ou revisar **classe/subclasse jogável**, **table-action**, **eco
 
 1. Abrir a skill **`rpg-class-mesa-api`** (e só as `references/` do subproblema).
 2. Padrão canônico: **um** `POST …/<class>/table-action` + `actionSlug` — não endpoints dedicados novos.
-3. Guerreiro com rotas dedicadas = **legado** (dívida D7) — não copiar.
-4. Front: skill irmã `rpg-class-mesa-front` no `dnd-front`.
+3. Front: skill irmã `rpg-class-mesa-front` no `dnd-front`.
 
 Detalhe e checklist vivem na skill — não duplicar aqui.

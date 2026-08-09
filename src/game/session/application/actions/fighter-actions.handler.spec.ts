@@ -88,7 +88,8 @@ describe('FighterActionsHandler tabletop actions', () => {
   });
 
   it('spends one Superiority Die for a selected maneuver', async () => {
-    const result = await handler.useBattleMasterManeuver('user', fighter.id, {
+    const result = await handler.useTableAction('user', fighter.id, {
+      actionSlug: 'use-maneuver',
       maneuverSlug: 'trip-attack',
     });
 
@@ -103,7 +104,8 @@ describe('FighterActionsHandler tabletop actions', () => {
   });
 
   it('uses Relentless without spending Superiority', async () => {
-    const result = await handler.useBattleMasterManeuver('user', fighter.id, {
+    const result = await handler.useTableAction('user', fighter.id, {
+      actionSlug: 'use-maneuver',
       maneuverSlug: 'trip-attack',
       useRelentless: true,
     });
@@ -117,8 +119,8 @@ describe('FighterActionsHandler tabletop actions', () => {
     const psiWarrior = { ...fighter, subclassSlug: 'psi-warrior', level: 7 };
     access.findAccessibleOrFail.mockResolvedValue(psiWarrior);
 
-    const result = await handler.usePsiWarriorAction('user', fighter.id, {
-      actionSlug: 'protective-field',
+    const result = await handler.useTableAction('user', fighter.id, {
+      actionSlug: 'psi:protective-field',
     });
 
     expect(state.useClassResource).toHaveBeenCalledWith(
@@ -133,7 +135,8 @@ describe('FighterActionsHandler tabletop actions', () => {
     const dungeoneer = { ...fighter, subclassSlug: 'dungeoneer', level: 7 };
     access.findAccessibleOrFail.mockResolvedValue(dungeoneer);
 
-    const result = await handler.useDungeonPrecaution('user', fighter.id, {
+    const result = await handler.useTableAction('user', fighter.id, {
+      actionSlug: 'dungeon-precaution',
       spellSlug: 'detectar-magia',
     });
 

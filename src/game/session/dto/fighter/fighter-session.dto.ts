@@ -126,9 +126,6 @@ export class TableActionResponseDto {
   note!: string;
 }
 
-/** @deprecated Use TableActionResponseDto — alias de compatibilidade. */
-export class FighterTableActionResponseDto extends TableActionResponseDto {}
-
 export class UsePsiWarriorActionDto {
   @ApiProperty({
     enum: [

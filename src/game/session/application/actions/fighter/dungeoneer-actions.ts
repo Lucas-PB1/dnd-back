@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { findDungeoneerPrecautionSpell } from '@game/combat/domain/fighter';
 import type {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UseDungeonPrecautionDto,
 } from '@game/session/dto';
 import type { FighterActionDeps } from './fighter-action-deps';
@@ -11,7 +11,7 @@ export async function useDungeonPrecautionAction(
   userId: string,
   characterId: string,
   dto: UseDungeonPrecautionDto,
-): Promise<FighterTableActionResponseDto> {
+): Promise<TableActionResponseDto> {
   const character = await deps.access.findAccessibleOrFail(
     userId,
     characterId,

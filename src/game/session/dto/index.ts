@@ -24,7 +24,6 @@ export {
   ActionSurgeResponseDto,
   UseBattleMasterManeuverDto,
   TableActionResponseDto,
-  FighterTableActionResponseDto,
   UsePsiWarriorActionDto,
   UseDungeonPrecautionDto,
 } from './fighter/fighter-session.dto';
@@ -42,6 +41,7 @@ export {
   UseMonkTableActionDto,
   UsePaladinTableActionDto,
   UseRangerTableActionDto,
+  UseFighterTableActionDto,
 } from './table-actions/table-actions-martial.dto';
 
 export {

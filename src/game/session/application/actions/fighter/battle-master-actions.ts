@@ -5,7 +5,7 @@ import { superiorityDieFaces } from '@game/combat/domain/fighter';
 import { rollDie } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UseBattleMasterManeuverDto,
 } from '@game/session/dto';
 import type { FighterActionDeps } from './fighter-action-deps';
@@ -48,7 +48,7 @@ export async function useBattleMasterManeuverAction(
   userId: string,
   characterId: string,
   dto: UseBattleMasterManeuverDto,
-): Promise<FighterTableActionResponseDto> {
+): Promise<TableActionResponseDto> {
   const character = await deps.access.findAccessibleOrFail(
     userId,
     characterId,

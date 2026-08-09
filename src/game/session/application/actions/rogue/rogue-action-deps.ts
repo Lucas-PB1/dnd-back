@@ -2,7 +2,7 @@ import { CharacterDomainService } from '@game/sheet/domain/core/character-domain
 import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
-  FighterTableActionResponseDto,
+  TableActionResponseDto,
   UseRogueTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -13,5 +13,5 @@ export type RogueActionDeps = {
   mechanicalCatalog: LoadCombatMechanicalCatalog;
 };
 
-export type RogueTableActionResult = FighterTableActionResponseDto;
+export type RogueTableActionResult = TableActionResponseDto;
 export type { PlayerCharacter, UseRogueTableActionDto };

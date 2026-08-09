@@ -33,13 +33,14 @@ Extras: invocações + pact blade (UI/front); cast mecânico de invocação aind
 | HTTP | `POST …/wizard/table-action` |
 | Economy/panel | `C009` + `C014` (tradições / mísseis) |
 
-## Guerreiro (`fighter`) — legado
+## Guerreiro (`fighter`)
 
 | Camada | Path |
 |--------|------|
 | Domain | `src/game/combat/domain/fighter/` |
 | Handler | `fighter-actions.handler.ts` + `actions/fighter/` |
-| HTTP | `fighter-session.controller.ts` — rotas dedicadas (`second-wind`, `action-surge`, `psi-action`, manobras…) |
-| Panel | UI própria (BM/psi); poucas/nenhuma linha genérica C010 |
+| HTTP | `POST …/fighter/table-action` (+ `GET …/fighter/maneuvers` para lista BM) |
+| Economy | `C009` (`second-wind`, `action-surge`, `tactical-mind`, `psi:*`) |
+| Panel | `C010` / `C019` (base + psi); BM/Dungeoneer = UI com seletor |
 
-**Não** usar como template de classe nova. Migração para table-action = dívida D7.
+Manobras BM: `actionSlug: use-maneuver` + `maneuverSlug`. Precaução: `dungeon-precaution` + `spellSlug`.

@@ -35,7 +35,7 @@ Dívidas a avaliar: [`docs/plans/class-mesa-dividas.md`](../../../docs/plans/cla
 
 - Economia: coluna `table_action` aponta para esse slug (ou `spend-resource` / cast especial documentado).
 - **Não** criar endpoints dedicados por poder em classe nova.
-- **Guerreiro** (`fighter-session.controller` com rotas dedicadas) = **legado** — não copiar; ver dívida D7.
+- **Guerreiro** (`GET` maneuvers + `POST …/fighter/table-action`) — canônico; ver exemplares.
 
 ## Checklist “classe done” (API)
 
@@ -57,7 +57,7 @@ Dívidas a avaliar: [`docs/plans/class-mesa-dividas.md`](../../../docs/plans/cla
 
 ## Anti-padrões
 
-- Endpoint novo por feature (exceto migrar legado fighter)
+- Endpoint novo por feature
 - `subclass_id` NULL em ação de subclasse (vaza no painel de todas)
 - Economia sem `table_action` quando o Usar deveria chamar o handler
 - Inventar catálogo estático no domain — SSOT no banco (`rpg-catalog-model`)
