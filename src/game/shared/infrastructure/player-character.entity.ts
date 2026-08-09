@@ -26,19 +26,19 @@ export class PlayerCharacter {
   @Column({ name: 'user_id', type: 'uuid' })
   userId!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
-  @Column({ default: 1 })
+  @Column({ type: 'int', default: 1 })
   level!: number;
 
-  @Column({ name: 'class_slug' })
+  @Column({ type: 'text',  name: 'class_slug' })
   classSlug!: string;
 
-  @Column({ name: 'species_slug' })
+  @Column({ type: 'text',  name: 'species_slug' })
   speciesSlug!: string;
 
-  @Column({ name: 'background_slug' })
+  @Column({ type: 'text',  name: 'background_slug' })
   backgroundSlug!: string;
 
   @Column({ name: 'subclass_slug', type: 'text', nullable: true })

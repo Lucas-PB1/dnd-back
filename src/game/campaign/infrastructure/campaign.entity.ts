@@ -11,13 +11,13 @@ export class Campaign {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
   @Column({ type: 'text', nullable: true })
   description!: string | null;
 
-  @Column({ name: 'invite_code' })
+  @Column({ type: 'text',  name: 'invite_code' })
   inviteCode!: string;
 
   @Column({ name: 'created_by', type: 'uuid' })

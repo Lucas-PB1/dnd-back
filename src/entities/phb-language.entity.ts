@@ -5,10 +5,10 @@ export class PhbLanguage {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text',  unique: true })
   slug!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
   @Column({ type: 'text', nullable: true })
@@ -17,6 +17,6 @@ export class PhbLanguage {
   @Column({ name: 'typical_speakers', type: 'text', nullable: true })
   typicalSpeakers!: string | null;
 
-  @Column({ name: 'is_rare' })
+  @Column({ type: 'boolean', name: 'is_rare' })
   isRare!: boolean;
 }

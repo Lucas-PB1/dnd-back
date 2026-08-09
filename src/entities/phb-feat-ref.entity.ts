@@ -5,6 +5,6 @@ export class PhbFeatRef {
   @PrimaryColumn({ type: 'bigint' })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text',  unique: true })
   slug!: string;
 }

@@ -5,7 +5,7 @@ export class PhbSubclassRef {
   @PrimaryColumn({ type: 'bigint' })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text',  unique: true })
   slug!: string;
 
   @Column({ name: 'class_id', type: 'bigint' })

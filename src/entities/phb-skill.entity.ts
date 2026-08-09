@@ -6,10 +6,10 @@ export class PhbSkill {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text',  unique: true })
   slug!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
   @Column({ type: 'text', nullable: true })

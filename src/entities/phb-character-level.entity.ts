@@ -2,10 +2,10 @@ import { Entity, PrimaryColumn, Column } from 'typeorm';
 
 @Entity({ schema: 'rpg', name: 'phb_character_level' })
 export class PhbCharacterLevel {
-  @PrimaryColumn()
+  @PrimaryColumn({ type: 'int' })
   level!: number;
 
-  @Column({ name: 'proficiency_bonus' })
+  @Column({ type: 'int', name: 'proficiency_bonus' })
   proficiencyBonus!: number;
 
   @Column({ name: 'xp_threshold', type: 'int', nullable: true })

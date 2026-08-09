@@ -5,12 +5,12 @@ export class PhbAbility {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text',  unique: true })
   slug!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
-  @Column({ name: 'sort_order' })
+  @Column({ type: 'int', name: 'sort_order' })
   sortOrder!: number;
 }

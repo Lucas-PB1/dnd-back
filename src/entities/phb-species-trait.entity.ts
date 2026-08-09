@@ -10,10 +10,10 @@ export class PhbSpeciesTrait {
   @JoinColumn({ name: 'species_id' })
   species!: PhbSpecies;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   description!: string;
 
   @Column({ name: 'choice_kind', type: 'varchar', nullable: true })

@@ -5,16 +5,16 @@ export class PhbEdition {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text',  unique: true })
   slug!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   label!: string;
 
-  @Column({ default: 'Livro do Jogador 2024' })
+  @Column({ type: 'text',  default: 'Livro do Jogador 2024' })
   book!: string;
 
-  @Column({ name: 'language', default: 'pt-BR' })
+  @Column({ type: 'text',  name: 'language', default: 'pt-BR' })
   language!: string;
 
   @Column({ name: 'extracted_at', type: 'timestamptz', nullable: true })

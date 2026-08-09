@@ -5,10 +5,10 @@ export class PhbSpecies {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text',  unique: true })
   slug!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
   @Column({ type: 'text', nullable: true })
@@ -17,16 +17,16 @@ export class PhbSpecies {
   @Column({ type: 'text', nullable: true })
   summary!: string | null;
 
-  @Column({ name: 'creature_type' })
+  @Column({ type: 'text',  name: 'creature_type' })
   creatureType!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   size!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   speed!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   description!: string;
 
   @Column({ name: 'source_meta', type: 'jsonb', nullable: true })

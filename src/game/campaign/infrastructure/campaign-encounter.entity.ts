@@ -17,7 +17,7 @@ export class CampaignEncounter {
   @Column({ name: 'campaign_id', type: 'uuid' })
   campaignId!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
   @Column({ type: 'text', default: 'active' })

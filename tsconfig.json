@@ -10,14 +10,15 @@
     "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["./src/*"],
-      "@entities/*": ["./src/entities/*"],
-      "@common/*": ["./src/common/*"],
-      "@catalog/*": ["./src/catalog/*"],
-      "@game/*": ["./src/game/*"],
-      "@identity/*": ["./src/identity/*"],
-      "@config/*": ["./src/config/*"]
+      "@/*": ["src/*"],
+      "@entities/*": ["src/entities/*"],
+      "@common/*": ["src/common/*"],
+      "@catalog/*": ["src/catalog/*"],
+      "@game/*": ["src/game/*"],
+      "@identity/*": ["src/identity/*"],
+      "@config/*": ["src/config/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

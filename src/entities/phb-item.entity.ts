@@ -5,13 +5,13 @@ export class PhbItem {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id!: string;
 
-  @Column({ unique: true })
+  @Column({ type: 'text',  unique: true })
   slug!: string;
 
-  @Column({ name: 'item_type' })
+  @Column({ type: 'text',  name: 'item_type' })
   itemType!: string;
 
-  @Column()
+  @Column({ type: 'text' })
   name!: string;
 
   @Column({ type: 'jsonb', nullable: true })
