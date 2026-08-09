@@ -5,8 +5,7 @@ Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front
 
 **Última revisão:** 2026-08-09
 
-Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · **`rpg-class-mesa-front`** (dnd-front).  
-Dívidas de alinhamento: [`class-mesa-dividas.md`](class-mesa-dividas.md).
+Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · **`rpg-class-mesa-front`** (dnd-front).
 
 ---
 
@@ -19,7 +18,7 @@ Dívidas de alinhamento: [`class-mesa-dividas.md`](class-mesa-dividas.md).
 | HP / CA / ataque / feat options / granted spells | Pronto |
 | Deploy front / E2E | Pronto |
 | UI ataques (aba Ações) + erros HTTP PT | Pronto |
-| Classes PHB + Valdas (critério mesa) | Pronto — seguir skills mesa; gaps em dívidas |
+| Classes PHB + Valdas (critério mesa) | Pronto — seguir skills mesa |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
 ---
@@ -34,8 +33,9 @@ Dívidas de alinhamento: [`class-mesa-dividas.md`](class-mesa-dividas.md).
 
 ### Referência (feito)
 
-- Catálogo mecânico de combate no banco — [`combat-mechanical-catalog.md`](combat-mechanical-catalog.md)
+- Catálogo mecânico de combate no banco — skill `rpg-catalog-model` · `GET /combat-mechanical-catalog`
 - Padrão classe mesa — skills `rpg-class-mesa-api` / `rpg-class-mesa-front`
+- Invocações do Bruxo: catálogo + seleção + free_cast no painel/aba Magias
 
 ### Adiado — polish / ops
 
@@ -47,8 +47,7 @@ Não priorizar. Só retomar com pedido explícito.
 
 Consolidação de schema:  
 [`adr-schema-consolidation.md`](../architecture/adr-schema-consolidation.md) ·  
-[`schema-equivalence-map.md`](../architecture/schema-equivalence-map.md) ·  
-[`schema-consolidation-plan.md`](schema-consolidation-plan.md)  
+[`schema-equivalence-map.md`](../architecture/schema-equivalence-map.md)  
 Status: **Concluído** — ver ADR DoD.
 
 - [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)

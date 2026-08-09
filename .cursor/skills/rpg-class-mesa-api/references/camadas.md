@@ -27,15 +27,15 @@ Legado: `fighter-session.controller.ts` (rotas dedicadas) — não expandir.
 - Defs: `phb_resource_definition` (scope `class` / `subclass`)
 - Grants: `phb_resource_grant`
 - Seeds comuns: `phb/S068_*` (classe), `subclass/S002`–`S003` (subclasse)
-- Patches de combate: `combat/C014`+ quando fechar gap pós-C009
+- Gaps de recurso não gerados: `combat/C014_wizard_subclass_resources.sql`
 
 ## 4. Economia e painel
 
 | Seed | Papel |
 |------|--------|
-| `combat/C009_phb_class_economy_action.sql` | Aba Ações |
-| `combat/C010_phb_class_panel_action.sql` | Botões do painel |
-| `C014`–`C018` | Patches idempotentes (wizard / warlock / sorcerer…) |
+| `combat/C009_phb_class_economy_action.sql` | Aba Ações (SSOT) |
+| `combat/C010_phb_class_panel_action.sql` | Botões do painel (SSOT) |
+| `combat/C014_wizard_subclass_resources.sql` | Recursos mago (third-eye / spectral / illusory) |
 
 HTTP catálogo: `GET /combat-mechanical-catalog` → `economyActions` + `panelActions`.
 

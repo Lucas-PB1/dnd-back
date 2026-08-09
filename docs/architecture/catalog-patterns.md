@@ -102,12 +102,11 @@ Repetição estrutural OK. Views agregadoras onde a API lista.
 
 ## 9. Catálogo mecânico de combate
 
-Tabelas tipadas para a **engine** (mesa/dados). Seeds: `database/seeds/combat/C00*.sql`.  
-Plano: [`docs/plans/combat-mechanical-catalog.md`](../plans/combat-mechanical-catalog.md).
+Tabelas tipadas para a **engine** (mesa/dados). Seeds: `database/seeds/combat/C00*.sql` (C009 economia, C010 painel, C014 recursos mago).
 
 **Não** colocar mecânica em JSONB genérico.
 
-HTTP: `GET /combat-mechanical-catalog`.
+HTTP: `GET /combat-mechanical-catalog` (`economyActions` + `panelActions`).
 
 ---
 

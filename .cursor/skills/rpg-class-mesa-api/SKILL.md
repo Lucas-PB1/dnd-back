@@ -10,15 +10,15 @@ description: >-
 
 Skill irmã (front): `rpg-class-mesa-front` no repo `dnd-front`.
 
-Catálogo mecânico (tabelas): skill `rpg-catalog-model` · [`docs/plans/combat-mechanical-catalog.md`](../../../docs/plans/combat-mechanical-catalog.md).
+Catálogo mecânico (tabelas): skill `rpg-catalog-model` · [`docs/architecture/catalog-patterns.md`](../../../docs/architecture/catalog-patterns.md) §9.
 
-Dívidas a avaliar: [`docs/plans/class-mesa-dividas.md`](../../../docs/plans/class-mesa-dividas.md).
+Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 
 ## Quando carregar
 
 - Nova classe/subclasse jogável (gasto de recurso, Usar, painel)
 - Handlers em `session/application/actions/`
-- Seeds `database/seeds/combat/C009`–`C018`
+- Seeds `database/seeds/combat/C009`–`C010` (SSOT) e `C014` (recursos mago)
 - Review de “está no padrão mesa?”
 
 ## Critério (mesa, não VTT)

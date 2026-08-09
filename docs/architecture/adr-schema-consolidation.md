@@ -24,8 +24,7 @@ Meta sugerida: **~45–60 tabelas** (catálogo + runtime), sem perder a fronteir
 Adotar o plano de consolidação em **lotes A→G** com rewrite in-place (sem produção), documentado em:
 
 - Este ADR  
-- [`schema-equivalence-map.md`](schema-equivalence-map.md)  
-- [`schema-consolidation-plan.md`](../plans/schema-consolidation-plan.md)
+- [`schema-equivalence-map.md`](schema-equivalence-map.md)
 
 ### Ordem
 

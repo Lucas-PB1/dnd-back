@@ -10,13 +10,13 @@ Fonte canônica: [`docs/README.md`](../../docs/README.md).
 | Tipo | Pasta |
 |------|-------|
 | Arquitetura / padrões | `docs/architecture/` |
-| Planos / backlog ativo | `docs/plans/` (`backlog.md`) |
+| Plans / backlog ativo | `docs/plans/` (`backlog.md`; polish adiado: `mm-cast-options-modal.md`) |
 | Deploy | `docs/deploy/` |
 
 ## Regras
 
 1. **Não** criar `.md` solto na raiz do repo (exceto `README.md`).
 2. Novo doc → pasta certa + **link no** `docs/README.md`.
-3. O que ainda falta → só [`docs/plans/backlog.md`](../../docs/plans/backlog.md). Dívidas de classe mesa → [`class-mesa-dividas.md`](../../docs/plans/class-mesa-dividas.md). Padrão jogável → skills `rpg-class-mesa-api` / `rpg-class-mesa-front`.
+3. O que ainda falta → só [`docs/plans/backlog.md`](../../docs/plans/backlog.md). Padrão jogável → skills `rpg-class-mesa-api` / `rpg-class-mesa-front`.
 4. Skills/rules apontam para docs com path relativo; não duplicar o livro inteiro na rule.
 5. Ao achar doc órfão ou desatualizado → mover/atualizar o índice, não deixar esparso.

@@ -7,7 +7,7 @@
 | Pasta | Conteúdo |
 |-------|----------|
 | [`architecture/`](architecture/) | Arquitetura, infra, modelo de dados, Game BC, padrões de código |
-| [`plans/`](plans/) | Backlog, dívidas classe mesa, catálogo de combate |
+| [`plans/`](plans/) | Backlog ativo |
 | [`deploy/`](deploy/) | Deploy Vercel + Supabase |
 
 ## Arquitetura
@@ -17,7 +17,7 @@
 | [`architecture/architecture.md`](architecture/architecture.md) | Bounded contexts, camadas |
 | [`architecture/infrastructure.md`](architecture/infrastructure.md) | Stack, env, TypeORM |
 | [`architecture/data-model.md`](architecture/data-model.md) | Schema `rpg` / PHB |
-| [`architecture/catalog-patterns.md`](architecture/catalog-patterns.md) | Padrões DRY SQL do catálogo |
+| [`architecture/catalog-patterns.md`](architecture/catalog-patterns.md) | Padrões DRY SQL do catálogo (+ catálogo mecânico) |
 | [`architecture/adr-schema-consolidation.md`](architecture/adr-schema-consolidation.md) | ADR — consolidação A→G (Aceito) |
 | [`architecture/schema-equivalence-map.md`](architecture/schema-equivalence-map.md) | Mapa tabela atual → alvo consolidado |
 | [`architecture/game-module-structure.md`](architecture/game-module-structure.md) | Submódulos Game |
@@ -30,12 +30,9 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |-----|----------|
 | [`plans/backlog.md`](plans/backlog.md) | Checklist geral — o que ainda falta (API + front + gaps) |
-| [`plans/class-mesa-dividas.md`](plans/class-mesa-dividas.md) | Dívidas de alinhamento ao padrão classe mesa (a avaliar) |
-| [`plans/code-health-plan.md`](plans/code-health-plan.md) | Inventário de arquivos gordos / hardcodes / próximos PRs |
-| [`plans/combat-mechanical-catalog.md`](plans/combat-mechanical-catalog.md) | Catálogos mecânicos de combate (tabelas tipadas) |
-| [`plans/schema-consolidation-plan.md`](plans/schema-consolidation-plan.md) | Plano de lotes A→G (meta ~45–60 tabelas) |
+| [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Adiado: modal Escudo/Giga no cast de Mísseis |
 
-Padrão de classe jogável (mesa): skills Cursor **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`** (não há mais `class-mechanics.md`).
+Padrão de classe jogável (mesa): skills Cursor **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**.
 
 ## Ops
 
