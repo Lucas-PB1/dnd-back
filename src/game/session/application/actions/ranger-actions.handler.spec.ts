@@ -101,6 +101,31 @@ describe('RangerActionsHandler', () => {
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 
+  it('resolves Hunter Superior Defense note at level 15', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...ranger,
+      subclassSlug: 'hunter',
+      level: 15,
+    });
+    const result = await handler.useTableAction('user-1', 'ranger-1', {
+      actionSlug: 'hunter-defense',
+    });
+    expect(result.resourceSpent).toBe(false);
+    expect(result.note).toContain('Defesa do Caçador');
+  });
+
+  it('resolves Gloom Stalker Shadowy Dodge note at level 15', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...ranger,
+      subclassSlug: 'gloom-stalker',
+      level: 15,
+    });
+    const result = await handler.useTableAction('user-1', 'ranger-1', {
+      actionSlug: 'gloom-stalker-dodge',
+    });
+    expect(result.note).toContain('Esquiva Sombria');
+  });
+
   it('rejects ranger actions for non-rangers', async () => {
     access.findAccessibleOrFail.mockResolvedValueOnce({
       ...ranger,

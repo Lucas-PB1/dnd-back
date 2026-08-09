@@ -18,7 +18,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 | HP / CA / ataque / feat options / granted spells | Pronto |
 | Deploy front / E2E | Pronto |
 | UI ataques (aba Ações) + erros HTTP PT | Pronto |
-| Classes PHB + Valdas (critério mesa) | Pronto — seguir skills mesa |
+| Classes PHB + Valdas (critério mesa) | Pronto — seguir skills mesa; Patrulheiro alinhado 2026-08-09 |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
 ---

@@ -42,7 +42,7 @@ describe('executeRollAttack', () => {
         abilitySlug: 'destreza',
         critThreshold: 20,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
     const result = await executeRollAttack({
       ...base,
@@ -62,7 +62,7 @@ describe('executeRollAttack', () => {
         abilitySlug: 'forca',
         critThreshold: 20,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
     const result = await executeRollAttack({
       ...base,
@@ -87,7 +87,7 @@ describe('executeRollAttack', () => {
         abilitySlug: 'destreza',
         critThreshold: 20,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollAttack({
@@ -119,7 +119,7 @@ describe('executeRollAttack', () => {
         abilitySlug: 'forca',
         critThreshold: 20,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollAttack({
@@ -151,7 +151,7 @@ describe('executeRollAttack', () => {
         abilitySlug: 'destreza',
         critThreshold: 20,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollAttack({

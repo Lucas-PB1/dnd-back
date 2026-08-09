@@ -3,6 +3,12 @@
 
 DELETE FROM rpg.phb_class_panel_action WHERE panel_key = 'wizard|spell-mastery';
 DELETE FROM rpg.phb_class_panel_action WHERE panel_key = 'warlock|fiend|dark-ones-own-luck';
+-- Pools base do Patrulheiro (Marca / Incansável / Véu) só na Economia (C009), não no painel.
+DELETE FROM rpg.phb_class_panel_action WHERE panel_key IN (
+  'ranger|hunters-mark-free',
+  'ranger|tireless',
+  'ranger|natures-veil'
+);
 
 INSERT INTO rpg.phb_class_panel_action (
   panel_key, class_id, subclass_id, slug, name, title, unlock_level,
@@ -15,12 +21,12 @@ INSERT INTO rpg.phb_class_panel_action (
 ('bard|dance|unarmed-dance', (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'dance'), 'unarmed-dance', 'Ataque Desarmado (Dança)', 'Dança: ataque desarmado com Carisma + dado de Inspiração (não gasta uso)', 3, NULL, 'subclass'::rpg.panel_action_section, false, 5),
 ('bard|dance|agile-response', (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'dance'), 'agile-response', 'Movimento Inspirador', 'Reação (Dança, nv. 6+): inimigo encerra turno a 1,5 m — gasta 1 Inspiração; você e um aliado movem metade do Deslocamento', 6, 'bardicInspiration', 'subclass'::rpg.panel_action_section, false, 6),
 ('bard|valor|combat-inspiration', (SELECT id FROM rpg.phb_class WHERE slug = 'bard'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'valor'), 'combat-inspiration', 'Inspiração em Combate', 'Bravura: o aliado inspirado pode somar o dado ao dano ou à CA (Reação)', 3, 'bardicInspiration', 'subclass'::rpg.panel_action_section, false, 7),
-('ranger|hunters-mark-free', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), NULL, 'hunters-mark-free', 'Marca do Predador (gratuita)', NULL, 1, 'favoredEnemy', 'base'::rpg.panel_action_section, false, 1),
-('ranger|tireless', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), NULL, 'tireless', 'Incansável', NULL, 10, 'tireless', 'base'::rpg.panel_action_section, false, 2),
-('ranger|natures-veil', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), NULL, 'natures-veil', 'Véu da Natureza', NULL, 14, 'naturesVeil', 'base'::rpg.panel_action_section, false, 3),
 ('ranger|fey-wanderer|fey-reinforcements', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 'fey-reinforcements', 'Reforços Feéricos', NULL, 11, 'fey-reinforcements', 'subclass'::rpg.panel_action_section, false, 4),
 ('ranger|fey-wanderer|misty-wanderer', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 'misty-wanderer', 'Andarilho Nebuloso', NULL, 15, 'misty-wanderer', 'subclass'::rpg.panel_action_section, false, 5),
 ('ranger|beast-master|primal-companion', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'beast-master'), 'primal-companion', 'Companheiro Primal', NULL, 3, NULL, 'subclass'::rpg.panel_action_section, false, 6),
+('ranger|hunter|hunter-defense', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'hunter'), 'hunter-defense', 'Defesa do Caçador Superior', 'Reação: Resistência ao dano neste turno', 15, NULL, 'subclass'::rpg.panel_action_section, false, 7),
+('ranger|gloom-stalker|gloom-stalker-dodge', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), 'gloom-stalker-dodge', 'Esquiva Sombria', 'Reação: Desvantagem no ataque + teleporte 9 m', 15, NULL, 'subclass'::rpg.panel_action_section, false, 8),
+('ranger|beastborne|feral-howl', (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'beastborne'), 'feral-howl', 'Uivo Feral', 'Na iniciativa: 1d4 → Aspecto Bestial', 7, NULL, 'subclass'::rpg.panel_action_section, false, 9),
 ('sorcerer|innate-sorcery', (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), NULL, 'innate-sorcery', 'Feitiçaria Inata', NULL, 1, 'innate-sorcery', 'base'::rpg.panel_action_section, false, 1),
 ('sorcerer|sorcerous-restoration', (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), NULL, 'sorcerous-restoration', 'Restauração Feiticeira', NULL, 5, 'sorcerous-restoration', 'base'::rpg.panel_action_section, false, 2),
 ('sorcerer|wild-magic|tides-of-chaos', (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'wild-magic'), 'tides-of-chaos', 'Marés do Caos', 'Vantagem em 1 Teste de D20 (gasta 1 uso)', 3, 'tides-of-chaos', 'subclass'::rpg.panel_action_section, false, 6),

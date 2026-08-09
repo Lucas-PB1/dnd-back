@@ -71,7 +71,7 @@ describe('executeRollDamage', () => {
         brutalStrikeDice: null,
         abilitySlug: 'forca',
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
     const result = await executeRollDamage({
       ...base,
@@ -92,7 +92,7 @@ describe('executeRollDamage', () => {
         grazeOnMissDamage: null,
         rageDamageBonus: 0,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
     await expect(
       executeRollDamage({
@@ -115,7 +115,7 @@ describe('executeRollDamage', () => {
         brutalStrikeDice: '1d10',
         abilitySlug: 'forca',
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
     const result = await executeRollDamage({
       ...base,
@@ -154,7 +154,7 @@ describe('executeRollDamage', () => {
         brutalStrikeDice: null,
         abilitySlug: 'forca',
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollDamage({
@@ -200,7 +200,7 @@ describe('executeRollDamage', () => {
         abilitySlug: 'destreza',
         sneakAttackEligible: true,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollDamage({
@@ -248,7 +248,7 @@ describe('executeRollDamage', () => {
         abilitySlug: 'forca',
         sneakAttackEligible: false,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     await expect(
@@ -291,7 +291,7 @@ describe('executeRollDamage', () => {
         abilitySlug: 'destreza',
         sneakAttackEligible: true,
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollDamage({
@@ -336,7 +336,7 @@ describe('executeRollDamage', () => {
         brutalStrikeDice: null,
         abilitySlug: 'forca',
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollDamage({
@@ -375,7 +375,7 @@ describe('executeRollDamage', () => {
         brutalStrikeDice: null,
         abilitySlug: 'forca',
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const melee = await executeRollDamage({
@@ -432,7 +432,7 @@ describe('executeRollDamage', () => {
         brutalStrikeDice: null,
         abilitySlug: 'forca',
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollDamage({
@@ -480,7 +480,7 @@ describe('executeRollDamage', () => {
         brutalStrikeDice: null,
         abilitySlug: 'destreza',
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollDamage({
@@ -528,7 +528,7 @@ describe('executeRollDamage', () => {
         brutalStrikeDice: null,
         abilitySlug: 'forca',
       },
-      combatFlags: { rageActive: false, recklessActive: false },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
     });
 
     const result = await executeRollDamage({

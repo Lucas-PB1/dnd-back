@@ -45,3 +45,14 @@ Extras: invocações (free_cast no painel + aba Magias) + pact blade (UI/front).
 | Panel | `C010` (base + psi); BM/Dungeoneer = UI com seletor |
 
 Manobras BM: `actionSlug: use-maneuver` + `maneuverSlug`. Precaução: `dungeon-precaution` + `spellSlug`.
+
+## Patrulheiro (`ranger`)
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/ranger/` |
+| Handler | `ranger-actions.handler.ts` + `actions/ranger/` |
+| HTTP | `POST …/ranger/table-action` |
+| Economy/panel | `C009` + `C010` |
+
+Pools base (Marca / Incansável / Véu): só **C009 Economia** com `resource_slug` (UI: ± sempre; Usar se `table_action`) — painel não lista `remaining/max`. Subclasses no C010: fey / beast-master / hunter-defense / gloom-dodge; beastborne = UI Aspecto + `feral-howl` + Carnificina no dano (`bestialAspectLevel`).

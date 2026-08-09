@@ -24,6 +24,35 @@ Campos críticos:
 - Linha só documental / painel cuida → pode ser `NULL` (ex.: metamagia lista no painel).
 - Front: roteia por `classSlug` do catálogo (+ protocolos `cast:` / `arm:` / `psi:`).
 
+## Controle de recursos
+
+Pools limitados (usos / DL / SR) devem ser **recursos de verdade**, não contador decorativo no painel.
+
+### Catálogo
+
+1. `phb_resource_definition` + grant (`S002`/`S003`; mago: `C014`).
+2. Linha **C009** com `resource_slug` apontando esse pool.
+3. `table_action` na mesma linha **quando** o botão Usar deve chamar o handler (gasto + nota). Sem `table_action` = linha só de lembrete / sem Usar.
+
+Referência: Mago (`third-eye`, `magic-missile-free`, …) e Bruxo (`healing-light`, `fey-steps`, …).
+
+### UI na aba Ações (Economia)
+
+| Campo C009 | O que a UI mostra |
+|------------|-------------------|
+| `resource_slug` + pool no estado da ficha | **Sempre** − / `remaining/max` / + (Gastar / Recuperar) |
+| `table_action` preenchido | Botão **Usar** (ou Conjurar / Armar / …) |
+| só `resource_slug`, sem `table_action` | Contador ± **ainda aparece**; sem Usar |
+| nenhum dos dois | Só nome/summary (lembrete puro) |
+
+**Regra:** o controle de recurso **não** depende de `table_action`. Esconder o ± porque `table_action` é `NULL` é bug (Patrulheiro: Marca/Véu ficavam só com o nome).
+
+Implementação front: `plan-economy-table-use.ts` (`counterSlug` a partir de `resourceSlug` mesmo sem `tableAction`) · `beyond-actions-tab.tsx` (render ± se `counter && plan.counterSlug`).
+
+**C010 / painel:** poderes e controles especiais (Recuperação Arcana, Aspecto Bestial, máscaras, invocações). Pode repetir um botão com `resource_slug` como atalho (ex. Bruxo), mas **não** substitui a Economia como UI de `remaining/max`.
+
+**Anti-padrão:** `CombatResourceSummary` no Ferramentas do painel espelhando pools da Economia; ou ± só se `table_action` existir.
+
 ## Panel (`C010` — SSOT)
 
 | Campo | Uso |

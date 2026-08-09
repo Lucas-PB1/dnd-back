@@ -19,15 +19,27 @@ export type RollWeaponCharacter = {
   level: number;
 };
 
-async function loadBarbarianCombatFlags(
+export type WeaponCombatFlags = {
+  rageActive: boolean;
+  recklessActive: boolean;
+  bestialAspectLevel: number;
+};
+
+async function loadWeaponCombatFlags(
   dataSource: DataSource | undefined,
   characterId: string,
-): Promise<{ rageActive: boolean; recklessActive: boolean }> {
-  if (!dataSource) return { rageActive: false, recklessActive: false };
+): Promise<WeaponCombatFlags> {
+  if (!dataSource) {
+    return { rageActive: false, recklessActive: false, bestialAspectLevel: 0 };
+  }
   const rows = await dataSource.query<
-    { rage_active: boolean; reckless_active: boolean }[]
+    {
+      rage_active: boolean;
+      reckless_active: boolean;
+      bestial_aspect_level: number | null;
+    }[]
   >(
-    `SELECT rage_active, reckless_active
+    `SELECT rage_active, reckless_active, bestial_aspect_level
      FROM rpg.player_character_state
      WHERE character_id = $1
      LIMIT 1`,
@@ -37,6 +49,7 @@ async function loadBarbarianCombatFlags(
   return {
     rageActive: Boolean(row?.rage_active),
     recklessActive: Boolean(row?.reckless_active),
+    bestialAspectLevel: Number(row?.bestial_aspect_level ?? 0),
   };
 }
 
@@ -76,7 +89,7 @@ export async function findEquippedWeaponAttack(
         itemEffects.abilityScoreCaps,
       )
     : classScores;
-  const combatFlags = await loadBarbarianCombatFlags(
+  const combatFlags = await loadWeaponCombatFlags(
     deps.dataSource,
     character.id,
   );

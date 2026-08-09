@@ -1,6 +1,7 @@
 import { FIXTURE_BESTIAL_ASPECT_BENEFITS } from '../__fixtures__/mechanical-catalog.fixtures';
 import {
   bestialAspectBenefits,
+  carnificinaDamageBonus,
   clampBestialAspectLevel,
 } from './beastborne';
 
@@ -30,5 +31,43 @@ describe('beastborne', () => {
     expect(
       bestialAspectBenefits(FIXTURE_BESTIAL_ASPECT_BENEFITS, 99),
     ).toHaveLength(5);
+  });
+
+  it('applies Carnificina from aspect level (+2 / +3 at 11)', () => {
+    expect(
+      carnificinaDamageBonus({
+        subclassSlug: 'beastborne',
+        characterLevel: 5,
+        bestialAspectLevel: 0,
+      }),
+    ).toBe(0);
+    expect(
+      carnificinaDamageBonus({
+        subclassSlug: 'beastborne',
+        characterLevel: 5,
+        bestialAspectLevel: 1,
+      }),
+    ).toBe(2);
+    expect(
+      carnificinaDamageBonus({
+        subclassSlug: 'beastborne',
+        characterLevel: 11,
+        bestialAspectLevel: 2,
+      }),
+    ).toBe(3);
+    expect(
+      carnificinaDamageBonus({
+        subclassSlug: 'hunter',
+        characterLevel: 11,
+        bestialAspectLevel: 5,
+      }),
+    ).toBe(0);
+    expect(
+      carnificinaDamageBonus({
+        subclassSlug: 'beastborne',
+        characterLevel: 2,
+        bestialAspectLevel: 3,
+      }),
+    ).toBe(0);
   });
 });

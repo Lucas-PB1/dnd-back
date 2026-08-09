@@ -1,16 +1,17 @@
 import { BadRequestException } from '@nestjs/common';
 import {
+  carnificinaDamageBonus,
   feyDreadfulStrikesDie,
   gloomDreadAmbusherDie,
   huntersMarkDie,
   isRangerClass,
 } from '@game/combat/domain/ranger';
-import { addDamagePart } from './damage-accumulator';
+import { addDamagePart, addFlatDamage } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 
-/** Marca do Predador, Assassino de Colossos, Golpes Terríveis e Golpe Terrível. */
+/** Marca do Predador, Carnificina, Assassino de Colossos, Golpes Terríveis e Golpe Terrível. */
 export const applyRangerExtras: DamageEffect = async (ctx, acc) => {
-  const { character, dto, resourceSpender } = ctx;
+  const { character, combatFlags, dto, resourceSpender } = ctx;
 
   if (isRangerClass(character.classSlug) && dto.huntersMark) {
     const die = huntersMarkDie(character.level);
@@ -18,6 +19,19 @@ export const applyRangerExtras: DamageEffect = async (ctx, acc) => {
     acc.notes.push(`Marca do Predador: +${die} Energético`);
   } else if (dto.huntersMark) {
     throw new BadRequestException("Hunter's Mark requires Ranger class");
+  }
+
+  const carnificina = carnificinaDamageBonus({
+    subclassSlug: character.subclassSlug,
+    characterLevel: character.level,
+    bestialAspectLevel: combatFlags.bestialAspectLevel,
+  });
+  if (carnificina > 0) {
+    addFlatDamage(
+      acc,
+      carnificina,
+      `Carnificina: +${carnificina} (Aspecto ${combatFlags.bestialAspectLevel})`,
+    );
   }
 
   if (dto.colossusSlayer) {

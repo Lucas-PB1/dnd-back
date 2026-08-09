@@ -42,8 +42,8 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 1. Domain `src/game/combat/domain/<class>/` — `features.ts` (`isXClass`, fórmulas, `*CombatNotes`) + extras tipados se houver
 2. Handler fatiado em `session/application/actions/<class>/` + facade `*-actions.handler.ts` + `…/table-action`
 3. `phb_resource_definition` + `phb_resource_grant` (classe e/ou subclasse)
-4. Linhas `phb_class_economy_action` com `table_action` quando Usar dispara efeito
-5. Linhas `phb_class_panel_action` com `subclass_id` correto (nunca NULL se for de subclasse)
+4. Linhas `phb_class_economy_action` com `resource_slug` nos pools + `table_action` quando Usar dispara efeito
+5. Linhas `phb_class_panel_action` com `subclass_id` correto (nunca NULL se for de subclasse) — painel ≠ contador `remaining/max` da Economia
 6. Specs domain/handler no que gasta ou rola
 7. Front alinhado — skill `rpg-class-mesa-front`
 
@@ -60,4 +60,7 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 - Endpoint novo por feature
 - `subclass_id` NULL em ação de subclasse (vaza no painel de todas)
 - Economia sem `table_action` quando o Usar deveria chamar o handler
+- Pool limitado sem `resource_slug` na C009
+- Contador ± na Economia amarrado a `table_action` (sumir o `remaining/max` sem Usar)
+- Contador duplicado no Ferramentas do painel (`CombatResourceSummary` espelhando a Economia)
 - Inventar catálogo estático no domain — SSOT no banco (`rpg-catalog-model`)

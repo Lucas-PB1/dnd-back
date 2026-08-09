@@ -151,6 +151,8 @@ export class UseRangerTableActionDto {
       'fey-reinforcements',
       'misty-wanderer',
       'primal-companion',
+      'hunter-defense',
+      'gloom-stalker-dodge',
       'set-bestial-aspect',
       'feral-howl',
     ],
@@ -162,6 +164,8 @@ export class UseRangerTableActionDto {
     'fey-reinforcements',
     'misty-wanderer',
     'primal-companion',
+    'hunter-defense',
+    'gloom-stalker-dodge',
     'set-bestial-aspect',
     'feral-howl',
   ])
@@ -172,6 +176,8 @@ export class UseRangerTableActionDto {
     | 'fey-reinforcements'
     | 'misty-wanderer'
     | 'primal-companion'
+    | 'hunter-defense'
+    | 'gloom-stalker-dodge'
     | 'set-bestial-aspect'
     | 'feral-howl';
 

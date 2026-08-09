@@ -16,6 +16,8 @@ import {
 import {
   resolveFeralHowl,
   resolveFeyReinforcements,
+  resolveGloomStalkerDodge,
+  resolveHunterDefense,
   resolveMistyWanderer,
   resolvePrimalCompanion,
   resolveSetBestialAspect,
@@ -64,6 +66,10 @@ export class RangerActionsHandler {
         return resolveMistyWanderer(deps, character);
       case 'primal-companion':
         return resolvePrimalCompanion(deps, character);
+      case 'hunter-defense':
+        return resolveHunterDefense(deps, character);
+      case 'gloom-stalker-dodge':
+        return resolveGloomStalkerDodge(deps, character);
       case 'set-bestial-aspect':
         return resolveSetBestialAspect(deps, character, dto.level);
       case 'feral-howl':

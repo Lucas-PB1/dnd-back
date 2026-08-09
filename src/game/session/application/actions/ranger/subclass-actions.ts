@@ -121,3 +121,31 @@ export async function resolvePrimalCompanion(
     note: 'Companheiro Primal: Ação Bônus para comandar a fera; na ação Atacar você pode sacrificar um ataque para o Golpe da Fera.',
   };
 }
+
+export async function resolveHunterDefense(
+  deps: RangerActionDeps,
+  character: PlayerCharacter,
+): Promise<RangerTableActionResult> {
+  assertCharacterSubclass(character, 'hunter', 'Caçador');
+  assertCharacterLevel(character, 15, 'Patrulheiro', 'Defesa do Caçador Superior');
+  return {
+    state: await deps.state.buildResponse(character),
+    actionName: 'Defesa do Caçador Superior',
+    resourceSpent: false,
+    note: 'Defesa do Caçador Superior: Reação — você tem Resistência ao dano que desencadeou esta reação até o fim do turno atual (mesa).',
+  };
+}
+
+export async function resolveGloomStalkerDodge(
+  deps: RangerActionDeps,
+  character: PlayerCharacter,
+): Promise<RangerTableActionResult> {
+  assertCharacterSubclass(character, 'gloom-stalker', 'Vigilante das Sombras');
+  assertCharacterLevel(character, 15, 'Patrulheiro', 'Esquiva Sombria');
+  return {
+    state: await deps.state.buildResponse(character),
+    actionName: 'Esquiva Sombria',
+    resourceSpent: false,
+    note: 'Esquiva Sombria: Reação — imponha Desvantagem ao ataque (se ainda não tiver sido resolvido) e teleporte até 9 m para um espaço sem luz intensa que você possa ver (mesa).',
+  };
+}
