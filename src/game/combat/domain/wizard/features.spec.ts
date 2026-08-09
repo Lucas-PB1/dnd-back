@@ -39,6 +39,13 @@ describe('wizard-features', () => {
     const divinerNotes = wizardCombatNotes({ classSlug: 'wizard', subclassSlug: 'diviner', level: 3 });
     expect(divinerNotes.some((n) => n.includes('Presságio'))).toBe(true);
 
+    const evokerL3 = wizardCombatNotes({ classSlug: 'wizard', subclassSlug: 'evoker', level: 3 });
+    expect(evokerL3.some((n) => n.includes('Truque Potente'))).toBe(true);
+    expect(evokerL3.some((n) => n.includes('Esculpir Magias'))).toBe(false);
+
+    const evokerL6 = wizardCombatNotes({ classSlug: 'wizard', subclassSlug: 'evoker', level: 6 });
+    expect(evokerL6.some((n) => n.includes('Esculpir Magias'))).toBe(true);
+
     const mmNotes = wizardCombatNotes({
       classSlug: 'wizard',
       subclassSlug: 'magic-missile-mage',

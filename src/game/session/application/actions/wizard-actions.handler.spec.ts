@@ -61,6 +61,40 @@ describe('WizardActionsHandler', () => {
     expect(result.note).toContain('Proteção Arcana');
   });
 
+  it('requires level 6 for Sculpt Spells', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...wizard,
+      subclassSlug: 'evoker',
+      level: 3,
+    });
+
+    await expect(
+      handler.useTableAction('user-1', 'wiz-1', {
+        actionSlug: 'sculpt-spells',
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('spends Third Eye resource for Diviner', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...wizard,
+      subclassSlug: 'diviner',
+      level: 10,
+    });
+
+    const result = await handler.useTableAction('user-1', 'wiz-1', {
+      actionSlug: 'third-eye',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ subclassSlug: 'diviner' }),
+      'third-eye',
+      1,
+    );
+    expect(result.resourceSpent).toBe(true);
+    expect(result.note).toContain('Terceiro Olho');
+  });
+
   it('rolls Portent dice for Diviner', async () => {
     access.findAccessibleOrFail.mockResolvedValueOnce({
       ...wizard,

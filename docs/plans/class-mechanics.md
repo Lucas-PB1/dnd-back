@@ -219,11 +219,12 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 ### Mago (`wizard`) — `[x]`
 
 - [x] Base: Recuperação Arcana (recupera slots até metade do nível de Mago no descanso curto), Ritualista Arcano (rituais sem preparação) e Dominância de Magias (nv 18)
-- [x] Abjurador: Proteção Arcana (cria barreira de 2×nível + INT de PV temporários ao conjurar Abjuração)
-- [x] Adivinhador: Presságio (rola 2d20/3d20 no descanso longo e substitui rolagens no dia)
-- [x] Evocador: Esculpir Magias (protege aliados contra magias de área) e Truque Potentado
-- [x] Ilusionista: Ilusão Aprimorada (conjura ilusões como Ação Bônus sem componentes V)
-- [x] UI: `combat-wizard-panel`, seletores de Recuperação Arcana e botões de Tradição Arcana
+- [x] Abjurador: Proteção Arcana (PV = 2×nível + INT; BA gasta slot → recupera 2× círculo); Proteção Projetada L6 (reação); Rompe-Magia L10 (Dissipar como BA); Resistência à Magia L14 (nota)
+- [x] Adivinhador: Presságio (2d20 / 3d20 no L14); Perito em Adivinhação L6 (nota); O Terceiro Olho L10 (recurso 1/SR)
+- [x] Evocador: Truque Potente L3 (nota); Esculpir Magias L6 (painel); Evocação Potencializada L10 (nota); Sobrecarga L14 (free + painel)
+- [x] Ilusionista: Ilusão Aprimorada L3; Criaturas Espectrais L6 / Autoimagem L10 (recursos); Realidade Ilusória L14
+- [x] Mago dos Mísseis: free / Versáteis / Escudo / Giga (economia + Usar)
+- [x] UI: `combat-wizard-panel`, Recuperação Arcana e botões de Tradição Arcana (catálogo C010/C014)
 
 ---
 

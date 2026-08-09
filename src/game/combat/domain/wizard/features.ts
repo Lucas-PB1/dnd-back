@@ -4,6 +4,12 @@ export const MAGIC_MISSILE_FREE_RESOURCE = 'magic-missile-free';
 export const MISSILE_SHIELD_RESOURCE = 'missile-shield';
 export const GIGA_MISSILE_RESOURCE = 'giga-missile';
 
+export const THIRD_EYE_RESOURCE = 'third-eye';
+export const SPECTRAL_SUMMON_RESOURCE = 'spectral-summon';
+export const ILLUSORY_SELF_RESOURCE = 'illusory-self';
+
+export const SCULPT_SPELLS_UNLOCK_LEVEL = 6;
+
 /** classOptions: Dominância de Magias (nv. 18). */
 export const SPELL_MASTERY_LEVEL_1_KEY = 'spellMastery1';
 export const SPELL_MASTERY_LEVEL_2_KEY = 'spellMastery2';
@@ -165,31 +171,46 @@ function addWizardSubclassNotes(
 
   if (subclassSlug === 'abjurer') {
     notes.push(
-      'Escola de Abjuração: Proteção Arcana (cria barreira de PV temporários ao conjurar magia de Abjuração de 1º+ círculo; absorve dano).',
+      'Abjurador: Proteção Arcana (barreira ao conjurar Abjuração 1º+; Ação Bônus gasta slot para recuperar 2× círculo).',
     );
+    if (level >= 14) {
+      notes.push(
+        'Resistência à Magia: vantagem em salvaguardas contra magias; Resistência a dano de magias.',
+      );
+    }
   }
 
   if (subclassSlug === 'diviner') {
     const count = portentDiceCount(level);
     notes.push(
-      `Escola de Adivinhação: Presságio (guarde ${count}d20 no início do dia e substitua qualquer jogada de d20 sua ou de outra criatura).`,
+      `Adivinhador: Presságio (guarde ${count}d20 no início do dia e substitua qualquer d20 seu ou de outra criatura).`,
     );
+    if (level >= 6) {
+      notes.push(
+        'Perito em Adivinhação: ao conjurar Adivinhação com espaço de 2º+, recupere um espaço de nível inferior.',
+      );
+    }
   }
 
   if (subclassSlug === 'evoker') {
     notes.push(
-      'Escola de Evocação: Esculpir Magias (aliados passam automaticamente em salvaguardas de suas magias de Evocação e não sofrem dano).',
+      'Evocador: Truque Potente (em salvaguarda bem-sucedida contra seu truque de dano, o alvo ainda sofre metade).',
     );
     if (level >= 6) {
       notes.push(
-        'Truque Potentado: truques de dano causam metade do dano mesmo em caso de sucesso na salvaguarda.',
+        'Esculpir Magias: escolha aliados na área de Evocação; passam automaticamente e não sofrem dano.',
+      );
+    }
+    if (level >= 10) {
+      notes.push(
+        'Evocação Potencializada: ao rolar dano de Evocação conjurada com espaço, trate 1s no dado como 2s.',
       );
     }
   }
 
   if (subclassSlug === 'illusionist') {
     notes.push(
-      'Escola de Ilusão: Ilusão Aprimorada (conjure truques e magias de ilusão como Ação Bônus sem componentes V e com maior alcance).',
+      'Ilusionista: Ilusão Aprimorada (truques de Ilusão e Imagem Silenciosa como Ação Bônus, sem V, alcance dobrado).',
     );
   }
 

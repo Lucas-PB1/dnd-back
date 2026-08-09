@@ -1,10 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import {
   abjurerArcaneWardHp,
+  ILLUSORY_SELF_RESOURCE,
   isWizardClass,
   portentDiceCount,
+  SCULPT_SPELLS_UNLOCK_LEVEL,
+  SPECTRAL_SUMMON_RESOURCE,
+  THIRD_EYE_RESOURCE,
 } from '../../../combat/domain/wizard-features';
-import { rollDamageParts } from '../../../dice/domain/dice';
 import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
 import { abilityModifier } from '../../../sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
@@ -55,12 +58,32 @@ export class WizardActionsHandler {
 
       case 'arcane-ward':
         return this.resolveArcaneWard(character);
+      case 'arcane-ward-recharge':
+        return this.resolveArcaneWardRecharge(character);
+      case 'projected-ward':
+        return this.resolveProjectedWard(character);
+      case 'spell-breaker':
+        return this.resolveSpellBreaker(character);
+
       case 'portent':
         return this.resolvePortent(character);
+      case 'third-eye':
+        return this.resolveThirdEye(character);
+
       case 'sculpt-spells':
         return this.resolveSculptSpells(character);
+      case 'overchannel':
+        return this.resolveOverchannel(character);
+
       case 'improved-illusions':
         return this.resolveImprovedIllusions(character);
+      case 'spectral-summon':
+        return this.resolveSpectralSummon(character);
+      case 'illusory-self':
+        return this.resolveIllusorySelf(character);
+      case 'illusory-reality':
+        return this.resolveIllusoryReality(character);
+
       case 'spell-mastery':
         return this.resolveSpellMastery(character);
       case 'arm-missile-shield':
@@ -107,6 +130,49 @@ export class WizardActionsHandler {
     };
   }
 
+  private async resolveArcaneWardRecharge(
+    character: PlayerCharacter,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'abjurer', 'Escola de Abjuração');
+    assertCharacterLevel(character, 3, 'Mago', 'Proteção Arcana');
+
+    return {
+      state: await this.state.buildResponse(character),
+      actionName: 'Recarregar Proteção Arcana',
+      resourceSpent: false,
+      note: 'Recarregar Proteção: Ação Bônus — gaste 1 espaço de magia; a Proteção recupera PV iguais ao dobro do círculo do espaço.',
+    };
+  }
+
+  private async resolveProjectedWard(
+    character: PlayerCharacter,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'abjurer', 'Escola de Abjuração');
+    assertCharacterLevel(character, 6, 'Mago', 'Proteção Projetada');
+
+    return {
+      state: await this.state.buildResponse(character),
+      actionName: 'Proteção Projetada',
+      resourceSpent: false,
+      note: 'Proteção Projetada: Reação — quando uma criatura à sua vista a até 9 m sofrer dano, sua Proteção Arcana pode absorvê-lo no lugar dela.',
+    };
+  }
+
+  private async resolveSpellBreaker(
+    character: PlayerCharacter,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'abjurer', 'Escola de Abjuração');
+    assertCharacterLevel(character, 10, 'Mago', 'Rompe-Magia');
+    const pb = await this.domain.getProficiencyBonus(character.level);
+
+    return {
+      state: await this.state.buildResponse(character),
+      actionName: 'Rompe-Magia',
+      resourceSpent: false,
+      note: `Rompe-Magia: Dissipar Magia como Ação Bônus; some +${pb} (PB) ao teste. Contramagia e Dissipar sempre preparadas; se falharem ao interromper, o espaço não é gasto.`,
+    };
+  }
+
   private async resolvePortent(
     character: PlayerCharacter,
   ): Promise<TableActionResponseDto> {
@@ -123,17 +189,53 @@ export class WizardActionsHandler {
     };
   }
 
+  private async resolveThirdEye(
+    character: PlayerCharacter,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'diviner', 'Escola de Adivinhação');
+    assertCharacterLevel(character, 10, 'Mago', 'O Terceiro Olho');
+    const state = (
+      await this.state.useClassResource(character, THIRD_EYE_RESOURCE, 1)
+    ).state;
+
+    return {
+      state,
+      actionName: 'O Terceiro Olho',
+      resourceSpent: true,
+      note: 'O Terceiro Olho: Ação Bônus — escolha Compreensão Superior, Ver o Invisível (sem espaço) ou Visão no Escuro 36 m até o próximo descanso. 1× por Descanso Curto ou Longo.',
+    };
+  }
+
   private async resolveSculptSpells(
     character: PlayerCharacter,
   ): Promise<TableActionResponseDto> {
     assertCharacterSubclass(character, 'evoker', 'Escola de Evocação');
-    assertCharacterLevel(character, 3, 'Mago', 'Esculpir Magias');
+    assertCharacterLevel(
+      character,
+      SCULPT_SPELLS_UNLOCK_LEVEL,
+      'Mago',
+      'Esculpir Magias',
+    );
 
     return {
       state: await this.state.buildResponse(character),
       actionName: 'Esculpir Magias',
       resourceSpent: false,
-      note: 'Esculpir Magias: escolha até 1 + Nível da Magia aliados no raio de evocação em área. Eles passam automaticamente na salvaguarda e não sofrem dano.',
+      note: 'Esculpir Magias: escolha até 1 + nível da magia aliados na área de Evocação. Eles passam automaticamente na salvaguarda e não sofrem dano.',
+    };
+  }
+
+  private async resolveOverchannel(
+    character: PlayerCharacter,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'evoker', 'Escola de Evocação');
+    assertCharacterLevel(character, 14, 'Mago', 'Sobrecarga');
+
+    return {
+      state: await this.state.buildResponse(character),
+      actionName: 'Sobrecarga',
+      resourceSpent: false,
+      note: 'Sobrecarga: ao conjurar magia de Mago com dano (espaço 1º–5º), pode causar dano máximo. 1ª vez no dia sem custo; usos seguintes antes do Descanso Longo causam 2d12 Necrótico por círculo (+1d12 por uso extra), ignorando Resistência/Imunidade.',
     };
   }
 
@@ -148,6 +250,54 @@ export class WizardActionsHandler {
       actionName: 'Ilusão Aprimorada',
       resourceSpent: false,
       note: 'Ilusão Aprimorada: conjure truques de Ilusão e Imagem Silenciosa como Ação Bônus sem componentes V e com o dobro do alcance.',
+    };
+  }
+
+  private async resolveSpectralSummon(
+    character: PlayerCharacter,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'illusionist', 'Escola de Ilusão');
+    assertCharacterLevel(character, 6, 'Mago', 'Criaturas Espectrais');
+    const state = (
+      await this.state.useClassResource(character, SPECTRAL_SUMMON_RESOURCE, 1)
+    ).state;
+
+    return {
+      state,
+      actionName: 'Criaturas Espectrais',
+      resourceSpent: true,
+      note: 'Criaturas Espectrais: Ação — Convocar Feérico ou Invocar Fera (versão Ilusão) sem espaço; PV da criatura pela metade. Recupera no Descanso Longo.',
+    };
+  }
+
+  private async resolveIllusorySelf(
+    character: PlayerCharacter,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'illusionist', 'Escola de Ilusão');
+    assertCharacterLevel(character, 10, 'Mago', 'Autoimagem Ilusória');
+    const state = (
+      await this.state.useClassResource(character, ILLUSORY_SELF_RESOURCE, 1)
+    ).state;
+
+    return {
+      state,
+      actionName: 'Autoimagem Ilusória',
+      resourceSpent: true,
+      note: 'Autoimagem Ilusória: Reação ao ser atingido — o ataque erra. Restaure no Descanso Curto/Longo ou gastando um espaço de 2º+ (sem ação).',
+    };
+  }
+
+  private async resolveIllusoryReality(
+    character: PlayerCharacter,
+  ): Promise<TableActionResponseDto> {
+    assertCharacterSubclass(character, 'illusionist', 'Escola de Ilusão');
+    assertCharacterLevel(character, 14, 'Mago', 'Realidade Ilusória');
+
+    return {
+      state: await this.state.buildResponse(character),
+      actionName: 'Realidade Ilusória',
+      resourceSpent: false,
+      note: 'Realidade Ilusória: Ação Bônus — enquanto uma Ilusão conjurada com espaço estiver ativa, torne real 1 objeto inanimado não mágico dela por 1 minuto (não causa dano nem condições).',
     };
   }
 
