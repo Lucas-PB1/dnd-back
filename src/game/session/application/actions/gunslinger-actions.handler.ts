@@ -7,7 +7,7 @@ import {
   ReloadFirearmDto,
   UseManeuverDto,
   UseManeuverResponseDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 
 @Injectable()
 export class GunslingerActionsHandler {

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
-import { CastSpellDto, CastSpellResponseDto } from '@game/session/dto/character-state.dto';
+import { CastSpellDto, CastSpellResponseDto } from '@game/session/dto';
 
 @Injectable()
 export class CastSpellHandler {

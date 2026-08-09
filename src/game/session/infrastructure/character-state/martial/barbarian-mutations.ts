@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { applyResourceSpend } from '@game/session/domain/class-resources';
-import { CharacterStateResponseDto } from '@game/session/dto/character-state.dto';
+import { CharacterStateResponseDto } from '@game/session/dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from '../resources/class-resources';
 import type { BuildResponse } from '../core/mutation-types';

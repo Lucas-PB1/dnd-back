@@ -34,7 +34,7 @@ Cada submódulo:
 ├── domain/             # regras D&D deste agregado
 ├── infrastructure/     # entities + repos (helpers em subpastas)
 ├── controllers/        # @Controller('characters') — mesmas URLs
-├── dto/                # barrels + subpastas por família
+├── dto/                # `index.ts` + subpastas por família
 └── *.module.ts
 ```
 
@@ -47,13 +47,14 @@ session/
 │   ├── core/             # state, cast, rest, resources
 │   └── actions/          # *-actions.handler por classe
 ├── dto/
-│   ├── character-state.dto.ts   # barrel
+│   ├── index.ts          # barrel público da pasta
 │   ├── core/ · fighter/ · martial/ · table-actions/
 ├── infrastructure/
 │   ├── character-state.repository.ts   # facade fina
 │   └── character-state/
+│       ├── index.ts      # barrel das mutations de estado
 │       ├── core/ · resources/ · rest/ · spell/ · martial/
-│       └── mutations.ts                # barrel
+│       └── martial/index.ts
 └── domain/
 ```
 
@@ -62,17 +63,16 @@ session/
 ```
 combat/domain/
 ├── aggregate-class-combat.ts     # orquestra notas / ataques / deslocamento
-├── *-features.ts · armor-class.ts · weapon-attack.ts · …  # barrels públicos
 ├── barbarian/ · bard/ · cleric/ · druid/ · fighter/ · gunslinger/
 ├── monk/ · paladin/ · ranger/ · rogue/ · sorcerer/ · warlock/ · wizard/
-├── equipment/                    # CA, dual-wield, compliance, charm, size
-├── weapon-attacks/               # compute + predicates + assemble
-├── catalog/                      # subclass-table-action (transversal)
+│   └── index.ts                  # barrel público de cada pasta
+├── equipment/index.ts            # CA, dual-wield, compliance, charm, size
+├── weapon-attacks/index.ts       # compute + predicates + assemble
+├── catalog/index.ts              # subclass-table-action (transversal)
 └── __fixtures__/                 # catálogo mecânico para testes
 ```
 
-Imports externos preferem os barrels na raiz (`combat/domain/fighter-features`); a implementação vive nas pastas.
-
+Imports externos preferem o barrel da pasta (`combat/domain/fighter`); a implementação vive nos módulos internos.
 ## Dependências
 
 ```mermaid

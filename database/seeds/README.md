@@ -17,8 +17,8 @@ Metadados: `database/seed-manifest.json`
 
 Numeração sequencial sem lacunas (ordem de dependência). Exemplos:
 
-- `S074_phb_species_trait_choice_kind.sql` — choice_kinds PHB
-- `S075`–`S077` — weapon mastery + class resources
+- `S074_phb_metamagic.sql` — opções de Metamagia (Feiticeiro)
+- `S075`–`S077` — weapon mastery + class resources (se presentes)
 - `V001_phb_edition_citation.sql` — edição/citações Valdas
 - `V011`–`V013` — construções Geppettin, estações Mandrágora, grants
 

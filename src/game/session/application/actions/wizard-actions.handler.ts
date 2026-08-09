@@ -7,14 +7,14 @@ import {
   SCULPT_SPELLS_UNLOCK_LEVEL,
   SPECTRAL_SUMMON_RESOURCE,
   THIRD_EYE_RESOURCE,
-} from '@game/combat/domain/wizard-features';
+} from '@game/combat/domain/wizard';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   TableActionResponseDto,
   UseWizardTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {

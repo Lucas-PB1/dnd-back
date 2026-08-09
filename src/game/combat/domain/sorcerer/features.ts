@@ -2,6 +2,9 @@ export function isSorcererClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'sorcerer';
 }
 
+export const INNATE_SORCERY_RESOURCE = 'innate-sorcery';
+export const SORCEROUS_RESTORATION_RESOURCE = 'sorcerous-restoration';
+
 export function sorceryPointsMax(level: number): number {
   return level >= 2 ? level : 0;
 }
@@ -32,7 +35,7 @@ export function sorcererCombatNotes(input: {
 
   const level = input.level ?? 1;
   const notes = [
-    'Inato Feiticeiro: Ação Bônus ativa Ira Feiticeira por 1 minuto (+1 na CD das suas magias e Vantagem nas jogadas de ataque com truques de Feiticeiro).',
+    'Feitiçaria Inata (2×/DL): Ação Bônus libera a magia por 1 minuto (+1 na CD das suas magias de Feiticeiro e Vantagem nas jogadas de ataque das magias de Feiticeiro).',
   ];
 
   addBaseSorcererNotes(notes, level);
@@ -46,17 +49,22 @@ function addBaseSorcererNotes(notes: string[], level: number): void {
       'Fonte de Magia: converta Slots de Magia em Pontos de Feitiçaria (1:1) ou Pontos de Feitiçaria em Slots de 1º a 5º círculo.',
     );
     notes.push(
-      'Metamágica: aplique opções de Metamágica (Cuidadosa, Distante, Empoderada, Estendida, Elevada, Sutil, Rápida, Transmutada) gastando Pontos de Feitiçaria.',
+      'Metamagia: aplique opções conhecidas gastando Pontos de Feitiçaria.',
     );
   }
   if (level >= 5) {
     notes.push(
-      'Restauração Feiticeira: recupere Pontos de Feitiçaria no Descanso Curto (até metade do nível do Feiticeiro).',
+      'Restauração Feiticeira (1×/DL): no Descanso Curto, recupere Pontos de Feitiçaria até metade do nível do Feiticeiro.',
+    );
+  }
+  if (level >= 7) {
+    notes.push(
+      'Feitiçaria Encarnada: sem usos de Feitiçaria Inata, gaste 2 Pontos de Feitiçaria ao ativá-la; com Inata ativa, até 2 Metamagias por magia.',
     );
   }
   if (level >= 20) {
     notes.push(
-      'Apotheosis Feiticeira: quando a Ira Feiticeira estiver ativa, você pode usar uma Metamágica por turno sem gastar Pontos de Feitiçaria.',
+      'Apoteose Arcana: enquanto a Feitiçaria Inata estiver ativa, você pode usar uma opção de Metamagia por turno sem gastar Pontos de Feitiçaria.',
     );
   }
 }
@@ -87,13 +95,13 @@ function addSorcererSubclassNotes(
 
   if (subclassSlug === 'clockwork') {
     notes.push(
-      'Mapeamento Mecânico: Baluarte da Ordem (gaste 1–5 Pontos de Feitiçaria para conceder d8s de proteção a um aliado) e Restaurar Ordem (cancela Vantagem/Desvantagem).',
+      'Feitiçaria Mecânica: Bastião da Lei (gaste 1–5 Pontos de Feitiçaria para conceder d8s de proteção a um aliado) e Restaurar Equilíbrio (cancela Vantagem/Desvantagem).',
     );
   }
 
   if (subclassSlug === 'wild-magic') {
     notes.push(
-      'Magia Selvagem: Maré de Caos (Vantagem em 1 rolagem; recarrega quando o Mestre dispara um Surto de Magia Selvagem).',
+      'Feitiçaria Selvagem: Marés do Caos (Vantagem em 1 Teste de D20; recarrega quando o Mestre dispara um Surto de Magia Selvagem).',
     );
   }
 

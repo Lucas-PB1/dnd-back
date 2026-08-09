@@ -4,7 +4,7 @@ import {
   FEY_STEPS_RESOURCE,
   HURL_THROUGH_HELL_RESOURCE,
   SEARING_VENGEANCE_RESOURCE,
-} from '@game/combat/domain/warlock-features';
+} from '@game/combat/domain/warlock';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {

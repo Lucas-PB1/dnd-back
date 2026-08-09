@@ -1,5 +1,5 @@
-import { DataSource } from 'typeorm';
-import type { EldritchInvocationEffectRow } from '../domain/warlock-features';
+﻿import { DataSource } from 'typeorm';
+import type { EldritchInvocationEffectRow } from '../domain/warlock';
 
 type CatalogQueryRow = {
   slug: string;

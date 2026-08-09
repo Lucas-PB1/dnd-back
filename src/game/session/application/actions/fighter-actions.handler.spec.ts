@@ -7,7 +7,7 @@ import { CharacterDomainService } from '@game/sheet/domain/core/character-domain
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import { CharacterStateResponseDto } from '@game/session/dto/character-state.dto';
+import { CharacterStateResponseDto } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { FighterActionsHandler } from './fighter-actions.handler';
 

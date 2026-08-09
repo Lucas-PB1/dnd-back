@@ -1,11 +1,11 @@
-import { monkFocusSaveDc } from '@game/combat/domain/monk-features';
+import { monkFocusSaveDc } from '@game/combat/domain/monk';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   FighterTableActionResponseDto,
   UseMonkTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export const FOCUS_RESOURCE_SLUG = 'focusPoints';

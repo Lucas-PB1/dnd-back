@@ -5,7 +5,7 @@ import type { PlayerCharacterAccessService } from '@game/shared/player-character
 import {
   TableActionResponseDto,
   UseBardTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export const BARDIC_INSPIRATION_SLUG = 'bardicInspiration';

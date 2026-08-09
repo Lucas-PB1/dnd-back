@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+﻿import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbBattleMasterManeuver } from '@entities/views/v-phb-battle-master-maneuver.entity';
@@ -11,17 +11,17 @@ import { VPhbGunslingerManeuver } from '@entities/views/v-phb-gunslinger-maneuve
 import { VPhbPersonaMask } from '@entities/views/v-phb-persona-mask.entity';
 import { VPhbSubclassPrecautionSpell } from '@entities/views/v-phb-subclass-precaution-spell.entity';
 import { VPhbSubclassTableAction } from '@entities/views/v-phb-subclass-table-action.entity';
-import type { BattleMasterManeuver } from '../domain/battle-master-maneuvers';
+import type { BattleMasterManeuver } from '../domain/fighter';
 import type {
   ActionEconomyBucket,
   ClassEconomyActionRecord,
   ClassPanelActionRecord,
   PanelActionSection,
 } from '../domain/class-action-ui-catalog';
-import type { PrecautionSpell } from '../domain/dungeoneer-catalog';
-import type { GunslingerManeuver, ManeuverEffectKind } from '../domain/gunslinger-maneuvers';
+import type { PrecautionSpell } from '../domain/fighter';
+import type { GunslingerManeuver, ManeuverEffectKind } from '../domain/gunslinger';
 import type { CunningStrikeEffect } from '../domain/rogue/types';
-import type { SubclassTableAction } from '../domain/subclass-table-action';
+import type { SubclassTableAction } from '../domain/catalog';
 
 export type PersonaMaskCatalogEntry = {
   slug: string;

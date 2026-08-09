@@ -1,7 +1,7 @@
 import {
   destroyUndeadDice,
   divineSparkDice,
-} from '@game/combat/domain/cleric-features';
+} from '@game/combat/domain/cleric';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';

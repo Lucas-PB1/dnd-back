@@ -4,7 +4,7 @@ import { CharacterStateRepository } from '@game/session/infrastructure/character
 import {
   CharacterStateResponseDto,
   PatchCharacterStateDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 
 @Injectable()
 export class PatchCharacterStateHandler {

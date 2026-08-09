@@ -1,4 +1,4 @@
-import { bardicInspirationDie } from '@game/combat/domain/bard-features';
+import { bardicInspirationDie } from '@game/combat/domain/bard';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import {
   assertCharacterLevel,
@@ -56,16 +56,16 @@ export async function resolveCombatInspiration(
   character: PlayerCharacter,
 ): Promise<BardTableActionResult> {
   assertCharacterSubclass(character, 'valor', 'Colégio da Bravura');
-  assertCharacterLevel(character, 3, 'Bardo', 'Inspiração de Combate');
+  assertCharacterLevel(character, 3, 'Bardo', 'Inspiração em Combate');
   const die = bardicInspirationDie(character.level);
   const state = await spendInspiration(deps, character);
 
   return {
     state,
-    actionName: 'Inspiração de Combate',
+    actionName: 'Inspiração em Combate',
     expression: `1${die}`,
     resourceSpent: true,
-    note: `Inspiração de Combate (1${die}): a criatura com Inspiração Bárdica pode rolar o dado e somar à rolagem de dano da arma ou usar a Reação para somar o dado à sua CA contra um ataque.`,
+    note: `Inspiração em Combate (1${die}): a criatura com Inspiração Bárdica pode rolar o dado e somar à rolagem de dano da arma ou usar a Reação para somar o dado à sua CA contra um ataque.`,
   };
 }
 

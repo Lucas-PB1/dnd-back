@@ -1,4 +1,4 @@
-import { CharacterStateResponseDto } from '@game/session/dto/character-state.dto';
+import { CharacterStateResponseDto } from '@game/session/dto';
 import type { MartialSessionDeps, PlayerCharacter } from './martial-deps';
 import {
   applyRecoverAllRage,
@@ -6,7 +6,7 @@ import {
   applySetPersonaMasks,
   applyToggleRage,
   applyToggleReckless,
-} from '../mutations';
+} from '..';
 
 export async function toggleRageOp(
   deps: MartialSessionDeps,

@@ -11,7 +11,7 @@ import {
   buildMagicMissileCastNote,
   isMagicMissileMage,
   isSpellMasterySpell,
-} from '@game/combat/domain/wizard-features';
+} from '@game/combat/domain/wizard';
 import {
   buildEldritchCantripCastNote,
   isWarlockClass,
@@ -19,7 +19,7 @@ import {
   readEldritchInvocationPicks,
   resolveEldritchInvocationFreeCast,
   type EldritchFreeCastResolution,
-} from '@game/combat/domain/warlock-features';
+} from '@game/combat/domain/warlock';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
@@ -39,7 +39,7 @@ import { applyResourceSpend } from '@game/session/domain/class-resources';
 import {
   CastSpellDto,
   CharacterStateResponseDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from '../resources/class-resources';
 import { consumeSpellSlot, loadMaxSlots } from '../resources/spell-slots';

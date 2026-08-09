@@ -1,6 +1,6 @@
 import { rollDie } from '@game/dice/domain/dice';
 import { riskDieFaces } from '../domain/risk-die';
-import type { GunslingerManeuver } from '@game/combat/domain/gunslinger-maneuvers';
+import type { GunslingerManeuver } from '@game/combat/domain/gunslinger';
 
 export type ResourceDieRoll = {
   resourceSlug: string;

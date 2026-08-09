@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isWarlockClass } from '@game/combat/domain/warlock-features';
+import { isWarlockClass } from '@game/combat/domain/warlock';
 import { AssertCanBindPactWeaponService } from '@game/inventory/application/assert-can-bind-pact-weapon.service';
 import { CharacterInventoryRepository } from '@game/inventory/infrastructure/character-inventory.repository';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
@@ -7,7 +7,7 @@ import { PlayerCharacterAccessService } from '@game/shared/player-character-acce
 import {
   TableActionResponseDto,
   UseWarlockTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { WarlockActionDeps } from './warlock/warlock-action-deps';
 import {

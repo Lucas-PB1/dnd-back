@@ -5,7 +5,7 @@ import {
   CharacterStateResponseDto,
   ToggleRageDto,
   ToggleRecklessDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 
 @Injectable()
 export class BarbarianActionsHandler {

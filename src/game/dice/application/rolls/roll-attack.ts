@@ -20,7 +20,7 @@ import {
   upgradeTowardAdvantage,
 } from './advantage-mode';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
-import { hasPreciseHunter, isRangerClass } from '@game/combat/domain/ranger-features';
+import { hasPreciseHunter, isRangerClass } from '@game/combat/domain/ranger';
 
 export async function executeRollAttack(input: {
   access: PlayerCharacterAccessService;

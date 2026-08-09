@@ -15,7 +15,7 @@ import { forceAdvantageIfNormal } from './advantage-mode';
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
-import { isRangerClass } from '@game/combat/domain/ranger-features';
+import { isRangerClass } from '@game/combat/domain/ranger';
 
 export async function executeRollInitiative(input: {
   access: PlayerCharacterAccessService;

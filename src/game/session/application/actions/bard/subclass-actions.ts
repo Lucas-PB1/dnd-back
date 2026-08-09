@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
-import { bardicInspirationDie } from '@game/combat/domain/bard-features';
+import { bardicInspirationDie } from '@game/combat/domain/bard';
 import {
   assertValidPersonaMasks,
   maxEquippedPersonaMasks,
-} from '@game/combat/domain/college-of-masks';
+} from '@game/combat/domain/bard';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {

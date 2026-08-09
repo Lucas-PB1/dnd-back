@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+﻿import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
@@ -7,13 +7,13 @@ import {
   computeEquipmentCompliance,
   type EquipmentComplianceResult,
   type EquippedArmorCompliancePiece,
-} from '../domain/equipment-compliance';
+} from '../domain/equipment';
 import {
   analyzeDualWield,
   heavyWeaponSlugsForSmallSize,
   type EquippedWeaponPiece,
-} from '../domain/weapon-attack';
-import type { SizeCategory } from '../domain/creature-size';
+} from '../domain/weapon-attacks';
+import type { SizeCategory } from '../domain/equipment';
 import { PhbWeapon } from '@entities/phb-weapon.entity';
 import { weaponPropsOf } from '@catalog/equipment/weapon-props';
 

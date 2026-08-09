@@ -30,7 +30,7 @@ import {
   ToggleRecklessDto,
   UseManeuverDto,
   UseManeuverResponseDto,
-} from '../dto/character-state.dto';
+} from '../dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()

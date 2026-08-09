@@ -1,4 +1,4 @@
-import { HUNTERS_MARK_SPELL_SLUG } from '@game/combat/domain/ranger-features';
+import { HUNTERS_MARK_SPELL_SLUG } from '@game/combat/domain/ranger';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';

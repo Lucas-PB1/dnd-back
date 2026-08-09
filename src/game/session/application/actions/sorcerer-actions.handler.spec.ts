@@ -2,7 +2,12 @@ import { BadRequestException } from '@nestjs/common';
 import { SorcererActionsHandler } from './sorcerer-actions.handler';
 
 describe('SorcererActionsHandler', () => {
-  const stateResponse = { classResources: [] };
+  const stateResponse = {
+    classResources: [
+      { slug: 'innate-sorcery', remaining: 2, max: 2, used: 0, name: 'Feitiçaria Inata' },
+      { slug: 'sorceryPoints', remaining: 5, max: 5, used: 0, name: 'Pontos de Feitiçaria' },
+    ],
+  };
   const access = { findAccessibleOrFail: jest.fn() };
   const state = {
     useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
@@ -12,10 +17,14 @@ describe('SorcererActionsHandler', () => {
     buildResponse: jest.fn().mockResolvedValue(stateResponse),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
+  const dataSource = {
+    query: jest.fn().mockResolvedValue([{ value_id: 'subtle-spell' }]),
+  };
   const handler = new SorcererActionsHandler(
     access as never,
     state as never,
     domain as never,
+    dataSource as never,
   );
   const sorcerer = {
     id: 'sorc-1',
@@ -39,6 +48,7 @@ describe('SorcererActionsHandler', () => {
     state.recoverClassResource.mockResolvedValue(stateResponse);
     state.buildResponse.mockResolvedValue(stateResponse);
     domain.getProficiencyBonus.mockResolvedValue(3);
+    dataSource.query.mockResolvedValue([{ value_id: 'subtle-spell' }]);
   });
 
   it('converts level 1 spell slot to 1 sorcery point', async () => {
@@ -75,9 +85,10 @@ describe('SorcererActionsHandler', () => {
     expect(result.note).toContain('gastou 2 Pontos de Feitiçaria');
   });
 
-  it('spends sorcery points for Metamagic', async () => {
+  it('spends sorcery points for a known Metamagic option', async () => {
     const result = await handler.useTableAction('user-1', 'sorc-1', {
-      actionSlug: 'use-metamagic-1',
+      actionSlug: 'use-metamagic',
+      metamagicSlug: 'subtle-spell',
     });
 
     expect(state.useClassResource).toHaveBeenCalledWith(
@@ -85,7 +96,20 @@ describe('SorcererActionsHandler', () => {
       'sorceryPoints',
       1,
     );
-    expect(result.actionName).toContain('Metamágica');
+    expect(result.actionName).toBe('Magia Sutil');
+  });
+
+  it('activates Feitiçaria Inata spending one use', async () => {
+    const result = await handler.useTableAction('user-1', 'sorc-1', {
+      actionSlug: 'innate-sorcery',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'sorc-1' }),
+      'innate-sorcery',
+      1,
+    );
+    expect(result.actionName).toBe('Feitiçaria Inata');
   });
 
   it('rejects Sorcerer actions for non-sorcerer characters', async () => {

@@ -13,7 +13,7 @@ import type {
   UseBattleMasterManeuverDto,
   UseDungeonPrecautionDto,
   UsePsiWarriorActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import type { FighterActionDeps } from './fighter/fighter-action-deps';
 import {
   useActionSurgeAction,

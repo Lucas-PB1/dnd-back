@@ -13,6 +13,7 @@ import { CharacterClassExpertiseValidator } from './character-class-expertise.va
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
 import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
 import { CharacterEldritchInvocationsValidator } from './character-eldritch-invocations.validator';
+import { CharacterMetamagicValidator } from './character-metamagic.validator';
 import { CharacterFeatOptionValueValidator } from '../feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from '../feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from '../feats/character-feats.validator';
@@ -40,6 +41,7 @@ function buildClassOptionsValidator(
     new CharacterEldritchInvocationsValidator(dataSource, {
       find: jest.fn(),
     } as never),
+    new CharacterMetamagicValidator(dataSource),
   );
 }
 

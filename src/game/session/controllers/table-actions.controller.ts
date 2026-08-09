@@ -40,7 +40,7 @@ import {
   UseSorcererTableActionDto,
   UseWarlockTableActionDto,
   UseWizardTableActionDto,
-} from '../dto/character-state.dto';
+} from '../dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()

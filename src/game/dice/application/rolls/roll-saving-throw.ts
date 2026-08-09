@@ -1,11 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { isFighterClass } from '@game/combat/domain/fighter-features';
+import { isFighterClass } from '@game/combat/domain/fighter';
 import {
   auraOfProtectionBonus,
   hasAuraOfProtection,
   isPaladinClass,
-} from '@game/combat/domain/paladin-features';
+} from '@game/combat/domain/paladin';
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { collectSaveProficiencyAbilities } from '@game/sheet/domain/stats/character-check-bonuses';
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';

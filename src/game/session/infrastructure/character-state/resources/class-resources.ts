@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
-import { ClassResourceStateDto } from '@game/session/dto/character-state.dto';
+import { ClassResourceStateDto } from '@game/session/dto';
 import {
   resolveClassResourceMaxima,
   type ClassResourceMax,
@@ -13,7 +13,7 @@ import {
   psiEnergyDieLabel,
   superiorityDieFaces,
   superiorityDieLabel,
-} from '@game/combat/domain/fighter-features';
+} from '@game/combat/domain/fighter';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 
 export type ClassResourceDbRow = {

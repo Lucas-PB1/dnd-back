@@ -1,7 +1,7 @@
 import {
   CharacterStateResponseDto,
   UseManeuverResponseDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { reloadAllFirearms, loadReloadCapacity } from './firearm-ops';
 import type { MartialSessionDeps, PlayerCharacter } from './martial-deps';
 import {
@@ -9,7 +9,7 @@ import {
   applyReloadFirearm,
   applyUseManeuver,
   listAvailableManeuvers,
-} from '../mutations';
+} from '..';
 
 export async function useManeuverOp(
   deps: MartialSessionDeps,

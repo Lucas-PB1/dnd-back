@@ -4,7 +4,7 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { PhbCondition } from '../phb-condition.entity';
 import { PlayerCharacterState } from '../player-character-state.entity';
-import { applyPatchState, applyUseClassResource } from './mutations';
+import { applyPatchState, applyUseClassResource } from './index';
 import { resolveClassResources } from './resources/class-resources';
 
 jest.mock('./resources/class-resources', () => ({

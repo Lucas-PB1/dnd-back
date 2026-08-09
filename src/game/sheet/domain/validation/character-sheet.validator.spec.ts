@@ -16,6 +16,7 @@ import { CharacterClassExpertiseValidator } from './class-options/character-clas
 import { CharacterWeaponMasteryValidator } from './class-options/character-weapon-mastery.validator';
 import { CharacterSpellMasteryValidator } from './class-options/character-spell-mastery.validator';
 import { CharacterEldritchInvocationsValidator } from './class-options/character-eldritch-invocations.validator';
+import { CharacterMetamagicValidator } from './class-options/character-metamagic.validator';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterCreateRequirementsValidator } from './character-create-requirements.validator';
 import { EMPTY_SHEET_DATA, type CharacterSheetInput } from '../character-sheet.types';
@@ -121,6 +122,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         dataSource as unknown as DataSource,
         { find: jest.fn() } as never,
       ),
+      new CharacterMetamagicValidator(dataSource as unknown as DataSource),
     );
 
     const featsValidator = {

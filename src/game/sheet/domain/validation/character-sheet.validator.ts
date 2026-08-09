@@ -70,6 +70,10 @@ export class CharacterSheetValidator {
         input.classOptions,
         input.characterSpells,
       );
+      await this.classOptionsValidator.validateMetamagicOptions(
+        ctx,
+        input.classOptions,
+      );
     }
 
     const characterFeats = input.characterFeats ?? [];

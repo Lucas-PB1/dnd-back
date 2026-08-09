@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
-import { isRangerClass } from '@game/combat/domain/ranger-features';
+import { isRangerClass } from '@game/combat/domain/ranger';
 import {
   FighterTableActionResponseDto,
   UseRangerTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { RangerActionDeps } from './ranger/ranger-action-deps';

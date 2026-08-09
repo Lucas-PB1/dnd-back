@@ -1,4 +1,8 @@
-import { sorceryPointCostToCreateSlot } from '@game/combat/domain/sorcerer-features';
+import { BadRequestException } from '@nestjs/common';
+import {
+  sorceryPointCostToCreateSlot,
+  type MetamagicCatalogRow,
+} from '@game/combat/domain/sorcerer';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type {
   PlayerCharacter,
@@ -49,20 +53,25 @@ export async function convertPointsToSlot(
   };
 }
 
-export async function useMetamagic(
+export async function useMetamagicOption(
   deps: SorcererActionDeps,
   character: PlayerCharacter,
-  pointsCost: number,
-  label: string,
+  option: MetamagicCatalogRow,
+  knownSlugs: readonly string[],
 ): Promise<SorcererTableActionResult> {
-  assertCharacterLevel(character, 2, 'Feiticeiro', 'Metamágica');
-  const state = await spendPoints(deps, character, pointsCost);
+  assertCharacterLevel(character, 2, 'Feiticeiro', 'Metamagia');
+  if (knownSlugs.length > 0 && !knownSlugs.includes(option.slug)) {
+    throw new BadRequestException(
+      `Você não conhece a Metamagia '${option.name}'`,
+    );
+  }
 
+  const state = await spendPoints(deps, character, option.cost);
   return {
     state,
-    actionName: label,
+    actionName: option.name,
     resourceSpent: true,
-    total: pointsCost,
-    note: `Metamágica: gastou ${pointsCost} Ponto(s) de Feitiçaria para modificar a conjuração da magia.`,
+    total: option.cost,
+    note: `Metamagia — ${option.name} (${option.cost} pt): ${option.description}`,
   };
 }

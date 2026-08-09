@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+﻿import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
 import { PhbItem } from '@entities/phb-item.entity';
@@ -14,15 +14,15 @@ import {
   computeWeaponAttacks,
   type EquippedWeaponPiece,
   type WeaponAttack,
-} from '../domain/weapon-attack';
-import { parseWeaponCharm } from '../domain/weapon-charm';
+} from '../domain/weapon-attacks';
+import { parseWeaponCharm } from '../domain/equipment';
 
 export type WeaponAttackResolveContext = {
   classSlug: string;
   proficiencyBonus: number;
   featSlugs?: readonly string[];
   fightingStyleSlugs?: readonly string[];
-  sizeCategory?: import('../domain/creature-size').SizeCategory;
+  sizeCategory?: import('../domain/equipment').SizeCategory;
   hasShield?: boolean;
   masteredWeaponSlugs?: readonly string[];
   itemAttackBonus?: number;

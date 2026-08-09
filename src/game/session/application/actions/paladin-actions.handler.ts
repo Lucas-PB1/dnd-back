@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isPaladinClass } from '@game/combat/domain/paladin-features';
+import { isPaladinClass } from '@game/combat/domain/paladin';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   FighterTableActionResponseDto,
   UsePaladinTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { PaladinActionDeps } from './paladin/paladin-action-deps';
 import {

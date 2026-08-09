@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+﻿import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
@@ -7,7 +7,7 @@ import type { AbilityScores } from '@game/shared/infrastructure/player-character
 import {
   computeArmorClassFromEquipment,
   type EquippedArmorPiece,
-} from '../domain/armor-class';
+} from '../domain/equipment';
 import { CombatCatalogService } from '../infrastructure/combat-catalog.service';
 
 export type ArmorClassResolveInput = {

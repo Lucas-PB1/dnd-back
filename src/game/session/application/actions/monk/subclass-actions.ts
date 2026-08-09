@@ -1,4 +1,4 @@
-import { martialArtsDie } from '@game/combat/domain/monk-features';
+import { martialArtsDie } from '@game/combat/domain/monk';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {

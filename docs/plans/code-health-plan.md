@@ -15,7 +15,7 @@ Standards: [`../architecture/code-standards.md`](../architecture/code-standards.
 | `fighter-actions.handler` | facade ≤100 + `actions/fighter/{core,battle-master,psi-warrior,dungeoneer}` |
 | Handlers HARD (bard, druid, monk, ranger, sorcerer) | facades + `actions/<classe>/` ≤150 |
 | Softs paladin / warlock | mesmo padrão (`actions/paladin/`, `actions/warlock/`) |
-| `combat/domain` em subpastas | pastas por classe + `equipment/` + `weapon-attacks/` + `catalog/`; barrels na raiz |
+| `combat/domain` em subpastas | pastas por classe + `equipment/` + `weapon-attacks/` + `catalog/`; barrel = `index.ts` em cada pasta |
 
 ### Ainda soft / próximo
 

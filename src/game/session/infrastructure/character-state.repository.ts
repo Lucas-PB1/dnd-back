@@ -16,7 +16,7 @@ import {
   PatchCharacterStateDto,
   RestResponseDto,
   UseClassResourceResponseDto,
-} from '../dto/character-state.dto';
+} from '../dto';
 import { PhbCondition } from './phb-condition.entity';
 import { PlayerCharacterState } from './player-character-state.entity';
 import { buildCharacterStateResponse } from './character-state/core/build-response';

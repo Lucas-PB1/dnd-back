@@ -13,7 +13,7 @@ import {
   CharacterStateResponseDto,
   PatchCharacterStateDto,
   RestResponseDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import type { BuildResponse } from '../core/mutation-types';

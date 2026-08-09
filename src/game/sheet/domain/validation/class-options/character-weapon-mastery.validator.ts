@@ -8,7 +8,7 @@ import {
   parseWeaponMasteryEligibility,
   type ClassProgressionMasteryRow,
 } from './class-weapon-mastery-slots';
-import { isProficient, type EquippedWeaponPiece } from '@game/combat/domain/weapon-attack';
+import { isProficient, type EquippedWeaponPiece } from '@game/combat/domain/weapon-attacks';
 
 @Injectable()
 export class CharacterWeaponMasteryValidator {

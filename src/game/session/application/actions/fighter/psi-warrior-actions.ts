@@ -1,12 +1,12 @@
 import { BadRequestException } from '@nestjs/common';
-import { resolvePsiWarriorTableAction } from '@game/combat/domain/fighter-table-actions';
-import { psiEnergyDieFaces } from '@game/combat/domain/fighter-features';
+import { resolvePsiWarriorTableAction } from '@game/combat/domain/fighter';
+import { psiEnergyDieFaces } from '@game/combat/domain/fighter';
 import { rollDie } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type {
   FighterTableActionResponseDto,
   UsePsiWarriorActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export async function usePsiWarriorAction(

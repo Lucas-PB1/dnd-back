@@ -3,7 +3,7 @@ import {
   collectEldritchFreeCastSpellSlugs,
   readEldritchInvocationPicks,
   type ClassOptionLike,
-} from '@game/combat/domain/warlock-features';
+} from '@game/combat/domain/warlock';
 import { loadEldritchInvocationEffectCatalog } from '@game/combat/application/load-eldritch-invocation-effect-catalog';
 
 /**

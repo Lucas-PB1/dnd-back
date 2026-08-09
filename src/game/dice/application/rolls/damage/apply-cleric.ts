@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import {
   divineStrikeDice,
   isClericClass,
-} from '@game/combat/domain/cleric-features';
+} from '@game/combat/domain/cleric';
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 

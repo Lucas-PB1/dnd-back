@@ -30,7 +30,7 @@ import {
   UseBattleMasterManeuverDto,
   UseDungeonPrecautionDto,
   UsePsiWarriorActionDto,
-} from '../dto/character-state.dto';
+} from '../dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()

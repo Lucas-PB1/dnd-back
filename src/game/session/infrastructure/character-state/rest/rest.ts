@@ -4,7 +4,7 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
-import { RestResponseDto } from '@game/session/dto/character-state.dto';
+import { RestResponseDto } from '@game/session/dto';
 import {
   restoreHitDiceOnLongRest,
   spendHitDice,
@@ -15,7 +15,7 @@ import {
 } from '@game/session/domain/class-resources';
 import { resetDeathSaves } from '@game/session/domain/death-saves';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
-import { isWarlockClass } from '@game/combat/domain/warlock-features';
+import { isWarlockClass } from '@game/combat/domain/warlock';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 

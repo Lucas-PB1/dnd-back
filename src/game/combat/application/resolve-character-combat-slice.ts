@@ -1,4 +1,4 @@
-import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
+﻿import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
 import { aggregateClassCombatContributions } from '../domain/aggregate-class-combat';
 import { featCombatNotes } from '../domain/feat/combat-notes';
 import { itemCombatNotes } from '../domain/item/combat-notes';
@@ -10,7 +10,7 @@ import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-chara
 import { Repository } from 'typeorm';
 import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
-import type { SizeCategory } from '../domain/creature-size';
+import type { SizeCategory } from '../domain/equipment';
 
 export type MappedCombatSlice = {
   armorClass: number;
@@ -23,13 +23,13 @@ export type MappedCombatSlice = {
   speedPenaltyMeters: Awaited<
     ReturnType<ResolveEquipmentCompliance['resolve']>
   >['speedPenaltyMeters'];
-  /** Bônus de deslocamento de itens ativos (metros). */
+  /** BÃ´nus de deslocamento de itens ativos (metros). */
   itemSpeedBonusMeters: number;
-  /** Bônus de PV máximos de itens ativos. */
+  /** BÃ´nus de PV mÃ¡ximos de itens ativos. */
   itemHpBonus: number;
-  /** Notas de combate de classe + espécie + talento + item (Passivas). */
+  /** Notas de combate de classe + espÃ©cie + talento + item (Passivas). */
   classCombatNotes: string[];
-  /** Ataques por Ação Atacar (Guerreiro Extra Attack). */
+  /** Ataques por AÃ§Ã£o Atacar (Guerreiro Extra Attack). */
   attacksPerAction: number;
 };
 

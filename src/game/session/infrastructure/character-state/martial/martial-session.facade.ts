@@ -5,7 +5,7 @@ import type {
   SecondWindResponseDto,
   TacticalMindResponseDto,
   UseManeuverResponseDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import type { MartialSessionDeps } from './martial-deps';
 import {
   fireChamberOp,
@@ -20,7 +20,7 @@ import {
   useManeuverOp,
   useSecondWindOp,
   useTacticalMindOp,
-} from './martial-session-ops';
+} from './index';
 
 /** Agrupa ops marciais; deps via factory (buildResponse do repository). */
 export class MartialSessionFacade {

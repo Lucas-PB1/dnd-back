@@ -1,7 +1,7 @@
 import {
   cunningStrikeSaveDc,
   soulknifePsiDiceSchedule,
-} from '../rogue-features';
+} from '../rogue';
 import {
   findSubclassTableAction,
   type SubclassTableAction,

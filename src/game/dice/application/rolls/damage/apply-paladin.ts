@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { divineSmiteDice } from '@game/combat/domain/paladin-features';
+import { divineSmiteDice } from '@game/combat/domain/paladin';
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 

@@ -7,7 +7,7 @@ import { applyResourceSpend } from '@game/session/domain/class-resources';
 import {
   CharacterStateResponseDto,
   UseClassResourceResponseDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import type { BuildResponse } from '../core/mutation-types';
 import { resolveClassResources } from './class-resources';

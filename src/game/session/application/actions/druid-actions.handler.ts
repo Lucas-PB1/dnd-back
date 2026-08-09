@@ -1,10 +1,10 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isDruidClass } from '@game/combat/domain/druid-features';
+import { isDruidClass } from '@game/combat/domain/druid';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
   UseDruidTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { DruidActionDeps } from './druid/druid-action-deps';

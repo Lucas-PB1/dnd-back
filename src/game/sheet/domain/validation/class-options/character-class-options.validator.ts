@@ -14,6 +14,7 @@ import { CharacterClassExpertiseValidator } from './character-class-expertise.va
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
 import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
 import { CharacterEldritchInvocationsValidator } from './character-eldritch-invocations.validator';
+import { CharacterMetamagicValidator } from './character-metamagic.validator';
 import type { ClassProgressionMasteryRow } from './class-weapon-mastery-slots';
 
 /** Facade estável: fighting styles + delegação para validators por concern. */
@@ -28,6 +29,7 @@ export class CharacterClassOptionsValidator {
     private readonly weaponMasteryValidator: CharacterWeaponMasteryValidator,
     private readonly spellMasteryValidator: CharacterSpellMasteryValidator,
     private readonly eldritchInvocationsValidator: CharacterEldritchInvocationsValidator,
+    private readonly metamagicValidator: CharacterMetamagicValidator,
   ) {}
 
   async validateFightingStyleSelections(
@@ -158,6 +160,13 @@ export class CharacterClassOptionsValidator {
       options,
       characterSpells,
     );
+  }
+
+  async validateMetamagicOptions(
+    ctx: CharacterSheetContext,
+    options: NonNullable<CharacterSheetInput['classOptions']>,
+  ): Promise<void> {
+    return this.metamagicValidator.validateMetamagicOptions(ctx, options);
   }
 
   async loadWeaponMasteryProgression(

@@ -14,6 +14,7 @@ import { ItemsModule } from './items/items.module';
 import { ReferenceModule } from './reference/reference.module';
 import { CombatMechanicalModule } from './combat-mechanical/combat-mechanical.module';
 import { EldritchInvocationsModule } from './eldritch-invocations/eldritch-invocations.module';
+import { MetamagicsModule } from './metamagics/metamagics.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { EldritchInvocationsModule } from './eldritch-invocations/eldritch-invoc
     ReferenceModule,
     CombatMechanicalModule,
     EldritchInvocationsModule,
+    MetamagicsModule,
   ],
   exports: [CatalogLookupModule],
 })

@@ -5,7 +5,7 @@ import {
   isSpellMasteryOptionKey,
   isWizardClass,
   spellMasteryRequiredLevelForKey,
-} from '@game/combat/domain/wizard-features';
+} from '@game/combat/domain/wizard';
 import {
   CharacterSheetContext,
   CharacterSheetInput,

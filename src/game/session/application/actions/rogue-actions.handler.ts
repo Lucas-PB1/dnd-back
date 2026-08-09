@@ -4,7 +4,7 @@ import { CharacterDomainService } from '@game/sheet/domain/core/character-domain
 import {
   FighterTableActionResponseDto,
   UseRogueTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { assertCharacterSubclass } from '../core/table-action-guards';

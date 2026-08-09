@@ -1,5 +1,5 @@
 import { FIXTURE_CUNNING_STRIKE_EFFECTS } from './__fixtures__/mechanical-catalog.fixtures';
-import { psiEnergyDiceSchedule } from './fighter-features';
+import { psiEnergyDiceSchedule } from './fighter';
 import {
   availableCunningStrikeEffects,
   cunningStrikeSaveDc,
@@ -9,7 +9,7 @@ import {
   sneakAttackDiceExpression,
   soulknifePsiDiceSchedule,
   validateCunningStrikeSelection,
-} from './rogue-features';
+} from './rogue';
 
 describe('rogue features', () => {
   it('increases Sneak Attack by one die every odd Rogue level', () => {

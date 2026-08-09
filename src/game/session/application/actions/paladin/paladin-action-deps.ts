@@ -4,7 +4,7 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import type {
   FighterTableActionResponseDto,
   UsePaladinTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 

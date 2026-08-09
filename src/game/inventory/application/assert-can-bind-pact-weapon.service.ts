@@ -6,7 +6,7 @@ import {
   isMeleeWeaponFromPropertyIds,
   propertyIdsFromItemProperties,
 } from '@game/combat/domain/warlock/pact-blade';
-import { isWarlockClass } from '@game/combat/domain/warlock-features';
+import { isWarlockClass } from '@game/combat/domain/warlock';
 import { PlayerCharacterOption } from '@game/sheet/infrastructure/player-sheet.entities';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 

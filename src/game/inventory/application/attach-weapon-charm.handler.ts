@@ -7,7 +7,7 @@ import { Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbItem } from '@entities/phb-item.entity';
 import { PhbWeapon } from '@entities/phb-weapon.entity';
-import { parseWeaponCharm } from '@game/combat/domain/weapon-charm';
+import { parseWeaponCharm } from '@game/combat/domain/equipment';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   AttachWeaponCharmDto,

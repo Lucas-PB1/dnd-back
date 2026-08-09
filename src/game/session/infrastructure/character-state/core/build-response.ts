@@ -7,7 +7,7 @@ import {
   isWarlockClass,
   readEldritchInvocationPicks,
   resolveEldritchInvocationFreeCast,
-} from '@game/combat/domain/warlock-features';
+} from '@game/combat/domain/warlock';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
@@ -20,7 +20,7 @@ import {
   freeCastsRemaining,
   resolveGrantedSpellCastEconomy,
 } from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
-import { CharacterStateResponseDto } from '@game/session/dto/character-state.dto';
+import { CharacterStateResponseDto } from '@game/session/dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { buildClassResourceState } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';

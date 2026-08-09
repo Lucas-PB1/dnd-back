@@ -176,21 +176,21 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 - [x] Conhecimento: Palavras Cortantes (Reação gasta 1 Inspiração para subtrair do ataque/teste/dano inimigo)
 - [x] Glamour: Desempenho Cativante (gasta 1 Inspiração para conceder PV temporários = 2×dado a aliados e movimento por Reação)
 - [x] Dança: Dança Virtuosa (Ataque Desarmado com CAR e dado de Inspiração) e Resposta Ágil (Reação para CA + movimento de aliado)
-- [x] Bravura: Inspiração de Combate (usar Inspiração no dano ou na CA)
+- [x] Bravura: Inspiração em Combate (usar Inspiração no dano ou na CA)
 - [x] UI: `combat-bard-panel`, botões de ação e estado ao vivo dos usos/dados
 
 ---
 
 ### Feiticeiro (`sorcerer`) — `[x]`
 
-- [x] Base: Pontos de Feitiçaria (máx = nível a partir do nv 2), Inato Feiticeiro (Ira Feiticeira: +1 CD de magia e Vantagem nos truques), Restauração Feiticeira (recupera Pontos no Descanso Curto nv 5+)
+- [x] Base: Pontos de Feitiçaria (máx = nível a partir do nv 2), Feitiçaria Inata (+1 CD de magia e Vantagem nos ataques de magia de Feiticeiro), Restauração Feiticeira (recupera Pontos no Descanso Curto nv 5+)
 - [x] Fonte de Magia: conversão bidirecional entre Slots de Magia ↔ Pontos de Feitiçaria (1:1 slot->pontos, custos 2/3/5/6/7 pontos->slot)
-- [x] Metamágica: botões de gasto de 1, 2 ou 3 Pontos de Feitiçaria para modificadores de conjuração
+- [x] Metamagia: catálogo `phb_metamagic` (SSOT), picks em `classOptions`, gasto por opção conhecida (custos 1–2 SP; sem botão genérico de 3 pts)
 - [x] Linhagem Dracônica: Resiliência Dracônica (CA 10 + DES + CAR; +1 PV/nível) e Afinidade Elemental
-- [x] Magia Selvagem: Maré de Caos (Vantagem em 1 rolagem; recarrega com Surto de Magia Selvagem)
-- [x] Mapeamento Mecânico: Baluarte da Ordem (gasta 1-5 Pontos para dados de proteção a aliados)
+- [x] Feitiçaria Selvagem: Marés do Caos (Vantagem em 1 Teste de D20; recarrega com Surto de Magia Selvagem)
+- [x] Feitiçaria Mecânica: Bastião da Lei (gasta 1-5 Pontos para dados de proteção a aliados)
 - [x] Feitiçaria Aberrante: Feitiçaria Psiónica e Mente Psiónica
-- [x] UI: `combat-sorcerer-panel`, seletores de conversão de slots e botões de metamágica/subclasse
+- [x] UI: `combat-sorcerer-panel`, seletores de conversão de slots e botões de metamagia/subclasse
 
 ---
 

@@ -2,7 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import {
   bestialAspectBenefits,
   clampBestialAspectLevel,
-} from '@game/combat/domain/beastborne';
+} from '@game/combat/domain/ranger';
 import { rollDie } from '@game/dice/domain/dice';
 import {
   assertCharacterLevel,

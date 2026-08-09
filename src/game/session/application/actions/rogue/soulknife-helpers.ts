@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
-import { psiEnergyDieFaces } from '@game/combat/domain/fighter-features';
+import { psiEnergyDieFaces } from '@game/combat/domain/fighter';
 import {
   resolveSoulknifeTableAction,
   type SoulknifeActionSlug,
-} from '@game/combat/domain/rogue-table-actions';
+} from '@game/combat/domain/rogue';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter, RogueActionDeps } from './rogue-action-deps';
 

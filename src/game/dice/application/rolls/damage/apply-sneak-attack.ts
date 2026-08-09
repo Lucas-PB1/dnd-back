@@ -3,7 +3,7 @@ import {
   cunningStrikeSaveDc,
   sneakAttackDieFaces,
   validateCunningStrikeSelection,
-} from '@game/combat/domain/rogue-features';
+} from '@game/combat/domain/rogue';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import {

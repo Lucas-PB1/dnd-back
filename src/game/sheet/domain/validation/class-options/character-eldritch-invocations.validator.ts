@@ -11,8 +11,8 @@ import {
   validateEldritchInvocationPicks,
   type EldritchCantripEligibility,
   type EldritchInvocationCatalogRow,
-} from '@game/combat/domain/warlock-features';
-import { isWarlockClass } from '@game/combat/domain/warlock-features';
+} from '@game/combat/domain/warlock';
+import { isWarlockClass } from '@game/combat/domain/warlock';
 import { CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
 import {
   CharacterSheetContext,

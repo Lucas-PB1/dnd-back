@@ -1,17 +1,22 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isSorcererClass } from '@game/combat/domain/sorcerer-features';
+import { DataSource } from 'typeorm';
+import {
+  isSorcererClass,
+  METAMAGIC_OPTION_KEY,
+  type MetamagicCatalogRow,
+} from '@game/combat/domain/sorcerer';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
   UseSorcererTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { SorcererActionDeps } from './sorcerer/sorcerer-action-deps';
 import {
   convertPointsToSlot,
   convertSlotToPoints,
-  useMetamagic,
+  useMetamagicOption,
 } from './sorcerer/font-of-magic-actions';
 import {
   resolveBastionOfLaw,
@@ -26,10 +31,55 @@ export class SorcererActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
+    private readonly dataSource: DataSource,
   ) {}
 
   private deps(): SorcererActionDeps {
     return { state: this.state, domain: this.domain };
+  }
+
+  private async loadKnownMetamagicSlugs(
+    characterId: string,
+  ): Promise<string[]> {
+    const rows = await this.dataSource.query<{ value_id: string }[]>(
+      `SELECT value_id
+       FROM rpg.player_character_option
+       WHERE character_id = $1
+         AND scope = 'class'
+         AND option_key = $2
+       ORDER BY instance_index ASC`,
+      [characterId, METAMAGIC_OPTION_KEY],
+    );
+    return rows.map((row) => row.value_id);
+  }
+
+  private async loadMetamagicOption(
+    slug: string,
+  ): Promise<MetamagicCatalogRow | null> {
+    const rows = await this.dataSource.query<
+      {
+        slug: string;
+        name: string;
+        description: string;
+        cost: number;
+        stacks_with_other: boolean;
+      }[]
+    >(
+      `SELECT slug, name, description, cost, stacks_with_other
+       FROM rpg.phb_metamagic
+       WHERE slug = $1
+       LIMIT 1`,
+      [slug],
+    );
+    const row = rows[0];
+    if (!row) return null;
+    return {
+      slug: row.slug,
+      name: row.name,
+      description: row.description,
+      cost: Number(row.cost),
+      stacksWithOther: row.stacks_with_other,
+    };
   }
 
   async useTableAction(
@@ -70,12 +120,19 @@ export class SorcererActionsHandler {
       case 'convert-points-to-slot-5':
         return convertPointsToSlot(deps, character, 5);
 
-      case 'use-metamagic-1':
-        return useMetamagic(deps, character, 1, 'Metamágica (1 ponto)');
-      case 'use-metamagic-2':
-        return useMetamagic(deps, character, 2, 'Metamágica (2 pontos)');
-      case 'use-metamagic-3':
-        return useMetamagic(deps, character, 3, 'Metamágica (3 pontos)');
+      case 'use-metamagic': {
+        if (!dto.metamagicSlug) {
+          throw new BadRequestException('metamagicSlug é obrigatório');
+        }
+        const option = await this.loadMetamagicOption(dto.metamagicSlug);
+        if (!option) {
+          throw new BadRequestException(
+            `Metamagia desconhecida: '${dto.metamagicSlug}'`,
+          );
+        }
+        const known = await this.loadKnownMetamagicSlugs(character.id);
+        return useMetamagicOption(deps, character, option, known);
+      }
 
       case 'innate-sorcery':
         return resolveInnateSorcery(deps, character);

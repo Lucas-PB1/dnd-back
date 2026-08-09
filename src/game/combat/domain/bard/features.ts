@@ -104,7 +104,7 @@ function addBardSubclassNotes(
 
   if (subclassSlug === 'valor') {
     notes.push(
-      'Colégio da Bravura: Inspiração de Combate (aliados podem usar Inspiração na CA ou rolar no dano). Proficiência em Armas Marciais e Escudos.',
+      'Colégio da Bravura: Inspiração em Combate (aliados podem usar Inspiração na CA ou rolar no dano). Proficiência em Armas Marciais e Escudos.',
     );
     if (level >= 6) {
       notes.push(

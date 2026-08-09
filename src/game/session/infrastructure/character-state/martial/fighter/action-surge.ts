@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { isFighterClass } from '@game/combat/domain/fighter-features';
+import { isFighterClass } from '@game/combat/domain/fighter';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { applyResourceSpend } from '@game/session/domain/class-resources';
-import { ActionSurgeResponseDto } from '@game/session/dto/character-state.dto';
+import { ActionSurgeResponseDto } from '@game/session/dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from '@game/session/infrastructure/character-state/resources/class-resources';
 import type { BuildResponse } from '@game/session/infrastructure/character-state/core/mutation-types';

@@ -61,9 +61,7 @@ const SORCERER_TABLE_ACTION_SLUGS = [
   'convert-points-to-slot-3',
   'convert-points-to-slot-4',
   'convert-points-to-slot-5',
-  'use-metamagic-1',
-  'use-metamagic-2',
-  'use-metamagic-3',
+  'use-metamagic',
   'innate-sorcery',
   'sorcerous-restoration',
   'tides-of-chaos',
@@ -74,6 +72,14 @@ export class UseSorcererTableActionDto {
   @ApiProperty({ enum: SORCERER_TABLE_ACTION_SLUGS })
   @IsIn(SORCERER_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof SORCERER_TABLE_ACTION_SLUGS)[number];
+
+  @ApiPropertyOptional({
+    example: 'subtle-spell',
+    description: 'Slug da opção de Metamagia (use-metamagic)',
+  })
+  @IsOptional()
+  @IsString()
+  metamagicSlug?: string;
 }
 
 const WARLOCK_TABLE_ACTION_SLUGS = [

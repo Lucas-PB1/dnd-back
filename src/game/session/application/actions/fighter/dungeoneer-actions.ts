@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
-import { findDungeoneerPrecautionSpell } from '@game/combat/domain/fighter-table-actions';
+import { findDungeoneerPrecautionSpell } from '@game/combat/domain/fighter';
 import type {
   FighterTableActionResponseDto,
   UseDungeonPrecautionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export async function useDungeonPrecautionAction(

@@ -1,4 +1,4 @@
-import { moonWildShapeTempHp } from '@game/combat/domain/druid-features';
+import { moonWildShapeTempHp } from '@game/combat/domain/druid';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {

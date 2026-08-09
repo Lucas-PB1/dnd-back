@@ -91,6 +91,30 @@ VALUES
     NULL,
     (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'),
     2
+  ),
+  (
+    'sorceryPoints',
+    'Pontos de Feitiçaria',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'),
+    2
+  ),
+  (
+    'innate-sorcery',
+    'Feitiçaria Inata',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'),
+    1
+  ),
+  (
+    'sorcerous-restoration',
+    'Restauração Feiticeira',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'),
+    5
   )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -295,4 +319,40 @@ SELECT 'class'::rpg.resource_owner_kind, c.id, rd.id, 2, 'fixed'::rpg.resource_m
 FROM rpg.phb_class c
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'magical-cunning' AND rd.class_id = c.id
 WHERE c.slug = 'warlock'
+ON CONFLICT DO NOTHING;
+
+-- Feiticeiro — Pontos de Feitiçaria (máx = nível, a partir do nv 2)
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT 'class'::rpg.resource_owner_kind, c.id, rd.id, 2, 'level'::rpg.resource_max_formula, NULL,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'sorceryPoints' AND rd.class_id = c.id
+WHERE c.slug = 'sorcerer'
+ON CONFLICT DO NOTHING;
+
+-- Feiticeiro — Feitiçaria Inata (2×/DL)
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT 'class'::rpg.resource_owner_kind, c.id, rd.id, 1, 'fixed'::rpg.resource_max_formula, 2,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'innate-sorcery' AND rd.class_id = c.id
+WHERE c.slug = 'sorcerer'
+ON CONFLICT DO NOTHING;
+
+-- Feiticeiro — Restauração Feiticeira (1×/DL)
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT 'class'::rpg.resource_owner_kind, c.id, rd.id, 5, 'fixed'::rpg.resource_max_formula, 1,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'sorcerous-restoration' AND rd.class_id = c.id
+WHERE c.slug = 'sorcerer'
 ON CONFLICT DO NOTHING;

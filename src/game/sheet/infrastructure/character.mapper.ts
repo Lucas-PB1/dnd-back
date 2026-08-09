@@ -24,7 +24,7 @@ import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-gra
 import {
   resolveSizeCategory,
   sizeCategoryFromChoices,
-} from '@game/combat/domain/creature-size';
+} from '@game/combat/domain/equipment';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
 import { resolveCharacterCombatSlice } from '@game/combat/application/resolve-character-combat-slice';

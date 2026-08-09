@@ -1,4 +1,4 @@
-import { martialArtsDie } from '@game/combat/domain/monk-features';
+import { martialArtsDie } from '@game/combat/domain/monk';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type {
   MonkActionDeps,

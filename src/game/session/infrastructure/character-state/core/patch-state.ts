@@ -6,7 +6,7 @@ import { clampDeathSaveCount } from '@game/session/domain/death-saves';
 import {
   CharacterStateResponseDto,
   PatchCharacterStateDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { assertValidConditions } from './conditions';

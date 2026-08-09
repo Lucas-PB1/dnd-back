@@ -2,13 +2,13 @@ import {
   ActionSurgeResponseDto,
   SecondWindResponseDto,
   TacticalMindResponseDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import type { MartialSessionDeps, PlayerCharacter } from './martial-deps';
 import {
   applyActionSurge,
   applySecondWind,
   applyTacticalMind,
-} from '../mutations';
+} from '..';
 
 export async function useSecondWindOp(
   deps: MartialSessionDeps,

@@ -1,12 +1,12 @@
-import { Injectable } from '@nestjs/common';
+﻿import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbHpBonusSource } from '@entities/views/v-phb-hp-bonus-source.entity';
 import { VPhbUnarmoredDefense } from '@entities/views/v-phb-unarmored-defense.entity';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
-import type { UnarmoredDefenseRow } from '../domain/armor-class';
+import type { UnarmoredDefenseRow } from '../domain/equipment';
 
-/** Shape aligned with sheet `HitPointsBonusRow` (structural; avoids combat→sheet). */
+/** Shape aligned with sheet `HitPointsBonusRow` (structural; avoids combatâ†’sheet). */
 type HitPointsBonusRow = {
   label: string;
   flat?: number;
@@ -25,7 +25,7 @@ type UnarmoredDefenseInput = {
   subclassSlug?: string | null;
 };
 
-/** Leitura do catálogo estruturado de bônus de PV e Defesa sem Armadura. */
+/** Leitura do catÃ¡logo estruturado de bÃ´nus de PV e Defesa sem Armadura. */
 @Injectable()
 export class CombatCatalogService {
   constructor(
@@ -35,7 +35,7 @@ export class CombatCatalogService {
     private readonly unarmoredRepo: Repository<VPhbUnarmoredDefense>,
   ) {}
 
-  /** Bônus permanentes de PV aplicáveis à espécie/subclasse/talentos dados. */
+  /** BÃ´nus permanentes de PV aplicÃ¡veis Ã  espÃ©cie/subclasse/talentos dados. */
   async loadHitPointsBonusSources(
     input: HitPointsSourceInput,
   ): Promise<HitPointsBonusRow[]> {

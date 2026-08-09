@@ -1,37 +1,37 @@
 import {
   barbarianCombatNotes,
   fastMovementBonusMeters,
-} from './barbarian-rage';
+} from './barbarian';
 import {
   attacksPerAction as fighterAttacksPerAction,
   fighterCombatNotes,
   isFighterClass,
-} from './fighter-features';
-import { rogueCombatNotes } from './rogue-features';
+} from './fighter';
+import { rogueCombatNotes } from './rogue';
 import {
   isMonkClass,
   monkAttacksPerAction,
   monkCombatNotes,
   unarmoredMovementBonusMeters,
-} from './monk-features';
+} from './monk';
 import {
   isPaladinClass,
   paladinAttacksPerAction,
   paladinCombatNotes,
-} from './paladin-features';
+} from './paladin';
 import {
   isRangerClass,
   rangerAttacksPerAction,
   rangerCombatNotes,
   rangerSpeedBonusMeters,
-} from './ranger-features';
-import { clericCombatNotes } from './cleric-features';
-import { bardCombatNotes } from './bard-features';
-import { sorcererCombatNotes } from './sorcerer-features';
-import { warlockCombatNotes } from './warlock-features';
-import { druidCombatNotes } from './druid-features';
-import { wizardCombatNotes } from './wizard-features';
-import { gunslingerCombatNotes } from './gunslinger-features';
+} from './ranger';
+import { clericCombatNotes } from './cleric';
+import { bardCombatNotes } from './bard';
+import { sorcererCombatNotes } from './sorcerer';
+import { warlockCombatNotes } from './warlock';
+import { druidCombatNotes } from './druid';
+import { wizardCombatNotes } from './wizard';
+import { gunslingerCombatNotes } from './gunslinger';
 
 export type ClassCombatContribution = {
   notes: string[];
@@ -47,7 +47,7 @@ type ClassCombatInput = {
 
 /**
  * Agrega contribuições explícitas de cada classe.
- * Cada *-features.ts permanece dono das regras; este módulo só combina.
+ * Cada pasta de classe (`fighter/`, `rogue/`, …) permanece dona das regras via `index.ts`; este módulo só combina.
  */
 export function aggregateClassCombatContributions(
   input: ClassCombatInput,

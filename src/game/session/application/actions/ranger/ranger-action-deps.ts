@@ -3,7 +3,7 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import {
   FighterTableActionResponseDto,
   UseRangerTableActionDto,
-} from '@game/session/dto/character-state.dto';
+} from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export const FAVORED_ENEMY_SLUG = 'favoredEnemy';
