@@ -3,9 +3,10 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **não feitos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-07-29 — mecânica por classe em [`class-mechanics.md`](class-mechanics.md)
+**Última revisão:** 2026-08-09
 
-Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mechanics.md)** (Pistoleiro, Bárbaro, Guerreiro, Ladino, Monge, Paladino, Guardião e Clérigo feitos; 5 PHB pendentes).
+Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · **`rpg-class-mesa-front`** (dnd-front).  
+Dívidas de alinhamento: [`class-mesa-dividas.md`](class-mesa-dividas.md).
 
 ---
 
@@ -15,9 +16,10 @@ Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mecha
 |------|--------|
 | Ficha / inventário / sessão / dados | Pronto |
 | Campanha + encontro (API + UI) | Pronto |
-| HP / CA / ataque / feat options / granted spells | Pronto (magias concedidas fechado) |
-| Deploy front / E2E | Pronto (API campaign e2e + Cypress smoke) |
+| HP / CA / ataque / feat options / granted spells | Pronto |
+| Deploy front / E2E | Pronto |
 | UI ataques (aba Ações) + erros HTTP PT | Pronto |
+| Classes PHB + Valdas (critério mesa) | Pronto — seguir skills mesa; gaps em dívidas |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
 ---
@@ -33,6 +35,7 @@ Mecânica jogável por classe/subclasse → **[`class-mechanics.md`](class-mecha
 ### Referência (feito)
 
 - Catálogo mecânico de combate no banco — [`combat-mechanical-catalog.md`](combat-mechanical-catalog.md)
+- Padrão classe mesa — skills `rpg-class-mesa-api` / `rpg-class-mesa-front`
 
 ### Adiado — polish / ops
 
@@ -40,13 +43,13 @@ Não priorizar. Só retomar com pedido explícito.
 
 - [ ] Mísseis Mágicos: escolhas Escudo/Giga no cast (modal) — [`mm-cast-options-modal.md`](mm-cast-options-modal.md)
 
-### Referência — modelo de dados (proposta)
+### Referência — modelo de dados
 
-Consolidação de schema pós-auditoria (`analise`):  
+Consolidação de schema:  
 [`adr-schema-consolidation.md`](../architecture/adr-schema-consolidation.md) ·  
 [`schema-equivalence-map.md`](../architecture/schema-equivalence-map.md) ·  
 [`schema-consolidation-plan.md`](schema-consolidation-plan.md)  
-Status: **Concluído** (A→G + criticals + docs) — schema `rpg` ~81 tabelas base; ver ADR DoD.
+Status: **Concluído** — ver ADR DoD.
 
 - [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)
 - [ ] Iniciativa PC: fontes além de DEX + Alerta — **traços** e **condições** (não magias)
@@ -67,13 +70,6 @@ Não priorizar. Só retomar com pedido explícito.
 - [ ] Estilos e talentos condicionais: GWF, TWF/Dual, Charger, Polearm Master, Ataque Direcionado, Savage/Piercer/Crusher/Slasher, Sharpshooter
 - [ ] Maestria de arma como sistema de combate (além da escolha na ficha)
 - [ ] Vantagem / desvantagem / cobertura no cálculo de ataque (mesa)
-
----
-
-## Ordem sugerida
-
-1. ~~UI de ataques / erros PT~~ — feito  
-2. ~~Resto~~ — adiado (só sob pedido)  
 
 ---
 

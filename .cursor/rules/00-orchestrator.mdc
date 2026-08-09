@@ -17,12 +17,13 @@ Genérico: shared-ai (`nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`,
 | Tabelas, FKs, views PHB | `rpg-catalog-model` |
 | Queries prontas nas views | `phb-query-views` |
 | `db:setup` / migrate / seed | `postgres-apply-catalog` |
+| Classe mesa (table-action / economy) | `rpg-class-mesa-api` |
 | Arquivos grandes / dívida | `audit-code-health` |
 | Split SRP de módulo TS | `split-large-module` |
 
 ## Rules locais
 
-`architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `docs-hub`
+`architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `docs-hub` · `class-mesa`
 
 ## Ops rápidos
 

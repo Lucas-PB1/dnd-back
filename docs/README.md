@@ -7,7 +7,7 @@
 | Pasta | Conteúdo |
 |-------|----------|
 | [`architecture/`](architecture/) | Arquitetura, infra, modelo de dados, Game BC, padrões de código |
-| [`plans/`](plans/) | Backlog geral + acompanhamento de mecânica por classe |
+| [`plans/`](plans/) | Backlog, dívidas classe mesa, catálogo de combate |
 | [`deploy/`](deploy/) | Deploy Vercel + Supabase |
 
 ## Arquitetura
@@ -30,10 +30,12 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |-----|----------|
 | [`plans/backlog.md`](plans/backlog.md) | Checklist geral — o que ainda falta (API + front + gaps) |
-| [`plans/class-mechanics.md`](plans/class-mechanics.md) | Mecânica por classe/subclasse (feito / parcial / pendente) |
+| [`plans/class-mesa-dividas.md`](plans/class-mesa-dividas.md) | Dívidas de alinhamento ao padrão classe mesa (a avaliar) |
 | [`plans/code-health-plan.md`](plans/code-health-plan.md) | Inventário de arquivos gordos / hardcodes / próximos PRs |
-| [`plans/combat-mechanical-catalog.md`](plans/combat-mechanical-catalog.md) | Migrar catálogos mecânicos de combate (TS → tabelas tipadas) |
+| [`plans/combat-mechanical-catalog.md`](plans/combat-mechanical-catalog.md) | Catálogos mecânicos de combate (tabelas tipadas) |
 | [`plans/schema-consolidation-plan.md`](plans/schema-consolidation-plan.md) | Plano de lotes A→G (meta ~45–60 tabelas) |
+
+Padrão de classe jogável (mesa): skills Cursor **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`** (não há mais `class-mechanics.md`).
 
 ## Ops
 
@@ -41,5 +43,5 @@ Contrato REST: Swagger em `/api`.
 
 ## Cursor (agente)
 
-Rules locais: `architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `docs-hub`  
-Skills locais: `dnd-glossary-pt` · `rpg-catalog-model` · `phb-query-views` · `postgres-apply-catalog` · `audit-code-health` · `split-large-module`
+Rules locais: `architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `docs-hub` · `class-mesa`  
+Skills locais: `dnd-glossary-pt` · `rpg-catalog-model` · `phb-query-views` · `postgres-apply-catalog` · `rpg-class-mesa-api` · `audit-code-health` · `split-large-module`
