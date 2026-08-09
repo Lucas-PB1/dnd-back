@@ -71,6 +71,7 @@ const SORCERER_TABLE_ACTION_SLUGS = [
   'bend-luck',
   'heroic-soul',
   'mystical-maneuver',
+  'warp-implosion',
 ] as const;
 
 export class UseSorcererTableActionDto {

@@ -189,7 +189,7 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 - [x] Linhagem Dracônica: Resiliência Dracônica (CA 10 + DES + CAR; +1 PV/nível), Afinidade Elemental e Asas de Dragão L14 (painel/economia)
 - [x] Feitiçaria Selvagem: Marés do Caos (gasta recurso) e Distorcer a Sorte L6 (1 SP)
 - [x] Feitiçaria Mecânica: Restaurar Equilíbrio (usos CAR) e Bastião da Lei (1–5 SP → N d8)
-- [x] Feitiçaria Aberrante: Feitiçaria Psiónica e Mente Psiónica (notas de mesa)
+- [x] Feitiçaria Aberrante: Feitiçaria Psiónica e Mente Psiónica (notas) + Implosão L18 (recurso/economia/painel)
 - [x] Feitiçaria Heróica: Alma Heróica / Manobra Mística (painel + handler SP)
 - [x] UI: `combat-sorcerer-panel`, seletores de conversão de slots e botões de metamagia/subclasse
 

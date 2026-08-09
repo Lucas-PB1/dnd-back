@@ -226,3 +226,21 @@ export async function resolveMysticalManeuver(
     note: 'Manobra Mística: gastou 2 Pontos de Feitiçaria (Ação Bônus após acertar) → +2d8 no dano e escolha Cegar, Ruinoso (−3 CA) ou Ferimento (sangramento).',
   };
 }
+
+export const WARP_IMPLOSION_RESOURCE = 'warp-implosion';
+
+export async function resolveWarpImplosion(
+  deps: SorcererActionDeps,
+  character: PlayerCharacter,
+): Promise<SorcererTableActionResult> {
+  assertCharacterSubclass(character, 'aberrant', 'Feitiçaria Aberrante');
+  assertCharacterLevel(character, 18, 'Feiticeiro', 'Implosão de Distorção');
+  await deps.state.useClassResource(character, WARP_IMPLOSION_RESOURCE, 1);
+
+  return {
+    state: await deps.state.buildResponse(character),
+    actionName: 'Implosão de Distorção',
+    resourceSpent: true,
+    note: 'Implosão de Distorção: ação Usar Magia — teleporte e dano espacial conforme a ficha (1×/Descanso Longo).',
+  };
+}

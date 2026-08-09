@@ -91,6 +91,11 @@ function addSorcererSubclassNotes(
     notes.push(
       'Feitiçaria Aberrante: Mente Psiónica (telepatia a 9 m) e Feitiçaria Psiónica (gaste Pontos de Feitiçaria em vez de slots para magias aberrantes sem componentes V, S ou M).',
     );
+    if (level >= 18) {
+      notes.push(
+        'Implosão de Distorção (L18): ação Usar Magia — teleporte e dano espacial (1×/DL); gaste na economia/painel.',
+      );
+    }
   }
 
   if (subclassSlug === 'clockwork') {

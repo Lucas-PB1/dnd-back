@@ -120,6 +120,22 @@ INSERT INTO rpg.phb_class_economy_action (
   'mystical-maneuver',
   2,
   62
+),
+(
+  'sorcerer-warp-implosion',
+  (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'),
+  (SELECT id FROM rpg.phb_subclass WHERE slug = 'aberrant'),
+  'Implosão de Distorção',
+  'action'::rpg.action_economy_bucket,
+  18,
+  'warp-implosion',
+  NULL,
+  true,
+  'Usar Magia: teleporte + dano espacial (1×/DL)',
+  'Como ação Usar Magia, libere a anomalia (teleporte e dano — aplique na mesa). 1 uso; recupera no Descanso Longo.',
+  'warp-implosion',
+  NULL,
+  64
 )
 ON CONFLICT (action_id) DO UPDATE SET
   class_id = EXCLUDED.class_id,
@@ -252,6 +268,19 @@ INSERT INTO rpg.phb_class_panel_action (
   'subclass'::rpg.panel_action_section,
   false,
   12
+),
+(
+  'sorcerer|aberrant|warp-implosion',
+  (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'),
+  (SELECT id FROM rpg.phb_subclass WHERE slug = 'aberrant'),
+  'warp-implosion',
+  'Implosão de Distorção',
+  'Usar Magia: teleporte + dano espacial (1×/DL)',
+  18,
+  'warp-implosion',
+  'subclass'::rpg.panel_action_section,
+  false,
+  13
 )
 ON CONFLICT (panel_key) DO UPDATE SET
   class_id = EXCLUDED.class_id,

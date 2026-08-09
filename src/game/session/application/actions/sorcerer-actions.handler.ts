@@ -28,6 +28,7 @@ import {
   resolveRestoreBalance,
   resolveSorcerousRestoration,
   resolveTidesOfChaos,
+  resolveWarpImplosion,
 } from './sorcerer/feature-actions';
 
 @Injectable()
@@ -157,6 +158,8 @@ export class SorcererActionsHandler {
         return resolveHeroicSoul(deps, character);
       case 'mystical-maneuver':
         return resolveMysticalManeuver(deps, character);
+      case 'warp-implosion':
+        return resolveWarpImplosion(deps, character);
     }
   }
 }
