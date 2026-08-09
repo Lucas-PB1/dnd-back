@@ -1,4 +1,5 @@
--- Talentos: definições de recurso + grants (owner_kind = feat).
+-- Talentos PHB: definições de recurso + grants (owner_kind = feat).
+-- Talentos Valdas → valdas/V019_phb_feat_resource_grant.sql
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, feat_id, min_level)
 VALUES
@@ -7,13 +8,7 @@ VALUES
   ('mageSlayerGuard', 'Resguardo Mental', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'mage-slayer'), 1),
   ('boonVitalityDice', 'Recuperar Vitalidade', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'), 1),
   ('boonDeathWard', 'Até a Morte', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-recovery'), 1),
-  ('boonFate', 'Aprimorar Destino', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-fate'), 1),
-  ('ironHeroIntervention', 'Intervenção Heroica', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'iron-hero'), 1),
-  ('familiarDistraction', 'Distração do Familiar', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'familiar-keeper'), 1),
-  ('showmanTaunt', 'Provocação', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'showman'), 1),
-  ('spellbladeChannel', 'Ataque Canalizado', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'spellblade'), 1),
-  ('magitechRecharge', 'Recarga de Item Mágico', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'magitechnician'), 1),
-  ('metabolisticFuel', 'Combustível Vital', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'metabolistic-magic'), 1)
+  ('boonFate', 'Aprimorar Destino', 'feat'::rpg.resource_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'boon-of-fate'), 1)
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
   scope = EXCLUDED.scope,
@@ -38,11 +33,7 @@ SELECT
 FROM rpg.phb_feat f
 JOIN rpg.phb_resource_definition rd ON rd.feat_id = f.id
 WHERE (f.slug, rd.slug) IN (
-  ('lucky', 'luckPoints'),
-  ('iron-hero', 'ironHeroIntervention'),
-  ('familiar-keeper', 'familiarDistraction'),
-  ('showman', 'showmanTaunt'),
-  ('spellblade', 'spellbladeChannel')
+  ('lucky', 'luckPoints')
 )
 ON CONFLICT DO NOTHING;
 
@@ -86,9 +77,7 @@ FROM (VALUES
   ('ritual-caster', 'ritualQuick', 'fixed', 1, false),
   ('boon-of-recovery', 'boonDeathWard', 'fixed', 1, false),
   ('boon-of-recovery', 'boonVitalityDice', 'fixed', 10, false),
-  ('boon-of-fate', 'boonFate', 'fixed', 1, true),
-  ('magitechnician', 'magitechRecharge', 'fixed', 1, false),
-  ('metabolistic-magic', 'metabolisticFuel', 'fixed', 1, false)
+  ('boon-of-fate', 'boonFate', 'fixed', 1, true)
 ) AS v(feat_slug, resource_slug, max_formula, fixed_max, recover_short)
 JOIN rpg.phb_feat f ON f.slug = v.feat_slug
 JOIN rpg.phb_resource_definition rd

@@ -1,19 +1,4 @@
--- Espécie: def Mandrágora + grants para todos os recursos de espécie (S046).
-
-INSERT INTO rpg.phb_resource_definition (slug, name, scope, species_id, class_id, min_level)
-VALUES (
-  'entanglingVines',
-  'Vinhas Enredantes',
-  'species'::rpg.resource_scope,
-  (SELECT id FROM rpg.phb_species WHERE slug = 'mandrake'),
-  NULL,
-  1
-)
-ON CONFLICT (slug) DO UPDATE SET
-  name = EXCLUDED.name,
-  scope = EXCLUDED.scope,
-  species_id = EXCLUDED.species_id,
-  min_level = EXCLUDED.min_level;
+-- Grants de recursos de espécie PHB (defs em S046). Mandrake → valdas/V018.
 
 -- PB / LR
 INSERT INTO rpg.phb_resource_grant (
@@ -35,8 +20,7 @@ JOIN rpg.phb_resource_definition rd ON rd.species_id = sp.id
 WHERE (sp.slug, rd.slug) IN (
   ('dwarf', 'stonecunning'),
   ('dragonborn', 'breathWeapon'),
-  ('goliath', 'giantAncestry'),
-  ('mandrake', 'entanglingVines')
+  ('goliath', 'giantAncestry')
 )
 ON CONFLICT DO NOTHING;
 
