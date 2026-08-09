@@ -70,7 +70,7 @@ describe('BardActionsHandler', () => {
       1,
     );
     expect(result.expression).toBe('1d8');
-    expect(result.note).toContain('Inspiração Bárdica (1d8)');
+    expect(result.note).toContain('Inspiração de Bardo (1d8)');
   });
 
   it('resolves Cutting Words for Lore Bard', async () => {
@@ -79,7 +79,7 @@ describe('BardActionsHandler', () => {
     });
 
     expect(result.expression).toBe('1d8');
-    expect(result.note).toContain('Palavras Cortantes');
+    expect(result.note).toContain('Palavras de Interrupção');
   });
 
   it('resolves Enthralling Performance for Glamour Bard', async () => {

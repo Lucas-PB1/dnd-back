@@ -5,7 +5,9 @@ description: Glossário PHB 2024 PT-BR e convenções de slug da API. Use quando
 
 # Glossário PT-BR + slugs
 
-Ver [`terms-pt-br.md`](references/terms-pt-br.md)
+SSOT de nomes: `docs/Glossário de Termos Traduzidos V. 5.1.26.xlsx` (Livro do X),  
+exceto override de mesa documentado em `terms-pt-br.md` (ex.: Ranger → **Patrulheiro**).  
+Resumo operacional: [`terms-pt-br.md`](references/terms-pt-br.md)
 
 ## Slugs no banco / URL
 
@@ -15,10 +17,10 @@ Ver [`terms-pt-br.md`](references/terms-pt-br.md)
 | Magia (muitas) | **PT** kebab | `/spells/bola-de-fogo` |
 | Atributo | **PT** sem acento | `forca`, `destreza` |
 
-- JSON: `name` / textos user-facing em **PT**
+- JSON: `name` / textos user-facing em **PT** (glossário)
 - Código TypeScript: identificadores em **inglês**
 - Rotas de equipamento: `/armor`, `/weapons`, `/tools`, `/items` — **não** `/equipment/armor`
 
 ## Uso
 
-Termos oficiais PHB 2024 PT-BR nos textos. Para roteamento técnico → `nestjs-bounded-context` → `slug-routing.md`.
+Em conflito entre convenção antiga do repo e o glossário, **reescreva para o glossário**. Para roteamento técnico → `nestjs-bounded-context` → `slug-routing.md`.

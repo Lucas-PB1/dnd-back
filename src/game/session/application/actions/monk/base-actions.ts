@@ -42,13 +42,13 @@ export async function resolveStepOfTheWind(
   deps: MonkActionDeps,
   character: PlayerCharacter,
 ): Promise<MonkTableActionResult> {
-  assertCharacterLevel(character, 2, 'Monk', 'Passo do Vento');
+  assertCharacterLevel(character, 2, 'Monk', 'Passos do Vento');
   const state = await spendFocus(deps, character, 1);
   return {
     state,
-    actionName: 'Passo do Vento',
+    actionName: 'Passos do Vento',
     resourceSpent: true,
-    note: 'Passo do Vento: gaste 1 Foco para usar Disparar e Desengajar como Ação Bônus; distância de salto dobra neste turno.',
+    note: 'Passos do Vento: gaste 1 Foco para usar Disparar e Desengajar como Ação Bônus; distância de salto dobra neste turno.',
   };
 }
 

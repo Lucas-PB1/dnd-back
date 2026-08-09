@@ -18,16 +18,16 @@ export async function resolveGrantInspiration(
   deps: BardActionDeps,
   character: PlayerCharacter,
 ): Promise<BardTableActionResult> {
-  assertCharacterLevel(character, 1, 'Bardo', 'Inspiração Bárdica');
+  assertCharacterLevel(character, 1, 'Bardo', 'Inspiração de Bardo');
   const die = bardicInspirationDie(character.level);
   const state = await spendInspiration(deps, character);
 
   return {
     state,
-    actionName: 'Inspiração Bárdica',
+    actionName: 'Inspiração de Bardo',
     expression: `1${die}`,
     resourceSpent: true,
-    note: `Inspiração Bárdica (1${die}): concedida como Ação Bônus a uma criatura voluntária a até 18 m por 1 hora. Ela pode adicionar o dado a um teste de habilidade, ataque ou salvaguarda.`,
+    note: `Inspiração de Bardo (1${die}): concedida como Ação Bônus a uma criatura voluntária a até 18 m por 1 hora. Ela pode adicionar o dado a um teste de habilidade, ataque ou salvaguarda.`,
   };
 }
 
@@ -36,18 +36,18 @@ export async function resolveCuttingWords(
   character: PlayerCharacter,
 ): Promise<BardTableActionResult> {
   assertCharacterSubclass(character, 'lore', 'Colégio do Conhecimento');
-  assertCharacterLevel(character, 3, 'Bardo', 'Palavras Cortantes');
+  assertCharacterLevel(character, 3, 'Bardo', 'Palavras de Interrupção');
   const die = bardicInspirationDie(character.level);
   const result = rollDamageParts(`1${die}`, 0);
   const state = await spendInspiration(deps, character);
 
   return {
     state,
-    actionName: 'Palavras Cortantes',
+    actionName: 'Palavras de Interrupção',
     expression: result.expression,
     total: result.total,
     resourceSpent: true,
-    note: `Palavras Cortantes: Reação gasta 1 Inspiração para subtrair ${result.total} (1${die}) de uma jogada de ataque, teste de habilidade ou dano de um inimigo visível a até 18 m.`,
+    note: `Palavras de Interrupção: Reação gasta 1 Inspiração para subtrair ${result.total} (1${die}) de uma jogada de ataque, teste de habilidade ou dano de um inimigo visível a até 18 m.`,
   };
 }
 
@@ -65,7 +65,7 @@ export async function resolveCombatInspiration(
     actionName: 'Inspiração em Combate',
     expression: `1${die}`,
     resourceSpent: true,
-    note: `Inspiração em Combate (1${die}): a criatura com Inspiração Bárdica pode rolar o dado e somar à rolagem de dano da arma ou usar a Reação para somar o dado à sua CA contra um ataque.`,
+    note: `Inspiração em Combate (1${die}): a criatura com Inspiração de Bardo pode rolar o dado e somar à rolagem de dano da arma ou usar a Reação para somar o dado à sua CA contra um ataque.`,
   };
 }
 
@@ -84,6 +84,6 @@ export async function resolveSuperiorInspiration(
     state,
     actionName: 'Inspiração Superior',
     resourceSpent: false,
-    note: 'Inspiração Superior: ao rolar iniciativa sem usos de Inspiração Bárdica restantes, recupere 1 uso.',
+    note: 'Inspiração Superior: ao rolar iniciativa sem usos de Inspiração de Bardo restantes, recupere 1 uso.',
   };
 }

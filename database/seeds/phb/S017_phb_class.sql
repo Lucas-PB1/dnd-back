@@ -47,7 +47,7 @@ geralmente, esse dom aparece de forma inesperada.
 Aqueles que possuem esse poder logo percebem que
 não conseguem ficar ociosos. A magia de um Feiticeiro
 anseia por ser utilizada.', 'Carisma', NULL, 'd6', 6, 4, 1, TRUE, 3, 'Feitiçaria', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'full')),
-  ('ranger', 'Guardião', 'Explorador marcial das fronteiras selvagens', 'Una proezas marciais, magia da natureza e habilidades de sobrevivência.', NULL, 'Destreza e Sabedoria', 'and', 'd10', 10, 6, 1, TRUE, 3, 'Arquétipo', 3, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half')),
+  ('ranger', 'Patrulheiro', 'Explorador marcial das fronteiras selvagens', 'Una proezas marciais, magia da natureza e habilidades de sobrevivência.', NULL, 'Destreza e Sabedoria', 'and', 'd10', 10, 6, 1, TRUE, 3, 'Arquétipo', 3, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half')),
   ('fighter', 'Guerreiro', 'Mestre de armas e armaduras', 'Domine todas as armas e armaduras.', NULL, 'Força ou Destreza', 'or', 'd10', 10, 6, 1, TRUE, 3, 'Arquétipo', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
   ('rogue', 'Ladino', 'Especialista furtivo e mortal', 'Desfira Ataques Furtivos mortais enquanto evita danos através da furtividade.', NULL, 'Destreza', NULL, 'd8', 8, 5, 1, TRUE, 3, 'Arquétipo', 4, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), NULL),
   ('wizard', 'Mago', 'Estudioso da magia arcana', 'Estude magia arcana e domine magias para todos os propósitos.', 'Magos são reconhecidos por seu estudo
@@ -87,3 +87,9 @@ luta cósmica contra a aniquilação. Guerreiros são raros
 nos exércitos de um mundo, e ainda menos indivíduos
 podem reivindicar a vocação de um Paladino. Ao receber esse chamado, essas pessoas abençoadas abandonam suas ocupações anteriores para empunhar armas
 e magia.', 'Força e Carisma', 'and', 'd10', 10, 6, 1, TRUE, 3, 'Juramento', 2, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch3:55-182'), (SELECT id FROM rpg.phb_spell_slot_pattern WHERE slug = 'half'));
+
+-- Override de mesa: Ranger = Patrulheiro (glossário Livro do X traz Guardião)
+UPDATE rpg.phb_class
+SET name = 'Patrulheiro'
+WHERE slug = 'ranger'
+  AND name IS DISTINCT FROM 'Patrulheiro';

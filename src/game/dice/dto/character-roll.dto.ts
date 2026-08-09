@@ -81,7 +81,7 @@ export class RollAttackDto {
   @ApiPropertyOptional({
     default: false,
     description:
-      'Caçador Preciso (Guardião nv.17): vantagem contra a criatura marcada',
+      'Caçador Preciso (Patrulheiro nv.17): vantagem contra a criatura marcada',
   })
   @IsOptional()
   @IsBoolean()
@@ -262,7 +262,7 @@ export class RollDamageDto {
   @ApiPropertyOptional({
     default: false,
     description:
-      'Marca do Predador (Guardião): adiciona o dado da marca (1d6 ou 1d10 no nv.20)',
+      'Marca do Predador (Patrulheiro): adiciona o dado da marca (1d6 ou 1d10 no nv.20)',
   })
   @IsOptional()
   @IsBoolean()

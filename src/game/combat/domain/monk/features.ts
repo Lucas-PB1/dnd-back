@@ -93,7 +93,7 @@ export function monkCombatNotes(input: {
 function addBaseMonkNotes(notes: string[], level: number): void {
   if (level >= 2) {
     notes.push(
-      'Foco do Monge: Torrente de Golpes, Defesa Paciente e Passo do Vento (Pontos de Foco)',
+      'Foco do Monge: Torrente de Golpes, Defesa Paciente e Passos do Vento (Pontos de Foco)',
     );
     notes.push(
       `Movimento sem Armadura: +${unarmoredMovementBonusMeters({

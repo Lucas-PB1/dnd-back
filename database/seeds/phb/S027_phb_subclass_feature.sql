@@ -212,12 +212,18 @@ Golpes Ágeis. Quando você gastar um uso da sua Inspiração de Bardo como part
 ou Reação, pode realizar um Ataque Desarmado como
 parte dessa ação, Ação Bônus ou Reação.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'dance'), 6, 'Gingado Coordenado', 'Ao jogar Iniciativa, você pode gastar um uso da sua
+INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'dance'), 6, 'Movimento Coordenado', 'Ao jogar Iniciativa, você pode gastar um uso da sua
 Inspiração de Bardo se não estiver com a condição
 Incapacitado. Ao realizar isso, jogue o dado da sua
 Inspiração de Bardo; você e cada aliado a até 9 metros
 de você que puder ver ou ouvir você adquire um bônus
 na Iniciativa igual ao número jogado.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
+
+-- Glossário Livro do X: Coordinated Movement → Movimento Coordenado (remove rótulo antigo)
+DELETE FROM rpg.phb_subclass_feature
+WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'dance')
+  AND level = 6
+  AND name = 'Gingado Coordenado';
 
 INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'dance'), 6, 'Movimento Inspirador', 'Quando um inimigo à sua vista encerra o turno dele a
 até 1,5 metro de você, você pode executar uma Reação
@@ -1300,12 +1306,12 @@ INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VAL
 a magia traumatizante tirada dos cantos sombrios de
 Faéria. Uma vez por turno, ao atingir uma criatura com
 uma arma, você pode causar 1d4 pontos de dano Psíquico adicional ao alvo. O dano adicional aumenta para
-1d6 quando você atinge o nível 11 de Guardião.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
+1d6 quando você atinge o nível 11 de Patrulheiro.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 3, 'Magias do Andarilho Feérico', 'Ao atingir um nível de Guardião detalhado na tabela
+INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'fey-wanderer'), 3, 'Magias do Andarilho Feérico', 'Ao atingir um nível de Patrulheiro detalhado na tabela
 Magias do Andarilho Feérico, você tem a lista de magias sempre preparadas.
 Magias do Andarilho Feérico
-Nível de Guardião Magias
+Nível de Patrulheiro Magias
 3 Enfeitiçar Pessoa
 5 Passo Nebuloso
 9 Convocar Feérico
@@ -1464,11 +1470,11 @@ Impulso do Emboscador. No início do seu primeiro
 turno de cada combate, seu Deslocamento aumenta em
 3 metros até o final deste turno.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), 3, 'Magias do Vigilante das Sombras', 'Ao atingir um nível de Guardião detalhado na tabela
+INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'gloom-stalker'), 3, 'Magias do Vigilante das Sombras', 'Ao atingir um nível de Patrulheiro detalhado na tabela
 Magias do Vigilante das Sombras, você tem a lista de
 magias sempre preparadas.
 Magias do Vigilante das Sombras
-Nível de Guardião Magias
+Nível de Patrulheiro Magias
 3 Disfarçar-se
 5 Corda Extradimensional
 9 Medo
@@ -2171,7 +2177,7 @@ Golpes Potencializados. Uma vez em cada um dos
 seus turnos, você pode causar dano adicional a um
 alvo igual a uma jogada de seu dado de Artes Marciais
 ao atingi-lo com um Ataque Desarmado. O dano adicional é do mesmo tipo causado por esse ataque.
-Passo Destrutivo. Ao usar seu Passo do Vento, seu
+Passo Destrutivo. Ao usar seus Passos do Vento, seu
 Deslocamento aumenta em 6 metros até o final do turno.
 Pela duração, qualquer criatura à sua escolha sofre
 dano igual a uma jogada de seu dado de Artes Marciais
@@ -2204,7 +2210,7 @@ vezes igual ao seu modificador de Sabedoria (mínimo
 de uma vez) e restaura todos os usos gastos ao completar um Descanso Longo.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'open-hand'), 11, 'Passo Veloz', 'Ao executar uma Ação Bônus diferente de Passo do
-Vento, você também pode usar Passo do Vento imediatamente após essa Ação Bônus.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
+Vento, você também pode usar Passos do Vento imediatamente após essa Ação Bônus.') ON CONFLICT (subclass_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_subclass_feature (subclass_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_subclass WHERE slug = 'open-hand'), 17, 'Palma Vibrante', 'Você obtém a habilidade de infligir vibrações letais no
 corpo de outra pessoa. Ao acertar uma criatura com

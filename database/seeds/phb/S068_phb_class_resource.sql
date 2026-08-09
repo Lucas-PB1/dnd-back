@@ -273,7 +273,7 @@ JOIN rpg.phb_resource_definition rd ON rd.slug = 'layOnHands' AND rd.class_id = 
 WHERE c.slug = 'paladin'
 ON CONFLICT DO NOTHING;
 
--- Guardião — Inimigo Favorito (usos gratuitos de Marca do Predador = PB)
+-- Patrulheiro — Inimigo Favorito (usos gratuitos de Marca do Predador = PB)
 INSERT INTO rpg.phb_resource_grant (
   owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
@@ -285,7 +285,7 @@ JOIN rpg.phb_resource_definition rd ON rd.slug = 'favoredEnemy' AND rd.class_id 
 WHERE c.slug = 'ranger'
 ON CONFLICT DO NOTHING;
 
--- Guardião — Incansável (usos = mod. Sabedoria)
+-- Patrulheiro — Incansável (usos = mod. Sabedoria)
 INSERT INTO rpg.phb_resource_grant (
   owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long
@@ -297,7 +297,7 @@ JOIN rpg.phb_resource_definition rd ON rd.slug = 'tireless' AND rd.class_id = c.
 WHERE c.slug = 'ranger'
 ON CONFLICT DO NOTHING;
 
--- Guardião — Véu da Natureza (usos = mod. Sabedoria)
+-- Patrulheiro — Véu da Natureza (usos = mod. Sabedoria)
 INSERT INTO rpg.phb_resource_grant (
   owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
   recover_one_on_short, recover_all_on_short, recover_all_on_long

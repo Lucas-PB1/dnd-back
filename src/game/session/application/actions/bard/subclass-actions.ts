@@ -44,18 +44,14 @@ export async function resolveAgileResponse(
   character: PlayerCharacter,
 ): Promise<BardTableActionResult> {
   assertCharacterSubclass(character, 'dance', 'Colégio da Dança');
-  assertCharacterLevel(character, 6, 'Bardo', 'Resposta Ágil');
-  const die = bardicInspirationDie(character.level);
-  const result = rollDamageParts(`1${die}`, 0);
+  assertCharacterLevel(character, 6, 'Bardo', 'Movimento Inspirador');
   const state = await spendInspiration(deps, character);
 
   return {
     state,
-    actionName: 'Resposta Ágil',
-    expression: result.expression,
-    total: result.total,
+    actionName: 'Movimento Inspirador',
     resourceSpent: true,
-    note: `Resposta Ágil: Reação gasta 1 Inspiração para conceder +${result.total} (1${die}) na CA a você ou aliado a 18 m atacado. Se o ataque errar, o alvo pode mover metade do Deslocamento sem provocar Opport. Attacks.`,
+    note: 'Movimento Inspirador: Reação quando um inimigo à sua vista encerra o turno a até 1,5 m. Gaste 1 Inspiração de Bardo para se mover até metade do Deslocamento; um aliado a até 9 m também pode (própria Reação). Nenhum movimento provoca Ataques de Oportunidade.',
   };
 }
 

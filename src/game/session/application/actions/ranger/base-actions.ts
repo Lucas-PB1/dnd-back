@@ -33,7 +33,7 @@ export async function resolveTireless(
   deps: RangerActionDeps,
   character: PlayerCharacter,
 ): Promise<RangerTableActionResult> {
-  assertCharacterLevel(character, 10, 'Ranger', 'Incansável');
+  assertCharacterLevel(character, 10, 'Patrulheiro', 'Incansável');
   const wisdom = Math.max(1, abilityModifier(character.abilityScores.sabedoria));
   const heal = rollDamageParts('1d8', wisdom);
   const state = (
@@ -54,7 +54,7 @@ export async function resolveNaturesVeil(
   deps: RangerActionDeps,
   character: PlayerCharacter,
 ): Promise<RangerTableActionResult> {
-  assertCharacterLevel(character, 14, 'Ranger', 'Véu da Natureza');
+  assertCharacterLevel(character, 14, 'Patrulheiro', 'Véu da Natureza');
   const state = (
     await deps.state.useClassResource(character, NATURES_VEIL_SLUG, 1)
   ).state;

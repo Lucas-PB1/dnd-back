@@ -290,7 +290,7 @@ describe('Classes queries', () => {
   it('findFeaturesByClassSlug filters by maxLevel', async () => {
     featuresRepo.find.mockResolvedValue([
       sampleFeature,
-      { ...sampleFeature, featureLevel: 5, featureName: 'Inspiração Bárdica' },
+      { ...sampleFeature, featureLevel: 5, featureName: 'Inspiração de Bardo' },
     ]);
     const result = await findClassFeatures.execute('bard', 1, 50, 1);
     expect(result.data).toHaveLength(1);

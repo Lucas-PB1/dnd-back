@@ -14,4 +14,4 @@ VALUES
   ('two-weapon-fighting', 'Combate com Duas Armas', 'Quando você realiza um ataque adicional como resultado de usar uma arma com a propriedade Leve, você pode adicionar seu modificador de atributo ao dano desse ataque, se já não estiver adicionando-o ao dano.'),
   ('unarmed-fighting', 'Combate Desarmado', 'Quando você atinge com seu Ataque Desarmado e causa dano, pode causar dano Contundente igual a 1d6 mais seu modificador de Força em vez do dano normal de um Ataque Desarmado. Se você não estiver segurando nenhuma arma ou Escudo quando realizar a jogada de ataque, o d6 se torna um d8. No início de cada um dos seus turnos, você pode causar 1d4 pontos de dano Contundente a uma criatura Imobilizada por você.'),
   ('blessed-warrior', 'Combatente Abençoado', 'Estilo de luta alternativo do Paladino (PHB 2024).'),
-  ('druidic-warrior', 'Combatente Druídico', 'Estilo de luta alternativo do Guardião (PHB 2024).');
+  ('druidic-warrior', 'Combatente Druídico', 'Estilo de luta alternativo do Patrulheiro (PHB 2024).');

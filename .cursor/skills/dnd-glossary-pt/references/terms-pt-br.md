@@ -1,5 +1,7 @@
 # Termos PHB — PT-BR
 
+Fonte de verdade de nomes oficiais: `docs/Glossário de Termos Traduzidos V. 5.1.26.xlsx` (Livro do X). Em conflito com convenção antiga do repo, prevalece o glossário.
+
 | PT | EN | API path |
 |----|-----|----------|
 | Classe | Class | `/classes` |
@@ -56,12 +58,39 @@ API: `GET /alignments` — slugs EN (`lawful-good`, …); `name` e abreviação 
 | `neutral-evil` | Neutro e Mau | NM |
 | `chaotic-evil` | Caótico e Mau | CM |
 
-## Classes e talentos (nomes PT)
+## Classes (glossário)
 
 | slug | name |
 |------|------|
-| `ranger` | Guardião |
-| `artisan` (feat) | Artesão |
+| `barbarian` | Bárbaro |
+| `bard` | Bardo |
+| `cleric` | Clérigo |
+| `druid` | Druida |
+| `fighter` | Guerreiro |
+| `monk` | Monge |
+| `paladin` | Paladino |
+| `ranger` | Patrulheiro (override de mesa; glossário Livro do X traz Guardião) |
+| `rogue` | Ladino |
+| `sorcerer` | Feiticeiro |
+| `warlock` | Bruxo |
+| `wizard` | Mago |
+
+## Termos que já causaram drift (usar estes)
+
+| EN | PT correto | Evitar |
+|----|------------|--------|
+| Bardic Inspiration | Inspiração de Bardo | Inspiração Bárdica |
+| Cutting Words | Palavras de Interrupção | Palavras Cortantes |
+| Step of the Wind | Passos do Vento | Passo do Vento |
+| Divine Spark | Centelha Divina | Centelha: … |
+| Inspiring Movement | Movimento Inspirador | Resposta Ágil |
+| Coordinated Movement | Movimento Coordenado | Gingado Coordenado |
+| Innate Sorcery | Feitiçaria Inata | Ira Feiticeira |
+| Metamagic | Metamagia | Metamágica |
+| Healing Light | Luz Medicinal | Luz Curativa |
+| Tides of Chaos | Marés do Caos | Maré de Caos |
+| Bastion of Law | Bastião da Lei | Baluarte da Ordem |
+| Ranger | **Patrulheiro** (override de mesa) | Guardião (Livro do X) |
 
 ## Armaduras (exemplos)
 
@@ -76,4 +105,4 @@ Preferir PT oficial: **Caído** (não `Prone`), Vantagem/Desvantagem, etc.
 
 ## Consistência
 
-Preferir termos oficiais PHB 2024 PT-BR nos textos user-facing. Não inventar slug PT para classes (`guerreiro` ❌ → `fighter` ✅).
+Preferir termos do glossário Livro do X nos textos user-facing. Não inventar slug PT para classes (`guerreiro` ❌ → `fighter` ✅).

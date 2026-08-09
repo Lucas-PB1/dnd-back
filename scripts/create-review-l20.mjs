@@ -32,7 +32,7 @@ const CLASS_LABEL = {
   gunslinger: 'Pistoleiro',
   monk: 'Monge',
   paladin: 'Paladino',
-  ranger: 'Guardião',
+  ranger: 'Patrulheiro',
   rogue: 'Ladino',
   sorcerer: 'Feiticeiro',
   warlock: 'Bruxo',

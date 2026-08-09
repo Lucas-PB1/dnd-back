@@ -1181,37 +1181,37 @@ Venenoso.') ON CONFLICT (class_id, level, name) DO NOTHING;
 INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 1, 'Conjuração', 'Você aprendeu a canalizar a essência mágica da natureza para conjurar magias. Veja o capítulo 7 para as
 regras sobre conjuração de magias. As informações
 abaixo detalham como você usa essas regras com as
-magias de Guardião, explicadas na lista de magias de
-Guardião mais adiante na descrição da classe.
-Espaços de Magia. A tabela Características de Guardião mostra quantos espaços de magia você tem para
+magias de Patrulheiro, explicadas na lista de magias de
+Patrulheiro mais adiante na descrição da classe.
+Espaços de Magia. A tabela Características de Patrulheiro mostra quantos espaços de magia você tem para
 conjurar suas magias de 1º círculo ou superior. Você
 restaura todos os espaços gastos ao completar um
 Descanso Longo.
 Magias Preparadas de 1º Círculo ou Superior. Você
 prepara a lista de magias de 1º círculo ou superior que
-estão disponíveis para você conjurar com esta característica. Para começar, escolha duas magias de Guardião
+estão disponíveis para você conjurar com esta característica. Para começar, escolha duas magias de Patrulheiro
 de 1º círculo. Curar Ferimentos e Golpe Constritor são
 recomendadas.
-O número de magias em sua lista aumenta à medida que você atinge níveis de Guardião, conforme
+O número de magias em sua lista aumenta à medida que você atinge níveis de Patrulheiro, conforme
 mostrado na coluna Magias Preparadas da tabela
-Características de Guardião. Sempre que esse número
+Características de Patrulheiro. Sempre que esse número
 aumentar, escolha magias adicionais da lista de magias
-de Guardião até que o número de magias em sua lista
+de Patrulheiro até que o número de magias em sua lista
 corresponda ao número da tabela. As magias escolhidas devem ser de um círculo para o qual você possui
-espaços de magia. Por exemplo, se você é um Guardião
+espaços de magia. Por exemplo, se você é um Patrulheiro
 de nível 5, sua lista de magias preparadas pode incluir
-seis magias de Guardião de 1º ou 2º círculo em qualquer combinação.
-Se outra característica de Guardião lhe der magias
+seis magias de Patrulheiro de 1º ou 2º círculo em qualquer combinação.
+Se outra característica de Patrulheiro lhe der magias
 que você sempre tem preparadas, essas magias não
 contam para o número de magias que você pode preparar com esta característica, mas essas magias, de outra
-forma, contam como magias de Guardião para você.
+forma, contam como magias de Patrulheiro para você.
 Mudando Suas Magias Preparadas. Sempre que completar um Descanso Longo, você pode substituir uma
-magia em sua lista por outra magia de Guardião para a
+magia em sua lista por outra magia de Patrulheiro para a
 qual você tem espaços de magia.
 Atributo de Conjuração. Sabedoria é seu atributo de
-conjuração para suas magias de Guardião.
+conjuração para suas magias de Patrulheiro.
 Foco de Conjuração. Você pode usar um Foco Druídico como um Foco de Conjuração para suas magias de
-Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
+Patrulheiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 1, 'Inimigo Favorito', 'Você sempre tem a magia Marca do Predador preparada.
 Você pode conjurá-la duas vezes sem gastar um espaço
@@ -1219,7 +1219,7 @@ de magia, e você restaura todos os usos gastos desta
 característica ao completar um Descanso Longo.
 O número de vezes que você pode conjurar a magia
 sem um espaço de magia aumenta ao atingir certos
-níveis de Guardião, conforme mostrado na coluna Inimigo Favorito da tabela Características de Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
+níveis de Patrulheiro, conforme mostrado na coluna Inimigo Favorito da tabela Características de Patrulheiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 1, 'Maestria em Arma', 'Seu treinamento com armas permite que você use
 as propriedades de maestria de dois tipos de armas à
@@ -1235,9 +1235,9 @@ desses talentos, você pode escolher a opção abaixo.
 Combatente Druídico. Você aprende dois truques
 de Druida à sua escolha. Fagulha Estelar e Orientação
 são recomendados. Os truques escolhidos contam
-como magias de Guardião para você, e Sabedoria é
+como magias de Patrulheiro para você, e Sabedoria é
 seu atributo de conjuração para eles. Sempre que
-você atingir um nível de Guardião, pode substituir um
+você atingir um nível de Patrulheiro, pode substituir um
 desses truques por outro truque de Druida.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 2, 'Explorador Hábil', 'Graças às suas viagens, você adquire os seguintes
@@ -1248,17 +1248,23 @@ Especialização nessa perícia.
 Idiomas. Você conhece dois idiomas à sua escolha da
 tabela de idiomas no capítulo 2.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 3, 'Subclasse de Guardião', 'Você adquire uma subclasse de Guardião à sua escolha.
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 3, 'Subclasse de Patrulheiro', 'Você adquire uma subclasse de Patrulheiro à sua escolha.
 As subclasses Andarilho Feérico, Caçador, Senhor das
 Feras e Vigilante das Sombras estão detalhadas após a
-descrição desta classe. Uma subclasse é uma especialidade que concede a você características em determinados níveis de Guardião. Durante toda sua jornada, você
+descrição desta classe. Uma subclasse é uma especialidade que concede a você características em determinados níveis de Patrulheiro. Durante toda sua jornada, você
 adquire cada uma das características de sua subclasse
-de seu nível de Guardião ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+de seu nível de Patrulheiro ou menor.') ON CONFLICT (class_id, level, name) DO NOTHING;
+
+-- Override de mesa: Ranger = Patrulheiro (não Guardião do Livro do X)
+DELETE FROM rpg.phb_class_feature
+WHERE class_id = (SELECT id FROM rpg.phb_class WHERE slug = 'ranger')
+  AND level = 3
+  AND name = 'Subclasse de Guardião';
 
 INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 4, 'Aumento no Valor de Atributo', 'Você adquire o talento Aumento no Valor de Atributo (veja o capítulo 5) ou outro talento à sua escolha
 para o qual atenda os pré-requisitos. Você adquire
 essa característica novamente nos níveis 8, 12 e 16 de
-Guardião.') ON CONFLICT (class_id, level, name) DO NOTHING;
+Patrulheiro.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
 INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'ranger'), 5, 'Ataque Extra', 'Você pode atacar duas vezes, em vez de uma, sempre
 que executar a ação Atacar no seu turno.') ON CONFLICT (class_id, level, name) DO NOTHING;
@@ -1714,7 +1720,7 @@ Pontos de Foco da tabela Características de Monge.
 Você pode gastar esses pontos para melhorar ou
 impulsionar certas características de Monge. Você
 começa aprendendo três dessas características: Defesa
-Paciente, Passo do Vento e Torrente de Golpes, cada
+Paciente, Passos do Vento e Torrente de Golpes, cada
 uma das quais é detalhada abaixo.
 Ao gastar um Ponto de Foco, ele não está disponível.
 Você restaura todos os usos gastos ao completar um
@@ -1726,7 +1732,7 @@ Sabedoria e seu Bônus de Proficiência.
 Defesa Paciente. Você pode executar a ação Desengajar como uma Ação Bônus. Como alternativa, você
 pode gastar 1 Ponto de Foco para executar as ações
 Desengajar e Esquivar como uma Ação Bônus.
-Passo do Vento. Você pode executar a ação Correr
+Passos do Vento. Você pode executar a ação Correr
 como uma Ação Bônus. Como alternativa, você pode
 gastar 1 Ponto de Foco para executar as ações Desengajar e Correr como uma Ação Bônus, e sua distância
 de salto é dobrada durante o turno.
@@ -1798,14 +1804,14 @@ Escudo, você adquire a capacidade de se mover no seu
 turno ao longo de superfícies verticais e por líquidos
 sem entrar em queda durante o movimento.') ON CONFLICT (class_id, level, name) DO NOTHING;
 
-INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 10, 'Foco Aprimorado', 'Sua Defesa Paciente, Passo do Vento e Torrente de
+INSERT INTO rpg.phb_class_feature (class_id, level, name, description) VALUES ((SELECT id FROM rpg.phb_class WHERE slug = 'monk'), 10, 'Foco Aprimorado', 'Sua Defesa Paciente, Passos do Vento e Torrente de
 Golpes adquirem os seguintes benefícios.
 Defesa Paciente. Ao gastar um Ponto de Foco para
 usar Defesa Paciente, você adquire um número de
 Pontos de Vida Temporários igual a duas jogadas de
 seus dados de Artes Marciais.
-Passo do Vento. Ao gastar um Ponto de Foco para
-usar Passo do Vento, você pode escolher uma criatura voluntária a até 1,5 metro de si que seja Grande
+Passos do Vento. Ao gastar um Ponto de Foco para
+usar Passos do Vento, você pode escolher uma criatura voluntária a até 1,5 metro de si que seja Grande
 ou menor. Você move a criatura com você até o final
 do seu turno. O movimento da criatura não provoca
 Ataques de Oportunidade.

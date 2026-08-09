@@ -31,7 +31,7 @@ export function bardCombatNotes(input: {
   const recovery = bardicInspirationRestRecovery(level) === 'short' ? 'Curto/Longo' : 'Longo';
 
   const notes = [
-    `Inspiração Bárdica (${die}): Ação Bônus para conceder a uma criatura a até 18 m; recarrega em Descanso ${recovery}.`,
+    `Inspiração de Bardo (${die}): Ação Bônus para conceder a uma criatura a até 18 m; recarrega em Descanso ${recovery}.`,
   ];
 
   addBaseBardNotes(notes, level);
@@ -52,12 +52,12 @@ function addBaseBardNotes(notes: string[], level: number): void {
   }
   if (level >= 5) {
     notes.push(
-      'Fonte de Inspiração: Inspiração Bárdica recarrega em Descanso Curto ou Longo.',
+      'Fonte de Inspiração: Inspiração de Bardo recarrega em Descanso Curto ou Longo.',
     );
   }
   if (level >= 18) {
     notes.push(
-      'Inspiração Superior: ao rolar iniciativa sem usos de Inspiração Bárdica, recupere 1 uso.',
+      'Inspiração Superior: ao rolar iniciativa sem usos de Inspiração de Bardo, recupere 1 uso.',
     );
   }
 }
@@ -71,7 +71,7 @@ function addBardSubclassNotes(
 
   if (subclassSlug === 'lore') {
     notes.push(
-      'Colégio do Conhecimento: Palavras Cortantes (Reação: gasta Inspiração para subtrair do ataque/teste/dano inimigo).',
+      'Colégio do Conhecimento: Palavras de Interrupção (Reação: gasta Inspiração para subtrair do ataque/teste/dano inimigo).',
     );
     if (level >= 6) {
       notes.push(
@@ -97,7 +97,7 @@ function addBardSubclassNotes(
     );
     if (level >= 6) {
       notes.push(
-        'Resposta Ágil: Reação para gastar Inspiração e conceder CA/movimento a você ou aliado.',
+        'Movimento Inspirador: Reação (inimigo encerra turno a 1,5 m) gasta Inspiração de Bardo para você e um aliado se moverem até metade do Deslocamento.',
       );
     }
   }
@@ -115,7 +115,7 @@ function addBardSubclassNotes(
 
   if (subclassSlug === 'college-of-masks') {
     notes.push(
-      'Colégio das Máscaras: escolha Máscaras de Persona na mesa (3→4→5 nos nv. 3/6/14). Vestir/trocar como Ação Bônus; efeitos usam Inspiração Bárdica conforme a máscara.',
+      'Colégio das Máscaras: escolha Máscaras de Persona na mesa (3→4→5 nos nv. 3/6/14). Vestir/trocar como Ação Bônus; efeitos usam Inspiração de Bardo conforme a máscara.',
     );
     notes.push(
       'Artista Teatral: proficiência em Kit de Disfarce; some o dado de Inspiração em Performance sem gastar uso.',

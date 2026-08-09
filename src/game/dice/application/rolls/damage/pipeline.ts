@@ -8,7 +8,7 @@ import type { DamageEffect } from './damage-roll-context';
 
 /**
  * Ordem fixa do pipeline de dano — SSOT.
- * Golpe Mortal (em applySneakAttack) dobra o total ANTES de Paladino/Guardião.
+ * Golpe Mortal (em applySneakAttack) dobra o total ANTES de Paladino/Patrulheiro.
  */
 export const DAMAGE_EFFECT_PIPELINE: readonly DamageEffect[] = [
   applyWeaponMasteryExtras,

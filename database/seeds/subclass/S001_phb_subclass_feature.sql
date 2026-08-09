@@ -47,7 +47,7 @@ UPDATE rpg.phb_subclass_feature SET feature_kind = 'passive'::rpg.subclass_featu
 
 UPDATE rpg.phb_subclass_feature SET feature_kind = 'passive'::rpg.subclass_feature_kind WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'dance') AND level = 3 AND name = 'Ginga Fascinante';
 
-UPDATE rpg.phb_subclass_feature SET feature_kind = 'passive'::rpg.subclass_feature_kind WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'dance') AND level = 6 AND name = 'Gingado Coordenado';
+UPDATE rpg.phb_subclass_feature SET feature_kind = 'passive'::rpg.subclass_feature_kind WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'dance') AND level = 6 AND name = 'Movimento Coordenado';
 
 UPDATE rpg.phb_subclass_feature SET feature_kind = 'passive'::rpg.subclass_feature_kind WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'dance') AND level = 6 AND name = 'Movimento Inspirador';
 

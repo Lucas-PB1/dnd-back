@@ -1,5 +1,5 @@
 /**
- * Regras de combate do Guardião (PHB 2024): Marca do Predador, Incansável,
+ * Regras de combate do Patrulheiro (PHB 2024): Marca do Predador, Incansável,
  * Véu da Natureza e notas de arquétipo. O motor aplica os números; alvo/duração ficam na mesa.
  */
 

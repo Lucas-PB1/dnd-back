@@ -89,7 +89,7 @@ VALUES (
 
 Kits de Disfarce. Você ganha proficiência com o Kit de Disfarce.
 
-Toque Dramático. Sempre que você fizer um teste de Carisma (Atuação), adicione seu dado de Inspiração Bárdica à jogada sem gastá-lo.'
+Toque Dramático. Sempre que você fizer um teste de Carisma (Atuação), adicione seu dado de Inspiração de Bardo à jogada sem gastá-lo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -127,7 +127,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'college-of-masks'),
   3,
   'Máscara de Persona: Anjo',
-  'Anjo. Esta máscara impecável de alabastro retrata um Celestial sereno. Uma vez por turno, quando você causa dano a uma criatura com um ataque ou magia, você pode gastar um uso de sua Inspiração Bárdica para causar dano Radiante extra ao alvo igual a uma rolagem do seu dado de Inspiração Bárdica.'
+  'Anjo. Esta máscara impecável de alabastro retrata um Celestial sereno. Uma vez por turno, quando você causa dano a uma criatura com um ataque ou magia, você pode gastar um uso de sua Inspiração de Bardo para causar dano Radiante extra ao alvo igual a uma rolagem do seu dado de Inspiração de Bardo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -168,7 +168,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'college-of-masks'),
   3,
   'Máscara de Persona: Diabo',
-  'Diabo. Esta máscara de obsidiana exibe as presas e os chifres de um corruptor atraente. Quando você sofre dano de uma criatura a até 9 m de você, você pode gastar um uso de sua Inspiração Bárdica como Reação para causar dano de Fogo à criatura. Este dano é igual a duas rolagens do seu dado de Inspiração Bárdica, e você ganha PV temporários iguais ao dano causado.'
+  'Diabo. Esta máscara de obsidiana exibe as presas e os chifres de um corruptor atraente. Quando você sofre dano de uma criatura a até 9 m de você, você pode gastar um uso de sua Inspiração de Bardo como Reação para causar dano de Fogo à criatura. Este dano é igual a duas rolagens do seu dado de Inspiração de Bardo, e você ganha PV temporários iguais ao dano causado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -180,7 +180,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'college-of-masks'),
   3,
   'Máscara de Persona: Dragão',
-  'Dragão. Quando você coloca esta máscara, e como Ação Bônus em cada um de seus turnos enquanto a usar, você pode gastar um dado de Inspiração Bárdica para exalar chamas em um Cone de 4,5 m. Cada criatura no Cone faz uma salvaguarda de Destreza contra sua CD de magia. Em uma falha, a criatura sofre dano de Fogo igual a duas rolagens do seu dado de Inspiração Bárdica, ou metade desse dano em um sucesso.'
+  'Dragão. Quando você coloca esta máscara, e como Ação Bônus em cada um de seus turnos enquanto a usar, você pode gastar um dado de Inspiração de Bardo para exalar chamas em um Cone de 4,5 m. Cada criatura no Cone faz uma salvaguarda de Destreza contra sua CD de magia. Em uma falha, a criatura sofre dano de Fogo igual a duas rolagens do seu dado de Inspiração de Bardo, ou metade desse dano em um sucesso.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -204,7 +204,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'college-of-masks'),
   3,
   'Máscara de Persona: Gladiador',
-  'Gladiador. Este elmo metálico sombrio, marcado e riscado, oculta todo o rosto. Enquanto usar esta máscara, você tem proficiência com armas Marciais e treinamento com Escudos. Como Ação Bônus, você pode gastar um uso de sua Inspiração Bárdica para fazer um ataque com uma arma ou um Ataque Desarmado.'
+  'Gladiador. Este elmo metálico sombrio, marcado e riscado, oculta todo o rosto. Enquanto usar esta máscara, você tem proficiência com armas Marciais e treinamento com Escudos. Como Ação Bônus, você pode gastar um uso de sua Inspiração de Bardo para fazer um ataque com uma arma ou um Ataque Desarmado.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -245,7 +245,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'college-of-masks'),
   3,
   'Máscara de Persona: Bufão',
-  'Bufão. Esta máscara de pano de um bufão sorridente é adornada com guizos e padrões de xadrez. Quando você coloca esta máscara, e como Ação Bônus em cada um de seus turnos enquanto a usar, você pode se mover até metade do seu Deslocamento sem provocar Ataques de Oportunidade. Você também pode gastar um uso de Inspiração Bárdica para conjurar Escárnio Vicioso como parte da Ação Bônus desta máscara.'
+  'Bufão. Esta máscara de pano de um bufão sorridente é adornada com guizos e padrões de xadrez. Quando você coloca esta máscara, e como Ação Bônus em cada um de seus turnos enquanto a usar, você pode se mover até metade do seu Deslocamento sem provocar Ataques de Oportunidade. Você também pode gastar um uso de Inspiração de Bardo para conjurar Escárnio Vicioso como parte da Ação Bônus desta máscara.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -257,7 +257,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'college-of-masks'),
   3,
   'Máscara de Persona: Nobre',
-  'Nobre. Esta máscara de prata reluzente tem dois rubis cravados nas órbitas. Você pode usar sua Inspiração Bárdica como parte da Ação Bônus para colocar esta máscara. Quando uma criatura com seu dado de Inspiração Bárdica falhar em um Teste de D20 enquanto você usar esta máscara, ela pode rolar o dado de Inspiração Bárdica duas vezes e adicionar o resultado mais alto ao d20.'
+  'Nobre. Esta máscara de prata reluzente tem dois rubis cravados nas órbitas. Você pode usar sua Inspiração de Bardo como parte da Ação Bônus para colocar esta máscara. Quando uma criatura com seu dado de Inspiração de Bardo falhar em um Teste de D20 enquanto você usar esta máscara, ela pode rolar o dado de Inspiração de Bardo duas vezes e adicionar o resultado mais alto ao d20.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;

@@ -24,7 +24,7 @@ export async function resolveSetBestialAspect(
   level: number | undefined,
 ): Promise<RangerTableActionResult> {
   assertCharacterSubclass(character, 'beastborne', 'Beastborne');
-  assertCharacterLevel(character, 3, 'Ranger', 'Aspecto Bestial');
+  assertCharacterLevel(character, 3, 'Patrulheiro', 'Aspecto Bestial');
   if (level === undefined) {
     throw new BadRequestException('Bestial aspect level is required');
   }
@@ -56,7 +56,7 @@ export async function resolveFeralHowl(
   character: PlayerCharacter,
 ): Promise<RangerTableActionResult> {
   assertCharacterSubclass(character, 'beastborne', 'Beastborne');
-  assertCharacterLevel(character, 7, 'Ranger', 'Uivo Feral');
+  assertCharacterLevel(character, 7, 'Patrulheiro', 'Uivo Feral');
   const roll = rollDie(4);
   const state = await deps.state.martial.setBestialAspectLevel(
     character,
@@ -79,7 +79,7 @@ export async function resolveFeyReinforcements(
   character: PlayerCharacter,
 ): Promise<RangerTableActionResult> {
   assertCharacterSubclass(character, 'fey-wanderer', 'Andarilho Feérico');
-  assertCharacterLevel(character, 11, 'Ranger', 'Reforços Feéricos');
+  assertCharacterLevel(character, 11, 'Patrulheiro', 'Reforços Feéricos');
   const state = (
     await deps.state.useClassResource(character, FEY_REINFORCEMENTS_SLUG, 1)
   ).state;
@@ -96,7 +96,7 @@ export async function resolveMistyWanderer(
   character: PlayerCharacter,
 ): Promise<RangerTableActionResult> {
   assertCharacterSubclass(character, 'fey-wanderer', 'Andarilho Feérico');
-  assertCharacterLevel(character, 15, 'Ranger', 'Andarilho Nebuloso');
+  assertCharacterLevel(character, 15, 'Patrulheiro', 'Andarilho Nebuloso');
   const state = (
     await deps.state.useClassResource(character, MISTY_WANDERER_SLUG, 1)
   ).state;
@@ -113,7 +113,7 @@ export async function resolvePrimalCompanion(
   character: PlayerCharacter,
 ): Promise<RangerTableActionResult> {
   assertCharacterSubclass(character, 'beast-master', 'Senhor das Feras');
-  assertCharacterLevel(character, 3, 'Ranger', 'Companheiro Primal');
+  assertCharacterLevel(character, 3, 'Patrulheiro', 'Companheiro Primal');
   return {
     state: await deps.state.buildResponse(character),
     actionName: 'Companheiro Primal',
