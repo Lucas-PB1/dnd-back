@@ -42,6 +42,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 Não priorizar. Só retomar com pedido explícito.
 
 - [ ] Mísseis Mágicos: escolhas Escudo/Giga no cast (modal) — [`mm-cast-options-modal.md`](mm-cast-options-modal.md)
+- [ ] Senhor das Feras: Companheiro Primal (invocar, PV, comandar na mesa) — [`beast-master-primal-companion.md`](beast-master-primal-companion.md)
 
 ### Referência — modelo de dados
 
