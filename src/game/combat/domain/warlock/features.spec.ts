@@ -65,13 +65,32 @@ describe('warlock-features', () => {
       subclassSlug: 'fiend',
       level: 3,
     });
-    expect(fiendNotes.some((n) => n.includes('Bênção do Obscuro'))).toBe(true);
+    expect(fiendNotes.some((n) => n.includes('Bênção do Tenebroso'))).toBe(true);
 
     const celestialNotes = warlockCombatNotes({
       classSlug: 'warlock',
       subclassSlug: 'celestial',
       level: 3,
     });
-    expect(celestialNotes.some((n) => n.includes('Luz Curativa'))).toBe(true);
+    expect(celestialNotes.some((n) => n.includes('Luz Medicinal'))).toBe(true);
+
+    const archfeyNotes = warlockCombatNotes({
+      classSlug: 'warlock',
+      subclassSlug: 'archfey',
+      level: 14,
+    });
+    expect(archfeyNotes.some((n) => n.includes('Magia Sedutora'))).toBe(true);
+    expect(archfeyNotes.some((n) => n.includes('Passo Nebuloso'))).toBe(true);
+
+    const gooNotes = warlockCombatNotes({
+      classSlug: 'warlock',
+      subclassSlug: 'great-old-one',
+      level: 14,
+    });
+    expect(gooNotes.some((n) => n.includes('Combatente Clarividente'))).toBe(
+      true,
+    );
+    expect(gooNotes.some((n) => n.includes('Criar Servo'))).toBe(true);
+    expect(gooNotes.some((n) => n.includes('teleporte'))).toBe(false);
   });
 });

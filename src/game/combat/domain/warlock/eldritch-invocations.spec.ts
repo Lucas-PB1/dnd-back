@@ -158,18 +158,57 @@ describe('eldritch-invocations', () => {
     ]);
   });
 
-  it('builds cantrip cast notes for blast invocations', () => {
+  it('builds cantrip cast notes only for the bound cantrip', () => {
     expect(
       buildEldritchCantripCastNote({
         spellLevel: 1,
-        pickedSlugs: ['agonizing-blast'],
+        spellSlug: 'rajada-mistica',
+        bindings: [
+          {
+            instanceIndex: 0,
+            invocationSlug: 'agonizing-blast',
+            cantripSlug: 'rajada-mistica',
+          },
+        ],
         charismaModifier: 4,
+        warlockLevel: 5,
+      }),
+    ).toBeNull();
+    expect(
+      buildEldritchCantripCastNote({
+        spellLevel: 0,
+        spellSlug: 'toque-gelido',
+        bindings: [
+          {
+            instanceIndex: 0,
+            invocationSlug: 'agonizing-blast',
+            cantripSlug: 'rajada-mistica',
+          },
+        ],
+        charismaModifier: 5,
         warlockLevel: 5,
       }),
     ).toBeNull();
     const note = buildEldritchCantripCastNote({
       spellLevel: 0,
-      pickedSlugs: ['agonizing-blast', 'repelling-blast', 'eldritch-spear'],
+      spellSlug: 'rajada-mistica',
+      bindings: [
+        {
+          instanceIndex: 0,
+          invocationSlug: 'agonizing-blast',
+          cantripSlug: 'rajada-mistica',
+        },
+        {
+          instanceIndex: 1,
+          invocationSlug: 'repelling-blast',
+          cantripSlug: 'rajada-mistica',
+        },
+        {
+          instanceIndex: 2,
+          invocationSlug: 'eldritch-spear',
+          cantripSlug: 'rajada-mistica',
+        },
+      ],
       charismaModifier: 5,
       warlockLevel: 5,
     });

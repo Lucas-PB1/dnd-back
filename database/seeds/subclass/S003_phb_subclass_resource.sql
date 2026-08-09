@@ -812,3 +812,15 @@ WHERE rg.owner_kind = 'subclass'
   AND rg.resource_id = rd.id
   AND s.slug IN ('light', 'trickery')
   AND rd.slug IN ('corona-of-light', 'tricksters-blessing');
+
+-- Bruxo: Combatente Clarividente recupera em Descanso Curto (PHB 2024)
+UPDATE rpg.phb_resource_grant rg
+SET recover_one_on_short = FALSE,
+    recover_all_on_short = TRUE,
+    recover_all_on_long = TRUE
+FROM rpg.phb_subclass s, rpg.phb_resource_definition rd
+WHERE rg.owner_kind = 'subclass'
+  AND rg.owner_id = s.id
+  AND rg.resource_id = rd.id
+  AND s.slug = 'great-old-one'
+  AND rd.slug = 'clairvoyant-competitor';

@@ -91,7 +91,7 @@ UPDATE rpg.phb_subclass_feature SET feature_kind = 'resource'::rpg.subclass_feat
 
 UPDATE rpg.phb_subclass_feature SET feature_kind = 'always_prepared'::rpg.subclass_feature_kind WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one') AND level = 3 AND name = 'Magias de Pacto do Grande Antigo';
 
-UPDATE rpg.phb_subclass_feature SET feature_kind = 'always_prepared'::rpg.subclass_feature_kind WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one') AND level = 3 AND name = 'Magias Psíquicas';
+UPDATE rpg.phb_subclass_feature SET feature_kind = 'passive'::rpg.subclass_feature_kind WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one') AND level = 3 AND name = 'Magias Psíquicas';
 
 UPDATE rpg.phb_subclass_feature SET feature_kind = 'passive'::rpg.subclass_feature_kind WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'great-old-one') AND level = 3 AND name = 'Mente Desperta';
 

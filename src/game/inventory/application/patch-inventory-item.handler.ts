@@ -5,6 +5,7 @@ import {
   InventoryItemResponseDto,
   PatchInventoryItemDto,
 } from '../dto/inventory.dto';
+import { AssertCanBindPactWeaponService } from './assert-can-bind-pact-weapon.service';
 import { AssertCanEquipItemService } from './assert-can-equip-item.service';
 
 function isEquipping(dto: PatchInventoryItemDto): boolean {
@@ -19,6 +20,7 @@ export class PatchInventoryItemHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly inventory: CharacterInventoryRepository,
     private readonly assertCanEquip: AssertCanEquipItemService,
+    private readonly assertCanBindPact: AssertCanBindPactWeaponService,
   ) {}
 
   async execute(
@@ -34,6 +36,9 @@ export class PatchInventoryItemHandler {
     );
     if (isEquipping(dto)) {
       await this.assertCanEquip.assert(character, itemSlug);
+    }
+    if (dto.pactWeapon === true) {
+      await this.assertCanBindPact.assert(character, itemSlug);
     }
     return this.inventory.patch(
       characterId,

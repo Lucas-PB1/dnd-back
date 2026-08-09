@@ -117,7 +117,10 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       new CharacterClassExpertiseValidator(dataSource as unknown as DataSource),
       new CharacterWeaponMasteryValidator(dataSource as unknown as DataSource),
       new CharacterSpellMasteryValidator(dataSource as unknown as DataSource),
-      new CharacterEldritchInvocationsValidator(dataSource as unknown as DataSource),
+      new CharacterEldritchInvocationsValidator(
+        dataSource as unknown as DataSource,
+        { find: jest.fn() } as never,
+      ),
     );
 
     const featsValidator = {

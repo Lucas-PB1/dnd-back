@@ -68,6 +68,7 @@ export class CharacterSheetValidator {
       await this.classOptionsValidator.validateEldritchInvocationOptions(
         ctx,
         input.classOptions,
+        input.characterSpells,
       );
     }
 

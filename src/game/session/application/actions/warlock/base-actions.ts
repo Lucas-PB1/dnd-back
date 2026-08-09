@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import {
   DARK_ONES_LUCK_RESOURCE,
   MAGICAL_CUNNING_RESOURCE,
@@ -41,29 +42,33 @@ export async function resolveMagicalCunning(
 export async function resolveHealingLight(
   deps: WarlockActionDeps,
   character: PlayerCharacter,
+  diceCount?: number,
 ): Promise<WarlockTableActionResult> {
   assertCharacterSubclass(character, 'celestial', 'Patrono Celestial');
-  assertCharacterLevel(character, 3, 'Bruxo', 'Luz Curativa');
+  assertCharacterLevel(character, 3, 'Bruxo', 'Luz Medicinal');
   const charisma = abilityModifier(character.abilityScores.carisma);
-  const diceCount = Math.max(1, charisma);
-  const result = rollDamageParts(`${diceCount}d6`, 0);
-
-  let state;
-  try {
-    state = (
-      await deps.state.useClassResource(character, 'healing-light', diceCount)
-    ).state;
-  } catch {
-    state = await deps.state.buildResponse(character);
+  const maxDice = Math.max(1, charisma);
+  const spent = diceCount ?? maxDice;
+  if (!Number.isInteger(spent) || spent < 1 || spent > maxDice) {
+    throw new BadRequestException(
+      `Luz Medicinal: escolha de 1 a ${maxDice} d6(s)`,
+    );
   }
+  const result = rollDamageParts(`${spent}d6`, 0);
+
+  const { state } = await deps.state.useClassResource(
+    character,
+    'healing-light',
+    spent,
+  );
 
   return {
     state,
-    actionName: 'Luz Curativa',
+    actionName: 'Luz Medicinal',
     expression: result.expression,
     total: result.total,
     resourceSpent: true,
-    note: `Luz Curativa: Ação Bônus gasta ${diceCount}d6 da reserva e restaura ${result.total} PV (${result.expression}) a uma criatura visível a até 18 m.`,
+    note: `Luz Medicinal: Ação Bônus gasta ${spent}d6 da reserva e restaura ${result.total} PV (${result.expression}) a uma criatura visível a até 18 m.`,
   };
 }
 
@@ -75,14 +80,11 @@ export async function resolveDarkOnesOwnLuck(
   assertCharacterLevel(character, 6, 'Bruxo', 'A Sorte do Próprio Tenebroso');
   const result = rollDamageParts('1d10', 0);
 
-  let state;
-  try {
-    state = (
-      await deps.state.useClassResource(character, DARK_ONES_LUCK_RESOURCE, 1)
-    ).state;
-  } catch {
-    state = await deps.state.buildResponse(character);
-  }
+  const { state } = await deps.state.useClassResource(
+    character,
+    DARK_ONES_LUCK_RESOURCE,
+    1,
+  );
 
   return {
     state,

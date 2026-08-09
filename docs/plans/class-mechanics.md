@@ -38,7 +38,7 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 | Bárbaro | `barbarian` | `[x]` feito |
 | Guerreiro | `fighter` | `[x]` feito |
 | Bardo | `bard` | `[x]` feito |
-| Bruxo | `warlock` | `[~]` Magia de Pacto + Invocações MVP |
+| Bruxo | `warlock` | `[x]` feito |
 | Clérigo | `cleric` | `[x]` feito |
 | Druida | `druid` | `[x]` feito |
 | Feiticeiro | `sorcerer` | `[x]` feito |
@@ -194,13 +194,14 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 
 ---
 
-### Bruxo (`warlock`) — `[~]`
+### Bruxo (`warlock`) — `[x]`
 
 - [x] Base: Magia de Pacto (slots recarregam no Descanso Curto **e** Longo), Astúcia Mágica L2 (metade dos slots, 1×/DL; L20 todos) e Arcanum Místico (nota)
 - [x] Invocações Místicas MVP: catálogo `phb_eldritch_invocation`, seleção via `classOptions`, passo na criação, painel na ficha/combate (efeitos mecânicos de cast ainda follow-up)
-- [x] Celestial: Luz Curativa
-- [x] Ínfero: Sorte do Próprio Tenebroso L6 (`dark-ones-luck`); Bênção/Resiliência (notes/botões)
-- [~] Arquifada / Grande Antigo: botões note; recursos `fey-steps` etc. ainda sem wire completo
+- [x] Celestial: Luz Medicinal, Alma Radiante, Resiliência Celestial, Vingança Calcinante
+- [x] Ínfero: Bênção do Tenebroso, Sorte do Próprio Tenebroso, Resistência Ínfera, Lançar no Inferno
+- [x] Arquifada: Passos Feéricos (Passo Nebuloso + efeitos), Fuga em Névoa, Defesas Sedutoras, Magia Sedutora
+- [x] Grande Antigo: Magias Psíquicas, Mente Desperta, Combatente Clarividente (link), Danação Mística (+ grant), Escudo Mental, Criar Servo
 - [x] UI: `combat-warlock-panel` + bloco de invocações conhecidas
 
 ---

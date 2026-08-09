@@ -4,6 +4,7 @@ describe('PatchInventoryItemHandler', () => {
   let access: { findAccessibleOrFail: jest.Mock };
   let inventory: { patch: jest.Mock };
   let assertCanEquip: { assert: jest.Mock };
+  let assertCanBindPact: { assert: jest.Mock };
   let handler: PatchInventoryItemHandler;
 
   beforeEach(() => {
@@ -14,10 +15,12 @@ describe('PatchInventoryItemHandler', () => {
     };
     inventory = { patch: jest.fn().mockResolvedValue({ itemSlug: 'dagger' }) };
     assertCanEquip = { assert: jest.fn().mockResolvedValue(undefined) };
+    assertCanBindPact = { assert: jest.fn().mockResolvedValue(undefined) };
     handler = new PatchInventoryItemHandler(
       access as never,
       inventory as never,
       assertCanEquip as never,
+      assertCanBindPact as never,
     );
   });
 

@@ -14,6 +14,7 @@ function itemRow(overrides: Partial<PlayerCharacterItem> = {}): PlayerCharacterI
     location: 'backpack',
     equipmentSlot: null,
     attuned: false,
+    isPactWeapon: false,
     ...overrides,
   } as PlayerCharacterItem;
 }
@@ -27,7 +28,7 @@ describe('CharacterInventoryRepository', () => {
     remove: jest.Mock;
     count: jest.Mock;
   };
-  let catalogItems: { findOne: jest.Mock };
+  let catalogItems: { find: jest.Mock; findOne: jest.Mock };
   let catalogLookup: { assertItemInCatalog: jest.Mock };
   let slotResolver: { resolve: jest.Mock };
   let repository: CharacterInventoryRepository;
@@ -42,6 +43,15 @@ describe('CharacterInventoryRepository', () => {
       count: jest.fn().mockResolvedValue(0),
     };
     catalogItems = {
+      find: jest.fn().mockResolvedValue([
+        {
+          slug: 'rope',
+          name: 'Corda',
+          itemType: 'gear',
+          weight: '5 lb.',
+          properties: null,
+        },
+      ]),
       findOne: jest.fn().mockResolvedValue({
         slug: 'rope',
         name: 'Corda',
@@ -174,6 +184,36 @@ describe('CharacterInventoryRepository', () => {
       });
       await repository.patch('ch1', 'rope', { attuned: true }, 16);
       expect(row.attuned).toBe(true);
+    });
+
+    it('marks pact weapon and clears previous flag', async () => {
+      const previous = itemRow({
+        itemSlug: 'dagger',
+        isPactWeapon: true,
+      });
+      const row = itemRow({ itemSlug: 'longsword', isPactWeapon: false });
+      items.findOne.mockResolvedValue(row);
+      items.find = jest.fn().mockResolvedValue([previous]);
+      catalogItems.find.mockResolvedValue([
+        {
+          slug: 'longsword',
+          name: 'Espada Longa',
+          itemType: 'weapon',
+          weight: '3 lb.',
+          properties: null,
+        },
+      ]);
+
+      const dto = await repository.patch(
+        'ch1',
+        'longsword',
+        { pactWeapon: true },
+        16,
+      );
+
+      expect(previous.isPactWeapon).toBe(false);
+      expect(row.isPactWeapon).toBe(true);
+      expect(dto.isPactWeapon).toBe(true);
     });
   });
 

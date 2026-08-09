@@ -108,11 +108,27 @@ export async function loadAndPickEldritchInvocationOptions(db, level) {
     requiresInvocationSlug: row.requires_invocation_slug,
     repeatable: row.repeatable,
   }));
-  return pickRandomValidEldritchInvocations({ level, catalog }).map(
-    (pick) => ({
-      optionKey: 'eldritch-invocation',
-      valueId: pick.slug,
-      instanceIndex: pick.instanceIndex,
-    }),
+  return pickRandomValidEldritchInvocations({ level, catalog }).flatMap(
+    (pick) => {
+      const rows = [
+        {
+          optionKey: 'eldritch-invocation',
+          valueId: pick.slug,
+          instanceIndex: pick.instanceIndex,
+        },
+      ];
+      if (
+        pick.slug === 'agonizing-blast' ||
+        pick.slug === 'repelling-blast' ||
+        pick.slug === 'eldritch-spear'
+      ) {
+        rows.push({
+          optionKey: 'eldritch-invocation-cantrip',
+          valueId: 'raio-mistico',
+          instanceIndex: pick.instanceIndex,
+        });
+      }
+      return rows;
+    },
   );
 }

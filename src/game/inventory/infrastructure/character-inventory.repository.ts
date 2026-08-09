@@ -13,6 +13,7 @@ import {
 import { EquipmentSlotResolver } from './equipment-slot-resolver';
 import {
   applyInventoryAttunement,
+  applyPactWeaponFlag,
   clearEquippedSlotIfOccupied,
   findInventoryItemOrFail,
   inventoryItemToDto,
@@ -88,6 +89,7 @@ export class CharacterInventoryRepository {
       location: 'backpack',
       equipmentSlot: null,
       attuned: false,
+      isPactWeapon: false,
       attachedCharmSlug: null,
     });
     await this.items.save(row);
@@ -122,6 +124,7 @@ export class CharacterInventoryRepository {
           location: 'backpack',
           equipmentSlot: null,
           attuned: false,
+          isPactWeapon: false,
           attachedCharmSlug: null,
         }),
       );
@@ -190,8 +193,44 @@ export class CharacterInventoryRepository {
       });
     }
 
+    if (dto.pactWeapon !== undefined) {
+      await applyPactWeaponFlag({
+        items: this.items,
+        characterId,
+        row,
+        pactWeapon: dto.pactWeapon,
+      });
+    }
+
     await this.items.save(row);
     return inventoryItemToDto(this.catalogItems, row);
+  }
+
+  async findPactWeaponSlug(characterId: string): Promise<string | null> {
+    const row = await this.items.findOne({
+      where: { characterId, isPactWeapon: true },
+    });
+    return row?.itemSlug ?? null;
+  }
+
+  /**
+   * Marca arma de pacto (exclusiva) e equipa em main_hand se ainda não estiver.
+   */
+  async bindAndEquipPactWeapon(
+    characterId: string,
+    itemSlug: string,
+    strengthScore: number,
+  ): Promise<InventoryItemResponseDto> {
+    return this.patch(
+      characterId,
+      itemSlug,
+      {
+        pactWeapon: true,
+        location: 'equipped',
+        equipmentSlot: 'main_hand',
+      },
+      strengthScore,
+    );
   }
 
   async remove(characterId: string, itemSlug: string): Promise<void> {

@@ -3,7 +3,7 @@ import { DataSource } from 'typeorm';
 import { assertUnique } from '@common/assert';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
-import { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
+import { CharacterFeatDto, CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
 import {
   FIGHTING_STYLE_FEAT_CATEGORY,
   collectFightingStyleSlugsFromSubclassOptions,
@@ -151,10 +151,12 @@ export class CharacterClassOptionsValidator {
   async validateEldritchInvocationOptions(
     ctx: CharacterSheetContext,
     options: NonNullable<CharacterSheetInput['classOptions']>,
+    characterSpells?: CharacterSpellDto[],
   ): Promise<void> {
     return this.eldritchInvocationsValidator.validateEldritchInvocationOptions(
       ctx,
       options,
+      characterSpells,
     );
   }
 

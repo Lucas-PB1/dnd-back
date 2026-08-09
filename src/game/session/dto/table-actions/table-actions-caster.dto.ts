@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsIn, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsIn, IsInt, IsOptional, IsString, Min } from 'class-validator';
 
 const CLERIC_TABLE_ACTION_SLUGS = [
   'divine-spark-heal',
@@ -83,12 +83,35 @@ const WARLOCK_TABLE_ACTION_SLUGS = [
   'fey-step-effect',
   'awakened-mind',
   'fiendish-resilience',
+  'invoke-pact-weapon',
+  'hurl-through-hell',
+  'searing-vengeance',
+  'beguiling-defenses',
+  'clairvoyant-combatant',
 ] as const;
 
 export class UseWarlockTableActionDto {
   @ApiProperty({ enum: WARLOCK_TABLE_ACTION_SLUGS })
   @IsIn(WARLOCK_TABLE_ACTION_SLUGS)
   actionSlug!: (typeof WARLOCK_TABLE_ACTION_SLUGS)[number];
+
+  @ApiPropertyOptional({
+    example: 'longsword',
+    description:
+      'Slug da arma do inventário (invoke-pact-weapon). Se omitido, usa a já marcada.',
+  })
+  @IsOptional()
+  @IsString()
+  itemSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 2,
+    description: 'Quantidade de d6 da Luz Medicinal (1–mod. Carisma).',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  diceCount?: number;
 }
 
 const DRUID_TABLE_ACTION_SLUGS = [

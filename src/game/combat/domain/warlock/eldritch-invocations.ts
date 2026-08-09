@@ -1,6 +1,10 @@
 import {
+  BLAST_INVOCATION_SLUGS,
+  ELDRITCH_INVOCATION_CANTRIP_OPTION_KEY,
   ELDRITCH_INVOCATION_OPTION_KEY,
+  isBlastInvocationSlug,
   warlockInvocationLimit,
+  type BlastInvocationSlug,
 } from './features';
 
 export type EldritchInvocationCatalogRow = {
@@ -22,6 +26,27 @@ export type ClassOptionLike = {
   optionKey: string;
   valueId: string;
   instanceIndex?: number;
+};
+
+export type EldritchBlastCantripBinding = {
+  instanceIndex: number;
+  invocationSlug: BlastInvocationSlug;
+  cantripSlug: string;
+};
+
+/** Metadados mínimos do truque para elegibilidade PHB 2024. */
+export type EldritchCantripEligibility = {
+  slug: string;
+  /** Truque (nível 0) conhecido como magia de Bruxo. */
+  isWarlockCantrip: boolean;
+  requiresAttackRoll: boolean;
+  /** Alcance em metros (heurística a partir do texto do catálogo). */
+  rangeMeters: number | null;
+  /**
+   * Causa dano: ataque, salvaguarda típica de dano, ou descrição com dado de dano.
+   * Sem coluna dedicada na view — heurística documentada.
+   */
+  dealsDamage: boolean;
 };
 
 /** Presente das Profundezas: free cast 1×/Descanso Longo (demais free_cast = à vontade). */
@@ -47,6 +72,30 @@ export function readEldritchInvocationPicks(
   return picks.sort((a, b) => a.instanceIndex - b.instanceIndex);
 }
 
+export function readEldritchInvocationCantripBindings(
+  classOptions: readonly ClassOptionLike[] | null | undefined,
+): EldritchBlastCantripBinding[] {
+  const picksByIndex = new Map(
+    readEldritchInvocationPicks(classOptions).map((pick) => [
+      pick.instanceIndex,
+      pick.slug,
+    ]),
+  );
+  const bindings: EldritchBlastCantripBinding[] = [];
+  for (const option of classOptions ?? []) {
+    if (option.optionKey !== ELDRITCH_INVOCATION_CANTRIP_OPTION_KEY) continue;
+    const instanceIndex = option.instanceIndex ?? 0;
+    const invocationSlug = picksByIndex.get(instanceIndex);
+    if (!invocationSlug || !isBlastInvocationSlug(invocationSlug)) continue;
+    bindings.push({
+      instanceIndex,
+      invocationSlug,
+      cantripSlug: option.valueId,
+    });
+  }
+  return bindings.sort((a, b) => a.instanceIndex - b.instanceIndex);
+}
+
 export function knownPactSlugsFromPicks(
   picks: readonly { slug: string }[],
 ): Set<string> {
@@ -61,6 +110,53 @@ export function knownPactSlugsFromPicks(
     }
   }
   return set;
+}
+
+/**
+ * Extrai alcance em metros a partir do texto do catálogo (ex.: "36 metros", "120 feet").
+ */
+export function parseSpellRangeMeters(
+  rangeText: string | null | undefined,
+): number | null {
+  if (!rangeText) return null;
+  const meters = rangeText.match(/(\d+(?:[.,]\d+)?)\s*m(?:etro)?/i);
+  if (meters) {
+    return Number(meters[1].replace(',', '.'));
+  }
+  const feet = rangeText.match(/(\d+(?:[.,]\d+)?)\s*(?:ft|feet|pés|pes)/i);
+  if (feet) {
+    return Number(feet[1].replace(',', '.')) * 0.3;
+  }
+  return null;
+}
+
+export function inferSpellDealsDamage(input: {
+  requiresAttackRoll: boolean;
+  saveAbilitySlug?: string | null;
+  description?: string | null;
+}): boolean {
+  if (input.requiresAttackRoll) return true;
+  if (input.saveAbilitySlug) return true;
+  const text = input.description ?? '';
+  return /\d+\s*d\s*\d+/i.test(text) && /dano|damage/i.test(text);
+}
+
+export function cantripEligibleForBlastInvocation(
+  invocationSlug: BlastInvocationSlug,
+  cantrip: EldritchCantripEligibility,
+): boolean {
+  if (!cantrip.isWarlockCantrip) return false;
+  if (invocationSlug === 'repelling-blast') {
+    return cantrip.requiresAttackRoll;
+  }
+  if (invocationSlug === 'eldritch-spear') {
+    return (
+      cantrip.dealsDamage &&
+      cantrip.rangeMeters != null &&
+      cantrip.rangeMeters >= 3
+    );
+  }
+  return cantrip.dealsDamage;
 }
 
 /**
@@ -123,6 +219,72 @@ export function validateEldritchInvocationPicks(input: {
   return errors;
 }
 
+/**
+ * Valida siblings eldritch-invocation-cantrip para picks de blast.
+ */
+export function validateEldritchBlastCantripBindings(input: {
+  picks: readonly { slug: string; instanceIndex: number }[];
+  bindings: readonly EldritchBlastCantripBinding[];
+  cantripsBySlug: ReadonlyMap<string, EldritchCantripEligibility>;
+}): string[] {
+  const errors: string[] = [];
+  const bindingByIndex = new Map(
+    input.bindings.map((binding) => [binding.instanceIndex, binding]),
+  );
+  const usedCantripByInvocation = new Map<string, Set<string>>();
+
+  for (const pick of input.picks) {
+    if (!isBlastInvocationSlug(pick.slug)) continue;
+    const binding = bindingByIndex.get(pick.instanceIndex);
+    if (!binding) {
+      errors.push(
+        `Invocação '${pick.slug}' (slot ${pick.instanceIndex}) requer um truque vinculado`,
+      );
+      continue;
+    }
+    if (binding.invocationSlug !== pick.slug) {
+      errors.push(
+        `Truque vinculado no slot ${pick.instanceIndex} não corresponde a '${pick.slug}'`,
+      );
+      continue;
+    }
+    const cantrip = input.cantripsBySlug.get(binding.cantripSlug);
+    if (!cantrip || !cantrip.isWarlockCantrip) {
+      errors.push(
+        `Truque '${binding.cantripSlug}' não é um truque de Bruxo conhecido`,
+      );
+      continue;
+    }
+    if (!cantripEligibleForBlastInvocation(pick.slug, cantrip)) {
+      errors.push(
+        `Truque '${binding.cantripSlug}' não é elegível para '${pick.slug}'`,
+      );
+      continue;
+    }
+    const used = usedCantripByInvocation.get(pick.slug) ?? new Set<string>();
+    if (used.has(binding.cantripSlug)) {
+      errors.push(
+        `Truque '${binding.cantripSlug}' já está vinculado a outra '${pick.slug}'`,
+      );
+    }
+    used.add(binding.cantripSlug);
+    usedCantripByInvocation.set(pick.slug, used);
+  }
+
+  for (const binding of input.bindings) {
+    const pick = input.picks.find(
+      (row) => row.instanceIndex === binding.instanceIndex,
+    );
+    if (!pick || !isBlastInvocationSlug(pick.slug)) {
+      errors.push(
+        `Vínculo de truque órfão no slot ${binding.instanceIndex} ('${binding.cantripSlug}')`,
+      );
+    }
+  }
+
+  return errors;
+}
+
 export function collectEldritchFreeCastSpellSlugs(
   pickedSlugs: readonly string[],
   catalog: readonly Pick<
@@ -169,24 +331,30 @@ export function resolveEldritchInvocationFreeCast(input: {
   return null;
 }
 
-/** Notas de combate ao conjurar truque com Explosão Agonizante / Repulsiva / Lança. */
+/** Notas de combate ao conjurar o truque vinculado a Explosão Agonizante / Repulsiva / Lança. */
 export function buildEldritchCantripCastNote(input: {
   spellLevel: number;
-  pickedSlugs: readonly string[];
+  spellSlug: string;
+  bindings: readonly EldritchBlastCantripBinding[];
   charismaModifier: number;
   warlockLevel: number;
 }): string | null {
   if (input.spellLevel !== 0) return null;
-  const picked = new Set(input.pickedSlugs);
+  const matching = input.bindings.filter(
+    (binding) => binding.cantripSlug === input.spellSlug,
+  );
+  if (matching.length === 0) return null;
+
   const parts: string[] = [];
-  if (picked.has('agonizing-blast')) {
+  const kinds = new Set(matching.map((binding) => binding.invocationSlug));
+  if (kinds.has('agonizing-blast')) {
     const bonus = Math.max(0, input.charismaModifier);
     parts.push(`Explosão Agonizante: +${bonus} de Carisma no dano`);
   }
-  if (picked.has('repelling-blast')) {
+  if (kinds.has('repelling-blast')) {
     parts.push('Explosão Repulsiva: empurre até 3 m (Grande ou menor)');
   }
-  if (picked.has('eldritch-spear')) {
+  if (kinds.has('eldritch-spear')) {
     const rangeBonus = 9 * Math.max(1, input.warlockLevel);
     parts.push(`Lança Mística: alcance +${rangeBonus} m`);
   }
@@ -240,3 +408,5 @@ function shuffle<T>(items: readonly T[], random: () => number): T[] {
   }
   return next;
 }
+
+export { BLAST_INVOCATION_SLUGS, isBlastInvocationSlug };

@@ -314,6 +314,11 @@ describe('applyCastSpell', () => {
             valueId: 'agonizing-blast',
             instanceIndex: 2,
           },
+          {
+            optionKey: 'eldritch-invocation-cantrip',
+            valueId: 'rajada-mistica',
+            instanceIndex: 2,
+          },
         ],
       });
     });
@@ -361,7 +366,7 @@ describe('applyCastSpell', () => {
       ).rejects.toThrow(BadRequestException);
     });
 
-    it('annotates cantrip casts with agonizing blast', async () => {
+    it('annotates cantrip casts with agonizing blast only when bound', async () => {
       catalogLookup.findSpellOrFail.mockResolvedValue({
         level: 0,
         concentration: false,
@@ -369,6 +374,9 @@ describe('applyCastSpell', () => {
       spellLookup.hasSpell.mockResolvedValue(true);
       const result = await castWarlock({ spellSlug: 'rajada-mistica' });
       expect(result.note).toMatch(/Explosão Agonizante/i);
+
+      const other = await castWarlock({ spellSlug: 'toque-gelido' });
+      expect(other.note ?? '').not.toMatch(/Explosão Agonizante/i);
     });
   });
 });

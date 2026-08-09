@@ -7,6 +7,7 @@ import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
+import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
@@ -66,6 +67,7 @@ import { CampaignModule } from '../campaign/campaign.module';
       PhbCharacterLevel,
       VPhbSpeciesTraitChoices,
       VSpellByClass,
+      VPhbSpell,
       VPhbSubclassPreparedSpell,
       PhbSubclassRef,
       PhbOptionValue,

@@ -6,6 +6,7 @@ import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
+import { CharacterInventoryModule } from '../inventory/character-inventory.module';
 import { SpellcastingModule } from '../spellcasting/spellcasting.module';
 import { PhbCondition } from './infrastructure/phb-condition.entity';
 import { PlayerCharacterState } from './infrastructure/player-character-state.entity';
@@ -44,6 +45,7 @@ import { WizardActionsHandler } from './application/actions/wizard-actions.handl
     ]),
     GameSharedModule,
     forwardRef(() => CharacterSheetModule),
+    CharacterInventoryModule,
     SpellcastingModule,
     CatalogModule,
     CombatModule,

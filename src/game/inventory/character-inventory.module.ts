@@ -9,11 +9,13 @@ import { GameSharedModule } from '../shared/game-shared.module';
 import {
   PlayerCharacterEquipment,
   PlayerCharacterFeat,
+  PlayerCharacterOption,
 } from '../sheet/infrastructure/player-sheet.entities';
 import { PlayerCharacterItem } from './infrastructure/player-character-item.entity';
 import { CharacterInventoryRepository } from './infrastructure/character-inventory.repository';
 import { EquipmentSlotResolver } from './infrastructure/equipment-slot-resolver';
 import { CharacterInventoryController } from './character-inventory.controller';
+import { AssertCanBindPactWeaponService } from './application/assert-can-bind-pact-weapon.service';
 import { AssertCanEquipItemService } from './application/assert-can-equip-item.service';
 import { AttachWeaponCharmHandler } from './application/attach-weapon-charm.handler';
 import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
@@ -28,6 +30,7 @@ import { SeedStartingInventoryHandler } from './application/seed-starting-invent
       PlayerCharacterItem,
       PlayerCharacterEquipment,
       PlayerCharacterFeat,
+      PlayerCharacterOption,
       PhbItem,
       PhbWeapon,
       VPhbArmor,
@@ -40,6 +43,7 @@ import { SeedStartingInventoryHandler } from './application/seed-starting-invent
   providers: [
     CharacterInventoryRepository,
     EquipmentSlotResolver,
+    AssertCanBindPactWeaponService,
     AssertCanEquipItemService,
     AttachWeaponCharmHandler,
     GetCharacterInventoryQuery,
@@ -48,6 +52,10 @@ import { SeedStartingInventoryHandler } from './application/seed-starting-invent
     RemoveInventoryItemHandler,
     SeedStartingInventoryHandler,
   ],
-  exports: [SeedStartingInventoryHandler],
+  exports: [
+    SeedStartingInventoryHandler,
+    CharacterInventoryRepository,
+    AssertCanBindPactWeaponService,
+  ],
 })
 export class CharacterInventoryModule {}

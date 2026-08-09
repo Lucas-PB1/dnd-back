@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isWarlockClass } from '@game/combat/domain/warlock-features';
+import { AssertCanBindPactWeaponService } from '@game/inventory/application/assert-can-bind-pact-weapon.service';
+import { CharacterInventoryRepository } from '@game/inventory/infrastructure/character-inventory.repository';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
@@ -15,9 +17,14 @@ import {
 } from './warlock/base-actions';
 import {
   resolveAwakenedMind,
+  resolveBeguilingDefenses,
+  resolveClairvoyantCombatant,
   resolveFeyStepEffect,
   resolveFiendishResilience,
+  resolveHurlThroughHell,
+  resolveSearingVengeance,
 } from './warlock/patron-actions';
+import { resolveInvokePactWeapon } from './warlock/pact-blade-actions';
 
 @Injectable()
 export class WarlockActionsHandler {
@@ -25,6 +32,8 @@ export class WarlockActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
+    private readonly inventory: CharacterInventoryRepository,
+    private readonly assertCanBindPact: AssertCanBindPactWeaponService,
   ) {}
 
   private deps(): WarlockActionDeps {
@@ -54,7 +63,7 @@ export class WarlockActionsHandler {
       case 'magical-cunning':
         return resolveMagicalCunning(deps, character);
       case 'healing-light':
-        return resolveHealingLight(deps, character);
+        return resolveHealingLight(deps, character, dto.diceCount);
       case 'dark-ones-luck':
         return resolveDarkOnesOwnLuck(deps, character);
       case 'fey-step-effect':
@@ -63,6 +72,24 @@ export class WarlockActionsHandler {
         return resolveAwakenedMind(deps, character);
       case 'fiendish-resilience':
         return resolveFiendishResilience(deps, character);
+      case 'invoke-pact-weapon':
+        return resolveInvokePactWeapon(
+          {
+            ...deps,
+            inventory: this.inventory,
+            assertCanBindPact: this.assertCanBindPact,
+          },
+          character,
+          dto.itemSlug,
+        );
+      case 'hurl-through-hell':
+        return resolveHurlThroughHell(deps, character);
+      case 'searing-vengeance':
+        return resolveSearingVengeance(deps, character);
+      case 'beguiling-defenses':
+        return resolveBeguilingDefenses(deps, character);
+      case 'clairvoyant-combatant':
+        return resolveClairvoyantCombatant(deps, character);
     }
   }
 }

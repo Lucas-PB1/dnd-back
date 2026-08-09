@@ -15,6 +15,7 @@ import {
 import {
   buildEldritchCantripCastNote,
   isWarlockClass,
+  readEldritchInvocationCantripBindings,
   readEldritchInvocationPicks,
   resolveEldritchInvocationFreeCast,
   type EldritchFreeCastResolution,
@@ -204,7 +205,8 @@ export async function applyCastSpell(input: {
   }
   const blastNote = buildEldritchCantripCastNote({
     spellLevel: spell.level,
-    pickedSlugs: invocationPicks.map((pick) => pick.slug),
+    spellSlug: dto.spellSlug,
+    bindings: readEldritchInvocationCantripBindings(sheet.classOptions),
     charismaModifier: abilityModifier(character.abilityScores.carisma ?? 10),
     warlockLevel: character.level,
   });

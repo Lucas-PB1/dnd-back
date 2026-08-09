@@ -35,6 +35,12 @@ export class InventoryItemResponseDto {
 
   @ApiProperty({
     example: false,
+    description: 'Arma vinculada ao Pacto da Lâmina (Bruxo)',
+  })
+  isPactWeapon!: boolean;
+
+  @ApiProperty({
+    example: false,
     description: 'True when phb_item.properties.requiresAttunement',
   })
   requiresAttunement!: boolean;
@@ -141,6 +147,15 @@ export class PatchInventoryItemDto {
   @IsOptional()
   @IsBoolean()
   attuned?: boolean;
+
+  @ApiPropertyOptional({
+    example: true,
+    description:
+      'Marcar / desmarcar como Arma de Pacto (Bruxo com Pacto da Lâmina; no máx. 1)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  pactWeapon?: boolean;
 }
 
 export class AttachWeaponCharmDto {

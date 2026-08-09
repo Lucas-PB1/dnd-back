@@ -84,6 +84,29 @@ export async function applyInventoryAttunement(input: {
   row.attuned = true;
 }
 
+export async function applyPactWeaponFlag(input: {
+  items: Repository<PlayerCharacterItem>;
+  characterId: string;
+  row: PlayerCharacterItem;
+  pactWeapon: boolean;
+}): Promise<void> {
+  const { items, characterId, row, pactWeapon } = input;
+  if (!pactWeapon) {
+    row.isPactWeapon = false;
+    return;
+  }
+
+  const previous = await items.find({
+    where: { characterId, isPactWeapon: true },
+  });
+  for (const other of previous) {
+    if (other.itemSlug === row.itemSlug) continue;
+    other.isPactWeapon = false;
+    await items.save(other);
+  }
+  row.isPactWeapon = true;
+}
+
 export function inventoryItemToDtoFromCatalog(
   catalogBySlug: Map<string, PhbItem>,
   row: PlayerCharacterItem,
@@ -105,6 +128,7 @@ export function inventoryItemToDtoFromCatalog(
     location: row.location,
     equipmentSlot: row.equipmentSlot,
     attuned: row.attuned,
+    isPactWeapon: row.isPactWeapon ?? false,
     requiresAttunement,
     effectsActive: itemEffectsActive(activation),
     effectsStatus: itemEffectsStatus(activation),

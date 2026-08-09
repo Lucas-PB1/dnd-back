@@ -37,6 +37,10 @@ export class PlayerCharacterItem {
   @Column({ type: 'boolean', default: false })
   attuned!: boolean;
 
+  /** Bruxo · Pacto da Lâmina: arma vinculada (no máximo uma por personagem). */
+  @Column({ name: 'is_pact_weapon', type: 'boolean', default: false })
+  isPactWeapon!: boolean;
+
   /** Slug do encanto de arma preso a este item (`weapon-charm-*`). */
   @Column({ name: 'attached_charm_slug', type: 'text', nullable: true })
   attachedCharmSlug!: string | null;

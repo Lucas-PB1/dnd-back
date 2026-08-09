@@ -37,7 +37,9 @@ function buildClassOptionsValidator(
     new CharacterClassExpertiseValidator(dataSource),
     new CharacterWeaponMasteryValidator(dataSource),
     new CharacterSpellMasteryValidator(dataSource),
-    new CharacterEldritchInvocationsValidator(dataSource),
+    new CharacterEldritchInvocationsValidator(dataSource, {
+      find: jest.fn(),
+    } as never),
   );
 }
 
