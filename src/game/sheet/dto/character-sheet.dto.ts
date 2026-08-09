@@ -36,7 +36,7 @@ export class SubclassOptionDto {
   valueId!: string;
 }
 
-/** Opções da classe (ex.: Especialização / Expertise). */
+/** Opções da classe (ex.: Especialização / Expertise / Invocações). */
 export class ClassOptionDto {
   @ApiProperty({ example: 'expertiseSkill1' })
   @IsString()
@@ -47,6 +47,16 @@ export class ClassOptionDto {
   @IsString()
   @IsNotEmpty()
   valueId!: string;
+
+  @ApiPropertyOptional({
+    example: 0,
+    default: 0,
+    description: 'Índice quando a mesma optionKey se repete (ex.: invocações)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(0)
+  instanceIndex?: number;
 }
 
 export class CharacterFeatDto {

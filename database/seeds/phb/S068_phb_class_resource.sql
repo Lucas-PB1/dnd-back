@@ -83,6 +83,14 @@ VALUES
     NULL,
     (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'),
     10
+  ),
+  (
+    'magical-cunning',
+    'Astúcia Mágica',
+    'class'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'),
+    2
   )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -275,4 +283,16 @@ SELECT 'class'::rpg.resource_owner_kind, c.id, rd.id, 14, 'wisdom_mod'::rpg.reso
 FROM rpg.phb_class c
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'naturesVeil' AND rd.class_id = c.id
 WHERE c.slug = 'ranger'
+ON CONFLICT DO NOTHING;
+
+-- Bruxo — Astúcia Mágica (1×/DL)
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT 'class'::rpg.resource_owner_kind, c.id, rd.id, 2, 'fixed'::rpg.resource_max_formula, 1,
+       FALSE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'magical-cunning' AND rd.class_id = c.id
+WHERE c.slug = 'warlock'
 ON CONFLICT DO NOTHING;

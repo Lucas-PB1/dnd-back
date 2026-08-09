@@ -1,7 +1,9 @@
 import {
   healingLightDiceMax,
   isWarlockClass,
+  magicalCunningSlotRecoveryCount,
   warlockCombatNotes,
+  warlockInvocationLimit,
   warlockPactSlotCount,
   warlockPactSlotLevel,
 } from './features';
@@ -29,6 +31,25 @@ describe('warlock-features', () => {
     expect(warlockPactSlotCount(17)).toBe(4);
   });
 
+  it('computes magical cunning recovery count', () => {
+    expect(magicalCunningSlotRecoveryCount(2)).toBe(1);
+    expect(magicalCunningSlotRecoveryCount(5)).toBe(1);
+    expect(magicalCunningSlotRecoveryCount(11)).toBe(2);
+    expect(magicalCunningSlotRecoveryCount(17)).toBe(2);
+    expect(magicalCunningSlotRecoveryCount(20)).toBe(4);
+  });
+
+  it('computes warlock invocation limit by level', () => {
+    expect(warlockInvocationLimit(1)).toBe(1);
+    expect(warlockInvocationLimit(2)).toBe(3);
+    expect(warlockInvocationLimit(5)).toBe(5);
+    expect(warlockInvocationLimit(7)).toBe(6);
+    expect(warlockInvocationLimit(9)).toBe(7);
+    expect(warlockInvocationLimit(12)).toBe(8);
+    expect(warlockInvocationLimit(15)).toBe(9);
+    expect(warlockInvocationLimit(18)).toBe(10);
+  });
+
   it('computes celestial healing light dice max pool', () => {
     expect(healingLightDiceMax(3)).toBe(4);
     expect(healingLightDiceMax(10)).toBe(11);
@@ -37,12 +58,20 @@ describe('warlock-features', () => {
   it('generates combat notes for base warlock and subclasses', () => {
     const notes = warlockCombatNotes({ classSlug: 'warlock', level: 5 });
     expect(notes.some((n) => n.includes('Magia de Pacto'))).toBe(true);
-    expect(notes.some((n) => n.includes('Contato Arcano'))).toBe(true);
+    expect(notes.some((n) => n.includes('Astúcia Mágica'))).toBe(true);
 
-    const fiendNotes = warlockCombatNotes({ classSlug: 'warlock', subclassSlug: 'fiend', level: 3 });
-    expect(fiendNotes.some((n) => n.includes('Sorte do Próprio Inferno'))).toBe(true);
+    const fiendNotes = warlockCombatNotes({
+      classSlug: 'warlock',
+      subclassSlug: 'fiend',
+      level: 3,
+    });
+    expect(fiendNotes.some((n) => n.includes('Bênção do Obscuro'))).toBe(true);
 
-    const celestialNotes = warlockCombatNotes({ classSlug: 'warlock', subclassSlug: 'celestial', level: 3 });
+    const celestialNotes = warlockCombatNotes({
+      classSlug: 'warlock',
+      subclassSlug: 'celestial',
+      level: 3,
+    });
     expect(celestialNotes.some((n) => n.includes('Luz Curativa'))).toBe(true);
   });
 });

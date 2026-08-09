@@ -38,7 +38,7 @@ Legenda: `[x]` feito · `[~]` parcial · `[ ]` não conferido
 | Bárbaro | `barbarian` | `[x]` feito |
 | Guerreiro | `fighter` | `[x]` feito |
 | Bardo | `bard` | `[x]` feito |
-| Bruxo | `warlock` | `[x]` feito |
+| Bruxo | `warlock` | `[~]` Magia de Pacto + Invocações MVP |
 | Clérigo | `cleric` | `[x]` feito |
 | Druida | `druid` | `[x]` feito |
 | Feiticeiro | `sorcerer` | `[x]` feito |
@@ -194,14 +194,14 @@ Divino; e bloquear automaticamente os 2d4 Descansos Longos após Desejo.
 
 ---
 
-### Bruxo (`warlock`) — `[x]`
+### Bruxo (`warlock`) — `[~]`
 
-- [x] Base: Magia de Pacto (slots de círculo único com recuperação no Descanso Curto e Longo), Contato Arcano (recupera 1 Slot de Pacto no nv 5+, 1×/DL) e Arcanum Místico (magias de 6º a 9º círculo)
-- [x] Celestial: Luz Curativa (reserva de 1 + nível em d6s para cura como Ação Bônus) e Alma Radiante (+CAR no dano Fogo/Radiante)
-- [x] Ínfero: Bênção do Obscuro (PV temp = CAR + nível ao matar inimigo), Sorte do Próprio Inferno (+1d10 em teste/salvaguarda) e Resiliência Ínfera
-- [x] Arquifada: Passo de Bruma Aprimorado (usos de Passo de Bruma com efeitos de Provocar, Desorientar ou Invisibilidade)
-- [x] Grande Antigo: Mente Desperta (telepatia a 9 m) e Feitiçaria Psiónica
-- [x] UI: `combat-warlock-panel`, exibição dos recursos de patrono e botões de ação
+- [x] Base: Magia de Pacto (slots recarregam no Descanso Curto **e** Longo), Astúcia Mágica L2 (metade dos slots, 1×/DL; L20 todos) e Arcanum Místico (nota)
+- [x] Invocações Místicas MVP: catálogo `phb_eldritch_invocation`, seleção via `classOptions`, passo na criação, painel na ficha/combate (efeitos mecânicos de cast ainda follow-up)
+- [x] Celestial: Luz Curativa
+- [x] Ínfero: Sorte do Próprio Tenebroso L6 (`dark-ones-luck`); Bênção/Resiliência (notes/botões)
+- [~] Arquifada / Grande Antigo: botões note; recursos `fey-steps` etc. ainda sem wire completo
+- [x] UI: `combat-warlock-panel` + bloco de invocações conhecidas
 
 ---
 

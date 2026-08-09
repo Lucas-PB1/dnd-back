@@ -1,4 +1,7 @@
 import {
+  DARK_ONES_LUCK_RESOURCE,
+  MAGICAL_CUNNING_RESOURCE,
+  magicalCunningSlotRecoveryCount,
   warlockPactSlotLevel,
 } from '../../../../combat/domain/warlock-features';
 import { rollDamageParts } from '../../../../dice/domain/dice';
@@ -14,16 +17,24 @@ export async function resolveMagicalCunning(
   deps: WarlockActionDeps,
   character: PlayerCharacter,
 ): Promise<WarlockTableActionResult> {
-  assertCharacterLevel(character, 5, 'Bruxo', 'Contato Arcano');
+  assertCharacterLevel(character, 2, 'Bruxo', 'Astúcia Mágica');
   const slotLvl = warlockPactSlotLevel(character.level);
-  await deps.state.recoverSpellSlotLevel(character, slotLvl);
-  const updatedState = await deps.state.buildResponse(character);
+  const recoverCount = magicalCunningSlotRecoveryCount(character.level);
+
+  await deps.state.useClassResource(
+    character,
+    MAGICAL_CUNNING_RESOURCE,
+    1,
+  );
+  for (let i = 0; i < recoverCount; i += 1) {
+    await deps.state.recoverSpellSlotLevel(character, slotLvl);
+  }
 
   return {
-    state: updatedState,
-    actionName: 'Contato Arcano',
+    state: await deps.state.buildResponse(character),
+    actionName: 'Astúcia Mágica',
     resourceSpent: true,
-    note: `Contato Arcano: Ação Bônus recuperou 1 Slot de Pacto de ${slotLvl}º círculo (1×/Descanso Longo).`,
+    note: `Astúcia Mágica: recuperou ${recoverCount} Slot(s) de Pacto de ${slotLvl}º círculo (1×/Descanso Longo).`,
   };
 }
 
@@ -61,13 +72,13 @@ export async function resolveDarkOnesOwnLuck(
   character: PlayerCharacter,
 ): Promise<WarlockTableActionResult> {
   assertCharacterSubclass(character, 'fiend', 'Patrono Ínfero');
-  assertCharacterLevel(character, 3, 'Bruxo', 'Sorte do Próprio Inferno');
+  assertCharacterLevel(character, 6, 'Bruxo', 'A Sorte do Próprio Tenebroso');
   const result = rollDamageParts('1d10', 0);
 
   let state;
   try {
     state = (
-      await deps.state.useClassResource(character, 'dark-ones-own-luck', 1)
+      await deps.state.useClassResource(character, DARK_ONES_LUCK_RESOURCE, 1)
     ).state;
   } catch {
     state = await deps.state.buildResponse(character);
@@ -75,10 +86,10 @@ export async function resolveDarkOnesOwnLuck(
 
   return {
     state,
-    actionName: 'Sorte do Próprio Inferno',
+    actionName: 'A Sorte do Próprio Tenebroso',
     expression: result.expression,
     total: result.total,
     resourceSpent: true,
-    note: `Sorte do Próprio Inferno: some +${result.total} (1d10) ao teste de habilidade ou salvaguarda que você acabou de rolar.`,
+    note: `A Sorte do Próprio Tenebroso: some +${result.total} (1d10) ao teste de habilidade ou salvaguarda que você acabou de rolar.`,
   };
 }

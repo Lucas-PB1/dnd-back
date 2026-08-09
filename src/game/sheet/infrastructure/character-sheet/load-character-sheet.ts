@@ -90,6 +90,7 @@ export async function loadCharacterSheet(
     classOptions: classOptionRows.map((row) => ({
       optionKey: row.optionKey,
       valueId: row.valueId,
+      instanceIndex: row.instanceIndex,
     })),
     characterFeats: featRows.map((row) => ({
       featSlug: row.featSlug,

@@ -19,6 +19,30 @@ export function warlockPactSlotCount(level: number): number {
   return 1;
 }
 
+/** Astúcia Mágica: recupera metade dos slots (ceil). L20 Mestre Místico: todos. */
+export function magicalCunningSlotRecoveryCount(level: number): number {
+  const max = warlockPactSlotCount(level);
+  if (level >= 20) return max;
+  return Math.ceil(max / 2);
+}
+
+/** Contagem PHB 2024 — coluna Invocações da tabela do Bruxo. */
+export function warlockInvocationLimit(level: number): number {
+  if (level >= 18) return 10;
+  if (level >= 15) return 9;
+  if (level >= 12) return 8;
+  if (level >= 9) return 7;
+  if (level >= 7) return 6;
+  if (level >= 5) return 5;
+  if (level >= 2) return 3;
+  if (level >= 1) return 1;
+  return 0;
+}
+
+export const ELDRITCH_INVOCATION_OPTION_KEY = 'eldritch-invocation';
+export const MAGICAL_CUNNING_RESOURCE = 'magical-cunning';
+export const DARK_ONES_LUCK_RESOURCE = 'dark-ones-luck';
+
 export function healingLightDiceMax(level: number): number {
   return 1 + level;
 }
@@ -44,14 +68,16 @@ export function warlockCombatNotes(input: {
 }
 
 function addBaseWarlockNotes(notes: string[], level: number): void {
-  if (level >= 2) {
+  const invocationLimit = warlockInvocationLimit(level);
+  if (invocationLimit > 0) {
     notes.push(
-      'Invocações Místicas: habilidades e truques aprimorados ativos na sua ficha.',
+      `Invocações Místicas: até ${invocationLimit} invocação(ões) conhecida(s) (veja o painel/ficha).`,
     );
   }
-  if (level >= 5) {
+  if (level >= 2) {
+    const recover = magicalCunningSlotRecoveryCount(level);
     notes.push(
-      'Contato Arcano: Ação Bônus recupera 1 Slot de Pacto (1×/Descanso Longo).',
+      `Astúcia Mágica: rito de 1 min recupera ${recover} slot(s) de Pacto (1×/Descanso Longo).`,
     );
   }
   if (level >= 11) {

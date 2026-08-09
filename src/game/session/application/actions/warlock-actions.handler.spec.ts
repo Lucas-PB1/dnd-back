@@ -40,25 +40,49 @@ describe('WarlockActionsHandler', () => {
     domain.getProficiencyBonus.mockResolvedValue(3);
   });
 
-  it('recovers 1 pact slot for Magical Cunning', async () => {
+  it('recovers half pact slots for Magical Cunning', async () => {
     const result = await handler.useTableAction('user-1', 'war-1', {
       actionSlug: 'magical-cunning',
     });
 
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'war-1' }),
+      'magical-cunning',
+      1,
+    );
+    expect(state.recoverSpellSlotLevel).toHaveBeenCalledTimes(1);
     expect(state.recoverSpellSlotLevel).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'war-1' }),
       3,
     );
-    expect(result.note).toContain('Contato Arcano');
+    expect(result.note).toContain('Astúcia Mágica');
   });
 
-  it('rolls 1d10 for Dark One’s Own Luck (Fiend)', async () => {
-    const result = await handler.useTableAction('user-1', 'war-1', {
-      actionSlug: 'dark-ones-own-luck',
+  it('requires level 6 for Dark One’s Luck', async () => {
+    await expect(
+      handler.useTableAction('user-1', 'war-1', {
+        actionSlug: 'dark-ones-luck',
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('rolls 1d10 for Dark One’s Luck (Fiend L6+)', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...warlock,
+      level: 6,
     });
 
+    const result = await handler.useTableAction('user-1', 'war-1', {
+      actionSlug: 'dark-ones-luck',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.anything(),
+      'dark-ones-luck',
+      1,
+    );
     expect(result.expression).toBe('1d10');
-    expect(result.note).toContain('Sorte do Próprio Inferno');
+    expect(result.note).toContain('Sorte do Próprio Tenebroso');
   });
 
   it('resolves Healing Light for Celestial Warlock', async () => {

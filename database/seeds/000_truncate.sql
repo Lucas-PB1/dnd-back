@@ -2,6 +2,7 @@
 -- Lote C: updated for phb_option_def/value unificado
 
 TRUNCATE TABLE
+  rpg.phb_eldritch_invocation,
   rpg.phb_class_ability_boost,
   rpg.phb_resource_grant,
   rpg.phb_combat_modifier,

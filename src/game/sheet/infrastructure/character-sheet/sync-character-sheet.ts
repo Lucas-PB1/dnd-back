@@ -72,7 +72,7 @@ export async function syncCharacterSheet(
           characterId,
           scope: 'class' as const,
           ownerSlug: '',
-          instanceIndex: 0,
+          instanceIndex: option.instanceIndex ?? 0,
           optionKey: option.optionKey,
           valueId: option.valueId,
         })),

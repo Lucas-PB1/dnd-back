@@ -15,6 +15,7 @@ import {
 } from '../../../domain/class-resources';
 import { resetDeathSaves } from '../../../domain/death-saves';
 import { PlayerCharacterState } from '../../player-character-state.entity';
+import { isWarlockClass } from '../../../../combat/domain/warlock-features';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 
@@ -98,6 +99,11 @@ export async function applyShortRestState(input: {
     state.resourcesUsed ?? {},
     resources,
   );
+
+  // Magia de Pacto: slots recarregam no Descanso Curto (pattern pact).
+  if (isWarlockClass(character.classSlug)) {
+    state.spellSlotsUsed = {};
+  }
 
   if (hitDiceSpent === 0) {
     await stateRepo.save(state);

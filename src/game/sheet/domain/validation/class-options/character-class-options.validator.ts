@@ -13,6 +13,7 @@ import { CharacterSubclassOptionsValidator } from './character-subclass-options.
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
 import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
+import { CharacterEldritchInvocationsValidator } from './character-eldritch-invocations.validator';
 import type { ClassProgressionMasteryRow } from './class-weapon-mastery-slots';
 
 /** Facade estável: fighting styles + delegação para validators por concern. */
@@ -26,6 +27,7 @@ export class CharacterClassOptionsValidator {
     private readonly expertiseValidator: CharacterClassExpertiseValidator,
     private readonly weaponMasteryValidator: CharacterWeaponMasteryValidator,
     private readonly spellMasteryValidator: CharacterSpellMasteryValidator,
+    private readonly eldritchInvocationsValidator: CharacterEldritchInvocationsValidator,
   ) {}
 
   async validateFightingStyleSelections(
@@ -143,6 +145,16 @@ export class CharacterClassOptionsValidator {
       ctx,
       options,
       characterSpells,
+    );
+  }
+
+  async validateEldritchInvocationOptions(
+    ctx: CharacterSheetContext,
+    options: NonNullable<CharacterSheetInput['classOptions']>,
+  ): Promise<void> {
+    return this.eldritchInvocationsValidator.validateEldritchInvocationOptions(
+      ctx,
+      options,
     );
   }
 

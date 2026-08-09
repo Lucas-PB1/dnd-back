@@ -12,6 +12,7 @@ import { CharacterSubclassOptionsValidator } from './character-subclass-options.
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
 import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
+import { CharacterEldritchInvocationsValidator } from './character-eldritch-invocations.validator';
 import { CharacterFeatOptionValueValidator } from '../feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from '../feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from '../feats/character-feats.validator';
@@ -36,6 +37,7 @@ function buildClassOptionsValidator(
     new CharacterClassExpertiseValidator(dataSource),
     new CharacterWeaponMasteryValidator(dataSource),
     new CharacterSpellMasteryValidator(dataSource),
+    new CharacterEldritchInvocationsValidator(dataSource),
   );
 }
 

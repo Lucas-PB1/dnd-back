@@ -68,6 +68,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       validateClassExpertiseOptions: jest.fn().mockResolvedValue(undefined),
       validateClassWeaponMasteryOptions: jest.fn().mockResolvedValue(undefined),
       validateSpellMasteryOptions: jest.fn().mockResolvedValue(undefined),
+      validateEldritchInvocationOptions: jest.fn().mockResolvedValue(undefined),
     };
     featsValidator = {
       validateCharacterFeats: jest.fn().mockResolvedValue(undefined),

@@ -79,7 +79,7 @@ export class UseSorcererTableActionDto {
 const WARLOCK_TABLE_ACTION_SLUGS = [
   'magical-cunning',
   'healing-light',
-  'dark-ones-own-luck',
+  'dark-ones-luck',
   'fey-step-effect',
   'awakened-mind',
   'fiendish-resilience',

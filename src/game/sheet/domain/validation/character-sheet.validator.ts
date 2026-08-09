@@ -65,6 +65,10 @@ export class CharacterSheetValidator {
         input.classOptions,
         input.characterSpells,
       );
+      await this.classOptionsValidator.validateEldritchInvocationOptions(
+        ctx,
+        input.classOptions,
+      );
     }
 
     const characterFeats = input.characterFeats ?? [];

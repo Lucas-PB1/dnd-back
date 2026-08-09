@@ -55,7 +55,7 @@ export class WarlockActionsHandler {
         return resolveMagicalCunning(deps, character);
       case 'healing-light':
         return resolveHealingLight(deps, character);
-      case 'dark-ones-own-luck':
+      case 'dark-ones-luck':
         return resolveDarkOnesOwnLuck(deps, character);
       case 'fey-step-effect':
         return resolveFeyStepEffect(deps, character);

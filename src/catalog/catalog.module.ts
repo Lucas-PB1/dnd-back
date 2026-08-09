@@ -13,6 +13,7 @@ import { EquipmentModule } from './equipment/equipment.module';
 import { ItemsModule } from './items/items.module';
 import { ReferenceModule } from './reference/reference.module';
 import { CombatMechanicalModule } from './combat-mechanical/combat-mechanical.module';
+import { EldritchInvocationsModule } from './eldritch-invocations/eldritch-invocations.module';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { CombatMechanicalModule } from './combat-mechanical/combat-mechanical.mo
     ItemsModule,
     ReferenceModule,
     CombatMechanicalModule,
+    EldritchInvocationsModule,
   ],
   exports: [CatalogLookupModule],
 })
