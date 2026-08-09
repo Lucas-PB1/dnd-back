@@ -9,7 +9,7 @@ import { PlayerCharacter } from './player-character.entity';
 import {
   CampaignCharacterAccessService,
   CharacterAccessMode,
-} from '../../campaign/infrastructure/campaign-character-access.service';
+} from '@game/campaign/infrastructure/campaign-character-access.service';
 
 @Injectable()
 export class CharacterRepository {

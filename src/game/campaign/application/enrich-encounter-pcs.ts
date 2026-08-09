@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
-import { ResolveEquippedArmorClass } from '../../combat/application/resolve-equipped-armor-class';
-import { PlayerCharacterState } from '../../session/infrastructure/player-character-state.entity';
-import { loadFeatSlugsByCharacterIds } from '../../sheet/infrastructure/load-feat-slugs-by-character-ids';
-import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import { ResolveEquippedArmorClass } from '@game/combat/application/resolve-equipped-armor-class';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
+import { loadFeatSlugsByCharacterIds } from '@game/sheet/infrastructure/load-feat-slugs-by-character-ids';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { PcCombatantEnrichment } from '../domain/build-encounter-dto';
 
 @Injectable()

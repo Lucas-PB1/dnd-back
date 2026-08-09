@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterFeatsValidator } from './character-feats.validator';
 import { CharacterFeatOptionsValidator } from './character-feat-options.validator';
 

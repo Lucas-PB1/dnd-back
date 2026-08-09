@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { assertUnique } from '../../../../../common/assert';
-import { VPhbSpeciesTraitChoices } from '../../../../../entities/views/v-phb-species-trait-choices.entity';
-import { CharacterSheetInput } from '../../character-sheet.types';
+import { assertUnique } from '@common/assert';
+import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
+import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 
 const OPTIONAL_KINDS = new Set(['high_elf_cantrip']);
 

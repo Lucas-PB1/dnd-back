@@ -1,6 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { In, Repository } from 'typeorm';
-import { generateCampaignInviteCode } from '../../domain/invite-code';
+import { generateCampaignInviteCode } from '@game/campaign/domain/invite-code';
 import { Campaign } from '../campaign.entity';
 import { CampaignMember, CampaignRole } from '../campaign-member.entity';
 import {

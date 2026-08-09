@@ -1,4 +1,4 @@
-import { FIXTURE_SOULKNIFE_ACTIONS } from '../../../combat/domain/__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_SOULKNIFE_ACTIONS } from '@game/combat/domain/__fixtures__/mechanical-catalog.fixtures';
 import { RogueActionsHandler } from './rogue-actions.handler';
 
 describe('RogueActionsHandler', () => {

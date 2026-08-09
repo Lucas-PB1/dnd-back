@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbClassFeature } from '../../../entities/views/v-phb-class-feature.entity';
-import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '../../../common/dto/pagination.dto';
+import { VPhbClassFeature } from '@entities/views/v-phb-class-feature.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
 import { ClassFeatureResponseDto } from '../dto/class-feature-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 

@@ -3,7 +3,7 @@ import {
   CharacterSheetData,
   EMPTY_SHEET_DATA,
   type GrantedSpellSheetSlice,
-} from '../../domain/character-sheet.types';
+} from '@game/sheet/domain/character-sheet.types';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
   PlayerCharacterEquipment,

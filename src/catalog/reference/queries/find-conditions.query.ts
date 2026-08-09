@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbCondition } from '../../../game/session/infrastructure/phb-condition.entity';
+import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
 import { ConditionResponseDto } from '../dto/condition-response.dto';
 
 @Injectable()

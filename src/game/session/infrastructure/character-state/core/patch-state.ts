@@ -1,14 +1,14 @@
 import { BadRequestException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
-import { clampDeathSaveCount } from '../../../domain/death-saves';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { clampDeathSaveCount } from '@game/session/domain/death-saves';
 import {
   CharacterStateResponseDto,
   PatchCharacterStateDto,
-} from '../../../dto/character-state.dto';
-import { PhbCondition } from '../../phb-condition.entity';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+} from '@game/session/dto/character-state.dto';
+import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { assertValidConditions } from './conditions';
 import type { BuildResponse } from './mutation-types';
 

@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 
 describe('clampHitDiceToLevel', () => {

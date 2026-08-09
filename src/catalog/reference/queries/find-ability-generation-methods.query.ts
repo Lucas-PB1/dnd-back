@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbAbilityGenerationMethod } from '../../../entities/phb-ability-generation-method.entity';
+import { PhbAbilityGenerationMethod } from '@entities/phb-ability-generation-method.entity';
 import { AbilityGenerationMethodResponseDto } from '../dto/ability-generation-method-response.dto';
 
 @Injectable()

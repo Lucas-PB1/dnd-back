@@ -18,9 +18,9 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { SupabaseAuthGuard } from '../../../identity/guards/supabase-auth.guard';
-import { CurrentUser } from '../../../identity/decorators/current-user.decorator';
-import { AuthUser } from '../../../identity/auth-user';
+import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
+import { CurrentUser } from '@identity/decorators/current-user.decorator';
+import { AuthUser } from '@identity/auth-user';
 import { GetCharacterStateQuery } from '../application/core/get-character-state.query';
 import { PatchCharacterStateHandler } from '../application/core/patch-character-state.handler';
 import { CastSpellHandler } from '../application/core/cast-spell.handler';

@@ -1,7 +1,7 @@
 import { AssertCanEquipItemService } from './assert-can-equip-item.service';
 import { assertCanEquipItem } from '../domain/assert-can-equip-item';
-import type { ResolveEquipmentCompliance } from '../../combat/application/resolve-equipment-compliance';
-import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import type { ResolveEquipmentCompliance } from '@game/combat/application/resolve-equipment-compliance';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
 jest.mock('../domain/assert-can-equip-item', () => ({
   assertCanEquipItem: jest.fn(),

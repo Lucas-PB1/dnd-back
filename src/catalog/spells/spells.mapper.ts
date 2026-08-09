@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { VPhbSpell } from '../../entities/views/v-phb-spell.entity';
+import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { SpellResponseDto } from './dto/spell-response.dto';
 import { SpellSummaryResponseDto } from './dto/spell-summary-response.dto';
 

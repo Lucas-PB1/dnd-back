@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbFeat } from '../../../entities/views/v-phb-feat.entity';
+import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import {
   applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
-} from '../../../common/dto/pagination.dto';
+} from '@common/dto/pagination.dto';
 import { FeatResponseDto } from '../dto/feat-response.dto';
 import { FeatSummaryResponseDto } from '../dto/feat-summary-response.dto';
 import { FeatsMapper } from '../feats.mapper';

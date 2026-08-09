@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import type { SpeciesChoiceDto } from '../../dto/character-sheet.dto';
+import type { SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
 
 const HIGH_ELF_CANTRIP = 'high_elf_cantrip';
 

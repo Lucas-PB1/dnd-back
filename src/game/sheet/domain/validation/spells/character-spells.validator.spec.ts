@@ -7,9 +7,9 @@ jest.mock('./assert-spell-quotas', () => ({
 }));
 
 import { DataSource, Repository } from 'typeorm';
-import { VSpellByClass } from '../../../../../entities/views/v-spell-by-class.entity';
-import { VPhbSubclassPreparedSpell } from '../../../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { LoadGrantedSpellCatalog } from '../../../../spellcasting/application/load-granted-spell-catalog';
+import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { CharacterSpellsValidator } from './character-spells.validator';
 import { assertSpellQuotas } from './assert-spell-quotas';
 import { validateSpellListAccess } from './validate-spell-list-access';

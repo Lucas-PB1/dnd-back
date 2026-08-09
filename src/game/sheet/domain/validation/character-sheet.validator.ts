@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterSheetInput, CharacterSheetContext } from '../character-sheet.types';
-import { FeatOptionDto, CharacterFeatDto } from '../../dto/character-sheet.dto';
+import { FeatOptionDto, CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 import { CharacterBackgroundValidator } from './background/character-background.validator';
 import { CharacterEquipmentValidator } from './equipment/character-equipment.validator';
 import { CharacterSpellsValidator } from './spells/character-spells.validator';
@@ -91,6 +91,7 @@ export class CharacterSheetValidator {
         input.featOptions,
         input.characterFeats ?? ctx.characterFeats,
         input.speciesChoices,
+        input.classOptions,
       );
     }
 

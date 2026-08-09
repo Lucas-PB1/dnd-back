@@ -1,5 +1,5 @@
 import { DataSource, Repository } from 'typeorm';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 
 export async function loadReloadCapacity(
   dataSource: DataSource,

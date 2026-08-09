@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PhbAbility } from '../../entities/phb-ability.entity';
+import { PhbAbility } from '@entities/phb-ability.entity';
 import { AbilityResponseDto } from './dto/ability-response.dto';
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { FindFeatOptionsQuery } from './queries/find-feat-options.query';
-import { PhbOptionDef, PhbOptionValue } from '../../entities/phb-option.entity';
-import { PhbFeatRef } from '../../entities/phb-feat-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
 
 describe('FindFeatOptionsQuery', () => {
   let query: FindFeatOptionsQuery;

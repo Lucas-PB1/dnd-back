@@ -2,11 +2,11 @@ import { BadRequestException } from '@nestjs/common';
 import {
   computeEquipmentCompliance,
   type EquippedArmorCompliancePiece,
-} from '../../combat/domain/equipment-compliance';
+} from '@game/combat/domain/equipment-compliance';
 import {
   isProficient,
   type EquippedWeaponPiece,
-} from '../../combat/domain/weapon-attack';
+} from '@game/combat/domain/weapon-attack';
 
 export type AssertCanEquipArmorInput = {
   kind: 'armor';

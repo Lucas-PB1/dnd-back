@@ -1,9 +1,9 @@
-import { rollDie } from '../../../../dice/domain/dice';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
+import { rollDie } from '@game/dice/domain/dice';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
-} from '../../core/table-action-guards';
+} from '@game/session/application/core/table-action-guards';
 import type {
   PlayerCharacter,
   RogueActionDeps,

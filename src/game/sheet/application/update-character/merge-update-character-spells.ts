@@ -1,11 +1,13 @@
+import { DataSource } from 'typeorm';
 import {
   CharacterSheetData,
   CharacterSheetInput,
-} from '../../domain/character-sheet.types';
-import { CharacterFeatDto, FeatOptionDto, SpeciesChoiceDto } from '../../dto/character-sheet.dto';
-import { UpdateCharacterDto } from '../../dto/update-character.dto';
-import { mergeGrantedSpells } from '../../../spellcasting/application/merge-granted-spells';
-import { LoadGrantedSpellCatalog } from '../../../spellcasting/application/load-granted-spell-catalog';
+} from '@game/sheet/domain/character-sheet.types';
+import { CharacterFeatDto, FeatOptionDto, SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
+import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
+import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { resolveEldritchGrantedSpellSlugs } from '../eldritch-granted-spells';
 
 export async function mergeUpdateCharacterSpells(input: {
   dto: UpdateCharacterDto;
@@ -25,6 +27,7 @@ export async function mergeUpdateCharacterSpells(input: {
   effectiveFeatOptions: FeatOptionDto[];
   effectiveSpeciesChoices: SpeciesChoiceDto[] | undefined;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  dataSource: DataSource;
 }): Promise<void> {
   const {
     dto,
@@ -36,6 +39,7 @@ export async function mergeUpdateCharacterSpells(input: {
     effectiveFeatOptions,
     effectiveSpeciesChoices,
     grantedSpellCatalog,
+    dataSource,
   } = input;
 
   const featSlugs = [
@@ -50,6 +54,16 @@ export async function mergeUpdateCharacterSpells(input: {
     });
   const previousSubclassGrantedSpells =
     await grantedSpellCatalog.loadSubclassGrantedSpells(previous.subclassSlug);
+
+  const nextClassOptions =
+    dto.classOptions !== undefined
+      ? dto.classOptions
+      : sheetSnapshot.classOptions;
+  const [extraGrantedSpellSlugs, previousExtraGrantedSpellSlugs] =
+    await Promise.all([
+      resolveEldritchGrantedSpellSlugs(dataSource, nextClassOptions),
+      resolveEldritchGrantedSpellSlugs(dataSource, sheetSnapshot.classOptions),
+    ]);
 
   sheetInput.characterSpells = mergeGrantedSpells(
     dto.characterSpells ?? sheetSnapshot.characterSpells,
@@ -68,6 +82,8 @@ export async function mergeUpdateCharacterSpells(input: {
       featFixedSpells,
       subclassGrantedSpells,
       previousSubclassGrantedSpells,
+      extraGrantedSpellSlugs,
+      previousExtraGrantedSpellSlugs,
     },
   );
 

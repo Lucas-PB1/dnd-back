@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import { LevelUpService } from './level-up.service';
-import type { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
-import type { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
-import type { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
-import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import type { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
 type Repo = { findOne: jest.Mock; find: jest.Mock };
 

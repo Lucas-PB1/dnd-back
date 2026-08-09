@@ -15,7 +15,7 @@ import {
   CharacterSpellDto,
   FeatOptionDto,
   SpeciesChoiceDto,
-} from '../../sheet/dto/character-sheet.dto';
+} from '@game/sheet/dto/character-sheet.dto';
 
 export class PreviewGrantedSpellsDto {
   @ApiProperty({ example: 'elf' })

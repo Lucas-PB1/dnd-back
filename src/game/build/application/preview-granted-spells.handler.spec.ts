@@ -3,7 +3,7 @@ import {
   PreviewGrantedSpellsResponseDto,
 } from '../dto/preview-granted-spells.dto';
 import { PreviewGrantedSpellsHandler } from './preview-granted-spells.handler';
-import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 
 describe('PreviewGrantedSpellsHandler', () => {
   it('merges species/feat grants and annotates sources', async () => {

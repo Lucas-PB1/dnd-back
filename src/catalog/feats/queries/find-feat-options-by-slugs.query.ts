@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { PhbOptionDef, PhbOptionValue } from '../../../entities/phb-option.entity';
-import { PhbFeatRef } from '../../../entities/phb-feat-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
 import { FeatOptionResponseDto } from '../dto/feat-option-response.dto';
 
 export type FeatOptionsBySlugDto = {

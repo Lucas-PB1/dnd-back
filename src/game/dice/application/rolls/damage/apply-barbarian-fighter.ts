@@ -1,9 +1,9 @@
 import {
   divineFuryExtraDice,
   hasDivineFury,
-} from '../../../../combat/domain/barbarian-rage';
-import { psiEnergyDieFaces } from '../../../../combat/domain/fighter-features';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
+} from '@game/combat/domain/barbarian-rage';
+import { psiEnergyDieFaces } from '@game/combat/domain/fighter-features';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 

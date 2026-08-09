@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterRepository } from '../../shared/infrastructure/character.repository';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { CharacterResponseDto } from '../dto/character-response.dto';
-import { CampaignService } from '../../campaign/application/campaign.service';
+import { CampaignService } from '@game/campaign/application/campaign.service';
 
 @Injectable()
 export class GetCharacterQuery {

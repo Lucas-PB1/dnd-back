@@ -3,7 +3,7 @@ import {
   type EquippedArmorPiece,
   type UnarmoredDefenseRow,
 } from './armor-class';
-import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 
 const BARBARIAN_UD: UnarmoredDefenseRow = {
   label: 'Defesa sem Armadura (bárbaro)',

@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isSorcererClass } from '../../../combat/domain/sorcerer-features';
-import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
+import { isSorcererClass } from '@game/combat/domain/sorcerer-features';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
   UseSorcererTableActionDto,
-} from '../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { SorcererActionDeps } from './sorcerer/sorcerer-action-deps';
 import {
   convertPointsToSlot,

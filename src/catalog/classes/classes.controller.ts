@@ -7,7 +7,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { PaginationQueryDto } from '@common/dto/pagination.dto';
 import { ClassesQueryDto } from './dto/classes-query.dto';
 import { FindClassesQuery } from './queries/find-classes.query';
 import { FindClassBySlugQuery } from './queries/find-class-by-slug.query';

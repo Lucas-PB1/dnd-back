@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { CatalogLookupService } from '../../catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { SubclassSpellcastingResponseDto } from '../dto/subclass-spellcasting-response.dto';
 
 type SpellcastingRow = {

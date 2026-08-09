@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { requireFound } from '../../../common/require-found';
-import { PhbSkill } from '../../../entities/phb-skill.entity';
+import { requireFound } from '@common/require-found';
+import { PhbSkill } from '@entities/phb-skill.entity';
 import { SkillResponseDto } from '../dto/skill-response.dto';
 import { SkillsMapper } from '../skills.mapper';
 

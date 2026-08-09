@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PhbFightingStyle } from '../../entities/phb-fighting-style.entity';
+import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
 import { FightingStyleResponseDto } from './dto/fighting-style-response.dto';
 
 @Injectable()

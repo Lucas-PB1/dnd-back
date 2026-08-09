@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
-import { CatalogLookupService } from '../../catalog-lookup.service';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import {
   PaginatedResponseDto,
   paginateOrNotFound,
-} from '../../../common/dto/pagination.dto';
+} from '@common/dto/pagination.dto';
 import { SubclassSpellSlotsResponseDto } from '../dto/subclass-spellcasting-response.dto';
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
-import { PhbItem } from '../../../entities/phb-item.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PhbItem } from '@entities/phb-item.entity';
 import { PlayerCharacterItem } from './player-character-item.entity';
 import {
   AddInventoryItemDto,

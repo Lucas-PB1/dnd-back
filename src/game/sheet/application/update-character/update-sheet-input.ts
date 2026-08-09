@@ -1,9 +1,9 @@
-import { UpdateCharacterDto } from '../../dto/update-character.dto';
-import { CharacterFeatDto, FeatOptionDto } from '../../dto/character-sheet.dto';
+import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
+import { CharacterFeatDto, FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import {
   CharacterSheetData,
   CharacterSheetInput,
-} from '../../domain/character-sheet.types';
+} from '@game/sheet/domain/character-sheet.types';
 
 export function featSlugsOf(feats: readonly CharacterFeatDto[]): string[] {
   return feats.map((feat) => feat.featSlug).sort();
@@ -53,6 +53,7 @@ export function shouldResyncCharacterSpells(
     dto.featOptions !== undefined ||
     dto.characterFeats !== undefined ||
     dto.speciesChoices !== undefined ||
+    dto.classOptions !== undefined ||
     speciesChanged ||
     subclassChanged ||
     levelChanged

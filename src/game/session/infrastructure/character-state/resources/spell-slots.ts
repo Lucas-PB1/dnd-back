@@ -1,11 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { VClassSpellSlots } from '../../../../../entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '../../../../../entities/views/v-subclass-spell-slots.entity';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import {
   PlayerCharacterState,
   SpellSlotsUsed,
-} from '../../player-character-state.entity';
+} from '@game/session/infrastructure/player-character-state.entity';
 
 export async function loadMaxSlots(
   classSlots: Repository<VClassSpellSlots>,

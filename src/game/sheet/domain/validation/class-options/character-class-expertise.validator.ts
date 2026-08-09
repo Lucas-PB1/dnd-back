@@ -1,13 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { assertUnique } from '../../../../../common/assert';
-import { CharacterSheetInput, CharacterSheetContext } from '../../character-sheet.types';
+import { assertUnique } from '@common/assert';
+import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import {
   allowedExpertiseSkillSlugsForClass,
   classExpertiseSlotsAtLevel,
   isClassExpertiseOptionKey,
 } from './class-expertise-slots';
-import { collectProficientSkillSlugs } from '../../stats/character-check-bonuses';
+import { collectProficientSkillSlugs } from '@game/sheet/domain/stats/character-check-bonuses';
 
 @Injectable()
 export class CharacterClassExpertiseValidator {
@@ -27,7 +27,7 @@ export class CharacterClassExpertiseValidator {
     const unlockedKeys = new Set(unlocked.map((slot) => slot.optionKey));
 
     assertUnique(
-      options.map((option) => option.optionKey),
+      expertiseOptions.map((option) => option.optionKey),
       'Duplicate class option keys are not allowed',
     );
 

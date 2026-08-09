@@ -2,7 +2,7 @@ import {
   computeDerivedStats,
   type AbilityModifiers,
 } from './character-derived-stats';
-import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 
 describe('character-derived-stats', () => {
   const scores: AbilityScores = {

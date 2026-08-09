@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { requireFound } from '../../../common/require-found';
-import { PhbWeapon } from '../../../entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '../../../entities/phb-weapon-mastery.entity';
-import { PhbWeaponProperty } from '../../../entities/phb-weapon-property.entity';
+import { requireFound } from '@common/require-found';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import { PhbWeaponProperty } from '@entities/phb-weapon-property.entity';
 import { WeaponResponseDto } from '../dto/weapon-response.dto';
 import { EquipmentMapper } from '../equipment.mapper';
 import {

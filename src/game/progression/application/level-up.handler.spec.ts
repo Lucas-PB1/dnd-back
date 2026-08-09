@@ -1,12 +1,12 @@
 import { BadRequestException } from '@nestjs/common';
 import { LevelUpHandler } from './level-up.handler';
 import { LevelUpPreviewQuery } from './level-up-preview.query';
-import type { CharacterRepository } from '../../shared/infrastructure/character.repository';
-import type { UpdateCharacterHandler } from '../../sheet/application/update-character.handler';
-import type { CharacterStateRepository } from '../../session/infrastructure/character-state.repository';
-import type { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
+import type { CharacterRepository } from '@game/shared/infrastructure/character.repository';
+import type { UpdateCharacterHandler } from '@game/sheet/application/update-character.handler';
+import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import type { LevelUpService } from '../domain/level-up.service';
-import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
 const fighterProgression = [
   { level: 1, weaponMastery: 3 },

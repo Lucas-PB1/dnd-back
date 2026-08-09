@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { FIXTURE_BESTIAL_ASPECT_BENEFITS } from '../../../combat/domain/__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_BESTIAL_ASPECT_BENEFITS } from '@game/combat/domain/__fixtures__/mechanical-catalog.fixtures';
 import { RangerActionsHandler } from './ranger-actions.handler';
 
 describe('RangerActionsHandler', () => {

@@ -17,9 +17,9 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { SupabaseAuthGuard } from '../../identity/guards/supabase-auth.guard';
-import { CurrentUser } from '../../identity/decorators/current-user.decorator';
-import { AuthUser } from '../../identity/auth-user';
+import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
+import { CurrentUser } from '@identity/decorators/current-user.decorator';
+import { AuthUser } from '@identity/auth-user';
 import { LevelUpPreviewQuery } from './application/level-up-preview.query';
 import { LevelUpHandler } from './application/level-up.handler';
 import { LevelUpDto, LevelUpPreviewDto } from './dto/level-up.dto';

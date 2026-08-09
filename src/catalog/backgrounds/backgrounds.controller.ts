@@ -6,7 +6,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { PaginationQueryDto } from '@common/dto/pagination.dto';
 import { BackgroundsQueryDto } from './dto/backgrounds-query.dto';
 import { FindBackgroundsQuery } from './queries/find-backgrounds.query';
 import { FindBackgroundBySlugQuery } from './queries/find-background-by-slug.query';

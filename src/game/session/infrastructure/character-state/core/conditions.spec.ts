@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { PhbCondition } from '../../phb-condition.entity';
+import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
 import { assertValidConditions } from './conditions';
 
 describe('conditions', () => {

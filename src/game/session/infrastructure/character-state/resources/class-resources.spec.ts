@@ -4,7 +4,7 @@ import {
   loadClassResourceSchedule,
   resolveClassResources,
 } from './class-resources';
-import { DEFAULT_ABILITY_SCORES } from '../../../../shared/infrastructure/player-character.entity';
+import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
 
 describe('character-state/class-resources', () => {
   let dataSource: { query: jest.Mock };

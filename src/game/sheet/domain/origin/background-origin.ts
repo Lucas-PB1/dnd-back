@@ -1,5 +1,5 @@
-import { CharacterFeatDto } from '../../dto/character-sheet.dto';
-import { VPhbBackground } from '../../../../entities/views/v-phb-background.entity';
+import { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
+import { VPhbBackground } from '@entities/views/v-phb-background.entity';
 import { nextFeatInstanceIndex } from '../validation/feats/character-feat';
 
 export function resolveBackgroundOriginCharacterFeats(

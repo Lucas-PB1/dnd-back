@@ -2,15 +2,15 @@ import { BadRequestException, ForbiddenException } from '@nestjs/common';
 import { CampaignEncounterInitiativeService } from './campaign-encounter-initiative.service';
 import type { CampaignRepository } from '../infrastructure/campaign.repository';
 import type { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
-import type { CharacterRollsService } from '../../dice/application/character-rolls.service';
+import type { CharacterRollsService } from '@game/dice/application/character-rolls.service';
 import type { LoadEncounterDto } from './load-encounter-dto';
 import type { CampaignEncounter } from '../infrastructure/campaign-encounter.entity';
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
-import { rollD20Check } from '../../dice/domain/dice';
+import { rollD20Check } from '@game/dice/domain/dice';
 
-jest.mock('../../dice/domain/dice', () => ({
-  ...jest.requireActual('../../dice/domain/dice'),
+jest.mock('@game/dice/domain/dice', () => ({
+  ...jest.requireActual('@game/dice/domain/dice'),
   rollD20Check: jest.fn(),
 }));
 

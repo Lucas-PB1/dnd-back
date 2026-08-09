@@ -1,10 +1,10 @@
 import {
   destroyUndeadDice,
   divineSparkDice,
-} from '../../../../combat/domain/cleric-features';
-import { rollDamageParts } from '../../../../dice/domain/dice';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
-import { assertCharacterLevel } from '../../core/table-action-guards';
+} from '@game/combat/domain/cleric-features';
+import { rollDamageParts } from '@game/dice/domain/dice';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type {
   ClericActionDeps,
   ClericTableActionResult,

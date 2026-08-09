@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { CharacterSheetContext } from '../../character-sheet.types';
+import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
 
 describe('CharacterWeaponMasteryValidator', () => {

@@ -1,6 +1,6 @@
 import { FindWeaponsQuery } from './find-weapons.query';
 import type { EquipmentMapper } from '../equipment.mapper';
-import type { PhbWeapon } from '../../../entities/phb-weapon.entity';
+import type { PhbWeapon } from '@entities/phb-weapon.entity';
 
 function weaponRow(overrides: Partial<PhbWeapon> = {}): PhbWeapon {
   return {

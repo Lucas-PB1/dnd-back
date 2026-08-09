@@ -6,7 +6,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationQueryDto, PaginatedResponseDto } from '../../common/dto/pagination.dto';
+import { PaginationQueryDto, PaginatedResponseDto } from '@common/dto/pagination.dto';
 import { FeatsBySlugsQueryDto } from './dto/feats-by-slugs-query.dto';
 import { FeatsQueryDto } from './dto/feats-query.dto';
 import { FindFeatsQuery } from './queries/find-feats.query';

@@ -1,7 +1,7 @@
 import {
   CharacterStateResponseDto,
   UseManeuverResponseDto,
-} from '../../../dto/character-state.dto';
+} from '@game/session/dto/character-state.dto';
 import { reloadAllFirearms, loadReloadCapacity } from './firearm-ops';
 import type { MartialSessionDeps, PlayerCharacter } from './martial-deps';
 import {

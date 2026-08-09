@@ -1,10 +1,10 @@
-import type { LoadCombatMechanicalCatalog } from '../../../../combat/application/load-combat-mechanical-catalog';
-import type { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
+import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   FighterTableActionResponseDto,
   UseRangerTableActionDto,
-} from '../../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../../infrastructure/character-state.repository';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export const FAVORED_ENEMY_SLUG = 'favoredEnemy';
 export const TIRELESS_SLUG = 'tireless';

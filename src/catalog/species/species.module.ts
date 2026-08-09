@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbSpecies } from '../../entities/phb-species.entity';
-import { PhbSpeciesTrait } from '../../entities/phb-species-trait.entity';
-import { VPhbSpeciesTraitChoices } from '../../entities/views/v-phb-species-trait-choices.entity';
+import { PhbSpecies } from '@entities/phb-species.entity';
+import { PhbSpeciesTrait } from '@entities/phb-species-trait.entity';
+import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { CatalogLookupModule } from '../catalog-lookup.module';
 import { SpeciesController } from './species.controller';
 import { SpeciesMapper } from './species.mapper';

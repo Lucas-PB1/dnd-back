@@ -1,17 +1,17 @@
 import { BadRequestException } from '@nestjs/common';
 import type { DataSource } from 'typeorm';
-import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
-import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
-import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import type { LoadCombatMechanicalCatalog } from '../../../combat/application/load-combat-mechanical-catalog';
-import type { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
-import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
-import { rollDamageParts } from '../../domain/dice';
+import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
+import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import type { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
+import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { rollDamageParts } from '@game/dice/domain/dice';
 import type {
   CharacterRollResponseDto,
   RollDamageDto,
-} from '../../dto/character-roll.dto';
-import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
+} from '@game/dice/dto/character-roll.dto';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
 import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbArmor } from '../../../entities/views/v-phb-armor.entity';
+import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 import {
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
-} from '../../../common/dto/pagination.dto';
+} from '@common/dto/pagination.dto';
 import { ArmorResponseDto } from '../dto/armor-response.dto';
 import { EquipmentMapper } from '../equipment.mapper';
 

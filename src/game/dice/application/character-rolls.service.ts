@@ -1,10 +1,10 @@
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
-import { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
-import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
-import { LoadCombatMechanicalCatalog } from '../../combat/application/load-combat-mechanical-catalog';
-import { ResolveEquippedWeaponAttacks } from '../../combat/application/resolve-equipped-weapon-attacks';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import {
   CharacterRollResponseDto,
   RollAttackDto,
@@ -18,8 +18,8 @@ import { executeRollDamage } from './rolls/roll-damage';
 import { executeRollInitiative } from './rolls/roll-initiative';
 import { executeRollSavingThrow } from './rolls/roll-saving-throw';
 import { executeRollSkill } from './rolls/roll-skill';
-import { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
-import { CharacterStateRepository } from '../../session/infrastructure/character-state.repository';
+import { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 @Injectable()
 export class CharacterRollsService {

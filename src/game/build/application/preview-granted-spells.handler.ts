@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
-import { mergeGrantedSpells } from '../../spellcasting/application/merge-granted-spells';
-import { annotateSpellSources } from '../../spellcasting/application/annotate-spell-sources';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
+import { annotateSpellSources } from '@game/spellcasting/application/annotate-spell-sources';
 import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
-} from '../../spellcasting/domain/granted-spells';
+} from '@game/spellcasting/domain/granted-spells';
 import {
   PreviewGrantedSpellsDto,
   PreviewGrantedSpellsResponseDto,

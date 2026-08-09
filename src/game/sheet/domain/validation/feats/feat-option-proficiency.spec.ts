@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
-import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
-import type { FeatOptionDto } from '../../../dto/character-sheet.dto';
+import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import type { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 
 describe('validateFeatProficiencyOption', () => {
   let dataSource: { query: jest.Mock };

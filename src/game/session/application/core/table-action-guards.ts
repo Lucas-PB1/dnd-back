@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import type { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
 export function assertCharacterLevel(
   character: PlayerCharacter,

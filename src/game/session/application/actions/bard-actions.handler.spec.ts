@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import { FIXTURE_PERSONA_MASK_SLUGS } from '../../../combat/domain/__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_PERSONA_MASK_SLUGS } from '@game/combat/domain/__fixtures__/mechanical-catalog.fixtures';
 import { BardActionsHandler } from './bard-actions.handler';
 
 describe('BardActionsHandler', () => {

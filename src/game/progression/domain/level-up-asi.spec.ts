@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
-import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import {
   applyLevelUpAsiBoost,
   resolveLevelUpAsiFromDto,

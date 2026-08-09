@@ -1,17 +1,17 @@
 import { DataSource, Repository } from 'typeorm';
-import type { AbilityKey } from '../../build/domain/ability-generation';
-import type { AbilityModifiers } from '../../sheet/domain/stats/character-derived-stats';
-import type { CharacterSheetData } from '../../sheet/domain/character-sheet.types';
+import type { AbilityKey } from '@game/build/domain/ability-generation';
+import type { AbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
+import type { CharacterSheetData } from '@game/sheet/domain/character-sheet.types';
 import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
 } from '../domain/granted-spells';
 import { enrichSpellsWithSpellcastingStats } from '../domain/enrich-spells-with-spellcasting-stats';
-import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { annotateSpellSources } from './annotate-spell-sources';
 import { LoadGrantedSpellCatalog } from './load-granted-spell-catalog';
 import { resolveSpellcastingStats } from './resolve-spellcasting-stats';
-import type { CharacterSpellDto } from '../../sheet/dto/character-sheet.dto';
+import type { CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
 
 const ABILITY_SLUGS = new Set<AbilityKey>([
   'forca',

@@ -1,12 +1,12 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { isFighterClass } from '../../../../../combat/domain/fighter-features';
-import { PlayerCharacter } from '../../../../../shared/infrastructure/player-character.entity';
-import { applyResourceSpend } from '../../../../domain/class-resources';
-import { ActionSurgeResponseDto } from '../../../../dto/character-state.dto';
-import { PlayerCharacterState } from '../../../player-character-state.entity';
-import { resolveClassResources } from '../../resources/class-resources';
-import type { BuildResponse } from '../../core/mutation-types';
+import { isFighterClass } from '@game/combat/domain/fighter-features';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { applyResourceSpend } from '@game/session/domain/class-resources';
+import { ActionSurgeResponseDto } from '@game/session/dto/character-state.dto';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
+import { resolveClassResources } from '@game/session/infrastructure/character-state/resources/class-resources';
+import type { BuildResponse } from '@game/session/infrastructure/character-state/core/mutation-types';
 
 export async function applyActionSurge(input: {
   character: PlayerCharacter;

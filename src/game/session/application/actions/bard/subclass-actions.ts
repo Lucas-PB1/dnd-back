@@ -1,15 +1,15 @@
 import { BadRequestException } from '@nestjs/common';
-import { bardicInspirationDie } from '../../../../combat/domain/bard-features';
+import { bardicInspirationDie } from '@game/combat/domain/bard-features';
 import {
   assertValidPersonaMasks,
   maxEquippedPersonaMasks,
-} from '../../../../combat/domain/college-of-masks';
-import { rollDamageParts } from '../../../../dice/domain/dice';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
+} from '@game/combat/domain/college-of-masks';
+import { rollDamageParts } from '@game/dice/domain/dice';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
-} from '../../core/table-action-guards';
+} from '@game/session/application/core/table-action-guards';
 import type {
   BardActionDeps,
   BardTableActionResult,

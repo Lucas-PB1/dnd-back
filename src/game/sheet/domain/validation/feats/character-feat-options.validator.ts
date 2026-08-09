@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { assertUnique } from '../../../../../common/assert';
-import { PhbOptionDef } from '../../../../../entities/phb-option.entity';
-import { PhbFeatRef } from '../../../../../entities/phb-feat-ref.entity';
-import { PhbCharacterLevel } from '../../../../../entities/phb-character-level.entity';
-import { FeatOptionDto, CharacterFeatDto } from '../../../dto/character-sheet.dto';
+import { assertUnique } from '@common/assert';
+import { PhbOptionDef } from '@entities/phb-option.entity';
+import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { FeatOptionDto, CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 import { requiredAbilityScoreImprovementDefs } from './ability-score-improvement-feat-options';
 import { CharacterFeatOptionValueValidator } from './character-feat-option-value.validator';
 import {

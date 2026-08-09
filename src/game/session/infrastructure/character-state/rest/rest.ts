@@ -1,21 +1,21 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
-import { CharacterRepository } from '../../../../shared/infrastructure/character.repository';
-import { computeAbilityModifiers } from '../../../../sheet/domain/stats/character-derived-stats';
-import { RestResponseDto } from '../../../dto/character-state.dto';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
+import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
+import { RestResponseDto } from '@game/session/dto/character-state.dto';
 import {
   restoreHitDiceOnLongRest,
   spendHitDice,
-} from '../../../domain/hit-dice-rest';
+} from '@game/session/domain/hit-dice-rest';
 import {
   applyLongRestResourceRecovery,
   applyShortRestResourceRecovery,
-} from '../../../domain/class-resources';
-import { resetDeathSaves } from '../../../domain/death-saves';
-import { PlayerCharacterState } from '../../player-character-state.entity';
-import { isWarlockClass } from '../../../../combat/domain/warlock-features';
+} from '@game/session/domain/class-resources';
+import { resetDeathSaves } from '@game/session/domain/death-saves';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
+import { isWarlockClass } from '@game/combat/domain/warlock-features';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 

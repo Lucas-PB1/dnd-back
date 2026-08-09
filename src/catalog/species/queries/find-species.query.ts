@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbSpecies } from '../../../entities/phb-species.entity';
+import { PhbSpecies } from '@entities/phb-species.entity';
 import {
   applyIlikeSearch,
   DEFAULT_PHB_EDITION_SLUG,
   PaginatedResponseDto,
   paginateQb,
-} from '../../../common/dto/pagination.dto';
+} from '@common/dto/pagination.dto';
 import { SpeciesResponseDto } from '../dto/species-response.dto';
 import { SpeciesSummaryResponseDto } from '../dto/species-summary-response.dto';
 import { SpeciesMapper } from '../species.mapper';

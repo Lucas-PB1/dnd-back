@@ -1,8 +1,8 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindSubclassOptionsQuery } from './find-subclass-options.query';
-import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PhbOptionValue } from '../../../entities/phb-option.entity';
-import { PhbSubclassRef } from '../../../entities/phb-subclass-ref.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 
 describe('FindSubclassOptionsQuery', () => {
   let query: FindSubclassOptionsQuery;

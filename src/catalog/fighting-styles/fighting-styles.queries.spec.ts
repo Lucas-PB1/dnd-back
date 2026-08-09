@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { PhbFightingStyle } from '../../entities/phb-fighting-style.entity';
+import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
 import { FightingStylesMapper } from './fighting-styles.mapper';
 import { FindFightingStyleBySlugQuery } from './queries/find-fighting-style-by-slug.query';
 import { FindFightingStylesQuery } from './queries/find-fighting-styles.query';

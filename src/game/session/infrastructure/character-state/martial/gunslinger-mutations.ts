@@ -1,19 +1,19 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import type { GunslingerManeuver } from '../../../../combat/domain/gunslinger-maneuvers';
+import type { GunslingerManeuver } from '@game/combat/domain/gunslinger-maneuvers';
 import {
   findGunslingerManeuver,
   listGunslingerManeuvers,
-} from '../../../../combat/domain/gunslinger-maneuvers';
-import { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
-import { applyResourceSpend } from '../../../domain/class-resources';
-import { resolveManeuverEffect, rollRiskDie } from '../../../domain/maneuver-resolve';
+} from '@game/combat/domain/gunslinger-maneuvers';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { applyResourceSpend } from '@game/session/domain/class-resources';
+import { resolveManeuverEffect, rollRiskDie } from '@game/session/domain/maneuver-resolve';
 import {
   CharacterStateResponseDto,
   UseManeuverResponseDto,
-} from '../../../dto/character-state.dto';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+} from '@game/session/dto/character-state.dto';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from '../resources/class-resources';
 import type { BuildResponse } from '../core/mutation-types';
 

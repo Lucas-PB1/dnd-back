@@ -1,16 +1,16 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   applyResourceRecover,
   applyResourceSpend,
-} from '../../../domain/class-resources';
-import { rollRiskDie } from '../../../domain/maneuver-resolve';
+} from '@game/session/domain/class-resources';
+import { rollRiskDie } from '@game/session/domain/maneuver-resolve';
 import {
   CharacterStateResponseDto,
   UseClassResourceResponseDto,
-} from '../../../dto/character-state.dto';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+} from '@game/session/dto/character-state.dto';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from './class-resources';
 import type { BuildResponse } from '../core/mutation-types';
 

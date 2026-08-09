@@ -1,4 +1,4 @@
-import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import { appliesRageDamageBonus } from '../barbarian/rage';
 import { applyOverkillDamageBonus } from '../gunslinger/firearm';
 import {

@@ -1,4 +1,4 @@
-import type { AbilityKey } from '../../../build/domain/ability-generation';
+import type { AbilityKey } from '@game/build/domain/ability-generation';
 import { RESILIENT_FEAT_SLUG } from '../validation/feats/resilient-feat-options';
 import { hasJackOfAllTrades } from '../validation/class-options/class-expertise-slots';
 

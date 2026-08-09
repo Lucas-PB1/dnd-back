@@ -5,8 +5,8 @@
 import {
   psiEnergyDiceCount,
   superiorityDiceCount,
-} from '../../combat/domain/fighter-features';
-import { zealotHealingDiceCount } from '../../combat/domain/barbarian-rage';
+} from '@game/combat/domain/fighter-features';
+import { zealotHealingDiceCount } from '@game/combat/domain/barbarian-rage';
 import type { AbilityMods, ClassResourceScheduleRow, ResourceMaxFormula } from './class-resources';
 
 function abilityModFromFormula(

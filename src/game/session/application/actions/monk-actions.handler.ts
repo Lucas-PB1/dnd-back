@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isMonkClass } from '../../../combat/domain/monk-features';
-import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
+import { isMonkClass } from '@game/combat/domain/monk-features';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   FighterTableActionResponseDto,
   UseMonkTableActionDto,
-} from '../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { MonkActionDeps } from './monk/monk-action-deps';
 import {
   resolveFlurryOfBlows,

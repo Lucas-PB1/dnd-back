@@ -1,4 +1,4 @@
-import { assertCharacterLevel } from '../../core/table-action-guards';
+import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type {
   DruidActionDeps,
   DruidTableActionResult,

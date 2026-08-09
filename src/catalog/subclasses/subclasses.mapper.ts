@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { VPhbSubclass } from '../../entities/views/v-phb-subclass.entity';
-import { VPhbSubclassMechanics } from '../../entities/views/v-phb-subclass-mechanics.entity';
-import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { VPhbSubclass } from '@entities/views/v-phb-subclass.entity';
+import { VPhbSubclassMechanics } from '@entities/views/v-phb-subclass-mechanics.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { SubclassResponseDto } from './dto/subclass-response.dto';
 import { SubclassMechanicResponseDto } from './dto/subclass-mechanic-response.dto';
 import { SubclassSpellResponseDto } from './dto/subclass-spell-response.dto';

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { VPhbFeat } from '../../../entities/views/v-phb-feat.entity';
+import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import { FeatResponseDto } from '../dto/feat-response.dto';
 import { FeatsMapper } from '../feats.mapper';
 

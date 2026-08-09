@@ -11,7 +11,7 @@ import {
   ASI_DISTRIBUTION_PLUS2,
 } from './ability-score-improvement-feat-options';
 import { RITUAL_CASTER_FEAT_SLUG } from './ritual-caster-feat-options';
-import type { CharacterFeatDto, FeatOptionDto } from '../../../dto/character-sheet.dto';
+import type { CharacterFeatDto, FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 
 const asiFeat: CharacterFeatDto = {
   featSlug: ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG,

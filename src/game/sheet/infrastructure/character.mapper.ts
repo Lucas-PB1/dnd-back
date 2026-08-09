@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
-import { PhbSpecies } from '../../../entities/phb-species.entity';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { PhbSpecies } from '@entities/phb-species.entity';
 import {
   CharacterResponseDto,
   CharacterSummaryResponseDto,
@@ -16,20 +16,20 @@ import {
 import { loadClassAbilityBoosts } from './load-class-ability-boosts';
 import { CharacterSheetRepository } from './character-sheet.repository';
 import { CharacterSheetData } from '../domain/character-sheet.types';
-import { ResolveEquippedArmorClass } from '../../combat/application/resolve-equipped-armor-class';
-import { ResolveEquippedWeaponAttacks } from '../../combat/application/resolve-equipped-weapon-attacks';
-import { ResolveEquipmentCompliance } from '../../combat/application/resolve-equipment-compliance';
-import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
+import { ResolveEquippedArmorClass } from '@game/combat/application/resolve-equipped-armor-class';
+import { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
+import { ResolveEquipmentCompliance } from '@game/combat/application/resolve-equipment-compliance';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import {
   resolveSizeCategory,
   sizeCategoryFromChoices,
-} from '../../combat/domain/creature-size';
-import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
-import { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
-import { resolveCharacterCombatSlice } from '../../combat/application/resolve-character-combat-slice';
-import { resolveCharacterSpellcastingSlice } from '../../spellcasting/application/resolve-character-spellcasting-slice';
-import { loadActiveItemSlugs } from '../../session/infrastructure/character-state/resources/class-resources';
+} from '@game/combat/domain/creature-size';
+import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
+import { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import { resolveCharacterCombatSlice } from '@game/combat/application/resolve-character-combat-slice';
+import { resolveCharacterSpellcastingSlice } from '@game/spellcasting/application/resolve-character-spellcasting-slice';
+import { loadActiveItemSlugs } from '@game/session/infrastructure/character-state/resources/class-resources';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/validation/class-options/fighting-style-feat-options';
 import { collectMasteredWeaponSlugs } from '../domain/validation/class-options/class-weapon-mastery-slots';
 

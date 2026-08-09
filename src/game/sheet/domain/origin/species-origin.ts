@@ -1,4 +1,4 @@
-import { CharacterFeatDto, SpeciesChoiceDto } from '../../dto/character-sheet.dto';
+import { CharacterFeatDto, SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
 import { nextFeatInstanceIndex } from '../validation/feats/character-feat';
 
 const HUMAN_ORIGIN_FEAT_KIND = 'human_origin_feat';

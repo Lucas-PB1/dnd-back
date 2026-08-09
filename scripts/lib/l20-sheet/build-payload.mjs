@@ -1,4 +1,5 @@
 import { pickN, pickRandom, shuffle } from './random.mjs';
+import { loadAndPickEldritchInvocationOptions } from './eldritch-invocations.mjs';
 
 const LEVEL = 20;
 const OPTIONAL_SPECIES_KINDS = new Set(['high_elf_cantrip']);
@@ -75,7 +76,13 @@ export async function buildL20Payload(client, idx, opts) {
 
   const speciesChoices = pickSpeciesChoices(idx, species.slug);
   const subclassOptions = await loadSubclassOptions(client, subclassSlug);
-  const classOptions = buildClassOptions(idx, classSlug, classSkillSlugs, bgSkillSet);
+  const classOptions = await buildClassOptions(
+    client,
+    idx,
+    classSlug,
+    classSkillSlugs,
+    bgSkillSet,
+  );
   const { characterFeats, featOptions } = buildFeats(idx, classSlug, background);
   const languageSlugs = pickLanguages(idx, background);
   const characterSpells = buildSpells(idx, classSlug);
@@ -196,7 +203,7 @@ async function loadSubclassOptions(client, subclassSlug) {
   return out;
 }
 
-function buildClassOptions(idx, classSlug, classSkillSlugs, bgSkillSet) {
+async function buildClassOptions(client, idx, classSlug, classSkillSlugs, bgSkillSet) {
   const options = [];
   const expertiseCount = EXPERTISE_SLOTS[classSlug] ?? 0;
   if (expertiseCount > 0) {
@@ -231,6 +238,11 @@ function buildClassOptions(idx, classSlug, classSkillSlugs, bgSkillSet) {
       optionKey: 'spellMastery2',
       valueId: (l2[0] ?? leveled[1] ?? leveled[0]).spellSlug,
     });
+  }
+
+  if (classSlug === 'warlock') {
+    const invocations = await loadAndPickEldritchInvocationOptions(client, LEVEL);
+    options.push(...invocations);
   }
 
   return options;

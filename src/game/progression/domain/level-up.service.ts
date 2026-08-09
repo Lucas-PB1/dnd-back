@@ -1,20 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
-import { PhbCharacterLevel } from '../../../entities/phb-character-level.entity';
-import { VSpellByClass } from '../../../entities/views/v-spell-by-class.entity';
-import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
-import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
-import { CharacterDomainService } from '../../sheet/domain/core/character-domain.service';
-import { maxSpellLevelFromSlots } from '../../spellcasting/domain/max-spell-level';
-import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { maxSpellLevelFromSlots } from '@game/spellcasting/domain/max-spell-level';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 import { isAsiOrFeatLevel } from './asi-feat-levels';
-import { classExpertiseSlotsNewAtLevel } from '../../sheet/domain/validation/class-options/class-expertise-slots';
-import { classWeaponMasterySlotsNewAtLevel } from '../../sheet/domain/validation/class-options/class-weapon-mastery-slots';
+import { classExpertiseSlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-expertise-slots';
+import { classWeaponMasterySlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-weapon-mastery-slots';
 
 @Injectable()
 export class LevelUpService {

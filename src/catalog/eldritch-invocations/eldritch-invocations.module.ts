@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbEldritchInvocation } from '../../entities/phb-eldritch-invocation.entity';
+import { PhbEldritchInvocation } from '@entities/phb-eldritch-invocation.entity';
 import { EldritchInvocationsController } from './eldritch-invocations.controller';
 import { FindEldritchInvocationsQuery } from './queries/find-eldritch-invocations.query';
 

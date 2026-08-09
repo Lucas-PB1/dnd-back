@@ -1,6 +1,6 @@
 import { EquipmentMapper } from './equipment.mapper';
-import type { PhbWeapon } from '../../entities/phb-weapon.entity';
-import type { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
+import type { PhbWeapon } from '@entities/phb-weapon.entity';
+import type { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 
 describe('EquipmentMapper', () => {
   const mapper = new EquipmentMapper();

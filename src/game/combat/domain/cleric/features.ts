@@ -1,4 +1,4 @@
-import { abilityModifier } from '../../../sheet/domain/stats/ability-modifier';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 
 export function isClericClass(classSlug: string | null | undefined): boolean {
   return classSlug === 'cleric';

@@ -2,14 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { VPhbSubclassMechanics } from '../../entities/views/v-phb-subclass-mechanics.entity';
-import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { VPhbSubclassMechanics } from '@entities/views/v-phb-subclass-mechanics.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { CatalogLookupService } from '../catalog-lookup.service';
 import { SubclassesMapper } from './subclasses.mapper';
 import { FindSubclassBySlugQuery } from './queries/find-subclass-by-slug.query';
 import { FindSubclassMechanicsQuery } from './queries/find-subclass-mechanics.query';
 import { FindSubclassSpellsQuery } from './queries/find-subclass-spells.query';
-import { VPhbSubclass } from '../../entities/views/v-phb-subclass.entity';
+import { VPhbSubclass } from '@entities/views/v-phb-subclass.entity';
 
 describe('Subclasses queries', () => {
   let findSubclassBySlug: FindSubclassBySlugQuery;

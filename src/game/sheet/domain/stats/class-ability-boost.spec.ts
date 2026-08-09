@@ -3,7 +3,7 @@ import {
   classHitPointsBonus,
   type ClassAbilityBoostRow,
 } from './class-ability-boost';
-import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 
 describe('class-ability-boost', () => {
   const base: AbilityScores = {

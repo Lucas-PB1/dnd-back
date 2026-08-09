@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { maxSpellLevelFromSlots } from '../../../../spellcasting/domain/max-spell-level';
+import { maxSpellLevelFromSlots } from '@game/spellcasting/domain/max-spell-level';
 
 export type SubclassSpellcastingInfo = {
   spellListClassSlug: string;

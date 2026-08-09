@@ -1,4 +1,4 @@
-jest.mock('../../domain/dice', () => ({
+jest.mock('@game/dice/domain/dice', () => ({
   rollD20Check: jest.fn((modifier: number, mode = 'normal') => ({
     expression: `1d20+${modifier}`,
     total: 8 + modifier,
@@ -32,7 +32,7 @@ jest.mock('./stroke-of-luck', () => ({
   turnCheckIntoNaturalTwenty: jest.fn((result) => result),
 }));
 
-jest.mock('../../../sheet/infrastructure/load-class-ability-boosts', () => ({
+jest.mock('@game/sheet/infrastructure/load-class-ability-boosts', () => ({
   resolveEffectiveAbilityScores: jest.fn(
     async (_ds: unknown, _classSlug: string, _level: number, scores: unknown) =>
       scores,

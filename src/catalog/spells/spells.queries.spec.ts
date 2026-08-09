@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { VPhbSpell } from '../../entities/views/v-phb-spell.entity';
+import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { SpellsMapper } from './spells.mapper';
 import { FindSpellsQuery } from './queries/find-spells.query';
 import { FindSpellBySlugQuery } from './queries/find-spell-by-slug.query';

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { VPhbBackground } from '../../entities/views/v-phb-background.entity';
-import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
-import { VPhbBackgroundSkill } from '../../entities/views/v-phb-background-skill.entity';
-import { VPhbBackgroundToolOption } from '../../entities/views/v-phb-background-tool-option.entity';
-import { VPhbBackgroundLanguage } from '../../entities/views/v-phb-background-language.entity';
+import { VPhbBackground } from '@entities/views/v-phb-background.entity';
+import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
+import { VPhbBackgroundSkill } from '@entities/views/v-phb-background-skill.entity';
+import { VPhbBackgroundToolOption } from '@entities/views/v-phb-background-tool-option.entity';
+import { VPhbBackgroundLanguage } from '@entities/views/v-phb-background-language.entity';
 import { BackgroundResponseDto } from './dto/background-response.dto';
 import { BackgroundSummaryResponseDto } from './dto/background-summary-response.dto';
 import { BackgroundEquipmentResponseDto } from './dto/background-equipment-response.dto';

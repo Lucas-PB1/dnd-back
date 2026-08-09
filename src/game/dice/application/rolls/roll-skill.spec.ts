@@ -1,4 +1,4 @@
-jest.mock('../../domain/dice', () => ({
+jest.mock('@game/dice/domain/dice', () => ({
   rollD20Check: jest.fn().mockReturnValue({
     expression: '1d20+7',
     total: 11,

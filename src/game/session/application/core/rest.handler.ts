@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
-import { RestDto, RestResponseDto } from '../../dto/character-state.dto';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { RestDto, RestResponseDto } from '@game/session/dto/character-state.dto';
 
 @Injectable()
 export class RestHandler {

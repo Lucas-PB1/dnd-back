@@ -1,5 +1,5 @@
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
-import { DEFAULT_ABILITY_SCORES } from '../../shared/infrastructure/player-character.entity';
+import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
 
 describe('ResolveEquippedArmorClass', () => {
   let inventoryItems: { find: jest.Mock };

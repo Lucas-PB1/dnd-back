@@ -1,20 +1,20 @@
 import { DataSource } from 'typeorm';
-import { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
-import { computeAbilityModifiers } from '../../../../sheet/domain/stats/character-derived-stats';
-import { ClassResourceStateDto } from '../../../dto/character-state.dto';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
+import { ClassResourceStateDto } from '@game/session/dto/character-state.dto';
 import {
   resolveClassResourceMaxima,
   type ClassResourceMax,
   type ClassResourceScheduleRow,
-} from '../../../domain/class-resources';
-import { riskDieFaces, riskDieLabel } from '../../../domain/risk-die';
+} from '@game/session/domain/class-resources';
+import { riskDieFaces, riskDieLabel } from '@game/session/domain/risk-die';
 import {
   psiEnergyDieFaces,
   psiEnergyDieLabel,
   superiorityDieFaces,
   superiorityDieLabel,
-} from '../../../../combat/domain/fighter-features';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+} from '@game/combat/domain/fighter-features';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 
 export type ClassResourceDbRow = {
   resource_slug: string;

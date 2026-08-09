@@ -246,4 +246,129 @@ describe('applyCastSpell', () => {
       expect(result.note).toMatch(/Dominância/i);
     });
   });
+
+  describe('warlock eldritch free cast', () => {
+    const warlock = {
+      classSlug: 'warlock',
+      subclassSlug: 'fiend',
+      level: 5,
+      abilityScores: { carisma: 18 },
+    };
+
+    const catalogRows = [
+      {
+        slug: 'armor-of-shadows',
+        name: 'Armadura de Sombras',
+        min_level: 1,
+        requires_pact_slug: null,
+        requires_invocation_slug: null,
+        repeatable: false,
+        kind: 'free_cast',
+        granted_spell_slug: 'armadura-arcana',
+      },
+      {
+        slug: 'gift-of-the-depths',
+        name: 'Presente das Profundezas',
+        min_level: 5,
+        requires_pact_slug: null,
+        requires_invocation_slug: null,
+        repeatable: false,
+        kind: 'free_cast',
+        granted_spell_slug: 'respirar-na-agua',
+      },
+      {
+        slug: 'agonizing-blast',
+        name: 'Explosão Agonizante',
+        min_level: 2,
+        requires_pact_slug: null,
+        requires_invocation_slug: null,
+        repeatable: false,
+        kind: 'passive',
+        granted_spell_slug: null,
+      },
+    ];
+
+    beforeEach(() => {
+      catalogLookup.findSpellOrFail.mockResolvedValue({
+        level: 1,
+        concentration: false,
+      });
+      sheetRepository.load.mockResolvedValue({
+        characterFeats: [],
+        featOptions: [],
+        speciesChoices: [],
+        characterSpells: [],
+        classOptions: [
+          {
+            optionKey: 'eldritch-invocation',
+            valueId: 'armor-of-shadows',
+            instanceIndex: 0,
+          },
+          {
+            optionKey: 'eldritch-invocation',
+            valueId: 'gift-of-the-depths',
+            instanceIndex: 1,
+          },
+          {
+            optionKey: 'eldritch-invocation',
+            valueId: 'agonizing-blast',
+            instanceIndex: 2,
+          },
+        ],
+      });
+    });
+
+    async function castWarlock(dto: {
+      spellSlug: string;
+      useFreeCast?: boolean;
+      slotLevel?: number;
+    }) {
+      return applyCastSpell({
+        character: { ...character, ...warlock } as never,
+        state: state as never,
+        dto: dto as never,
+        stateRepo: stateRepo as never,
+        classSlots: classSlots as never,
+        subclassSlots: subclassSlots as never,
+        catalogLookup: catalogLookup as never,
+        spellLookup: spellLookup as never,
+        sheetRepository: sheetRepository as never,
+        grantedSpellCatalog: grantedSpellCatalog as never,
+        dataSource: {
+          query: jest.fn().mockResolvedValue(catalogRows),
+        } as never,
+        buildResponse,
+      });
+    }
+
+    it('casts armor-of-shadows grant at will without slot', async () => {
+      spellLookup.hasSpell.mockResolvedValue(false);
+      const result = await castWarlock({ spellSlug: 'armadura-arcana' });
+      expect(result.slotLevelUsed).toBeNull();
+      expect(result.note).toMatch(/Armadura de Sombras/i);
+      expect(state.spellSlotsUsed).toEqual({});
+    });
+
+    it('consumes gift-of-the-depths once per long rest', async () => {
+      spellLookup.hasSpell.mockResolvedValue(true);
+      const result = await castWarlock({ spellSlug: 'respirar-na-agua' });
+      expect(result.slotLevelUsed).toBeNull();
+      expect(state.grantedSpellUses['respirar-na-agua']).toBe(1);
+
+      classSlots.findOne.mockResolvedValue({ level1: 0, level2: 0, level3: 2 });
+      await expect(
+        castWarlock({ spellSlug: 'respirar-na-agua' }),
+      ).rejects.toThrow(BadRequestException);
+    });
+
+    it('annotates cantrip casts with agonizing blast', async () => {
+      catalogLookup.findSpellOrFail.mockResolvedValue({
+        level: 0,
+        concentration: false,
+      });
+      spellLookup.hasSpell.mockResolvedValue(true);
+      const result = await castWarlock({ spellSlug: 'rajada-mistica' });
+      expect(result.note).toMatch(/Explosão Agonizante/i);
+    });
+  });
 });

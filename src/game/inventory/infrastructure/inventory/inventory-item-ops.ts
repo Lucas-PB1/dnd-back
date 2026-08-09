@@ -1,22 +1,22 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { In, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
-import { PhbItem } from '../../../../entities/phb-item.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PhbItem } from '@entities/phb-item.entity';
 import {
   EquipmentSlot,
   EXCLUSIVE_EQUIPMENT_SLOTS,
   PlayerCharacterItem,
 } from '../player-character-item.entity';
-import { InventoryItemResponseDto } from '../../dto/inventory.dto';
+import { InventoryItemResponseDto } from '@game/inventory/dto/inventory.dto';
 import {
   itemRequiresAttunement,
   MAX_ATTUNED_ITEMS,
-} from '../../domain/attunement';
+} from '@game/inventory/domain/attunement';
 import {
   itemEffectsActive,
   itemEffectsStatus,
-} from '../../domain/item-effects-active';
-import { parseItemWeightKg } from '../../domain/encumbrance';
+} from '@game/inventory/domain/item-effects-active';
+import { parseItemWeightKg } from '@game/inventory/domain/encumbrance';
 
 export async function findInventoryItemOrFail(
   items: Repository<PlayerCharacterItem>,

@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbBattleMasterManeuver } from '../../../entities/views/v-phb-battle-master-maneuver.entity';
-import { VPhbBeastborneAspectBenefit } from '../../../entities/views/v-phb-beastborne-aspect-benefit.entity';
-import { VPhbClassEconomyAction } from '../../../entities/views/v-phb-class-economy-action.entity';
-import { VPhbClassPanelAction } from '../../../entities/views/v-phb-class-panel-action.entity';
-import { VPhbCunningStrikeEffect } from '../../../entities/views/v-phb-cunning-strike-effect.entity';
-import { VPhbDungeoneerSlayerType } from '../../../entities/views/v-phb-dungeoneer-slayer-type.entity';
-import { VPhbGunslingerManeuver } from '../../../entities/views/v-phb-gunslinger-maneuver.entity';
-import { VPhbPersonaMask } from '../../../entities/views/v-phb-persona-mask.entity';
-import { VPhbSubclassPrecautionSpell } from '../../../entities/views/v-phb-subclass-precaution-spell.entity';
-import { VPhbSubclassTableAction } from '../../../entities/views/v-phb-subclass-table-action.entity';
+import { VPhbBattleMasterManeuver } from '@entities/views/v-phb-battle-master-maneuver.entity';
+import { VPhbBeastborneAspectBenefit } from '@entities/views/v-phb-beastborne-aspect-benefit.entity';
+import { VPhbClassEconomyAction } from '@entities/views/v-phb-class-economy-action.entity';
+import { VPhbClassPanelAction } from '@entities/views/v-phb-class-panel-action.entity';
+import { VPhbCunningStrikeEffect } from '@entities/views/v-phb-cunning-strike-effect.entity';
+import { VPhbDungeoneerSlayerType } from '@entities/views/v-phb-dungeoneer-slayer-type.entity';
+import { VPhbGunslingerManeuver } from '@entities/views/v-phb-gunslinger-maneuver.entity';
+import { VPhbPersonaMask } from '@entities/views/v-phb-persona-mask.entity';
+import { VPhbSubclassPrecautionSpell } from '@entities/views/v-phb-subclass-precaution-spell.entity';
+import { VPhbSubclassTableAction } from '@entities/views/v-phb-subclass-table-action.entity';
 import type { BattleMasterManeuver } from '../domain/battle-master-maneuvers';
 import type {
   ActionEconomyBucket,

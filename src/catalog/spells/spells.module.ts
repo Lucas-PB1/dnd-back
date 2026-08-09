@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { VPhbSpell } from '../../entities/views/v-phb-spell.entity';
+import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { SpellsController } from './spells.controller';
 import { SpellsMapper } from './spells.mapper';
 import { FindSpellsQuery } from './queries/find-spells.query';

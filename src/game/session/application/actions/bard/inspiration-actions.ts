@@ -1,9 +1,9 @@
-import { bardicInspirationDie } from '../../../../combat/domain/bard-features';
-import { rollDamageParts } from '../../../../dice/domain/dice';
+import { bardicInspirationDie } from '@game/combat/domain/bard-features';
+import { rollDamageParts } from '@game/dice/domain/dice';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
-} from '../../core/table-action-guards';
+} from '@game/session/application/core/table-action-guards';
 import type {
   BardActionDeps,
   BardTableActionResult,

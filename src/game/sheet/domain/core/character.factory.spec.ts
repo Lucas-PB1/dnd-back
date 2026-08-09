@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
-import { DEFAULT_ABILITY_SCORES, PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
+import { DEFAULT_ABILITY_SCORES, PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterFactory } from './character.factory';
-import { UpdateCharacterDto } from '../../dto/update-character.dto';
+import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
 import { BACKGROUND_BOOST_MODE_PLUS1X3, BACKGROUND_BOOST_MODE_PLUS2_PLUS1 } from '../origin/background-ability-boost';
 
 const createDto = {

@@ -2,13 +2,13 @@ import {
   FIXTURE_BATTLE_MASTER_MANEUVERS,
   FIXTURE_DUNGEONEER_PRECAUTION_SPELLS,
   FIXTURE_PSI_ACTIONS,
-} from '../../../combat/domain/__fixtures__/mechanical-catalog.fixtures';
-import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
-import { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
-import { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
-import { CharacterStateResponseDto } from '../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
+} from '@game/combat/domain/__fixtures__/mechanical-catalog.fixtures';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { CharacterStateResponseDto } from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { FighterActionsHandler } from './fighter-actions.handler';
 
 describe('FighterActionsHandler tabletop actions', () => {

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { weaponPropsOf } from '../../../catalog/equipment/weapon-props';
-import { PhbWeapon } from '../../../entities/phb-weapon.entity';
-import { VPhbArmor } from '../../../entities/views/v-phb-armor.entity';
-import { ResolveEquipmentCompliance } from '../../combat/application/resolve-equipment-compliance';
-import { PlayerCharacterFeat } from '../../sheet/infrastructure/player-sheet.entities';
-import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import { weaponPropsOf } from '@catalog/equipment/weapon-props';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
+import { ResolveEquipmentCompliance } from '@game/combat/application/resolve-equipment-compliance';
+import { PlayerCharacterFeat } from '@game/sheet/infrastructure/player-sheet.entities';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { assertCanEquipItem } from '../domain/assert-can-equip-item';
 
 /** Carrega contexto da ficha/catálogo e aplica o gate de equip. */

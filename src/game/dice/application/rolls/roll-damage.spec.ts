@@ -12,7 +12,7 @@ import { BadRequestException } from '@nestjs/common';
 import {
   FIXTURE_CUNNING_STRIKE_EFFECTS,
   FIXTURE_DUNGEONEER_SLAYER_LABELS,
-} from '../../../combat/domain/__fixtures__/mechanical-catalog.fixtures';
+} from '@game/combat/domain/__fixtures__/mechanical-catalog.fixtures';
 import { executeRollDamage } from './roll-damage';
 import {
   findEquippedWeaponAttack,

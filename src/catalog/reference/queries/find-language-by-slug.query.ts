@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { requireFound } from '../../../common/require-found';
-import { PhbLanguage } from '../../../entities/phb-language.entity';
+import { requireFound } from '@common/require-found';
+import { PhbLanguage } from '@entities/phb-language.entity';
 import { LanguageResponseDto } from '../dto/language-response.dto';
 import { ReferenceMapper } from '../reference.mapper';
 

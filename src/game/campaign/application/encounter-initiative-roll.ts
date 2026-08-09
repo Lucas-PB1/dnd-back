@@ -1,6 +1,6 @@
 import { ForbiddenException } from '@nestjs/common';
-import type { CharacterRollsService } from '../../dice/application/character-rolls.service';
-import { rollD20Check } from '../../dice/domain/dice';
+import type { CharacterRollsService } from '@game/dice/application/character-rolls.service';
+import { rollD20Check } from '@game/dice/domain/dice';
 import type { CampaignRepository } from '../infrastructure/campaign.repository';
 import type { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';

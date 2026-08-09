@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { CharacterEquipmentValidator } from './character-equipment.validator';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { VPhbClassEquipment } from '../../../../../entities/views/v-phb-class-equipment.entity';
-import { VPhbBackgroundEquipment } from '../../../../../entities/views/v-phb-background-equipment.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
+import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
 
 describe('CharacterEquipmentValidator', () => {
   let validator: CharacterEquipmentValidator;

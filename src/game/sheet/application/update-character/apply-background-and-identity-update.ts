@@ -1,13 +1,13 @@
-import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
-import { CharacterSheetValidator } from '../../domain/validation/character-sheet.validator';
-import { CharacterFactory } from '../../domain/core/character.factory';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { CharacterSheetValidator } from '@game/sheet/domain/validation/character-sheet.validator';
+import { CharacterFactory } from '@game/sheet/domain/core/character.factory';
 import {
   applyBackgroundAbilityBoosts,
   resolveBackgroundAbilityBoostInput,
-} from '../../domain/origin/background-ability-boost';
-import { resolveBackgroundToolItemSlug } from '../../domain/origin/background-origin';
-import { UpdateCharacterDto } from '../../dto/update-character.dto';
-import { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
+} from '@game/sheet/domain/origin/background-ability-boost';
+import { resolveBackgroundToolItemSlug } from '@game/sheet/domain/origin/background-origin';
+import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
 type EffectiveIdentity = {
   backgroundSlug: string;

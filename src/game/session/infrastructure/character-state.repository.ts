@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
-import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
-import { LoadCombatMechanicalCatalog } from '../../combat/application/load-combat-mechanical-catalog';
-import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
-import { CharacterRepository } from '../../shared/infrastructure/character.repository';
-import { CharacterSpellLookup } from '../../sheet/application/character-spell-lookup';
-import { CharacterSheetRepository } from '../../sheet/infrastructure/character-sheet.repository';
-import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
+import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import {
   CastSpellDto,
   CharacterStateResponseDto,

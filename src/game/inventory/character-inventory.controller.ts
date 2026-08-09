@@ -21,9 +21,9 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { SupabaseAuthGuard } from '../../identity/guards/supabase-auth.guard';
-import { CurrentUser } from '../../identity/decorators/current-user.decorator';
-import { AuthUser } from '../../identity/auth-user';
+import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
+import { CurrentUser } from '@identity/decorators/current-user.decorator';
+import { AuthUser } from '@identity/auth-user';
 import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
 import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
 import { AttachWeaponCharmHandler } from './application/attach-weapon-charm.handler';

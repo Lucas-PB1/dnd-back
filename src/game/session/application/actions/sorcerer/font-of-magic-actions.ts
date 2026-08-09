@@ -1,5 +1,5 @@
-import { sorceryPointCostToCreateSlot } from '../../../../combat/domain/sorcerer-features';
-import { assertCharacterLevel } from '../../core/table-action-guards';
+import { sorceryPointCostToCreateSlot } from '@game/combat/domain/sorcerer-features';
+import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type {
   PlayerCharacter,
   SorcererActionDeps,

@@ -1,13 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { VPhbBackgroundToolOption } from '../../../../../entities/views/v-phb-background-tool-option.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { VPhbBackgroundToolOption } from '@entities/views/v-phb-background-tool-option.entity';
 import {
   assertBackgroundBoostSlugsAllowed,
   resolveBackgroundAbilityBoostInput,
-} from '../../origin/background-ability-boost';
-import { CharacterFeatDto } from '../../../dto/character-sheet.dto';
+} from '@game/sheet/domain/origin/background-ability-boost';
+import { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 
 @Injectable()
 export class CharacterBackgroundValidator {

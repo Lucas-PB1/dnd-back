@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { VSpellByClass } from '../../../../../entities/views/v-spell-by-class.entity';
-import { VPhbSubclassPreparedSpell } from '../../../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { CharacterSheetContext } from '../../character-sheet.types';
-import { CharacterSheetInput } from '../../character-sheet.types';
+import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
+import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 
 export async function validateSpellListAccess(
   classSpellsRepo: Repository<VSpellByClass>,
@@ -14,10 +14,12 @@ export async function validateSpellListAccess(
   speciesGranted: ReadonlySet<string>,
   spellListClassSlug: string,
   maxSpellLevel: number,
+  extraGranted: ReadonlySet<string> = new Set(),
 ): Promise<void> {
   for (const spell of spells) {
     if (featGranted.has(spell.spellSlug)) continue;
     if (speciesGranted.has(spell.spellSlug)) continue;
+    if (extraGranted.has(spell.spellSlug)) continue;
 
     const inListClass = await classSpellsRepo.findOne({
       where: {

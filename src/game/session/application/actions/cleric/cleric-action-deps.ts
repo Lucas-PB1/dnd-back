@@ -1,15 +1,15 @@
-import { CharacterDomainService } from '../../../../sheet/domain/core/character-domain.service';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
-import type { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   TableActionResponseDto,
   UseClericTableActionDto,
-} from '../../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../../infrastructure/character-state.repository';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
-} from '../../core/table-action-guards';
+} from '@game/session/application/core/table-action-guards';
 
 export const CHANNEL_DIVINITY_SLUG = 'channelDivinity';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbEdition } from '../../../entities/phb-edition.entity';
+import { PhbEdition } from '@entities/phb-edition.entity';
 import { EditionResponseDto } from '../dto/edition-response.dto';
 
 @Injectable()

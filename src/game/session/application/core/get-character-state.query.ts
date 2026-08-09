@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
-import { CharacterRepository } from '../../../shared/infrastructure/character.repository';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
-import { CharacterStateResponseDto } from '../../dto/character-state.dto';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { CharacterStateResponseDto } from '@game/session/dto/character-state.dto';
 
 @Injectable()
 export class GetCharacterStateQuery {

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbFightingStyle } from '../../../entities/phb-fighting-style.entity';
+import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
 import {
   PaginatedResponseDto,
   paginateQb,
-} from '../../../common/dto/pagination.dto';
+} from '@common/dto/pagination.dto';
 import { FightingStyleResponseDto } from '../dto/fighting-style-response.dto';
 import { FightingStylesMapper } from '../fighting-styles.mapper';
 

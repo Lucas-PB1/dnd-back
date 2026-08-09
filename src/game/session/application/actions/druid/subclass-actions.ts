@@ -1,10 +1,10 @@
-import { moonWildShapeTempHp } from '../../../../combat/domain/druid-features';
-import { rollDamageParts } from '../../../../dice/domain/dice';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
+import { moonWildShapeTempHp } from '@game/combat/domain/druid-features';
+import { rollDamageParts } from '@game/dice/domain/dice';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
-} from '../../core/table-action-guards';
+} from '@game/session/application/core/table-action-guards';
 import type {
   DruidActionDeps,
   DruidTableActionResult,

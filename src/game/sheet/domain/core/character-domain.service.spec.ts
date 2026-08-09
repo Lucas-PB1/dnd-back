@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { CharacterDomainService } from './character-domain.service';
-import { DEFAULT_ABILITY_SCORES, PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
-import type { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
-import type { CombatCatalogService } from '../../../combat/infrastructure/combat-catalog.service';
+import { DEFAULT_ABILITY_SCORES, PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import type { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import type { CombatCatalogService } from '@game/combat/infrastructure/combat-catalog.service';
 
 describe('CharacterDomainService', () => {
   let catalogLookup: { findClassOrFail: jest.Mock };

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { LoadCombatMechanicalCatalog } from '../../../game/combat/application/load-combat-mechanical-catalog';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { CombatMechanicalCatalogResponseDto } from '../dto/combat-mechanical-catalog-response.dto';
 import {
   filterCombatMechanicalCatalog,

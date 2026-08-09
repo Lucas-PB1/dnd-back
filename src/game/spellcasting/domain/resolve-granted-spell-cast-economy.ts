@@ -1,7 +1,7 @@
 import type {
   FeatOptionDto,
   SpeciesChoiceDto,
-} from '../../sheet/dto/character-sheet.dto';
+} from '@game/sheet/dto/character-sheet.dto';
 import type {
   CharacterSpellSource,
   FeatGrantedSpellRow,

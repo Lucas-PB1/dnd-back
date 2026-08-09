@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { PhbAlignment } from '../../entities/phb-alignment.entity';
-import { PhbLanguage } from '../../entities/phb-language.entity';
-import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
+import { PhbAlignment } from '@entities/phb-alignment.entity';
+import { PhbLanguage } from '@entities/phb-language.entity';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
 import { AlignmentResponseDto } from './dto/alignment-response.dto';
 import { LanguageResponseDto } from './dto/language-response.dto';
 import { CharacterLevelResponseDto } from './dto/character-level-response.dto';

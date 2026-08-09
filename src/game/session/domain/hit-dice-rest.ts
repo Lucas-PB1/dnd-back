@@ -1,5 +1,5 @@
-import { parseHitDieLabel } from '../../sheet/domain/stats/hit-points.calc';
-import { rollDie, type Rng } from '../../dice/domain/dice';
+import { parseHitDieLabel } from '@game/sheet/domain/stats/hit-points.calc';
+import { rollDie, type Rng } from '@game/dice/domain/dice';
 
 export type HitDiceSpendResult = {
   hitDiceSpent: number;

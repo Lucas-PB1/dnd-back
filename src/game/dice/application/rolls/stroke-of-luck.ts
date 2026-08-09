@@ -1,7 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
-import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
-import type { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
-import type { CheckRollResult } from '../../domain/dice';
+import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import type { CheckRollResult } from '@game/dice/domain/dice';
 
 export async function spendStrokeOfLuck(
   spender: CharacterResourceSpender,

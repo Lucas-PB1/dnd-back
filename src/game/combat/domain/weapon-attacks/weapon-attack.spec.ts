@@ -3,7 +3,7 @@ import {
   computeWeaponAttacks,
   type EquippedWeaponPiece,
 } from './weapon-attack';
-import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 
 const scores = (partial: Partial<AbilityScores> = {}): AbilityScores => ({
   forca: 16,

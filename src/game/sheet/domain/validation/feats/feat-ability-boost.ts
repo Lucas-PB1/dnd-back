@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
-import type { AbilityScores } from '../../../../shared/infrastructure/player-character.entity';
-import type { FeatOptionDto } from '../../../dto/character-sheet.dto';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import type { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import {
   ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG,
   ASI_DISTRIBUTION_PLUS1PLUS1,

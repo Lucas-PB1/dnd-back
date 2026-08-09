@@ -1,5 +1,5 @@
-import type { AbilityKey } from '../../build/domain/ability-generation';
-import type { AbilityModifiers } from '../../sheet/domain/stats/character-derived-stats';
+import type { AbilityKey } from '@game/build/domain/ability-generation';
+import type { AbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
 
 export function computeSpellSaveDc(
   proficiencyBonus: number,

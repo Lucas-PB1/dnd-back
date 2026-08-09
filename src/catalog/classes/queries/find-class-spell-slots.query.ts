@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
-import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '../../../common/dto/pagination.dto';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
 import { ClassSpellSlotsResponseDto } from '../dto/class-spell-slots-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 

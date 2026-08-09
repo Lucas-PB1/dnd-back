@@ -1,4 +1,4 @@
-import { rollDamageParts } from '../../../domain/dice';
+import { rollDamageParts } from '@game/dice/domain/dice';
 
 export type DamageAccumulator = {
   total: number;

@@ -15,9 +15,9 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { SupabaseAuthGuard } from '../../../identity/guards/supabase-auth.guard';
-import { CurrentUser } from '../../../identity/decorators/current-user.decorator';
-import { AuthUser } from '../../../identity/auth-user';
+import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
+import { CurrentUser } from '@identity/decorators/current-user.decorator';
+import { AuthUser } from '@identity/auth-user';
 import { RogueActionsHandler } from '../application/actions/rogue-actions.handler';
 import { MonkActionsHandler } from '../application/actions/monk-actions.handler';
 import { PaladinActionsHandler } from '../application/actions/paladin-actions.handler';

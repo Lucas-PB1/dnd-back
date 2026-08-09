@@ -1,21 +1,21 @@
 import type { DataSource } from 'typeorm';
-import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
-import { initiativeBonus } from '../../../sheet/domain/stats/character-check-bonuses';
-import { computeAbilityModifiers } from '../../../sheet/domain/stats/character-derived-stats';
-import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
-import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
-import { rollD20Check } from '../../domain/dice';
+import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { initiativeBonus } from '@game/sheet/domain/stats/character-check-bonuses';
+import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
+import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-class-ability-boosts';
+import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { rollD20Check } from '@game/dice/domain/dice';
 import type {
   CharacterRollResponseDto,
   RollInitiativeDto,
-} from '../../dto/character-roll.dto';
-import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
+} from '@game/dice/dto/character-roll.dto';
+import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import { forceAdvantageIfNormal } from './advantage-mode';
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
-import { abilityModifier } from '../../../sheet/domain/stats/ability-modifier';
-import { isRangerClass } from '../../../combat/domain/ranger-features';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { isRangerClass } from '@game/combat/domain/ranger-features';
 
 export async function executeRollInitiative(input: {
   access: PlayerCharacterAccessService;

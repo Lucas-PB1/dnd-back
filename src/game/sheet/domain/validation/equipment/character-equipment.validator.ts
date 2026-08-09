@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { assertUnique } from '../../../../../common/assert';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { VPhbClassEquipment } from '../../../../../entities/views/v-phb-class-equipment.entity';
-import { VPhbBackgroundEquipment } from '../../../../../entities/views/v-phb-background-equipment.entity';
-import { CharacterSheetInput } from '../../character-sheet.types';
-import { CharacterSheetContext } from '../../character-sheet.types';
+import { assertUnique } from '@common/assert';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
+import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
+import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
+import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 
 @Injectable()
 export class CharacterEquipmentValidator {

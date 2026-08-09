@@ -1,10 +1,10 @@
-import type { CharacterDomainService } from '../../../../sheet/domain/core/character-domain.service';
-import type { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
+import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   TableActionResponseDto,
   UseDruidTableActionDto,
-} from '../../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../../infrastructure/character-state.repository';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export const WILD_SHAPE_SLUG = 'wildShape';
 

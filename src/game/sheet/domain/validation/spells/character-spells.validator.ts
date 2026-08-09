@@ -1,16 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { assertUnique } from '../../../../../common/assert';
-import { VSpellByClass } from '../../../../../entities/views/v-spell-by-class.entity';
-import { VPhbSubclassPreparedSpell } from '../../../../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { CharacterFeatDto, SpeciesChoiceDto } from '../../../dto/character-sheet.dto';
-import { CharacterSheetContext, CharacterSheetInput } from '../../character-sheet.types';
+import { assertUnique } from '@common/assert';
+import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { CharacterFeatDto, SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
+import { CharacterSheetContext, CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
-} from '../../../../spellcasting/domain/granted-spells';
-import { LoadGrantedSpellCatalog } from '../../../../spellcasting/application/load-granted-spell-catalog';
+} from '@game/spellcasting/domain/granted-spells';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { resolveEldritchGrantedSpellSlugs } from '@game/sheet/application/eldritch-granted-spells';
 import { assertSpellQuotas } from './assert-spell-quotas';
 import {
   loadSubclassSpellcasting,
@@ -36,6 +37,7 @@ export class CharacterSpellsValidator {
     featOptions?: CharacterSheetInput['featOptions'],
     characterFeats?: CharacterFeatDto[],
     speciesChoices?: SpeciesChoiceDto[],
+    classOptions?: CharacterSheetInput['classOptions'],
   ): Promise<void> {
     const keys = spells.map((s) => `${s.spellSlug}:${s.listType}`);
     assertUnique(keys, 'Duplicate character spell entries are not allowed');
@@ -62,6 +64,10 @@ export class CharacterSpellsValidator {
       ctx.level,
       speciesCatalog,
     );
+    const eldritchGranted = await resolveEldritchGrantedSpellSlugs(
+      this.dataSource,
+      classOptions,
+    );
     const subclassCasting = await this.loadSubclassSpellcasting(ctx.subclassSlug);
     const spellListClassSlug =
       subclassCasting?.spellListClassSlug ?? ctx.classSlug;
@@ -81,6 +87,7 @@ export class CharacterSpellsValidator {
       speciesGranted,
       spellListClassSlug,
       maxSpellLevel,
+      eldritchGranted,
     );
 
     await assertSpellQuotas(

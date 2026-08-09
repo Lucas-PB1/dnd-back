@@ -1,8 +1,8 @@
-import type { AbilityKey } from '../../build/domain/ability-generation';
+import type { AbilityKey } from '@game/build/domain/ability-generation';
 import type {
   FeatOptionDto,
   SpeciesChoiceDto,
-} from '../../sheet/dto/character-sheet.dto';
+} from '@game/sheet/dto/character-sheet.dto';
 import type { CharacterSpellSource, FeatGrantedSpellRow } from './granted-spells/types';
 import { ritualSpellSlotIndex } from './ritual-spell-option-key';
 

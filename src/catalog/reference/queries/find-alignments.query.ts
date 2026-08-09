@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbAlignment } from '../../../entities/phb-alignment.entity';
-import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
+import { PhbAlignment } from '@entities/phb-alignment.entity';
+import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
 import { AlignmentResponseDto } from '../dto/alignment-response.dto';
 import { ReferenceMapper } from '../reference.mapper';
 

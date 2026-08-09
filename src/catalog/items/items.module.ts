@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PhbItem } from '../../entities/phb-item.entity';
+import { PhbItem } from '@entities/phb-item.entity';
 import { ItemsController } from './items.controller';
 import { ItemsMapper } from './items.mapper';
 import { FindItemBySlugQuery } from './queries/find-item-by-slug.query';

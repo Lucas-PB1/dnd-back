@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbSubclass } from '../../../entities/views/v-phb-subclass.entity';
+import { VPhbSubclass } from '@entities/views/v-phb-subclass.entity';
 import {
   applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
-} from '../../../common/dto/pagination.dto';
+} from '@common/dto/pagination.dto';
 import { SubclassResponseDto } from '../dto/subclass-response.dto';
 import { SubclassesMapper } from '../subclasses.mapper';
 

@@ -4,7 +4,7 @@ import {
   gloomDreadAmbusherDie,
   huntersMarkDie,
   isRangerClass,
-} from '../../../../combat/domain/ranger-features';
+} from '@game/combat/domain/ranger-features';
 import { addDamagePart } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 

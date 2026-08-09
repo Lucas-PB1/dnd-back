@@ -8,7 +8,7 @@ import {
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
 } from '../player-sheet.entities';
-import { EMPTY_SHEET_DATA } from '../../domain/character-sheet.types';
+import { EMPTY_SHEET_DATA } from '@game/sheet/domain/character-sheet.types';
 import {
   emptySheetData,
   loadBackgroundSkillSlugs,

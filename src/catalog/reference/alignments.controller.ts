@@ -1,6 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { PaginationQueryDto } from '@common/dto/pagination.dto';
 import { FindAlignmentsQuery } from './queries/find-alignments.query';
 
 @ApiTags('catalog-reference')

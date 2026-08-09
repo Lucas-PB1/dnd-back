@@ -1,16 +1,16 @@
 import { Repository } from 'typeorm';
-import { PhbItem } from '../../../../entities/phb-item.entity';
+import { PhbItem } from '@entities/phb-item.entity';
 import { PlayerCharacterItem } from '../player-character-item.entity';
-import { InventoryItemResponseDto } from '../../dto/inventory.dto';
+import { InventoryItemResponseDto } from '@game/inventory/dto/inventory.dto';
 import {
   assertWithinCarryingCapacity,
   encumbranceFromCatalogRows,
-} from '../../domain/assert-encumbrance';
+} from '@game/inventory/domain/assert-encumbrance';
 import {
   computeEncumbrance,
   parseItemWeightKg,
   type EncumbranceSummary,
-} from '../../domain/encumbrance';
+} from '@game/inventory/domain/encumbrance';
 
 export function encumbranceFromInventoryDtos(
   dtos: InventoryItemResponseDto[],

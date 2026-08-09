@@ -1,4 +1,4 @@
-import type { AdvantageMode } from '../../domain/dice';
+import type { AdvantageMode } from '@game/dice/domain/dice';
 
 /** Só promove para vantagem se o modo atual ainda for normal. */
 export function forceAdvantageIfNormal(mode: AdvantageMode): AdvantageMode {

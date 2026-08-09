@@ -240,6 +240,86 @@ function pickN<T>(items: T[], n: number): T[] {
   return out;
 }
 
+function warlockInvocationLimit(level: number): number {
+  if (level >= 18) return 10;
+  if (level >= 15) return 9;
+  if (level >= 12) return 8;
+  if (level >= 9) return 7;
+  if (level >= 7) return 6;
+  if (level >= 5) return 5;
+  if (level >= 2) return 3;
+  if (level >= 1) return 1;
+  return 0;
+}
+
+type EldritchCatalogRow = {
+  slug: string;
+  minLevel: number;
+  requiresPactSlug: string | null;
+  requiresInvocationSlug: string | null;
+  repeatable: boolean;
+};
+
+function pickValidEldritchInvocations(
+  level: number,
+  catalog: EldritchCatalogRow[],
+): { optionKey: string; valueId: string; instanceIndex: number }[] {
+  const limit = warlockInvocationLimit(level);
+  const eligible = catalog.filter((row) => row.minLevel <= level);
+  const picks: { slug: string; instanceIndex: number }[] = [];
+
+  const isValid = (trial: { slug: string; instanceIndex: number }[]) => {
+    const bySlug = new Map(catalog.map((row) => [row.slug, row]));
+    const pickedSlugs = trial.map((p) => p.slug);
+    const counts = new Map<string, number>();
+    for (const slug of pickedSlugs) {
+      counts.set(slug, (counts.get(slug) ?? 0) + 1);
+    }
+    const pactKnown = new Set(
+      pickedSlugs.filter((slug) =>
+        ['pact-of-the-tome', 'pact-of-the-blade', 'pact-of-the-chain'].includes(
+          slug,
+        ),
+      ),
+    );
+    const known = new Set(pickedSlugs);
+    if (trial.length > limit) return false;
+    for (const pick of trial) {
+      const row = bySlug.get(pick.slug);
+      if (!row) return false;
+      if (level < row.minLevel) return false;
+      if (row.requiresPactSlug && !pactKnown.has(row.requiresPactSlug)) {
+        return false;
+      }
+      if (
+        row.requiresInvocationSlug &&
+        !known.has(row.requiresInvocationSlug)
+      ) {
+        return false;
+      }
+      if (!row.repeatable && (counts.get(pick.slug) ?? 0) > 1) return false;
+    }
+    return true;
+  };
+
+  while (picks.length < limit) {
+    const candidates = pickN(
+      eligible.filter((row) =>
+        isValid([...picks, { slug: row.slug, instanceIndex: picks.length }]),
+      ),
+      eligible.length,
+    );
+    if (candidates.length === 0) break;
+    picks.push({ slug: candidates[0]!.slug, instanceIndex: picks.length });
+  }
+
+  return picks.map((pick) => ({
+    optionKey: 'eldritch-invocation',
+    valueId: pick.slug,
+    instanceIndex: pick.instanceIndex,
+  }));
+}
+
 describe('Create class review characters (L20)', () => {
   let app: INestApplication<App>;
   let db: DataSource;
@@ -466,12 +546,42 @@ describe('Create class review characters (L20)', () => {
         );
       }
 
+      // Invocações Místicas (bruxo): até o limite do nível, picks válidos.
+      if (cls.slug === 'warlock') {
+        const invocationRows = await db.query<
+          {
+            slug: string;
+            min_level: number;
+            requires_pact_slug: string | null;
+            requires_invocation_slug: string | null;
+            repeatable: boolean;
+          }[]
+        >(
+          `SELECT slug, min_level, requires_pact_slug, requires_invocation_slug, repeatable
+           FROM rpg.phb_eldritch_invocation
+           ORDER BY sort_order`,
+        );
+        classOptions.push(
+          ...pickValidEldritchInvocations(
+            LEVEL,
+            invocationRows.map((row) => ({
+              slug: row.slug,
+              minLevel: row.min_level,
+              requiresPactSlug: row.requires_pact_slug,
+              requiresInvocationSlug: row.requires_invocation_slug,
+              repeatable: row.repeatable,
+            })),
+          ),
+        );
+      }
+
       const characterFeats: { featSlug: string; instanceIndex: number }[] = [];
       if (cls.slug === 'fighter' || cls.slug === 'gunslinger') {
         characterFeats.push({ featSlug: 'defense', instanceIndex: 0 });
       }
 
       // Mago: grimório (known) + preparadas do dia; Mísseis vem always_prepared via subclasse.
+      // Bruxo: truques + conhecidas (free_cast das invocações entram via merge).
       const characterSpells =
         cls.slug === 'wizard'
           ? [
@@ -486,7 +596,19 @@ describe('Create class review characters (L20)', () => {
               { spellSlug: 'maos-magicas', listType: 'known' as const },
               { spellSlug: 'luz', listType: 'known' as const },
             ]
-          : undefined;
+          : cls.slug === 'warlock'
+            ? [
+                { spellSlug: 'raio-mistico', listType: 'known' as const },
+                { spellSlug: 'prestidigitacao-arcana', listType: 'known' as const },
+                { spellSlug: 'maos-magicas', listType: 'known' as const },
+                { spellSlug: 'repreensao-diabolica', listType: 'known' as const },
+                { spellSlug: 'armadura-de-agathys', listType: 'known' as const },
+                { spellSlug: 'passo-nebuloso', listType: 'known' as const },
+                { spellSlug: 'invisibilidade', listType: 'known' as const },
+                { spellSlug: 'contramagia', listType: 'known' as const },
+                { spellSlug: 'voo', listType: 'known' as const },
+              ]
+            : undefined;
 
       const name = `Review · ${CLASS_LABEL[cls.slug] ?? cls.slug}`;
       const payload = {

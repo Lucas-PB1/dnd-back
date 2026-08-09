@@ -1,11 +1,11 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbClass } from '../../../../entities/views/v-phb-class.entity';
-import { PhbCharacterLevel } from '../../../../entities/phb-character-level.entity';
-import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
-import { AbilityScores, PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
-import { CombatCatalogService } from '../../../combat/infrastructure/combat-catalog.service';
+import { VPhbClass } from '@entities/views/v-phb-class.entity';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { AbilityScores, PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { CombatCatalogService } from '@game/combat/infrastructure/combat-catalog.service';
 import {
   calculateHitPointsMax,
   ClassHpProfile,

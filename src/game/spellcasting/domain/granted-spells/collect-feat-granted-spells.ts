@@ -1,7 +1,7 @@
 import type {
   CharacterFeatDto,
   FeatOptionDto,
-} from '../../../sheet/dto/character-sheet.dto';
+} from '@game/sheet/dto/character-sheet.dto';
 import { ritualSpellSlotIndex } from '../ritual-spell-option-key';
 import { FeatGrantedSpellRow } from './types';
 

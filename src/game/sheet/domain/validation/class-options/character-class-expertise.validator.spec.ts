@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm';
-import { CharacterSheetContext } from '../../character-sheet.types';
+import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
 
 describe('CharacterClassExpertiseValidator', () => {

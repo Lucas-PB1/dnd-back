@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { LoadCombatMechanicalCatalog } from '../../../combat/application/load-combat-mechanical-catalog';
-import { isRangerClass } from '../../../combat/domain/ranger-features';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { isRangerClass } from '@game/combat/domain/ranger-features';
 import {
   FighterTableActionResponseDto,
   UseRangerTableActionDto,
-} from '../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { RangerActionDeps } from './ranger/ranger-action-deps';
 import {
   resolveHuntersMarkFree,

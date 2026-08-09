@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { requireFound } from '../../../common/require-found';
-import { PhbItem } from '../../../entities/phb-item.entity';
+import { requireFound } from '@common/require-found';
+import { PhbItem } from '@entities/phb-item.entity';
 import { ItemResponseDto } from '../dto/item-response.dto';
 import { ItemsMapper } from '../items.mapper';
 

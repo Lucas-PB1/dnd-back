@@ -1,15 +1,15 @@
 import { BadRequestException } from '@nestjs/common';
 import type { DataSource } from 'typeorm';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
-import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
-import { collectFightingStyleSlugsFromSubclassOptions } from '../../../sheet/domain/validation/class-options/fighting-style-feat-options';
-import { collectMasteredWeaponSlugs } from '../../../sheet/domain/validation/class-options/class-weapon-mastery-slots';
-import { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
-import { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
-import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
-import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-item-effects';
-import type { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { collectFightingStyleSlugsFromSubclassOptions } from '@game/sheet/domain/validation/class-options/fighting-style-feat-options';
+import { collectMasteredWeaponSlugs } from '@game/sheet/domain/validation/class-options/class-weapon-mastery-slots';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-class-ability-boosts';
+import { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 
 export type RollWeaponCharacter = {
   id: string;

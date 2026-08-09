@@ -16,7 +16,7 @@ import { applyBackgroundAndIdentityUpdate } from './update-character/apply-backg
 import { clearStaleSheetChoices } from './update-character/clear-stale-sheet-choices';
 import { mergeUpdateCharacterSpells } from './update-character/merge-update-character-spells';
 import { EMPTY_SHEET_DATA } from '../domain/character-sheet.types';
-import { DEFAULT_ABILITY_SCORES, type PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import { DEFAULT_ABILITY_SCORES, type PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
 const mockApplyBackground = applyBackgroundAndIdentityUpdate as jest.MockedFunction<typeof applyBackgroundAndIdentityUpdate>;
 const mockClearStale = clearStaleSheetChoices as jest.MockedFunction<typeof clearStaleSheetChoices>;

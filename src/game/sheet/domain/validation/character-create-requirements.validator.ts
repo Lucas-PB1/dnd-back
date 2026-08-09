@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterSheetInput } from '../character-sheet.types';
 import { classExpertiseSlotsAtLevel } from './class-options/class-expertise-slots';
 import { classWeaponMasterySlotsAtLevel } from './class-options/class-weapon-mastery-slots';
@@ -8,7 +8,7 @@ import { CharacterClassOptionsValidator } from './class-options/character-class-
 import { FIGHTING_STYLE_FEAT_CATEGORY } from './class-options/fighting-style-feat-options';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterSheetContext } from '../character-sheet.types';
-import type { CharacterFeatDto } from '../../dto/character-sheet.dto';
+import type { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 
 /**
  * Valida escolhas obrigatórias no POST /characters quando o catálogo exige.

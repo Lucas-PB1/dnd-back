@@ -1,4 +1,4 @@
-import { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterSheetValidator } from './character-sheet.validator';
 import { CharacterBackgroundValidator } from './background/character-background.validator';
 import { CharacterEquipmentValidator } from './equipment/character-equipment.validator';
@@ -34,6 +34,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       | 'validateClassExpertiseOptions'
       | 'validateClassWeaponMasteryOptions'
       | 'validateSpellMasteryOptions'
+      | 'validateEldritchInvocationOptions'
     >
   >;
   let featsValidator: jest.Mocked<

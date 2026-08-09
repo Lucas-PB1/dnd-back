@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isWarlockClass } from '../../../combat/domain/warlock-features';
-import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
+import { isWarlockClass } from '@game/combat/domain/warlock-features';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   TableActionResponseDto,
   UseWarlockTableActionDto,
-} from '../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { WarlockActionDeps } from './warlock/warlock-action-deps';
 import {
   resolveDarkOnesOwnLuck,

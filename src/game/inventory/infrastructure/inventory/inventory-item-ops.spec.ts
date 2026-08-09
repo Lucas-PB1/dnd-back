@@ -1,7 +1,7 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import type { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
-import type { PhbItem } from '../../../../entities/phb-item.entity';
+import type { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import type { PhbItem } from '@entities/phb-item.entity';
 import type { PlayerCharacterItem } from '../player-character-item.entity';
 import {
   applyInventoryAttunement,

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbEldritchInvocation } from '../../entities/phb-eldritch-invocation.entity';
+import { PhbEldritchInvocation } from '@entities/phb-eldritch-invocation.entity';
 import { EldritchInvocationResponseDto } from '../dto/eldritch-invocation-response.dto';
 
 @Injectable()

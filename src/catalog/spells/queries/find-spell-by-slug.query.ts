@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { requireFound } from '../../../common/require-found';
-import { VPhbSpell } from '../../../entities/views/v-phb-spell.entity';
+import { requireFound } from '@common/require-found';
+import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { SpellResponseDto } from '../dto/spell-response.dto';
 import { SpellsMapper } from '../spells.mapper';
 

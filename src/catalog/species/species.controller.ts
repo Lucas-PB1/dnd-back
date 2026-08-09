@@ -6,7 +6,7 @@ import {
   ApiParam,
   ApiTags,
 } from '@nestjs/swagger';
-import { PaginationQueryDto } from '../../common/dto/pagination.dto';
+import { PaginationQueryDto } from '@common/dto/pagination.dto';
 import { SpeciesQueryDto } from './dto/species-query.dto';
 import { FindSpeciesQuery } from './queries/find-species.query';
 import { FindSpeciesBySlugQuery } from './queries/find-species-by-slug.query';

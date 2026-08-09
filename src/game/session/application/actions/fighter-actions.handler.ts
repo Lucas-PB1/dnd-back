@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { LoadCombatMechanicalCatalog } from '../../../combat/application/load-combat-mechanical-catalog';
-import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
-import { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type {
   ActionSurgeResponseDto,
   FighterTableActionResponseDto,
@@ -13,7 +13,7 @@ import type {
   UseBattleMasterManeuverDto,
   UseDungeonPrecautionDto,
   UsePsiWarriorActionDto,
-} from '../../dto/character-state.dto';
+} from '@game/session/dto/character-state.dto';
 import type { FighterActionDeps } from './fighter/fighter-action-deps';
 import {
   useActionSurgeAction,

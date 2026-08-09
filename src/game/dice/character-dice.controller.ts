@@ -16,9 +16,9 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { SupabaseAuthGuard } from '../../identity/guards/supabase-auth.guard';
-import { CurrentUser } from '../../identity/decorators/current-user.decorator';
-import { AuthUser } from '../../identity/auth-user';
+import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
+import { CurrentUser } from '@identity/decorators/current-user.decorator';
+import { AuthUser } from '@identity/auth-user';
 import { CharacterRollsService } from './application/character-rolls.service';
 import {
   CharacterRollResponseDto,

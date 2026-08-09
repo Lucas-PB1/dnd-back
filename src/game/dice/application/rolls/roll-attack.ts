@@ -1,16 +1,16 @@
 import { BadRequestException } from '@nestjs/common';
 import type { DataSource } from 'typeorm';
-import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
-import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import type { ResolveEquippedWeaponAttacks } from '../../../combat/application/resolve-equipped-weapon-attacks';
-import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
+import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import type { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
+import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   rollD20Check,
   type AdvantageMode,
-} from '../../domain/dice';
-import type { CharacterRollResponseDto, RollAttackDto } from '../../dto/character-roll.dto';
-import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
-import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
+} from '@game/dice/domain/dice';
+import type { CharacterRollResponseDto, RollAttackDto } from '@game/dice/dto/character-roll.dto';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,
@@ -20,7 +20,7 @@ import {
   upgradeTowardAdvantage,
 } from './advantage-mode';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
-import { hasPreciseHunter, isRangerClass } from '../../../combat/domain/ranger-features';
+import { hasPreciseHunter, isRangerClass } from '@game/combat/domain/ranger-features';
 
 export async function executeRollAttack(input: {
   access: PlayerCharacterAccessService;

@@ -3,14 +3,14 @@ import {
   applyCombatantInitiativeRoll,
   assertCanRollInitiative,
 } from './encounter-initiative-roll';
-import type { CharacterRollsService } from '../../dice/application/character-rolls.service';
+import type { CharacterRollsService } from '@game/dice/application/character-rolls.service';
 import type { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
 import type { CampaignRepository } from '../infrastructure/campaign.repository';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
-import { rollD20Check } from '../../dice/domain/dice';
+import { rollD20Check } from '@game/dice/domain/dice';
 
-jest.mock('../../dice/domain/dice', () => ({
-  ...jest.requireActual('../../dice/domain/dice'),
+jest.mock('@game/dice/domain/dice', () => ({
+  ...jest.requireActual('@game/dice/domain/dice'),
   rollD20Check: jest.fn(),
 }));
 

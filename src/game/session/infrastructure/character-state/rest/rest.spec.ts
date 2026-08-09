@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
-import { CharacterRepository } from '../../../../shared/infrastructure/character.repository';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { applyLongRestState, applyShortRestState } from './rest';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';

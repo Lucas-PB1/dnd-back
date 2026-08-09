@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbSubclass } from '../../../entities/views/v-phb-subclass.entity';
-import { CatalogLookupService } from '../../catalog-lookup.service';
+import { VPhbSubclass } from '@entities/views/v-phb-subclass.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import {
   filterRowsByEditionSlug,
   PaginatedResponseDto,
   paginate,
-} from '../../../common/dto/pagination.dto';
-import { SubclassResponseDto } from '../../subclasses/dto/subclass-response.dto';
+} from '@common/dto/pagination.dto';
+import { SubclassResponseDto } from '@catalog/subclasses/dto/subclass-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 
 @Injectable()

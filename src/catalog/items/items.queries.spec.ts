@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { PhbItem } from '../../entities/phb-item.entity';
+import { PhbItem } from '@entities/phb-item.entity';
 import { ItemResponseDto } from './dto/item-response.dto';
 import { ItemsMapper } from './items.mapper';
 import { FindItemBySlugQuery } from './queries/find-item-by-slug.query';

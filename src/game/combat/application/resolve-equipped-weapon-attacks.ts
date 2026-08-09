@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
-import { PhbItem } from '../../../entities/phb-item.entity';
-import { PhbWeapon } from '../../../entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '../../../entities/phb-weapon-mastery.entity';
-import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
-import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+import { PhbItem } from '@entities/phb-item.entity';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import {
   loadWeaponMasteryBySlug,
   weaponPropsOf,
-} from '../../../catalog/equipment/weapon-props';
+} from '@catalog/equipment/weapon-props';
 import {
   computeWeaponAttacks,
   type EquippedWeaponPiece,

@@ -1,11 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
-import { PhbFeatRef } from '../../../../../entities/phb-feat-ref.entity';
-import { VPhbSpeciesTraitChoices } from '../../../../../entities/views/v-phb-species-trait-choices.entity';
-import { PhbSubclassRef } from '../../../../../entities/phb-subclass-ref.entity';
-import { PhbCharacterLevel } from '../../../../../entities/phb-character-level.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
+import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
 import { CharacterClassOptionsValidator } from './character-class-options.validator';
 import { CharacterSpeciesChoicesValidator } from './character-species-choices.validator';
 import { CharacterSubclassOptionsValidator } from './character-subclass-options.validator';

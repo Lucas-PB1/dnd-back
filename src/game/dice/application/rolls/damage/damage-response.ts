@@ -1,5 +1,5 @@
-import type { CharacterRollResponseDto } from '../../../dto/character-roll.dto';
-import type { RollDamageDto } from '../../../dto/character-roll.dto';
+import type { CharacterRollResponseDto } from '@game/dice/dto/character-roll.dto';
+import type { RollDamageDto } from '@game/dice/dto/character-roll.dto';
 import type { DamageAccumulator } from './damage-accumulator';
 import type { DamageWeaponAttack } from './damage-roll-context';
 

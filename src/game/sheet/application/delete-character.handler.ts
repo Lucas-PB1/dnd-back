@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterRepository } from '../../shared/infrastructure/character.repository';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 
 @Injectable()
 export class DeleteCharacterHandler {

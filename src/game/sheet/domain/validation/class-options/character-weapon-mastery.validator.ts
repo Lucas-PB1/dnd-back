@@ -1,14 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { assertUnique } from '../../../../../common/assert';
-import { CharacterSheetInput, CharacterSheetContext } from '../../character-sheet.types';
+import { assertUnique } from '@common/assert';
+import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import {
   classWeaponMasterySlotsAtLevel,
   isClassWeaponMasteryOptionKey,
   parseWeaponMasteryEligibility,
   type ClassProgressionMasteryRow,
 } from './class-weapon-mastery-slots';
-import { isProficient, type EquippedWeaponPiece } from '../../../../combat/domain/weapon-attack';
+import { isProficient, type EquippedWeaponPiece } from '@game/combat/domain/weapon-attack';
 
 @Injectable()
 export class CharacterWeaponMasteryValidator {
@@ -28,7 +28,7 @@ export class CharacterWeaponMasteryValidator {
     const unlockedKeys = new Set(unlocked.map((slot) => slot.optionKey));
 
     assertUnique(
-      options.map((option) => option.optionKey),
+      masteryOptions.map((option) => option.optionKey),
       'Duplicate class option keys are not allowed',
     );
 

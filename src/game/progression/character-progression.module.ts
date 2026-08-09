@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CatalogModule } from '../../catalog/catalog.module';
-import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
-import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
-import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '../../entities/views/v-subclass-spell-slots.entity';
+import { CatalogModule } from '@catalog/catalog.module';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { CharacterSessionModule } from '../session/character-session.module';

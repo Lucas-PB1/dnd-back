@@ -4,11 +4,11 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
-import { PhbItem } from '../../../entities/phb-item.entity';
-import { PhbWeapon } from '../../../entities/phb-weapon.entity';
-import { parseWeaponCharm } from '../../combat/domain/weapon-charm';
-import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PhbItem } from '@entities/phb-item.entity';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { parseWeaponCharm } from '@game/combat/domain/weapon-charm';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   AttachWeaponCharmDto,
   DetachWeaponCharmDto,

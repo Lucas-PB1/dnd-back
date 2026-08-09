@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { CampaignCharacter } from '../../campaign/infrastructure/campaign-character.entity';
+import { CampaignCharacter } from '@game/campaign/infrastructure/campaign-character.entity';
 import {
   CampaignMember,
   CampaignRole,
-} from '../../campaign/infrastructure/campaign-member.entity';
+} from '@game/campaign/infrastructure/campaign-member.entity';
 
 export type CharacterAccessMode = 'read' | 'write' | 'own';
 

@@ -13,7 +13,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { SupabaseAuthGuard } from '../../identity/guards/supabase-auth.guard';
+import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
 import { RollAbilitiesHandler } from './application/roll-abilities.handler';
 import { PreviewGrantedSpellsHandler } from './application/preview-granted-spells.handler';
 import { RollAbilitiesDto, RollAbilitiesResponseDto } from './dto/roll-abilities.dto';

@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CatalogLookupService } from '../../catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { SpeciesResponseDto } from '../dto/species-response.dto';
 import { SpeciesMapper } from '../species.mapper';
 

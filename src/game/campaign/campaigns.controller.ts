@@ -20,9 +20,9 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
-import { SupabaseAuthGuard } from '../../identity/guards/supabase-auth.guard';
-import { CurrentUser } from '../../identity/decorators/current-user.decorator';
-import { AuthUser } from '../../identity/auth-user';
+import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
+import { CurrentUser } from '@identity/decorators/current-user.decorator';
+import { AuthUser } from '@identity/auth-user';
 import { CampaignService } from './application/campaign.service';
 import {
   CampaignCharacterSummaryDto,

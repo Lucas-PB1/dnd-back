@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { VPhbFeat } from '../../entities/views/v-phb-feat.entity';
+import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import { FeatResponseDto } from './dto/feat-response.dto';
 import { FeatSummaryResponseDto } from './dto/feat-summary-response.dto';
 

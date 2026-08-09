@@ -1,5 +1,5 @@
-import { PhbOptionDef } from '../../../../../entities/phb-option.entity';
-import { ritualSpellSlotIndex } from '../../../../spellcasting/domain/ritual-spell-option-key';
+import { PhbOptionDef } from '@entities/phb-option.entity';
+import { ritualSpellSlotIndex } from '@game/spellcasting/domain/ritual-spell-option-key';
 
 export { ritualSpellSlotIndex };
 

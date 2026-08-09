@@ -3,7 +3,7 @@ import {
   resolveSpellcastingAbilityForSpell,
 } from './resolve-granted-spellcasting-ability';
 import { enrichSpellsWithSpellcastingStats } from './enrich-spells-with-spellcasting-stats';
-import type { AbilityModifiers } from '../../sheet/domain/stats/character-derived-stats';
+import type { AbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
 
 const mods: AbilityModifiers = {
   forca: 1,

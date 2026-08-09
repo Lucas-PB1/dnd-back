@@ -1,8 +1,8 @@
-import type { CharacterDomainService } from '../../../../sheet/domain/core/character-domain.service';
-import type { CharacterResourceSpender } from '../../../../session/domain/character-resource-spender';
-import type { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
-import type { CunningStrikeEffect } from '../../../../combat/domain/rogue/types';
-import type { RollDamageDto } from '../../../dto/character-roll.dto';
+import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import type { CunningStrikeEffect } from '@game/combat/domain/rogue/types';
+import type { RollDamageDto } from '@game/dice/dto/character-roll.dto';
 import type { findEquippedWeaponAttack } from '../roll-weapon-context';
 import type { DamageAccumulator } from './damage-accumulator';
 

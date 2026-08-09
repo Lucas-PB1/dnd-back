@@ -1,9 +1,9 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CatalogModule } from '../../catalog/catalog.module';
+import { CatalogModule } from '@catalog/catalog.module';
 import { CombatModule } from '../combat/combat.module';
-import { VClassSpellSlots } from '../../entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '../../entities/views/v-subclass-spell-slots.entity';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterSheetModule } from '../sheet/character-sheet.module';
 import { SpellcastingModule } from '../spellcasting/spellcasting.module';

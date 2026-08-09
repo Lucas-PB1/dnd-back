@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
+import { DataSource } from 'typeorm';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterFactory } from '../domain/core/character.factory';
 import { CharacterDomainService } from '../domain/core/character-domain.service';
-import { CharacterRepository } from '../../shared/infrastructure/character.repository';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { CharacterSheetRepository } from '../infrastructure/character-sheet.repository';
 import { CharacterSheetValidator } from '../domain/validation/character-sheet.validator';
 import { CharacterMapper } from '../infrastructure/character.mapper';
@@ -15,9 +16,10 @@ import {
   resolveBackgroundToolItemSlug,
 } from '../domain/origin/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../domain/origin/species-origin';
-import { mergeGrantedSpells } from '../../spellcasting/application/merge-granted-spells';
-import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
-import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
+import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { SeedStartingInventoryHandler } from '@game/inventory/application/seed-starting-inventory.handler';
+import { resolveEldritchGrantedSpellSlugs } from './eldritch-granted-spells';
 
 @Injectable()
 export class CreateCharacterHandler {
@@ -30,6 +32,7 @@ export class CreateCharacterHandler {
     private readonly mapper: CharacterMapper,
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly dataSource: DataSource,
   ) {}
 
   async execute(userId: string, dto: CreateCharacterDto): Promise<CharacterResponseDto> {
@@ -85,6 +88,10 @@ export class CreateCharacterHandler {
         featSlugs,
         subclassSlug: dto.subclassSlug,
       });
+    const extraGrantedSpellSlugs = await resolveEldritchGrantedSpellSlugs(
+      this.dataSource,
+      sheetInput.classOptions,
+    );
     sheetInput.characterSpells = mergeGrantedSpells(
       sheetInput.characterSpells ?? [],
       {
@@ -96,6 +103,7 @@ export class CreateCharacterHandler {
         speciesCatalog,
         featFixedSpells,
         subclassGrantedSpells,
+        extraGrantedSpellSlugs,
       },
     );
 

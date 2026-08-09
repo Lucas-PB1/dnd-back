@@ -1,11 +1,11 @@
 import { applyBackgroundAndIdentityUpdate } from './apply-background-and-identity-update';
-import { DEFAULT_ABILITY_SCORES, PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
+import { DEFAULT_ABILITY_SCORES, PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   BACKGROUND_BOOST_MODE_PLUS1X3,
   BACKGROUND_BOOST_MODE_PLUS2_PLUS1,
-} from '../../domain/origin/background-ability-boost';
-import type { CatalogLookupService } from '../../../../catalog/catalog-lookup.service';
-import type { CharacterSheetValidator } from '../../domain/validation/character-sheet.validator';
+} from '@game/sheet/domain/origin/background-ability-boost';
+import type { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import type { CharacterSheetValidator } from '@game/sheet/domain/validation/character-sheet.validator';
 
 function row(): PlayerCharacter {
   return {

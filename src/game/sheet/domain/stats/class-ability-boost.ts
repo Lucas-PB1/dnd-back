@@ -1,4 +1,4 @@
-import { AbilityScores } from '../../../shared/infrastructure/player-character.entity';
+import { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import { abilityModifier } from './ability-modifier';
 
 /**

@@ -1,11 +1,11 @@
-import type { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type {
   ActionSurgeResponseDto,
   CharacterStateResponseDto,
   SecondWindResponseDto,
   TacticalMindResponseDto,
   UseManeuverResponseDto,
-} from '../../../dto/character-state.dto';
+} from '@game/session/dto/character-state.dto';
 import type { MartialSessionDeps } from './martial-deps';
 import {
   fireChamberOp,

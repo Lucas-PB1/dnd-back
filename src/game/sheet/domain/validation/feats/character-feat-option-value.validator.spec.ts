@@ -3,8 +3,8 @@ jest.mock('./feat-option-proficiency', () => ({
 }));
 
 import { DataSource, Repository } from 'typeorm';
-import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
-import { VSpellByClass } from '../../../../../entities/views/v-spell-by-class.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { CharacterFeatOptionValueValidator } from './character-feat-option-value.validator';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
 import { RESILIENT_FEAT_SLUG } from './resilient-feat-options';

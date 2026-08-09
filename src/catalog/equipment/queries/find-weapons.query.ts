@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbWeapon } from '../../../entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '../../../entities/phb-weapon-mastery.entity';
-import { PhbWeaponProperty } from '../../../entities/phb-weapon-property.entity';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import { PhbWeaponProperty } from '@entities/phb-weapon-property.entity';
 import {
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
-} from '../../../common/dto/pagination.dto';
+} from '@common/dto/pagination.dto';
 import { WeaponResponseDto } from '../dto/weapon-response.dto';
 import { EquipmentMapper } from '../equipment.mapper';
 import {

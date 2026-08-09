@@ -1,13 +1,13 @@
 import { BadRequestException } from '@nestjs/common';
-import { listBattleMasterManeuvers } from '../../../../combat/domain/battle-master-maneuvers';
-import { resolveBattleMasterTableRoll } from '../../../../combat/domain/fighter-table-actions';
-import { superiorityDieFaces } from '../../../../combat/domain/fighter-features';
-import { rollDie } from '../../../../dice/domain/dice';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
+import { listBattleMasterManeuvers } from '@game/combat/domain/battle-master-maneuvers';
+import { resolveBattleMasterTableRoll } from '@game/combat/domain/fighter-table-actions';
+import { superiorityDieFaces } from '@game/combat/domain/fighter-features';
+import { rollDie } from '@game/dice/domain/dice';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type {
   FighterTableActionResponseDto,
   UseBattleMasterManeuverDto,
-} from '../../../dto/character-state.dto';
+} from '@game/session/dto/character-state.dto';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export async function listBattleMasterManeuversAction(

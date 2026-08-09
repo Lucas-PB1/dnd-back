@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbHpBonusSource } from '../../../entities/views/v-phb-hp-bonus-source.entity';
-import { VPhbUnarmoredDefense } from '../../../entities/views/v-phb-unarmored-defense.entity';
-import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+import { VPhbHpBonusSource } from '@entities/views/v-phb-hp-bonus-source.entity';
+import { VPhbUnarmoredDefense } from '@entities/views/v-phb-unarmored-defense.entity';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { UnarmoredDefenseRow } from '../domain/armor-class';
 
 /** Shape aligned with sheet `HitPointsBonusRow` (structural; avoids combat→sheet). */

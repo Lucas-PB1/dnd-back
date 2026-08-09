@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
-import { OptionScope } from '../../../entities/phb-option.entity';
+import { OptionScope } from '@entities/phb-option.entity';
 
 @Entity({ schema: 'rpg', name: 'player_character_species_choice' })
 export class PlayerCharacterSpeciesChoice {

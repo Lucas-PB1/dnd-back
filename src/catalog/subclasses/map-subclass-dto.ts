@@ -1,4 +1,4 @@
-import { VPhbSubclass } from '../../entities/views/v-phb-subclass.entity';
+import { VPhbSubclass } from '@entities/views/v-phb-subclass.entity';
 import { SubclassResponseDto } from './dto/subclass-response.dto';
 
 export function mapSubclassDto(row: VPhbSubclass): SubclassResponseDto {

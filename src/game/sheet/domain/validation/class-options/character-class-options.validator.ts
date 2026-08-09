@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { assertUnique } from '../../../../../common/assert';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { CharacterSheetInput, CharacterSheetContext } from '../../character-sheet.types';
-import { CharacterFeatDto } from '../../../dto/character-sheet.dto';
+import { assertUnique } from '@common/assert';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
+import { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 import {
   FIGHTING_STYLE_FEAT_CATEGORY,
   collectFightingStyleSlugsFromSubclassOptions,

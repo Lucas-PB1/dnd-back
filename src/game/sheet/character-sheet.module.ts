@@ -1,17 +1,17 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CatalogModule } from '../../catalog/catalog.module';
+import { CatalogModule } from '@catalog/catalog.module';
 import { CharacterInventoryModule } from '../inventory/character-inventory.module';
-import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
-import { PhbSubclassRef } from '../../entities/phb-subclass-ref.entity';
-import { PhbOptionDef, PhbOptionValue } from '../../entities/phb-option.entity';
-import { VPhbSpeciesTraitChoices } from '../../entities/views/v-phb-species-trait-choices.entity';
-import { VSpellByClass } from '../../entities/views/v-spell-by-class.entity';
-import { VPhbSubclassPreparedSpell } from '../../entities/views/v-phb-subclass-prepared-spell.entity';
-import { VPhbClassEquipment } from '../../entities/views/v-phb-class-equipment.entity';
-import { VPhbBackgroundEquipment } from '../../entities/views/v-phb-background-equipment.entity';
-import { VPhbBackgroundToolOption } from '../../entities/views/v-phb-background-tool-option.entity';
-import { PhbFeatRef } from '../../entities/phb-feat-ref.entity';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
+import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
+import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
+import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
+import { VPhbBackgroundToolOption } from '@entities/views/v-phb-background-tool-option.entity';
+import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CombatModule } from '../combat/combat.module';
@@ -50,7 +50,7 @@ import { CreateCharacterHandler } from './application/create-character.handler';
 import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
-import { PhbSpecies } from '../../entities/phb-species.entity';
+import { PhbSpecies } from '@entities/phb-species.entity';
 import { CampaignModule } from '../campaign/campaign.module';
 
 @Module({

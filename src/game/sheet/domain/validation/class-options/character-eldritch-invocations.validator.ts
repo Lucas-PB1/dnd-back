@@ -4,12 +4,12 @@ import {
   readEldritchInvocationPicks,
   validateEldritchInvocationPicks,
   type EldritchInvocationCatalogRow,
-} from '../../../../combat/domain/warlock-features';
-import { isWarlockClass } from '../../../../combat/domain/warlock-features';
+} from '@game/combat/domain/warlock-features';
+import { isWarlockClass } from '@game/combat/domain/warlock-features';
 import {
   CharacterSheetContext,
   CharacterSheetInput,
-} from '../../character-sheet.types';
+} from '@game/sheet/domain/character-sheet.types';
 
 @Injectable()
 export class CharacterEldritchInvocationsValidator {

@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbBackgroundSkill } from '../../../entities/views/v-phb-background-skill.entity';
-import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '../../../common/dto/pagination.dto';
+import { VPhbBackgroundSkill } from '@entities/views/v-phb-background-skill.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
 import { BackgroundSkillResponseDto } from '../dto/background-skill-response.dto';
 import { BackgroundsMapper } from '../backgrounds.mapper';
 

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, In, Repository } from 'typeorm';
-import { VPhbArmor } from '../../../entities/views/v-phb-armor.entity';
-import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
+import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
+import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import {
   computeEquipmentCompliance,
   type EquipmentComplianceResult,
@@ -14,8 +14,8 @@ import {
   type EquippedWeaponPiece,
 } from '../domain/weapon-attack';
 import type { SizeCategory } from '../domain/creature-size';
-import { PhbWeapon } from '../../../entities/phb-weapon.entity';
-import { weaponPropsOf } from '../../../catalog/equipment/weapon-props';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { weaponPropsOf } from '@catalog/equipment/weapon-props';
 
 export type EquipmentComplianceResolveInput = {
   classSlug: string;

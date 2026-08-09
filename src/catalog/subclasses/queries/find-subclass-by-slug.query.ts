@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CatalogLookupService } from '../../catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { SubclassResponseDto } from '../dto/subclass-response.dto';
 import { SubclassesMapper } from '../subclasses.mapper';
 

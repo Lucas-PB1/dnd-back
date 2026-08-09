@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterRollsService } from '../../dice/application/character-rolls.service';
+import { CharacterRollsService } from '@game/dice/application/character-rolls.service';
 import { CampaignRepository } from '../infrastructure/campaign.repository';
 import { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
 import { viewerFromMember } from './encounter-combatant-ops';

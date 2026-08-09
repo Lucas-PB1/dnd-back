@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterDomainService } from '../domain/core/character-domain.service';
-import { CharacterRepository } from '../../shared/infrastructure/character.repository';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { CharacterSheetRepository } from '../infrastructure/character-sheet.repository';
 import { CharacterSheetValidator } from '../domain/validation/character-sheet.validator';
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
-import { SeedStartingInventoryHandler } from '../../inventory/application/seed-starting-inventory.handler';
-import { LoadGrantedSpellCatalog } from '../../spellcasting/application/load-granted-spell-catalog';
+import { SeedStartingInventoryHandler } from '@game/inventory/application/seed-starting-inventory.handler';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';
 import { assertAndConsumeHighElfCantripSwap } from './update-character/assert-high-elf-cantrip-swap';
 import { clearStaleSheetChoices } from './update-character/clear-stale-sheet-choices';
@@ -125,6 +125,7 @@ export class UpdateCharacterHandler {
         effectiveFeatOptions,
         effectiveSpeciesChoices,
         grantedSpellCatalog: this.grantedSpellCatalog,
+        dataSource: this.dataSource,
       });
     }
 
@@ -137,6 +138,8 @@ export class UpdateCharacterHandler {
     const injectSpeciesChoices =
       (shouldResyncSpells || needsProficiencyContext) &&
       sheetInput.speciesChoices === undefined;
+    const injectClassOptions =
+      shouldResyncSpells && sheetInput.classOptions === undefined;
 
     const validationInput: CharacterSheetInput = {
       ...sheetInput,
@@ -149,6 +152,9 @@ export class UpdateCharacterHandler {
       ...(injectFeatOptions ? { featOptions: effectiveFeatOptions } : {}),
       ...(injectSpeciesChoices
         ? { speciesChoices: effectiveSpeciesChoices }
+        : {}),
+      ...(injectClassOptions
+        ? { classOptions: sheetSnapshot.classOptions }
         : {}),
     };
 

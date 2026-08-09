@@ -1,12 +1,12 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { VSpellByClass } from '../../../../../entities/views/v-spell-by-class.entity';
-import { CharacterSheetContext } from '../../character-sheet.types';
-import { CharacterSheetInput } from '../../character-sheet.types';
+import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
+import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
+import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 import {
   findSpellQuotaViolation,
   spellQuotaViolationMessage,
-} from '../../../../spellcasting/domain/spell-quota';
+} from '@game/spellcasting/domain/spell-quota';
 import {
   loadSpellProgressionLimits,
   SubclassSpellcastingInfo,

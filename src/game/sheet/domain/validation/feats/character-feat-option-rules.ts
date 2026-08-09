@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
-import { assertUnique } from '../../../../../common/assert';
-import { FeatOptionDto, CharacterFeatDto } from '../../../dto/character-sheet.dto';
+import { assertUnique } from '@common/assert';
+import { FeatOptionDto, CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 import {
   ABILITY_SCORE_IMPROVEMENT_FEAT_SLUG,
   ASI_DISTRIBUTION_PLUS1PLUS1,

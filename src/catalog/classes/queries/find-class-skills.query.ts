@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbClassSkillChoice } from '../../../entities/views/v-phb-class-skill-choice.entity';
-import { CatalogLookupService } from '../../catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '../../../common/dto/pagination.dto';
+import { VPhbClassSkillChoice } from '@entities/views/v-phb-class-skill-choice.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
 import { ClassSkillResponseDto } from '../dto/class-skill-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 

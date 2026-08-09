@@ -1,6 +1,6 @@
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { VPhbBackgroundToolOption } from '../../../../../entities/views/v-phb-background-tool-option.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { VPhbBackgroundToolOption } from '@entities/views/v-phb-background-tool-option.entity';
 import { CharacterBackgroundValidator } from './character-background.validator';
 
 describe('CharacterBackgroundValidator', () => {

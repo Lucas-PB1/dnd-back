@@ -1,10 +1,10 @@
 import { DataSource, Repository } from 'typeorm';
-import { PhbItem } from '../../../entities/phb-item.entity';
-import { PhbWeapon } from '../../../entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '../../../entities/phb-weapon-mastery.entity';
+import { PhbItem } from '@entities/phb-item.entity';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
-import type { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
-import { DEFAULT_ABILITY_SCORES } from '../../shared/infrastructure/player-character.entity';
+import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
+import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
 
 describe('ResolveEquippedWeaponAttacks', () => {
   let inventoryItems: { find: jest.Mock };

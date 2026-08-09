@@ -1,4 +1,4 @@
-import type { CharacterSpellDto } from '../../../sheet/dto/character-sheet.dto';
+import type { CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
 import { collectFeatGrantedSpellSlugs } from './collect-feat-granted-spells';
 import { collectSpeciesGrantedSpellSlugs } from './collect-species-granted-spells';
 import { collectSubclassGrantedSpellSlugs } from './collect-subclass-granted-spells';
@@ -31,6 +31,7 @@ export function mergeCharacterSpellsWithGrantedSources(
       speciesCatalog,
     ),
     collectSubclassGrantedSpellSlugs(level, subclassGrants),
+    context.extraGrantedSpellSlugs ?? new Set(),
   );
   const previousGranted = unionSets(
     collectFeatGrantedSpellSlugs(
@@ -48,6 +49,7 @@ export function mergeCharacterSpellsWithGrantedSources(
       previousLevel,
       context.previousSubclassGrantedSpells ?? subclassGrants,
     ),
+    context.previousExtraGrantedSpellSlugs ?? new Set(),
   );
 
   const kept = baseSpells.filter((spell) => {

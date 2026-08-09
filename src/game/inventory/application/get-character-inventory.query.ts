@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
-import { PlayerCharacterEquipment } from '../../sheet/infrastructure/player-sheet.entities';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { PlayerCharacterEquipment } from '@game/sheet/infrastructure/player-sheet.entities';
 import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
 import { CharacterInventoryResponseDto } from '../dto/inventory.dto';
 import { SeedStartingInventoryHandler } from './seed-starting-inventory.handler';

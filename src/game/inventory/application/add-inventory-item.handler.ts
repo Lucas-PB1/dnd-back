@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PlayerCharacterAccessService } from '../../shared/player-character-access.service';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
 import {
   AddInventoryItemDto,

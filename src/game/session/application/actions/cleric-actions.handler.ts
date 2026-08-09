@@ -1,12 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { isClericClass } from '../../../combat/domain/cleric-features';
-import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
+import { isClericClass } from '@game/combat/domain/cleric-features';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
   UseClericTableActionDto,
-} from '../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { ClericActionDeps } from './cleric/cleric-action-deps';
 import {
   resolveDivineIntervention,

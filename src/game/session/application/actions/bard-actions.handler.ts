@@ -1,13 +1,13 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { LoadCombatMechanicalCatalog } from '../../../combat/application/load-combat-mechanical-catalog';
-import { isBardClass } from '../../../combat/domain/bard-features';
-import { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
+import { isBardClass } from '@game/combat/domain/bard-features';
+import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
   UseBardTableActionDto,
-} from '../../dto/character-state.dto';
-import { CharacterStateRepository } from '../../infrastructure/character-state.repository';
-import { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
+} from '@game/session/dto/character-state.dto';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { BardActionDeps } from './bard/bard-action-deps';
 import {
   resolveCombatInspiration,

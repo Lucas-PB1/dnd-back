@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CatalogLookupService } from '../../catalog-lookup.service';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { ClassResponseDto } from '../dto/class-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 import { ClassProficienciesQuery } from './class-proficiencies.query';

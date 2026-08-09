@@ -1,9 +1,9 @@
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../catalog/catalog-lookup.service';
-import { VClassSpellSlots } from '../../../entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '../../../entities/views/v-subclass-spell-slots.entity';
-import { CharacterRepository } from '../../shared/infrastructure/character.repository';
-import { CharacterSpellLookup } from '../../sheet/application/character-spell-lookup';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
+import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
+import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
 import { PhbCondition } from './phb-condition.entity';
 import { PlayerCharacterState } from './player-character-state.entity';
 import { CharacterStateRepository } from './character-state.repository';

@@ -3,14 +3,14 @@ import { DataSource, Repository } from 'typeorm';
 import {
   hasTacticalMind,
   isFighterClass,
-} from '../../../../../combat/domain/fighter-features';
-import { rollDie } from '../../../../../dice/domain/dice';
-import { PlayerCharacter } from '../../../../../shared/infrastructure/player-character.entity';
-import { applyResourceSpend } from '../../../../domain/class-resources';
-import { TacticalMindResponseDto } from '../../../../dto/character-state.dto';
-import { PlayerCharacterState } from '../../../player-character-state.entity';
-import { resolveClassResources } from '../../resources/class-resources';
-import type { BuildResponse } from '../../core/mutation-types';
+} from '@game/combat/domain/fighter-features';
+import { rollDie } from '@game/dice/domain/dice';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { applyResourceSpend } from '@game/session/domain/class-resources';
+import { TacticalMindResponseDto } from '@game/session/dto/character-state.dto';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
+import { resolveClassResources } from '@game/session/infrastructure/character-state/resources/class-resources';
+import type { BuildResponse } from '@game/session/infrastructure/character-state/core/mutation-types';
 
 export async function applyTacticalMind(input: {
   character: PlayerCharacter;

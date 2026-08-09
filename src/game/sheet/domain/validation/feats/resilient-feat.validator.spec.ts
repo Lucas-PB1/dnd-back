@@ -1,9 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { PhbOptionDef, PhbOptionValue } from '../../../../../entities/phb-option.entity';
-import { PhbFeatRef } from '../../../../../entities/phb-feat-ref.entity';
-import { PhbCharacterLevel } from '../../../../../entities/phb-character-level.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
 import { CharacterFeatOptionValueValidator } from './character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from './character-feat-options.validator';
 import { CharacterFeatsValidator } from './character-feats.validator';

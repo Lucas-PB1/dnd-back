@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbSkill } from '../../../entities/phb-skill.entity';
+import { PhbSkill } from '@entities/phb-skill.entity';
 import {
   applyIlikeSearch,
   PaginatedResponseDto,
   paginateQb,
-} from '../../../common/dto/pagination.dto';
+} from '@common/dto/pagination.dto';
 import { SkillResponseDto } from '../dto/skill-response.dto';
 import { SkillsMapper } from '../skills.mapper';
 

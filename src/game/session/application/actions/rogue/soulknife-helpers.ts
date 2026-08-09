@@ -1,10 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
-import { psiEnergyDieFaces } from '../../../../combat/domain/fighter-features';
+import { psiEnergyDieFaces } from '@game/combat/domain/fighter-features';
 import {
   resolveSoulknifeTableAction,
   type SoulknifeActionSlug,
-} from '../../../../combat/domain/rogue-table-actions';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
+} from '@game/combat/domain/rogue-table-actions';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter, RogueActionDeps } from './rogue-action-deps';
 
 export function psiDieFaces(character: PlayerCharacter): number {

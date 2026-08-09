@@ -1,5 +1,5 @@
-import { rollDamageParts } from '../../../../dice/domain/dice';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
+import { rollDamageParts } from '@game/dice/domain/dice';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type {
   ClericActionDeps,
   ClericTableActionResult,

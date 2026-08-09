@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PhbItem } from '../../entities/phb-item.entity';
+import { PhbItem } from '@entities/phb-item.entity';
 import { ItemResponseDto } from './dto/item-response.dto';
 import { ItemSummaryResponseDto } from './dto/item-summary-response.dto';
 

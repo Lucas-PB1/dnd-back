@@ -1,4 +1,4 @@
-import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
 /**
  * Porta usada pelas rolls para gastar recursos/slots sem SQL ad-hoc.

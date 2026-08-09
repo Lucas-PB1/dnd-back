@@ -6,6 +6,15 @@ module.exports = {
   transform: {
     '^.+\\.(t|j)s$': 'ts-jest',
   },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/$1',
+    '^@entities/(.*)$': '<rootDir>/entities/$1',
+    '^@common/(.*)$': '<rootDir>/common/$1',
+    '^@catalog/(.*)$': '<rootDir>/catalog/$1',
+    '^@game/(.*)$': '<rootDir>/game/$1',
+    '^@identity/(.*)$': '<rootDir>/identity/$1',
+    '^@config/(.*)$': '<rootDir>/config/$1',
+  },
   /**
    * Cobertura do código de aplicação/domínio.
    * DTOs (class-validator) e controllers (wiring HTTP) ficam de fora do unit gate —

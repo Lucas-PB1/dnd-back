@@ -1,7 +1,7 @@
 import { LoadGrantedSpellCatalog } from './load-granted-spell-catalog';
-import { VPhbSpeciesGrantedSpell } from '../../../entities/views/v-phb-species-granted-spell.entity';
-import { VPhbFeatGrantedSpell } from '../../../entities/views/v-phb-feat-granted-spell.entity';
-import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { VPhbSpeciesGrantedSpell } from '@entities/views/v-phb-species-granted-spell.entity';
+import { VPhbFeatGrantedSpell } from '@entities/views/v-phb-feat-granted-spell.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 
 describe('LoadGrantedSpellCatalog', () => {
   let service: LoadGrantedSpellCatalog;

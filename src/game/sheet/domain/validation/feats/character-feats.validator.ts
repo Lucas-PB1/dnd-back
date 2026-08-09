@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { assertUnique } from '../../../../../common/assert';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { FeatOptionDto, CharacterFeatDto } from '../../../dto/character-sheet.dto';
+import { assertUnique } from '@common/assert';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { FeatOptionDto, CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 import { featInstanceKey } from './character-feat';
 import { CharacterFeatOptionsValidator } from './character-feat-options.validator';
 

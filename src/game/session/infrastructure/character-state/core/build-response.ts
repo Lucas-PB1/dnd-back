@@ -1,21 +1,27 @@
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { VClassSpellSlots } from '../../../../../entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '../../../../../entities/views/v-subclass-spell-slots.entity';
-import { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
-import { CharacterSheetRepository } from '../../../../sheet/infrastructure/character-sheet.repository';
-import { LoadGrantedSpellCatalog } from '../../../../spellcasting/application/load-granted-spell-catalog';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
+import { loadEldritchInvocationEffectCatalog } from '@game/combat/application/load-eldritch-invocation-effect-catalog';
+import {
+  isWarlockClass,
+  readEldritchInvocationPicks,
+  resolveEldritchInvocationFreeCast,
+} from '@game/combat/domain/warlock-features';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import {
   annotateCharacterSpellSources,
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
-} from '../../../../spellcasting/domain/granted-spells';
+} from '@game/spellcasting/domain/granted-spells';
 import {
   freeCastsRemaining,
   resolveGrantedSpellCastEconomy,
-} from '../../../../spellcasting/domain/resolve-granted-spell-cast-economy';
-import { CharacterStateResponseDto } from '../../../dto/character-state.dto';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+} from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
+import { CharacterStateResponseDto } from '@game/session/dto/character-state.dto';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { buildClassResourceState } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 import { computeRemaining, loadMaxSlots } from '../resources/spell-slots';
@@ -64,6 +70,7 @@ export async function buildCharacterStateResponse(input: {
     grantedSpellUses,
     sheetRepository,
     grantedSpellCatalog,
+    dataSource,
   );
 
   return {
@@ -100,6 +107,7 @@ async function buildGrantedSpellCastOptions(
   grantedSpellUses: Record<string, number>,
   sheetRepository: CharacterSheetRepository,
   grantedSpellCatalog: LoadGrantedSpellCatalog,
+  dataSource: DataSource,
 ): Promise<CharacterStateResponseDto['grantedSpellCastOptions']> {
   const sheet = await sheetRepository.loadGrantedSpellSlice(character.id);
   const { speciesCatalog, featFixedSpells } =
@@ -123,7 +131,7 @@ async function buildGrantedSpellCastOptions(
     speciesGrantedSlugs,
   });
 
-  return annotated
+  const options = annotated
     .filter((spell) => spell.source === 'feat' || spell.source === 'species')
     .map((spell) => {
       const castEconomy = resolveGrantedSpellCastEconomy({
@@ -145,4 +153,62 @@ async function buildGrantedSpellCastOptions(
         ),
       };
     });
+
+  if (!isWarlockClass(character.classSlug)) {
+    return options;
+  }
+
+  const fullSheet = await sheetRepository.load(
+    character.id,
+    character.backgroundSlug,
+  );
+  const picks = readEldritchInvocationPicks(fullSheet.classOptions);
+  if (picks.length === 0) return options;
+
+  const catalog = await loadEldritchInvocationEffectCatalog(dataSource);
+  const pickedSlugs = picks.map((pick) => pick.slug);
+  const seen = new Set(options.map((row) => row.spellSlug));
+
+  for (const spell of fullSheet.characterSpells) {
+    if (seen.has(spell.spellSlug)) continue;
+    const freeCast = resolveEldritchInvocationFreeCast({
+      spellSlug: spell.spellSlug,
+      pickedSlugs,
+      catalog,
+    });
+    if (!freeCast) continue;
+    seen.add(spell.spellSlug);
+    options.push({
+      spellSlug: spell.spellSlug,
+      castEconomy: freeCast.economy,
+      freeCastsRemaining: freeCastsRemaining(
+        freeCast.economy,
+        spell.spellSlug,
+        grantedSpellUses,
+      ),
+    });
+  }
+
+  for (const row of catalog) {
+    if (row.kind !== 'free_cast' || !row.grantedSpellSlug) continue;
+    if (seen.has(row.grantedSpellSlug)) continue;
+    const freeCast = resolveEldritchInvocationFreeCast({
+      spellSlug: row.grantedSpellSlug,
+      pickedSlugs,
+      catalog,
+    });
+    if (!freeCast) continue;
+    seen.add(row.grantedSpellSlug);
+    options.push({
+      spellSlug: row.grantedSpellSlug,
+      castEconomy: freeCast.economy,
+      freeCastsRemaining: freeCastsRemaining(
+        freeCast.economy,
+        row.grantedSpellSlug,
+        grantedSpellUses,
+      ),
+    });
+  }
+
+  return options;
 }

@@ -1,5 +1,5 @@
-import { CharacterSheetRepository } from '../../infrastructure/character-sheet.repository';
-import { UpdateCharacterDto } from '../../dto/update-character.dto';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
 
 /** Limpa escolhas de ficha obsoletas quando classe/espécie/subclasse muda sem novo payload. */
 export async function clearStaleSheetChoices(

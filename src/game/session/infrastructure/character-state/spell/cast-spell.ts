@@ -1,8 +1,8 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '../../../../../catalog/catalog-lookup.service';
-import { VClassSpellSlots } from '../../../../../entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '../../../../../entities/views/v-subclass-spell-slots.entity';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import {
   GIGA_MISSILE_RESOURCE,
   MAGIC_MISSILE_FREE_RESOURCE,
@@ -11,30 +11,38 @@ import {
   buildMagicMissileCastNote,
   isMagicMissileMage,
   isSpellMasterySpell,
-} from '../../../../combat/domain/wizard-features';
-import { PlayerCharacter } from '../../../../shared/infrastructure/player-character.entity';
-import { CharacterSpellLookup } from '../../../../sheet/application/character-spell-lookup';
-import { CharacterSheetRepository } from '../../../../sheet/infrastructure/character-sheet.repository';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
-import { LoadGrantedSpellCatalog } from '../../../../spellcasting/application/load-granted-spell-catalog';
+} from '@game/combat/domain/wizard-features';
+import {
+  buildEldritchCantripCastNote,
+  isWarlockClass,
+  readEldritchInvocationPicks,
+  resolveEldritchInvocationFreeCast,
+  type EldritchFreeCastResolution,
+} from '@game/combat/domain/warlock-features';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lookup';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import {
   annotateCharacterSpellSources,
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
-} from '../../../../spellcasting/domain/granted-spells';
+} from '@game/spellcasting/domain/granted-spells';
 import {
   consumeGrantedFreeCast,
   freeCastsRemaining,
   resolveGrantedSpellCastEconomy,
-} from '../../../../spellcasting/domain/resolve-granted-spell-cast-economy';
-import { applyResourceSpend } from '../../../domain/class-resources';
+} from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
+import { applyResourceSpend } from '@game/session/domain/class-resources';
 import {
   CastSpellDto,
   CharacterStateResponseDto,
-} from '../../../dto/character-state.dto';
-import { PlayerCharacterState } from '../../player-character-state.entity';
+} from '@game/session/dto/character-state.dto';
+import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from '../resources/class-resources';
 import { consumeSpellSlot, loadMaxSlots } from '../resources/spell-slots';
+import { loadEldritchInvocationEffectCatalog } from '@game/combat/application/load-eldritch-invocation-effect-catalog';
 
 type BuildResponse = (
   character: PlayerCharacter,
@@ -74,8 +82,25 @@ export async function applyCastSpell(input: {
     buildResponse,
   } = input;
 
+  const sheet = await sheetRepository.load(
+    character.id,
+    character.backgroundSlug,
+  );
+  const invocationPicks = isWarlockClass(character.classSlug)
+    ? readEldritchInvocationPicks(sheet.classOptions)
+    : [];
+  const invocationCatalog =
+    invocationPicks.length > 0
+      ? await loadEldritchInvocationEffectCatalog(dataSource)
+      : [];
+  const eldritchFreeCast = resolveEldritchInvocationFreeCast({
+    spellSlug: dto.spellSlug,
+    pickedSlugs: invocationPicks.map((pick) => pick.slug),
+    catalog: invocationCatalog,
+  });
+
   const knowsSpell = await spellLookup.hasSpell(character.id, dto.spellSlug);
-  if (!knowsSpell) {
+  if (!knowsSpell && !eldritchFreeCast) {
     throw new BadRequestException(
       `Spell '${dto.spellSlug}' is not on this character's list`,
     );
@@ -85,11 +110,8 @@ export async function applyCastSpell(input: {
   let slotLevelUsed: number | null = null;
   let usedFreeResource = false;
   let usedSpellMastery = false;
+  let usedEldritchFreeCast: EldritchFreeCastResolution | null = null;
 
-  const sheet = await sheetRepository.load(
-    character.id,
-    character.backgroundSlug,
-  );
   const masteryFree =
     !dto.freeCastResourceSlug &&
     !dto.useFreeCast &&
@@ -105,12 +127,15 @@ export async function applyCastSpell(input: {
     });
     usedFreeResource = true;
   } else if (dto.useFreeCast) {
-    const economy = await resolveSpellCastEconomyForCharacter(
-      character,
-      dto.spellSlug,
-      sheetRepository,
-      grantedSpellCatalog,
-    );
+    const economy =
+      eldritchFreeCast?.economy === 'once_per_long_rest'
+        ? eldritchFreeCast.economy
+        : await resolveSpellCastEconomyForCharacter(
+            character,
+            dto.spellSlug,
+            sheetRepository,
+            grantedSpellCatalog,
+          );
     if (economy !== 'once_per_long_rest') {
       throw new BadRequestException(
         `Spell '${dto.spellSlug}' cannot be cast with a free granted use`,
@@ -130,6 +155,24 @@ export async function applyCastSpell(input: {
       state.grantedSpellUses,
       dto.spellSlug,
     );
+    if (eldritchFreeCast?.economy === 'once_per_long_rest') {
+      usedEldritchFreeCast = eldritchFreeCast;
+    }
+  } else if (eldritchFreeCast?.economy === 'at_will') {
+    usedEldritchFreeCast = eldritchFreeCast;
+  } else if (
+    eldritchFreeCast?.economy === 'once_per_long_rest' &&
+    (freeCastsRemaining(
+      eldritchFreeCast.economy,
+      dto.spellSlug,
+      state.grantedSpellUses,
+    ) ?? 0) > 0
+  ) {
+    state.grantedSpellUses = consumeGrantedFreeCast(
+      state.grantedSpellUses,
+      dto.spellSlug,
+    );
+    usedEldritchFreeCast = eldritchFreeCast;
   } else if (masteryFree) {
     usedSpellMastery = true;
   } else if (spell.level > 0) {
@@ -154,6 +197,19 @@ export async function applyCastSpell(input: {
   if (usedSpellMastery) {
     const masteryNote = 'Dominância de Magias: conjurada sem espaço.';
     note = note ? `${note} · ${masteryNote}` : masteryNote;
+  }
+  if (usedEldritchFreeCast) {
+    const freeNote = `${usedEldritchFreeCast.invocationName}: conjurada sem espaço.`;
+    note = note ? `${note} · ${freeNote}` : freeNote;
+  }
+  const blastNote = buildEldritchCantripCastNote({
+    spellLevel: spell.level,
+    pickedSlugs: invocationPicks.map((pick) => pick.slug),
+    charismaModifier: abilityModifier(character.abilityScores.carisma ?? 10),
+    warlockLevel: character.level,
+  });
+  if (blastNote) {
+    note = note ? `${note} · ${blastNote}` : blastNote;
   }
 
   if (spell.concentration) {

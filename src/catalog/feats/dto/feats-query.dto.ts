@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsIn, IsOptional, IsString } from 'class-validator';
-import { CategorySearchQueryDto } from '../../../common/dto/pagination.dto';
+import { CategorySearchQueryDto } from '@common/dto/pagination.dto';
 
 export class FeatsQueryDto extends CategorySearchQueryDto {
   @ApiPropertyOptional({

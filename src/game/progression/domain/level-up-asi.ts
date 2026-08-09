@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
-import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
-import { STANDARD_ABILITY_SCORE_CAP } from '../../sheet/domain/validation/feats/epic-boon-feat-options';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { STANDARD_ABILITY_SCORE_CAP } from '@game/sheet/domain/validation/feats/epic-boon-feat-options';
 
 export type LevelUpAsiDistributionMode = 'plus2' | 'plus1plus1';
 

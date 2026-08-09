@@ -1,4 +1,4 @@
-import { rollDamageParts } from '../../../domain/dice';
+import { rollDamageParts } from '@game/dice/domain/dice';
 import { addDamagePart, type DamageAccumulator } from './damage-accumulator';
 import type { DamageEffect } from './damage-roll-context';
 

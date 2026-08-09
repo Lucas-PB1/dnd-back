@@ -1,9 +1,9 @@
-jest.mock('../../domain/invite-code', () => ({
+jest.mock('@game/campaign/domain/invite-code', () => ({
   generateCampaignInviteCode: jest.fn(() => 'NEWCODE1'),
 }));
 
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
-import { generateCampaignInviteCode } from '../../domain/invite-code';
+import { generateCampaignInviteCode } from '@game/campaign/domain/invite-code';
 import type { Campaign } from '../campaign.entity';
 import type { CampaignMember } from '../campaign-member.entity';
 import {

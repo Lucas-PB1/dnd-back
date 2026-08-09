@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { VPhbFeat } from '../../entities/views/v-phb-feat.entity';
+import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import { FeatsMapper } from './feats.mapper';
 import { FindFeatBySlugQuery } from './queries/find-feat-by-slug.query';
 

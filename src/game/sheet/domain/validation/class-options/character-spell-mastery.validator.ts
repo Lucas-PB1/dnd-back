@@ -5,11 +5,11 @@ import {
   isSpellMasteryOptionKey,
   isWizardClass,
   spellMasteryRequiredLevelForKey,
-} from '../../../../combat/domain/wizard-features';
+} from '@game/combat/domain/wizard-features';
 import {
   CharacterSheetContext,
   CharacterSheetInput,
-} from '../../character-sheet.types';
+} from '@game/sheet/domain/character-sheet.types';
 
 const PREPARED_LIST_TYPES = new Set(['prepared', 'always_prepared']);
 

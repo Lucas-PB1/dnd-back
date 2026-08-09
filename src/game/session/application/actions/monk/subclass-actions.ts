@@ -1,10 +1,10 @@
-import { martialArtsDie } from '../../../../combat/domain/monk-features';
-import { rollDamageParts } from '../../../../dice/domain/dice';
-import { abilityModifier } from '../../../../sheet/domain/stats/ability-modifier';
+import { martialArtsDie } from '@game/combat/domain/monk-features';
+import { rollDamageParts } from '@game/dice/domain/dice';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
-} from '../../core/table-action-guards';
+} from '@game/session/application/core/table-action-guards';
 import type {
   MonkActionDeps,
   MonkTableActionResult,

@@ -2,7 +2,7 @@ import type {
   CharacterFeatDto,
   FeatOptionDto,
   SpeciesChoiceDto,
-} from '../../../sheet/dto/character-sheet.dto';
+} from '@game/sheet/dto/character-sheet.dto';
 
 export type CharacterSpellSource = 'class' | 'subclass' | 'feat' | 'species';
 
@@ -45,4 +45,7 @@ export type GrantedSpellMergeContext = {
   /** Magias always_prepared da subclasse (Finger Guns etc.). */
   subclassGrantedSpells?: readonly SubclassGrantedSpellRow[];
   previousSubclassGrantedSpells?: readonly SubclassGrantedSpellRow[];
+  /** Concessões extras (ex. free_cast de Invocações Místicas). */
+  extraGrantedSpellSlugs?: ReadonlySet<string>;
+  previousExtraGrantedSpellSlugs?: ReadonlySet<string>;
 };

@@ -1,9 +1,9 @@
 import { DataSource, Repository } from 'typeorm';
 import { EnrichEncounterPcs } from './enrich-encounter-pcs';
-import * as featSlugsLoader from '../../sheet/infrastructure/load-feat-slugs-by-character-ids';
-import type { ResolveEquippedArmorClass } from '../../combat/application/resolve-equipped-armor-class';
-import type { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
-import type { PlayerCharacterState } from '../../session/infrastructure/player-character-state.entity';
+import * as featSlugsLoader from '@game/sheet/infrastructure/load-feat-slugs-by-character-ids';
+import type { ResolveEquippedArmorClass } from '@game/combat/application/resolve-equipped-armor-class';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import type { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 
 function character(overrides: Partial<PlayerCharacter> = {}): PlayerCharacter {
   return {

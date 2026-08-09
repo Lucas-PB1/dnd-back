@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbAbility } from '../../../entities/phb-ability.entity';
-import { PaginatedResponseDto, paginate } from '../../../common/dto/pagination.dto';
+import { PhbAbility } from '@entities/phb-ability.entity';
+import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
 import { AbilityResponseDto } from '../dto/ability-response.dto';
 import { AbilitiesMapper } from '../abilities.mapper';
 

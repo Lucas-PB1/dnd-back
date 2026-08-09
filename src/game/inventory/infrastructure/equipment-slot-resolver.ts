@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbItem } from '../../../entities/phb-item.entity';
-import { VPhbArmor } from '../../../entities/views/v-phb-armor.entity';
+import { PhbItem } from '@entities/phb-item.entity';
+import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 import type { EquipmentSlot } from './player-character-item.entity';
 import { PlayerCharacterItem } from './player-character-item.entity';
 

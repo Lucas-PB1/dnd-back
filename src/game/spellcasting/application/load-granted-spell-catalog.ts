@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbSpeciesGrantedSpell } from '../../../entities/views/v-phb-species-granted-spell.entity';
-import { VPhbFeatGrantedSpell } from '../../../entities/views/v-phb-feat-granted-spell.entity';
-import { VPhbSubclassPreparedSpell } from '../../../entities/views/v-phb-subclass-prepared-spell.entity';
+import { VPhbSpeciesGrantedSpell } from '@entities/views/v-phb-species-granted-spell.entity';
+import { VPhbFeatGrantedSpell } from '@entities/views/v-phb-feat-granted-spell.entity';
+import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import {
   FeatGrantedSpellRow,
   SpeciesGrantedSpellRow,

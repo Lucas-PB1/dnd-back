@@ -1,8 +1,8 @@
 import { DataSource, Repository } from 'typeorm';
-import { VPhbArmor } from '../../../entities/views/v-phb-armor.entity';
-import { PhbWeapon } from '../../../entities/phb-weapon.entity';
+import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
-import type { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
+import type { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 
 function weapon(slug: string, category: string, propertyIds: string[]) {
   return {

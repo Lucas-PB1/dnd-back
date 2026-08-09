@@ -1,3 +1,4 @@
+import './register-path-aliases';
 import 'reflect-metadata';
 
 import { NestFactory } from '@nestjs/core';

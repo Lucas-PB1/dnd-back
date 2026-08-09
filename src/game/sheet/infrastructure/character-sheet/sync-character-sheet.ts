@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
-import { CharacterSheetInput } from '../../domain/character-sheet.types';
-import { featInstanceKey } from '../../domain/validation/feats/character-feat';
+import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
+import { featInstanceKey } from '@game/sheet/domain/validation/feats/character-feat';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
   PlayerCharacterEquipment,

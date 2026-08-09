@@ -1,6 +1,6 @@
 import { ForbiddenException, NotFoundException } from '@nestjs/common';
-import type { CharacterRepository } from '../../../shared/infrastructure/character.repository';
-import type { PlayerCharacter } from '../../../shared/infrastructure/player-character.entity';
+import type { CharacterRepository } from '@game/shared/infrastructure/character.repository';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { Campaign } from '../campaign.entity';
 import type { CampaignCharacter } from '../campaign-character.entity';
 import type { CampaignMember } from '../campaign-member.entity';

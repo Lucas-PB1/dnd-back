@@ -1,27 +1,27 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { isFighterClass } from '../../../combat/domain/fighter-features';
+import { isFighterClass } from '@game/combat/domain/fighter-features';
 import {
   auraOfProtectionBonus,
   hasAuraOfProtection,
   isPaladinClass,
-} from '../../../combat/domain/paladin-features';
-import type { CharacterDomainService } from '../../../sheet/domain/core/character-domain.service';
-import { collectSaveProficiencyAbilities } from '../../../sheet/domain/stats/character-check-bonuses';
-import { computeAbilityModifiers } from '../../../sheet/domain/stats/character-derived-stats';
-import type { CharacterSheetRepository } from '../../../sheet/infrastructure/character-sheet.repository';
-import type { PlayerCharacterAccessService } from '../../../shared/player-character-access.service';
-import type { AbilityKey } from '../../../build/domain/ability-generation';
-import { rollD20Check } from '../../domain/dice';
+} from '@game/combat/domain/paladin-features';
+import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
+import { collectSaveProficiencyAbilities } from '@game/sheet/domain/stats/character-check-bonuses';
+import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
+import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
+import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import type { AbilityKey } from '@game/build/domain/ability-generation';
+import { rollD20Check } from '@game/dice/domain/dice';
 import type {
   CharacterRollResponseDto,
   RollSavingThrowDto,
-} from '../../dto/character-roll.dto';
+} from '@game/dice/dto/character-roll.dto';
 import { loadAccessibleCharacter } from './roll-weapon-context';
-import type { ResolveActivePermanentItemEffects } from '../../../inventory/application/resolve-active-permanent-item-effects';
-import { applyItemAbilityBonuses } from '../../../inventory/domain/permanent-item-effects';
-import { resolveEffectiveAbilityScores } from '../../../sheet/infrastructure/load-class-ability-boosts';
-import type { CharacterResourceSpender } from '../../../session/domain/character-resource-spender';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
+import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-class-ability-boosts';
+import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 
 const ABILITY_LABELS: Record<AbilityKey, string> = {

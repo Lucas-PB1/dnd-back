@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { PhbAlignment } from '../../entities/phb-alignment.entity';
-import { PhbCharacterLevel } from '../../entities/phb-character-level.entity';
+import { PhbAlignment } from '@entities/phb-alignment.entity';
+import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
 import { ReferenceMapper } from './reference.mapper';
 import { FindAlignmentsQuery } from './queries/find-alignments.query';
 import { FindCharacterLevelsQuery } from './queries/find-character-levels.query';

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { PhbWeapon } from '../../entities/phb-weapon.entity';
-import { PhbWeaponMastery } from '../../entities/phb-weapon-mastery.entity';
-import { PhbWeaponProperty } from '../../entities/phb-weapon-property.entity';
-import { VPhbArmor } from '../../entities/views/v-phb-armor.entity';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+import { PhbWeaponProperty } from '@entities/phb-weapon-property.entity';
+import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 import { WeaponResponseDto } from './dto/weapon-response.dto';
 import { ArmorResponseDto } from './dto/armor-response.dto';
 import { weaponPropsOf } from './weapon-props';

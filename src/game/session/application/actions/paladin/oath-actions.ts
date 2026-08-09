@@ -1,4 +1,4 @@
-import { assertCharacterLevel } from '../../core/table-action-guards';
+import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type { PaladinTableActionResult } from './paladin-action-deps';
 import {
   CHANNEL_DIVINITY_SLUG,

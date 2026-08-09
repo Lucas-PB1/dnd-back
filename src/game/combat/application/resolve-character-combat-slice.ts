@@ -1,4 +1,4 @@
-import { applyItemAbilityBonuses } from '../../inventory/domain/permanent-item-effects';
+import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
 import { aggregateClassCombatContributions } from '../domain/aggregate-class-combat';
 import { featCombatNotes } from '../domain/feat/combat-notes';
 import { itemCombatNotes } from '../domain/item/combat-notes';
@@ -6,10 +6,10 @@ import { speciesCombatNotes } from '../domain/species/combat-notes';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
-import { PlayerCharacterItem } from '../../inventory/infrastructure/player-character-item.entity';
+import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { Repository } from 'typeorm';
-import type { ResolveActivePermanentItemEffects } from '../../inventory/application/resolve-active-permanent-item-effects';
-import type { AbilityScores } from '../../shared/infrastructure/player-character.entity';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { SizeCategory } from '../domain/creature-size';
 
 export type MappedCombatSlice = {

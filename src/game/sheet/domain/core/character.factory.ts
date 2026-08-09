@@ -2,9 +2,9 @@ import { BadRequestException } from '@nestjs/common';
 import {
   DEFAULT_ABILITY_SCORES,
   PlayerCharacter,
-} from '../../../shared/infrastructure/player-character.entity';
-import { CreateCharacterDto } from '../../dto/create-character.dto';
-import { UpdateCharacterDto } from '../../dto/update-character.dto';
+} from '@game/shared/infrastructure/player-character.entity';
+import { CreateCharacterDto } from '@game/sheet/dto/create-character.dto';
+import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
 import {
   applyBackgroundAbilityBoosts,
   BACKGROUND_BOOST_MODE_PLUS1X3,
@@ -13,7 +13,7 @@ import {
   type BackgroundBoostMode,
 } from '../origin/background-ability-boost';
 import { applyFeatAbilityIncreases } from '../validation/feats/feat-ability-boost';
-import type { FeatOptionDto } from '../../dto/character-sheet.dto';
+import type { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 
 const MIN_LEVEL = 1;
 const MAX_LEVEL = 20;

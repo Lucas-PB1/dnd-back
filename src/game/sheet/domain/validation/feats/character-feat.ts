@@ -1,4 +1,4 @@
-import { CharacterFeatDto } from '../../../dto/character-sheet.dto';
+import { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 
 export function featInstanceKey(featSlug: string, instanceIndex: number): string {
   return `${featSlug}:${instanceIndex}`;
