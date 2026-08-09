@@ -10,6 +10,12 @@ DELETE FROM rpg.phb_class_panel_action WHERE panel_key IN (
   'ranger|natures-veil'
 );
 
+-- Lâminas Psíquicas: ataques virtuais na ficha (Furtivo/Astuto no card), não no painel.
+DELETE FROM rpg.phb_class_panel_action WHERE panel_key IN (
+  'rogue|soulknife|psychic-blade-main',
+  'rogue|soulknife|psychic-blade-bonus'
+);
+
 INSERT INTO rpg.phb_class_panel_action (
   panel_key, class_id, subclass_id, slug, name, title, unlock_level,
   resource_slug, section, spends_focus, sort_order
@@ -101,7 +107,16 @@ INSERT INTO rpg.phb_class_panel_action (
 ('fighter|psi-warrior|psi:psychic-leap', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'), 'psi:psychic-leap', 'Salto com Impulsão Psíquica', 'Ação Bônus: voo 2× deslocamento (1× gratuito / descanso)', 7, 'psi-energy-dice', 'subclass'::rpg.panel_action_section, false, 12),
 ('fighter|psi-warrior|psi:mental-guard', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'), 'psi:mental-guard', 'Resguardo Mental', 'Encerra Amedrontado/Enfeitiçado (1 dado psi)', 10, 'psi-energy-dice', 'subclass'::rpg.panel_action_section, false, 13),
 ('fighter|psi-warrior|psi:energy-bulwark', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'), 'psi:energy-bulwark', 'Baluarte de Energia', 'Cobertura Parcial (1× gratuito / DL; depois 1 dado)', 15, 'psi-energy-dice', 'subclass'::rpg.panel_action_section, false, 14),
-('fighter|psi-warrior|psi:telekinetic-master', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'), 'psi:telekinetic-master', 'Mestre Telecinético', 'Telecinese (1× gratuito / DL; depois 1 dado)', 18, 'psi-energy-dice', 'subclass'::rpg.panel_action_section, false, 15)
+('fighter|psi-warrior|psi:telekinetic-master', (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'psi-warrior'), 'psi:telekinetic-master', 'Mestre Telecinético', 'Telecinese (1× gratuito / DL; depois 1 dado)', 18, 'psi-energy-dice', 'subclass'::rpg.panel_action_section, false, 15),
+('rogue|soulknife|psychic-whispers', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'), 'psychic-whispers', 'Sussurros Psíquicos', 'Listagem: 1× gratuito / DL; depois 1 dado (toggle)', 3, 'psychic-whispers', 'subclass'::rpg.panel_action_section, false, 3),
+('rogue|soulknife|psi-bolstered-knack', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'), 'psi-bolstered-knack', 'Aptidão Reforçada', 'Some o dado psi ao teste; gasta só se sucesso', 3, 'soulknife-psi-dice', 'subclass'::rpg.panel_action_section, false, 4),
+('rogue|soulknife|guided-strike', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'), 'guided-strike', 'Golpe Teleguiado', 'Some o dado psi ao ataque que errou; gasta só se acertar', 9, 'soulknife-psi-dice', 'subclass'::rpg.panel_action_section, false, 5),
+('rogue|soulknife|psychic-teleport', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'), 'psychic-teleport', 'Teleporte Psíquico', 'Ação Bônus: teleporte (resultado × 3) m (1 dado)', 9, 'soulknife-psi-dice', 'subclass'::rpg.panel_action_section, false, 6),
+('rogue|soulknife|psychic-veil', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'), 'psychic-veil', 'Véu Psíquico', 'Uso pré-estabelecido 1×/DL; depois 1 dado', 13, 'psychic-veil', 'subclass'::rpg.panel_action_section, false, 7),
+('rogue|soulknife|rend-mind', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'), 'rend-mind', 'Rasgar Mente', 'Listagem: 1× gratuito; depois 3 dados', 17, 'rend-mind', 'subclass'::rpg.panel_action_section, false, 8),
+('rogue|arcane-trickster|spell-thief', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'arcane-trickster'), 'spell-thief', 'Ladrão de Magias', 'Reação: negar e roubar uma magia (1×/descanso)', 17, 'spell-thief', 'subclass'::rpg.panel_action_section, false, 9),
+('rogue|thief|magic-device-charge', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'thief'), 'magic-device-charge', 'Testar carga de item', 'Usar Dispositivo Mágico: teste para recarregar item (nv. 13+)', 13, NULL, 'subclass'::rpg.panel_action_section, false, 10),
+('rogue|arachnoid-stalker|arachnoid-web', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'), 'arachnoid-web', 'Correia / Teia', 'Gasta 1 uso: teia, correia ou magia Teia (mesa)', 3, 'arachnoid-web', 'subclass'::rpg.panel_action_section, false, 11)
 ON CONFLICT (panel_key) DO UPDATE SET
   class_id = EXCLUDED.class_id,
   subclass_id = EXCLUDED.subclass_id,

@@ -27,5 +27,6 @@ description: Explica tabelas, FKs, views e clusters do catálogo PHB 2024 no sch
 
 - API/contratos: **slug** · joins SQL: **id**
 - Itens: sempre partir de `phb_item`; subtipo em weapon/armor/tool
+- Armas concedidas por classe/subclasse: seed no catálogo + load por slug — **não** hardcodar dano/propriedades no domain ([`conventions.md`](references/conventions.md) § Armas concedidas)
 - Catálogo read-only na aplicação
 - TypeORM: entities em `src/entities/`, views em `src/entities/views/` (`schema: 'rpg'`) — skill global `typeorm`

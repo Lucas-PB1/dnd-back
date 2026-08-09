@@ -15,6 +15,11 @@ import {
   type EquippedWeaponPiece,
   type WeaponAttack,
 } from '../domain/weapon-attacks';
+import {
+  hasPsychicBlades,
+  PSYCHIC_BLADE_ITEM_SLUGS,
+  psychicBladeEquipmentSlot,
+} from '../domain/rogue/psychic-blades';
 import { parseWeaponCharm } from '../domain/equipment';
 
 export type WeaponAttackResolveContext = {
@@ -53,6 +58,11 @@ export class ResolveEquippedWeaponAttacks {
     context: WeaponAttackResolveContext,
   ): Promise<WeaponAttack[]> {
     const isMonk = context.classSlug === 'monk';
+    const soulknifeBlades = hasPsychicBlades({
+      classSlug: context.classSlug,
+      subclassSlug: context.subclassSlug,
+      level: context.level,
+    });
     const equipped = await this.inventoryItems.find({
       where: {
         characterId,
@@ -60,10 +70,28 @@ export class ResolveEquippedWeaponAttacks {
         equipmentSlot: In(['main_hand', 'off_hand']),
       },
     });
-    if (equipped.length === 0) {
-      return isMonk ? this.computeAttacks(scores, [], context, []) : [];
+
+    const pieces: EquippedWeaponPiece[] = [];
+    if (equipped.length > 0) {
+      pieces.push(...(await this.piecesFromInventory(equipped)));
+    }
+    if (soulknifeBlades) {
+      pieces.push(...(await this.piecesFromCatalogSlugs([...PSYCHIC_BLADE_ITEM_SLUGS])));
     }
 
+    if (pieces.length === 0 && !isMonk) {
+      return [];
+    }
+
+    const weaponProficiencySlugs = await this.loadWeaponProficiencySlugs(
+      context.classSlug,
+    );
+    return this.computeAttacks(scores, pieces, context, weaponProficiencySlugs);
+  }
+
+  private async piecesFromInventory(
+    equipped: PlayerCharacterItem[],
+  ): Promise<EquippedWeaponPiece[]> {
     const rows = await this.weapons.find({
       where: { item: { slug: In(equipped.map((row) => row.itemSlug)) } },
       relations: ['item'],
@@ -76,40 +104,80 @@ export class ResolveEquippedWeaponAttacks {
     for (const item of equipped) {
       const weapon = bySlug.get(item.itemSlug);
       if (!weapon) continue;
-      const props = weaponPropsOf(weapon);
-      const masterySlug = props.masteryId ?? null;
-      const mastery = masterySlug
-        ? (masteryBySlug.get(masterySlug) ?? null)
-        : null;
-      const charmSlug = item.attachedCharmSlug ?? null;
-      const charmRow = charmSlug ? charmBySlug.get(charmSlug) : undefined;
-      pieces.push({
-        itemSlug: weapon.item.slug,
-        itemName: weapon.item.name,
-        category: weapon.category,
-        damage: weapon.damage,
-        damageType: weapon.damageType,
-        versatileDamage: props.versatileDamage ?? null,
-        propertySlugs: props.propertyIds ?? [],
-        equipmentSlot: item.equipmentSlot ?? 'main_hand',
-        masterySlug,
-        masteryName: mastery?.name ?? null,
-        reloadCapacity:
-          typeof props.reload === 'number' ? props.reload : null,
-        attachedCharmSlug: charmSlug,
-        attachedCharmName: charmRow?.name ?? null,
-        weaponCharm: charmRow?.charm ?? null,
-      });
+      pieces.push(
+        this.toPiece(weapon, masteryBySlug, {
+          equipmentSlot: item.equipmentSlot ?? 'main_hand',
+          attachedCharmSlug: item.attachedCharmSlug ?? null,
+          attachedCharmName: item.attachedCharmSlug
+            ? (charmBySlug.get(item.attachedCharmSlug)?.name ?? null)
+            : null,
+          weaponCharm: item.attachedCharmSlug
+            ? (charmBySlug.get(item.attachedCharmSlug)?.charm ?? null)
+            : null,
+        }),
+      );
     }
+    return pieces;
+  }
 
-    if (pieces.length === 0) {
-      return isMonk ? this.computeAttacks(scores, [], context, []) : [];
+  /** Carrega armas do catálogo por slug (ex.: Lâminas Psíquicas do seed C015). */
+  private async piecesFromCatalogSlugs(
+    slugs: string[],
+  ): Promise<EquippedWeaponPiece[]> {
+    const rows = await this.weapons.find({
+      where: { item: { slug: In(slugs) } },
+      relations: ['item'],
+    });
+    if (rows.length === 0) return [];
+    const masteryBySlug = await loadWeaponMasteryBySlug(rows, this.masteryRepo);
+    const bySlug = new Map(rows.map((row) => [row.item.slug, row]));
+    const pieces: EquippedWeaponPiece[] = [];
+    for (const slug of slugs) {
+      const weapon = bySlug.get(slug);
+      if (!weapon) continue;
+      pieces.push(
+        this.toPiece(weapon, masteryBySlug, {
+          equipmentSlot: psychicBladeEquipmentSlot(slug),
+          attachedCharmSlug: null,
+          attachedCharmName: null,
+          weaponCharm: null,
+        }),
+      );
     }
+    return pieces;
+  }
 
-    const weaponProficiencySlugs = await this.loadWeaponProficiencySlugs(
-      context.classSlug,
-    );
-    return this.computeAttacks(scores, pieces, context, weaponProficiencySlugs);
+  private toPiece(
+    weapon: PhbWeapon,
+    masteryBySlug: Map<string, PhbWeaponMastery>,
+    extras: {
+      equipmentSlot: string;
+      attachedCharmSlug: string | null;
+      attachedCharmName: string | null;
+      weaponCharm: NonNullable<ReturnType<typeof parseWeaponCharm>> | null;
+    },
+  ): EquippedWeaponPiece {
+    const props = weaponPropsOf(weapon);
+    const masterySlug = props.masteryId ?? null;
+    const mastery = masterySlug
+      ? (masteryBySlug.get(masterySlug) ?? null)
+      : null;
+    return {
+      itemSlug: weapon.item.slug,
+      itemName: weapon.item.name,
+      category: weapon.category,
+      damage: weapon.damage,
+      damageType: weapon.damageType,
+      versatileDamage: props.versatileDamage ?? null,
+      propertySlugs: props.propertyIds ?? [],
+      equipmentSlot: extras.equipmentSlot,
+      masterySlug,
+      masteryName: mastery?.name ?? null,
+      reloadCapacity: typeof props.reload === 'number' ? props.reload : null,
+      attachedCharmSlug: extras.attachedCharmSlug,
+      attachedCharmName: extras.attachedCharmName,
+      weaponCharm: extras.weaponCharm,
+    };
   }
 
   private async loadCharmsBySlug(

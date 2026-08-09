@@ -1,3 +1,4 @@
+import { PSYCHIC_BLADE_BONUS_ITEM_SLUG } from '../rogue/psychic-blades';
 import { hasProperty } from './weapon-attack-predicates';
 import type {
   EquippedWeaponPiece,
@@ -33,11 +34,15 @@ export function collectAttackNoteExtras(input: {
     noteExtras.push(cap != null ? `recarga (${cap})` : 'recarga');
   }
   if (input.role === 'light_bonus') {
-    noteExtras.push(
-      input.nickUsesAttackAction
-        ? 'ataque adicional (Ágil · ação Atacar)'
-        : 'ataque adicional (Leve)',
-    );
+    if (piece.itemSlug === PSYCHIC_BLADE_BONUS_ITEM_SLUG) {
+      noteExtras.push('Ação Bônus (segunda lâmina)');
+    } else {
+      noteExtras.push(
+        input.nickUsesAttackAction
+          ? 'ataque adicional (Ágil · ação Atacar)'
+          : 'ataque adicional (Leve)',
+      );
+    }
   }
   if (input.role === 'dual_bonus') {
     noteExtras.push('ataque adicional (Ambidestro)');

@@ -18,7 +18,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 | HP / CA / ataque / feat options / granted spells | Pronto |
 | Deploy front / E2E | Pronto |
 | UI ataques (aba Ações) + erros HTTP PT | Pronto |
-| Classes mesa **concluídas** | Guerreiro · Feiticeiro · Bruxo · Mago · Patrulheiro (skills `rpg-class-mesa-*` / exemplares) |
+| Classes mesa **concluídas** | Guerreiro · Feiticeiro · Bruxo · Mago · Patrulheiro · Ladino (skills `rpg-class-mesa-*` / exemplares) |
 | Demais classes PHB / Valdas | Seguir skills mesa sob pedido |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
@@ -36,7 +36,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 
 - Catálogo mecânico de combate no banco — skill `rpg-catalog-model` · `GET /combat-mechanical-catalog`
 - Padrão classe mesa — skills `rpg-class-mesa-api` / `rpg-class-mesa-front`
-- Classes **concluídas** (critério mesa): Guerreiro, Feiticeiro, Bruxo, Mago, Patrulheiro — ver `references/exemplares.md` nas skills
+- Classes **concluídas** (critério mesa): Guerreiro, Feiticeiro, Bruxo, Mago, Patrulheiro, Ladino — ver `references/exemplares.md` nas skills
 - Invocações do Bruxo: catálogo + seleção + free_cast no painel/aba Magias
 
 ### Adiado — polish / ops
@@ -45,6 +45,7 @@ Não priorizar. Só retomar com pedido explícito.
 
 - [ ] Mísseis Mágicos: escolhas Escudo/Giga no cast (modal) — [`mm-cast-options-modal.md`](mm-cast-options-modal.md)
 - [ ] Senhor das Feras: Companheiro Primal (invocar, PV, comandar na mesa) — [`beast-master-primal-companion.md`](beast-master-primal-companion.md)
+- [ ] Duração / condições na mesa (família combate situacional): Invisível do Véu Psíquico, Atordoado do Rasgar Mente, Correia/Teia (Arachnoid), venenos do Assassino — hoje gasto/listagem + nota / toggles (sem tracker)
 
 ### Referência — modelo de dados
 

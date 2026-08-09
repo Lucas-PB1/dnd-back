@@ -522,6 +522,74 @@ describe('computeWeaponAttacks', () => {
     expect(unarmed.martialArtsDie).toBeNull();
     expect(unarmed.damageDice).toBe('1'); // fica com o dano base 1
   });
+
+  it('computes Soulknife Psychic Blades from catalog pieces (sneak + bonus blade)', () => {
+    const catalogPieces: EquippedWeaponPiece[] = [
+      {
+        itemSlug: 'psychic-blade',
+        itemName: 'Lâmina Psíquica',
+        category: 'simple',
+        damage: '1d6',
+        damageType: 'Psíquico',
+        versatileDamage: null,
+        propertySlugs: ['finesse', 'thrown'],
+        equipmentSlot: 'main_hand',
+        masterySlug: 'vex',
+        masteryName: 'Afligir',
+      },
+      {
+        itemSlug: 'psychic-blade-bonus',
+        itemName: 'Lâmina Psíquica (adicional)',
+        category: 'simple',
+        damage: '1d4',
+        damageType: 'Psíquico',
+        versatileDamage: null,
+        propertySlugs: ['finesse', 'thrown', 'light'],
+        equipmentSlot: 'off_hand',
+        masterySlug: 'vex',
+        masteryName: 'Afligir',
+      },
+    ];
+    const attacks = computeWeaponAttacks(
+      scores({ forca: 10, destreza: 16 }),
+      catalogPieces,
+      {
+        proficiencyBonus: 4,
+        weaponProficiencySlugs: [],
+        classSlug: 'rogue',
+        subclassSlug: 'soulknife',
+        level: 9,
+      },
+    );
+    const mainMelee = attacks.find(
+      (a) => a.itemSlug === 'psychic-blade' && a.mode === 'melee',
+    )!;
+    const mainRanged = attacks.find(
+      (a) => a.itemSlug === 'psychic-blade' && a.mode === 'ranged',
+    )!;
+    const bonus = attacks.find(
+      (a) => a.itemSlug === 'psychic-blade-bonus' && a.mode === 'melee',
+    )!;
+
+    expect(mainMelee).toMatchObject({
+      proficient: true,
+      abilitySlug: 'destreza',
+      damageDice: '1d6',
+      damageType: 'Psíquico',
+      sneakAttackEligible: true,
+      masterySlug: 'vex',
+      masteryActive: true,
+    });
+    expect(mainMelee.attackBonus).toBe(3 + 4);
+    expect(mainRanged.sneakAttackEligible).toBe(true);
+    expect(bonus).toMatchObject({
+      damageDice: '1d4',
+      role: 'light_bonus',
+      sneakAttackEligible: true,
+      omitsAbilityDamage: true,
+    });
+    expect(bonus.attackNote).toContain('segunda lâmina');
+  });
 });
 
 describe('analyzeDualWield', () => {

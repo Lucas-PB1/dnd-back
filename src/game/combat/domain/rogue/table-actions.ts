@@ -10,8 +10,8 @@ import {
 export const SOULKNIFE_ACTION_SLUGS = [
   'psi-bolstered-knack',
   'psychic-whispers',
-  'homing-strikes',
-  'psychic-teleportation',
+  'guided-strike',
+  'psychic-teleport',
   'psychic-veil',
   'rend-mind',
 ] as const;
@@ -103,10 +103,10 @@ function buildSoulknifeActionNote(
   if (slug === 'psychic-whispers') {
     return `Sussurros Psíquicos: comunicação telepática por ${roll} hora(s), em até 1,5 km.`;
   }
-  if (slug === 'homing-strikes') {
+  if (slug === 'guided-strike') {
     return `Golpes Teleguiados: some ${roll} ao ataque que errou; gaste o dado somente se acertar.`;
   }
-  if (slug === 'psychic-teleportation') {
+  if (slug === 'psychic-teleport') {
     return `Teleporte Psíquico: teleporte-se até ${
       (roll ?? 0) * 3
     } metros como Ação Bônus.`;

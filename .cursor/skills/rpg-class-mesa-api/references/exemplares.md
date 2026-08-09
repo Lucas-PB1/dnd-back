@@ -11,10 +11,11 @@ Padrão alvo: **table-action**. Checklist em [`SKILL.md`](../SKILL.md).
 | Bruxo | `warlock` | **Concluída** |
 | Mago | `wizard` | **Concluída** |
 | Patrulheiro | `ranger` | **Concluída** |
+| Ladino | `rogue` | **Concluída** |
 
-Polish **adiado** (não reabre “classe done”): ver [`docs/plans/backlog.md`](../../../docs/plans/backlog.md) — MM modal, Companheiro Primal tracker, reuso de invocações.
+Polish **adiado** (não reabre “classe done”): ver [`docs/plans/backlog.md`](../../../docs/plans/backlog.md) — MM modal, Companheiro Primal tracker, reuso de invocações / entidades / duração.
 
-Invocações / criaturas (nas concluídas) — só nota ou uso hoje; tracker = plano futuro:
+Invocações / criaturas / efeitos de duração (nas concluídas) — só nota ou uso hoje; tracker = plano futuro:
 
 | Classe · subclasse | Feature | Mesa hoje |
 |--------------------|---------|-----------|
@@ -24,6 +25,13 @@ Invocações / criaturas (nas concluídas) — só nota ou uso hoje; tracker = p
 | Feiticeiro · Dracônico L18 | Companheiro Dracônico | magia / nota PHB; sem linha C009 dedicada |
 | Bruxo · GOO L14 | Criar Servo | modifica Invocar Aberração no cast; sem pool próprio |
 | Guerreiro | — | nada equivalente |
+| Ladino · Adaga Espiritual | Lâminas Psíquicas | ataques virtuais na ficha (`psychic-blade` / `-bonus`) com Furtivo/Astuto |
+| Ladino · Trapaceiro Arcano | Mãos Mágicas Ligeiras | nota / conjuração (alcance à distância — **não** companion) |
+| Ladino · Adaga Espiritual | Véu Psíquico | uso pré-estabelecido `psychic-veil` + nota; sem tracker de Invisível |
+| Ladino · Adaga Espiritual | Sussurros / Rasgar Mente | listagem Economia/painel (gasto de uso); duração/condição = mesa |
+| Ladino · Perseguidor Aracnídeo | Correia / Teia | `arachnoid-web` uso + nota; posição / condição Teia |
+| Ladino · Assassino | Veneno / Golpe Mortal | toggles no ataque + nota; condições |
+| Ladino (base) | Esquiva Sobrenatural / Elusivo | lembrete C009 / nota; defesa situacional |
 
 ---
 
@@ -85,3 +93,17 @@ Manobras BM: `actionSlug: use-maneuver` + `maneuverSlug`. Precaução: `dungeon-
 Pools base (Marca / Incansável / Véu): só **C009 Economia** com `resource_slug` (UI: ± sempre; Usar se `table_action`) — painel não lista `remaining/max`. Subclasses no C010: fey / beast-master / hunter-defense / gloom-dodge; beastborne = UI Aspecto + `feral-howl` + Carnificina no dano (`bestialAspectLevel`).
 
 Polish adiado: tracker Companheiro Primal — [`beast-master-primal-companion.md`](../../../docs/plans/beast-master-primal-companion.md).
+
+## Ladino (`rogue`) — **concluída**
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/rogue/` |
+| Handler | `rogue-actions.handler.ts` + `actions/rogue/` |
+| HTTP | `POST …/rogue/table-action` |
+| Economy/panel | `C009` + `C010` |
+| Catálogo legado Soulknife | `C004` (slugs alinhados ao handler: `guided-strike`, `psychic-teleport`) |
+
+Pools/usos: `soulknife-psi-dice` + free uses Soulknife; `spell-thief`; `arachnoid-web`; `strokeOfLuck` (± na Economia, gasto nas rolls). Painel = poderes de subclasse (sem lâminas). **Lâminas Psíquicas** = ataques virtuais na ficha (`psychic-blade`) com Furtivo/Golpe Astuto no card. Sussurros/Rasgar/Véu = listagem + gasto de uso (sem tracker de duração).
+
+Polish adiado: Teia/posição, condições persistentes — ver tabela no topo + backlog Adiado.

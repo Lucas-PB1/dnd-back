@@ -19,3 +19,12 @@ export {
 } from './cunning-strike';
 export { rogueCombatNotes } from './combat-notes';
 export * from './table-actions';
+export {
+  PSYCHIC_BLADE_ITEM_SLUG,
+  PSYCHIC_BLADE_BONUS_ITEM_SLUG,
+  PSYCHIC_BLADE_ITEM_SLUGS,
+  hasPsychicBlades,
+  isPsychicBladeItemSlug,
+  isSoulknifeSubclass,
+  psychicBladeEquipmentSlot,
+} from './psychic-blades';

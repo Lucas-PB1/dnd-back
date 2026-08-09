@@ -53,7 +53,7 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 |----------|---------|
 | Pastas, seeds, HTTP | [`references/camadas.md`](references/camadas.md) |
 | Economy / panel / XOR | [`references/economia-painel.md`](references/economia-painel.md) |
-| Mago · Guerreiro · Feiticeiro · Bruxo · Patrulheiro (**concluídas**) | [`references/exemplares.md`](references/exemplares.md) |
+| Mago · Guerreiro · Feiticeiro · Bruxo · Patrulheiro · Ladino (**concluídas**) | [`references/exemplares.md`](references/exemplares.md) |
 
 ## Anti-padrões
 
@@ -64,3 +64,4 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 - Contador ± na Economia amarrado a `table_action` (sumir o `remaining/max` sem Usar)
 - Contador duplicado no Ferramentas do painel (`CombatResourceSummary` espelhando a Economia)
 - Inventar catálogo estático no domain — SSOT no banco (`rpg-catalog-model`)
+- Hardcodar dano/propriedades de arma no TypeScript — seed `phb_item`/`phb_weapon` + load por slug

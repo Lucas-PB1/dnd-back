@@ -55,7 +55,7 @@ export async function resolvePsychicTeleport(
   const tableAction = await resolveSoulknifeAction(
     deps,
     character,
-    'psychic-teleportation',
+    'psychic-teleport',
     { dieRoll },
   );
   const state = (

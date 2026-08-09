@@ -8,6 +8,7 @@ import {
   martialArtsDie,
   martialArtsDieFaces,
 } from '../monk/features';
+import { isPsychicBladeItemSlug } from '../rogue/psychic-blades';
 import {
   abilityMod,
   hasProperty,
@@ -81,7 +82,8 @@ export function computeOneAttack(
     !context.hasShield &&
     isMonkWeaponForAttack(piece, mode);
   const proficient =
-    piece.itemSlug === MONK_UNARMED_ITEM_SLUG
+    piece.itemSlug === MONK_UNARMED_ITEM_SLUG ||
+    isPsychicBladeItemSlug(piece.itemSlug)
       ? true
       : isProficient(piece, context);
   let ability = pickAbility(scores, piece, mode);
@@ -123,7 +125,8 @@ export function computeOneAttack(
   const masteryName = piece.masteryName ?? null;
   const masteryActive =
     Boolean(masterySlug) &&
-    (context.masteredWeaponSlugs ?? []).includes(piece.itemSlug);
+    ((context.masteredWeaponSlugs ?? []).includes(piece.itemSlug) ||
+      isPsychicBladeItemSlug(piece.itemSlug));
   const nickUsesAttackAction =
     masteryActive &&
     masterySlug === 'nick' &&

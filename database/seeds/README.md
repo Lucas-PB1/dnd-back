@@ -9,9 +9,9 @@ Dados do catálogo PHB 2024 e Valdas Spire of Secrets. **Um arquivo por tabela.*
 | `subclass/S###_<tabela>.sql` | Mecânicas de subclasse (`S001`–`S007`) |
 | `valdas/V###_<tabela>.sql` | Pack Valdas (`V001`–`V013`, edição em `V001`) |
 | `valdas-gunslinger/G###_<tabela>.sql` | Classe Gunslinger (`G001`–`G028`) |
-| `valdas-player-pack-2/P###_<tabela>.sql` | Valdas Player Pack 2 (`P001`–`P011`) |
+| `combat/C###_*.sql` | Economia (C009), painel (C010), recursos especiais, **armas concedidas** (ex. C015 Lâminas Psíquicas) |
 
-Metadados: `database/seed-manifest.json`
+**Regra:** stats de arma (dano, tipo, propriedades, maestria) vivem no catálogo (`phb_item` / `phb_weapon`), nunca hardcoded no domain TypeScript.
 
 ## Baseline canônico
 

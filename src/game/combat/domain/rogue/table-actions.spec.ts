@@ -61,7 +61,7 @@ describe('Soulknife tabletop actions', () => {
   it('spends Homing Strikes only when its bonus turns the miss into a hit', () => {
     const result = resolveSoulknifeTableAction({
       catalog: FIXTURE_SOULKNIFE_ACTIONS,
-      actionSlug: 'homing-strikes',
+      actionSlug: 'guided-strike',
       level: 9,
       dexterityModifier: 5,
       proficiencyBonus: 4,
@@ -77,7 +77,7 @@ describe('Soulknife tabletop actions', () => {
   it('rolls Psychic Teleportation distance and always spends one Psi die', () => {
     const result = resolveSoulknifeTableAction({
       catalog: FIXTURE_SOULKNIFE_ACTIONS,
-      actionSlug: 'psychic-teleportation',
+      actionSlug: 'psychic-teleport',
       level: 9,
       dexterityModifier: 5,
       proficiencyBonus: 4,
@@ -149,7 +149,7 @@ describe('Soulknife tabletop actions', () => {
     expect(() =>
       resolveSoulknifeTableAction({
         catalog: FIXTURE_SOULKNIFE_ACTIONS,
-        actionSlug: 'psychic-teleportation',
+        actionSlug: 'psychic-teleport',
         level: 9,
         dexterityModifier: 5,
         proficiencyBonus: 4,

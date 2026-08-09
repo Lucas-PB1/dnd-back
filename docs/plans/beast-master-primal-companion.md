@@ -109,7 +109,7 @@ Mesmo “sabor” (criatura conjurada na mesa), em geral **mais simples** que o 
 | Bruxo **GOO** | Criar Servo L14 | Modifica Invocar Aberração no cast (nota/magia) | Opcional: flag no cast + PV temp. na nota |
 | Guerreiro | — | Nada equivalente | — |
 
-Não priorizar até a fase A/B do Beast Master existir. Asas de Dragão / Pact Blade / misty-wanderer **não** entram neste bucket.
+Não priorizar até a fase A/B do Beast Master existir. Asas de Dragão / Pact Blade / misty-wanderer / **Mãos Mágicas Ligeiras** (alcance à distância, sem PV) **não** entram neste bucket.
 ## Arquivos-alvo (referência)
 
 - `dnd-api/.../actions/ranger/subclass-actions.ts`

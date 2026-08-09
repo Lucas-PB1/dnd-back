@@ -58,7 +58,7 @@ export async function resolveConditionalPsiBonus(
   const tableAction = await resolveSoulknifeAction(
     deps,
     character,
-    attack ? 'homing-strikes' : 'psi-bolstered-knack',
+    attack ? 'guided-strike' : 'psi-bolstered-knack',
     { dieRoll, succeededWithDie: success },
   );
   const state =

@@ -5,6 +5,7 @@ import {
   MONK_UNARMED_ITEM_SLUG,
   isMonkClass,
 } from '../monk/features';
+import { PSYCHIC_BLADE_BONUS_ITEM_SLUG } from '../rogue/psychic-blades';
 import { buildModes, hasProperty } from './weapon-attack-predicates';
 import type {
   EquippedWeaponPiece,
@@ -27,6 +28,15 @@ const MONK_UNARMED_PIECE: EquippedWeaponPiece = {
   masteryName: null,
   reloadCapacity: null,
 };
+
+function attackRoleForPiece(
+  piece: EquippedWeaponPiece,
+  dualBonusRole: WeaponAttackRole | null,
+): WeaponAttackRole {
+  if (piece.itemSlug === PSYCHIC_BLADE_BONUS_ITEM_SLUG) return 'light_bonus';
+  if (piece.equipmentSlot === 'off_hand' && dualBonusRole) return dualBonusRole;
+  return 'main';
+}
 
 /** Calcula ataques passivos das armas equipadas (main_hand / off_hand). */
 export function computeWeaponAttacks(
@@ -53,10 +63,7 @@ export function computeWeaponAttacks(
     );
   }
   for (const piece of weapons) {
-    const role: WeaponAttackRole =
-      piece.equipmentSlot === 'off_hand' && dual.bonusRole
-        ? dual.bonusRole
-        : 'main';
+    const role = attackRoleForPiece(piece, dual.bonusRole);
     for (const mode of buildModes(piece)) {
       // Ataque adicional TWF/Dual é corpo a corpo; modos ranged da off-hand ficam main.
       const effectiveRole = role !== 'main' && mode === 'ranged' ? 'main' : role;

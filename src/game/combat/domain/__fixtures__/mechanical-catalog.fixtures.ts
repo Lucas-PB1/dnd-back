@@ -413,7 +413,7 @@ export const FIXTURE_SOULKNIFE_ACTIONS: readonly SubclassTableAction[] = [
   },
   {
     subclassSlug: 'soulknife',
-    slug: 'homing-strikes',
+    slug: 'guided-strike',
     name: 'Golpes Teleguiados',
     unlockLevel: 9,
     alwaysSpendsPool: false,
@@ -422,7 +422,7 @@ export const FIXTURE_SOULKNIFE_ACTIONS: readonly SubclassTableAction[] = [
   },
   {
     subclassSlug: 'soulknife',
-    slug: 'psychic-teleportation',
+    slug: 'psychic-teleport',
     name: 'Teleporte Psíquico',
     unlockLevel: 9,
     alwaysSpendsPool: false,
