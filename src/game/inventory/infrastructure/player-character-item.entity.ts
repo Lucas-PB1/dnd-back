@@ -22,13 +22,13 @@ export class PlayerCharacterItem {
   @PrimaryColumn({ name: 'character_id', type: 'uuid' })
   characterId!: string;
 
-  @PrimaryColumn({ name: 'item_slug' })
+  @PrimaryColumn({ name: 'item_slug', type: 'text' })
   itemSlug!: string;
 
   @Column({ type: 'int', default: 1 })
   quantity!: number;
 
-  @Column({ default: 'backpack' })
+  @Column({ type: 'text', default: 'backpack' })
   location!: InventoryLocation;
 
   @Column({ name: 'equipment_slot', type: 'text', nullable: true })
