@@ -10,7 +10,7 @@
   "seeds": {
     "phb": "S001-S080",
     "subclass": "S001-S007",
-    "valdas": "V001-V015",
+    "valdas": "V001-V021",
     "valdasGunslinger": "G001-G028",
     "valdasPlayerPack2": "P001-P011",
     "totalFiles": 141

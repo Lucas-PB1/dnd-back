@@ -59,7 +59,7 @@ checkSeq('database/migrations/060_views', 'V', 45);
 checkSeq('database/migrations/090_player', 'P', 19);
 checkSeq('database/seeds/phb', 'S', 70);  // Lote B: -5 (lineage/ancestry seeds)
 checkSeq('database/seeds/subclass', 'S', 10);
-checkSeq('database/seeds/valdas', 'V', 17);
+checkSeq('database/seeds/valdas', 'V', 21);
 checkSeq('database/seeds/valdas-gunslinger', 'G', 28);
 checkSeq('database/seeds/valdas-player-pack-2', 'P', 12);
 

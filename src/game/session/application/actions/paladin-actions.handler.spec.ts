@@ -2,11 +2,12 @@ import { BadRequestException } from '@nestjs/common';
 import { PaladinActionsHandler } from './paladin-actions.handler';
 
 describe('PaladinActionsHandler', () => {
-  const stateResponse = { classResources: [] };
+  const stateResponse = { classResources: [], tempHp: 0 };
   const access = { findAccessibleOrFail: jest.fn() };
   const state = {
     useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
     buildResponse: jest.fn().mockResolvedValue(stateResponse),
+    patch: jest.fn().mockResolvedValue({ ...stateResponse, tempHp: 12 }),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
   const handler = new PaladinActionsHandler(
@@ -33,6 +34,11 @@ describe('PaladinActionsHandler', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     state.useClassResource.mockResolvedValue({ state: stateResponse });
+    state.buildResponse.mockResolvedValue(stateResponse);
+    state.patch.mockImplementation(async (_c, dto) => ({
+      ...stateResponse,
+      ...dto,
+    }));
     access.findAccessibleOrFail.mockResolvedValue(paladin);
   });
 
@@ -89,6 +95,81 @@ describe('PaladinActionsHandler', () => {
     await expect(
       handler.useTableAction('user-1', 'pal-1', {
         actionSlug: 'abjure-enemies',
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('spends Channel Divinity on oath channel with subclass note', async () => {
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'oath-channel',
+    });
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      'channelDivinity',
+      1,
+    );
+    expect(result.actionName).toBe('Voto de Inimizade');
+    expect(result.resourceSpent).toBe(true);
+  });
+
+  it('rolls temp HP pool on Inspiring Smite for Glory', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...paladin,
+      subclassSlug: 'glory',
+      level: 5,
+    });
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'inspiring-smite',
+    });
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      'channelDivinity',
+      1,
+    );
+    expect(result.actionName).toBe('Destruição Inspiradora');
+    expect(result.expression).toMatch(/^2d8\+5$/);
+    expect(result.total).toBeGreaterThanOrEqual(7);
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.anything(),
+      expect.objectContaining({ tempHp: result.total }),
+    );
+  });
+
+  it('routes Glory oath-channel to Inspiring Smite', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...paladin,
+      subclassSlug: 'glory',
+      level: 5,
+    });
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'oath-channel',
+    });
+    expect(result.actionName).toBe('Destruição Inspiradora');
+    expect(result.expression).toMatch(/^2d8\+5$/);
+  });
+
+  it('spends Channel Divinity on Peerless Athlete for Glory', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...paladin,
+      subclassSlug: 'glory',
+      level: 3,
+    });
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'peerless-athlete',
+    });
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      'channelDivinity',
+      1,
+    );
+    expect(result.actionName).toBe('Atleta Inigualável');
+    expect(result.note).toContain('Atletismo');
+  });
+
+  it('rejects Peerless Athlete for non-Glory oaths', async () => {
+    await expect(
+      handler.useTableAction('user-1', 'pal-1', {
+        actionSlug: 'peerless-athlete',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
   });

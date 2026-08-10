@@ -14,7 +14,7 @@ import {
   resolveDivineSense,
   resolveLayOnHands,
 } from './paladin/base-actions';
-import { resolveOathChannel } from './paladin/oath-actions';
+import { resolveOathChannel, resolvePeerlessAthlete, resolveInspiringSmite } from './paladin/oath-actions';
 
 @Injectable()
 export class PaladinActionsHandler {
@@ -58,6 +58,10 @@ export class PaladinActionsHandler {
         return resolveAbjureEnemies(deps, character);
       case 'oath-channel':
         return resolveOathChannel(deps, character);
+      case 'inspiring-smite':
+        return resolveInspiringSmite(deps, character);
+      case 'peerless-athlete':
+        return resolvePeerlessAthlete(deps, character);
     }
   }
 }

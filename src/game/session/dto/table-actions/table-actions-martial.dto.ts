@@ -116,6 +116,8 @@ export class UsePaladinTableActionDto {
       'divine-sense',
       'abjure-enemies',
       'oath-channel',
+      'inspiring-smite',
+      'peerless-athlete',
     ],
   })
   @IsIn([
@@ -124,13 +126,17 @@ export class UsePaladinTableActionDto {
     'divine-sense',
     'abjure-enemies',
     'oath-channel',
+    'inspiring-smite',
+    'peerless-athlete',
   ])
   actionSlug!:
     | 'lay-on-hands'
     | 'cure-poison'
     | 'divine-sense'
     | 'abjure-enemies'
-    | 'oath-channel';
+    | 'oath-channel'
+    | 'inspiring-smite'
+    | 'peerless-athlete';
 
   @ApiPropertyOptional({
     minimum: 1,

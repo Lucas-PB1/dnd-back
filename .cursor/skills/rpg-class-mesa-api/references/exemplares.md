@@ -12,6 +12,7 @@ Padrão alvo: **table-action**. Checklist em [`SKILL.md`](../SKILL.md).
 | Mago | `wizard` | **Concluída** |
 | Patrulheiro | `ranger` | **Concluída** |
 | Ladino | `rogue` | **Concluída** |
+| Paladino | `paladin` | **Concluída** |
 
 Polish **adiado** (não reabre “classe done”): ver [`docs/plans/backlog.md`](../../../docs/plans/backlog.md) — MM modal, Companheiro Primal tracker, reuso de invocações / entidades / duração.
 
@@ -32,6 +33,9 @@ Invocações / criaturas / efeitos de duração (nas concluídas) — só nota o
 | Ladino · Perseguidor Aracnídeo | Correia / Teia | `arachnoid-web` uso + nota; posição / condição Teia |
 | Ladino · Assassino | Veneno / Golpe Mortal | toggles no ataque + nota; condições |
 | Ladino (base) | Esquiva Sobrenatural / Elusivo | lembrete C009 / nota; defesa situacional |
+| Paladino · Devoção L15 | Destruição Protetora | lembrete C009; Usar/handler adiado |
+| Paladino · Glória L15 | Defesa Gloriosa | C009 ± `glorious-defense`; Usar dedicado adiado |
+| Paladino · Glória L3 | Atleta Inigualável (2º canal) | C009 + `peerless-athlete` |
 
 ---
 
@@ -107,3 +111,16 @@ Polish adiado: tracker Companheiro Primal — [`beast-master-primal-companion.md
 Pools/usos: `soulknife-psi-dice` + free uses Soulknife; `spell-thief`; `arachnoid-web`; `strokeOfLuck` (± na Economia, gasto nas rolls). Painel = poderes de subclasse (sem lâminas). **Lâminas Psíquicas** = ataques virtuais na ficha (`psychic-blade`) com Furtivo/Golpe Astuto no card. Sussurros/Rasgar/Véu = listagem + gasto de uso (sem tracker de duração).
 
 Polish adiado: Teia/posição, condições persistentes — ver tabela no topo + backlog Adiado.
+
+## Paladino (`paladin`) — **concluída**
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/paladin/` |
+| Handler | `paladin-actions.handler.ts` + `actions/paladin/` |
+| HTTP | `POST …/paladin/table-action` |
+| Economy/panel | `C009` + `C010` |
+
+Pools: `layOnHands` + `channelDivinity` (C009 ±; Sentido Divino com `table_action`). Economia por juramento: canais nomeados (`oath-channel` / `peerless-athlete`) + pools L15/L20 (`holy-nimbus`, `glorious-defense`, `undying-sentinel`, …; Folia `reveler` / `party-animal`). Painel: cura com amount + Curar Veneno; canais C010 com `resource_slug`. Destruição Divina no card de ataque.
+
+Polish adiado: Defesa Gloriosa / Destruição Protetora (Usar dedicado).

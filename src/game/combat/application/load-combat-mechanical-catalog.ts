@@ -70,8 +70,6 @@ function asPanelSection(value: string): PanelActionSection {
 
 @Injectable()
 export class LoadCombatMechanicalCatalog {
-  private cache: CombatMechanicalCatalog | null = null;
-
   constructor(
     @InjectRepository(VPhbGunslingerManeuver)
     private readonly gunslingerRepo: Repository<VPhbGunslingerManeuver>,
@@ -96,8 +94,6 @@ export class LoadCombatMechanicalCatalog {
   ) {}
 
   async load(): Promise<CombatMechanicalCatalog> {
-    if (this.cache) return this.cache;
-
     const [
       gunslingerRows,
       battleMasterRows,
@@ -124,7 +120,7 @@ export class LoadCombatMechanicalCatalog {
       this.panelRepo.find({ order: { sortOrder: 'ASC' } }),
     ]);
 
-    this.cache = {
+    return {
       gunslingerManeuvers: gunslingerRows.map((row) => ({
         slug: row.slug,
         name: row.name,
@@ -221,11 +217,8 @@ export class LoadCombatMechanicalCatalog {
         sortOrder: Number(row.sortOrder),
       })),
     };
-
-    return this.cache;
   }
 
-  clearCache(): void {
-    this.cache = null;
-  }
+  /** No-op: catálogo não é mais cacheado (seeds/reseed refletem no próximo request). */
+  clearCache(): void {}
 }
