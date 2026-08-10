@@ -64,4 +64,6 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 - Contador ± na Economia amarrado a `table_action` (sumir o `remaining/max` sem Usar)
 - Contador duplicado no Ferramentas do painel (`CombatResourceSummary` espelhando a Economia)
 - Inventar catálogo estático no domain — SSOT no banco (`rpg-catalog-model`)
+- **Lista/`Set` hardcoded de `subclassSlug` (ou manobras/features) no TS** — filtrar/derivar do catálogo já carregado (C001/C009/C010). Nova sub = seed; **não** editar array de slugs no código
 - Hardcodar dano/propriedades de arma no TypeScript — seed `phb_item`/`phb_weapon` + load por slug
+- Deixar o **front** espelhar limiar de feature (`classSlug` + `level`) — expor número/flag no DTO (ex.: `savingThrowAuraBonus`)

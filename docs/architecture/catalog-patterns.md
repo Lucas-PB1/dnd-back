@@ -102,11 +102,13 @@ Repetição estrutural OK. Views agregadoras onde a API lista.
 
 ## 9. Catálogo mecânico de combate
 
-Tabelas tipadas para a **engine** (mesa/dados). Seeds: `database/seeds/combat/C00*.sql` (C009 economia, C010 painel, C014 recursos mago).
+Tabelas tipadas para a **engine** (mesa/dados). Seeds: `database/seeds/combat/C00*.sql` (C001 manobras, C009 economia, C010 painel, C014 recursos mago).
 
 **Não** colocar mecânica em JSONB genérico.
 
-HTTP: `GET /combat-mechanical-catalog` (`economyActions` + `panelActions`).
+**Não** manter no TypeScript `Set`/`array` paralelo de slugs de subclasse, manobra ou feature — o filtro e a listagem leem o catálogo carregado do banco. Nova sub/manobra = seed; o código não lista slugs.
+
+HTTP: `GET /combat-mechanical-catalog` (`economyActions` + `panelActions` + manobras, …).
 
 ---
 

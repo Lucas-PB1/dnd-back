@@ -7,20 +7,33 @@ export type CombatMechanicalCatalogFilters = {
 
 const BATTLE_MASTER_SUBCLASS = 'battle-master';
 const GUNSLINGER_CLASS = 'gunslinger';
-const GUNSLINGER_SUBCLASSES = new Set([
-  'pistolero',
-  'deadeye',
-  'high-roller',
-  'secret-agent',
-  'spellslinger',
-  'trick-shot',
-  'white-hat',
-]);
 const BARD_CLASS = 'bard';
 const ROGUE_CLASS = 'rogue';
 const FIGHTER_CLASS = 'fighter';
 const DUNGEONEER_SUBCLASS = 'dungeoneer';
 const BEASTBORNE_SUBCLASS = 'beastborne';
+
+function gunslingerManeuversForFilters(
+  catalog: CombatMechanicalCatalogResponseDto,
+  classSlug: string | undefined,
+  subclassSlug: string | undefined,
+): CombatMechanicalCatalogResponseDto['gunslingerManeuvers'] {
+  const subclassInCatalog =
+    subclassSlug != null &&
+    catalog.gunslingerManeuvers.some(
+      (maneuver) => maneuver.subclassSlug === subclassSlug,
+    );
+  const include =
+    (!subclassSlug && (!classSlug || classSlug === GUNSLINGER_CLASS)) ||
+    subclassInCatalog;
+  if (!include) return [];
+
+  if (!subclassSlug) return catalog.gunslingerManeuvers;
+  return catalog.gunslingerManeuvers.filter(
+    (maneuver) =>
+      !maneuver.subclassSlug || maneuver.subclassSlug === subclassSlug,
+  );
+}
 
 /** Aplica filtros opcionais sem alterar o catálogo completo quando omitidos. */
 export function filterCombatMechanicalCatalog(
@@ -55,9 +68,6 @@ export function filterCombatMechanicalCatalog(
   const includeBattleMaster =
     (!subclassSlug && (!classSlug || classSlug === FIGHTER_CLASS)) ||
     subclassSlug === BATTLE_MASTER_SUBCLASS;
-  const includeGunslinger =
-    (!subclassSlug && (!classSlug || classSlug === GUNSLINGER_CLASS)) ||
-    (subclassSlug != null && GUNSLINGER_SUBCLASSES.has(subclassSlug));
   const includePersonaMasks = !classSlug || classSlug === BARD_CLASS;
   const includeCunning = !classSlug || classSlug === ROGUE_CLASS;
   const includeDungeoneer =
@@ -84,14 +94,11 @@ export function filterCombatMechanicalCatalog(
     ...catalog,
     economyActions,
     panelActions,
-    gunslingerManeuvers: includeGunslinger
-      ? subclassSlug
-        ? catalog.gunslingerManeuvers.filter(
-            (maneuver) =>
-              !maneuver.subclassSlug || maneuver.subclassSlug === subclassSlug,
-          )
-        : catalog.gunslingerManeuvers
-      : [],
+    gunslingerManeuvers: gunslingerManeuversForFilters(
+      catalog,
+      classSlug,
+      subclassSlug,
+    ),
     battleMasterManeuvers: includeBattleMaster
       ? catalog.battleMasterManeuvers
       : [],
