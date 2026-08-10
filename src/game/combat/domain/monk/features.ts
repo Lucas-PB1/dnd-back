@@ -150,47 +150,110 @@ function addOpenHandNotes(notes: string[], level: number): void {
       'Técnica da Mão Espalmada: na Torrente, cada acerto impõe Caído, empurrão ou sem Reação',
     );
   }
-  if (level >= 6) notes.push('Integridade Corporal: gaste recurso para curar-se');
-  if (level >= 11) notes.push('Passo Veloz: acelera após Defesa Paciente');
-  if (level >= 17) notes.push('Palma Vibrante: salvaguarda CON ou dano massivo');
+  if (level >= 6) {
+    notes.push(
+      'Integridade Corporal: Ação Bônus — cura MA + Sabedoria (usos = Sabedoria/DL)',
+    );
+  }
+  if (level >= 11) {
+    notes.push(
+      'Passo Veloz: após Ação Bônus que não seja Passos do Vento, use Passos do Vento de imediato',
+    );
+  }
+  if (level >= 17) {
+    notes.push(
+      'Palma Vibrante: 4 Foco no acerto desarmado → vibrações; encerrar força CON vs 10d12 Energético',
+    );
+  }
 }
 
 function addElementsNotes(notes: string[], level: number): void {
   if (level >= 3) {
     notes.push(
-      'Sintonia Elemental: 1 Foco para Explosão Elemental e alcance dos Golpes',
+      'Sintonia Elemental: 1 Foco no início do turno (10 min) — tipo elemental, +3 m de alcance',
+    );
+    notes.push('Manipular Elementos: conhece Elementalismo (SAB)');
+  }
+  if (level >= 6) {
+    notes.push(
+      'Explosão Elemental: 2 Foco, esfera 6 m / 36 m, 3× MA (Destreza)',
     );
   }
-  if (level >= 6) notes.push('Explosão Elemental: dado de Artes Marciais à distância');
-  if (level >= 11) notes.push('Passo dos Elementos: voo/velocidade elemental');
-  if (level >= 17) notes.push('Ápice Elemental: 5 Foco para efeitos elementais');
+  if (level >= 11) {
+    notes.push(
+      'Passo dos Elementos: com Sintonia ativa — natação e voo = Deslocamento',
+    );
+  }
+  if (level >= 17) {
+    notes.push(
+      'Ápice Elemental: com Sintonia — dano extra MA 1×/turno; Passos do Vento aprimorados',
+    );
+  }
 }
 
 function addMercyNotes(notes: string[], level: number): void {
   if (level >= 3) {
-    notes.push('Mão de Cura: gaste 1 Foco para curar SAB + dado de Artes Marciais');
-    notes.push('Mão de Dolo: gaste 1 Foco para dano Necrótico extra (1×/turno)');
+    notes.push('Mão de Cura: 1 Foco para curar SAB + dado de Artes Marciais');
+    notes.push('Mão de Dolo: 1 Foco para dano Necrótico extra (1×/turno)');
   }
-  if (level >= 6) notes.push('Toque de Médico: remove condições ao curar');
-  if (level >= 11) notes.push('Torrente de Cura e Dolo: aplique as Mãos na Torrente');
-  if (level >= 17) notes.push('Mão da Misericórdia Final: reviver ou matar');
+  if (level >= 6) {
+    notes.push(
+      'Toque de Médico: cura remove condição; dolo pode impor Envenenado',
+    );
+  }
+  if (level >= 11) {
+    notes.push(
+      'Torrente de Cura e Dolo: na Torrente, cura/dolo sem Foco extra (usos = Sabedoria/DL)',
+    );
+  }
+  if (level >= 17) {
+    notes.push(
+      'Mão da Misericórdia Final: 5 Foco + 1 uso/DL para reviver (4d10 + SAB)',
+    );
+  }
 }
 
 function addShadowNotes(notes: string[], level: number): void {
   if (level >= 3) {
-    notes.push('Artes das Sombras: 1 Foco para escuridão, visão e magias');
+    notes.push(
+      'Artes das Sombras: Visão no Escuro; 1 Foco → Escuridão (vê na área); Ilusão Menor',
+    );
   }
-  if (level >= 6) notes.push('Passo da Sombra: teleporte entre sombras com Vantagem');
-  if (level >= 11) notes.push('Passo da Sombra Aprimorado: teleporte na Torrente');
-  if (level >= 17) notes.push('Manto da Sombra: torne-se Invisível na escuridão');
+  if (level >= 6) {
+    notes.push(
+      'Passo da Sombra: teleporte 18 m entre Meia-luz/Escuridão + Vantagem',
+    );
+  }
+  if (level >= 11) {
+    notes.push(
+      'Passo Aprimorado: 1 Foco no Passo — sem requisito de sombra + Ataque Desarmado',
+    );
+  }
+  if (level >= 17) {
+    notes.push(
+      'Manto da Sombra: 3 Foco — Invisível 1 min; Torrente sem Foco',
+    );
+  }
 }
 
 function addWarriorOfTheStreetNotes(notes: string[], level: number): void {
   if (level >= 3) {
-    notes.push('Combinação: reposicione-se ao acertar Ataques Desarmados');
-    notes.push('Punho de Ferro: aumente o dado de Artes Marciais gastando Foco');
+    notes.push(
+      'Combinação: 1 Foco no acerto → +2 a +6 nos ataques desarmados no turno',
+    );
+    notes.push('Punho de Ferro: acerto desarmado em objeto = crítico');
   }
-  if (level >= 6) notes.push('Movimentos Especiais: manobras de rua com Foco');
-  if (level >= 11) notes.push('Traço Aéreo: mobilidade aérea em combate');
-  if (level >= 17) notes.push('K.O.: 1×/descanso (ou 5 Foco) para nocautear');
+  if (level >= 6) {
+    notes.push(
+      'Movimentos: Explosão de Energia, Quebrador de Guarda, Corte Superior (1 Foco cada)',
+    );
+  }
+  if (level >= 11) {
+    notes.push('Traço Aéreo: 1 Foco — voo até o fim do próximo turno');
+  }
+  if (level >= 17) {
+    notes.push(
+      'K.O.: +3× MA; ≤100 PV → Inconsciente (1×/descanso ou 5 Foco para recuperar)',
+    );
+  }
 }

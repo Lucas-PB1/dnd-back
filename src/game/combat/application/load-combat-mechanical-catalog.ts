@@ -68,6 +68,19 @@ function asPanelSection(value: string): PanelActionSection {
     : 'base';
 }
 
+/** Prefere o texto jogável mais completo entre C009 e C010 title. */
+function pickPlayableText(
+  ...candidates: Array<string | null | undefined>
+): string | undefined {
+  let best: string | undefined;
+  for (const candidate of candidates) {
+    const text = candidate?.trim();
+    if (!text) continue;
+    if (!best || text.length > best.length) best = text;
+  }
+  return best;
+}
+
 @Injectable()
 export class LoadCombatMechanicalCatalog {
   constructor(
@@ -207,7 +220,7 @@ export class LoadCombatMechanicalCatalog {
         const economyTextByKey = new Map<string, string>();
         for (const row of economyRows) {
           if (!row.classSlug || !row.tableAction) continue;
-          const text = row.description?.trim() || row.summary?.trim();
+          const text = pickPlayableText(row.description, row.summary);
           if (!text) continue;
           economyTextByKey.set(`${row.classSlug}|${row.tableAction}`, text);
         }
@@ -218,7 +231,10 @@ export class LoadCombatMechanicalCatalog {
           slug: row.slug,
           name: row.name,
           title: row.title ?? undefined,
-          description: economyTextByKey.get(`${row.classSlug}|${row.slug}`),
+          description: pickPlayableText(
+            economyTextByKey.get(`${row.classSlug}|${row.slug}`),
+            row.title,
+          ),
           minLevel: Number(row.unlockLevel),
           resourceSlug: row.resourceSlug ?? undefined,
           section: asPanelSection(row.section),

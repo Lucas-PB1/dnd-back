@@ -14,6 +14,7 @@ Padrão alvo: **table-action**. Checklist em [`SKILL.md`](../SKILL.md).
 | Ladino | `rogue` | **Concluída** |
 | Paladino | `paladin` | **Concluída** |
 | Pistoleiro | `gunslinger` | **Concluída** |
+| Monge | `monk` | **Concluída** |
 
 Polish **adiado** (não reabre “classe done”): ver [`docs/plans/backlog.md`](../../../docs/plans/backlog.md) — MM modal, Companheiro Primal tracker, reuso de invocações / entidades / duração.
 
@@ -27,6 +28,7 @@ Invocações / criaturas / efeitos de duração (nas concluídas) — só nota o
 | Feiticeiro · Dracônico L18 | Companheiro Dracônico | magia / nota PHB; sem linha C009 dedicada |
 | Bruxo · GOO L14 | Criar Servo | modifica Invocar Aberração no cast; sem pool próprio |
 | Guerreiro | — | nada equivalente |
+| Monge | Defletir / Queda Lenta | só lembrete C009 (sem Usar) |
 | Ladino · Adaga Espiritual | Lâminas Psíquicas | ataques virtuais na ficha (`psychic-blade` / `-bonus`) com Furtivo/Astuto |
 | Ladino · Trapaceiro Arcano | Mãos Mágicas Ligeiras | nota / conjuração (alcance à distância — **não** companion) |
 | Ladino · Adaga Espiritual | Véu Psíquico | uso pré-estabelecido `psychic-veil` + nota; sem tracker de Invisível |
@@ -139,3 +141,16 @@ Polish adiado: Defesa Gloriosa / Destruição Protetora (Usar dedicado).
 Pool: `risk` (Dados de Risco). Painel: seletor de manobras (C001 base + **todas** as subs Valdas / Pistolero) via table-action; Gambito Terrível recupera 1 risk. Firearms reload/fire legado permanece. Tiro na Cabeça: toggle no card (gasta 3× risk).
 
 Polish adiado: Assumidor de risco (d6 grátis); condições White Hat; Bang cast dedicado; polish câmaras.
+
+## Monge (`monk`) — **concluída**
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/monk/` |
+| Handler | `monk-actions.handler.ts` + `actions/monk/` |
+| HTTP | `POST …/monk/table-action` |
+| Economy/panel | `C009` + `C010` |
+
+Pool: `focusPoints` (± na Economia). Base: Torrente / Defesa Paciente / Passos do Vento / Golpe Atordoante. Subs PHB: open-hand (Técnica, Integridade, Palma Vibrante), elements (Sintonia, Explosão nv.6/2 Foco), mercy (Cura/Dolo, Torrente Cura-Dolo, Misericórdia Final), shadow (Artes Escuridão, Passo 18 m, Aprimorado, Manto). Valdas `warrior-of-the-street`: Combinação / Movimentos / Traço / K.O. (+ recuperar 5 Foco). Defletir/Queda Lenta = lembrete. Passo Veloz / Punho de Ferro / Ápice = notes.
+
+Polish adiado: tracker de duração Sintonia/Manto; aplicar PV na ficha em curas; Passo Veloz automático.

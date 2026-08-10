@@ -51,7 +51,7 @@ Implementação front: `plan-economy-table-use.ts` (`counterSlug` a partir de `r
 
 **C010 / painel:** poderes e controles especiais (Recuperação Arcana, Aspecto Bestial, máscaras, invocações). Pode repetir um botão com `resource_slug` como atalho (ex. Bruxo), mas **não** substitui a Economia como UI de `remaining/max`.
 
-Texto jogável no painel: o loader preenche `panelActions[].description` a partir de C009 (`description`/`summary`) quando `table_action` = `slug` na mesma classe. C010 `title` fica como resumo/fallback.
+Texto jogável no painel: o loader preenche `panelActions[].description` com o texto mais completo entre C009 (`description`/`summary` quando `table_action` = `slug`) e C010 `title`. Front: `description || title` — sem fallback genérico de “Gasta Foco”.
 
 **Anti-padrão:** `CombatResourceSummary` no Ferramentas do painel espelhando pools da Economia; ou ± só se `table_action` existir.
 

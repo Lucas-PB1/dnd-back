@@ -79,10 +79,25 @@ export class UseMonkTableActionDto {
       'step-of-the-wind',
       'stunning-strike',
       'open-hand-technique',
+      'wholeness-of-body',
+      'vibrating-palm',
+      'elemental-attunement',
       'elemental-blast',
       'hand-of-healing',
       'hand-of-harm',
+      'flurry-of-healing-and-harm',
+      'hand-of-ultimate-mercy',
+      'shadow-arts',
       'shadow-step',
+      'improved-shadow-step',
+      'cloak-of-shadows',
+      'street-combo',
+      'energy-burst',
+      'guard-breaker',
+      'uppercut',
+      'air-dash',
+      'knockout',
+      'recover-knockout',
     ],
   })
   @IsIn([
@@ -91,10 +106,25 @@ export class UseMonkTableActionDto {
     'step-of-the-wind',
     'stunning-strike',
     'open-hand-technique',
+    'wholeness-of-body',
+    'vibrating-palm',
+    'elemental-attunement',
     'elemental-blast',
     'hand-of-healing',
     'hand-of-harm',
+    'flurry-of-healing-and-harm',
+    'hand-of-ultimate-mercy',
+    'shadow-arts',
     'shadow-step',
+    'improved-shadow-step',
+    'cloak-of-shadows',
+    'street-combo',
+    'energy-burst',
+    'guard-breaker',
+    'uppercut',
+    'air-dash',
+    'knockout',
+    'recover-knockout',
   ])
   actionSlug!:
     | 'flurry-of-blows'
@@ -102,10 +132,25 @@ export class UseMonkTableActionDto {
     | 'step-of-the-wind'
     | 'stunning-strike'
     | 'open-hand-technique'
+    | 'wholeness-of-body'
+    | 'vibrating-palm'
+    | 'elemental-attunement'
     | 'elemental-blast'
     | 'hand-of-healing'
     | 'hand-of-harm'
-    | 'shadow-step';
+    | 'flurry-of-healing-and-harm'
+    | 'hand-of-ultimate-mercy'
+    | 'shadow-arts'
+    | 'shadow-step'
+    | 'improved-shadow-step'
+    | 'cloak-of-shadows'
+    | 'street-combo'
+    | 'energy-burst'
+    | 'guard-breaker'
+    | 'uppercut'
+    | 'air-dash'
+    | 'knockout'
+    | 'recover-knockout';
 }
 
 export class UsePaladinTableActionDto {

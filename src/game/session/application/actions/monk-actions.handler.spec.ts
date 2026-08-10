@@ -61,7 +61,82 @@ describe('MonkActionsHandler', () => {
       actionSlug: 'hand-of-healing',
     });
     expect(result.expression).toMatch(/1d8\+3/);
-    expect(result.note).toContain('curar');
+    expect(result.note).toContain('cure');
+  });
+
+  it('heals with Wholeness of Body using the subclass pool', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      id: 'monk-1',
+      classSlug: 'monk',
+      subclassSlug: 'open-hand',
+      level: 6,
+      abilityScores: {
+        forca: 10,
+        destreza: 16,
+        constituicao: 12,
+        inteligencia: 10,
+        sabedoria: 16,
+        carisma: 8,
+      },
+    });
+    const result = await handler.useTableAction('user-1', 'monk-1', {
+      actionSlug: 'wholeness-of-body',
+    });
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'monk-1' }),
+      'wholeness-of-body',
+      1,
+    );
+    expect(result.note).toContain('Integridade Corporal');
+  });
+
+  it('spends 2 Focus on Elemental Blast at level 6+', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      id: 'monk-1',
+      classSlug: 'monk',
+      subclassSlug: 'elements',
+      level: 6,
+      abilityScores: {
+        forca: 10,
+        destreza: 16,
+        constituicao: 12,
+        inteligencia: 10,
+        sabedoria: 16,
+        carisma: 8,
+      },
+    });
+    const result = await handler.useTableAction('user-1', 'monk-1', {
+      actionSlug: 'elemental-blast',
+    });
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'monk-1' }),
+      'focusPoints',
+      2,
+    );
+    expect(result.note).toContain('Esfera');
+    expect(result.expression).toMatch(/3d8/);
+  });
+
+  it('teleports 18 m on Shadow Step', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      id: 'monk-1',
+      classSlug: 'monk',
+      subclassSlug: 'shadow',
+      level: 6,
+      abilityScores: {
+        forca: 10,
+        destreza: 16,
+        constituicao: 12,
+        inteligencia: 10,
+        sabedoria: 16,
+        carisma: 8,
+      },
+    });
+    const result = await handler.useTableAction('user-1', 'monk-1', {
+      actionSlug: 'shadow-step',
+    });
+    expect(result.note).toContain('18 m');
+    expect(state.useClassResource).not.toHaveBeenCalled();
   });
 
   it('rejects subclass actions for the wrong subclass', async () => {

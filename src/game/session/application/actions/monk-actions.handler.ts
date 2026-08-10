@@ -15,11 +15,26 @@ import {
   resolveStunningStrike,
 } from './monk/base-actions';
 import {
+  resolveAirDash,
+  resolveCloakOfShadows,
+  resolveElementalAttunement,
   resolveElementalBlast,
+  resolveEnergyBurst,
+  resolveFlurryOfHealingAndHarm,
+  resolveGuardBreaker,
   resolveHandOfHarm,
   resolveHandOfHealing,
+  resolveHandOfUltimateMercy,
+  resolveImprovedShadowStep,
+  resolveKnockout,
   resolveOpenHandTechnique,
+  resolveRecoverKnockout,
+  resolveShadowArts,
   resolveShadowStep,
+  resolveStreetCombo,
+  resolveUppercut,
+  resolveVibratingPalm,
+  resolveWholenessOfBody,
 } from './monk/subclass-actions';
 
 @Injectable()
@@ -60,14 +75,48 @@ export class MonkActionsHandler {
         return resolveStunningStrike(deps, character);
       case 'open-hand-technique':
         return resolveOpenHandTechnique(deps, character);
+      case 'wholeness-of-body':
+        return resolveWholenessOfBody(deps, character);
+      case 'vibrating-palm':
+        return resolveVibratingPalm(deps, character);
+      case 'elemental-attunement':
+        return resolveElementalAttunement(deps, character);
       case 'elemental-blast':
         return resolveElementalBlast(deps, character);
       case 'hand-of-healing':
         return resolveHandOfHealing(deps, character);
       case 'hand-of-harm':
         return resolveHandOfHarm(deps, character);
+      case 'flurry-of-healing-and-harm':
+        return resolveFlurryOfHealingAndHarm(deps, character);
+      case 'hand-of-ultimate-mercy':
+        return resolveHandOfUltimateMercy(deps, character);
+      case 'shadow-arts':
+        return resolveShadowArts(deps, character);
       case 'shadow-step':
         return resolveShadowStep(deps, character);
+      case 'improved-shadow-step':
+        return resolveImprovedShadowStep(deps, character);
+      case 'cloak-of-shadows':
+        return resolveCloakOfShadows(deps, character);
+      case 'street-combo':
+        return resolveStreetCombo(deps, character);
+      case 'energy-burst':
+        return resolveEnergyBurst(deps, character);
+      case 'guard-breaker':
+        return resolveGuardBreaker(deps, character);
+      case 'uppercut':
+        return resolveUppercut(deps, character);
+      case 'air-dash':
+        return resolveAirDash(deps, character);
+      case 'knockout':
+        return resolveKnockout(deps, character);
+      case 'recover-knockout':
+        return resolveRecoverKnockout(deps, character);
+      default:
+        throw new BadRequestException(
+          `Ação de Monge desconhecida: ${dto.actionSlug as string}`,
+        );
     }
   }
 }

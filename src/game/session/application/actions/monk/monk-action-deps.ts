@@ -23,9 +23,18 @@ export async function spendFocus(
   character: PlayerCharacter,
   amount: number,
 ): Promise<TableActionResponseDto['state']> {
+  return spendResource(deps, character, FOCUS_RESOURCE_SLUG, amount);
+}
+
+export async function spendResource(
+  deps: MonkActionDeps,
+  character: PlayerCharacter,
+  resourceSlug: string,
+  amount: number,
+): Promise<TableActionResponseDto['state']> {
   const result = await deps.state.useClassResource(
     character,
-    FOCUS_RESOURCE_SLUG,
+    resourceSlug,
     amount,
   );
   return result.state;
