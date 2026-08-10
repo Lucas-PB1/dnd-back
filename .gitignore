@@ -1,7 +1,7 @@
 # Dependencies / build
 node_modules/
 dist/
-coverage/
+/coverage/
 *.tsbuildinfo
 
 # Env / secrets

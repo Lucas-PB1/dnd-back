@@ -21,7 +21,7 @@ describe('FindItemsQuery', () => {
   });
 
   it('searches and filters by item type', async () => {
-    const result = await query.execute(1, 20, 'corda', 'gear');
+    const result = await query.execute(1, 20, 'corda', { itemType: 'gear' });
     expect(qb.andWhere).toHaveBeenCalledWith('item.itemType = :itemType', {
       itemType: 'gear',
     });
@@ -29,7 +29,7 @@ describe('FindItemsQuery', () => {
   });
 
   it('filters multiple item types', async () => {
-    await query.execute(1, 20, undefined, 'gear,tool');
+    await query.execute(1, 20, undefined, { itemType: 'gear,tool' });
     expect(qb.andWhere).toHaveBeenCalledWith('item.itemType IN (:...types)', {
       types: ['gear', 'tool'],
     });

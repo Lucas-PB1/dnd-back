@@ -78,6 +78,8 @@ describe('applyWeaponCharmToAttack', () => {
     martialArtsDie: null,
     attachedCharmSlug: null,
     attachedCharmName: null,
+    attachedCoverageSlug: null,
+    attachedCoverageName: null,
   };
 
   const piece = (
