@@ -13,6 +13,7 @@ Padrão alvo: **table-action**. Checklist em [`SKILL.md`](../SKILL.md).
 | Patrulheiro | `ranger` | **Concluída** |
 | Ladino | `rogue` | **Concluída** |
 | Paladino | `paladin` | **Concluída** |
+| Pistoleiro | `gunslinger` | **Concluída** |
 
 Polish **adiado** (não reabre “classe done”): ver [`docs/plans/backlog.md`](../../../docs/plans/backlog.md) — MM modal, Companheiro Primal tracker, reuso de invocações / entidades / duração.
 
@@ -36,6 +37,7 @@ Invocações / criaturas / efeitos de duração (nas concluídas) — só nota o
 | Paladino · Devoção L15 | Destruição Protetora | lembrete C009; Usar/handler adiado |
 | Paladino · Glória L15 | Defesa Gloriosa | C009 ± `glorious-defense`; Usar dedicado adiado |
 | Paladino · Glória L3 | Atleta Inigualável (2º canal) | C009 + `peerless-athlete` |
+| Pistoleiro | Manobras de outras subs (não-Pistolero) | adiado — C001 só base + Pistolero |
 
 ---
 
@@ -124,3 +126,16 @@ Polish adiado: Teia/posição, condições persistentes — ver tabela no topo +
 Pools: `layOnHands` + `channelDivinity` (C009 ±; Sentido Divino com `table_action`). Economia por juramento: canais nomeados (`oath-channel` / `peerless-athlete`) + pools L15/L20 (`holy-nimbus`, `glorious-defense`, `undying-sentinel`, …; Folia `reveler` / `party-animal`). Painel: cura com amount + Curar Veneno; canais C010 com `resource_slug`. Destruição Divina no card de ataque.
 
 Polish adiado: Defesa Gloriosa / Destruição Protetora (Usar dedicado).
+
+## Pistoleiro (`gunslinger`) — **concluída**
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/gunslinger/` |
+| Handler | `gunslinger-actions.handler.ts` (+ ops marciais existentes) |
+| HTTP | `POST …/gunslinger/table-action` (`use-maneuver`, `recover-risk`); `GET …/maneuvers` lista |
+| Economy/panel | `C009` (`risk` ±, Tempo Bala, Tiro na Cabeça) + `C010` (`recover-risk`) |
+
+Pool: `risk` (Dados de Risco). Painel: seletor de manobras (C001 base + Pistolero) via table-action; Gambito Terrível recupera 1 risk. Firearms reload/fire legado permanece. Tiro na Cabeça: toggle no card (gasta 3× risk).
+
+Polish adiado: manobras C001 das outras subclasses Valdas; polish câmaras além do atual.

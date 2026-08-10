@@ -29,12 +29,14 @@ import { WarlockActionsHandler } from '../application/actions/warlock-actions.ha
 import { DruidActionsHandler } from '../application/actions/druid-actions.handler';
 import { WizardActionsHandler } from '../application/actions/wizard-actions.handler';
 import { FighterActionsHandler } from '../application/actions/fighter-actions.handler';
+import { GunslingerActionsHandler } from '../application/actions/gunslinger-actions.handler';
 import {
   TableActionResponseDto,
   UseBardTableActionDto,
   UseClericTableActionDto,
   UseDruidTableActionDto,
   UseFighterTableActionDto,
+  UseGunslingerTableActionDto,
   UseMonkTableActionDto,
   UsePaladinTableActionDto,
   UseRangerTableActionDto,
@@ -42,6 +44,7 @@ import {
   UseSorcererTableActionDto,
   UseWarlockTableActionDto,
   UseWizardTableActionDto,
+  UseManeuverResponseDto,
 } from '../dto';
 
 @ApiTags('game-characters')
@@ -62,6 +65,7 @@ export class TableActionsController {
     private readonly druid: DruidActionsHandler,
     private readonly wizard: WizardActionsHandler,
     private readonly fighter: FighterActionsHandler,
+    private readonly gunslinger: GunslingerActionsHandler,
   ) {}
 
   @Post(':id/fighter/table-action')
@@ -76,6 +80,20 @@ export class TableActionsController {
     @Body() dto: UseFighterTableActionDto,
   ): Promise<TableActionResponseDto> {
     return this.fighter.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/gunslinger/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Gunslinger tabletop action (maneuver / recover-risk)',
+  })
+  @ApiOkResponse({ type: TableActionResponseDto })
+  useGunslingerTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseGunslingerTableActionDto,
+  ): Promise<UseManeuverResponseDto | TableActionResponseDto> {
+    return this.gunslinger.useTableAction(user.id, id, dto);
   }
 
   @Post(':id/rogue/table-action')

@@ -264,3 +264,19 @@ export class UseFighterTableActionDto {
   @Min(1)
   dc?: number;
 }
+
+const GUNSLINGER_TABLE_ACTION_SLUGS = ['use-maneuver', 'recover-risk'] as const;
+
+export class UseGunslingerTableActionDto {
+  @ApiProperty({ enum: GUNSLINGER_TABLE_ACTION_SLUGS })
+  @IsIn([...GUNSLINGER_TABLE_ACTION_SLUGS])
+  actionSlug!: (typeof GUNSLINGER_TABLE_ACTION_SLUGS)[number];
+
+  @ApiPropertyOptional({
+    example: 'bite-the-bullet',
+    description: 'Slug da manobra (use-maneuver)',
+  })
+  @IsOptional()
+  @IsString()
+  maneuverSlug?: string;
+}

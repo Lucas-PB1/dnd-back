@@ -116,7 +116,8 @@ INSERT INTO rpg.phb_class_panel_action (
 ('rogue|soulknife|rend-mind', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'soulknife'), 'rend-mind', 'Rasgar Mente', 'Listagem: 1× gratuito; depois 3 dados', 17, 'rend-mind', 'subclass'::rpg.panel_action_section, false, 8),
 ('rogue|arcane-trickster|spell-thief', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'arcane-trickster'), 'spell-thief', 'Ladrão de Magias', 'Reação: negar e roubar uma magia (1×/descanso)', 17, 'spell-thief', 'subclass'::rpg.panel_action_section, false, 9),
 ('rogue|thief|magic-device-charge', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'thief'), 'magic-device-charge', 'Testar carga de item', 'Usar Dispositivo Mágico: teste para recarregar item (nv. 13+)', 13, NULL, 'subclass'::rpg.panel_action_section, false, 10),
-('rogue|arachnoid-stalker|arachnoid-web', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'), 'arachnoid-web', 'Correia / Teia', 'Gasta 1 uso: teia, correia ou magia Teia (mesa)', 3, 'arachnoid-web', 'subclass'::rpg.panel_action_section, false, 11)
+('rogue|arachnoid-stalker|arachnoid-web', (SELECT id FROM rpg.phb_class WHERE slug = 'rogue'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'arachnoid-stalker'), 'arachnoid-web', 'Correia / Teia', 'Gasta 1 uso: teia, correia ou magia Teia (mesa)', 3, 'arachnoid-web', 'subclass'::rpg.panel_action_section, false, 11),
+('gunslinger|recover-risk', (SELECT id FROM rpg.phb_class WHERE slug = 'gunslinger'), NULL, 'recover-risk', 'Gambito Terrível', 'Marcar recuperação de 1 Dado de Risco (iniciativa/crítico)', 15, 'risk', 'base'::rpg.panel_action_section, false, 1)
 ON CONFLICT (panel_key) DO UPDATE SET
   class_id = EXCLUDED.class_id,
   subclass_id = EXCLUDED.subclass_id,

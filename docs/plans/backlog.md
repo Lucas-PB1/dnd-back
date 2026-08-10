@@ -18,7 +18,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 | HP / CA / ataque / feat options / granted spells | Pronto |
 | Deploy front / E2E | Pronto |
 | UI ataques (aba Ações) + erros HTTP PT | Pronto |
-| Classes mesa **concluídas** | Guerreiro · Feiticeiro · Bruxo · Mago · Patrulheiro · Ladino · Paladino (skills `rpg-class-mesa-*` / exemplares) |
+| Classes mesa **concluídas** | Guerreiro · Feiticeiro · Bruxo · Mago · Patrulheiro · Ladino · Paladino · Pistoleiro (skills `rpg-class-mesa-*` / exemplares) |
 | Demais classes PHB / Valdas | Seguir skills mesa sob pedido |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
@@ -36,7 +36,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 
 - Catálogo mecânico de combate no banco — skill `rpg-catalog-model` · `GET /combat-mechanical-catalog`
 - Padrão classe mesa — skills `rpg-class-mesa-api` / `rpg-class-mesa-front`
-- Classes **concluídas** (critério mesa): Guerreiro, Feiticeiro, Bruxo, Mago, Patrulheiro, Ladino, Paladino — ver `references/exemplares.md` nas skills
+- Classes **concluídas** (critério mesa): Guerreiro, Feiticeiro, Bruxo, Mago, Patrulheiro, Ladino, Paladino, Pistoleiro — ver `references/exemplares.md` nas skills
 - Invocações do Bruxo: catálogo + seleção + free_cast no painel/aba Magias
 
 ### Adiado — polish / ops
@@ -47,6 +47,7 @@ Não priorizar. Só retomar com pedido explícito.
 - [ ] Senhor das Feras: Companheiro Primal (invocar, PV, comandar na mesa) — [`beast-master-primal-companion.md`](beast-master-primal-companion.md)
 - [ ] Duração / condições na mesa (família combate situacional): Invisível do Véu Psíquico, Atordoado do Rasgar Mente, Correia/Teia (Arachnoid), venenos do Assassino — hoje gasto/listagem + nota / toggles (sem tracker)
 - [ ] Paladino: Defesa Gloriosa (Usar L15 dedicado no pool `glorious-defense`) — hoje ± + descrição; Destruição Protetora é lembrete (Cobertura na aura ao Destruir)
+- [ ] Pistoleiro: manobras C001 das subclasses Valdas além de Pistolero; polish câmaras/firearms
 
 ### Referência — modelo de dados
 

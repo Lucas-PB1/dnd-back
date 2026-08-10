@@ -6,6 +6,7 @@ export type CombatMechanicalCatalogFilters = {
 };
 
 const BATTLE_MASTER_SUBCLASS = 'battle-master';
+const GUNSLINGER_CLASS = 'gunslinger';
 const GUNSLINGER_SUBCLASS = 'pistolero';
 const BARD_CLASS = 'bard';
 const ROGUE_CLASS = 'rogue';
@@ -47,7 +48,7 @@ export function filterCombatMechanicalCatalog(
     (!subclassSlug && (!classSlug || classSlug === FIGHTER_CLASS)) ||
     subclassSlug === BATTLE_MASTER_SUBCLASS;
   const includeGunslinger =
-    (!subclassSlug && (!classSlug || classSlug === FIGHTER_CLASS)) ||
+    (!subclassSlug && (!classSlug || classSlug === GUNSLINGER_CLASS)) ||
     subclassSlug === GUNSLINGER_SUBCLASS;
   const includePersonaMasks = !classSlug || classSlug === BARD_CLASS;
   const includeCunning = !classSlug || classSlug === ROGUE_CLASS;

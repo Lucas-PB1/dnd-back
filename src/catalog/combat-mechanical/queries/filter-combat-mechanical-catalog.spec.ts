@@ -53,7 +53,16 @@ describe('filterCombatMechanicalCatalog', () => {
       'fighter|a',
     ]);
     expect(result.battleMasterManeuvers).toHaveLength(1);
+    expect(result.gunslingerManeuvers).toEqual([]);
     expect(result.personaMasks).toEqual([]);
+  });
+
+  it('keeps gunslinger maneuvers when filtering by gunslinger class', () => {
+    const result = filterCombatMechanicalCatalog(sampleCatalog(), {
+      classSlug: 'gunslinger',
+    });
+    expect(result.gunslingerManeuvers).toHaveLength(1);
+    expect(result.battleMasterManeuvers).toEqual([]);
   });
 
   it('filters subclass subsets', () => {

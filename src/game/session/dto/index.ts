@@ -42,6 +42,7 @@ export {
   UsePaladinTableActionDto,
   UseRangerTableActionDto,
   UseFighterTableActionDto,
+  UseGunslingerTableActionDto,
 } from './table-actions/table-actions-martial.dto';
 
 export {
