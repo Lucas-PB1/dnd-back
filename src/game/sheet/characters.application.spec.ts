@@ -84,6 +84,11 @@ describe('Characters application layer', () => {
     backgroundBoostPlus1AbilitySlug: null,
     backgroundBoostPlus1Slugs: null,
     backgroundToolItemSlug: null,
+    coinCopper: 0,
+    coinSilver: 0,
+    coinElectrum: 0,
+    coinGold: 0,
+    coinPlatinum: 0,
     createdAt: new Date(),
     updatedAt: new Date(),
   };

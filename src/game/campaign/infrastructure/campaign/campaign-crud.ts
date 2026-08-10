@@ -90,13 +90,20 @@ export async function updateCampaign(
   deps: CampaignCrudDeps,
   campaignId: string,
   userId: string,
-  patch: { name?: string; description?: string | null },
+  patch: {
+    name?: string;
+    description?: string | null;
+    allowPlayerSkipPayment?: boolean;
+  },
 ): Promise<Campaign> {
   await requireRole(deps, campaignId, userId, ['dm']);
   const campaign = await findCampaignOrFail(deps, campaignId);
   if (patch.name !== undefined) campaign.name = patch.name.trim();
   if (patch.description !== undefined) {
     campaign.description = patch.description?.trim() || null;
+  }
+  if (patch.allowPlayerSkipPayment !== undefined) {
+    campaign.allowPlayerSkipPayment = patch.allowPlayerSkipPayment;
   }
   return deps.campaigns.save(campaign);
 }

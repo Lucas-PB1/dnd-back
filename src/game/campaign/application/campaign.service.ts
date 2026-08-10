@@ -160,8 +160,8 @@ export class CampaignService {
     return this.toSummary(campaign, membership.role);
   }
 
-  listCampaignRefsByCharacterIds(characterIds: string[]) {
-    return this.repo.listCampaignRefsByCharacterIds(characterIds);
+  listCampaignRefsByCharacterIds(characterIds: string[], userId: string) {
+    return this.repo.listCampaignRefsByCharacterIds(characterIds, userId);
   }
 
   private toSummary(
@@ -174,6 +174,7 @@ export class CampaignService {
       description: campaign.description,
       inviteCode: campaign.inviteCode,
       myRole: role,
+      allowPlayerSkipPayment: campaign.allowPlayerSkipPayment,
       createdAt: campaign.createdAt.toISOString(),
       updatedAt: campaign.updatedAt.toISOString(),
     };

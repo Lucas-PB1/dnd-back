@@ -12,6 +12,7 @@ import {
 } from './character-sheet.dto';
 import { AbilityScoresDto } from './ability-scores.dto';
 import { CharacterCampaignRefDto } from './character-campaign-ref.dto';
+import { CoinPurseDto } from './coin-purse.dto';
 import {
   EquipmentWarningResponseDto,
   WeaponAttackResponseDto,
@@ -19,6 +20,7 @@ import {
 
 export { AbilityScoresDto } from './ability-scores.dto';
 export { CharacterCampaignRefDto } from './character-campaign-ref.dto';
+export { CoinPurseDto } from './coin-purse.dto';
 export {
   EquipmentWarningResponseDto,
   WeaponAttackResponseDto,
@@ -227,6 +229,9 @@ export class CharacterResponseDto {
 
   @ApiProperty({ type: [CharacterCampaignRefDto] })
   campaigns!: CharacterCampaignRefDto[];
+
+  @ApiProperty({ type: CoinPurseDto, description: 'Saldo das 5 moedas D&D' })
+  coins!: CoinPurseDto;
 }
 
 /** Resumo para GET /characters — sem sheet/combat/magias. */

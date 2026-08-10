@@ -9,6 +9,7 @@ import {
   Min,
   ValidateIf,
 } from 'class-validator';
+import { CoinPurseDto } from '@game/sheet/dto/coin-purse.dto';
 
 export class InventoryItemResponseDto {
   @ApiProperty({ example: 'longsword' })
@@ -150,12 +151,44 @@ export class InventoryEncumbranceDto {
   encumbered!: boolean;
 }
 
+export class InventoryPaymentContextDto {
+  @ApiProperty({
+    example: true,
+    description: 'Personagem vinculado a pelo menos uma campanha',
+  })
+  inCampaign!: boolean;
+
+  @ApiProperty({
+    example: false,
+    description: 'Viewer é DM ou assistant em alguma campanha do personagem',
+  })
+  viewerIsDmOrAssistant!: boolean;
+
+  @ApiProperty({
+    example: false,
+    description: 'Alguma campanha permite “Não pagar”',
+  })
+  allowPlayerSkipPayment!: boolean;
+
+  @ApiProperty({
+    example: true,
+    description: 'Cobrança se aplica (campanha + player)',
+  })
+  chargeApplies!: boolean;
+}
+
 export class CharacterInventoryResponseDto {
   @ApiProperty({ type: [InventoryItemResponseDto] })
   items!: InventoryItemResponseDto[];
 
   @ApiProperty({ type: InventoryEncumbranceDto })
   encumbrance!: InventoryEncumbranceDto;
+
+  @ApiProperty({ type: CoinPurseDto })
+  wealth!: CoinPurseDto;
+
+  @ApiProperty({ type: InventoryPaymentContextDto })
+  paymentContext!: InventoryPaymentContextDto;
 }
 
 export class AddInventoryItemDto {
@@ -169,6 +202,15 @@ export class AddInventoryItemDto {
   @IsInt()
   @Min(1)
   quantity?: number;
+
+  @ApiPropertyOptional({
+    example: true,
+    description:
+      'Default true. Se false e a campanha permitir skip, adiciona sem debitar',
+  })
+  @IsOptional()
+  @IsBoolean()
+  pay?: boolean;
 }
 
 export class PatchInventoryItemDto {

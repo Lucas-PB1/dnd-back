@@ -7,10 +7,13 @@ export function isSupabaseUrl(connectionString) {
 
 /**
  * Pooler (mesmo em :5432) pode descartar DDL entre commits.
- * Preferir host direto db.<project>.supabase.co para migrate/seed/reset.
+ * Preferir host direto db.<project>.supabase.co para migrate/seed/reset
+ * quando a rede resolve IPv4; no Windows costuma ser IPv6-only (ENOTFOUND).
  * @param {string} connectionString
+ * @param {{ preferPooler?: boolean }} [opts]
  */
-export function resolveDirectDatabaseUrl(connectionString) {
+export function resolveDirectDatabaseUrl(connectionString, opts = {}) {
+  if (opts.preferPooler) return connectionString;
   try {
     const u = new URL(connectionString);
     if (!u.hostname.includes('pooler.supabase')) {
@@ -30,21 +33,21 @@ export function resolveDirectDatabaseUrl(connectionString) {
 }
 
 /** @param {string} connectionString */
-export function createPgClient(connectionString) {
+export function createPgClient(connectionString, opts = {}) {
   const ssl = isSupabaseUrl(connectionString)
     ? { rejectUnauthorized: false }
     : undefined;
 
   return new pg.Client({
-    connectionString: resolveDirectDatabaseUrl(connectionString),
+    connectionString: resolveDirectDatabaseUrl(connectionString, opts),
     ssl,
   });
 }
 
 /** @param {string} connectionString */
-export function maskDatabaseUrl(connectionString) {
+export function maskDatabaseUrl(connectionString, opts = {}) {
   try {
-    const url = new URL(resolveDirectDatabaseUrl(connectionString));
+    const url = new URL(resolveDirectDatabaseUrl(connectionString, opts));
     if (url.password) url.password = '****';
     return `${url.hostname}:${url.port || '5432'}${url.pathname}`;
   } catch {

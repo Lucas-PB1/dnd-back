@@ -2,7 +2,10 @@ import {
   BLAST_INVOCATION_SLUGS,
   ELDRITCH_INVOCATION_CANTRIP_OPTION_KEY,
   ELDRITCH_INVOCATION_OPTION_KEY,
+  ELDRITCH_INVOCATION_ORIGIN_FEAT_OPTION_KEY,
   isBlastInvocationSlug,
+  isLessonsOfTheFirstOnesSlug,
+  LESSONS_OF_THE_FIRST_ONES_SLUG,
   warlockInvocationLimit,
   type BlastInvocationSlug,
 } from './features';
@@ -32,6 +35,11 @@ export type EldritchBlastCantripBinding = {
   instanceIndex: number;
   invocationSlug: BlastInvocationSlug;
   cantripSlug: string;
+};
+
+export type EldritchOriginFeatBinding = {
+  instanceIndex: number;
+  featSlug: string;
 };
 
 /** Metadados mínimos do truque para elegibilidade PHB 2024. */
@@ -92,6 +100,32 @@ export function readEldritchInvocationCantripBindings(
       invocationSlug,
       cantripSlug: option.valueId,
     });
+  }
+  return bindings.sort((a, b) => a.instanceIndex - b.instanceIndex);
+}
+
+export function readEldritchInvocationOriginFeatBindings(
+  classOptions: readonly ClassOptionLike[] | null | undefined,
+): EldritchOriginFeatBinding[] {
+  const picksByIndex = new Map(
+    readEldritchInvocationPicks(classOptions).map((pick) => [
+      pick.instanceIndex,
+      pick.slug,
+    ]),
+  );
+  const bindings: EldritchOriginFeatBinding[] = [];
+  for (const option of classOptions ?? []) {
+    if (option.optionKey !== ELDRITCH_INVOCATION_ORIGIN_FEAT_OPTION_KEY) {
+      continue;
+    }
+    const instanceIndex = option.instanceIndex ?? 0;
+    const invocationSlug = picksByIndex.get(instanceIndex);
+    if (!invocationSlug || !isLessonsOfTheFirstOnesSlug(invocationSlug)) {
+      continue;
+    }
+    const featSlug = option.valueId.trim();
+    if (!featSlug) continue;
+    bindings.push({ instanceIndex, featSlug });
   }
   return bindings.sort((a, b) => a.instanceIndex - b.instanceIndex);
 }
@@ -285,6 +319,71 @@ export function validateEldritchBlastCantripBindings(input: {
   return errors;
 }
 
+/**
+ * Valida siblings eldritch-invocation-origin-feat para Lições dos Primeiros.
+ * Cada pick exige um talento de Origem distinto.
+ */
+export function validateEldritchOriginFeatBindings(input: {
+  picks: readonly { slug: string; instanceIndex: number }[];
+  bindings: readonly EldritchOriginFeatBinding[];
+  /** Slugs com category = origin no catálogo. */
+  originFeatSlugs: ReadonlySet<string>;
+  /**
+   * Talentos já na ficha que não vêm desta invocação
+   * (antecedente / humano / ASI) — não podem ser reescolhidos.
+   */
+  occupiedFeatSlugs?: ReadonlySet<string>;
+}): string[] {
+  const errors: string[] = [];
+  const bindingByIndex = new Map(
+    input.bindings.map((binding) => [binding.instanceIndex, binding]),
+  );
+  const usedFeats = new Set<string>();
+
+  for (const pick of input.picks) {
+    if (!isLessonsOfTheFirstOnesSlug(pick.slug)) continue;
+    const binding = bindingByIndex.get(pick.instanceIndex);
+    if (!binding) {
+      errors.push(
+        `Invocação '${LESSONS_OF_THE_FIRST_ONES_SLUG}' (slot ${pick.instanceIndex}) requer um talento de Origem`,
+      );
+      continue;
+    }
+    if (!input.originFeatSlugs.has(binding.featSlug)) {
+      errors.push(
+        `Talento '${binding.featSlug}' não é um talento de Origem válido`,
+      );
+      continue;
+    }
+    if (usedFeats.has(binding.featSlug)) {
+      errors.push(
+        `Talento de Origem '${binding.featSlug}' já escolhido em outra Lições dos Primeiros`,
+      );
+      continue;
+    }
+    if (input.occupiedFeatSlugs?.has(binding.featSlug)) {
+      errors.push(
+        `Talento de Origem '${binding.featSlug}' já está na ficha; escolha outro`,
+      );
+      continue;
+    }
+    usedFeats.add(binding.featSlug);
+  }
+
+  for (const binding of input.bindings) {
+    const pick = input.picks.find(
+      (row) => row.instanceIndex === binding.instanceIndex,
+    );
+    if (!pick || !isLessonsOfTheFirstOnesSlug(pick.slug)) {
+      errors.push(
+        `Vínculo de talento órfão no slot ${binding.instanceIndex} ('${binding.featSlug}')`,
+      );
+    }
+  }
+
+  return errors;
+}
+
 export function collectEldritchFreeCastSpellSlugs(
   pickedSlugs: readonly string[],
   catalog: readonly Pick<
@@ -409,4 +508,10 @@ function shuffle<T>(items: readonly T[], random: () => number): T[] {
   return next;
 }
 
-export { BLAST_INVOCATION_SLUGS, isBlastInvocationSlug };
+export {
+  BLAST_INVOCATION_SLUGS,
+  ELDRITCH_INVOCATION_ORIGIN_FEAT_OPTION_KEY,
+  isBlastInvocationSlug,
+  isLessonsOfTheFirstOnesSlug,
+  LESSONS_OF_THE_FIRST_ONES_SLUG,
+};

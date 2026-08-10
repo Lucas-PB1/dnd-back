@@ -60,10 +60,10 @@ describe('ListCharactersQuery', () => {
     expect(repository.findAllByUser).toHaveBeenCalledWith('user-1');
     expect(mapper.toSummaryList).toHaveBeenCalled();
     expect(dataSource.query).toHaveBeenCalled();
-    expect(campaigns.listCampaignRefsByCharacterIds).toHaveBeenCalledWith([
-      'a',
-      'b',
-    ]);
+    expect(campaigns.listCampaignRefsByCharacterIds).toHaveBeenCalledWith(
+      ['a', 'b'],
+      'user-1',
+    );
     expect(result[0]).toMatchObject({
       className: 'Patrulheiro',
       speciesName: 'Elfo',

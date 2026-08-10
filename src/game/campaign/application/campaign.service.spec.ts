@@ -12,6 +12,7 @@ function campaign(overrides: Partial<Campaign> = {}): Campaign {
     description: 'Desc',
     inviteCode: 'CODE1234',
     createdBy: 'u1',
+    allowPlayerSkipPayment: false,
     createdAt: new Date(iso),
     updatedAt: new Date('2026-01-02T00:00:00.000Z'),
     ...overrides,
@@ -143,12 +144,24 @@ describe('CampaignService', () => {
   });
 
   it('remove, unlink and listCampaignRefs delegate to repository', async () => {
-    const map = new Map([['ch1', [{ id: 'c1', name: 'One' }]]]);
+    const map = new Map([
+      [
+        'ch1',
+        [
+          {
+            id: 'c1',
+            name: 'One',
+            allowPlayerSkipPayment: false,
+            myRole: 'player' as const,
+          },
+        ],
+      ],
+    ]);
     repo.listCampaignRefsByCharacterIds.mockResolvedValue(map);
 
     await service.remove('u1', 'c1');
     await service.unlinkCharacter('u1', 'c1', 'ch1');
-    await expect(service.listCampaignRefsByCharacterIds(['ch1'])).resolves.toBe(map);
+    await expect(service.listCampaignRefsByCharacterIds(['ch1'], 'u1')).resolves.toBe(map);
 
     expect(repo.deleteCampaign).toHaveBeenCalledWith('c1', 'u1');
     expect(repo.unlinkCharacter).toHaveBeenCalledWith('c1', 'u1', 'ch1');

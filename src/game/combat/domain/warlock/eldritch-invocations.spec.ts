@@ -2,9 +2,11 @@ import {
   buildEldritchCantripCastNote,
   collectEldritchFreeCastSpellSlugs,
   pickRandomValidEldritchInvocations,
+  readEldritchInvocationOriginFeatBindings,
   readEldritchInvocationPicks,
   resolveEldritchInvocationFreeCast,
   validateEldritchInvocationPicks,
+  validateEldritchOriginFeatBindings,
   type EldritchInvocationCatalogRow,
   type EldritchInvocationEffectRow,
 } from './eldritch-invocations';
@@ -118,6 +120,77 @@ describe('eldritch-invocations', () => {
     });
     expect(errors).toEqual([]);
   });
+
+  it('requires distinct origin feats for lessons-of-the-first-ones', () => {
+    const options = [
+      {
+        optionKey: 'eldritch-invocation',
+        valueId: 'lessons-of-the-first-ones',
+        instanceIndex: 0,
+      },
+      {
+        optionKey: 'eldritch-invocation-origin-feat',
+        valueId: 'alert',
+        instanceIndex: 0,
+      },
+      {
+        optionKey: 'eldritch-invocation',
+        valueId: 'lessons-of-the-first-ones',
+        instanceIndex: 1,
+      },
+    ];
+    expect(readEldritchInvocationOriginFeatBindings(options)).toEqual([
+      { instanceIndex: 0, featSlug: 'alert' },
+    ]);
+    expect(
+      validateEldritchOriginFeatBindings({
+        picks: [
+          { slug: 'lessons-of-the-first-ones', instanceIndex: 0 },
+          { slug: 'lessons-of-the-first-ones', instanceIndex: 1 },
+        ],
+        bindings: [{ instanceIndex: 0, featSlug: 'alert' }],
+        originFeatSlugs: new Set(['alert', 'lucky']),
+      }).some((e) => e.includes('requer um talento')),
+    ).toBe(true);
+
+    expect(
+      validateEldritchOriginFeatBindings({
+        picks: [
+          { slug: 'lessons-of-the-first-ones', instanceIndex: 0 },
+          { slug: 'lessons-of-the-first-ones', instanceIndex: 1 },
+        ],
+        bindings: [
+          { instanceIndex: 0, featSlug: 'alert' },
+          { instanceIndex: 1, featSlug: 'alert' },
+        ],
+        originFeatSlugs: new Set(['alert', 'lucky']),
+      }).some((e) => e.includes('já escolhido')),
+    ).toBe(true);
+
+    expect(
+      validateEldritchOriginFeatBindings({
+        picks: [{ slug: 'lessons-of-the-first-ones', instanceIndex: 0 }],
+        bindings: [{ instanceIndex: 0, featSlug: 'alert' }],
+        originFeatSlugs: new Set(['alert']),
+        occupiedFeatSlugs: new Set(['alert']),
+      }).some((e) => e.includes('já está na ficha')),
+    ).toBe(true);
+
+    expect(
+      validateEldritchOriginFeatBindings({
+        picks: [
+          { slug: 'lessons-of-the-first-ones', instanceIndex: 0 },
+          { slug: 'lessons-of-the-first-ones', instanceIndex: 1 },
+        ],
+        bindings: [
+          { instanceIndex: 0, featSlug: 'alert' },
+          { instanceIndex: 1, featSlug: 'lucky' },
+        ],
+        originFeatSlugs: new Set(['alert', 'lucky']),
+      }),
+    ).toEqual([]);
+  });
+
 
   it('resolves at-will and once-per-long-rest free casts', () => {
     expect(

@@ -47,6 +47,7 @@ function campaign(overrides: Partial<Campaign> = {}): Campaign {
     description: 'Desc',
     inviteCode: 'OLDCODE1',
     createdBy: 'u1',
+    allowPlayerSkipPayment: false,
     createdAt: new Date('2026-01-01'),
     updatedAt: new Date('2026-01-02'),
     ...overrides,

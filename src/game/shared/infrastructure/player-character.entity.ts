@@ -78,6 +78,21 @@ export class PlayerCharacter {
   @Column({ name: 'background_tool_item_slug', type: 'text', nullable: true })
   backgroundToolItemSlug!: string | null;
 
+  @Column({ name: 'coin_copper', type: 'int', default: 0 })
+  coinCopper!: number;
+
+  @Column({ name: 'coin_silver', type: 'int', default: 0 })
+  coinSilver!: number;
+
+  @Column({ name: 'coin_electrum', type: 'int', default: 0 })
+  coinElectrum!: number;
+
+  @Column({ name: 'coin_gold', type: 'int', default: 0 })
+  coinGold!: number;
+
+  @Column({ name: 'coin_platinum', type: 'int', default: 0 })
+  coinPlatinum!: number;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 

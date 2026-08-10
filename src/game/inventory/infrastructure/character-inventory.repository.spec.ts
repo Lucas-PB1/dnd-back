@@ -72,8 +72,10 @@ describe('CharacterInventoryRepository', () => {
     repository = new CharacterInventoryRepository(
       items as unknown as Repository<PlayerCharacterItem>,
       catalogItems as unknown as Repository<PhbItem>,
+      { findOne: jest.fn() } as never,
       catalogLookup as unknown as CatalogLookupService,
       slotResolver as unknown as EquipmentSlotResolver,
+      { transaction: jest.fn() } as never,
     );
   });
 
@@ -141,6 +143,11 @@ describe('CharacterInventoryRepository', () => {
   });
 
   describe('patch', () => {
+    const characterCtx = {
+      classSlug: 'fighter',
+      speciesSlug: 'human' as string | null,
+    };
+
     it('equips item in resolved slot', async () => {
       const row = itemRow();
       items.findOne
@@ -151,6 +158,7 @@ describe('CharacterInventoryRepository', () => {
         'rope',
         { location: 'equipped', equipmentSlot: 'main_hand' },
         16,
+        characterCtx,
       );
       expect(slotResolver.resolve).toHaveBeenCalledWith('ch1', 'rope', 'main_hand');
       expect(row.location).toBe('equipped');
@@ -161,7 +169,7 @@ describe('CharacterInventoryRepository', () => {
     it('moves equipped item back to backpack', async () => {
       const row = itemRow({ location: 'equipped', equipmentSlot: 'main_hand' });
       items.findOne.mockResolvedValue(row);
-      await repository.patch('ch1', 'rope', { location: 'backpack' }, 16);
+      await repository.patch('ch1', 'rope', { location: 'backpack' }, 16, characterCtx);
       expect(row.location).toBe('backpack');
       expect(row.equipmentSlot).toBeNull();
     });
@@ -169,7 +177,7 @@ describe('CharacterInventoryRepository', () => {
     it('updates quantity without location change', async () => {
       const row = itemRow({ quantity: 2 });
       items.findOne.mockResolvedValue(row);
-      await repository.patch('ch1', 'rope', { quantity: 1 }, 16);
+      await repository.patch('ch1', 'rope', { quantity: 1 }, 16, characterCtx);
       expect(row.quantity).toBe(1);
       expect(items.save).toHaveBeenCalledWith(row);
     });
@@ -182,7 +190,7 @@ describe('CharacterInventoryRepository', () => {
         weight: '5 lb.',
         properties: { requiresAttunement: true },
       });
-      await repository.patch('ch1', 'rope', { attuned: true }, 16);
+      await repository.patch('ch1', 'rope', { attuned: true }, 16, characterCtx);
       expect(row.attuned).toBe(true);
     });
 
@@ -209,6 +217,7 @@ describe('CharacterInventoryRepository', () => {
         'longsword',
         { pactWeapon: true },
         16,
+        characterCtx,
       );
 
       expect(previous.isPactWeapon).toBe(false);

@@ -15,7 +15,7 @@ export class GetCharacterQuery {
   async execute(userId: string, id: string): Promise<CharacterResponseDto> {
     const row = await this.repository.findAccessibleOrFail(userId, id, 'read');
     const dto = await this.mapper.toDto(row);
-    const refs = await this.campaigns.listCampaignRefsByCharacterIds([dto.id]);
+    const refs = await this.campaigns.listCampaignRefsByCharacterIds([dto.id], userId);
     dto.campaigns = refs.get(dto.id) ?? [];
     return dto;
   }

@@ -191,6 +191,13 @@ export class CharacterMapper {
       spellSaveDc: spellcasting.spellSaveDc,
       spellAttackBonus: spellcasting.spellAttackBonus,
       campaigns: [],
+      coins: {
+        copper: row.coinCopper,
+        silver: row.coinSilver,
+        electrum: row.coinElectrum,
+        gold: row.coinGold,
+        platinum: row.coinPlatinum,
+      },
       createdAt: row.createdAt.toISOString(),
       updatedAt: row.updatedAt.toISOString(),
     };

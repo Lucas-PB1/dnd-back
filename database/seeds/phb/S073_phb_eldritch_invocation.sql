@@ -54,7 +54,7 @@ INSERT INTO rpg.phb_eldritch_invocation (
 ),
 (
   'lessons-of-the-first-ones',
-  'Lições dos Grandes Antigos',
+  'Lições dos Primeiros',
   'Pré-requisito: nv. 2+. Obtém um talento de Origem à sua escolha. Repetível (outro talento).',
   2, NULL, NULL, true, 'note'::rpg.eldritch_invocation_kind, NULL, 90
 ),

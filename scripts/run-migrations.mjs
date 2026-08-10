@@ -82,10 +82,31 @@ async function getAppliedVersions(client) {
  * @param {string} url
  */
 async function migrateOne(label, url) {
-  console.log(`\n→ ${maskDatabaseUrl(url)}`);
+  const preferPooler =
+    process.env.SUPABASE_MIGRATIONS_USE_POOLER === '1' ||
+    process.env.SUPABASE_MIGRATIONS_USE_POOLER === 'true';
 
-  const client = createPgClient(url);
-  await client.connect();
+  let client = createPgClient(url, { preferPooler });
+  console.log(`\n→ ${maskDatabaseUrl(url, { preferPooler })}`);
+
+  try {
+    await client.connect();
+  } catch (err) {
+    const code = err && typeof err === 'object' && 'code' in err ? err.code : '';
+    const isDirectHost = /db\.[^.]+\.supabase\.co/i.test(
+      maskDatabaseUrl(url),
+    );
+    if (!preferPooler && isDirectHost && code === 'ENOTFOUND') {
+      console.log(
+        '  db.* inacessível (ENOTFOUND); tentando session pooler…',
+      );
+      client = createPgClient(url, { preferPooler: true });
+      console.log(`→ ${maskDatabaseUrl(url, { preferPooler: true })}`);
+      await client.connect();
+    } else {
+      throw err;
+    }
+  }
 
   try {
     await ensureMigrationTable(client);

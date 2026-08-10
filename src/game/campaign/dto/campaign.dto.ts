@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsIn,
   IsOptional,
   IsString,
@@ -35,6 +36,14 @@ export class UpdateCampaignDto {
   @IsString()
   @MaxLength(2000)
   description?: string | null;
+
+  @ApiPropertyOptional({
+    description:
+      'Se true, players podem marcar “Não pagar” ao adicionar item no inventário',
+  })
+  @IsOptional()
+  @IsBoolean()
+  allowPlayerSkipPayment?: boolean;
 }
 
 export class JoinCampaignDto {
@@ -111,6 +120,12 @@ export class CampaignSummaryDto {
 
   @ApiProperty({ enum: ['dm', 'player', 'assistant'] })
   myRole!: 'dm' | 'player' | 'assistant';
+
+  @ApiProperty({
+    description:
+      'Se true, players podem marcar “Não pagar” ao adicionar item no inventário',
+  })
+  allowPlayerSkipPayment!: boolean;
 
   @ApiProperty()
   createdAt!: string;

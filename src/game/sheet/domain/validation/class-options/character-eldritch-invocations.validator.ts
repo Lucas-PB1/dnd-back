@@ -6,14 +6,19 @@ import {
   inferSpellDealsDamage,
   parseSpellRangeMeters,
   readEldritchInvocationCantripBindings,
+  readEldritchInvocationOriginFeatBindings,
   readEldritchInvocationPicks,
   validateEldritchBlastCantripBindings,
   validateEldritchInvocationPicks,
+  validateEldritchOriginFeatBindings,
   type EldritchCantripEligibility,
   type EldritchInvocationCatalogRow,
 } from '@game/combat/domain/warlock';
 import { isWarlockClass } from '@game/combat/domain/warlock';
-import { CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
+import {
+  CharacterFeatDto,
+  CharacterSpellDto,
+} from '@game/sheet/dto/character-sheet.dto';
 import {
   CharacterSheetContext,
   CharacterSheetInput,
@@ -31,13 +36,15 @@ export class CharacterEldritchInvocationsValidator {
     ctx: CharacterSheetContext,
     options: NonNullable<CharacterSheetInput['classOptions']>,
     characterSpells: CharacterSpellDto[] | undefined,
+    characterFeats: CharacterFeatDto[] | undefined = [],
   ): Promise<void> {
     const picks = readEldritchInvocationPicks(options);
     const bindings = readEldritchInvocationCantripBindings(options);
+    const originBindings = readEldritchInvocationOriginFeatBindings(options);
     if (picks.length === 0) {
-      if (bindings.length > 0) {
+      if (bindings.length > 0 || originBindings.length > 0) {
         throw new BadRequestException(
-          'Vínculos de truque de invocação sem picks de invocação',
+          'Vínculos de invocação sem picks de invocação',
         );
       }
       return;
@@ -68,6 +75,24 @@ export class CharacterEldritchInvocationsValidator {
       }),
     );
 
+    const originFeatSlugs = await this.loadOriginFeatSlugs(originBindings);
+    const lessonsFeatSlugs = new Set(
+      originBindings.map((binding) => binding.featSlug),
+    );
+    const occupiedFeatSlugs = new Set(
+      (characterFeats ?? [])
+        .map((feat) => feat.featSlug)
+        .filter((slug) => !lessonsFeatSlugs.has(slug)),
+    );
+    errors.push(
+      ...validateEldritchOriginFeatBindings({
+        picks,
+        bindings: originBindings,
+        originFeatSlugs,
+        occupiedFeatSlugs,
+      }),
+    );
+
     if (errors.length > 0) {
       throw new BadRequestException(errors.join('; '));
     }
@@ -95,6 +120,21 @@ export class CharacterEldritchInvocationsValidator {
       requiresInvocationSlug: row.requires_invocation_slug,
       repeatable: row.repeatable,
     }));
+  }
+
+  private async loadOriginFeatSlugs(
+    bindings: ReturnType<typeof readEldritchInvocationOriginFeatBindings>,
+  ): Promise<Set<string>> {
+    const slugs = [...new Set(bindings.map((binding) => binding.featSlug))];
+    if (slugs.length === 0) return new Set();
+    const rows = await this.dataSource.query<{ slug: string }[]>(
+      `SELECT slug
+       FROM rpg.phb_feat
+       WHERE category = 'origin'::rpg.feat_category
+         AND slug = ANY($1::text[])`,
+      [slugs],
+    );
+    return new Set(rows.map((row) => row.slug));
   }
 
   private async loadCantripEligibility(

@@ -16,6 +16,7 @@ import {
   resolveBackgroundToolItemSlug,
 } from '../domain/origin/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../domain/origin/species-origin';
+import { resolveLessonsOriginCharacterFeats } from '../domain/origin/lessons-origin';
 import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { SeedStartingInventoryHandler } from '@game/inventory/application/seed-starting-inventory.handler';
@@ -70,6 +71,10 @@ export class CreateCharacterHandler {
     characterFeats = resolveHumanOriginCharacterFeats(
       dto.speciesSlug,
       dto.speciesChoices,
+      characterFeats,
+    );
+    characterFeats = resolveLessonsOriginCharacterFeats(
+      dto.classOptions,
       characterFeats,
     );
     const backgroundToolItemSlug = resolveBackgroundToolItemSlug(

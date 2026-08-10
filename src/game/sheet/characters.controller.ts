@@ -29,8 +29,11 @@ import { GetCharacterQuery } from './application/get-character.query';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
+import { PatchCharacterWealthHandler } from './application/patch-character-wealth.handler';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
+import { PatchCharacterWealthDto } from './dto/coin-purse.dto';
+import { CoinPurseDto } from './dto/coin-purse.dto';
 import {
   CharacterResponseDto,
   CharacterSummaryResponseDto,
@@ -48,6 +51,7 @@ export class CharactersController {
     private readonly createCharacter: CreateCharacterHandler,
     private readonly updateCharacter: UpdateCharacterHandler,
     private readonly deleteCharacter: DeleteCharacterHandler,
+    private readonly patchWealth: PatchCharacterWealthHandler,
   ) {}
 
   @Get()
@@ -92,6 +96,18 @@ export class CharactersController {
     @Body() dto: UpdateCharacterDto,
   ): Promise<CharacterResponseDto> {
     return this.updateCharacter.execute(user.id, id, dto);
+  }
+
+  @Patch(':id/wealth')
+  @ApiOperation({ summary: 'Set character coin balances (PC/PP/PE/PO/PL)' })
+  @ApiOkResponse({ type: CoinPurseDto })
+  @ApiNotFoundResponse()
+  updateWealth(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: PatchCharacterWealthDto,
+  ): Promise<CoinPurseDto> {
+    return this.patchWealth.execute(user.id, id, dto);
   }
 
   @Delete(':id')

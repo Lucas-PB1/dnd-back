@@ -78,7 +78,7 @@ describe('CampaignRepository', () => {
     await repo.unlinkCharacter('c1', 'u', 'ch1');
     await repo.listLinkedCharacters('c1');
     await repo.findCharactersByIds(['ch1']);
-    await repo.listCampaignRefsByCharacterIds(['ch1']);
+    await repo.listCampaignRefsByCharacterIds(['ch1'], 'u');
     expect(links.linkCharacter).toHaveBeenCalled();
     expect(links.unlinkCharacter).toHaveBeenCalled();
     expect(links.listLinkedCharacters).toHaveBeenCalled();

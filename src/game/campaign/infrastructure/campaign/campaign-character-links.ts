@@ -90,16 +90,37 @@ export async function findCharactersByIds(
 }
 
 /**
- * Mapa characterId → campanhas em que o personagem está vinculado.
+ * Mapa characterId → campanhas em que o personagem está vinculado
+ * (inclui setting de skip payment e papel do viewer).
  */
 export async function listCampaignRefsByCharacterIds(
   deps: {
     links: Repository<CampaignCharacter>;
     campaigns: Repository<Campaign>;
+    members: Repository<CampaignMember>;
   },
   characterIds: string[],
-): Promise<Map<string, Array<{ id: string; name: string }>>> {
-  const result = new Map<string, Array<{ id: string; name: string }>>();
+  userId: string,
+): Promise<
+  Map<
+    string,
+    Array<{
+      id: string;
+      name: string;
+      allowPlayerSkipPayment: boolean;
+      myRole: 'dm' | 'player' | 'assistant' | null;
+    }>
+  >
+> {
+  const result = new Map<
+    string,
+    Array<{
+      id: string;
+      name: string;
+      allowPlayerSkipPayment: boolean;
+      myRole: 'dm' | 'player' | 'assistant' | null;
+    }>
+  >();
   if (characterIds.length === 0) return result;
 
   const links = await deps.links.find({
@@ -107,16 +128,28 @@ export async function listCampaignRefsByCharacterIds(
   });
   if (links.length === 0) return result;
 
-  const campaigns = await deps.campaigns.find({
-    where: { id: In([...new Set(links.map((l) => l.campaignId))]) },
-  });
+  const campaignIds = [...new Set(links.map((l) => l.campaignId))];
+  const [campaigns, memberships] = await Promise.all([
+    deps.campaigns.find({ where: { id: In(campaignIds) } }),
+    deps.members.find({
+      where: { userId, campaignId: In(campaignIds) },
+    }),
+  ]);
   const campaignById = new Map(campaigns.map((c) => [c.id, c]));
+  const roleByCampaignId = new Map(
+    memberships.map((m) => [m.campaignId, m.role] as const),
+  );
 
   for (const link of links) {
     const campaign = campaignById.get(link.campaignId);
     if (!campaign) continue;
     const list = result.get(link.characterId) ?? [];
-    list.push({ id: campaign.id, name: campaign.name });
+    list.push({
+      id: campaign.id,
+      name: campaign.name,
+      allowPlayerSkipPayment: campaign.allowPlayerSkipPayment,
+      myRole: roleByCampaignId.get(campaign.id) ?? null,
+    });
     result.set(link.characterId, list);
   }
 

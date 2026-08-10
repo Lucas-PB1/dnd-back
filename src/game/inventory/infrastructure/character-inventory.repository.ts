@@ -1,8 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbItem } from '@entities/phb-item.entity';
+import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { PlayerCharacterItem } from './player-character-item.entity';
 import {
   AddInventoryItemDto,
@@ -26,6 +27,17 @@ import {
   assertInventoryAddFits,
   encumbranceFromInventoryDtos,
 } from './inventory/inventory-encumbrance';
+import {
+  applyCoinPurseToColumns,
+  coinPurseFromColumns,
+  debitCoins,
+  type CoinPurse,
+} from '../domain/coin-purse';
+
+export type AddInventoryOptions = {
+  /** Debitar estas moedas na mesma transação do add (null = free). */
+  debit?: CoinPurse | null;
+};
 
 @Injectable()
 export class CharacterInventoryRepository {
@@ -34,14 +46,17 @@ export class CharacterInventoryRepository {
     private readonly items: Repository<PlayerCharacterItem>,
     @InjectRepository(PhbItem)
     private readonly catalogItems: Repository<PhbItem>,
+    @InjectRepository(PlayerCharacter)
+    private readonly characters: Repository<PlayerCharacter>,
     private readonly catalogLookup: CatalogLookupService,
     private readonly slotResolver: EquipmentSlotResolver,
+    private readonly dataSource: DataSource,
   ) {}
 
   async list(
     characterId: string,
     strengthScore: number,
-  ): Promise<CharacterInventoryResponseDto> {
+  ): Promise<Omit<CharacterInventoryResponseDto, 'wealth' | 'paymentContext'>> {
     const rows = await this.items.find({
       where: { characterId },
       order: { location: 'ASC', itemSlug: 'ASC' },
@@ -57,6 +72,7 @@ export class CharacterInventoryRepository {
     characterId: string,
     dto: AddInventoryItemDto,
     strengthScore: number,
+    options: AddInventoryOptions = {},
   ): Promise<InventoryItemResponseDto> {
     const catalog = await this.catalogLookup.assertItemInCatalog(dto.itemSlug);
     const delta = dto.quantity ?? 1;
@@ -70,8 +86,38 @@ export class CharacterInventoryRepository {
       itemSlug: dto.itemSlug,
     });
 
-    const existing = await this.items.findOne({
-      where: { characterId, itemSlug: dto.itemSlug },
+    if (!options.debit) {
+      return this.addItemRow(this.items, characterId, dto.itemSlug, delta);
+    }
+
+    return this.dataSource.transaction(async (manager) => {
+      const characters = manager.getRepository(PlayerCharacter);
+      const items = manager.getRepository(PlayerCharacterItem);
+      const character = await characters.findOne({
+        where: { id: characterId },
+        lock: { mode: 'pessimistic_write' },
+      });
+      if (!character) {
+        throw new BadRequestException('Character not found');
+      }
+      const next = debitCoins(
+        coinPurseFromColumns(character),
+        options.debit!,
+      );
+      applyCoinPurseToColumns(character, next);
+      await characters.save(character);
+      return this.addItemRow(items, characterId, dto.itemSlug, delta);
+    });
+  }
+
+  private async addItemRow(
+    items: Repository<PlayerCharacterItem>,
+    characterId: string,
+    itemSlug: string,
+    delta: number,
+  ): Promise<InventoryItemResponseDto> {
+    const existing = await items.findOne({
+      where: { characterId, itemSlug },
     });
 
     if (existing) {
@@ -81,13 +127,13 @@ export class CharacterInventoryRepository {
         );
       }
       existing.quantity += delta;
-      await this.items.save(existing);
+      await items.save(existing);
       return inventoryItemToDto(this.catalogItems, existing);
     }
 
-    const row = this.items.create({
+    const row = items.create({
       characterId,
-      itemSlug: dto.itemSlug,
+      itemSlug,
       quantity: delta,
       location: 'backpack',
       equipmentSlot: null,
@@ -95,7 +141,7 @@ export class CharacterInventoryRepository {
       isPactWeapon: false,
       attachedCharmSlug: null,
     });
-    await this.items.save(row);
+    await items.save(row);
     return inventoryItemToDto(this.catalogItems, row);
   }
 
@@ -262,5 +308,19 @@ export class CharacterInventoryRepository {
   async remove(characterId: string, itemSlug: string): Promise<void> {
     const row = await findInventoryItemOrFail(this.items, characterId, itemSlug);
     await this.items.remove(row);
+  }
+
+  async loadWealth(characterId: string): Promise<CoinPurse> {
+    const row = await this.characters.findOne({ where: { id: characterId } });
+    if (!row) {
+      return {
+        copper: 0,
+        silver: 0,
+        electrum: 0,
+        gold: 0,
+        platinum: 0,
+      };
+    }
+    return coinPurseFromColumns(row);
   }
 }

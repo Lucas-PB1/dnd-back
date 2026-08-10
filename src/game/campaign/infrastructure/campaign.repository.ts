@@ -97,7 +97,11 @@ export class CampaignRepository {
   async updateCampaign(
     campaignId: string,
     userId: string,
-    patch: { name?: string; description?: string | null },
+    patch: {
+      name?: string;
+      description?: string | null;
+      allowPlayerSkipPayment?: boolean;
+    },
   ): Promise<Campaign> {
     return updateCampaign(this.crudDeps(), campaignId, userId, patch);
   }
@@ -181,10 +185,22 @@ export class CampaignRepository {
 
   async listCampaignRefsByCharacterIds(
     characterIds: string[],
-  ): Promise<Map<string, Array<{ id: string; name: string }>>> {
+    userId: string,
+  ): Promise<
+    Map<
+      string,
+      Array<{
+        id: string;
+        name: string;
+        allowPlayerSkipPayment: boolean;
+        myRole: 'dm' | 'player' | 'assistant' | null;
+      }>
+    >
+  > {
     return listCampaignRefsByCharacterIds(
-      { links: this.links, campaigns: this.campaigns },
+      { links: this.links, campaigns: this.campaigns, members: this.members },
       characterIds,
+      userId,
     );
   }
 }

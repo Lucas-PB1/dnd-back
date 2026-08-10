@@ -154,11 +154,13 @@ export class CharacterClassOptionsValidator {
     ctx: CharacterSheetContext,
     options: NonNullable<CharacterSheetInput['classOptions']>,
     characterSpells?: CharacterSpellDto[],
+    characterFeats?: CharacterFeatDto[],
   ): Promise<void> {
     return this.eldritchInvocationsValidator.validateEldritchInvocationOptions(
       ctx,
       options,
       characterSpells,
+      characterFeats,
     );
   }
 

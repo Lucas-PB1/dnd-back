@@ -43,6 +43,13 @@ export const ELDRITCH_INVOCATION_OPTION_KEY = 'eldritch-invocation';
 /** Sibling: mesmo instanceIndex da invocação de blast → slug do truque vinculado. */
 export const ELDRITCH_INVOCATION_CANTRIP_OPTION_KEY =
   'eldritch-invocation-cantrip';
+/**
+ * Sibling: mesmo instanceIndex de `lessons-of-the-first-ones` → talento de Origem.
+ */
+export const ELDRITCH_INVOCATION_ORIGIN_FEAT_OPTION_KEY =
+  'eldritch-invocation-origin-feat';
+
+export const LESSONS_OF_THE_FIRST_ONES_SLUG = 'lessons-of-the-first-ones';
 
 export const BLAST_INVOCATION_SLUGS = [
   'agonizing-blast',
@@ -56,6 +63,10 @@ export function isBlastInvocationSlug(
   slug: string,
 ): slug is BlastInvocationSlug {
   return (BLAST_INVOCATION_SLUGS as readonly string[]).includes(slug);
+}
+
+export function isLessonsOfTheFirstOnesSlug(slug: string): boolean {
+  return slug === LESSONS_OF_THE_FIRST_ONES_SLUG;
 }
 
 export const MAGICAL_CUNNING_RESOURCE = 'magical-cunning';

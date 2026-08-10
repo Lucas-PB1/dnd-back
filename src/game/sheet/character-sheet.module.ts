@@ -51,6 +51,7 @@ import { GetCharacterQuery } from './application/get-character.query';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
+import { PatchCharacterWealthHandler } from './application/patch-character-wealth.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
 import { PhbSpecies } from '@entities/phb-species.entity';
 import { CampaignModule } from '../campaign/campaign.module';
@@ -113,6 +114,7 @@ import { CampaignModule } from '../campaign/campaign.module';
     CreateCharacterHandler,
     UpdateCharacterHandler,
     DeleteCharacterHandler,
+    PatchCharacterWealthHandler,
     CharacterSpellLookup,
   ],
   exports: [

@@ -23,6 +23,13 @@ export class Campaign {
   @Column({ name: 'created_by', type: 'uuid' })
   createdBy!: string;
 
+  @Column({
+    name: 'allow_player_skip_payment',
+    type: 'boolean',
+    default: false,
+  })
+  allowPlayerSkipPayment!: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 

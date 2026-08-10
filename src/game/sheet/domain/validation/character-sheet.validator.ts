@@ -69,6 +69,7 @@ export class CharacterSheetValidator {
         ctx,
         input.classOptions,
         input.characterSpells,
+        input.characterFeats ?? ctx.characterFeats,
       );
       await this.classOptionsValidator.validateMetamagicOptions(
         ctx,

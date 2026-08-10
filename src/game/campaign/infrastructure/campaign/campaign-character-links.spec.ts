@@ -169,8 +169,13 @@ describe('campaign-character-links', () => {
   describe('listCampaignRefsByCharacterIds', () => {
     it('returns empty map for empty input', async () => {
       const result = await listCampaignRefsByCharacterIds(
-        { links: links as never, campaigns: campaigns as never },
+        {
+          links: links as never,
+          campaigns: campaigns as never,
+          members: members as never,
+        },
         [],
+        'u1',
       );
       expect(result.size).toBe(0);
     });
@@ -181,17 +186,44 @@ describe('campaign-character-links', () => {
         link({ characterId: 'ch1', campaignId: 'c2' }),
       ]);
       campaigns.find.mockResolvedValue([
-        { id: 'c1', name: 'One' } as Campaign,
-        { id: 'c2', name: 'Two' } as Campaign,
+        {
+          id: 'c1',
+          name: 'One',
+          allowPlayerSkipPayment: true,
+        } as Campaign,
+        {
+          id: 'c2',
+          name: 'Two',
+          allowPlayerSkipPayment: false,
+        } as Campaign,
+      ]);
+      members.find.mockResolvedValue([
+        { campaignId: 'c1', role: 'player' },
+        { campaignId: 'c2', role: 'dm' },
       ]);
 
       const result = await listCampaignRefsByCharacterIds(
-        { links: links as never, campaigns: campaigns as never },
+        {
+          links: links as never,
+          campaigns: campaigns as never,
+          members: members as never,
+        },
         ['ch1'],
+        'u1',
       );
       expect(result.get('ch1')).toEqual([
-        { id: 'c1', name: 'One' },
-        { id: 'c2', name: 'Two' },
+        {
+          id: 'c1',
+          name: 'One',
+          allowPlayerSkipPayment: true,
+          myRole: 'player',
+        },
+        {
+          id: 'c2',
+          name: 'Two',
+          allowPlayerSkipPayment: false,
+          myRole: 'dm',
+        },
       ]);
     });
   });

@@ -27,6 +27,7 @@ export class ListCharactersQuery {
     await this.attachCatalogNames(dtos);
     const refs = await this.campaigns.listCampaignRefsByCharacterIds(
       dtos.map((d) => d.id),
+      userId,
     );
     for (const dto of dtos) {
       dto.campaigns = refs.get(dto.id) ?? [];

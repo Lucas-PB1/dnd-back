@@ -37,11 +37,22 @@ for (const arg of args) {
   }
 }
 
-console.log('DB', maskDatabaseUrl(url));
+console.log('DB', maskDatabaseUrl(url, { preferPooler: true }));
 console.log('Files', files.length);
 
-const client = createPgClient(url);
-await client.connect();
+let client = createPgClient(url);
+try {
+  await client.connect();
+} catch (err) {
+  const code = err && typeof err === 'object' && 'code' in err ? err.code : '';
+  if (code === 'ENOTFOUND') {
+    console.log('db.* inacessível; usando pooler…');
+    client = createPgClient(url, { preferPooler: true });
+    await client.connect();
+  } else {
+    throw err;
+  }
+}
 
 let failed = 0;
 for (const file of files) {

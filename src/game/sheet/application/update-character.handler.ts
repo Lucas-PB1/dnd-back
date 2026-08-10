@@ -21,6 +21,8 @@ import {
   shouldResyncCharacterSpells,
   toSheetInput,
 } from './update-character/update-sheet-input';
+import { syncLessonsOriginCharacterFeats } from '../domain/origin/lessons-origin';
+import { readEldritchInvocationOriginFeatBindings } from '@game/combat/domain/warlock';
 
 @Injectable()
 export class UpdateCharacterHandler {
@@ -71,8 +73,28 @@ export class UpdateCharacterHandler {
     await this.sheetValidator.validateLevelRules(effective);
 
     const sheetSnapshot = await this.sheetRepository.load(row.id, effective.backgroundSlug);
-    const effectiveCharacterFeats =
+    let effectiveCharacterFeats =
       dto.characterFeats !== undefined ? dto.characterFeats : sheetSnapshot.characterFeats;
+
+    if (dto.classOptions !== undefined) {
+      const previousLessons = new Set(
+        readEldritchInvocationOriginFeatBindings(
+          sheetSnapshot.classOptions,
+        ).map((binding) => binding.featSlug),
+      );
+      const protectedFeatSlugs = new Set(
+        effectiveCharacterFeats
+          .map((feat) => feat.featSlug)
+          .filter((slug) => !previousLessons.has(slug)),
+      );
+      effectiveCharacterFeats = syncLessonsOriginCharacterFeats({
+        previousClassOptions: sheetSnapshot.classOptions,
+        nextClassOptions: dto.classOptions,
+        characterFeats: effectiveCharacterFeats,
+        protectedFeatSlugs,
+      });
+    }
+
     const effectiveFeatOptions = resolveEffectiveFeatOptions(
       dto,
       sheetSnapshot,
@@ -110,6 +132,12 @@ export class UpdateCharacterHandler {
     );
 
     const sheetInput = toSheetInput(dto);
+    if (
+      dto.classOptions !== undefined &&
+      dto.characterFeats === undefined
+    ) {
+      sheetInput.characterFeats = effectiveCharacterFeats;
+    }
     if (shouldResyncSpells) {
       await mergeUpdateCharacterSpells({
         dto,
