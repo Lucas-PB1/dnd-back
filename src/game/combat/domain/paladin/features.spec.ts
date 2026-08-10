@@ -6,6 +6,7 @@ import {
   isPaladinClass,
   paladinAttacksPerAction,
   paladinCombatNotes,
+  paladinSavingThrowAuraBonus,
   radiantStrikesDie,
 } from './features';
 
@@ -53,6 +54,30 @@ describe('paladin-features', () => {
       expect(auraOfProtectionBonus(4)).toBe(4);
       expect(auraOfProtectionBonus(0)).toBe(1);
       expect(auraOfProtectionBonus(-2)).toBe(1);
+    });
+
+    it('exposes sheet/roll aura bonus only for paladin 6+', () => {
+      expect(
+        paladinSavingThrowAuraBonus({
+          classSlug: 'paladin',
+          level: 6,
+          charismaModifier: 3,
+        }),
+      ).toBe(3);
+      expect(
+        paladinSavingThrowAuraBonus({
+          classSlug: 'paladin',
+          level: 5,
+          charismaModifier: 3,
+        }),
+      ).toBe(0);
+      expect(
+        paladinSavingThrowAuraBonus({
+          classSlug: 'fighter',
+          level: 10,
+          charismaModifier: 3,
+        }),
+      ).toBe(0);
     });
 
     it('expands the aura range at level 18', () => {

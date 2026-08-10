@@ -41,6 +41,18 @@ export function auraOfProtectionBonus(charismaModifier: number): number {
   return Math.max(1, charismaModifier);
 }
 
+/** Bônus de Aura de Proteção para a ficha/rolagem (0 se não aplicar). */
+export function paladinSavingThrowAuraBonus(input: {
+  classSlug?: string | null;
+  level: number;
+  charismaModifier: number;
+}): number {
+  if (!isPaladinClass(input.classSlug) || !hasAuraOfProtection(input.level)) {
+    return 0;
+  }
+  return auraOfProtectionBonus(input.charismaModifier);
+}
+
 export function auraRangeMeters(level: number): number {
   return level >= 18 ? 9 : 3;
 }

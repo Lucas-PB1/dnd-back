@@ -1,11 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { isFighterClass } from '@game/combat/domain/fighter';
-import {
-  auraOfProtectionBonus,
-  hasAuraOfProtection,
-  isPaladinClass,
-} from '@game/combat/domain/paladin';
+import { paladinSavingThrowAuraBonus } from '@game/combat/domain/paladin';
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { collectSaveProficiencyAbilities } from '@game/sheet/domain/stats/character-check-bonuses';
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
@@ -93,11 +89,12 @@ export async function executeRollSavingThrow(input: {
   let bonus = mods[ability] + (proficient ? pb : 0) + itemSaveBonus;
   const notes: string[] = [];
 
-  if (
-    isPaladinClass(character.classSlug) &&
-    hasAuraOfProtection(character.level)
-  ) {
-    const auraBonus = auraOfProtectionBonus(mods.carisma);
+  const auraBonus = paladinSavingThrowAuraBonus({
+    classSlug: character.classSlug,
+    level: character.level,
+    charismaModifier: mods.carisma,
+  });
+  if (auraBonus > 0) {
     bonus += auraBonus;
     notes.push(
       `Aura de Proteção: +${auraBonus} (mod. de Carisma; aliados no alcance também)`,

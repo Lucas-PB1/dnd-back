@@ -218,6 +218,13 @@ export class CharacterResponseDto {
   })
   attacksPerAction!: number;
 
+  @ApiProperty({
+    example: 3,
+    description:
+      'Bônus de salvaguarda de auras/features de classe (ex.: Aura de Proteção). 0 se não houver. Front não recalcula.',
+  })
+  savingThrowAuraBonus!: number;
+
   @ApiProperty({ type: [CharacterCampaignRefDto] })
   campaigns!: CharacterCampaignRefDto[];
 }

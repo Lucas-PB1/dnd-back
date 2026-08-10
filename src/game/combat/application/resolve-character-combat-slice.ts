@@ -3,6 +3,7 @@ import { aggregateClassCombatContributions } from '../domain/aggregate-class-com
 import { featCombatNotes } from '../domain/feat/combat-notes';
 import { itemCombatNotes } from '../domain/item/combat-notes';
 import { speciesCombatNotes } from '../domain/species/combat-notes';
+import { paladinSavingThrowAuraBonus } from '../domain/paladin';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
@@ -11,6 +12,7 @@ import { Repository } from 'typeorm';
 import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { SizeCategory } from '../domain/equipment';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 
 export type MappedCombatSlice = {
   armorClass: number;
@@ -23,14 +25,19 @@ export type MappedCombatSlice = {
   speedPenaltyMeters: Awaited<
     ReturnType<ResolveEquipmentCompliance['resolve']>
   >['speedPenaltyMeters'];
-  /** BÃ´nus de deslocamento de itens ativos (metros). */
+  /** Bônus de deslocamento de itens ativos (metros). */
   itemSpeedBonusMeters: number;
-  /** BÃ´nus de PV mÃ¡ximos de itens ativos. */
+  /** Bônus de PV máximos de itens ativos. */
   itemHpBonus: number;
-  /** Notas de combate de classe + espÃ©cie + talento + item (Passivas). */
+  /** Notas de combate de classe + espécie + talento + item (Passivas). */
   classCombatNotes: string[];
-  /** Ataques por AÃ§Ã£o Atacar (Guerreiro Extra Attack). */
+  /** Ataques por Ação Atacar (Guerreiro Extra Attack). */
   attacksPerAction: number;
+  /**
+   * Bônus de salvaguarda vindo de auras/features de classe (ex.: Aura de Proteção).
+   * SSOT no domain da API — o front só exibe; não recalcula.
+   */
+  savingThrowAuraBonus: number;
 };
 
 export async function resolveCharacterCombatSlice(input: {
@@ -154,5 +161,10 @@ export async function resolveCharacterCombatSlice(input: {
       ...classCombat.notes,
     ],
     attacksPerAction: classCombat.attacksPerAction,
+    savingThrowAuraBonus: paladinSavingThrowAuraBonus({
+      classSlug,
+      level,
+      charismaModifier: abilityModifier(combatScores.carisma),
+    }),
   };
 }

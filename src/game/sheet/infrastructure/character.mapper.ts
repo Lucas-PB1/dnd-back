@@ -186,6 +186,7 @@ export class CharacterMapper {
       itemSpeedBonusMeters: combat.itemSpeedBonusMeters,
       classCombatNotes: combat.classCombatNotes,
       attacksPerAction: combat.attacksPerAction,
+      savingThrowAuraBonus: combat.savingThrowAuraBonus,
       spellcastingAbilitySlug: spellcasting.spellcastingAbilitySlug,
       spellSaveDc: spellcasting.spellSaveDc,
       spellAttackBonus: spellcasting.spellAttackBonus,
