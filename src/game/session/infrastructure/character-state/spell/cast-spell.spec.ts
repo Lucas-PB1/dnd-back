@@ -4,10 +4,16 @@ import { resolveClassResources } from '../resources/class-resources';
 
 jest.mock('../resources/class-resources', () => ({
   resolveClassResources: jest.fn(),
+  loadActiveItemSlugs: jest.fn(),
 }));
+
+import { loadActiveItemSlugs } from '../resources/class-resources';
 
 const resolveClassResourcesMock = resolveClassResources as jest.MockedFunction<
   typeof resolveClassResources
+>;
+const loadActiveItemSlugsMock = loadActiveItemSlugs as jest.MockedFunction<
+  typeof loadActiveItemSlugs
 >;
 
 describe('applyCastSpell', () => {
@@ -85,6 +91,8 @@ describe('applyCastSpell', () => {
     buildResponse = jest.fn().mockResolvedValue({ ok: true });
     resolveClassResourcesMock.mockReset();
     resolveClassResourcesMock.mockResolvedValue([]);
+    loadActiveItemSlugsMock.mockReset();
+    loadActiveItemSlugsMock.mockResolvedValue([]);
   });
 
   async function cast(
@@ -92,9 +100,12 @@ describe('applyCastSpell', () => {
       spellSlug: string;
       useFreeCast?: boolean;
       freeCastResourceSlug?: string;
+      itemCastResourceSlug?: string;
+      itemCastSpendAmount?: number;
       slotLevel?: number;
     },
     characterOverride?: Record<string, unknown>,
+    dataSourceOverride?: { query: jest.Mock },
   ) {
     return applyCastSpell({
       character: { ...character, ...(characterOverride ?? {}) } as never,
@@ -107,10 +118,48 @@ describe('applyCastSpell', () => {
       spellLookup: spellLookup as never,
       sheetRepository: sheetRepository as never,
       grantedSpellCatalog: grantedSpellCatalog as never,
-      dataSource: { query: jest.fn() } as never,
+      dataSource: (dataSourceOverride ?? { query: jest.fn() }) as never,
       buildResponse,
     });
   }
+
+  it('casts via item charges without knowing the spell', async () => {
+    spellLookup.hasSpell.mockResolvedValue(false);
+    catalogLookup.findSpellOrFail.mockResolvedValue({
+      level: 1,
+      concentration: false,
+    });
+    loadActiveItemSlugsMock.mockResolvedValue(['varinha-de-misseis-magicos']);
+    resolveClassResourcesMock.mockResolvedValue([
+      { slug: 'varinhaMisseisCharges', name: 'Cargas', max: 7 },
+    ] as never);
+    const query = jest
+      .fn()
+      .mockResolvedValueOnce([
+        {
+          action_id: 'item-varinha-de-misseis-magicos-2',
+          item_slug: 'varinha-de-misseis-magicos',
+          spell_slug: 'misseis-magicos',
+          resource_slug: 'varinhaMisseisCharges',
+          spend_amount: 2,
+        },
+      ])
+      .mockResolvedValueOnce([]);
+
+    const result = await cast(
+      {
+        spellSlug: 'misseis-magicos',
+        itemCastResourceSlug: 'varinhaMisseisCharges',
+        itemCastSpendAmount: 2,
+      },
+      undefined,
+      { query },
+    );
+
+    expect(result.slotLevelUsed).toBe(2);
+    expect(state.resourcesUsed.varinhaMisseisCharges).toBe(2);
+    expect(result.note).toMatch(/carga/i);
+  });
 
   it('consumes free cast without spending slot', async () => {
     const result = await cast({

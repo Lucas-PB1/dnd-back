@@ -13,12 +13,17 @@ import {
   itemRequiresAttunement,
   MAX_ATTUNED_ITEMS,
 } from '../domain/attunement';
+import { assertCharacterMayAttune } from '../domain/attunement-restriction';
 import {
   coverageMatchesBase,
   coverageRequiresTierBonus,
   parseItemCoverage,
   type CoverageBaseContext,
 } from '../domain/coverage/item-coverage';
+import {
+  assertEnspelledBoundSpell,
+  isEnspelledCoverageSlug,
+} from '../domain/coverage/enspelled-weapon';
 import {
   AttachCoverageDto,
   DetachCoverageDto,
@@ -50,12 +55,21 @@ export class AttachCoverageHandler {
     characterId: string,
     dto: AttachCoverageDto,
   ): Promise<InventoryItemResponseDto> {
-    await this.access.findAccessibleOrFail(userId, characterId, 'write');
+    const character = await this.access.findAccessibleOrFail(
+      userId,
+      characterId,
+      'write',
+    );
     return this.attachCoverage(
       characterId,
+      {
+        classSlug: character.classSlug,
+        speciesSlug: character.speciesSlug ?? null,
+      },
       dto.baseItemSlug,
       dto.coverageSlug,
       dto.bonus,
+      dto.spellSlug,
     );
   }
 
@@ -70,9 +84,11 @@ export class AttachCoverageHandler {
 
   private async attachCoverage(
     characterId: string,
+    character: { classSlug: string; speciesSlug: string | null },
     baseItemSlug: string,
     coverageSlug: string,
     bonus: 1 | 2 | 3 | undefined,
+    spellSlug: string | undefined,
   ): Promise<InventoryItemResponseDto> {
     const baseRow = await findInventoryItemOrFail(
       this.items,
@@ -105,6 +121,32 @@ export class AttachCoverageHandler {
       );
     }
 
+    const isEnspelled = isEnspelledCoverageSlug(coverageSlug);
+    if (isEnspelled) {
+      if (!spellSlug?.trim()) {
+        throw new BadRequestException(
+          `Coverage '${coverageSlug}' requires spellSlug`,
+        );
+      }
+      const spell = await this.catalogLookup.findSpellOrFail(spellSlug);
+      try {
+        assertEnspelledBoundSpell({
+          itemSlug: coverageSlug,
+          spellSlug: spell.slug,
+          spellLevel: Number(spell.level),
+          schoolSlug: spell.schoolSlug,
+        });
+      } catch (error) {
+        throw new BadRequestException(
+          error instanceof Error ? error.message : 'Invalid enspelled spell',
+        );
+      }
+    } else if (spellSlug != null) {
+      throw new BadRequestException(
+        `Coverage '${coverageSlug}' does not take a bound spell`,
+      );
+    }
+
     const baseCtx = await this.resolveBaseContext(baseItemSlug);
     if (!coverageMatchesBase(coverage, baseCtx)) {
       throw new BadRequestException(
@@ -127,7 +169,8 @@ export class AttachCoverageHandler {
 
     if (
       baseRow.attachedCoverageSlug === coverageSlug &&
-      (baseRow.attachedCoverageBonus ?? null) === (bonus ?? null)
+      (baseRow.attachedCoverageBonus ?? null) === (bonus ?? null) &&
+      (baseRow.attachedCoverageSpellSlug ?? null) === (spellSlug ?? null)
     ) {
       return inventoryItemToDto(this.catalogItems, baseRow);
     }
@@ -141,14 +184,26 @@ export class AttachCoverageHandler {
     }
 
     const requiresAttunement = itemRequiresAttunement(coverageProps);
-    if (requiresAttunement) {
-      await this.assertAttunementSlot(characterId);
+    let shouldAttune = false;
+    if (requiresAttunement && (await this.hasAttunementSlot(characterId))) {
+      try {
+        assertCharacterMayAttune({
+          itemLabel: coverageSlug,
+          classSlug: character.classSlug,
+          speciesSlug: character.speciesSlug,
+          properties: coverageProps,
+        });
+        shouldAttune = true;
+      } catch {
+        shouldAttune = false;
+      }
     }
 
     await this.consumeFromBackpack(coverageRow);
     baseRow.attachedCoverageSlug = coverageSlug;
     baseRow.attachedCoverageBonus = needsTier ? (bonus ?? null) : null;
-    baseRow.attachedCoverageAttuned = requiresAttunement;
+    baseRow.attachedCoverageSpellSlug = isEnspelled ? (spellSlug ?? null) : null;
+    baseRow.attachedCoverageAttuned = shouldAttune;
     await this.items.save(baseRow);
     return inventoryItemToDto(this.catalogItems, baseRow);
   }
@@ -174,6 +229,7 @@ export class AttachCoverageHandler {
     );
     baseRow.attachedCoverageSlug = null;
     baseRow.attachedCoverageBonus = null;
+    baseRow.attachedCoverageSpellSlug = null;
     baseRow.attachedCoverageAttuned = false;
     await this.items.save(baseRow);
     return inventoryItemToDto(this.catalogItems, baseRow);
@@ -208,18 +264,14 @@ export class AttachCoverageHandler {
     };
   }
 
-  private async assertAttunementSlot(characterId: string): Promise<void> {
+  private async hasAttunementSlot(characterId: string): Promise<boolean> {
     const attunedCount = await this.items.count({
       where: { characterId, attuned: true },
     });
     const coverageAttunedCount = await this.items.count({
       where: { characterId, attachedCoverageAttuned: true },
     });
-    if (attunedCount + coverageAttunedCount >= MAX_ATTUNED_ITEMS) {
-      throw new BadRequestException(
-        `Maximum of ${MAX_ATTUNED_ITEMS} attuned items reached`,
-      );
-    }
+    return attunedCount + coverageAttunedCount < MAX_ATTUNED_ITEMS;
   }
 
   private async consumeFromBackpack(row: PlayerCharacterItem): Promise<void> {
@@ -261,6 +313,7 @@ export class AttachCoverageHandler {
         attachedCharmSlug: null,
         attachedCoverageSlug: null,
         attachedCoverageBonus: null,
+        attachedCoverageSpellSlug: null,
         attachedCoverageAttuned: false,
       }),
     );

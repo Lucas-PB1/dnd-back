@@ -152,6 +152,33 @@ export class CastSpellDto {
   @IsOptional()
   @IsString()
   freeCastResourceSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 'varinhaMisseisCharges',
+    description:
+      'Cast via carga de item (fase 6): resource do item ativo + bypass da lista',
+  })
+  @IsOptional()
+  @IsString()
+  itemCastResourceSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 2,
+    description: 'Cargas gastas no cast de item (padrão 1)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  itemCastSpendAmount?: number;
+
+  @ApiPropertyOptional({
+    example: 'cajado-dos-magi',
+    description:
+      'Cast gratuito de item (sem carga): item ativo + economy com spell_slug e sem resource',
+  })
+  @IsOptional()
+  @IsString()
+  itemCastItemSlug?: string;
 }
 
 export class CastSpellResponseDto {
@@ -201,4 +228,10 @@ export class RestResponseDto {
 
   @ApiPropertyOptional({ example: 12 })
   hitPointsHealed?: number;
+
+  @ApiPropertyOptional({
+    example: ['Cargas — Varinha de Mísseis Mágicos: recuperou 5 (1d6+1).'],
+    description: 'Notas de recover 1dN de itens no descanso longo',
+  })
+  notes?: string[];
 }

@@ -38,10 +38,11 @@ export async function applyLongRestState(input: {
   state.spellSlotsUsed = {};
   state.grantedSpellUses = {};
   state.highElfCantripSwapAvailable = true;
-  state.resourcesUsed = applyLongRestResourceRecovery(
+  const recovery = applyLongRestResourceRecovery(
     state.resourcesUsed ?? {},
     resources,
   );
+  state.resourcesUsed = recovery.used;
   state.concentratingOn = null;
   state.conditions = [];
   state.tempHp = 0;
@@ -68,6 +69,7 @@ export async function applyLongRestState(input: {
   return {
     type: 'long',
     state: await buildResponse(character, state),
+    notes: recovery.notes.length > 0 ? recovery.notes : undefined,
   };
 }
 

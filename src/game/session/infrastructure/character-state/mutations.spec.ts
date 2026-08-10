@@ -134,6 +134,7 @@ describe('mutations', () => {
           recoverOneOnShort: false,
           recoverAllOnShort: false,
           recoverAllOnLong: true,
+          recoverOnLongDice: null,
         },
       ]);
       await applyUseClassResource({
@@ -173,6 +174,7 @@ describe('mutations', () => {
           recoverOneOnShort: false,
           recoverAllOnShort: false,
           recoverAllOnLong: true,
+          recoverOnLongDice: null,
         },
       ]);
       state.resourcesUsed = { rage: 1 };

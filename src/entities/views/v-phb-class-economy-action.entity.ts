@@ -50,6 +50,9 @@ export class VPhbClassEconomyAction {
   @ViewColumn({ name: 'spend_amount' })
   spendAmount!: number | null;
 
+  @ViewColumn({ name: 'spell_slug' })
+  spellSlug!: string | null;
+
   @ViewColumn({ name: 'sort_order' })
   sortOrder!: number;
 

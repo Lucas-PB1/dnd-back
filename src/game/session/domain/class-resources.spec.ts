@@ -29,6 +29,7 @@ describe('class-resources', () => {
       recoverOneOnShort: true,
       recoverAllOnShort: false,
       recoverAllOnLong: true,
+    recoverOnLongDice: null,
     },
     {
       resourceSlug: 'rage',
@@ -39,6 +40,7 @@ describe('class-resources', () => {
       recoverOneOnShort: true,
       recoverAllOnShort: false,
       recoverAllOnLong: true,
+    recoverOnLongDice: null,
     },
   ];
 
@@ -63,6 +65,7 @@ describe('class-resources', () => {
         recoverOneOnShort: true,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
+      recoverOnLongDice: null,
       },
     ];
     const [channel] = resolveClassResourceMaxima({
@@ -86,6 +89,7 @@ describe('class-resources', () => {
         recoverOneOnShort: false,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
+      recoverOnLongDice: null,
       },
     ];
     const [bardic] = resolveClassResourceMaxima({
@@ -108,6 +112,7 @@ describe('class-resources', () => {
         recoverOneOnShort: true,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
+      recoverOnLongDice: null,
       },
       {
         resourceSlug: 'secondWind',
@@ -118,6 +123,7 @@ describe('class-resources', () => {
         recoverOneOnShort: true,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
+      recoverOnLongDice: null,
       },
     ];
     const [secondWind] = resolveClassResourceMaxima({
@@ -140,6 +146,7 @@ describe('class-resources', () => {
         recoverOneOnShort: false,
         recoverAllOnShort: true,
         recoverAllOnLong: true,
+      recoverOnLongDice: null,
       },
       {
         resourceSlug: 'psi-energy-dice',
@@ -150,6 +157,7 @@ describe('class-resources', () => {
         recoverOneOnShort: true,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
+      recoverOnLongDice: null,
       },
     ];
     const resolved = resolveClassResourceMaxima({
@@ -173,6 +181,7 @@ describe('class-resources', () => {
         recoverOneOnShort: false,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
+      recoverOnLongDice: null,
       },
       {
         resourceSlug: 'arcaneRecovery',
@@ -183,6 +192,7 @@ describe('class-resources', () => {
         recoverOneOnShort: false,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
+      recoverOnLongDice: null,
       },
     ];
     const maxima = resolveClassResourceMaxima({
@@ -210,6 +220,7 @@ describe('class-resources', () => {
         recoverOneOnShort: true,
         recoverAllOnShort: false,
         recoverAllOnLong: true,
+        recoverOnLongDice: null,
       },
       {
         slug: 'actionSurge',
@@ -218,6 +229,7 @@ describe('class-resources', () => {
         recoverOneOnShort: false,
         recoverAllOnShort: true,
         recoverAllOnLong: true,
+        recoverOnLongDice: null,
       },
     ];
     let used = applyResourceSpend({}, 'rage', 3);
@@ -225,8 +237,28 @@ describe('class-resources', () => {
     used = applyResourceSpend(used, 'actionSurge', 1);
     used = applyShortRestResourceRecovery(used, resources);
     expect(used).toEqual({ rage: 1 });
-    used = applyLongRestResourceRecovery(used, resources);
+    const longRest = applyLongRestResourceRecovery(used, resources);
+    used = longRest.used;
     expect(used).toEqual({});
     expect(resourcesRemaining({ rage: 3 }, { rage: 1 })).toEqual({ rage: 2 });
+  });
+
+  it('recovers 1dN charges on long rest', () => {
+    const resources: ClassResourceMax[] = [
+      {
+        slug: 'varinhaMisseisCharges',
+        name: 'Cargas — Mísseis',
+        max: 7,
+        recoverOneOnShort: false,
+        recoverAllOnShort: false,
+        recoverAllOnLong: false,
+        recoverOnLongDice: '1d6+1',
+      },
+    ];
+    const used = { varinhaMisseisCharges: 6 };
+    const result = applyLongRestResourceRecovery(used, resources, () => 0.99);
+    // 1d6 with rng 0.99 → 6, +1 = 7, capped by spent 6
+    expect(result.used).toEqual({});
+    expect(result.notes[0]).toMatch(/recuperou 6/);
   });
 });

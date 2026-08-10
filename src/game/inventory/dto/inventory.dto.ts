@@ -7,6 +7,7 @@ import {
   IsOptional,
   IsString,
   Min,
+  ValidateIf,
 } from 'class-validator';
 
 export class InventoryItemResponseDto {
@@ -108,6 +109,24 @@ export class InventoryItemResponseDto {
   attachedCoverageAttuned!: boolean;
 
   @ApiPropertyOptional({
+    example: true,
+    description: 'True quando a cobertura anexada exige sintonia',
+  })
+  attachedCoverageRequiresAttunement!: boolean;
+
+  @ApiPropertyOptional({
+    example: 'bola-de-fogo',
+    description: 'Magia vinculada (Arma Magificada)',
+  })
+  attachedCoverageSpellSlug!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'bola-de-fogo',
+    description: 'Magia vinculada em item único (ex.: Cajado Magificado)',
+  })
+  boundSpellSlug!: string | null;
+
+  @ApiPropertyOptional({
     example: false,
     description: 'True quando phb_item.properties.kind = coverage',
   })
@@ -188,11 +207,30 @@ export class PatchInventoryItemDto {
   @ApiPropertyOptional({
     example: true,
     description:
+      'Sintonizar / dessintonizar a cobertura anexada (máx. 3; só se a cobertura exige)',
+  })
+  @IsOptional()
+  @IsBoolean()
+  attachedCoverageAttuned?: boolean;
+
+  @ApiPropertyOptional({
+    example: true,
+    description:
       'Marcar / desmarcar como Arma de Pacto (Bruxo com Pacto da Lâmina; no máx. 1)',
   })
   @IsOptional()
   @IsBoolean()
   pactWeapon?: boolean;
+
+  @ApiPropertyOptional({
+    example: 'bola-de-fogo',
+    description: 'Vincular magia em item Enspelled único (ex.: Cajado Magificado)',
+  })
+  @IsOptional()
+  @ValidateIf((_, value) => value != null)
+  @IsString()
+  @IsNotEmpty()
+  boundSpellSlug?: string | null;
 }
 
 export class AttachWeaponCharmDto {
@@ -233,6 +271,15 @@ export class AttachCoverageDto {
   @IsInt()
   @IsIn([1, 2, 3])
   bonus?: 1 | 2 | 3;
+
+  @ApiPropertyOptional({
+    example: 'bola-de-fogo',
+    description: 'Obrigatório para coberturas Enspelled (arma/armadura magificada)',
+  })
+  @IsOptional()
+  @IsString()
+  @IsNotEmpty()
+  spellSlug?: string;
 }
 
 export class DetachCoverageDto {

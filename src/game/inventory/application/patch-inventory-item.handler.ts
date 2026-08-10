@@ -45,6 +45,10 @@ export class PatchInventoryItemHandler {
       itemSlug,
       dto,
       character.abilityScores?.forca ?? 10,
+      {
+        classSlug: character.classSlug,
+        speciesSlug: character.speciesSlug ?? null,
+      },
     );
   }
 }

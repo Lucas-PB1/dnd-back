@@ -25,6 +25,7 @@ export type ClassResourceDbRow = {
   recover_one_on_short: boolean;
   recover_all_on_short: boolean;
   recover_all_on_long: boolean;
+  recover_on_long_dice: string | null;
 };
 
 export async function buildClassResourceState(
@@ -168,7 +169,8 @@ export async function loadClassResourceSchedule(
        cr.fixed_max,
        cr.recover_one_on_short,
        cr.recover_all_on_short,
-       cr.recover_all_on_long
+       cr.recover_all_on_long,
+       cr.recover_on_long_dice
      FROM rpg.phb_resource_grant cr
      JOIN rpg.phb_class c ON c.id = cr.owner_id AND cr.owner_kind = 'class'::rpg.resource_owner_kind
      JOIN rpg.phb_resource_definition rd ON rd.id = cr.resource_id
@@ -186,6 +188,7 @@ export async function loadClassResourceSchedule(
     recoverOneOnShort: row.recover_one_on_short,
     recoverAllOnShort: row.recover_all_on_short,
     recoverAllOnLong: row.recover_all_on_long,
+    recoverOnLongDice: row.recover_on_long_dice ?? null,
   }));
 }
 
@@ -202,7 +205,8 @@ export async function loadSubclassResourceSchedule(
        sr.fixed_max,
        sr.recover_one_on_short,
        sr.recover_all_on_short,
-       sr.recover_all_on_long
+       sr.recover_all_on_long,
+       sr.recover_on_long_dice
      FROM rpg.phb_resource_grant sr
      JOIN rpg.phb_subclass s ON s.id = sr.owner_id AND sr.owner_kind = 'subclass'::rpg.resource_owner_kind
      JOIN rpg.phb_resource_definition rd ON rd.id = sr.resource_id
@@ -220,6 +224,7 @@ export async function loadSubclassResourceSchedule(
     recoverOneOnShort: row.recover_one_on_short,
     recoverAllOnShort: row.recover_all_on_short,
     recoverAllOnLong: row.recover_all_on_long,
+    recoverOnLongDice: row.recover_on_long_dice ?? null,
   }));
 }
 
@@ -236,7 +241,8 @@ export async function loadSpeciesResourceSchedule(
        gr.fixed_max,
        gr.recover_one_on_short,
        gr.recover_all_on_short,
-       gr.recover_all_on_long
+       gr.recover_all_on_long,
+       gr.recover_on_long_dice
      FROM rpg.phb_resource_grant gr
      JOIN rpg.phb_species sp
        ON sp.id = gr.owner_id AND gr.owner_kind = 'species'::rpg.resource_owner_kind
@@ -255,6 +261,7 @@ export async function loadSpeciesResourceSchedule(
     recoverOneOnShort: row.recover_one_on_short,
     recoverAllOnShort: row.recover_all_on_short,
     recoverAllOnLong: row.recover_all_on_long,
+    recoverOnLongDice: row.recover_on_long_dice ?? null,
   }));
 }
 
@@ -272,7 +279,8 @@ export async function loadFeatResourceSchedule(
        gr.fixed_max,
        gr.recover_one_on_short,
        gr.recover_all_on_short,
-       gr.recover_all_on_long
+       gr.recover_all_on_long,
+       gr.recover_on_long_dice
      FROM rpg.phb_resource_grant gr
      JOIN rpg.phb_feat f
        ON f.id = gr.owner_id AND gr.owner_kind = 'feat'::rpg.resource_owner_kind
@@ -291,6 +299,7 @@ export async function loadFeatResourceSchedule(
     recoverOneOnShort: row.recover_one_on_short,
     recoverAllOnShort: row.recover_all_on_short,
     recoverAllOnLong: row.recover_all_on_long,
+    recoverOnLongDice: row.recover_on_long_dice ?? null,
   }));
 }
 
@@ -356,7 +365,8 @@ export async function loadItemResourceSchedule(
        gr.fixed_max,
        gr.recover_one_on_short,
        gr.recover_all_on_short,
-       gr.recover_all_on_long
+       gr.recover_all_on_long,
+       gr.recover_on_long_dice
      FROM rpg.phb_resource_grant gr
      JOIN rpg.phb_item i
        ON i.id = gr.owner_id AND gr.owner_kind = 'item'::rpg.resource_owner_kind
@@ -375,5 +385,6 @@ export async function loadItemResourceSchedule(
     recoverOneOnShort: row.recover_one_on_short,
     recoverAllOnShort: row.recover_all_on_short,
     recoverAllOnLong: row.recover_all_on_long,
+    recoverOnLongDice: row.recover_on_long_dice ?? null,
   }));
 }

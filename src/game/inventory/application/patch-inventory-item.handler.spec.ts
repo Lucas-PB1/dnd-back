@@ -11,6 +11,8 @@ describe('PatchInventoryItemHandler', () => {
     access = {
       findAccessibleOrFail: jest.fn().mockResolvedValue({
         abilityScores: { forca: 12 },
+        classSlug: 'fighter',
+        speciesSlug: 'human',
       }),
     };
     inventory = { patch: jest.fn().mockResolvedValue({ itemSlug: 'dagger' }) };
@@ -32,6 +34,7 @@ describe('PatchInventoryItemHandler', () => {
       'dagger',
       { location: 'equipped' },
       12,
+      { classSlug: 'fighter', speciesSlug: 'human' },
     );
   });
 
@@ -46,13 +49,17 @@ describe('PatchInventoryItemHandler', () => {
   });
 
   it('defaults strength to 10 when missing', async () => {
-    access.findAccessibleOrFail.mockResolvedValue({});
+    access.findAccessibleOrFail.mockResolvedValue({
+      classSlug: 'wizard',
+      speciesSlug: null,
+    });
     await handler.execute('u1', 'c1', 'dagger', { location: 'backpack' });
     expect(inventory.patch).toHaveBeenCalledWith(
       'c1',
       'dagger',
       { location: 'backpack' },
       10,
+      { classSlug: 'wizard', speciesSlug: null },
     );
   });
 });

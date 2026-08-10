@@ -90,3 +90,12 @@ ON CONFLICT (action_id) DO UPDATE SET
   sort_order = EXCLUDED.sort_order,
   requires_option_key = EXCLUDED.requires_option_key,
   requires_option_value = EXCLUDED.requires_option_value;
+
+-- Fase 6 piloto: cast real via spell_slug
+UPDATE rpg.phb_class_economy_action
+SET spell_slug = 'misseis-magicos'
+WHERE action_id IN (
+  'item-varinha-de-misseis-magicos-1',
+  'item-varinha-de-misseis-magicos-2',
+  'item-varinha-de-misseis-magicos-3'
+);

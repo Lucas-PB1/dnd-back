@@ -12,6 +12,11 @@ import {
   itemRequiresAttunement,
   MAX_ATTUNED_ITEMS,
 } from '@game/inventory/domain/attunement';
+import { assertCharacterMayAttune } from '@game/inventory/domain/attunement-restriction';
+import {
+  assertEnspelledBoundSpell,
+  getEnspelledProfile,
+} from '@game/inventory/domain/coverage/enspelled-weapon';
 import {
   itemEffectsActive,
   itemEffectsStatus,
@@ -50,14 +55,20 @@ export async function clearEquippedSlotIfOccupied(
   }
 }
 
+export type AttunementCharacterContext = {
+  classSlug: string;
+  speciesSlug: string | null;
+};
+
 export async function applyInventoryAttunement(input: {
   items: Repository<PlayerCharacterItem>;
   catalogLookup: CatalogLookupService;
   characterId: string;
+  character: AttunementCharacterContext;
   row: PlayerCharacterItem;
   attuned: boolean;
 }): Promise<void> {
-  const { items, catalogLookup, characterId, row, attuned } = input;
+  const { items, catalogLookup, characterId, character, row, attuned } = input;
   if (row.attuned === attuned) return;
 
   if (!attuned) {
@@ -69,6 +80,19 @@ export async function applyInventoryAttunement(input: {
   if (!itemRequiresAttunement(catalog.properties)) {
     throw new BadRequestException(
       `Item '${row.itemSlug}' does not require attunement`,
+    );
+  }
+
+  try {
+    assertCharacterMayAttune({
+      itemLabel: row.itemSlug,
+      classSlug: character.classSlug,
+      speciesSlug: character.speciesSlug,
+      properties: catalog.properties,
+    });
+  } catch (error) {
+    throw new BadRequestException(
+      error instanceof Error ? error.message : 'Attunement not allowed',
     );
   }
 
@@ -85,6 +109,100 @@ export async function applyInventoryAttunement(input: {
   }
 
   row.attuned = true;
+}
+
+export async function applyAttachedCoverageAttunement(input: {
+  items: Repository<PlayerCharacterItem>;
+  catalogLookup: CatalogLookupService;
+  characterId: string;
+  character: AttunementCharacterContext;
+  row: PlayerCharacterItem;
+  attuned: boolean;
+}): Promise<void> {
+  const { items, catalogLookup, characterId, character, row, attuned } = input;
+  if (row.attachedCoverageAttuned === attuned) return;
+
+  if (!attuned) {
+    row.attachedCoverageAttuned = false;
+    return;
+  }
+
+  const coverageSlug = row.attachedCoverageSlug;
+  if (!coverageSlug) {
+    throw new BadRequestException(
+      `Item '${row.itemSlug}' has no attached coverage to attune`,
+    );
+  }
+
+  const catalog = await catalogLookup.assertItemInCatalog(coverageSlug);
+  if (!itemRequiresAttunement(catalog.properties)) {
+    throw new BadRequestException(
+      `Coverage '${coverageSlug}' does not require attunement`,
+    );
+  }
+
+  try {
+    assertCharacterMayAttune({
+      itemLabel: coverageSlug,
+      classSlug: character.classSlug,
+      speciesSlug: character.speciesSlug,
+      properties: catalog.properties,
+    });
+  } catch (error) {
+    throw new BadRequestException(
+      error instanceof Error ? error.message : 'Attunement not allowed',
+    );
+  }
+
+  const attunedCount = await items.count({
+    where: { characterId, attuned: true },
+  });
+  const coverageAttunedCount = await items.count({
+    where: { characterId, attachedCoverageAttuned: true },
+  });
+  if (attunedCount + coverageAttunedCount >= MAX_ATTUNED_ITEMS) {
+    throw new BadRequestException(
+      `Maximum of ${MAX_ATTUNED_ITEMS} attuned items reached`,
+    );
+  }
+
+  row.attachedCoverageAttuned = true;
+}
+
+export async function applyBoundSpellSlug(input: {
+  catalogLookup: CatalogLookupService;
+  row: PlayerCharacterItem;
+  boundSpellSlug: string | null;
+}): Promise<void> {
+  const { catalogLookup, row, boundSpellSlug } = input;
+  if ((row.boundSpellSlug ?? null) === boundSpellSlug) return;
+
+  if (boundSpellSlug == null) {
+    row.boundSpellSlug = null;
+    return;
+  }
+
+  const profile = getEnspelledProfile(row.itemSlug);
+  if (!profile || profile.kind !== 'unique') {
+    throw new BadRequestException(
+      `Item '${row.itemSlug}' does not accept a bound spell`,
+    );
+  }
+
+  const spell = await catalogLookup.findSpellOrFail(boundSpellSlug);
+  try {
+    assertEnspelledBoundSpell({
+      itemSlug: row.itemSlug,
+      spellSlug: spell.slug,
+      spellLevel: Number(spell.level),
+      schoolSlug: spell.schoolSlug,
+    });
+  } catch (error) {
+    throw new BadRequestException(
+      error instanceof Error ? error.message : 'Invalid bound spell',
+    );
+  }
+  row.boundSpellSlug = spell.slug;
 }
 
 export async function applyPactWeaponFlag(input: {
@@ -161,6 +279,11 @@ export function inventoryItemToDtoFromCatalog(
       : null,
     attachedCoverageBonus: row.attachedCoverageBonus ?? null,
     attachedCoverageAttuned: row.attachedCoverageAttuned ?? false,
+    attachedCoverageRequiresAttunement: coverageSlug
+      ? itemRequiresAttunement(coverage?.properties)
+      : false,
+    attachedCoverageSpellSlug: row.attachedCoverageSpellSlug ?? null,
+    boundSpellSlug: row.boundSpellSlug ?? null,
     isCoverage,
   };
 }

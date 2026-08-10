@@ -83,6 +83,7 @@ describe('rest', () => {
         recoverAllOnLong: true,
         recoverOneOnShort: false,
         recoverAllOnShort: false,
+        recoverOnLongDice: null,
       },
     ] as never);
     mockClampHitDice.mockResolvedValue(undefined);

@@ -56,4 +56,12 @@ export class PlayerCharacterItem {
   /** Sintonia da cobertura anexada (conta no limite de 3). */
   @Column({ name: 'attached_coverage_attuned', type: 'boolean', default: false })
   attachedCoverageAttuned!: boolean;
+
+  /** Magia vinculada (Arma Magificada / Enspelled). */
+  @Column({ name: 'attached_coverage_spell_slug', type: 'text', nullable: true })
+  attachedCoverageSpellSlug!: string | null;
+
+  /** Magia vinculada em item único (ex.: Cajado Magificado). */
+  @Column({ name: 'bound_spell_slug', type: 'text', nullable: true })
+  boundSpellSlug!: string | null;
 }

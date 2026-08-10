@@ -31,13 +31,21 @@ Itens mágicos do Cap. 7 (A–Z), extraídos da tradução comunitária do DMG 2
 | `D033_phb_item_resource_grant_marvelous_weapons_i.sql` | §0 #9i: utilitários + armas (+ PE) |
 | `D034_phb_item_resource_grant_armor_shields_j.sql` | §0 #9j: escudos / armaduras únicas |
 | `D035_phb_item_resource_grant_weapons_k.sql` | §0 #9k: armas únicas (+ PE / artefatos) |
-| `D036_phb_item_resource_grant_marvelous_dense_l.sql` | §0 #9l: densos finais + Orcus/Maravilhas |
+| `D037_phb_item_resource_grant_enspelled_weapon.sql` | Fase 6: cargas Arma Magificada |
+| `D038_fix_armadura_magificada.sql` | Extrai Armadura Magificada (colada em fumegante) |
+| `D039_phb_item_resource_grant_enspelled_armor.sql` | Fase 6: cargas Armadura Magificada |
+| `D040_phb_item_resource_grant_weapon_coverages.sql` | Coberturas de arma: resources (Martelo, Garra, Escara, Lâmina, Juramento) |
+| `D041_phb_item_resource_grant_recover_dice.sql` | Recover 1dN ao amanhecer (long rest) |
 
-Economy: `C016`–`C038` · `C039` densos finais.  
-Taxonomia: `…-staves.yaml` · `…-marvelous-simple.yaml` · `…-rings.yaml` · `…-wands.yaml` · `…-armor-shields.yaml` · `…-weapons.yaml` · `…-marvelous-dense.yaml`.
+Economy: `C016`–`C039` · `C040`/`C041` Enspelled · `C042` spell_slug · `C043` weapon coverages · `C044` Magi free cast.  
+Cajado Magificado: resource `D024`/`C026` + `bound_spell_slug` (`P023`).  
+Taxonomia: `…-staves.yaml` · `…-marvelous-simple.yaml` · `…-rings.yaml` · `…-wands.yaml` · `…-armor-shields.yaml` · `…-weapons.yaml` · `…-marvelous-dense.yaml` · coverages.
 
-Cast/link de magia do item → **fase 6** (hoje: spend + texto).  
-Overlay coberturas (§3.1 / 2b) → migration `P021` + `POST …/inventory/coverage/attach|detach`.  
+Cast de item (fase 6): `POST …/spells/cast` + `itemCastResourceSlug` / `itemCastSpendAmount` / `itemCastItemSlug` (Magi 0).  
+Recover 1dN: coluna `recover_on_long_dice` (`T073`) + `D041`.  
+Enspelled: CD/ataque/raridade via `getEnspelledSpellStats` na nota do cast.  
+Sintonia por classe: `attunement-restriction.ts` no patch / attach cobertura.  
+Overlay coberturas (§3.1 / 2b) → migration `P021`/`P022`/`P023` + `POST …/inventory/coverage/attach|detach`.  
 Modelo: `docs/architecture/dmg-item-mesa.md`.  
 Compêndio: `/equipment?tab=magic` + `GET /items?magic=true`.
 

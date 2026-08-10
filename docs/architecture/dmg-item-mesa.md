@@ -23,7 +23,7 @@ Contagens aproximadas no `D010` atual (~338). **Dentro de cada tipo**, preferir 
 |---|---------------|----|----------------------|---------------|
 | 1 | **Poção / Óleo / Pergaminho** (consumo 1×) | ~30 | Uma ação, sem attune, sem pool contínuo | 1 economy `action`/`bonus` + resource max 1 **ou** lembrete “consumir”; item some na mesa |
 | 2 | **Passivo numérico puro** (qualquer categoria) | subset | Só `permanentEffects`; zero botão | UPDATE `properties` — ex. Anel de Proteção (+1 CA / salvaguardas) |
-| 3 | **Cobertura** (template sobre peça base) | subset | Taxonomia §3.1 + overlay inventário | Overlay feito (`P021` / attach-detach) |
+| 3 | **Cobertura** (template sobre peça base) | subset | Taxonomia §3.1 + overlay inventário | Overlay feito (`P021` / attach-detach / sintonia / munição) |
 | 4 | **1 uso / amanhecer** (maravilhoso simples) | subset | Igual estatueta Valdas | 1 resource max 1 + 1 `spend-resource` |
 | 5 | **1 pool + 1 botão** (cargas fixas) | subset | Igual Anel dos Barris | 1 resource max N + 1 economy |
 | 6 | **Anel / item com 2–3 habilidades, pool opcional** | ~22 anéis (mistos) | Várias rows, mesmo `item_id` | Padrão Trono |
@@ -386,8 +386,13 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 
 ### Fase 6 — Cast de item + artefatos / além do MVP (§0 #11)
 
-- **Cast/link magia:** amarrar `spellSlug` (consulta UI) e/ou conjurar via motor gastando carga do item (hoje: só `spend-resource` + texto).
-- Handlers dedicados, restrição de attune por classe no runtime, recuperação 1dN ao amanhecer (hoje grants usam recover-all on long como MVP).
+- **Cast/link magia:** `spell_slug` na economy + `itemCastResourceSlug`/`itemCastSpendAmount`/`itemCastItemSlug` em `POST …/spells/cast`. Backfill: `C042`. Magi custo 0: `C044` (`cast-item-free`). Enspelled: Arma/Armadura Magificada + Cajado Magificado.
+- **Nível de conjuração:** `resolveItemCastSlotLevel` — default `max(nível, spend)`; Relâmpagos/Cuspidora upcast por carga.
+- **Enspelled CD/raridade:** `getEnspelledSpellStats` / nota no cast (tabela DMG por nível da magia bound).
+- **Sintonia por classe:** `parseAttunementRestriction` + gate em patch attune / attach cobertura.
+- **Recover 1dN:** `recover_on_long_dice` (`T073`/`D041`) no Descanso Longo; notas em `RestResponseDto.notes`.
+- **Coberturas de arma:** `D040`/`C043` (dançarina, língua, arco energia, martelo, defensora, escara, garra, lâmina sorte, juramento).
+- Pendente: Orcus multi-botão; sorvedora tracking; sacro-vingadora só PE.
 
 ---
 
@@ -434,7 +439,7 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 | Varinhas multi-magia (§0 #7) | Feito (`D019`+`C021` — 3 varinhas) |
 | Cajados multi-magia (§0 #8) | Feito (`D020`–`D025` / `C022`–`C027` — 18 cajados) |
 | Maravilhosos / anéis / varinhas / armas / escudos / densos (§0 #9) | Feito (`D026`–`D036` / `C028`–`C039`) |
-| Cast/link magia de item | Fase 6 (adiado) |
-| Overlay coberturas (UI) | Feito (§3.1 / fase 2b — attach/detach + PE/ataque) |
+| Cast/link magia de item | Piloto feito (varinha mísseis + Arma Magificada); backfill depois |
+| Overlay coberturas (UI) | Feito (§3.1 / fase 2b — attach/detach + PE/ataque + toggle sintonia + munição) |
 
-Próximo passo natural: **fase 6** (cast/link de magia) ou refinamentos de cobertura (toggle sintonia, munição/busca).
+Próximo passo natural: recover 1dN real **ou** coberturas de arma com economy.

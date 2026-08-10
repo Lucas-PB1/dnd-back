@@ -176,6 +176,12 @@ export class ClassEconomyActionDto {
 
   @ApiPropertyOptional()
   spendAmount?: number;
+
+  @ApiPropertyOptional({
+    example: 'misseis-magicos',
+    description: 'Magia do catálogo vinculada a esta action (cast de item)',
+  })
+  spellSlug?: string;
 }
 
 export class ClassPanelActionDto {

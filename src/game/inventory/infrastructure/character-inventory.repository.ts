@@ -13,11 +13,14 @@ import {
 import { EquipmentSlotResolver } from './equipment-slot-resolver';
 import {
   applyInventoryAttunement,
+  applyAttachedCoverageAttunement,
+  applyBoundSpellSlug,
   applyPactWeaponFlag,
   clearEquippedSlotIfOccupied,
   findInventoryItemOrFail,
   inventoryItemToDto,
   inventoryItemsToDtos,
+  type AttunementCharacterContext,
 } from './inventory/inventory-item-ops';
 import {
   assertInventoryAddFits,
@@ -136,6 +139,7 @@ export class CharacterInventoryRepository {
     itemSlug: string,
     dto: PatchInventoryItemDto,
     strengthScore: number,
+    character: AttunementCharacterContext,
   ): Promise<InventoryItemResponseDto> {
     const row = await findInventoryItemOrFail(this.items, characterId, itemSlug);
 
@@ -188,8 +192,20 @@ export class CharacterInventoryRepository {
         items: this.items,
         catalogLookup: this.catalogLookup,
         characterId,
+        character,
         row,
         attuned: dto.attuned,
+      });
+    }
+
+    if (dto.attachedCoverageAttuned !== undefined) {
+      await applyAttachedCoverageAttunement({
+        items: this.items,
+        catalogLookup: this.catalogLookup,
+        characterId,
+        character,
+        row,
+        attuned: dto.attachedCoverageAttuned,
       });
     }
 
@@ -199,6 +215,14 @@ export class CharacterInventoryRepository {
         characterId,
         row,
         pactWeapon: dto.pactWeapon,
+      });
+    }
+
+    if (dto.boundSpellSlug !== undefined) {
+      await applyBoundSpellSlug({
+        catalogLookup: this.catalogLookup,
+        row,
+        boundSpellSlug: dto.boundSpellSlug,
       });
     }
 
@@ -220,6 +244,7 @@ export class CharacterInventoryRepository {
     characterId: string,
     itemSlug: string,
     strengthScore: number,
+    character: AttunementCharacterContext,
   ): Promise<InventoryItemResponseDto> {
     return this.patch(
       characterId,
@@ -230,6 +255,7 @@ export class CharacterInventoryRepository {
         equipmentSlot: 'main_hand',
       },
       strengthScore,
+      character,
     );
   }
 

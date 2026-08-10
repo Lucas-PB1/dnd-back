@@ -121,8 +121,16 @@ items:
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Qualquer Simples ou Marcial"
-    note: "params: spellSlug + escola (Enspelled)"
-    status: tagged
+    note: "params: spellSlug (escolas DMG ≤8º); resource+economy fase 6 (D037/C040)"
+    status: wired
+
+  - slug: armadura-magificada
+    name: "Armadura Magificada"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Leve, Média ou Pesada"
+    note: "params: spellSlug (Abjuração/Ilusão ≤8º); D038/D039/C041"
+    status: wired
 
   - slug: arma-sempre-alerta
     name: "Arma Sempre Alerta"
@@ -178,7 +186,7 @@ items:
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Qualquer Arma Corpo a Corpo"
-    status: tagged
+    status: wired
 
   - slug: matadora-de-dragoes
     name: "Matadora de Dragões"
@@ -206,7 +214,7 @@ items:
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive, Rapieira"
-    status: tagged
+    status: wired
 
   - slug: espada-da-precisao
     name: "Espada da Precisão"
@@ -227,7 +235,7 @@ items:
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Rapieira"
-    status: tagged
+    status: wired
 
   - slug: espada-laceradora
     name: "Espada Laceradora"
@@ -262,14 +270,14 @@ items:
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Adaga, Cimitarra, Espada Curta, Foice, Lança ou Rapieira"
-    status: tagged
+    status: wired
 
   - slug: lamina-da-sorte
     name: "Lâmina da Sorte"
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive, Rapieira"
-    status: tagged
+    status: wired
 
   - slug: machado-do-carrasco
     name: "Machado do Carrasco"
@@ -290,28 +298,28 @@ items:
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Qualquer Arma Corpo a Corpo"
-    status: tagged
+    status: wired
 
   - slug: arco-de-energia
     name: "Arco de Energia"
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Arco Curto ou Arco Longo"
-    status: tagged
+    status: wired
 
   - slug: arco-do-juramento
     name: "Arco do Juramento"
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Arco Curto ou Arco Longo"
-    status: tagged
+    status: wired
 
   - slug: martelo-do-trovao
     name: "Martelo do Trovão"
     kind: coverage
     appliesTo: weapon
     appliesFilter: "Malho ou Martelo de Guerra"
-    status: tagged
+    status: wired
 
   - slug: armadura-de-placas-das-formas-etereas
     name: "Armadura de Placas das Formas Etéreas"

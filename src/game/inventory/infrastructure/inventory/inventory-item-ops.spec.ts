@@ -5,6 +5,7 @@ import type { PhbItem } from '@entities/phb-item.entity';
 import type { PlayerCharacterItem } from '../player-character-item.entity';
 import {
   applyInventoryAttunement,
+  applyAttachedCoverageAttunement,
   clearEquippedSlotIfOccupied,
   findInventoryItemOrFail,
   inventoryItemToDto,
@@ -119,6 +120,7 @@ describe('inventory-item-ops', () => {
         items: items as unknown as Repository<PlayerCharacterItem>,
         catalogLookup: catalogLookup as unknown as CatalogLookupService,
         characterId: 'ch1',
+        character: { classSlug: 'wizard', speciesSlug: null },
         row,
         attuned: true,
       });
@@ -131,6 +133,7 @@ describe('inventory-item-ops', () => {
         items: items as unknown as Repository<PlayerCharacterItem>,
         catalogLookup: catalogLookup as unknown as CatalogLookupService,
         characterId: 'ch1',
+        character: { classSlug: 'wizard', speciesSlug: null },
         row,
         attuned: false,
       });
@@ -143,6 +146,7 @@ describe('inventory-item-ops', () => {
         items: items as unknown as Repository<PlayerCharacterItem>,
         catalogLookup: catalogLookup as unknown as CatalogLookupService,
         characterId: 'ch1',
+        character: { classSlug: 'wizard', speciesSlug: null },
         row,
         attuned: true,
       });
@@ -157,6 +161,7 @@ describe('inventory-item-ops', () => {
           items: items as unknown as Repository<PlayerCharacterItem>,
           catalogLookup: catalogLookup as unknown as CatalogLookupService,
           characterId: 'ch1',
+          character: { classSlug: 'wizard', speciesSlug: null },
           row,
           attuned: true,
         }),
@@ -171,10 +176,84 @@ describe('inventory-item-ops', () => {
           items: items as unknown as Repository<PlayerCharacterItem>,
           catalogLookup: catalogLookup as unknown as CatalogLookupService,
           characterId: 'ch1',
+          character: { classSlug: 'wizard', speciesSlug: null },
           row,
           attuned: true,
         }),
       ).rejects.toBeInstanceOf(BadRequestException);
+    });
+    it('rejects attunement when class does not match', async () => {
+      catalogLookup.assertItemInCatalog.mockResolvedValue({
+        slug: 'cajado-da-cura',
+        properties: {
+          requiresAttunement: true,
+          attunement: 'Requer Sintonização por um Bardo, Clérigo ou Druida',
+        },
+      });
+      const row = itemRow({ itemSlug: 'cajado-da-cura', attuned: false });
+      await expect(
+        applyInventoryAttunement({
+          items: items as unknown as Repository<PlayerCharacterItem>,
+          catalogLookup: catalogLookup as unknown as CatalogLookupService,
+          characterId: 'ch1',
+          character: { classSlug: 'fighter', speciesSlug: null },
+          row,
+          attuned: true,
+        }),
+      ).rejects.toBeInstanceOf(BadRequestException);
+    });
+  });
+
+  describe('applyAttachedCoverageAttunement', () => {
+    it('attunes attached coverage when it requires attunement', async () => {
+      catalogLookup.assertItemInCatalog.mockResolvedValue({
+        slug: 'espada-vorpal',
+        properties: { requiresAttunement: true, kind: 'coverage' },
+      });
+      const row = itemRow({
+        itemSlug: 'longsword',
+        attachedCoverageSlug: 'espada-vorpal',
+        attachedCoverageAttuned: false,
+      });
+      await applyAttachedCoverageAttunement({
+        items: items as unknown as Repository<PlayerCharacterItem>,
+        catalogLookup: catalogLookup as unknown as CatalogLookupService,
+        characterId: 'ch1',
+        character: { classSlug: 'wizard', speciesSlug: null },
+        row,
+        attuned: true,
+      });
+      expect(row.attachedCoverageAttuned).toBe(true);
+    });
+
+    it('rejects when no coverage is attached', async () => {
+      const row = itemRow({ attachedCoverageSlug: null });
+      await expect(
+        applyAttachedCoverageAttunement({
+          items: items as unknown as Repository<PlayerCharacterItem>,
+          catalogLookup: catalogLookup as unknown as CatalogLookupService,
+          characterId: 'ch1',
+          character: { classSlug: 'wizard', speciesSlug: null },
+          row,
+          attuned: true,
+        }),
+      ).rejects.toBeInstanceOf(BadRequestException);
+    });
+
+    it('clears coverage attunement', async () => {
+      const row = itemRow({
+        attachedCoverageSlug: 'espada-vorpal',
+        attachedCoverageAttuned: true,
+      });
+      await applyAttachedCoverageAttunement({
+        items: items as unknown as Repository<PlayerCharacterItem>,
+        catalogLookup: catalogLookup as unknown as CatalogLookupService,
+        characterId: 'ch1',
+        character: { classSlug: 'wizard', speciesSlug: null },
+        row,
+        attuned: false,
+      });
+      expect(row.attachedCoverageAttuned).toBe(false);
     });
   });
 

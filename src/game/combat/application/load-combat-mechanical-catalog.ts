@@ -215,6 +215,7 @@ export class LoadCombatMechanicalCatalog {
         tableAction: row.tableAction ?? undefined,
         spendAmount:
           row.spendAmount == null ? undefined : Number(row.spendAmount),
+        spellSlug: row.spellSlug ?? undefined,
       })),
       panelActions: (() => {
         const economyTextByKey = new Map<string, string>();

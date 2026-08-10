@@ -23,6 +23,8 @@ export type ClassEconomyActionRecord = {
   description?: string;
   tableAction?: string;
   spendAmount?: number;
+  /** Magia vinculada (cast de item / consulta UI). */
+  spellSlug?: string;
 };
 
 export type PanelActionSection = 'base' | 'subclass' | 'metamagic' | 'channel';

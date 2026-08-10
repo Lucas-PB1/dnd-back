@@ -5,6 +5,7 @@
  */
 
 import { resolveFormulaMax } from './resource-max-formulas';
+import { rollExpression, type Rng } from '@game/dice/domain/dice';
 
 export type ResourceMaxFormula =
   | 'fixed'
@@ -26,6 +27,8 @@ export type ClassResourceScheduleRow = {
   recoverOneOnShort: boolean;
   recoverAllOnShort: boolean;
   recoverAllOnLong: boolean;
+  /** Ex.: 1d6+1 — recupera N cargas no long rest (cap no max). */
+  recoverOnLongDice: string | null;
 };
 
 export type ClassResourceMax = {
@@ -35,6 +38,7 @@ export type ClassResourceMax = {
   recoverOneOnShort: boolean;
   recoverAllOnShort: boolean;
   recoverAllOnLong: boolean;
+  recoverOnLongDice: string | null;
 };
 
 export type AbilityMods = {
@@ -103,6 +107,7 @@ export function resolveClassResourceMaxima(input: {
       recoverOneOnShort: top.recoverOneOnShort,
       recoverAllOnShort,
       recoverAllOnLong: top.recoverAllOnLong,
+      recoverOnLongDice: top.recoverOnLongDice ?? null,
     });
   }
 
@@ -159,17 +164,35 @@ export function applyShortRestResourceRecovery(
   return next;
 }
 
+export type LongRestResourceRecoveryResult = {
+  used: Record<string, number>;
+  notes: string[];
+};
+
 export function applyLongRestResourceRecovery(
   used: Record<string, number>,
   resources: readonly ClassResourceMax[],
-): Record<string, number> {
-  const next = { ...used };
+  rng: Rng = Math.random,
+): LongRestResourceRecoveryResult {
+  let next = { ...used };
+  const notes: string[] = [];
   for (const resource of resources) {
+    const spent = next[resource.slug] ?? 0;
+    if (resource.recoverOnLongDice) {
+      if (spent <= 0) continue;
+      const rolled = rollExpression(resource.recoverOnLongDice, rng).total;
+      const recovered = Math.min(Math.max(0, rolled), spent);
+      next = applyResourceRecover(next, resource.slug, recovered);
+      notes.push(
+        `${resource.name}: recuperou ${recovered} (${resource.recoverOnLongDice}).`,
+      );
+      continue;
+    }
     if (resource.recoverAllOnLong) {
       delete next[resource.slug];
     }
   }
-  return next;
+  return { used: next, notes };
 }
 
 export function resourcesRemaining(

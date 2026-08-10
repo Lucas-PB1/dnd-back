@@ -220,6 +220,7 @@ describe('WarlockActionsHandler', () => {
       'war-1',
       'longsword',
       8,
+      { classSlug: 'warlock', speciesSlug: null },
     );
     expect(result.note).toContain('Espada Longa');
     expect(result.note).toContain('Carisma');
@@ -236,6 +237,7 @@ describe('WarlockActionsHandler', () => {
       'war-1',
       'dagger',
       8,
+      { classSlug: 'warlock', speciesSlug: null },
     );
   });
 

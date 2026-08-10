@@ -43,6 +43,7 @@ describe('character-state/class-resources', () => {
           recover_one_on_short: false,
           recover_all_on_short: false,
           recover_all_on_long: true,
+          recover_on_long_dice: null,
         },
       ]);
       await expect(
@@ -57,6 +58,7 @@ describe('character-state/class-resources', () => {
           recoverOneOnShort: false,
           recoverAllOnShort: false,
           recoverAllOnLong: true,
+          recoverOnLongDice: null,
         },
       ]);
     });
@@ -73,6 +75,7 @@ describe('character-state/class-resources', () => {
         recover_one_on_short: false,
         recover_all_on_short: true,
         recover_all_on_long: true,
+        recover_on_long_dice: null,
       },
       {
         resource_slug: 'rage',
@@ -83,6 +86,7 @@ describe('character-state/class-resources', () => {
         recover_one_on_short: false,
         recover_all_on_short: false,
         recover_all_on_long: true,
+        recover_on_long_dice: null,
       },
     ];
 

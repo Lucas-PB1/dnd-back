@@ -37,6 +37,10 @@ export async function resolveInvokePactWeapon(
     character.id,
     resolvedSlug,
     strength,
+    {
+      classSlug: character.classSlug,
+      speciesSlug: character.speciesSlug ?? null,
+    },
   );
 
   return {
