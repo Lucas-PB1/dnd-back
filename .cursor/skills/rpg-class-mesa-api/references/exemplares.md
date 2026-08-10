@@ -16,6 +16,7 @@ Padrão alvo: **table-action**. Checklist em [`SKILL.md`](../SKILL.md).
 | Pistoleiro | `gunslinger` | **Concluída** |
 | Monge | `monk` | **Concluída** |
 | Clérigo | `cleric` | **Concluída** |
+| Bardo | `bard` | **Concluída** |
 
 Polish **adiado** (não reabre “classe done”): ver [`docs/plans/backlog.md`](../../../docs/plans/backlog.md) — MM modal, Companheiro Primal tracker, reuso de invocações / entidades / duração.
 
@@ -168,3 +169,16 @@ Polish adiado: tracker de duração Sintonia/Manto; aplicar PV na ficha em curas
 Pool: `channelDivinity` (± via `cleric-channel`; Usar nas linhas nomeadas). Base: Centelha (cura/dano), Expulsar Mortos-Vivos, Intervenção Divina. PHB: Vida (`preserve-life`), Luz (`radiance-of-dawn` / `warding-flare` / `crown-of-light`), Trapaça (`tricksters-blessing` + `invoke-duplicity`), Guerra (`guided-strike` / `war-priest` / `war-gods-blessing`). Valdas `dragon-domain`: Afinidade (`chromatic-affinity`), Majestade (`dragon-majesty`), Serpe L6 (`serpent-blessing`), Aspecto L17 (pool ± + Rasgar/Cauda/Asas).
 
 Polish adiado: recuperar 1 uso de Aspecto com espaço 2+; persistir tipo de Afinidade no estado; Transposição do Trapaceiro Usar dedicado.
+
+## Bardo (`bard`) — **concluída**
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/bard/` |
+| Handler | `bard-actions.handler.ts` + `actions/bard/` |
+| HTTP | `POST …/bard/table-action` |
+| Economy/panel | `C009` + `C010` |
+
+Pool: `bardicInspiration` (± via `bard-inspiration`; Usar nas linhas nomeadas). Base: Conceder Inspiração, Inspiração Superior L18. PHB: lore (`cutting-words`, `peerless-skill` L14), glamour (`mantle-of-inspiration` + PV temp, `mantle-of-majesty` 1/DL, `unbreakable-majesty` L14), dance (`unarmed-dance` DES, `coordinated-movement`, `agile-response`), valor (`combat-inspiration`; Magia de Batalha = nota). Valdas `college-of-masks`: Vestir máscaras + Usar por máscara (`persona-*` gastam Inspiração) + `virtuoso-skill` (handler, não `spend-resource`).
+
+Polish adiado: restaurar Manto de Majestade com espaço 3+; devolver Inspiração em Perícia Inigualável se ainda falhar (mesa ±).

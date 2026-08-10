@@ -17,9 +17,19 @@ import {
 } from './bard/inspiration-actions';
 import {
   resolveAgileResponse,
-  resolveEnthrallingPerformance,
+  resolveCoordinatedMovement,
+  resolveMantleOfInspiration,
+  resolveMantleOfMajesty,
+  resolvePeerlessSkill,
+  resolvePersonaAngel,
+  resolvePersonaDevil,
+  resolvePersonaDragon,
+  resolvePersonaGladiator,
+  resolvePersonaJester,
   resolveSetPersonaMasks,
   resolveUnarmedDance,
+  resolveUnbreakableMajesty,
+  resolveVirtuosoSkill,
 } from './bard/subclass-actions';
 
 @Injectable()
@@ -60,16 +70,36 @@ export class BardActionsHandler {
         return resolveGrantInspiration(deps, character);
       case 'cutting-words':
         return resolveCuttingWords(deps, character);
-      case 'enthralling-performance':
-        return resolveEnthrallingPerformance(deps, character);
+      case 'peerless-skill':
+        return resolvePeerlessSkill(deps, character);
+      case 'mantle-of-inspiration':
+        return resolveMantleOfInspiration(deps, character);
+      case 'mantle-of-majesty':
+        return resolveMantleOfMajesty(deps, character);
+      case 'unbreakable-majesty':
+        return resolveUnbreakableMajesty(deps, character);
       case 'agile-response':
         return resolveAgileResponse(deps, character);
+      case 'coordinated-movement':
+        return resolveCoordinatedMovement(deps, character);
       case 'unarmed-dance':
         return resolveUnarmedDance(deps, character);
       case 'combat-inspiration':
         return resolveCombatInspiration(deps, character);
       case 'superior-inspiration':
         return resolveSuperiorInspiration(deps, character);
+      case 'virtuoso-skill':
+        return resolveVirtuosoSkill(deps, character);
+      case 'persona-angel':
+        return resolvePersonaAngel(deps, character);
+      case 'persona-devil':
+        return resolvePersonaDevil(deps, character);
+      case 'persona-dragon':
+        return resolvePersonaDragon(deps, character);
+      case 'persona-gladiator':
+        return resolvePersonaGladiator(deps, character);
+      case 'persona-jester':
+        return resolvePersonaJester(deps, character);
       case 'set-persona-masks':
         return resolveSetPersonaMasks(deps, character, dto.masks ?? []);
     }

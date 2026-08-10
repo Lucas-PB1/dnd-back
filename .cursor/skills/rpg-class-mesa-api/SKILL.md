@@ -65,7 +65,7 @@ Não deixar só “jogue na mesa” quando o valor já pode ser rolado/calculado
 |----------|---------|
 | Pastas, seeds, HTTP | [`references/camadas.md`](references/camadas.md) |
 | Economy / panel / XOR | [`references/economia-painel.md`](references/economia-painel.md) |
-| Mago · Guerreiro · Feiticeiro · Bruxo · Patrulheiro · Ladino · Paladino · Pistoleiro · Monge · Clérigo (**concluídas**) | [`references/exemplares.md`](references/exemplares.md) |
+| Mago · Guerreiro · Feiticeiro · Bruxo · Patrulheiro · Ladino · Paladino · Pistoleiro · Monge · Clérigo · Bardo (**concluídas**) | [`references/exemplares.md`](references/exemplares.md) |
 
 ## Anti-padrões
 

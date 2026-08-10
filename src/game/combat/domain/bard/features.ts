@@ -75,54 +75,72 @@ function addBardSubclassNotes(
     );
     if (level >= 6) {
       notes.push(
-        'Segredos Mágicos Aprimorados: aprenda 2 magias adicionais de qualquer lista.',
+        'Descobertas Mágicas: aprenda 2 magias adicionais de qualquer lista.',
+      );
+    }
+    if (level >= 14) {
+      notes.push(
+        'Perícia Inigualável: após falhar teste/ataque, some o dado de Inspiração (só gasta se virar sucesso).',
       );
     }
   }
 
   if (subclassSlug === 'glamour') {
     notes.push(
-      'Colégio do Glamour: Desempenho Cativante (gasta Inspiração para dar PV temporários e mover aliados como Reação).',
+      'Colégio do Glamour: Manto de Inspiração (gasta Inspiração para PV temp. 2×dado e movimento por Reação).',
     );
     if (level >= 6) {
       notes.push(
-        'Manto de Majestade: conjure Comando como Ação Bônus sem gastar espaço.',
+        'Manto de Majestade: Comando sem espaço (1×/DL; restaurável com espaço 3+).',
+      );
+    }
+    if (level >= 14) {
+      notes.push(
+        'Majestade Inquebrável: presença 1 min — atacante falha salvo CAR ou o ataque falha.',
       );
     }
   }
 
   if (subclassSlug === 'dance') {
     notes.push(
-      'Colégio da Dança: Dança Virtuosa (Ataque Desarmado com CAR e dado de Inspiração; move-se sem provocar Opport. Attacks ao gastar Ação Bônus ou rolar iniciativa).',
+      'Colégio da Dança: Dança Virtuosa (Ataque Desarmado com DES + dado de Inspiração; Golpes Ágeis ao gastar Inspiração).',
     );
     if (level >= 6) {
       notes.push(
-        'Movimento Inspirador: Reação (inimigo encerra turno a 1,5 m) gasta Inspiração de Bardo para você e um aliado se moverem até metade do Deslocamento.',
+        'Movimento Coordenado (iniciativa) e Movimento Inspirador (Reação a 1,5 m).',
       );
+    }
+    if (level >= 14) {
+      notes.push('Evasão Liderada: Evasão e compartilhe com aliado a 1,5 m.');
     }
   }
 
   if (subclassSlug === 'valor') {
     notes.push(
-      'Colégio da Bravura: Inspiração em Combate (aliados podem usar Inspiração na CA ou rolar no dano). Proficiência em Armas Marciais e Escudos.',
+      'Colégio da Bravura: Inspiração em Combate (aliados usam Inspiração na CA ou no dano). Proficiência Marcial/Escudo.',
     );
     if (level >= 6) {
       notes.push(
-        'Ataque Extra (Bravura): pode substituir um de seus ataques por um Truque conjurado.',
-    );
+        'Ataque Extra (Bravura): pode substituir um ataque por um Truque.',
+      );
+    }
+    if (level >= 14) {
+      notes.push(
+        'Magia de Batalha: após magia de ação, ataque com arma como Ação Bônus.',
+      );
     }
   }
 
   if (subclassSlug === 'college-of-masks') {
     notes.push(
-      'Colégio das Máscaras: escolha Máscaras de Persona na mesa (3→4→5 nos nv. 3/6/14). Vestir/trocar como Ação Bônus; efeitos usam Inspiração de Bardo conforme a máscara.',
+      'Colégio das Máscaras: vista máscaras no painel; efeitos que gastam Inspiração têm Usar (Anjo/Diabo/Dragão/Gladiador/Bobão).',
     );
     notes.push(
-      'Artista Teatral: proficiência em Kit de Disfarce; some o dado de Inspiração em Performance sem gastar uso.',
+      'Artista Teatral: Kit de Disfarce; some o dado de Inspiração em Atuação sem gastar uso.',
     );
     if (level >= 6) {
       notes.push(
-        'Habilidade de Virtuoso: 1×/turno faça um Teste d20 com Carisma (usos = mod. CAR; veja recurso).',
+        'Habilidade de Virtuoso: 1×/turno Teste d20 com Carisma (usos = mod. CAR).',
       );
     }
     if (level >= 14) {

@@ -46,6 +46,6 @@ describe('bard-features', () => {
     expect(loreNotes.some((n) => n.includes('Palavras de Interrupção'))).toBe(true);
 
     const glamourNotes = bardCombatNotes({ classSlug: 'bard', subclassSlug: 'glamour', level: 3 });
-    expect(glamourNotes.some((n) => n.includes('Desempenho Cativante'))).toBe(true);
+    expect(glamourNotes.some((n) => n.includes('Manto de Inspiração'))).toBe(true);
   });
 });

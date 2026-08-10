@@ -32,11 +32,21 @@ export class UseClericTableActionDto {
 const BARD_TABLE_ACTION_SLUGS = [
   'grant-inspiration',
   'cutting-words',
-  'enthralling-performance',
+  'peerless-skill',
+  'mantle-of-inspiration',
+  'mantle-of-majesty',
+  'unbreakable-majesty',
   'agile-response',
+  'coordinated-movement',
   'unarmed-dance',
   'combat-inspiration',
   'superior-inspiration',
+  'virtuoso-skill',
+  'persona-angel',
+  'persona-devil',
+  'persona-dragon',
+  'persona-gladiator',
+  'persona-jester',
   'set-persona-masks',
 ] as const;
 
