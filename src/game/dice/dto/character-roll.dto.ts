@@ -104,7 +104,7 @@ export class RollDamageDto {
 
   @ApiPropertyOptional({
     default: false,
-    description: 'Dano de Garantido (Graze) no erro — só modificador de atributo',
+    description: 'Dano de Resvalar (Graze) no erro — só modificador de atributo',
   })
   @IsOptional()
   @IsBoolean()

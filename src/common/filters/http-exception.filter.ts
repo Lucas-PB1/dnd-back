@@ -43,6 +43,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
         message = (obj.message as string | string[]) ?? message;
         error = (obj.error as string) ?? exception.name;
       }
+    } else if (isPlayerCharacterUserFkError(exception)) {
+      statusCode = HttpStatus.UNAUTHORIZED;
+      message =
+        'Sessão inválida: usuário não encontrado. Faça login novamente.';
+      error = 'Unauthorized';
+      this.logger.warn(
+        exception instanceof Error ? exception.message : String(exception),
+      );
     } else if (exception instanceof Error) {
       const isProd = process.env.NODE_ENV === 'production';
       this.logger.error(
@@ -61,4 +69,9 @@ export class HttpExceptionFilter implements ExceptionFilter {
 
     response.status(statusCode).json(payload);
   }
+}
+
+function isPlayerCharacterUserFkError(exception: unknown): boolean {
+  if (!(exception instanceof Error)) return false;
+  return exception.message.includes('player_character_user_id_fkey');
 }

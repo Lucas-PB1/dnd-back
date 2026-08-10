@@ -74,15 +74,20 @@ describe('HttpExceptionFilter', () => {
     );
   });
 
-  it('keeps Portuguese inventory messages', () => {
-    const { host, json } = mockHost('/inventory');
+  it('maps player_character user FK to 401', () => {
+    const { host, json, status } = mockHost('/characters');
     filter.catch(
-      new BadRequestException('Sem proficiência com armadura: não pode equipar.'),
+      new Error(
+        'insert or update on table "player_character" violates foreign key constraint "player_character_user_id_fkey"',
+      ),
       host,
     );
+    expect(status).toHaveBeenCalledWith(HttpStatus.UNAUTHORIZED);
     expect(json).toHaveBeenCalledWith(
       expect.objectContaining({
-        message: 'Sem proficiência com armadura: não pode equipar.',
+        statusCode: HttpStatus.UNAUTHORIZED,
+        message:
+          'Sessão inválida: usuário não encontrado. Faça login novamente.',
       }),
     );
   });

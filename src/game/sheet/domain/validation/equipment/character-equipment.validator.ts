@@ -7,6 +7,7 @@ import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity
 import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
 import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
+import { resolveStartingGoldPieces } from '@game/inventory/domain/resolve-starting-gold';
 
 @Injectable()
 export class CharacterEquipmentValidator {
@@ -68,6 +69,65 @@ export class CharacterEquipmentValidator {
         );
       }
     }
+  }
+
+  /** PO inicial das escolhas de equipamento (criação). */
+  async resolveStartingGold(
+    equipment: CharacterSheetInput['equipment'],
+    ctx: Pick<CharacterSheetContext, 'classSlug' | 'backgroundSlug'>,
+  ): Promise<number> {
+    const background = await this.catalogLookup.findBackgroundOrFail(
+      ctx.backgroundSlug,
+    );
+    const classPackages = [
+      ...new Set(
+        (equipment ?? [])
+          .filter((row) => row.source === 'class')
+          .map((row) => row.packageSlug),
+      ),
+    ];
+    const backgroundPackages = [
+      ...new Set(
+        (equipment ?? [])
+          .filter((row) => row.source === 'background')
+          .map((row) => row.packageSlug),
+      ),
+    ];
+
+    const classEquipmentRows =
+      classPackages.length === 0
+        ? []
+        : (
+            await Promise.all(
+              classPackages.map((packageSlug) =>
+                this.classEquipmentRepo.find({
+                  where: { classSlug: ctx.classSlug, packageSlug },
+                }),
+              ),
+            )
+          ).flat();
+
+    const backgroundEquipmentRows =
+      backgroundPackages.length === 0
+        ? []
+        : (
+            await Promise.all(
+              backgroundPackages.map((packageSlug) =>
+                this.backgroundEquipmentRepo.find({
+                  where: { backgroundSlug: ctx.backgroundSlug, packageSlug },
+                }),
+              ),
+            )
+          ).flat();
+
+    return resolveStartingGoldPieces({
+      equipment,
+      background: {
+        equipmentGoldOption: background.equipmentGoldOption ?? null,
+      },
+      classEquipmentRows,
+      backgroundEquipmentRows,
+    });
   }
 
   private async assertEquipmentPackage(

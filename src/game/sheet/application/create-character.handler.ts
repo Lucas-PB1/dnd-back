@@ -1,5 +1,8 @@
-import { Injectable } from '@nestjs/common';
-import { DataSource } from 'typeorm';
+import {
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { DataSource, QueryFailedError } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterFactory } from '../domain/core/character.factory';
 import { CharacterDomainService } from '../domain/core/character-domain.service';
@@ -21,6 +24,9 @@ import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { SeedStartingInventoryHandler } from '@game/inventory/application/seed-starting-inventory.handler';
 import { resolveEldritchGrantedSpellSlugs } from './eldritch-granted-spells';
+
+const AUTH_USER_MISSING_MESSAGE =
+  'Sessão inválida: usuário não encontrado. Faça login novamente.';
 
 @Injectable()
 export class CreateCharacterHandler {
@@ -142,11 +148,44 @@ export class CreateCharacterHandler {
       (sheetInput.characterFeats ?? []).map((feat) => feat.featSlug),
     );
 
-    const saved = await this.repository.save(entity);
+    const startingGold = await this.sheetValidator.resolveStartingGold(
+      sheetInput.equipment,
+      { classSlug: dto.classSlug, backgroundSlug: dto.backgroundSlug },
+    );
+    if (startingGold > 0) {
+      entity.coinGold = startingGold;
+    }
+
+    await this.assertAuthUserExists(userId);
+
+    let saved;
+    try {
+      saved = await this.repository.save(entity);
+    } catch (error) {
+      if (isPlayerCharacterUserFkError(error)) {
+        throw new UnauthorizedException(AUTH_USER_MISSING_MESSAGE);
+      }
+      throw error;
+    }
     await this.sheetRepository.sync(saved.id, sheetInput);
     await this.seedStartingInventory.execute(saved.id, sheetInput.equipment);
 
     return this.mapper.toDto(saved);
+  }
+
+  private async assertAuthUserExists(userId: string): Promise<void> {
+    try {
+      const rows = await this.dataSource.query(
+        `SELECT 1 FROM auth.users WHERE id = $1 LIMIT 1`,
+        [userId],
+      );
+      if (!Array.isArray(rows) || rows.length === 0) {
+        throw new UnauthorizedException(AUTH_USER_MISSING_MESSAGE);
+      }
+    } catch (error) {
+      if (error instanceof UnauthorizedException) throw error;
+      // Sem schema auth (ex.: Postgres local de teste) — deixa o save decidir.
+    }
   }
 
   private toSheetInput(
@@ -166,4 +205,10 @@ export class CreateCharacterHandler {
       abilityGenerationMethodSlug: dto.abilityGenerationMethodSlug,
     };
   }
+}
+
+function isPlayerCharacterUserFkError(error: unknown): boolean {
+  if (!(error instanceof QueryFailedError)) return false;
+  const message = error.message ?? '';
+  return message.includes('player_character_user_id_fkey');
 }

@@ -84,7 +84,7 @@ export type WeaponAttack = {
    */
   nickUsesAttackAction: boolean;
   /**
-   * Garantido (Graze): no erro, dano igual ao modificador de atributo do ataque.
+   * Resvalar (Graze): no erro, dano igual ao modificador de atributo do ataque.
    * `null` se a maestria não se aplica.
    */
   grazeOnMissDamage: number | null;

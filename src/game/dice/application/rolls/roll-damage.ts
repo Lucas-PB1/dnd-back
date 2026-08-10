@@ -61,7 +61,7 @@ export async function executeRollDamage(input: {
     const modifier = attack.grazeOnMissDamage;
     return {
       kind: 'damage',
-      label: `Dano no erro — ${attack.itemName} (Garantido)`,
+      label: `Dano no erro — ${attack.itemName} (Resvalar)`,
       expression: `${modifier}`,
       total: modifier,
       modifier,

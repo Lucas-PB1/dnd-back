@@ -361,7 +361,7 @@ describe('computeWeaponAttacks', () => {
       propertySlugs: ['two-handed', 'heavy'],
       equipmentSlot: 'main_hand' as const,
       masterySlug: 'graze',
-      masteryName: 'Garantido',
+      masteryName: 'Resvalar',
     };
     const [attack] = computeWeaponAttacks(scores(), [piece], {
       ...fighterContext,

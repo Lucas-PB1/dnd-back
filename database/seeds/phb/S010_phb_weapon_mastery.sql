@@ -18,7 +18,7 @@ para realizar a jogada de ataque e seu Bônus de Proficiência). Se falhar, a cr
 dela antes do início do seu próximo turno.'),
   ('push', 'Empurrar', 'Se atingir uma criatura com esta arma, você pode empurrá-la até 3 metros para longe de você se a criatura
 for Grande ou menor.'),
-  ('graze', 'Garantido', 'Se sua jogada de ataque com esta arma errar uma
+  ('graze', 'Resvalar', 'Se sua jogada de ataque com esta arma errar uma
 criatura, você pode causar dano a essa criatura igual
 ao modificador de atributo que utilizou para realizar a
 jogada de ataque. Este dano é do mesmo tipo causado
@@ -35,4 +35,7 @@ uma jogada de ataque corpo a corpo com a mesma
 arma contra uma segunda criatura a até 1,5 metro da
 primeira que também esteja ao seu alcance. Se acertar,
 a segunda criatura sofre o dano da arma, mas você não
-adiciona seu modificador de atributo a esse dano, a menos que esse modificador seja negativo. Você pode realizar esse ataque adicional apenas uma vez por turno.');
+adiciona seu modificador de atributo a esse dano, a menos que esse modificador seja negativo. Você pode realizar esse ataque adicional apenas uma vez por turno.')
+ON CONFLICT (slug) DO UPDATE
+SET name = EXCLUDED.name,
+    description = EXCLUDED.description;

@@ -50,6 +50,7 @@ describe('Characters application layer', () => {
       | 'validateBackgroundAbilityBoosts'
       | 'validateBackgroundToolChoice'
       | 'validateBackgroundOriginFeat'
+      | 'resolveStartingGold'
     >
   >;
   let sheetRepo: jest.Mocked<Pick<CharacterSheetRepository, 'sync' | 'load' | 'loadMany' | 'empty' | 'mergeSheetData'>>;
@@ -119,6 +120,7 @@ describe('Characters application layer', () => {
       validateBackgroundAbilityBoosts: jest.fn().mockResolvedValue(undefined),
       validateBackgroundToolChoice: jest.fn().mockResolvedValue(undefined),
       validateBackgroundOriginFeat: jest.fn().mockResolvedValue(undefined),
+      resolveStartingGold: jest.fn().mockResolvedValue(0),
     };
     sheetRepo = {
       sync: jest.fn().mockResolvedValue(undefined),
@@ -146,7 +148,7 @@ describe('Characters application layer', () => {
         {
           provide: DataSource,
           useValue: {
-            query: jest.fn().mockResolvedValue([]),
+            query: jest.fn().mockResolvedValue([{ ok: 1 }]),
           },
         },
         { provide: getRepositoryToken(PlayerCharacter), useValue: repo },

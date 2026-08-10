@@ -198,4 +198,11 @@ export class CharacterSheetValidator {
       classSlug,
     );
   }
+
+  resolveStartingGold(
+    equipment: CharacterSheetInput['equipment'],
+    ctx: Pick<CharacterSheetContext, 'classSlug' | 'backgroundSlug'>,
+  ): Promise<number> {
+    return this.equipmentValidator.resolveStartingGold(equipment, ctx);
+  }
 }
