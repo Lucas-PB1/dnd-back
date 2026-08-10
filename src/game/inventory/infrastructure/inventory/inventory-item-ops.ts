@@ -113,6 +113,11 @@ export function inventoryItemToDtoFromCatalog(
 ): InventoryItemResponseDto {
   const catalog = catalogBySlug.get(row.itemSlug);
   const requiresAttunement = itemRequiresAttunement(catalog?.properties);
+  const consumable =
+    catalog?.properties != null &&
+    typeof catalog.properties === 'object' &&
+    !Array.isArray(catalog.properties) &&
+    (catalog.properties as Record<string, unknown>).consumable === true;
   const activation = {
     location: row.location,
     attuned: row.attuned,
@@ -131,6 +136,7 @@ export function inventoryItemToDtoFromCatalog(
     isPactWeapon: row.isPactWeapon ?? false,
     requiresAttunement,
     effectsActive: itemEffectsActive(activation),
+    consumable,
     effectsStatus: itemEffectsStatus(activation),
     weightKg: parseItemWeightKg(catalog?.weight),
     attachedCharmSlug: charmSlug,

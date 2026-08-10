@@ -66,6 +66,28 @@ describe('Items queries', () => {
     expect(qb.andWhere).toHaveBeenCalled();
   });
 
+  it('findAll applies magic and edition filters', async () => {
+    await findItems.execute(1, 20, undefined, {
+      magic: true,
+      editionSlugs: ['dmg-2024-pt'],
+      rarity: 'rare',
+    });
+    const qb = repo.createQueryBuilder.mock.results[0].value;
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      `(item.properties->>'magic') = 'true'`,
+    );
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      `(item.properties->>'rarity') = :rarity`,
+      { rarity: 'rare' },
+    );
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      `COALESCE(item.properties->>'editionSlug', :defaultEdition) IN (:...editionSlugs)`,
+      expect.objectContaining({
+        editionSlugs: ['dmg-2024-pt'],
+      }),
+    );
+  });
+
   it('findBySlug returns dto', async () => {
     repo.findOne.mockResolvedValue(sample);
     const result = await findItemBySlug.execute('longsword');

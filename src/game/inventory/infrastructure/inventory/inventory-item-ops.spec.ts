@@ -192,6 +192,7 @@ describe('inventory-item-ops', () => {
         weightKg: 5,
         attuned: true,
         effectsActive: false,
+        consumable: false,
         effectsStatus: 'inactive_unequipped',
       });
     });

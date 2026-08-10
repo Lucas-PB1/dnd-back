@@ -53,6 +53,13 @@ export class InventoryItemResponseDto {
   effectsActive!: boolean;
 
   @ApiProperty({
+    example: false,
+    description:
+      'True when phb_item.properties.consumable (poção/óleo/pergaminho)',
+  })
+  consumable!: boolean;
+
+  @ApiProperty({
     enum: ['active', 'inactive_unequipped', 'inactive_unattuned'],
     description: 'Estado dos efeitos permanentes do item',
   })

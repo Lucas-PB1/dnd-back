@@ -1,0 +1,76 @@
+# Taxonomia — §0 #6 exemplar: Anel das Estrelas Cadentes
+# Padrão Trono: N economy no mesmo item_id; pool compartilhado starRingCharges
+
+meta:
+  fase: 4-wiring
+  padrao: multi-action-shared-pool
+  exemplar: anel-das-estrelas-cadentes
+
+items:
+  - slug: anel-das-estrelas-cadentes
+    name: "Anel das Estrelas Cadentes"
+    kind: unique
+    requiresAttunement: true
+    resource:
+      slug: starRingCharges
+      name: "Cargas — Anel das Estrelas Cadentes"
+      fixed_max: 6
+    abilities:
+      - id: item-anel-das-estrelas-cadentes-luzes
+        name: "Anel · Luz / Luzes Dançantes"
+        bucket: action
+        table_action: null
+        resource: null
+        summary: "Conjurar Luz ou Luzes Dançantes (sem gastar carga)"
+        status: wired
+
+      - id: item-anel-das-estrelas-cadentes-esferas
+        name: "Anel · Esferas de Relâmpago"
+        bucket: action
+        table_action: spend-resource
+        resource: starRingCharges
+        spend_amount: 2
+        summary: "Usar Magia: 2 cargas → até 4 esferas (Conc. 1 min)"
+        status: wired
+
+      - id: item-anel-das-estrelas-cadentes-mover-esferas
+        name: "Anel · Mover esferas"
+        bucket: bonus
+        table_action: null
+        resource: null
+        summary: "Ação Bônus: mover cada esfera até 9 m"
+        status: wired
+
+      - id: item-anel-das-estrelas-cadentes-estrelas-1
+        name: "Anel · Estrelas Cadentes (1)"
+        bucket: action
+        table_action: spend-resource
+        resource: starRingCharges
+        spend_amount: 1
+        status: wired
+
+      - id: item-anel-das-estrelas-cadentes-estrelas-2
+        name: "Anel · Estrelas Cadentes (2)"
+        bucket: action
+        table_action: spend-resource
+        resource: starRingCharges
+        spend_amount: 2
+        status: wired
+
+      - id: item-anel-das-estrelas-cadentes-estrelas-3
+        name: "Anel · Estrelas Cadentes (3)"
+        bucket: action
+        table_action: spend-resource
+        resource: starRingCharges
+        spend_amount: 3
+        status: wired
+
+      - id: item-anel-das-estrelas-cadentes-fogo-fadas
+        name: "Anel · Fogo das Fadas"
+        bucket: action
+        table_action: spend-resource
+        resource: starRingCharges
+        spend_amount: 1
+        status: wired
+
+    mesa_complete: parcial

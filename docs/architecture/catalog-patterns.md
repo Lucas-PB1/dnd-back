@@ -110,6 +110,8 @@ Tabelas tipadas para a **engine** (mesa/dados). Seeds: `database/seeds/combat/C0
 
 HTTP: `GET /combat-mechanical-catalog` (`economyActions` + `panelActions` + manobras, …).
 
+Itens mágicos (DMG) na mesma profundidade de mesa (várias ações, cargas, passivos): ver [`dmg-item-mesa.md`](./dmg-item-mesa.md). Seeds de referência: `combat/C013` (Valdas), catálogo `dmg/D010`.
+
 ---
 
 ## Checklist — nova tabela de catálogo

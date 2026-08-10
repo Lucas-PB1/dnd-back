@@ -1,0 +1,83 @@
+# Taxonomia — lote §0 #5 (1 pool + 1 botão)
+# Total: 5
+# Padrão Anel dos Barris: resource max N + spend-resource (1 carga)
+# MVP: recover_all_on_long (texto = 1dN ao amanhecer)
+
+meta:
+  fase: 3-wiring
+  padrao: charge-pool-single
+  nota: |
+    Um botão por item; spend_amount 1.
+    Sem gasto variável 1–K (isso é §0 #10).
+    Sem lista multi-magia de varinha/cajado (§0 #7–#8).
+
+items:
+  - slug: anel-de-evasao
+    name: "Anel de Evasão"
+    kind: unique
+    requiresAttunement: true
+    resource: { slug: anelEvasaoCharges, fixed_max: 3 }
+    abilities:
+      - id: item-anel-de-evasao-usar
+        name: "Anel de Evasão · Sucesso"
+        bucket: reaction
+        table_action: spend-resource
+        resource: anelEvasaoCharges
+        status: wired
+    mesa_complete: parcial
+
+  - slug: colar-dos-pensamentos
+    name: "Colar dos Pensamentos"
+    kind: unique
+    requiresAttunement: true
+    resource: { slug: colarPensamentosCharges, fixed_max: 5 }
+    abilities:
+      - id: item-colar-dos-pensamentos-usar
+        name: "Colar · Detectar Pensamentos"
+        bucket: action
+        table_action: spend-resource
+        resource: colarPensamentosCharges
+        status: wired
+    mesa_complete: parcial
+
+  - slug: elmo-de-teleporte
+    name: "Elmo de Teleporte"
+    kind: unique
+    requiresAttunement: true
+    resource: { slug: elmoTeleporteCharges, fixed_max: 3 }
+    abilities:
+      - id: item-elmo-de-teleporte-usar
+        name: "Elmo · Teleporte"
+        bucket: action
+        table_action: spend-resource
+        resource: elmoTeleporteCharges
+        status: wired
+    mesa_complete: parcial
+
+  - slug: gema-da-visao
+    name: "Gema da Visão"
+    kind: unique
+    requiresAttunement: true
+    resource: { slug: gemaVisaoCharges, fixed_max: 3 }
+    abilities:
+      - id: item-gema-da-visao-usar
+        name: "Gema · Visão Verdadeira"
+        bucket: action
+        table_action: spend-resource
+        resource: gemaVisaoCharges
+        status: wired
+    mesa_complete: parcial
+
+  - slug: varinha-farejadora-de-magias
+    name: "Varinha Farejadora de Magias"
+    kind: unique
+    requiresAttunement: false
+    resource: { slug: varinhaFarejadoraCharges, fixed_max: 3 }
+    abilities:
+      - id: item-varinha-farejadora-de-magias-usar
+        name: "Varinha · Detectar Magia"
+        bucket: action
+        table_action: spend-resource
+        resource: varinhaFarejadoraCharges
+        status: wired
+    mesa_complete: parcial

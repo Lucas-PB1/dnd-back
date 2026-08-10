@@ -1,0 +1,463 @@
+# Taxonomia — lote §0 #1 (poção / óleo / pergaminho)
+# Gerado por generate-dmg-consumable-lote.mjs
+# Total: 30
+
+meta:
+  fase: 1-wiring
+  padrao: consumable-reminder
+  nota: |
+    Sem pool regenerável (consumo real = quantity no inventário).
+    Economy = lembrete (table_action NULL).
+    Aparece na aba Ações se quantity>0 e properties.consumable=true (mochila ou equipado).
+    Poções: bucket bonus (Beber). Óleos/pergaminhos: action.
+
+items:
+  - slug: oleo-de-forma-eterea
+    name: "Óleo de Forma Etérea"
+    kind: oleo
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-oleo-de-forma-eterea-usar
+        name: "Aplicar · Óleo de Forma Etérea"
+        bucket: action
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: oleo-de-precisao
+    name: "Óleo de Precisão"
+    kind: oleo
+    header: "Poção, Muito Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-oleo-de-precisao-usar
+        name: "Aplicar · Óleo de Precisão"
+        bucket: action
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: oleo-escorregadio
+    name: "Óleo Escorregadio"
+    kind: oleo
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-oleo-escorregadio-usar
+        name: "Aplicar · Óleo Escorregadio"
+        bucket: action
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pergaminho-da-invocacao-de-tita
+    name: "Pergaminho da Invocação de Titã"
+    kind: pergaminho
+    header: "Pergaminho, Lendário"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pergaminho-da-invocacao-de-tita-usar
+        name: "Ler · Pergaminho da Invocação de Titã"
+        bucket: action
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pergaminho-de-circulo-da-protecao
+    name: "Pergaminho de Círculo da Proteção"
+    kind: pergaminho
+    header: "Pergaminho, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pergaminho-de-circulo-da-protecao-usar
+        name: "Ler · Pergaminho de Círculo da Proteção"
+        bucket: action
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-bafo-de-fogo
+    name: "Poção Bafo de Fogo"
+    kind: pocao
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-bafo-de-fogo-usar
+        name: "Beber · Poção Bafo de Fogo"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-da-saude
+    name: "Poção da Saúde"
+    kind: pocao
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-da-saude-usar
+        name: "Beber · Poção da Saúde"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-das-formas-gasosas
+    name: "Poção das Formas Gasosas"
+    kind: pocao
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-das-formas-gasosas-usar
+        name: "Beber · Poção das Formas Gasosas"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-amizade-animal
+    name: "Poção de Amizade Animal"
+    kind: pocao
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-amizade-animal-usar
+        name: "Beber · Poção de Amizade Animal"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-clarividencia
+    name: "Poção de Clarividência"
+    kind: pocao
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-clarividencia-usar
+        name: "Beber · Poção de Clarividência"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-compreensao
+    name: "Poção de Compreensão"
+    kind: pocao
+    header: "Poção, Comum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-compreensao-usar
+        name: "Beber · Poção de Compreensão"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-cura
+    name: "Poção de Cura"
+    kind: pocao
+    header: "Poção, Comum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-cura-usar
+        name: "Beber · Poção de Cura"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-escalada
+    name: "Poção de Escalada"
+    kind: pocao
+    header: "Poção, Comum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-escalada-usar
+        name: "Beber · Poção de Escalada"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-forca-de-gigante
+    name: "Poção de Força de Gigante"
+    kind: pocao
+    header: "Poção, Raridade Variável"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-forca-de-gigante-usar
+        name: "Beber · Poção de Força de Gigante"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-heroismo
+    name: "Poção de Heroísmo"
+    kind: pocao
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-heroismo-usar
+        name: "Beber · Poção de Heroísmo"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-invisibilidade
+    name: "Poção de Invisibilidade"
+    kind: pocao
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-invisibilidade-usar
+        name: "Beber · Poção de Invisibilidade"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-invisibilidade-maior
+    name: "Poção de Invisibilidade Maior"
+    kind: pocao
+    header: "Poção, Muito Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-invisibilidade-maior-usar
+        name: "Beber · Poção de Invisibilidade Maior"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-invulnerabilidade
+    name: "Poção de Invulnerabilidade"
+    kind: pocao
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-invulnerabilidade-usar
+        name: "Beber · Poção de Invulnerabilidade"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-ler-mentes
+    name: "Poção de Ler Mentes"
+    kind: pocao
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-ler-mentes-usar
+        name: "Beber · Poção de Ler Mentes"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-longevidade
+    name: "Poção de Longevidade"
+    kind: pocao
+    header: "Poção, Muito Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-longevidade-usar
+        name: "Beber · Poção de Longevidade"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-pugilismo
+    name: "Poção de Pugilismo"
+    kind: pocao
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-pugilismo-usar
+        name: "Beber · Poção de Pugilismo"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-resistencia
+    name: "Poção de Resistência"
+    kind: pocao
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-resistencia-usar
+        name: "Beber · Poção de Resistência"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-respirar-na-agua
+    name: "Poção de Respirar na Água"
+    kind: pocao
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-respirar-na-agua-usar
+        name: "Beber · Poção de Respirar na Água"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-velocidade
+    name: "Poção de Velocidade"
+    kind: pocao
+    header: "Poção, Muito Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-velocidade-usar
+        name: "Beber · Poção de Velocidade"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-vitalidade
+    name: "Poção de Vitalidade"
+    kind: pocao
+    header: "Poção, Muito Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-vitalidade-usar
+        name: "Beber · Poção de Vitalidade"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-de-voo
+    name: "Poção de Voo"
+    kind: pocao
+    header: "Poção, Muito Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-de-voo-usar
+        name: "Beber · Poção de Voo"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-do-amor
+    name: "Poção do Amor"
+    kind: pocao
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-do-amor-usar
+        name: "Beber · Poção do Amor"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-do-crescimento
+    name: "Poção do Crescimento"
+    kind: pocao
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-do-crescimento-usar
+        name: "Beber · Poção do Crescimento"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-do-encolhimento
+    name: "Poção do Encolhimento"
+    kind: pocao
+    header: "Poção, Raro"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-do-encolhimento-usar
+        name: "Beber · Poção do Encolhimento"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso
+
+  - slug: pocao-falsa
+    name: "Poção Falsa"
+    kind: pocao
+    header: "Poção, Incomum"
+    tipo: reminder
+    consumable: true
+    abilities:
+      - id: item-pocao-falsa-usar
+        name: "Beber · Poção Falsa"
+        bucket: bonus
+        table_action: null
+        resource: null
+        status: wired
+    mesa_complete: parcial  # lembrete; quantity manual após uso

@@ -1,0 +1,54 @@
+# Taxonomia — §0 #7 lote varinhas (pool + N botões)
+# Total: 3
+# Pool compartilhado por varinha; spend_amount = custo da magia
+# MVP: recover_all_on_long; destruição no 1 ao gastar última carga = nota no texto
+
+meta:
+  fase: 4-wiring
+  padrao: wand-multi-spell
+  nota: |
+    Sem cast automático — spend-resource + lembrete de mesa.
+    Mísseis: botões 1/2/3 cargas (círculo 1/2/3).
+
+items:
+  - slug: varinha-imobilizadora
+    name: "Varinha Imobilizadora"
+    requiresAttunement: true
+    resource: { slug: varinhaImobilizadoraCharges, fixed_max: 7 }
+    abilities:
+      - id: item-varinha-imobilizadora-paralisar-pessoa
+        spend_amount: 2
+        spell: Paralisar Pessoa
+      - id: item-varinha-imobilizadora-paralisar-monstro
+        spend_amount: 5
+        spell: Paralisar Monstro
+    mesa_complete: parcial
+
+  - slug: varinha-do-medo
+    name: "Varinha do Medo"
+    requiresAttunement: true
+    resource: { slug: varinhaMedoCharges, fixed_max: 7 }
+    abilities:
+      - id: item-varinha-do-medo-comando
+        spend_amount: 1
+        spell: "Comando (abaixar/fugir)"
+      - id: item-varinha-do-medo-medo
+        spend_amount: 3
+        spell: "Medo (Cone 18 m)"
+    mesa_complete: parcial
+
+  - slug: varinha-de-misseis-magicos
+    name: "Varinha de Mísseis Mágicos"
+    requiresAttunement: false
+    resource: { slug: varinhaMisseisCharges, fixed_max: 7 }
+    abilities:
+      - id: item-varinha-de-misseis-magicos-1
+        spend_amount: 1
+        spell: "Mísseis Mágicos (1º)"
+      - id: item-varinha-de-misseis-magicos-2
+        spend_amount: 2
+        spell: "Mísseis Mágicos (2º)"
+      - id: item-varinha-de-misseis-magicos-3
+        spend_amount: 3
+        spell: "Mísseis Mágicos (3º)"
+    mesa_complete: parcial

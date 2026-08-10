@@ -1,0 +1,342 @@
+# Taxonomia — coberturas confirmadas (§3.1)
+# Gerado por generate-dmg-coverage-lote.mjs
+# Total: 47
+
+meta:
+  fase: 2-taxonomy
+  padrao: coverage
+  nota: |
+    properties.kind=coverage + appliesTo + appliesFilter.
+    Sem overlay de inventário neste lote (wiring 2b depois).
+    Busca/compêndio pode usar esses campos.
+
+items:
+  - slug: arma-1-2-ou-3
+    name: "Arma, +1, +2 ou +3"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    status: tagged
+
+  - slug: armadura-1-2-ou-3
+    name: "Armadura, +1, +2 ou +3"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Leve, Média ou Pesada"
+    status: tagged
+
+  - slug: escudo-1-2-ou-3
+    name: "Escudo, +1, +2 ou +3"
+    kind: coverage
+    appliesTo: shield
+    appliesFilter: "Escudo"
+    status: tagged
+
+  - slug: municao-1-2-ou-3
+    name: "Munição, +1, +2 ou +3"
+    kind: coverage
+    appliesTo: ammunition
+    appliesFilter: "Qualquer Munição"
+    status: tagged
+
+  - slug: varinha-do-mago-de-guerra-1-2-ou-3
+    name: "Varinha do Mago de Guerra, +1, +2 ou +3"
+    kind: coverage
+    appliesTo: wand
+    appliesFilter: "varinha"
+    status: tagged
+
+  - slug: ataduras-do-poder-desarmado
+    name: "Ataduras do Poder Desarmado"
+    kind: coverage
+    appliesTo: unarmed
+    appliesFilter: "ataque-desarmado"
+    status: tagged
+
+  - slug: arma-de-adamantina
+    name: "Arma de Adamantina"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Munição ou Arma Corpo a Corpo"
+    status: tagged
+
+  - slug: arma-de-prata
+    name: "Arma de Prata"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    status: tagged
+
+  - slug: armadura-adamantina
+    name: "Armadura Adamantina"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Média ou Pesada, Exceto Gibão de Peles"
+    status: tagged
+
+  - slug: armadura-de-mitral
+    name: "Armadura de Mitral"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Média ou Pesada, Exceto Gibão de Peles"
+    status: tagged
+
+  - slug: armadura-facil-de-tirar
+    name: "Armadura Fácil de Tirar"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Leve, Média ou Pesada"
+    status: tagged
+
+  - slug: armadura-fumegante
+    name: "Armadura Fumegante"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Pesada, Média ou Leve"
+    status: tagged
+
+  - slug: armadura-reluzente
+    name: "Armadura Reluzente"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Leve, Média ou Pesada"
+    status: tagged
+
+  - slug: armadura-do-marinheiro
+    name: "Armadura do Marinheiro"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Leve, Média ou Pesada"
+    status: tagged
+
+  - slug: arma-implacavel
+    name: "Arma Implacável"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    status: tagged
+
+  - slug: arma-magificada
+    name: "Arma Magificada"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    note: "params: spellSlug + escola (Enspelled)"
+    status: tagged
+
+  - slug: arma-sempre-alerta
+    name: "Arma Sempre Alerta"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    status: tagged
+
+  - slug: armadura-de-resistencia
+    name: "Armadura de Resistência"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Leve, Média ou Pesada"
+    status: tagged
+
+  - slug: armadura-de-vulnerabilidade
+    name: "Armadura de Vulnerabilidade"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Leve, Média ou Pesada"
+    status: tagged
+
+  - slug: armadura-demoniaca
+    name: "Armadura Demoníaca"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Qualquer Leve, Média ou Pesada"
+    status: tagged
+
+  - slug: municao-exterminadora
+    name: "Munição Exterminadora"
+    kind: coverage
+    appliesTo: ammunition
+    appliesFilter: "Qualquer Munição"
+    status: tagged
+
+  - slug: municao-impactante
+    name: "Munição Impactante"
+    kind: coverage
+    appliesTo: ammunition
+    appliesFilter: "Qualquer Munição"
+    status: tagged
+
+  - slug: sorvedora-das-nove-almas
+    name: "Sorvedora das Nove Almas"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    status: tagged
+
+  - slug: defensora
+    name: "Defensora"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Arma Corpo a Corpo"
+    status: tagged
+
+  - slug: matadora-de-dragoes
+    name: "Matadora de Dragões"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    status: tagged
+
+  - slug: matadora-de-gigantes
+    name: "Matadora de Gigantes"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    status: tagged
+
+  - slug: sacro-vingadora
+    name: "Sacro Vingadora"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Simples ou Marcial"
+    status: tagged
+
+  - slug: escara-gelida
+    name: "Escara Gélida"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive, Rapieira"
+    status: tagged
+
+  - slug: espada-da-precisao
+    name: "Espada da Precisão"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Grande, Espada Longa ou Glaive"
+    status: tagged
+
+  - slug: espada-da-vinganca
+    name: "Espada da Vingança"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira"
+    status: tagged
+
+  - slug: espada-dancarina
+    name: "Espada Dançarina"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Rapieira"
+    status: tagged
+
+  - slug: espada-laceradora
+    name: "Espada Laceradora"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira"
+    status: tagged
+
+  - slug: espada-lunar
+    name: "Espada Lunar"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive, Rapieira"
+    status: tagged
+
+  - slug: espada-usurpadora-de-vida
+    name: "Espada Usurpadora de Vida"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira"
+    status: tagged
+
+  - slug: espada-vorpal
+    name: "Espada Vorpal"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Grande, Espada Longa ou Glaive"
+    status: tagged
+
+  - slug: garra-silvestre
+    name: "Garra Silvestre"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Adaga, Cimitarra, Espada Curta, Foice, Lança ou Rapieira"
+    status: tagged
+
+  - slug: lamina-da-sorte
+    name: "Lâmina da Sorte"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive, Rapieira"
+    status: tagged
+
+  - slug: machado-do-carrasco
+    name: "Machado do Carrasco"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Alabarda, Machadinha, Machado de Batalha ou Machado Grande"
+    status: tagged
+
+  - slug: machado-berserker
+    name: "Machado-Berserker"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Alabarda, Machado de Batalha ou Machado Grande"
+    status: tagged
+
+  - slug: lingua-flamejante
+    name: "Língua Flamejante"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Qualquer Arma Corpo a Corpo"
+    status: tagged
+
+  - slug: arco-de-energia
+    name: "Arco de Energia"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Arco Curto ou Arco Longo"
+    status: tagged
+
+  - slug: arco-do-juramento
+    name: "Arco do Juramento"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Arco Curto ou Arco Longo"
+    status: tagged
+
+  - slug: martelo-do-trovao
+    name: "Martelo do Trovão"
+    kind: coverage
+    appliesTo: weapon
+    appliesFilter: "Malho ou Martelo de Guerra"
+    status: tagged
+
+  - slug: armadura-de-placas-das-formas-etereas
+    name: "Armadura de Placas das Formas Etéreas"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Armadura de Placas Parcial ou Armadura de Placas"
+    status: tagged
+
+  - slug: armadura-de-placas-do-povo-anao
+    name: "Armadura de Placas do Povo Anão"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Armadura de Placas ou Placas Parcial"
+    status: tagged
+
+  - slug: cota-de-malha-elfica
+    name: "Cota de Malha Élfica"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Cota de Malha ou Cota de Malha Parcial"
+    status: tagged
+
+  - slug: cota-de-malha-ifriti
+    name: "Cota de Malha Ifriti"
+    kind: coverage
+    appliesTo: armor
+    appliesFilter: "Cota de Malha ou Cota de Malha Parcial"
+    status: tagged

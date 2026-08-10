@@ -294,7 +294,7 @@ export async function loadFeatResourceSchedule(
   }));
 }
 
-/** Itens equipados (+ sintonizados se exigir) e charms anexados a armas equipadas. */
+/** Itens equipados (+ sintonizados se exigir), charms anexados e consumíveis com quantity > 0. */
 export async function loadActiveItemSlugs(
   dataSource: DataSource,
   characterId: string,
@@ -317,6 +317,13 @@ export async function loadActiveItemSlugs(
        WHERE pci.character_id = $1
          AND pci.location = 'equipped'
          AND pci.attached_charm_slug IS NOT NULL
+       UNION ALL
+       SELECT pci.item_slug
+       FROM rpg.player_character_item pci
+       JOIN rpg.phb_item i ON i.slug = pci.item_slug
+       WHERE pci.character_id = $1
+         AND pci.quantity > 0
+         AND COALESCE((i.properties->>'consumable')::boolean, false) = true
      ) active
      ORDER BY item_slug`,
     [characterId],

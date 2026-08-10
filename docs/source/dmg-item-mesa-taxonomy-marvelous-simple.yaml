@@ -1,0 +1,84 @@
+# Taxonomia — §0 #9a–b maravilhosos simples (dawn + pool pequeno)
+# Total: 19
+# MVP: recover_all_on_long
+
+meta:
+  fase: 5-wiring
+  padrao: marvelous-simple
+  nota: |
+    Mistura §0 #4 (1×/amanhecer) e §0 #5 (pool + botão).
+    Olhos: gasto variável 1–3 (§0 #10 leve).
+
+items:
+  - slug: elmo-de-telepatia
+    dawn_resources:
+      - { slug: elmoTelepatiaDetectarUse, fixed_max: 1 }
+      - { slug: elmoTelepatiaSugestaoUse, fixed_max: 1 }
+    notes: ["Telepatia 9 m = lembrete passivo"]
+
+  - slug: chifre-do-alarme-silencioso
+    resource: { slug: chifreAlarmeSilenciosoCharges, fixed_max: 4 }
+
+  - slug: botas-aladas
+    resource: { slug: botasAladasCharges, fixed_max: 4 }
+
+  - slug: manto-de-invisibilidade
+    resource: { slug: mantoInvisibilidadeCharges, fixed_max: 3 }
+
+  - slug: capa-do-saltimbanco
+    resource: { slug: capaSaltimbancoUse, fixed_max: 1 }
+
+  - slug: olhos-de-enfeiticar
+    resource: { slug: olhosEnfeiticarCharges, fixed_max: 3 }
+    spells:
+      - { id: enfeiticar-1, spend: 1 }
+      - { id: enfeiticar-2, spend: 2 }
+      - { id: enfeiticar-3, spend: 3 }
+
+  - slug: pedras-mensageiras
+    resource: { slug: pedrasMensageirasUse, fixed_max: 1 }
+
+  - slug: flauta-atormentadora
+    resource: { slug: flautaAtormentadoraCharges, fixed_max: 3 }
+
+  # --- lote 9b ---
+  - slug: chapeu-dos-vermes
+    resource: { slug: chapeuVermesCharges, fixed_max: 3 }
+
+  - slug: tunica-das-cores-cintilantes
+    resource: { slug: tunicaCoresCharges, fixed_max: 3 }
+
+  - slug: instrumento-musical-de-escrita
+    resource: { slug: instrumentoEscritaCharges, fixed_max: 3 }
+
+  - slug: manto-do-morcego
+    resource: { slug: mantoMorcegoPolimorfiaUse, fixed_max: 1 }
+    notes: ["Furtividade/voo = lembrete"]
+
+  - slug: capa-aracnidea
+    resource: { slug: capaAracnideaTeiaUse, fixed_max: 1 }
+    notes: ["Caminhada/escalada/resistência = lembrete"]
+
+  - slug: orbe-flutuante
+    resource: { slug: orbeFlutuanteLuzDiaUse, fixed_max: 1 }
+    notes: ["Luz à vontade = lembrete"]
+
+  - slug: cubo-de-invocacao
+    resource: { slug: cuboInvocacaoUse, fixed_max: 1 }
+
+  - slug: tabuleiro-espiritual
+    resource: { slug: tabuleiroEspiritualCharges, fixed_max: 3 }
+    spells:
+      - { id: augurio, spend: 1 }
+      - { id: comunhao, spend: 3 }
+
+  - slug: bola-de-cristal-de-telepatia
+    resource: { slug: bolaCristalTelepatiaSugestaoUse, fixed_max: 1 }
+    notes: ["Vidência à vontade = lembrete"]
+
+  - slug: jarro-alquimico
+    resource: { slug: jarroAlquimicoUse, fixed_max: 1 }
+
+  - slug: cinturao-do-povo-anao
+    permanentEffects: { abilityBonuses: { constituicao: 2 } }
+    notes: ["Benefícios anão/não-anão = lembrete"]
