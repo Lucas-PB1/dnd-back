@@ -135,7 +135,7 @@ function addClericSubclassNotes(
 
   if (subclassSlug === 'dragon-domain') {
     notes.push(
-      'Domínio do Dragão: após Descanso Longo escolha Ácido/Frio/Fogo/Elétrico/Veneno; troque Necrótico/Radiante de Clérigo por esse tipo e cause dano extra = nível (usos = mod. SAB).',
+      'Domínio do Dragão: após Descanso Longo escolha Ácido/Frio/Fogo/Relâmpago/Veneno; troque Necrótico/Radiante de Clérigo por esse tipo e cause dano extra = nível (usos = mod. SAB).',
     );
     notes.push(
       'Majestade Dracônica: Canalizar Divindade — Emanação 9 m Enfeitiçado ou Amedrontado (salvaguarda SAB).',
@@ -147,7 +147,7 @@ function addClericSubclassNotes(
     }
     if (level >= 17) {
       notes.push(
-        'Aspecto Lendário: 3 ações lendárias/LR (Rasgar, Cauda, Asas) — veja recurso.',
+        'Aspecto Lendário: 3 ações lendárias/DL (Rasgar, Cauda, Asas) — Usar no painel/economia.',
       );
     }
   }

@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { rollDamageParts } from '@game/dice/domain/dice';
+import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type { PaladinTableActionResult } from './paladin-action-deps';
 import {
@@ -82,10 +83,11 @@ export async function resolveInspiringSmite(
   }
   await deps.state.useClassResource(character, CHANNEL_DIVINITY_SLUG, 1);
   const pool = rollDamageParts('2d8', character.level);
-  const current = (await deps.state.buildResponse(character)).tempHp ?? 0;
-  const state = await deps.state.patch(character, {
-    tempHp: Math.max(current, pool.total),
-  });
+  const state = await applyTemporaryHitPoints(
+    deps.state,
+    character,
+    pool.total,
+  );
   return {
     state,
     actionName: 'Destruição Inspiradora',

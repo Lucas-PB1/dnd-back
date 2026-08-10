@@ -10,6 +10,7 @@ Ao implementar ou revisar **classe/subclasse jogável**, **table-action**, **eco
 1. Abrir a skill **`rpg-class-mesa-api`** (e só as `references/` do subproblema).
 2. Padrão canônico: **um** `POST …/<class>/table-action` + `actionSlug` — não endpoints dedicados novos.
 3. **Sem** `Set`/lista hardcoded de `subclassSlug`/manobras no TS — SSOT = seeds `C00*` + catálogo carregado.
-4. Front: skill irmã `rpg-class-mesa-front` no `dnd-front`.
+4. **PV temporários:** se a ação concede PV temp., aplicar na ficha (`applyTemporaryHitPoints` / `tempHp`); declaração manual na UI permanece. Não só nota.
+5. Front: skill irmã `rpg-class-mesa-front` no `dnd-front`.
 
 Detalhe e checklist vivem na skill — não duplicar aqui.

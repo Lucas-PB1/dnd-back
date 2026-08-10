@@ -6,11 +6,15 @@ describe('RangerActionsHandler', () => {
   const stateResponse = {
     classResources: [],
     concentratingOn: 'marca-do-predador',
+    tempHp: 0,
   };
   const access = { findAccessibleOrFail: jest.fn() };
   const state = {
     useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
-    patch: jest.fn().mockResolvedValue(stateResponse),
+    patch: jest.fn().mockImplementation(async (_c, dto) => ({
+      ...stateResponse,
+      ...dto,
+    })),
     buildResponse: jest.fn().mockResolvedValue(stateResponse),
   };
   const mechanicalCatalog = {
@@ -83,6 +87,10 @@ describe('RangerActionsHandler', () => {
     );
     expect(result.expression).toMatch(/1d8\+3/);
     expect(result.note).toContain('PV temporários');
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'ranger-1' }),
+      expect.objectContaining({ tempHp: result.total }),
+    );
   });
 
   it('rejects Nature\'s Veil below level 14', async () => {

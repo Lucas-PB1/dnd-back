@@ -2,11 +2,15 @@ import { BadRequestException } from '@nestjs/common';
 import { ClericActionsHandler } from './cleric-actions.handler';
 
 describe('ClericActionsHandler', () => {
-  const stateResponse = { classResources: [] };
+  const stateResponse = { classResources: [], tempHp: 0 };
   const access = { findAccessibleOrFail: jest.fn() };
   const state = {
     useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
     buildResponse: jest.fn().mockResolvedValue(stateResponse),
+    patch: jest.fn().mockImplementation(async (_c, dto) => ({
+      ...stateResponse,
+      ...dto,
+    })),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
   const handler = new ClericActionsHandler(
@@ -102,6 +106,24 @@ describe('ClericActionsHandler', () => {
     );
   });
 
+  it('applies temporary HP for Improved Warding Flare', async () => {
+    const result = await handler.useTableAction('user-1', 'cleric-1', {
+      actionSlug: 'warding-flare',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'cleric-1' }),
+      'warding-flare',
+      1,
+    );
+    expect(result.expression).toMatch(/^2d6\+4$/);
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'cleric-1' }),
+      expect.objectContaining({ tempHp: result.total }),
+    );
+    expect(result.note).toContain('ajuste o contador');
+  });
+
   it('rejects Cleric actions for another class', async () => {
     access.findAccessibleOrFail.mockResolvedValueOnce({
       ...cleric,
@@ -113,5 +135,63 @@ describe('ClericActionsHandler', () => {
         actionSlug: 'divine-spark-heal',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('spends Channel Divinity for Dragon Majesty with save DC', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...cleric,
+      subclassSlug: 'dragon-domain',
+      level: 5,
+    });
+
+    const result = await handler.useTableAction('user-1', 'cleric-1', {
+      actionSlug: 'dragon-majesty',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'cleric-1' }),
+      'channelDivinity',
+      1,
+    );
+    expect(result.saveDc).toBe(15);
+    expect(result.note).toContain('Enfeitiçado ou Amedrontado');
+  });
+
+  it('spends chromatic-affinity for Dragon Domain bonus damage', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...cleric,
+      subclassSlug: 'dragon-domain',
+      level: 8,
+    });
+
+    const result = await handler.useTableAction('user-1', 'cleric-1', {
+      actionSlug: 'chromatic-affinity',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'cleric-1' }),
+      'chromatic-affinity',
+      1,
+    );
+    expect(result.total).toBe(8);
+  });
+
+  it('spends legendary-aspect for Rend at level 17+', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...cleric,
+      subclassSlug: 'dragon-domain',
+      level: 17,
+    });
+
+    const result = await handler.useTableAction('user-1', 'cleric-1', {
+      actionSlug: 'legendary-aspect-rend',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'cleric-1' }),
+      'legendary-aspect',
+      1,
+    );
+    expect(result.note).toContain('Rasgar');
   });
 });

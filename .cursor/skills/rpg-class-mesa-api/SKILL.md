@@ -29,6 +29,17 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 
 **Feito (mínimo):** economia + painel + handler + recurso quando gasta. Front: skill irmã.
 
+## PV temporários (`tempHp`)
+
+Sempre que uma **table-action** (ou manobra) concede PV temporários **a si mesmo** (ou um pool que a mesa aplica no personagem):
+
+1. **Aplicar** na ficha via `applyTemporaryHitPoints` (`session/application/core/apply-temporary-hit-points.ts`) — `max(atual, novo)`, regra 5e.
+2. Nota clara com o total / expressão.
+3. Se o efeito for **aliado / distribuição**: ainda aplica na ficha do PC e a nota pede ajuste manual (padrão Destruição Inspiradora).
+4. **Declaração manual** permanece: o jogador edita `tempHp` no dialog Condições / PV temp. da ficha — não remover.
+
+Não deixar só “jogue na mesa” quando o valor já pode ser rolado/calculado no handler.
+
 ## Padrão de ações (canônico)
 
 **Um** endpoint por classe: `POST /characters/:id/<classSlug>/table-action` com `actionSlug` (+ campos opcionais no mesmo DTO: `pointsSpent`, `metamagicSlug`, …).
@@ -44,8 +55,9 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 3. `phb_resource_definition` + `phb_resource_grant` (classe e/ou subclasse)
 4. Linhas `phb_class_economy_action` com `resource_slug` nos pools + `table_action` quando Usar dispara efeito
 5. Linhas `phb_class_panel_action` com `subclass_id` correto (nunca NULL se for de subclasse) — painel ≠ contador `remaining/max` da Economia
-6. Specs domain/handler no que gasta ou rola
-7. Front alinhado — skill `rpg-class-mesa-front`
+6. **PV temp.:** se a feature concede, aplicar `tempHp` (não só nota) — ver seção acima
+7. Specs domain/handler no que gasta ou rola
+8. Front alinhado — skill `rpg-class-mesa-front`
 
 ## References (progressive disclosure)
 
@@ -53,7 +65,7 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 |----------|---------|
 | Pastas, seeds, HTTP | [`references/camadas.md`](references/camadas.md) |
 | Economy / panel / XOR | [`references/economia-painel.md`](references/economia-painel.md) |
-| Mago · Guerreiro · Feiticeiro · Bruxo · Patrulheiro · Ladino · Paladino · Pistoleiro · Monge (**concluídas**) | [`references/exemplares.md`](references/exemplares.md) |
+| Mago · Guerreiro · Feiticeiro · Bruxo · Patrulheiro · Ladino · Paladino · Pistoleiro · Monge · Clérigo (**concluídas**) | [`references/exemplares.md`](references/exemplares.md) |
 
 ## Anti-padrões
 
@@ -67,3 +79,4 @@ Backlog ativo: [`docs/plans/backlog.md`](../../../docs/plans/backlog.md).
 - **Lista/`Set` hardcoded de `subclassSlug` (ou manobras/features) no TS** — filtrar/derivar do catálogo já carregado (C001/C009/C010). Nova sub = seed; **não** editar array de slugs no código
 - Hardcodar dano/propriedades de arma no TypeScript — seed `phb_item`/`phb_weapon` + load por slug
 - Deixar o **front** espelhar limiar de feature (`classSlug` + `level`) — expor número/flag no DTO (ex.: `savingThrowAuraBonus`)
+- Conceder PV temporários só na nota, sem atualizar `tempHp` quando o alvo é o próprio personagem

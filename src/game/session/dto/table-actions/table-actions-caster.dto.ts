@@ -15,6 +15,12 @@ const CLERIC_TABLE_ACTION_SLUGS = [
   'guided-strike',
   'war-priest',
   'war-gods-blessing',
+  'dragon-majesty',
+  'serpent-blessing',
+  'chromatic-affinity',
+  'legendary-aspect-rend',
+  'legendary-aspect-tail',
+  'legendary-aspect-wings',
 ] as const;
 
 export class UseClericTableActionDto {

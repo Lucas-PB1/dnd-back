@@ -7,6 +7,7 @@ describe('SorcererActionsHandler', () => {
       { slug: 'innate-sorcery', remaining: 2, max: 2, used: 0, name: 'Feitiçaria Inata' },
       { slug: 'sorceryPoints', remaining: 5, max: 5, used: 0, name: 'Pontos de Feitiçaria' },
     ],
+    tempHp: 0,
   };
   const access = { findAccessibleOrFail: jest.fn() };
   const state = {
@@ -15,6 +16,10 @@ describe('SorcererActionsHandler', () => {
     consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
     recoverSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
     buildResponse: jest.fn().mockResolvedValue(stateResponse),
+    patch: jest.fn().mockImplementation(async (_c, dto) => ({
+      ...stateResponse,
+      ...dto,
+    })),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
   const dataSource = {
@@ -190,5 +195,29 @@ describe('SorcererActionsHandler', () => {
         actionSlug: 'convert-slot-1-to-points',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('rolls and applies temporary HP for Heroic Soul', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...sorcerer,
+      subclassSlug: 'heroic-sorcery',
+      level: 5,
+    });
+
+    const result = await handler.useTableAction('user-1', 'sorc-1', {
+      actionSlug: 'heroic-soul',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'sorc-1' }),
+      'sorceryPoints',
+      1,
+    );
+    expect(result.expression).toMatch(/^1d6\+5$/);
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'sorc-1' }),
+      expect.objectContaining({ tempHp: result.total }),
+    );
+    expect(result.note).toContain('aplicados na ficha');
   });
 });

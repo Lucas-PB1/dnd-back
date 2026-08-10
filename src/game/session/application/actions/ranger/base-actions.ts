@@ -1,6 +1,7 @@
 import { HUNTERS_MARK_SPELL_SLUG } from '@game/combat/domain/ranger';
 import { rollDamageParts } from '@game/dice/domain/dice';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
 import type {
   PlayerCharacter,
@@ -36,9 +37,12 @@ export async function resolveTireless(
   assertCharacterLevel(character, 10, 'Patrulheiro', 'Incansável');
   const wisdom = Math.max(1, abilityModifier(character.abilityScores.sabedoria));
   const heal = rollDamageParts('1d8', wisdom);
-  const state = (
-    await deps.state.useClassResource(character, TIRELESS_SLUG, 1)
-  ).state;
+  await deps.state.useClassResource(character, TIRELESS_SLUG, 1);
+  const state = await applyTemporaryHitPoints(
+    deps.state,
+    character,
+    heal.total,
+  );
   return {
     state,
     actionName: 'Incansável',
@@ -46,7 +50,7 @@ export async function resolveTireless(
     roll: heal.dice[0]?.rolls[0],
     total: heal.total,
     resourceSpent: true,
-    note: `Incansável: você ganha ${heal.total} PV temporários (${heal.expression}). Descanso Curto reduz Exaustão em 1.`,
+    note: `Incansável: você ganha ${heal.total} PV temporários (${heal.expression}) — aplicados na ficha. Descanso Curto reduz Exaustão em 1.`,
   };
 }
 

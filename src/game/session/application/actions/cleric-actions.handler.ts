@@ -15,10 +15,16 @@ import {
   resolveTurnUndead,
 } from './cleric/base-actions';
 import {
+  resolveChromaticAffinity,
   resolveCrownOfLight,
+  resolveDragonMajesty,
   resolveGuidedStrike,
   resolveInvokeDuplicity,
+  resolveLegendaryAspectRend,
+  resolveLegendaryAspectTail,
+  resolveLegendaryAspectWings,
   resolveRadianceOfDawn,
+  resolveSerpentBlessing,
   resolveTrickstersBlessing,
   resolveWardingFlare,
   resolveWarGodsBlessing,
@@ -79,6 +85,18 @@ export class ClericActionsHandler {
         return resolveWarPriest(deps, character);
       case 'war-gods-blessing':
         return resolveWarGodsBlessing(deps, character);
+      case 'dragon-majesty':
+        return resolveDragonMajesty(deps, character);
+      case 'serpent-blessing':
+        return resolveSerpentBlessing(deps, character);
+      case 'chromatic-affinity':
+        return resolveChromaticAffinity(deps, character);
+      case 'legendary-aspect-rend':
+        return resolveLegendaryAspectRend(deps, character);
+      case 'legendary-aspect-tail':
+        return resolveLegendaryAspectTail(deps, character);
+      case 'legendary-aspect-wings':
+        return resolveLegendaryAspectWings(deps, character);
     }
   }
 }

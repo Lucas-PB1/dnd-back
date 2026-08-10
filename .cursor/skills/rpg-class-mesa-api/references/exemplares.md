@@ -15,6 +15,7 @@ Padrão alvo: **table-action**. Checklist em [`SKILL.md`](../SKILL.md).
 | Paladino | `paladin` | **Concluída** |
 | Pistoleiro | `gunslinger` | **Concluída** |
 | Monge | `monk` | **Concluída** |
+| Clérigo | `cleric` | **Concluída** |
 
 Polish **adiado** (não reabre “classe done”): ver [`docs/plans/backlog.md`](../../../docs/plans/backlog.md) — MM modal, Companheiro Primal tracker, reuso de invocações / entidades / duração.
 
@@ -154,3 +155,16 @@ Polish adiado: Assumidor de risco (d6 grátis); condições White Hat; Bang cast
 Pool: `focusPoints` (± na Economia). Base: Torrente / Defesa Paciente / Passos do Vento / Golpe Atordoante. Subs PHB: open-hand (Técnica, Integridade, Palma Vibrante), elements (Sintonia, Explosão nv.6/2 Foco), mercy (Cura/Dolo, Torrente Cura-Dolo, Misericórdia Final), shadow (Artes Escuridão, Passo 18 m, Aprimorado, Manto). Valdas `warrior-of-the-street`: Combinação / Movimentos / Traço / K.O. (+ recuperar 5 Foco). Defletir/Queda Lenta = lembrete. Passo Veloz / Punho de Ferro / Ápice = notes.
 
 Polish adiado: tracker de duração Sintonia/Manto; aplicar PV na ficha em curas; Passo Veloz automático.
+
+## Clérigo (`cleric`) — **concluída**
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/cleric/` |
+| Handler | `cleric-actions.handler.ts` + `actions/cleric/` |
+| HTTP | `POST …/cleric/table-action` |
+| Economy/panel | `C009` + `C010` |
+
+Pool: `channelDivinity` (± via `cleric-channel`; Usar nas linhas nomeadas). Base: Centelha (cura/dano), Expulsar Mortos-Vivos, Intervenção Divina. PHB: Vida (`preserve-life`), Luz (`radiance-of-dawn` / `warding-flare` / `crown-of-light`), Trapaça (`tricksters-blessing` + `invoke-duplicity`), Guerra (`guided-strike` / `war-priest` / `war-gods-blessing`). Valdas `dragon-domain`: Afinidade (`chromatic-affinity`), Majestade (`dragon-majesty`), Serpe L6 (`serpent-blessing`), Aspecto L17 (pool ± + Rasgar/Cauda/Asas).
+
+Polish adiado: recuperar 1 uso de Aspecto com espaço 2+; persistir tipo de Afinidade no estado; Transposição do Trapaceiro Usar dedicado.

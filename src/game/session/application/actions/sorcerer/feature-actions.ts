@@ -3,6 +3,8 @@ import {
   INNATE_SORCERY_RESOURCE,
   SORCEROUS_RESTORATION_RESOURCE,
 } from '@game/combat/domain/sorcerer';
+import { rollDamageParts } from '@game/dice/domain/dice';
+import { applyTemporaryHitPoints } from '@game/session/application/core/apply-temporary-hit-points';
 import {
   assertCharacterLevel,
   assertCharacterSubclass,
@@ -198,15 +200,21 @@ export async function resolveHeroicSoul(
 ): Promise<SorcererTableActionResult> {
   assertCharacterSubclass(character, 'heroic-sorcery', 'Feitiçaria Heróica');
   assertCharacterLevel(character, 3, 'Feiticeiro', 'Alma Heróica');
-  const state = await spendPoints(deps, character, 1);
-  const tempHpNote = `1d6 + ${character.level}`;
+  await spendPoints(deps, character, 1);
+  const roll = rollDamageParts('1d6', character.level);
+  const state = await applyTemporaryHitPoints(
+    deps.state,
+    character,
+    roll.total,
+  );
 
   return {
     state,
     actionName: 'Alma Heróica',
+    expression: roll.expression,
+    total: roll.total,
     resourceSpent: true,
-    total: 1,
-    note: `Alma Heróica: gastou 1 Ponto de Feitiçaria → PV temporários ${tempHpNote} (jogue na mesa).`,
+    note: `Alma Heróica: gastou 1 Ponto de Feitiçaria → ${roll.total} PV temporários (${roll.expression}) aplicados na ficha.`,
   };
 }
 
