@@ -12,12 +12,14 @@ export async function toggleRageOp(
   deps: MartialSessionDeps,
   character: PlayerCharacter,
   active?: boolean,
+  spendResource = true,
 ): Promise<CharacterStateResponseDto> {
   const state = await deps.findOrCreate(character.id, character.level);
   return applyToggleRage({
     character,
     state,
     active,
+    spendResource,
     stateRepo: deps.stateRepo,
     dataSource: deps.dataSource,
     buildResponse: deps.buildResponse,

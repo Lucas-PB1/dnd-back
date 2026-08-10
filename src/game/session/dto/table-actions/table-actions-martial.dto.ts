@@ -325,3 +325,45 @@ export class UseGunslingerTableActionDto {
   @IsString()
   maneuverSlug?: string;
 }
+
+const BARBARIAN_TABLE_ACTION_SLUGS = [
+  'toggle-rage',
+  'toggle-reckless',
+  'recover-all-rage',
+  'frenzy',
+  'wild-heart-eagle',
+  'fanatical-focus',
+  'retaliation',
+  'intimidating-presence',
+  'restore-intimidating-presence',
+  'champion-of-the-gods',
+  'zealous-presence',
+  'restore-zealous-presence',
+  'rage-of-the-gods',
+  'revitalizing-strength',
+  'branches-of-the-tree',
+  'traverse-the-tree',
+  'undeniable-magic-rage',
+  'cantrip-mage-hand',
+  'cantrip-shocking-grasp',
+  'cantrip-sure-strike',
+  'burning-hands-slap',
+  'magic-missile-throws',
+  'shield-block',
+  'i-cast-fist',
+] as const;
+
+export class UseBarbarianTableActionDto {
+  @ApiProperty({ enum: BARBARIAN_TABLE_ACTION_SLUGS })
+  @IsIn([...BARBARIAN_TABLE_ACTION_SLUGS])
+  actionSlug!: (typeof BARBARIAN_TABLE_ACTION_SLUGS)[number];
+
+  @ApiPropertyOptional({
+    minimum: 1,
+    description: 'Dados d12 de Campeão dos Deuses a gastar',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  diceCount?: number;
+}

@@ -1,5 +1,6 @@
 import {
   appliesRageDamageBonus,
+  barbarianCombatNotes,
   brutalStrikeDice,
   divineFuryExtraDice,
   fastMovementBonusMeters,
@@ -86,5 +87,15 @@ describe('barbarian-rage', () => {
   it('recognizes barbarian slug', () => {
     expect(isBarbarianClass('barbarian')).toBe(true);
     expect(isBarbarianClass('gunslinger')).toBe(false);
+  });
+
+  it('includes subclass combat notes', () => {
+    const notes = barbarianCombatNotes({
+      classSlug: 'barbarian',
+      subclassSlug: 'berserker',
+      level: 14,
+    });
+    expect(notes.some((n) => n.includes('Frenesi'))).toBe(true);
+    expect(notes.some((n) => n.includes('Presença Intimidante'))).toBe(true);
   });
 });

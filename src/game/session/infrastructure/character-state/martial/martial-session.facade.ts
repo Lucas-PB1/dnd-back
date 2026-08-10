@@ -55,8 +55,9 @@ export class MartialSessionFacade {
   toggleRage(
     character: PlayerCharacter,
     active?: boolean,
+    spendResource = true,
   ): Promise<CharacterStateResponseDto> {
-    return toggleRageOp(this.getDeps(), character, active);
+    return toggleRageOp(this.getDeps(), character, active, spendResource);
   }
 
   toggleReckless(

@@ -55,7 +55,7 @@ export function aggregateClassCombatContributions(
   const { classSlug, subclassSlug, level } = input;
 
   const notes = [
-    ...barbarianCombatNotes({ classSlug, level }),
+    ...barbarianCombatNotes({ classSlug, subclassSlug, level }),
     ...fighterCombatNotes({ classSlug, subclassSlug, level }),
     ...rogueCombatNotes({ classSlug, subclassSlug, level }),
     ...monkCombatNotes({ classSlug, subclassSlug, level }),

@@ -1,5 +1,5 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
-import { brutalStrikeDice as resolveBrutalStrikeDice } from '../barbarian/rage';
+import { brutalStrikeDice as resolveBrutalStrikeDice, divineFuryExtraDice, hasDivineFury } from '../barbarian/rage';
 import { resolveAttackCritThreshold } from '../gunslinger/firearm';
 import {
   MONK_UNARMED_ITEM_SLUG,
@@ -145,6 +145,12 @@ export function computeOneAttack(
     mode === 'melee' && ability.slug === 'forca'
       ? resolveBrutalStrikeDice(context.level ?? 0)
       : null;
+  const divineFuryDice = hasDivineFury({
+    subclassSlug: context.subclassSlug,
+    level: context.level,
+  })
+    ? divineFuryExtraDice(context.level ?? 0)
+    : null;
 
   return assembleWeaponAttack({
     piece,
@@ -172,6 +178,7 @@ export function computeOneAttack(
     attackDisadvantage,
     critThreshold,
     brutalDice,
+    divineFuryDice,
     noteExtras: collectAttackNoteExtras({
       piece,
       role,

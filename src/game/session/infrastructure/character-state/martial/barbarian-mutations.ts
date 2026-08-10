@@ -11,6 +11,8 @@ export async function applyToggleRage(input: {
   character: PlayerCharacter;
   state: PlayerCharacterState;
   active?: boolean;
+  /** When false, enter Rage without spending a use (ex.: Magia indiscutível). Default true. */
+  spendResource?: boolean;
   stateRepo: Repository<PlayerCharacterState>;
   dataSource: DataSource;
   buildResponse: BuildResponse;
@@ -22,22 +24,24 @@ export async function applyToggleRage(input: {
 
   const nextActive = input.active ?? !state.rageActive;
   if (nextActive && !state.rageActive) {
-    const resources = await resolveClassResources(dataSource, character);
-    const rage = resources.find((item) => item.slug === 'rage');
-    if (!rage) {
-      throw new BadRequestException('Rage is not available yet');
-    }
-    try {
-      state.resourcesUsed = applyResourceSpend(
-        state.resourcesUsed ?? {},
-        'rage',
-        rage.max,
-        1,
-      );
-    } catch (error) {
-      throw new BadRequestException(
-        error instanceof Error ? error.message : 'Cannot spend Rage',
-      );
+    if (input.spendResource !== false) {
+      const resources = await resolveClassResources(dataSource, character);
+      const rage = resources.find((item) => item.slug === 'rage');
+      if (!rage) {
+        throw new BadRequestException('Rage is not available yet');
+      }
+      try {
+        state.resourcesUsed = applyResourceSpend(
+          state.resourcesUsed ?? {},
+          'rage',
+          rage.max,
+          1,
+        );
+      } catch (error) {
+        throw new BadRequestException(
+          error instanceof Error ? error.message : 'Cannot spend Rage',
+        );
+      }
     }
     state.rageActive = true;
   } else if (!nextActive) {

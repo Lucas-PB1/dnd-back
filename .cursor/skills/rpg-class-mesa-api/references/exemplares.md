@@ -182,3 +182,17 @@ Polish adiado: recuperar 1 uso de Aspecto com espaço 2+; persistir tipo de Afin
 Pool: `bardicInspiration` (± via `bard-inspiration`; Usar nas linhas nomeadas). Base: Conceder Inspiração, Inspiração Superior L18. PHB: lore (`cutting-words`, `peerless-skill` L14), glamour (`mantle-of-inspiration` + PV temp, `mantle-of-majesty` 1/DL, `unbreakable-majesty` L14), dance (`unarmed-dance` DES, `coordinated-movement`, `agile-response`), valor (`combat-inspiration`; Magia de Batalha = nota). Valdas `college-of-masks`: Vestir máscaras + Usar por máscara (`persona-*` gastam Inspiração) + `virtuoso-skill` (handler, não `spend-resource`).
 
 Polish adiado: restaurar Manto de Majestade com espaço 3+; devolver Inspiração em Perícia Inigualável se ainda falhar (mesa ±).
+
+## Bárbaro (`barbarian`) — **concluída**
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/barbarian/` |
+| Handler | `barbarian-actions.handler.ts` + `actions/barbarian/` |
+| HTTP | `POST …/barbarian/table-action` (legado `rage/toggle` / `reckless/toggle` ainda existe) |
+| Economy/panel | `C009` + `C010` |
+
+Pool: `rage` (± via `barbarian-rage`; Usar `toggle-rage`). Base: Imprudente, Fúria Persistente L15. PHB: berserker (`frenzy`, `retaliation`, `intimidating-presence` + restaurar), wild-heart (`wild-heart-eagle` + notas), world-tree (PV temp. no enter + `revitalizing-strength` / `branches-of-the-tree` / `traverse-the-tree`), zealot (`champion-of-the-gods`, `fanatical-focus`, `zealous-presence`, `rage-of-the-gods`; Fúria Divina no card de ataque). Valdas `path-of-the-muscle-wizard`: Fúria gratuita + 3 “Truques” + “Magias”/punho.
+
+Polish adiado: persistir escolha Águia/Lobo/Urso no estado; pools 1×/DL das “Magias” do Mago Musculoso; Reação Revivificação da Fúria dos Deuses.
+

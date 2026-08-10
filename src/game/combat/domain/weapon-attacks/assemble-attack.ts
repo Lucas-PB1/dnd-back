@@ -36,6 +36,7 @@ export function assembleWeaponAttack(input: {
   attackDisadvantage: boolean;
   critThreshold: number;
   brutalDice: string | null;
+  divineFuryDice: string | null;
   noteExtras: string[];
 }): WeaponAttack {
   const modeLabel =
@@ -90,6 +91,7 @@ export function assembleWeaponAttack(input: {
     hasRecoil: hasProperty(input.piece, 'recoil'),
     rageDamageBonus: input.rageBonus,
     brutalStrikeDice: input.brutalDice,
+    divineFuryDice: input.divineFuryDice,
     sneakAttackEligible:
       input.mode === 'ranged' || hasProperty(input.piece, 'finesse'),
     martialArtsDie: input.monkMartialArtsDie,

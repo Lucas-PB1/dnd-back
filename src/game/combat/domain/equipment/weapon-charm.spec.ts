@@ -73,6 +73,7 @@ describe('applyWeaponCharmToAttack', () => {
     hasRecoil: false,
     rageDamageBonus: 0,
     brutalStrikeDice: null,
+    divineFuryDice: null,
     sneakAttackEligible: false,
     martialArtsDie: null,
     attachedCharmSlug: null,

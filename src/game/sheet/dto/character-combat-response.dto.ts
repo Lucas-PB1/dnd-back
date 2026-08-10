@@ -93,6 +93,12 @@ export class WeaponAttackResponseDto {
   @ApiPropertyOptional({ example: '1d10' })
   brutalStrikeDice!: string | null;
 
+  @ApiPropertyOptional({
+    example: '1d6+2',
+    description: 'Fúria Divina (Fanático) — 1º acerto/turno com Fúria ativa',
+  })
+  divineFuryDice!: string | null;
+
   @ApiProperty({
     example: true,
     description: 'Arma com Acuidade ou ataque à distância, elegível para Ataque Furtivo',

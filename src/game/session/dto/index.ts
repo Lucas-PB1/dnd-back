@@ -43,6 +43,7 @@ export {
   UseRangerTableActionDto,
   UseFighterTableActionDto,
   UseGunslingerTableActionDto,
+  UseBarbarianTableActionDto,
 } from './table-actions/table-actions-martial.dto';
 
 export {

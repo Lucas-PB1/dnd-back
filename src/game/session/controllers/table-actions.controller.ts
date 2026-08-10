@@ -24,6 +24,7 @@ import { PaladinActionsHandler } from '../application/actions/paladin-actions.ha
 import { RangerActionsHandler } from '../application/actions/ranger-actions.handler';
 import { ClericActionsHandler } from '../application/actions/cleric-actions.handler';
 import { BardActionsHandler } from '../application/actions/bard-actions.handler';
+import { BarbarianActionsHandler } from '../application/actions/barbarian-actions.handler';
 import { SorcererActionsHandler } from '../application/actions/sorcerer-actions.handler';
 import { WarlockActionsHandler } from '../application/actions/warlock-actions.handler';
 import { DruidActionsHandler } from '../application/actions/druid-actions.handler';
@@ -32,6 +33,7 @@ import { FighterActionsHandler } from '../application/actions/fighter-actions.ha
 import { GunslingerActionsHandler } from '../application/actions/gunslinger-actions.handler';
 import {
   TableActionResponseDto,
+  UseBarbarianTableActionDto,
   UseBardTableActionDto,
   UseClericTableActionDto,
   UseDruidTableActionDto,
@@ -60,6 +62,7 @@ export class TableActionsController {
     private readonly ranger: RangerActionsHandler,
     private readonly cleric: ClericActionsHandler,
     private readonly bard: BardActionsHandler,
+    private readonly barbarian: BarbarianActionsHandler,
     private readonly sorcerer: SorcererActionsHandler,
     private readonly warlock: WarlockActionsHandler,
     private readonly druid: DruidActionsHandler,
@@ -178,6 +181,20 @@ export class TableActionsController {
     @Body() dto: UseBardTableActionDto,
   ): Promise<TableActionResponseDto> {
     return this.bard.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/barbarian/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Barbarian or Barbarian-subclass tabletop action',
+  })
+  @ApiOkResponse({ type: TableActionResponseDto })
+  useBarbarianTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseBarbarianTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.barbarian.useTableAction(user.id, id, dto);
   }
 
   @Post(':id/sorcerer/table-action')
