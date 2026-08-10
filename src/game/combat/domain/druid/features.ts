@@ -13,6 +13,23 @@ export function moonWildShapeTempHp(level: number): number {
   return 3 * level;
 }
 
+/** Auxílio da Terra: 2d6 → 3d6@10 → 4d6@14. */
+export function landAidDice(level: number): number {
+  if (level >= 14) return 4;
+  if (level >= 10) return 3;
+  return 2;
+}
+
+/** Forma Estelar Arquiro/Cálice: 1d8 → 2d8@10. */
+export function starryFormDice(level: number): string {
+  return level >= 10 ? '2d8' : '1d8';
+}
+
+/** Ira do Mar: 1,5 m → 3 m@6. */
+export function wrathOfTheSeaRadiusMeters(level: number): number {
+  return level >= 6 ? 3 : 1.5;
+}
+
 export function druidCombatNotes(input: {
   classSlug?: string | null;
   subclassSlug?: string | null;
@@ -35,7 +52,7 @@ export function druidCombatNotes(input: {
 function addBaseDruidNotes(notes: string[], level: number, uses: number): void {
   if (level >= 2) {
     notes.push(
-      `Forma Selvagem (${uses} usos): Ação Bônus assume forma besta ou ativa Companheiro Selvagem (1 uso recarrega em Descanso Curto; todos no Longo).`,
+      `Forma Selvagem (${uses} usos): pool na Economia (±). Assumir ficha de besta = polish futuro; Ação Bônus também ativa Companheiro Selvagem (mesa).`,
     );
   }
   if (level >= 5) {
@@ -64,29 +81,76 @@ function addDruidSubclassNotes(
 
   if (subclassSlug === 'moon') {
     notes.push(
-      `Círculo da Lua: Forma Selvagem de Combate (concede ${moonWildShapeTempHp(level)} PV temporários, CA = 13 + Mod. Sabedoria e Ataques de Radiante).`,
+      `Círculo da Lua: Forma Selvagem de Combate (ND máx. ⌊nível/3⌋, CA 13+SAB, ${moonWildShapeTempHp(level)} PV temp.).`,
     );
-    notes.push(
-      'Cura Lunar: na Forma Selvagem, Ação Bônus gasta slot para recuperar 1d8 de PV por nível do slot.',
-    );
+    if (level >= 6) {
+      notes.push(
+        'Lua L6: ataques na forma podem ser Radiantes; +SAB em salvaguardas de Constituição.',
+      );
+    }
+    if (level >= 10) {
+      notes.push(
+        'Passo Lunar: teleporte 9 m (usos = SAB); restaurar com espaço 2+.',
+      );
+    }
+    if (level >= 14) {
+      notes.push(
+        'Forma Lunar: +2d10 radiante 1×/turno na forma; Passo Lunar pode levar um aliado.',
+      );
+    }
   }
 
   if (subclassSlug === 'land') {
     notes.push(
-      'Círculo da Terra: Recuperação Natural (recupera slots de magia acumulados no descanso curto) e Terreno Habitual (Ação Bônus sintoniza com bioma).',
+      `Círculo da Terra: Auxílio da Terra (${landAidDice(level)}d6 dano necrótico + cura à escolha, gasta Forma Selvagem).`,
     );
+    if (level >= 6) {
+      notes.push(
+        'Recuperação Natural: 1 magia do Círculo sem espaço (1×/DL); no Descanso Curto recupere slots (soma ≤ ⌈nível/2⌉, sem 6+).',
+      );
+    }
+    if (level >= 10) {
+      notes.push(
+        'Proteção Natural: imune a Envenenado; resistência conforme terreno escolhido.',
+      );
+    }
+    if (level >= 14) {
+      notes.push(
+        'Santuário Natural: gaste Forma Selvagem — cubo 4,5 m com cobertura parcial (mover com Ação Bônus).',
+      );
+    }
   }
 
   if (subclassSlug === 'stars') {
+    const dice = starryFormDice(level);
     notes.push(
-      'Círculo das Estrelas: Forma Estelar (Arquiro: 1d8+SAB dano radiante Bônus; Cálice: +1d8+SAB cura extra; Dragão: mínimo 10 em Concentração/INT/SAB).',
+      `Círculo das Estrelas: Forma Estelar (Arquiro: ${dice}+SAB radiante; Cálice: +${dice}+SAB cura; Dragão: mínimo 10).`,
     );
+    notes.push(
+      'Mapa Estelar: Raio Guia gratuito (usos = SAB) + Orientação preparada.',
+    );
+    if (level >= 6) {
+      notes.push(
+        'Presságio Cósmico: após DL, Reação ±1d6 em Teste de D20 (usos = SAB).',
+      );
+    }
+    if (level >= 10) {
+      notes.push(
+        'Constelações Cintilantes: 2d8; Dragão voo 6 m; trocar constelação no início do turno.',
+      );
+    }
   }
 
   if (subclassSlug === 'sea') {
+    const radius = wrathOfTheSeaRadiusMeters(level);
     notes.push(
-      'Círculo do Mar: Ira do Mar (Ação Bônus emana aura de tempestade a 3 m: causa d6s de dano elétrico/concussão = Mod. Sabedoria e empurra a 4.5 m).',
+      `Círculo do Mar: Ira do Mar (Emanação ${radius} m, d6s = SAB de dano Gélido + empurrão 4,5 m; gasta Forma Selvagem).`,
     );
+    if (level >= 14) {
+      notes.push(
+        'Manifestação Oceânica: gaste 2 usos de Forma Selvagem para a variante aprimorada (mesa).',
+      );
+    }
   }
 
   if (subclassSlug === 'circle-of-the-city') {

@@ -18,7 +18,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 | HP / CA / ataque / feat options / granted spells | Pronto |
 | Deploy front / E2E | Pronto |
 | UI ataques (aba Ações) + erros HTTP PT | Pronto |
-| Classes mesa **concluídas** | Guerreiro · Feiticeiro · Bruxo · Mago · Patrulheiro · Ladino · Paladino · Pistoleiro (skills `rpg-class-mesa-*` / exemplares) |
+| Classes mesa **concluídas** | Guerreiro · Feiticeiro · Bruxo · Mago · Patrulheiro · Ladino · Paladino · Pistoleiro · Monge · Clérigo · Bardo · Bárbaro · Druida (skills `rpg-class-mesa-*` / exemplares) |
 | Demais classes PHB / Valdas | Seguir skills mesa sob pedido |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
@@ -36,7 +36,8 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 
 - Catálogo mecânico de combate no banco — skill `rpg-catalog-model` · `GET /combat-mechanical-catalog`
 - Padrão classe mesa — skills `rpg-class-mesa-api` / `rpg-class-mesa-front`
-- Classes **concluídas** (critério mesa): Guerreiro, Feiticeiro, Bruxo, Mago, Patrulheiro, Ladino, Paladino, Pistoleiro — ver `references/exemplares.md` nas skills
+- Classes **concluídas** (critério mesa): Guerreiro, Feiticeiro, Bruxo, Mago, Patrulheiro, Ladino, Paladino, Pistoleiro, Monge, Clérigo, Bardo, Bárbaro, Druida — ver `references/exemplares.md` nas skills
+- Druida: Forma Selvagem (seletor/ficha de besta) e Companheiro Selvagem tracker = polish adiado
 - Invocações do Bruxo: catálogo + seleção + free_cast no painel/aba Magias
 
 ### Adiado — polish / ops

@@ -17,6 +17,8 @@ Padrão alvo: **table-action**. Checklist em [`SKILL.md`](../SKILL.md).
 | Monge | `monk` | **Concluída** |
 | Clérigo | `cleric` | **Concluída** |
 | Bardo | `bard` | **Concluída** |
+| Bárbaro | `barbarian` | **Concluída** |
+| Druida | `druid` | **Concluída** |
 
 Polish **adiado** (não reabre “classe done”): ver [`docs/plans/backlog.md`](../../../docs/plans/backlog.md) — MM modal, Companheiro Primal tracker, reuso de invocações / entidades / duração.
 
@@ -25,6 +27,9 @@ Invocações / criaturas / efeitos de duração (nas concluídas) — só nota o
 | Classe · subclasse | Feature | Mesa hoje |
 |--------------------|---------|-----------|
 | Mago · Ilusionista | Criaturas Espectrais | `spectral-summon` uso + nota |
+| Druida | Forma Selvagem (besta) | ± `wildShape` na Economia; seletor/ficha de besta = futuro |
+| Druida | Companheiro Selvagem | nota; tracker = futuro |
+| Druida · Terra | Magia do Círculo sem espaço | lembrete C009; Usar dedicado adiado |
 | Patrulheiro · Andarilho Feérico | Reforços Feéricos | `fey-reinforcements` uso + nota |
 | Patrulheiro · Senhor das Feras | Companheiro Primal | nota; tracker em [`beast-master-primal-companion.md`](../../../docs/plans/beast-master-primal-companion.md) |
 | Feiticeiro · Dracônico L18 | Companheiro Dracônico | magia / nota PHB; sem linha C009 dedicada |
@@ -195,4 +200,17 @@ Polish adiado: restaurar Manto de Majestade com espaço 3+; devolver Inspiraçã
 Pool: `rage` (± via `barbarian-rage`; Usar `toggle-rage`). Base: Imprudente, Fúria Persistente L15. PHB: berserker (`frenzy`, `retaliation`, `intimidating-presence` + restaurar), wild-heart (`wild-heart-eagle` + notas), world-tree (PV temp. no enter + `revitalizing-strength` / `branches-of-the-tree` / `traverse-the-tree`), zealot (`champion-of-the-gods`, `fanatical-focus`, `zealous-presence`, `rage-of-the-gods`; Fúria Divina no card de ataque). Valdas `path-of-the-muscle-wizard`: Fúria gratuita + 3 “Truques” + “Magias”/punho.
 
 Polish adiado: persistir escolha Águia/Lobo/Urso no estado; pools 1×/DL das “Magias” do Mago Musculoso; Reação Revivificação da Fúria dos Deuses.
+
+## Druida (`druid`) — **concluída**
+
+| Camada | Path |
+|--------|------|
+| Domain | `src/game/combat/domain/druid/` |
+| Handler | `druid-actions.handler.ts` + `actions/druid/` |
+| HTTP | `POST …/druid/table-action` |
+| Economy/panel | `C009` + `C010` |
+
+Pool: `wildShape` (± na Economia; **sem** Usar de forma de besta). Base: Ressurgimento (Forma↔Slot). Subs PHB: moon (`moon-combat-wild-shape` + PV temp., `lunar-step` / `restore-lunar-step`), land (`land-aid`, `natural-recovery-1..5`, `nature-sanctuary`), stars (Arquiro/Cálice/Dragão + `stellar-guidance` / `cosmic-omen`), sea (`wrath-of-the-sea` / `ocean-manifestation`). Valdas `circle-of-the-city`: `city-shape` / `wall-warp`. Handler `wild-shape` permanece na API para polish futuro.
+
+Polish adiado: seletor/ficha de besta; tracker Companheiro Selvagem; magia do Círculo Terra sem espaço (lembrete C009).
 

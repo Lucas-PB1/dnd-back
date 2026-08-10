@@ -356,3 +356,35 @@ FROM rpg.phb_class c
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'sorcerous-restoration' AND rd.class_id = c.id
 WHERE c.slug = 'sorcerer'
 ON CONFLICT DO NOTHING;
+
+-- Druida — Forma Selvagem (PHB 2024: 2@2 → 3@6 → 4@17; 1 uso no curto)
+INSERT INTO rpg.phb_resource_definition (slug, name, scope, species_id, class_id, min_level)
+VALUES (
+  'wildShape',
+  'Forma Selvagem',
+  'class'::rpg.resource_scope,
+  NULL,
+  (SELECT id FROM rpg.phb_class WHERE slug = 'druid'),
+  2
+)
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name,
+  scope = EXCLUDED.scope,
+  class_id = EXCLUDED.class_id,
+  min_level = EXCLUDED.min_level;
+
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT 'class'::rpg.resource_owner_kind, c.id, rd.id, v.unlock_level, 'fixed'::rpg.resource_max_formula, v.fixed_max,
+       TRUE, FALSE, TRUE
+FROM rpg.phb_class c
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'wildShape' AND rd.class_id = c.id
+CROSS JOIN (VALUES
+  (2, 2),
+  (6, 3),
+  (17, 4)
+) AS v(unlock_level, fixed_max)
+WHERE c.slug = 'druid'
+ON CONFLICT DO NOTHING;

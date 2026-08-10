@@ -9,7 +9,11 @@ describe('DruidActionsHandler', () => {
     recoverClassResource: jest.fn().mockResolvedValue(stateResponse),
     consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
     recoverSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
+    buildResponse: jest.fn().mockResolvedValue({ ...stateResponse, tempHp: 0 }),
+    patch: jest.fn().mockImplementation(async (_character, patch) => ({
+      ...stateResponse,
+      ...patch,
+    })),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
   const handler = new DruidActionsHandler(
@@ -91,7 +95,55 @@ describe('DruidActionsHandler', () => {
     });
 
     expect(result.total).toBe(15);
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'druid-1' }),
+      'wildShape',
+      1,
+    );
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'druid-1' }),
+      { tempHp: 15 },
+    );
+    expect(result.state).toEqual(expect.objectContaining({ tempHp: 15 }));
     expect(result.note).toContain('Forma Selvagem de Combate');
+  });
+
+  it('resolves Land Aid for Circle of the Land', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...druid,
+      subclassSlug: 'land',
+      level: 3,
+    });
+
+    const result = await handler.useTableAction('user-1', 'druid-1', {
+      actionSlug: 'land-aid',
+    });
+
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'druid-1' }),
+      'wildShape',
+      1,
+    );
+    expect(result.note).toContain('Auxílio da Terra');
+    expect(result.expression).toMatch(/d6/);
+  });
+
+  it('resolves Natural Recovery slot for Circle of the Land', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...druid,
+      subclassSlug: 'land',
+      level: 6,
+    });
+
+    const result = await handler.useTableAction('user-1', 'druid-1', {
+      actionSlug: 'natural-recovery-2',
+    });
+
+    expect(state.recoverSpellSlotLevel).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'druid-1' }),
+      2,
+    );
+    expect(result.note).toContain('Recuperação Natural');
   });
 
   it('rejects Druid actions for non-druid characters', async () => {
