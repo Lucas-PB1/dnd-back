@@ -75,7 +75,10 @@ export async function applyInventoryAttunement(input: {
   const attunedCount = await items.count({
     where: { characterId, attuned: true },
   });
-  if (attunedCount >= MAX_ATTUNED_ITEMS) {
+  const coverageAttunedCount = await items.count({
+    where: { characterId, attachedCoverageAttuned: true },
+  });
+  if (attunedCount + coverageAttunedCount >= MAX_ATTUNED_ITEMS) {
     throw new BadRequestException(
       `Maximum of ${MAX_ATTUNED_ITEMS} attuned items reached`,
     );
@@ -125,6 +128,15 @@ export function inventoryItemToDtoFromCatalog(
   };
   const charmSlug = row.attachedCharmSlug ?? null;
   const charm = charmSlug ? catalogBySlug.get(charmSlug) : undefined;
+  const coverageSlug = row.attachedCoverageSlug ?? null;
+  const coverage = coverageSlug ? catalogBySlug.get(coverageSlug) : undefined;
+  const props =
+    catalog?.properties != null &&
+    typeof catalog.properties === 'object' &&
+    !Array.isArray(catalog.properties)
+      ? (catalog.properties as Record<string, unknown>)
+      : null;
+  const isCoverage = props?.kind === 'coverage';
   return {
     itemSlug: row.itemSlug,
     itemName: catalog?.name ?? row.itemSlug,
@@ -143,6 +155,13 @@ export function inventoryItemToDtoFromCatalog(
     attachedCharmName: charmSlug
       ? (charm?.name ?? charmSlug)
       : null,
+    attachedCoverageSlug: coverageSlug,
+    attachedCoverageName: coverageSlug
+      ? (coverage?.name ?? coverageSlug)
+      : null,
+    attachedCoverageBonus: row.attachedCoverageBonus ?? null,
+    attachedCoverageAttuned: row.attachedCoverageAttuned ?? false,
+    isCoverage,
   };
 }
 
@@ -160,11 +179,12 @@ export async function inventoryItemsToDtos(
   catalogItems: Repository<PhbItem>,
   rows: readonly PlayerCharacterItem[],
 ): Promise<InventoryItemResponseDto[]> {
-  const slugs = rows.flatMap((row) =>
-    row.attachedCharmSlug
-      ? [row.itemSlug, row.attachedCharmSlug]
-      : [row.itemSlug],
-  );
+  const slugs = rows.flatMap((row) => {
+    const list = [row.itemSlug];
+    if (row.attachedCharmSlug) list.push(row.attachedCharmSlug);
+    if (row.attachedCoverageSlug) list.push(row.attachedCoverageSlug);
+    return list;
+  });
   const catalogBySlug = await loadInventoryCatalogBySlugs(catalogItems, slugs);
   return rows.map((row) => inventoryItemToDtoFromCatalog(catalogBySlug, row));
 }

@@ -2,8 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { PhbItem } from '@entities/phb-item.entity';
+import { itemRequiresAttunement } from '../domain/attunement';
+import {
+  coverageBonusToEffects,
+  parseItemCoverage,
+} from '../domain/coverage/item-coverage';
 import {
   resolveActivePermanentItemEffects,
+  type InventoryItemForEffects,
   type ResolvedPermanentItemEffects,
 } from '../domain/permanent-item-effects';
 import { PlayerCharacterItem } from '../infrastructure/player-character-item.entity';
@@ -25,21 +31,71 @@ export class ResolveActivePermanentItemEffects {
       return resolveActivePermanentItemEffects([]);
     }
 
+    const slugs = [
+      ...new Set(
+        rows.flatMap((row) =>
+          [row.itemSlug, row.attachedCoverageSlug].filter(
+            (slug): slug is string => Boolean(slug),
+          ),
+        ),
+      ),
+    ];
     const catalog = await this.catalogItems.find({
-      where: { slug: In(rows.map((row) => row.itemSlug)) },
+      where: { slug: In(slugs) },
     });
     const bySlug = new Map(catalog.map((item) => [item.slug, item]));
 
-    return resolveActivePermanentItemEffects(
-      rows.map((row) => {
-        const item = bySlug.get(row.itemSlug);
-        return {
-          location: row.location,
-          attuned: row.attuned,
-          itemName: item?.name ?? row.itemSlug,
-          properties: item?.properties ?? null,
+    const forEffects: InventoryItemForEffects[] = rows.map((row) => {
+      const item = bySlug.get(row.itemSlug);
+      return {
+        location: row.location,
+        attuned: row.attuned,
+        itemName: item?.name ?? row.itemSlug,
+        properties: item?.properties ?? null,
+      };
+    });
+
+    for (const row of rows) {
+      const coverageSlug = row.attachedCoverageSlug;
+      if (!coverageSlug || row.location !== 'equipped') continue;
+      const coverageItem = bySlug.get(coverageSlug);
+      if (!coverageItem) continue;
+      const props = (coverageItem.properties ?? null) as Record<
+        string,
+        unknown
+      > | null;
+      const coverage = parseItemCoverage(props);
+      if (!coverage) continue;
+      // Bônus de arma/munição ficam por peça no resolve de ataques.
+      if (coverage.appliesTo === 'weapon' || coverage.appliesTo === 'ammunition') {
+        continue;
+      }
+
+      const requiresAttunement = itemRequiresAttunement(props);
+      if (requiresAttunement && !row.attachedCoverageAttuned) continue;
+
+      let properties = props;
+      const bonus = row.attachedCoverageBonus;
+      if (
+        (bonus === 1 || bonus === 2 || bonus === 3) &&
+        (coverage.appliesTo === 'armor' || coverage.appliesTo === 'shield')
+      ) {
+        const effects = coverageBonusToEffects(coverage.appliesTo, bonus);
+        properties = {
+          ...(props ?? {}),
+          permanentEffects: effects,
+          requiresAttunement,
         };
-      }),
-    );
+      }
+
+      forEffects.push({
+        location: 'equipped',
+        attuned: requiresAttunement ? row.attachedCoverageAttuned : true,
+        itemName: coverageItem.name,
+        properties,
+      });
+    }
+
+    return resolveActivePermanentItemEffects(forEffects);
   }
 }

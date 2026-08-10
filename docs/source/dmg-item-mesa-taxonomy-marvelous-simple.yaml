@@ -1,13 +1,13 @@
-# Taxonomia — §0 #9a–b maravilhosos simples (dawn + pool pequeno)
-# Total: 19
-# MVP: recover_all_on_long
+# Taxonomia — §0 #9a–i maravilhosos + utilitários densos leves
+# Total: ~140 (+ anéis em …-rings.yaml; armas únicas neste lote)
+# MVP: recover_all_on_long (exc. carrilhão / pó espirro)
 
 meta:
   fase: 5-wiring
   padrao: marvelous-simple
   nota: |
-    Mistura §0 #4 (1×/amanhecer) e §0 #5 (pool + botão).
-    Olhos: gasto variável 1–3 (§0 #10 leve).
+    Mistura §0 #4/#5 e passivos/à vontade (§0 #2 leve).
+    Set atributo 19 = lembrete (schema não fixa valor).
 
 items:
   - slug: elmo-de-telepatia
@@ -41,7 +41,6 @@ items:
   - slug: flauta-atormentadora
     resource: { slug: flautaAtormentadoraCharges, fixed_max: 3 }
 
-  # --- lote 9b ---
   - slug: chapeu-dos-vermes
     resource: { slug: chapeuVermesCharges, fixed_max: 3 }
 
@@ -82,3 +81,174 @@ items:
   - slug: cinturao-do-povo-anao
     permanentEffects: { abilityBonuses: { constituicao: 2 } }
     notes: ["Benefícios anão/não-anão = lembrete"]
+
+  # --- lote 9c ---
+  - slug: botas-de-levitacao
+  - slug: manto-de-resistencia-a-magia
+  - slug: bola-de-cristal
+  - slug: elmo-da-compreensao-de-idiomas
+  - slug: amuleto-da-saude
+    notes: ["Con 19 = ajuste manual"]
+  - slug: dado-do-charlatao
+  - slug: chifre-de-escutar
+  - slug: vela-das-profundezas
+  - slug: pedra-da-boa-sorte-pedra-da-sorte
+    permanentEffects:
+      savingThrowBonuses: { forca: 1, destreza: 1, constituicao: 1, inteligencia: 1, sabedoria: 1, carisma: 1 }
+    notes: ["+1 testes de atributo = lembrete"]
+  - slug: conta-de-nutricao
+  - slug: manto-da-arraia
+  - slug: broche-escudarcano
+  - slug: capa-esvoacante
+  - slug: luvas-da-ladinagem
+  - slug: manoplas-de-poder-do-ogro
+    notes: ["For 19 = ajuste manual"]
+  - slug: chapeu-do-embuco
+  - slug: tiara-do-intelecto
+    notes: ["Int 19 = ajuste manual"]
+  - slug: elmo-do-medo
+  - slug: leque-do-vento
+    notes: ["20% falha cumulativa = rastreio mesa"]
+  - slug: cubo-energetico
+    resource: { slug: cuboEnergeticoCharges, fixed_max: 10 }
+  - slug: cubo-portal
+    resource: { slug: cuboPortalCharges, fixed_max: 3 }
+  - slug: bolsa-de-temperos-prestativa-de-howard
+    resource: { slug: bolsaTemperosCharges, fixed_max: 10 }
+
+  # --- lote 9d ---
+  - slug: botas-despistadoras
+  - slug: braceletes-de-defesa
+    permanentEffects: { acBonus: 2 }
+    notes: ["Só sem armadura/escudo"]
+  - slug: olhos-noturnos
+  - slug: roupas-autoconcertantes
+  - slug: colar-da-adaptabilidade
+  - slug: periapto-de-protecao-contra-veneno
+  - slug: capa-do-povo-elfico
+  - slug: braceletes-de-arquearia
+  - slug: livro-de-magias-duravel
+  - slug: amuleto-de-protecao-contra-deteccao-e-localizacao
+  - slug: bola-de-cristal-de-visao-verdadeira
+  - slug: bengala-de-veterano
+  - slug: chave-misteriosa
+  - slug: botas-elficas
+  - slug: esfera-do-tempo
+  - slug: luvas-de-natacao-e-escalada
+  - slug: conta-de-hidratacao
+  - slug: cadeado-antiladinagem
+  - slug: touca-de-respirar-na-agua
+  - slug: esfera-da-direcao
+  - slug: caneca-da-sobriedade
+  - slug: vara-de-pesca
+
+  # --- lote 9e ---
+  - slug: olhos-ampliadores-da-visao
+  - slug: olhos-da-aguia
+  - slug: sela-do-cavaleiro
+  - slug: botas-das-terras-glaciais
+  - slug: sandalias-de-escalada-de-aranha
+  - slug: manual-de-saude-corporal
+  - slug: tomo-dos-pensamentos-objetivos
+  - slug: luvas-de-apanhar-projeteis
+  - slug: manual-dos-exercicios-beneficos
+  - slug: cachimbo-teratologico
+  - slug: manual-de-rapidez-nas-acoes
+  - slug: capa-de-muitas-modas
+  - slug: perfume-de-encantamento
+  - slug: botas-de-caminhar-e-saltar
+  - slug: tomo-da-compreensao
+  - slug: tomo-da-lideranca-e-influencia
+  - slug: membro-protetico
+  - slug: manto-da-natureza
+  - slug: ferraduras-de-velocidade
+  - slug: olho-ersatz
+  - slug: haste-retratil
+  - slug: pote-do-despertar
+  - slug: corda-autorreparadora
+  - slug: lanterna-reveladora
+
+  # --- lote 9f ---
+  - slug: periapto-de-cicatrizacao
+  - slug: bola-de-cristal-da-leitura-de-mentes
+  - slug: capa-deslocadora
+  - slug: unguento-de-keoghtom
+  - slug: solvente-universal
+  - slug: manto-das-asas
+    resource: { slug: mantoAsasUse, fixed_max: 1 }
+  - slug: talisma-da-esfera
+  - slug: botas-de-velocidade
+    resource: { slug: botasVelocidadeUse, fixed_max: 1 }
+  - slug: rubi-do-mago-de-batalha
+  - slug: tunica-do-arquimago
+  - slug: colar-de-bolas-de-fogo
+  - slug: insignia-da-pena-de-quaal
+  - slug: boneca-conversadora
+  - slug: aljava-de-ehlonna
+  - slug: po-de-desaparecimento
+  - slug: instrumento-musical-de-ilusoes
+  - slug: escaravelho-de-protecao
+    resource: { slug: escaravelhoProtecaoCharges, fixed_max: 12 }
+    permanentEffects: { acBonus: 1 }
+  - slug: cinturao-de-forca-de-gigante
+  - slug: moeda-rival
+    resource: { slug: moedaRivalUse, fixed_max: 1 }
+  - slug: olho-de-megera
+    resource: { slug: olhoMegeraCharges, fixed_max: 3 }
+  - slug: faixas-de-ferro-de-bilarro
+    resource: { slug: faixasBilarroUse, fixed_max: 1 }
+  - slug: caldeirao-do-renascimento
+    dawn_resources:
+      - { slug: caldeiraoPocaoUse, fixed_max: 1 }
+      - { slug: caldeiraoReviverUse, fixed_max: 1 }
+  - slug: tomo-das-palavras-tranquilizantes
+    resource: { slug: tomoPalavrasUse, fixed_max: 1 }
+  - slug: talisma-do-mal-universal
+    resource: { slug: talismaMalCharges, fixed_max: 6 }
+  - slug: talisma-do-bem-sem-ver-a-quem
+    resource: { slug: talismaBemCharges, fixed_max: 7 }
+
+  # --- lote 9g ---
+  - slug: garrafa-do-fumace-eterno
+  - slug: gema-elemental
+  - slug: tunica-ocular
+  - slug: trombeta-de-explosao
+  - slug: cola-suprema
+  - slug: chapeu-dos-magos
+    resource: { slug: chapeuMagosTruqueUse, fixed_max: 1 }
+  - slug: poco-dos-mundos
+    resource: { slug: pocoMundosUse, fixed_max: 1 }
+  - slug: colar-de-contas-de-oracao
+  - slug: gema-da-claridade
+    resource: { slug: gemaClaridadeCharges, fixed_max: 50 }
+
+  # --- lote 9i (utilitários + armas) ---
+  - slug: bolsa-cabe-tudo
+  - slug: buraco-portatil
+  - slug: barco-de-bolso
+  - slug: tapete-voador
+  - slug: vassoura-voadora
+  - slug: garrafa-da-agua-infinita
+  - slug: ferraduras-de-zefiro
+  - slug: grilhoes-dimensionais
+  - slug: corda-encantada
+  - slug: corda-de-emaranhamento
+  - slug: mochila-prestativa-de-heward
+  - slug: amuleto-planar
+  - slug: contas-energeticas
+  - slug: po-da-seca
+  - slug: po-de-espirro-engasgo
+    resource: { slug: poEspirroEngasgoUse, fixed_max: 1, recover_long: false }
+  - slug: carrilhao-destrancador
+    resource: { slug: carrilhaoDestrancadorCharges, fixed_max: 10, recover_long: false }
+  - slug: flauta-dos-esgotos
+    resource: { slug: flautaEsgotosCharges, fixed_max: 3 }
+  - slug: vassoura-dancante-de-baba-yaga
+  - slug: vela-de-invocacao
+  - slug: adaga-peconhenta
+    resource: { slug: adagaPeconhentaVenenoUse, fixed_max: 1 }
+    permanentEffects: { attackBonus: 1, damageBonus: 1 }
+  - slug: azagaia-relampago
+    resource: { slug: azagaiaRelampagoUse, fixed_max: 1 }
+  - slug: cimitarra-da-velocidade
+    permanentEffects: { attackBonus: 2, damageBonus: 2 }

@@ -23,7 +23,7 @@ Contagens aproximadas no `D010` atual (~338). **Dentro de cada tipo**, preferir 
 |---|---------------|----|----------------------|---------------|
 | 1 | **Poção / Óleo / Pergaminho** (consumo 1×) | ~30 | Uma ação, sem attune, sem pool contínuo | 1 economy `action`/`bonus` + resource max 1 **ou** lembrete “consumir”; item some na mesa |
 | 2 | **Passivo numérico puro** (qualquer categoria) | subset | Só `permanentEffects`; zero botão | UPDATE `properties` — ex. Anel de Proteção (+1 CA / salvaguardas) |
-| 3 | **Cobertura** (template sobre peça base) | subset | Taxonomia §3.1 — UX de busca/attach aberta | Marcar `kind` + filtro; overlay depois |
+| 3 | **Cobertura** (template sobre peça base) | subset | Taxonomia §3.1 + overlay inventário | Overlay feito (`P021` / attach-detach) |
 | 4 | **1 uso / amanhecer** (maravilhoso simples) | subset | Igual estatueta Valdas | 1 resource max 1 + 1 `spend-resource` |
 | 5 | **1 pool + 1 botão** (cargas fixas) | subset | Igual Anel dos Barris | 1 resource max N + 1 economy |
 | 6 | **Anel / item com 2–3 habilidades, pool opcional** | ~22 anéis (mistos) | Várias rows, mesmo `item_id` | Padrão Trono |
@@ -131,7 +131,7 @@ Ao ler o texto do item, quebrar em **habilidades**. Para cada uma, classificar:
 | `spend-variable` | Gasta 1–K | MVP: K botões com `spend_amount` 1..K (mesmo pool); depois UI |
 | `reminder` | Ação/toggle sem gasto automático | economy, `table_action` NULL |
 | `cast-like` | Conjura magia / efeito complexo | lembrete no MVP; handler só se precisar estado |
-| `coverage` | Template mágico sobre peça base (§3.1) | Marcar `kind`; wiring de overlay depois |
+| `coverage` | Template mágico sobre peça base (§3.1) | Overlay na peça base (`attached_coverage_*`) |
 
 Buckets: `action` | `bonus` | `reaction` | `free` (e os demais do enum do repo).
 
@@ -290,6 +290,15 @@ Sugestão de arquivos (criar só na fase correspondente):
 | `dmg/D025_…_staves_final.sql` | Resources Acrobata/Poder/Magi (§0 #8f) |
 | `dmg/D026_…_marvelous_simple.sql` | Resources maravilhosos simples (§0 #9a) |
 | `dmg/D027_…_marvelous_simple_b.sql` | Resources maravilhosos simples lote 2 (§0 #9b) |
+| `dmg/D028_…_marvelous_simple_c.sql` | Resources + Pedra da Sorte (§0 #9c) |
+| `dmg/D029_…_marvelous_d.sql` | Braceletes de Defesa PE (§0 #9d) |
+| `dmg/D030_…_marvelous_simple_f.sql` | Resources maravilhosos lote 6 (§0 #9f) |
+| `dmg/D031_…_marvelous_rings_g.sql` | Resources 9g + anéis |
+| `dmg/D032_…_rings_wands_h.sql` | Resources anéis finais + varinhas (§0 #9h) |
+| `dmg/D033_…_marvelous_weapons_i.sql` | Resources + PE utilitários/armas (§0 #9i) |
+| `dmg/D034_…_armor_shields_j.sql` | Resources + PE escudos/armaduras (§0 #9j) |
+| `dmg/D035_…_weapons_k.sql` | Resources + PE armas únicas (§0 #9k) |
+| `dmg/D036_…_marvelous_dense_l.sql` | Resources + PE densos finais (§0 #9l) |
 | `combat/C016_…_dmg_consumables.sql` | economy consumíveis |
 | `combat/C017_…_dmg_dawn.sql` | economy 1×/amanhecer |
 | `combat/C018_…_dawn_elementals.sql` | economy elementais 1×/amanhecer |
@@ -304,6 +313,16 @@ Sugestão de arquivos (criar só na fase correspondente):
 | `combat/C027_…_staves_final.sql` | economy Acrobata/Poder/Magi |
 | `combat/C028_…_marvelous_simple.sql` | economy maravilhosos simples |
 | `combat/C029_…_marvelous_simple_b.sql` | economy maravilhosos simples lote 2 |
+| `combat/C030_…_marvelous_simple_c.sql` | economy maravilhosos simples lote 3 |
+| `combat/C031_…_marvelous_simple_d.sql` | economy maravilhosos simples lote 4 |
+| `combat/C032_…_marvelous_simple_e.sql` | economy maravilhosos simples lote 5 |
+| `combat/C033_…_marvelous_simple_f.sql` | economy maravilhosos simples lote 6 |
+| `combat/C034_…_marvelous_rings_g.sql` | economy maravilhosos + anéis lote 7 |
+| `combat/C035_…_rings_wands_h.sql` | economy anéis finais + varinhas lote 2 |
+| `combat/C036_…_marvelous_weapons_i.sql` | economy utilitários densos + armas |
+| `combat/C037_…_armor_shields_j.sql` | economy escudos / armaduras únicas |
+| `combat/C038_…_weapons_k.sql` | economy armas únicas / artefatos |
+| `combat/C039_…_marvelous_dense_l.sql` | economy densos finais + Orcus/Maravilhas |
 
 Regras de row economy (iguais C013):
 
@@ -365,9 +384,10 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 - Ex.: gastar 1–3 cargas → botões separados.
 - Maravilhosos multi-modo: reminders + pools pontuais.
 
-### Fase 6 — Artefatos / além do MVP (§0 #11)
+### Fase 6 — Cast de item + artefatos / além do MVP (§0 #11)
 
-- Handlers dedicados, cast automático, restrição de attune por classe no runtime, recuperação 1dN ao amanhecer (hoje grants usam recover-all on long como MVP).
+- **Cast/link magia:** amarrar `spellSlug` (consulta UI) e/ou conjurar via motor gastando carga do item (hoje: só `spend-resource` + texto).
+- Handlers dedicados, restrição de attune por classe no runtime, recuperação 1dN ao amanhecer (hoje grants usam recover-all on long como MVP).
 
 ---
 
@@ -407,13 +427,14 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 | Compêndio `/equipment?tab=magic` | Feito (`GET /items?magic=true`) |
 | `permanentEffects` DMG (lote §0 #2) | Feito (`D012` — anel/manto de proteção) |
 | Edição `dmg-2024-pt` (Fontes) | Feito (`D001`) |
-| Modelo **cobertura** overlay/busca | Taxonomia tagged; wiring inventário/UI depois |
+| Modelo **cobertura** overlay/busca | Feito (`P021` + attach/detach + UI Beyond) |
 | Resources DMG (1×/amanhecer lote) | Feito (`D015`+`C017` · `D016`+`C018` elementais) |
 | Resources DMG (pool cargas §0 #5) | Feito (`D017`+`C019` — 5 itens) |
 | Anel das Estrelas Cadentes (§0 #6) | Feito (`D018`+`C020` — 7 actions, pool 6) |
 | Varinhas multi-magia (§0 #7) | Feito (`D019`+`C021` — 3 varinhas) |
 | Cajados multi-magia (§0 #8) | Feito (`D020`–`D025` / `C022`–`C027` — 18 cajados) |
-| Maravilhosos simples (§0 #9a–b) | Feito (`D026`–`D027` / `C028`–`C029` — 19 itens) |
-| Economy demais categorias | Pendente |
+| Maravilhosos / anéis / varinhas / armas / escudos / densos (§0 #9) | Feito (`D026`–`D036` / `C028`–`C039`) |
+| Cast/link magia de item | Fase 6 (adiado) |
+| Overlay coberturas (UI) | Feito (§3.1 / fase 2b — attach/detach + PE/ataque) |
 
-Próximo passo natural: mais maravilhosos (§0 #9) **ou** overlay coberturas.
+Próximo passo natural: **fase 6** (cast/link de magia) ou refinamentos de cobertura (toggle sintonia, munição/busca).

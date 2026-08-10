@@ -23,9 +23,21 @@ Itens mágicos do Cap. 7 (A–Z), extraídos da tradução comunitária do DMG 2
 | `D025_phb_item_resource_grant_staves_final.sql` | §0 #8f: Acrobata/Poder/Magi |
 | `D026_phb_item_resource_grant_marvelous_simple.sql` | §0 #9a: maravilhosos simples |
 | `D027_phb_item_resource_grant_marvelous_simple_b.sql` | §0 #9b: maravilhosos simples lote 2 |
+| `D028_phb_item_resource_grant_marvelous_simple_c.sql` | §0 #9c: passivos + cubos/bolsa |
+| `D029_phb_item_permanent_effects_marvelous_d.sql` | §0 #9d: Braceletes de Defesa |
+| `D030_phb_item_resource_grant_marvelous_simple_f.sql` | §0 #9f: resources densos leves |
+| `D031_phb_item_resource_grant_marvelous_rings_g.sql` | §0 #9g: gema/chapéu/poço + anéis |
+| `D032_phb_item_resource_grant_rings_wands_h.sql` | §0 #9h: anéis finais + varinhas |
+| `D033_phb_item_resource_grant_marvelous_weapons_i.sql` | §0 #9i: utilitários + armas (+ PE) |
+| `D034_phb_item_resource_grant_armor_shields_j.sql` | §0 #9j: escudos / armaduras únicas |
+| `D035_phb_item_resource_grant_weapons_k.sql` | §0 #9k: armas únicas (+ PE / artefatos) |
+| `D036_phb_item_resource_grant_marvelous_dense_l.sql` | §0 #9l: densos finais + Orcus/Maravilhas |
 
-Economy: `C016`–`C028` · `C029` maravilhosos 9b.  
-Taxonomia: inclui `…-staves.yaml` · `…-marvelous-simple.yaml`.  
+Economy: `C016`–`C038` · `C039` densos finais.  
+Taxonomia: `…-staves.yaml` · `…-marvelous-simple.yaml` · `…-rings.yaml` · `…-wands.yaml` · `…-armor-shields.yaml` · `…-weapons.yaml` · `…-marvelous-dense.yaml`.
+
+Cast/link de magia do item → **fase 6** (hoje: spend + texto).  
+Overlay coberturas (§3.1 / 2b) → migration `P021` + `POST …/inventory/coverage/attach|detach`.  
 Modelo: `docs/architecture/dmg-item-mesa.md`.  
 Compêndio: `/equipment?tab=magic` + `GET /items?magic=true`.
 

@@ -21,6 +21,12 @@ import {
   psychicBladeEquipmentSlot,
 } from '../domain/rogue/psychic-blades';
 import { parseWeaponCharm } from '../domain/equipment';
+import { itemRequiresAttunement } from '@game/inventory/domain/attunement';
+import {
+  coverageBonusToEffects,
+  parseItemCoverage,
+} from '@game/inventory/domain/coverage/item-coverage';
+import { parsePermanentItemEffects } from '@game/inventory/domain/permanent-item-effects';
 
 export type WeaponAttackResolveContext = {
   classSlug: string;
@@ -99,11 +105,26 @@ export class ResolveEquippedWeaponAttacks {
     const bySlug = new Map(rows.map((row) => [row.item.slug, row]));
     const masteryBySlug = await loadWeaponMasteryBySlug(rows, this.masteryRepo);
     const charmBySlug = await this.loadCharmsBySlug(equipped);
+    const coverageBySlug = await this.loadCoveragesBySlug(equipped);
     const pieces: EquippedWeaponPiece[] = [];
 
     for (const item of equipped) {
       const weapon = bySlug.get(item.itemSlug);
       if (!weapon) continue;
+      const coverageSlug = item.attachedCoverageSlug ?? null;
+      const coverageMeta = coverageSlug
+        ? coverageBySlug.get(coverageSlug)
+        : undefined;
+      const coverageActive =
+        Boolean(coverageSlug) &&
+        (!coverageMeta?.requiresAttunement ||
+          item.attachedCoverageAttuned === true);
+      const coverageBonuses = coverageActive
+        ? this.resolveCoverageWeaponBonuses(
+            coverageMeta,
+            item.attachedCoverageBonus,
+          )
+        : { attackBonus: 0, damageBonus: 0 };
       pieces.push(
         this.toPiece(weapon, masteryBySlug, {
           equipmentSlot: item.equipmentSlot ?? 'main_hand',
@@ -114,6 +135,12 @@ export class ResolveEquippedWeaponAttacks {
           weaponCharm: item.attachedCharmSlug
             ? (charmBySlug.get(item.attachedCharmSlug)?.charm ?? null)
             : null,
+          attachedCoverageSlug: coverageActive ? coverageSlug : null,
+          attachedCoverageName: coverageActive
+            ? (coverageMeta?.name ?? coverageSlug)
+            : null,
+          coverageAttackBonus: coverageBonuses.attackBonus,
+          coverageDamageBonus: coverageBonuses.damageBonus,
         }),
       );
     }
@@ -141,6 +168,10 @@ export class ResolveEquippedWeaponAttacks {
           attachedCharmSlug: null,
           attachedCharmName: null,
           weaponCharm: null,
+          attachedCoverageSlug: null,
+          attachedCoverageName: null,
+          coverageAttackBonus: 0,
+          coverageDamageBonus: 0,
         }),
       );
     }
@@ -155,6 +186,10 @@ export class ResolveEquippedWeaponAttacks {
       attachedCharmSlug: string | null;
       attachedCharmName: string | null;
       weaponCharm: NonNullable<ReturnType<typeof parseWeaponCharm>> | null;
+      attachedCoverageSlug: string | null;
+      attachedCoverageName: string | null;
+      coverageAttackBonus: number;
+      coverageDamageBonus: number;
     },
   ): EquippedWeaponPiece {
     const props = weaponPropsOf(weapon);
@@ -177,6 +212,10 @@ export class ResolveEquippedWeaponAttacks {
       attachedCharmSlug: extras.attachedCharmSlug,
       attachedCharmName: extras.attachedCharmName,
       weaponCharm: extras.weaponCharm,
+      attachedCoverageSlug: extras.attachedCoverageSlug,
+      attachedCoverageName: extras.attachedCoverageName,
+      coverageAttackBonus: extras.coverageAttackBonus,
+      coverageDamageBonus: extras.coverageDamageBonus,
     };
   }
 
@@ -209,6 +248,82 @@ export class ResolveEquippedWeaponAttacks {
       result.set(item.slug, { name: item.name, charm });
     }
     return result;
+  }
+
+  private async loadCoveragesBySlug(
+    equipped: PlayerCharacterItem[],
+  ): Promise<
+    Map<
+      string,
+      {
+        name: string;
+        requiresAttunement: boolean;
+        properties: Record<string, unknown> | null;
+      }
+    >
+  > {
+    const slugs = [
+      ...new Set(
+        equipped
+          .map((row) => row.attachedCoverageSlug)
+          .filter((slug): slug is string => Boolean(slug)),
+      ),
+    ];
+    const result = new Map<
+      string,
+      {
+        name: string;
+        requiresAttunement: boolean;
+        properties: Record<string, unknown> | null;
+      }
+    >();
+    if (slugs.length === 0) return result;
+
+    const items = await this.catalogItems.find({
+      where: { slug: In(slugs) },
+    });
+    for (const item of items) {
+      const properties = (item.properties ?? null) as Record<
+        string,
+        unknown
+      > | null;
+      if (!parseItemCoverage(properties)) continue;
+      result.set(item.slug, {
+        name: item.name,
+        requiresAttunement: itemRequiresAttunement(properties),
+        properties,
+      });
+    }
+    return result;
+  }
+
+  private resolveCoverageWeaponBonuses(
+    coverageMeta:
+      | {
+          name: string;
+          requiresAttunement: boolean;
+          properties: Record<string, unknown> | null;
+        }
+      | undefined,
+    bonus: number | null | undefined,
+  ): { attackBonus: number; damageBonus: number } {
+    if (!coverageMeta) return { attackBonus: 0, damageBonus: 0 };
+    const coverage = parseItemCoverage(coverageMeta.properties);
+    if (!coverage) return { attackBonus: 0, damageBonus: 0 };
+
+    if (bonus === 1 || bonus === 2 || bonus === 3) {
+      const fromTier = coverageBonusToEffects(coverage.appliesTo, bonus);
+      return {
+        attackBonus: fromTier.attackBonus ?? 0,
+        damageBonus: fromTier.damageBonus ?? 0,
+      };
+    }
+
+    const pe = parsePermanentItemEffects(coverageMeta.properties);
+    return {
+      attackBonus: pe.attackBonus,
+      damageBonus: pe.damageBonus,
+    };
   }
 
   private computeAttacks(

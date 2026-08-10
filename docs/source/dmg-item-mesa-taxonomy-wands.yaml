@@ -1,7 +1,8 @@
-# Taxonomia — §0 #7 lote varinhas (pool + N botões)
-# Total: 3
+# Taxonomia — §0 #7 varinhas
+# Total: 12 (3 iniciais + 9 lote #9h; faltam Orcus / Maravilhas)
 # Pool compartilhado por varinha; spend_amount = custo da magia
 # MVP: recover_all_on_long; destruição no 1 ao gastar última carga = nota no texto
+# Cast/link magia = fase 6
 
 meta:
   fase: 4-wiring
@@ -52,3 +53,22 @@ items:
         spend_amount: 3
         spell: "Mísseis Mágicos (3º)"
     mesa_complete: parcial
+
+  - slug: varinha-dos-segredos
+    resource: { slug: varinhaSegredosCharges, fixed_max: 3 }
+  - slug: varinha-de-teia
+    resource: { slug: varinhaTeiaCharges, fixed_max: 7 }
+  - slug: varinha-de-polimorfia
+    resource: { slug: varinhaPolimorfiaCharges, fixed_max: 7 }
+  - slug: batuta-da-regencia
+    resource: { slug: batutaRegenciaCharges, fixed_max: 3 }
+  - slug: varinha-de-relampagos
+    resource: { slug: varinhaRelampagosCharges, fixed_max: 7 }
+  - slug: varinha-cuspidora-de-fogo
+    resource: { slug: varinhaCuspidoraFogoCharges, fixed_max: 7 }
+  - slug: varinha-pirotecnica
+    resource: { slug: varinhaPirotecnicaCharges, fixed_max: 7 }
+  - slug: varinha-de-detectar-inimigo
+    resource: { slug: varinhaDetectarInimigoCharges, fixed_max: 7 }
+  - slug: varinha-de-paralisia
+    resource: { slug: varinhaParalisiaCharges, fixed_max: 7 }

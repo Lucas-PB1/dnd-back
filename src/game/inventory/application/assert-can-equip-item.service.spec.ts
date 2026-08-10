@@ -38,6 +38,7 @@ function character(): PlayerCharacter {
 
 describe('AssertCanEquipItemService', () => {
   let equipmentCompliance: jest.Mocked<Pick<ResolveEquipmentCompliance, 'loadArmorTrainingSlugs'>>;
+  let catalogItems: { findOne: jest.Mock };
   let armorCatalog: { findOne: jest.Mock };
   let weapons: { findOne: jest.Mock };
   let feats: { find: jest.Mock };
@@ -47,6 +48,7 @@ describe('AssertCanEquipItemService', () => {
   beforeEach(() => {
     mockedAssert.mockReset();
     equipmentCompliance = { loadArmorTrainingSlugs: jest.fn() };
+    catalogItems = { findOne: jest.fn().mockResolvedValue(null) };
     armorCatalog = { findOne: jest.fn() };
     weapons = { findOne: jest.fn() };
     feats = { find: jest.fn().mockResolvedValue([{ featSlug: 'alert' }]) };
@@ -55,9 +57,27 @@ describe('AssertCanEquipItemService', () => {
       equipmentCompliance as never,
       armorCatalog as never,
       weapons as never,
+      catalogItems as never,
       feats as never,
       dataSource as never,
     );
+  });
+
+  it('rejects coverage items before armor/weapon gate', async () => {
+    catalogItems.findOne.mockResolvedValue({
+      slug: 'arma-1-2-ou-3',
+      properties: {
+        kind: 'coverage',
+        appliesTo: 'weapon',
+        appliesFilter: 'Qualquer Simples ou Marcial',
+      },
+    });
+
+    await expect(service.assert(character(), 'arma-1-2-ou-3')).rejects.toThrow(
+      /coverage/,
+    );
+    expect(armorCatalog.findOne).not.toHaveBeenCalled();
+    expect(mockedAssert).not.toHaveBeenCalled();
   });
 
   it('armor path loads training and delegates to assertCanEquipItem', async () => {

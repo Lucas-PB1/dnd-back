@@ -1,0 +1,37 @@
+# Taxonomia — anéis DMG (lote §0 #9g + já wired)
+# Novos neste lote: 15 · Já wired: evasão, proteção, estrelas
+
+meta:
+  fase: 5-wiring
+  padrao: rings
+  nota: |
+    Mistura passivo, à vontade e pools.
+    anelTresDesejosCharges: sem recover_all_on_long.
+
+items:
+  - slug: anel-de-telecinese
+  - slug: anel-de-natacao
+  - slug: anel-de-queda-suave
+  - slug: anel-de-andar-sobre-as-aguas
+  - slug: anel-de-saltar
+  - slug: anel-dos-tres-desejos
+    resource: { slug: anelTresDesejosCharges, fixed_max: 3, recover_long: false }
+  - slug: anel-da-livre-movimentacao
+  - slug: anel-de-invisibilidade
+  - slug: anel-de-aquecimento
+  - slug: anel-de-influenciar-animais
+    resource: { slug: anelInfluenciarAnimaisCharges, fixed_max: 3 }
+  - slug: anel-de-regeneracao
+  - slug: anel-afastador-de-magias
+  - slug: anel-de-resistencia
+  - slug: anel-de-visao-de-raio-x
+  - slug: anel-de-escudo-mental
+
+  - slug: anel-de-ariete
+    resource: { slug: anelArieteCharges, fixed_max: 3 }
+  - slug: anel-de-invocar-djinni
+    resource: { slug: anelDjinniUse, fixed_max: 1 }
+  - slug: anel-armazenador-de-magias
+  - slug: anel-de-comando-elemental
+    resource: { slug: anelComandoElementalCharges, fixed_max: 5 }
+    notes: ["Magias por plano; cast real = fase 6"]

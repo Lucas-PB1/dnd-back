@@ -18,6 +18,7 @@ import { CharacterInventoryController } from './character-inventory.controller';
 import { AssertCanBindPactWeaponService } from './application/assert-can-bind-pact-weapon.service';
 import { AssertCanEquipItemService } from './application/assert-can-equip-item.service';
 import { AttachWeaponCharmHandler } from './application/attach-weapon-charm.handler';
+import { AttachCoverageHandler } from './application/attach-coverage.handler';
 import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
 import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
 import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
@@ -46,6 +47,7 @@ import { SeedStartingInventoryHandler } from './application/seed-starting-invent
     AssertCanBindPactWeaponService,
     AssertCanEquipItemService,
     AttachWeaponCharmHandler,
+    AttachCoverageHandler,
     GetCharacterInventoryQuery,
     AddInventoryItemHandler,
     PatchInventoryItemHandler,

@@ -21,6 +21,12 @@ export type EquippedWeaponPiece = {
   attachedCharmName?: string | null;
   /** Dados estruturados do encanto (catálogo), se carregados. */
   weaponCharm?: WeaponCharm | null;
+  /** Cobertura DMG presa (`attached_coverage_slug`). */
+  attachedCoverageSlug?: string | null;
+  attachedCoverageName?: string | null;
+  /** Bônus numéricos da cobertura (tier ou PE). */
+  coverageAttackBonus?: number;
+  coverageDamageBonus?: number;
 };
 
 export type WeaponAttackContext = {
@@ -114,4 +120,7 @@ export type WeaponAttack = {
   attachedCharmSlug: string | null;
   /** Nome do encanto para exibição na ficha. */
   attachedCharmName: string | null;
+  /** Cobertura DMG presa a esta peça. */
+  attachedCoverageSlug: string | null;
+  attachedCoverageName: string | null;
 };

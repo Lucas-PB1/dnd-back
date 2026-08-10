@@ -8,6 +8,7 @@ import type {
   WeaponAttackRole,
 } from './weapon-attack.types';
 import { applyWeaponCharmToAttack } from '../equipment/weapon-charm';
+import { applyCoverageBonusToAttack } from '../equipment/coverage-overlay';
 import type { AbilityPick } from './attack-bonuses';
 
 export function assembleWeaponAttack(input: {
@@ -97,6 +98,11 @@ export function assembleWeaponAttack(input: {
     martialArtsDie: input.monkMartialArtsDie,
     attachedCharmSlug: input.piece.attachedCharmSlug ?? null,
     attachedCharmName: input.piece.attachedCharmName ?? null,
+    attachedCoverageSlug: input.piece.attachedCoverageSlug ?? null,
+    attachedCoverageName: input.piece.attachedCoverageName ?? null,
   };
-  return applyWeaponCharmToAttack(input.piece, baseAttack);
+  return applyCoverageBonusToAttack(
+    input.piece,
+    applyWeaponCharmToAttack(input.piece, baseAttack),
+  );
 }

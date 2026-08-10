@@ -1,12 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { weaponPropsOf } from '@catalog/equipment/weapon-props';
+import { PhbItem } from '@entities/phb-item.entity';
 import { PhbWeapon } from '@entities/phb-weapon.entity';
 import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 import { ResolveEquipmentCompliance } from '@game/combat/application/resolve-equipment-compliance';
 import { PlayerCharacterFeat } from '@game/sheet/infrastructure/player-sheet.entities';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import { parseItemCoverage } from '../domain/coverage/item-coverage';
 import { assertCanEquipItem } from '../domain/assert-can-equip-item';
 
 /** Carrega contexto da ficha/catálogo e aplica o gate de equip. */
@@ -18,12 +20,26 @@ export class AssertCanEquipItemService {
     private readonly armorCatalog: Repository<VPhbArmor>,
     @InjectRepository(PhbWeapon)
     private readonly weapons: Repository<PhbWeapon>,
+    @InjectRepository(PhbItem)
+    private readonly catalogItems: Repository<PhbItem>,
     @InjectRepository(PlayerCharacterFeat)
     private readonly feats: Repository<PlayerCharacterFeat>,
     private readonly dataSource: DataSource,
   ) {}
 
   async assert(character: PlayerCharacter, itemSlug: string): Promise<void> {
+    const catalog = await this.catalogItems.findOne({ where: { slug: itemSlug } });
+    if (
+      catalog &&
+      parseItemCoverage(
+        (catalog.properties ?? null) as Record<string, unknown> | null,
+      )
+    ) {
+      throw new BadRequestException(
+        `Item '${itemSlug}' is a coverage — attach it to a base piece instead of equipping`,
+      );
+    }
+
     const featRows = await this.feats.find({
       where: { characterId: character.id },
     });

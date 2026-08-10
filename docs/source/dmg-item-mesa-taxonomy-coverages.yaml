@@ -7,7 +7,7 @@ meta:
   padrao: coverage
   nota: |
     properties.kind=coverage + appliesTo + appliesFilter.
-    Sem overlay de inventário neste lote (wiring 2b depois).
+    Overlay inventário (fase 2b): attach/detach na peça base (`P021`).
     Busca/compêndio pode usar esses campos.
 
 items:

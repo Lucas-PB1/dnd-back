@@ -44,4 +44,16 @@ export class PlayerCharacterItem {
   /** Slug do encanto de arma preso a este item (`weapon-charm-*`). */
   @Column({ name: 'attached_charm_slug', type: 'text', nullable: true })
   attachedCharmSlug!: string | null;
+
+  /** Slug da cobertura DMG presa a esta peça base (`kind=coverage`). */
+  @Column({ name: 'attached_coverage_slug', type: 'text', nullable: true })
+  attachedCoverageSlug!: string | null;
+
+  /** Tier +1/+2/+3 quando a cobertura é `*-1-2-ou-3`. */
+  @Column({ name: 'attached_coverage_bonus', type: 'smallint', nullable: true })
+  attachedCoverageBonus!: number | null;
+
+  /** Sintonia da cobertura anexada (conta no limite de 3). */
+  @Column({ name: 'attached_coverage_attuned', type: 'boolean', default: false })
+  attachedCoverageAttuned!: boolean;
 }

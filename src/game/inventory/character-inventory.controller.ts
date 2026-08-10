@@ -27,12 +27,15 @@ import { AuthUser } from '@identity/auth-user';
 import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
 import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
 import { AttachWeaponCharmHandler } from './application/attach-weapon-charm.handler';
+import { AttachCoverageHandler } from './application/attach-coverage.handler';
 import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
 import { RemoveInventoryItemHandler } from './application/remove-inventory-item.handler';
 import {
   AddInventoryItemDto,
+  AttachCoverageDto,
   AttachWeaponCharmDto,
   CharacterInventoryResponseDto,
+  DetachCoverageDto,
   DetachWeaponCharmDto,
   InventoryItemResponseDto,
   PatchInventoryItemDto,
@@ -50,6 +53,7 @@ export class CharacterInventoryController {
     private readonly patchInventoryItem: PatchInventoryItemHandler,
     private readonly removeInventoryItem: RemoveInventoryItemHandler,
     private readonly weaponCharm: AttachWeaponCharmHandler,
+    private readonly coverage: AttachCoverageHandler,
   ) {}
 
   @Get(':id/inventory')
@@ -97,6 +101,30 @@ export class CharacterInventoryController {
     @Body() dto: DetachWeaponCharmDto,
   ): Promise<InventoryItemResponseDto> {
     return this.weaponCharm.detach(user.id, id, dto);
+  }
+
+  @Post(':id/inventory/coverage/attach')
+  @ApiOperation({ summary: 'Attach a DMG coverage from backpack to a base item' })
+  @ApiOkResponse({ type: InventoryItemResponseDto })
+  @ApiNotFoundResponse()
+  attachCoverage(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: AttachCoverageDto,
+  ): Promise<InventoryItemResponseDto> {
+    return this.coverage.attach(user.id, id, dto);
+  }
+
+  @Post(':id/inventory/coverage/detach')
+  @ApiOperation({ summary: 'Detach a DMG coverage back to backpack' })
+  @ApiOkResponse({ type: InventoryItemResponseDto })
+  @ApiNotFoundResponse()
+  detachCoverage(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: DetachCoverageDto,
+  ): Promise<InventoryItemResponseDto> {
+    return this.coverage.detach(user.id, id, dto);
   }
 
   @Patch(':id/inventory/:itemSlug')

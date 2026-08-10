@@ -318,6 +318,17 @@ export async function loadActiveItemSlugs(
          AND pci.location = 'equipped'
          AND pci.attached_charm_slug IS NOT NULL
        UNION ALL
+       SELECT pci.attached_coverage_slug AS item_slug
+       FROM rpg.player_character_item pci
+       JOIN rpg.phb_item cov ON cov.slug = pci.attached_coverage_slug
+       WHERE pci.character_id = $1
+         AND pci.location = 'equipped'
+         AND pci.attached_coverage_slug IS NOT NULL
+         AND (
+           COALESCE((cov.properties->>'requiresAttunement')::boolean, false) = false
+           OR pci.attached_coverage_attuned = true
+         )
+       UNION ALL
        SELECT pci.item_slug
        FROM rpg.player_character_item pci
        JOIN rpg.phb_item i ON i.slug = pci.item_slug

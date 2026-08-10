@@ -82,6 +82,36 @@ export class InventoryItemResponseDto {
     description: 'Nome do encanto preso (quando attachedCharmSlug está definido)',
   })
   attachedCharmName!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'arma-1-2-ou-3',
+    description: 'Cobertura DMG presa a esta peça (slug do catálogo)',
+  })
+  attachedCoverageSlug!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'Arma, +1, +2 ou +3',
+    description: 'Nome da cobertura presa',
+  })
+  attachedCoverageName!: string | null;
+
+  @ApiPropertyOptional({
+    example: 2,
+    description: 'Tier +1/+2/+3 da cobertura (quando aplicável)',
+  })
+  attachedCoverageBonus!: number | null;
+
+  @ApiPropertyOptional({
+    example: true,
+    description: 'Sintonia da cobertura anexada',
+  })
+  attachedCoverageAttuned!: boolean;
+
+  @ApiPropertyOptional({
+    example: false,
+    description: 'True quando phb_item.properties.kind = coverage',
+  })
+  isCoverage!: boolean;
 }
 
 export class InventoryEncumbranceDto {
@@ -182,4 +212,32 @@ export class DetachWeaponCharmDto {
   @IsString()
   @IsNotEmpty()
   weaponSlug!: string;
+}
+
+export class AttachCoverageDto {
+  @ApiProperty({ example: 'longsword' })
+  @IsString()
+  @IsNotEmpty()
+  baseItemSlug!: string;
+
+  @ApiProperty({ example: 'arma-1-2-ou-3' })
+  @IsString()
+  @IsNotEmpty()
+  coverageSlug!: string;
+
+  @ApiPropertyOptional({
+    example: 2,
+    description: 'Obrigatório para coberturas *-1-2-ou-3',
+  })
+  @IsOptional()
+  @IsInt()
+  @IsIn([1, 2, 3])
+  bonus?: 1 | 2 | 3;
+}
+
+export class DetachCoverageDto {
+  @ApiProperty({ example: 'longsword' })
+  @IsString()
+  @IsNotEmpty()
+  baseItemSlug!: string;
 }
