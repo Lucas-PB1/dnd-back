@@ -7,7 +7,15 @@ export type CombatMechanicalCatalogFilters = {
 
 const BATTLE_MASTER_SUBCLASS = 'battle-master';
 const GUNSLINGER_CLASS = 'gunslinger';
-const GUNSLINGER_SUBCLASS = 'pistolero';
+const GUNSLINGER_SUBCLASSES = new Set([
+  'pistolero',
+  'deadeye',
+  'high-roller',
+  'secret-agent',
+  'spellslinger',
+  'trick-shot',
+  'white-hat',
+]);
 const BARD_CLASS = 'bard';
 const ROGUE_CLASS = 'rogue';
 const FIGHTER_CLASS = 'fighter';
@@ -49,7 +57,7 @@ export function filterCombatMechanicalCatalog(
     subclassSlug === BATTLE_MASTER_SUBCLASS;
   const includeGunslinger =
     (!subclassSlug && (!classSlug || classSlug === GUNSLINGER_CLASS)) ||
-    subclassSlug === GUNSLINGER_SUBCLASS;
+    (subclassSlug != null && GUNSLINGER_SUBCLASSES.has(subclassSlug));
   const includePersonaMasks = !classSlug || classSlug === BARD_CLASS;
   const includeCunning = !classSlug || classSlug === ROGUE_CLASS;
   const includeDungeoneer =
@@ -76,7 +84,14 @@ export function filterCombatMechanicalCatalog(
     ...catalog,
     economyActions,
     panelActions,
-    gunslingerManeuvers: includeGunslinger ? catalog.gunslingerManeuvers : [],
+    gunslingerManeuvers: includeGunslinger
+      ? subclassSlug
+        ? catalog.gunslingerManeuvers.filter(
+            (maneuver) =>
+              !maneuver.subclassSlug || maneuver.subclassSlug === subclassSlug,
+          )
+        : catalog.gunslingerManeuvers
+      : [],
     battleMasterManeuvers: includeBattleMaster
       ? catalog.battleMasterManeuvers
       : [],

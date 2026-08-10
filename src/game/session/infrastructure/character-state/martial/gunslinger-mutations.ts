@@ -44,6 +44,14 @@ export async function applyUseManeuver(input: {
   if (!maneuver) {
     throw new BadRequestException(`Unknown maneuver '${maneuverSlug}'`);
   }
+  if (
+    maneuver.subclassSlug &&
+    maneuver.subclassSlug !== character.subclassSlug
+  ) {
+    throw new BadRequestException(
+      `Maneuver '${maneuverSlug}' requires subclass '${maneuver.subclassSlug}'`,
+    );
+  }
   if (character.level < maneuver.fromLevel) {
     throw new BadRequestException(
       `Maneuver '${maneuverSlug}' unlocks at level ${maneuver.fromLevel}`,

@@ -65,6 +65,23 @@ describe('filterCombatMechanicalCatalog', () => {
     expect(result.battleMasterManeuvers).toEqual([]);
   });
 
+  it('keeps gunslinger maneuvers for Valdas subclasses and filters by subclassSlug', () => {
+    const catalog = sampleCatalog();
+    catalog.gunslingerManeuvers = [
+      { slug: 'base', subclassSlug: undefined } as never,
+      { slug: 'eagle', subclassSlug: 'deadeye' } as never,
+      { slug: 'fan', subclassSlug: 'pistolero' } as never,
+    ];
+    const result = filterCombatMechanicalCatalog(catalog, {
+      classSlug: 'gunslinger',
+      subclassSlug: 'deadeye',
+    });
+    expect(result.gunslingerManeuvers.map((m) => m.slug)).toEqual([
+      'base',
+      'eagle',
+    ]);
+  });
+
   it('filters subclass subsets', () => {
     const result = filterCombatMechanicalCatalog(sampleCatalog(), {
       classSlug: 'fighter',

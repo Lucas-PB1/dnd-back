@@ -37,7 +37,7 @@ Invocações / criaturas / efeitos de duração (nas concluídas) — só nota o
 | Paladino · Devoção L15 | Destruição Protetora | lembrete C009; Usar/handler adiado |
 | Paladino · Glória L15 | Defesa Gloriosa | C009 ± `glorious-defense`; Usar dedicado adiado |
 | Paladino · Glória L3 | Atleta Inigualável (2º canal) | C009 + `peerless-athlete` |
-| Pistoleiro | Manobras de outras subs (não-Pistolero) | adiado — C001 só base + Pistolero |
+| Pistoleiro | Manobras outras subs | C001 + C009 lembretes done; polish Assumidor / condições / Bang cast / câmaras |
 
 ---
 
@@ -134,8 +134,8 @@ Polish adiado: Defesa Gloriosa / Destruição Protetora (Usar dedicado).
 | Domain | `src/game/combat/domain/gunslinger/` |
 | Handler | `gunslinger-actions.handler.ts` (+ ops marciais existentes) |
 | HTTP | `POST …/gunslinger/table-action` (`use-maneuver`, `recover-risk`); `GET …/maneuvers` lista |
-| Economy/panel | `C009` (`risk` ±, Tempo Bala, Tiro na Cabeça) + `C010` (`recover-risk`) |
+| Economy/panel | `C009` (`risk` ±, Tempo Bala, Tiro na Cabeça + lembretes por sub Valdas) + `C010` (`recover-risk`) |
 
-Pool: `risk` (Dados de Risco). Painel: seletor de manobras (C001 base + Pistolero) via table-action; Gambito Terrível recupera 1 risk. Firearms reload/fire legado permanece. Tiro na Cabeça: toggle no card (gasta 3× risk).
+Pool: `risk` (Dados de Risco). Painel: seletor de manobras (C001 base + **todas** as subs Valdas / Pistolero) via table-action; Gambito Terrível recupera 1 risk. Firearms reload/fire legado permanece. Tiro na Cabeça: toggle no card (gasta 3× risk).
 
-Polish adiado: manobras C001 das outras subclasses Valdas; polish câmaras além do atual.
+Polish adiado: Assumidor de risco (d6 grátis); condições White Hat; Bang cast dedicado; polish câmaras.

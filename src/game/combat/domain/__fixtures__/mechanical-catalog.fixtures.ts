@@ -81,6 +81,76 @@ export const FIXTURE_GUNSLINGER_MANEUVERS: readonly GunslingerManeuver[] = [
     fromLevel: 10,
     subclassSlug: 'pistolero',
   },
+  {
+    slug: 'eagle-eye',
+    name: 'Olho de Águia',
+    description:
+      '1×/turno (Olho Morto): ao errar ataque à distância, gaste 1 Dado de Risco e some-o à jogada de ataque (pode virar acerto).',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 3,
+    subclassSlug: 'deadeye',
+  },
+  {
+    slug: 'liars-dice',
+    name: 'Dados do Mentiroso',
+    description:
+      'Ação Bônus (Grande Apostador): ao causar dano com arma de longo alcance, gaste 1 Dado de Risco e declare o total em segredo.',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 3,
+    subclassSlug: 'high-roller',
+  },
+  {
+    slug: 'parting-shot',
+    name: 'Tiro de despedida',
+    description:
+      'Ao Correr, Desengajar ou Esquivar (Agente Secreto): gaste 1 Dado de Risco para um ataque à distância como Ação Bônus.',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 3,
+    subclassSlug: 'secret-agent',
+  },
+  {
+    slug: 'magic-bullet',
+    name: 'Bala Mágica',
+    description:
+      'Ação Bônus (Pistoleiro Arcano): substitua ataque mágico por ataque à distância com arma + Dado de Risco.',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 14,
+    subclassSlug: 'spellslinger',
+  },
+  {
+    slug: 'ricochet',
+    name: 'Ricochete',
+    description:
+      'Ação Bônus (Tiro de Trucagem): ao errar, gaste 1 Dado de Risco e rerrole o ataque somando o dado.',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 3,
+    subclassSlug: 'trick-shot',
+  },
+  {
+    slug: 'skilled-deflection',
+    name: 'Deflexão Hábil',
+    description:
+      'Reação (Tiro de Trucagem): conceda Por um Triz a um aliado a até 9 m.',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 10,
+    subclassSlug: 'trick-shot',
+  },
+  {
+    slug: 'lay-down-the-law',
+    name: 'Estabeleça a Lei',
+    description:
+      'Ação Bônus (Chapéu Branco): PV Temp. a aliado + Reação de tiro se ele for atingido.',
+    effectKind: 'descriptive',
+    riskCost: 1,
+    fromLevel: 3,
+    subclassSlug: 'white-hat',
+  },
 ];
 
 export const FIXTURE_BATTLE_MASTER_MANEUVERS: readonly BattleMasterManeuver[] = [

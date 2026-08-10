@@ -47,7 +47,7 @@ Não priorizar. Só retomar com pedido explícito.
 - [ ] Senhor das Feras: Companheiro Primal (invocar, PV, comandar na mesa) — [`beast-master-primal-companion.md`](beast-master-primal-companion.md)
 - [ ] Duração / condições na mesa (família combate situacional): Invisível do Véu Psíquico, Atordoado do Rasgar Mente, Correia/Teia (Arachnoid), venenos do Assassino — hoje gasto/listagem + nota / toggles (sem tracker)
 - [ ] Paladino: Defesa Gloriosa (Usar L15 dedicado no pool `glorious-defense`) — hoje ± + descrição; Destruição Protetora é lembrete (Cobertura na aura ao Destruir)
-- [ ] Pistoleiro: manobras C001 das subclasses Valdas além de Pistolero; polish câmaras/firearms
+- [ ] Pistoleiro: Assumidor de risco (d6 grátis); condições White Hat; Bang cast; polish câmaras/firearms
 
 ### Referência — modelo de dados
 
