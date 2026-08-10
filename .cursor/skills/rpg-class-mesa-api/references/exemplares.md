@@ -82,10 +82,10 @@ Polish adiado: modal Escudo/Giga no cast — [`mm-cast-options-modal.md`](../../
 | Domain | `src/game/combat/domain/fighter/` |
 | Handler | `fighter-actions.handler.ts` + `actions/fighter/` |
 | HTTP | `POST …/fighter/table-action` (+ `GET …/fighter/maneuvers` para lista BM) |
-| Economy | `C009` (`second-wind`, `action-surge`, `tactical-mind`, `psi:*`) |
+| Economy | `C009` (`second-wind`, `action-surge`, `tactical-mind`, `psi:*`, BM `superiority-dice`, pool `dungeon-precautions`) |
 | Panel | `C010` (base + psi); BM/Dungeoneer = UI com seletor |
 
-Manobras BM: `actionSlug: use-maneuver` + `maneuverSlug`. Precaução: `dungeon-precaution` + `spellSlug`.
+Manobras BM: `actionSlug: use-maneuver` + `maneuverSlug`. Precaução: `dungeon-precaution` + `spellSlug`. Pool Dungeoneer: só **C009** (±); sem espelho no painel.
 
 ## Patrulheiro (`ranger`) — **concluída**
 

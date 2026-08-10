@@ -194,8 +194,16 @@ export class ClassPanelActionDto {
   @ApiProperty({ example: 'Conceder Inspiração' })
   name!: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description: 'Resumo curto (C010 title)',
+  })
   title?: string;
+
+  @ApiPropertyOptional({
+    description:
+      'Texto jogável (C009 description quando table_action = slug)',
+  })
+  description?: string;
 
   @ApiProperty({ example: 1 })
   minLevel!: number;

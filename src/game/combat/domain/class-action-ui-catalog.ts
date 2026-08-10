@@ -33,7 +33,13 @@ export type ClassPanelActionRecord = {
   subclassSlug?: string;
   slug: string;
   name: string;
+  /** Resumo curto (C010 `title`) — fallback se não houver description. */
   title?: string;
+  /**
+   * Texto jogável completo. Preferência: C009 `description` quando
+   * `table_action` = slug do painel (mesmo classSlug); senão ausente.
+   */
+  description?: string;
   minLevel: number;
   resourceSlug?: string;
   section: PanelActionSection;

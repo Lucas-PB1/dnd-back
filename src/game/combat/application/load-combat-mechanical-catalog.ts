@@ -203,19 +203,29 @@ export class LoadCombatMechanicalCatalog {
         spendAmount:
           row.spendAmount == null ? undefined : Number(row.spendAmount),
       })),
-      panelActions: panelRows.map((row) => ({
-        panelKey: row.panelKey,
-        classSlug: row.classSlug,
-        subclassSlug: row.subclassSlug ?? undefined,
-        slug: row.slug,
-        name: row.name,
-        title: row.title ?? undefined,
-        minLevel: Number(row.unlockLevel),
-        resourceSlug: row.resourceSlug ?? undefined,
-        section: asPanelSection(row.section),
-        spendsFocus: Boolean(row.spendsFocus),
-        sortOrder: Number(row.sortOrder),
-      })),
+      panelActions: (() => {
+        const economyTextByKey = new Map<string, string>();
+        for (const row of economyRows) {
+          if (!row.classSlug || !row.tableAction) continue;
+          const text = row.description?.trim() || row.summary?.trim();
+          if (!text) continue;
+          economyTextByKey.set(`${row.classSlug}|${row.tableAction}`, text);
+        }
+        return panelRows.map((row) => ({
+          panelKey: row.panelKey,
+          classSlug: row.classSlug,
+          subclassSlug: row.subclassSlug ?? undefined,
+          slug: row.slug,
+          name: row.name,
+          title: row.title ?? undefined,
+          description: economyTextByKey.get(`${row.classSlug}|${row.slug}`),
+          minLevel: Number(row.unlockLevel),
+          resourceSlug: row.resourceSlug ?? undefined,
+          section: asPanelSection(row.section),
+          spendsFocus: Boolean(row.spendsFocus),
+          sortOrder: Number(row.sortOrder),
+        }));
+      })(),
     };
   }
 
