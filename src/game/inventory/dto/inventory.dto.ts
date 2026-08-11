@@ -169,6 +169,13 @@ export class InventoryItemResponseDto {
     description: 'Preço de catálogo (phb_item.cost.text) para compra/venda',
   })
   costText!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'mochila',
+    description: 'Recipiente (bolsa/saca/…); null = raiz',
+    nullable: true,
+  })
+  containedInItemSlug!: string | null;
 }
 
 export class InventoryEncumbranceDto {
@@ -310,6 +317,16 @@ export class PatchInventoryItemDto {
   @IsString()
   @IsNotEmpty()
   boundSpellSlug?: string | null;
+
+  @ApiPropertyOptional({
+    example: 'mochila',
+    description: 'Mover para recipiente (slug) ou null para raiz',
+    nullable: true,
+  })
+  @IsOptional()
+  @ValidateIf((_, value) => value != null)
+  @IsString()
+  containedInItemSlug?: string | null;
 }
 
 export class AttachWeaponCharmDto {

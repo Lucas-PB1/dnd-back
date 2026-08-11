@@ -94,6 +94,11 @@ export function parseCostText(costText: string | null | undefined): CoinPurse {
   return purse;
 }
 
+/** Soma purses via cobre (câmbio PHB). */
+export function addCoinPurses(a: CoinPurse, b: CoinPurse): CoinPurse {
+  return copperToPurse(purseToCopper(a) + purseToCopper(b));
+}
+
 export function scaleCoinPurse(purse: CoinPurse, quantity: number): CoinPurse {
   if (!Number.isInteger(quantity) || quantity < 1) {
     throw new Error('Quantity must be a positive integer');

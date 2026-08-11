@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { RecordItemCatalogStatsService } from '@catalog/items/application/record-item-catalog-stats.service';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
@@ -16,6 +17,7 @@ import {
   resolveInventoryPayment,
   scaleCoinPurse,
 } from '../domain/coin-purse';
+import { isServiceItem } from '../domain/item-kind';
 
 @Injectable()
 export class AddInventoryItemHandler {
@@ -24,6 +26,7 @@ export class AddInventoryItemHandler {
     private readonly campaignAccess: CampaignCharacterAccessService,
     private readonly catalogLookup: CatalogLookupService,
     private readonly inventory: CharacterInventoryRepository,
+    private readonly catalogStats: RecordItemCatalogStatsService,
   ) {}
 
   async execute(
@@ -36,40 +39,46 @@ export class AddInventoryItemHandler {
       characterId,
       'write',
     );
+    const catalog = await this.catalogLookup.assertItemInCatalog(dto.itemSlug);
+    if (isServiceItem(catalog.properties as Record<string, unknown> | null)) {
+      throw new BadRequestException(
+        'Serviços não entram na mochila — use POST …/inventory/purchase.',
+      );
+    }
+
     const paymentCtx =
       await this.campaignAccess.resolveInventoryPaymentContext(
         userId,
         characterId,
       );
-    const pay = dto.pay !== false;
     const decision = resolveInventoryPayment({
       ...paymentCtx,
-      pay,
+      pay: dto.pay !== false,
     });
 
+    const quantity = dto.quantity ?? 1;
     let debit = null;
     if (decision.mustPay) {
-      const catalog = await this.catalogLookup.assertItemInCatalog(
-        dto.itemSlug,
-      );
-      const quantity = dto.quantity ?? 1;
       try {
         debit = scaleCoinPurse(
           parseCostText(catalogCostText(catalog.cost)),
           quantity,
         );
-        // Valida saldo com câmbio antes da transação
         debitCoinsWithExchange(coinPurseFromColumns(character), debit);
       } catch (error) {
         throw new BadRequestException(coinPurseErrorMessage(error));
       }
     }
 
-    return this.inventory.add(
+    const result = await this.inventory.add(
       characterId,
       dto,
       character.abilityScores?.forca ?? 10,
       { debit },
     );
+    if (debit) {
+      await this.catalogStats.recordPurchase(dto.itemSlug, quantity);
+    }
+    return result;
   }
 }

@@ -1,149 +1,35 @@
+import { BadRequestException } from '@nestjs/common';
 import { AssertCanEquipItemService } from './assert-can-equip-item.service';
-import { assertCanEquipItem } from '../domain/assert-can-equip-item';
-import type { ResolveEquipmentCompliance } from '@game/combat/application/resolve-equipment-compliance';
-import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-
-jest.mock('../domain/assert-can-equip-item', () => ({
-  assertCanEquipItem: jest.fn(),
-}));
-
-const mockedAssert = assertCanEquipItem as jest.MockedFunction<typeof assertCanEquipItem>;
-
-function character(): PlayerCharacter {
-  return {
-    id: 'ch1',
-    userId: 'u1',
-    name: 'Test',
-    level: 1,
-    classSlug: 'fighter',
-    speciesSlug: 'human',
-    backgroundSlug: 'soldier',
-    subclassSlug: null,
-    alignmentSlug: null,
-    abilityScores: {
-      forca: 16,
-      destreza: 14,
-      constituicao: 14,
-      inteligencia: 10,
-      sabedoria: 12,
-      carisma: 8,
-    },
-    hitPointsMax: 12,
-    hitPointsCurrent: 12,
-    abilityGenerationMethodSlug: null,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  } as PlayerCharacter;
-}
 
 describe('AssertCanEquipItemService', () => {
-  let equipmentCompliance: jest.Mocked<Pick<ResolveEquipmentCompliance, 'loadArmorTrainingSlugs'>>;
-  let catalogItems: { findOne: jest.Mock };
-  let armorCatalog: { findOne: jest.Mock };
-  let weapons: { findOne: jest.Mock };
-  let feats: { find: jest.Mock };
-  let dataSource: { query: jest.Mock };
-  let service: AssertCanEquipItemService;
+  const catalogItems = { findOne: jest.fn() };
+  const service = new AssertCanEquipItemService(catalogItems as never);
+  const character = { id: 'c1', classSlug: 'fighter' } as never;
 
   beforeEach(() => {
-    mockedAssert.mockReset();
-    equipmentCompliance = { loadArmorTrainingSlugs: jest.fn() };
-    catalogItems = { findOne: jest.fn().mockResolvedValue(null) };
-    armorCatalog = { findOne: jest.fn() };
-    weapons = { findOne: jest.fn() };
-    feats = { find: jest.fn().mockResolvedValue([{ featSlug: 'alert' }]) };
-    dataSource = { query: jest.fn() };
-    service = new AssertCanEquipItemService(
-      equipmentCompliance as never,
-      armorCatalog as never,
-      weapons as never,
-      catalogItems as never,
-      feats as never,
-      dataSource as never,
-    );
+    catalogItems.findOne.mockReset();
   });
 
-  it('rejects coverage items before armor/weapon gate', async () => {
+  it('blocks coverage items', async () => {
     catalogItems.findOne.mockResolvedValue({
       slug: 'arma-1-2-ou-3',
       properties: {
         kind: 'coverage',
         appliesTo: 'weapon',
-        appliesFilter: 'Qualquer Simples ou Marcial',
+        appliesFilter: 'Qualquer',
+        requiresTierBonus: true,
       },
     });
-
-    await expect(service.assert(character(), 'arma-1-2-ou-3')).rejects.toThrow(
-      /coverage/,
+    await expect(service.assert(character, 'arma-1-2-ou-3')).rejects.toBeInstanceOf(
+      BadRequestException,
     );
-    expect(armorCatalog.findOne).not.toHaveBeenCalled();
-    expect(mockedAssert).not.toHaveBeenCalled();
   });
 
-  it('armor path loads training and delegates to assertCanEquipItem', async () => {
-    armorCatalog.findOne.mockResolvedValue({
-      itemSlug: 'leather-armor',
-      itemName: 'Armadura de Couro',
-      categorySlug: 'light',
-      strengthReq: null,
-      stealthDisadvantage: false,
+  it('allows weapons without proficiency check', async () => {
+    catalogItems.findOne.mockResolvedValue({
+      slug: 'longsword',
+      properties: {},
     });
-    equipmentCompliance.loadArmorTrainingSlugs.mockResolvedValue(['light']);
-
-    await service.assert(character(), 'leather-armor');
-
-    expect(equipmentCompliance.loadArmorTrainingSlugs).toHaveBeenCalledWith('fighter');
-    expect(mockedAssert).toHaveBeenCalledWith({
-      kind: 'armor',
-      piece: {
-        itemSlug: 'leather-armor',
-        itemName: 'Armadura de Couro',
-        categorySlug: 'light',
-        strengthReq: null,
-        stealthDisadvantage: false,
-      },
-      armorTrainingSlugs: ['light'],
-      featSlugs: ['alert'],
-      strengthScore: 16,
-    });
-    expect(weapons.findOne).not.toHaveBeenCalled();
-  });
-
-  it('returns when item is not armor or weapon', async () => {
-    armorCatalog.findOne.mockResolvedValue(null);
-    weapons.findOne.mockResolvedValue(null);
-
-    await expect(service.assert(character(), 'unknown-item')).resolves.toBeUndefined();
-    expect(mockedAssert).not.toHaveBeenCalled();
-  });
-
-  it('weapon path loads proficiency slugs and delegates to assertCanEquipItem', async () => {
-    armorCatalog.findOne.mockResolvedValue(null);
-    weapons.findOne.mockResolvedValue({
-      category: 'martial',
-      damage: '1d8',
-      damageType: 'slashing',
-      item: {
-        slug: 'longsword',
-        name: 'Espada Longa',
-        properties: { propertyIds: ['versatile'], versatileDamage: '1d10' },
-      },
-    });
-    dataSource.query.mockResolvedValue([{ slug: 'armas-marciais' }]);
-
-    await service.assert(character(), 'longsword');
-
-    expect(dataSource.query).toHaveBeenCalledWith(
-      expect.stringContaining('phb_class_proficiency'),
-      ['fighter'],
-    );
-    expect(mockedAssert).toHaveBeenCalledWith(
-      expect.objectContaining({
-        kind: 'weapon',
-        weaponProficiencySlugs: ['armas-marciais'],
-        featSlugs: ['alert'],
-        itemName: 'Espada Longa',
-      }),
-    );
+    await expect(service.assert(character, 'longsword')).resolves.toBeUndefined();
   });
 });

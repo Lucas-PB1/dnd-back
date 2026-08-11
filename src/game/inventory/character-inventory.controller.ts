@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -18,6 +19,7 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -28,6 +30,7 @@ import { GetCharacterInventoryQuery } from './application/get-character-inventor
 import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
 import { InventoryActionsHandler } from './application/inventory-actions.handler';
 import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
+import { PurchaseInventoryHandler } from './application/purchase-inventory.handler';
 import { RemoveInventoryItemHandler } from './application/remove-inventory-item.handler';
 import { InventoryActionDto } from './dto/inventory-action.dto';
 import {
@@ -36,6 +39,7 @@ import {
   InventoryItemResponseDto,
   PatchInventoryItemDto,
 } from './dto/inventory.dto';
+import { PurchaseInventoryDto } from './dto/purchase-inventory.dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()
@@ -46,6 +50,7 @@ export class CharacterInventoryController {
   constructor(
     private readonly getInventory: GetCharacterInventoryQuery,
     private readonly addInventoryItem: AddInventoryItemHandler,
+    private readonly purchaseInventory: PurchaseInventoryHandler,
     private readonly patchInventoryItem: PatchInventoryItemHandler,
     private readonly removeInventoryItem: RemoveInventoryItemHandler,
     private readonly inventoryActions: InventoryActionsHandler,
@@ -72,6 +77,20 @@ export class CharacterInventoryController {
     @Body() dto: AddInventoryItemDto,
   ): Promise<InventoryItemResponseDto> {
     return this.addInventoryItem.execute(user.id, id, dto);
+  }
+
+  @Post(':id/inventory/purchase')
+  @ApiOperation({
+    summary: 'Beyond shop checkout — multi-line purchase (atomic debit)',
+  })
+  @ApiOkResponse({ type: CharacterInventoryResponseDto })
+  @ApiNotFoundResponse()
+  purchase(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: PurchaseInventoryDto,
+  ): Promise<CharacterInventoryResponseDto> {
+    return this.purchaseInventory.execute(user.id, id, dto);
   }
 
   @Post(':id/inventory/actions')
@@ -107,14 +126,30 @@ export class CharacterInventoryController {
 
   @Delete(':id/inventory/:itemSlug')
   @HttpCode(HttpStatus.NO_CONTENT)
-  @ApiOperation({ summary: 'Remove item from inventory' })
+  @ApiOperation({ summary: 'Remove / sell / discard inventory item' })
+  @ApiQuery({ name: 'quantity', required: false, type: Number })
+  @ApiQuery({
+    name: 'mode',
+    required: false,
+    enum: ['sell', 'discard'],
+  })
   @ApiNoContentResponse()
   @ApiNotFoundResponse()
   removeInventory(
     @CurrentUser() user: AuthUser,
     @Param('id', ParseUUIDPipe) id: string,
     @Param('itemSlug') itemSlug: string,
+    @Query('quantity') quantityRaw?: string,
+    @Query('mode') mode?: 'sell' | 'discard',
   ): Promise<void> {
-    return this.removeInventoryItem.execute(user.id, id, itemSlug);
+    const quantity =
+      quantityRaw != null && quantityRaw !== ''
+        ? Number.parseInt(quantityRaw, 10)
+        : undefined;
+    return this.removeInventoryItem.execute(user.id, id, itemSlug, {
+      quantity:
+        quantity != null && Number.isFinite(quantity) ? quantity : undefined,
+      mode,
+    });
   }
 }

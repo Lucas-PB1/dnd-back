@@ -23,6 +23,7 @@ import { AttachWeaponCharmHandler } from './application/attach-weapon-charm.hand
 import { AttachCoverageHandler } from './application/attach-coverage.handler';
 import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
 import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
+import { PurchaseInventoryHandler } from './application/purchase-inventory.handler';
 import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
 import { RemoveInventoryItemHandler } from './application/remove-inventory-item.handler';
 import { SeedStartingInventoryHandler } from './application/seed-starting-inventory.handler';
@@ -61,6 +62,7 @@ import { PlayerCharacter } from '../shared/infrastructure/player-character.entit
     InventoryActionsHandler,
     GetCharacterInventoryQuery,
     AddInventoryItemHandler,
+    PurchaseInventoryHandler,
     PatchInventoryItemHandler,
     RemoveInventoryItemHandler,
     SeedStartingInventoryHandler,

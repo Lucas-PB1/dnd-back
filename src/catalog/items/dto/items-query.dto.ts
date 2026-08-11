@@ -34,4 +34,30 @@ export class ItemsQueryDto extends IntersectionType(
   @IsOptional()
   @IsString()
   rarity?: string;
+
+  @ApiPropertyOptional({
+    description:
+      'When true, only items with a parseable catalog cost; false = no cost / Varia',
+    enum: ['true', 'false'],
+  })
+  @IsOptional()
+  @IsIn(['true', 'false'])
+  hasCost?: 'true' | 'false';
+
+  @ApiPropertyOptional({
+    description:
+      'Filter by properties.kind (service|mount|coverage|…). Comma-separated.',
+    example: 'service',
+  })
+  @IsOptional()
+  @IsString()
+  kind?: string;
+
+  @ApiPropertyOptional({
+    description: 'When true, only properties.consumable = true',
+    enum: ['true', 'false'],
+  })
+  @IsOptional()
+  @IsIn(['true', 'false'])
+  consumable?: 'true' | 'false';
 }

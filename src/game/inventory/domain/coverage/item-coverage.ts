@@ -115,13 +115,22 @@ function isWeaponBase(base: CoverageBaseContext): boolean {
   return base.itemType === 'weapon' || Boolean(base.weaponCategory);
 }
 
+function isRangedWeaponHint(base: CoverageBaseContext): boolean {
+  const hay = normalizeCoverageText(
+    `${base.itemSlug} ${base.itemName} ${base.subtypeLabel ?? ''}`,
+  );
+  return /arco|best|crossbow|bow|firearm|pistola|rifle|atirar|ranged|distancia|virote|flecha/.test(
+    hay,
+  );
+}
+
 function isArmorBody(base: CoverageBaseContext): boolean {
   const cat = base.armorCategorySlug;
   return cat === 'light' || cat === 'medium' || cat === 'heavy';
 }
 
 function isShield(base: CoverageBaseContext): boolean {
-  return base.armorCategorySlug === 'shield' || base.itemType === 'armor';
+  return base.armorCategorySlug === 'shield';
 }
 
 /** True se a peça base passa no filtro da cobertura. */
@@ -138,7 +147,21 @@ export function coverageMatchesBase(
       if (filter.includes('simples') || filter.includes('marcial')) {
         return cat === 'simple' || cat === 'martial';
       }
-      // "qualquer arma corpo a corpo" / "municao ou arma…" — MVP: qualquer arma catalogada
+      if (
+        filter.includes('corpo a corpo') ||
+        filter.includes('corpo-a-corpo') ||
+        filter.includes('melee')
+      ) {
+        return !isRangedWeaponHint(base);
+      }
+      if (
+        filter.includes('distancia') ||
+        filter.includes('à distância') ||
+        filter.includes('a distancia') ||
+        filter.includes('ranged')
+      ) {
+        return isRangedWeaponHint(base);
+      }
       return true;
     }
     return matchesAllowlist(base, coverage.appliesFilter);

@@ -18,6 +18,9 @@ export type FindItemsFilters = {
   rarity?: string;
   editionSlugs?: string[];
   fields?: 'summary';
+  hasCost?: boolean;
+  kind?: string;
+  consumable?: boolean;
 };
 
 @Injectable()
@@ -39,7 +42,14 @@ export class FindItemsQuery {
       .orderBy('item.name', 'ASC');
 
     if (filters.fields === 'summary') {
-      qb.select(['item.slug', 'item.name', 'item.itemType']);
+      qb.select([
+        'item.slug',
+        'item.name',
+        'item.itemType',
+        'item.cost',
+        'item.weight',
+        'item.properties',
+      ]);
     }
 
     applyIlikeSearch(qb, ['item.name', 'item.slug'], q);
@@ -65,6 +75,38 @@ export class FindItemsQuery {
     const rarity = filters.rarity?.trim();
     if (rarity) {
       qb.andWhere(`(item.properties->>'rarity') = :rarity`, { rarity });
+    }
+
+    if (filters.hasCost === true) {
+      qb.andWhere(
+        `item.cost IS NOT NULL
+         AND NULLIF(TRIM(item.cost->>'text'), '') IS NOT NULL
+         AND LOWER(TRIM(item.cost->>'text')) <> 'varia'`,
+      );
+    } else if (filters.hasCost === false) {
+      qb.andWhere(
+        `item.cost IS NULL
+         OR NULLIF(TRIM(item.cost->>'text'), '') IS NULL
+         OR LOWER(TRIM(item.cost->>'text')) = 'varia'`,
+      );
+    }
+
+    const kinds = filters.kind
+      ?.split(',')
+      .map((value) => value.trim())
+      .filter(Boolean);
+    if (kinds?.length === 1) {
+      qb.andWhere(`(item.properties->>'kind') = :kind`, { kind: kinds[0] });
+    } else if (kinds && kinds.length > 1) {
+      qb.andWhere(`(item.properties->>'kind') IN (:...kinds)`, { kinds });
+    }
+
+    if (filters.consumable === true) {
+      qb.andWhere(`(item.properties->>'consumable') = 'true'`);
+    } else if (filters.consumable === false) {
+      qb.andWhere(
+        `(item.properties->>'consumable' IS NULL OR (item.properties->>'consumable') <> 'true')`,
+      );
     }
 
     const editionSlugs = filters.editionSlugs

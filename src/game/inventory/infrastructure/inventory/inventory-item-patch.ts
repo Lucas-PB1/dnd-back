@@ -1,5 +1,6 @@
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbItem } from '@entities/phb-item.entity';
+import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import {
   InventoryItemResponseDto,
@@ -136,6 +137,21 @@ export async function patchInventoryItem(input: {
       row,
       boundSpellSlug: dto.boundSpellSlug,
     });
+  }
+
+  if (dto.containedInItemSlug !== undefined) {
+    if (dto.containedInItemSlug === null) {
+      row.containedInItemSlug = null;
+    } else if (dto.containedInItemSlug === itemSlug) {
+      throw new BadRequestException('Item cannot contain itself');
+    } else {
+      await findInventoryItemOrFail(
+        items,
+        characterId,
+        dto.containedInItemSlug,
+      );
+      row.containedInItemSlug = dto.containedInItemSlug;
+    }
   }
 
   await items.save(row);

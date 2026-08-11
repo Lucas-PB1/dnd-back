@@ -15,6 +15,7 @@ describe('AddInventoryItemHandler', () => {
   let campaignAccess: { resolveInventoryPaymentContext: jest.Mock };
   let catalogLookup: { assertItemInCatalog: jest.Mock };
   let inventory: { add: jest.Mock };
+  let catalogStats: { recordPurchase: jest.Mock };
   let handler: AddInventoryItemHandler;
 
   beforeEach(() => {
@@ -28,16 +29,19 @@ describe('AddInventoryItemHandler', () => {
       assertItemInCatalog: jest.fn().mockResolvedValue({
         slug: 'longsword',
         cost: { text: '15 PO' },
+        properties: {},
       }),
     };
     inventory = {
       add: jest.fn().mockResolvedValue({ itemSlug: 'longsword' }),
     };
+    catalogStats = { recordPurchase: jest.fn().mockResolvedValue(undefined) };
     handler = new AddInventoryItemHandler(
       access as never,
       campaignAccess as never,
       catalogLookup as never,
       inventory as never,
+      catalogStats as never,
     );
   });
 

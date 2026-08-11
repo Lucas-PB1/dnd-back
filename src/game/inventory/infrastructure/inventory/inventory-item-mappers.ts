@@ -69,6 +69,7 @@ export function inventoryItemToDtoFromCatalog(
     isCoverage,
     instanceProperties: row.instanceProperties ?? null,
     costText: catalogCostText(catalog?.cost ?? null),
+    containedInItemSlug: row.containedInItemSlug ?? null,
   };
 }
 

@@ -71,4 +71,8 @@ export class PlayerCharacterItem {
    */
   @Column({ name: 'instance_properties', type: 'jsonb', nullable: true })
   instanceProperties!: Record<string, unknown> | null;
+
+  /** Recipiente (bolsa/saca/…); null = raiz Equipado/Mochila. */
+  @Column({ name: 'contained_in_item_slug', type: 'text', nullable: true })
+  containedInItemSlug!: string | null;
 }

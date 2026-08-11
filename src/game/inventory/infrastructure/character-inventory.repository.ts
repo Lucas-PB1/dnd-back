@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
@@ -19,21 +19,34 @@ import {
   type AttunementCharacterContext,
 } from './inventory/inventory-item-ops';
 import { encumbranceFromInventoryDtos } from './inventory/inventory-encumbrance';
-import { coinPurseFromColumns, type CoinPurse } from '../domain/coin-purse';
+import {
+  applyCoinPurseToColumns,
+  coinPurseFromColumns,
+  debitCoinsWithExchange,
+  type CoinPurse,
+} from '../domain/coin-purse';
 import {
   addInventoryItem,
   removeInventoryItemWithCredit,
 } from './inventory/inventory-coin-tx';
+import {
+  adjustInventoryQuantityWithCoins,
+  removeInventoryQuantityWithCredit,
+} from './inventory/inventory-purchase-tx';
 import { patchInventoryItem } from './inventory/inventory-item-patch';
 import { ensureFromStartingEquipment } from './inventory/ensure-starting-inventory';
 
 export type AddInventoryOptions = {
-  /** Debitar estas moedas na mesma transação do add (null = free). */
   debit?: CoinPurse | null;
 };
 
 export type RemoveInventoryOptions = {
-  /** Creditar estas moedas na mesma transação do remove (null = sem venda). */
+  credit?: CoinPurse | null;
+  quantity?: number;
+};
+
+export type PatchQuantityCoinOptions = {
+  debit?: CoinPurse | null;
   credit?: CoinPurse | null;
 };
 
@@ -128,6 +141,24 @@ export class CharacterInventoryRepository {
     });
   }
 
+  async patchQuantityWithCoins(
+    characterId: string,
+    itemSlug: string,
+    newQuantity: number,
+    options: PatchQuantityCoinOptions = {},
+  ): Promise<InventoryItemResponseDto> {
+    return adjustInventoryQuantityWithCoins({
+      dataSource: this.dataSource,
+      catalogItems: this.catalogItems,
+      catalogLookup: this.catalogLookup,
+      characterId,
+      itemSlug,
+      newQuantity,
+      debit: options.debit,
+      credit: options.credit,
+    });
+  }
+
   async findPactWeaponSlug(characterId: string): Promise<string | null> {
     const row = await this.items.findOne({
       where: { characterId, isPactWeapon: true },
@@ -135,7 +166,6 @@ export class CharacterInventoryRepository {
     return row?.itemSlug ?? null;
   }
 
-  /** Marca arma de pacto (exclusiva) e equipa em main_hand se ainda não estiver. */
   async bindAndEquipPactWeapon(
     characterId: string,
     itemSlug: string,
@@ -165,15 +195,56 @@ export class CharacterInventoryRepository {
     options: RemoveInventoryOptions = {},
   ): Promise<void> {
     const row = await findInventoryItemOrFail(this.items, characterId, itemSlug);
-    if (!options.credit) {
+    const quantity = options.quantity ?? row.quantity;
+    if (quantity < 1 || quantity > row.quantity) {
+      throw new BadRequestException(
+        `Cannot remove ${quantity}; stack has ${row.quantity}`,
+      );
+    }
+    const isPartial = quantity < row.quantity;
+    if (!options.credit && !isPartial) {
       await this.items.remove(row);
+      return;
+    }
+    if (!options.credit && isPartial) {
+      row.quantity -= quantity;
+      await this.items.save(row);
+      return;
+    }
+    if (isPartial || options.credit) {
+      await removeInventoryQuantityWithCredit({
+        dataSource: this.dataSource,
+        characterId,
+        itemSlug,
+        quantity,
+        credit: options.credit ?? null,
+      });
       return;
     }
     await removeInventoryItemWithCredit({
       dataSource: this.dataSource,
       characterId,
       itemSlug,
-      credit: options.credit,
+      credit: options.credit!,
+    });
+  }
+
+  async debitWealth(characterId: string, debit: CoinPurse): Promise<void> {
+    await this.dataSource.transaction(async (manager) => {
+      const characters = manager.getRepository(PlayerCharacter);
+      const character = await characters.findOne({
+        where: { id: characterId },
+        lock: { mode: 'pessimistic_write' },
+      });
+      if (!character) {
+        throw new BadRequestException('Character not found');
+      }
+      const next = debitCoinsWithExchange(
+        coinPurseFromColumns(character),
+        debit,
+      );
+      applyCoinPurseToColumns(character, next);
+      await characters.save(character);
     });
   }
 

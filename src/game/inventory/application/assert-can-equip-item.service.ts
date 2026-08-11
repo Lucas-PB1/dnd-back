@@ -1,33 +1,20 @@
 import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
-import { weaponPropsOf } from '@catalog/equipment/weapon-props';
+import { Repository } from 'typeorm';
 import { PhbItem } from '@entities/phb-item.entity';
-import { PhbWeapon } from '@entities/phb-weapon.entity';
-import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
-import { ResolveEquipmentCompliance } from '@game/combat/application/resolve-equipment-compliance';
-import { PlayerCharacterFeat } from '@game/sheet/infrastructure/player-sheet.entities';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { parseItemCoverage } from '../domain/coverage/item-coverage';
-import { assertCanEquipItem } from '../domain/assert-can-equip-item';
+import { assertCoverageNotEquippable } from '../domain/assert-can-equip-item';
 
-/** Carrega contexto da ficha/catálogo e aplica o gate de equip. */
+/** Gate de equip: só bloqueia cobertura; proficiência é soft (compliance/ataques). */
 @Injectable()
 export class AssertCanEquipItemService {
   constructor(
-    private readonly equipmentCompliance: ResolveEquipmentCompliance,
-    @InjectRepository(VPhbArmor)
-    private readonly armorCatalog: Repository<VPhbArmor>,
-    @InjectRepository(PhbWeapon)
-    private readonly weapons: Repository<PhbWeapon>,
     @InjectRepository(PhbItem)
     private readonly catalogItems: Repository<PhbItem>,
-    @InjectRepository(PlayerCharacterFeat)
-    private readonly feats: Repository<PlayerCharacterFeat>,
-    private readonly dataSource: DataSource,
   ) {}
 
-  async assert(character: PlayerCharacter, itemSlug: string): Promise<void> {
+  async assert(_character: PlayerCharacter, itemSlug: string): Promise<void> {
     const catalog = await this.catalogItems.findOne({ where: { slug: itemSlug } });
     if (
       catalog &&
@@ -35,78 +22,7 @@ export class AssertCanEquipItemService {
         (catalog.properties ?? null) as Record<string, unknown> | null,
       )
     ) {
-      throw new BadRequestException(
-        `Item '${itemSlug}' is a coverage — attach it to a base piece instead of equipping`,
-      );
+      assertCoverageNotEquippable(itemSlug);
     }
-
-    const featRows = await this.feats.find({
-      where: { characterId: character.id },
-    });
-    const featSlugs = featRows.map((row) => row.featSlug);
-
-    const armor = await this.armorCatalog.findOne({ where: { itemSlug } });
-    if (armor) {
-      const armorTrainingSlugs =
-        await this.equipmentCompliance.loadArmorTrainingSlugs(
-          character.classSlug,
-        );
-      assertCanEquipItem({
-        kind: 'armor',
-        piece: {
-          itemSlug: armor.itemSlug,
-          itemName: armor.itemName,
-          categorySlug: armor.categorySlug,
-          strengthReq: armor.strengthReq,
-          stealthDisadvantage: armor.stealthDisadvantage,
-        },
-        armorTrainingSlugs,
-        featSlugs,
-        strengthScore: character.abilityScores.forca,
-      });
-      return;
-    }
-
-    const weapon = await this.weapons.findOne({
-      where: { item: { slug: itemSlug } },
-      relations: ['item'],
-    });
-    if (!weapon) return;
-
-    const weaponProficiencySlugs = await this.loadWeaponProficiencySlugs(
-      character.classSlug,
-    );
-    const props = weaponPropsOf(weapon);
-    assertCanEquipItem({
-      kind: 'weapon',
-      piece: {
-        itemSlug: weapon.item.slug,
-        itemName: weapon.item.name,
-        category: weapon.category,
-        damage: weapon.damage,
-        damageType: weapon.damageType,
-        versatileDamage: props.versatileDamage ?? null,
-        propertySlugs: props.propertyIds ?? [],
-        equipmentSlot: 'main_hand',
-      },
-      weaponProficiencySlugs,
-      featSlugs,
-      itemName: weapon.item.name,
-    });
-  }
-
-  private async loadWeaponProficiencySlugs(
-    classSlug: string,
-  ): Promise<string[]> {
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT cwp.ref_slug AS slug
-       FROM rpg.phb_class c
-       JOIN rpg.phb_class_proficiency cwp
-         ON cwp.class_id = c.id AND cwp.kind = 'weapon'::rpg.class_proficiency_kind
-       WHERE c.slug = $1
-       ORDER BY cwp.ref_slug`,
-      [classSlug],
-    );
-    return rows.map((row) => row.slug);
   }
 }

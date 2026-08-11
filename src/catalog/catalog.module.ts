@@ -35,6 +35,6 @@ import { MetamagicsModule } from './metamagics/metamagics.module';
     EldritchInvocationsModule,
     MetamagicsModule,
   ],
-  exports: [CatalogLookupModule],
+  exports: [CatalogLookupModule, ItemsModule],
 })
 export class CatalogModule {}

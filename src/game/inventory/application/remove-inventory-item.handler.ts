@@ -11,6 +11,8 @@ import {
   scaleCoinPurse,
 } from '../domain/coin-purse';
 
+export type RemoveInventoryMode = 'sell' | 'discard';
+
 @Injectable()
 export class RemoveInventoryItemHandler {
   constructor(
@@ -24,6 +26,7 @@ export class RemoveInventoryItemHandler {
     userId: string,
     characterId: string,
     itemSlug: string,
+    options: { quantity?: number; mode?: RemoveInventoryMode } = {},
   ): Promise<void> {
     await this.access.findAccessibleOrFail(userId, characterId, 'write');
     const paymentCtx =
@@ -34,11 +37,13 @@ export class RemoveInventoryItemHandler {
 
     const chargeApplies =
       paymentCtx.inCampaign && !paymentCtx.viewerIsDmOrAssistant;
+    const mode = options.mode ?? (chargeApplies ? 'sell' : 'discard');
+    const stackQty =
+      (await this.inventory.peekItemQuantity(characterId, itemSlug)) ?? 1;
+    const quantity = options.quantity ?? stackQty;
 
     let credit = null;
-    if (chargeApplies) {
-      const quantity =
-        (await this.inventory.peekItemQuantity(characterId, itemSlug)) ?? 1;
+    if (chargeApplies && mode === 'sell') {
       try {
         const catalog = await this.catalogLookup.assertItemInCatalog(itemSlug);
         credit = halfCoinPurseValue(
@@ -48,7 +53,6 @@ export class RemoveInventoryItemHandler {
           ),
         );
       } catch (error) {
-        // Sem preço / Varia → remove sem crédito (não bloqueia)
         if (
           error instanceof Error &&
           (/no catalog price/i.test(error.message) ||
@@ -62,7 +66,7 @@ export class RemoveInventoryItemHandler {
     }
 
     try {
-      await this.inventory.remove(characterId, itemSlug, { credit });
+      await this.inventory.remove(characterId, itemSlug, { credit, quantity });
     } catch (error) {
       if (error instanceof BadRequestException) throw error;
       throw new BadRequestException(coinPurseErrorMessage(error));

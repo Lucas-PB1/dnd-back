@@ -2,9 +2,16 @@ import { PatchInventoryItemHandler } from './patch-inventory-item.handler';
 
 describe('PatchInventoryItemHandler', () => {
   let access: { findAccessibleOrFail: jest.Mock };
-  let inventory: { patch: jest.Mock };
+  let campaignAccess: { resolveInventoryPaymentContext: jest.Mock };
+  let catalogLookup: { assertItemInCatalog: jest.Mock };
+  let inventory: {
+    patch: jest.Mock;
+    peekItemQuantity: jest.Mock;
+    patchQuantityWithCoins: jest.Mock;
+  };
   let assertCanEquip: { assert: jest.Mock };
   let assertCanBindPact: { assert: jest.Mock };
+  let catalogStats: { recordPurchase: jest.Mock };
   let handler: PatchInventoryItemHandler;
 
   beforeEach(() => {
@@ -13,16 +20,37 @@ describe('PatchInventoryItemHandler', () => {
         abilityScores: { forca: 12 },
         classSlug: 'fighter',
         speciesSlug: 'human',
+        coinCopper: 0,
+        coinSilver: 0,
+        coinElectrum: 0,
+        coinGold: 100,
+        coinPlatinum: 0,
       }),
     };
-    inventory = { patch: jest.fn().mockResolvedValue({ itemSlug: 'dagger' }) };
+    campaignAccess = {
+      resolveInventoryPaymentContext: jest.fn().mockResolvedValue({
+        inCampaign: false,
+        viewerIsDmOrAssistant: false,
+        allowPlayerSkipPayment: false,
+      }),
+    };
+    catalogLookup = { assertItemInCatalog: jest.fn() };
+    inventory = {
+      patch: jest.fn().mockResolvedValue({ itemSlug: 'dagger' }),
+      peekItemQuantity: jest.fn().mockResolvedValue(1),
+      patchQuantityWithCoins: jest.fn(),
+    };
     assertCanEquip = { assert: jest.fn().mockResolvedValue(undefined) };
     assertCanBindPact = { assert: jest.fn().mockResolvedValue(undefined) };
+    catalogStats = { recordPurchase: jest.fn() };
     handler = new PatchInventoryItemHandler(
       access as never,
+      campaignAccess as never,
+      catalogLookup as never,
       inventory as never,
       assertCanEquip as never,
       assertCanBindPact as never,
+      catalogStats as never,
     );
   });
 
