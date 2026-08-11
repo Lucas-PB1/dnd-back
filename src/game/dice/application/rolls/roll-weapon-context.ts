@@ -9,6 +9,11 @@ import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-c
 import { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
 import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
+import {
+  applyAbilityPenalties,
+  collectAbilityPenaltiesFromInventory,
+} from '@game/inventory/domain/artifact/artifact-instance-ops';
+import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 
 export type RollWeaponCharacter = {
@@ -82,13 +87,22 @@ export async function findEquippedWeaponAttack(
         character.abilityScores,
       )
     : character.abilityScores;
-  const scores = itemEffects
+  const scoresWithItems = itemEffects
     ? applyItemAbilityBonuses(
         classScores,
         itemEffects.abilityBonuses,
         itemEffects.abilityScoreCaps,
       )
     : classScores;
+  const inventoryRows = deps.dataSource
+    ? await deps.dataSource.getRepository(PlayerCharacterItem).find({
+        where: { characterId: character.id },
+      })
+    : [];
+  const scores = applyAbilityPenalties(
+    scoresWithItems,
+    collectAbilityPenaltiesFromInventory(inventoryRows),
+  );
   const combatFlags = await loadWeaponCombatFlags(
     deps.dataSource,
     character.id,

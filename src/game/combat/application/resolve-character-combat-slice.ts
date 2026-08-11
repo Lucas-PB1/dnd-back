@@ -1,4 +1,8 @@
 ﻿import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
+import {
+  applyAbilityPenalties,
+  collectAbilityPenaltiesFromInventory,
+} from '@game/inventory/domain/artifact/artifact-instance-ops';
 import { aggregateClassCombatContributions } from '../domain/aggregate-class-combat';
 import { featCombatNotes } from '../domain/feat/combat-notes';
 import { itemCombatNotes } from '../domain/item/combat-notes';
@@ -8,11 +12,12 @@ import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { SizeCategory } from '../domain/equipment';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { PhbItem } from '@entities/phb-item.entity';
 
 export type MappedCombatSlice = {
   armorClass: number;
@@ -89,10 +94,14 @@ export async function resolveCharacterCombatSlice(input: {
   const itemEffects = await permanentItemEffects.resolve(characterId, {
     inventoryRows,
   });
-  const combatScores = applyItemAbilityBonuses(
+  const withItemBonuses = applyItemAbilityBonuses(
     abilityScores,
     itemEffects.abilityBonuses,
     itemEffects.abilityScoreCaps,
+  );
+  const combatScores = applyAbilityPenalties(
+    withItemBonuses,
+    collectAbilityPenaltiesFromInventory(inventoryRows),
   );
 
   const armor = await equippedArmorClass.resolve(characterId, combatScores, {
@@ -143,6 +152,10 @@ export async function resolveCharacterCombatSlice(input: {
   });
   const itemNotes = itemCombatNotes({
     itemSlugs: activeItemSlugs ?? [],
+    propertiesBySlug: await loadItemCombatNoteProperties(
+      inventoryItems,
+      activeItemSlugs ?? [],
+    ),
   });
 
   return {
@@ -168,4 +181,20 @@ export async function resolveCharacterCombatSlice(input: {
       charismaModifier: abilityModifier(combatScores.carisma),
     }),
   };
+}
+
+async function loadItemCombatNoteProperties(
+  inventoryItems: Repository<PlayerCharacterItem>,
+  itemSlugs: readonly string[],
+): Promise<Map<string, Record<string, unknown> | null>> {
+  const map = new Map<string, Record<string, unknown> | null>();
+  if (itemSlugs.length === 0) return map;
+  const rows = await inventoryItems.manager.getRepository(PhbItem).find({
+    where: { slug: In([...itemSlugs]) },
+    select: ['slug', 'properties'],
+  });
+  for (const row of rows) {
+    map.set(row.slug, row.properties);
+  }
+  return map;
 }

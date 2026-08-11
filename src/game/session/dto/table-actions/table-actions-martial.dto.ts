@@ -163,6 +163,9 @@ export class UsePaladinTableActionDto {
       'oath-channel',
       'inspiring-smite',
       'peerless-athlete',
+      'glorious-defense',
+      'undying-sentinel',
+      'reveler',
     ],
   })
   @IsIn([
@@ -173,6 +176,9 @@ export class UsePaladinTableActionDto {
     'oath-channel',
     'inspiring-smite',
     'peerless-athlete',
+    'glorious-defense',
+    'undying-sentinel',
+    'reveler',
   ])
   actionSlug!:
     | 'lay-on-hands'
@@ -181,7 +187,10 @@ export class UsePaladinTableActionDto {
     | 'abjure-enemies'
     | 'oath-channel'
     | 'inspiring-smite'
-    | 'peerless-athlete';
+    | 'peerless-athlete'
+    | 'glorious-defense'
+    | 'undying-sentinel'
+    | 'reveler';
 
   @ApiPropertyOptional({
     minimum: 1,
@@ -310,7 +319,12 @@ export class UseFighterTableActionDto {
   dc?: number;
 }
 
-const GUNSLINGER_TABLE_ACTION_SLUGS = ['use-maneuver', 'recover-risk'] as const;
+const GUNSLINGER_TABLE_ACTION_SLUGS = [
+  'use-maneuver',
+  'recover-risk',
+  'reload-firearm',
+  'fire-chamber',
+] as const;
 
 export class UseGunslingerTableActionDto {
   @ApiProperty({ enum: GUNSLINGER_TABLE_ACTION_SLUGS })
@@ -324,6 +338,23 @@ export class UseGunslingerTableActionDto {
   @IsOptional()
   @IsString()
   maneuverSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 'revolver',
+    description: 'Arma de fogo (reload-firearm / fire-chamber)',
+  })
+  @IsOptional()
+  @IsString()
+  itemSlug?: string;
+
+  @ApiPropertyOptional({
+    example: 1,
+    description: 'Tiros a gastar (fire-chamber; Automática = 2)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  shots?: number;
 }
 
 const BARBARIAN_TABLE_ACTION_SLUGS = [

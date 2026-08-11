@@ -8,9 +8,41 @@ import {
   IsString,
   Max,
   Min,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { CharacterStateResponseDto } from './character-state-response.dto';
 
+export class ArtifactRandomCastDto {
+  @ApiProperty({ example: 'varinha-de-orcus' })
+  @IsString()
+  itemSlug!: string;
+
+  @ApiProperty({
+    enum: [
+      'minorBeneficial',
+      'majorBeneficial',
+      'minorDetrimental',
+      'majorDetrimental',
+    ],
+  })
+  @IsIn([
+    'minorBeneficial',
+    'majorBeneficial',
+    'minorDetrimental',
+    'majorDetrimental',
+  ])
+  bucket!:
+    | 'minorBeneficial'
+    | 'majorBeneficial'
+    | 'minorDetrimental'
+    | 'majorDetrimental';
+
+  @ApiProperty({ example: 0 })
+  @IsInt()
+  @Min(0)
+  index!: number;
+}
 export class UseClassResourceDto {
   @ApiProperty({ example: 'rage' })
   @IsString()
@@ -179,6 +211,16 @@ export class CastSpellDto {
   @IsOptional()
   @IsString()
   itemCastItemSlug?: string;
+
+  @ApiPropertyOptional({
+    type: ArtifactRandomCastDto,
+    description:
+      'Cast de magia rolada em prop de artefato (instance_properties; 1× até DL)',
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ArtifactRandomCastDto)
+  artifactRandomCast?: ArtifactRandomCastDto;
 }
 
 export class CastSpellResponseDto {
@@ -192,6 +234,18 @@ export class CastSpellResponseDto {
     example: 'Mísseis Mágicos: 7 dardo(s) · penetram Escudo',
   })
   note?: string | null;
+
+  @ApiPropertyOptional({
+    example: 18,
+    description: 'CD fixa do item (Treasure); null = usar CD do personagem',
+  })
+  spellSaveDcOverride?: number | null;
+
+  @ApiPropertyOptional({
+    example: 10,
+    description: 'Bônus de ataque mágico do item, se houver',
+  })
+  spellAttackBonusOverride?: number | null;
 
   @ApiProperty({ type: CharacterStateResponseDto })
   state!: CharacterStateResponseDto;

@@ -44,7 +44,7 @@ Invocações / criaturas / efeitos de duração (nas concluídas) — só nota o
 | Ladino · Assassino | Veneno / Golpe Mortal | toggles no ataque + nota; condições |
 | Ladino (base) | Esquiva Sobrenatural / Elusivo | lembrete C009 / nota; defesa situacional |
 | Paladino · Devoção L15 | Destruição Protetora | lembrete C009; Usar/handler adiado |
-| Paladino · Glória L15 | Defesa Gloriosa | C009 ± `glorious-defense`; Usar dedicado adiado |
+| Paladino · Glória L15 | Defesa Gloriosa | C009 ± `glorious-defense` + Usar `glorious-defense` |
 | Paladino · Glória L3 | Atleta Inigualável (2º canal) | C009 + `peerless-athlete` |
 | Pistoleiro | Manobras outras subs | C001 + C009 lembretes done; polish Assumidor / condições / Bang cast / câmaras |
 
@@ -134,7 +134,7 @@ Polish adiado: Teia/posição, condições persistentes — ver tabela no topo +
 
 Pools: `layOnHands` + `channelDivinity` (C009 ±; Sentido Divino com `table_action`). Economia por juramento: canais nomeados (`oath-channel` / `peerless-athlete`) + pools L15/L20 (`holy-nimbus`, `glorious-defense`, `undying-sentinel`, …; Folia `reveler` / `party-animal`). Painel: cura com amount + Curar Veneno; canais C010 com `resource_slug`. Destruição Divina no card de ataque.
 
-Polish adiado: Defesa Gloriosa / Destruição Protetora (Usar dedicado).
+Polish adiado: Destruição Protetora (lembrete de Cobertura na aura). Defesa Gloriosa: Usar ligado.
 
 ## Pistoleiro (`gunslinger`) — **concluída**
 
@@ -194,7 +194,7 @@ Polish adiado: restaurar Manto de Majestade com espaço 3+; devolver Inspiraçã
 |--------|------|
 | Domain | `src/game/combat/domain/barbarian/` |
 | Handler | `barbarian-actions.handler.ts` + `actions/barbarian/` |
-| HTTP | `POST …/barbarian/table-action` (legado `rage/toggle` / `reckless/toggle` ainda existe) |
+| HTTP | `POST …/barbarian/table-action` |
 | Economy/panel | `C009` + `C010` |
 
 Pool: `rage` (± via `barbarian-rage`; Usar `toggle-rage`). Base: Imprudente, Fúria Persistente L15. PHB: berserker (`frenzy`, `retaliation`, `intimidating-presence` + restaurar), wild-heart (`wild-heart-eagle` + notas), world-tree (PV temp. no enter + `revitalizing-strength` / `branches-of-the-tree` / `traverse-the-tree`), zealot (`champion-of-the-gods`, `fanatical-focus`, `zealous-presence`, `rage-of-the-gods`; Fúria Divina no card de ataque). Valdas `path-of-the-muscle-wizard`: Fúria gratuita + 3 “Truques” + “Magias”/punho.

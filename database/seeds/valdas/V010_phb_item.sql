@@ -59,7 +59,7 @@ VALUES (
   'Esta carta selada, infundida com magia de Cronomancia, contém uma descrição escrita de como a criatura que a lê morrerá. A carta sempre contém descrições específicas, como “O orc de olhos vermelhos enfiou sua lâmina no coração de Faizon, o Azul”, mas também pode usar linguagem enigmática ou vaga. Nunca especifica uma hora exata. Uma vez que uma criatura tenha lido a carta, ela terá Vantagem em Salvaguardas contra a Morte e morrerá somente após obter cinco falhas no Salvaguarda contra a Morte, em vez de três. Porém, quando a criatura chega ao momento de sua morte descrito na carta, ela morre sem fazer Salvaguardas contra a Morte se for reduzida a 0 Pontos de Vida.
 
 Depois que um Memento Mori é aberto e lido, ele se torna uma carta comum. Seus efeitos terminam apenas se a criatura que o leu morrer e mais tarde for restaurada à vida.',
-  '{"magic":true,"category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"source":"valdas-spire-player-pack","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:player-pack"}'::jsonb
+  '{"magic":true,"category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"source":"valdas-spire-player-pack","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:player-pack","combatNotes":["Após ler: Vantagem em Salvaguardas contra a Morte; morre só com 5 falhas (exceto morte descrita na carta)."]}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,

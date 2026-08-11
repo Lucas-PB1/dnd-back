@@ -1,5 +1,6 @@
--- Seed rpg.phb_item
--- Gerado automaticamente — não editar à mão
+-- Seed rpg.phb_item (catálogo PHB Cap. 6 — loja / inventário)
+-- Fonte de verdade de preços: cost->>'text' aqui (não properties.variants nem patches).
+-- Categorias “Varia” (pais) ficam com cost NULL; variantes filhas têm preço.
 
 INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, properties)
 VALUES
@@ -54,6 +55,19 @@ VALUES
   ('splint', 'armor'::rpg.item_type, 'Armadura de Talas', '{"text":"200 PO"}'::jsonb, '30 kg', NULL, '{"acFormula":{"type":"fixed","base":17},"propertyIds":["stealth-disadvantage","strength-requirement"]}'::jsonb),
   ('plate', 'armor'::rpg.item_type, 'Placas', '{"text":"1.500 PO"}'::jsonb, '32 kg', NULL, '{"acFormula":{"type":"fixed","base":18},"propertyIds":["stealth-disadvantage","strength-requirement"]}'::jsonb),
   ('shield', 'armor'::rpg.item_type, 'Escudo', '{"text":"10 PO"}'::jsonb, '3 kg', NULL, '{"acFormula":{"type":"shield-bonus","bonus":2},"propertyIds":["shield-ac-bonus"]}'::jsonb),
+  -- Barding (PHB Cap. 6): custo ×4 e peso ×2 da armadura base; loja/montaria
+  ('barding-padded', 'other'::rpg.item_type, 'Barding — Acolchoada', '{"text":"20 PO"}'::jsonb, '8 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"padded"}'::jsonb),
+  ('barding-leather', 'other'::rpg.item_type, 'Barding — Couro', '{"text":"40 PO"}'::jsonb, '10 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"leather"}'::jsonb),
+  ('barding-studded-leather', 'other'::rpg.item_type, 'Barding — Couro Batido', '{"text":"180 PO"}'::jsonb, '13 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"studded-leather"}'::jsonb),
+  ('barding-hide', 'other'::rpg.item_type, 'Barding — Gibão de Peles', '{"text":"40 PO"}'::jsonb, '12 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"hide"}'::jsonb),
+  ('barding-chain-shirt', 'other'::rpg.item_type, 'Barding — Cota de Malha Parcial', '{"text":"200 PO"}'::jsonb, '20 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"chain-shirt"}'::jsonb),
+  ('barding-scale-mail', 'other'::rpg.item_type, 'Barding — Loriga de Escamas', '{"text":"200 PO"}'::jsonb, '44 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"scale-mail"}'::jsonb),
+  ('barding-breastplate', 'other'::rpg.item_type, 'Barding — Couraça', '{"text":"1.600 PO"}'::jsonb, '20 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"breastplate"}'::jsonb),
+  ('barding-half-plate', 'other'::rpg.item_type, 'Barding — Meia-Placa', '{"text":"3.000 PO"}'::jsonb, '40 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"half-plate"}'::jsonb),
+  ('barding-ring-mail', 'other'::rpg.item_type, 'Barding — Cota de Anéis', '{"text":"120 PO"}'::jsonb, '40 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"ring-mail"}'::jsonb),
+  ('barding-chain-mail', 'other'::rpg.item_type, 'Barding — Cota de Malha', '{"text":"300 PO"}'::jsonb, '54 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"chain-mail"}'::jsonb),
+  ('barding-splint', 'other'::rpg.item_type, 'Barding — Armadura de Talas', '{"text":"800 PO"}'::jsonb, '60 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"splint"}'::jsonb),
+  ('barding-plate', 'other'::rpg.item_type, 'Barding — Placas', '{"text":"6.000 PO"}'::jsonb, '64 kg', 'Armadura de montaria (custo e peso ×2 da armadura correspondente).', '{"kind":"barding","baseArmorSlug":"plate"}'::jsonb),
   ('acido', 'gear'::rpg.item_type, 'Ácido', '{"text":"25 PO"}'::jsonb, '0,5 kg', 'Ao executar a ação Atacar, você pode substituir um', NULL),
   ('agua-benta', 'gear'::rpg.item_type, 'Água Benta', '{"text":"25 PO"}'::jsonb, '0,5 kg', 'Ao executar a ação Atacar, você pode substituir um de', NULL),
   ('algibeira', 'gear'::rpg.item_type, 'Algibeira', '{"text":"5 PP"}'::jsonb, '0,5 kg', 'Uma Algibeira comporta até 3 kg em um volume de 6', NULL),
@@ -84,8 +98,8 @@ VALUES
   ('estojo-mapa-ou-pergaminho', 'gear'::rpg.item_type, 'Estojo, Mapa ou Pergaminho', '{"text":"1 PO"}'::jsonb, '0,5 kg', 'Um Estojo de Mapa ou Pergaminho armazena até 10', NULL),
   ('estojo-virote-de-besta', 'gear'::rpg.item_type, 'Estojo, Virote de Besta', '{"text":"1 PO"}'::jsonb, '0,5 kg', 'Um Estojo de Virotes de Besta armazena até 20', NULL),
   ('estrepes', 'gear'::rpg.item_type, 'Estrepes', '{"text":"1 PO"}'::jsonb, '1 kg (saco)', 'Como uma ação Usar Objeto, você pode espalhar', NULL),
-  ('foco-arcano', 'focus'::rpg.item_type, 'Foco Arcano', '{"text":"Varia"}'::jsonb, 'Varia', 'Um Foco Arcano assume uma das formas na tabela', NULL),
-  ('foco-druidico', 'focus'::rpg.item_type, 'Foco Druídico', '{"text":"Varia"}'::jsonb, 'Varia', 'Um Foco Druídico assume uma das formas apresentadas na tabela Foco Druídico e é esculpido, amarrado', NULL),
+  ('foco-arcano', 'focus'::rpg.item_type, 'Foco Arcano', NULL, 'Varia', 'Categoria: escolha uma variante (cristal, orbe, bastão, cajado ou varinha).', '{"catalogGroup":true}'::jsonb),
+  ('foco-druidico', 'focus'::rpg.item_type, 'Foco Druídico', NULL, 'Varia', 'Categoria: escolha uma variante (ramo de visco, cajado de madeira ou varinha de teixo).', '{"catalogGroup":true}'::jsonb),
   ('fogo-alquimico', 'gear'::rpg.item_type, 'Fogo Alquímico', '{"text":"50 PO"}'::jsonb, '0,5 kg', 'Ao executar a ação Atacar, você pode substituir um de', NULL),
   ('frasco', 'gear'::rpg.item_type, 'Frasco', '{"text":"1 PO"}'::jsonb, '—', 'Um Frasco armazena até 150 mililitros.', NULL),
   ('garrafa-de-vidro-1-litro', 'gear'::rpg.item_type, 'Garrafa de Vidro (1 litro)', '{"text":"2 PO"}'::jsonb, '1 kg', 'Uma Garrafa de Vidro armazena até 1 litro.', NULL),
@@ -108,7 +122,7 @@ VALUES
   ('lupa', 'gear'::rpg.item_type, 'Lupa', '{"text":"100 PO"}'::jsonb, '—', 'Uma Lupa concede Vantagem em qualquer teste de', NULL),
   ('mapa', 'gear'::rpg.item_type, 'Mapa', '{"text":"1 PO"}'::jsonb, '—', 'Se consultar um mapa detalhado, você obtém um', NULL),
   ('mochila', 'gear'::rpg.item_type, 'Mochila', '{"text":"2 PO"}'::jsonb, '2,5 kg', 'Uma Mochila armazena até 15 quilos dentro de 30', NULL),
-  ('municao', 'gear'::rpg.item_type, 'Munição', '{"text":"Varia"}'::jsonb, 'Varia', 'Munição é exigida por uma arma que tenha a propriedade Munição. A descrição de uma arma detalha o tipo', NULL),
+  ('municao', 'gear'::rpg.item_type, 'Munição', NULL, 'Varia', 'Categoria: escolha flechas, virotes, balas ou agulhas.', '{"catalogGroup":true}'::jsonb),
   ('oleo', 'gear'::rpg.item_type, 'Óleo', '{"text":"1 PP"}'::jsonb, '0,5 kg', 'Você pode cobrir uma criatura, objeto ou área com', NULL),
   ('pa', 'gear'::rpg.item_type, 'Pá', '{"text":"2 PO"}'::jsonb, '2,5 kg', 'Trabalhando por 1 hora, você pode usar uma Pá para', NULL),
   ('papel', 'gear'::rpg.item_type, 'Papel', '{"text":"2 PP"}'::jsonb, '—', 'Uma folha de papel pode comportar cerca de 250 palavras escritas à mão.', NULL),
@@ -128,7 +142,7 @@ VALUES
   ('roupas-viagem', 'gear'::rpg.item_type, 'Roupas, Viagem', '{"text":"2 PO"}'::jsonb, '2 kg', 'Roupas de Viagem são roupas resistentes projetadas', NULL),
   ('saca', 'gear'::rpg.item_type, 'Saca', '{"text":"1 PC"}'::jsonb, '250 g', 'Uma Saca armazena até 15 kg dentro de 30 centímetros cúbicos.', NULL),
   ('saco-de-dormir', 'gear'::rpg.item_type, 'Saco de Dormir', '{"text":"1 PO"}'::jsonb, '3,5 kg', 'Um Saco de Dormir acomoda uma criatura Pequena', NULL),
-  ('simbolo-sagrado', 'gear'::rpg.item_type, 'Símbolo Sagrado', '{"text":"Varia"}'::jsonb, 'Varia', 'Um Símbolo Sagrado assume uma das formas na tabela', NULL),
+  ('simbolo-sagrado', 'gear'::rpg.item_type, 'Símbolo Sagrado', NULL, 'Varia', 'Categoria: escolha amuleto, emblema ou relicário.', '{"catalogGroup":true}'::jsonb),
   ('sino', 'gear'::rpg.item_type, 'Sino', '{"text":"1 PO"}'::jsonb, '—', 'Quando tocado como uma ação Usar Objeto, um Sino', NULL),
   ('tenda', 'gear'::rpg.item_type, 'Tenda', '{"text":"2 PO"}'::jsonb, '10 kg', 'Uma Tenda acomoda para dormir até duas criaturas', NULL),
   ('tinta', 'gear'::rpg.item_type, 'Tinta', '{"text":"10 PO"}'::jsonb, '—', 'A tinta vem em uma garrafa de 30 mililitros, que', NULL),
@@ -167,12 +181,133 @@ detectar alimentos estragados ou envenenados (CD 15)', '{"attribute":"Sabedoria"
 armadilha (CD 15)', '{"attribute":"Destreza","crafting":null,"variants":null}'::jsonb),
   ('ferramentas-de-navegador', 'tool'::rpg.item_type, 'Ferramentas de Navegador', '{"text":"25 PO"}'::jsonb, '1 kg', 'Traçar uma rota (CD 10) ou determinar a posição
 observando as estrelas (CD 15)', '{"attribute":"Sabedoria","crafting":null,"variants":null}'::jsonb),
-  ('instrumento-musical', 'tool'::rpg.item_type, 'Instrumento Musical', '{"text":"Varia"}'::jsonb, 'Varia', 'Tocar uma música conhecida (CD 10) ou
-improvisar uma música (CD 15)', '{"attribute":"Carisma","crafting":null,"variants":"Alaúde (35 PO, 1 kg), Flauta (2 PO, 0,5 kg), Flauta\nde Pan (12 PO, 1 kg), Gaita de Foles (30 PO, 3 kg), Lira\n(30 PO, 1 kg), Oboé (2 PO, 0,5 kg), Tambor (6 PO, 1,5 kg),\nTrombeta (3 PO, 1 kg), Violino (30 PO, 0,5 kg), Xilofone (25\nPO, 5 kg)"}'::jsonb),
+  ('instrumento-musical', 'tool'::rpg.item_type, 'Instrumento Musical', NULL, 'Varia', 'Categoria: escolha um instrumento concreto (alaúde, flauta, etc.).', '{"attribute":"Carisma","crafting":null,"catalogGroup":true}'::jsonb),
   ('kit-de-disfarce', 'tool'::rpg.item_type, 'Kit de Disfarce', '{"text":"25 PO"}'::jsonb, '1,5 kg', 'Aplicar maquiagem (CD 10)', '{"attribute":"Carisma","crafting":"Fantasia","variants":null}'::jsonb),
   ('kit-de-falsificacao', 'tool'::rpg.item_type, 'Kit de Falsificação', '{"text":"15 PO"}'::jsonb, '2,5 kg', 'Imitar 10 ou menos palavras escritas de outra
 pessoa (CD 15) ou duplicar um selo de cera (CD 20)', '{"attribute":"Destreza","crafting":null,"variants":null}'::jsonb),
   ('kit-de-herbalismo', 'tool'::rpg.item_type, 'Kit de Herbalismo', '{"text":"5 PO"}'::jsonb, '1,5 kg', 'Identificar uma planta (CD 10)', '{"attribute":"Inteligência","crafting":"Antitoxina, Kit de Curandeiro, Poção de Cura, Vela","variants":null}'::jsonb),
-  ('kit-de-jogos', 'tool'::rpg.item_type, 'Kit de Jogos', '{"text":"Varia"}'::jsonb, '—', 'Discernir se alguém está trapaceando (CD 10) ou
-ganhar o jogo (CD 20)', '{"attribute":"Sabedoria","crafting":null,"variants":"Dados (1 PP), Xadrez-do-Dragão (1 PO), Baralho\n(5 PP), Conjunto do Jogo dos Três Dragões (1 PO)"}'::jsonb),
-  ('kit-de-veneno', 'tool'::rpg.item_type, 'Kit de Veneno', '{"text":"50 PO"}'::jsonb, '1 kg', 'Detectar um objeto envenenado (CD 10)', '{"attribute":"Inteligência","crafting":"Veneno Básico","variants":null}'::jsonb);
+  ('kit-de-jogos', 'tool'::rpg.item_type, 'Kit de Jogos', NULL, '—', 'Categoria: escolha dados, xadrez-do-dragão, baralho ou ante dos três dragões.', '{"attribute":"Sabedoria","crafting":null,"catalogGroup":true}'::jsonb),
+  ('kit-de-veneno', 'tool'::rpg.item_type, 'Kit de Veneno', '{"text":"50 PO"}'::jsonb, '1 kg', 'Detectar um objeto envenenado (CD 10)', '{"attribute":"Inteligência","crafting":"Veneno Básico","variants":null}'::jsonb),
+
+  -- Variantes: foco arcano
+  ('cristal', 'focus'::rpg.item_type, 'Cristal', '{"text":"10 PO"}'::jsonb, '0,5 kg', 'Foco Arcano.', '{"variantOf":"foco-arcano"}'::jsonb),
+  ('orbe', 'focus'::rpg.item_type, 'Orbe', '{"text":"20 PO"}'::jsonb, '1,5 kg', 'Foco Arcano.', '{"variantOf":"foco-arcano"}'::jsonb),
+  ('bastao', 'focus'::rpg.item_type, 'Bastão', '{"text":"10 PO"}'::jsonb, '1 kg', 'Foco Arcano.', '{"variantOf":"foco-arcano"}'::jsonb),
+  ('cajado-arcano', 'focus'::rpg.item_type, 'Cajado (Foco Arcano)', '{"text":"5 PO"}'::jsonb, '2 kg', 'Foco Arcano; também conta como Cajado (arma).', '{"variantOf":"foco-arcano","alsoWeaponSlug":"quarterstaff"}'::jsonb),
+  ('varinha', 'focus'::rpg.item_type, 'Varinha', '{"text":"10 PO"}'::jsonb, '0,5 kg', 'Foco Arcano.', '{"variantOf":"foco-arcano"}'::jsonb),
+
+  -- Variantes: foco druídico
+  ('ramo-de-visco', 'focus'::rpg.item_type, 'Ramo de Visco', '{"text":"1 PO"}'::jsonb, '—', 'Foco Druídico.', '{"variantOf":"foco-druidico"}'::jsonb),
+  ('cajado-de-madeira', 'focus'::rpg.item_type, 'Cajado de Madeira', '{"text":"5 PO"}'::jsonb, '2 kg', 'Foco Druídico; também conta como Cajado (arma).', '{"variantOf":"foco-druidico","alsoWeaponSlug":"quarterstaff"}'::jsonb),
+  ('varinha-de-teixo', 'focus'::rpg.item_type, 'Varinha de Teixo', '{"text":"10 PO"}'::jsonb, '0,5 kg', 'Foco Druídico.', '{"variantOf":"foco-druidico"}'::jsonb),
+
+  -- Variantes: símbolo sagrado
+  ('amuleto', 'focus'::rpg.item_type, 'Amuleto', '{"text":"5 PO"}'::jsonb, '0,5 kg', 'Símbolo Sagrado (usado ou empunhado).', '{"variantOf":"simbolo-sagrado","wornOrHeld":true}'::jsonb),
+  ('emblema', 'focus'::rpg.item_type, 'Emblema', '{"text":"5 PO"}'::jsonb, '—', 'Símbolo Sagrado (em tecido ou Escudo).', '{"variantOf":"simbolo-sagrado","borneOnFabricOrShield":true}'::jsonb),
+  ('relicario', 'focus'::rpg.item_type, 'Relicário', '{"text":"5 PO"}'::jsonb, '1 kg', 'Símbolo Sagrado (empunhado).', '{"variantOf":"simbolo-sagrado","held":true}'::jsonb),
+
+  -- Variantes: munição (pacote inclui estojo/aljava adequado)
+  ('flechas', 'gear'::rpg.item_type, 'Flechas (20)', '{"text":"1 PO"}'::jsonb, '0,5 kg', '20 flechas; inclui Aljava.', '{"variantOf":"municao","amount":20,"storageSlug":"aljava"}'::jsonb),
+  ('virotes', 'gear'::rpg.item_type, 'Virotes (20)', '{"text":"1 PO"}'::jsonb, '0,75 kg', '20 virotes; inclui Estojo de Virotes.', '{"variantOf":"municao","amount":20,"storageSlug":"estojo-virote-de-besta"}'::jsonb),
+  ('balas-arma-de-fogo', 'gear'::rpg.item_type, 'Balas, Arma de Fogo (10)', '{"text":"3 PO"}'::jsonb, '1 kg', '10 balas de arma de fogo; inclui Algibeira.', '{"variantOf":"municao","amount":10,"storageSlug":"algibeira"}'::jsonb),
+  ('balas-de-funda', 'gear'::rpg.item_type, 'Balas, Funda (20)', '{"text":"4 PC"}'::jsonb, '0,75 kg', '20 balas de funda; inclui Algibeira.', '{"variantOf":"municao","amount":20,"storageSlug":"algibeira"}'::jsonb),
+  ('agulhas', 'gear'::rpg.item_type, 'Agulhas (50)', '{"text":"1 PO"}'::jsonb, '0,5 kg', '50 agulhas de sopro; inclui Algibeira.', '{"variantOf":"municao","amount":50,"storageSlug":"algibeira"}'::jsonb),
+
+  -- Variantes: instrumentos (slugs alinhados a S060 / backgrounds)
+  ('gaita-de-foles', 'tool'::rpg.item_type, 'Gaita de Foles', '{"text":"30 PO"}'::jsonb, '3 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('tambor', 'tool'::rpg.item_type, 'Tambor', '{"text":"6 PO"}'::jsonb, '1,5 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('salterio', 'tool'::rpg.item_type, 'Saltério', '{"text":"25 PO"}'::jsonb, '5 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('flauta', 'tool'::rpg.item_type, 'Flauta', '{"text":"2 PO"}'::jsonb, '0,5 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('trompa', 'tool'::rpg.item_type, 'Trompa', '{"text":"3 PO"}'::jsonb, '1 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('alaude', 'tool'::rpg.item_type, 'Alaúde', '{"text":"35 PO"}'::jsonb, '1 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('lira', 'tool'::rpg.item_type, 'Lira', '{"text":"30 PO"}'::jsonb, '1 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('flauta-de-pan', 'tool'::rpg.item_type, 'Flauta de Pã', '{"text":"12 PO"}'::jsonb, '1 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('charamela', 'tool'::rpg.item_type, 'Charamela', '{"text":"2 PO"}'::jsonb, '0,5 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+  ('viola', 'tool'::rpg.item_type, 'Viola', '{"text":"30 PO"}'::jsonb, '0,5 kg', 'Instrumento musical.', '{"variantOf":"instrumento-musical","attribute":"Carisma"}'::jsonb),
+
+  -- Variantes: kits de jogos (preços PHB: dados 1 PP, baralho 5 PP)
+  ('conjunto-de-dados', 'tool'::rpg.item_type, 'Conjunto de Dados', '{"text":"1 PP"}'::jsonb, '—', 'Kit de jogos.', '{"variantOf":"kit-de-jogos","attribute":"Sabedoria"}'::jsonb),
+  ('xadrez-do-dragao', 'tool'::rpg.item_type, 'Xadrez-do-Dragão', '{"text":"1 PO"}'::jsonb, '0,25 kg', 'Kit de jogos.', '{"variantOf":"kit-de-jogos","attribute":"Sabedoria"}'::jsonb),
+  ('baralho', 'tool'::rpg.item_type, 'Baralho', '{"text":"5 PP"}'::jsonb, '—', 'Kit de jogos.', '{"variantOf":"kit-de-jogos","attribute":"Sabedoria"}'::jsonb),
+  ('ante-dos-tres-dragoes', 'tool'::rpg.item_type, 'Ante dos Três Dragões', '{"text":"1 PO"}'::jsonb, '—', 'Kit de jogos.', '{"variantOf":"kit-de-jogos","attribute":"Sabedoria"}'::jsonb),
+
+  -- Pergaminhos mágicos 2º–9º (venda = 2× custo de scriba PHB)
+  ('pergaminho-magico-2-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (2º Círculo)', '{"text":"200 PO"}'::jsonb, '—', 'Pergaminho mágico genérico de 2º círculo.', NULL),
+  ('pergaminho-magico-3-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (3º Círculo)', '{"text":"300 PO"}'::jsonb, '—', 'Pergaminho mágico genérico de 3º círculo.', NULL),
+  ('pergaminho-magico-4-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (4º Círculo)', '{"text":"2.000 PO"}'::jsonb, '—', 'Pergaminho mágico genérico de 4º círculo.', NULL),
+  ('pergaminho-magico-5-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (5º Círculo)', '{"text":"3.000 PO"}'::jsonb, '—', 'Pergaminho mágico genérico de 5º círculo.', NULL),
+  ('pergaminho-magico-6-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (6º Círculo)', '{"text":"20.000 PO"}'::jsonb, '—', 'Pergaminho mágico genérico de 6º círculo.', NULL),
+  ('pergaminho-magico-7-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (7º Círculo)', '{"text":"25.000 PO"}'::jsonb, '—', 'Pergaminho mágico genérico de 7º círculo.', NULL),
+  ('pergaminho-magico-8-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (8º Círculo)', '{"text":"30.000 PO"}'::jsonb, '—', 'Pergaminho mágico genérico de 8º círculo.', NULL),
+  ('pergaminho-magico-9-circulo', 'gear'::rpg.item_type, 'Pergaminho Mágico (9º Círculo)', '{"text":"100.000 PO"}'::jsonb, '—', 'Pergaminho mágico genérico de 9º círculo.', NULL),
+
+  -- Montarias / animais
+  ('camelo', 'other'::rpg.item_type, 'Camelo', '{"text":"50 PO"}'::jsonb, '—', 'Montaria.', '{"kind":"mount","carryingCapacityLb":450}'::jsonb),
+  ('elefante', 'other'::rpg.item_type, 'Elefante', '{"text":"200 PO"}'::jsonb, '—', 'Montaria.', '{"kind":"mount","carryingCapacityLb":1320}'::jsonb),
+  ('cavalo-de-carga', 'other'::rpg.item_type, 'Cavalo de Carga', '{"text":"50 PO"}'::jsonb, '—', 'Montaria.', '{"kind":"mount","carryingCapacityLb":540}'::jsonb),
+  ('cavalo-de-montaria', 'other'::rpg.item_type, 'Cavalo de Montaria', '{"text":"75 PO"}'::jsonb, '—', 'Montaria.', '{"kind":"mount","carryingCapacityLb":480}'::jsonb),
+  ('mastim', 'other'::rpg.item_type, 'Mastim', '{"text":"25 PO"}'::jsonb, '—', 'Animal.', '{"kind":"mount","carryingCapacityLb":195}'::jsonb),
+  ('mula', 'other'::rpg.item_type, 'Mula', '{"text":"8 PO"}'::jsonb, '—', 'Montaria.', '{"kind":"mount","carryingCapacityLb":420}'::jsonb),
+  ('ponei', 'other'::rpg.item_type, 'Pônei', '{"text":"30 PO"}'::jsonb, '—', 'Montaria.', '{"kind":"mount","carryingCapacityLb":225}'::jsonb),
+  ('cavalo-de-guerra', 'other'::rpg.item_type, 'Cavalo de Guerra', '{"text":"400 PO"}'::jsonb, '—', 'Montaria.', '{"kind":"mount","carryingCapacityLb":540}'::jsonb),
+
+  -- Arnês / selas / veículos puxados
+  ('carruagem', 'gear'::rpg.item_type, 'Carruagem', '{"text":"100 PO"}'::jsonb, '300 kg', 'Veículo puxado.', '{"kind":"drawn-vehicle"}'::jsonb),
+  ('carroca', 'gear'::rpg.item_type, 'Carroça', '{"text":"15 PO"}'::jsonb, '100 kg', 'Veículo puxado.', '{"kind":"drawn-vehicle"}'::jsonb),
+  ('carro-de-guerra', 'gear'::rpg.item_type, 'Carro de Guerra', '{"text":"250 PO"}'::jsonb, '50 kg', 'Veículo puxado (chariot).', '{"kind":"drawn-vehicle"}'::jsonb),
+  ('racao-animal-por-dia', 'gear'::rpg.item_type, 'Ração Animal (por dia)', '{"text":"5 PC"}'::jsonb, '5 kg', 'Alimento para montaria (1 dia).', '{"kind":"mount-feed","billing":"per-day"}'::jsonb),
+  ('sela-exotica', 'gear'::rpg.item_type, 'Sela Exótica', '{"text":"60 PO"}'::jsonb, '20 kg', 'Sela.', '{"kind":"saddle"}'::jsonb),
+  ('sela-militar', 'gear'::rpg.item_type, 'Sela Militar', '{"text":"20 PO"}'::jsonb, '15 kg', 'Sela.', '{"kind":"saddle"}'::jsonb),
+  ('sela-de-montaria', 'gear'::rpg.item_type, 'Sela de Montaria', '{"text":"10 PO"}'::jsonb, '12,5 kg', 'Sela.', '{"kind":"saddle"}'::jsonb),
+  ('treno', 'gear'::rpg.item_type, 'Trenó', '{"text":"20 PO"}'::jsonb, '150 kg', 'Veículo puxado.', '{"kind":"drawn-vehicle"}'::jsonb),
+  ('estabulo-por-dia', 'other'::rpg.item_type, 'Estábulo (por dia)', '{"text":"5 PP"}'::jsonb, '—', 'Hospedagem de montaria por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('vagao', 'gear'::rpg.item_type, 'Vagão', '{"text":"35 PO"}'::jsonb, '200 kg', 'Veículo puxado.', '{"kind":"drawn-vehicle"}'::jsonb),
+
+  -- Veículos grandes (ar / água)
+  ('aeronave', 'other'::rpg.item_type, 'Aeronave', '{"text":"40.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"8 mph","crew":10,"passengers":20,"cargoTons":1,"ac":13,"hp":300}'::jsonb),
+  ('galera', 'other'::rpg.item_type, 'Galera', '{"text":"30.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"4 mph","crew":80,"cargoTons":150,"ac":15,"hp":500,"damageThreshold":20}'::jsonb),
+  ('barco-de-quilla', 'other'::rpg.item_type, 'Barco de Quilha', '{"text":"3.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"1 mph","crew":1,"passengers":6,"cargoTons":0.5,"ac":15,"hp":100,"damageThreshold":10}'::jsonb),
+  ('navio-longo', 'other'::rpg.item_type, 'Navio Longo', '{"text":"10.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"3 mph","crew":40,"passengers":150,"cargoTons":10,"ac":15,"hp":300,"damageThreshold":15}'::jsonb),
+  ('bote', 'other'::rpg.item_type, 'Bote', '{"text":"50 PO"}'::jsonb, '50 kg', 'Veículo grande (pode ser carregado).', '{"kind":"large-vehicle","speed":"1.5 mph","crew":1,"passengers":3,"ac":11,"hp":50}'::jsonb),
+  ('navio-a-vela', 'other'::rpg.item_type, 'Navio a Vela', '{"text":"10.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"2 mph","crew":20,"passengers":20,"cargoTons":100,"ac":15,"hp":300,"damageThreshold":15}'::jsonb),
+  ('navio-de-guerra', 'other'::rpg.item_type, 'Navio de Guerra', '{"text":"25.000 PO"}'::jsonb, '—', 'Veículo grande.', '{"kind":"large-vehicle","speed":"2.5 mph","crew":60,"passengers":60,"cargoTons":200,"ac":15,"hp":500,"damageThreshold":20}'::jsonb),
+
+  -- Serviços (preço unitário em cost; billing em properties)
+  ('estilo-de-vida-miseravel', 'other'::rpg.item_type, 'Estilo de Vida — Miserável', NULL, '—', 'Grátis; sobrevive de caridade.', '{"kind":"service","billing":"per-day","lifestyle":"wretched"}'::jsonb),
+  ('estilo-de-vida-sordido', 'other'::rpg.item_type, 'Estilo de Vida — Sórdido', '{"text":"1 PP"}'::jsonb, '—', 'Custo diário de manutenção.', '{"kind":"service","billing":"per-day","lifestyle":"squalid"}'::jsonb),
+  ('estilo-de-vida-pobre', 'other'::rpg.item_type, 'Estilo de Vida — Pobre', '{"text":"2 PP"}'::jsonb, '—', 'Custo diário de manutenção.', '{"kind":"service","billing":"per-day","lifestyle":"poor"}'::jsonb),
+  ('estilo-de-vida-modesto', 'other'::rpg.item_type, 'Estilo de Vida — Modesto', '{"text":"1 PO"}'::jsonb, '—', 'Custo diário de manutenção.', '{"kind":"service","billing":"per-day","lifestyle":"modest"}'::jsonb),
+  ('estilo-de-vida-confortavel', 'other'::rpg.item_type, 'Estilo de Vida — Confortável', '{"text":"2 PO"}'::jsonb, '—', 'Custo diário de manutenção.', '{"kind":"service","billing":"per-day","lifestyle":"comfortable"}'::jsonb),
+  ('estilo-de-vida-rico', 'other'::rpg.item_type, 'Estilo de Vida — Rico', '{"text":"4 PO"}'::jsonb, '—', 'Custo diário de manutenção.', '{"kind":"service","billing":"per-day","lifestyle":"wealthy"}'::jsonb),
+  ('estilo-de-vida-aristocratico', 'other'::rpg.item_type, 'Estilo de Vida — Aristocrático', '{"text":"10 PO"}'::jsonb, '—', 'Custo diário de manutenção.', '{"kind":"service","billing":"per-day","lifestyle":"aristocratic"}'::jsonb),
+  ('cerveja-caneca', 'other'::rpg.item_type, 'Cerveja (caneca)', '{"text":"4 PC"}'::jsonb, '—', 'Comida/bebida.', '{"kind":"service"}'::jsonb),
+  ('pao', 'other'::rpg.item_type, 'Pão', '{"text":"2 PC"}'::jsonb, '—', 'Comida/bebida.', '{"kind":"service"}'::jsonb),
+  ('queijo-cunha', 'other'::rpg.item_type, 'Queijo (cunha)', '{"text":"1 PP"}'::jsonb, '—', 'Comida/bebida.', '{"kind":"service"}'::jsonb),
+  ('estadia-sordida', 'other'::rpg.item_type, 'Estadia na Estalagem — Sórdida', '{"text":"7 PC"}'::jsonb, '—', 'Hospedagem por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('estadia-pobre', 'other'::rpg.item_type, 'Estadia na Estalagem — Pobre', '{"text":"1 PP"}'::jsonb, '—', 'Hospedagem por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('estadia-modesta', 'other'::rpg.item_type, 'Estadia na Estalagem — Modesta', '{"text":"5 PP"}'::jsonb, '—', 'Hospedagem por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('estadia-confortavel', 'other'::rpg.item_type, 'Estadia na Estalagem — Confortável', '{"text":"8 PP"}'::jsonb, '—', 'Hospedagem por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('estadia-rica', 'other'::rpg.item_type, 'Estadia na Estalagem — Rica', '{"text":"2 PO"}'::jsonb, '—', 'Hospedagem por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('estadia-aristocratica', 'other'::rpg.item_type, 'Estadia na Estalagem — Aristocrática', '{"text":"4 PO"}'::jsonb, '—', 'Hospedagem por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('refeicao-sordida', 'other'::rpg.item_type, 'Refeição — Sórdida', '{"text":"1 PC"}'::jsonb, '—', 'Refeição.', '{"kind":"service"}'::jsonb),
+  ('refeicao-pobre', 'other'::rpg.item_type, 'Refeição — Pobre', '{"text":"2 PC"}'::jsonb, '—', 'Refeição.', '{"kind":"service"}'::jsonb),
+  ('refeicao-modesta', 'other'::rpg.item_type, 'Refeição — Modesta', '{"text":"1 PP"}'::jsonb, '—', 'Refeição.', '{"kind":"service"}'::jsonb),
+  ('refeicao-confortavel', 'other'::rpg.item_type, 'Refeição — Confortável', '{"text":"2 PP"}'::jsonb, '—', 'Refeição.', '{"kind":"service"}'::jsonb),
+  ('refeicao-rica', 'other'::rpg.item_type, 'Refeição — Rica', '{"text":"3 PP"}'::jsonb, '—', 'Refeição.', '{"kind":"service"}'::jsonb),
+  ('refeicao-aristocratica', 'other'::rpg.item_type, 'Refeição — Aristocrática', '{"text":"6 PP"}'::jsonb, '—', 'Refeição.', '{"kind":"service"}'::jsonb),
+  ('vinho-comum', 'other'::rpg.item_type, 'Vinho — Comum (garrafa)', '{"text":"2 PP"}'::jsonb, '—', 'Bebida.', '{"kind":"service"}'::jsonb),
+  ('vinho-fino', 'other'::rpg.item_type, 'Vinho — Fino (garrafa)', '{"text":"10 PO"}'::jsonb, '—', 'Bebida.', '{"kind":"service"}'::jsonb),
+  ('viagem-carroca-entre-cidades', 'other'::rpg.item_type, 'Viagem de Carroça (entre cidades)', '{"text":"3 PC"}'::jsonb, '—', 'Preço por milha.', '{"kind":"service","billing":"per-mile"}'::jsonb),
+  ('viagem-carroca-na-cidade', 'other'::rpg.item_type, 'Viagem de Carroça (na cidade)', '{"text":"1 PC"}'::jsonb, '—', 'Preço por milha.', '{"kind":"service","billing":"per-mile"}'::jsonb),
+  ('pedagio', 'other'::rpg.item_type, 'Pedágio (estrada ou portão)', '{"text":"1 PC"}'::jsonb, '—', 'Pedágio.', '{"kind":"service"}'::jsonb),
+  ('passagem-de-navio', 'other'::rpg.item_type, 'Passagem de Navio', '{"text":"1 PP"}'::jsonb, '—', 'Preço por milha.', '{"kind":"service","billing":"per-mile"}'::jsonb),
+  ('servo-habilidoso', 'other'::rpg.item_type, 'Servo Habilidoso', '{"text":"2 PO"}'::jsonb, '—', 'Contratação por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('servo-nao-treinado', 'other'::rpg.item_type, 'Servo Não Treinado', '{"text":"2 PP"}'::jsonb, '—', 'Contratação por dia.', '{"kind":"service","billing":"per-day"}'::jsonb),
+  ('mensageiro', 'other'::rpg.item_type, 'Mensageiro', '{"text":"2 PC"}'::jsonb, '—', 'Preço por milha.', '{"kind":"service","billing":"per-mile"}'::jsonb),
+  ('servico-de-magia-truque', 'other'::rpg.item_type, 'Serviço de Magia — Truque', '{"text":"30 PO"}'::jsonb, '—', 'Conjuração contratada (+ componentes caros).', '{"kind":"service","spellLevel":0}'::jsonb),
+  ('servico-de-magia-1', 'other'::rpg.item_type, 'Serviço de Magia — 1º Círculo', '{"text":"50 PO"}'::jsonb, '—', 'Conjuração contratada (+ componentes caros).', '{"kind":"service","spellLevel":1}'::jsonb),
+  ('servico-de-magia-2', 'other'::rpg.item_type, 'Serviço de Magia — 2º Círculo', '{"text":"200 PO"}'::jsonb, '—', 'Conjuração contratada (+ componentes caros).', '{"kind":"service","spellLevel":2}'::jsonb),
+  ('servico-de-magia-3', 'other'::rpg.item_type, 'Serviço de Magia — 3º Círculo', '{"text":"300 PO"}'::jsonb, '—', 'Conjuração contratada (+ componentes caros).', '{"kind":"service","spellLevel":3}'::jsonb),
+  ('servico-de-magia-4-5', 'other'::rpg.item_type, 'Serviço de Magia — 4º–5º Círculo', '{"text":"2.000 PO"}'::jsonb, '—', 'Conjuração contratada (+ componentes caros).', '{"kind":"service","spellLevel":"4-5"}'::jsonb),
+  ('servico-de-magia-6-8', 'other'::rpg.item_type, 'Serviço de Magia — 6º–8º Círculo', '{"text":"20.000 PO"}'::jsonb, '—', 'Conjuração contratada (+ componentes caros).', '{"kind":"service","spellLevel":"6-8"}'::jsonb),
+  ('servico-de-magia-9', 'other'::rpg.item_type, 'Serviço de Magia — 9º Círculo', '{"text":"100.000 PO"}'::jsonb, '—', 'Conjuração contratada (+ componentes caros).', '{"kind":"service","spellLevel":9}'::jsonb);

@@ -1,5 +1,5 @@
 -- DMG lote §0 #4: resources 1×/amanhecer (MVP: recover no Descanso Longo)
--- Ver docs/source/dmg-item-mesa-taxonomy-dawn.yaml
+-- Ver docs/source/dmg-wiring-status.md
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)
 VALUES

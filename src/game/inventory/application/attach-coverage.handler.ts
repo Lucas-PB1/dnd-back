@@ -109,7 +109,7 @@ export class AttachCoverageHandler {
       );
     }
 
-    const needsTier = coverageRequiresTierBonus(coverageSlug);
+    const needsTier = coverageRequiresTierBonus(coverageProps);
     if (needsTier && (bonus !== 1 && bonus !== 2 && bonus !== 3)) {
       throw new BadRequestException(
         `Coverage '${coverageSlug}' requires bonus 1, 2 or 3`,

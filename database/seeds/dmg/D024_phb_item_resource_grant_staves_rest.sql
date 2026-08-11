@@ -1,5 +1,5 @@
 -- DMG §0 #8e: resources cajados restantes (Agravo/Magificado/Trovoada/Píton)
--- Ver docs/source/dmg-item-mesa-taxonomy-staves.yaml
+-- Ver docs/source/dmg-wiring-status.md
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)
 VALUES

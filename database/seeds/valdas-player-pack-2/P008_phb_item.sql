@@ -87,7 +87,7 @@ VALUES (
   NULL,
   NULL,
   'Estas Algemas mágicas são usadas para restringir conjuradores. Quando uma criatura tenta conjurar uma magia ou realizar a Ação Mágica enquanto está presa com estas Algemas, ela faz um teste de atributo CD 20 usando seu atributo de conjuração. Em caso de falha, a magia ou Ação Mágica falha e a criatura sofre 4d6 de dano Ígneo. O espaço de magia ou o uso daquela Ação Mágica é desperdiçado, assim como a ação, Ação Bônus ou Reação utilizada.',
-  '{"magic":true,"category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"source":"valdas-spire-player-pack-2","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:player-pack-2"}'::jsonb
+  '{"magic":true,"category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"source":"valdas-spire-player-pack-2","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:player-pack-2","combatNotes":["Em conjurador preso: teste CD 20 no atributo de conjuração ou magia/Ação Mágica falha e 4d6 Ígneo."]}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,
@@ -129,7 +129,7 @@ VALUES (
   NULL,
   NULL,
   'Se uma criatura sofrer dano desta munição mágica, ela morre. A munição então se torna não mágica.',
-  '{"magic":true,"category":"Munição","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":false,"source":"valdas-spire-player-pack-2","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:player-pack-2"}'::jsonb
+  '{"magic":true,"category":"Munição","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":false,"source":"valdas-spire-player-pack-2","editionSlug":"valdas-spire-2024-en","citationSlug":"valdas-spire-2024-en:player-pack-2","combatNotes":["Criatura que sofre dano desta munição morre; a munição se torna não mágica."]}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,

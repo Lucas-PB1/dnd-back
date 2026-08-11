@@ -3,7 +3,7 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **não feitos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-08-09
+**Última revisão:** 2026-08-11
 
 Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · **`rpg-class-mesa-front`** (dnd-front).
 
@@ -19,6 +19,8 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 | Deploy front / E2E | Pronto |
 | UI ataques (aba Ações) + erros HTTP PT | Pronto |
 | Classes mesa **concluídas** | Guerreiro · Feiticeiro · Bruxo · Mago · Patrulheiro · Ladino · Paladino · Pistoleiro · Monge · Clérigo · Bardo · Bárbaro · Druida (skills `rpg-class-mesa-*` / exemplares) |
+| Itens DMG mesa (wiring lotes) | Pronto — ver `docs/source/dmg-wiring-status.md` |
+| Inventário actions unificado | Pronto — `POST …/inventory/actions` |
 | Demais classes PHB / Valdas | Seguir skills mesa sob pedido |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
@@ -39,6 +41,9 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 - Classes **concluídas** (critério mesa): Guerreiro, Feiticeiro, Bruxo, Mago, Patrulheiro, Ladino, Paladino, Pistoleiro, Monge, Clérigo, Bardo, Bárbaro, Druida — ver `references/exemplares.md` nas skills
 - Druida: Forma Selvagem (seletor/ficha de besta) e Companheiro Selvagem tracker = polish adiado
 - Invocações do Bruxo: catálogo + seleção + free_cast no painel/aba Magias
+- Inventário: micro-rotas charm/coverage/artifact-regen → `POST …/inventory/actions` (`actionSlug`)
+- Barding PHB Cap. 6: `barding-*` em `S031` + domínio `barding.ts`
+- Scrapes Beyond removidos de `docs/source/avaliar/` (audits históricos mantidos)
 
 ### Adiado — polish / ops
 
@@ -47,7 +52,9 @@ Não priorizar. Só retomar com pedido explícito.
 - [ ] Mísseis Mágicos: escolhas Escudo/Giga no cast (modal) — [`mm-cast-options-modal.md`](mm-cast-options-modal.md)
 - [ ] Senhor das Feras: Companheiro Primal (invocar, PV, comandar na mesa) — [`beast-master-primal-companion.md`](beast-master-primal-companion.md)
 - [ ] Duração / condições na mesa (família combate situacional): Invisível do Véu Psíquico, Atordoado do Rasgar Mente, Correia/Teia (Arachnoid), venenos do Assassino — hoje gasto/listagem + nota / toggles (sem tracker)
-- [ ] Paladino: Defesa Gloriosa (Usar L15 dedicado no pool `glorious-defense`) — hoje ± + descrição; Destruição Protetora é lembrete (Cobertura na aura ao Destruir)
+- [x] Paladino: Defesa Gloriosa (Usar L15 dedicado no pool `glorious-defense`)
+- [ ] Paladino: Destruição Protetora continua lembrete (Cobertura na aura ao Destruir)
+
 - [ ] Pistoleiro: Assumidor de risco (d6 grátis); condições White Hat; Bang cast; polish câmaras/firearms
 
 ### Referência — modelo de dados
@@ -59,6 +66,17 @@ Status: **Concluído** — ver ADR DoD.
 
 - [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)
 - [ ] Iniciativa PC: fontes além de DEX + Alerta — **traços** e **condições** (não magias)
+
+### Adiado — Treasure / itens (gaps de regra)
+
+Não priorizar. Detalhe: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).  
+**Plano operacional (PRs):** [`itens-restante.md`](itens-restante.md).
+
+- [ ] Cast de item: concentração / componentes / CD override do item
+- [x] Recarga no amanhecer ≠ Descanso Longo — MVP curto documentado (DL ≈ amanhecer); evento `dawn` = P1
+- [x] Itens amaldiçoados (`properties.cursed` + bloquear dessintonizar) — ver `itens-restante.md` PR2a / `D047`
+- [x] Artefato: conflict senciente / re-roll / d6 1–5 RAW — `sentient-conflict` + `artifact-reroll` + d6 no cast
+- [ ] Split `cast-spell.ts` (dívida ≥400 — ver PR3 do plano)
 
 ### Adiado — combate situacional (ex-P1)
 

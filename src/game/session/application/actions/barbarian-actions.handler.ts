@@ -2,10 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { isBarbarianClass } from '@game/combat/domain/barbarian';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
-  CharacterStateResponseDto,
   TableActionResponseDto,
-  ToggleRageDto,
-  ToggleRecklessDto,
   UseBarbarianTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -54,47 +51,6 @@ export class BarbarianActionsHandler {
       state: this.state,
       domain: this.domain,
     };
-  }
-
-  /** @deprecated Prefer POST …/barbarian/table-action (toggle-rage). */
-  async toggleRage(
-    userId: string,
-    characterId: string,
-    dto: ToggleRageDto,
-  ): Promise<CharacterStateResponseDto> {
-    const character = await this.access.findAccessibleOrFail(
-      userId,
-      characterId,
-      'write',
-    );
-    return this.state.martial.toggleRage(character, dto.active);
-  }
-
-  /** @deprecated Prefer POST …/barbarian/table-action (toggle-reckless). */
-  async toggleReckless(
-    userId: string,
-    characterId: string,
-    dto: ToggleRecklessDto,
-  ): Promise<CharacterStateResponseDto> {
-    const character = await this.access.findAccessibleOrFail(
-      userId,
-      characterId,
-      'write',
-    );
-    return this.state.martial.toggleReckless(character, dto.active);
-  }
-
-  /** @deprecated Prefer POST …/barbarian/table-action (recover-all-rage). */
-  async recoverAllRage(
-    userId: string,
-    characterId: string,
-  ): Promise<CharacterStateResponseDto> {
-    const character = await this.access.findAccessibleOrFail(
-      userId,
-      characterId,
-      'write',
-    );
-    return this.state.martial.recoverAllRage(character);
   }
 
   async useTableAction(

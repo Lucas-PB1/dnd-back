@@ -14,7 +14,14 @@ import {
   resolveDivineSense,
   resolveLayOnHands,
 } from './paladin/base-actions';
-import { resolveOathChannel, resolvePeerlessAthlete, resolveInspiringSmite } from './paladin/oath-actions';
+import {
+  resolveGloriousDefense,
+  resolveInspiringSmite,
+  resolveOathChannel,
+  resolvePeerlessAthlete,
+  resolveReveler,
+  resolveUndyingSentinel,
+} from './paladin/oath-actions';
 
 @Injectable()
 export class PaladinActionsHandler {
@@ -62,6 +69,12 @@ export class PaladinActionsHandler {
         return resolveInspiringSmite(deps, character);
       case 'peerless-athlete':
         return resolvePeerlessAthlete(deps, character);
+      case 'glorious-defense':
+        return resolveGloriousDefense(deps, character);
+      case 'undying-sentinel':
+        return resolveUndyingSentinel(deps, character);
+      case 'reveler':
+        return resolveReveler(deps, character);
     }
   }
 }

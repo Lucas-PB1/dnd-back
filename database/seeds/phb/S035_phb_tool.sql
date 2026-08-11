@@ -54,6 +54,25 @@ observando as estrelas (CD 15)') ON CONFLICT (item_id) DO NOTHING;
 INSERT INTO rpg.phb_tool (item_id, category_id, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'instrumento-musical'), (SELECT id FROM rpg.phb_tool_category WHERE slug = 'instrument'), 'Tocar uma música conhecida (CD 10) ou
 improvisar uma música (CD 15)') ON CONFLICT (item_id) DO NOTHING;
 
+INSERT INTO rpg.phb_tool (item_id, category_id, use_description)
+SELECT i.id, tc.id, 'Tocar uma música conhecida (CD 10) ou improvisar uma música (CD 15)'
+FROM rpg.phb_item i
+CROSS JOIN rpg.phb_tool_category tc
+WHERE tc.slug = 'instrument'
+  AND i.slug IN (
+    'gaita-de-foles',
+    'tambor',
+    'salterio',
+    'flauta',
+    'trompa',
+    'alaude',
+    'lira',
+    'flauta-de-pan',
+    'charamela',
+    'viola'
+  )
+ON CONFLICT (item_id) DO NOTHING;
+
 INSERT INTO rpg.phb_tool (item_id, category_id, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-disfarce'), (SELECT id FROM rpg.phb_tool_category WHERE slug = 'kit'), 'Aplicar maquiagem (CD 10)') ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_tool (item_id, category_id, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-falsificacao'), (SELECT id FROM rpg.phb_tool_category WHERE slug = 'kit'), 'Imitar 10 ou menos palavras escritas de outra
@@ -63,5 +82,18 @@ INSERT INTO rpg.phb_tool (item_id, category_id, use_description) VALUES ((SELECT
 
 INSERT INTO rpg.phb_tool (item_id, category_id, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-jogos'), (SELECT id FROM rpg.phb_tool_category WHERE slug = 'kit'), 'Discernir se alguém está trapaceando (CD 10) ou
 ganhar o jogo (CD 20)') ON CONFLICT (item_id) DO NOTHING;
+
+INSERT INTO rpg.phb_tool (item_id, category_id, use_description)
+SELECT i.id, tc.id, 'Discernir se alguém está trapaceando (CD 10) ou ganhar o jogo (CD 20)'
+FROM rpg.phb_item i
+CROSS JOIN rpg.phb_tool_category tc
+WHERE tc.slug = 'kit'
+  AND i.slug IN (
+    'conjunto-de-dados',
+    'xadrez-do-dragao',
+    'baralho',
+    'ante-dos-tres-dragoes'
+  )
+ON CONFLICT (item_id) DO NOTHING;
 
 INSERT INTO rpg.phb_tool (item_id, category_id, use_description) VALUES ((SELECT id FROM rpg.phb_item WHERE slug = 'kit-de-veneno'), (SELECT id FROM rpg.phb_tool_category WHERE slug = 'kit'), 'Detectar um objeto envenenado (CD 10)') ON CONFLICT (item_id) DO NOTHING;

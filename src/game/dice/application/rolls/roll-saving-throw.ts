@@ -16,9 +16,21 @@ import type {
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
 import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
+import {
+  applyAbilityPenalties,
+  collectAbilityPenaltiesFromInventory,
+} from '@game/inventory/domain/artifact/artifact-instance-ops';
+import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-class-ability-boosts';
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
+
+async function loadAbilityPenalties(dataSource: DataSource, characterId: string) {
+  const rows = await dataSource.getRepository(PlayerCharacterItem).find({
+    where: { characterId },
+  });
+  return collectAbilityPenaltiesFromInventory(rows);
+}
 
 const ABILITY_LABELS: Record<AbilityKey, string> = {
   forca: 'Força',
@@ -79,10 +91,13 @@ export async function executeRollSavingThrow(input: {
     character.level,
     character.abilityScores,
   );
-  const scores = applyItemAbilityBonuses(
-    classScores,
-    itemEffects.abilityBonuses,
-    itemEffects.abilityScoreCaps,
+  const scores = applyAbilityPenalties(
+    applyItemAbilityBonuses(
+      classScores,
+      itemEffects.abilityBonuses,
+      itemEffects.abilityScoreCaps,
+    ),
+    await loadAbilityPenalties(input.dataSource, character.id),
   );
   const mods = computeAbilityModifiers(scores);
   const itemSaveBonus = itemEffects.savingThrowBonuses[ability] ?? 0;

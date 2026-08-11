@@ -56,10 +56,14 @@ Círculo de Magia
 	Lendário
 	18
 	+10',
-  '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Qualquer Leve, Média ou Pesada)","rarity":"varies","rarityLabel":"Raridade Variável","requiresAttunement":true,"header":"Armadura (Qualquer Leve, Média ou Pesada), Raridade Variável (Requer Sintonização)","attunement":"Requer Sintonização","armorSubtype":"Qualquer Leve, Média ou Pesada","kind":"coverage","appliesTo":"armor","appliesFilter":"Qualquer Leve, Média ou Pesada"}'::jsonb
+  '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Qualquer Leve, Média ou Pesada)","rarity":"varies","rarityLabel":"Raridade Variável","requiresAttunement":true,"header":"Armadura (Qualquer Leve, Média ou Pesada), Raridade Variável (Requer Sintonização)","attunement":"Requer Sintonização","armorSubtype":"Qualquer Leve, Média ou Pesada","kind":"coverage","appliesTo":"armor","appliesFilter":"Qualquer Leve, Média ou Pesada","enspelled":{"kind":"coverage","schoolSlugs":["abjuracao","ilusao"],"maxLevel":8}}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   item_type = EXCLUDED.item_type,
   name = EXCLUDED.name,
   description = EXCLUDED.description,
   properties = COALESCE(rpg.phb_item.properties, '{}'::jsonb) || EXCLUDED.properties;
+
+UPDATE rpg.phb_item
+SET properties = COALESCE(properties, '{}'::jsonb) || '{"enspelled":{"kind":"unique","schoolSlugs":null,"maxLevel":8}}'::jsonb
+WHERE slug = 'cajado-magificado';

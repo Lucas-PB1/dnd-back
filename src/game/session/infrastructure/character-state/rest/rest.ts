@@ -16,6 +16,8 @@ import {
 import { resetDeathSaves } from '@game/session/domain/death-saves';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { isWarlockClass } from '@game/combat/domain/warlock';
+import { mapArtifactSpellSpendFlags } from '@game/inventory/domain/artifact/artifact-instance-ops';
+import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
 
@@ -61,6 +63,8 @@ export async function applyLongRestState(input: {
   state.deathSaveFailures = deathSaves.deathSaveFailures;
   await stateRepo.save(state);
 
+  await recoverArtifactRandomSpellUses(dataSource, character.id);
+
   if (character.hitPointsMax !== null) {
     character.hitPointsCurrent = character.hitPointsMax;
     await characters.save(character);
@@ -71,6 +75,20 @@ export async function applyLongRestState(input: {
     state: await buildResponse(character, state),
     notes: recovery.notes.length > 0 ? recovery.notes : undefined,
   };
+}
+
+async function recoverArtifactRandomSpellUses(
+  dataSource: DataSource,
+  characterId: string,
+): Promise<void> {
+  const items = dataSource.getRepository(PlayerCharacterItem);
+  const rows = await items.find({ where: { characterId } });
+  for (const row of rows) {
+    const next = mapArtifactSpellSpendFlags(row.instanceProperties, false);
+    if (!next || next === row.instanceProperties) continue;
+    row.instanceProperties = next;
+    await items.save(row);
+  }
 }
 
 export async function applyShortRestState(input: {

@@ -9,31 +9,65 @@ describe('resolveItemCastSlotLevel', () => {
     expect(resolveItemCastSlotLevel({ spellLevel: 6, spendAmount: 4 })).toBe(6);
   });
 
-  it('upcasts Relâmpagos / Cuspidora by charge', () => {
+  it('upcasts by charge when rule is charge-upcast', () => {
     expect(
       resolveItemCastSlotLevel({
         spellLevel: 3,
         spendAmount: 1,
-        resourceSlug: 'varinhaRelampagosCharges',
+        slotRule: { mode: 'charge-upcast' },
       }),
     ).toBe(3);
     expect(
       resolveItemCastSlotLevel({
         spellLevel: 3,
         spendAmount: 2,
-        resourceSlug: 'varinhaCuspidoraFogoCharges',
+        slotRule: { mode: 'charge-upcast' },
       }),
     ).toBe(4);
     expect(
       resolveItemCastSlotLevel({
         spellLevel: 3,
         spendAmount: 3,
-        resourceSlug: 'varinhaRelampagosCharges',
+        slotRule: { mode: 'charge-upcast' },
       }),
     ).toBe(5);
   });
 
   it('returns null for cantrips', () => {
     expect(resolveItemCastSlotLevel({ spellLevel: 0, spendAmount: 1 })).toBeNull();
+  });
+
+  it('forces fixed / fixed-by-spend from seed rule', () => {
+    expect(
+      resolveItemCastSlotLevel({
+        spellLevel: 6,
+        spendAmount: 1,
+        slotRule: { mode: 'fixed', slotLevel: 9 },
+      }),
+    ).toBe(9);
+    expect(
+      resolveItemCastSlotLevel({
+        spellLevel: 1,
+        spendAmount: 4,
+        slotRule: {
+          mode: 'fixed-by-spend',
+          spendAmount: 4,
+          spellLevel: 1,
+          slotLevel: 9,
+        },
+      }),
+    ).toBe(9);
+    expect(
+      resolveItemCastSlotLevel({
+        spellLevel: 1,
+        spendAmount: 1,
+        slotRule: {
+          mode: 'fixed-by-spend',
+          spendAmount: 4,
+          spellLevel: 1,
+          slotLevel: 9,
+        },
+      }),
+    ).toBe(1);
   });
 });

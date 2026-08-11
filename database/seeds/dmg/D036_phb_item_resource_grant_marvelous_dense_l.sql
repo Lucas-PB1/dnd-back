@@ -1,5 +1,5 @@
 -- DMG §0 #9l: resources + permanentEffects (maravilhosos densos finais + Orcus/Maravilhas)
--- Ver docs/source/dmg-item-mesa-taxonomy-marvelous-dense.yaml
+-- Ver docs/source/dmg-wiring-status.md
 -- Cast/link magia = fase 6 · tabelas/artefatos = lembrete + pools chave
 -- trombeta 7 dias / desejo 30 dias: sem recover automático
 

@@ -73,9 +73,10 @@ describe('CharacterInventoryRepository', () => {
       items as unknown as Repository<PlayerCharacterItem>,
       catalogItems as unknown as Repository<PhbItem>,
       { findOne: jest.fn() } as never,
+      { find: jest.fn().mockResolvedValue([]) } as never,
       catalogLookup as unknown as CatalogLookupService,
       slotResolver as unknown as EquipmentSlotResolver,
-      { transaction: jest.fn() } as never,
+      { transaction: jest.fn(), query: jest.fn().mockResolvedValue([]) } as never,
     );
   });
 

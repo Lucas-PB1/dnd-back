@@ -49,6 +49,19 @@ export class InventoryItemResponseDto {
 
   @ApiProperty({
     example: false,
+    description: 'True when phb_item.properties.cursed',
+  })
+  cursed!: boolean;
+
+  @ApiProperty({
+    example: false,
+    description:
+      'True when instance_properties.curseBroken (após Remover Maldição / Mestre)',
+  })
+  curseBroken!: boolean;
+
+  @ApiProperty({
+    example: false,
     description:
       'True when equipped and (no attunement required or currently attuned)',
   })
@@ -132,6 +145,30 @@ export class InventoryItemResponseDto {
     description: 'True quando phb_item.properties.kind = coverage',
   })
   isCoverage!: boolean;
+
+  @ApiPropertyOptional({
+    description:
+      'Estado por instância (props de artefato roladas na 1ª sintonia, senciência, etc.)',
+    example: {
+      artifactRandom: {
+        rolledAt: '2026-08-11T12:00:00.000Z',
+        minorBeneficial: [{ slug: 'ac-bonus-1', summaryPt: '+1 CA' }],
+      },
+      sentience: {
+        alignment: 'CM',
+        inteligencia: 15,
+        sabedoria: 13,
+        carisma: 16,
+      },
+    },
+  })
+  instanceProperties!: Record<string, unknown> | null;
+
+  @ApiPropertyOptional({
+    example: '15 PO',
+    description: 'Preço de catálogo (phb_item.cost.text) para compra/venda',
+  })
+  costText!: string | null;
 }
 
 export class InventoryEncumbranceDto {

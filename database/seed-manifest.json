@@ -2,17 +2,18 @@
   "generatedAt": "2026-07-29T17:00:00.000Z",
   "note": "Baseline canônico — contagens atuais (G028 + T080)",
   "migrations": {
-    "tables": "T001-T080",
-    "views": "V001-V032",
-    "player": "P001-P018",
+    "tables": "T001-T074",
+    "views": "V001-V049",
+    "player": "P001-P026",
     "totalFiles": 130
   },
   "seeds": {
-    "phb": "S001-S080",
-    "subclass": "S001-S007",
-    "valdas": "V001-V021",
+    "phb": "S000-S075",
+    "subclass": "S001-S010",
+    "valdas": "V001-V023",
     "valdasGunslinger": "G001-G028",
-    "valdasPlayerPack2": "P001-P011",
-    "totalFiles": 141
+    "valdasPlayerPack2": "P001-P013",
+    "combat": "C001-C044",
+    "totalFiles": 142
   }
 }

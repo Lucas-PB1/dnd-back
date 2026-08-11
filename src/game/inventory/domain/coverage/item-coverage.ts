@@ -11,9 +11,12 @@ export const COVERAGE_APPLIES_TO = [
 
 export type CoverageAppliesTo = (typeof COVERAGE_APPLIES_TO)[number];
 
+const APPLIES_TO_SET = new Set<string>(COVERAGE_APPLIES_TO);
+
 export type ItemCoverage = {
   appliesTo: CoverageAppliesTo;
   appliesFilter: string;
+  requiresTierBonus: boolean;
 };
 
 export type CoverageBaseContext = {
@@ -28,16 +31,6 @@ export type CoverageBaseContext = {
   subtypeLabel?: string | null;
 };
 
-const APPLIES_TO_SET = new Set<string>(COVERAGE_APPLIES_TO);
-
-const TIER_BONUS_SLUGS = new Set([
-  'arma-1-2-ou-3',
-  'armadura-1-2-ou-3',
-  'escudo-1-2-ou-3',
-  'municao-1-2-ou-3',
-  'varinha-do-mago-de-guerra-1-2-ou-3',
-]);
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
@@ -51,7 +44,7 @@ export function normalizeCoverageText(value: string): string {
     .trim();
 }
 
-/** Lê `kind/appliesTo/appliesFilter` do catálogo. */
+/** Lê `kind/appliesTo/appliesFilter/requiresTierBonus` do catálogo. */
 export function parseItemCoverage(
   properties: Record<string, unknown> | null | undefined,
 ): ItemCoverage | null {
@@ -68,11 +61,14 @@ export function parseItemCoverage(
   return {
     appliesTo: appliesTo as CoverageAppliesTo,
     appliesFilter,
+    requiresTierBonus: properties.requiresTierBonus === true,
   };
 }
 
-export function coverageRequiresTierBonus(coverageSlug: string): boolean {
-  return TIER_BONUS_SLUGS.has(coverageSlug);
+export function coverageRequiresTierBonus(
+  properties: Record<string, unknown> | null | undefined,
+): boolean {
+  return parseItemCoverage(properties)?.requiresTierBonus === true;
 }
 
 export function coverageBonusToEffects(

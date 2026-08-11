@@ -1,5 +1,5 @@
 -- DMG §0 #6: economy Anel das Estrelas Cadentes (multi-ação + pool)
--- Ver docs/source/dmg-item-mesa-taxonomy-star-ring.yaml
+-- Ver docs/source/dmg-wiring-status.md
 
 INSERT INTO rpg.phb_class_economy_action (
   action_id, class_id, species_id, feat_id, item_id, subclass_id, name, economy, unlock_level,

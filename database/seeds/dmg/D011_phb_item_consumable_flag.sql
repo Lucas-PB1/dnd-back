@@ -1,5 +1,5 @@
 -- DMG lote §0 #1: marca consumíveis (poção / óleo / pergaminho)
--- Gerado por docs/source/generate-dmg-consumable-lote.mjs
+-- Gerado por scripts/generate-dmg-consumable-lote.mjs
 
 UPDATE rpg.phb_item
 SET properties = COALESCE(properties, '{}'::jsonb) || '{"consumable":true}'::jsonb

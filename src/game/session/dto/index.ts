@@ -28,13 +28,7 @@ export {
   UseDungeonPrecautionDto,
 } from './fighter/fighter-session.dto';
 
-export {
-  ToggleRageDto,
-  ToggleRecklessDto,
-  FirearmChamberDto,
-  ReloadFirearmDto,
-  FireChamberDto,
-} from './martial/barbarian-firearm.dto';
+export { FirearmChamberDto } from './martial/barbarian-firearm.dto';
 
 export {
   UseRogueTableActionDto,

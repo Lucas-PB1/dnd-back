@@ -1,5 +1,5 @@
 -- DMG lote §0 #4b: resources 1×/amanhecer (elementais)
--- Ver docs/source/dmg-item-mesa-taxonomy-dawn-elementals.yaml
+-- Ver docs/source/dmg-wiring-status.md
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)
 VALUES

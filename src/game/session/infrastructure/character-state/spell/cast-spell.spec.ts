@@ -36,7 +36,10 @@ describe('applyCastSpell', () => {
     gigaMissileArmed: boolean;
   };
   let spellLookup: { hasSpell: jest.Mock };
-  let catalogLookup: { findSpellOrFail: jest.Mock };
+  let catalogLookup: {
+    findSpellOrFail: jest.Mock;
+    assertItemInCatalog: jest.Mock;
+  };
   let sheetRepository: { load: jest.Mock };
   let grantedSpellCatalog: { loadMergeCatalog: jest.Mock };
   let classSlots: { findOne: jest.Mock };
@@ -58,6 +61,10 @@ describe('applyCastSpell', () => {
       findSpellOrFail: jest.fn().mockResolvedValue({
         level: 2,
         concentration: false,
+      }),
+      assertItemInCatalog: jest.fn().mockResolvedValue({
+        slug: 'varinha-de-misseis-magicos',
+        properties: {},
       }),
     };
     sheetRepository = {
@@ -159,6 +166,98 @@ describe('applyCastSpell', () => {
     expect(result.slotLevelUsed).toBe(2);
     expect(state.resourcesUsed.varinhaMisseisCharges).toBe(2);
     expect(result.note).toMatch(/carga/i);
+    expect(result.note).toMatch(/sem componentes/i);
+    expect(result.spellSaveDcOverride).toBeNull();
+    expect(catalogLookup.assertItemInCatalog).toHaveBeenCalledWith(
+      'varinha-de-misseis-magicos',
+    );
+  });
+
+  it('applies item CD and charge-upcast from properties', async () => {
+    spellLookup.hasSpell.mockResolvedValue(false);
+    catalogLookup.findSpellOrFail.mockResolvedValue({
+      level: 3,
+      concentration: true,
+    });
+    catalogLookup.assertItemInCatalog.mockResolvedValue({
+      slug: 'varinha-de-relampagos',
+      properties: {
+        spellSaveDc: 15,
+        itemCastSlotRule: { mode: 'charge-upcast' },
+      },
+    });
+    loadActiveItemSlugsMock.mockResolvedValue(['varinha-de-relampagos']);
+    resolveClassResourcesMock.mockResolvedValue([
+      { slug: 'varinhaRelampagosCharges', name: 'Cargas', max: 7 },
+    ] as never);
+    const query = jest
+      .fn()
+      .mockResolvedValueOnce([
+        {
+          action_id: 'item-varinha-de-relampagos-2',
+          item_slug: 'varinha-de-relampagos',
+          spell_slug: 'relampago',
+          resource_slug: 'varinhaRelampagosCharges',
+          spend_amount: 2,
+        },
+      ])
+      .mockResolvedValueOnce([]);
+
+    const result = await cast(
+      {
+        spellSlug: 'relampago',
+        itemCastResourceSlug: 'varinhaRelampagosCharges',
+        itemCastSpendAmount: 2,
+      },
+      undefined,
+      { query },
+    );
+
+    expect(result.slotLevelUsed).toBe(4);
+    expect(result.spellSaveDcOverride).toBe(15);
+    expect(result.note).toMatch(/CD 15/);
+    expect(result.note).toMatch(/concentração/i);
+  });
+
+  it('notes +0+PB when item uses caster ability and class has none', async () => {
+    spellLookup.hasSpell.mockResolvedValue(false);
+    catalogLookup.findSpellOrFail.mockResolvedValue({
+      level: 1,
+      concentration: false,
+    });
+    catalogLookup.assertItemInCatalog.mockResolvedValue({
+      slug: 'item-usa-atributo',
+      properties: { useCasterAbility: true },
+    });
+    loadActiveItemSlugsMock.mockResolvedValue(['item-usa-atributo']);
+    resolveClassResourcesMock.mockResolvedValue([
+      { slug: 'itemUsaAtributoCharges', name: 'Cargas', max: 3 },
+    ] as never);
+    const query = jest
+      .fn()
+      .mockResolvedValueOnce([
+        {
+          action_id: 'item-usa-atributo-1',
+          item_slug: 'item-usa-atributo',
+          spell_slug: 'misseis-magicos',
+          resource_slug: 'itemUsaAtributoCharges',
+          spend_amount: 1,
+        },
+      ])
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce([]); // loadSpellcastingAbilitySlug → no ability
+
+    const result = await cast(
+      {
+        spellSlug: 'misseis-magicos',
+        itemCastResourceSlug: 'itemUsaAtributoCharges',
+        itemCastSpendAmount: 1,
+      },
+      undefined,
+      { query },
+    );
+
+    expect(result.note).toMatch(/\+0 \+ PB/);
   });
 
   it('consumes free cast without spending slot', async () => {

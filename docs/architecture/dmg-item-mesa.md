@@ -6,7 +6,8 @@ Documento de referência para levar cada item do Cap. 7 à **mesma profundidade*
 
 Fontes:
 
-- Catálogo DMG: `database/seeds/dmg/D010_phb_item.sql` · índice `docs/source/dmg-2024-itens-magicos-az-index.md`
+- Catálogo DMG: `database/seeds/dmg/D010_phb_item.sql` · índice `docs/source/dmg-2024-itens-magicos-az-index.md` · status lotes `docs/source/dmg-wiring-status.md`
+- Regras Treasure × gaps: `docs/architecture/treasure-rules-vs-sistema.md`
 - Economia de classe: `.cursor/skills/rpg-class-mesa-api/references/economia-painel.md`
 - Economia de item (Valdas): `database/seeds/combat/C013_phb_item_economy_action.sql`
 - Recursos de item: `database/seeds/valdas/V020_phb_item_resource_grant.sql`
@@ -85,6 +86,7 @@ D010 (item)
 - Uma única row “usar item” que junta 4 poderes.
 - Mecânica só no texto da descrição, sem economy/resource/passivo.
 - `POST …/item/table-action` no MVP (classes têm table-action; itens Valdas usam `spend-resource` + lembrete).
+- Overlay inventário (charm / coverage / artifact-regen): um `POST …/inventory/actions` com `actionSlug` — sem micro-rotas dedicadas.
 - Hardcode de slugs de item no TypeScript — seed + catálogo.
 
 ---
@@ -353,7 +355,7 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 
 - Percorrer o índice A–Z **na ordem da §0** (não aleatório).
 - Para cada item: listar habilidades + `tipo` + bucket (ainda sem SQL).
-- Artefato sugerido: `docs/source/dmg-item-mesa-taxonomy.yaml` (ou MD por letra / por tipo).
+- Artefato sugerido: `docs/source/dmg-wiring-status.md` (status por lote; detalhe por item = seeds).
 - Saída: contagem por tipo (quantos só passivos, quantos multi-ação, etc.).
 
 ### Fase 2 — Passivos numéricos (§0 #2) e marcar coberturas (§0 #3 / §3.1)
@@ -387,12 +389,13 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 ### Fase 6 — Cast de item + artefatos / além do MVP (§0 #11)
 
 - **Cast/link magia:** `spell_slug` na economy + `itemCastResourceSlug`/`itemCastSpendAmount`/`itemCastItemSlug` em `POST …/spells/cast`. Backfill: `C042`. Magi custo 0: `C044` (`cast-item-free`). Enspelled: Arma/Armadura Magificada + Cajado Magificado.
-- **Nível de conjuração:** `resolveItemCastSlotLevel` — default `max(nível, spend)`; Relâmpagos/Cuspidora upcast por carga.
+- **Nível de conjuração:** `resolveItemCastSlotLevel` — default `max(nível, spend)`; regras SSOT em `properties.itemCastSlotRule(s)` (`D046`: Relâmpagos/Cuspidora `charge-upcast`; Onda/Órbes fixed).
+- **Treasure cast:** notas (componentes / concentração / +0+PB) + `spellSaveDcOverride` via `properties.spellSaveDc` / Enspelled.
 - **Enspelled CD/raridade:** `getEnspelledSpellStats` / nota no cast (tabela DMG por nível da magia bound).
 - **Sintonia por classe:** `parseAttunementRestriction` + gate em patch attune / attach cobertura.
-- **Recover 1dN:** `recover_on_long_dice` (`T073`/`D041`) no Descanso Longo; notas em `RestResponseDto.notes`.
+- **Recover 1dN / cargas:** `recover_on_long_dice` (`T073`/`D041`) e `recover_all_on_long` no **Descanso Longo** — MVP mesa ≈ “próximo amanhecer” (Treasure §2); evento `dawn` = P1.
 - **Coberturas de arma:** `D040`/`C043` (dançarina, língua, arco energia, martelo, defensora, escara, garra, lâmina sorte, juramento).
-- Pendente: Orcus multi-botão; sorvedora tracking; sacro-vingadora só PE.
+- Pendente: sorvedora tracking; sacro-vingadora só PE; gaps em `treasure-rules-vs-sistema.md`.
 
 ---
 
@@ -403,7 +406,7 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 3. Seeds na ordem: enrich passivo → resource → economy.
 4. Re-seed / apply só os arquivos tocados (preferir pooler session se `db.*` IPv6 falhar).
 5. Smoke: inventário → sintonizar → aba Ações → Usar / ±.
-6. Marcar `status: wired` / `mesa_complete: true` na ficha/taxonomia.
+6. Atualizar status em `docs/source/dmg-wiring-status.md` se o lote mudou.
 
 ---
 
@@ -428,18 +431,18 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 |------|--------|
 | `D010` catálogo (~338) | Feito |
 | Taxonomia + economy consumíveis | Feito (`D011` + `C016`) |
-| Taxonomia coberturas (§3.1) | Feito (`D013` + `dmg-item-mesa-taxonomy-coverages.yaml`) |
+| Taxonomia coberturas (§3.1) | Feito (`D013`; status em `dmg-wiring-status.md`) |
 | Compêndio `/equipment?tab=magic` | Feito (`GET /items?magic=true`) |
 | `permanentEffects` DMG (lote §0 #2) | Feito (`D012` — anel/manto de proteção) |
 | Edição `dmg-2024-pt` (Fontes) | Feito (`D001`) |
-| Modelo **cobertura** overlay/busca | Feito (`P021` + attach/detach + UI Beyond) |
+| Modelo **cobertura** overlay/busca | Feito (`P021` + `inventory/actions` attach/detach + UI Beyond) |
 | Resources DMG (1×/amanhecer lote) | Feito (`D015`+`C017` · `D016`+`C018` elementais) |
 | Resources DMG (pool cargas §0 #5) | Feito (`D017`+`C019` — 5 itens) |
 | Anel das Estrelas Cadentes (§0 #6) | Feito (`D018`+`C020` — 7 actions, pool 6) |
 | Varinhas multi-magia (§0 #7) | Feito (`D019`+`C021` — 3 varinhas) |
 | Cajados multi-magia (§0 #8) | Feito (`D020`–`D025` / `C022`–`C027` — 18 cajados) |
 | Maravilhosos / anéis / varinhas / armas / escudos / densos (§0 #9) | Feito (`D026`–`D036` / `C028`–`C039`) |
-| Cast/link magia de item | Piloto feito (varinha mísseis + Arma Magificada); backfill depois |
+| Cast/link magia de item | Feito (varinhas/cajados `C042`; artefatos `C045`; Magi `C044`) |
 | Overlay coberturas (UI) | Feito (§3.1 / fase 2b — attach/detach + PE/ataque + toggle sintonia + munição) |
 
-Próximo passo natural: recover 1dN real **ou** coberturas de arma com economy.
+Próximo passo natural: gaps em `treasure-rules-vs-sistema.md` (dawn real, curse, CD de item).

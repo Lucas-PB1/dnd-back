@@ -83,11 +83,6 @@ export function assertEnspelledBoundSpell(input: {
   }
 }
 
-/** @deprecated use assertEnspelledBoundSpell with itemSlug */
-export function isEnspelledAllowedSchool(schoolSlug: string): boolean {
-  return (WEAPON_SCHOOLS as readonly string[]).includes(schoolSlug);
-}
-
 /** Tabela DMG Enspelled: raridade / CD / bônus de ataque mágico por nível da magia. */
 export type EnspelledRarity =
   | 'uncommon'

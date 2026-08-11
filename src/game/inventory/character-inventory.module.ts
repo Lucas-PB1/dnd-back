@@ -12,6 +12,8 @@ import {
   PlayerCharacterOption,
 } from '../sheet/infrastructure/player-sheet.entities';
 import { PlayerCharacterItem } from './infrastructure/player-character-item.entity';
+import { DmgArtifactRandomProperty } from './infrastructure/dmg-artifact-random-property.entity';
+import { DmgSentientTraitTable } from './infrastructure/dmg-sentient-trait-table.entity';
 import { CharacterInventoryRepository } from './infrastructure/character-inventory.repository';
 import { EquipmentSlotResolver } from './infrastructure/equipment-slot-resolver';
 import { CharacterInventoryController } from './character-inventory.controller';
@@ -24,6 +26,11 @@ import { AddInventoryItemHandler } from './application/add-inventory-item.handle
 import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
 import { RemoveInventoryItemHandler } from './application/remove-inventory-item.handler';
 import { SeedStartingInventoryHandler } from './application/seed-starting-inventory.handler';
+import { ApplyArtifactRegenHandler } from './application/apply-artifact-regen.handler';
+import { ArtifactRegenAccessHandler } from './application/artifact-regen-access.handler';
+import { ApplyArtifactPolishHandler } from './application/apply-artifact-polish.handler';
+import { InventoryActionsHandler } from './application/inventory-actions.handler';
+import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
 
 @Module({
   imports: [
@@ -32,9 +39,12 @@ import { SeedStartingInventoryHandler } from './application/seed-starting-invent
       PlayerCharacterEquipment,
       PlayerCharacterFeat,
       PlayerCharacterOption,
+      PlayerCharacter,
       PhbItem,
       PhbWeapon,
       VPhbArmor,
+      DmgArtifactRandomProperty,
+      DmgSentientTraitTable,
     ]),
     GameSharedModule,
     CatalogModule,
@@ -48,11 +58,15 @@ import { SeedStartingInventoryHandler } from './application/seed-starting-invent
     AssertCanEquipItemService,
     AttachWeaponCharmHandler,
     AttachCoverageHandler,
+    InventoryActionsHandler,
     GetCharacterInventoryQuery,
     AddInventoryItemHandler,
     PatchInventoryItemHandler,
     RemoveInventoryItemHandler,
     SeedStartingInventoryHandler,
+    ApplyArtifactRegenHandler,
+    ArtifactRegenAccessHandler,
+    ApplyArtifactPolishHandler,
   ],
   exports: [
     SeedStartingInventoryHandler,

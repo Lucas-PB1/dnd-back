@@ -31,26 +31,36 @@ Itens mágicos do Cap. 7 (A–Z), extraídos da tradução comunitária do DMG 2
 | `D033_phb_item_resource_grant_marvelous_weapons_i.sql` | §0 #9i: utilitários + armas (+ PE) |
 | `D034_phb_item_resource_grant_armor_shields_j.sql` | §0 #9j: escudos / armaduras únicas |
 | `D035_phb_item_resource_grant_weapons_k.sql` | §0 #9k: armas únicas (+ PE / artefatos) |
+| `D036_phb_item_resource_grant_marvelous_dense_l.sql` | §0 #9l: densos finais + Orcus/Vecna/Órbes |
 | `D037_phb_item_resource_grant_enspelled_weapon.sql` | Fase 6: cargas Arma Magificada |
 | `D038_fix_armadura_magificada.sql` | Extrai Armadura Magificada (colada em fumegante) |
 | `D039_phb_item_resource_grant_enspelled_armor.sql` | Fase 6: cargas Armadura Magificada |
 | `D040_phb_item_resource_grant_weapon_coverages.sql` | Coberturas de arma: resources (Martelo, Garra, Escara, Lâmina, Juramento) |
 | `D041_phb_item_resource_grant_recover_dice.sql` | Recover 1dN ao amanhecer (long rest) |
+| `D042_phb_item_resource_grant_dmg_artifacts_fix.sql` | Artefatos: pools Kas/Contenção/Trevas + PE Feitos |
+| `D043_dmg_artifact_random_property.sql` | Tabelas 1d100 props aleatórias de artefato |
+| `D044_dmg_sentient_trait_table.sql` | Tabelas de geração de item senciente |
+| `D045_phb_item_artifact_quota_sentience.sql` | Quotas + senciência fixa (11 artefatos + Lunâmina) |
+| `D046_phb_item_cast_treasure_props.sql` | Treasure cast: `spellSaveDc` + `itemCastSlotRule(s)` (Relâmpagos/Cuspidora/Onda/Órbes/Orcus) |
+| `D047_phb_item_cursed_flag.sql` | `properties.cursed` (Vulnerabilidade, Demoníaca, Escudo Atração, Espada Vingança, Machado-Berserker) |
 
-Economy: `C016`–`C039` · `C040`/`C041` Enspelled · `C042` spell_slug · `C043` weapon coverages · `C044` Magi free cast.  
+Economy: `C016`–`C039` · `C040`/`C041` Enspelled · `C042` spell_slug · `C043` weapon coverages · `C044` Magi free cast · `C045` artefatos.  
 Cajado Magificado: resource `D024`/`C026` + `bound_spell_slug` (`P023`).  
-Taxonomia: `…-staves.yaml` · `…-marvelous-simple.yaml` · `…-rings.yaml` · `…-wands.yaml` · `…-armor-shields.yaml` · `…-weapons.yaml` · `…-marvelous-dense.yaml` · coverages.
+Artefato 1ª sintonia: `instance_properties` (`P027`) + tabelas `T075`/`T076`.  
+Status dos lotes: [`docs/source/dmg-wiring-status.md`](../../docs/source/dmg-wiring-status.md).
 
 Cast de item (fase 6): `POST …/spells/cast` + `itemCastResourceSlug` / `itemCastSpendAmount` / `itemCastItemSlug` (Magi 0).  
 Recover 1dN: coluna `recover_on_long_dice` (`T073`) + `D041`.  
 Enspelled: CD/ataque/raridade via `getEnspelledSpellStats` na nota do cast.  
 Sintonia por classe: `attunement-restriction.ts` no patch / attach cobertura.  
-Overlay coberturas (§3.1 / 2b) → migration `P021`/`P022`/`P023` + `POST …/inventory/coverage/attach|detach`.  
+Overlay coberturas (§3.1 / 2b) → migration `P021`/`P022`/`P023` + `POST …/inventory/actions` (`attach-coverage` / `detach-coverage`; também charm e `artifact-regen`).  
 Modelo: `docs/architecture/dmg-item-mesa.md`.  
+Gaps Treasure: `docs/architecture/treasure-rules-vs-sistema.md`.  
 Compêndio: `/equipment?tab=magic` + `GET /items?magic=true`.
 
 ```bash
-node docs/source/generate-dmg-item-seeds.mjs
-node docs/source/generate-dmg-consumable-lote.mjs
-node docs/source/generate-dmg-coverage-lote.mjs
+node scripts/generate-dmg-item-seeds.mjs
+node scripts/generate-dmg-consumable-lote.mjs
+node scripts/generate-dmg-coverage-lote.mjs
+node scripts/generate-dmg-artifact-sentience-seeds.mjs
 ```

@@ -8,10 +8,10 @@ import {
   InventoryItemResponseDto,
 } from '../dto/inventory.dto';
 import {
-  assertCanDebitCoins,
   catalogCostText,
   coinPurseErrorMessage,
   coinPurseFromColumns,
+  debitCoinsWithExchange,
   parseCostText,
   resolveInventoryPayment,
   scaleCoinPurse,
@@ -58,7 +58,8 @@ export class AddInventoryItemHandler {
           parseCostText(catalogCostText(catalog.cost)),
           quantity,
         );
-        assertCanDebitCoins(coinPurseFromColumns(character), debit);
+        // Valida saldo com câmbio antes da transação
+        debitCoinsWithExchange(coinPurseFromColumns(character), debit);
       } catch (error) {
         throw new BadRequestException(coinPurseErrorMessage(error));
       }

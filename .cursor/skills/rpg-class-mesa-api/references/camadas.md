@@ -39,8 +39,8 @@ Legado: `fighter-session.controller.ts` (rotas dedicadas) — não expandir.
 
 HTTP catálogo: `GET /combat-mechanical-catalog` → `economyActions` + `panelActions`.
 
-Apply pontual: `node scripts/apply-seed-files.mjs combat/C0xx_….sql`  
-Skill seeds: `postgres-apply-catalog`.
+Aplicar catálogo: `npm run db:setup` (wipe + migrate + seed) ou `npm run db:seed` após migrate.  
+Skill: `postgres-apply-catalog`.
 
 ## 5. Testes
 

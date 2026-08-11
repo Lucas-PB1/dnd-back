@@ -9,6 +9,3 @@ CREATE TABLE rpg.phb_edition (
   extracted_at TIMESTAMPTZ,
   notes        TEXT
 );
-
-INSERT INTO rpg.phb_edition (slug, label, extracted_at)
-VALUES ('phb-2024-pt', 'PHB 2024 PT-BR', NOW());

@@ -1,6 +1,7 @@
 -- Seed DMG 2024 — Itens Mágicos A–Z (Cap. 7)
--- Gerado por docs/source/generate-dmg-item-seeds.mjs — não editar à mão
+-- Gerado por scripts/generate-dmg-item-seeds.mjs — não editar à mão
 -- Fonte: comunidade DMG 2024 PT; 338 itens
+-- cost: tabela DMG raridade→PO (consumível ×½; artefato/varies/+1|+2|+3 = NULL)
 
 INSERT INTO rpg.phb_item (
   slug, item_type, name, cost, weight, description, properties
@@ -9,7 +10,7 @@ VALUES (
   'adaga-peconhenta',
   'weapon'::rpg.item_type,
   'Adaga Peçonhenta',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica.
 Você pode executar uma Ação Bônus para revestir magicamente a lâmina com veneno. O veneno permanece por 1 minuto ou até que um ataque usando esta arma atinja uma criatura. Essa criatura deve ser bem-sucedida em uma salvaguarda de Constituição CD 15 ou sofre 2d10 pontos de dano Venenoso e tem a condição Envenenado por 1 minuto. A arma não pode ser usada deste modo novamente até o próximo amanhecer.',
@@ -30,7 +31,7 @@ VALUES (
   'alaude-de-batidas-estrondosas',
   'weapon'::rpg.item_type,
   'Alaúde de Batidas Estrondosas',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este alaúde reforçado pode ser empunhado como uma Clava mágica que causa 2d8 pontos de dano Trovejante adicionais ao acertar.
 Cante e Golpeie. Se você for um Bardo, pode usar seu modificador de Carisma em vez do modificador de Força ao realizar uma jogada de ataque corpo a corpo com o alaúde, desde que esteja cantando ou cantarolando durante o ataque.',
@@ -51,7 +52,7 @@ VALUES (
   'aljava-de-ehlonna',
   'other'::rpg.item_type,
   'Aljava de Ehlonna',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Cada um dos três compartimentos dessa aljava conecta-se a um espaço extradimensional que permite armazenar inúmeros itens sem pesar mais de 1 quilo. O compartimento mais curto pode conter até 60 Flechas, Virotes ou objetos similares. O compartimento médio comporta até 18 Azagaias ou objetos similares. O compartimento mais longo pode armazenar até 6 objetos longos, como arcos, Cajados ou Lanças.
 Você pode sacar qualquer item da aljava como se estivesse pegando de uma aljava ou bainha comum.',
@@ -72,7 +73,7 @@ VALUES (
   'amuleto-da-estilha-negra',
   'other'::rpg.item_type,
   'Amuleto da Estilha Negra',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este amuleto é formado a partir de um fragmento de material resiliente originário de um reino de outro mundo. Enquanto estiver usando-o, você adquire os seguintes benefícios.
 Foco de Conjuração. Você pode usar o amuleto como um Foco de Conjuração para suas magias de Bruxo.
@@ -94,7 +95,7 @@ VALUES (
   'amuleto-da-saude',
   'other'::rpg.item_type,
   'Amuleto da Saúde',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Sua Constituição é 19 enquanto usar este amuleto; se já for 19 ou superior, ele não tem efeito.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Item Maravilhoso, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -114,7 +115,7 @@ VALUES (
   'amuleto-de-protecao-contra-deteccao-e-localizacao',
   'other'::rpg.item_type,
   'Amuleto de Proteção Contra Detecção e Localização',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este amuleto, você fica oculto aos efeitos de magias de Adivinhação. Você não pode ser alvo de tais magias ou ser percebido por sensores mágicos de vidência.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -134,7 +135,7 @@ VALUES (
   'amuleto-mecanico',
   'other'::rpg.item_type,
   'Amuleto Mecânico',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este amuleto de cobre contém pequenas engrenagens interligadas e funciona com a magia de Mecânos, um plano de precisão mecânica. Ruídos fracos de tique-taque e zumbidos emanam vindos de dentro.
 Ao realizar uma jogada de ataque enquanto utiliza o amuleto, você pode usar um 10 em vez de jogar um d20. Uma vez usada, esta propriedade não pode ser usada novamente até o próximo amanhecer.',
@@ -155,7 +156,7 @@ VALUES (
   'amuleto-planar',
   'other'::rpg.item_type,
   'Amuleto Planar',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este amuleto, você pode executar uma ação Usar Magia para nomear um local em outro plano de existência com o qual esteja familiarizado. Em seguida, realize um teste de Inteligência (Arcanismo) CD 15. Em caso de sucesso, você conjura Transição Planar. Se falhar, você e cada criatura e objeto em um raio de 4,5 metros viajam para um destino aleatório determinado ao jogar 1d100, conforme a tabela a seguir.
 1d100
@@ -187,7 +188,7 @@ VALUES (
   'anel-afastador-de-magias',
   'other'::rpg.item_type,
   'Anel Afastador de Magias',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você tem Vantagem em salvaguardas contra magias. Se você for bem-sucedido na salvaguarda contra uma magia de 7º círculo ou inferior, a magia não tem efeito sobre você. Se essa magia teve apenas você como alvo e não cria uma área de efeito, você pode executar uma Reação para desviar a magia de volta para o conjurador; o conjurador deve realizar uma salvaguarda contra a magia usando sua própria CD para evitar magia.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Anel, Lendário (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -207,7 +208,7 @@ VALUES (
   'anel-armazenador-de-magias',
   'other'::rpg.item_type,
   'Anel Armazenador de Magias',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este anel armazena magias conjuradas nele, contendo-as até que o usuário sintonizado as use. O anel pode armazenar até 5 círculos de magias de cada vez. Quando encontrado, o anel contém 1d6 -1 círculos de magias armazenadas escolhidas pelo Mestre.
 Qualquer criatura pode conjurar uma magia de 1º a 5º círculo no anel ao tocá-lo no momento em que a magia é conjurada. A magia não tem efeito, exceto por ser armazenada no anel. Se o anel não puder conter a magia, esta é gasta sem efeito. O círculo de espaço utilizado para conjurar a magia determina quanto espaço ela ocupa.
@@ -229,7 +230,7 @@ VALUES (
   'anel-da-livre-movimentacao',
   'other'::rpg.item_type,
   'Anel da Livre Movimentação',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, Terreno Difícil não custa movimento adicional a você. Além disso, a magia não pode reduzir nenhum de seus Deslocamentos nem impor a condição Contido ou Paralisado a você.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Anel, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -249,7 +250,7 @@ VALUES (
   'anel-das-estrelas-cadentes',
   'other'::rpg.item_type,
   'Anel das Estrelas Cadentes',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você pode conjurar Luzes Dançantes ou Luz a partir do anel.
 O anel tem 6 cargas e recupera 1d6 cargas gastas diariamente ao amanhecer. Você pode gastar as cargas do anel para usar as propriedades abaixo.
@@ -285,7 +286,7 @@ VALUES (
   'anel-de-andar-sobre-as-aguas',
   'other'::rpg.item_type,
   'Anel de Andar Sobre as Águas',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você conjura Caminhar Sobre as Águas a partir dele, tendo apenas você como alvo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Anel, Incomum"}'::jsonb
@@ -305,7 +306,7 @@ VALUES (
   'anel-de-aquecimento',
   'other'::rpg.item_type,
   'Anel de Aquecimento',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Se você sofrer dano Gélido enquanto estiver usando este anel, o anel reduz o dano sofrido em 2d8.
 Além disso, enquanto estiver usando este anel, você e tudo o que você usa e carrega não serão prejudicados por temperaturas de -18 graus Celsius ou menos.',
@@ -326,7 +327,7 @@ VALUES (
   'anel-de-ariete',
   'other'::rpg.item_type,
   'Anel de Aríete',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este anel tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Enquanto estiver usando o anel, você pode executar uma ação Usar Magia para gastar de 1 a 3 cargas para fazer um ataque mágico à distância contra uma criatura à sua vista a até 18 metros de distância. O anel produz a cabeça de um carneiro espectral e realiza sua jogada de ataque com um bônus de +7. Em um acerto, para cada carga que você gasta, o alvo sofre 2d10 pontos de dano Energético e é empurrado 1,5 metro para longe de você.
 Como alternativa, você pode gastar de 1 a 3 das cargas do anel como uma ação Usar Magia para tentar quebrar um objeto não mágico à sua vista a até 18 metros de distância e que não esteja sendo usado ou carregado. O anel realiza um teste de Força com um bônus de +5 para cada carga gasta.',
@@ -347,7 +348,7 @@ VALUES (
   'anel-de-comando-elemental',
   'other'::rpg.item_type,
   'Anel de Comando Elemental',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Cada Anel de Comando Elemental está ligado a um dos quatro Planos Elementais. O Mestre escolhe ou determina aleatoriamente o plano ao qual o anel está ligado. Por exemplo, um Anel de Comando Elemental (ar) está ligado ao Plano Elemental do Ar.
 Cada Anel de Comando Elemental tem as duas propriedades a seguir:
@@ -386,7 +387,7 @@ VALUES (
   'anel-de-escudo-mental',
   'other'::rpg.item_type,
   'Anel de Escudo Mental',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você é imune à magia que permite que outras criaturas leiam seus pensamentos, determinem se você está mentindo, conheçam seu alinhamento ou conheçam seu tipo de criatura. As criaturas só podem se comunicar telepaticamente com você se você permitir.
 Você pode executar uma ação Usar Magia para fazer com que o anel se torne imperceptível até executar outra ação Usar Magia para torná-lo perceptível, até remover o anel ou até você morrer.
@@ -408,7 +409,7 @@ VALUES (
   'anel-de-evasao',
   'other'::rpg.item_type,
   'Anel de Evasão',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este anel tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Ao falhar em uma salvaguarda de Destreza enquanto estiver usando o anel, você pode executar uma Reação para gastar 1 carga para ser bem-sucedido nessa salvaguarda.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Anel, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -428,7 +429,7 @@ VALUES (
   'anel-de-influenciar-animais',
   'other'::rpg.item_type,
   'Anel de Influenciar Animais',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este anel possui 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Enquanto estiver usando o anel, você pode gastar 1 carga para conjurar uma das seguintes magias (CD 13 para evitar):
 ● Amizade Animal
@@ -451,7 +452,7 @@ VALUES (
   'anel-de-invisibilidade',
   'other'::rpg.item_type,
   'Anel de Invisibilidade',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você pode executar uma ação Usar Magia para adquirir a condição Invisível. Você permanece Invisível até que o anel seja removido ou até que você execute uma Ação Bônus para se tornar visível novamente.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Anel, Lendário (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -471,7 +472,7 @@ VALUES (
   'anel-de-invocar-djinni',
   'other'::rpg.item_type,
   'Anel de Invocar Djinni',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você pode executar uma ação Usar Magia para invocar um determinado Djinni do Plano Elemental do Ar. O djinni aparece em um espaço desocupado à sua escolha a até 36 metros de você. Ele permanece enquanto você mantiver a Concentração, até um máximo de 1 hora, ou até que você tenha seus Pontos de Vida reduzidos a 0.
 Enquanto estiver invocado, o djinni é Amigável a você e seus aliados, obedecendo aos seus comandos. Se você não der comandos, o djinni se defende contra quem o atacar, mas não executa nenhuma outra ação.
@@ -494,7 +495,7 @@ VALUES (
   'anel-de-natacao',
   'other'::rpg.item_type,
   'Anel de Natação',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Você tem um Deslocamento de Natação de 12 metros enquanto estiver usando este anel.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Anel, Incomum"}'::jsonb
@@ -514,7 +515,7 @@ VALUES (
   'anel-de-protecao',
   'other'::rpg.item_type,
   'Anel de Proteção',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você recebe um bônus de +1 na Classe de Armadura e em salvaguardas enquanto estiver usando este anel.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Anel, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -534,7 +535,7 @@ VALUES (
   'anel-de-queda-suave',
   'other'::rpg.item_type,
   'Anel de Queda Suave',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Ao cair enquanto usa este anel, você desce 18 metros por rodada e não sofre dano devido à queda.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Anel, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -554,7 +555,7 @@ VALUES (
   'anel-de-regeneracao',
   'other'::rpg.item_type,
   'Anel de Regeneração',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você recupera 1d6 Pontos de Vida a cada 10 minutos se tiver pelo menos 1 Ponto de Vida. Se você perder uma parte do corpo, o anel faz com que a parte perdida volte a crescer e retorne à funcionalidade total após 1d6 + 1 dias se você tiver pelo menos 1 Ponto de Vida durante todo esse tempo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"header":"Anel, Muito Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -574,7 +575,7 @@ VALUES (
   'anel-de-resistencia',
   'other'::rpg.item_type,
   'Anel de Resistência',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você tem Resistência a um tipo de dano ao usar este anel. A pedra preciosa no anel indica o tipo de dano, que o Mestre escolhe ou determina aleatoriamente ao jogar na tabela a seguir.
 1d10
@@ -628,7 +629,7 @@ VALUES (
   'anel-de-saltar',
   'other'::rpg.item_type,
   'Anel de Saltar',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você pode conjurar Salto a partir dele, mas só pode escolher a si mesmo como alvo quando o fizer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Anel, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -648,7 +649,7 @@ VALUES (
   'anel-de-telecinese',
   'other'::rpg.item_type,
   'Anel de Telecinese',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você pode conjurar Telecinese a partir dele.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"header":"Anel, Muito Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -668,7 +669,7 @@ VALUES (
   'anel-de-visao-de-raio-x',
   'other'::rpg.item_type,
   'Anel de Visão de Raio-X',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você pode executar uma ação Usar Magia para adquirir visão de raio-X com alcance de 9 metros por 1 minuto. Para você, objetos sólidos dentro desse raio aparecem transparentes e não impedem que a luz passe por eles. A visão pode penetrar 30 centímetros de pedra, 2,5 centímetros de metal comum ou até 90 centímetros de madeira ou terra. Substâncias mais espessas ou uma fina camada de chumbo bloqueiam a visão.
 Sempre que usar o anel novamente antes de fazer um Descanso Longo, você deve ser bem-sucedido em uma salvaguarda de Constituição CD 15 ou adquire 1 nível de Exaustão.',
@@ -689,7 +690,7 @@ VALUES (
   'anel-dos-tres-desejos',
   'other'::rpg.item_type,
   'Anel dos Três Desejos',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este anel, você pode gastar 1 de suas 3 cargas para conjurar Desejo a partir dele. O anel se torna não mágico quando você usa a última carga.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Anel","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":false,"header":"Anel, Lendário"}'::jsonb
@@ -709,7 +710,7 @@ VALUES (
   'arco-de-energia',
   'weapon'::rpg.item_type,
   'Arco de Energia',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 nas jogadas de ataque e dano realizadas com esta arma mágica, que não possui corda. Sempre que você faz o movimento de disparar puxando o braço para trás, uma flecha mágica feita de energia dourada aparece encaixada e pronta para ser disparada. Uma flecha criada por esta arma causa dano Energético em vez de dano Perfurante ao acertar, e desaparece após acertar ou errar o alvo. Até desaparecer, a flecha emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros.
 Esta arma tem as seguintes propriedades adicionais.
@@ -734,7 +735,7 @@ VALUES (
   'arco-do-juramento',
   'weapon'::rpg.item_type,
   'Arco do Juramento',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Ao colocar uma flecha neste arco, ele sussurra em Élfico: “Célere derrota aos meus inimigos”. Ao usar esta arma para um ataque à distância, você pode proferir ou designar as seguintes palavras de comando: “Morte rápida àquele que me feriu”. O alvo do seu ataque se torna seu inimigo jurado até morrer ou até o amanhecer 7 dias depois. Você pode ter apenas um desses inimigos jurados por vez. Quando seu inimigo jurado morre, você pode escolher um novo após o próximo amanhecer.
 Ao realizar uma jogada de ataque à distância com esta arma contra seu inimigo jurado, você tem Vantagem na jogada. Além disso, seu alvo não recebe nenhum benefício de Cobertura Parcial ou Cobertura de Três Quartos, e você não sofre Desvantagem devido ao alcance máximo. Se o ataque acertar, seu inimigo jurado sofre 3d6 pontos de dano Perfurante adicionais.
@@ -756,7 +757,7 @@ VALUES (
   'arma-de-adamantina',
   'weapon'::rpg.item_type,
   'Arma de Adamantina',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Esta arma ou munição, feita de adamantina, uma das substâncias mais duras existentes, causa um Acerto Crítico ao atingir um objeto.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Qualquer Munição ou Arma Corpo a Corpo)","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Arma (Qualquer Munição ou Arma Corpo a Corpo), Incomum","weaponSubtype":"Qualquer Munição ou Arma Corpo a Corpo"}'::jsonb
@@ -776,7 +777,7 @@ VALUES (
   'arma-de-prata',
   'weapon'::rpg.item_type,
   'Arma de Prata',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Um processo alquímico uniu prata a esta arma mágica. Ao obter um Acerto Crítico com ela contra uma criatura que está multimorfada, a arma causa um dado adicional de dano.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Qualquer Simples ou Marcial)","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Arma (Qualquer Simples ou Marcial), Comum","weaponSubtype":"Qualquer Simples ou Marcial"}'::jsonb
@@ -796,7 +797,7 @@ VALUES (
   'arma-implacavel',
   'weapon'::rpg.item_type,
   'Arma Implacável',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta arma mágica causa 2d6 pontos de dano adicionais a qualquer criatura atingida. Este dano adicional é do mesmo tipo do dano normal da arma.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Qualquer Simples ou Marcial)","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"header":"Arma (Qualquer Simples ou Marcial), Raro","weaponSubtype":"Qualquer Simples ou Marcial"}'::jsonb
@@ -877,7 +878,7 @@ VALUES (
   'arma-sempre-alerta',
   'weapon'::rpg.item_type,
   'Arma Sempre Alerta',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Contanto que esta arma esteja ao seu alcance e você esteja sintonizado com ela, você e seus aliados a até 9 metros de distância adquirem os seguintes benefícios.
 Alarme. A arma desperta magicamente cada sujeito que está dormindo naturalmente quando um combate se inicia. Esse benefício não acorda quem está em sono induzido magicamente.
@@ -919,7 +920,7 @@ VALUES (
   'armadura-adamantina',
   'armor'::rpg.item_type,
   'Armadura Adamantina',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta armadura é reforçada com adamantina, uma das substâncias mais duras existentes. Enquanto estiver usando, qualquer Acerto Crítico contra você se torna um acerto normal.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Qualquer Média ou Pesada, Exceto Gibão de Peles)","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Armadura (Qualquer Média ou Pesada, Exceto Gibão de Peles), Incomum","armorSubtype":"Qualquer Média ou Pesada, Exceto Gibão de Peles"}'::jsonb
@@ -939,7 +940,7 @@ VALUES (
   'armadura-de-invulnerabilidade',
   'armor'::rpg.item_type,
   'Armadura de Invulnerabilidade',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Você tem Resistência a dano Contundente, Cortante e Perfurante enquanto usa esta armadura.
 Carapaça Metálica. Você pode executar uma ação Usar Magia para obter Imunidade a dano Contundente, Cortante e Perfurante por 10 minutos ou até não usar mais a armadura. Você restaura o uso desta propriedade após o amanhecer.',
@@ -960,7 +961,7 @@ VALUES (
   'armadura-de-mitral',
   'armor'::rpg.item_type,
   'Armadura de Mitral',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'O mitral é um metal leve e flexível. Armaduras feitas dessa substância podem ser usadas sob roupas normais. Caso a armadura imponha Desvantagem em testes de Destreza (Furtividade) ou possua exigência de Força, a versão em mitral ignora essas limitações.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Qualquer Média ou Pesada, Exceto Gibão de Peles)","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Armadura (Qualquer Média ou Pesada, Exceto Gibão de Peles), Incomum","armorSubtype":"Qualquer Média ou Pesada, Exceto Gibão de Peles"}'::jsonb
@@ -980,7 +981,7 @@ VALUES (
   'armadura-de-placas-das-formas-etereas',
   'armor'::rpg.item_type,
   'Armadura de Placas das Formas Etéreas',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo esta armadura, você pode executar uma ação Usar Magia e usar uma palavra de comando para obter o efeito da magia Forma Etérea. A magia encerra imediatamente se você remover a armadura ou executar uma ação Usar Magia para repetir a palavra de comando. Esta propriedade da armadura não pode ser usada novamente até o próximo amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Armadura de Placas Parcial ou Armadura de Placas)","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Armadura (Armadura de Placas Parcial ou Armadura de Placas), Lendário (Requer Sintonização)","attunement":"Requer Sintonização","armorSubtype":"Armadura de Placas Parcial ou Armadura de Placas"}'::jsonb
@@ -1000,7 +1001,7 @@ VALUES (
   'armadura-de-placas-do-povo-anao',
   'armor'::rpg.item_type,
   'Armadura de Placas do Povo Anão',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo esta armadura, você adquire um bônus de +2 na Classe de Armadura. Além disso, se um efeito mover você contra sua vontade pelo chão, você pode executar uma Reação para reduzir a distância em até 3 metros.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Armadura de Placas ou Placas Parcial)","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":false,"header":"Armadura (Armadura de Placas ou Placas Parcial), Muito Raro","armorSubtype":"Armadura de Placas ou Placas Parcial"}'::jsonb
@@ -1020,7 +1021,7 @@ VALUES (
   'armadura-de-resistencia',
   'armor'::rpg.item_type,
   'Armadura de Resistência',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você tem Resistência a um tipo de dano enquanto usa esta armadura. O Mestre escolhe o tipo ou o determina aleatoriamente jogando na tabela a seguir.
 1d10
@@ -1062,7 +1063,7 @@ VALUES (
   'armadura-de-vulnerabilidade',
   'armor'::rpg.item_type,
   'Armadura de Vulnerabilidade',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando esta armadura, você tem Resistência a um dos seguintes tipos de dano: Contundente, Cortante ou Perfurante. O Mestre escolhe o tipo ou o determina aleatoriamente.
 Maldição. Esta armadura é amaldiçoada, um fato revelado apenas quando a magia Identificar é conjurada na armadura ou você se sintonizar a ela. Sintonizar a armadura o amaldiçoa até que você seja alvo da magia Remover Maldição ou efeito mágico semelhante; remover a armadura não encerra a maldição. Enquanto amaldiçoado, você tem Vulnerabilidade a dois dos três tipos de dano associados à armadura (não aquele ao qual ela concede Resistência).',
@@ -1083,7 +1084,7 @@ VALUES (
   'armadura-demoniaca',
   'armor'::rpg.item_type,
   'Armadura Demoníaca',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo esta armadura, você adquire um bônus de +1 na Classe de Armadura e conhece o idioma Abissal. Além disso, as manoplas com garras da armadura permitem que seus Ataques Desarmados causem 1d8 pontos de dano Cortante em vez do dano normal Contundente, e você adquire um bônus de +1 nas jogadas de ataque e dano de seus Ataques Desarmados.
 Maldição. Após vestir esta armadura amaldiçoada, você não pode removê-la a menos que seja alvo de uma magia Remover Maldição ou efeito mágico semelhante. Enquanto veste a armadura, você tem Desvantagem em jogadas de ataque contra demônios e em salvaguardas contra magias e habilidades especiais desses ínferos.',
@@ -1104,7 +1105,7 @@ VALUES (
   'armadura-do-marinheiro',
   'armor'::rpg.item_type,
   'Armadura do Marinheiro',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo esta armadura, você tem um Deslocamento de Natação igual ao seu Deslocamento. Além disso, se começar seu turno debaixo d''água com 0 Pontos de Vida, você recupera imediatamente 1d4 Pontos de Vida. A armadura não pode curar ninguém novamente até o próximo amanhecer.
 A armadura é decorada com representações de peixes e conchas.',
@@ -1125,7 +1126,7 @@ VALUES (
   'armadura-facil-de-tirar',
   'armor'::rpg.item_type,
   'Armadura Fácil de Tirar',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Você pode despir esta armadura como uma ação Usar Magia.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Qualquer Leve, Média ou Pesada)","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Armadura (Qualquer Leve, Média ou Pesada), Comum","armorSubtype":"Qualquer Leve, Média ou Pesada"}'::jsonb
@@ -1145,7 +1146,7 @@ VALUES (
   'armadura-fumegante',
   'armor'::rpg.item_type,
   'Armadura Fumegante',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Fumos tênues, inofensivos e sem odor se elevam desta armadura enquanto ela está sendo vestida.
 Armadura Magificada
@@ -1209,7 +1210,7 @@ VALUES (
   'armadura-reluzente',
   'armor'::rpg.item_type,
   'Armadura Reluzente',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta armadura nunca fica suja.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Qualquer Leve, Média ou Pesada)","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Armadura (Qualquer Leve, Média ou Pesada), Comum","armorSubtype":"Qualquer Leve, Média ou Pesada"}'::jsonb
@@ -1269,7 +1270,7 @@ VALUES (
   'azagaia-relampago',
   'weapon'::rpg.item_type,
   'Azagaia Relâmpago',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Toda vez que realizar uma jogada de ataque com esta arma mágica e acertar, você pode causar dano Elétrico em vez de dano Perfurante.
 Relâmpago. Ao arremessar esta arma em um alvo a até 36 metros, você pode escolher não fazer uma jogada de ataque à distância e, em vez disso, transformá-la em um relâmpago. Esse relâmpago forma uma Linha de 1,5 metro de largura entre você e o alvo. O alvo e cada criatura na linha (exceto você) fazem uma salvaguarda de Destreza CD 13, sofrendo 4d6 de dano Elétrico em caso de falha, ou metade do dano se tiver sucesso. Após causar o dano, a arma reaparece em sua mão. Essa propriedade pode ser utilizada novamente apenas no próximo amanhecer.',
@@ -1290,7 +1291,7 @@ VALUES (
   'baralho-das-ilusoes',
   'other'::rpg.item_type,
   'Baralho das Ilusões',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta caixa contém um conjunto de cartas. Um baralho completo tem 34 cartas: 32 representando criaturas específicas e duas com uma superfície espelhada. Um baralho encontrado como tesouro costuma ter 1d20 - 1 cartas a menos.
 A magia do baralho funciona apenas se as cartas forem tiradas aleatoriamente. Você pode executar uma ação Usar Magia para tirar uma carta aleatoriamente do baralho e jogá-la no chão em um ponto a até 9 metros de você. Uma ilusão de uma criatura, determinada ao jogar na tabela Baralho das Ilusões, forma-se sobre a carta jogada e permanece até ser dissipada. A criatura ilusória criada pela carta parece e se comporta como uma criatura real de sua espécie, exceto que não pode causar dano. Enquanto você estiver a até 36 metros da criatura ilusória e puder vê-la, você pode executar uma ação Usar Magia para movê-la para qualquer lugar a até 9 metros de sua carta.
@@ -1381,7 +1382,7 @@ VALUES (
   'baralho-de-muitas-coisas',
   'other'::rpg.item_type,
   'Baralho de Muitas Coisas',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Geralmente encontrado em uma caixa ou bolsa, este baralho contém uma quantidade de cartas feitas de marfim ou de velino. A maioria (75%) desses baralhos tem treze cartas, mas alguns têm vinte e duas. Use a coluna apropriada da tabela Baralho de Muitas Coisas ao determinar aleatoriamente as cartas retiradas do baralho.
 Antes de puxar uma carta, você deve declarar quantas cartas pretende puxar e, em seguida, puxá-las aleatoriamente. Qualquer carta puxada além desse número não tem efeito. Caso contrário, assim que você puxar uma carta do baralho, a magia do baralho entra em efeito. Você deve puxar cada carta em um intervalo de, no máximo, 1 hora após a anterior. Se você não puxar o número declarado de cartas, as cartas restantes saem do baralho por conta própria e entram em efeito simultaneamente.
@@ -1542,7 +1543,7 @@ VALUES (
   'barco-de-bolso',
   'other'::rpg.item_type,
   'Barco de Bolso',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este objeto parece uma caixa de madeira medindo 30 centímetros de comprimento, 15 centímetros de largura e 15 centímetros de profundidade. Ele pesa 2 quilos e flutua. Pode ser aberto para armazenar itens em seu interior. Este item também possui três palavras de comando, cada uma exigindo uma ação Usar Magia para ser utilizado:
 Primeira Palavra de Comando. A caixa se desdobra em um Barco a Remo.
@@ -1567,7 +1568,7 @@ VALUES (
   'batuta-da-regencia',
   'other'::rpg.item_type,
   'Batuta da Regência',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 3 cargas. Enquanto a segura, você pode executar uma ação Usar Magia para gastar 1 carga e criar música orquestral agitando-a. A música pode ser ouvida a até 36 metros e termina quando você para de balançar a varinha.
 Recuperando Cargas. A varinha recupera todas as cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, um som triste de tuba toca enquanto a varinha se desfaz em cinzas e é destruída.',
@@ -1588,7 +1589,7 @@ VALUES (
   'bengala-de-veterano',
   'other'::rpg.item_type,
   'Bengala de Veterano',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Como uma Ação Bônus, você pode transformar esta bengala em uma Espada Longa comum ou transformar a Espada Longa de volta em uma bengala. Em ambos os casos, você deve estar segurando o item.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -1608,7 +1609,7 @@ VALUES (
   'bola-de-cristal',
   'other'::rpg.item_type,
   'Bola de Cristal',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Ao tocar neste orbe de cristal, você pode conjurar Vidência (CD 17 para evitar) com ele.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"header":"Item Maravilhoso, Muito Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -1628,7 +1629,7 @@ VALUES (
   'bola-de-cristal-da-leitura-de-mentes',
   'other'::rpg.item_type,
   'Bola de Cristal da Leitura de Mentes',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Ao tocar neste orbe de cristal, você pode conjurar Vidência (CD 17 para evitar) com ele. Além disso, você pode conjurar Detectar Pensamentos (CD 17 para evitar) determinando como alvos criaturas à sua vista a até 9 metros do sensor mágico. Você não precisa se concentrar na magia Detectar Pensamentos para mantê-la pela duração, mas ela encerra quando a magia Vidência termina.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Item Maravilhoso, Lendário (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -1648,7 +1649,7 @@ VALUES (
   'bola-de-cristal-de-telepatia',
   'other'::rpg.item_type,
   'Bola de Cristal de Telepatia',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Ao tocar neste orbe de cristal, você pode conjurar Vidência (CD 17 para evitar) com ele. Além disso, você pode se comunicar telepaticamente com criaturas à sua vista a até 9 metros do sensor mágico. Você também pode conjurar Sugestão (CD 17 para evitar) através do sensor em uma dessas criaturas. Você não precisa se concentrar na magia Sugestão para mantê-la pela duração, mas ela encerra quando a magia Vidência termina. Você não pode conjurar Sugestão deste modo novamente até o próximo amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Item Maravilhoso, Lendário (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -1668,7 +1669,7 @@ VALUES (
   'bola-de-cristal-de-visao-verdadeira',
   'other'::rpg.item_type,
   'Bola de Cristal de Visão Verdadeira',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Ao tocar neste orbe de cristal, você pode conjurar Vidência (CD 17 para evitar) com ele. Além disso, você tem Visão Verdadeira com um alcance de 36 metros centrado no sensor mágico.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Item Maravilhoso, Lendário (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -1688,7 +1689,7 @@ VALUES (
   'bolsa-cabe-tudo',
   'other'::rpg.item_type,
   'Bolsa Cabe Tudo',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta bolsa tem um espaço interno consideravelmente maior do que suas dimensões externas — aproximadamente 60 centímetros de diâmetro e 1,2 metro de profundidade. A bolsa pode conter até 250 quilos, não excedendo um volume de 1,8 metro cúbico. A bolsa pesa 7,5 quilos, independentemente do seu conteúdo. Retirar um item da bolsa requer uma ação Usar Objeto.
 Se a bolsa estiver sobrecarregada, furada ou rasgada, ela é destruída e seu conteúdo é espalhado no Plano Astral. Se for virada do avesso, seu conteúdo é despejado ileso, mas a bolsa deve ser colocada no lugar antes que possa ser usada novamente. A bolsa contém ar suficiente para 10 minutos de respiração, dividido pelo número de criaturas que respiram lá dentro.
@@ -1710,7 +1711,7 @@ VALUES (
   'bolsa-das-tropelias',
   'other'::rpg.item_type,
   'Bolsa das Tropelias',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta bolsa comum, feita em tecido nas cores cinza, ferrugem ou bronze, parece vazia. No entanto, ao tatear seu interior, revela-se um objeto pequeno e disforme.
 Como uma ação Usar Magia, você pode puxar o objeto disforme da bolsa e arremessá-lo até 6 metros. Quando o objeto cai no chão, ele se transforma em uma criatura que você determina jogando na tabela que corresponde à cor da bolsa. Veja o Livro dos Monstros para o bloco de estatísticas da criatura. A criatura desaparece no próximo amanhecer ou quando é reduzida a 0 Pontos de Vida.
@@ -1791,7 +1792,7 @@ VALUES (
   'bolsa-de-feijoes',
   'other'::rpg.item_type,
   'Bolsa de Feijões',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta bolsa pesada de pano contém 3d4 feijões secos e pesa 250 gramas, independente de quantos grãos tenha. Se não houver mais feijões, a bolsa deixa de ser um item mágico.
 Se você despejar um ou mais grãos da bolsa, eles explodem em uma Esfera de 3 metros de raio centrada neles. Todos os grãos descartados são destruídos na explosão e cada criatura na Esfera, incluindo você, realiza uma salvaguarda de Destreza CD 15, sofrendo 5d4 pontos de dano Energético se falhar, ou metade desse dano em caso de sucesso.
@@ -1840,7 +1841,7 @@ VALUES (
   'bolsa-de-temperos-prestativa-de-howard',
   'other'::rpg.item_type,
   'Bolsa de Temperos Prestativa de Howard',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta pochete parece vazia e tem 10 cargas. Enquanto segura a bolsa, você pode executar uma ação Usar Magia para gastar 1 carga, falar o nome de qualquer tempero alimentício não mágico (como sal, pimenta, açafrão ou coentro) e remover uma pitada do tempero desejado da bolsa. Uma pitada é suficiente para temperar uma única refeição. A bolsa recupera 1d6 + 4 cargas gastas diariamente ao amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -1860,7 +1861,7 @@ VALUES (
   'bolsa-devoradora',
   'other'::rpg.item_type,
   'Bolsa Devoradora',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Esta bolsa se assemelha a uma Bolsa Cabe Tudo, mas é um orifício de alimentação para uma gigantesca criatura extradimensional. Virar a bolsa do avesso fecha o orifício.
 A criatura extradimensional na bolsa sente tudo o que é colocado dentro dela. Qualquer matéria animal ou vegetal totalmente inserida é devorada e perdida para sempre. Se parte de uma criatura viva, como uma pessoa, entrar na bolsa, há 50% de chance de ser puxada para dentro. A criatura na bolsa pode tentar escapar com um teste bem-sucedido de Força (Atletismo) CD 15. Outra criatura pode tentar puxar alguém para fora da bolsa com um teste de Força (Atletismo) CD 20, desde que não seja puxada primeiro. Qualquer criatura que inicie seu turno dentro da bolsa é devorada e seu corpo destruído.
@@ -1883,7 +1884,7 @@ VALUES (
   'boneca-conversadora',
   'other'::rpg.item_type,
   'Boneca Conversadora',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Durante um Descanso Curto, enquanto a boneca estiver a até 1,5 metro de você, você pode falar a ela até seis frases de no máximo seis palavras cada, e definir uma condição para cada frase. As condições devem ocorrer a até 1,5 metro da boneca para as frases serem ativadas. Você pode substituir frases antigas a qualquer momento. Por exemplo, ao ser erguida, ela pode dizer: “Eu quero um doce.” As frases programadas desaparecem quando sua Sintonização com a boneca termina.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":true,"header":"Item Maravilhoso, Comum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -1903,7 +1904,7 @@ VALUES (
   'botas-aladas',
   'other'::rpg.item_type,
   'Botas Aladas',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Estas botas têm 4 cargas e recuperam 1d4 cargas gastas diariamente ao amanhecer. Enquanto estiver usando as botas, você pode executar uma ação Usar Magia para gastar 1 carga, recebendo um Deslocamento de Voo de 9 metros por 1 hora. Se estiver voando quando a duração encerrar, você desce a uma taxa de 9 metros por rodada até pousar.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -1923,7 +1924,7 @@ VALUES (
   'botas-das-terras-glaciais',
   'other'::rpg.item_type,
   'Botas das Terras Glaciais',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Estas botas de pele são confortáveis e quentes. Ao usá-las, você adquire os seguintes benefícios.
 Caminhante Invernal. Você ignora Terreno Difícil gerado por gelo ou neve.
@@ -1945,7 +1946,7 @@ VALUES (
   'botas-de-caminhar-e-saltar',
   'other'::rpg.item_type,
   'Botas de Caminhar e Saltar',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando estas botas, seu Deslocamento se torna 9 metros, a menos que seu Deslocamento seja maior, e seu Deslocamento não é reduzido se você carregar um peso superior à sua capacidade de carga ou usar Armadura Pesada.
 Uma vez em cada um de seus turnos, você pode saltar até 9 metros gastando apenas 3 metros de movimento.',
@@ -1966,7 +1967,7 @@ VALUES (
   'botas-de-levitacao',
   'other'::rpg.item_type,
   'Botas de Levitação',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando estas botas, você pode conjurar Levitação em si mesmo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Item Maravilhoso, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -1986,7 +1987,7 @@ VALUES (
   'botas-de-velocidade',
   'other'::rpg.item_type,
   'Botas de Velocidade',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando estas botas, você pode executar uma Ação Bônus para bater os calcanhares. Ao fazer isso, as botas dobram seu Deslocamento, e qualquer criatura que realizar um Ataque de Oportunidade contra você tem Desvantagem na jogada de ataque. Se você bater os calcanhares novamente, o efeito encerra.
 Ao usar a propriedade das botas por um total de 10 minutos, a magia deixa de funcionar até que você complete um Descanso Longo.',
@@ -2007,7 +2008,7 @@ VALUES (
   'botas-despistadoras',
   'other'::rpg.item_type,
   'Botas Despistadoras',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando essas botas, você pode fazer com que elas deixem pegadas como as de qualquer tipo de humanoide do seu tamanho.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":true,"header":"Item Maravilhoso, Comum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -2027,7 +2028,7 @@ VALUES (
   'botas-elficas',
   'other'::rpg.item_type,
   'Botas Élficas',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando essas botas, seus passos não fazem barulho, independentemente da superfície em que você está se movendo. Você também tem Vantagem em testes de Destreza (Furtividade).',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -2047,7 +2048,7 @@ VALUES (
   'braceletes-de-arquearia',
   'other'::rpg.item_type,
   'Braceletes de Arquearia',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando estes braceletes, você tem proficiência com o Arco Longo e o Arco Curto, e recebe um bônus de +2 nas jogadas de dano realizadas com essas armas.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -2067,7 +2068,7 @@ VALUES (
   'braceletes-de-defesa',
   'other'::rpg.item_type,
   'Braceletes de Defesa',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando estes braceletes, você recebe um bônus de +2 na Classe de Armadura se não estiver vestindo armadura e não estiver usando Escudo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Item Maravilhoso, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -2087,7 +2088,7 @@ VALUES (
   'braseiro-de-comandar-elementais-do-fogo',
   'other'::rpg.item_type,
   'Braseiro de Comandar Elementais do Fogo',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver a até 1,5 metro deste braseiro, você pode executar uma ação Usar Magia para invocar um Elemental do Fogo. O elemental aparece em um espaço desocupado próximo ao braseiro, entende seus idiomas, obedece aos seus comandos e age imediatamente após sua contagem de iniciativa. Ele desaparece após 1 hora, quando morre ou quando você o dispensa como uma Ação Bônus. O braseiro não pode ser utilizado novamente desse modo até o próximo amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"header":"Item Maravilhoso, Raro"}'::jsonb
@@ -2107,7 +2108,7 @@ VALUES (
   'broche-escudarcano',
   'other'::rpg.item_type,
   'Broche Escudarcano',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este broche, você tem Resistência a dano Energético e Imunidade ao dano da magia Míssil Mágico.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -2127,7 +2128,7 @@ VALUES (
   'buraco-portatil',
   'other'::rpg.item_type,
   'Buraco Portátil',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este fino tecido preto, macio como seda, é dobrado até as dimensões de um lenço. Ele se desdobra em uma folha circular de 1,8 metro de diâmetro.
 Você pode executar uma ação Usar Magia para desdobrar um Buraco Portátil e posicioná-lo sobre ou contra uma superfície sólida. Após isso, o Buraco Portátil cria um buraco extradimensional com 3 metros de profundidade. O espaço cilíndrico dentro do buraco existe em um plano de existência diferente, portanto, não pode ser utilizado para criar passagens abertas. Qualquer criatura dentro de um Buraco Portátil aberto pode sair dele.
@@ -2151,7 +2152,7 @@ VALUES (
   'cachimbo-teratologico',
   'other'::rpg.item_type,
   'Cachimbo Teratológico',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Ao fumar este cachimbo, você pode executar uma ação Usar Magia para exalar uma nuvem de fumaça que assume a forma de uma criatura, como um dragão, um flunf ou um slaad. A forma deve ser pequena o suficiente para caber em um cubo de 30 centímetros de lados e perde sua forma após alguns segundos, tornando-se uma nuvem comum de fumaça.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -2171,7 +2172,7 @@ VALUES (
   'cadeado-antiladinagem',
   'other'::rpg.item_type,
   'Cadeado Antiladinagem',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este cadeado parece ser comum (do tipo descrito no capítulo 6 do Livro do Jogador) e vem com uma única chave. Os pinos neste cadeado se ajustam magicamente para frustrar ladrões. Testes de Destreza realizados para abrir o cadeado têm Desvantagem.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -2191,7 +2192,7 @@ VALUES (
   'cajado-avicular',
   'other'::rpg.item_type,
   'Cajado Avicular',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este cajado de madeira é decorado com entalhes de pássaros. Ele possui 10 cargas. Ao segurar o cajado, você pode executar uma ação Usar Magia para gastar 1 carga do cajado e fazer com que ele produza um dos seguintes sons, que podem ser ouvidos a até 36 metros: o chilrear de um tentilhão, o crocitar de um corvo, o cacarejar de uma galinha, o grasnar de um pato, o chamado de um mergulhão, o grugulejar de um peru, o chamado de uma gaivota, o crocitar de uma coruja ou o gritapoar de uma águia.
 Recuperando Cargas. O cajado recupera 1d6 + 4 cargas gastas diariamente ao amanhecer. Se você gastar a última carga, jogue 1d20. Em um 1, o cajado explode em uma nuvem inofensiva de penas de pássaro e se perde para sempre.',
@@ -2212,7 +2213,7 @@ VALUES (
   'cajado-da-cura',
   'other'::rpg.item_type,
   'Cajado da Cura',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este cajado possui 10 cargas. Ao empunhar o cajado, você pode conjurar uma das magias na tabela a seguir a partir dele, usando o modificador do seu atributo de conjuração. A tabela indica quantas cargas você deve gastar para conjurar a magia.
  
@@ -2242,7 +2243,7 @@ VALUES (
   'cajado-da-piton',
   'other'::rpg.item_type,
   'Cajado da Píton',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Como uma ação Usar Magia, você pode arremessar este cajado de modo que ele caia em um espaço desocupado a até 3 metros de você, fazendo com que o cajado se transforme em uma Cobra Constritora Gigante nesse espaço. A cobra está sob seu controle e compartilha sua contagem de Iniciativa, tendo o turno imediatamente o seu.
 No seu turno, você pode controlar mentalmente a cobra (nenhuma ação é necessária) se ela estiver a até 18 metros de você e você não estiver sob a condição Incapacitado. Você decide a ação que a cobra executa e para onde ela se move durante o turno dela, ou pode dar um comando geral, como atacar inimigos ou proteger um local. Na ausência de comandos seus, a cobra se defende sozinha.
@@ -2264,7 +2265,7 @@ VALUES (
   'cajado-da-trovoada-relampejante',
   'other'::rpg.item_type,
   'Cajado da Trovoada Relampejante',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este cajado pode ser empunhado como um Cajado mágico que concede um bônus de +2 para jogadas de ataque e dano realizadas com ele. Ele também possui as seguintes propriedades adicionais. Uma vez que uma dessas propriedades é usada, ela não pode ser usada novamente até o próximo amanhecer.
 Golpe de Relâmpago. Você pode executar uma ação Usar Magia para fazer com que um relâmpago salte da ponta do cajado em uma Linha com 1,5 metro de largura e 36 metros de comprimento. Cada criatura nessa Linha realiza uma salvaguarda de Destreza CD 17, sofrendo 9d6 pontos de dano Elétrico se falhar ou metade desse dano em caso de sucesso.
@@ -2289,7 +2290,7 @@ VALUES (
   'cajado-da-vibora',
   'other'::rpg.item_type,
   'Cajado da Víbora',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Como uma Ação Bônus, você pode transformar a cabeça deste cajado em uma Cobra Peçonhenta animada por 1 minuto ou reverter o cajado para sua forma inanimada.
 Ao executar a ação Atacar, você pode realizar uma das jogadas de ataque usando a cabeça da cobra animada, que possui um alcance de 1,5 metro. Aplique seu Bônus de Proficiência e modificador de Sabedoria à jogada de ataque. Em caso de acerto, o alvo sofre 1d6 pontos de dano Perfurante e 3d6 pontos de dano Venenoso.
@@ -2311,7 +2312,7 @@ VALUES (
   'cajado-das-matas',
   'other'::rpg.item_type,
   'Cajado das Matas',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este cajado possui 6 cargas e pode ser empunhado como um Cajado mágico que concede um bônus de +2 para jogadas de ataque e dano realizadas com ele. Ao empunhar o cajado, você adquire um bônus de +2 nas jogadas de ataque mágico.
 Forma Arbórea. Você pode executar uma ação Usar Magia para fincar uma das extremidades do cajado na terra em um espaço desocupado e gastar 1 carga para transformar o cajado em uma árvore saudável. A árvore possui 18 metros de altura e um tronco com 1,5 metro de diâmetro, e seus galhos da copa se espalham em um raio de 6 metros. A árvore parece comum, comum, mas emite uma aura tênue de magia de Transmutação que pode ser percebida com a magia Detectar Magia. Ao tocar a árvore e executar uma ação Usar Magia, você retorna o cajado à sua forma normal. Qualquer criatura que estiver na árvore cai quando a árvore reverte à forma de cajado.
@@ -2352,7 +2353,7 @@ VALUES (
   'cajado-de-flores',
   'other'::rpg.item_type,
   'Cajado de Flores',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este cajado de madeira possui 10 cargas. Ao empunhar o cajado, você pode executar uma ação Usar Magia para gastar 1 carga do cajado e fazer com que uma flor brote de um pedaço de terra ou solo a até 1,5 metro de você, ou do próprio cajado. A menos que você escolha um tipo específico de flor, o cajado cria uma margarida de aroma suave. A flor é inofensiva e não mágica, e cresce ou murcha como uma flor normal.
 Recuperando Cargas. O cajado recupera 1d6 + 4 cargas gastas diariamente ao amanhecer. Ao gastar a última carga, jogue 1d20. Em um resultado 1, o cajado se transforma em pétalas de flores e é perdido para sempre.',
@@ -2373,7 +2374,7 @@ VALUES (
   'cajado-do-acrobata',
   'weapon'::rpg.item_type,
   'Cajado do Acrobata',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +2 em jogadas de ataque e dano realizadas com esta arma mágica.
 Enquanto estiver segurando esta arma, você pode fazê-la emitir Meia-luz verde em um raio de 3 metros como uma Ação Bônus ou após jogar a Iniciativa, ou apagar a luz como uma Ação Bônus.
@@ -2399,7 +2400,7 @@ VALUES (
   'cajado-do-agravo',
   'other'::rpg.item_type,
   'Cajado do Agravo',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este cajado pode ser empunhado como um Cajado mágico que concede um bônus de +3 para jogadas de ataque e dano realizadas com ele.
 O cajado possui 10 cargas. Ao atingir com uma jogada de ataque corpo a corpo usando ele, você pode gastar até 3 cargas. Para cada carga que você gastar, o alvo sofre 1d6 pontos de dano Energético adicionais.
@@ -2421,7 +2422,7 @@ VALUES (
   'cajado-do-definhamento',
   'other'::rpg.item_type,
   'Cajado do Definhamento',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este cajado tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer.
 O cajado pode ser empunhado como um Cajado mágico. Em um acerto, ele causa dano como um Cajado normal, e você pode gastar 1 carga para causar ao alvo 2d10 pontos de dano Necrótico adicionais e forçá-lo a realizar uma salvaguarda de Constituição CD 15. Se falhar, o alvo tem Desvantagem por 1 hora em qualquer teste de atributo ou salvaguarda que use Força ou Constituição.',
@@ -2442,7 +2443,7 @@ VALUES (
   'cajado-do-enxame-de-insetos',
   'other'::rpg.item_type,
   'Cajado do Enxame de Insetos',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este cajado possui 10 cargas.
 Magias. Ao empunhar o cajado, você pode conjurar uma das magias na tabela a seguir a partir dele, usando a CD para evitar sua magia e seu modificador de ataque mágico. A tabela indica quantas cargas você deve gastar para conjurar a magia.
@@ -2471,7 +2472,7 @@ VALUES (
   'cajado-do-fogo',
   'other'::rpg.item_type,
   'Cajado do Fogo',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você tem Resistência a dano Ígneo enquanto empunha este cajado.
 Magias. O cajado possui 10 cargas. Ao empunhar o cajado, você pode conjurar uma das magias na tabela a seguir a partir dele, usando a CD para evitar sua magia. A tabela indica quantas cargas você deve gastar para conjurar a magia.
@@ -2501,7 +2502,7 @@ VALUES (
   'cajado-do-gelo',
   'other'::rpg.item_type,
   'Cajado do Gelo',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você tem Resistência a dano Gélido enquanto empunhar este cajado.
 Magias. O cajado possui 10 cargas. Ao empunhar o cajado, você pode conjurar uma das magias na tabela a seguir a partir dele, usando a CD para evitar sua magia. A tabela indica quantas cargas você deve gastar para conjurar a magia.
@@ -2533,7 +2534,7 @@ VALUES (
   'cajado-do-poder',
   'other'::rpg.item_type,
   'Cajado do Poder',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este cajado possui 20 cargas e pode ser empunhado como um Cajado mágico que concede um bônus de +2 para jogadas de ataque e dano realizadas com ele. Ao empunhar o cajado, você adquire um bônus de +2 na Classe de Armadura, salvaguardas e jogada de ataque mágico.
 Golpe Retributivo. Você pode executar uma ação Usar Magia para quebrar o cajado sobre o joelho ou contra uma superfície sólida. O cajado é destruído e libera sua magia em uma explosão que preenche uma Emanação de 9 metros originada dele. Você tem 50% de chance de se teleportar instantaneamente para um plano de existência aleatório, evitando a explosão. Se falhar em evitar o efeito, você sofre dano Energético igual a 16 vezes o número de cargas no cajado. Cada outra criatura na área realiza uma salvaguarda de Destreza CD 17. Se falhar, uma criatura sofre dano Energético igual a 4 vezes o número de cargas no cajado. Em caso de sucesso, uma criatura sofre metade desse dano.
@@ -2576,7 +2577,7 @@ VALUES (
   'cajado-dos-magi',
   'other'::rpg.item_type,
   'Cajado dos Magi',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este cajado possui 50 cargas e pode ser empunhado como um Cajado mágico que concede um bônus de +2 para jogadas de ataque e dano realizadas com ele. Ao empunhá-lo, você adquire um bônus de +2 nas jogadas de ataque mágico.
 Absorção de Magia. Ao empunhar o cajado, você tem Vantagem em salvaguardas contra magias. Além disso, você pode executar uma Reação quando outra criatura conjurar uma magia que tenha como alvo apenas você. Ao fazer isso, o cajado absorve a energia da magia, cancelando seu efeito e adquirindo um número de cargas igual ao círculo da magia absorvida. No entanto, se isso fizer com que o número total de cargas do cajado ultrapasse 50, o cajado explode como se você tivesse ativado seu Golpe Retributivo (veja abaixo).
@@ -2641,7 +2642,7 @@ VALUES (
   'cajado-dos-sortilegios',
   'other'::rpg.item_type,
   'Cajado dos Sortilégios',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este cajado possui 10 cargas. Enquanto segura o cajado, você pode usar qualquer uma de suas propriedades:
 Conjurar Magia. Você pode gastar 1 das cargas do cajado para conjurar Comando, Compreender Idiomas ou Enfeitiçar Pessoa, usando a CD para evitar sua magia.
@@ -2726,7 +2727,7 @@ VALUES (
   'cajado-ornamental',
   'other'::rpg.item_type,
   'Cajado Ornamental',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Se você posicionar um objeto Minúsculo pesando no máximo 0,5 quilo (como um fragmento de cristal, um ovo ou uma pedra) acima da ponta deste cajado enquanto o segura, o objeto flutua a 2,5 cm da ponta do cajado e permanece lá até ser removido ou até que o cajado deixar de estar em sua posse. O cajado pode ter até três desses objetos flutuando sobre sua ponta ao mesmo tempo. Ao segurar o cajado, você pode fazer um ou mais desses objetos girarem, ou se moverem lentamente no lugar.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Cajado","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Cajado, Comum"}'::jsonb
@@ -2746,7 +2747,7 @@ VALUES (
   'caldeirao-do-renascimento',
   'other'::rpg.item_type,
   'Caldeirão do Renascimento',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este pote Minúsculo traz cenas em relevo de heróis em suas laterais de ferro fundido.
 Você pode usar o caldeirão como Foco de Conjuração para suas magias, e ele funciona como um componente adequado para a magia Vidência.
@@ -2770,7 +2771,7 @@ VALUES (
   'caneca-da-sobriedade',
   'other'::rpg.item_type,
   'Caneca da Sobriedade',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta caneca possui um rosto sério esculpido em um dos lados. Você pode beber cerveja, vinho ou qualquer outra bebida alcoólica não mágica colocada nela sem ficar embriagado. A caneca não afeta líquidos mágicos ou substâncias perigosas, como venenos.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -2790,7 +2791,7 @@ VALUES (
   'capa-aracnidea',
   'other'::rpg.item_type,
   'Capa Aracnídea',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Esta bela peça de roupa é feita de seda preta, entrelaçada com finos fios prateados. Ao usá-la, você adquire os seguintes benefícios.
 Caminhada da Aranha. Você não pode ser aprisionado em teias de qualquer tipo e pode se mover através delas como se estivesse em Terreno Difícil.
@@ -2814,7 +2815,7 @@ VALUES (
   'capa-de-muitas-modas',
   'other'::rpg.item_type,
   'Capa de Muitas Modas',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo esta capa, você pode executar uma Ação Bônus para alterar o estilo, a cor e a qualidade aparente dela O peso da capa não muda. Independentemente da aparência da capa, ela não pode ser nada além de uma capa. Embora duplique a aparência de outras capas e mantos mágicos, não obtém as propriedades mágicas delas.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -2834,7 +2835,7 @@ VALUES (
   'capa-deslocadora',
   'other'::rpg.item_type,
   'Capa Deslocadora',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando esta capa, ela magicamente projeta uma ilusão que faz você parecer estar em um local perto de sua localização real, impondo Desvantagem em qualquer jogada de ataque que criaturas realizarem contra você. Se você sofrer dano, a propriedade deixa de funcionar até o início do seu próximo turno. Esta propriedade é suprimida enquanto seu Deslocamento for 0.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Item Maravilhoso, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -2854,7 +2855,7 @@ VALUES (
   'capa-do-povo-elfico',
   'other'::rpg.item_type,
   'Capa do Povo Élfico',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando esta capa, testes de Sabedoria (Percepção) realizados para notá-lo têm Desvantagem e você tem Vantagem em testes de Destreza (Furtividade).',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -2874,7 +2875,7 @@ VALUES (
   'capa-do-saltimbanco',
   'other'::rpg.item_type,
   'Capa do Saltimbanco',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta capa exala um leve odor de enxofre. Ao usá-la, você pode conjurar Porta Dimensional como uma ação Usar Magia. Essa propriedade só pode ser utilizada novamente após o próximo amanhecer.
 Ao se teleportar com esta magia, você deixa uma nuvem de fumaça para trás. O espaço que você deixou fica Parcialmente Obscurecido por essa fumaça até o final do seu próximo turno.',
@@ -2895,7 +2896,7 @@ VALUES (
   'capa-esvoacante',
   'other'::rpg.item_type,
   'Capa Esvoaçante',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo esta capa, você pode executar uma Ação Bônus para fazê-la ondular dramaticamente por 1 minuto.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -2915,7 +2916,7 @@ VALUES (
   'carrilhao-destrancador',
   'other'::rpg.item_type,
   'Carrilhão Destrancador',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este tubo de metal oco mede cerca de 30 centímetros de comprimento e pesa 0,5 quilo. Como uma ação Usar Magia, você pode tocar o carrilhão para conjurar Arrombar. O som de batida habitual da magia é substituído pelo tom claro e retumbante do carrilhão, que é audível a 90 metros.
 O carrilhão pode ser usado 10 vezes. Após a décima vez, ele racha e se torna inútil.
@@ -2990,7 +2991,7 @@ VALUES (
   'chapeu-das-muitas-magias',
   'other'::rpg.item_type,
   'Chapéu das Muitas Magias',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este chapéu pontudo tem as seguintes propriedades.
 Presto Conjura um Relâmpago Usando Seu Chapéu das Muitas Magias
@@ -3037,7 +3038,7 @@ VALUES (
   'chapeu-do-embuco',
   'other'::rpg.item_type,
   'Chapéu do Embuço',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo este Chapéu, você pode conjurar a magia Disfarçar-se. A magia se encerra se o chapéu for removido.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -3057,7 +3058,7 @@ VALUES (
   'chapeu-dos-magos',
   'other'::rpg.item_type,
   'Chapéu dos Magos',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este chapéu em forma de cone é adornado com luas e estrelas. Enquanto o estiver usando, você adquire os seguintes benefícios.
 Foco de Conjuração. Você pode usar o chapéu como um Foco de Conjuração para suas magias de Mago.
@@ -3079,7 +3080,7 @@ VALUES (
   'chapeu-dos-vermes',
   'other'::rpg.item_type,
   'Chapéu dos Vermes',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este chapéu tem 3 cargas. Enquanto o segura, você pode executar uma ação Usar Magia para gastar 1 carga e invocar, à sua escolha, um Morcego, um Rato ou um Sapo. A criatura invocada aparece magicamente no chapéu e tenta se afastar de você o mais rápido possível. A criatura é Indiferente em relação a você e a outras criaturas, e não está sob seu controle. Ele se comporta como uma criatura comum de seu tipo e desaparece após 1 hora ou quando alcança 0 Pontos de Vida. O chapéu recupera todas as cargas gastas diariamente ao amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -3099,7 +3100,7 @@ VALUES (
   'chave-misteriosa',
   'other'::rpg.item_type,
   'Chave Misteriosa',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Um ponto de interrogação é moldado na cabeça desta chave. A chave possui 5% de chance de destrancar qualquer fechadura na qual esteja inserida. Assim que destranca algo, a chave desaparece.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -3119,7 +3120,7 @@ VALUES (
   'chifre-de-escutar',
   'other'::rpg.item_type,
   'Chifre de Escutar',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Enquanto segurar este chifre contra sua orelha, ele suprime os efeitos da condição Surdo em você.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -3139,7 +3140,7 @@ VALUES (
   'chifre-do-alarme-silencioso',
   'other'::rpg.item_type,
   'Chifre do Alarme Silencioso',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este chifre tem 4 cargas e recupera 1d4 cargas gastas diariamente ao amanhecer. Como uma ação Usar Magia, você pode soprar o chifre enquanto gasta 1 carga. Uma criatura à sua escolha escuta o estrondar do chifre, desde que a criatura esteja a até 180 metros do item. Nenhuma outra criatura ouve a trombeta.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -3159,7 +3160,7 @@ VALUES (
   'cimitarra-da-velocidade',
   'weapon'::rpg.item_type,
   'Cimitarra da Velocidade',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +2 em jogadas de ataque e dano realizadas com esta arma mágica. Além disso, você pode realizar um ataque com ela como uma Ação Bônus em cada um dos seus turnos.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Cimitarra)","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"header":"Arma (Cimitarra), Muito Rara (Requer Sintonização)","attunement":"Requer Sintonização","weaponSubtype":"Cimitarra"}'::jsonb
@@ -3217,7 +3218,7 @@ VALUES (
   'cinturao-do-povo-anao',
   'other'::rpg.item_type,
   'Cinturão do Povo Anão',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Ao usar este cinturão, você adquire os seguintes benefícios:
 Amigo dos Anões. Você tem Vantagem em testes de Carisma (Persuasão) realizados para interagir com anões e duergar.
@@ -3244,7 +3245,7 @@ VALUES (
   'cola-suprema',
   'other'::rpg.item_type,
   'Cola Suprema',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Essa substância viscosa, de coloração branco-leitosa, pode formar uma ligação adesiva permanente entre quaisquer dois objetos. Ela deve ser armazenada em uma ampola ou pote cujo interior tenha sido revestido com Óleo Escorregadio. Quando encontrado, um recipiente contém (1d6 + 1) x 30 gramas de cola.
 Trinta gramas de cola podem cobrir uma superfície quadrada de 30 centímetros de lado. Aplicar 30 gramas de Cola Suprema requer uma ação Usar Objeto, e a cola aplicada leva 1 minuto para se fixar completamente. Após esse tempo, o vínculo formado só pode ser desfeito com a aplicação de Solvente Universal ou Óleo de Forma Etérea, ou com uma magia Desejo.',
@@ -3265,7 +3266,7 @@ VALUES (
   'colar-da-adaptabilidade',
   'other'::rpg.item_type,
   'Colar da Adaptabilidade',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Ao usar este colar, você pode respirar normalmente em qualquer ambiente e tem Vantagem em salvaguardas realizadas para evitar ou encerrar a condição Envenenado.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -3285,7 +3286,7 @@ VALUES (
   'colar-de-bolas-de-fogo',
   'other'::rpg.item_type,
   'Colar de Bolas de Fogo',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este colar tem 1d6 + 3 contas penduradas nele. Você pode executar uma ação Usar Magia para soltar uma conta e arremessá-la a até 18 metros de distância. Ao atingir o final de sua trajetória, a conta detona como uma magia Bola de Fogo de 3º círculo (CD 15 para evitar).
 Você pode arremessar várias contas, ou até mesmo o colar inteiro, de uma só vez. Ao fazer isso, aumente o dano da Bola de Fogo em 1d6 para cada conta após a primeira (máximo 12d6).',
@@ -3306,7 +3307,7 @@ VALUES (
   'colar-de-contas-de-oracao',
   'other'::rpg.item_type,
   'Colar de Contas de Oração',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este colar tem 1d4 + 2 contas mágicas produzidas de água-marinha, pérola negra ou topázio. Ele também tem muitas contas não mágicas produzidas de pedras como âmbar, hematita, citrino, coral, jade, pérola ou quartzo. Se uma conta mágica for removida do colar, essa conta perde sua magia.
 Existem seis tipos de contas mágicas. O Mestre decide o tipo de cada conta no colar ou a determina aleatoriamente jogando na tabela abaixo. Um colar pode ter mais de uma conta do mesmo tipo. Para usar uma conta, você deve estar usando o colar. Cada conta contém uma magia que você pode conjurar como uma Ação Bônus (usando a CD para evitar sua magia se uma salvaguarda for necessária). Uma vez que a magia de uma conta mágica é conjurada, essa conta não pode ser usada novamente até o próximo amanhecer.
@@ -3348,7 +3349,7 @@ VALUES (
   'colar-dos-pensamentos',
   'other'::rpg.item_type,
   'Colar dos Pensamentos',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'O colar tem 5 cargas. Enquanto o estiver usando-o, você pode gastar 1 carga para conjurar Detectar Pensamentos (CD 13 para evitar) a partir dele. O colar recupera 1d4 cargas gastas diariamente ao amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -3368,7 +3369,7 @@ VALUES (
   'conta-de-hidratacao',
   'other'::rpg.item_type,
   'Conta de Hidratação',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Ao ser colocada em um líquido, esta esfera esponjosa, gelatinosa e insípida dissolve-se, transformando até meio litro de um líquido em água potável fresca e gelada. A esfera não afeta líquidos mágicos ou substâncias perigosas, como venenos.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -3388,7 +3389,7 @@ VALUES (
   'conta-de-nutricao',
   'other'::rpg.item_type,
   'Conta de Nutrição',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta esfera esponjosa, gelatinosa e insípida dissolve na língua e fornece nutrição equivalente a um dia de Rações.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -3408,7 +3409,7 @@ VALUES (
   'contas-energeticas',
   'other'::rpg.item_type,
   'Contas Energéticas',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta pequena esfera preta mede 2 centímetros de diâmetro e pesa 30 gramas. Normalmente, 1d4 + 4 Contas Energéticas são encontradas juntas.
 Você pode executar uma ação Usar Magia para arremessar a conta a até 18 metros. Ela explode em uma esfera de 3 metros de raio e é destruída. Cada criatura na esfera deve ser bem-sucedida em uma salvaguarda de Destreza CD 15 ou sofre 5d4 pontos de dano Energético. Uma esfera energética transparente cerca a área por 1 minuto. Qualquer criatura que falhe na salvaguarda e que esteja completamente dentro da área está presa dentro da esfera. Criaturas bem-sucedidas ou que estejam parcialmente dentro da área são empurradas para fora do centro da esfera até que não estejam mais dentro dela. Apenas ar respirável pode passar através da parede da esfera. Nenhum ataque ou quaisquer outros efeitos podem atravessá-la.
@@ -3430,7 +3431,7 @@ VALUES (
   'corda-autorreparadora',
   'other'::rpg.item_type,
   'Corda Autorreparadora',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta corda enrolada de 15 metros é capaz de se reparar quando cortada em qualquer número de pedaços menores. Ao executar uma ação Usar Magia, você pode fazer com que todos os pedaços da corda que estejam em contato entre si e não estejam sendo usados se unam novamente. Uma Corda Autorreparadora é permanentemente encurtada se alguma de suas partes for perdida ou destruída.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -3450,7 +3451,7 @@ VALUES (
   'corda-de-emaranhamento',
   'other'::rpg.item_type,
   'Corda de Emaranhamento',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta corda tem 9 metros de comprimento. Enquanto segura uma de suas extremidades, você pode executar uma ação Usar Magia para comandar que a outra extremidade dispare a avançar e enredar uma criatura à sua vista a até 6 metros de distância. O alvo deve ser bem-sucedido em uma salvaguarda de Destreza CD 15 ou tem a condição Contido. Você pode libertar o alvo soltando sua extremidade da corda (fazendo com que a corda se enrole no espaço do alvo) ou executando uma Ação Bônus para repetir o comando (fazendo com que a corda se enrole em sua mão).
 Um alvo Contido pela corda pode executar uma ação para realizar um teste de Força (Atletismo) ou Destreza (Acrobacia) CD 15. Em caso de sucesso, o alvo não está mais Contido pela corda. Se você ainda estiver segurando a corda quando o alvo se soltar, pode executar uma Reação para comandar que ela se enrole em sua mão; caso contrário, ela se enrola no espaço do alvo.
@@ -3472,7 +3473,7 @@ VALUES (
   'corda-encantada',
   'other'::rpg.item_type,
   'Corda Encantada',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta corda de 18 metros de comprimento suporta até 1.500 quilos. Enquanto estiver segurando uma das extremidades, você pode executar uma ação Usar Magia para ordenar que a outra extremidade se anime e se mova até o destino de sua escolha, até o comprimento da corda e afastando-se de você. A extremidade percorre 3 metros no turno em que for comandada pela primeira vez e outros 3 metros no início de cada um dos seus turnos subsequentes, até alcançar o destino ou até que você a mande parar. Você também pode ordenar que a corda se prenda firmemente a um objeto, se solte, se ate, se desate ou se enrole para ser transportada.
 Ao ordenar que ela se dê nós, nós largos se formam a cada 30 centímetros. Com os nós, a corda se encurta para 15 metros de comprimento e concede Vantagem em testes de atributo realizados para escalada.
@@ -3497,7 +3498,7 @@ VALUES (
   'cota-de-malha-elfica',
   'armor'::rpg.item_type,
   'Cota de Malha Élfica',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando esta armadura você adquire um bônus de +1 na Classe de Armadura. Você é considerado proficiente com esta armadura, mesmo se não tiver treinamento com armaduras Médias ou Pesadas.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Cota de Malha ou Cota de Malha Parcial)","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"header":"Armadura (Cota de Malha ou Cota de Malha Parcial), Raro","armorSubtype":"Cota de Malha ou Cota de Malha Parcial"}'::jsonb
@@ -3517,7 +3518,7 @@ VALUES (
   'cota-de-malha-ifriti',
   'armor'::rpg.item_type,
   'Cota de Malha Ifriti',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo esta armadura, você recebe um bônus de +3 na Classe de Armadura, tem Imunidade a dano Ígneo e conhece o idioma Primordial. Além disso, você pode andar ou se mover pela rocha derretida como se fosse chão firme.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Cota de Malha ou Cota de Malha Parcial)","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Armadura (Cota de Malha ou Cota de Malha Parcial), Lendário (Requer Sintonização)","attunement":"Requer Sintonização","armorSubtype":"Cota de Malha ou Cota de Malha Parcial"}'::jsonb
@@ -3537,7 +3538,7 @@ VALUES (
   'cubo-de-invocacao',
   'other'::rpg.item_type,
   'Cubo de Invocação',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este cubo minúsculo parece uma caixinha de surpresas. Quando você torce a manivela como uma ação Usar Magia, uma melodia alegre emana da caixa, a tampa se abre, uma criatura aparece no espaço desocupado mais próximo e a tampa se fecha. Caso contrário, a tampa não pode ser aberta.
 Jogue na tabela Cubo de Invocação para determinar qual magia o cubo conjura para invocar a criatura. A magia é conjurada no 5º círculo (CD 17 para evitar, +9 de bônus de ataque) e não requer Concentração, mas você age como o conjurador.
@@ -3573,7 +3574,7 @@ VALUES (
   'cubo-energetico',
   'other'::rpg.item_type,
   'Cubo Energético',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este cubo tem cerca de 2,5 centímetros de lados. Cada face tem uma marcação distinta. Você pode pressionar uma dessas faces, gastar o número de cargas necessárias para isso e, assim, conjurar a magia associada a ela (CD 17 para evitar), conforme mostrado na tabela Faces do Cubo Energético.
 O cubo começa com 10 cargas e recupera 1d6 cargas gastas diariamente ao amanhecer.
@@ -3609,7 +3610,7 @@ VALUES (
   'cubo-portal',
   'other'::rpg.item_type,
   'Cubo-Portal',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este cubo tem 7 centímetros de lados e irradia energia mágica palpável. Cada um dos seis lados do cubo são ligados a um plano de existência diferente, um dos quais sendo o Plano Material. Os demais são determinados pelo Mestre.
 O cubo tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Como uma ação Usar Magia, você pode gastar 1 das cargas do cubo para conjurar uma das seguintes magias usando o cubo.
@@ -3632,7 +3633,7 @@ VALUES (
   'dado-do-charlatao',
   'other'::rpg.item_type,
   'Dado do Charlatão',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Sempre que você jogar este dado de seis lados, você pode controlar qual número obtido na jogada.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":true,"header":"Item Maravilhoso, Comum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -3652,7 +3653,7 @@ VALUES (
   'defensora',
   'weapon'::rpg.item_type,
   'Defensora',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Você recebe um bônus de +3 em jogadas de ataque e dano realizadas com esta arma mágica.
 Na primeira vez que você atacar com esta arma em cada um de seus turnos, pode transferir parte ou todo o bônus da arma para sua Classe de Armadura. Por exemplo, você pode reduzir o bônus nas jogadas de ataque e de dano para +1 e adquirir um bônus de +2 na Classe de Armadura. Os bônus ajustados têm efeito até o início do seu próximo turno, embora você precise segurar a arma para obter o bônus na CA.',
@@ -3721,7 +3722,7 @@ VALUES (
   'diadema-da-explosao',
   'other'::rpg.item_type,
   'Diadema da Explosão',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo esta diadema, você pode conjurar Raio Ardente com ela (bônus de +5 para acertar). O diadema não pode conjurar esta magia novamente até o próximo amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -3741,7 +3742,7 @@ VALUES (
   'dispositivo-de-kwalish',
   'other'::rpg.item_type,
   'Dispositivo de Kwalish',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'À primeira vista, o item se assemelha a um enorme barril de ferro selado, pesando cerca de 250 quilos. Ele possui um trinco oculto que pode ser encontrado com um teste de Inteligência (Investigação) CD 20. Ao soltar o trinco, um alçapão se abre em uma das extremidades, permitindo que duas criaturas Médias ou menores rastejem para dentro. Na extremidade oposta, dez alavancas estão dispostas paralelamente, em posição neutra, podendo ser movidas para cima ou para baixo. Ao acionar certas alavancas, o dispositivo se transforma em uma lagosta gigante.
 O Dispositivo de Kwalish é um objeto Grande com as seguintes estatísticas: CA 20; PV 200; Deslocamento 9 m, Natação 9 m (ou 0 m para ambas se as pernas não estiverem estendidas); Imunidade a dano Psíquico e Venenoso.
@@ -3799,7 +3800,7 @@ VALUES (
   'elmo-da-compreensao-de-idiomas',
   'other'::rpg.item_type,
   'Elmo da Compreensão de Idiomas',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo este elmo, você pode conjurar Compreender Idiomas a partir dele.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -3819,7 +3820,7 @@ VALUES (
   'elmo-de-telepatia',
   'other'::rpg.item_type,
   'Elmo de Telepatia',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este elmo, você tem telepatia com um alcance de 9 metros, e pode conjurar Detectar Pensamentos ou Sugestão (CD 13 para evitar) a partir do elmo. Uma vez que uma das magias é conjurada do elmo, essa magia não pode ser conjurada novamente até o próximo amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -3839,7 +3840,7 @@ VALUES (
   'elmo-de-teleporte',
   'other'::rpg.item_type,
   'Elmo de Teleporte',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este elmo tem 3 cargas. Enquanto o estiver usando-o, você pode gastar 1 carga para conjurar Teleporte a partir dele. O elmo recupera 1d3 cargas gastas diariamente ao amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Item Maravilhoso, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -3859,7 +3860,7 @@ VALUES (
   'elmo-do-esplendor',
   'other'::rpg.item_type,
   'Elmo do Esplendor',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este elmo é cravejado com 1d10 diamantes, 2d10 rubis, 3d10 opalas de fogo e 4d10 opalas. Qualquer joia extraída do elmo se desfaz em pó. Quando todas as joias são removidas ou destruídas, o elmo perde sua magia.
 Você adquire os seguintes benefícios enquanto estiver usando o elmo.
@@ -3885,7 +3886,7 @@ VALUES (
   'elmo-do-medo',
   'other'::rpg.item_type,
   'Elmo do Medo',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este temível elmo de aço, seus olhos brilham em vermelho e o resto do rosto fica escondido na sombra.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -3905,7 +3906,7 @@ VALUES (
   'escara-gelida',
   'weapon'::rpg.item_type,
   'Escara Gélida',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Ao acertar com uma jogada de ataque usando esta arma mágica, o alvo sofre 1d6 pontos de dano Gélido adicionais. Além disso, enquanto segura a arma, você tem Resistência a dano Ígneo.
 Em temperaturas congelantes, a arma emite Luz Plena em um raio de 3 metros e Meia-luz por mais 3 metros.
@@ -3927,7 +3928,7 @@ VALUES (
   'escaravelho-de-protecao',
   'other'::rpg.item_type,
   'Escaravelho de Proteção',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este medalhão em forma de besouro oferece três benefícios enquanto estiver com você.
 Defensivo. Você adquire um bônus de +1 na Classe de Armadura.
@@ -3950,7 +3951,7 @@ VALUES (
   'escudo-animado',
   'armor'::rpg.item_type,
   'Escudo Animado',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Enquanto empunhar este Escudo, você pode executar uma Ação Bônus para animá-lo. O Escudo salta no ar e paira em seu espaço para protegê-lo como se você o estivesse empunhando, deixando as mãos livres. O Escudo permanece animado por 1 minuto ou até que você morra, ou tenha a condição Incapacitado ou execute uma Ação Bônus para encerrar esse efeito, momento em que o Escudo cai no chão ou em sua mão, se você tiver uma livre.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Escudo)","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"header":"Armadura (Escudo), Muito Raro (Requer Sintonização)","attunement":"Requer Sintonização","armorSubtype":"Escudo"}'::jsonb
@@ -3970,7 +3971,7 @@ VALUES (
   'escudo-apanhador-de-flechas',
   'armor'::rpg.item_type,
   'Escudo Apanhador de Flechas',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você recebe um bônus de +2 na Classe de Armadura contra jogadas de ataque à distância enquanto empunha este Escudo. Este bônus soma ao bônus normal do Escudo para a CA.
 Sempre que um atacante realizar uma jogada de ataque à distância contra um alvo a até 1,5 metro de você, você pode executar uma Reação para se tornar alvo do ataque.',
@@ -3991,7 +3992,7 @@ VALUES (
   'escudo-bloqueador-de-magias',
   'armor'::rpg.item_type,
   'Escudo Bloqueador de Magias',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Ao estar equipado com este Escudo, você tem Vantagem em salvaguardas contra magias e outros efeitos mágicos, e jogadas de ataque mágico têm Desvantagem contra você.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Escudo)","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"header":"Armadura (Escudo), Muito Raro (Requer Sintonização)","attunement":"Requer Sintonização","armorSubtype":"Escudo"}'::jsonb
@@ -4011,7 +4012,7 @@ VALUES (
   'escudo-de-atracao-de-projeteis',
   'armor'::rpg.item_type,
   'Escudo de Atração de Projéteis',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Ao ter este Escudo equipado, você tem Resistência a dano de ataques originados de armas à Distância.
 Maldição. Este Escudo está amaldiçoado. Sintonizar-se a ele o amaldiçoa até que você seja alvo de uma magia Remover Maldição ou efeito mágico semelhante. Remover o Escudo não encerra a maldição sobre você. Sempre que um ataque com uma arma à distância tem como alvo uma criatura a até 3 metros de você, a maldição faz com que você se torne o alvo.',
@@ -4032,7 +4033,7 @@ VALUES (
   'escudo-do-cavaleiro',
   'armor'::rpg.item_type,
   'Escudo do Cavaleiro',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Ao ter este Escudo equipado, você tem um bônus de +2 na Classe de Armadura. Este bônus soma ao bônus normal do Escudo para a CA.
 O Escudo possui as seguintes propriedades adicionais que você pode usar enquanto o tem equipado.
@@ -4055,7 +4056,7 @@ VALUES (
   'escudo-expressivo',
   'armor'::rpg.item_type,
   'Escudo Expressivo',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'O Escudo está estampado com o símbolo de um rosto. Ao ter este Escudo equipado, você pode executar uma Ação Bônus para alterar a expressão do rosto.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Escudo)","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Armadura (Escudo), Comum","armorSubtype":"Escudo"}'::jsonb
@@ -4075,7 +4076,7 @@ VALUES (
   'escudo-sentinela',
   'armor'::rpg.item_type,
   'Escudo Sentinela',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Ao ter este Escudo equipado, você tem Vantagem em jogadas de Iniciativa e testes de Sabedoria (Percepção). O Escudo está estampado com o símbolo de um olho.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Armadura (Escudo)","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Armadura (Escudo), Incomum","armorSubtype":"Escudo"}'::jsonb
@@ -4115,7 +4116,7 @@ VALUES (
   'esfera-da-aniquilacao',
   'other'::rpg.item_type,
   'Esfera da Aniquilação',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Essa esfera negra, com 60 centímetros de diâmetro, é uma ruptura no multiverso, suspensa no espaço e estabilizada por um campo mágico que a envolve.
 A esfera aniquila toda matéria com a qual entra em contato, bem como toda matéria que a atravessa. Artefatos são exceções. A menos que um Artefato seja suscetível ao dano de uma Esfera da Aniquilação, ele atravessa ela ileso. Qualquer outra coisa que toque a esfera, mas não seja totalmente engolida e obliterada por ela, sofre 8d10 pontos de dano Energético.
@@ -4147,7 +4148,7 @@ VALUES (
   'esfera-da-direcao',
   'other'::rpg.item_type,
   'Esfera da Direção',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta esfera pode ser usada como um Foco Arcano.
 Enquanto segura esta esfera, você pode executar uma ação Usar Magia para determinar para que lado fica o norte magnético. Nada acontece se a esfera for usada em um local que não tenha norte magnético.',
@@ -4168,7 +4169,7 @@ VALUES (
   'esfera-do-tempo',
   'other'::rpg.item_type,
   'Esfera do Tempo',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta esfera pode ser usada como um Foco Arcano.
 Enquanto segura a esfera, você pode executar uma ação Usar Magia para descobrir se é manhã, tarde, noite ou madrugada. Esta propriedade funciona apenas no Plano Material.',
@@ -4189,7 +4190,7 @@ VALUES (
   'espada-da-precisao',
   'weapon'::rpg.item_type,
   'Espada da Precisão',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Ao atacar um objeto com esta arma mágica e acertar, maximize os dados de dano da arma contra o alvo.
 Ao atacar uma criatura com esta arma e obter 20 no d20 na jogada de ataque, o alvo sofre 14 pontos de dano Cortante adicionais e adquire 1 nível de Exaustão.',
@@ -4210,7 +4211,7 @@ VALUES (
   'espada-da-vinganca',
   'weapon'::rpg.item_type,
   'Espada da Vingança',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica.
 Maldição. Esta arma é amaldiçoada e está possuída por um espírito vingativo. Sintonizar-se com ela estende a maldição a você. Enquanto permanecer amaldiçoado, você não deseja se separar da arma, mantendo-a em sua posse o tempo todo. Enquanto estiver sintonizado com esta arma, você tem Desvantagem em jogadas de ataque realizadas com armas diferentes desta.
@@ -4233,7 +4234,7 @@ VALUES (
   'espada-dancarina',
   'weapon'::rpg.item_type,
   'Espada Dançarina',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você pode usar uma Ação Bônus para lançar esta arma mágica no ar. Ao fazer isso, a arma começa a pairar, voa até 9 metros e ataca uma criatura à sua escolha a até 1,5 metro da arma. A arma usa a sua jogada de ataque e adiciona o seu modificador de atributo às jogadas de dano.
 Enquanto a arma estiver pairando, você pode executar uma Ação Bônus para fazê-la voar até 9 metros para outro ponto a até 9 metros de você. Como parte da mesma Ação Bônus, você pode fazer com que a arma ataque uma criatura a até 1,5 metro da arma.
@@ -4255,7 +4256,7 @@ VALUES (
   'espada-das-respostas',
   'weapon'::rpg.item_type,
   'Espada das Respostas',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +3 em jogadas de ataque e dano realizadas com esta espada. Além disso, ao empunhar a espada, você pode executar uma Reação para realizar um ataque corpo a corpo com ela contra qualquer criatura ao seu alcance que cause dano a você. Você tem Vantagem na jogada de ataque, e qualquer dano causado por este ataque especial ignora qualquer Imunidade ou Resistência que o alvo possua a esse dano.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Espada Longa)","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Arma (Espada Longa), Lendário (Requer Sintonização)","attunement":"Requer Sintonização","weaponSubtype":"Espada Longa"}'::jsonb
@@ -4317,7 +4318,7 @@ VALUES (
   'espada-laceradora',
   'weapon'::rpg.item_type,
   'Espada Laceradora',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Ao atingir uma criatura com um ataque usando esta arma mágica, o alvo sofre 2d6 pontos de dano Necrótico adicionais e deve ser bem-sucedido em uma salvaguarda de Constituição CD 15 ou não pode recuperar Pontos de Vida por 1 hora. O alvo repete a salvaguarda no final de cada um dos turnos dele, encerrando o efeito em caso de sucesso.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira)","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Arma (Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira), Raro (Requer Sintonização)","attunement":"Requer Sintonização","weaponSubtype":"Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira"}'::jsonb
@@ -4337,7 +4338,7 @@ VALUES (
   'espada-lunar',
   'weapon'::rpg.item_type,
   'Espada Lunar',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Na Escuridão, a lâmina desembainhada desta arma emite a luz do luar, criando Luz Plena em um raio de 4,5 metros e Meia-luz por mais 4,5 metros.
 Espada Lunar (Rapieira)',
@@ -4358,7 +4359,7 @@ VALUES (
   'espada-usurpadora-de-vida',
   'weapon'::rpg.item_type,
   'Espada Usurpadora de Vida',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Ao atacar uma criatura com esta arma mágica e obter 20 no d20 na jogada de ataque, o alvo sofre 15 pontos de dano Necrótico adicionais se não for um Constructo ou um Morto-Vivo, e você recebe Pontos de Vida Temporários iguais à quantidade de dano Necrótico sofrido.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira)","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Arma (Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira), Raro (Requer Sintonização)","attunement":"Requer Sintonização","weaponSubtype":"Cimitarra, Espada Curta, Espada Grande, Espada Longa, Glaive ou Rapieira"}'::jsonb
@@ -4378,7 +4379,7 @@ VALUES (
   'espada-vorpal',
   'weapon'::rpg.item_type,
   'Espada Vorpal',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +3 em jogadas de ataque e dano realizadas com esta arma mágica. Além disso, a arma ignora Resistência a dano Cortante.
 Ao usar esta arma para atacar uma criatura que tenha pelo menos uma cabeça e obter 20 no d20 na jogada de ataque, você corta uma das cabeças da criatura. A criatura morre se não puder sobreviver sem a cabeça perdida. Uma criatura é imune a esse efeito se tiver Imunidade a dano Cortante, se não tiver ou não precisar de uma cabeça, ou se o Mestre decidir que a criatura é grande demais para sua cabeça ser cortada com esta arma. Tal criatura, em vez disso, sofre 30 pontos de dano Cortante adicionais do acerto. Se a criatura tiver Resistência Lendária, ela pode gastar um uso diário desse traço para evitar perder a cabeça, sofrendo o dano adicional.',
@@ -4399,7 +4400,7 @@ VALUES (
   'espelho-aprisionador-de-vida',
   'other'::rpg.item_type,
   'Espelho Aprisionador de Vida',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Quando este espelho de um metro e meio de altura e um metro e meio de largura é visto indiretamente, sua superfície mostra imagens tênues de criaturas. O espelho pesa 25 quilos e tem CA 11, 10 PV, Imunidade a dano Psíquico e Venenoso e Vulnerabilidade a dano Contundente. Ele quebra e é destruído quando reduzido a 0 Pontos de Vida.
 Se o espelho estiver pendurado em uma superfície vertical e você estiver a até 1,5 metro dele, você pode executar uma ação Usar Magia e usar uma palavra de comando para ativá-lo. Ele permanece ativado até que você execute uma ação Usar Magia e repita a palavra de comando para desativá-lo.
@@ -4498,7 +4499,7 @@ VALUES (
   'faixas-de-ferro-de-bilarro',
   'other'::rpg.item_type,
   'Faixas de Ferro de Bilarro',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta esfera de ferro enferrujada mede 7,5 centímetros de diâmetro e pesa 0,5 quilo. Você pode executar uma ação Usar Magia para arremessar a esfera em uma criatura Enorme ou menor à sua vista a até 18 metros de distância. À medida que a esfera se move pelo ar, ela se abre em um emaranhado de faixas de metal.
 Realize uma jogada de ataque à distância com um bônus de ataque igual ao seu modificador de Destreza mais seu Bônus de Proficiência. Em caso de acerto, o alvo tem a condição Contido até que você execute uma Ação Bônus para emitir um comando que o libere. Fazer isso ou errar o ataque faz com que as faixas se contraiam e se tornem uma esfera mais uma vez.
@@ -4521,7 +4522,7 @@ VALUES (
   'ferraduras-de-velocidade',
   'other'::rpg.item_type,
   'Ferraduras de Velocidade',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Essas ferraduras vêm em um conjunto de quatro. Como uma ação Usar Magia, você pode tocar uma das ferraduras no casco de um cavalo ou criatura semelhante, fazendo-a se fixar. Remover uma ferradura também exige executar uma ação Usar Magia.
 Enquanto todas as quatro ferraduras estão fixadas à mesma criatura, o Deslocamento da criatura aumenta em 9 metros.',
@@ -4542,7 +4543,7 @@ VALUES (
   'ferraduras-de-zefiro',
   'other'::rpg.item_type,
   'Ferraduras de Zéfiro',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Essas ferraduras vêm em um conjunto de quatro. Como uma ação Usar Magia, você pode tocar uma das ferraduras no casco de um cavalo ou criatura semelhante, fazendo-a se fixar. Remover uma ferradura também exige executar uma ação Usar Magia.
 Enquanto todas as quatro ferraduras estão fixadas nos cascos de um cavalo ou criatura semelhante, elas permitem que a criatura se mova normalmente enquanto flutua a 10 centímetros acima de uma superfície. Esse efeito possibilita que a criatura atravesse ou permaneça sobre superfícies não sólidas ou instáveis, como água ou lava. A criatura não deixa rastros e ignora Terreno Difícil. Além disso, a criatura pode viajar por até 12 horas por dia sem sofrer níveis de Exaustão devido a viagens longas.',
@@ -4563,7 +4564,7 @@ VALUES (
   'flauta-atormentadora',
   'other'::rpg.item_type,
   'Flauta Atormentadora',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Essa flauta possui 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Você pode executar uma ação Usar Magia para tocar a flauta e gastar 1 carga para criar uma melodia misteriosa e fascinante. Cada criatura à sua escolha, a até 9 metros de você, deve ser bem-sucedida em uma salvaguarda de Sabedoria CD 15 ou tem a condição Amedrontado por 1 minuto. Se falhar, a criatura pode repetir a salvaguarda no final de cada um dos turnos dela, encerrando o efeito em caso de sucesso. Uma criatura bem-sucedida na salvaguarda torna-se imune ao efeito dessa flauta por 24 horas.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -4583,7 +4584,7 @@ VALUES (
   'flauta-dos-esgotos',
   'other'::rpg.item_type,
   'Flauta dos Esgotos',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto essa flauta estiver em sua posse, ratos comuns e ratos gigantes são Indiferentes a você e não o atacam, a menos que você os ameace ou os machuque.
 A flauta possui 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Se tocar a flauta como uma ação Usar Mágica, você pode executar uma Ação Bônus para gastar de 1 a 3 cargas, invocando um Enxame de Ratos com cada carga gasta, desde que haja ratos suficientes em até 750 metros de você para serem chamados desse modo (conforme determinado pelo Mestre). Se não houver ratos suficientes para formar um exame, a carga é desperdiçada. Os enxames invocados se movem em direção à música pela rota mais curta disponível, mas não estão sob seu controle de outro modo.
@@ -4605,7 +4606,7 @@ VALUES (
   'fortaleza-instantanea-de-daern',
   'other'::rpg.item_type,
   'Fortaleza Instantânea de Daern',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Como uma ação Usar Magia, você pode colocar esta estatueta de adamantina de 2,5 centímetros no chão e, ao pronunciar uma palavra de comando, fazê-la crescer rapidamente em uma torre quadrada de adamantina. Repetir a palavra de comando faz com que a torre retorne à forma de estatueta, funcionando apenas se a torre estiver vazia. Cada criatura na área onde a torre aparece é empurrada para um espaço desocupado ao lado dela, assim como objetos na área que não estão sendo usados ou carregados.
 A torre mede 6 metros de lados e 9 metros de altura, com seteiras em todos os lados e uma muralha no topo. Seu interior é dividido em dois andares, conectados por uma escada, escaleira ou rampa à sua escolha, que termina em um alçapão que leva ao telhado. Ao ser criada, a torre possui uma única porta ao nível do solo, voltada para você, que se abre apenas com seu comando, acionado como uma Ação Bônus. A porta é imune à magia Arrombar e efeitos mágicos semelhantes.
@@ -4627,7 +4628,7 @@ VALUES (
   'garra-silvestre',
   'weapon'::rpg.item_type,
   'Garra Silvestre',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Enquanto esta arma estiver em sua posse, você compreende a comunicação não escrita de todos os Feéricos, e eles compreendem a sua.
 Mensagem Secreta. Como uma ação Usar Magia, você pode usar esta arma para conjurar Mensagem. Uma vez que esta propriedade é usada, ela não pode ser usada novamente até o próximo amanhecer.',
@@ -4648,7 +4649,7 @@ VALUES (
   'garrafa-da-agua-infinita',
   'other'::rpg.item_type,
   'Garrafa da Água Infinita',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esse frasco com tampa faz barulho ao ser sacudido, como se contivesse água. A garrafa pesa 1 quilo.
 Você pode executar uma ação Usar Magia para remover a rolha e pronunciar uma das três palavras de comando, momento em que uma quantidade de água fresca ou salgada (à sua escolha) é derramada do frasco. A água para de jorrar no início do seu próximo turno. Escolha entre as seguintes palavras de comando:
@@ -4672,7 +4673,7 @@ VALUES (
   'garrafa-do-fumace-eterno',
   'other'::rpg.item_type,
   'Garrafa do Fumacê Eterno',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Como uma ação Usar Magia, você pode abrir ou fechar esta garrafa.
 Abrir a garrafa faz com que uma fumaça espessa se espalhe, formando uma nuvem que preenche uma Emanação de 18 metros originada da garrafa. A área na fumaça é Totalmente Obscurecida.
@@ -4695,7 +4696,7 @@ VALUES (
   'garrafa-ifriti',
   'other'::rpg.item_type,
   'Garrafa Ifriti',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Ao executar uma ação Usar Magia para remover a rolha desta garrafa de latão pintada, uma nuvem de fumaça espessa sai dela. No final do seu turno, a fumaça desaparece com um lampejo de fogo inofensivo e um Ifriti aparece em um espaço desocupado a até 9 metros de você.
 Na primeira vez que a garrafa é aberta, o Mestre joga 1d10 na tabela a seguir para determinar o efeito.
@@ -4725,7 +4726,7 @@ VALUES (
   'gema-da-claridade',
   'other'::rpg.item_type,
   'Gema da Claridade',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Este prisma tem 50 cargas. Enquanto o estiver segurando, você pode executar uma ação Usar Magia e dizer uma das três palavras de comando para produzir um dos seguintes efeitos:
 Primeira Palavra de Comando. A gema emite Luz Plena em um raio de 9 metros e Meia-luz por mais 9 metros. Este efeito não consome uma carga, permanecendo até que você execute uma Ação Bônus para repetir a palavra de comando ou até que você use outra função da gema.
@@ -4749,7 +4750,7 @@ VALUES (
   'gema-da-visao',
   'other'::rpg.item_type,
   'Gema da Visão',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta gema tem 3 cargas. Como uma ação Usar Magia, você pode consumir 1 carga. Nos próximos 10 minutos, você tem Visão Verdadeira a 36 metros quando olha através da gema.
 A gema recupera 1d3 cargas gastas diariamente ao amanhecer.',
@@ -4770,7 +4771,7 @@ VALUES (
   'gema-elemental',
   'other'::rpg.item_type,
   'Gema Elemental',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta gema contém uma partícula de energia elemental. Ao quebrá-la como uma ação Usar Objeto, ela invoca um Elemental (veja também o Livro dos Monstros para o bloco de estatísticas) e deixa de ser mágica. O Elemental aparece em um espaço desocupado próximo à gema quebrada, entende seus idiomas, obedece a seus comandos e age imediatamente após você na contagem de Iniciativa. Ele desaparece após 1 hora, quando morre ou quando você o dispensa como uma Ação Bônus.
 Gema
@@ -4800,7 +4801,7 @@ VALUES (
   'grilhoes-dimensionais',
   'other'::rpg.item_type,
   'Grilhões Dimensionais',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você pode executar uma ação Usar Objeto para colocar esses grilhões em uma criatura que tem a condição Incapacitado. Os grilhões se ajustam para caber em uma criatura de tamanho Pequeno a Grande. Os grilhões impedem que a criatura presa por eles use qualquer método de movimento extradimensional, incluindo teleporte ou viagem para um plano de existência diferente. Eles não impedem a criatura de passar por um portal interdimensional.
 Você e qualquer criatura escolhida por você ao usar os grilhões podem executar uma ação Utilizar Objeto para removê-los. Uma vez a cada 30 dias, a criatura acorrentada pode fazer um teste de Força (Atletismo) com CD 30. Em caso de sucesso, a criatura se liberta e destrói os grilhões.',
@@ -4821,7 +4822,7 @@ VALUES (
   'haste-retratil',
   'other'::rpg.item_type,
   'Haste Retrátil',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este item funciona como uma Haste. Enquanto a segura, você pode executar uma ação Usar Magia para reduzi-la em um cetro de 30 centímetros de comprimento para facilitar o armazenamento (o peso da haste não muda) ou fazer com que o cetro de 30 centímetros de comprimento reverta para uma Haste. O cetro se alonga apenas até onde o espaço circundante permitir.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -4841,7 +4842,7 @@ VALUES (
   'incensario-de-controlar-elementais-do-ar',
   'other'::rpg.item_type,
   'Incensário de Controlar Elementais do Ar',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto incenso estiver queimando neste incensário, você pode executar uma ação Usar Magia para invocar um Elemental do Ar. O elemental aparece em um espaço desocupado próximo ao braseiro, entende seus idiomas, obedece aos seus comandos e age imediatamente após sua contagem de iniciativa. Ele desaparece após 1 hora, quando morre ou quando você o dispensa como uma Ação Bônus. O incensário não pode ser utilizado novamente desse modo até o próximo amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"header":"Item Maravilhoso, Raro"}'::jsonb
@@ -4903,7 +4904,7 @@ VALUES (
   'instrumento-musical-de-escrita',
   'other'::rpg.item_type,
   'Instrumento Musical de Escrita',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este instrumento musical possui 3 cargas e restaura todas as cargas gastas diariamente ao amanhecer. Enquanto estiver tocando este instrumento, você pode executar uma ação Usar Magia para gastar 1 carga e escrever uma mensagem mágica em um objeto ou superfície não mágica à sua vista e a até 9 metros de distância. A mensagem pode conter até seis palavras escritas em um idioma que você conhece. Se você for um Bardo, pode adicionar mais sete palavras e fazer a mensagem brilhar levemente, permitindo que ela seja visível em Escuridão não mágica. Conjurar Dissipar Magia na mensagem a apaga. Caso contrário, a mensagem desaparece após 24 horas.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -4923,7 +4924,7 @@ VALUES (
   'instrumento-musical-de-ilusoes',
   'other'::rpg.item_type,
   'Instrumento Musical de Ilusões',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Enquanto estiver tocando este instrumento musical, você pode executar uma ação Usar Magia para criar efeitos visuais ilusórios e inofensivos dentro de uma Emanação de 1,5 metro originada do instrumento. Se você for um Bardo, o tamanho da Emanação aumenta para 4,5 metros. Exemplos de efeitos visuais incluem notas musicais luminosas, uma dançarina espectral, borboletas e neve caindo suavemente. Os efeitos mágicos não têm matéria nem som, e são obviamente ilusórios. Os efeitos encerram quando você para de tocar o instrumento.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -4993,7 +4994,7 @@ VALUES (
   'jarro-alquimico',
   'other'::rpg.item_type,
   'Jarro Alquímico',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Este jarro de cerâmica parece capaz de conter 4 litros de líquido e pesa 6 quilos, esteja cheio ou vazio. O jarro faz barulho de líquido ao ser agitado, mesmo quando vazio.
 Você pode executar uma ação Usar Magia e nomear um líquido da tabela Líquidos do Jarro Alquímico para que o jarro produza o líquido escolhido. Após isso, você pode destampar o jarro como uma ação Usar Objeto e derramar o líquido, a uma taxa de até 8 litros por minuto. A quantidade máxima de líquido que o jarro pode produzir depende do líquido escolhido.
@@ -5038,7 +5039,7 @@ VALUES (
   'lamina-da-sorte',
   'weapon'::rpg.item_type,
   'Lâmina da Sorte',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica. Enquanto estiver de posse da arma, você também recebe um bônus de +1 em salvaguardas.
 Desejo. A arma possui 1d3 cargas. Ao segurá-la, você pode gastar 1 carga para conjurar Desejo a partir dela. Uma vez utilizada, essa propriedade não pode ser usada novamente até o próximo amanhecer. A arma perde essa propriedade se não tiver cargas.
@@ -5060,7 +5061,7 @@ VALUES (
   'lamina-solar',
   'weapon'::rpg.item_type,
   'Lâmina Solar',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Este item parece ser um cabo de espada.
 Lâmina Radiante. Ao empunhar o cabo, você pode executar uma Ação Bônus para fazer com que uma lâmina de brilho puro surja ou desapareça. Enquanto a lâmina existir, esta arma mágica funciona como uma Espada Longa com a propriedade Acuidade. Se você é proficiente com Espadas Longas ou Curtas, você é proficiente com a Lâmina Solar.
@@ -5115,7 +5116,7 @@ VALUES (
   'lanterna-reveladora',
   'other'::rpg.item_type,
   'Lanterna Reveladora',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto acesa, esta lanterna coberta queima por 6 horas com 0,5 litro de Óleo, emitindo Luz Plena em um raio de 9 metros e Meia-luz por mais 9 metros. Criaturas e objetos invisíveis tornam-se visíveis enquanto estiverem na Luz Plena da lanterna. Você pode executar uma ação Usar Objeto para abaixar a tampa, reduzindo a luz da lanterna para Meia-luz em um raio de 1,5 metro.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -5135,7 +5136,7 @@ VALUES (
   'leque-do-vento',
   'other'::rpg.item_type,
   'Leque do Vento',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto segurar este leque, você pode conjurar Lufada de Vento (CD 13 para evitar) a partir dele. Cada vez que o leque é usado antes do próximo amanhecer, ele tem uma chance cumulativa de 20% de não funcionar. Se o leque não funcionar, ele se rasga em farrapos inúteis e não mágicos.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -5155,7 +5156,7 @@ VALUES (
   'lingua-flamejante',
   'weapon'::rpg.item_type,
   'Língua Flamejante',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver segurando esta arma mágica, você pode executar uma Ação Bônus e pronunciar uma palavra de comando para fazer com que chamas envolvam a lâmina. Essas chamas emitem Luz Plena em um raio de 12 metros e Meia-luz por mais 12 metros. Enquanto a arma estiver em chamas, ela causa 2d6 pontos de dano Ígneo adicionais ao acertar. As chamas permanecem até você executar uma Ação Bônus para repetir o comando ou até que você largue, guarde ou embainhe a arma.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Qualquer Arma Corpo a Corpo)","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Arma (Qualquer Arma Corpo a Corpo), Raro (Requer Sintonização)","attunement":"Requer Sintonização","weaponSubtype":"Qualquer Arma Corpo a Corpo"}'::jsonb
@@ -5220,7 +5221,7 @@ VALUES (
   'livro-de-magias-duravel',
   'other'::rpg.item_type,
   'Livro de Magias Durável',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este livro de magias, assim como tudo o que estiver escrito em suas páginas, não pode ser danificado por fogo ou água. Além disso, o livro de magias não se deteriora com o tempo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -5272,7 +5273,7 @@ VALUES (
   'loriga-de-escamas-draconicas',
   'armor'::rpg.item_type,
   'Loriga de Escamas Dracônicas',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'A Loriga de Escamas Dracônicas é feita das escamas de um tipo específico de dragão. Algumas vezes, dragões recolhem suas escamas caídas e as oferecem como presente. Outras vezes, caçadores esfolam cuidadosamente o couro de um dragão morto. Seja qual for o caso, a Loriga de Escamas Dracônicas é altamente valorizada.
 Enquanto estiver vestindo esta armadura, você adquire um bônus de +1 na Classe de Armadura, tem Vantagem em salvaguardas contra ataques de sopro de Dragões e possui Resistência a um tipo de dano determinado pelo tipo de dragão cujas escamas foram usadas (veja a tabela a seguir).
@@ -5317,7 +5318,7 @@ VALUES (
   'lunamina',
   'weapon'::rpg.item_type,
   'Lunâmina',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'De todos os itens mágicos criados pelos elfos, um dos mais valiosos e zelosamente protegidos é a Lunâmina. Em tempos antigos, quase todas as casas nobres élficas reivindicavam uma dessas armas. Ao longo dos séculos, algumas desapareceram do mundo, sua magia perdida à medida que linhagens familiares se extinguiram. Outras sumiram com seus portadores durante grandes jornadas. Assim, apenas algumas dessas armas ainda existem.
 Toda Lunâmina anseia por um portador cuja índole e objetivos sejam compatíveis com os seus. Ao tentar se sintonizar com uma Lunâmina que não o aceita como portador, a arma não apenas rejeita você, mas também impõe uma maldição: durante 24 horas, ou até que a maldição seja encerrada por uma magia Remover Maldição ou efeito similar, você deve realizar Testes de D20 com Desvantagem. Se a arma o aceitar e você tentar se sintonizar com ela, a sintonização ocorre instantaneamente e uma nova runa surge em sua lâmina. Você permanece sintonizado com a arma até morrer ou até que ela seja destruída. Para qualquer criatura que não seja seu portador escolhido, uma Lunâmina funciona como uma arma não mágica de seu tipo.
@@ -5361,7 +5362,7 @@ VALUES (
   'luvas-da-ladinagem',
   'other'::rpg.item_type,
   'Luvas da Ladinagem',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Estas luvas são imperceptíveis durante o uso. Ao usá-las, você recebe bônus de +5 em testes de Destreza (Prestidigitação).',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -5381,7 +5382,7 @@ VALUES (
   'luvas-de-apanhar-projeteis',
   'other'::rpg.item_type,
   'Luvas de Apanhar Projéteis',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto usar estas luvas, ao ser atingido por uma jogada de ataque com uma arma de Arremesso ou à Distância, você pode executar uma Reação para reduzir o dano em 1d10 mais seu modificador de Destreza, desde que tenha uma mão livre. Se reduzir o dano a 0, você pode pegar a munição ou arma, se for pequena o suficiente para sua mão.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -5401,7 +5402,7 @@ VALUES (
   'luvas-de-natacao-e-escalada',
   'other'::rpg.item_type,
   'Luvas de Natação e Escalada',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo estas luvas, você tem um Deslocamento de Escalada e um Deslocamento de Natação igual ao seu Deslocamento, e você recebe um bônus de +5 nos testes de Força (Atletismo) realizados para escalar ou nadar.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -5421,7 +5422,7 @@ VALUES (
   'maca-da-destruicao',
   'weapon'::rpg.item_type,
   'Maça da Destruição',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica. O bônus aumenta para +3 quando você ataca um Constructo com ela.
 Ao tirar 20 em uma jogada de ataque realizada com esta arma, o alvo sofre 7 pontos de dano Contundente adicionais ou 14 pontos de dano Contundente adicionais se for um Constructo. Se um Constructo tiver 25 Pontos de Vida ou menos após sofrer esse dano, ele é destruído.',
@@ -5442,7 +5443,7 @@ VALUES (
   'maca-da-disrupcao',
   'weapon'::rpg.item_type,
   'Maça da Disrupção',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Ao acertar um Ínfero ou um Morto-Vivo com esta arma mágica, essa criatura sofre 2d6 pontos de dano Radiante adicionais. Se o alvo tiver 25 Pontos de Vida ou menos após sofrer esse dano, ele deve ser bem-sucedido em uma salvaguarda de Sabedoria CD 15 ou é destruído. Em caso de sucesso, a criatura tem a condição Amedrontado até o final do seu próximo turno.
 Iluminação. Enquanto você empunha esta arma, ela emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros.',
@@ -5463,7 +5464,7 @@ VALUES (
   'maca-do-terror',
   'weapon'::rpg.item_type,
   'Maça do Terror',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta arma mágica possui 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Enquanto estiver empunhando-a, você pode executar uma ação Usar Magia e gastar 1 carga para liberar uma onda de terror a partir dela. Cada criatura à sua escolha a até 9 metros de você deve ser bem-sucedida em uma salvaguarda de Sabedoria CD 15 ou tem com a condição Amedrontado por 1 minuto. Enquanto estiver Amedrontada deste modo, uma criatura deve gastar seus turnos tentando se mover para o mais longe possível de você e não pode realizar Ataques de Oportunidade. Durante sua ação, ela pode usar apenas a opção Correr ou tentar escapar de um efeito que a impeça de se mover. Se não houver nenhum lugar para onde possa se mover, a criatura pode executar a ação Esquivar. No final de cada um dos turnos da criatura, ela pode repetir a salvaguarda, encerrando o efeito sobre si em caso de sucesso.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Maça)","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Arma (Maça), Raro (Requer Sintonização)","attunement":"Requer Sintonização","weaponSubtype":"Maça"}'::jsonb
@@ -5483,7 +5484,7 @@ VALUES (
   'machado-do-carrasco',
   'weapon'::rpg.item_type,
   'Machado do Carrasco',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica.
 Qualquer Humanoide que você acertar com a arma sofre 2d6 pontos de dano Cortante adicionais, e você adquire Pontos de Vida Temporários iguais ao dano adicional causado.',
@@ -5543,7 +5544,7 @@ VALUES (
   'machado-berserker',
   'weapon'::rpg.item_type,
   'Machado-Berserker',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você recebe um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica. Além disso, enquanto você estiver sintonizado com esta arma, seus Pontos de Vida máximos aumentam em 1 para cada nível que você atingiu.
 Maldição. Esta arma é amaldiçoada e sintonizar-se com ela compartilha a maldição com você. Enquanto estiver amaldiçoado, você não deseja se separar dela, mantendo-a ao alcance o tempo todo. Você também tem Desvantagem em jogadas de ataque com armas que não sejam esta.
@@ -5566,7 +5567,7 @@ VALUES (
   'manoplas-de-poder-do-ogro',
   'other'::rpg.item_type,
   'Manoplas de Poder do Ogro',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Seu valor de Força é 19 enquanto estiver usando estas luvas. Elas não afetam você se sua Força for 19 ou superior sem elas.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -5586,7 +5587,7 @@ VALUES (
   'manto-da-arraia',
   'other'::rpg.item_type,
   'Manto da Arraia',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo este manto, você pode respirar debaixo d’água e tem um Deslocamento de Natação de 18 metros.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -5606,7 +5607,7 @@ VALUES (
   'manto-da-natureza',
   'other'::rpg.item_type,
   'Manto da Natureza',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Este manto muda de cor e textura para se misturar com o terreno ao seu redor. Enquanto estiver usando o manto, você pode usá-la como um Foco de Conjuração para suas magias de Druida e Guardião.
 Enquanto estiver em uma área Parcialmente Obscurecida, você pode executar a ação Esconder como uma Ação Bônus, mesmo que esteja sendo observado diretamente.',
@@ -5627,7 +5628,7 @@ VALUES (
   'manto-das-asas',
   'other'::rpg.item_type,
   'Manto das Asas',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando este manto, você pode executar uma ação Usar Magia para transformá-lo em um par de asas em suas costas. As asas duram 1 hora ou até você encerrar o efeito como uma ação Usar Magia. As asas concedem a você um Deslocamento de Voo de 18 metros. Se estiver no alto quando as asas desaparecerem, você cai. Quando as asas desaparecem, você não pode usá-las novamente por 1d12 horas.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Item Maravilhoso, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -5647,7 +5648,7 @@ VALUES (
   'manto-de-invisibilidade',
   'other'::rpg.item_type,
   'Manto de Invisibilidade',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este manto tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Enquanto estiver vestindo este manto, você pode executar uma ação Usar Mágica para colocar o capuz sobre sua cabeça e gastar 1 carga para conceder a si a condição Invisível por 1 hora. O efeito encerra se você retirar o capuz (nenhuma ação é necessária) ou parar de usar o manto.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Item Maravilhoso, Lendário (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -5667,7 +5668,7 @@ VALUES (
   'manto-de-protecao',
   'other'::rpg.item_type,
   'Manto de Proteção',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Você recebe um bônus de +1 na Classe de Armadura e em salvaguardas enquanto estiver usando este manto.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -5687,7 +5688,7 @@ VALUES (
   'manto-de-resistencia-a-magia',
   'other'::rpg.item_type,
   'Manto de Resistência à Magia',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você tem Vantagem em salvaguardas contra magias enquanto estiver vestindo este manto.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Item Maravilhoso, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -5707,7 +5708,7 @@ VALUES (
   'manto-do-morcego',
   'other'::rpg.item_type,
   'Manto do Morcego',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver vestindo este manto, você tem Vantagem em testes de Destreza (Furtividade). Em uma área de Meia-luz ou Escuridão, você pode segurar as bordas do manto e usá-lo para ter um Deslocamento de Voo de 12 metros. Se você não conseguir pegar as bordas do manto enquanto voa deste modo, ou se não estiver mais em Meia-luz ou Escuridão, você perde este Deslocamento de Voo.
 Enquanto estiver usando o manto em uma área de Meia-luz ou Escuridão, você pode conjurar Polimorfia em si, multimorfando-se em um Morcego. Enquanto estiver nessa forma, você mantém seus valores de Inteligência, Sabedoria e Carisma. O manto não pode ser usado desta forma novamente até o próximo amanhecer.',
@@ -5728,7 +5729,7 @@ VALUES (
   'manual-de-rapidez-nas-acoes',
   'other'::rpg.item_type,
   'Manual de Rapidez nas Ações',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este livro descreve exercícios de coordenação e equilíbrio, e suas palavras são carregadas de magia. Se você passar 48 horas em um período de 6 dias ou menos estudando o conteúdo do livro e praticando as diretrizes apresentadas, sua Destreza aumenta em 2, até no máximo 30. O manual então perde sua magia, mas a recupera em um século.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":false,"header":"Item Maravilhoso, Muito Raro"}'::jsonb
@@ -5748,7 +5749,7 @@ VALUES (
   'manual-de-saude-corporal',
   'other'::rpg.item_type,
   'Manual de Saúde Corporal',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este livro contém dicas de saúde e nutrição e suas palavras são carregadas de magia. Se você passar 48 horas em um período de 6 dias ou menos estudando o conteúdo do livro e praticando as diretrizes apresentadas, seu valor de Constituição aumenta em 2, até no máximo 30. A magia do manual se dissipa, retornando após um século.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":false,"header":"Item Maravilhoso, Muito Raro"}'::jsonb
@@ -5768,7 +5769,7 @@ VALUES (
   'manual-dos-exercicios-beneficos',
   'other'::rpg.item_type,
   'Manual dos Exercícios Benéficos',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este livro descreve exercícios de condicionamento físico e suas palavras são carregadas de magia. Se você passar 48 horas em um período de 6 dias ou menos estudando o conteúdo do livro e praticando as diretrizes apresentadas, seu valor de Força aumenta em 2, até no máximo 30. A magia do manual se dissipa, retornando após um século.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":false,"header":"Item Maravilhoso, Muito Raro"}'::jsonb
@@ -5788,7 +5789,7 @@ VALUES (
   'manual-dos-golens',
   'other'::rpg.item_type,
   'Manual dos Golens',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este tomo contém informações e encantamentos necessários para fazer um tipo específico de golem. O Mestre escolhe o tipo ou o determina aleatoriamente jogando na tabela a seguir. Para decifrar e usar o manual, você deve ser um conjurador com pelo menos dois espaços de magia de 5º círculo. Uma criatura que não pode usar um Manual dos Golens e tentar lê-lo sofre 6d6 pontos de dano Psíquico.
 Você deve dedicar o tempo mostrado na tabela para criar um golem, trabalhando sem pausas com o manual à disposição e descansando no máximo 8 horas por dia. Você também deve pagar o custo especificado para comprar suprimentos.
@@ -5831,7 +5832,7 @@ VALUES (
   'martelo-arremessavel-dos-anoes',
   'weapon'::rpg.item_type,
   'Martelo Arremessável dos Anões',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você recebe um bônus de +3 nas jogadas de ataque e dano realizadas com esta arma mágica. Ela tem a propriedade Arremesso, com alcance normal de 6 metros e máximo de 18 metros. Ao atingir um ataque à distância com esta arma, ela causa 1d8 pontos de dano Energético adicionais ou 2d8 pontos de dano Energético se o alvo for um Gigante. Imediatamente após atingir ou errar, a arma retorna à sua mão.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Martelo de Guerra)","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"header":"Arma (Martelo de Guerra), Muito Raro (Requer Sintonização por um Anão ou uma Criatura Sintonizada a um Cinturão do Povo Anão)","attunement":"Requer Sintonização por um Anão ou uma Criatura Sintonizada a um Cinturão do Povo Anão","weaponSubtype":"Martelo de Guerra"}'::jsonb
@@ -5851,7 +5852,7 @@ VALUES (
   'martelo-do-trovao',
   'weapon'::rpg.item_type,
   'Martelo do Trovão',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica.
 A arma tem 5 cargas. Você pode gastar 1 carga e realizar um ataque à distância com a arma, arremessando-a como se ela tivesse a propriedade Arremesso, com alcance normal de 6 metros e máximo de 18 metros. Se o ataque acertar, a arma libera um estrondo audível a 90 metros. O alvo e todas as criaturas a até 9 metros dele, exceto você, devem ser bem-sucedidos em uma salvaguarda de Constituição CD 17 ou têm a condição Atordoado até o final do seu próximo turno. Imediatamente após atingir ou errar, a arma retorna à sua mão. A arma recupera 1d4 + 1 cargas gastas diariamente ao amanhecer.
@@ -5875,7 +5876,7 @@ VALUES (
   'matadora-de-dragoes',
   'weapon'::rpg.item_type,
   'Matadora de Dragões',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica.
 A arma causa 3d6 pontos de dano adicionais do tipo da arma se o alvo for um Dragão.',
@@ -5896,7 +5897,7 @@ VALUES (
   'matadora-de-gigantes',
   'weapon'::rpg.item_type,
   'Matadora de Gigantes',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +1 em jogadas de ataque e dano realizadas com esta arma mágica.
 Ao atingir um Gigante com esta arma, ele sofre 2d6 pontos de dano adicionais do tipo da arma e deve ser bem-sucedido em uma salvaguarda de Força CD 15 ou tem a condição Caído.',
@@ -5917,7 +5918,7 @@ VALUES (
   'membro-protetico',
   'other'::rpg.item_type,
   'Membro Protético',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este item mágico substitui um membro perdido — uma mão, um braço, um pé, uma perna ou parte semelhante do corpo. Enquanto a prótese estiver acoplada, ela funciona de forma idêntica à parte que substitui. Você pode retirá-la ou acoplá-la novamente como uma ação Usar Magia, e ela não pode ser removida contra a sua vontade enquanto você estiver vivo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -5937,7 +5938,7 @@ VALUES (
   'mochila-prestativa-de-heward',
   'other'::rpg.item_type,
   'Mochila Prestativa de Heward',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta mochila tem um bolso central e dois bolsos laterais, cada um das quais é um espaço extradimensional. Cada bolso lateral pode conter até 100 quilos de material, não excedendo um volume de 75 centímetros cúbicos. O bolso central pode conter até 250 quilos de material, não excedendo um volume de 1,8 metros cúbicos. A mochila sempre pesa 2,5 quilos, independentemente do seu conteúdo.
 Recuperar um item da mochila exige uma ação Usar Objeto ou uma Ação Bônus (à sua escolha). Ao buscar um item específico dentro da mochila, o item está sempre magicamente no topo.
@@ -5961,7 +5962,7 @@ VALUES (
   'moeda-rival',
   'other'::rpg.item_type,
   'Moeda Rival',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta moeda de ouro tem uma criatura em relevo em cada lado. As duas criaturas representadas devem ser rivais famosas ou inimigas uma da outra. Por exemplo, uma Moeda Rival pode mostrar Iggwilv de um lado e Mordenkainen do outro, ou Vingador de um lado e Tiamat do outro. Uma dessas figuras está no lado “cara” da moeda, a outra no lado “coroa”.
 A moeda tem 1 carga e recupera sua carga gasta diariamente ao amanhecer. Você pode executar uma ação Usar Magia para lançar a moeda, gastando sua carga. Jogue qualquer dado (1d2) para determinar se a moeda gera cara (em um número par) ou coroa (em um número ímpar). A jogada também determina o efeito:
@@ -5984,7 +5985,7 @@ VALUES (
   'municao-exterminadora',
   'weapon'::rpg.item_type,
   'Munição Exterminadora',
-  NULL,
+  '{"text":"20000 PO"}'::jsonb,
   NULL,
   'Esta munição mágica é projetada para eliminar criaturas de um tipo específico, escolhida pelo Mestre ou determinada aleatoriamente na tabela abaixo. Uma criatura alvo ao sofrer dano, deve realizar uma salvaguarda de Constituição CD 17; se falhar, sofre 6d10 pontos de dano Energético adicionais, ou metade desse dano em caso de sucesso.
 Após causar o dano adicional a uma criatura, a munição deixa de ser mágica.
@@ -6036,7 +6037,7 @@ VALUES (
   'municao-impactante',
   'weapon'::rpg.item_type,
   'Munição Impactante',
-  NULL,
+  '{"text":"50 PO"}'::jsonb,
   NULL,
   'Uma criatura atingida por esta munição deve ser bem-sucedida em uma salvaguarda de Força CD 10 ou tem a condição Caído.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Qualquer Munição)","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Arma (Qualquer Munição), Comum","weaponSubtype":"Qualquer Munição"}'::jsonb
@@ -6077,7 +6078,7 @@ VALUES (
   'oleo-de-forma-eterea',
   'gear'::rpg.item_type,
   'Óleo de Forma Etérea',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'Um frasco deste óleo pode cobrir uma criatura Média ou menor, juntamente com o equipamento que ela está usando e carregando (um frasco adicional é necessário para cada categoria de tamanho acima de Médio). A aplicação do óleo leva 10 minutos. A criatura afetada então recebe o efeito da magia Forma Etérea por 1 hora.
 Bolhas deste óleo cinza turvo se formam do lado de fora de seu recipiente e evaporam rapidamente.',
@@ -6098,7 +6099,7 @@ VALUES (
   'oleo-de-precisao',
   'gear'::rpg.item_type,
   'Óleo de Precisão',
-  NULL,
+  '{"text":"20000 PO"}'::jsonb,
   NULL,
   'Um frasco deste óleo pode revestir uma arma Corpo a Corpo ou até vinte peças de munição, mas apenas armas e munições não mágicas que causem dano Cortante ou Perfurante são afetadas. Aplicar o óleo leva 1 minuto, após o qual ele se impregna magicamente no item coberto, transformando a arma em uma Arma +3 ou a munição em Munição +3.
 Este óleo transparente e gelatinoso brilha com pequenos fragmentos de prata ultrafinos.',
@@ -6119,7 +6120,7 @@ VALUES (
   'oleo-escorregadio',
   'gear'::rpg.item_type,
   'Óleo Escorregadio',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Um frasco deste óleo pode cobrir uma criatura Média ou menor, juntamente com o equipamento que ela está usando e carregando (um frasco adicional é necessário para cada categoria de tamanho acima de Médio). A aplicação do óleo leva 10 minutos. A criatura afetada então recebe o efeito da magia Movimentação Livre por 8 horas.
 Alternativamente, o óleo pode ser derramado no chão como uma ação Usar Magia, onde cobre um quadrado de 3 metros de lado, duplicando o efeito da magia Graxa nessa área por 8 horas.
@@ -6141,7 +6142,7 @@ VALUES (
   'olho-de-megera',
   'other'::rpg.item_type,
   'Olho de Megera',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Um Olho de Megera tem 3 cargas. Enquanto estiver vestindo ou segurando este item, você pode gastar 1 carga para conjurar Ver o Invisível ou Visão no Escuro (aplicando apenas em si). O Olho de Megera recupera todas as cargas gastas diariamente ao amanhecer.
 Compondo um Olho de Megera. Apenas uma laia de megeras pode compor este item, feito de um olho real revestido em verniz e geralmente exibido em um pingente ou outro acessório. Uma laia pode ter apenas um Olho de Megera por vez, e compor um novo exige que todos os três membros realizem um rito especial de 1 hora. Megeras não podem realizar o rito se uma delas tiver a condição Incapacitado. Qualquer outra ação durante o rito resulta em falha e término imediato.
@@ -6231,7 +6232,7 @@ VALUES (
   'olho-ersatz',
   'other'::rpg.item_type,
   'Olho Ersatz',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este olho mágico substitui um olho real que foi perdido ou removido. Enquanto o Olho Ersatz estiver encaixado na sua cavidade ocular, você pode enxergar através do pequeno orbe como se ele fosse seu olho natural. Você pode inserir ou remover o Olho Ersatz como uma ação Usar Magia, e ele não pode ser removido contra sua vontade enquanto você estiver vivo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -6251,7 +6252,7 @@ VALUES (
   'olhos-ampliadores-da-visao',
   'other'::rpg.item_type,
   'Olhos Ampliadores da Visão',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Essas lentes de cristal se ajustam sobre os olhos. Ao usá-las, você pode ver muito melhor do que o habitual em um alcance de 30 centímetros, concedendo-lhe Visão no Escuro neste alcance e Vantagem em testes de Inteligência (Investigação) realizados para examinar algo dentro desse alcance.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -6271,7 +6272,7 @@ VALUES (
   'olhos-da-aguia',
   'other'::rpg.item_type,
   'Olhos da Águia',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Estas lentes de cristal se ajustam sobre os olhos. Ao usá-las, você tem Vantagem em testes de Sabedoria (Percepção) que dependem da visão. Em condições de boa visibilidade, você pode distinguir detalhes até mesmo de criaturas e objetos extremamente distantes, tão pequenos quanto 60 centímetros de extensão.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -6291,7 +6292,7 @@ VALUES (
   'olhos-de-enfeiticar',
   'other'::rpg.item_type,
   'Olhos de Enfeitiçar',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Essas lentes de cristal se ajustam sobre os olhos. Elas possuem 3 cargas. Enquanto as usar, você pode gastar 1 ou mais cargas para conjurar Enfeitiçar Pessoa (CD 13 para evitar). Por 1 carga, você conjura como 1º círculo da magia. Você aumenta o círculo da magia em um para cada carga adicional que gastar. As lentes recuperam todas as cargas gastas diariamente ao amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -6311,7 +6312,7 @@ VALUES (
   'olhos-noturnos',
   'other'::rpg.item_type,
   'Olhos Noturnos',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Ao usar essas lentes escuras, você tem Visão no Escuro a até 18 metros. Se você já tem Visão no Escuro, usar as lentes aumenta seu alcance em 18 metros.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -6390,7 +6391,7 @@ VALUES (
   'orbe-flutuante',
   'other'::rpg.item_type,
   'Orbe Flutuante',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta pequena esfera de vidro espesso pesa meio quilo. Se você estiver a até 18 metros dela, pode ordenar que ela emita luz equivalente à magia Luz ou Luz do Dia (à sua escolha). Após ser utilizada, o efeito de Luz do Dia não pode ser usado novamente até o próximo amanhecer.
 Você pode dar outra ordem como uma ação Usar Magia para fazer o globo iluminado subir no ar e pairar a no máximo 1,5 metro do chão. O globo paira dessa forma até que você ou outra criatura agarre o globo. Se você se mover para mais de 18 metros do globo flutuante, ele o segue até estar a até 18 metros de você, tomando a rota mais curta para isso. Se impedido de se mover, o globo desce suavemente ao chão, torna-se inativo, e sua luz se apaga.',
@@ -6453,7 +6454,7 @@ VALUES (
   'pedra-da-boa-sorte-pedra-da-sorte',
   'other'::rpg.item_type,
   'Pedra da Boa Sorte (Pedra-da-Sorte)',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto esta ágata polida estiver em sua posse, você recebe um bônus de +1 em testes de atributo e salvaguardas.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -6473,7 +6474,7 @@ VALUES (
   'pedra-de-controlar-elementais-da-terra',
   'other'::rpg.item_type,
   'Pedra de Controlar Elementais da Terra',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Ao tocar esta pedra de 2,5 kg no chão, você pode executar uma ação Usar Magia para invocar um Elemental da Terra. O elemental aparece em um espaço desocupado à sua escolha e a até 9 metros de você, obedece aos seus comandos e age imediatamente após sua contagem de iniciativa. O elemental desaparece após 1 hora, quando morre ou quando você o dispensar como uma Ação Bônus. A pedra não pode ser usada dessa maneira novamente até o próximo amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"header":"Item Maravilhoso, Raro"}'::jsonb
@@ -6533,7 +6534,7 @@ VALUES (
   'pedras-mensageiras',
   'other'::rpg.item_type,
   'Pedras Mensageiras',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'As Pedras Mensageiras vêm em pares, com cada pedra esculpida para combinar com a outra, de modo que a combinação seja facilmente reconhecida. Ao tocar uma pedra, você pode conjurar Remeter a partir dela. O alvo é o portador da outra pedra. Se nenhuma criatura estiver portando a outra pedra, você sabe desse fato assim que usar a pedra, e você não conjura a magia.
 Uma vez que Remeter seja conjurada usando uma das pedras, as pedras não podem ser usadas novamente até o próximo amanhecer. Se uma das pedras em um par for destruída, a outra se torna não mágica.',
@@ -6554,7 +6555,7 @@ VALUES (
   'perfume-de-encantamento',
   'other'::rpg.item_type,
   'Perfume de Encantamento',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este minúsculo frasco contém um perfume mágico, suficiente para uma aplicação. Você pode executar uma ação Usar Magia para aplicar o perfume em si mesmo, e o efeito dura 1 hora. Durante esse tempo, você tem Vantagem em todos os testes de Carisma (Enganação e Persuasão) realizados para influenciar uma criatura a até 1,5 metro de você.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -6574,7 +6575,7 @@ VALUES (
   'pergaminho-da-invocacao-de-tita',
   'other'::rpg.item_type,
   'Pergaminho da Invocação de Titã',
-  NULL,
+  '{"text":"100000 PO"}'::jsonb,
   NULL,
   'Ao executar uma ação Usar Magia para ler este pergaminho, um titã em particular cujo nome consta no pergaminho aparece em um espaço desocupado no chão ou na água à sua vista a até 1,5 km de distância. O Mestre escolhe um titã adequado ou o determina aleatoriamente jogando na tabela abaixo (veja o Livro dos Monstros para o bloco de estatísticas da criatura).
 O titã é Hostil em relação a todas as outras criaturas e desaparece ao ser reduzido a 0 Pontos de Vida. Se o titã for invocado para um espaço que não seja grande o suficiente para contê-lo, a invocação falha e o pergaminho é desperdiçado.
@@ -6611,7 +6612,7 @@ VALUES (
   'pergaminho-de-circulo-da-protecao',
   'other'::rpg.item_type,
   'Pergaminho de Círculo da Proteção',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'Cada Pergaminho de Círculo da Proteção funciona contra criaturas de um tipo de criatura escolhido pelo Mestre ou determinado jogando na tabela a seguir.
 1d100
@@ -6714,7 +6715,7 @@ VALUES (
   'periapto-de-cicatrizacao',
   'other'::rpg.item_type,
   'Periapto de Cicatrização',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Ao usar este pingente, você adquire os seguintes benefícios.
 Aumento de Cura Natural. Sempre que você jogar um Dado de Ponto de Vida para recuperar Pontos de Vida, dobre o número de Pontos de Vida que ele restaura.
@@ -6736,7 +6737,7 @@ VALUES (
   'periapto-de-protecao-contra-veneno',
   'other'::rpg.item_type,
   'Periapto de Proteção Contra Veneno',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta delicada corrente de prata possui um pingente de gema preta com corte brilhante. Ao usá-la, você recebe Imunidade à condição Envenenado e ao dano Venenoso.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"rare","rarityLabel":"Raro","requiresAttunement":true,"header":"Item Maravilhoso, Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -6756,7 +6757,7 @@ VALUES (
   'periapto-de-saude',
   'other'::rpg.item_type,
   'Periapto de Saúde',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Ao usar este pingente, você pode executar uma ação Usar Magia para recuperar 2d4 + 2 Pontos de Vida. Uma vez usada, esta propriedade não pode ser utilizada novamente até o próximo amanhecer.
 Além disso, você tem Vantagem nas salvaguardas para evitar ou encerrar a condição Envenenado enquanto usa este pingente.',
@@ -6777,7 +6778,7 @@ VALUES (
   'perola-de-poder',
   'other'::rpg.item_type,
   'Pérola de Poder',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto esta pérola estiver em sua posse, você pode executar uma ação Usar Magia para recuperar um espaço de magia gasto de 3º círculo ou inferior. Após usar a pérola, ela não pode ser usada novamente até o próximo amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização por um Conjurador)","attunement":"Requer Sintonização por um Conjurador"}'::jsonb
@@ -6797,7 +6798,7 @@ VALUES (
   'pigmentos-maravilhosos-de-nolzur',
   'other'::rpg.item_type,
   'Pigmentos Maravilhosos de Nolzur',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Esta bela caixa de madeira contém 1d4 potes de pigmento e uma escova (pesando 0,5 quilo no total).
 Usando o pincel e consumindo 1 pote de pigmento, você pode pintar qualquer quantidade de objetos tridimensionais e características do terreno (como paredes, portas, árvores, flores, armas, teias e fossos), desde que esses elementos estejam todos confinados a um Cubo de 6 metros de lado. O processo leva 10 minutos (independentemente do número de elementos que você faz), durante os quais você deve permanecer no Cubo, e requer Concentração. Se sua Concentração for interrompida ou se você deixar o Cubo antes que o trabalho seja concluído, todos os elementos pintados desaparecem e o pote de pigmento é desperdiçado.
@@ -6821,7 +6822,7 @@ VALUES (
   'po-da-seca',
   'other'::rpg.item_type,
   'Pó da Seca',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Este pequeno pacote contém 1d6 + 4 pitadas de poeira. Como uma ação Usar Objeto, você pode salpicar uma pitada da poeira sobre a água, transformando um Cubo de 4,5 metros de água em uma esfera do tamanho de uma bola de gude, que flutua ou repousa próxima ao local onde a poeira foi jogada. O peso da esfera é insignificante. Uma criatura pode executar uma ação Usar Objeto para esmagar a esfera contra uma superfície dura, fazendo com que ela se rompa e libere a água absorvida pela poeira. Fazer isso destrói a esfera e a magia se encerra.
 Como uma ação Usar Objeto, você pode salpicar uma pitada da poeira em um Elemental a até 1,5 metro de você que seja composto principalmente de água (como um Aquanômalo ou um Elemental da Água). Essa criatura exposta à poeira deve realizar uma salvaguarda de Constituição CD 13, sofrendo 10d6 pontos de dano Necrótico se falhar ou metade desse dano em caso de sucesso.',
@@ -6842,7 +6843,7 @@ VALUES (
   'po-de-desaparecimento',
   'other'::rpg.item_type,
   'Pó de Desaparecimento',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Este pó se assemelha a areia fina. Há o suficiente para um único uso. Quando você executa uma ação Usar Objeto para lançar o pó no ar, você e cada criatura e objeto em uma Emanação de 3 metros centrada em você fica com a condição Invisível por 2d4 minutos. A duração é a mesma para todos os alvos, e o pó é consumido quando sua magia surte efeito. Imediatamente após uma criatura afetada realizar uma jogada de ataque, causar dano ou conjurar uma magia, a condição Invisível encerra para essa criatura.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -6862,7 +6863,7 @@ VALUES (
   'po-de-espirro-engasgo',
   'other'::rpg.item_type,
   'Pó de Espirro-engasgo',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Este pó, encontrado em um pequeno recipiente, se assemelha ao Pó de Desaparecimento e é revelado como tal por uma magia Identificar. Há quantidade suficiente para um único uso.
 Como uma ação Usar Objeto, você pode arremessar o pó no ar, forçando você e todas as criaturas em uma Emanação de 9 metros originados em você a realizar uma salvaguarda de Constituição CD 15. Constructos, Elementais, Gosmas, Plantas e Mortos-Vivos têm sucesso automaticamente.
@@ -6884,7 +6885,7 @@ VALUES (
   'pocao-bafo-de-fogo',
   'gear'::rpg.item_type,
   'Poção Bafo de Fogo',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Após beber esta poção, você pode executar uma Ação Bônus para exalar fogo em um alvo a até 9 metros de distância. O alvo deve realizar uma salvaguarda de Destreza CD 13 ou sofre 4d6 pontos de dano Ígneo se falhar e metade desse dano em caso de sucesso. O efeito termina depois que você exala o fogo três vezes ou quando 1 hora tenha se passado.
 O líquido laranja desta poção pisca e fumaça preenche a parte superior do recipiente e se espalha sempre que é aberta.',
@@ -6905,7 +6906,7 @@ VALUES (
   'pocao-da-saude',
   'gear'::rpg.item_type,
   'Poção da Saúde',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'O líquido claro e vermelho contém pequenas bolhas de luz.
 Quando você bebe esta poção, todos os contágios mágicos em você são curados. Além disso, as seguintes condições encerram em você: Cego, Envenenado, Paralisado e Surdo.',
@@ -6926,7 +6927,7 @@ VALUES (
   'pocao-das-formas-gasosas',
   'gear'::rpg.item_type,
   'Poção das Formas Gasosas',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você adquire o efeito da magia Forma Gasosa por 1 hora (sem necessidade de Concentração) ou até encerrar o efeito como uma Ação Bônus.
 O recipiente desta poção parece conter névoa que se move e derrama como água.',
@@ -6947,7 +6948,7 @@ VALUES (
   'pocao-de-amizade-animal',
   'gear'::rpg.item_type,
   'Poção de Amizade Animal',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você pode conjurar a magia Amizade Animal como 3º círculo (CD 13 para evitar).
 Agitar o líquido turvo desta poção revela pequenos fragmentos: uma escama de peixe, uma pena de beija-flor, uma garra de gato ou um pelo de esquilo.',
@@ -6968,7 +6969,7 @@ VALUES (
   'pocao-de-clarividencia',
   'gear'::rpg.item_type,
   'Poção de Clarividência',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você recebe o efeito da magia Clarividência (sem necessidade de Concentração).
 Um globo ocular flutua no líquido amarelado desta poção, mas desaparece quando a poção é aberta.',
@@ -6989,7 +6990,7 @@ VALUES (
   'pocao-de-compreensao',
   'gear'::rpg.item_type,
   'Poção de Compreensão',
-  NULL,
+  '{"text":"50 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você recebe o efeito da magia Compreender Idiomas por 1 hora.
 O líquido desta poção é uma mistura translúcida com fragmentos de sal e fuligem que giram nela.',
@@ -7010,7 +7011,7 @@ VALUES (
   'pocao-de-cura',
   'gear'::rpg.item_type,
   'Poção de Cura',
-  NULL,
+  '{"text":"50 PO"}'::jsonb,
   NULL,
   'Você recupera 2d4 + 2 Pontos de Vida ao beber esta poção.
 Qualquer que seja sua potência, o líquido vermelho da poção brilha quando agitada.
@@ -7046,7 +7047,7 @@ VALUES (
   'pocao-de-escalada',
   'gear'::rpg.item_type,
   'Poção de Escalada',
-  NULL,
+  '{"text":"50 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você adquire um Deslocamento de Escalada igual ao seu Deslocamento por 1 hora. Durante esse período, você tem Vantagem em testes de Força (Atletismo) para escalar.
 Esta poção é composta por camadas marrons, prateadas e cinzentas que se assemelham a faixas de pedra. Agitar a garrafa não consegue misturar as cores.',
@@ -7106,7 +7107,7 @@ VALUES (
   'pocao-de-heroismo',
   'gear'::rpg.item_type,
   'Poção de Heroísmo',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você adquire 10 Pontos de Vida Temporários que duram 1 hora. Pela mesma duração, você está sob o efeito da magia Bênção (sem necessidade de Concentração).
 O líquido azul desta poção borbulha e solta vapor, como se estivesse fervendo.',
@@ -7127,7 +7128,7 @@ VALUES (
   'pocao-de-invisibilidade',
   'gear'::rpg.item_type,
   'Poção de Invisibilidade',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'O recipiente desta poção parece vazio, mas aparenta conter líquido. Ao beber a poção, você tem a condição Invisível por 1 hora. O efeito termina se você realizar uma jogada de ataque, causar dano ou conjurar uma magia.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Poção","rarity":"rare","rarityLabel":"Raro","requiresAttunement":false,"header":"Poção, Raro"}'::jsonb
@@ -7147,7 +7148,7 @@ VALUES (
   'pocao-de-invisibilidade-maior',
   'gear'::rpg.item_type,
   'Poção de Invisibilidade Maior',
-  NULL,
+  '{"text":"20000 PO"}'::jsonb,
   NULL,
   'O recipiente desta poção parece vazio, mas aparenta conter líquido. Ao beber a poção, você tem a condição Invisível por 1 hora.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Poção","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":false,"header":"Poção, Muito Raro"}'::jsonb
@@ -7167,7 +7168,7 @@ VALUES (
   'pocao-de-invulnerabilidade',
   'gear'::rpg.item_type,
   'Poção de Invulnerabilidade',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'Por 1 minuto após beber esta poção, você tem Resistência a todos os tipos de dano.
 O líquido xaroposo desta poção parece ferro liquefeito.',
@@ -7188,7 +7189,7 @@ VALUES (
   'pocao-de-ler-mentes',
   'gear'::rpg.item_type,
   'Poção de Ler Mentes',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você recebe o efeito da magia Detectar Pensamentos (sem necessidade de Concentração).
 O líquido denso e roxo desta poção contém uma nuvem rosa de formato oval flutuando em seu interior.',
@@ -7209,7 +7210,7 @@ VALUES (
   'pocao-de-longevidade',
   'gear'::rpg.item_type,
   'Poção de Longevidade',
-  NULL,
+  '{"text":"20000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, sua idade física é reduzida em 1d6 + 6 anos, para um mínimo de 13 anos. Cada vez que você subsequentemente bebe uma Poção de Longevidade, há 10% de chance cumulativa de que você, em vez de rejuvenescer, envelheça 1d6 + 6 anos.
 Suspenso neste líquido âmbar está um pequeno coração que, contra toda lógica, ainda está batendo. Esse ingrediente desaparece ao abrir a poção.',
@@ -7230,7 +7231,7 @@ VALUES (
   'pocao-de-pugilismo',
   'gear'::rpg.item_type,
   'Poção de Pugilismo',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Após beber esta poção, cada Ataque Desarmado que você realizar causa 1d6 pontos de dano Energético adicionais em caso de acerto. Este efeito dura 10 minutos.
 Esta poção é um líquido verde espesso que tem gosto de espinafre.',
@@ -7251,7 +7252,7 @@ VALUES (
   'pocao-de-resistencia',
   'gear'::rpg.item_type,
   'Poção de Resistência',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você tem Resistência a um tipo de dano por 1 hora. O Mestre escolhe o tipo ou o determina aleatoriamente jogando na tabela a seguir.
 1d10
@@ -7293,7 +7294,7 @@ VALUES (
   'pocao-de-respirar-na-agua',
   'gear'::rpg.item_type,
   'Poção de Respirar na Água',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Você pode respirar debaixo d’água por 24 horas após beber esta poção.
 O fluido verde turvo desta poção tem cheiro de maresia e possui uma bolha no formato de água-viva flutuando em seu meio.',
@@ -7314,7 +7315,7 @@ VALUES (
   'pocao-de-velocidade',
   'gear'::rpg.item_type,
   'Poção de Velocidade',
-  NULL,
+  '{"text":"20000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você adquire o efeito da magia Celeridade por 1 minuto (sem necessidade de Concentração) e sem sofrer a onda de letargia que normalmente ocorre quando o efeito termina.
 O fluido amarelo desta poção é manchado de preto e gira por conta própria.',
@@ -7335,7 +7336,7 @@ VALUES (
   'pocao-de-vitalidade',
   'gear'::rpg.item_type,
   'Poção de Vitalidade',
-  NULL,
+  '{"text":"20000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, ela remove quaisquer níveis de Exaustão que você tenha e encerra a condição Envenenado em você. Pelas próximas 24 horas, você recupera o número máximo de Pontos de Vida para qualquer Dado de Ponto de Vida que gastar.
 O líquido carmesim desta poção pulsa regularmente com uma luz opaca, lembrando o ritmo do batimento cardíaco.',
@@ -7356,7 +7357,7 @@ VALUES (
   'pocao-de-voo',
   'gear'::rpg.item_type,
   'Poção de Voo',
-  NULL,
+  '{"text":"20000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você adquire um Deslocamento de Voo igual ao seu Deslocamento por 1 hora e pode pairar. Se você estiver no ar quando a poção terminar o efeito, você cai, a menos que tenha algum outro meio de permanecer no ar.
 O líquido transparente desta poção flutua no topo de seu recipiente e tem impurezas brancas turvas flutuando.',
@@ -7377,7 +7378,7 @@ VALUES (
   'pocao-do-amor',
   'gear'::rpg.item_type,
   'Poção do Amor',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Da próxima vez que avistar uma criatura nos 10 minutos seguintes após beber esta poção, você fica enfeitiçado por ela e tem a condição Enfeitiçado por 1 hora.
 Este líquido efervescente em tons de rosa possui bolhas quase imperceptíveis em forma de coração.',
@@ -7398,7 +7399,7 @@ VALUES (
   'pocao-do-crescimento',
   'gear'::rpg.item_type,
   'Poção do Crescimento',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você recebe o efeito “aumentar” da magia Aumentar/Reduzir por 10 minutos (sem necessidade de Concentração).
 O vermelho no líquido da poção se expande continuamente a partir de uma pequena gota para colorir o líquido claro ao seu redor e depois se contrai. Agitar a garrafa não interrompe esse processo.',
@@ -7419,7 +7420,7 @@ VALUES (
   'pocao-do-encolhimento',
   'gear'::rpg.item_type,
   'Poção do Encolhimento',
-  NULL,
+  '{"text":"2000 PO"}'::jsonb,
   NULL,
   'Ao beber esta poção, você recebe o efeito “reduzir” da magia Aumentar/Reduzir por 1d4 horas (sem necessidade de Concentração).
 O vermelho no líquido da poção se contrai continuamente em uma pequena gota e depois se expande para colorir o líquido claro ao seu redor. Agitar a garrafa não interrompe esse processo.',
@@ -7440,7 +7441,7 @@ VALUES (
   'pocao-falsa',
   'gear'::rpg.item_type,
   'Poção Falsa',
-  NULL,
+  '{"text":"200 PO"}'::jsonb,
   NULL,
   'Esta mistura parece, cheira e tem o gosto de uma Poção de Cura ou outra poção benéfica. No entanto, na verdade, é veneno mascarado por magia de ilusão. A magia Identificar revela sua verdadeira natureza.
 Se você beber esta poção, sofre 4d6 pontos de dano Venenoso e deve ser bem-sucedido em uma salvaguarda de Constituição CD 13 ou tem a condição Envenenado por 1 hora.',
@@ -7461,7 +7462,7 @@ VALUES (
   'poco-dos-mundos',
   'other'::rpg.item_type,
   'Poço dos Mundos',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este fino tecido preto, macio como seda, é dobrado até as dimensões de um lenço. Ele se desdobra em uma folha circular de 1,8 metro de diâmetro.
 Você pode executar uma ação Usar Magia para desdobrar o Poço dos Mundos e colocá-lo em uma superfície sólida, quando ele forma um portal circular bidirecional de 1,8 metro de diâmetro para outro mundo ou plano de existência. Cada vez que o item abre um portal, o Mestre decide para onde ele leva. O portal permanece aberto até que uma criatura a até 1,5 metro dele execute uma ação Usar Magia para fechá-lo, segurando as bordas do tecido e dobrando-o.
@@ -7483,7 +7484,7 @@ VALUES (
   'pote-de-ferro',
   'other'::rpg.item_type,
   'Pote de Ferro',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Enquanto segura este pote de ferro com rolha de latão, você pode executar uma ação Usar Magia para selecionar a criatura à sua vista a até 18 metros de distância como alvo. Se o pote estiver vazio e o alvo for nativo de um plano de existência diferente daquele em que você se encontra, o alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria CD 17 ou fica preso no pote. Se o alvo já tiver sido aprisionado pelo pote anteriormente, ele tem Vantagem na salvaguarda. Uma vez aprisionada, uma criatura permanece no pote até ser liberada. O pote pode conter somente uma criatura por vez. Uma criatura presa no pote não envelhece e não precisa respirar, comer ou beber.
 Você pode executar uma ação Usar Magia para remover a rolha do pote e libertar a criatura contida nele. A criatura então obedece aos seus comandos por 1 hora, compreendendo essas instruções, mesmo que não conheça o idioma em que são dadas. Caso não emita comandos ou dê à criatura uma ordem que provavelmente resulte na morte ou captura dela, ela se defende, mas, de outra forma, não executa nenhuma ação. Ao final da duração, a criatura age de acordo com sua disposição e alinhamento normais.
@@ -7568,7 +7569,7 @@ VALUES (
   'pote-do-despertar',
   'other'::rpg.item_type,
   'Pote do Despertar',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Se você plantar um arbusto comum neste vaso de barro de 5 quilos e deixá-lo crescer por 30 dias, o arbusto magicamente se transforma em um Arbusto Desperto no final desse período. Quando o arbusto desperta, suas raízes quebram o vaso, destruindo-o.
 O arbusto desperto é Amigável a você e obedece aos seus comandos. Se você não emitir comandos, o arbusto não realiza nada.',
@@ -7589,7 +7590,7 @@ VALUES (
   'roupas-autoconcertantes',
   'other'::rpg.item_type,
   'Roupas Autoconcertantes',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta roupa elegante remenda-se magicamente para seus próprios desgastes diários. Peças da roupa totalmente destruídas não podem ser reparadas deste modo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -7609,7 +7610,7 @@ VALUES (
   'rubi-do-mago-de-batalha',
   'other'::rpg.item_type,
   'Rubi do Mago de Batalha',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Gravado com runas místicas, este rubi de 2,5 centímetros de diâmetro permite que você use uma arma Simples ou Marcial como um Foco de Conjuração para suas magias. Para que esta propriedade funcione, você deve prender o rubi à arma pressionando-o contra ela por pelo menos 10 minutos. Depois disso, o rubi não pode ser removido, a menos que você o remova como uma ação Usar Magia, a arma seja destruída ou sua Sintonização com o rubi termine.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":true,"header":"Item Maravilhoso, Comum (Requer Sintonização por um Conjurador)","attunement":"Requer Sintonização por um Conjurador"}'::jsonb
@@ -7629,7 +7630,7 @@ VALUES (
   'sacro-vingadora',
   'weapon'::rpg.item_type,
   'Sacro Vingadora',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +3 em jogadas de ataque e dano realizadas com esta arma mágica. Ao atingir um Ínfero ou um Morto-Vivo com a arma, essa criatura sofre 2d10 pontos de dano Radiante adicionais.
 Ela cria uma Emanação de 3 metros originada em você enquanto empunhada. Você e todas as criaturas Amigáveis a você na Emanação têm Vantagem em salvaguardas contra magias e outros efeitos mágicos. Se você tiver 17 ou mais níveis na classe Paladino, o tamanho da Emanação aumenta para 9 metros.',
@@ -7650,7 +7651,7 @@ VALUES (
   'sandalias-de-escalada-de-aranha',
   'other'::rpg.item_type,
   'Sandálias de Escalada de Aranha',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto calçar estas sandálias, você pode se mover por superfícies verticais e ao longo de tetos, mantendo as mãos livres. Você tem um Deslocamento de Escalada igual ao seu Deslocamento. No entanto, as sandálias não permitem que você se mova desse modo em superfícies escorregadias, como aquelas cobertas por gelo ou óleo.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -7670,7 +7671,7 @@ VALUES (
   'sela-do-cavaleiro',
   'other'::rpg.item_type,
   'Sela do Cavaleiro',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta sela confere os seguintes benefícios enquanto você estiver sentado nela e montado em uma montaria.
 Cavaleiro Seguro. Você não pode ser desmontado contra sua vontade. Esta propriedade é suprimida se você tem a condição Incapacitado.
@@ -7692,7 +7693,7 @@ VALUES (
   'solvente-universal',
   'other'::rpg.item_type,
   'Solvente Universal',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este tubo contém um líquido leitoso com um forte cheiro de álcool. Quando encontrado, um tubo contém 1d6 + 30 gramas.
 Você pode executar uma ação Usar Objeto para despejar 30 gramas ou mais de solvente do tubo em uma superfície ao seu alcance. Cada 30 gramas de solvente dissolve instantaneamente até um quadrado de 30 centímetros de lados de adesivo que tocar, incluindo Cola Suprema.',
@@ -7713,7 +7714,7 @@ VALUES (
   'sorvedora-das-nove-almas',
   'weapon'::rpg.item_type,
   'Sorvedora das Nove Almas',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você adquire um bônus de +2 em jogadas de ataque e dano realizadas com esta arma mágica.
 Roubar Vida. A arma possui 1d8 + 1 cargas. Ao atacar uma criatura com menos de 100 Pontos de Vida usando esta arma e obtendo 20 no d20 para a jogada de ataque, a criatura deve ser bem-sucedida em uma salvaguarda de Constituição CD 15 ou é morta instantaneamente enquanto a espada drena sua força vital. Constructos e Mortos-Vivos são bem-sucedidos automaticamente. A arma perde 1 carga se a criatura for morta. Quando a arma não tiver cargas restantes, ela perde esta propriedade.',
@@ -7734,7 +7735,7 @@ VALUES (
   'tabuleiro-espiritual',
   'other'::rpg.item_type,
   'Tabuleiro Espiritual',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Essa placa de madeira ornamentada tem, de um lado, as letras do alfabeto comum, ao lado das palavras “Sim” e “Não” e símbolos que representam “Fortuna” e “Infortúnio”. Acompanha uma prancheta de madeira em forma de coração. Esta prancheta deve estar apoiada no lado com letras do tabuleiro para que a magia do tabuleiro funcione.
 Este tabuleiro possui 3 cargas e recupera 1 carga gasta diariamente ao amanhecer. Ao tocar a prancheta, você pode levar 1 minuto para conjurar uma das magias na tabela abaixo, que indica quantas cargas você deve gastar para conjurar a magia. Ao conjurar a magia, você invoca os espíritos dos mortos para guiar a prancheta pela superfície do tabuleiro, respondendo às suas perguntas apontando para as letras ou palavras no tabuleiro.
@@ -7761,7 +7762,7 @@ VALUES (
   'tacape-trovejante',
   'weapon'::rpg.item_type,
   'Tacape Trovejante',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Enquanto estiver sintonizado com esta arma mágica, seu valor de Força é 20, a menos que já seja maior ou igual. A arma causa 1d8 pontos adicionais de dano Trovejante a qualquer criatura atingida e 3d8 pontos adicionais de dano Trovejante a objetos atingidos que não estão sendo usados ou carregados.
 Esta arma tem as seguintes propriedades adicionais.
@@ -7784,7 +7785,7 @@ VALUES (
   'talisma-da-esfera',
   'other'::rpg.item_type,
   'Talismã da Esfera',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Ao segurar ou usar este talismã, você tem Vantagem em qualquer teste de Inteligência (Arcanismo) para controlar uma Esfera da Aniquilação. Além disso, ao iniciar seu turno controlando uma Esfera da Aniquilação, você pode executar uma ação Usar Magia para movê-la 3 metros mais um número de metros adicionais igual a 3 vezes seu modificador de Inteligência. Esse movimento não precisa ser em linha reta.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"legendary","rarityLabel":"Lendário","requiresAttunement":true,"header":"Item Maravilhoso, Lendário (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -7804,7 +7805,7 @@ VALUES (
   'talisma-do-bem-sem-ver-a-quem',
   'other'::rpg.item_type,
   'Talismã do Bem Sem Ver a Quem',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este talismã é um poderoso símbolo de bondade. Um Ínfero ou um Morto-Vivo que o toque sofre 8d6 pontos de dano Radiante, e sofre esse mesmo dano novamente ao final de cada turno em que estiver segurando ou carregando o talismã.
 Repreensão Pura. O talismã possui 7 cargas. Enquanto estiver segurando ou usando o talismã, você pode executar uma ação Usar Magia para gastar 1 carga e escolher como alvo uma criatura que esteja no chão e à sua vista, a até 36 metros de distância. Uma fissura flamejante se abre sob o alvo, que deve realizar uma salvaguarda de Destreza CD 20. Se o alvo for um Ínfero ou um Morto-Vivo, ele realiza a salvaguarda com Desvantagem. Se falhar, o alvo cai na fissura e é destruído, sem deixar restos mortais. Com um sucesso, o alvo evita a queda, mas sofre 4d6 pontos de dano Psíquico devido à provação. Em ambos os casos, a fissura se fecha em seguida, sem deixar vestígios de sua existência. Ao gastar a última carga, o talismã se dispersa em partículas de luz dourada e é destruído.
@@ -7826,7 +7827,7 @@ VALUES (
   'talisma-do-mal-universal',
   'other'::rpg.item_type,
   'Talismã do Mal Universal',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este talismã representa o mal impenitente. Qualquer criatura que não seja um Ínfero ou um Morto-Vivo que o toque sofre 8d6 pontos de dano Necrótico, e sofre esse mesmo dano novamente ao final de cada turno em que o estiver segurando ou carregando.
 Fim Supremo. O talismã tem 6 cargas. Ao segurar este talismã, você pode executar uma ação Usar Magia para gastar 1 carga e escolher como alvo uma criatura à sua vista, no chão, a até 36 metros de distância. Uma fissura flamejante se abre sob o alvo, e o alvo faz uma salvaguarda de Destreza CD 20. Se o alvo for um Celestial, ele tem Desvantagem na salvaguarda. Se falhar, o alvo cai na fissura e é destruído, não deixando restos mortais. Em caso de sucesso, o alvo não é jogado na fissura, mas sofre 4d6 pontos de dano Psíquico devido à provação. Em ambos os casos, a fissura então se fecha, não deixando vestígios de sua existência. Quando você gasta a última carga, o talismã se dissolve em partículas de luz dourada e é destruído.
@@ -7848,7 +7849,7 @@ VALUES (
   'tapete-voador',
   'other'::rpg.item_type,
   'Tapete Voador',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Você pode fazer o tapete pairar e voar utilizando uma ação Usar Magia e a palavra de comando do tapete. Ele se move conforme suas instruções, desde que você esteja a até 9 metros dele.
 Existem quatro tamanhos de Tapete Voador. O Mestre pode escolher o tamanho ou determinar aleatoriamente utilizando a tabela a seguir. Um tapete pode carregar até o dobro do peso indicado na tabela, mas o Deslocamento de Voo é reduzido pela metade ao exceder a capacidade normal.
@@ -7890,7 +7891,7 @@ VALUES (
   'tiara-do-intelecto',
   'other'::rpg.item_type,
   'Tiara do Intelecto',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Sua Inteligência é 19 enquanto estiver vestindo esta bandana. Ela não tem efeito se sua Inteligência for 19 ou superior sem ela.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Item Maravilhoso, Incomum (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -7910,7 +7911,7 @@ VALUES (
   'tigela-de-comandar-elementais-da-agua',
   'other'::rpg.item_type,
   'Tigela de Comandar Elementais da Água',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Enquanto a tigela estiver cheia de água e você estiver a até 1,5 metro dela, você pode executar uma ação Usar Magia para invocar um Elemental da Água. O elemental aparece em um espaço desocupado próximo à tigela, entende seus idiomas, obedece aos seus comandos e age imediatamente após sua contagem de iniciativa. Ele desaparece após 1 hora, quando morre ou quando você o dispensa como uma Ação Bônus. A tigela não pode ser utilizada novamente desse modo até o próximo amanhecer.
 A tigela possui cerca de 30 centímetros de diâmetro e 15 centímetros de profundidade, podendo conter aproximadamente 12 litros.',
@@ -7931,7 +7932,7 @@ VALUES (
   'tomo-da-compreensao',
   'other'::rpg.item_type,
   'Tomo da Compreensão',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este livro contém exercícios de discernimento e intuição e suas palavras são carregadas de magia. Se você passar 48 horas em um período de 6 dias ou menos estudando o conteúdo do livro e praticando as diretrizes apresentadas, seu valor de Sabedoria aumenta em 2, até no máximo 30. A magia do manual se dissipa, retornando após um século.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":false,"header":"Item Maravilhoso, Muito Raro"}'::jsonb
@@ -7951,7 +7952,7 @@ VALUES (
   'tomo-da-lideranca-e-influencia',
   'other'::rpg.item_type,
   'Tomo da Liderança e Influência',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este livro contém diretrizes para influenciar e encantar outros, e suas palavras são carregadas de magia. Se você passar 48 horas em um período de 6 dias ou menos estudando o conteúdo do livro e praticando as diretrizes apresentadas, seu valor de Carisma aumenta em 2, até no máximo 30. A magia do manual se dissipa, retornando após um século.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":false,"header":"Item Maravilhoso, Muito Raro"}'::jsonb
@@ -7971,7 +7972,7 @@ VALUES (
   'tomo-das-palavras-tranquilizantes',
   'other'::rpg.item_type,
   'Tomo das Palavras Tranquilizantes',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este livro tem uma língua dissecada presa na capa. Existem cinco desses tomos, e não se sabe qual é o original. A terrível decoração de capa do primeiro Tomo das Palavras Tranquilizantes pertenceu a um antigo servo traiçoeiro do deus lich Vecna. As línguas presas às capas das quatro cópias vieram de outros conjuradores que desafiaram Vecna. As primeiras páginas de cada tomo estão cheias de rabiscos indecifráveis. As páginas restantes estão em branco.
 Enquanto estiver sintonizado com este item, você pode usá-lo como um Livro de Magias e um Foco Arcano. Além disso, enquanto segura o tomo, você pode executar uma Ação Bônus para conjurar uma magia que escreveu nele, sem gastar um espaço de magia ou usar quaisquer componentes Verbais ou Somáticos. Uma vez usada, esta propriedade do tomo não pode ser usada novamente até o próximo amanhecer.
@@ -7994,7 +7995,7 @@ VALUES (
   'tomo-dos-pensamentos-objetivos',
   'other'::rpg.item_type,
   'Tomo dos Pensamentos Objetivos',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Este tomo contém exercícios de memória e lógica e suas palavras são carregadas de magia. Se você passar 48 horas em um período de 6 dias ou menos estudando o conteúdo do livro e praticando as diretrizes apresentadas, seu valor de Inteligência aumenta em 2, até no máximo 30. A magia do manual se dissipa, retornando após um século.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":false,"header":"Item Maravilhoso, Muito Raro"}'::jsonb
@@ -8014,7 +8015,7 @@ VALUES (
   'touca-de-respirar-na-agua',
   'other'::rpg.item_type,
   'Touca de Respirar na Água',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Enquanto estiver usando esta touca debaixo d''água, você pode executar uma ação Usar Magia para criar uma bolha de ar ao redor da sua cabeça, permitindo que respire normalmente. A bolha permanece até que a touca seja removida ou você saia da água.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Item Maravilhoso, Incomum"}'::jsonb
@@ -8034,7 +8035,7 @@ VALUES (
   'tridente-de-comandar-peixes',
   'weapon'::rpg.item_type,
   'Tridente de Comandar Peixes',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta arma mágica tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Enquanto o carrega, você pode gastar 1 carga para conjurar Dominar Fera (CD 15 para evitar) em uma Fera que tenha Deslocamento de Natação.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Arma (Tridente)","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":true,"header":"Arma (Tridente), Incomum (Requer Sintonização)","attunement":"Requer Sintonização","weaponSubtype":"Tridente"}'::jsonb
@@ -8054,7 +8055,7 @@ VALUES (
   'trombeta-de-explosao',
   'other'::rpg.item_type,
   'Trombeta de Explosão',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você pode executar uma ação Usar Magia para soprar a trombeta, que emite uma explosão estrondosa em um Cone de 9 metros que é audível a até 180 metros. Cada criatura no Cone realiza uma salvaguarda de Constituição CD 15. Se falhar, uma criatura sofre 5d8 pontos de dano Trovejante e tem a condição Surdo por 1 minuto. Em caso de sucesso, uma criatura sofre apenas metade do dano. Objetos de vidro ou cristal no Cone, que não estão sendo usados ou carregados, sofrem 10d8 pontos de dano Trovejante.
 Cada uso da magia da trombeta tem 20% de chance de fazê-la explodir. A explosão causa 10d6 pontos de dano Energético ao usuário e destrói a trombeta.',
@@ -8075,7 +8076,7 @@ VALUES (
   'trombeta-do-valhalla',
   'other'::rpg.item_type,
   'Trombeta do Valhalla',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Você pode executar uma ação Usar Magia para soprar esta trombeta. Em resposta, espíritos combatentes do plano de Ysgard aparecem em espaços desocupados a até 18 metros de você. Cada espírito usa o bloco de estatísticas do Berserker e retorna a Ysgard após 1 hora ou quando é reduzido a 0 Ponto de Vida. Os espíritos parecem combatentes vivos, e têm Imunidade às condições Amedrontado e Enfeitiçado. Após usar a trombeta, ela não pode ser utilizada novamente até que se passem 7 dias.
 Sabe-se que existem quatro tipos de Trombeta do Valhalla, cada uma feita de um metal diferente. O tipo de trombeta determina quantos espíritos ela invoca, bem como o requisito para seu uso. O Mestre escolhe o tipo da trombeta ou o determina aleatoriamente jogando na tabela a seguir.
@@ -8117,7 +8118,7 @@ VALUES (
   'tunica-das-cores-cintilantes',
   'other'::rpg.item_type,
   'Túnica das Cores Cintilantes',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Esta túnica tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Enquanto a usa, você pode executar uma ação Usar Magia e gastar 1 carga para fazer com que o traje exiba um padrão de mudança de tons deslumbrantes até o final do seu próximo turno. Durante esse tempo, a túnica projeta Luz Plena em um raio de 9 metros e Meia-luz por mais 9 metros, e criaturas que podem ver você têm Desvantagem nas jogadas de ataque contra você. Qualquer criatura na Luz Plena que possa vê-lo quando o poder da túnica for ativado deve ser bem-sucedida em uma salvaguarda de Sabedoria CD 15 ou tem a condição Atordoado até o efeito terminar.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"very-rare","rarityLabel":"Muito Raro","requiresAttunement":true,"header":"Item Maravilhoso, Muito Raro (Requer Sintonização)","attunement":"Requer Sintonização"}'::jsonb
@@ -8137,7 +8138,7 @@ VALUES (
   'tunica-das-estrelas',
   'other'::rpg.item_type,
   'Túnica das Estrelas',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Esta túnica preta ou azul escuro é bordada com pequenas estrelas brancas ou prateadas. Você adquire um bônus de +1 em salvaguardas enquanto estiver usando esta túnica.
 Seis estrelas, localizadas na parte superior frontal da túnica, são particularmente grandes. Enquanto estiver usando esta túnica, você pode executar uma ação Usar Magia para remover uma das estrelas e gastá-la para conjurar como 5º círculo de Mísseis Mágicos. Diariamente ao anoitecer, 1d6 estrelas removidas reaparecem no manto.
@@ -8159,7 +8160,7 @@ VALUES (
   'tunica-das-quinquilharias-uteis',
   'other'::rpg.item_type,
   'Túnica das Quinquilharias Úteis',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta túnica é coberta por remendos de pano de várias formas e cores. Enquanto estiver usando a túnica, você pode executar uma ação Usar Magia para remover um dos remendos, fazendo com que ele se torne o objeto ou criatura que representa. Uma vez que o último remendo é removido, a túnica se torna uma peça de vestuário comum.
 A túnica tem dois de cada um dos seguintes remendos:
@@ -8215,7 +8216,7 @@ VALUES (
   'tunica-do-arquimago',
   'other'::rpg.item_type,
   'Túnica do Arquimago',
-  NULL,
+  '{"text":"200000 PO"}'::jsonb,
   NULL,
   'Este traje elegante é feito de um tecido requintado e adornado com runas.
 Você adquire os seguintes benefícios enquanto estiver usando a túnica.
@@ -8239,7 +8240,7 @@ VALUES (
   'tunica-ocular',
   'other'::rpg.item_type,
   'Túnica Ocular',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta túnica é adornada com padrões em formas de olho. Ao usar a túnica, você adquire os seguintes benefícios:
 Sentidos Especiais. Você tem Visão no Escuro e Visão Verdadeira, ambas com um alcance de 36 metros.
@@ -8262,7 +8263,7 @@ VALUES (
   'unguento-de-keoghtom',
   'other'::rpg.item_type,
   'Unguento de Keoghtom',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta ampola de vidro de 7,5 centímetros de diâmetro contém 1d4 + 1 doses de uma mistura espessa que cheira levemente a babosa. A ampola e seu conteúdo pesam 250 gramas.
 Como uma ação Usar Objeto, você pode engolir uma dose do unguento ou aplicá-lo a uma criatura a até 1,5 metro de você. A criatura que o receber recupera 2d8 + 2 Pontos de Vida e não tem mais a condição Envenenado.',
@@ -8283,7 +8284,7 @@ VALUES (
   'vara-de-pesca',
   'other'::rpg.item_type,
   'Vara de Pesca',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Este item funciona como uma Haste. Enquanto a segura, você pode executar uma ação Usar Magia para fazer com que ela se transforme em uma vara de pescar com um anzol, uma linha e uma carretilha, ou fazer com que a vara de pescar reverta para uma Haste.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -8303,7 +8304,7 @@ VALUES (
   'varinha-cuspidora-de-fogo',
   'other'::rpg.item_type,
   'Varinha Cuspidora de Fogo',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segurar, você não pode gastar mais do que 3 cargas para conjurar Bola de Fogo (CD 15 para evitar) a partir dela. Por 1 carga, você conjura a versão de 3º círculo da magia. Você pode aumentar o círculo da magia em 1 para cada carga adicional que gastar.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha se desfaz em cinzas e é destruída.',
@@ -8324,7 +8325,7 @@ VALUES (
   'varinha-das-maravilhas',
   'other'::rpg.item_type,
   'Varinha das Maravilhas',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segurar, você pode executar uma ação Usar Magia para gastar 1 carga enquanto escolhe um ponto a até 36 metros de você. Esse local se torna o ponto de origem de uma magia ou outro efeito mágico determinado pela jogada na tabela Efeitos da Varinha das Maravilhas. As magias conjuradas a partir da varinha têm salvaguardas com CD 15. Se o alcance máximo de uma magia normalmente for inferior a 36 metros, ela se torna 36 metros quando conjurada a partir da varinha. Se um efeito tiver vários alvos possíveis, o Mestre determina aleatoriamente quais deles são afetados.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha se desfaz em pó e é destruída.
@@ -8384,7 +8385,7 @@ VALUES (
   'varinha-de-detectar-inimigo',
   'other'::rpg.item_type,
   'Varinha de Detectar Inimigo',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segura, você pode executar uma ação Usar Magia para gastar 1 carga. Por 1 minuto, você sabe a direção da criatura Hostil mais próxima a você a até 18 metros, mas não a distância dela de você. A varinha pode sentir a presença de criaturas Hostis que estão Invisíveis, etéreas, disfarçadas ou ocultas, bem como aquelas à vista de todos. O efeito se encerra se você parar de segurar a varinha.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha se desfaz em cinzas e é destruída.',
@@ -8405,7 +8406,7 @@ VALUES (
   'varinha-de-misseis-magicos',
   'other'::rpg.item_type,
   'Varinha de Mísseis Mágicos',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segurar, você não pode gastar mais do que 3 cargas para conjurar Mísseis Mágicos a partir dela. Por 1 carga, você conjura a versão de 1º círculo da magia. Você pode aumentar o círculo da magia em 1 para cada carga adicional que gastar.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha se desfaz em cinzas e é destruída.',
@@ -8481,7 +8482,7 @@ VALUES (
   'varinha-de-paralisia',
   'other'::rpg.item_type,
   'Varinha de Paralisia',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segurar, você pode executar uma ação Usar Magia para gastar 1 carga e fazer com que um fino raio azul saia da ponta da varinha em direção a uma criatura à sua vista a até 18 metros de distância. O alvo deve ser bem-sucedido em uma salvaguarda de Constituição CD 15 ou tem a condição Paralisado por 1 minuto. No final de cada um dos turnos do alvo, ele repete a salvaguarda, encerrando o efeito em si em caso de sucesso.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha se desfaz em cinzas e é destruída.',
@@ -8502,7 +8503,7 @@ VALUES (
   'varinha-de-polimorfia',
   'other'::rpg.item_type,
   'Varinha de Polimorfia',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segurar, você pode gastar 1 carga para conjurar Polimorfia (CD 15 para evitar) a partir dela.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha se desfaz em cinzas e é destruída.',
@@ -8523,7 +8524,7 @@ VALUES (
   'varinha-de-relampagos',
   'other'::rpg.item_type,
   'Varinha de Relâmpagos',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segurar, você não pode gastar mais do que 3 cargas para conjurar Relâmpago (CD 15 para evitar) a partir dela. Por 1 carga, você conjura a versão de 3º círculo da magia. Você pode aumentar o círculo da magia em 1 para cada carga adicional que gastar.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha se desfaz em cinzas e é destruída.',
@@ -8544,7 +8545,7 @@ VALUES (
   'varinha-de-teia',
   'other'::rpg.item_type,
   'Varinha de Teia',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segurar, você pode gastar 1 carga para conjurar Teia (CD 13 para evitar) a partir dela.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha se desfaz em cinzas e é destruída.',
@@ -8585,7 +8586,7 @@ VALUES (
   'varinha-do-medo',
   'other'::rpg.item_type,
   'Varinha do Medo',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas.
 Magias. Enquanto segurar a varinha, você pode conjurar uma das magias (CD 15 para evitar) na tabela a seguir a partir dela. A tabela indica quantas cargas você deve gastar para conjurar a magia.
@@ -8613,7 +8614,7 @@ VALUES (
   'varinha-dos-segredos',
   'other'::rpg.item_type,
   'Varinha dos Segredos',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Enquanto a segurar, você pode executar uma ação Usar Magia para gastar 1 carga e, se uma porta ou armadilha secreta estiver a até 18 metros de você, a varinha pulsa e aponta para a mais próxima.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Varinha","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Varinha, Incomum"}'::jsonb
@@ -8633,7 +8634,7 @@ VALUES (
   'varinha-farejadora-de-magias',
   'other'::rpg.item_type,
   'Varinha Farejadora de Magias',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 3 cargas. Enquanto a segurar, você pode gastar 1 carga para conjurar Detectar Magia a partir dela. A varinha recupera 1d3 cargas gastas diariamente ao amanhecer.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Varinha","rarity":"uncommon","rarityLabel":"Incomum","requiresAttunement":false,"header":"Varinha, Incomum"}'::jsonb
@@ -8653,7 +8654,7 @@ VALUES (
   'varinha-imobilizadora',
   'other'::rpg.item_type,
   'Varinha Imobilizadora',
-  NULL,
+  '{"text":"4000 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas.
 Magias. Enquanto segurar a varinha, você pode conjurar uma das magias (CD 17 para evitar) na tabela a seguir a partir dela. A tabela indica quantas cargas você deve gastar para conjurar a magia.
@@ -8681,7 +8682,7 @@ VALUES (
   'varinha-pirotecnica',
   'other'::rpg.item_type,
   'Varinha Pirotécnica',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'Esta varinha tem 7 cargas. Enquanto a segurar, você pode executar uma ação Usar Magia para gastar 1 carga e criar uma explosão inofensiva de luz multicolorida em um ponto à sua vista a até 36 metros de distância. A explosão de luz é acompanhada por um ruído crepitante que pode ser ouvido a até 90 metros de distância. A luz é tão brilhante quanto uma chama de tocha, mas dura apenas um segundo.
 Recuperando Cargas. A varinha recupera 1d6 + 1 cargas gastas diariamente ao amanhecer. Se você gastar a última carga da varinha, jogue 1d20. Em um 1, a varinha irrompe em uma exibição pirotécnica inofensiva e é destruída.',
@@ -8702,7 +8703,7 @@ VALUES (
   'vassoura-dancante-de-baba-yaga',
   'other'::rpg.item_type,
   'Vassoura Dançante de Baba Yaga',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'A arquifada Baba Yaga criou muitas vassouras mágicas, cada uma delas única. Nenhuma é exatamente igual. Ao segurar a vassoura, você pode executar uma ação Usar Magia para transformá-la em uma Vassoura Agressora sob seu controle. A vassoura então se move para um espaço desocupado mais próximo de você, agindo imediatamente após você na contagem de Iniciativa e permanece animada até que você execute uma Ação Bônus e pronuncie uma palavra de comando para torná-la inanimada.
 No seu turno, você pode controlar mentalmente a vassoura animada se ela estiver a até 9 metros de você e não estiver sob a condição Incapacitado (nenhuma ação é necessária). Você decide a ação que a vassoura executa e o movimento dela no próximo turno, ou pode dar um comando geral, como atacar inimigos ou proteger um local.
@@ -8725,7 +8726,7 @@ VALUES (
   'vassoura-voadora',
   'other'::rpg.item_type,
   'Vassoura Voadora',
-  NULL,
+  '{"text":"400 PO"}'::jsonb,
   NULL,
   'Esta vassoura de madeira funciona como uma vassoura comum até que você monte nela e use a ação Usar Magia para fazê-la pairar, permitindo que seja montada no ar. A vassoura possui um Deslocamento de Voo de 15 metros e suporta até 200 quilos, mas o Deslocamento de Voo diminui para 9 metros se carregar mais de 100 quilos. A vassoura para de pairar quando você desce ou deixa de estar montado nela.
 Com uma ação Usar Magia, você pode enviar a vassoura para um destino a até 1,5 quilômetro de você, desde que nomeie o local e esteja familiarizado com ele. A vassoura retorna a você quando você executa uma ação Usar Magia e pronuncia uma palavra de comando, caso ela ainda esteja a 1,5 quilômetro de você.',
@@ -8746,7 +8747,7 @@ VALUES (
   'vela-das-profundezas',
   'other'::rpg.item_type,
   'Vela das Profundezas',
-  NULL,
+  '{"text":"100 PO"}'::jsonb,
   NULL,
   'A chama desta vela não se apaga quando mergulhada em água. Ela emite luz e calor como uma vela normal.',
   '{"magic":true,"source":"dmg-2024-pt","editionSlug":"dmg-2024-pt","citationSlug":"dmg-2024-pt:ch7:itens-magicos","category":"Item Maravilhoso","rarity":"common","rarityLabel":"Comum","requiresAttunement":false,"header":"Item Maravilhoso, Comum"}'::jsonb
@@ -8766,7 +8767,7 @@ VALUES (
   'vela-de-invocacao',
   'other'::rpg.item_type,
   'Vela de Invocação',
-  NULL,
+  '{"text":"40000 PO"}'::jsonb,
   NULL,
   'A magia da vela é ativada ao acendê-la, o que requer uma ação Usar Magia. Após queimar por 4 horas, a vela é destruída, mas pode ser apagada antes para uso posterior — deduza o tempo queimado em frações de 1 minuto do total de queima.
 Enquanto estiver acesa, a vela emite Meia-luz em um raio de 9 metros. Dentro dessa luz, você tem Vantagem em Testes de D20. Além disso, Clérigos ou Druidas podem conjurar magias preparadas de 1º círculo sem gastar espaços de magia.

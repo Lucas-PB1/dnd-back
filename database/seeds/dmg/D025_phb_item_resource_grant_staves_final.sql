@@ -1,5 +1,5 @@
 -- DMG §0 #8f: Acrobata + Poder + Magi (fecha lote cajados)
--- Ver docs/source/dmg-item-mesa-taxonomy-staves.yaml
+-- Ver docs/source/dmg-wiring-status.md
 -- +2 ataque mágico / Vantagem vs magias = passive-note
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)

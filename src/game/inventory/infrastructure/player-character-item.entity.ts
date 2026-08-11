@@ -64,4 +64,11 @@ export class PlayerCharacterItem {
   /** Magia vinculada em item único (ex.: Cajado Magificado). */
   @Column({ name: 'bound_spell_slug', type: 'text', nullable: true })
   boundSpellSlug!: string | null;
+
+  /**
+   * Estado por instância (artefato rolado na 1ª sintonia, senciência copiada, etc.).
+   * Não é apagado ao dessintonizar.
+   */
+  @Column({ name: 'instance_properties', type: 'jsonb', nullable: true })
+  instanceProperties!: Record<string, unknown> | null;
 }

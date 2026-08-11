@@ -30,6 +30,7 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |-----|----------|
 | [`plans/backlog.md`](plans/backlog.md) | Checklist geral — o que ainda falta (API + front + gaps) |
+| [`plans/itens-restante.md`](plans/itens-restante.md) | Operações restantes: Treasure cast/cursed/dawn, split cast-spell, artefato |
 | [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Adiado: modal Escudo/Giga no cast de Mísseis |
 
 Padrão de classe jogável (mesa): skills Cursor **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**.

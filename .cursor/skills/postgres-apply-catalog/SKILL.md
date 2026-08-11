@@ -20,10 +20,11 @@ description: Aplica catálogo PHB ao PostgreSQL — dev-reset, migrations granul
 ## Preferir npm
 
 ```powershell
-npm run db:setup
+npm run db:setup              # local: reset → migrate → seed
+npm run db:setup:all          # local + Supabase (wipe remoto com --confirm; OK sem dados reais)
 ```
 
-Equivalente manual:
+Equivalente manual local:
 
 ```powershell
 psql $env:DATABASE_URL -f database/dev-reset.sql
@@ -31,14 +32,16 @@ Get-ChildItem database/migrations -Recurse -Filter *.sql | Sort-Object FullName 
 Get-ChildItem database/seeds -Recurse -Filter *.sql | Sort-Object FullName | ForEach-Object { psql $env:DATABASE_URL -f $_.FullName }
 ```
 
+Não use scripts `apply-*` / `reseed-*` avulsos — SSOT = `database/seeds/` via `run-seeds.mjs`.
+
 ## Supabase (remoto)
 
 Configure `SUPABASE_DATABASE_URL` (direct, porta 5432) no `.env`:
 
 ```bash
-npm run db:migrate:all    # local + Supabase (incremental)
-npm run db:migrate:supabase
-npm run db:seed:supabase  # só em banco vazio
+npm run db:migrate:all        # local + Supabase (incremental schema)
+npm run db:seed:supabase      # só se o banco remoto estiver vazio / truncável
+npm run db:setup:all          # wipe+migrate+seed local e remoto (exige --confirm no reset)
 ```
 
-**Não** rodar `db:reset` no Supabase.
+**Cuidado:** wipe no Supabase apaga tudo. Sem dados reais de jogador, preferir `db:setup:all` para alinhar o catálogo.

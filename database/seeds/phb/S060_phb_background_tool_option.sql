@@ -1,70 +1,5 @@
--- Seed rpg.phb_background_tool_option (+ instrumentos / kits de jogos)
-
--- Instrumentos
-INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description)
-VALUES
-  ('gaita-de-foles', 'tool'::rpg.item_type, 'Gaita de Foles', '{"text":"30 PO"}'::jsonb, '3 kg', 'Instrumento musical.'),
-  ('tambor', 'tool'::rpg.item_type, 'Tambor', '{"text":"6 PO"}'::jsonb, '1,5 kg', 'Instrumento musical.'),
-  ('salterio', 'tool'::rpg.item_type, 'Saltério', '{"text":"25 PO"}'::jsonb, '5 kg', 'Instrumento musical.'),
-  ('flauta', 'tool'::rpg.item_type, 'Flauta', '{"text":"2 PO"}'::jsonb, '0,5 kg', 'Instrumento musical.'),
-  ('trompa', 'tool'::rpg.item_type, 'Trompa', '{"text":"3 PO"}'::jsonb, '1 kg', 'Instrumento musical.'),
-  ('alaude', 'tool'::rpg.item_type, 'Alaúde', '{"text":"35 PO"}'::jsonb, '1 kg', 'Instrumento musical.'),
-  ('lira', 'tool'::rpg.item_type, 'Lira', '{"text":"30 PO"}'::jsonb, '1 kg', 'Instrumento musical.'),
-  ('flauta-de-pan', 'tool'::rpg.item_type, 'Flauta de Pã', '{"text":"12 PO"}'::jsonb, '1 kg', 'Instrumento musical.'),
-  ('charamela', 'tool'::rpg.item_type, 'Charamela', '{"text":"2 PO"}'::jsonb, '0,5 kg', 'Instrumento musical.'),
-  ('viola', 'tool'::rpg.item_type, 'Viola', '{"text":"30 PO"}'::jsonb, '0,5 kg', 'Instrumento musical.')
-ON CONFLICT (slug) DO UPDATE
-SET
-  name = EXCLUDED.name,
-  cost = EXCLUDED.cost,
-  weight = EXCLUDED.weight,
-  description = EXCLUDED.description;
-
--- Kits de jogos
-INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description)
-VALUES
-  ('conjunto-de-dados', 'tool'::rpg.item_type, 'Conjunto de Dados', '{"text":"1 PO"}'::jsonb, '—', 'Kit de jogos.'),
-  ('xadrez-do-dragao', 'tool'::rpg.item_type, 'Xadrez-do-Dragão', '{"text":"1 PO"}'::jsonb, '0,25 kg', 'Kit de jogos.'),
-  ('baralho', 'tool'::rpg.item_type, 'Baralho', '{"text":"5 PO"}'::jsonb, '—', 'Kit de jogos.'),
-  ('ante-dos-tres-dragoes', 'tool'::rpg.item_type, 'Ante dos Três Dragões', '{"text":"1 PO"}'::jsonb, '—', 'Kit de jogos.')
-ON CONFLICT (slug) DO UPDATE
-SET
-  name = EXCLUDED.name,
-  cost = EXCLUDED.cost,
-  weight = EXCLUDED.weight,
-  description = EXCLUDED.description;
-
-INSERT INTO rpg.phb_tool (item_id, category_id, use_description)
-SELECT i.id, tc.id, 'Tocar uma música conhecida (CD 10) ou improvisar uma melodia.'
-FROM rpg.phb_item i
-CROSS JOIN rpg.phb_tool_category tc
-WHERE tc.slug = 'instrument'
-  AND i.slug IN (
-    'gaita-de-foles',
-    'tambor',
-    'salterio',
-    'flauta',
-    'trompa',
-    'alaude',
-    'lira',
-    'flauta-de-pan',
-    'charamela',
-    'viola'
-  )
-ON CONFLICT (item_id) DO NOTHING;
-
-INSERT INTO rpg.phb_tool (item_id, category_id, use_description)
-SELECT i.id, tc.id, 'Discernir se alguém está trapaceando (CD 10) ou vencer uma partida.'
-FROM rpg.phb_item i
-CROSS JOIN rpg.phb_tool_category tc
-WHERE tc.slug = 'kit'
-  AND i.slug IN (
-    'conjunto-de-dados',
-    'xadrez-do-dragao',
-    'baralho',
-    'ante-dos-tres-dragoes'
-  )
-ON CONFLICT (item_id) DO NOTHING;
+-- Seed rpg.phb_background_tool_option (+ opções de instrumento do talento Músico)
+-- Itens de instrumento/jogos vivem em S031; aqui só whitelist e option_value.
 
 -- Whitelist: Artesão (ferramentas de artesão — sem ladrão/navegador)
 INSERT INTO rpg.phb_background_tool_option (background_id, item_id)
@@ -87,7 +22,7 @@ JOIN rpg.phb_item i ON i.slug IN (
 WHERE b.slug = 'artisan'
 ON CONFLICT DO NOTHING;
 
--- Whitelist: Artista (instrumentos)
+-- Whitelist: Artista (instrumentos concretos)
 INSERT INTO rpg.phb_background_tool_option (background_id, item_id)
 SELECT b.id, i.id
 FROM rpg.phb_background b
@@ -106,7 +41,7 @@ JOIN rpg.phb_item i ON i.slug IN (
 WHERE b.slug = 'entertainer'
 ON CONFLICT DO NOTHING;
 
--- Whitelist: Guarda / Nobre / Soldado (kits de jogos)
+-- Whitelist: Guarda / Nobre / Soldado (kits de jogos concretos)
 INSERT INTO rpg.phb_background_tool_option (background_id, item_id)
 SELECT b.id, i.id
 FROM rpg.phb_background b
@@ -119,7 +54,7 @@ JOIN rpg.phb_item i ON i.slug IN (
 WHERE b.slug IN ('guard', 'noble', 'soldier')
 ON CONFLICT DO NOTHING;
 
--- Músico — refrescar opções de instrumento com o catálogo expandido (Lote C)
+-- Músico — opções de instrumento a partir do catálogo (exclui categoria genérica)
 INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order)
 SELECT
   'feat'::rpg.option_scope,
@@ -142,7 +77,6 @@ WHERE c.slug = 'instrument'
 ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE
 SET label = EXCLUDED.label;
 
--- Remove genérico se ficou de seed antigo
 DELETE FROM rpg.phb_option_value ov
 USING rpg.phb_feat f
 WHERE ov.scope = 'feat'::rpg.option_scope

@@ -138,6 +138,51 @@ describe('inventory-item-ops', () => {
         attuned: false,
       });
       expect(row.attuned).toBe(false);
+      expect(catalogLookup.assertItemInCatalog).toHaveBeenCalled();
+    });
+
+    it('rejects ending attunement on cursed item without curseBroken', async () => {
+      catalogLookup.assertItemInCatalog.mockResolvedValue({
+        slug: 'espada-da-vinganca',
+        properties: { requiresAttunement: true, cursed: true },
+      });
+      const row = itemRow({
+        itemSlug: 'espada-da-vinganca',
+        attuned: true,
+        instanceProperties: null,
+      });
+      await expect(
+        applyInventoryAttunement({
+          items: items as unknown as Repository<PlayerCharacterItem>,
+          catalogLookup: catalogLookup as unknown as CatalogLookupService,
+          characterId: 'ch1',
+          character: { classSlug: 'wizard', speciesSlug: null },
+          row,
+          attuned: false,
+        }),
+      ).rejects.toBeInstanceOf(BadRequestException);
+      expect(row.attuned).toBe(true);
+    });
+
+    it('allows ending attunement when curseBroken is set', async () => {
+      catalogLookup.assertItemInCatalog.mockResolvedValue({
+        slug: 'espada-da-vinganca',
+        properties: { requiresAttunement: true, cursed: true },
+      });
+      const row = itemRow({
+        itemSlug: 'espada-da-vinganca',
+        attuned: true,
+        instanceProperties: { curseBroken: true },
+      });
+      await applyInventoryAttunement({
+        items: items as unknown as Repository<PlayerCharacterItem>,
+        catalogLookup: catalogLookup as unknown as CatalogLookupService,
+        characterId: 'ch1',
+        character: { classSlug: 'wizard', speciesSlug: null },
+        row,
+        attuned: false,
+      });
+      expect(row.attuned).toBe(false);
     });
 
     it('attunes when item requires attunement and limit not reached', async () => {
@@ -201,6 +246,105 @@ describe('inventory-item-ops', () => {
           attuned: true,
         }),
       ).rejects.toBeInstanceOf(BadRequestException);
+    });
+
+    it('rolls artifact instance properties on first attunement', async () => {
+      catalogLookup.assertItemInCatalog.mockResolvedValue({
+        slug: 'varinha-de-orcus',
+        properties: {
+          requiresAttunement: true,
+          artifactRandomQuota: {
+            minorBeneficial: 1,
+            majorBeneficial: 0,
+            minorDetrimental: 0,
+            majorDetrimental: 0,
+          },
+          sentience: { alignment: 'CM', inteligencia: 16 },
+        },
+      });
+      const row = itemRow({
+        itemSlug: 'varinha-de-orcus',
+        attuned: false,
+        instanceProperties: null,
+      });
+      await applyInventoryAttunement({
+        items: items as unknown as Repository<PlayerCharacterItem>,
+        catalogLookup: catalogLookup as unknown as CatalogLookupService,
+        characterId: 'ch1',
+        character: { classSlug: 'wizard', speciesSlug: null },
+        row,
+        attuned: true,
+        artifactRoll: {
+          loadArtifactRandomRows: async () => [
+            {
+              kind: 'minor_beneficial',
+              rollMin: 1,
+              rollMax: 100,
+              slug: 'ac-bonus-1',
+              summaryPt: '+1 CA',
+              effect: {
+                type: 'permanentEffects',
+                permanentEffects: { acBonus: 1 },
+              },
+            },
+          ],
+          rng: () => 0.5,
+          nowIso: () => '2026-08-11T12:00:00.000Z',
+        },
+      });
+      expect(row.attuned).toBe(true);
+      expect(row.instanceProperties).toMatchObject({
+        sentience: { alignment: 'CM', inteligencia: 16 },
+        artifactRandom: {
+          rolledAt: '2026-08-11T12:00:00.000Z',
+          minorBeneficial: [expect.objectContaining({ slug: 'ac-bonus-1' })],
+        },
+      });
+    });
+
+    it('does not re-roll artifact properties on re-attunement', async () => {
+      catalogLookup.assertItemInCatalog.mockResolvedValue({
+        slug: 'varinha-de-orcus',
+        properties: {
+          requiresAttunement: true,
+          artifactRandomQuota: {
+            minorBeneficial: 1,
+            majorBeneficial: 0,
+            minorDetrimental: 0,
+            majorDetrimental: 0,
+          },
+          sentience: { alignment: 'CM' },
+        },
+      });
+      const existing = {
+        artifactRandom: {
+          rolledAt: '2026-01-01T00:00:00.000Z',
+          minorBeneficial: [{ slug: 'kept', summaryPt: 'kept', roll: 1, effect: { type: 'reminder', text: 'kept' } }],
+          majorBeneficial: [],
+          minorDetrimental: [],
+          majorDetrimental: [],
+        },
+        sentience: { alignment: 'CM' },
+      };
+      const row = itemRow({
+        itemSlug: 'varinha-de-orcus',
+        attuned: false,
+        instanceProperties: existing,
+      });
+      await applyInventoryAttunement({
+        items: items as unknown as Repository<PlayerCharacterItem>,
+        catalogLookup: catalogLookup as unknown as CatalogLookupService,
+        characterId: 'ch1',
+        character: { classSlug: 'wizard', speciesSlug: null },
+        row,
+        attuned: true,
+        artifactRoll: {
+          loadArtifactRandomRows: async () => {
+            throw new Error('should not load');
+          },
+        },
+      });
+      expect(row.instanceProperties).toBe(existing);
     });
   });
 

@@ -12,7 +12,8 @@ Baseline canônico em fases (lexicográfico por path):
 8. `080_indexes/IX001_catalog.sql`
 9. `090_player/P001`–… — tabelas de jogador + RLS + slots mágicos
 
-Não há migrations de dados corretivos — isso fica nos seeds.
+Não há migrations de dados de catálogo — isso fica nos seeds (`database/seeds/`).  
+Exceção: `090_player/P026` configura bucket/policies de storage (infra Supabase), não catálogo PHB.
 
 ## Registro
 

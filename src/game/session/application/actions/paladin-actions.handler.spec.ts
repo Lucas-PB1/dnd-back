@@ -174,6 +174,80 @@ describe('PaladinActionsHandler', () => {
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 
+  it('spends Glorious Defense pool for Glory L15+', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...paladin,
+      subclassSlug: 'glory',
+      level: 15,
+      abilityScores: { ...paladin.abilityScores, carisma: 18 },
+    });
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'glorious-defense',
+    });
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      'glorious-defense',
+      1,
+    );
+    expect(result.actionName).toBe('Defesa Gloriosa');
+    expect(result.note).toContain('+4 CA');
+  });
+
+  it('rejects Glorious Defense below level 15', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...paladin,
+      subclassSlug: 'glory',
+      level: 10,
+    });
+    await expect(
+      handler.useTableAction('user-1', 'pal-1', {
+        actionSlug: 'glorious-defense',
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('spends Undying Sentinel and reports 1 + 3×level HP', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...paladin,
+      subclassSlug: 'ancients',
+      level: 15,
+      hitPointsCurrent: 0,
+      hitPointsMax: 120,
+    });
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'undying-sentinel',
+    });
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      'undying-sentinel',
+      1,
+    );
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      { deathSaveSuccesses: 0, deathSaveFailures: 0 },
+    );
+    expect(result.actionName).toBe('Sentinela Imortal');
+    expect(result.total).toBe(46);
+    expect(result.note).toContain('46');
+  });
+
+  it('spends Reveler pool for Oath of Revelry L15+', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...paladin,
+      subclassSlug: 'oath-of-revelry',
+      level: 15,
+    });
+    const result = await handler.useTableAction('user-1', 'pal-1', {
+      actionSlug: 'reveler',
+    });
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pal-1' }),
+      'reveler',
+      1,
+    );
+    expect(result.actionName).toBe('Folião');
+  });
+
   it('rejects paladin actions for non-paladins', async () => {
     access.findAccessibleOrFail.mockResolvedValueOnce({
       ...paladin,

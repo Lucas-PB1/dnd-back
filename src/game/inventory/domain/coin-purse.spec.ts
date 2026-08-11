@@ -1,8 +1,12 @@
 import {
   applyCoinPatch,
+  copperToPurse,
   debitCoins,
+  debitCoinsWithExchange,
   EMPTY_COIN_PURSE,
+  halfCoinPurseValue,
   parseCostText,
+  purseToCopper,
   resolveInventoryPayment,
   scaleCoinPurse,
 } from './coin-purse';
@@ -28,6 +32,21 @@ describe('coin-purse', () => {
     });
   });
 
+  it('parses Brazilian thousand separators', () => {
+    expect(parseCostText('1.500 PO')).toEqual({
+      ...EMPTY_COIN_PURSE,
+      gold: 1500,
+    });
+    expect(parseCostText('1.000 PO')).toEqual({
+      ...EMPTY_COIN_PURSE,
+      gold: 1000,
+    });
+    expect(parseCostText('40.000 PO')).toEqual({
+      ...EMPTY_COIN_PURSE,
+      gold: 40000,
+    });
+  });
+
   it('rejects missing or unparsable cost', () => {
     expect(() => parseCostText(null)).toThrow(/no catalog price/);
     expect(() => parseCostText('barato')).toThrow(/Cannot parse/);
@@ -43,6 +62,42 @@ describe('coin-purse', () => {
     expect(() =>
       debitCoins(balance, { ...EMPTY_COIN_PURSE, gold: 11 }),
     ).toThrow(/Insufficient gold/);
+  });
+
+  it('converts purse to copper and back (greedy)', () => {
+    expect(purseToCopper({ ...EMPTY_COIN_PURSE, gold: 1 })).toBe(100);
+    expect(purseToCopper({ ...EMPTY_COIN_PURSE, platinum: 1 })).toBe(1000);
+    expect(copperToPurse(1155)).toEqual({
+      platinum: 1,
+      gold: 1,
+      electrum: 1,
+      silver: 0,
+      copper: 5,
+    });
+  });
+
+  it('debits with exchange across denominations', () => {
+    const balance = { ...EMPTY_COIN_PURSE, platinum: 2 };
+    const cost = { ...EMPTY_COIN_PURSE, gold: 15 };
+    expect(debitCoinsWithExchange(balance, cost)).toEqual({
+      ...EMPTY_COIN_PURSE,
+      platinum: 0,
+      gold: 5,
+    });
+    expect(() =>
+      debitCoinsWithExchange(
+        { ...EMPTY_COIN_PURSE, silver: 5 },
+        { ...EMPTY_COIN_PURSE, gold: 1 },
+      ),
+    ).toThrow(/Insufficient coins/);
+  });
+
+  it('halves catalog value for selling', () => {
+    expect(halfCoinPurseValue({ ...EMPTY_COIN_PURSE, gold: 15 })).toEqual({
+      ...EMPTY_COIN_PURSE,
+      gold: 7,
+      electrum: 1,
+    });
   });
 
   it('scales cost by quantity', () => {

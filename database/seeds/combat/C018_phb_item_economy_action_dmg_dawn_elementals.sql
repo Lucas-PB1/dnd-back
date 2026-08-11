@@ -1,5 +1,5 @@
 -- DMG lote §0 #4b: economy 1×/amanhecer (elementais)
--- Ver docs/source/dmg-item-mesa-taxonomy-dawn-elementals.yaml
+-- Ver docs/source/dmg-wiring-status.md
 
 INSERT INTO rpg.phb_class_economy_action (
   action_id, class_id, species_id, feat_id, item_id, subclass_id, name, economy, unlock_level,

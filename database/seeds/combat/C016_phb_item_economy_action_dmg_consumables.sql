@@ -1,5 +1,5 @@
 -- DMG lote §0 #1: economy lembrete (Beber / Aplicar / Ler)
--- Gerado por docs/source/generate-dmg-consumable-lote.mjs
+-- Gerado por scripts/generate-dmg-consumable-lote.mjs
 -- Sem resource regenerável — consumir = reduzir quantity no inventário.
 
 INSERT INTO rpg.phb_class_economy_action (

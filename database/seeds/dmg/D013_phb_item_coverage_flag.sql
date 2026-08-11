@@ -1,24 +1,24 @@
 -- DMG §3.1: marca coberturas (kind + appliesTo + appliesFilter)
--- Gerado por docs/source/generate-dmg-coverage-lote.mjs
+-- Gerado por scripts/generate-dmg-coverage-lote.mjs
 
 UPDATE rpg.phb_item
-SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"weapon","appliesFilter":"Qualquer Simples ou Marcial"}'::jsonb
+SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"weapon","appliesFilter":"Qualquer Simples ou Marcial","requiresTierBonus":true}'::jsonb
 WHERE slug = 'arma-1-2-ou-3';
 
 UPDATE rpg.phb_item
-SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"armor","appliesFilter":"Qualquer Leve, Média ou Pesada"}'::jsonb
+SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"armor","appliesFilter":"Qualquer Leve, Média ou Pesada","requiresTierBonus":true}'::jsonb
 WHERE slug = 'armadura-1-2-ou-3';
 
 UPDATE rpg.phb_item
-SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"shield","appliesFilter":"Escudo"}'::jsonb
+SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"shield","appliesFilter":"Escudo","requiresTierBonus":true}'::jsonb
 WHERE slug = 'escudo-1-2-ou-3';
 
 UPDATE rpg.phb_item
-SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"ammunition","appliesFilter":"Qualquer Munição"}'::jsonb
+SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"ammunition","appliesFilter":"Qualquer Munição","requiresTierBonus":true}'::jsonb
 WHERE slug = 'municao-1-2-ou-3';
 
 UPDATE rpg.phb_item
-SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"wand","appliesFilter":"varinha"}'::jsonb
+SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"wand","appliesFilter":"varinha","requiresTierBonus":true}'::jsonb
 WHERE slug = 'varinha-do-mago-de-guerra-1-2-ou-3';
 
 UPDATE rpg.phb_item
@@ -62,7 +62,7 @@ SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appli
 WHERE slug = 'arma-implacavel';
 
 UPDATE rpg.phb_item
-SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"weapon","appliesFilter":"Qualquer Simples ou Marcial"}'::jsonb
+SET properties = COALESCE(properties, '{}'::jsonb) || '{"kind":"coverage","appliesTo":"weapon","appliesFilter":"Qualquer Simples ou Marcial","enspelled":{"kind":"coverage","schoolSlugs":["adivinhacao","evocacao","invocacao","necromancia","transmutacao"],"maxLevel":8}}'::jsonb
 WHERE slug = 'arma-magificada';
 
 UPDATE rpg.phb_item

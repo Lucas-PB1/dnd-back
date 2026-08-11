@@ -1,5 +1,5 @@
 -- DMG lote §0 #2: permanentEffects (passivo numérico puro)
--- Ver docs/source/dmg-item-mesa-taxonomy-passives.yaml
+-- Ver docs/source/dmg-wiring-status.md
 
 UPDATE rpg.phb_item
 SET properties = COALESCE(properties, '{}'::jsonb) || '{

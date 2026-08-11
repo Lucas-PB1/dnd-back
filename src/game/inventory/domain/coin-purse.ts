@@ -1,4 +1,4 @@
-/** Moedas D&D separadas (sem troca automática entre tipos). */
+/** Moedas D&D — parse de catálogo + câmbio PHB (Coin Values). */
 
 export type CoinPurse = {
   copper: number;
@@ -36,20 +36,57 @@ const TOKEN_TO_KEY: Record<string, CoinKey> = {
   ppl: 'platinum',
 };
 
+/**
+ * PHB Coin Values em cobre (1 PO = 100 PC).
+ * 1 PC=1, 1 PP(prata)=10, 1 PE=50, 1 PO=100, 1 PL=1000
+ */
+export const COPPER_PER_COIN: Record<CoinKey, number> = {
+  copper: 1,
+  silver: 10,
+  electrum: 50,
+  gold: 100,
+  platinum: 1000,
+};
+
+const COIN_LABEL: Record<CoinKey, string> = {
+  copper: 'PC',
+  silver: 'PP',
+  electrum: 'PE',
+  gold: 'PO',
+  platinum: 'PL',
+};
+
+/** Extrai valor inteiro aceitando milhar BR (`1.500`). */
+function parseAmountToken(raw: string): number {
+  const normalized = raw.replace(/\./g, '');
+  const amount = Number(normalized);
+  if (!Number.isFinite(amount) || amount < 0) {
+    throw new Error(`Cannot parse amount '${raw}'`);
+  }
+  return amount;
+}
+
 export function parseCostText(costText: string | null | undefined): CoinPurse {
   if (!costText?.trim()) {
     throw new Error('Item has no catalog price');
   }
+  if (/^varia$/i.test(costText.trim())) {
+    throw new Error('Item has no catalog price');
+  }
   const purse = { ...EMPTY_COIN_PURSE };
-  const matches = [...costText.matchAll(/(\d+)\s*(PC|PP|PE|PO|PL|PPl)\b/gi)];
+  const matches = [
+    ...costText.matchAll(
+      /(\d{1,3}(?:\.\d{3})+|\d+)\s*(PC|PP|PE|PO|PL|PPl)\b/gi,
+    ),
+  ];
   if (matches.length === 0) {
     throw new Error(`Cannot parse item cost '${costText}'`);
   }
   for (const match of matches) {
-    const amount = Number(match[1]);
-    const token = match[2].toLowerCase();
+    const amount = parseAmountToken(match[1]!);
+    const token = match[2]!.toLowerCase();
     const key = TOKEN_TO_KEY[token];
-    if (!key || !Number.isFinite(amount) || amount < 0) {
+    if (!key) {
       throw new Error(`Cannot parse item cost '${costText}'`);
     }
     purse[key] += amount;
@@ -68,6 +105,42 @@ export function scaleCoinPurse(purse: CoinPurse, quantity: number): CoinPurse {
     gold: purse.gold * quantity,
     platinum: purse.platinum * quantity,
   };
+}
+
+export function purseToCopper(purse: CoinPurse): number {
+  let total = 0;
+  for (const key of COIN_KEYS) {
+    total += purse[key] * COPPER_PER_COIN[key];
+  }
+  return total;
+}
+
+/** Rebalanceia cobre em PL → PO → PE → PP → PC (greedy). */
+export function copperToPurse(copper: number): CoinPurse {
+  if (!Number.isInteger(copper) || copper < 0) {
+    throw new Error('Copper amount must be a non-negative integer');
+  }
+  let rest = copper;
+  const platinum = Math.floor(rest / COPPER_PER_COIN.platinum);
+  rest -= platinum * COPPER_PER_COIN.platinum;
+  const gold = Math.floor(rest / COPPER_PER_COIN.gold);
+  rest -= gold * COPPER_PER_COIN.gold;
+  const electrum = Math.floor(rest / COPPER_PER_COIN.electrum);
+  rest -= electrum * COPPER_PER_COIN.electrum;
+  const silver = Math.floor(rest / COPPER_PER_COIN.silver);
+  rest -= silver * COPPER_PER_COIN.silver;
+  return {
+    platinum,
+    gold,
+    electrum,
+    silver,
+    copper: rest,
+  };
+}
+
+/** Metade do valor (venda PHB) — arredonda para baixo em cobre. */
+export function halfCoinPurseValue(purse: CoinPurse): CoinPurse {
+  return copperToPurse(Math.floor(purseToCopper(purse) / 2));
 }
 
 export function assertCanDebitCoins(
@@ -94,6 +167,23 @@ export function debitCoins(balance: CoinPurse, cost: CoinPurse): CoinPurse {
   };
 }
 
+/**
+ * Debita pelo valor total em cobre e rebalanceia o saldo (loja aceita mistura).
+ */
+export function debitCoinsWithExchange(
+  balance: CoinPurse,
+  cost: CoinPurse,
+): CoinPurse {
+  const have = purseToCopper(balance);
+  const need = purseToCopper(cost);
+  if (have < need) {
+    throw new Error(
+      `Insufficient coins (have ${have} copper, need ${need} copper)`,
+    );
+  }
+  return copperToPurse(have - need);
+}
+
 export function creditCoins(balance: CoinPurse, delta: CoinPurse): CoinPurse {
   return {
     copper: balance.copper + delta.copper,
@@ -102,6 +192,16 @@ export function creditCoins(balance: CoinPurse, delta: CoinPurse): CoinPurse {
     gold: balance.gold + delta.gold,
     platinum: balance.platinum + delta.platinum,
   };
+}
+
+/**
+ * Credita e rebalanceia (útil após venda ½).
+ */
+export function creditCoinsWithExchange(
+  balance: CoinPurse,
+  delta: CoinPurse,
+): CoinPurse {
+  return copperToPurse(purseToCopper(balance) + purseToCopper(delta));
 }
 
 export function applyCoinPatch(
@@ -178,13 +278,12 @@ export function applyCoinPurseToColumns(
   row.coinPlatinum = purse.platinum;
 }
 
-const COIN_LABEL: Record<CoinKey, string> = {
-  copper: 'PC',
-  silver: 'PP',
-  electrum: 'PE',
-  gold: 'PO',
-  platinum: 'PL',
-};
+/** Formata purse não-vazio (ex. `3 PO · 5 PP`). */
+export function formatCoinPurseText(purse: CoinPurse): string {
+  return COIN_KEYS.filter((key) => purse[key] > 0)
+    .map((key) => `${purse[key]} ${COIN_LABEL[key]}`)
+    .join(' · ');
+}
 
 /** Mensagem amigável a partir de erro de parse/debit do domínio. */
 export function coinPurseErrorMessage(error: unknown): string {
@@ -195,7 +294,17 @@ export function coinPurseErrorMessage(error: unknown): string {
   if (/Cannot parse/i.test(message)) {
     return 'Não foi possível interpretar o preço do item no catálogo.';
   }
-  const insufficient = message.match(/Insufficient (\w+) coins \(have (\d+), need (\d+)\)/);
+  const insufficientTotal = message.match(
+    /Insufficient coins \(have (\d+) copper, need (\d+) copper\)/,
+  );
+  if (insufficientTotal) {
+    const haveGp = (Number(insufficientTotal[1]) / 100).toFixed(2);
+    const needGp = (Number(insufficientTotal[2]) / 100).toFixed(2);
+    return `Saldo insuficiente (equivalente a ${haveGp} PO; precisa ${needGp} PO).`;
+  }
+  const insufficient = message.match(
+    /Insufficient (\w+) coins \(have (\d+), need (\d+)\)/,
+  );
   if (insufficient) {
     const key = insufficient[1] as CoinKey;
     const label = COIN_LABEL[key] ?? key;

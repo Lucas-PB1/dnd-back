@@ -7,6 +7,7 @@ import {
   coverageBonusToEffects,
   parseItemCoverage,
 } from '../domain/coverage/item-coverage';
+import { mergeArtifactInstanceIntoCatalogProperties } from '../domain/artifact/merge-artifact-instance-effects';
 import {
   resolveActivePermanentItemEffects,
   type InventoryItemForEffects,
@@ -56,7 +57,10 @@ export class ResolveActivePermanentItemEffects {
         location: row.location,
         attuned: row.attuned,
         itemName: item?.name ?? row.itemSlug,
-        properties: item?.properties ?? null,
+        properties: mergeArtifactInstanceIntoCatalogProperties(
+          (item?.properties ?? null) as Record<string, unknown> | null,
+          row.instanceProperties,
+        ),
       };
     });
 

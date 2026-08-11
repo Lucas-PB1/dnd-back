@@ -1,5 +1,5 @@
 -- DMG §0 #6: resource Anel das Estrelas Cadentes
--- Ver docs/source/dmg-item-mesa-taxonomy-star-ring.yaml
+-- Ver docs/source/dmg-wiring-status.md
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)
 VALUES (

@@ -16,6 +16,8 @@ describe('GunslingerActionsHandler', () => {
   const martial = {
     listManeuvers: jest.fn(),
     useManeuver: jest.fn().mockResolvedValue(maneuverResult),
+    reloadFirearm: jest.fn().mockResolvedValue(stateResponse),
+    fireChamber: jest.fn().mockResolvedValue(stateResponse),
   };
   const state = {
     martial,
@@ -101,6 +103,46 @@ describe('GunslingerActionsHandler', () => {
     await expect(
       handler.useTableAction('user-1', 'gs-1', {
         actionSlug: 'recover-risk',
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('reloads firearm via table-action', async () => {
+    const result = await handler.useTableAction('user-1', 'gs-1', {
+      actionSlug: 'reload-firearm',
+      itemSlug: 'revolver',
+    });
+    expect(martial.reloadFirearm).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'gs-1' }),
+      'revolver',
+    );
+    expect(result).toMatchObject({
+      actionName: 'Recarregar',
+      note: 'Recarregou revolver.',
+    });
+  });
+
+  it('fires chamber via table-action', async () => {
+    const result = await handler.useTableAction('user-1', 'gs-1', {
+      actionSlug: 'fire-chamber',
+      itemSlug: 'revolver',
+      shots: 2,
+    });
+    expect(martial.fireChamber).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'gs-1' }),
+      'revolver',
+      2,
+    );
+    expect(result).toMatchObject({
+      actionName: 'Disparar',
+      note: 'Gastou 2 tiro(s) de revolver.',
+    });
+  });
+
+  it('rejects reload-firearm without itemSlug', async () => {
+    await expect(
+      handler.useTableAction('user-1', 'gs-1', {
+        actionSlug: 'reload-firearm',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
   });

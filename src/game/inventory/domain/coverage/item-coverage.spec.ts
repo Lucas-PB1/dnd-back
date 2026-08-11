@@ -25,7 +25,19 @@ describe('parseItemCoverage', () => {
     ).toEqual({
       appliesTo: 'weapon',
       appliesFilter: 'Qualquer Simples ou Marcial',
+      requiresTierBonus: false,
     });
+  });
+
+  it('reads requiresTierBonus from properties', () => {
+    expect(
+      parseItemCoverage({
+        kind: 'coverage',
+        appliesTo: 'weapon',
+        appliesFilter: 'Qualquer',
+        requiresTierBonus: true,
+      })?.requiresTierBonus,
+    ).toBe(true);
   });
 });
 
@@ -65,6 +77,7 @@ describe('coverageMatchesBase', () => {
     const cov: ItemCoverage = {
       appliesTo: 'weapon',
       appliesFilter: 'Qualquer Simples ou Marcial',
+      requiresTierBonus: false,
     };
     expect(coverageMatchesBase(cov, sword)).toBe(true);
   });
@@ -73,6 +86,7 @@ describe('coverageMatchesBase', () => {
     const cov: ItemCoverage = {
       appliesTo: 'weapon',
       appliesFilter: 'Cimitarra, Espada Longa, Rapieira',
+      requiresTierBonus: false,
     };
     expect(coverageMatchesBase(cov, sword)).toBe(true);
   });
@@ -81,6 +95,7 @@ describe('coverageMatchesBase', () => {
     const cov: ItemCoverage = {
       appliesTo: 'armor',
       appliesFilter: 'Qualquer Média ou Pesada, Exceto Gibão de Peles',
+      requiresTierBonus: false,
     };
     expect(coverageMatchesBase(cov, hide)).toBe(false);
     expect(coverageMatchesBase(cov, plate)).toBe(true);
@@ -90,6 +105,7 @@ describe('coverageMatchesBase', () => {
     const cov: ItemCoverage = {
       appliesTo: 'shield',
       appliesFilter: 'Escudo',
+      requiresTierBonus: false,
     };
     expect(coverageMatchesBase(cov, shield)).toBe(true);
     expect(coverageMatchesBase(cov, plate)).toBe(false);
@@ -114,6 +130,7 @@ describe('coverageMatchesBase', () => {
     const cov: ItemCoverage = {
       appliesTo: 'ammunition',
       appliesFilter: 'Qualquer Munição',
+      requiresTierBonus: false,
     };
     expect(coverageMatchesBase(cov, ammo)).toBe(true);
     expect(coverageMatchesBase(cov, arrows)).toBe(true);
@@ -136,9 +153,22 @@ describe('coverageBonusToEffects', () => {
 });
 
 describe('coverageRequiresTierBonus', () => {
-  it('detects +1/+2/+3 slugs', () => {
-    expect(coverageRequiresTierBonus('arma-1-2-ou-3')).toBe(true);
-    expect(coverageRequiresTierBonus('espada-vorpal')).toBe(false);
+  it('reads flag from properties', () => {
+    expect(
+      coverageRequiresTierBonus({
+        kind: 'coverage',
+        appliesTo: 'weapon',
+        appliesFilter: 'x',
+        requiresTierBonus: true,
+      }),
+    ).toBe(true);
+    expect(
+      coverageRequiresTierBonus({
+        kind: 'coverage',
+        appliesTo: 'weapon',
+        appliesFilter: 'x',
+      }),
+    ).toBe(false);
   });
 });
 

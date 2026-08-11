@@ -25,6 +25,8 @@ export class CastSpellHandler {
       spellSlug: dto.spellSlug,
       slotLevelUsed: result.slotLevelUsed,
       note: result.note,
+      spellSaveDcOverride: result.spellSaveDcOverride ?? null,
+      spellAttackBonusOverride: result.spellAttackBonusOverride ?? null,
       state: result.state,
     };
   }

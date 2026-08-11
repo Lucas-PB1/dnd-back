@@ -3,12 +3,8 @@ import { isGunslingerClass } from '@game/combat/domain/gunslinger';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
-  CharacterStateResponseDto,
-  FireChamberDto,
-  ReloadFirearmDto,
   TableActionResponseDto,
   UseGunslingerTableActionDto,
-  UseManeuverDto,
   UseManeuverResponseDto,
 } from '@game/session/dto';
 
@@ -26,65 +22,6 @@ export class GunslingerActionsHandler {
       'read',
     );
     return this.state.martial.listManeuvers(character);
-  }
-
-  async useManeuver(
-    userId: string,
-    characterId: string,
-    dto: UseManeuverDto,
-  ): Promise<UseManeuverResponseDto> {
-    const character = await this.access.findAccessibleOrFail(
-      userId,
-      characterId,
-      'write',
-    );
-    return this.state.martial.useManeuver(character, dto.maneuverSlug);
-  }
-
-  async reloadFirearm(
-    userId: string,
-    characterId: string,
-    dto: ReloadFirearmDto,
-  ): Promise<CharacterStateResponseDto> {
-    const character = await this.access.findAccessibleOrFail(
-      userId,
-      characterId,
-      'write',
-    );
-    return this.state.martial.reloadFirearm(character, dto.itemSlug);
-  }
-
-  async fireChamber(
-    userId: string,
-    characterId: string,
-    dto: FireChamberDto,
-  ): Promise<CharacterStateResponseDto> {
-    const character = await this.access.findAccessibleOrFail(
-      userId,
-      characterId,
-      'write',
-    );
-    return this.state.martial.fireChamber(
-      character,
-      dto.itemSlug,
-      dto.shots ?? 1,
-    );
-  }
-
-  /** Gambito Terrível (nv.15): recupera 1 Dado de Risco (marca de mesa). */
-  async recoverRisk(
-    userId: string,
-    characterId: string,
-  ): Promise<CharacterStateResponseDto> {
-    const character = await this.access.findAccessibleOrFail(
-      userId,
-      characterId,
-      'write',
-    );
-    if (!isGunslingerClass(character.classSlug) || character.level < 15) {
-      return this.state.buildResponse(character);
-    }
-    return this.state.recoverClassResource(character, 'risk', 1);
   }
 
   async useTableAction(
@@ -126,10 +63,45 @@ export class GunslingerActionsHandler {
           note: 'Gambito Terrível: recuperou 1 Dado de Risco (marque quando rolar Iniciativa ou obtiver um Acerto Crítico).',
         };
       }
+      case 'reload-firearm': {
+        const itemSlug = requireItemSlug(dto.itemSlug);
+        const state = await this.state.martial.reloadFirearm(
+          character,
+          itemSlug,
+        );
+        return {
+          state,
+          actionName: 'Recarregar',
+          resourceSpent: false,
+          note: `Recarregou ${itemSlug}.`,
+        };
+      }
+      case 'fire-chamber': {
+        const itemSlug = requireItemSlug(dto.itemSlug);
+        const shots = dto.shots ?? 1;
+        const state = await this.state.martial.fireChamber(
+          character,
+          itemSlug,
+          shots,
+        );
+        return {
+          state,
+          actionName: 'Disparar',
+          resourceSpent: false,
+          note: `Gastou ${shots} tiro(s) de ${itemSlug}.`,
+        };
+      }
       default:
         throw new BadRequestException(
           `Ação de Pistoleiro desconhecida: ${dto.actionSlug as string}`,
         );
     }
   }
+}
+
+function requireItemSlug(itemSlug: string | undefined): string {
+  if (!itemSlug?.trim()) {
+    throw new BadRequestException('itemSlug é obrigatório');
+  }
+  return itemSlug.trim();
 }

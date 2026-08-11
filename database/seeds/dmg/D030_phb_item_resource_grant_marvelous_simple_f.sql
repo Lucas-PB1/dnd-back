@@ -1,5 +1,5 @@
 -- DMG §0 #9f: resources maravilhosos (cargas / 1×)
--- Ver docs/source/dmg-item-mesa-taxonomy-marvelous-simple.yaml
+-- Ver docs/source/dmg-wiring-status.md
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)
 VALUES
