@@ -356,6 +356,7 @@ CROSS JOIN (
     ('musicalInstrument3')
 ) AS v(option_key)
 WHERE c.slug = 'instrument'
+  AND i.slug <> 'instrumento-musical'
 ON CONFLICT (scope, owner_id, option_key, value_id) DO NOTHING;
 
 -- --- D006_ritual_caster_feat_options.sql ---

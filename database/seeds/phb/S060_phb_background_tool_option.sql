@@ -141,3 +141,11 @@ WHERE c.slug = 'instrument'
   AND i.slug <> 'instrumento-musical'
 ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE
 SET label = EXCLUDED.label;
+
+-- Remove genérico se ficou de seed antigo
+DELETE FROM rpg.phb_option_value ov
+USING rpg.phb_feat f
+WHERE ov.scope = 'feat'::rpg.option_scope
+  AND ov.owner_id = f.id
+  AND f.slug = 'musician'
+  AND ov.value_id = 'instrumento-musical';
