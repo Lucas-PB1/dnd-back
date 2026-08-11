@@ -60,6 +60,8 @@ export async function castSpellOp(
 ): Promise<{
   slotLevelUsed: number | null;
   note: string | null;
+  spellSaveDcOverride: number | null;
+  spellAttackBonusOverride: number | null;
   state: CharacterStateResponseDto;
 }> {
   const state = await deps.findOrCreate(character.id, character.level);
