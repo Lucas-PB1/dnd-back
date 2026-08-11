@@ -130,9 +130,20 @@ export async function listCampaignRefsByCharacterIds(
 
   const campaignIds = [...new Set(links.map((l) => l.campaignId))];
   const [campaigns, memberships] = await Promise.all([
-    deps.campaigns.find({ where: { id: In(campaignIds) } }),
+    deps.campaigns.find({
+      where: { id: In(campaignIds) },
+      select: {
+        id: true,
+        name: true,
+        allowPlayerSkipPayment: true,
+      },
+    }),
     deps.members.find({
       where: { userId, campaignId: In(campaignIds) },
+      select: {
+        campaignId: true,
+        role: true,
+      },
     }),
   ]);
   const campaignById = new Map(campaigns.map((c) => [c.id, c]));

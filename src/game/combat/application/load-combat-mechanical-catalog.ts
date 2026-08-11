@@ -83,6 +83,13 @@ function pickPlayableText(
 
 @Injectable()
 export class LoadCombatMechanicalCatalog {
+  /** TTL do cache em memória (warm instance / vários loads no mesmo request). */
+  static readonly CACHE_TTL_MS = 60_000;
+
+  private cache: CombatMechanicalCatalog | null = null;
+  private cacheAtMs = 0;
+  private inflight: Promise<CombatMechanicalCatalog> | null = null;
+
   constructor(
     @InjectRepository(VPhbGunslingerManeuver)
     private readonly gunslingerRepo: Repository<VPhbGunslingerManeuver>,
@@ -107,6 +114,38 @@ export class LoadCombatMechanicalCatalog {
   ) {}
 
   async load(): Promise<CombatMechanicalCatalog> {
+    const now = Date.now();
+    if (
+      this.cache &&
+      now - this.cacheAtMs < LoadCombatMechanicalCatalog.CACHE_TTL_MS
+    ) {
+      return this.cache;
+    }
+    if (this.inflight) return this.inflight;
+
+    this.inflight = this.loadFromDb()
+      .then((catalog) => {
+        this.cache = catalog;
+        this.cacheAtMs = Date.now();
+        this.inflight = null;
+        return catalog;
+      })
+      .catch((error: unknown) => {
+        this.inflight = null;
+        throw error;
+      });
+
+    return this.inflight;
+  }
+
+  /** Invalida cache (testes / após reseed na mesma instância). */
+  clearCache(): void {
+    this.cache = null;
+    this.cacheAtMs = 0;
+    this.inflight = null;
+  }
+
+  private async loadFromDb(): Promise<CombatMechanicalCatalog> {
     const [
       gunslingerRows,
       battleMasterRows,
@@ -245,7 +284,4 @@ export class LoadCombatMechanicalCatalog {
       })(),
     };
   }
-
-  /** No-op: catálogo não é mais cacheado (seeds/reseed refletem no próximo request). */
-  clearCache(): void {}
 }

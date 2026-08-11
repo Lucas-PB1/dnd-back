@@ -119,7 +119,7 @@ export async function loadCharacterSheet(
   };
 }
 
-/** Só feats/options/species choices/spells — para GET state (granted casts). */
+/** Feats/options/species/spells + classOptions (invocações) — para GET state. */
 export async function loadGrantedSpellSheetSlice(
   deps: Pick<
     CharacterSheetLoadDeps,
@@ -127,26 +127,36 @@ export async function loadGrantedSpellSheetSlice(
   >,
   characterId: string,
 ): Promise<GrantedSpellSheetSlice> {
-  const [speciesRows, featRows, featOptionRows, spellRows] = await Promise.all([
-    deps.speciesChoices.find({
-      where: { characterId },
-      order: { choiceKind: 'ASC' },
-    }),
-    deps.feats.find({
-      where: { characterId },
-      order: { featSlug: 'ASC', instanceIndex: 'ASC' },
-    }),
-    deps.options.find({
-      where: { characterId, scope: 'feat' },
-      order: { ownerSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
-    }),
-    deps.spells.find({ where: { characterId }, order: { spellSlug: 'ASC' } }),
-  ]);
+  const [speciesRows, classOptionRows, featRows, featOptionRows, spellRows] =
+    await Promise.all([
+      deps.speciesChoices.find({
+        where: { characterId },
+        order: { choiceKind: 'ASC' },
+      }),
+      deps.options.find({
+        where: { characterId, scope: 'class' },
+        order: { optionKey: 'ASC' },
+      }),
+      deps.feats.find({
+        where: { characterId },
+        order: { featSlug: 'ASC', instanceIndex: 'ASC' },
+      }),
+      deps.options.find({
+        where: { characterId, scope: 'feat' },
+        order: { ownerSlug: 'ASC', instanceIndex: 'ASC', optionKey: 'ASC' },
+      }),
+      deps.spells.find({ where: { characterId }, order: { spellSlug: 'ASC' } }),
+    ]);
 
   return {
     speciesChoices: speciesRows.map((row) => ({
       choiceKind: row.choiceKind,
       choiceSlug: row.choiceSlug,
+    })),
+    classOptions: classOptionRows.map((row) => ({
+      optionKey: row.optionKey,
+      valueId: row.valueId,
+      instanceIndex: row.instanceIndex,
     })),
     characterFeats: featRows.map((row) => ({
       featSlug: row.featSlug,

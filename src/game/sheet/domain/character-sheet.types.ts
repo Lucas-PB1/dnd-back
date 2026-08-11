@@ -39,7 +39,11 @@ export const EMPTY_SHEET_DATA: CharacterSheetData = {
 /** Subconjunto da sheet para granted spell cast options no state. */
 export type GrantedSpellSheetSlice = Pick<
   CharacterSheetData,
-  'characterFeats' | 'featOptions' | 'speciesChoices' | 'characterSpells'
+  | 'characterFeats'
+  | 'featOptions'
+  | 'speciesChoices'
+  | 'characterSpells'
+  | 'classOptions'
 >;
 
 export interface CharacterSheetInput {

@@ -83,6 +83,21 @@ export class CampaignMemberDto {
 
   @ApiProperty()
   joinedAt!: string;
+
+  @ApiProperty({ nullable: true, required: false })
+  displayName!: string | null;
+
+  @ApiProperty({ nullable: true, required: false })
+  email!: string | null;
+
+  @ApiProperty({ nullable: true, required: false })
+  avatarUrl!: string | null;
+
+  @ApiProperty({ nullable: true, required: false })
+  bio!: string | null;
+
+  @ApiProperty({ type: [String], required: false })
+  characterNames!: string[];
 }
 
 export class CampaignCharacterSummaryDto {

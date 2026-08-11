@@ -158,18 +158,14 @@ async function buildGrantedSpellCastOptions(
     return options;
   }
 
-  const fullSheet = await sheetRepository.load(
-    character.id,
-    character.backgroundSlug,
-  );
-  const picks = readEldritchInvocationPicks(fullSheet.classOptions);
+  const picks = readEldritchInvocationPicks(sheet.classOptions);
   if (picks.length === 0) return options;
 
   const catalog = await loadEldritchInvocationEffectCatalog(dataSource);
   const pickedSlugs = picks.map((pick) => pick.slug);
   const seen = new Set(options.map((row) => row.spellSlug));
 
-  for (const spell of fullSheet.characterSpells) {
+  for (const spell of sheet.characterSpells) {
     if (seen.has(spell.spellSlug)) continue;
     const freeCast = resolveEldritchInvocationFreeCast({
       spellSlug: spell.spellSlug,

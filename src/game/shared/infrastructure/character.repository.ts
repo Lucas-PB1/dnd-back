@@ -23,6 +23,17 @@ export class CharacterRepository {
     return this.repo.find({
       where: { userId },
       order: { updatedAt: 'DESC' },
+      select: {
+        id: true,
+        name: true,
+        level: true,
+        classSlug: true,
+        speciesSlug: true,
+        backgroundSlug: true,
+        subclassSlug: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
   }
 

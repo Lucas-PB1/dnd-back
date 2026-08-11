@@ -17,6 +17,8 @@ export type ArmorClassResolveInput = {
   fightingStyleSlugs?: string[];
   itemAcBonus?: number;
   itemAcBonusNames?: readonly string[];
+  /** Snapshot compartilhado — evita novo `find` no combat slice. */
+  equippedItems?: PlayerCharacterItem[];
 };
 
 @Injectable()
@@ -34,9 +36,11 @@ export class ResolveEquippedArmorClass {
     scores: AbilityScores,
     context: ArmorClassResolveInput = {},
   ): Promise<{ armorClass: number; armorClassNote: string }> {
-    const equipped = await this.inventoryItems.find({
-      where: { characterId, location: 'equipped' },
-    });
+    const equipped =
+      context.equippedItems ??
+      (await this.inventoryItems.find({
+        where: { characterId, location: 'equipped' },
+      }));
 
     const armorSlots = equipped.filter(
       (row) => row.equipmentSlot === 'armor' || row.equipmentSlot === 'shield',

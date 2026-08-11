@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { CampaignRepository } from '../infrastructure/campaign.repository';
 import {
   CampaignDetailDto,
+  CampaignMemberDto,
   CampaignSummaryDto,
   CreateCampaignDto,
   JoinCampaignDto,
@@ -10,11 +13,16 @@ import {
   UpdateCampaignMemberDto,
 } from '../dto/campaign.dto';
 import { Campaign } from '../infrastructure/campaign.entity';
-import { CampaignRole } from '../infrastructure/campaign-member.entity';
+import { CampaignMember, CampaignRole } from '../infrastructure/campaign-member.entity';
+import { PlayerCharacter } from '../../shared/infrastructure/player-character.entity';
+import { resolveAuthUserProfiles } from './resolve-auth-user-profiles';
 
 @Injectable()
 export class CampaignService {
-  constructor(private readonly repo: CampaignRepository) {}
+  constructor(
+    private readonly repo: CampaignRepository,
+    @InjectDataSource() private readonly dataSource: DataSource,
+  ) {}
 
   async create(
     userId: string,
@@ -45,14 +53,16 @@ export class CampaignService {
       links.map((l) => l.characterId),
     );
     const byId = new Map(characters.map((c) => [c.id, c]));
+    const profiles = await resolveAuthUserProfiles(
+      this.dataSource,
+      members.map((m) => m.userId),
+    );
 
     return {
       ...this.toSummary(campaign, membership.role),
-      members: members.map((m) => ({
-        userId: m.userId,
-        role: m.role,
-        joinedAt: m.joinedAt.toISOString(),
-      })),
+      members: members.map((m) =>
+        this.toMemberDto(m, profiles, characters),
+      ),
       characters: links.map((link) => {
         const character = byId.get(link.characterId);
         return {
@@ -98,18 +108,21 @@ export class CampaignService {
     campaignId: string,
     targetUserId: string,
     dto: UpdateCampaignMemberDto,
-  ) {
+  ): Promise<CampaignMemberDto> {
     const member = await this.repo.updateMemberRole(
       campaignId,
       userId,
       targetUserId,
       dto.role,
     );
-    return {
-      userId: member.userId,
-      role: member.role,
-      joinedAt: member.joinedAt.toISOString(),
-    };
+    const profiles = await resolveAuthUserProfiles(this.dataSource, [
+      member.userId,
+    ]);
+    const links = await this.repo.listLinkedCharacters(campaignId);
+    const characters = await this.repo.findCharactersByIds(
+      links.map((l) => l.characterId),
+    );
+    return this.toMemberDto(member, profiles, characters);
   }
 
   async removeMember(
@@ -162,6 +175,27 @@ export class CampaignService {
 
   listCampaignRefsByCharacterIds(characterIds: string[], userId: string) {
     return this.repo.listCampaignRefsByCharacterIds(characterIds, userId);
+  }
+
+  private toMemberDto(
+    member: CampaignMember,
+    profiles: Awaited<ReturnType<typeof resolveAuthUserProfiles>>,
+    characters: PlayerCharacter[],
+  ): CampaignMemberDto {
+    const profile = profiles.get(member.userId);
+    return {
+      userId: member.userId,
+      role: member.role,
+      joinedAt: member.joinedAt.toISOString(),
+      displayName: profile?.displayName ?? null,
+      email: profile?.email ?? null,
+      avatarUrl: profile?.avatarUrl ?? null,
+      bio: profile?.bio ?? null,
+      characterNames: characters
+        .filter((character) => character.userId === member.userId)
+        .map((character) => character.name)
+        .filter(Boolean),
+    };
   }
 
   private toSummary(

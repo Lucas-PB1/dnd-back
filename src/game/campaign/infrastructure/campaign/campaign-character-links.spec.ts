@@ -211,6 +211,23 @@ describe('campaign-character-links', () => {
         ['ch1'],
         'u1',
       );
+      expect(campaigns.find).toHaveBeenCalledWith(
+        expect.objectContaining({
+          select: {
+            id: true,
+            name: true,
+            allowPlayerSkipPayment: true,
+          },
+        }),
+      );
+      expect(members.find).toHaveBeenCalledWith(
+        expect.objectContaining({
+          select: {
+            campaignId: true,
+            role: true,
+          },
+        }),
+      );
       expect(result.get('ch1')).toEqual([
         {
           id: 'c1',

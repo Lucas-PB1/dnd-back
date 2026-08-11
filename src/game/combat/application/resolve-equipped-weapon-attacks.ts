@@ -42,6 +42,8 @@ export type WeaponAttackResolveContext = {
   subclassSlug?: string | null;
   rageActive?: boolean;
   recklessActive?: boolean;
+  /** Snapshot compartilhado — evita novo `find` no combat slice. */
+  equippedItems?: PlayerCharacterItem[];
 };
 
 @Injectable()
@@ -69,13 +71,20 @@ export class ResolveEquippedWeaponAttacks {
       subclassSlug: context.subclassSlug,
       level: context.level,
     });
-    const equipped = await this.inventoryItems.find({
-      where: {
-        characterId,
-        location: 'equipped',
-        equipmentSlot: In(['main_hand', 'off_hand']),
-      },
-    });
+    const equipped = context.equippedItems
+      ? context.equippedItems.filter(
+          (row) =>
+            row.location === 'equipped' &&
+            (row.equipmentSlot === 'main_hand' ||
+              row.equipmentSlot === 'off_hand'),
+        )
+      : await this.inventoryItems.find({
+          where: {
+            characterId,
+            location: 'equipped',
+            equipmentSlot: In(['main_hand', 'off_hand']),
+          },
+        });
 
     const pieces: EquippedWeaponPiece[] = [];
     if (equipped.length > 0) {

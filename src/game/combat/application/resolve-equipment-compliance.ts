@@ -24,6 +24,8 @@ export type EquipmentComplianceResolveInput = {
   sizeCategory?: SizeCategory;
   weaponPieces?: EquippedWeaponPiece[];
   hasShield?: boolean;
+  /** Snapshot compartilhado — evita novo `find` no combat slice. */
+  equippedItems?: PlayerCharacterItem[];
 };
 
 @Injectable()
@@ -42,9 +44,11 @@ export class ResolveEquipmentCompliance {
     characterId: string,
     input: EquipmentComplianceResolveInput,
   ): Promise<EquipmentComplianceResult> {
-    const equipped = await this.inventoryItems.find({
-      where: { characterId, location: 'equipped' },
-    });
+    const equipped =
+      input.equippedItems ??
+      (await this.inventoryItems.find({
+        where: { characterId, location: 'equipped' },
+      }));
 
     const armorSlots = equipped.filter(
       (row) => row.equipmentSlot === 'armor' || row.equipmentSlot === 'shield',

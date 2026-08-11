@@ -25,8 +25,13 @@ export class ResolveActivePermanentItemEffects {
     private readonly catalogItems: Repository<PhbItem>,
   ) {}
 
-  async resolve(characterId: string): Promise<ActivePermanentItemEffects> {
-    const rows = await this.inventoryItems.find({ where: { characterId } });
+  async resolve(
+    characterId: string,
+    options?: { inventoryRows?: PlayerCharacterItem[] },
+  ): Promise<ActivePermanentItemEffects> {
+    const rows =
+      options?.inventoryRows ??
+      (await this.inventoryItems.find({ where: { characterId } }));
     if (rows.length === 0) {
       return resolveActivePermanentItemEffects([]);
     }

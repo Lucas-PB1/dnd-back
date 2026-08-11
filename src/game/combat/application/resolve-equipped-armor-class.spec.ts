@@ -59,4 +59,13 @@ describe('ResolveEquippedArmorClass', () => {
     expect(armorCatalog.find).toHaveBeenCalled();
     expect(result.armorClass).toBeGreaterThanOrEqual(11);
   });
+
+  it('skips inventory find when equippedItems snapshot is provided', async () => {
+    armorCatalog.find.mockResolvedValue([]);
+    const result = await service.resolve('ch1', DEFAULT_ABILITY_SCORES, {
+      equippedItems: [],
+    });
+    expect(inventoryItems.find).not.toHaveBeenCalled();
+    expect(result.armorClass).toBeGreaterThanOrEqual(10);
+  });
 });

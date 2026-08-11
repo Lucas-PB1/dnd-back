@@ -82,20 +82,18 @@ export async function resolveCharacterCombatSlice(input: {
     permanentItemEffects,
   } = input;
 
-  const itemEffects = await permanentItemEffects.resolve(characterId);
+  const inventoryRows = await inventoryItems.find({ where: { characterId } });
+  const equippedItems = inventoryRows.filter((row) => row.location === 'equipped');
+  const hasShield = equippedItems.some((row) => row.equipmentSlot === 'shield');
+
+  const itemEffects = await permanentItemEffects.resolve(characterId, {
+    inventoryRows,
+  });
   const combatScores = applyItemAbilityBonuses(
     abilityScores,
     itemEffects.abilityBonuses,
     itemEffects.abilityScoreCaps,
   );
-
-  const hasShield = await inventoryItems.exist({
-    where: {
-      characterId,
-      location: 'equipped',
-      equipmentSlot: 'shield',
-    },
-  });
 
   const armor = await equippedArmorClass.resolve(characterId, combatScores, {
     classSlug,
@@ -104,6 +102,7 @@ export async function resolveCharacterCombatSlice(input: {
     fightingStyleSlugs,
     itemAcBonus: itemEffects.acBonus,
     itemAcBonusNames: itemEffects.sourceNames,
+    equippedItems,
   });
   const weaponAttacks = await equippedWeaponAttacks.resolve(
     characterId,
@@ -120,6 +119,7 @@ export async function resolveCharacterCombatSlice(input: {
       masteredWeaponSlugs,
       itemAttackBonus: itemEffects.attackBonus,
       itemDamageBonus: itemEffects.damageBonus,
+      equippedItems,
     },
   );
 
@@ -129,6 +129,7 @@ export async function resolveCharacterCombatSlice(input: {
     featSlugs,
     sizeCategory,
     hasShield,
+    equippedItems,
   });
 
   const classCombat = aggregateClassCombatContributions({

@@ -13,6 +13,7 @@ import {
   emptySheetData,
   loadBackgroundSkillSlugs,
   loadCharacterSheet,
+  loadGrantedSpellSheetSlice,
   loadManyCharacterSheets,
   mergeSheetData,
   type CharacterSheetLoadDeps,
@@ -182,6 +183,57 @@ describe('load-character-sheet', () => {
         classSkillSlugs: ['perception'],
         backgroundSkillSlugs: [],
       });
+    });
+  });
+
+  describe('loadGrantedSpellSheetSlice', () => {
+    it('loads classOptions alongside feats/spells (no skills/equipment/languages)', async () => {
+      (deps.speciesChoices.find as jest.Mock).mockResolvedValue([]);
+      (deps.feats.find as jest.Mock).mockResolvedValue([]);
+      (deps.spells.find as jest.Mock).mockResolvedValue([
+        { spellSlug: 'disguise-self', listType: 'known' },
+      ]);
+      (deps.options.find as jest.Mock).mockImplementation(
+        (opts: { where: { scope?: string } }) => {
+          if (opts.where.scope === 'class') {
+            return Promise.resolve([
+              {
+                optionKey: 'eldritch-invocation',
+                valueId: 'mask-of-many-faces',
+                instanceIndex: 0,
+              },
+            ]);
+          }
+          if (opts.where.scope === 'feat') {
+            return Promise.resolve([]);
+          }
+          return Promise.resolve([]);
+        },
+      );
+
+      const slice = await loadGrantedSpellSheetSlice(deps, 'char-1');
+
+      expect(slice).toEqual({
+        speciesChoices: [],
+        classOptions: [
+          {
+            optionKey: 'eldritch-invocation',
+            valueId: 'mask-of-many-faces',
+            instanceIndex: 0,
+          },
+        ],
+        characterFeats: [],
+        featOptions: [],
+        characterSpells: [{ spellSlug: 'disguise-self', listType: 'known' }],
+      });
+      expect(deps.skills.find).not.toHaveBeenCalled();
+      expect(deps.equipment.find).not.toHaveBeenCalled();
+      expect(deps.languages.find).not.toHaveBeenCalled();
+      expect(deps.options.find).toHaveBeenCalledWith(
+        expect.objectContaining({
+          where: { characterId: 'char-1', scope: 'class' },
+        }),
+      );
     });
   });
 });

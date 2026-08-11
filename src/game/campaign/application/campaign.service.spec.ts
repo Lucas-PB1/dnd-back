@@ -2,6 +2,7 @@ import { CampaignService } from './campaign.service';
 import type { CampaignRepository } from '../infrastructure/campaign.repository';
 import type { Campaign } from '../infrastructure/campaign.entity';
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
+import type { DataSource } from 'typeorm';
 
 const iso = '2026-01-01T00:00:00.000Z';
 
@@ -32,6 +33,7 @@ function member(overrides: Partial<CampaignMember> = {}): CampaignMember {
 
 describe('CampaignService', () => {
   let repo: jest.Mocked<CampaignRepository>;
+  let dataSource: { query: jest.Mock };
   let service: CampaignService;
 
   beforeEach(() => {
@@ -53,7 +55,8 @@ describe('CampaignService', () => {
       rotateInviteCode: jest.fn(),
       listCampaignRefsByCharacterIds: jest.fn(),
     } as unknown as jest.Mocked<CampaignRepository>;
-    service = new CampaignService(repo);
+    dataSource = { query: jest.fn().mockResolvedValue([]) };
+    service = new CampaignService(repo, dataSource as unknown as DataSource);
   });
 
   it('create and list map repository rows to summaries', async () => {
@@ -80,13 +83,39 @@ describe('CampaignService', () => {
       { id: 'l2', campaignId: 'c1', characterId: 'gone', linkedBy: 'u1', linkedAt: linkAt },
     ]);
     repo.findCharactersByIds.mockResolvedValue([
-      { id: 'ch1', name: 'Hero', level: 3, classSlug: 'fighter', speciesSlug: 'human' } as never,
+      {
+        id: 'ch1',
+        userId: 'u1',
+        name: 'Hero',
+        level: 3,
+        classSlug: 'fighter',
+        speciesSlug: 'human',
+      } as never,
+    ]);
+    dataSource.query.mockResolvedValue([
+      {
+        id: 'u1',
+        email: 'dm@taverna.app',
+        display_name: 'Mestre Ana',
+        avatar_url: null,
+        bio: 'DM da mesa',
+      },
     ]);
 
     const detail = await service.getDetail('u1', 'c1');
     expect(detail).toMatchObject({
       myRole: 'assistant',
-      members: [{ userId: 'u1', role: 'assistant' }],
+      members: [
+        {
+          userId: 'u1',
+          role: 'assistant',
+          displayName: 'Mestre Ana',
+          email: 'dm@taverna.app',
+          avatarUrl: null,
+          bio: 'DM da mesa',
+          characterNames: ['Hero'],
+        },
+      ],
     });
     expect(detail.characters[0]).toMatchObject({
       characterId: 'ch1',
@@ -117,12 +146,28 @@ describe('CampaignService', () => {
   it('updateMemberRole serializes member dto', async () => {
     const updated = member({ userId: 'u2', role: 'assistant' });
     repo.updateMemberRole.mockResolvedValue(updated);
+    repo.listLinkedCharacters.mockResolvedValue([]);
+    repo.findCharactersByIds.mockResolvedValue([]);
+    dataSource.query.mockResolvedValue([
+      {
+        id: 'u2',
+        email: 'p@x.com',
+        display_name: 'Player',
+        avatar_url: null,
+        bio: null,
+      },
+    ]);
     await expect(
       service.updateMemberRole('u1', 'c1', 'u2', { role: 'assistant' }),
     ).resolves.toEqual({
       userId: 'u2',
       role: 'assistant',
       joinedAt: iso,
+      displayName: 'Player',
+      email: 'p@x.com',
+      avatarUrl: null,
+      bio: null,
+      characterNames: [],
     });
   });
 
@@ -152,7 +197,7 @@ describe('CampaignService', () => {
             id: 'c1',
             name: 'One',
             allowPlayerSkipPayment: false,
-            myRole: 'player' as const,
+            myRole: 'dm' as const,
           },
         ],
       ],
@@ -161,7 +206,9 @@ describe('CampaignService', () => {
 
     await service.remove('u1', 'c1');
     await service.unlinkCharacter('u1', 'c1', 'ch1');
-    await expect(service.listCampaignRefsByCharacterIds(['ch1'], 'u1')).resolves.toBe(map);
+    await expect(
+      service.listCampaignRefsByCharacterIds(['ch1'], 'u1'),
+    ).resolves.toBe(map);
 
     expect(repo.deleteCampaign).toHaveBeenCalledWith('c1', 'u1');
     expect(repo.unlinkCharacter).toHaveBeenCalledWith('c1', 'u1', 'ch1');
