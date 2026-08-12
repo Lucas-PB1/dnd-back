@@ -146,6 +146,12 @@ export class InventoryItemResponseDto {
   })
   isCoverage!: boolean;
 
+  @ApiProperty({
+    example: false,
+    description: 'True quando phb_item.properties.magic = true',
+  })
+  isMagic!: boolean;
+
   @ApiPropertyOptional({
     description:
       'Estado por instância (props de artefato roladas na 1ª sintonia, senciência, etc.)',

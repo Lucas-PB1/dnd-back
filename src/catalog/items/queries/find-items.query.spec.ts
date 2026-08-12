@@ -9,6 +9,7 @@ describe('FindItemsQuery', () => {
   beforeEach(() => {
     qb = {
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
       getCount: jest.fn().mockResolvedValue(1),
       skip: jest.fn().mockReturnThis(),
@@ -40,5 +41,24 @@ describe('FindItemsQuery', () => {
     expect(qb.andWhere).toHaveBeenCalledWith(
       `(item.properties->>'grantedBySubclass' IS NULL AND item.properties->>'grantedByClass' IS NULL)`,
     );
+  });
+
+  it('can exclude coverage overlays', async () => {
+    await query.execute(1, 20, undefined, { excludeCoverage: true });
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      `(item.properties->>'kind' IS NULL OR (item.properties->>'kind') <> 'coverage')`,
+    );
+  });
+
+  it('can filter attunement and sort by cost', async () => {
+    await query.execute(1, 20, undefined, {
+      requiresAttunement: true,
+      sort: 'cost_desc',
+    });
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      `(item.properties->>'requiresAttunement') = 'true'`,
+    );
+    expect(qb.orderBy).toHaveBeenCalled();
+    expect(qb.addOrderBy).toHaveBeenCalledWith('item.name', 'ASC');
   });
 });

@@ -20,6 +20,7 @@ import {
   parseItemCoverage,
   type CoverageBaseContext,
 } from '../domain/coverage/item-coverage';
+import { assertBaseEligibleForCoverage } from '../domain/coverage/coverage-base-eligibility';
 import {
   assertEnspelledBoundSpell,
   isEnspelledCoverageSlug,
@@ -146,6 +147,12 @@ export class AttachCoverageHandler {
         `Coverage '${coverageSlug}' does not take a bound spell`,
       );
     }
+
+    const baseCatalog = await this.catalogLookup.assertItemInCatalog(baseItemSlug);
+    assertBaseEligibleForCoverage(
+      baseItemSlug,
+      (baseCatalog.properties ?? null) as Record<string, unknown> | null,
+    );
 
     const baseCtx = await this.resolveBaseContext(baseItemSlug);
     if (!coverageMatchesBase(coverage, baseCtx)) {

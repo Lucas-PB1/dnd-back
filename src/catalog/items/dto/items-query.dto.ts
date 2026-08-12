@@ -60,4 +60,29 @@ export class ItemsQueryDto extends IntersectionType(
   @IsOptional()
   @IsIn(['true', 'false'])
   consumable?: 'true' | 'false';
+
+  @ApiPropertyOptional({
+    description: 'Exclude properties.kind = coverage (base pieces for overlays)',
+    enum: ['true', 'false'],
+  })
+  @IsOptional()
+  @IsIn(['true', 'false'])
+  excludeCoverage?: 'true' | 'false';
+
+  @ApiPropertyOptional({
+    description:
+      'When true, only properties.requiresAttunement = true; false = sem exigência explícita',
+    enum: ['true', 'false'],
+  })
+  @IsOptional()
+  @IsIn(['true', 'false'])
+  requiresAttunement?: 'true' | 'false';
+
+  @ApiPropertyOptional({
+    description: 'Ordenação: name | name_desc | cost_asc | cost_desc',
+    enum: ['name', 'name_desc', 'cost_asc', 'cost_desc'],
+  })
+  @IsOptional()
+  @IsIn(['name', 'name_desc', 'cost_asc', 'cost_desc'])
+  sort?: 'name' | 'name_desc' | 'cost_asc' | 'cost_desc';
 }

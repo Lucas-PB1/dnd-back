@@ -37,6 +37,7 @@ export function inventoryItemToDtoFromCatalog(
   const coverageSlug = row.attachedCoverageSlug ?? null;
   const coverage = coverageSlug ? catalogBySlug.get(coverageSlug) : undefined;
   const isCoverage = props?.kind === 'coverage';
+  const isMagic = props?.magic === true;
   return {
     itemSlug: row.itemSlug,
     itemName: catalog?.name ?? row.itemSlug,
@@ -67,6 +68,7 @@ export function inventoryItemToDtoFromCatalog(
     attachedCoverageSpellSlug: row.attachedCoverageSpellSlug ?? null,
     boundSpellSlug: row.boundSpellSlug ?? null,
     isCoverage,
+    isMagic,
     instanceProperties: row.instanceProperties ?? null,
     costText: catalogCostText(catalog?.cost ?? null),
     containedInItemSlug: row.containedInItemSlug ?? null,

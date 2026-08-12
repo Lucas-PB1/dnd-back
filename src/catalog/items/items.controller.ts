@@ -62,6 +62,19 @@ export class ItemsController {
           : query.consumable === 'false'
             ? false
             : undefined,
+      excludeCoverage:
+        query.excludeCoverage === 'true'
+          ? true
+          : query.excludeCoverage === 'false'
+            ? false
+            : undefined,
+      requiresAttunement:
+        query.requiresAttunement === 'true'
+          ? true
+          : query.requiresAttunement === 'false'
+            ? false
+            : undefined,
+      sort: query.sort,
     });
   }
 

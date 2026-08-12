@@ -82,13 +82,38 @@ describe('coverageMatchesBase', () => {
     expect(coverageMatchesBase(cov, sword)).toBe(true);
   });
 
-  it('matches allowlist by Portuguese name', () => {
+  it("matches allowlist by Portuguese name", () => {
     const cov: ItemCoverage = {
       appliesTo: 'weapon',
       appliesFilter: 'Cimitarra, Espada Longa, Rapieira',
       requiresTierBonus: false,
     };
     expect(coverageMatchesBase(cov, sword)).toBe(true);
+  });
+
+  it('matches shortbow and longbow for bow coverages', () => {
+    const cov: ItemCoverage = {
+      appliesTo: 'weapon',
+      appliesFilter: 'Arco Curto ou Arco Longo',
+      requiresTierBonus: false,
+    };
+    expect(
+      coverageMatchesBase(cov, {
+        itemSlug: 'shortbow',
+        itemName: 'Arco Curto',
+        itemType: 'weapon',
+        weaponCategory: 'simple',
+      }),
+    ).toBe(true);
+    expect(
+      coverageMatchesBase(cov, {
+        itemSlug: 'longbow',
+        itemName: 'Arco Longo',
+        itemType: 'weapon',
+        weaponCategory: 'martial',
+      }),
+    ).toBe(true);
+    expect(coverageMatchesBase(cov, sword)).toBe(false);
   });
 
   it('excludes hide from adamantine armor filter', () => {

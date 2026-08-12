@@ -24,6 +24,8 @@ import {
   assertCoverageLineHasTarget,
   assertNotStandaloneCoverageItem,
 } from '../domain/coverage/coverage-inventory-rules';
+import { assertBaseEligibleForCoverage } from '../domain/coverage/coverage-base-eligibility';
+import { resolveCoveragePurchaseCost } from '../domain/coverage/coverage-tier-cost';
 import { isServiceItem } from '../domain/item-kind';
 import { assertNotClassGrantedCatalogItem } from '@catalog/items/domain/class-granted-catalog-item';
 import { CharacterInventoryResponseDto } from '../dto/inventory.dto';
@@ -143,13 +145,33 @@ export class PurchaseInventoryHandler {
       const priced = this.tryAddCost(catalog.cost, quantity, totalCost);
       totalCost = priced.total;
       if (priced.ok) pricedLineCount += 1;
-      else needsPrice = true;
 
       statsLines.push({ itemSlug: line.itemSlug, quantity });
 
-      if (service) continue;
+      if (service) {
+        if (!priced.ok) needsPrice = true;
+        continue;
+      }
 
       if (coverage && line.attachToBaseSlug) {
+        const baseCatalog = await this.catalogLookup.assertItemInCatalog(
+          line.attachToBaseSlug,
+        );
+        assertBaseEligibleForCoverage(
+          line.attachToBaseSlug,
+          (baseCatalog.properties ?? null) as Record<string, unknown> | null,
+        );
+        if (!priced.ok) {
+          const tier = this.tryAddTierCoverageCost(
+            props,
+            line.attachCoverageBonus,
+            quantity,
+            totalCost,
+          );
+          totalCost = tier.total;
+          if (tier.ok) pricedLineCount += 1;
+          else needsPrice = true;
+        }
         inventoryLines.push({ itemSlug: line.itemSlug, quantity: 1 });
         coverageAttaches.push({
           baseItemSlug: line.attachToBaseSlug,
@@ -167,10 +189,18 @@ export class PurchaseInventoryHandler {
         const covCatalog = await this.catalogLookup.assertItemInCatalog(
           line.attachCoverageSlug,
         );
+        const covProps = (covCatalog.properties ?? null) as
+          | Record<string, unknown>
+          | null;
         assertAttachCoverageSlugIsCoverage(
           line.attachCoverageSlug,
-          (covCatalog.properties ?? null) as Record<string, unknown> | null,
+          covProps,
         );
+        assertBaseEligibleForCoverage(
+          line.itemSlug,
+          props,
+        );
+        if (!priced.ok) needsPrice = true;
         inventoryLines.push({ itemSlug: line.itemSlug, quantity });
         inventoryLines.push({
           itemSlug: line.attachCoverageSlug,
@@ -181,14 +211,29 @@ export class PurchaseInventoryHandler {
           coverageSlug: line.attachCoverageSlug,
           bonus: line.attachCoverageBonus,
         });
-        const covPriced = this.tryAddCost(covCatalog.cost, 1, totalCost);
-        totalCost = covPriced.total;
-        if (covPriced.ok) pricedLineCount += 1;
-        else needsPrice = true;
-        statsLines.push({ itemSlug: line.attachCoverageSlug, quantity: 1 });
+        const covPriced = this.tryAddCost(covCatalog.cost, quantity, totalCost);
+        if (covPriced.ok) {
+          totalCost = covPriced.total;
+          pricedLineCount += 1;
+        } else {
+          const tier = this.tryAddTierCoverageCost(
+            covProps,
+            line.attachCoverageBonus,
+            quantity,
+            totalCost,
+          );
+          totalCost = tier.total;
+          if (tier.ok) pricedLineCount += 1;
+          else needsPrice = true;
+        }
+        statsLines.push({
+          itemSlug: line.attachCoverageSlug,
+          quantity,
+        });
         continue;
       }
 
+      if (!priced.ok) needsPrice = true;
       inventoryLines.push({ itemSlug: line.itemSlug, quantity });
     }
 
@@ -216,5 +261,19 @@ export class PurchaseInventoryHandler {
     } catch {
       return { ok: false, total: current };
     }
+  }
+
+  private tryAddTierCoverageCost(
+    properties: Record<string, unknown> | null | undefined,
+    bonus: 1 | 2 | 3 | undefined,
+    quantity: number,
+    current: CoinPurse,
+  ): { ok: boolean; total: CoinPurse } {
+    const resolved = resolveCoveragePurchaseCost(properties, bonus);
+    if (!resolved) return { ok: false, total: current };
+    return {
+      ok: true,
+      total: addCoinPurses(current, scaleCoinPurse(resolved.purse, quantity)),
+    };
   }
 }

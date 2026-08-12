@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import {
   applyIlikeSearch,
   DEFAULT_PHB_EDITION_SLUG,
@@ -12,6 +12,10 @@ import { ItemResponseDto } from '../dto/item-response.dto';
 import { ItemSummaryResponseDto } from '../dto/item-summary-response.dto';
 import { ItemsMapper } from '../items.mapper';
 import { EXCLUDE_CLASS_GRANTED_ITEMS_SQL } from '../domain/class-granted-catalog-item';
+import {
+  ITEM_COST_COPPER_ORDER_EXPR,
+  type ItemCatalogSort,
+} from '../domain/item-cost-sort.sql';
 
 export type FindItemsFilters = {
   itemType?: string;
@@ -22,6 +26,9 @@ export type FindItemsFilters = {
   hasCost?: boolean;
   kind?: string;
   consumable?: boolean;
+  excludeCoverage?: boolean;
+  requiresAttunement?: boolean;
+  sort?: ItemCatalogSort;
 };
 
 @Injectable()
@@ -39,10 +46,11 @@ export class FindItemsQuery {
     filters: FindItemsFilters = {},
   ): Promise<PaginatedResponseDto<ItemResponseDto | ItemSummaryResponseDto>> {
     const qb = this.itemsRepo
-      .createQueryBuilder('item')
-      .orderBy('item.name', 'ASC');
+      .createQueryBuilder('item');
 
     qb.andWhere(EXCLUDE_CLASS_GRANTED_ITEMS_SQL);
+
+    applyItemCatalogSort(qb, filters.sort);
 
     if (filters.fields === 'summary') {
       qb.select([
@@ -112,6 +120,20 @@ export class FindItemsQuery {
       );
     }
 
+    if (filters.excludeCoverage === true) {
+      qb.andWhere(
+        `(item.properties->>'kind' IS NULL OR (item.properties->>'kind') <> 'coverage')`,
+      );
+    }
+
+    if (filters.requiresAttunement === true) {
+      qb.andWhere(`(item.properties->>'requiresAttunement') = 'true'`);
+    } else if (filters.requiresAttunement === false) {
+      qb.andWhere(
+        `(item.properties->>'requiresAttunement' IS NULL OR (item.properties->>'requiresAttunement') <> 'true')`,
+      );
+    }
+
     const editionSlugs = filters.editionSlugs
       ?.map((slug) => slug.trim())
       .filter(Boolean);
@@ -131,5 +153,26 @@ export class FindItemsQuery {
         ? rows.map((row) => this.mapper.toSummaryDto(row))
         : rows.map((row) => this.mapper.toDto(row));
     return { data, meta };
+  }
+}
+
+function applyItemCatalogSort(
+  qb: SelectQueryBuilder<PhbItem>,
+  sort: ItemCatalogSort | undefined,
+): void {
+  switch (sort) {
+    case 'name_desc':
+      qb.orderBy('item.name', 'DESC');
+      return;
+    case 'cost_asc':
+      qb.orderBy(ITEM_COST_COPPER_ORDER_EXPR, 'ASC', 'NULLS LAST');
+      qb.addOrderBy('item.name', 'ASC');
+      return;
+    case 'cost_desc':
+      qb.orderBy(ITEM_COST_COPPER_ORDER_EXPR, 'DESC', 'NULLS LAST');
+      qb.addOrderBy('item.name', 'ASC');
+      return;
+    default:
+      qb.orderBy('item.name', 'ASC');
   }
 }
