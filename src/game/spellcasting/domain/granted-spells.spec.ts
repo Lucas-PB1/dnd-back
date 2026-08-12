@@ -161,6 +161,36 @@ describe('granted-spells', () => {
       expect([...slugs].sort()).toEqual(['chama-sagrada', 'orientacao']);
     });
 
+    it('collects Northlands blessing bonusSpell + fixed grants', () => {
+      const slugs = collectFeatGrantedSpellSlugs(
+        [
+          {
+            featSlug: 'blessing-of-boreas',
+            instanceIndex: 0,
+            optionKey: 'castingAbility',
+            valueId: 'inteligencia',
+          },
+          {
+            featSlug: 'blessing-of-boreas',
+            instanceIndex: 0,
+            optionKey: 'bonusSpell',
+            valueId: 'armadura-de-agathys',
+          },
+        ],
+        [{ featSlug: 'blessing-of-boreas', instanceIndex: 0 }],
+        [
+          {
+            featSlug: 'blessing-of-boreas',
+            spellSlug: 'raio-de-gelo',
+          },
+        ],
+      );
+      expect([...slugs].sort()).toEqual([
+        'armadura-de-agathys',
+        'raio-de-gelo',
+      ]);
+    });
+
     it('adds fixed companions from catalog for fey/shadow touched', () => {
       const fey = collectFeatGrantedSpellSlugs(
         [

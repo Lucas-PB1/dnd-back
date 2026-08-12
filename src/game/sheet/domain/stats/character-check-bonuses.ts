@@ -16,7 +16,15 @@ export const ALERT_FEAT_SLUG = 'alert';
 export const PROF_OR_EXPERTISE_FEAT_OPTION_KEYS = new Set([
   'attentiveSkill', // observant
   'vastKnowledgeSkill', // keen-mind
+  'wildSkill', // blessing-of-freyr-and-freyja
+  'loreSkill', // blessing-of-wotan
 ]);
+
+/** Perícias fixas concedidas pelo feat (sem option_def) — proficiência ou expertise se já tiver. */
+export const FIXED_FEAT_SKILL_SLUGS: Readonly<Record<string, readonly string[]>> =
+  {
+    'blessing-of-loki': ['deception'],
+  };
 
 export type SkillProficiencyRank =
   | 'none'
@@ -54,11 +62,24 @@ export type SkillBonusSources = {
   backgroundSkillSlugs?: readonly string[];
   speciesChoices?: readonly SpeciesChoiceLike[];
   featOptions?: readonly FeatOptionLike[];
+  characterFeats?: readonly CharacterFeatLike[];
   classOptions?: readonly ClassOptionLike[];
   subclassOptions?: readonly SubclassOptionLike[];
   classSlug?: string | null;
   level?: number;
 };
+
+function collectFixedFeatSkillSlugs(
+  characterFeats: readonly CharacterFeatLike[] | undefined,
+): string[] {
+  if (!characterFeats?.length) return [];
+  const slugs: string[] = [];
+  for (const feat of characterFeats) {
+    const fixed = FIXED_FEAT_SKILL_SLUGS[feat.featSlug];
+    if (fixed) slugs.push(...fixed);
+  }
+  return slugs;
+}
 
 function isFeatSkillProficiencyOptionKey(optionKey: string): boolean {
   return (
@@ -101,7 +122,7 @@ export function collectClassExpertiseSkillSlugs(
     .map((option) => option.valueId);
 }
 
-/** Proficiências “base” (sem expertise condicional de Observant/Keen Mind). */
+/** Proficiências “base” (sem expertise condicional de Observant/Keen Mind / Loki). */
 function collectPriorProficientSkillSlugs(input: SkillBonusSources): string[] {
   const featOptions = (input.featOptions ?? []).filter(
     (option) => !PROF_OR_EXPERTISE_FEAT_OPTION_KEYS.has(option.optionKey),
@@ -125,6 +146,7 @@ export function collectExpertiseSkillSlugs(
   const result = new Set<string>(
     collectClassExpertiseSkillSlugs(input.classOptions),
   );
+  const fixedFeatSkills = collectFixedFeatSkillSlugs(input.characterFeats);
 
   for (const option of input.featOptions ?? []) {
     if (option.optionKey === 'expertiseSkill' && option.valueId) {
@@ -137,6 +159,10 @@ export function collectExpertiseSkillSlugs(
     ) {
       result.add(option.valueId);
     }
+  }
+
+  for (const skill of fixedFeatSkills) {
+    if (prior.has(skill)) result.add(skill);
   }
 
   return [...result];
@@ -152,6 +178,7 @@ export function collectProficientSkillSlugs(
         PROF_OR_EXPERTISE_FEAT_OPTION_KEYS.has(option.optionKey),
       ),
     ),
+    ...collectFixedFeatSkillSlugs(input.characterFeats),
     ...collectClassExpertiseSkillSlugs(input.classOptions),
   ]);
   return [...set];

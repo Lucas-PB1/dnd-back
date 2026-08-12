@@ -80,4 +80,23 @@ describe('character-check-bonuses', () => {
     expect(initiativeBonus(3, 2, [])).toBe(3);
     expect(initiativeBonus(3, 2, [{ featSlug: 'alert' }])).toBe(5);
   });
+
+  it('grants deception from blessing-of-loki without option', () => {
+    expect(
+      collectProficientSkillSlugs({
+        characterFeats: [{ featSlug: 'blessing-of-loki' }],
+      }),
+    ).toContain('deception');
+    expect(
+      skillProficiencyRank('deception', {
+        characterFeats: [{ featSlug: 'blessing-of-loki' }],
+      }),
+    ).toBe('proficient');
+    expect(
+      skillProficiencyRank('deception', {
+        classSkillSlugs: ['deception'],
+        characterFeats: [{ featSlug: 'blessing-of-loki' }],
+      }),
+    ).toBe('expertise');
+  });
 });

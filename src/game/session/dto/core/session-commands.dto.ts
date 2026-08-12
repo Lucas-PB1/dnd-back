@@ -75,6 +75,12 @@ export class UseClassResourceResponseDto {
 
   @ApiPropertyOptional({ type: ResourceDieRollDto })
   roll?: ResourceDieRollDto | null;
+
+  @ApiPropertyOptional({
+    example:
+      'Mudar Aspecto — Força Bestial: 6 PV temp. (2× PB) aplicados.',
+  })
+  note?: string | null;
 }
 
 export class UseManeuverDto {

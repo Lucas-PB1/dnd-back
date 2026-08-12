@@ -11,8 +11,8 @@ Dados do catálogo PHB 2024 e Valdas Spire of Secrets. **Um arquivo por tabela.*
 | `valdas-gunslinger/G###_<tabela>.sql` | Classe Gunslinger (`G001`–`G028`) |
 | `valdas-player-pack-2/P###_<tabela>.sql` | Valdas Player Pack 2 (`P001`–`P014`) |
 | `steinhardt-eldritch-hunt/H###_<tabela>.sql` | Steinhardt Eldritch Hunt Player Pack (`H001`–`H025`) |
-| `northlands-heroes/N###_<tabela>.sql` | Northlands Worldbook — Heroes of the Sagas (`N001`–`N023`; Waves 1–4 + feat requirements + background feat options) |
-| `combat/C###_*.sql` | Economia (C009), painel (C010), recursos especiais, **armas concedidas** (ex. C015 Lâminas Psíquicas) |
+| `northlands-heroes/N###_<tabela>.sql` | Northlands Worldbook — Heroes of the Sagas (`N001`–`N035`; Cap. 5 salvo veículos; Masterwork/Greater/Eir/Giantkin) |
+| `combat/C###_*.sql` | Economia/painel/recursos (`C001`–`C056`; Eir `C056`; Northlands C052–C055) |
 | `dmg/D###_*.sql` | Itens mágicos DMG 2024 Cap. 7 A–Z (`D010_phb_item`) |
 
 **Regra:** stats de arma (dano, tipo, propriedades, maestria) vivem no catálogo (`phb_item` / `phb_weapon`), nunca hardcoded no domain TypeScript.
@@ -28,4 +28,4 @@ Numeração sequencial sem lacunas (ordem de dependência). Exemplos:
 - `V001_phb_edition_citation.sql` — edição/citações Valdas
 - `V011`–`V013` — construções Geppettin, estações Mandrágora, grants
 
-Ordem de aplicação dos packs: `phb` → `subclass` → `valdas` → `valdas-gunslinger` → `valdas-player-pack-2` → `steinhardt-eldritch-hunt` → `dmg` → `combat`.
+Ordem de aplicação dos packs: `phb` → `subclass` → `valdas` → `valdas-gunslinger` → `valdas-player-pack-2` → `steinhardt-eldritch-hunt` → `northlands-heroes` → `dmg` → `combat`.

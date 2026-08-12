@@ -27,4 +27,10 @@ describe('speciesCombatNotes', () => {
     });
     expect(notes.some((n) => /1,5 m/i.test(n))).toBe(true);
   });
+
+  it('lists bearfolk Northlands passives', () => {
+    const notes = speciesCombatNotes({ speciesSlug: 'bearfolk' });
+    expect(notes.some((n) => /Pelagem Espessa/i.test(n))).toBe(true);
+    expect(notes.some((n) => /Coração Selvagem/i.test(n))).toBe(true);
+  });
 });

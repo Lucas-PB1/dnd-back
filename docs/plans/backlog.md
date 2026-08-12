@@ -3,7 +3,7 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **abertos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-08-12 (limpeza docs)
+**Última revisão:** 2026-08-12 (pente fino Northlands + Cap. 5 parcial)
 
 Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**.
 
@@ -15,7 +15,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-cla
 |------|--------|
 | Ficha / inventário / sessão / campanha / encontro | Pronto |
 | Classes mesa PHB (critério skills) | Pronto (13 classes) |
-| Packs Steinhardt + Northlands (Waves 1–4 + polish create) | Pronto |
+| Packs Steinhardt + Northlands (Waves 1–4 + polish create + pente fino) | Pronto |
 | Itens DMG mesa (wiring) | Pronto — [`dmg-wiring-status.md`](../source/dmg-wiring-status.md) |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
@@ -23,8 +23,9 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-cla
 
 ## Ativo
 
-- [ ] **Northlands — Character Threads:** Bloodsworn, Cursemarked, Explorer, Fatebound, Herald, Legend Hunter, Sworn Huskarl — sistema novo. Extração: [`northlands-character-threads.md`](northlands-character-threads.md). Sem schema/API/UI.
-- [ ] **Northlands — Cap. 5 (Magic and Miscellany):** magias/itens (HTML não estava no scrape); Healing Spirit do Spirit Caller se entrar no catálogo.
+- [ ] **Northlands — Character Threads:** Bloodsworn, Cursemarked, Explorer, Fatebound, Herald, Legend Hunter, Sworn Huskarl — sistema novo. Extração: [`northlands-character-threads.md`](northlands-character-threads.md). Sem schema/API/UI. **Espera** — não é gap de seed.
+- [ ] **Northlands — Cap. 5 veículos:** montarias / trenós / longships — **espera modelo de ficha** antes de seed. Armas/gear/magias/itens/Masterwork já feitos (`N024`–`N035`). Extração: [`northlands-magic-and-miscellany.md`](northlands-magic-and-miscellany.md).
+- [ ] **Northlands — pente fino residual (opcional):** M6 features só texto; Greater Freyr usos PB/dia — ver [`northlands-audit.md`](northlands-audit.md).
 
 ---
 

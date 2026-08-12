@@ -127,6 +127,31 @@ describe('BardActionsHandler', () => {
     );
   });
 
+  it('resolves Bragi Rune Vitalidade for Skald at level 6+', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...bard,
+      subclassSlug: 'skald',
+      level: 6,
+    });
+
+    const result = await handler.useTableAction('user-1', 'bard-1', {
+      actionSlug: 'bragi-rune',
+    });
+
+    expect(result.expression).toBe('1d8');
+    expect(result.resourceSpent).toBe(true);
+    expect(result.note).toContain('Vitalidade');
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'bard-1' }),
+      'bardicInspiration',
+      1,
+    );
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'bard-1' }),
+      expect.objectContaining({ tempHp: result.total }),
+    );
+  });
+
   it('resolves Mantle of Majesty spending resource for Glamour Bard at level 6+', async () => {
     access.findAccessibleOrFail.mockResolvedValueOnce({
       ...bard,

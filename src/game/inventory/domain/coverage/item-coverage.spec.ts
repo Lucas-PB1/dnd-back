@@ -39,6 +39,19 @@ describe('parseItemCoverage', () => {
       })?.requiresTierBonus,
     ).toBe(true);
   });
+
+  it('treats masterwork coverage as requiring tier bonus', () => {
+    const props = {
+      kind: 'coverage',
+      appliesTo: 'weapon',
+      appliesFilter: 'Qualquer Simples ou Marcial',
+      requiresTierBonus: true,
+      masterwork: true,
+    };
+    expect(parseItemCoverage(props)?.requiresTierBonus).toBe(true);
+    expect(coverageRequiresTierBonus(props)).toBe(true);
+    expect(props.masterwork).toBe(true);
+  });
 });
 
 describe('coverageMatchesBase', () => {

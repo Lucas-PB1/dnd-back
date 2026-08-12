@@ -85,6 +85,7 @@ export class CharacterMapper {
       backgroundSkillSlugs: loaded.backgroundSkillSlugs,
       speciesChoices: loaded.speciesChoices,
       featOptions: loaded.featOptions,
+      characterFeats: loaded.characterFeats,
       classOptions: loaded.classOptions,
       subclassOptions: loaded.subclassOptions,
       classSlug: row.classSlug,

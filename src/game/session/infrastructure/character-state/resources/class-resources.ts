@@ -7,6 +7,7 @@ import {
   type ClassResourceMax,
   type ClassResourceScheduleRow,
 } from '@game/session/domain/class-resources';
+import { filterSpeciesResourceScheduleByChoices } from '@game/session/domain/filter-species-resources-by-option';
 import { riskDieFaces, riskDieLabel } from '@game/session/domain/risk-die';
 import {
   psiEnergyDieFaces,
@@ -15,6 +16,10 @@ import {
   superiorityDieLabel,
 } from '@game/combat/domain/fighter';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
+import {
+  loadCharacterSpeciesChoices,
+  loadSpeciesResourceOptionGates,
+} from './species-resource-option-gates';
 
 export type ClassResourceDbRow = {
   resource_slug: string;
@@ -80,9 +85,15 @@ export async function resolveClassResources(
   const subclassRows = character.subclassSlug
     ? await loadSubclassResourceSchedule(dataSource, character.subclassSlug)
     : [];
-  const speciesRows = await loadSpeciesResourceSchedule(
-    dataSource,
-    character.speciesSlug,
+  const [speciesRowsRaw, speciesChoices, speciesGates] = await Promise.all([
+    loadSpeciesResourceSchedule(dataSource, character.speciesSlug),
+    loadCharacterSpeciesChoices(dataSource, character.id),
+    loadSpeciesResourceOptionGates(dataSource, character.speciesSlug),
+  ]);
+  const speciesRows = filterSpeciesResourceScheduleByChoices(
+    speciesRowsRaw,
+    speciesGates,
+    speciesChoices,
   );
   const featSlugs = await loadCharacterFeatSlugs(dataSource, character.id);
   const featRows =

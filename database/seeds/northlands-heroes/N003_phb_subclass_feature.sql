@@ -69,7 +69,7 @@ VALUES
 
 Bônus em Força (Atletismo) e salvaguardas de Força = mod. Sabedoria (mín. 1). Pode trocar um ataque corpo a corpo por mordida espectral (mod. Sabedoria no ataque; 1d8 + mod. Sabedoria Força no acerto).'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'circle-of-fenris'), 3, 'Magias do Círculo de Fenris',
-'Sempre preparadas: L3 Sentido Feral, Aprimorar Atributo, Golpe Constritor, Marca do Predador; L5 Invocar Fera, Medo; L7 Dominar Fera; L9 Comunhão com a Natureza.'),
+'Sempre preparadas: L3 Sentido Feral, Aprimorar Atributo, Golpe Constritor, Marca do Predador; L5 Invocar Animais, Medo; L7 Dominar Fera; L9 Comunhão com a Natureza.'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'circle-of-fenris'), 6, 'Manto Aprimorado',
 'Com o Manto: Quebrar a Corrente — mordidas causam dano dobrado a objetos/estruturas (ignoram limiar); Visão no Escuro 18 m (ou +9 m); Velocidade +3 m.'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'circle-of-fenris'), 10, 'Defender a Alcateia',
@@ -124,7 +124,7 @@ VALUES
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'spirit-caller'), 3, 'Forma Animal Espiritual',
 'Escolha (ou role d12) a forma simbólica dos espíritos: raposa-ártica, morcego, falcão, peixe, lebre, lince, coruja, corvo, serpente, esquilo, sapo, doninha.'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'spirit-caller'), 3, 'Magias do Chamador de Espíritos',
-'L3 Perdição, Bênção, Heroísmo, Proteção Contra o Bem e o Mal; L5 Augúrio; L7 Falar com Mortos, Guardiões Espirituais; L9 Aura de Vida, Proteção Contra a Morte. (Healing Spirit da fonte: sem magia PHB 2024 equivalente no catálogo — declare na mesa se usar XGE.)'),
+'L3 Perdição, Bênção, Heroísmo, Proteção Contra o Bem e o Mal; L5 Augúrio, Espírito Curador (XGE 2014); L7 Falar com Mortos, Guardiões Espirituais; L9 Aura de Vida, Proteção Contra a Morte.'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'spirit-caller'), 3, 'Expertise Oculta',
 'Proficiência em Arcanismo e Religião (se já não tiver). Pode usar mod. Carisma nesses testes se for maior que Inteligência.'),
 ((SELECT id FROM rpg.phb_subclass WHERE slug = 'spirit-caller'), 3, 'Orientação Espiritual',

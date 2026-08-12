@@ -11,6 +11,8 @@ Wiring de mesa, economy e gaps de regra **não** moram aqui.
 | `dmg-2024-itens-magicos-az.json` | Intermediário do gerador |
 | `dmg-2024-itens-magicos-az-index.md` | Índice humano dos ~338 itens |
 | `dmg-wiring-status.md` | Status dos lotes de wiring → seeds |
+| `northlands-cap5-extract.json` | Extração Cap. 5 Northlands (itens/magias/equip.) — regen: `node scripts/extract-northlands-cap5.mjs` |
+| `new/*.html` | Scrape Beyond **temporário** até seed; sem pastas `_files` |
 
 ## Regenerar seeds
 
@@ -31,6 +33,6 @@ Lista completa de seeds: [`database/seeds/dmg/README.md`](../../database/seeds/d
 
 ## Não colocar aqui
 
-- Scrapes HTML do D&D Beyond / pastas `_files`
-- Extratos one-shot de packs já seedados (Steinhardt, Northlands, …)
+- Pastas `_files` de scrape Beyond (JS/CSS/imagens)
+- Extratos one-shot de packs **já seedados**
 - Planos de feature (vão em `docs/plans/` ou `docs/architecture/`)

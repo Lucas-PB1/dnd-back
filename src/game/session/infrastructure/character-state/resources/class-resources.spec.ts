@@ -92,10 +92,13 @@ describe('character-state/class-resources', () => {
 
     it('builds remaining and risk die extras', async () => {
       dataSource.query.mockImplementation(async (sql: string) => {
-        if (String(sql).includes('player_character_feat')) return [];
-        if (String(sql).includes('player_character_item')) return [];
-        if (String(sql).includes('phb_resource_grant')) return scheduleRows;
-        if (String(sql).includes('v_phb_class_progression')) {
+        const text = String(sql);
+        if (text.includes('player_character_feat')) return [];
+        if (text.includes('player_character_item')) return [];
+        if (text.includes('player_character_species_choice')) return [];
+        if (text.includes('phb_class_economy_action')) return [];
+        if (text.includes('phb_resource_grant')) return scheduleRows;
+        if (text.includes('v_phb_class_progression')) {
           return [{ proficiency_bonus: 2, channel_divinity: null }];
         }
         return [];
@@ -137,6 +140,80 @@ describe('character-state/class-resources', () => {
         abilityScores: DEFAULT_ABILITY_SCORES,
       } as never);
       expect(resources).toEqual([]);
+    });
+
+    it('filters species resources by lineage gates (Andari hides bear-hug)', async () => {
+      const speciesSchedule = [
+        {
+          resource_slug: 'bearfolk-apex-predator',
+          resource_name: 'Predador de Ápice',
+          unlock_level: 1,
+          max_formula: 'proficiency_bonus',
+          fixed_max: null,
+          recover_one_on_short: false,
+          recover_all_on_short: false,
+          recover_all_on_long: true,
+          recover_on_long_dice: null,
+        },
+        {
+          resource_slug: 'bearfolk-bear-hug',
+          resource_name: 'Abraço do Urso',
+          unlock_level: 1,
+          max_formula: 'constitution_mod',
+          fixed_max: null,
+          recover_one_on_short: false,
+          recover_all_on_short: false,
+          recover_all_on_long: true,
+          recover_on_long_dice: null,
+        },
+      ];
+      dataSource.query.mockImplementation(async (sql: string) => {
+        const text = String(sql);
+        if (text.includes('player_character_feat')) return [];
+        if (text.includes('player_character_item')) return [];
+        if (text.includes('player_character_species_choice')) {
+          return [
+            { choice_kind: 'bearfolk_lineage', choice_slug: 'andari' },
+          ];
+        }
+        if (text.includes('phb_class_economy_action')) {
+          return [
+            {
+              resource_slug: 'bearfolk-apex-predator',
+              requires_option_key: null,
+              requires_option_value: null,
+            },
+            {
+              resource_slug: 'bearfolk-bear-hug',
+              requires_option_key: 'bearfolkLineageId',
+              requires_option_value: 'garhamr',
+            },
+          ];
+        }
+        if (text.includes('phb_resource_grant') && text.includes('phb_species')) {
+          return speciesSchedule;
+        }
+        if (text.includes('phb_resource_grant')) return [];
+        if (text.includes('v_phb_class_progression')) {
+          return [{ proficiency_bonus: 2, channel_divinity: null }];
+        }
+        return [];
+      });
+
+      const resources = await resolveClassResources(dataSource as never, {
+        id: 'andari-1',
+        classSlug: 'fighter',
+        speciesSlug: 'bearfolk',
+        level: 1,
+        abilityScores: {
+          ...DEFAULT_ABILITY_SCORES,
+          constituicao: 14,
+        },
+      } as never);
+
+      expect(resources.map((r) => r.slug)).toEqual([
+        'bearfolk-apex-predator',
+      ]);
     });
   });
 });

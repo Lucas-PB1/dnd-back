@@ -90,7 +90,7 @@ VALUES
     (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-loki'),
     2,
     'Magia do Trapaceiro',
-    'Magia do Trapaceiro. Você aprende os truques Ilusão Menor e Zombaria Cruel. Escolha a magia Disfarçar-se ou Enfeitiçar Pessoa. Você sempre a tem preparada. Pode conjurá-la uma vez sem gastar espaço de magia e recupera essa capacidade ao terminar um Descanso Longo; também pode conjurá-la com espaços que tiver. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias deste talento (escolha ao selecioná-lo).'
+    'Magia do Trapaceiro. Você aprende os truques Ilusão Menor e Zombaria Perversa. Escolha a magia Disfarçar-se ou Enfeitiçar Pessoa. Você sempre a tem preparada. Pode conjurá-la uma vez sem gastar espaço de magia e recupera essa capacidade ao terminar um Descanso Longo; também pode conjurá-la com espaços que tiver. Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para as magias deste talento (escolha ao selecioná-lo).'
   ),
   (
     (SELECT id FROM rpg.phb_feat WHERE slug = 'blessing-of-sif'),

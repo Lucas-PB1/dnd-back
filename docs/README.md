@@ -34,7 +34,9 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |-----|----------|
 | [`plans/backlog.md`](plans/backlog.md) | Checklist — o que ainda falta |
-| [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Extração Character Threads (Northlands) — **não implementado** |
+| [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Extração Character Threads — **adiado** (sistema novo) |
+| [`plans/northlands-magic-and-miscellany.md`](plans/northlands-magic-and-miscellany.md) | Cap. 5 — catálogo seedado; veículos/montarias **adiados** |
+| [`plans/northlands-audit.md`](plans/northlands-audit.md) | Pente fino Northlands — gaps críticos fechados; residual M6/M7 |
 | [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Adiado: modal Escudo/Giga no cast de Mísseis |
 | [`plans/beast-master-primal-companion.md`](plans/beast-master-primal-companion.md) | Adiado: Companheiro Primal na mesa |
 

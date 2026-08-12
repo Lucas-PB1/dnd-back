@@ -61,6 +61,7 @@ export async function executeRollSkill(input: {
     backgroundSkillSlugs: sheet.backgroundSkillSlugs,
     speciesChoices: sheet.speciesChoices,
     featOptions: sheet.featOptions,
+    characterFeats: sheet.characterFeats,
     classOptions: sheet.classOptions,
     classSlug: character.classSlug,
     level: character.level,

@@ -5,6 +5,7 @@ import {
   UseClassResourceDto,
   UseClassResourceResponseDto,
 } from '@game/session/dto';
+import { applySpeciesResourceSpendSideEffects } from './apply-species-resource-spend-side-effects';
 
 @Injectable()
 export class UseClassResourceHandler {
@@ -23,10 +24,22 @@ export class UseClassResourceHandler {
       characterId,
       'write',
     );
-    return this.state.useClassResource(
+    const resourceSlug = dto.resourceSlug;
+    const spent = await this.state.useClassResource(
       character,
-      dto.resourceSlug,
+      resourceSlug,
       dto.amount ?? 1,
     );
+    const side = await applySpeciesResourceSpendSideEffects({
+      state: this.state,
+      character,
+      resourceSlug,
+      currentState: spent.state,
+    });
+    return {
+      ...spent,
+      state: side.state,
+      ...(side.note ? { note: side.note } : {}),
+    };
   }
 }

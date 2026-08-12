@@ -88,6 +88,7 @@ API: `GET /alignments` — slugs EN (`lawful-good`, …); `name` e abreviação 
 | Innate Sorcery | Feitiçaria Inata | Ira Feiticeira |
 | Metamagic | Metamagia | Metamágica |
 | Healing Light | Luz Medicinal | Luz Curativa |
+| Healing Spirit | Espírito Curador | — |
 | Tides of Chaos | Marés do Caos | Maré de Caos |
 | Bastion of Law | Bastião da Lei | Baluarte da Ordem |
 | Ranger | **Patrulheiro** (override de mesa) | Guardião (Livro do X) |

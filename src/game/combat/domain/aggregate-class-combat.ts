@@ -32,6 +32,7 @@ import { warlockCombatNotes } from './warlock';
 import { druidCombatNotes } from './druid';
 import { wizardCombatNotes } from './wizard';
 import { gunslingerCombatNotes } from './gunslinger';
+import { northlandsSubclassCombatNotes } from './northlands-subclass-combat-notes';
 
 export type ClassCombatContribution = {
   notes: string[];
@@ -48,6 +49,7 @@ type ClassCombatInput = {
 /**
  * Agrega contribuições explícitas de cada classe.
  * Cada pasta de classe (`fighter/`, `rogue/`, …) permanece dona das regras via `index.ts`; este módulo só combina.
+ * Pack Northlands: notas de subclasse em `northlands-subclass-combat-notes.ts`.
  */
 export function aggregateClassCombatContributions(
   input: ClassCombatInput,
@@ -68,6 +70,7 @@ export function aggregateClassCombatContributions(
     ...druidCombatNotes({ classSlug, subclassSlug, level }),
     ...wizardCombatNotes({ classSlug, subclassSlug, level }),
     ...gunslingerCombatNotes({ classSlug, subclassSlug, level }),
+    ...northlandsSubclassCombatNotes({ subclassSlug, level }),
   ];
 
   const speedBonusMeters =

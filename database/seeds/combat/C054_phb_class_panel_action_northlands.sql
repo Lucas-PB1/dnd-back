@@ -27,7 +27,12 @@ INSERT INTO rpg.phb_class_panel_action (
 ('sorcerer|spirit-caller|spirit-secrets', (SELECT id FROM rpg.phb_class WHERE slug = 'sorcerer'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'spirit-caller'), 'spirit-secrets', 'Segredos Espirituais', 'Ao falhar: rerrolar', 14, 'spirit-secrets', 'subclass'::rpg.panel_action_section, false, 52),
 
 ('warlock|trickster|context-switch', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'trickster'), 'context-switch', 'Troca de Contexto', 'Reação: troca de lugar com alvo', 3, 'context-switch', 'subclass'::rpg.panel_action_section, false, 50),
-('warlock|trickster|harbinger-of-chaos', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'trickster'), 'harbinger-of-chaos', 'Arauto do Caos', 'AB: anuncia mudanças (1× / DC)', 14, 'harbinger-of-chaos', 'subclass'::rpg.panel_action_section, false, 51)
+('warlock|trickster|harbinger-of-chaos', (SELECT id FROM rpg.phb_class WHERE slug = 'warlock'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'trickster'), 'harbinger-of-chaos', 'Arauto do Caos', 'AB: anuncia mudanças (1× / DC)', 14, 'harbinger-of-chaos', 'subclass'::rpg.panel_action_section, false, 51),
+
+('barbarian|path-of-the-titan|giants-fury', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-titan'), 'giants-fury', 'Fúria dos Gigantes', 'Ao ativar Fúria: tornar-se Grande', 3, NULL, 'subclass'::rpg.panel_action_section, false, 50),
+('barbarian|path-of-the-titan|crushing-steps', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-titan'), 'crushing-steps', 'Passos Esmagadores', 'Movimento: atravessar espaço menor', 6, NULL, 'subclass'::rpg.panel_action_section, false, 51),
+('barbarian|path-of-the-titan|titanic-strikes', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-titan'), 'titanic-strikes', 'Golpes Titânicos', 'Com Golpe Brutal: empurrão ×2 / Vel. 0', 10, NULL, 'subclass'::rpg.panel_action_section, false, 52),
+('barbarian|path-of-the-titan|titans-fury', (SELECT id FROM rpg.phb_class WHERE slug = 'barbarian'), (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-titan'), 'titans-fury', 'Fúria dos Titãs', 'Ao ativar Fúria: tornar-se Enorme', 14, NULL, 'subclass'::rpg.panel_action_section, false, 53)
 ON CONFLICT (panel_key) DO UPDATE SET
   class_id = EXCLUDED.class_id,
   subclass_id = EXCLUDED.subclass_id,

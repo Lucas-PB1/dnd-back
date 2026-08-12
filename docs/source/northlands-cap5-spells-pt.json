@@ -1,0 +1,392 @@
+{
+  "aegirs-breath": {
+    "name": "Sopro de Aegir",
+    "description": "Você sopra uma nuvem de ar gélido em uma criatura ou objeto no alcance. Faça um ataque mágico à distância contra o alvo. Em um acerto, o alvo sofre 1d10 de dano Gélido, ou 1d12 se o alvo estiver pelo menos parcialmente submerso em água.",
+    "higherLevels": "A magia cria duas nuvens no 5º nível, três nuvens no 11º nível e quatro nuvens no 17º nível. Você pode direcionar as nuvens ao mesmo alvo ou a alvos diferentes. Faça uma jogada de ataque separada para cada nuvem."
+  },
+  "angrbodas-fury": {
+    "name": "Fúria de Angrboda",
+    "description": "Ao conjurar esta magia, você se abre para se tornar um conduto da raiva da deusa gigante Angrboda. Uma criatura no alcance realiza uma salvaguarda de Sabedoria. Em uma falha, o alvo fica Vulnerável a um tipo de dano à sua escolha. Se a criatura tiver Imunidade ao tipo de dano selecionado, ela perde essa Imunidade e sofre dano normalmente, mas não fica Vulnerável ao tipo de dano escolhido.\n\nA criatura pode repetir a salvaguarda de Sabedoria no final de cada um dos seus turnos, encerrando esta magia em caso de sucesso.",
+    "higherLevels": null
+  },
+  "aspect-of-the-narwhal": {
+    "name": "Aspecto do Narval",
+    "description": "Uma criatura voluntária que você toca assume os aspectos de um narval. Ela cresce nadadeiras e uma longa presa semelhante a um chifre. O alvo ganha Resistência a dano Gélido enquanto estiver submerso em água, seu Deslocamento se torna 1,5 metro, e ele ganha um Deslocamento de Natação de 15 metros. O alvo pode executar uma Ação Bônus em qualquer turno em que se mova pelo menos 4,5 metros diretamente em direção a um inimigo para fazer um ataque de investida com a presa que causa dano Perfurante igual a 2d6 mais o modificador de Força dele.",
+    "higherLevels": null
+  },
+  "awaken-ship-guardian": {
+    "name": "Despertar Guardião do Navio",
+    "description": "Você invoca um espírito protetor para habitar o casco de um navio Grande ou maior. Enquanto a magia durar, o navio tem os seguintes benefícios:\n\nImunidade a dano Ígneo.\n\nCada vez que o navio sofrer dano de uma criatura Grande ou maior, a criatura atacante realiza uma salvaguarda de Sabedoria, sofrendo 5d6 de dano Psíquico em uma falha ou metade desse dano em um sucesso.\n\nComo Ação Bônus enquanto você estiver no navio, você pode gastar um espaço de magia, e o navio recupera Pontos de Vida iguais a três vezes o círculo do espaço mais o seu modificador de conjuração.",
+    "higherLevels": null
+  },
+  "bearstormer": {
+    "name": "Tempestade de Ursos",
+    "description": "Você cria três ursos-pardos fantasmais em um Cubo de 6 metros no alcance. Até a magia terminar, você pode usar uma Ação Bônus para mover o Cubo até 12 metros.\n\nQuando o Cubo aparece, cada inimigo nele realiza uma salvaguarda de Inteligência. Em uma falha, a criatura sofre 18 (4d8) de dano Psíquico e tem a condição Amedrontado até o final do próximo turno dela. Em um sucesso, a criatura sofre apenas metade do dano. Uma criatura também realiza essa salvaguarda quando a área da magia se move para o espaço dela e quando uma criatura entra na área da magia ou termina o turno nela. Uma criatura realiza essa salvaguarda apenas uma vez por turno.",
+    "higherLevels": "Você aumenta o tamanho do Cubo em 6 metros, o número de ursos fantasmais em dois e o dano em 9 (2d8) para cada círculo de espaço de magia acima do 5º."
+  },
+  "beast-of-ragnarok": {
+    "name": "Fera do Ragnarok",
+    "description": "A aura espectral de Fenris o envolve enquanto você atrai o Ragnarok para o mundo por um instante. Até a magia terminar, o céu escurece, lançando o mundo em Meia-luz em uma Esfera de 1,5 quilômetro centrada em você. Neves densas caem dentro da Esfera, fazendo o solo se tornar Terreno Difícil e a visão ficar Totalmente Obscurecida.\n\nVocê ganha os seguintes benefícios pela Duração:\n\nVocê enxerga claramente dentro da Esfera e não é afetado pelo Terreno Difícil causado pela magia.\n\nVocê tem Vantagem em todos os Testes de D20.\n\nTodas as criaturas têm Desvantagem nas jogadas de ataque contra você.\n\nVocê tem Imunidade a todos os tipos de dano, exceto um. Role 1d12 para determinar aleatoriamente um tipo de dano (1. Ácido, 2. Contundente, 3. Ígneo, 4. Energético, 5. Elétrico, 6. Necrótico, 7. Perfurante, 8. Venenoso, 9. Psíquico, 10. Radiante, 11. Cortante ou 12. Trovejante.) Você tem Vulnerabilidade ao tipo de dano rolado.\n\nVocê tem Vantagem em salvaguardas para resistir ou encerrar todas as condições.",
+    "higherLevels": null
+  },
+  "bergelmirs-provocation": {
+    "name": "Provocação de Bergelmir",
+    "description": "Quando você vê uma criatura fazer um ataque ou ataque mágico, você pode usar sua Reação para provocar o atacante.\n\nA criatura que faz o ataque deve realizar uma salvaguarda de Sabedoria. Em uma falha, a criatura faz o ataque contra outro alvo elegível à sua escolha, que não pode incluir a própria criatura. Se não houver outro alvo elegível, o ataque da criatura é desperdiçado.",
+    "higherLevels": null
+  },
+  "beseech-the-norns": {
+    "name": "Suplicar às Nornas",
+    "description": "Você contata uma das três Nornas, as tecelãs do destino, para interceder em seu favor alterando o passado, o presente ou o futuro. Escolha um dos seguintes efeitos:\n\nMudar o Passado (Uror). Escolha uma criatura que você possa ver e que tenha morrido desde o início do seu último turno. Essa criatura retorna à vida com 1 Ponto de Vida. Esta magia não pode reviver nenhuma criatura que tenha morrido de velhice, nem restaura partes do corpo ausentes.\n\nGuiar o Presente (Verthandi). Trate a primeira jogada de ataque ou teste de atributo que você fizer antes do final do seu turno como um 20 natural.\n\nMoldar o Futuro (Skuld). Começando no início do seu próximo turno e durando 1 minuto, você tem Vantagem em todos os testes de atributo e salvaguardas.\n\nSe você conjurar a magia mais de uma vez antes de terminar um Descanso Longo, há 25 por cento cumulativos de chance, para cada conjuração após a primeira, de a magia não ter efeito (além de consumir o componente material).",
+    "higherLevels": null
+  },
+  "billowing-sails": {
+    "name": "Velas Enfunadas",
+    "description": "Você toca um navio ou outro veículo movido a vento e enche suas velas com uma brisa forte. Sempre que o navio viajar a vela, seu Deslocamento aumenta em 3 metros ou em 1,5 km/h.",
+    "higherLevels": null
+  },
+  "bone-chilling-smite": {
+    "name": "Golpe Arrepiante",
+    "description": "O alvo sofre 3d8 adicionais de dano Necrótico do ataque e deve ser bem-sucedido em uma salvaguarda de Constituição ou ganha um nível de Exaustão até a magia terminar.\n\nNo final de cada um dos seus turnos, o alvo Exausto repete a salvaguarda. Em um sucesso, ele remove toda a Exaustão causada por esta magia. Em uma falha, recebe um nível de Exaustão.",
+    "higherLevels": "O dano aumenta em 1d8 para cada círculo de espaço de magia acima do 3º."
+  },
+  "bound-fortunes": {
+    "name": "Fortunas Vinculadas",
+    "description": "Você toca outra criatura voluntária e une seus destinos até a magia terminar. Pela duração, se o alvo estiver a até 18 metros de você e fizer um teste de atributo, jogada de ataque ou salvaguarda, você pode usar sua Reação para permitir que o alvo role novamente e use o novo resultado. O alvo pode fazer o mesmo por você. Cada vez que fizer isso, o máximo de Pontos de Vida seu — e somente o seu — é reduzido em 1d4, e o mesmo vale para o alvo. Se isso reduzir o máximo de Pontos de Vida a 0, você morre. Essa redução é removida quando a magia termina.",
+    "higherLevels": null
+  },
+  "bragis-theatrical-fall": {
+    "name": "Queda Teatral de Bragi",
+    "description": "Com um suspiro e uma proclamação em voz alta, você parece cair morto no chão. Em vez de ser reduzido a 0 Pontos de Vida, você é reduzido a um número de Pontos de Vida igual ao seu modificador de atributo de conjuração. Ao mesmo tempo, você tem a condição Invisível, e uma ilusão do seu corpo morto aparece, deitada no espaço onde seu corpo teria caído.\n\nSe uma criatura executar a ação Analisar para examinar seu corpo ilusório, ela pode determinar que é uma ilusão com um teste bem-sucedido de Inteligência (Investigação) contra a CD de magia. Se uma criatura discernir a ilusão pelo que ela é, a ilusão se torna tênue para essa criatura.\n\nA condição Invisível termina se você executar a ação Atacar, usar a ação Usar Magia para conjurar uma magia que permita a uma criatura recuperar Pontos de Vida, ou usar qualquer ação para causar dano a uma criatura.",
+    "higherLevels": null
+  },
+  "branch-and-root-of-yggdrasil": {
+    "name": "Ramo e Raiz de Yggdrasil",
+    "description": "Todas as árvores estão intrinsecamente ligadas a Yggdrasil. Ao conjurar esta magia e tocar uma árvore, você e até oito criaturas voluntárias em contato com essa árvore são transportados para um local aleatório em Yggdrasil. Se você estiver tocando uma Árvore do Mundo encontrada no plano mortal (como as encontradas nas Terras do Norte) ao conjurar a magia, pode especificar um destino-alvo em Yggdrasil em termos gerais, e você aparece nesse destino ou perto dele, conforme determinado pelo Mestre.\n\nUsar esta magia exige um sacrifício do conjurador. Após conjurar esta magia, seu máximo de Pontos de Vida é reduzido em um valor igual a uma rolagem de um dos seus Dados de Vida até você completar um Descanso Longo.",
+    "higherLevels": null
+  },
+  "call-to-action": {
+    "name": "Chamado à Ação",
+    "description": "A criatura que inicia o turno pode imediatamente usar sua Reação para executar a ação Correr, Desengajar, Esquivar ou Ajudar.",
+    "higherLevels": null
+  },
+  "claws-of-the-bear": {
+    "name": "Garras do Urso",
+    "description": "Você imbui a si mesmo com as garras de um urso. Transforma os braços em um par de patas musculosas e peludas e faz um ataque mágico corpo a corpo contra um alvo. Em um acerto, o alvo sofre dano Cortante igual a 3d10 mais o seu modificador de atributo de conjuração e, se o alvo não for mais de uma categoria de tamanho maior que você, tem a condição Caído. Pela duração da magia, você pode atacar com as garras.",
+    "higherLevels": "Quando conjura esta magia usando um espaço de 5º ou 6º círculo, o dano aumenta para 4d10. Quando a conjura usando um espaço de 7º ou 8º círculo, o dano aumenta para 5d10. Quando a conjura usando um espaço de 9º círculo, o dano aumenta para 6d8."
+  },
+  "coldheart": {
+    "name": "Coração Gelado",
+    "description": "Você faz um frio sobrenatural cair sobre uma Fera ou Humanoide que você possa ver no alcance. O alvo deve realizar uma salvaguarda de Constituição. Em uma falha, recebe 1 nível de Exaustão.\n\nNo final do próximo turno dele, o alvo deve realizar outra salvaguarda de Constituição. Em uma falha, a criatura recebe 1 nível de Exaustão. Em seguida a magia termina. A Exaustão aplicada por esta magia não é removida pelo fim da magia.",
+    "higherLevels": null
+  },
+  "compel-avarice": {
+    "name": "Compelir Avareza",
+    "description": "Esta magia distorce as percepções da criatura-alvo, inflamando sua ganância. Você escolhe um objeto que possa ver ao conjurar esta magia. O alvo deve ser bem-sucedido em uma salvaguarda de Sabedoria ou é compelido a tentar tomar aquele item para si pela duração da magia. Ele tentará roubar o item se possível e, se não puder, lutará contra o atual portador do item. Se o alvo conseguir reivindicar o objeto, fugirá de todas as outras criaturas para guardá-lo com ciúmes até a magia terminar. Criaturas que tenham Imunidade à condição Enfeitiçado automaticamente têm sucesso nas salvaguardas contra esta magia.",
+    "higherLevels": null
+  },
+  "disrupt-the-wyrd": {
+    "name": "Perturbar o Wyrd",
+    "description": "A criatura rola novamente a salvaguarda, somando ou subtraindo o seu modificador de conjuração da nova rolagem. Ela deve usar o novo resultado.",
+    "higherLevels": null
+  },
+  "drummers-cadence": {
+    "name": "Cadência do Tamborileiro",
+    "description": "Pela duração, você emite uma aura em uma Emanação de 18 metros. Sempre que um navio aliado nesta área se mover a remo, seu Deslocamento aumenta em 3 metros. A embarcação deve ter tripulação suficiente para que esta magia tenha qualquer efeito.",
+    "higherLevels": null
+  },
+  "earthsail": {
+    "name": "Vela da Terra",
+    "description": "Você toca uma embarcação à vela com uma tripulação de até 10 ao longo da conjuração da magia, imbuindo-a com a capacidade de tratar a terra como se fosse mar. Pela duração, a embarcação trata solo, lama e terra compactada como se fossem água, avançando por eles e deixando um rastilho ondulado de terreno ressolidificado. Neve, gelo, plantas (incluindo árvores) e pedras pequenas são temporariamente afastados na esteira do navio, mas pedregulhos e montanhas devem ser contornados à vela.",
+    "higherLevels": "Se conjurar esta magia com um espaço de 7º círculo, ela pode afetar uma embarcação com tripulação de até 30 e dura 24 horas. Se conjurar esta magia com um espaço de 9º círculo, ela pode afetar uma embarcação com tripulação de qualquer tamanho e dura 1 semana."
+  },
+  "encase-in-ice": {
+    "name": "Encasular em Gelo",
+    "description": "Uma onda de água que se choca preenche um quadrado de 6 metros no solo que você possa ver no alcance. A água congela instantaneamente no lugar. Cada criatura na área realiza uma salvaguarda de Destreza. Em uma falha, as pernas da criatura ficam presas no gelo, e a criatura tem a condição Contido até a magia terminar. Uma criatura com a condição Contido pode usar uma ação para fazer um teste de Força (Atletismo) contra a CD de magia, encerrando a condição em si em caso de sucesso. Outra criatura pode executar a ação Ajudar para tentar libertar a criatura presa, fazendo o mesmo teste.\n\nCriaturas que não estavam na área da magia quando você a conjurou tratam a área como Terreno Difícil. Se uma criatura que não esteja Contida pelo gelo entrar na área ou terminar o turno nela, deve ser bem-sucedida em uma salvaguarda de Destreza ou tem a condição Caído.",
+    "higherLevels": "Se conjurar esta magia com um espaço de 3º círculo, o gelo prende os braços do alvo além das pernas. O alvo não pode executar a ação Atacar nem conjurar magias com componentes somáticos até a condição Contido terminar.\n\nSe conjurar esta magia usando um espaço de 5º círculo, o gelo sepulta completamente as criaturas na área quando você conjura a magia. Criaturas que falham na salvaguarda inicial ficam Contidas e têm Cobertura Total pela duração da magia. Uma criatura afetada pode fazer uma salvaguarda de Força no final de cada um dos seus turnos para se libertar, mas, tenha sucesso ou falhe, sofre 2d6 de dano Gélido à medida que a carne, que estava grudada no gelo, se rasga."
+  },
+  "ensnared-threads": {
+    "name": "Fios Enredados",
+    "description": "As Nornas permitem que você force brevemente uma conexão entre os fios do seu destino e os de outra criatura. Uma criatura que você possa ver no alcance deve realizar uma salvaguarda de Sabedoria. Em uma falha, você forma uma conexão entre si e o alvo.\n\nUma vez por turno, até a magia terminar, o primeiro ataque que o acertar atinge a criatura-alvo em vez disso, se ela puder ser alvo do ataque. Se essa criatura não puder ser o alvo do ataque, o ataque o atinge normalmente.",
+    "higherLevels": "Se conjurar esta magia com um espaço de 8º ou 9º círculo, todos os ataques que o acertarem atingem o alvo em vez disso. Quaisquer ataques dos quais a criatura não possa ser alvo ainda o atingem normalmente."
+  },
+  "extinguish": {
+    "name": "Extinguir",
+    "description": "Você extingue todas as chamas mágicas e não mágicas à sua escolha em um Cubo de 18 metros originado em você. Criaturas feitas parcial ou completamente de fogo sofrem 1d12 de dano Energético.",
+    "higherLevels": "Para cada círculo de espaço acima do 1º que você usar para conjurar esta magia, o cubo aumenta em 3 metros e as criaturas afetadas sofrem 1d12 adicional de dano Energético."
+  },
+  "eyes-of-the-raven": {
+    "name": "Olhos do Corvo",
+    "description": "Você invoca o poder dos corvos oniscientes de Wotan, Huginn e Muninn. Enquanto a magia durar, você tem Vantagem em testes de Inteligência e salvaguardas de Inteligência.\n\nComo ação Usar Magia, você pode ganhar Visão Verdadeira com alcance de 9 metros. Isso dura até o início do seu próximo turno. Em seguida a magia termina.",
+    "higherLevels": null
+  },
+  "fenriss-howl": {
+    "name": "Uivo de Fenris",
+    "description": "Você canaliza o uivo penetrante e fúnebre do lobo Fenris em um ponto que possa ver no alcance e ganha força do medo alheio. Criaturas à sua escolha a até 18 metros daquele ponto que possam ouvi-lo devem ser bem-sucedidas em uma salvaguarda de Sabedoria ou têm a condição Amedrontado (com você como fonte) pela duração da magia. Enquanto pelo menos uma criatura afetada pela magia permanecer Amedrontada, seu Deslocamento é dobrado, e você causa 3d6 adicionais de dano Necrótico a um inimigo Amedrontado com cada um dos seus ataques.",
+    "higherLevels": null
+  },
+  "fiery-siege": {
+    "name": "Cerco Flamejante",
+    "description": "Você toca uma arma de cerco, imbuindo-a com poder piroclástico. Pela duração, a arma de cerco causa 1d10 adicional de dano Ígneo quando acerta. Como Ação Bônus, você pode tocar uma máquina de cerco diferente, transferindo o efeito para ela.",
+    "higherLevels": null
+  },
+  "fire-rune": {
+    "name": "Runa de Fogo",
+    "description": "Você toca uma arma corpo a corpo e coloca nela um efeito mágico, criando uma runa visível gravada na arma. Ataques feitos com a arma invocada causam 1d8 adicional de dano Ígneo em um acerto.",
+    "higherLevels": null
+  },
+  "fist-of-the-frost-jarl": {
+    "name": "Punho do Jarl do Gelo",
+    "description": "Um punho de gelo sólido preenchendo um Cubo de 1,5 metro dispara de você na direção escolhida em uma Linha de 36 metros. Cada criatura na Linha realiza uma salvaguarda de Destreza. Em uma falha, a criatura sofre 18 (4d8) de dano Gélido. Em um sucesso, a criatura sofre metade do dano.\n\nVocê pode escolher que uma criatura de tamanho Enorme ou menor que falhe na salvaguarda tenha a condição Imobilizado, cuja CD de escape é igual à sua CD de magia. Uma criatura que termina o turno imobilizada pelo punho sofre 9 (2d8) de dano Gélido. Quando uma criatura escapa da imobilização, o punho se estilhaça.",
+    "higherLevels": "O dano aumenta em 1d8 para cada círculo de espaço de magia acima do 4º. Se conjurada usando um espaço de 7º círculo ou superior, a magia ignora Resistência a dano Gélido."
+  },
+  "freezing-fog": {
+    "name": "Névoa Congelante",
+    "description": "Você cria uma Esfera de 6 metros de raio de névoa gelada até os ossos centrada em um ponto no alcance. A Esfera está Totalmente Obscurecida e é considerada Terreno Difícil. A névoa permanece no ar pela duração ou até um vento forte (como o criado por Rajada de Vento) dispersá-la.\n\nCada criatura que inicia o turno na Esfera, ou se move para a área dela, deve ser bem-sucedida em uma salvaguarda de Constituição. Em uma falha, o Deslocamento do alvo é reduzido à metade até o final do próximo turno dele.\n\nQuando uma criatura se move para dentro ou através da área, sofre 2d4 de dano Gélido a cada 1,5 metro que percorre.\n\nVocê tem Imunidade a todos os efeitos desta magia.",
+    "higherLevels": null
+  },
+  "freyjas-allure": {
+    "name": "Fascínio de Freyja",
+    "description": "Uma criatura à sua escolha que você possa ver no alcance realiza uma salvaguarda de Carisma. Em uma falha, o alvo tem Desvantagem nas jogadas de ataque e não pode se afastar voluntariamente de você pela duração.\n\nNo final de cada um dos seus turnos, a criatura pode fazer outra salvaguarda de Carisma. O alvo tem Desvantagem na salvaguarda se puder vê-lo e você estiver a até 9 metros dele. Em um sucesso, a magia termina nele.",
+    "higherLevels": "Você pode escolher um alvo adicional para cada círculo de espaço de magia acima do 1º."
+  },
+  "freyjas-grace": {
+    "name": "Graça de Freyja",
+    "description": "Role novamente a salvaguarda como salvaguarda de Carisma, independentemente do tipo original da salvaguarda.",
+    "higherLevels": null
+  },
+  "ghostly-crew": {
+    "name": "Tripulação Fantasma",
+    "description": "Você invoca espíritos intangíveis para tripularem uma embarcação tocada. Pela duração da magia, enquanto você estiver a até 9 metros da embarcação, ela é considerada como tendo número suficiente de marinheiros para executar um complemento completo de ações normais de navio (incluindo movimento e uso de armas de cerco). Os espíritos não podem executar outras ações nem se engajar em quaisquer outras atividades, como lutar de forma independente ou reparar a embarcação.",
+    "higherLevels": null
+  },
+  "giantbane": {
+    "name": "Flagelo dos Gigantes",
+    "description": "Você tem Vantagem nas jogadas de ataque contra criaturas Grandes ou maiores, e seus ataques causam 2d6 adicionais de dano Energético contra tais criaturas.",
+    "higherLevels": null
+  },
+  "giantdodge": {
+    "name": "Esquiva do Gigante",
+    "description": "Aumente seu Deslocamento em 6 metros. Você ganha um bônus de +2 na CA contra ataques feitos por criaturas Grandes ou maiores, e não provoca Ataques de Oportunidade delas.",
+    "higherLevels": null
+  },
+  "giants-teeth": {
+    "name": "Dentes do Gigante",
+    "description": "Dois semicírculos de dentes enormes irrompem do solo e se fecham para esmagar uma criatura à sua escolha a até 27 metros.\n\nO alvo tem a condição Imobilizado. A CD de escape é igual à sua CD de magia. No início de cada um dos turnos dele enquanto tiver a condição Imobilizado, a criatura sofre 2d10 de dano Contundente. Se o alvo escapar, a magia termina.",
+    "higherLevels": "Quando conjura esta magia usando um espaço de 5º círculo, o dano aumenta para 3d10. Quando a conjura usando um espaço de 7º círculo, o dano aumenta para 5d8. Quando a conjura usando um espaço de 9º círculo, o dano aumenta para 6d8."
+  },
+  "glimpse-the-wyrd": {
+    "name": "Vislumbre do Wyrd",
+    "description": "Você adiciona ou subtrai 1d6 do Teste de D20.",
+    "higherLevels": null
+  },
+  "hearthfire": {
+    "name": "Fogo do Lar",
+    "description": "Você toca um objeto Grande ou menor que não esteja sendo usado ou carregado por outra pessoa. Até a magia terminar, o objeto emite Luz Plena em um raio de 6 metros e Meia-luz por mais 6 metros. Dentro da área de Luz Plena da magia, você e cada criatura à sua escolha têm Imunidade aos efeitos nocivos do Frio Extremo.",
+    "higherLevels": null
+  },
+  "hungry-jaws-of-fenris": {
+    "name": "Mandíbulas Famintas de Fenris",
+    "description": "Como ação Usar Magia, você canaliza o poder de Fenris, o Grande Lobo, transformando a boca em um focinho aberto. Isso não impede seu movimento nem suas ações, mas você não pode falar nem conjurar magias com componentes verbais pela duração.\n\nEnquanto a magia estiver ativa, você pode usar as mandíbulas para fazer um ataque de mordida. Em um acerto, o alvo sofre dano Perfurante igual a 4d10 mais o seu modificador de atributo de conjuração, e tem a condição Imobilizado (CD de escape igual à sua CD de magia).\n\nSe morder um alvo já Imobilizado por você, pode escolher engoli-lo, e a condição Imobilizado termina. Uma criatura engolida é empurrada para uma dimensão de bolso. Enquanto estiver lá, tem as condições Cego e Contido, tem Cobertura Total contra ataques e outros efeitos fora da dimensão, e sofre 19 (3d12) de dano Energético no início de cada um dos seus turnos. Você não pode engolir uma criatura se já tiver engolido uma criatura usando esta magia.\n\nUma criatura engolida pode fazer uma salvaguarda no final de cada um dos seus turnos. Em um sucesso, você regurgita a criatura para o espaço desocupado mais próximo à sua escolha. O mesmo ocorre se a duração da magia expirar.",
+    "higherLevels": "O dano causado pelo ataque de mordida aumenta em 1d12 para cada círculo de espaço de magia acima do 6º."
+  },
+  "ice-shape": {
+    "name": "Moldar Gelo",
+    "description": "Você toca uma seção de gelo de no máximo 1,5 metro em qualquer dimensão e a molda na forma que desejar. Por exemplo, poderia moldar o gelo em uma arma, estátua ou cofre, ou poderia fazer uma pequena passagem através do gelo com 1,5 metro de espessura. Também poderia moldar gelo para selar uma abertura estreita de caverna. Qualquer objeto que você criar é tosco, mas funcional; detalhes mecânicos mais finos não são possíveis.",
+    "higherLevels": null
+  },
+  "icewalker": {
+    "name": "Caminhante do Gelo",
+    "description": "Pela duração, você emite uma aura em uma Emanação de 9 metros. Enquanto estiverem na aura, você e criaturas à sua escolha ganham os seguintes benefícios:\n\nTratar gelo escorregadio como terreno normal\n\nTratar o peso como um décimo do normal para fins de romper gelo fino",
+    "higherLevels": null
+  },
+  "inbars-giant-friend": {
+    "name": "Amigo dos Gigantes de Inbar",
+    "description": "Seus olhos brilham com luz dourada. O Gigante deve realizar uma salvaguarda de Sabedoria. Em uma falha, a atitude dele em relação a você melhora 1 passo, como de Hostil para Indiferente ou de Indiferente para Amigável. A atitude de uma criatura é dinâmica, então o modo como você se comporta com o gigante a partir desse ponto pode afetar ainda mais a atitude dele. Um Gigante com Imunidade à condição Enfeitiçado tem Imunidade a esta magia. Depois de conjurar esta magia em um determinado Gigante, você não pode conjurá-la novamente naquele Gigante.",
+    "higherLevels": null
+  },
+  "infectious-skal": {
+    "name": "Skal Infeccioso",
+    "description": "Você canta uma canção de beber ruidosa que compele outros a pararem o que estão fazendo e cantarem junto. Uma criatura que possa ouvi-lo no alcance da magia deve ser bem-sucedida em uma salvaguarda de Sabedoria ou tem a condição Enfeitiçado até a magia terminar. Enquanto a criatura estiver Enfeitiçada, é Amigável em relação a você e não executa ações além de cantar junto com a canção. Pela duração da canção, você pode usar uma Ação Bônus para escolher como alvo uma nova criatura que esteja a até 9 metros de você ou de outra criatura cantando a canção. Você pode afetar um número total de criaturas igual ao seu modificador de atributo de Conjuração a qualquer momento, adicionando-as progressivamente. Uma criatura-alvo deve ser bem-sucedida em uma salvaguarda de Sabedoria ou fica Enfeitiçada por você e começa a cantar junto. Se qualquer um dos cantores além de você for atacado durante a canção, a canção para com uma nota dissonante alta, e a magia termina para todos os afetados.",
+    "higherLevels": "Se conjurar esta magia com um espaço de 3º círculo ou superior, você pode afetar 2 criaturas cada vez que executar uma Ação Bônus para espalhar a canção."
+  },
+  "jotun-form": {
+    "name": "Forma de Jotun",
+    "description": "Você se metamorfoseia em um Gigante pela duração ou até executar uma ação Usar Magia para se metamorfosear em uma forma elegível diferente. A nova forma deve ser de uma criatura do tipo Gigante com Nível de Desafio não superior ao seu nível ou Nível de Desafio. Você deve ter visto esse tipo de criatura antes.\n\nAo conjurar a magia, você ganha um número de Pontos de Vida Temporários igual aos Pontos de Vida da primeira forma na qual se metamorfoseia. Esses Pontos de Vida Temporários desaparecem se ainda restarem quando a magia terminar.\n\nSuas estatísticas de jogo são substituídas pelo bloco de estatísticas da forma escolhida, mas você mantém seu tipo de criatura; alinhamento; personalidade; valores de Inteligência, Sabedoria e Carisma; Pontos de Vida; Dados de Pontos de Vida; proficiências; e capacidade de se comunicar. Se tiver o traço Conjuração, você o mantém também.\n\nAo se metamorfosear, você determina se seu equipamento cai no chão ou muda de tamanho e forma para se adequar à nova forma enquanto você estiver nela.",
+    "higherLevels": null
+  },
+  "lokis-escape": {
+    "name": "Fuga de Loki",
+    "description": "Você tem a condição Invisível até o final do seu próximo turno. Enquanto a magia durar, você pode usar sua Ação Bônus para se mover o seu Deslocamento sem provocar Ataques de Oportunidade. A magia termina antecipadamente imediatamente após você fazer uma jogada de ataque, causar dano ou conjurar uma magia.",
+    "higherLevels": null
+  },
+  "luckfingers": {
+    "name": "Dedos da Sorte",
+    "description": "Você toca uma criatura Média ou menor, imbuindo-a de confiança e habilidade. Até a magia terminar, a criatura tem Vantagem em todos os testes de atributo. Se tal teste resultar em falha, a criatura pode escolher encerrar a magia e ter sucesso automaticamente no teste de atributo.",
+    "higherLevels": "Você pode escolher um alvo adicional para cada círculo de espaço de magia acima do 3º. Se uma criatura escolher encerrar a magia para ter sucesso automaticamente em um teste de atributo, a magia termina apenas para ela."
+  },
+  "melody-of-sheltered-rest": {
+    "name": "Melodia do Descanso Protegido",
+    "description": "Você canta ou murmura uma melodia animada. Pela duração, uma aura irradia de você em uma Emanação de 9 metros. Uma criatura dentro da aura (incluindo você) pode estender a duração por mais 2 horas, desde que continue cantando. Isso pode se repetir enquanto uma criatura dentro da aura continuar cantando. Enquanto estiverem na aura, as criaturas têm Vantagem em testes de Percepção e não podem ser surpreendidas.",
+    "higherLevels": null
+  },
+  "murmurs-of-doom": {
+    "name": "Murmúrios da Perdição",
+    "description": "Você inicia um réquiem sussurrado que é magicamente acompanhado pelo uivo de espíritos e outros presságios sombrios. Pela duração, uma aura irradia de você em uma Emanação de 9 metros. Quando cria a aura e no início de cada um dos seus turnos enquanto ela persistir, você pode escolher uma criatura nela para realizar uma salvaguarda de Constituição. Em uma falha, a criatura sofre 3d8 de dano Necrótico.",
+    "higherLevels": null
+  },
+  "noble-sacrifice": {
+    "name": "Sacrifício Nobre",
+    "description": "A criatura é restaurada a 1 Ponto de Vida, e você perde metade dos seus Pontos de Vida atuais.",
+    "higherLevels": null
+  },
+  "ode-to-wrath": {
+    "name": "Ode à Ira",
+    "description": "Você inicia um canto poético que é magicamente acompanhado por um trio de tambores batendo um ritmo furioso. Pela duração, uma aura irradia de você em uma Emanação de 9 metros. Enquanto estiverem na aura, você e seus aliados adicionam cada um o seu modificador de atributo de conjuração às jogadas de dano feitas com armas corpo a corpo.",
+    "higherLevels": null
+  },
+  "pawn-of-the-wyrd": {
+    "name": "Peão do Wyrd",
+    "description": "Você entrega seu destino aos ventos e aceita a orientação das Nornas. A criatura não executa aquela Reação e não pode executar uma Reação diferente. Se a Reação teria gasto um espaço de magia ou outra habilidade, nada é gasto. Você perde sua próxima Reação.",
+    "higherLevels": null
+  },
+  "protection-rune": {
+    "name": "Runa de Proteção",
+    "description": "Você toca uma criatura, criando uma runa visível gravada na pele dela. A criatura tem Resistência a um tipo de dano à sua escolha.",
+    "higherLevels": null
+  },
+  "reavers-rune": {
+    "name": "Runa do Saqueador",
+    "description": "Você toca uma arma corpo a corpo e coloca nela um efeito mágico, criando uma runa visível gravada na arma. No máximo uma vez por turno, uma criatura empunhando a arma pode fazer uma jogada de ataque com a arma com Vantagem quando de outra forma não teria Vantagem. Se a arma deixar a posse da criatura, a magia termina.",
+    "higherLevels": null
+  },
+  "regenerative-hull": {
+    "name": "Casco Regenerativo",
+    "description": "Você toca um veículo. No início de cada um dos seus turnos, o veículo recupera um número de Pontos de Vida igual a duas vezes o seu modificador de conjuração. Um veículo deve ter 1 PV ou mais para ser afetado.",
+    "higherLevels": null
+  },
+  "reinforce-hull": {
+    "name": "Reforçar Casco",
+    "description": "Um veículo que você toca tem seu limiar de dano aumentado pelo seu modificador de atributo de conjuração pela duração. Um veículo sem limiar de dano não pode ser alvo desta magia.",
+    "higherLevels": null
+  },
+  "repair-hull": {
+    "name": "Reparar Casco",
+    "description": "Um veículo que você toca recupera um número de Pontos de Vida igual a 4d12 mais o seu modificador de atributo de conjuração. O veículo-alvo deve ter 1 PV ou mais para ser afetado.",
+    "higherLevels": "O dano aumenta em 1d12 para cada círculo de magia acima do 3º."
+  },
+  "sailors-shanty": {
+    "name": "Canção do Marinheiro",
+    "description": "Você toca um veículo. A tripulação do veículo tem Vantagem em Testes de D20 para controlar ou operar o veículo.",
+    "higherLevels": null
+  },
+  "shared-expertise": {
+    "name": "Especialização Compartilhada",
+    "description": "Pela duração, você emite uma aura em uma Emanação de 9 metros. Escolha até 2 perícias nas quais você tenha Especialização. Se você não tiver Especialização em uma perícia, esta magia não tem efeito.\n\nEnquanto estiverem na área, criaturas aliadas são tratadas como tendo Proficiência nas perícias escolhidas. Se um aliado já tiver Proficiência ou Especialização na perícia, não ganha benefício.",
+    "higherLevels": null
+  },
+  "shield-maidens-favor": {
+    "name": "Favor da Donzela do Escudo",
+    "description": "Um eco espiritual de uma donzela do escudo de Valhalla aparece e se interpõe entre o ataque desencadeador e seu alvo; em seguida a donzela do escudo desaparece. O dano do ataque desencadeador é reduzido em 1d10 mais o seu modificador de conjuração.",
+    "higherLevels": "A redução de dano aumenta em 1d10 para cada círculo de magia acima do 1º."
+  },
+  "sifs-grace": {
+    "name": "Graça de Sif",
+    "description": "Você concede uma medida da velocidade e do passo firme de Sif a uma criatura ao alcance. Até a magia terminar, o Deslocamento do alvo dobra, e criaturas que fazem Ataques de Oportunidade contra o alvo têm Desvantagem nas jogadas de ataque. Se o alvo se mover no turno dele, tem Vantagem em testes de Destreza (Acrobacia).\n\nSe o alvo estiver sujeito a um efeito que exija uma salvaguarda de Destreza, pode escolher ter sucesso automaticamente. Isso encerra esta magia para ele.",
+    "higherLevels": "Você pode escolher um alvo adicional para cada círculo de espaço de magia acima do 3º."
+  },
+  "skaldic-scolding": {
+    "name": "Repreensão Escáldica",
+    "description": "A criatura que o danificou é bombardeada com uma saraivada de insultos cáusticos e deve realizar uma salvaguarda de Carisma. Em uma falha, a criatura sofre 4d10 de dano Psíquico e tem a condição Incapacitado até o início do seu próximo turno. Se a criatura falhar na salvaguarda por 5 ou mais, tem a condição Atordoado em vez disso. Em um sucesso, a criatura sofre metade do dano e não tem a condição Incapacitado.",
+    "higherLevels": "O dano aumenta em 1d10 para cada círculo de magia acima do 4º."
+  },
+  "song-of-the-shield-wall": {
+    "name": "Canção da Muralha de Escudos",
+    "description": "Você inicia um canto que é magicamente acompanhado pelo som de martelos batendo no ferro. Escudos circulares espectrais brilhantes aparecem diante de um número de criaturas igual ao seu modificador de atributo de conjuração que estejam a até 9 metros de você. Cada criatura ganha um bônus de +2 na CA.",
+    "higherLevels": "Se conjurar esta magia com um espaço de 6º círculo, o bônus na CA aumenta para +3, e se usar um espaço de 8º círculo, aumenta para +4."
+  },
+  "speechmasters-rune": {
+    "name": "Runa do Mestre da Fala",
+    "description": "Você coloca um efeito mágico na pedra usada como componente material da magia, criando uma runa visível gravada na pedra. Qualquer criatura segurando a pedra tem Vantagem em testes de Carisma.",
+    "higherLevels": null
+  },
+  "storm-maidens-edge": {
+    "name": "Gume da Donzela da Tempestade",
+    "description": "Você toca uma arma e a imbui com o poder da tempestade. Até a magia terminar, a arma escolhida causa 2d8 adicionais de dano Elétrico em um acerto.\n\nUma criatura atingida pela arma deve realizar uma salvaguarda de Força contra a CD de Magia. Em uma falha, o alvo é empurrado 3 metros para trás. Se o alvo falhar na salvaguarda de Força por 5 ou mais, tem a condição Caído.",
+    "higherLevels": "A quantidade de dano Elétrico adicional causado pela arma aumenta em 1d8 a cada dois círculos de espaço de magia acima do 3º."
+  },
+  "summon-leviathan-avatar": {
+    "name": "Invocar Avatar do Leviatã",
+    "description": "Você chama o espírito do lendário leviatã. Ele se manifesta em um espaço desocupado que você possa ver no alcance e usa o bloco de estatísticas Espírito do Leviatã. O espaço escolhido deve estar preenchido com água suficiente para conter o tamanho do leviatã; caso contrário, a magia termina imediatamente. A criatura desaparece quando chega a 0 Pontos de Vida ou quando a magia termina.\n\nO leviatã é um aliado seu e de seus aliados. Em combate, a criatura compartilha sua contagem de Iniciativa, mas age imediatamente após o seu turno. Ela obedece a seus comandos verbais (nenhuma ação necessária da sua parte). Se você não der nenhum comando, ela executa a ação Esquivar e usa seu movimento para evitar perigo.",
+    "higherLevels": "Use o círculo do espaço de magia como o círculo da magia no bloco de estatísticas."
+  },
+  "sun-rune": {
+    "name": "Runa do Sol",
+    "description": "Você coloca um efeito mágico na pedra usada como componente material da magia, criando uma runa visível gravada na pedra. Você só pode ter uma magia Runa do Sol ativa por vez.\n\nUma vez enquanto a magia durar, qualquer criatura segurando a pedra pode usar uma Ação para invocar o poder da runa e arremessá-la a um alvo a até 18 metros de distância. Ela para antes se impactar contra uma superfície sólida. Quando a pedra aterra ou impacta, a runa é ativada.\n\nQuando a runa é ativada, o calor abrasador do sol lampeja em uma Esfera de 9 metros de raio centrada na pedra. Cada criatura na Esfera realiza uma salvaguarda de Constituição. Em uma falha, a criatura sofre 4d6 de dano Ígneo e 4d6 de dano Radiante, ou metade em um sucesso.\n\nObjetos inflamáveis na Esfera que não estejam sendo usados ou carregados começam a queimar. Gelo ou neve dentro da Esfera vaporizam em uma névoa que preenche a Esfera, tornando-a Totalmente Obscurecida por 1 minuto ou até um vento forte (como o criado pela magia Rajada de Vento) dispersá-la.\n\nApós ativar o poder da runa, a criatura não pode ativar outra Runa do Sol novamente até depois de um Descanso Longo.",
+    "higherLevels": null
+  },
+  "talons-of-the-eagle": {
+    "name": "Garras da Águia",
+    "description": "Você imbui a si mesmo com o poder da águia. Enquanto a magia durar, você tem Vantagem em testes de Destreza e salvaguardas de Destreza.\n\nComo ação Usar Magia, você pode transformar brevemente as mãos em um conjunto de garras, então se mover até o seu Deslocamento e fazer um ataque corpo a corpo com as garras. Em um acerto, o alvo sofre dano Cortante igual a 1d8 mais o seu modificador de atributo de conjuração.",
+    "higherLevels": "O dano aumenta em 1d8 a cada dois círculos de espaço de magia acima do 1º."
+  },
+  "thought-rune": {
+    "name": "Runa do Pensamento",
+    "description": "Você coloca um efeito mágico na pedra usada como componente material da magia, criando uma runa visível gravada na pedra. Uma criatura segurando a pedra tem Vantagem em testes de Inteligência e Sabedoria e em salvaguardas de Inteligência e Sabedoria.",
+    "higherLevels": null
+  },
+  "tricksters-bluff": {
+    "name": "Blefe do Trapaceiro",
+    "description": "Você é agraciado com uma medida da língua de prata de Loki. Você tem Vantagem em testes de Carisma (Enganação). Se falhar em tal teste, pode escolher causar 1d4 de dano Psíquico à criatura que falhou em enganar, e essa criatura tem Desvantagem nas jogadas de ataque até o início do seu próximo turno.",
+    "higherLevels": null
+  },
+  "trollblood-infusion": {
+    "name": "Infusão de Sangue de Troll",
+    "description": "Uma criatura que você toca é magicamente infundida com as propriedades regenerativas do sangue de troll. Pela duração da magia, o alvo recupera 5 Pontos de Vida no início de cada um dos seus turnos, se tiver pelo menos 1 Ponto de Vida, e tem sucesso automaticamente em Salvaguardas Contra a Morte. Se a criatura sofrer dano Ácido ou Ígneo, este efeito não funciona no início do próximo turno dela.",
+    "higherLevels": null
+  },
+  "truths-blade": {
+    "name": "Lâmina da Verdade",
+    "description": "Você pune quem falaria falsamente com você. A criatura deve realizar uma salvaguarda de Sabedoria. Se falhar, pela duração, sofre 4d8 de dano Psíquico sempre que mentir.",
+    "higherLevels": "A quantidade de dano Psíquico aumenta em 1d8 para cada círculo de espaço de magia acima do 3º."
+  },
+  "valhallas-cohort": {
+    "name": "Coorte de Valhalla",
+    "description": "Você conjura espíritos guerreiros de Valhalla, o salão dos mortos honrados. Os espíritos aparecem como uma coorte Enorme de guerreiros espectrais intangíveis em um espaço desocupado que você possa ver no alcance. Os espíritos brandem lanças, machados e lâminas, atacando quem estiver por perto. A coorte dura pela duração, e você escolhe a aparência dos espíritos (como a espécie deles e quaisquer insígnias usadas).\n\nVocê também pode mover a coorte 9 metros como Ação Bônus nos seus turnos seguintes.\n\nSe a coorte terminar o movimento a até 1,5 metro de uma criatura, ou se uma criatura se mover a até 1,5 metro da coorte, você pode fazer um ataque mágico corpo a corpo contra essa criatura. Em um acerto, o alvo sofre dano Energético igual a 2d10 mais o seu modificador de atributo de conjuração. Uma criatura só pode ser atacada dessa forma uma vez por turno.",
+    "higherLevels": "O dano aumenta em 1d10 para cada círculo de espaço de magia acima do 4º."
+  },
+  "valkyries-guidance": {
+    "name": "Orientação da Valquíria",
+    "description": "Você consulta as Valquírias e pede que guiem sua mão à glória em Valhalla. Escolha uma criatura que possa ver. Pela duração da magia, você ganha Vantagem em jogadas de ataque corpo a corpo contra aquela criatura e em testes de Inteligência para recordar lore sobre ela. A magia termina imediatamente se você não atacar a criatura no seu turno.",
+    "higherLevels": null
+  },
+  "valkyries-vision": {
+    "name": "Visão da Valquíria",
+    "description": "Você vê quão perto da morte outras criaturas estão. Até a magia terminar, você conhece o total atual de Pontos de Vida de cada criatura que possa ver a até 9 metros de você, e pode ver quantos níveis de Exaustão ela tem.\n\nComo Ação Bônus no seu turno, você pode fazer uma criatura a até 9 metros de você que esteja morrendo ficar Estável. Fazer isso encerra a magia imediatamente.",
+    "higherLevels": null
+  },
+  "wall-of-snow": {
+    "name": "Muralha de Neve",
+    "description": "Você cria uma muralha de neve compactada em uma superfície sólida no alcance. Você pode fazer a muralha com até 15 metros de comprimento, 4,5 metros de altura e 30 centímetros de espessura. Ou pode fazer uma cúpula hemisférica de 3 metros de raio. Você pode moldar a muralha da forma que escolher, desde que forme um caminho contínuo ao longo do solo. A muralha dura pela duração.\n\nSe a muralha cortar o espaço de uma criatura quando aparecer, a criatura é empurrada para um lado da muralha (você escolhe qual lado).\n\nA muralha é um objeto que pode ser danificado e assim rompido. Tem CA 10 e 10 Pontos de Vida por seção de 3 metros, e tem Imunidade a dano Gélido, Venenoso e Psíquico, e Vulnerabilidade a dano Ígneo e Radiante. Reduzir uma seção de 3 metros da muralha a 0 Pontos de Vida a destrói.\n\nCriaturas dentro de uma cúpula intacta têm Imunidade aos efeitos do Frio Extremo enquanto a magia durar.\n\nSe conjurar esta magia em uma área de terreno nevado, ela se mistura perfeitamente com a neve existente. Se uma criatura executar a ação Analisar para examinar a muralha, pode diferenciá-la do terreno ao redor com um teste bem-sucedido de Inteligência (Investigação) contra a CD de magia.",
+    "higherLevels": null
+  },
+  "weave-detonation": {
+    "name": "Detonação da Trama",
+    "description": "Uma explosão invisível e silenciosa de destino irrompe em um ponto à sua escolha. Cada criatura em uma Esfera de 6 metros de raio centrada naquele ponto realiza uma salvaguarda de Sabedoria. Em uma falha, a criatura tem Desvantagem em todos os Testes de D20 por 1 minuto.\n\nUma criatura pode repetir a salvaguarda de Sabedoria no final de cada um dos seus turnos, encerrando a magia em caso de sucesso.",
+    "higherLevels": "Para cada círculo de espaço de magia acima do 3º, você pode excluir até cinco criaturas dentro do raio dos efeitos da magia."
+  },
+  "whiteout": {
+    "name": "Nevasca Cegante",
+    "description": "Você deve estar ao ar livre para conjurar esta magia, e ela termina antecipadamente se você entrar em um ambiente fechado.\n\nAo conjurar esta magia, você cria uma Esfera de 6 metros de raio de névoa densa e neve rodopiante centrada em você. A Esfera está Totalmente Obscurecida e o terreno dentro dela é Terreno Difícil. Qualquer criatura que comece o turno na Esfera ou entre na Esfera no turno dela deve ser bem-sucedida em uma salvaguarda de Constituição ou recebe 1 nível de Exaustão. Criaturas que tenham Resistência ou Imunidade a dano Gélido têm sucesso automaticamente nessa salvaguarda.\n\nAo conjurar a magia, você pode designar um número de criaturas igual ao seu modificador de atributo de conjuração. Essas criaturas não recebem níveis de Exaustão da magia.\n\nQuando a magia termina, toda a neve criada por ela desaparece instantaneamente e os níveis de Exaustão terminam.",
+    "higherLevels": null
+  },
+  "wotans-retribution": {
+    "name": "Retribuição de Wotan",
+    "description": "Você se teleporta diretamente atrás da criatura que desencadeou esta Reação e faz um ataque corpo a corpo contra ela com uma arma que estiver empunhando. Você tem Vantagem na jogada de ataque. Em um acerto, a criatura sofre o dano do seu ataque bem como uma quantidade de dano igual ao dano que ela causou a você quando desencadeou esta Reação.",
+    "higherLevels": null
+  },
+  "wyrd-sight": {
+    "name": "Visão do Wyrd",
+    "description": "Você manipula os fios da sorte e do destino para trabalhar a seu favor. No máximo uma vez por turno, você pode rolar 1d12 e somá-lo ou subtraí-lo de uma rolagem de d20 feita por uma criatura que você possa ver.",
+    "higherLevels": null
+  }
+}

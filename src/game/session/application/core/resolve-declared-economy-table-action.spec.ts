@@ -39,6 +39,18 @@ describe('resolveDeclaredEconomyTableAction', () => {
       description: 'PV temp. = 2× nível de Mago.',
     },
     {
+      id: 'fighter-viking-reprisal',
+      name: 'Represália do Saqueador',
+      economy: 'reaction' as const,
+      classSlug: 'fighter',
+      minLevel: 15,
+      subclassSlug: 'viking',
+      resourceSlug: 'marauders-reprisal',
+      alwaysSpendsResource: true,
+      tableAction: 'marauders-reprisal',
+      description: 'Reação: crítico + PV temp.',
+    },
+    {
       id: 'barbarian-lightning-step',
       name: 'Passo Relâmpago',
       economy: 'bonus' as const,
@@ -111,6 +123,31 @@ describe('resolveDeclaredEconomyTableAction', () => {
     );
     expect(result.total).toBe(10);
     expect(result.note).toContain('PV temporários aplicados: 10');
+  });
+
+  it('applies temp HP for marauders-reprisal (half level)', async () => {
+    const viking = {
+      id: 'fighter-1',
+      classSlug: 'fighter',
+      subclassSlug: 'viking',
+      level: 15,
+    };
+    const result = await resolveDeclaredEconomyTableAction(
+      { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
+      viking as never,
+      'marauders-reprisal',
+    );
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'fighter-1' }),
+      'marauders-reprisal',
+      1,
+    );
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'fighter-1' }),
+      { tempHp: 7 },
+    );
+    expect(result.total).toBe(7);
+    expect(result.note).toContain('PV temporários aplicados: 7');
   });
 
   it('returns note without spend when pool is absent', async () => {

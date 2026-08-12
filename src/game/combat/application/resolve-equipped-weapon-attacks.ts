@@ -26,6 +26,10 @@ import {
   coverageBonusToEffects,
   parseItemCoverage,
 } from '@game/inventory/domain/coverage/item-coverage';
+import {
+  isMagicCatalogItem,
+  masterworkTierBonusApplies,
+} from '@game/inventory/domain/coverage/coverage-base-eligibility';
 import { parsePermanentItemEffects } from '@game/inventory/domain/permanent-item-effects';
 import { extraWeaponProficiencyFromClassOrder } from '@game/sheet/domain/validation/class-options/class-order-effects';
 
@@ -138,6 +142,12 @@ export class ResolveEquippedWeaponAttacks {
         ? this.resolveCoverageWeaponBonuses(
             coverageMeta,
             item.attachedCoverageBonus,
+            isMagicCatalogItem(
+              (weapon.item.properties ?? null) as Record<
+                string,
+                unknown
+              > | null,
+            ),
           )
         : { attackBonus: 0, damageBonus: 0 };
       pieces.push(
@@ -321,10 +331,17 @@ export class ResolveEquippedWeaponAttacks {
         }
       | undefined,
     bonus: number | null | undefined,
+    baseIsMagic = false,
   ): { attackBonus: number; damageBonus: number } {
     if (!coverageMeta) return { attackBonus: 0, damageBonus: 0 };
     const coverage = parseItemCoverage(coverageMeta.properties);
     if (!coverage) return { attackBonus: 0, damageBonus: 0 };
+
+    if (
+      !masterworkTierBonusApplies(coverageMeta.properties, baseIsMagic)
+    ) {
+      return { attackBonus: 0, damageBonus: 0 };
+    }
 
     if (bonus === 1 || bonus === 2 || bonus === 3) {
       const fromTier = coverageBonusToEffects(coverage.appliesTo, bonus);

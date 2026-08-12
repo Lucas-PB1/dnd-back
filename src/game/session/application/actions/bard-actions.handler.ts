@@ -31,6 +31,7 @@ import {
   resolveUnbreakableMajesty,
   resolveVirtuosoSkill,
 } from './bard/subclass-actions';
+import { resolveBragiRune } from './bard/northlands-bard-actions';
 import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 
 @Injectable()
@@ -75,6 +76,8 @@ export class BardActionsHandler {
         return resolvePeerlessSkill(deps, character);
       case 'mantle-of-inspiration':
         return resolveMantleOfInspiration(deps, character);
+      case 'bragi-rune':
+        return resolveBragiRune(deps, character);
       case 'mantle-of-majesty':
         return resolveMantleOfMajesty(deps, character);
       case 'unbreakable-majesty':

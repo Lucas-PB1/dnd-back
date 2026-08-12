@@ -355,6 +355,10 @@ const BARBARIAN_TABLE_ACTION_SLUGS = [
   'fulgurant-strike',
   'lightning-step',
   'roaring-crash',
+  'giants-fury',
+  'crushing-steps',
+  'titanic-strikes',
+  'titans-fury',
 ] as const;
 
 export class UseBarbarianTableActionDto {

@@ -35,6 +35,7 @@ export function computePassivePerception(
       optionKey: string;
       valueId: string;
     }[];
+    characterFeats?: readonly { featSlug: string }[];
     classOptions?: readonly { optionKey: string; valueId: string }[];
     subclassOptions?: readonly { optionKey: string; valueId: string }[];
     classSlug?: string | null;
@@ -67,6 +68,7 @@ export function computeDerivedStats(input: {
     optionKey: string;
     valueId: string;
   }[];
+  characterFeats?: readonly { featSlug: string }[];
   classOptions?: readonly { optionKey: string; valueId: string }[];
   subclassOptions?: readonly { optionKey: string; valueId: string }[];
   classSlug?: string | null;
@@ -82,6 +84,7 @@ export function computeDerivedStats(input: {
         backgroundSkillSlugs: input.backgroundSkillSlugs,
         speciesChoices: input.speciesChoices,
         featOptions: input.featOptions,
+        characterFeats: input.characterFeats,
         classOptions: input.classOptions,
         subclassOptions: input.subclassOptions,
         classSlug: input.classSlug,

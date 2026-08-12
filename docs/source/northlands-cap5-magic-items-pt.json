@@ -1,0 +1,432 @@
+{
+  "antlered-headband-of-chernobog": {
+    "name": "Tiara Cornígera de Chernobog",
+    "header": "Item Maravilhoso, Lendário (Requer Sintonia por Bardo, Paladino, Feiticeiro ou Bruxo)",
+    "description": "Chifres branco-ossudos, as pontas manchadas de sangue seco, estão montados em uma tiara de couro curtido tingida pelo icor negro que escorre das bases dos chifres.\n\nEnquanto usa esta tiara, você ganha os seguintes benefícios.\n\nVisão Diabólica. Você enxerga normalmente em Meia-luz e Escuridão — tanto mágica quanto não mágica — a até 36 metros de si.\n\nInvestida dos Chifres. Você pode fazer um ataque com arma corpo a corpo com os chifres. Some seu Bônus de Proficiência e seu modificador de Força à jogada de ataque. Os chifres causam 1d10 de dano Perfurante mais o seu modificador de Força. Os chifres têm a propriedade de Maestria com Armas Empurrar, e você a obtém gratuitamente (somente com os chifres) se não tiver acesso a Maestria com Armas como traço de classe. Se você tiver Maestria com Armas como traço de classe, pode usar Empurrar com os chifres. Se o fizer, empurra criaturas atingidas pelos ataques com os chifres 4,5 metros em vez de 3 metros.\n\nSe você se mover pelo menos 4,5 metros em linha reta antes de causar dano a uma criatura com os chifres, essa criatura deve ser bem-sucedida em uma salvaguarda de Carisma CD 15 ou tem a condição Amedrontado por 1 minuto. No final de cada um dos seus turnos, o alvo Amedrontado repete a salvaguarda, encerrando o efeito em um sucesso.\n\nMagias. A tiara tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Você pode executar uma ação Usar Magia para gastar 1 ou mais de suas cargas e conjurar uma das seguintes magias a partir dela usando sua CD de magia: Escuridão (1 carga), Dominar Monstro (3 cargas). Você pode mirar criaturas Mortas-vivas com este uso de Dominar Monstro, mesmo que normalmente tenham Imunidade a ela."
+  },
+  "arm-ring-of-self-sacrifice": {
+    "name": "Bracelete do Autossacrifício",
+    "header": "Item Maravilhoso, Raro (Requer Sintonia)",
+    "description": "Este bracelete é levemente doloroso de usar. Tem 5 cargas e recupera 1d4 + 1 cargas gastas diariamente ao amanhecer. Enquanto o usa, você pode gastar suas cargas da seguinte forma:\n\nGolpe Agressivo. Quando você acerta uma criatura com um ataque, pode gastar 2 cargas para causar o dano máximo com o ataque. Contudo, você também sofre dano de Força igual ao dano mínimo possível do ataque, e não pode reduzir nem mitigar esse dano de forma alguma.\n\nRedirecionamento. Quando uma criatura que você possa ver faz uma jogada de ataque contra um aliado a até 1,5 metro de você, pode usar sua Reação e gastar 1 carga para se tornar o alvo do ataque no lugar."
+  },
+  "arrow-of-ice-trapping": {
+    "name": "Flecha do Aprisionamento Glacial",
+    "header": "Arma (Flecha), Raro",
+    "description": "Esta flecha causa 1d6 de dano Gélido adicional em um acerto. Se uma criatura sofrer dano desta munição, deve fazer uma salvaguarda de Força CD 15. Em uma falha, o alvo tem a condição Contido por estar preso em faixas de gelo. Ele pode fazer uma salvaguarda no final de cada um dos seus turnos para encerrar a condição Contido. Enquanto tiver a condição Contido, o alvo sofre 1d6 de dano Gélido no início de cada um dos seus turnos. O alvo ou uma criatura no alcance dele pode executar uma ação para fazer um teste de Força (Atletismo) CD 15 para liberá-lo."
+  },
+  "ashbraid": {
+    "name": "Trança de Cinzas",
+    "header": "Arma (Machado de Batalha, Machado Grande), Muito Raro (Requer Sintonia)",
+    "description": "Este machado tem a lâmina enegrecida pelo fogo, e o cabo está envolvido por fios de cabelo dourado indestrutível. Você tem um bônus de +1 nas jogadas de ataque e de dano feitas com esta arma. A arma causa 1d6 de dano Ígneo extra em um acerto.\n\nQuando você acerta uma criatura com um ataque feito com esta arma mágica, o alvo tem Vulnerabilidade a dano Ígneo até o início do seu próximo turno. Se o alvo tiver Resistência a dano Ígneo, perde essa Resistência até o início do seu próximo turno, embora não tenha Vulnerabilidade a dano Ígneo. Isso não tem efeito em criaturas com Imunidade a dano Ígneo."
+  },
+  "bell-ringing-greatclub": {
+    "name": "Clava Grande do Badalo",
+    "header": "Arma (Clava Grande), Incomum",
+    "description": "Esta Clava Grande é feita do badalo de um sino de gigante. Quando você marca um Acerto Crítico com esta Clava Grande, pode escolher que o alvo tenha a condição Atordoado até o início do seu próximo turno em vez de causar o dano extra do Acerto Crítico."
+  },
+  "belt-of-the-berserker": {
+    "name": "Cinto do Berserker",
+    "header": "Item Maravilhoso, Raro (Requer Sintonia por Bárbaro com o Traço de Classe Ataque Temerário)",
+    "description": "Enquanto usa este cinto de pele de lobo, você pode escolher usar o seguinte recurso cada vez que ativar seu traço de classe Fúria:\n\nFúria Temerária. Enquanto estiver em Fúria, você ganha uma Ação Bônus extra a cada turno que só pode usar para estender sua Fúria ou para executar a ação Correr. Se usá-la para Correr, não pode executar a ação Correr novamente naquele turno. Além disso, você ganha um Bônus de +1 ao seu Dano de Fúria. Por fim, deve usar seu Traço de Classe Ataque Temerário em cada um dos seus turnos durante a Fúria, ou sua Fúria termina."
+  },
+  "berserkers-mead": {
+    "name": "Hidromel do Berserker",
+    "header": "Poção, Raro",
+    "description": "Por 1 minuto após consumir esta poção, você é Imune aos primeiros 40 pontos de dano que sofrer."
+  },
+  "blade-of-insults": {
+    "name": "Lâmina dos Insultos",
+    "header": "Arma (Qualquer arma simples lâminada), Raro (Requer Sintonia por Bardo)",
+    "description": "Um bardo empunhando esta arma é capacitado a misturar esgrima com réplicas afiadas. Se você causar dano com esta arma no seu turno, pode usar sua Ação Bônus para conjurar Zombaria Viciosa na mesma criatura que danificou. Se desejar, como parte dessa Ação Bônus, também pode gastar um uso de sua Inspiração de Bardo, que funciona como de costume."
+  },
+  "byguls-paw-boots": {
+    "name": "Botas de Pata de Bygul",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Estas botas felpudas têm solas largas e espinhos afiados na frente que atuam como grampos. Enquanto as usa, você pode se mover por Terreno Difícil causado por neve ou gelo sem gastar deslocamento adicional, passa automaticamente em testes de Destreza (Acrobacia) para evitar a condição Caído e tem Vantagem em testes de Força (Atletismo) para escalar. Enquanto usa as botas, suas pegadas se assemelham às de um grande felino."
+  },
+  "cloak-of-wide-ranging": {
+    "name": "Manto das Longas Jornadas",
+    "header": "Item Maravilhoso, Comum",
+    "description": "Enquanto usa este manto de pele de lobo, você tem Vantagem em salvaguardas de Constituição para evitar níveis de Exaustão após viajar por mais de 8 horas em um dia."
+  },
+  "defender-honey": {
+    "name": "Mel do Defensor",
+    "header": "Poção, Incomum",
+    "description": "O mel é marrom-claro e tem doçura suave. Por 10 minutos após consumir este mel, você pode usar sua Reação para se interpor entre um ataque que acertaria um aliado a até 1,5 metro de você. O ataque mira você no lugar, com a mesma jogada de ataque."
+  },
+  "einherjars-drinking-horn": {
+    "name": "Chifre de Beber do Einherjar",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Este chifre de beber ricamente entalhado tem 6 cargas e recupera 1d6 cargas a cada dia ao amanhecer. Parece vazio, mas o portador pode gastar uma carga para executar uma ação Usar Magia e levá-lo aos lábios para beber um gole de hidromel delicioso. Qualquer criatura que beba este hidromel é revigorada, ganhando nutrição suficiente para sustentá-la por um dia. Alternativamente, uma criatura pode beber do chifre como ação Usar Magia e gastar 6 cargas para obter os mesmos benefícios, e o chifre remove 1 nível de Exaustão dessa criatura. Uma criatura não pode se beneficiar desta redução de Exaustão por mais de dois dias seguidos."
+  },
+  "feather-token": {
+    "name": "Token de Pena",
+    "header": "Item Maravilhoso, Raridade varia",
+    "description": "A seguir estão opções adicionais de token de pena:\n\nCorvo (Incomum). Você pode usar uma ação Usar Magia para lançar este token negro no ar. Você pode ver e ouvir através do token por uma hora. O token desaparece depois disso ou se a distância entre você e ele exceder 1,5 quilômetro. O pássaro tem as estatísticas de um corvo.\n\nCoruja-das-Neves (Incomum). Você pode usar uma ação Usar Magia para passar esta pena branca e cinza pelo rosto de uma criatura. Por 1 hora, essa criatura pode executar a ação Esconder-se sem os requisitos usuais de estar Obscurecida ou atrás de Cobertura, desde que seja contra terreno nevado."
+  },
+  "glacierpress-boots": {
+    "name": "Botas Pressão-Glacial",
+    "header": "Item Maravilhoso, Muito Raro",
+    "description": "O cano peludo destas botas tem gelo e cascalho grudados que nunca derretem. Estas botas têm 3 cargas e recuperam 1d3 cargas gastas diariamente ao amanhecer. Enquanto as usa, você pode executar uma ação Usar Magia para gastar 1 carga e ativá-las por 1 hora. Enquanto as botas estiverem ativas, você pode se mover em linha reta pelo espaço de qualquer criatura menor que Enorme. Você não provoca Ataques de Oportunidade devido a este movimento. Na primeira vez que entrar no espaço de uma criatura durante este movimento, ela deve ser bem-sucedida em uma salvaguarda de Força CD 15 ou ser empurrada à sua frente pelo restante do seu movimento."
+  },
+  "goggles-of-snowsight": {
+    "name": "Óculos de Visão na Neve",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Enquanto usa estes óculos de cristal azul facetado, você não tem Desvantagem em testes de Sabedoria (Percepção) para enxergar através de áreas Levemente Obscurecidas por neve soprada, areia ou outros detritos."
+  },
+  "goggles-of-tracking": {
+    "name": "Óculos de Rastreamento",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Estes óculos têm múltiplas lentes que podem ser giradas. Os óculos têm 3 cargas. Enquanto os usa, você pode executar uma ação Usar Magia para gastar uma carga. Por 1 hora, você pode ver quaisquer rastros que tenham sido obscurecidos por fenômenos naturais como chuva, neve ou areia soprada na última semana. Além disso, você tem Vantagem em testes de atributo para rastrear criaturas. Os óculos recuperam 1d3 cargas gastas diariamente ao amanhecer."
+  },
+  "the-grave-blade": {
+    "name": "A Lâmina Sepulcral",
+    "header": "Arma (Espada Longa), Fabuloso (propriedades de 5º nível ou superior requerem sintonia)",
+    "description": "Os reivers de Wolfheim trouxeram para casa muitos tesouros estranhos como souvenirs e lembranças de suas campanhas no exterior. Uma guerreira anã chamada Essalla reclamou uma espada estranha como sua parte do espólio em uma dessas jornadas de pilhagem. Incomum no desenho e sem ornamentos pelos padrões anões, parecia destinada a ser um souvenir trazido à tona apenas quando contassem as histórias da campanha.\n\nEsta espada tem uma lâmina cinza opaca e sem vida, e o punho é entalhado em osso envelhecido. A guarda é feita de costelas, e o pomo vem da extremidade arredondada de um fêmur, ambos fundidos em bronze.\n\nA Lâmina Sepulcral tornou-se conhecida em diferentes contos, pois os fios do destino de cada portador pareciam ser cortados logo após tomar posse dela. Mudou de mãos muitas vezes ao longo dos nove anos seguintes, aparentemente tomada de um cadáver com tanta frequência quanto trocada por ouro ou favores.\n\nA lâmina é conhecida pela canção que embute na presença de mortos-vivos, e com a morte de seus portadores a canção da lâmina se torna cada vez mais insistente. Alguns dizem que a canção é um aviso, enquanto outros teorizam que ela quer ser encontrada e enterrada com o corpo de seu primeiro portador.\n\nO souvenir de tanta morte se perdeu entre as mercadorias de um mercador que nunca chegou ao destino em Wolfheim, e o mistério de sua canção persiste em contos narrados em noites escuras quando o fogo queima baixo.\n\nO pomo desta espada embute uma canção sem palavras que pode ser ouvida em um raio de 1,5 metro quando Mortos-vivos estão a até 18 metros dela. À medida que seu nível aumenta, ela tem as seguintes propriedades adicionais se você a estiver empunhando ou segurando enquanto sintonizado com ela:\n\n5º nível. Quando você é reduzido a 0 Pontos de Vida mas não é morto imediatamente, pode cair para 1 Ponto de Vida em vez disso. Se o dano veio de uma criatura, você tem Vantagem nas jogadas de ataque contra ela por 1 minuto. Uma vez usada, a espada não pode ser usada desta forma novamente até o próximo amanhecer.\n\n9º nível. Você ganha um bônus de +1 nas jogadas de ataque e de dano com esta espada. Além disso, a espada causa 1d6 de dano Necrótico adicional em um acerto.\n\n13º nível. Você ganha um bônus de +2 nas jogadas de ataque e de dano (em vez de +1) com esta espada. Além disso, quando a espada causa dano a uma criatura viva, o alvo deve ser bem-sucedido em uma salvaguarda de Carisma CD 15 ou ter a condição Amedrontado até o final do seu próximo turno.\n\n17º nível. Você ganha um bônus de +3 nas jogadas de ataque e de dano (em vez de +2) com esta espada. Se você fizer uma jogada de ataque bem-sucedida contra uma criatura que tenha 50 Pontos de Vida ou menos, pode obrigá-la a morrer. Uma vez usada, a espada não pode ser usada desta forma novamente até o próximo amanhecer.\n\nItens Mágicos Fabulosos\n\nItens mágicos fabulosos se distinguem como uma raridade. Um item fabuloso cresce em poder junto com o personagem que o empunha. As regras para itens fabulosos estão resumidas aqui, e alguns itens mágicos fabulosos podem ser encontrados neste capítulo.\n\nUm item mágico fabuloso começa como um item mágico Comum. O item concede um traço menor e útil ao seu dono que não requer sintonia para usar.\n\nPara acessar qualquer traço de nível superior, um PC deve sintonizar-se a ele usando as regras padrão de Sintonia. Uma vez sintonizado, um PC pode usar as propriedades mais poderosas do item fabuloso conforme sobe de nível. Se um PC acima do 1º nível se sintonizar a um item fabuloso, suas propriedades dependentes de nível, até o nível atual do personagem, ficam imediatamente disponíveis.\n\nA critério do Mestre, as propriedades mais poderosas de um item podem se tornar disponíveis apenas depois que o personagem completar uma missão ou evento particular relacionado à história do item, em vez de imediatamente ao alcançar o nível exigido de cada propriedade.\n\nSe um PC optar por não se sintonizar a um item fabuloso, ele permanece um item mágico comum, concedendo apenas sua propriedade menor, independentemente do nível do personagem.\n\nSalvo indicação em contrário, as propriedades concedidas por um item fabuloso estão em efeito enquanto o personagem estiver vestindo, carregando ou tocando o item."
+  },
+  "hels-coin": {
+    "name": "Moeda de Hel",
+    "header": "Item Maravilhoso, Comum",
+    "description": "Enquanto carrega esta moeda de prata enegrecida, se você falhar em uma Salvaguarda contra a Morte, trata a salvaguarda como um sucesso. Em seguida a moeda se desfaz em pó.\n\nSe você carregar mais de uma Moeda de Hel, ganha a seguinte maldição. Se for bem-sucedido em uma Salvaguarda contra a Morte, trata o sucesso como uma falha. Em seguida uma Moeda de Hel se desfaz em pó. Esta maldição permanece até restar apenas uma moeda em sua posse, quando o efeito normal dessa moeda retoma. Você pode se desfazer livremente das moedas extras."
+  },
+  "hjartarydis-belt": {
+    "name": "Cinto de Hjartarydi",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Tocar este cinto de couro vermelho-sangue preenche você com uma sensação de conforto. Enquanto tiver o cinto equipado, você tem Vantagem em salvaguardas contra as condições Enfeitiçado e Amedrontado."
+  },
+  "hollow-eye": {
+    "name": "Olho Oco",
+    "header": "Item Maravilhoso, Raro (Requer Sintonia)",
+    "description": "Este pequeno talismã de madeira tem a forma de um grande globo ocular com um vazio no lugar da pupila. Enquanto segura o olho, como ação Usar Magia, você pode gastar 1 dos seus Dados de Vida para pingar uma pequena quantidade do próprio sangue no olho e conjurar a magia Olho Arcano ou a magia Adivinhação. Depois de usar o olho uma vez, ele não pode ser usado novamente até o próximo amanhecer."
+  },
+  "honey-of-the-hearth-fire": {
+    "name": "Mel do Fogo do Lar",
+    "header": "Poção [Mel], Incomum",
+    "description": "Quando você consome este mel, encerra em si as condições Cego, Surdo, Amedrontado e Envenenado."
+  },
+  "honey-of-the-hive-warden": {
+    "name": "Mel do Guardião da Colmeia",
+    "header": "Poção [Mel], Muito Raro",
+    "description": "Quando você consome este mel, tem Resistência a Veneno por 1 hora. Uma vez durante a duração, pode conjurar Nuvem de Insetos (CD 15). Em vez de gafanhotos causando dano Perfurante, a magia cria abelhas que causam dano de Veneno."
+  },
+  "honey-of-the-norn-blessed": {
+    "name": "Mel das Nornas Abençoadas",
+    "header": "Poção [Mel], Raro",
+    "description": "Quando você consome este mel, tem Vantagem em salvaguardas de Destreza por 1 hora. Uma vez durante a duração, pode conjurar Augúrio."
+  },
+  "honey-of-robust-health": {
+    "name": "Mel da Saúde Robusta",
+    "header": "Poção [Mel], Comum",
+    "description": "Quando você consome este mel como parte de um Descanso Curto, pode rolar novamente qualquer resultado de 1 ou 2 nos Dados de Vida gastos para recuperar Pontos de Vida durante aquele descanso. Você deve usar a nova rolagem. O mel tem um tom vermelho profundo e um sabor rico, e aquece o estômago."
+  },
+  "honey-of-the-sacred-bear": {
+    "name": "Mel do Urso Sagrado",
+    "header": "Poção [Mel], Raro",
+    "description": "Quando você consome este mel, tem Vantagem em testes de Força por 1 hora. Uma vez durante a duração, pode conjurar Heroísmo em si mesmo, sem exigir Concentração."
+  },
+  "honey-of-the-skalds-tongue": {
+    "name": "Mel da Língua do Skald",
+    "header": "Poção [Mel], Raro",
+    "description": "Quando você consome este mel, tem Vantagem em testes de Atuação e Persuasão por 1 hora. Uma vez durante a duração, pode conjurar Sugestão (CD 15)."
+  },
+  "horn-of-battles-call": {
+    "name": "Chifre do Chamado à Batalha",
+    "header": "Item Maravilhoso, Raro",
+    "description": "Este chifre envolvido em couro está cingido por robustas faixas de ferro. Quando você toca este chifre como uma ação, escolha até cinco aliados a até 36 metros de você que possam ouvi-lo. Cada alvo tem Vantagem em ataques com arma corpo a corpo até o início do seu próximo turno e ganha 10 Pontos de Vida Temporários. A condição Amedrontado termina em todos os alvos. Depois de tocar o chifre, ele não pode ser usado novamente até o próximo amanhecer."
+  },
+  "horn-of-the-hrimthursar": {
+    "name": "Chifre dos Hrimthursar",
+    "header": "Item Maravilhoso, Raro",
+    "description": "Este chifre de marfim, também conhecido como Chifre do Sopro Congelado, é tipicamente entalhado no osso de um dragão branco, remorhaz ou outro monstro ártico. Quando você soa o chifre, ele cria uma rajada de vento gelado em um Cone de 18 metros. Cada criatura no Cone sofre 4d6 de dano Gélido e tem a condição Incapacitado até o início do seu próximo turno. Uma salvaguarda de Constituição CD 15 bem-sucedida reduz o dano pela metade e anula a condição Incapacitado. Depois de tocar o chifre, ele não pode ser usado novamente até o próximo amanhecer."
+  },
+  "horn-of-the-wild-hunt": {
+    "name": "Chifre da Caçada Selvagem",
+    "header": "Item Maravilhoso, Lendário",
+    "description": "Este chifre negro parece normal à luz do dia, mas na escuridão brilha como um céu estrelado. O chifre tem 4 cargas e recupera 1d4 cargas diariamente ao pôr do sol.\n\nQuando você toca este chifre, pode gastar 1 carga para conjurar Conjurar Animais, ou 3 cargas para conjurar Conjurar Fadas (invocando um caçador espectral)."
+  },
+  "icebreaker-axe": {
+    "name": "Machado Quebra-Gelo",
+    "header": "Arma (Machado de Batalha ou Machado Grande), Raro",
+    "description": "Este machado é forjado de um metal cinza-escuro e tem runas azul-brancas inscritas na cabeça. Esta arma causa 3d8 de dano Trovejante extra a qualquer objeto feito de gelo que acerte.\n\nA arma tem 3 cargas. Como ação Usar Magia, você pode golpear a arma contra uma superfície gelada para criar uma Linha de 18 metros de energia trovejante. Cada criatura na Linha deve ser bem-sucedida em uma salvaguarda de Força CD 15 ou ter a condição Caído. Objetos na Linha feitos de gelo sofrem 3d8 de dano Trovejante. A arma recupera 1d3 cargas gastas diariamente ao amanhecer."
+  },
+  "iced-steel-armor": {
+    "name": "Armadura de Aço Glacial",
+    "header": "Armadura (Qualquer armadura Média ou Pesada feita principalmente de metal), Incomum",
+    "description": "Este traje de armadura é feito de aço glacial, que as lendas sustentam ter origem no submundo congelado de Niflheim. Objetos feitos de aço glacial sempre parecem frios ao toque. Enquanto o usa, você é automaticamente bem-sucedido em salvaguardas contra Calor Extremo, e tem Vantagem em salvaguardas contra magias envolvendo fogo e calor."
+  },
+  "iced-steel-weapon": {
+    "name": "Arma de Aço Glacial",
+    "header": "Arma (Qualquer Munição ou Arma Corpo a Corpo), Comum",
+    "description": "Esta arma ou peça de munição é feita de aço glacial, que as lendas sustentam ter origem no submundo congelado de Niflheim. Objetos feitos de aço glacial sempre parecem frios ao toque. O dano que você causa com esta arma é tratado como dano Gélido em vez do tipo que a arma normalmente causa, se isso for vantajoso para você."
+  },
+  "incendiary-coal": {
+    "name": "Carvão Incendiário",
+    "header": "Item Maravilhoso, Raro",
+    "description": "Este pedaço de carvão é agradavelmente quente ao toque. Como ação Usar Magia, você sopra suavemente no carvão para acendê-lo e então pode lançá-lo a até 9 metros, onde floresce em uma Esfera de fogo de 1,5 metro.\n\nUma criatura que termine o turno dentro ou adjacente à Esfera deve fazer uma salvaguarda de Destreza CD 15, sofrendo 1d6 de dano Ígneo em uma falha e metade disso em um sucesso. Objetos inflamáveis na Esfera ou adjacentes a ela que não estejam sendo usados ou carregados começam a queimar.\n\nNo final de cada um dos seus turnos subsequentes, o tamanho da Emanação aumenta em 1,5 metro, e o dano Ígneo causado aumenta em 1d6 até atingir o tamanho máximo de 9 metros e o dano máximo de 6d6. No final de cada um dos seus turnos após isso, o tamanho da Emanação diminui em 1,5 metro, e o dano Ígneo causado diminui em 1d6 até ambos chegarem a 0, momento em que o carvão não pode ser usado novamente até o próximo amanhecer."
+  },
+  "iron-traitors-arm-ring": {
+    "name": "Bracelete do Traidor de Ferro",
+    "header": "Item Maravilhoso, Muito Raro",
+    "description": "Este bracelete tem a aparência rude de ferro martelado. Você pode executar uma ação Utilizar para brandir o bracelete contra uma criatura Enorme ou menor a até 1,5 metro de si.\n\nFaça uma jogada de ataque corpo a corpo com um bônus de ataque igual ao seu modificador de Força ou Destreza mais o seu Bônus de Proficiência. Em um acerto, o bracelete se enrola no braço do alvo, e as propriedades mágicas de itens mágicos segurados ou usados pelo alvo deixam de funcionar até você executar uma Ação Bônus para emitir um comando que libera o bracelete.\n\nUma criatura que possa tocar o bracelete, incluindo a que o usa, pode executar uma ação para fazer um teste de Força (Atletismo) CD 20 para removê-lo. Em um teste bem-sucedido, o item é removido e a criatura fica livre do efeito. Em um teste falho, quaisquer outras tentativas feitas por aquela criatura falham automaticamente até 24 horas terem se passado. O bracelete também pode ser removido se o membro for decepado ou se o anel for destruído.\n\nDepois que o bracelete é usado, não pode ser usado novamente até o próximo amanhecer."
+  },
+  "kempdomr-axe": {
+    "name": "Machado Kempdomr",
+    "header": "Arma (Machado de Batalha, Machado Barbado, Breidox ou Machado Grande), Raro (Requer Sintonia)",
+    "description": "Este machado canaliza o poder dos jotun. Você ganha um bônus de +1 nas jogadas de ataque e de dano feitas com esta arma mágica.\n\nEsta arma tem 5 cargas. Quando você acerta um inimigo com um ataque corpo a corpo usando esta arma, pode gastar 1 carga para causar 3d8 de dano de Força extra e empurrar o alvo 3 metros para longe de você para cada categoria de tamanho que ele for menor que Gigantesco (criaturas Gigantescas não são empurradas). A arma recupera 1d4 + 1 cargas gastas diariamente ao amanhecer.\n\nDádiva do Gigante. Enquanto estiver sintonizado à arma e usando um Cinto de Força de Gigante ou Manoplas do Poder do Ogro aos quais também esteja sintonizado, a arma recupera todas as cargas gastas diariamente ao amanhecer. Além disso, o bônus nas jogadas de ataque e de dano aumenta para +2, e o dano de Força extra que você causa ao gastar uma carga aumenta para 4d8."
+  },
+  "laekning-shield": {
+    "name": "Escudo Laekning",
+    "header": "Escudo Redondo, Incomum",
+    "description": "Enquanto segura este Escudo, você tem um bônus de +1 à Classe de Armadura, além do bônus normal do Escudo à Classe de Armadura. Este Escudo redondo se repara magicamente e não é destruído ao final de um encontro em que você seja atingido."
+  },
+  "mug-of-friendship": {
+    "name": "Caneca da Amizade",
+    "header": "Item Maravilhoso, Comum",
+    "description": "Você pode usar uma ação Usar Magia para encantar qualquer líquido potável neste jarro. Uma criatura que beba o líquido encantado fica Amigável a você, e você tem Vantagem em testes de Carisma (Persuasão) contra ela por 1 hora. Após a hora, a criatura ainda está Amigável, embora sua atitude possa mudar com base no seu comportamento.\n\nDepois de ter sido usada para encantar líquido uma vez, não pode ser usada novamente até o próximo amanhecer."
+  },
+  "nine-escape-knot": {
+    "name": "Nó das Nove Fugas",
+    "header": "Item Maravilhoso, Raro",
+    "description": "Esta corda de cerca de 30 centímetros feita de rabos de raposa trançados canaliza o poder do trapaceiro Loki para escapar de situações difíceis. Enquanto a segura ou a tem consigo, você tem Vantagem em testes ou salvaguardas feitos para evitar ou encerrar as condições Agarrado ou Contido.\n\nDesfazer. Como ação Usar Magia, você pode desfazer um dos nove nós da corda para conjurar uma das seguintes magias, usando Carisma como seu atributo de conjuração: Acalmar Emoções, Enfeitiçar Pessoa, Confusão, Disfarçar-se, Cativar, Fingir Morte, Invisibilidade Superior, Imagem Espelhada e Passo Nebuloso. Cada uma dessas magias pode ser conjurada apenas uma vez pelo item. Quando o último nó é desfeito, a corda perde sua magia."
+  },
+  "northlanders-boots": {
+    "name": "Botas do Nortelandês",
+    "header": "Item Maravilhoso, Comum (Requer Sintonia)",
+    "description": "O usuário destas botas forradas de pele pode usar uma Ação Bônus para transformá-las em raquetes de neve, patins de gelo ou esquis, e de volta novamente."
+  },
+  "ottaveggr-talharpa": {
+    "name": "Talharpa Ottaveggr",
+    "header": "Item Maravilhoso, Comum",
+    "description": "Esta lira das Terras do Norte é encordoada com cordas feitas de cabelo de jotun trançado. Como ação Usar Magia, você pode tocar a talharpa para conceder a todos os seus aliados a até 18 metros que possam ouvi-la Vantagem em salvaguardas contra a condição Amedrontado e em testes de Força (Atletismo) por 1 hora. Depois que esta habilidade for usada, não pode ser usada novamente até o próximo amanhecer."
+  },
+  "potion-of-near-death-portent": {
+    "name": "Poção do Presságio de Quase-Morte",
+    "header": "Poção, Muito Raro",
+    "description": "O fluido cinza turvo desta poção tem um fio dourado suspenso nele. Beber esta poção dá a você uma visão vaga de sua potencial morte. Na próxima vez em 1 hora em que você seria reduzido a 0 Pontos de Vida, pode usar uma Reação e rolar 1d20. Se a rolagem for 10 ou mais, você não sofre dano. Se a rolagem for menor que 10, você é reduzido a 1 ponto de vida em vez disso."
+  },
+  "prismatic-ammunition": {
+    "name": "Munição Prismática",
+    "header": "Arma (Qualquer Munição), Incomum",
+    "description": "Esta peça de munição é feita de aço prismático infundido com o poder do Bifrost. Quando você acerta uma criatura que está fora do seu plano natal com um ataque à distância com esta munição, ela é banida para seu plano natal por 1 rodada."
+  },
+  "prismatic-steel-armor": {
+    "name": "Armadura de Aço Prismático",
+    "header": "Armadura (Qualquer armadura Média ou Pesada feita principalmente de metal), Incomum, (Requer Sintonia)",
+    "description": "Este traje de armadura é feito de aço prismático infundido com o poder do Bifrost. Enquanto o usa, você é automaticamente bem-sucedido em salvaguardas contra efeitos que o empurrariam, puxariam, teleportariam ou de outro modo o moveriam contra a sua vontade.\n\nEnquanto sintonizado à armadura, você pode executar uma ação Usar Magia para teleportar a armadura para dentro ou para fora do seu corpo, mesmo que ela esteja em outro plano de existência. Quando você teleporta a armadura para fora do corpo, ela se move para um quadrado adjacente. Você não pode usar este efeito novamente até o próximo amanhecer."
+  },
+  "prismatic-steel-weapon": {
+    "name": "Arma de Aço Prismático",
+    "header": "Arma (Qualquer Arma Corpo a Corpo), Muito Raro (Requer Sintonia)",
+    "description": "Esta arma é feita de aço prismático infundido com o poder do Bifrost. Quando você acerta uma criatura que está fora do seu plano natal com um ataque corpo a corpo usando esta arma, ela é banida para seu plano natal por 1 rodada. Se você marcar um Acerto Crítico com esta arma contra uma criatura que está fora do seu plano natal, a criatura é banida para seu plano natal indefinidamente, embora possa partir por conta própria.\n\nEnquanto sintonizado à arma, você pode executar uma Ação Bônus para invocá-la à sua mão vazia, mesmo que ela esteja em outro plano de existência."
+  },
+  "rage-hammer": {
+    "name": "Martelo da Fúria",
+    "header": "Arma (Malho ou Martelo de Guerra), Incomum (Requer Sintonia por Bárbaro)",
+    "description": "Quando você entra em Fúria, pode fazer um ataque corpo a corpo com esta arma como parte da Ação Bônus usada para entrar em Fúria. Depois de usar esta propriedade, não pode usá-la novamente até completar um Descanso Curto."
+  },
+  "ravenflight-axe": {
+    "name": "Machado Voo-do-Corvo",
+    "header": "Arma (Machadinha), Incomum (Requer Sintonia)",
+    "description": "Quando você ataca uma criatura com esta Machadinha e um dos seus aliados está a até 1,5 metro do alvo, a arma causa 1d6 de dano Cortante extra.\n\nAtaque do Bando. Uma vez por dia, você pode soltar a arma da mão como uma ação, momento em que ela se transforma em um Cone de 18 metros de corvos enxameando. Faça um ataque com arma à distância com o machado contra cada criatura à sua escolha no Cone. Imediatamente após completar o último ataque, a arma reaparece na sua mão. Esta propriedade não pode ser usada novamente até o próximo amanhecer."
+  },
+  "reavers-lodestone": {
+    "name": "Magnetita do Reiver",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Esta pedra tem um furo no centro, por onde passa um cordão de couro. Uma extremidade da pedra tem a runa de “pessoa” gravada, e a outra traz a runa de “ouro”. A pedra tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Como ação Usar Magia, você pode gastar 1 carga e sussurrar “pessoa” ou “ouro” e pendurar a pedra pelo cordão.\n\nAo usar o comando “pessoa”, a pedra se orienta e puxa suavemente na direção de algum número de pessoas. A força do puxão é maior quando os alvos estão mais perto ou em maior quantidade. O alcance é de 1,5 quilômetro por agrupamento de 100 pessoas humanoides, 15 quilômetros para 1000 pessoas, ou 150 quilômetros para 10.000 pessoas. Um agrupamento é uma comunidade de moradia temporária ou permanente, como um povoado, aldeia ou cidade.\n\nAo usar o comando “ouro”, a pedra se orienta e o puxa na direção de objetos de valor. A força do puxão é maior quando os alvos estão mais perto ou são mais valiosos. O alcance é de 3 metros para moedas ou objetos de arte no valor total de 100 PO, 30 metros para moedas ou objetos de arte no valor total de 1000 PO, ou 300 metros para moedas ou objetos de arte no valor total de 10.000 PO.\n\nQuer você a use para encontrar pessoas ou ouro, ela o puxa por 1 minuto."
+  },
+  "ring-of-the-cragtop-jarl-jarlpact": {
+    "name": "Anel do Jarl do Pico Rochoso (Pacto dos Jarls)",
+    "header": "Anel, Muito Raro (Requer Sintonia)",
+    "description": "Este anel de granito polido traz runas de força. Enquanto usa o anel, quando você ataca com uma arma que causa dano Contundente, marca um Acerto Crítico em um 19 ou 20 natural.\n\nAlém disso, o anel tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Você pode gastar suas cargas para usar as propriedades abaixo.\n\nOssos da Montanha. Você pode gastar 1 carga para conjurar Vida Falsa.\n\nGolpe da Montanha. Você pode gastar 1 carga quando causar dano Contundente com um ataque corpo a corpo ou à distância para empurrar o alvo 3 metros.\n\nPor fim, tem a seguinte propriedade.\n\nBenefício do Pacto dos Jarls. Se um aliado a até 36 metros estiver sintonizado e usando qualquer outro Anel do Pacto dos Jarls, você tem Vantagem em testes de Força e salvaguardas de Força."
+  },
+  "ring-of-the-diving-bird": {
+    "name": "Anel da Ave Mergulhadora",
+    "header": "Anel, Incomum",
+    "description": "Enquanto usa este anel, você tem um Deslocamento de Natação igual a qualquer Deslocamento de Voo que tenha."
+  },
+  "ring-of-the-forgefire-jarl-jarlpact": {
+    "name": "Anel do Jarl do Fogo da Forja (Pacto dos Jarls)",
+    "header": "Anel, Muito Raro (Requer Sintonia)",
+    "description": "Este anel de ferro negro traz runas laranja-brilhantes de fogo e metal. Enquanto usa o anel, seus ataques com arma corpo a corpo causam 1d6 de dano Ígneo extra em um acerto.\n\nAlém disso, o anel tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Você pode gastar suas cargas para usar as propriedades abaixo.\n\nExplosão da Fornalha. Você pode gastar 1 carga para conjurar Mãos Flamejantes (versão de 4º círculo).\n\nEco da Forja. Você pode gastar 1 carga para conjurar Aquecer Metal (versão de 4º círculo).\n\nPor fim, tem a seguinte propriedade.\n\nBenefício do Pacto dos Jarls. Se um aliado a até 36 metros estiver sintonizado e usando qualquer outro Anel do Pacto dos Jarls, você tem Vantagem em testes de Força e salvaguardas de Força."
+  },
+  "ring-of-the-glacial-jarl-jarlpact": {
+    "name": "Anel do Jarl Glacial (Pacto dos Jarls)",
+    "header": "Anel, Muito Raro (Requer Sintonia)",
+    "description": "Este anel cintilante de cristal azul-branco traz runas de gelo e batalha. Enquanto usa o anel, seus ataques com arma corpo a corpo causam 1d6 de dano Gélido extra em um acerto.\n\nAlém disso, o anel tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Você pode gastar suas cargas para usar as propriedades abaixo.\n\nIra Congelada. Você pode gastar 1 carga para conjurar Tempestade de Gelo. Você é imune a qualquer dano causado por esta conjuração da magia e ignora o Terreno Difícil criado por ela.\n\nGrito de Guerra. Você pode gastar 1 carga depois de acertar com um ataque com arma corpo a corpo para conceder Vantagem em todos os ataques feitos por aliados que possam ver ou ouvir você contra a criatura que você acertou. Este efeito dura até o início do seu próximo turno.\n\nPor fim, tem a seguinte propriedade.\n\nBenefício do Pacto dos Jarls. Se um aliado a até 36 metros estiver sintonizado e usando qualquer outro Anel do Pacto dos Jarls, você tem Vantagem em testes de Força e salvaguardas de Força.\n\nAnéis do Pacto dos Jarls\n\nHá muito tempo, um conjunto de anéis foi forjado para ajudar a cimentar uma trégua entre tribos rivais de gigantes. Quatro jarls gigantes rivais se reuniram para colocar seus anéis em uma demonstração de paz. Contudo, a trégua durou apenas até o banquete de celebração, quando os jarls embriagados iniciaram uma briga que se tornou um combate sangrento. Os anéis se estilhaçaram junto com a paz, mas fragmentos dos artefatos originais se moldaram em versões menores dos anéis e se espalharam pelas Terras do Norte.\n\nAlém de seus poderes básicos, cada anel concede um benefício adicional do pacto dos jarls se pelo menos um outro anel do pacto estiver sintonizado a um aliado próximo. Este benefício não se aplica a múltiplos anéis usados pelo mesmo personagem."
+  },
+  "ring-of-hospitality": {
+    "name": "Anel da Hospitalidade",
+    "header": "Anel, Comum",
+    "description": "Este anel é moldado para mostrar duas mãos apertadas em saudação. Enquanto usa este anel, você tem Vantagem em testes de Carisma (Persuasão) quando executa a ação Influenciar para pedir abrigo a outra criatura que possa compreendê-lo."
+  },
+  "ring-of-ice-shielding": {
+    "name": "Anel do Escudo de Gelo",
+    "header": "Anel, Raro (Requer Sintonia)",
+    "description": "Este anel tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Você pode usar uma Reação para formar uma parede de gelo de 1,5 metro de lado e 30 centímetros de espessura quando for o alvo de um ataque ou for obrigado a fazer uma salvaguarda de Destreza. A parede fornece Cobertura de Três Quartos. Se o ataque errar ou você for bem-sucedido na salvaguarda, a parede de gelo explode. Quaisquer inimigos adjacentes a ela sofrem 1d6 de dano Perfurante e 1d6 de dano Gélido."
+  },
+  "ring-of-surtr": {
+    "name": "Anel de Surtr",
+    "header": "Anel, Incomum",
+    "description": "Este anel é forjado de modo rude a partir de um único fragmento enrolado de ferro negro como carvão. É quente ao toque. Quando você causa dano Ígneo a um objeto enquanto usa este anel, causa 1d8 de dano Ígneo extra."
+  },
+  "ring-of-the-tempest-jarl-jarlpact": {
+    "name": "Anel do Jarl da Tempestade (Pacto dos Jarls)",
+    "header": "Anel, Lendário (Requer Sintonia)",
+    "description": "Este anel é feito de um pedaço retorcido de madeira carbonizada por raio, e traz runas da tempestade e do mar. Enquanto o usa, você tem Resistência a dano Gélido, Elétrico e Trovejante.\n\nAlém disso, o anel tem 3 cargas e recupera 1d3 cargas gastas diariamente ao amanhecer. Você pode gastar suas cargas para usar as propriedades abaixo.\n\nGolpe da Tempestade. Você pode gastar 2 cargas quando causar dano com um ataque corpo a corpo. Além do dano normal da arma, o alvo sofre 8d6 de dano Elétrico e tem a condição Cego até o início do seu próximo turno.\n\nSalto Levado pelo Vento. Você pode gastar 1 carga para conjurar a magia Salto em si mesmo.\n\nPor fim, tem a seguinte propriedade.\n\nBenefício do Pacto dos Jarls. Se um aliado a até 36 metros estiver sintonizado e usando qualquer outro Anel do Pacto dos Jarls, você ganha Vantagem em testes de Força e salvaguardas de Força."
+  },
+  "rod-of-frostbite": {
+    "name": "Bastão da Geada",
+    "header": "Varinha, Raro (Requer Sintonia por Conjurador)",
+    "description": "Esta vara é feita de pele enegrecida e ressecada encolhida firmemente em torno de um antebraço e mão humanoides. Esta varinha tem 5 cargas e recupera 1d4 + 1 cargas gastas diariamente ao amanhecer.\n\nFrio Definhante. Enquanto a segura, você pode executar uma ação Usar Magia para gastar 1 carga e fazer um raio sombrio partir de uma das pontas dos dedos da vara em direção a uma criatura que você possa ver a até 18 metros de si. O alvo deve ser bem-sucedido em uma salvaguarda de Constituição CD 15 ou, por 1 minuto, sofre 2d6 de dano Necrótico adicional sempre que sofrer dano Gélido. No final de cada um dos turnos do alvo, ele repete a salvaguarda, encerrando o efeito em si em um sucesso.\n\nConjurar Magia. Você pode conjurar Raio Gélido a partir dela usando seu modificador de ataque mágico. O dano escala com o seu nível."
+  },
+  "rostungr-armor": {
+    "name": "Armadura Rostungr",
+    "header": "Armadura (leve ou de pele), Muito Raro",
+    "description": "Você tem um bônus de +1 à Classe de Armadura enquanto usa esta armadura. Pode executar uma Ação Bônus para fazer a armadura envolvê-lo por 1 minuto. Você cresce nadadeiras e uma espessa camada de gordura, que permanecem pela duração. Neste estado, seu Deslocamento é reduzido pela metade, você tem Deslocamento de Natação de 9 metros e tem Resistência a dano Contundente. Depois que esta ação for usada, não pode ser usada novamente até o próximo amanhecer."
+  },
+  "rumbling-hammer": {
+    "name": "Martelo Retumbante",
+    "header": "Arma (Malho ou Martelo de Guerra), Comum (Requer Sintonia)",
+    "description": "Imediatamente após marcar um Acerto Crítico com este martelo, ele conjura Trovoada, usando o seu nível para definir o dano do truque. Seus aliados têm Imunidade ao dano causado por esta conjuração da magia."
+  },
+  "salt-of-thawing": {
+    "name": "Sal do Degelo",
+    "header": "Item Maravilhoso, Comum",
+    "description": "Você pode usar uma ação Usar Magia para espalhar este sal em uma área de 1,5 metro de lado a até 3 metros de você. Gelo de até 30 centímetros de espessura naquela área derrete instantaneamente."
+  },
+  "sail-of-favorable-winds": {
+    "name": "Vela dos Ventos Favoráveis",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Estas belas velas são bordadas com redemoinhos e contornos para parecerem nuvens brancas fofas. Enquanto navega, um navio içando estas velas trata qualquer vento como se fosse vento de popa, vindo diretamente atrás do navio, e assim pode manter velocidade máxima sem precisar orçar ou ajustar as velas. Isso não tem efeito se o navio estiver em calmaria e não houver vento disponível."
+  },
+  "sealskin-armor": {
+    "name": "Armadura de Pele de Foca",
+    "header": "Armadura (Qualquer Leve), Incomum (Requer Sintonia)",
+    "description": "Você tem um Deslocamento de Natação igual ao seu Deslocamento normal ao usar esta armadura. Além disso, tem Vantagem em quaisquer testes e salvaguardas para evitar ou encerrar a condição Agarrado."
+  },
+  "seidr-rune-necklace": {
+    "name": "Colar de Runas Seidr",
+    "header": "Item Maravilhoso, Raro (Requer Sintonia)",
+    "description": "Este colar é feito de runas entalhadas enfiadas em cabelo de gigante. As runas brilham em azul fraco. Enquanto usa este colar, você pode executar uma ação Usar Magia para conhecer e influenciar o futuro de um indivíduo com o qual esteja familiarizado.\n\nVocê escolhe um tipo de situação entre batalha, diplomacia, comércio, trama ou outra situação. O Mestre diz se aquele indivíduo provavelmente encontrará tal situação hoje. Pelo restante do dia, você sabe quando aquele indivíduo está naquele tipo de situação e, como Reação, pode somar ou subtrair 1d10 de uma rolagem de dado que ele acabou de fazer durante aquele evento, embora não tenha conhecimento adicional do que transpira onde o indivíduo está.\n\nVocê não pode executar esta ação Usar Magia novamente até o próximo amanhecer."
+  },
+  "serpent-fin-oars": {
+    "name": "Remos de Barbatana de Serpente",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Estes remos encantados prateados são mais leves e fortes que remos de madeira típicos e vêm em conjuntos suficientes para equipar um único navio. Enquanto marinheiros remam com estes remos, o piloto do navio tem Vantagem em testes para controlar o navio.\n\nQuando um navio equipado com estes remos está adjacente a outro navio a remo, o navio pode executar uma Ação para cortar os remos daquele navio, destruindo-os.\n\nEnquanto pelo menos um dos remos estiver intacto, e esse remo permanecer no navio, 1 remo adicional é magicamente produzido a cada amanhecer até haver o suficiente para equipar o navio."
+  },
+  "shadow-blade": {
+    "name": "Lâmina Sombria",
+    "header": "Arma (Espada Longa, Rapieira, Cimitarra ou Espada Curta), Raro (Requer Sintonia)",
+    "description": "Esta arma mágica elegante projeta uma imagem dupla sombria de si mesma quando empunhada. A arma tem 3 cargas e recupera 1d3 cargas a cada dia ao pôr do sol.\n\nGolpe Elusivo. Quando você erra com um ataque corpo a corpo feito com esta arma, pode gastar 1 carga para rolar novamente a jogada de ataque e usar o novo resultado.\n\nAparo Fantasmal. Enquanto segura esta arma, você pode gastar 1 carga para conjurar a magia Escudo."
+  },
+  "shield-of-the-world-serpent": {
+    "name": "Escudo da Serpente do Mundo",
+    "header": "Item Maravilhoso, Muito Raro (Requer Sintonia)",
+    "description": "Este escudo é moldado a partir de uma escama de Jormungandr. Enquanto empunha o escudo, você não pode ser empurrado ou puxado contra a sua vontade. No início de cada um dos seus turnos, pode encerrar quaisquer condições Agarrado e Contido em você."
+  },
+  "skinchanger-arm-ring": {
+    "name": "Bracelete do Mudapele",
+    "header": "Item Maravilhoso, Fabuloso (propriedades de 5º nível ou superior requerem sintonia)",
+    "description": "Este bracelete é feito de cobre e está coberto por uma pátina que não pode ser removida.\n\nHouve outrora uma seita de guerreiros do Norte dedicada a aprender com os animais de sua região. Cada membro da ordem buscava exemplificar as capacidades e o espírito de seu animal escolhido. O guerreiro do corvo era perspicaz para observar e podia viajar longe e rápido. O seguidor do lobo lutava bem em conjunto com outros. Outros tinham força e resistência como ursos.\n\nEsses ideais foram forjados em um bracelete encantado usado pelo líder da seita. Se essa magia foi alcançada com a ajuda de anões, druidas ou feiticeiros, ninguém pode dizer. Com a experiência, o usuário do bracelete podia se metamorfosear em um dos três animais exemplificados pelos guerreiros.\n\nEmbora a ordem tenha conquistado muitas vitórias no campo de batalha, não podia ser mantida a serviço de um único jarl. O ermo os chamava, e eles visitavam as terras povoadas do Norte cada vez menos com o passar dos anos, até nunca mais serem vistos.\n\nEnquanto usa este bracelete, você pode compreender e se comunicar verbalmente com corvos, lobos e ursos de todas as variedades, desde que sejam Feras, e pode usar qualquer uma das opções de perícia da ação Influenciar com eles.\n\nÀ medida que seu nível aumenta, você ganha os seguintes benefícios enquanto usa este bracelete.\n\n5º nível. Você pode executar a ação Usar Magia para crescer asas de penas negras e ganhar um Deslocamento de Voo de 15 metros por 1 hora. Enquanto tiver estas asas, seu tamanho diminui em uma categoria — de Médio para Pequeno, por exemplo. Você também tem Desvantagem em testes de Força e salvaguardas de Força. Seus ataques com armas ou Golpes Desarmados causam 1d4 a menos de dano em um acerto (isso não pode reduzir o dano abaixo de 1). Você pode encerrar o efeito antecipadamente como Ação Bônus. Uma vez usado, o bracelete não pode ser usado desta forma novamente até o próximo amanhecer.\n\n9º nível. Você tem Vantagem nas jogadas de ataque com armas corpo a corpo e Golpes Desarmados contra uma criatura se pelo menos um dos seus aliados estiver a até 1,5 metro da criatura e o aliado não tiver a condição Incapacitado.\n\n13º nível. Você pode usar uma ação Usar Magia para conceder a si mesmo Pontos de Vida Temporários iguais ao dobro do seu nível. Você também ganha Resistência a dano Gélido até os Pontos de Vida Temporários se esgotarem ou você terminar um Descanso Longo. Uma vez usado, o bracelete não pode ser usado desta forma novamente até o próximo amanhecer.\n\n17º nível. O bracelete tem 3 cargas. Você pode executar uma ação Usar Magia e gastar 1 carga para conjurar a magia Polimorfia em si mesmo. As formas que você pode assumir se limitam a um corvo; lobo ou lobo hediondo; ou urso negro, pardo ou polar. Quando você conjura Polimorfia desta forma, retém seus valores de Inteligência, Sabedoria e Carisma. O bracelete recupera 1d3 cargas gastas diariamente ao amanhecer."
+  },
+  "slip-bane-bracelet": {
+    "name": "Pulseira Antideslize",
+    "header": "Item Maravilhoso, Comum",
+    "description": "Esta pulseira de cordão tem 1d4 + 2 minúsculas garras penduradas. Enquanto a usa, você pode usar sua Reação para reduzir pela metade o dano de uma queda. Fazer isso faz uma das garras se desfazer. Quando todas as garras se forem, a pulseira se desfaz em pó."
+  },
+  "songsteel-armor": {
+    "name": "Armadura de Aço-Canção",
+    "header": "Armadura (Qualquer), Incomum",
+    "description": "Armadura de metal feita de aço-canção soa como um sino ou carrilhão quando bate em um objeto. Ao usar a armadura, você pode invocar Volund como Ação Bônus. Até o final do seu próximo turno, você sofre 5 a menos de dano de todos os ataques que o acertem. Depois de usar este recurso, deve terminar um Descanso Longo antes de poder usá-lo novamente."
+  },
+  "songsteel-shield": {
+    "name": "Escudo de Aço-Canção",
+    "header": "Armadura (Escudo), Incomum",
+    "description": "Escudos de metal feitos de aço-canção soam como um sino ou carrilhão quando batem em um objeto. Ao segurar o escudo, você pode invocar Volund como Ação Bônus. Até o final do seu próximo turno, você tem um bônus de +5 à sua CA. Depois de usar este recurso, deve terminar um Descanso Longo antes de poder usá-lo novamente."
+  },
+  "songsteel-weapon": {
+    "name": "Arma de Aço-Canção",
+    "header": "Arma (Qualquer), Incomum",
+    "description": "Uma arma de metal feita de aço-canção soa como um sino ou carrilhão quando bate em um objeto. Ao empunhar a arma, você pode invocar Volund como Ação Bônus. Até o final do seu próximo turno, você ganha um bônus de +5 nas jogadas de dano com esta arma. Depois de usar este recurso, deve terminar um Descanso Longo antes de poder usá-lo novamente."
+  },
+  "snowbirds": {
+    "name": "Pássaros-da-Neve",
+    "header": "Item Maravilhoso, Incomum",
+    "description": "Estas três figuras de cristal de andorinhas-do-ártico podem se encaixar em um círculo como se se aninhassem juntas. Cada uma pode ser removida e enterrada na neve ou em material solto semelhante, como areia ou solo. Como ação Usar Magia, você pode chamar um pássaro de cristal enterrado a até 30 metros de você. Ele explode no ar, preenchendo um Cilindro de 3 metros de altura e 1,5 metro de raio com neve, antes de cair de volta ao chão. A área dentro da explosão de neve fica Fortemente Obscurecida até o início do seu próximo turno. Os três pássaros-da-neve podem ser colocados separadamente e ativados simultaneamente para obscurecer várias áreas."
+  },
+  "storrbani": {
+    "name": "Storrbani",
+    "header": "Arma, Fabuloso (propriedades de 5º nível ou superior requerem sintonia)",
+    "description": "Thogar Matador-de-Gigantes conquistou grande renome pela coragem inabalável, mas não pelo brilho intelectual. Sua coragem inigualável frequentemente avançava muito além da razão. Ainda jovem, não pôde impedir gigantes e trolls saqueadores de destruírem sua aldeia e assassinarem sua família. Sozinho na neve ensanguentada, um fogo se acendeu no fundo do coração de Thogar. Daquele dia em diante, buscou vingança sem hesitação contra o povo gigante, não por glória ou renome, mas na esperança de que sua ousadia lhe rendesse amigos ou até uma nova família.\n\nO Matador-de-Gigantes tornou-se um terror para trolls e gigantes. Embora não fosse o guerreiro mais forte e certamente nunca o mais sábio, enfrentou covis de trolls e acampamentos de gigantes, lançando-se à batalha onde outros pausavam para traçar estratégia. Ainda assim, vez após vez, as pessoas que salvava se mostravam frias. Seus feitos, embora corajosos, raramente eram bem-vindos. Seus planos resultavam na morte de todos, exceto ele mesmo. Suas armadilhas atraíam gigantes à ruína às custas de aldeias inteiras. Aqueles que resgatava não ofereciam banquetes de agradecimento, apenas olhares desconfiados e portas fechadas. Quanto mais dava, mais sozinho ficava, e ainda assim lutava acreditando que, se fosse apenas corajoso o bastante, venceria e encontraria uma nova família.\n\nThogar encontrou o fim à sua maneira típica. Depois de cruzar o rastro de um bando de gigantes da tempestade rumo a uma aldeia, atacou-os tolamente na praça do assentamento. Sua lâmina, Storrbani, matou muitos gigantes antes que os outros fugissem, mas, infelizmente, os fogos acesos pela batalha queimaram metade da aldeia. O corpo estilhaçado de Thogar jazia nos restos do banquete de casamento (ao qual os gigantes tinham sido convidados), e ninguém veio em seu auxílio nem testemunhou seu último suspiro. Os skalds dizem que ele morreu completamente sozinho, mas quando as Valquírias vieram buscá-lo, ele não quis entrar em Valhalla sozinho. Compadecidas do bravo guerreiro, lançaram seu espírito na lâmina, prendendo-o ali até o dia em que cair novamente, lutando ao lado de um verdadeiro amigo, para que juntos possam entrar no Salão dos Escudos Dourados lado a lado.\n\nEsta espada longa é sobrenaturalmente leve e fácil de usar. Seu peso é reduzido a 0,5 quilograma, e ela ganha a propriedade de arma Acuidade. Faíscas saem da lâmina de Storrbani como se fosse um graveto em chamas. Quando você acerta um alvo com Storrbani, o alvo sofre 1d4 de dano Ígneo extra enquanto a lâmina queima no impacto.\n\nÀ medida que seu nível aumenta, você ganha os seguintes benefícios enquanto empunha ou segura esta arma.\n\n5º nível. A runa Gebo aparece na lâmina. Como Ação Bônus, você pode tocar a runa e conjurar Escudo da Fé em uma criatura (além de você) que possa ver a até 18 metros. Você não precisa se Concentrar na magia para mantê-la. Depois de usada desta forma, deve terminar um Descanso Curto antes de poder usá-la novamente.\n\nAlém disso, o espírito de Thogar Matador-de-Gigantes desperta dentro da espada longa. Ela se torna uma arma senciente, Leal e Neutra, com Inteligência 8, Sabedoria 13 e Carisma 10. Tem audição e visão até 18 metros. Comunica-se telepaticamente com seu portador e pode falar com uma voz áspera como um rosnado furioso. Pode ler e compreender Comum e Gigante. O espírito de Thogar é apaixonado, mas não particularmente brilhante. Quer que o portador enfrente gigantes e trolls e (secretamente) caia em batalha gloriosa contra as forças de Jotunheim para que portador e lâmina possam banquetear e lutar juntos no eterno Valhalla. Urge seu portador a buscar e destruir trolls e gigantes malignos, e a nunca recuar de uma luta. Se o portador demonstrar covardia ou recusar uma oportunidade de combater um troll maligno ou outro gigante, o espírito se entristece, suprimindo as propriedades mágicas da arma até o amanhecer seguinte.\n\n9º nível. Você ganha um bônus de +1 nas jogadas de ataque e de dano com esta arma, e a quantidade de dano Ígneo que ela causa aumenta para 2d6. Além disso, a runa Tiwaz aparece na lâmina. Como Ação Bônus, você pode tocar esta runa e conceder o dano Ígneo extra desta lâmina à arma de uma criatura que possa ver a até 18 metros. No final do seu próximo turno, a propriedade de dano Ígneo retorna a Storrbani.\n\n13º nível. Você ganha um bônus de +2 nas jogadas de ataque e de dano com esta arma em vez de um bônus de +1. Além disso, a runa Thurisaz aparece na lâmina. Como Ação Bônus, você pode tocar esta runa. Ao fazê-lo, suas jogadas de ataque com esta arma mágica marcam um acerto crítico em uma rolagem de 19 ou 20 até o final do seu próximo turno. Se o alvo for uma criatura do tipo gigante, Storrbani causa 1d8 de dano extra em um acerto crítico.\n\n17º nível. Você ganha um bônus de +3 nas jogadas de ataque e de dano com esta arma, em vez de um bônus de +2. Além disso, a runa Ansuz aparece na lâmina. Como Ação Bônus, você pode tocar a runa e ganhar Imunidade a todo dano até o final do seu próximo turno. Uma vez usada, a espada não pode ser usada novamente desta forma até o próximo amanhecer."
+  },
+  "stormbinders-cloak": {
+    "name": "Manto do Atador de Tempestades",
+    "header": "Item Maravilhoso, Lendário (Requer Sintonia)",
+    "description": "Você tem Resistência a dano Gélido, Elétrico e Trovejante enquanto usa este manto. Também ignora qualquer Obscurecimento criado por nuvens, névoa ou neblina mágicas ou não mágicas. Por fim, sempre que conjurar uma magia de 1º círculo ou superior que cause dano Gélido, Elétrico ou Trovejante, pode tratar a magia como se a tivesse conjurado com um espaço de magia 1 círculo acima do espaço usado."
+  },
+  "stormhook": {
+    "name": "Gancho da Tempestade",
+    "header": "Arma (Dardo, Azagaia ou Lança), Raro (Requer Sintonia)",
+    "description": "Quando você acerta uma criatura com um ataque à distância feito com esta arma mágica, o alvo é puxado 3 metros para perto de você. Se o alvo tiver um Deslocamento de Voo, esse Deslocamento é reduzido a 0 até o início do seu próximo turno.\n\nDepois de fazer um ataque à distância com esta arma, ela retorna à sua mão."
+  },
+  "stormhorn": {
+    "name": "Chifre da Tempestade",
+    "header": "Item Maravilhoso, Raro",
+    "description": "Este chifre de madeira é entalhado em teixo atingido por raio. Tem 6 cargas e recupera 1d6 cargas a cada dia ao amanhecer. Pode ser tocado como ação Usar Magia para conjurar uma magia — Névoa (1 carga), Rajada de Vento (2 cargas), Tempestade de Granizo (3 cargas) — usando sua CD de magia."
+  },
+  "sustaining-belt": {
+    "name": "Cinto Sustentador",
+    "header": "Item Maravilhoso, Comum",
+    "description": "Este cinto largo tem pelo curto e macio cinza em ambas as faces, interna e externa, com uma longa correia com muitos mais furos que um cinto comum. Enquanto usa este cinto, você não precisa consumir tanta comida ou água. Pode passar um número adicional de dias igual ao seu modificador de Constituição antes de sofrer os efeitos da fome ou da desidratação."
+  },
+  "tireless-armor": {
+    "name": "Armadura Incansável",
+    "header": "Armadura (Qualquer), Raro (Requer Sintonia)",
+    "description": "Esta armadura tem 3 cargas e recupera 1d3 cargas diariamente ao amanhecer. Cada vez que você receberia um nível de Exaustão, pode gastar uma carga para anular essa Exaustão.\n\nEnquanto a armadura tiver pelo menos 1 carga restante, você não pode sofrer penalidades ao seu Deslocamento."
+  },
+  "tireless-rower": {
+    "name": "Remador Incansável",
+    "header": "Item Maravilhoso, Muito Raro",
+    "description": "Parecendo ser apenas uma estátua de cobre de um anão sentado, esta maravilha duergar é na verdade um autômato mágico e de engenharia. Quando a palavra de comando é falada, o dispositivo se duplica até haver anões suficientes para remar o navio inteiro. Um único remador incansável pode substituir a tripulação de remo de um dracar por 8 horas. Precisa recarregar por 8 horas antes de poder ser usado novamente."
+  },
+  "titancall-dagger": {
+    "name": "Adaga Chamado-do-Titã",
+    "header": "Arma (Adaga), Lendário (Requer Sintonia)",
+    "description": "Você ganha um bônus de +2 nas jogadas de ataque e de dano feitas com esta arma mágica. Quando acerta uma criatura com esta Adaga, pode invocar um gigante do gelo como Ação Bônus. Ao fazê-lo, especifique um alvo para a ira do gigante.\n\nO gigante aparece em um espaço desocupado à sua escolha a até 36 metros de si e fica convencido de que o alvo o ofendeu. Enquanto invocado, o gigante é Amigável a você e aos seus aliados.\n\nO gigante permanece por 1 hora ou até cair a 0 Pontos de Vida, momento em que desaparece. Depois que um gigante é invocado, a adaga não pode ser usada novamente desta forma até o próximo amanhecer."
+  },
+  "tordalfrs-rebuttal": {
+    "name": "Réplica de Tordalfr",
+    "header": "Azagaia, Fabuloso (propriedades de 5º nível ou superior requerem sintonia)",
+    "description": "Tordalfr era um meio-gigante da tempestade nascido de mãe humana em uma pequena aldeia. Após anos de zombarias e provocações das crianças dos guerreiros locais, ele estourou.\n\nBrael, filho do cabeça da aldeia e um guerreiro aspirante pomposo, desafiou Tordalfr em público, proclamando aos cronies reunidos que havia evidência irrefutável de que Tordalfr era o filho indesejado de amantes proibidos, e desafiando qualquer um presente a oferecer prova do contrário.\n\nA fúria de Tordalfr atingiu tal pico que o céu sem nuvens se abriu e um raio atingiu sua mão estendida, coalescendo na forma de uma lança de arremesso, que ele lançou contra seu algoz. A azagaia atingiu Brael no peito, arremessando-o para trás e deixando uma cratera enegrecida e fumegante onde estivera o coração. Tordalfr marchou furioso para fora da aldeia e nunca voltou.\n\nQuando você acerta com um ataque com arma à distância usando esta Snaerispear, pode empurrar o alvo até 3 metros diretamente para longe de você.\n\nÀ medida que seu nível aumenta, você ganha os seguintes benefícios enquanto empunha ou segura esta arma.\n\n5º nível. Imediatamente após acertar ou errar um inimigo, esta azagaia reaparece na sua mão.\n\n9º nível. Você ganha um bônus de +1 nas jogadas de ataque e de dano com esta arma. Além disso, quando arremessada, a azagaia é envolta em eletricidade, causando 1d6 pontos de dano Elétrico extra a qualquer alvo que acerte.\n\n13º nível. Você ganha um bônus de +2 nas jogadas de ataque e de dano com esta arma em vez de +1. Além disso, pode usar uma Ação Bônus para carregar seu próximo ataque com a arma com eletricidade. Na próxima vez que acertar com esta azagaia antes do final do seu turno, o alvo deve ser bem-sucedido em uma salvaguarda de Constituição (CD 8 mais o seu modificador de Destreza e Bônus de Proficiência) ou ter a condição Atordoado até o início do seu próximo turno. Depois de usar esta habilidade, não pode usá-la novamente até completar um Descanso Curto.\n\n17º nível. Você ganha um bônus de +3 nas jogadas de ataque e de dano com esta arma, em vez de +2. Além disso, quando acerta com esta arma, pode invocar um raio dos céus para atingir o alvo. Este raio causa 8d8 de dano Elétrico ao alvo e a todas as criaturas a até 4,5 metros dele. Criaturas no raio da explosão são empurradas 4,5 metros para longe do alvo. Uma vez usada, esta habilidade não pode ser usada novamente até o próximo amanhecer."
+  },
+  "trollkin-unguent": {
+    "name": "Unguento Trollkin",
+    "header": "Poção, Raro",
+    "description": "Um frasco deste óleo pode cobrir uma criatura Média ou menor, junto com o equipamento que estiver vestindo e carregando (um frasco adicional é necessário para cada categoria de tamanho acima de Média). Aplicar o óleo leva 10 minutos. A criatura afetada então tem Resistência a dano Ígneo por 1 hora.\n\nSe a criatura sofrer dano Ígneo, fica envolta em chamas verdes fantasmagóricas que emanam Meia-luz em um raio de 4,5 metros. Enquanto em chamas, os ataques com arma corpo a corpo da criatura causam 1d6 de dano Necrótico extra. Após 10 minutos, as chamas se apagam e os efeitos do óleo expiram.\n\nEste óleo é transparente com um brilho iridescente."
+  },
+  "tyrs-crushing-might": {
+    "name": "Poder Esmagador de Tyr",
+    "header": "Item Maravilhoso, Raro",
+    "description": "Este gurupés de ferro é forjado na forma do deus de uma mão Tyr nos momentos depois que perdeu a mão para o lobo Fenris. Seu braço ferido está apertado junto ao corpo, a espada avançada na outra mão, e um grito poderoso nos lábios. Enquanto equipado com este item, um navio pode executar a ação Aríete pelo dobro do dano normal, e não sofre dano a si mesmo ao arremeter."
+  },
+  "valhallan-armor": {
+    "name": "Armadura de Valhalla",
+    "header": "Armadura (Qualquer Média ou Pesada), Raro (Requer Sintonia)",
+    "description": "Enquanto usa esta armadura, você não tem a condição Inconsciente quando está a 0 Pontos de Vida. Ainda faz Salvaguardas contra a Morte normalmente. Não pode usar a ação Ajudar para fazer um teste de Medicina e se estabilizar."
+  },
+  "warrior-honey": {
+    "name": "Mel do Guerreiro",
+    "header": "Poção [Mel], Comum",
+    "description": "Quando você consome este mel, tem Vantagem no primeiro teste de Iniciativa que fizer durante a próxima hora. Também tem Vantagem na primeira jogada de ataque corpo a corpo que fizer. O mel tem pequenas bolhas por toda parte e formiga no estômago."
+  },
+  "warhammer-of-giant-felling": {
+    "name": "Martelo de Guerra do Abate de Gigantes",
+    "header": "Arma (Martelo de Guerra), Muito Raro",
+    "description": "Este Martelo de Guerra está inscrito com runas e pictogramas dedicados a batalhas entre anões e gigantes. Você tem um bônus de +1 nas jogadas de ataque e de dano feitas com esta arma mágica.\n\nSe você acertar uma criatura de tamanho maior que o seu com esta arma, essa criatura deve ser bem-sucedida em uma salvaguarda de Força CD 15 ou sofrer 3d6 de dano Trovejante e ter a condição Caído.\n\nSe você acertar uma criatura do seu tamanho ou menor, essa criatura deve ser bem-sucedida em uma salvaguarda de Força CD 15 ou sofrer 2d6 de dano Trovejante e ter as condições Caído e Contido ao ser cravada no solo. O alvo ou uma criatura no alcance dele pode executar uma ação para fazer um teste de Força (Atletismo) CD 15 para liberá-lo."
+  },
+  "winged-helm-of-wisdom": {
+    "name": "Elmo Alado da Sabedoria",
+    "header": "Item Maravilhoso, Muito Raro (Requer Sintonia)",
+    "description": "Duas asas de pássaro negro se estendem para trás das laterais deste elmo de prata incomum, que tem uma placa lisa ininterrupta onde estaria a abertura do olho direito, embora as propriedades mágicas do elmo permitam que você veja através dela. Enquanto usa o elmo, você pode executar uma ação Usar Magia para ganhar um Deslocamento de Voo de 18 metros por 1 hora. Se estiver voando quando a duração expirar, desce a uma taxa de 9 metros por rodada até pousar. Enquanto este efeito estiver ativo, você pode manter Concentração em duas magias ao mesmo tempo, e a placa onde estaria a abertura do olho direito brilha em um azul fantasmagórico. Esta habilidade não pode ser usada novamente até o próximo amanhecer."
+  }
+}

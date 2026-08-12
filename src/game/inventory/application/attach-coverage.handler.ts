@@ -111,9 +111,15 @@ export class AttachCoverageHandler {
     }
 
     const needsTier = coverageRequiresTierBonus(coverageProps);
+    const isMasterwork = coverageProps?.masterwork === true;
     if (needsTier && (bonus !== 1 && bonus !== 2 && bonus !== 3)) {
       throw new BadRequestException(
         `Coverage '${coverageSlug}' requires bonus 1, 2 or 3`,
+      );
+    }
+    if (isMasterwork && bonus !== 1) {
+      throw new BadRequestException(
+        `Obra-Prima ('${coverageSlug}') exige bônus +1`,
       );
     }
     if (!needsTier && bonus != null) {
@@ -152,6 +158,7 @@ export class AttachCoverageHandler {
     assertBaseEligibleForCoverage(
       baseItemSlug,
       (baseCatalog.properties ?? null) as Record<string, unknown> | null,
+      coverageProps,
     );
 
     const baseCtx = await this.resolveBaseContext(baseItemSlug);

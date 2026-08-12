@@ -26,6 +26,13 @@ VALUES
     4,
     'Northlands Worldbook: Heróis das Sagas',
     NOW()
+  ),
+  (
+    'northlands-heroes-2024-en:magic-and-miscellany',
+    (SELECT id FROM rpg.phb_edition WHERE slug = 'northlands-heroes-2024-en'),
+    5,
+    'Northlands Worldbook: Magic and Miscellany',
+    NOW()
   )
 ON CONFLICT (slug) DO UPDATE SET
   edition_id = EXCLUDED.edition_id,

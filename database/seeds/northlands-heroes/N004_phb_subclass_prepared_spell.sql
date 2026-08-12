@@ -110,7 +110,7 @@ WHERE s.slug = 'oath-of-valhalla' AND sp.slug IN (
 )
 ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 
--- Spirit Caller (Healing Spirit ausente no PHB 2024 — omitido; ver feature)
+-- Spirit Caller
 INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
 SELECT s.id, 3, sp.id, NULL
 FROM rpg.phb_subclass s, rpg.phb_spell sp

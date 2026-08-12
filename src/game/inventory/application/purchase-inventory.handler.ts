@@ -160,6 +160,7 @@ export class PurchaseInventoryHandler {
         assertBaseEligibleForCoverage(
           line.attachToBaseSlug,
           (baseCatalog.properties ?? null) as Record<string, unknown> | null,
+          props,
         );
         if (!priced.ok) {
           const tier = this.tryAddTierCoverageCost(
@@ -199,6 +200,7 @@ export class PurchaseInventoryHandler {
         assertBaseEligibleForCoverage(
           line.itemSlug,
           props,
+          covProps,
         );
         if (!priced.ok) needsPrice = true;
         inventoryLines.push({ itemSlug: line.itemSlug, quantity });

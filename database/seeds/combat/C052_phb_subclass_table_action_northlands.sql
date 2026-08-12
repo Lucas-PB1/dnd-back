@@ -28,7 +28,12 @@ VALUES
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'spirit-caller'), 'spirit-secrets', 'Segredos Espirituais', 14, 'spirit-secrets', false, false, false, NULL, NULL),
 
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickster'), 'context-switch', 'Troca de Contexto', 3, 'context-switch', false, false, false, NULL, NULL),
-  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickster'), 'harbinger-of-chaos', 'Arauto do Caos', 14, 'harbinger-of-chaos', false, false, false, NULL, NULL)
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trickster'), 'harbinger-of-chaos', 'Arauto do Caos', 14, 'harbinger-of-chaos', false, false, false, NULL, NULL),
+
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-titan'), 'giants-fury', 'Fúria dos Gigantes', 3, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-titan'), 'crushing-steps', 'Passos Esmagadores', 6, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-titan'), 'titanic-strikes', 'Golpes Titânicos', 10, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-titan'), 'titans-fury', 'Fúria dos Titãs', 14, NULL, false, false, false, NULL, NULL)
 ON CONFLICT (subclass_id, slug) DO UPDATE
   SET name = EXCLUDED.name,
       unlock_level = EXCLUDED.unlock_level,

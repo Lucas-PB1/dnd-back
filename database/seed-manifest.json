@@ -3,7 +3,7 @@
   "note": "Baseline canônico — contagens atuais (G028 + T080)",
   "migrations": {
     "tables": "T001-T081",
-    "views": "V001-V056",
+    "views": "V001-V060",
     "player": "P001-P026",
     "totalFiles": 140
   },
@@ -14,8 +14,8 @@
     "valdasGunslinger": "G001-G028",
     "valdasPlayerPack2": "P001-P014",
     "steinhardtEldritchHunt": "H001-H025",
-    "northlandsHeroes": "N001-N023",
-    "combat": "C001-C055",
+    "northlandsHeroes": "N001-N035",
+    "combat": "C001-C056",
     "totalFiles": 179
   }
 }

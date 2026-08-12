@@ -5,27 +5,16 @@ import type {
 import { ritualSpellSlotIndex } from '../ritual-spell-option-key';
 import { FeatGrantedSpellRow } from './types';
 
-const MAGIC_INITIATE_SPELL_KEYS = new Set([
+/** Keys de opção que carregam slug de magia (qualquer feat — Magic Initiate, Blessings, …). */
+const FEAT_SPELL_OPTION_KEYS = new Set([
   'cantrip1',
   'cantrip2',
   'firstLevelSpell',
-]);
-
-const FIGHTING_STYLE_CANTRIP_FEATS = new Set([
-  'blessed-warrior',
-  'druidic-warrior',
+  'bonusSpell',
 ]);
 
 function isFeatSpellOption(featSlug: string, optionKey: string): boolean {
-  if (featSlug === 'magic-initiate') {
-    return MAGIC_INITIATE_SPELL_KEYS.has(optionKey);
-  }
-  if (FIGHTING_STYLE_CANTRIP_FEATS.has(featSlug)) {
-    return optionKey === 'cantrip1' || optionKey === 'cantrip2';
-  }
-  if (featSlug === 'fey-touched' || featSlug === 'shadow-touched') {
-    return optionKey === 'bonusSpell';
-  }
+  if (FEAT_SPELL_OPTION_KEYS.has(optionKey)) return true;
   if (featSlug === 'ritual-caster') {
     return ritualSpellSlotIndex(optionKey) !== null;
   }

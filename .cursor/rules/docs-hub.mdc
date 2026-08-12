@@ -10,7 +10,7 @@ Fonte canônica: [`docs/README.md`](../../docs/README.md).
 | Tipo | Pasta |
 |------|-------|
 | Arquitetura / padrões | `docs/architecture/` |
-| Plans / backlog ativo | `docs/plans/` (`backlog.md`; polish adiado: `mm-cast-options-modal.md`, `beast-master-primal-companion.md`; Threads: `northlands-character-threads.md`) |
+| Plans / backlog ativo | `docs/plans/` (`backlog.md`; polish adiado: `mm-cast-options-modal.md`, `beast-master-primal-companion.md`; Threads **adiado**: `northlands-character-threads.md`; Cap. 5 veículos **adiado**: `northlands-magic-and-miscellany.md`; pente fino: `northlands-audit.md`) |
 | Deploy | `docs/deploy/` |
 
 ## Regras
