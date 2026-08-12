@@ -11,9 +11,17 @@ const MAGIC_INITIATE_SPELL_KEYS = new Set([
   'firstLevelSpell',
 ]);
 
+const FIGHTING_STYLE_CANTRIP_FEATS = new Set([
+  'blessed-warrior',
+  'druidic-warrior',
+]);
+
 function isFeatSpellOption(featSlug: string, optionKey: string): boolean {
   if (featSlug === 'magic-initiate') {
     return MAGIC_INITIATE_SPELL_KEYS.has(optionKey);
+  }
+  if (FIGHTING_STYLE_CANTRIP_FEATS.has(featSlug)) {
+    return optionKey === 'cantrip1' || optionKey === 'cantrip2';
   }
   if (featSlug === 'fey-touched' || featSlug === 'shadow-touched') {
     return optionKey === 'bonusSpell';

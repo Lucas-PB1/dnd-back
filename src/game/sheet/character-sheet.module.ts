@@ -37,11 +37,16 @@ import { CharacterSpellsValidator } from './domain/validation/spells/character-s
 import { CharacterClassOptionsValidator } from './domain/validation/class-options/character-class-options.validator';
 import { CharacterSpeciesChoicesValidator } from './domain/validation/class-options/character-species-choices.validator';
 import { CharacterSubclassOptionsValidator } from './domain/validation/class-options/character-subclass-options.validator';
+import { CharacterSubclassOptionValueValidator } from './domain/validation/class-options/character-subclass-option-value.validator';
 import { CharacterClassExpertiseValidator } from './domain/validation/class-options/character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './domain/validation/class-options/character-weapon-mastery.validator';
 import { CharacterSpellMasteryValidator } from './domain/validation/class-options/character-spell-mastery.validator';
 import { CharacterEldritchInvocationsValidator } from './domain/validation/class-options/character-eldritch-invocations.validator';
 import { CharacterMetamagicValidator } from './domain/validation/class-options/character-metamagic.validator';
+import { CharacterClassFeatureOptionsValidator } from './domain/validation/class-options/character-class-feature-options.validator';
+import { CharacterClassExtraSkillValidator } from './domain/validation/class-options/character-class-extra-skill.validator';
+import { CharacterMysticArcanumValidator } from './domain/validation/class-options/character-mystic-arcanum.validator';
+import { CharacterSignatureSpellsValidator } from './domain/validation/class-options/character-signature-spells.validator';
 import { CharacterFeatOptionValueValidator } from './domain/validation/feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from './domain/validation/feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from './domain/validation/feats/character-feats.validator';
@@ -96,11 +101,16 @@ import { CampaignModule } from '../campaign/campaign.module';
     CharacterSpellsValidator,
     CharacterSpeciesChoicesValidator,
     CharacterSubclassOptionsValidator,
+    CharacterSubclassOptionValueValidator,
     CharacterClassExpertiseValidator,
     CharacterWeaponMasteryValidator,
     CharacterSpellMasteryValidator,
     CharacterEldritchInvocationsValidator,
     CharacterMetamagicValidator,
+    CharacterClassFeatureOptionsValidator,
+    CharacterClassExtraSkillValidator,
+    CharacterMysticArcanumValidator,
+    CharacterSignatureSpellsValidator,
     CharacterClassOptionsValidator,
     CharacterFeatOptionValueValidator,
     CharacterFeatOptionsValidator,

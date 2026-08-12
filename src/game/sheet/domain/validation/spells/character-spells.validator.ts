@@ -11,6 +11,7 @@ import {
   collectSpeciesGrantedSpellSlugs,
 } from '@game/spellcasting/domain/granted-spells';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { resolveEldritchGrantedSpellSlugs } from '@game/sheet/application/eldritch-granted-spells';
 import { assertSpellQuotas } from './assert-spell-quotas';
 import {
@@ -18,6 +19,7 @@ import {
   maxSpellLevelForCharacter,
   SubclassSpellcastingInfo,
 } from './spell-progression-queries';
+import { magicalSecretsListSlugs } from './magical-secrets';
 import { validateSpellListAccess } from './validate-spell-list-access';
 
 @Injectable()
@@ -29,6 +31,7 @@ export class CharacterSpellsValidator {
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells,
   ) {}
 
   async validateCharacterSpells(
@@ -38,9 +41,12 @@ export class CharacterSpellsValidator {
     characterFeats?: CharacterFeatDto[],
     speciesChoices?: SpeciesChoiceDto[],
     classOptions?: CharacterSheetInput['classOptions'],
+    subclassOptions?: CharacterSheetInput['subclassOptions'],
   ): Promise<void> {
-    const keys = spells.map((s) => `${s.spellSlug}:${s.listType}`);
-    assertUnique(keys, 'Duplicate character spell entries are not allowed');
+    assertUnique(
+      spells.map((s) => s.spellSlug),
+      'A mesma magia não pode aparecer mais de uma vez na ficha.',
+    );
 
     const feats = characterFeats ?? [];
     const featSlugs = [
@@ -51,6 +57,7 @@ export class CharacterSpellsValidator {
       await this.grantedSpellCatalog.loadMergeCatalog({
         speciesSlugs: [ctx.speciesSlug],
         featSlugs,
+        classSlug: ctx.classSlug,
       });
 
     const featGranted = collectFeatGrantedSpellSlugs(
@@ -68,6 +75,12 @@ export class CharacterSpellsValidator {
       this.dataSource,
       classOptions,
     );
+    const loreGranted = await this.resolveSubclassOptionGrants.resolveExtraGrantedSlugs(
+      ctx.subclassSlug,
+      ctx.level,
+      subclassOptions,
+    );
+    const extraGranted = new Set([...eldritchGranted, ...loreGranted]);
     const subclassCasting = await this.loadSubclassSpellcasting(ctx.subclassSlug);
     const spellListClassSlug =
       subclassCasting?.spellListClassSlug ?? ctx.classSlug;
@@ -87,7 +100,9 @@ export class CharacterSpellsValidator {
       speciesGranted,
       spellListClassSlug,
       maxSpellLevel,
-      eldritchGranted,
+      extraGranted,
+      magicalSecretsListSlugs(ctx.classSlug, ctx.level),
+      subclassOptions,
     );
 
     await assertSpellQuotas(
@@ -96,6 +111,8 @@ export class CharacterSpellsValidator {
       spells,
       ctx,
       subclassCasting,
+      classOptions,
+      subclassOptions,
     );
   }
 

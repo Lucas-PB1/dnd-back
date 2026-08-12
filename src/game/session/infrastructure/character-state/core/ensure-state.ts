@@ -28,6 +28,8 @@ export async function findOrCreateCharacterState(
       bestialAspectLevel: 0,
       missileShieldArmed: false,
       gigaMissileArmed: false,
+      starryFormActive: false,
+      stellarConstellation: null,
     });
     await stateRepo.save(row);
   }
@@ -57,6 +59,12 @@ export async function findOrCreateCharacterState(
   }
   if (row.gigaMissileArmed == null) {
     row.gigaMissileArmed = false;
+  }
+  if (row.starryFormActive == null) {
+    row.starryFormActive = false;
+  }
+  if (row.stellarConstellation === undefined) {
+    row.stellarConstellation = null;
   }
   return row;
 }

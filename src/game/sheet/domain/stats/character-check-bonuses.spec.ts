@@ -34,6 +34,18 @@ describe('character-check-bonuses', () => {
     ]);
   });
 
+  it('includes primordial knowledge extra skill', () => {
+    expect(
+      collectProficientSkillSlugs({
+        classSkillSlugs: ['athletics'],
+        backgroundSkillSlugs: [],
+        classOptions: [
+          { optionKey: 'primordialKnowledgeSkill', valueId: 'survival' },
+        ],
+      }),
+    ).toEqual(['athletics', 'survival']);
+  });
+
   it('applies expertise as double proficiency bonus', () => {
     const input = {
       classSkillSlugs: ['perception'],

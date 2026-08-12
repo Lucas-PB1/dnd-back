@@ -4,10 +4,26 @@ import { Repository } from 'typeorm';
 import { VPhbSpeciesGrantedSpell } from '@entities/views/v-phb-species-granted-spell.entity';
 import { VPhbFeatGrantedSpell } from '@entities/views/v-phb-feat-granted-spell.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { VPhbClassGrantedSpell } from '@entities/views/v-phb-class-granted-spell.entity';
 import {
+  ClassGrantedSpellRow,
   FeatGrantedSpellRow,
   SpeciesGrantedSpellRow,
+  SubclassGrantedSpellRow,
 } from '../domain/granted-spells';
+import { filterSubclassGrantedSpellRows } from '../domain/granted-spells/filter-subclass-granted-spells';
+
+export type SubclassOptionPick = {
+  optionKey: string;
+  valueId: string;
+};
+
+export type GrantedSpellMergeCatalog = {
+  speciesCatalog: SpeciesGrantedSpellRow[];
+  featFixedSpells: FeatGrantedSpellRow[];
+  subclassGrantedSpells: SubclassGrantedSpellRow[];
+  classGrantedSpells: ClassGrantedSpellRow[];
+};
 
 @Injectable()
 export class LoadGrantedSpellCatalog {
@@ -18,6 +34,8 @@ export class LoadGrantedSpellCatalog {
     private readonly featGrants: Repository<VPhbFeatGrantedSpell>,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpells: Repository<VPhbSubclassPreparedSpell>,
+    @InjectRepository(VPhbClassGrantedSpell)
+    private readonly classSpells: Repository<VPhbClassGrantedSpell>,
   ) {}
 
   async loadSpeciesCatalog(
@@ -57,13 +75,24 @@ export class LoadGrantedSpellCatalog {
 
   async loadSubclassGrantedSpells(
     subclassSlug: string | null | undefined,
-  ): Promise<{ unlockLevel: number; spellSlug: string }[]> {
+    subclassOptions?: readonly SubclassOptionPick[],
+  ): Promise<SubclassGrantedSpellRow[]> {
     if (!subclassSlug) return [];
     const rows = await this.subclassSpells.find({ where: { subclassSlug } });
-    return rows.map((row) => ({
-      unlockLevel: Number(row.unlockLevel),
-      spellSlug: row.spellSlug,
-    }));
+    const mapped = mapSubclassUnlockRows(rows);
+    return filterSubclassGrantedSpellRows(
+      mapped,
+      subclassSlug,
+      subclassOptions,
+    );
+  }
+
+  async loadClassGrantedSpells(
+    classSlug: string | null | undefined,
+  ): Promise<ClassGrantedSpellRow[]> {
+    if (!classSlug) return [];
+    const rows = await this.classSpells.find({ where: { classSlug } });
+    return mapUnlockRows(rows);
   }
 
   /** Catálogo completo usado no merge (espécie atual + anterior + talentos). */
@@ -71,11 +100,9 @@ export class LoadGrantedSpellCatalog {
     speciesSlugs: string[];
     featSlugs: string[];
     subclassSlug?: string | null;
-  }): Promise<{
-    speciesCatalog: SpeciesGrantedSpellRow[];
-    featFixedSpells: FeatGrantedSpellRow[];
-    subclassGrantedSpells: { unlockLevel: number; spellSlug: string }[];
-  }> {
+    classSlug?: string | null;
+    subclassOptions?: readonly SubclassOptionPick[];
+  }): Promise<GrantedSpellMergeCatalog> {
     const uniqueSpecies = [...new Set(input.speciesSlugs.filter(Boolean))];
     const speciesCatalog =
       uniqueSpecies.length === 0
@@ -87,10 +114,39 @@ export class LoadGrantedSpellCatalog {
           ).flat();
 
     const featFixedSpells = await this.loadFeatFixedSpells(input.featSlugs);
-    const subclassGrantedSpells = await this.loadSubclassGrantedSpells(
-      input.subclassSlug,
-    );
+    const [subclassGrantedSpells, classGrantedSpells] = await Promise.all([
+      this.loadSubclassGrantedSpells(input.subclassSlug, input.subclassOptions),
+      this.loadClassGrantedSpells(input.classSlug),
+    ]);
 
-    return { speciesCatalog, featFixedSpells, subclassGrantedSpells };
+    return {
+      speciesCatalog,
+      featFixedSpells,
+      subclassGrantedSpells,
+      classGrantedSpells,
+    };
   }
+}
+
+function mapSubclassUnlockRows(
+  rows: readonly {
+    unlockLevel: number;
+    spellSlug: string;
+    terrainSlug?: string | null;
+  }[],
+): SubclassGrantedSpellRow[] {
+  return rows.map((row) => ({
+    unlockLevel: Number(row.unlockLevel),
+    spellSlug: row.spellSlug,
+    terrainSlug: row.terrainSlug ?? null,
+  }));
+}
+
+function mapUnlockRows(
+  rows: readonly { unlockLevel: number; spellSlug: string }[],
+): { unlockLevel: number; spellSlug: string }[] {
+  return rows.map((row) => ({
+    unlockLevel: Number(row.unlockLevel),
+    spellSlug: row.spellSlug,
+  }));
 }

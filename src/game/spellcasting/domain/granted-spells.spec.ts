@@ -140,6 +140,27 @@ describe('granted-spells', () => {
       ]);
     });
 
+    it('collects blessed/druidic warrior cantrips', () => {
+      const slugs = collectFeatGrantedSpellSlugs(
+        [
+          {
+            featSlug: 'blessed-warrior',
+            instanceIndex: 0,
+            optionKey: 'cantrip1',
+            valueId: 'chama-sagrada',
+          },
+          {
+            featSlug: 'blessed-warrior',
+            instanceIndex: 0,
+            optionKey: 'cantrip2',
+            valueId: 'orientacao',
+          },
+        ],
+        [{ featSlug: 'blessed-warrior', instanceIndex: 0 }],
+      );
+      expect([...slugs].sort()).toEqual(['chama-sagrada', 'orientacao']);
+    });
+
     it('adds fixed companions from catalog for fey/shadow touched', () => {
       const fey = collectFeatGrantedSpellSlugs(
         [
@@ -252,6 +273,60 @@ describe('granted-spells', () => {
   });
 
   describe('mergeCharacterSpellsWithGrantedSources', () => {
+    it('adds class always_prepared grants without counting as a pick', () => {
+      const merged = mergeCharacterSpellsWithGrantedSources(
+        [{ spellSlug: 'curar-ferimentos', listType: 'prepared' }],
+        {
+          level: 1,
+          classGrantedSpells: [
+            { spellSlug: 'marca-do-predador', unlockLevel: 1 },
+          ],
+        },
+      );
+
+      expect(merged).toEqual([
+        { spellSlug: 'curar-ferimentos', listType: 'prepared' },
+        { spellSlug: 'marca-do-predador', listType: 'always_prepared' },
+      ]);
+    });
+
+    it('unlocks paladin mount at 5 without dropping smite', () => {
+      const merged = mergeCharacterSpellsWithGrantedSources(
+        [{ spellSlug: 'destruicao-divina', listType: 'always_prepared' }],
+        {
+          level: 5,
+          previousLevel: 4,
+          classGrantedSpells: [
+            { spellSlug: 'destruicao-divina', unlockLevel: 2 },
+            { spellSlug: 'convocar-montaria', unlockLevel: 5 },
+          ],
+        },
+      );
+
+      expect(merged).toEqual(
+        expect.arrayContaining([
+          { spellSlug: 'destruicao-divina', listType: 'always_prepared' },
+          { spellSlug: 'convocar-montaria', listType: 'always_prepared' },
+        ]),
+      );
+    });
+
+    it('promotes prepared subclass spell to always_prepared instead of duplicating', () => {
+      const merged = mergeCharacterSpellsWithGrantedSources(
+        [{ spellSlug: 'restauracao-maior', listType: 'prepared' }],
+        {
+          level: 12,
+          subclassGrantedSpells: [
+            { spellSlug: 'restauracao-maior', unlockLevel: 9 },
+          ],
+        },
+      );
+
+      expect(merged).toEqual([
+        { spellSlug: 'restauracao-maior', listType: 'always_prepared' },
+      ]);
+    });
+
     it('adds always_prepared feat grants without dropping class spells', () => {
       const merged = mergeCharacterSpellsWithGrantedSources(
         [{ spellSlug: 'bola-de-fogo', listType: 'prepared' }],

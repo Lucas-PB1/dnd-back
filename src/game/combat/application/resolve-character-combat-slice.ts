@@ -52,6 +52,7 @@ export async function resolveCharacterCombatSlice(input: {
   subclassSlug: string | null;
   speciesSlug: string;
   speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[];
+  classOptions?: readonly { optionKey: string; valueId: string }[];
   level: number;
   proficiencyBonus: number;
   featSlugs: string[];
@@ -73,6 +74,7 @@ export async function resolveCharacterCombatSlice(input: {
     subclassSlug,
     speciesSlug,
     speciesChoices,
+    classOptions,
     level,
     proficiencyBonus,
     featSlugs,
@@ -123,6 +125,7 @@ export async function resolveCharacterCombatSlice(input: {
       proficiencyBonus,
       featSlugs,
       fightingStyleSlugs,
+      classOptions,
       sizeCategory,
       hasShield,
       masteredWeaponSlugs,
@@ -136,6 +139,7 @@ export async function resolveCharacterCombatSlice(input: {
     classSlug,
     strengthScore: combatScores.forca,
     featSlugs,
+    classOptions,
     sizeCategory,
     hasShield,
     equippedItems,

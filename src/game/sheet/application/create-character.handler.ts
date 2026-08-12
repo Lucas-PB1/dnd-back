@@ -20,8 +20,9 @@ import {
 } from '../domain/origin/background-origin';
 import { resolveHumanOriginCharacterFeats } from '../domain/origin/species-origin';
 import { resolveLessonsOriginCharacterFeats } from '../domain/origin/lessons-origin';
-import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
+import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
 import { SeedStartingInventoryHandler } from '@game/inventory/application/seed-starting-inventory.handler';
 import { resolveEldritchGrantedSpellSlugs } from './eldritch-granted-spells';
 
@@ -39,6 +40,7 @@ export class CreateCharacterHandler {
     private readonly mapper: CharacterMapper,
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -93,16 +95,24 @@ export class CreateCharacterHandler {
 
     const sheetInput = this.toSheetInput(dto, characterFeats);
     const featSlugs = (sheetInput.characterFeats ?? []).map((f) => f.featSlug);
-    const { speciesCatalog, featFixedSpells, subclassGrantedSpells } =
+    const { speciesCatalog, featFixedSpells, subclassGrantedSpells, classGrantedSpells } =
       await this.grantedSpellCatalog.loadMergeCatalog({
         speciesSlugs: [dto.speciesSlug],
         featSlugs,
         subclassSlug: dto.subclassSlug,
+        classSlug: dto.classSlug,
+        subclassOptions: sheetInput.subclassOptions,
       });
-    const extraGrantedSpellSlugs = await resolveEldritchGrantedSpellSlugs(
+    const eldritchGranted = await resolveEldritchGrantedSpellSlugs(
       this.dataSource,
       sheetInput.classOptions,
     );
+    const loreGranted = await this.resolveSubclassOptionGrants.resolveExtraGrantedSlugs(
+      dto.subclassSlug,
+      level,
+      sheetInput.subclassOptions,
+    );
+    const extraGrantedSpellSlugs = unionSpellSlugSets(eldritchGranted, loreGranted);
     sheetInput.characterSpells = mergeGrantedSpells(
       sheetInput.characterSpells ?? [],
       {
@@ -114,6 +124,7 @@ export class CreateCharacterHandler {
         speciesCatalog,
         featFixedSpells,
         subclassGrantedSpells,
+        classGrantedSpells,
         extraGrantedSpellSlugs,
       },
     );
@@ -211,4 +222,12 @@ function isPlayerCharacterUserFkError(error: unknown): boolean {
   if (!(error instanceof QueryFailedError)) return false;
   const message = error.message ?? '';
   return message.includes('player_character_user_id_fkey');
+}
+
+function unionSpellSlugSets(...sets: ReadonlySet<string>[]): Set<string> {
+  const result = new Set<string>();
+  for (const set of sets) {
+    for (const slug of set) result.add(slug);
+  }
+  return result;
 }

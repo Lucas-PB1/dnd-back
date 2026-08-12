@@ -99,6 +99,8 @@ export async function buildCharacterStateResponse(input: {
     bestialAspectLevel: state.bestialAspectLevel ?? 0,
     missileShieldArmed: state.missileShieldArmed ?? false,
     gigaMissileArmed: state.gigaMissileArmed ?? false,
+    starryFormActive: state.starryFormActive ?? false,
+    stellarConstellation: state.stellarConstellation ?? null,
   };
 }
 
@@ -110,10 +112,11 @@ async function buildGrantedSpellCastOptions(
   dataSource: DataSource,
 ): Promise<CharacterStateResponseDto['grantedSpellCastOptions']> {
   const sheet = await sheetRepository.loadGrantedSpellSlice(character.id);
-  const { speciesCatalog, featFixedSpells } =
+    const { speciesCatalog, featFixedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: [character.speciesSlug],
       featSlugs: sheet.characterFeats.map((f) => f.featSlug),
+      classSlug: character.classSlug,
     });
   const featGrantedSlugs = collectFeatGrantedSpellSlugs(
     sheet.featOptions,

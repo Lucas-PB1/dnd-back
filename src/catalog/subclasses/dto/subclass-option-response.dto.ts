@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class SubclassOptionValueDto {
   @ApiProperty({ example: 'archery' })
@@ -26,4 +26,10 @@ export class SubclassOptionResponseDto {
 
   @ApiProperty({ type: [SubclassOptionValueDto] })
   values!: SubclassOptionValueDto[];
+
+  @ApiPropertyOptional({ example: 2 })
+  spellMaxLevel?: number | null;
+
+  @ApiPropertyOptional({ type: [String] })
+  spellSchoolSlugs?: string[] | null;
 }

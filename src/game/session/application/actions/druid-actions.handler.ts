@@ -21,6 +21,7 @@ import {
   resolveStarryFormArcher,
   resolveStarryFormChalice,
   resolveStarryFormDragon,
+  resolveStarryFormEnd,
   resolveStellarGuidance,
   resolveWallWarp,
   resolveWrathOfTheSea,
@@ -91,6 +92,8 @@ export class DruidActionsHandler {
         return resolveStarryFormChalice(deps, character);
       case 'starry-form-dragon':
         return resolveStarryFormDragon(deps, character);
+      case 'starry-form-end':
+        return resolveStarryFormEnd(deps, character);
       case 'stellar-guidance':
         return resolveStellarGuidance(deps, character);
       case 'cosmic-omen':

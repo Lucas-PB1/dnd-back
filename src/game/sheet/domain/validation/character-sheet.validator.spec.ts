@@ -17,6 +17,7 @@ import { CharacterWeaponMasteryValidator } from './class-options/character-weapo
 import { CharacterSpellMasteryValidator } from './class-options/character-spell-mastery.validator';
 import { CharacterEldritchInvocationsValidator } from './class-options/character-eldritch-invocations.validator';
 import { CharacterMetamagicValidator } from './class-options/character-metamagic.validator';
+import { CharacterClassFeatureOptionsValidator } from './class-options/character-class-feature-options.validator';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterCreateRequirementsValidator } from './character-create-requirements.validator';
 import { EMPTY_SHEET_DATA, type CharacterSheetInput } from '../character-sheet.types';
@@ -82,8 +83,11 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         if (sql.includes('subclass_unlock_level')) {
           return Promise.resolve([{ subclass_unlock_level: 3 }]);
         }
-        if (sql.includes('phb_option_def')) {
+        if (sql.includes('phb_option_def') && sql.includes("'subclass'")) {
           return Promise.resolve([{ optionKey: 'fighting_style' }]);
+        }
+        if (sql.includes('phb_option_def') && sql.includes("'class'")) {
+          return Promise.resolve([]);
         }
         if (sql.includes('phb_class_proficiency') || sql.includes('phb_fighting_style')) {
           return Promise.resolve([
@@ -114,6 +118,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         catalogLookup as unknown as CatalogLookupService,
         subclassRefRepo as unknown as Repository<PhbSubclassRef>,
         subclassOptionValuesRepo as unknown as Repository<PhbOptionValue>,
+        { validate: jest.fn().mockResolvedValue(undefined) } as never,
       ),
       new CharacterClassExpertiseValidator(dataSource as unknown as DataSource),
       new CharacterWeaponMasteryValidator(dataSource as unknown as DataSource),
@@ -123,6 +128,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         { find: jest.fn() } as never,
       ),
       new CharacterMetamagicValidator(dataSource as unknown as DataSource),
+      new CharacterClassFeatureOptionsValidator(dataSource as unknown as DataSource),
     );
 
     const featsValidator = {
@@ -140,11 +146,23 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       validateAbilityGenerationMethod: jest.fn().mockResolvedValue(undefined),
     } as unknown as CharacterEquipmentValidator;
 
+    const extraSkillValidator = {
+      validateClassExtraSkillOptions: jest.fn().mockResolvedValue(undefined),
+    };
+    const mysticArcanumValidator = {
+      validateMysticArcanumOptions: jest.fn().mockResolvedValue(undefined),
+    };
+    const signatureSpellsValidator = {
+      validateSignatureSpellOptions: jest.fn().mockResolvedValue(undefined),
+    };
     const createRequirementsValidator = new CharacterCreateRequirementsValidator(
       catalogLookup as unknown as CatalogLookupService,
       backgroundValidator,
       classOptionsValidator,
       featsValidator,
+      extraSkillValidator as never,
+      mysticArcanumValidator as never,
+      signatureSpellsValidator as never,
     );
 
     validator = new CharacterSheetValidator(
@@ -155,6 +173,9 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       classOptionsValidator,
       featsValidator,
       createRequirementsValidator,
+      extraSkillValidator as never,
+      mysticArcanumValidator as never,
+      signatureSpellsValidator as never,
     );
   });
 

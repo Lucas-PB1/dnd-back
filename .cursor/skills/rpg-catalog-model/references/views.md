@@ -21,6 +21,7 @@ Preferir views para endpoints read-only da API.
 | `v_phb_subclass_spells_expected` | Magias esperadas |
 | `v_phb_species_granted_spell` | Magias always_prepared de espécie/linhagem |
 | `v_phb_feat_granted_spell` | Magias fixas de talento (fey/shadow touched etc.) |
+| `v_phb_class_granted_spell` | Magias always_prepared de classe (S023) |
 | `v_phb_background_flavor` | Tagline/summary de antecedente |
 | `v_phb_background_tool_option` | Whitelist de ferramentas por antecedente |
 | `v_phb_background_tool_option_whitelist` | Alias agregado para validação |

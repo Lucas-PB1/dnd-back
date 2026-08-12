@@ -15,6 +15,7 @@ import {
   CharacterSpellDto,
   FeatOptionDto,
   SpeciesChoiceDto,
+  SubclassOptionDto,
 } from '@game/sheet/dto/character-sheet.dto';
 
 export class PreviewGrantedSpellsDto {
@@ -34,6 +35,11 @@ export class PreviewGrantedSpellsDto {
   @IsOptional()
   @IsString()
   subclassSlug?: string | null;
+
+  @ApiPropertyOptional({ example: 'ranger' })
+  @IsOptional()
+  @IsString()
+  classSlug?: string | null;
 
   @ApiPropertyOptional({ type: [SpeciesChoiceDto] })
   @IsOptional()
@@ -65,6 +71,13 @@ export class PreviewGrantedSpellsDto {
   @ValidateNested({ each: true })
   @Type(() => CharacterSpellDto)
   characterSpells?: CharacterSpellDto[];
+
+  @ApiPropertyOptional({ type: [SubclassOptionDto] })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SubclassOptionDto)
+  subclassOptions?: SubclassOptionDto[];
 }
 
 export class PreviewGrantedSpellsResponseDto {
@@ -73,7 +86,7 @@ export class PreviewGrantedSpellsResponseDto {
 
   @ApiProperty({
     type: [CharacterSpellDto],
-    description: 'Somente magias always_prepared concedidas (feat/species/subclass)',
+    description: 'Somente magias always_prepared concedidas (feat/species/subclass/class)',
   })
   grantedOnly!: CharacterSpellDto[];
 }

@@ -15,6 +15,7 @@ import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.vali
 import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
 import { CharacterEldritchInvocationsValidator } from './character-eldritch-invocations.validator';
 import { CharacterMetamagicValidator } from './character-metamagic.validator';
+import { CharacterClassFeatureOptionsValidator } from './character-class-feature-options.validator';
 import type { ClassProgressionMasteryRow } from './class-weapon-mastery-slots';
 
 /** Facade estável: fighting styles + delegação para validators por concern. */
@@ -30,6 +31,7 @@ export class CharacterClassOptionsValidator {
     private readonly spellMasteryValidator: CharacterSpellMasteryValidator,
     private readonly eldritchInvocationsValidator: CharacterEldritchInvocationsValidator,
     private readonly metamagicValidator: CharacterMetamagicValidator,
+    private readonly classFeatureOptionsValidator: CharacterClassFeatureOptionsValidator,
   ) {}
 
   async validateFightingStyleSelections(
@@ -111,8 +113,13 @@ export class CharacterClassOptionsValidator {
   async validateSubclassOptions(
     subclassSlug: string | null,
     options: CharacterSheetInput['subclassOptions'],
+    ctx?: Pick<CharacterSheetContext, 'classSlug' | 'level'>,
   ): Promise<void> {
-    return this.subclassOptionsValidator.validateSubclassOptions(subclassSlug, options);
+    return this.subclassOptionsValidator.validateSubclassOptions(
+      subclassSlug,
+      options,
+      ctx,
+    );
   }
 
   async validateClassExpertiseOptions(
@@ -175,5 +182,19 @@ export class CharacterClassOptionsValidator {
     classSlug: string,
   ): Promise<ClassProgressionMasteryRow[]> {
     return this.weaponMasteryValidator.loadWeaponMasteryProgression(classSlug);
+  }
+
+  async loadClassFeatureOptionKeysAtLevel(
+    classSlug: string,
+    level: number,
+  ): Promise<string[]> {
+    return this.classFeatureOptionsValidator.loadOptionKeysAtLevel(classSlug, level);
+  }
+
+  async validateClassFeatureOptions(
+    ctx: CharacterSheetContext,
+    options: NonNullable<CharacterSheetInput['classOptions']>,
+  ): Promise<void> {
+    return this.classFeatureOptionsValidator.validate(ctx, options);
   }
 }

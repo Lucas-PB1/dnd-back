@@ -22,6 +22,7 @@ import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { LoadGrantedSpellCatalog } from '../spellcasting/application/load-granted-spell-catalog';
+import { ResolveSubclassOptionGrantedSpells } from '../spellcasting/application/resolve-subclass-option-granted-spells';
 import { CampaignCharacterAccessService } from '../campaign/infrastructure/campaign-character-access.service';
 import { CampaignService } from '../campaign/application/campaign.service';
 
@@ -226,9 +227,17 @@ describe('Characters application layer', () => {
             loadMergeCatalog: jest.fn().mockResolvedValue({
               speciesCatalog: [],
               featFixedSpells: [],
+              subclassGrantedSpells: [],
+              classGrantedSpells: [],
             }),
             loadSpeciesCatalog: jest.fn().mockResolvedValue([]),
             loadFeatFixedSpells: jest.fn().mockResolvedValue([]),
+          },
+        },
+        {
+          provide: ResolveSubclassOptionGrantedSpells,
+          useValue: {
+            resolveExtraGrantedSlugs: jest.fn().mockResolvedValue(new Set()),
           },
         },
         {

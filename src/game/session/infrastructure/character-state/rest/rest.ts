@@ -53,6 +53,8 @@ export async function applyLongRestState(input: {
   state.bestialAspectLevel = 0;
   state.missileShieldArmed = false;
   state.gigaMissileArmed = false;
+  state.starryFormActive = false;
+  state.stellarConstellation = null;
   // personaMasks: mantidas no descanso longo (escolha de máscaras conhecidas/vestidas)
   state.hitDiceCurrent = restoreHitDiceOnLongRest(
     state.hitDiceCurrent,

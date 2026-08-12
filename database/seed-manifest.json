@@ -3,17 +3,17 @@
   "note": "Baseline canônico — contagens atuais (G028 + T080)",
   "migrations": {
     "tables": "T001-T074",
-    "views": "V001-V049",
+    "views": "V001-V050",
     "player": "P001-P026",
     "totalFiles": 130
   },
   "seeds": {
-    "phb": "S000-S075",
-    "subclass": "S001-S010",
+    "phb": "S000-S078",
+    "subclass": "S001-S011",
     "valdas": "V001-V023",
     "valdasGunslinger": "G001-G028",
     "valdasPlayerPack2": "P001-P013",
     "combat": "C001-C044",
-    "totalFiles": 142
+    "totalFiles": 143
   }
 }

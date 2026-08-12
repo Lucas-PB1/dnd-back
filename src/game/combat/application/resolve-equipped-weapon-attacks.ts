@@ -27,12 +27,14 @@ import {
   parseItemCoverage,
 } from '@game/inventory/domain/coverage/item-coverage';
 import { parsePermanentItemEffects } from '@game/inventory/domain/permanent-item-effects';
+import { extraWeaponProficiencyFromClassOrder } from '@game/sheet/domain/validation/class-options/class-order-effects';
 
 export type WeaponAttackResolveContext = {
   classSlug: string;
   proficiencyBonus: number;
   featSlugs?: readonly string[];
   fightingStyleSlugs?: readonly string[];
+  classOptions?: readonly { optionKey: string; valueId: string }[];
   sizeCategory?: import('../domain/equipment').SizeCategory;
   hasShield?: boolean;
   masteredWeaponSlugs?: readonly string[];
@@ -98,9 +100,13 @@ export class ResolveEquippedWeaponAttacks {
       return [];
     }
 
-    const weaponProficiencySlugs = await this.loadWeaponProficiencySlugs(
-      context.classSlug,
-    );
+    const weaponProficiencySlugs = [
+      ...(await this.loadWeaponProficiencySlugs(context.classSlug)),
+      ...extraWeaponProficiencyFromClassOrder(
+        context.classSlug,
+        context.classOptions,
+      ),
+    ];
     return this.computeAttacks(scores, pieces, context, weaponProficiencySlugs);
   }
 

@@ -79,3 +79,9 @@ VALUES
   ('tavern-brawler', 'Valentão de Taverna', 'origin', FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('mobile', 'Velocista', 'general', FALSE, 'Nível 4 ou superior, Destreza ou Constituição 13 ou superior', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
   ('tough', 'Vigoroso', 'origin', FALSE, NULL, (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217'));
+
+INSERT INTO rpg.phb_feat (slug, name, category, repeatable, prerequisite, source_citation_id)
+VALUES
+  ('blessed-warrior', 'Combatente Abençoado', 'fighting-style', FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217')),
+  ('druidic-warrior', 'Combatente Druídico', 'fighting-style', FALSE, 'Característica de Estilo de Luta', (SELECT id FROM rpg.phb_source_citation WHERE slug = 'phb-2024-pt:ch5:205-217'))
+ON CONFLICT (slug) DO NOTHING;

@@ -3,7 +3,7 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **não feitos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-08-11
+**Última revisão:** 2026-08-12 (gaps de subclasse — API implementada; front pendente)
 
 Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · **`rpg-class-mesa-front`** (dnd-front).
 
@@ -32,7 +32,10 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 
 ### Ativo
 
-*(nenhum — próximos itens só sob pedido)*
+- [x] **Create wizard — escolhas de classe (auditoria S023):** A/B em `S076`; perícia extra Bárbaro L3; idiomas Druida (Druídico), Ladino (Gíria+1) e Patrulheiro L2 (+2); Combatente Abençoado/Druídico; Arcana Mística; Maestria/Assinatura (UI); Segredos Mágicos L10; efeito mecânico Ordem Divina/Primal. SSOT: `database/seeds/phb/S023_phb_class_feature.sql`.
+- [x] **Create — magias always_prepared de classe (S023):** `phb_spell_grant` (`origin_type=class`) + `v_phb_class_granted_spell`; merge no create/update/preview. Druida L1 `falar-com-animais`; Patrulheiro L1 `marca-do-predador`; Paladino L2 `destruicao-divina` + L5 `convocar-montaria`; Bruxo L9 `contato-extraplanar`; Bardo L20 `palavra-de-poder-matar` + `palavra-de-poder-salvar`.
+- [x] **Create — picks de subclasse (S027 × S004):** seeds `S011`; validação API; pickers dinâmicos no wizard (`step-subclass-options.tsx` + `subclass-option-field.tsx`).
+- [x] **Create — always_prepared de subclasse (S028/merge) — API:** seed `S078`; filtro `terrain_slug` no merge (Terra). **Pendente front:** nada (merge automático).
 
 ### Referência (feito)
 

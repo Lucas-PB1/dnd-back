@@ -16,11 +16,13 @@ import {
 import type { SizeCategory } from '../domain/equipment';
 import { PhbWeapon } from '@entities/phb-weapon.entity';
 import { weaponPropsOf } from '@catalog/equipment/weapon-props';
+import { extraArmorTrainingFromClassOrder } from '@game/sheet/domain/validation/class-options/class-order-effects';
 
 export type EquipmentComplianceResolveInput = {
   classSlug: string;
   strengthScore: number;
   featSlugs?: readonly string[];
+  classOptions?: readonly { optionKey: string; valueId: string }[];
   sizeCategory?: SizeCategory;
   weaponPieces?: EquippedWeaponPiece[];
   hasShield?: boolean;
@@ -76,7 +78,10 @@ export class ResolveEquipmentCompliance {
       featSlugs: input.featSlugs,
     });
 
-    const armorTrainingSlugs = await this.loadArmorTrainingSlugs(input.classSlug);
+    const armorTrainingSlugs = [
+      ...(await this.loadArmorTrainingSlugs(input.classSlug)),
+      ...extraArmorTrainingFromClassOrder(input.classSlug, input.classOptions),
+    ];
     const heavySlugs = heavyWeaponSlugsForSmallSize(
       weaponPieces,
       input.sizeCategory,

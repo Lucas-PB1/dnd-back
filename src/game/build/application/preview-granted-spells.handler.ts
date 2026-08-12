@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
 import { annotateSpellSources } from '@game/spellcasting/application/annotate-spell-sources';
 import {
   collectFeatGrantedSpellSlugs,
+  collectGrantedSpellSlugsAtLevel,
   collectSpeciesGrantedSpellSlugs,
 } from '@game/spellcasting/domain/granted-spells';
 import {
@@ -13,7 +15,10 @@ import {
 
 @Injectable()
 export class PreviewGrantedSpellsHandler {
-  constructor(private readonly grantedSpellCatalog: LoadGrantedSpellCatalog) {}
+  constructor(
+    private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells,
+  ) {}
 
   async execute(
     dto: PreviewGrantedSpellsDto,
@@ -21,12 +26,24 @@ export class PreviewGrantedSpellsHandler {
     const level = dto.level ?? 1;
     const characterFeats = dto.characterFeats ?? [];
     const featSlugs = characterFeats.map((f) => f.featSlug);
-    const { speciesCatalog, featFixedSpells, subclassGrantedSpells } =
-      await this.grantedSpellCatalog.loadMergeCatalog({
-        speciesSlugs: [dto.speciesSlug],
-        featSlugs,
-        subclassSlug: dto.subclassSlug,
-      });
+    const {
+      speciesCatalog,
+      featFixedSpells,
+      subclassGrantedSpells,
+      classGrantedSpells,
+    } = await this.grantedSpellCatalog.loadMergeCatalog({
+      speciesSlugs: [dto.speciesSlug],
+      featSlugs,
+      subclassSlug: dto.subclassSlug,
+      classSlug: dto.classSlug,
+      subclassOptions: dto.subclassOptions,
+    });
+
+    const loreGranted = await this.resolveSubclassOptionGrants.resolveExtraGrantedSlugs(
+      dto.subclassSlug,
+      level,
+      dto.subclassOptions,
+    );
 
     const merged = mergeGrantedSpells(dto.characterSpells ?? [], {
       featOptions: dto.featOptions,
@@ -37,6 +54,8 @@ export class PreviewGrantedSpellsHandler {
       speciesCatalog,
       featFixedSpells,
       subclassGrantedSpells,
+      classGrantedSpells,
+      extraGrantedSpellSlugs: loreGranted,
     });
 
     const featGrantedSlugs = collectFeatGrantedSpellSlugs(
@@ -50,10 +69,13 @@ export class PreviewGrantedSpellsHandler {
       level,
       speciesCatalog,
     );
-    const subclassSpellSlugs = new Set(
-      subclassGrantedSpells
-        .filter((row) => row.unlockLevel <= level)
-        .map((row) => row.spellSlug),
+    const subclassSpellSlugs = collectGrantedSpellSlugsAtLevel(
+      level,
+      subclassGrantedSpells,
+    );
+    const classSpellSlugs = collectGrantedSpellSlugsAtLevel(
+      level,
+      classGrantedSpells,
     );
 
     const characterSpells = annotateSpellSources(merged, {
@@ -67,7 +89,8 @@ export class PreviewGrantedSpellsHandler {
         spell.listType === 'always_prepared' &&
         (spell.source === 'feat' ||
           spell.source === 'species' ||
-          spell.source === 'subclass'),
+          spell.source === 'subclass' ||
+          classSpellSlugs.has(spell.spellSlug)),
     );
 
     return { characterSpells, grantedOnly };

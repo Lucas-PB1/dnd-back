@@ -65,6 +65,28 @@ describe('validateSpellListAccess', () => {
     await expect(run([{ spellSlug: 'chromatic-orb' }])).resolves.toBeUndefined();
   });
 
+  it('accepts magical secrets extra class lists', async () => {
+    classSpellsRepo.findOne
+      .mockResolvedValueOnce(null)
+      .mockResolvedValueOnce({ spellLevel: 2 });
+    subclassSpellsRepo.findOne.mockResolvedValue(null);
+    await validateSpellListAccess(
+      classSpellsRepo as never,
+      subclassSpellsRepo as never,
+      [{ spellSlug: 'cura-ferimentos' }] as never,
+      { ...ctx, classSlug: 'bard', subclassSlug: null, level: 10 } as never,
+      new Set(),
+      new Set(),
+      'bard',
+      5,
+      new Set(),
+      ['cleric'],
+    );
+    expect(classSpellsRepo.findOne).toHaveBeenCalledWith({
+      where: { classSlug: 'cleric', spellSlug: 'cura-ferimentos' },
+    });
+  });
+
   it('rejects unknown spells', async () => {
     classSpellsRepo.findOne.mockResolvedValue(null);
     subclassSpellsRepo.findOne.mockResolvedValue(null);

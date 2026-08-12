@@ -8,6 +8,10 @@ import { CharacterSpellsValidator } from './spells/character-spells.validator';
 import { CharacterClassOptionsValidator } from './class-options/character-class-options.validator';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterCreateRequirementsValidator } from './character-create-requirements.validator';
+import { CharacterClassExtraSkillValidator } from './class-options/character-class-extra-skill.validator';
+import { CharacterMysticArcanumValidator } from './class-options/character-mystic-arcanum.validator';
+import { CharacterSignatureSpellsValidator } from './class-options/character-signature-spells.validator';
+import { classLanguageGrant } from './class-options/class-language-grant';
 
 export type { CharacterSheetContext } from '../character-sheet.types';
 
@@ -21,6 +25,9 @@ export class CharacterSheetValidator {
     private readonly classOptionsValidator: CharacterClassOptionsValidator,
     private readonly featsValidator: CharacterFeatsValidator,
     private readonly createRequirementsValidator: CharacterCreateRequirementsValidator,
+    private readonly extraSkillValidator: CharacterClassExtraSkillValidator,
+    private readonly mysticArcanumValidator: CharacterMysticArcanumValidator,
+    private readonly signatureSpellsValidator: CharacterSignatureSpellsValidator,
   ) {}
 
   async validateSheetInput(
@@ -42,7 +49,11 @@ export class CharacterSheetValidator {
     }
 
     if (input.subclassOptions !== undefined) {
-      await this.classOptionsValidator.validateSubclassOptions(ctx.subclassSlug, input.subclassOptions);
+      await this.classOptionsValidator.validateSubclassOptions(
+        ctx.subclassSlug,
+        input.subclassOptions,
+        ctx,
+      );
       const feats = input.characterFeats ?? ctx.characterFeats ?? [];
       await this.classOptionsValidator.validateFightingStyleSelections(
         ctx.classSlug,
@@ -75,6 +86,26 @@ export class CharacterSheetValidator {
         ctx,
         input.classOptions,
       );
+      await this.classOptionsValidator.validateClassFeatureOptions(
+        ctx,
+        input.classOptions,
+      );
+      await this.extraSkillValidator.validateClassExtraSkillOptions(
+        ctx,
+        input.classOptions,
+        input.classSkillSlugs,
+        input.speciesChoices,
+        input.featOptions,
+      );
+      await this.mysticArcanumValidator.validateMysticArcanumOptions(
+        ctx,
+        input.classOptions,
+      );
+      await this.signatureSpellsValidator.validateSignatureSpellOptions(
+        ctx,
+        input.classOptions,
+        input.characterSpells,
+      );
     }
 
     const characterFeats = input.characterFeats ?? [];
@@ -98,6 +129,7 @@ export class CharacterSheetValidator {
         input.characterFeats ?? ctx.characterFeats,
         input.speciesChoices,
         input.classOptions,
+        input.subclassOptions,
       );
     }
 
@@ -111,6 +143,7 @@ export class CharacterSheetValidator {
         await this.backgroundValidator.validateBackgroundLanguages(
           ctx.backgroundSlug,
           input.languageSlugs,
+          { extra: classLanguageGrant(ctx.classSlug, ctx.level) },
         );
       }
     }

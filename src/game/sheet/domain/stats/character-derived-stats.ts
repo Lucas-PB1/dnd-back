@@ -1,5 +1,6 @@
 import { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import { computeUnarmoredArmorClass } from '@game/combat/domain/equipment';
+import { classOrderSkillCheckBonus } from '../validation/class-options/class-order-effects';
 import {
   skillCheckBonus,
   skillProficiencyRank,
@@ -35,18 +36,17 @@ export function computePassivePerception(
       valueId: string;
     }[];
     classOptions?: readonly { optionKey: string; valueId: string }[];
+    subclassOptions?: readonly { optionKey: string; valueId: string }[];
     classSlug?: string | null;
     level?: number;
   },
 ): number {
   const rank = skillProficiencyRank('perception', skillSources);
+  const wisdomMod = abilityModifierValue(scores.sabedoria);
   return (
     10 +
-    skillCheckBonus(
-      abilityModifierValue(scores.sabedoria),
-      proficiencyBonus,
-      rank,
-    )
+    skillCheckBonus(wisdomMod, proficiencyBonus, rank) +
+    classOrderSkillCheckBonus('perception', skillSources.classOptions, wisdomMod)
   );
 }
 
@@ -68,6 +68,7 @@ export function computeDerivedStats(input: {
     valueId: string;
   }[];
   classOptions?: readonly { optionKey: string; valueId: string }[];
+  subclassOptions?: readonly { optionKey: string; valueId: string }[];
   classSlug?: string | null;
   level?: number;
 }): CharacterDerivedStats {
@@ -82,6 +83,7 @@ export function computeDerivedStats(input: {
         speciesChoices: input.speciesChoices,
         featOptions: input.featOptions,
         classOptions: input.classOptions,
+        subclassOptions: input.subclassOptions,
         classSlug: input.classSlug,
         level: input.level,
       },

@@ -144,6 +144,30 @@ describe('CharacterBackgroundValidator', () => {
         validator.validateBackgroundLanguages('acolyte', undefined),
       ).resolves.toBeUndefined();
     });
+
+    it('includes class extra languages in the required total', async () => {
+      await expect(
+        validator.validateBackgroundLanguages(
+          'acolyte',
+          ['common', 'thieves-cant', 'elvish', 'dwarvish'],
+          {
+            extra: { grantedSlugs: ['thieves-cant'], choiceCount: 1 },
+          },
+        ),
+      ).resolves.toBeUndefined();
+    });
+
+    it('includes granted druidic without extra choices', async () => {
+      await expect(
+        validator.validateBackgroundLanguages(
+          'acolyte',
+          ['common', 'druidic', 'elvish'],
+          {
+            extra: { grantedSlugs: ['druidic'], choiceCount: 0 },
+          },
+        ),
+      ).resolves.toBeUndefined();
+    });
   });
 
   describe('validateBackgroundOriginFeat + validateBackgroundToolChoice', () => {

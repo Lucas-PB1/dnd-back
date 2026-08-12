@@ -1,6 +1,8 @@
 import type { AbilityKey } from '@game/build/domain/ability-generation';
 import { RESILIENT_FEAT_SLUG } from '../validation/feats/resilient-feat-options';
 import { hasJackOfAllTrades } from '../validation/class-options/class-expertise-slots';
+import { collectClassExtraSkillSlugs } from '../validation/class-options/class-extra-skill-slots';
+import { collectSubclassBonusSkillSlugs } from '../validation/class-options/subclass-option-effects';
 
 /** Escolhas de espécie que concedem uma perícia (slug em choiceSlug). */
 export const SKILL_SPECIES_CHOICE_KINDS = new Set([
@@ -42,12 +44,18 @@ type ClassOptionLike = {
   valueId: string;
 };
 
+type SubclassOptionLike = {
+  optionKey: string;
+  valueId: string;
+};
+
 export type SkillBonusSources = {
   classSkillSlugs?: readonly string[];
   backgroundSkillSlugs?: readonly string[];
   speciesChoices?: readonly SpeciesChoiceLike[];
   featOptions?: readonly FeatOptionLike[];
   classOptions?: readonly ClassOptionLike[];
+  subclassOptions?: readonly SubclassOptionLike[];
   classSlug?: string | null;
   level?: number;
 };
@@ -104,6 +112,8 @@ function collectPriorProficientSkillSlugs(input: SkillBonusSources): string[] {
       ...(input.backgroundSkillSlugs ?? []),
       ...collectSpeciesSkillSlugs(input.speciesChoices),
       ...collectFeatSkillOptionSlugs(featOptions),
+      ...collectClassExtraSkillSlugs(input.classOptions),
+      ...collectSubclassBonusSkillSlugs(input.subclassOptions),
     ]),
   ];
 }

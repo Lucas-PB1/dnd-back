@@ -182,4 +182,16 @@ export class CharacterStateResponseDto {
     description: 'Giga-Míssil armado (próximo cast de Mísseis Mágicos)',
   })
   gigaMissileArmed!: boolean;
+
+  @ApiProperty({
+    example: false,
+    description: 'Forma Estrelada ativa (Círculo das Estrelas)',
+  })
+  starryFormActive!: boolean;
+
+  @ApiPropertyOptional({
+    example: 'archer',
+    description: 'Constelação ativa na Forma Estrelada',
+  })
+  stellarConstellation!: string | null;
 }

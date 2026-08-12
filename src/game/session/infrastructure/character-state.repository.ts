@@ -20,6 +20,7 @@ import {
 import { PhbCondition } from './phb-condition.entity';
 import { PlayerCharacterState } from './player-character-state.entity';
 import { buildCharacterStateResponse } from './character-state/core/build-response';
+import { applyStarryFormState } from './character-state/druid/starry-form-mutations';
 import {
   applyLongRestOp,
   applyShortRestOp,
@@ -196,6 +197,24 @@ export class CharacterStateRepository {
       state.gigaMissileArmed = flags.gigaMissileArmed;
     }
     return this.state.save(state);
+  }
+
+  async setStarryForm(
+    character: PlayerCharacter,
+    input: {
+      active: boolean;
+      constellation?: 'archer' | 'chalice' | 'dragon' | null;
+    },
+  ): Promise<CharacterStateResponseDto> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return applyStarryFormState({
+      character,
+      state,
+      active: input.active,
+      constellation: input.constellation,
+      stateRepo: this.state,
+      buildResponse: this.bindResponse(),
+    });
   }
 
   syncHitDiceOnLevelChange(

@@ -31,6 +31,9 @@ describe('CharacterCreateRequirementsValidator', () => {
       | 'validateClassExpertiseOptions'
       | 'loadWeaponMasteryProgression'
       | 'validateClassWeaponMasteryOptions'
+      | 'loadClassFeatureOptionKeysAtLevel'
+      | 'validateClassFeatureOptions'
+      | 'validateSpellMasteryOptions'
     >
   >;
   let featsValidator: jest.Mocked<Pick<CharacterFeatsValidator, 'validateFeatOptions'>>;
@@ -67,13 +70,28 @@ describe('CharacterCreateRequirementsValidator', () => {
       validateClassExpertiseOptions: jest.fn().mockResolvedValue(undefined),
       loadWeaponMasteryProgression: jest.fn().mockResolvedValue([]),
       validateClassWeaponMasteryOptions: jest.fn().mockResolvedValue(undefined),
+      loadClassFeatureOptionKeysAtLevel: jest.fn().mockResolvedValue([]),
+      validateClassFeatureOptions: jest.fn().mockResolvedValue(undefined),
+      validateSpellMasteryOptions: jest.fn().mockResolvedValue(undefined),
     };
     featsValidator = { validateFeatOptions: jest.fn().mockResolvedValue(undefined) };
+    const extraSkillValidator = {
+      validateClassExtraSkillOptions: jest.fn().mockResolvedValue(undefined),
+    };
+    const mysticArcanumValidator = {
+      validateMysticArcanumOptions: jest.fn().mockResolvedValue(undefined),
+    };
+    const signatureSpellsValidator = {
+      validateSignatureSpellOptions: jest.fn().mockResolvedValue(undefined),
+    };
     validator = new CharacterCreateRequirementsValidator(
       catalogLookup as unknown as CatalogLookupService,
       backgroundValidator as unknown as CharacterBackgroundValidator,
       classOptionsValidator as unknown as CharacterClassOptionsValidator,
       featsValidator as unknown as CharacterFeatsValidator,
+      extraSkillValidator as never,
+      mysticArcanumValidator as never,
+      signatureSpellsValidator as never,
     );
   });
 
@@ -161,6 +179,44 @@ describe('CharacterCreateRequirementsValidator', () => {
     await expect(validator.validateCreateRequiredFields({}, ctx)).rejects.toThrow(
       /requires expertise options/i,
     );
+  });
+
+  it('requires class feature options when catalog defines them', async () => {
+    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    classOptionsValidator.loadClassFeatureOptionKeysAtLevel.mockResolvedValue([
+      'divineOrder',
+    ]);
+    await expect(
+      validator.validateCreateRequiredFields(
+        {
+          classOptions: [
+            { optionKey: 'expertiseSkill1', valueId: 'stealth' },
+            { optionKey: 'expertiseSkill2', valueId: 'perception' },
+          ],
+        },
+        { ...ctx, classSlug: 'cleric', subclassSlug: 'life' },
+      ),
+    ).rejects.toThrow(/exige as opções: divineOrder/i);
+  });
+
+  it('requires primordial knowledge skill for barbarian 3+', async () => {
+    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    await expect(
+      validator.validateCreateRequiredFields(
+        { classSkillSlugs: [] },
+        { ...ctx, classSlug: 'barbarian', level: 3, subclassSlug: 'berserker' },
+      ),
+    ).rejects.toThrow(/perícia extra: primordialKnowledgeSkill/i);
+  });
+
+  it('requires fighting style for paladin at level 2', async () => {
+    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    await expect(
+      validator.validateCreateRequiredFields(
+        {},
+        { ...ctx, classSlug: 'paladin', level: 2, subclassSlug: null },
+      ),
+    ).rejects.toThrow(/Estilo de Luta/i);
   });
 
   it('requires weapon mastery options when progression grants slots', async () => {

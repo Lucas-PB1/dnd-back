@@ -8,5 +8,7 @@ VALUES
   ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 'spellList', 'wizard', 'Mago', 3),
   ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 'castingAbility', 'inteligencia', 'Inteligência', 1),
   ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 'castingAbility', 'sabedoria', 'Sabedoria', 2),
-  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 'castingAbility', 'carisma', 'Carisma', 3)
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 'castingAbility', 'carisma', 'Carisma', 3),
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'blessed-warrior'), 'spellList', 'cleric', 'Clérigo', 1),
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'druidic-warrior'), 'spellList', 'druid', 'Druida', 1)
 ON CONFLICT (scope, owner_id, option_key, value_id) DO NOTHING;

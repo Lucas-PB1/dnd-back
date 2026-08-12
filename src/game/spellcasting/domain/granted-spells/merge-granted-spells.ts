@@ -1,12 +1,13 @@
 import type { CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
 import { collectFeatGrantedSpellSlugs } from './collect-feat-granted-spells';
 import { collectSpeciesGrantedSpellSlugs } from './collect-species-granted-spells';
-import { collectSubclassGrantedSpellSlugs } from './collect-subclass-granted-spells';
+import { collectGrantedSpellSlugsAtLevel } from './collect-subclass-granted-spells';
 import { GrantedSpellMergeContext } from './types';
 
 /**
- * Mantém magias da classe/subclasse e sincroniza always_prepared de talento/espécie.
- * Remove always_prepared que eram só concessão gerenciada e não estão mais concedidas.
+ * Mantém magias da classe/subclasse e sincroniza always_prepared de
+ * talento/espécie/classe/subclasse. Remove always_prepared que eram só
+ * concessão gerenciada e não estão mais concedidas.
  */
 export function mergeCharacterSpellsWithGrantedSources(
   baseSpells: readonly CharacterSpellDto[],
@@ -17,6 +18,7 @@ export function mergeCharacterSpellsWithGrantedSources(
   const featFixed = context.featFixedSpells ?? [];
   const speciesCatalog = context.speciesCatalog ?? [];
   const subclassGrants = context.subclassGrantedSpells ?? [];
+  const classGrants = context.classGrantedSpells ?? [];
 
   const nextGranted = unionSets(
     collectFeatGrantedSpellSlugs(
@@ -30,7 +32,8 @@ export function mergeCharacterSpellsWithGrantedSources(
       level,
       speciesCatalog,
     ),
-    collectSubclassGrantedSpellSlugs(level, subclassGrants),
+    collectGrantedSpellSlugsAtLevel(level, subclassGrants),
+    collectGrantedSpellSlugsAtLevel(level, classGrants),
     context.extraGrantedSpellSlugs ?? new Set(),
   );
   const previousGranted = unionSets(
@@ -45,9 +48,13 @@ export function mergeCharacterSpellsWithGrantedSources(
       previousLevel,
       speciesCatalog,
     ),
-    collectSubclassGrantedSpellSlugs(
+    collectGrantedSpellSlugsAtLevel(
       previousLevel,
       context.previousSubclassGrantedSpells ?? subclassGrants,
+    ),
+    collectGrantedSpellSlugsAtLevel(
+      previousLevel,
+      context.previousClassGrantedSpells ?? classGrants,
     ),
     context.previousExtraGrantedSpellSlugs ?? new Set(),
   );
@@ -66,6 +73,14 @@ export function mergeCharacterSpellsWithGrantedSources(
         spell.spellSlug === spellSlug && spell.listType === 'always_prepared',
     );
     if (alreadyAlways) continue;
+    const playerIndex = result.findIndex(
+      (spell) =>
+        spell.spellSlug === spellSlug && spell.listType !== 'always_prepared',
+    );
+    if (playerIndex >= 0) {
+      result[playerIndex] = { spellSlug, listType: 'always_prepared' };
+      continue;
+    }
     result.push({ spellSlug, listType: 'always_prepared' });
   }
 

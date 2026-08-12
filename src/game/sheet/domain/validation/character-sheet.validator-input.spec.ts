@@ -36,8 +36,12 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       | 'validateSpellMasteryOptions'
       | 'validateEldritchInvocationOptions'
       | 'validateMetamagicOptions'
+      | 'validateClassFeatureOptions'
     >
   >;
+  let extraSkillValidator: { validateClassExtraSkillOptions: jest.Mock };
+  let mysticArcanumValidator: { validateMysticArcanumOptions: jest.Mock };
+  let signatureSpellsValidator: { validateSignatureSpellOptions: jest.Mock };
   let featsValidator: jest.Mocked<
     Pick<CharacterFeatsValidator, 'validateCharacterFeats' | 'validateFeatOptions'>
   >;
@@ -72,6 +76,16 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       validateSpellMasteryOptions: jest.fn().mockResolvedValue(undefined),
       validateEldritchInvocationOptions: jest.fn().mockResolvedValue(undefined),
       validateMetamagicOptions: jest.fn().mockResolvedValue(undefined),
+      validateClassFeatureOptions: jest.fn().mockResolvedValue(undefined),
+    };
+    extraSkillValidator = {
+      validateClassExtraSkillOptions: jest.fn().mockResolvedValue(undefined),
+    };
+    mysticArcanumValidator = {
+      validateMysticArcanumOptions: jest.fn().mockResolvedValue(undefined),
+    };
+    signatureSpellsValidator = {
+      validateSignatureSpellOptions: jest.fn().mockResolvedValue(undefined),
     };
     featsValidator = {
       validateCharacterFeats: jest.fn().mockResolvedValue(undefined),
@@ -86,6 +100,9 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       classOptionsValidator as unknown as CharacterClassOptionsValidator,
       featsValidator as unknown as CharacterFeatsValidator,
       {} as CharacterCreateRequirementsValidator,
+      extraSkillValidator as never,
+      mysticArcanumValidator as never,
+      signatureSpellsValidator as never,
     );
   });
 
@@ -109,6 +126,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
     expect(classOptionsValidator.validateSubclassOptions).toHaveBeenCalledWith(
       'champion',
       subclassOptions,
+      ctx,
     );
     expect(classOptionsValidator.validateFightingStyleSelections).toHaveBeenCalledWith(
       'fighter',
@@ -153,6 +171,10 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
     expect(classOptionsValidator.validateSpeciesChoices).toHaveBeenCalled();
     expect(classOptionsValidator.validateClassExpertiseOptions).toHaveBeenCalled();
     expect(classOptionsValidator.validateClassWeaponMasteryOptions).toHaveBeenCalled();
+    expect(classOptionsValidator.validateClassFeatureOptions).toHaveBeenCalled();
+    expect(extraSkillValidator.validateClassExtraSkillOptions).toHaveBeenCalled();
+    expect(mysticArcanumValidator.validateMysticArcanumOptions).toHaveBeenCalled();
+    expect(signatureSpellsValidator.validateSignatureSpellOptions).toHaveBeenCalled();
     expect(featsValidator.validateCharacterFeats).toHaveBeenCalled();
     expect(spellsValidator.validateCharacterSpells).toHaveBeenCalled();
     expect(equipmentValidator.validateEquipment).toHaveBeenCalled();

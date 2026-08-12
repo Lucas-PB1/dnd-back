@@ -8,6 +8,7 @@ import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity
 import { VPhbClassSkillChoice } from '@entities/views/v-phb-class-skill-choice.entity';
 import { VPhbClassFeature } from '@entities/views/v-phb-class-feature.entity';
 import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
+import { PhbOptionValue } from '@entities/phb-option.entity';
 import { CatalogLookupModule } from '../catalog-lookup.module';
 import { ClassesController } from './classes.controller';
 import { ClassesMapper } from './classes.mapper';
@@ -20,6 +21,7 @@ import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { FindClassFeaturesQuery } from './queries/find-class-features.query';
 import { FindClassProgressionQuery } from './queries/find-class-progression.query';
+import { FindClassOptionsQuery } from './queries/find-class-options.query';
 import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
 
 @Module({
@@ -33,6 +35,7 @@ import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
       VPhbClassSkillChoice,
       VPhbClassFeature,
       VPhbClassProgression,
+      PhbOptionValue,
     ]),
     CatalogLookupModule,
   ],
@@ -49,6 +52,7 @@ import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
     FindClassSkillsQuery,
     FindClassFeaturesQuery,
     FindClassProgressionQuery,
+    FindClassOptionsQuery,
   ],
 })
 export class ClassesModule {}

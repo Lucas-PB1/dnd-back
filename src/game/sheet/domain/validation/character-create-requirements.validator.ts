@@ -1,10 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterSheetInput } from '../character-sheet.types';
-import { classExpertiseSlotsAtLevel } from './class-options/class-expertise-slots';
-import { classWeaponMasterySlotsAtLevel } from './class-options/class-weapon-mastery-slots';
+import { assertCreateProgressionPicks } from './class-options/assert-create-progression-picks';
+import { classLanguageGrant } from './class-options/class-language-grant';
 import { CharacterBackgroundValidator } from './background/character-background.validator';
 import { CharacterClassOptionsValidator } from './class-options/character-class-options.validator';
+import { CharacterClassExtraSkillValidator } from './class-options/character-class-extra-skill.validator';
+import { CharacterMysticArcanumValidator } from './class-options/character-mystic-arcanum.validator';
+import { CharacterSignatureSpellsValidator } from './class-options/character-signature-spells.validator';
+import { classHasFightingStylePick } from './class-options/fighting-style-unlock';
 import { FIGHTING_STYLE_FEAT_CATEGORY } from './class-options/fighting-style-feat-options';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterSheetContext } from '../character-sheet.types';
@@ -20,6 +24,9 @@ export class CharacterCreateRequirementsValidator {
     private readonly backgroundValidator: CharacterBackgroundValidator,
     private readonly classOptionsValidator: CharacterClassOptionsValidator,
     private readonly featsValidator: CharacterFeatsValidator,
+    private readonly extraSkillValidator: CharacterClassExtraSkillValidator,
+    private readonly mysticArcanumValidator: CharacterMysticArcanumValidator,
+    private readonly signatureSpellsValidator: CharacterSignatureSpellsValidator,
   ) {}
 
   async validateCreateRequiredFields(
@@ -69,6 +76,7 @@ export class CharacterCreateRequirementsValidator {
         await this.classOptionsValidator.validateSubclassOptions(
           ctx.subclassSlug,
           provided,
+          ctx,
         );
       }
     }
@@ -89,11 +97,28 @@ export class CharacterCreateRequirementsValidator {
       input.subclassOptions,
     );
 
-    if (ctx.classSlug === 'fighter') {
+    const classFeatureKeys =
+      await this.classOptionsValidator.loadClassFeatureOptionKeysAtLevel(
+        ctx.classSlug,
+        ctx.level,
+      );
+    if (classFeatureKeys.length > 0) {
+      const provided = input.classOptions ?? [];
+      const providedKeys = new Set(provided.map((option) => option.optionKey));
+      const missing = classFeatureKeys.filter((key) => !providedKeys.has(key));
+      if (missing.length > 0) {
+        throw new BadRequestException(
+          `Classe '${ctx.classSlug}' exige as opções: ${missing.join(', ')}.`,
+        );
+      }
+      await this.classOptionsValidator.validateClassFeatureOptions(ctx, provided);
+    }
+
+    if (classHasFightingStylePick(ctx.classSlug, ctx.level)) {
       const hasFightingStyleFeat = await this.hasFightingStyleFeat(createFeats);
       if (!hasFightingStyleFeat) {
         throw new BadRequestException(
-          `Class '${ctx.classSlug}' requires a Fighting Style feat at level 1`,
+          `Classe '${ctx.classSlug}' exige um talento de Estilo de Luta.`,
         );
       }
     }
@@ -101,47 +126,20 @@ export class CharacterCreateRequirementsValidator {
     await this.backgroundValidator.validateBackgroundLanguages(
       ctx.backgroundSlug,
       input.languageSlugs,
-      { required: true },
+      {
+        required: true,
+        extra: classLanguageGrant(ctx.classSlug, ctx.level),
+      },
     );
 
-    const expertiseSlots = classExpertiseSlotsAtLevel(ctx.classSlug, ctx.level);
-    if (expertiseSlots.length > 0) {
-      const provided = input.classOptions ?? [];
-      const providedKeys = new Set(provided.map((option) => option.optionKey));
-      const missing = expertiseSlots
-        .map((slot) => slot.optionKey)
-        .filter((key) => !providedKeys.has(key));
-      if (missing.length > 0) {
-        throw new BadRequestException(
-          `Class '${ctx.classSlug}' requires expertise options: ${missing.join(', ')}`,
-        );
-      }
-      await this.classOptionsValidator.validateClassExpertiseOptions(
-        ctx,
-        provided,
-        input.classSkillSlugs,
-        input.speciesChoices,
-        input.featOptions,
-      );
-    }
-
-    const masterySlots = classWeaponMasterySlotsAtLevel(
-      await this.classOptionsValidator.loadWeaponMasteryProgression(ctx.classSlug),
-      ctx.level,
-    );
-    if (masterySlots.length > 0) {
-      const provided = input.classOptions ?? [];
-      const providedKeys = new Set(provided.map((option) => option.optionKey));
-      const missing = masterySlots
-        .map((slot) => slot.optionKey)
-        .filter((key) => !providedKeys.has(key));
-      if (missing.length > 0) {
-        throw new BadRequestException(
-          `Class '${ctx.classSlug}' requires weapon mastery options: ${missing.join(', ')}`,
-        );
-      }
-      await this.classOptionsValidator.validateClassWeaponMasteryOptions(ctx, provided);
-    }
+    await assertCreateProgressionPicks({
+      ctx,
+      sheet: input,
+      classOptionsValidator: this.classOptionsValidator,
+      extraSkillValidator: this.extraSkillValidator,
+      mysticArcanumValidator: this.mysticArcanumValidator,
+      signatureSpellsValidator: this.signatureSpellsValidator,
+    });
   }
 
   private async hasFightingStyleFeat(

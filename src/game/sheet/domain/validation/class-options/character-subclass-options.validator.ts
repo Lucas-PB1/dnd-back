@@ -7,6 +7,7 @@ import { PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { isFightingStyleSubclassOptionKey } from './fighting-style-feat-options';
+import { CharacterSubclassOptionValueValidator } from './character-subclass-option-value.validator';
 
 @Injectable()
 export class CharacterSubclassOptionsValidator {
@@ -17,6 +18,7 @@ export class CharacterSubclassOptionsValidator {
     private readonly subclassRefRepo: Repository<PhbSubclassRef>,
     @InjectRepository(PhbOptionValue)
     private readonly optionValuesRepo: Repository<PhbOptionValue>,
+    private readonly optionValueValidator: CharacterSubclassOptionValueValidator,
   ) {}
 
   async validateLevelRules(ctx: CharacterSheetContext): Promise<void> {
@@ -67,6 +69,7 @@ export class CharacterSubclassOptionsValidator {
   async validateSubclassOptions(
     subclassSlug: string | null,
     options: CharacterSheetInput['subclassOptions'],
+    ctx?: Pick<CharacterSheetContext, 'classSlug' | 'level'>,
   ): Promise<void> {
     if (!options) return;
 
@@ -85,7 +88,6 @@ export class CharacterSubclassOptionsValidator {
     }
 
     for (const option of options) {
-      // Lote C: query unified phb_option_value with scope='subclass'
       const valid = await this.optionValuesRepo.findOne({
         where: {
           scope: 'subclass',
@@ -94,7 +96,21 @@ export class CharacterSubclassOptionsValidator {
           valueId: option.valueId,
         },
       });
-      if (!valid) {
+      const defRows = await this.dataSource.query<{ value_type: string }[]>(
+        `SELECT value_type::text AS value_type
+         FROM rpg.phb_option_def
+         WHERE scope = 'subclass'::rpg.option_scope
+           AND owner_id = $1
+           AND option_key = $2`,
+        [subclass.id, option.optionKey],
+      );
+      const valueType = defRows[0]?.value_type;
+      const needsCatalogValue =
+        valueType === 'catalog' ||
+        valueType === 'terrain' ||
+        valueType === 'fighting_style';
+
+      if (needsCatalogValue && !valid) {
         throw new BadRequestException(
           `Subclass option '${option.optionKey}/${option.valueId}' is invalid for '${subclassSlug}'`,
         );
@@ -111,6 +127,15 @@ export class CharacterSubclassOptionsValidator {
           );
         }
       }
+    }
+
+    if (ctx) {
+      await this.optionValueValidator.validate(
+        subclassSlug,
+        ctx.classSlug,
+        ctx.level,
+        options,
+      );
     }
   }
 }

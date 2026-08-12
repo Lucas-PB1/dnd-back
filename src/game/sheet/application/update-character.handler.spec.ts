@@ -93,6 +93,7 @@ describe('UpdateCharacterHandler', () => {
       mapper as never,
       seedStartingInventory as never,
       grantedSpellCatalog as never,
+      { resolveExtraGrantedSlugs: jest.fn().mockResolvedValue(new Set()) } as never,
       { query: jest.fn() } as never,
     );
   });

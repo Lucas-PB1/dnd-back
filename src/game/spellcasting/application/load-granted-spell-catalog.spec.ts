@@ -2,6 +2,7 @@ import { LoadGrantedSpellCatalog } from './load-granted-spell-catalog';
 import { VPhbSpeciesGrantedSpell } from '@entities/views/v-phb-species-granted-spell.entity';
 import { VPhbFeatGrantedSpell } from '@entities/views/v-phb-feat-granted-spell.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { VPhbClassGrantedSpell } from '@entities/views/v-phb-class-granted-spell.entity';
 
 describe('LoadGrantedSpellCatalog', () => {
   let service: LoadGrantedSpellCatalog;
@@ -10,15 +11,20 @@ describe('LoadGrantedSpellCatalog', () => {
   let subclassSpells: jest.Mocked<
     Pick<import('typeorm').Repository<VPhbSubclassPreparedSpell>, 'find'>
   >;
+  let classSpells: jest.Mocked<
+    Pick<import('typeorm').Repository<VPhbClassGrantedSpell>, 'find'>
+  >;
 
   beforeEach(() => {
     speciesGrants = { find: jest.fn() };
     featGrants = { find: jest.fn() };
     subclassSpells = { find: jest.fn() };
+    classSpells = { find: jest.fn() };
     service = new LoadGrantedSpellCatalog(
       speciesGrants as never,
       featGrants as never,
       subclassSpells as never,
+      classSpells as never,
     );
   });
 
@@ -89,7 +95,36 @@ describe('LoadGrantedSpellCatalog', () => {
       ] as unknown as VPhbSubclassPreparedSpell[]);
       const rows = await service.loadSubclassGrantedSpells('hunter');
       expect(subclassSpells.find).toHaveBeenCalledWith({ where: { subclassSlug: 'hunter' } });
-      expect(rows).toEqual([{ unlockLevel: 3, spellSlug: 'hunter-mark' }]);
+      expect(rows).toEqual([{ unlockLevel: 3, spellSlug: 'hunter-mark', terrainSlug: null }]);
+    });
+
+    it('filters land spells by terrain pick', async () => {
+      subclassSpells.find.mockResolvedValue([
+        { unlockLevel: 3, spellSlug: 'maos-flamejantes', terrainSlug: 'arid' },
+        { unlockLevel: 3, spellSlug: 'nevoa-obscurecente', terrainSlug: 'polar' },
+      ] as unknown as VPhbSubclassPreparedSpell[]);
+      const rows = await service.loadSubclassGrantedSpells('land', [
+        { optionKey: 'circleTerrain', valueId: 'arid' },
+      ]);
+      expect(rows).toEqual([
+        { unlockLevel: 3, spellSlug: 'maos-flamejantes', terrainSlug: 'arid' },
+      ]);
+    });
+  });
+
+  describe('loadClassGrantedSpells', () => {
+    it.each([null, undefined, ''])('returns [] for falsy class %p', async (slug) => {
+      await expect(service.loadClassGrantedSpells(slug)).resolves.toEqual([]);
+      expect(classSpells.find).not.toHaveBeenCalled();
+    });
+
+    it('maps class granted spells', async () => {
+      classSpells.find.mockResolvedValue([
+        { unlockLevel: 1, spellSlug: 'marca-do-predador' },
+      ] as unknown as VPhbClassGrantedSpell[]);
+      const rows = await service.loadClassGrantedSpells('ranger');
+      expect(classSpells.find).toHaveBeenCalledWith({ where: { classSlug: 'ranger' } });
+      expect(rows).toEqual([{ unlockLevel: 1, spellSlug: 'marca-do-predador' }]);
     });
   });
 
@@ -103,6 +138,7 @@ describe('LoadGrantedSpellCatalog', () => {
         speciesSlugs: ['', 'elf', 'elf'],
         featSlugs: ['magic-initiate'],
         subclassSlug: null,
+        classSlug: null,
       });
 
       expect(speciesGrants.find).toHaveBeenCalledTimes(1);
@@ -119,16 +155,25 @@ describe('LoadGrantedSpellCatalog', () => {
       subclassSpells.find.mockResolvedValue([
         { unlockLevel: 3, spellSlug: 'hunter-mark' },
       ] as unknown as VPhbSubclassPreparedSpell[]);
+      classSpells.find.mockResolvedValue([
+        { unlockLevel: 1, spellSlug: 'marca-do-predador' },
+      ] as unknown as VPhbClassGrantedSpell[]);
 
       const result = await service.loadMergeCatalog({
         speciesSlugs: ['elf'],
         featSlugs: ['magic-initiate'],
         subclassSlug: 'hunter',
+        classSlug: 'ranger',
       });
 
       expect(result.speciesCatalog).toHaveLength(1);
       expect(result.featFixedSpells).toHaveLength(1);
-      expect(result.subclassGrantedSpells).toEqual([{ unlockLevel: 3, spellSlug: 'hunter-mark' }]);
+      expect(result.subclassGrantedSpells).toEqual([
+        { unlockLevel: 3, spellSlug: 'hunter-mark', terrainSlug: null },
+      ]);
+      expect(result.classGrantedSpells).toEqual([
+        { unlockLevel: 1, spellSlug: 'marca-do-predador' },
+      ]);
     });
 
     it('returns empty species catalog when all slugs are falsy', async () => {

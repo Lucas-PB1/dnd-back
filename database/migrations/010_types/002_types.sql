@@ -33,7 +33,7 @@ CREATE TYPE rpg.spell_source_origin AS ENUM (
   'class_list','subclass','species','feat'
 );
 
-CREATE TYPE rpg.spell_grant_origin AS ENUM ('feat', 'species');
+CREATE TYPE rpg.spell_grant_origin AS ENUM ('feat', 'species', 'class');
 
 CREATE TYPE rpg.option_value_type AS ENUM (
   'catalog',

@@ -47,6 +47,7 @@ export function shouldResyncCharacterSpells(
   levelChanged: boolean,
   speciesChanged: boolean,
   subclassChanged: boolean,
+  classChanged = false,
 ): boolean {
   return (
     dto.characterSpells !== undefined ||
@@ -56,6 +57,7 @@ export function shouldResyncCharacterSpells(
     dto.classOptions !== undefined ||
     speciesChanged ||
     subclassChanged ||
+    classChanged ||
     levelChanged
   );
 }

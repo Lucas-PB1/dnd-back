@@ -23,7 +23,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 | `option_scope` | subclass, species, feat, class |
 | `option_value_type` | catalog, skill, ability, spell, … |
 | `starting_package_source` | class, background |
-| `spell_grant_origin` | feat, species |
+| `spell_grant_origin` | feat, species, class |
 | `class_proficiency_kind` | saving_throw, primary_ability, armor_training, weapon, fighting_style |
 | `resource_owner_kind` | class, subclass |
 | `combat_modifier_kind` | hp_bonus, unarmored_defense |
@@ -43,7 +43,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_spell_school`, `phb_spell`, `phb_spell_class`
 - `phb_spell_slot_pattern`, `phb_spell_slot_by_level`
 - `phb_spell_source` — metadado de origem (listas/subclass)
-- `phb_spell_grant` — magias concedidas (feat/species); views `v_phb_*_granted_spell`
+- `phb_spell_grant` — magias concedidas (feat/species/class); views `v_phb_*_granted_spell`
 
 ### 3. Classes
 

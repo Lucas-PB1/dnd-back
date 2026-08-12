@@ -30,6 +30,7 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |-----|----------|
 | [`plans/backlog.md`](plans/backlog.md) | Checklist geral — o que ainda falta (API + front + gaps) |
+| [`plans/create-wizard-subclass-audit.md`](plans/create-wizard-subclass-audit.md) | Auditoria create wizard × subclasses PHB (S026/S027/S004/S028) |
 | [`plans/itens-restante.md`](plans/itens-restante.md) | Operações restantes: Treasure cast/cursed/dawn, split cast-spell, artefato |
 | [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Adiado: modal Escudo/Giga no cast de Mísseis |
 

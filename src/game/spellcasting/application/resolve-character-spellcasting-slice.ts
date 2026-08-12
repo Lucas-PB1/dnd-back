@@ -100,6 +100,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: [speciesSlug],
       featSlugs,
+      classSlug,
     });
   const featGrantedSlugs = collectFeatGrantedSpellSlugs(
     sheet.featOptions,

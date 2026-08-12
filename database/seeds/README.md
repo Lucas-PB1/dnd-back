@@ -19,7 +19,9 @@ Dados do catálogo PHB 2024 e Valdas Spire of Secrets. **Um arquivo por tabela.*
 Numeração sequencial sem lacunas (ordem de dependência). Exemplos:
 
 - `S074_phb_metamagic.sql` — opções de Metamagia (Feiticeiro)
-- `S075`–`S077` — weapon mastery + class resources (se presentes)
+- `S075` — recursos de espécie
+- `S076_phb_class_option.sql` — escolhas de classe (`scope=class`: Ordem Divina, Golpes Abençoados, Ordem Primal, Fúria Elemental)
+- `S011` / `S055` / `S056` — Combatente Abençoado e Druídico (estilo de luta + 2 truques)
 - `V001_phb_edition_citation.sql` — edição/citações Valdas
 - `V011`–`V013` — construções Geppettin, estações Mandrágora, grants
 

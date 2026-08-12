@@ -14,6 +14,7 @@ import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.vali
 import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
 import { CharacterEldritchInvocationsValidator } from './character-eldritch-invocations.validator';
 import { CharacterMetamagicValidator } from './character-metamagic.validator';
+import { CharacterClassFeatureOptionsValidator } from './character-class-feature-options.validator';
 import { CharacterFeatOptionValueValidator } from '../feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from '../feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from '../feats/character-feats.validator';
@@ -34,6 +35,7 @@ function buildClassOptionsValidator(
       catalogLookup,
       subclassRefRepo,
       subclassOptionValuesRepo,
+      {} as never,
     ),
     new CharacterClassExpertiseValidator(dataSource),
     new CharacterWeaponMasteryValidator(dataSource),
@@ -42,6 +44,7 @@ function buildClassOptionsValidator(
       find: jest.fn(),
     } as never),
     new CharacterMetamagicValidator(dataSource),
+    new CharacterClassFeatureOptionsValidator(dataSource),
   );
 }
 

@@ -69,4 +69,12 @@ export class PlayerCharacterState {
   /** Giga-Míssil armado para o próximo cast de Mísseis Mágicos. */
   @Column({ name: 'giga_missile_armed', type: 'boolean', default: false })
   gigaMissileArmed!: boolean;
+
+  /** Forma Estrelada ativa (Círculo das Estrelas). */
+  @Column({ name: 'starry_form_active', type: 'boolean', default: false })
+  starryFormActive!: boolean;
+
+  /** Constelação brilhando na Forma Estrelada: archer | dragon | chalice. */
+  @Column({ name: 'stellar_constellation', type: 'text', nullable: true })
+  stellarConstellation!: string | null;
 }

@@ -22,6 +22,7 @@ export async function resolveSpellCastEconomyForCharacter(
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: [character.speciesSlug],
       featSlugs: sheet.characterFeats.map((f) => f.featSlug),
+      classSlug: character.classSlug,
     });
   const featGrantedSlugs = collectFeatGrantedSpellSlugs(
     sheet.featOptions,

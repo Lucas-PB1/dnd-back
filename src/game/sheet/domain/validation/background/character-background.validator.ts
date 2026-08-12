@@ -109,16 +109,21 @@ export class CharacterBackgroundValidator {
   }
 
   /**
-   * PHB 2024: idiomas fixos do antecedente + exatamente `languageChoiceCount` escolhas.
+   * PHB 2024: idiomas fixos do antecedente + escolhas + extras de classe.
    * Escolhas = qualquer idioma do catálogo que não seja já concedido.
    */
   async validateBackgroundLanguages(
     backgroundSlug: string,
     languageSlugs: string[] | undefined,
-    options?: { required?: boolean },
+    options?: {
+      required?: boolean;
+      extra?: { grantedSlugs?: string[]; choiceCount?: number };
+    },
   ): Promise<void> {
     const background = await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
-    const choiceCount = background.languageChoiceCount ?? 0;
+    const extraGranted = [...new Set(options?.extra?.grantedSlugs ?? [])];
+    const extraChoice = options?.extra?.choiceCount ?? 0;
+    const choiceCount = (background.languageChoiceCount ?? 0) + extraChoice;
     const fixedRows = await this.dataSource.query<{ slug: string }[]>(
       `SELECT l.slug
        FROM rpg.phb_background_language bl
@@ -128,7 +133,7 @@ export class CharacterBackgroundValidator {
        ORDER BY l.slug`,
       [backgroundSlug],
     );
-    const fixed = fixedRows.map((row) => row.slug);
+    const fixed = [...new Set([...fixedRows.map((row) => row.slug), ...extraGranted])];
     const requiredTotal = fixed.length + choiceCount;
 
     if (requiredTotal === 0) {

@@ -86,6 +86,7 @@ export class CharacterMapper {
       speciesChoices: loaded.speciesChoices,
       featOptions: loaded.featOptions,
       classOptions: loaded.classOptions,
+      subclassOptions: loaded.subclassOptions,
       classSlug: row.classSlug,
       level: row.level,
     });
@@ -110,6 +111,7 @@ export class CharacterMapper {
       subclassSlug: row.subclassSlug,
       speciesSlug: row.speciesSlug,
       speciesChoices: loaded.speciesChoices,
+      classOptions: loaded.classOptions,
       level: row.level,
       proficiencyBonus,
       featSlugs,

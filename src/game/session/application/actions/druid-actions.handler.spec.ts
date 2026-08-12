@@ -2,14 +2,23 @@ import { BadRequestException } from '@nestjs/common';
 import { DruidActionsHandler } from './druid-actions.handler';
 
 describe('DruidActionsHandler', () => {
-  const stateResponse = { classResources: [] };
+  const stateResponse = {
+    classResources: [],
+    starryFormActive: false,
+    stellarConstellation: null,
+  };
   const access = { findAccessibleOrFail: jest.fn() };
   const state = {
     useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
     recoverClassResource: jest.fn().mockResolvedValue(stateResponse),
     consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
     recoverSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
-    buildResponse: jest.fn().mockResolvedValue({ ...stateResponse, tempHp: 0 }),
+    buildResponse: jest.fn().mockResolvedValue(stateResponse),
+    setStarryForm: jest.fn().mockImplementation(async (_character, input) => ({
+      ...stateResponse,
+      starryFormActive: input.active,
+      stellarConstellation: input.constellation ?? null,
+    })),
     patch: jest.fn().mockImplementation(async (_character, patch) => ({
       ...stateResponse,
       ...patch,
@@ -81,7 +90,32 @@ describe('DruidActionsHandler', () => {
     });
 
     expect(result.expression).toBe('1d8+4');
-    expect(result.note).toContain('Forma Estelar (Arquiro)');
+    expect(result.note).toContain('Forma Estelar (Arqueiro)');
+    expect(state.setStarryForm).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'druid-1' }),
+      { active: true, constellation: 'archer' },
+    );
+    expect(result.state).toEqual(
+      expect.objectContaining({
+        starryFormActive: true,
+        stellarConstellation: 'archer',
+      }),
+    );
+  });
+
+  it('re-uses Starry Form Archer without spending Wild Shape again', async () => {
+    state.buildResponse.mockResolvedValueOnce({
+      ...stateResponse,
+      starryFormActive: true,
+      stellarConstellation: 'archer',
+    });
+
+    const result = await handler.useTableAction('user-1', 'druid-1', {
+      actionSlug: 'starry-form-archer',
+    });
+
+    expect(state.useClassResource).not.toHaveBeenCalled();
+    expect(result.note).toContain('ainda ativa');
   });
 
   it('resolves Moon Combat Wild Shape for Circle of the Moon', async () => {

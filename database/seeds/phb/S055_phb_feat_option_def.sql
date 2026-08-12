@@ -10,5 +10,11 @@ VALUES
   ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'magic-initiate'), 'firstLevelSpell', 'Magia de 1º círculo', 'spell', 5, 'spellList', 1),
   ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), 'proficiency1', 'Proficiência 1', 'proficiency', 1, NULL, NULL),
   ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), 'proficiency2', 'Proficiência 2', 'proficiency', 2, NULL, NULL),
-  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), 'proficiency3', 'Proficiência 3', 'proficiency', 3, NULL, NULL)
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'skilled'), 'proficiency3', 'Proficiência 3', 'proficiency', 3, NULL, NULL),
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'blessed-warrior'), 'spellList', 'Lista de magias', 'catalog', 1, NULL, NULL),
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'blessed-warrior'), 'cantrip1', 'Truque 1', 'spell', 2, 'spellList', 0),
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'blessed-warrior'), 'cantrip2', 'Truque 2', 'spell', 3, 'spellList', 0),
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'druidic-warrior'), 'spellList', 'Lista de magias', 'catalog', 1, NULL, NULL),
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'druidic-warrior'), 'cantrip1', 'Truque 1', 'spell', 2, 'spellList', 0),
+  ('feat'::rpg.option_scope, (SELECT id FROM rpg.phb_feat WHERE slug = 'druidic-warrior'), 'cantrip2', 'Truque 2', 'spell', 3, 'spellList', 0)
 ON CONFLICT (scope, owner_id, option_key) DO NOTHING;

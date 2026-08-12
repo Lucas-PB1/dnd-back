@@ -1,8 +1,8 @@
-import { SubclassGrantedSpellRow } from './types';
+import { UnlockLevelGrantedSpellRow } from './types';
 
-export function collectSubclassGrantedSpellSlugs(
+export function collectGrantedSpellSlugsAtLevel(
   level: number,
-  rows: readonly SubclassGrantedSpellRow[],
+  rows: readonly UnlockLevelGrantedSpellRow[],
 ): Set<string> {
   const slugs = new Set<string>();
   for (const row of rows) {
@@ -10,3 +10,5 @@ export function collectSubclassGrantedSpellSlugs(
   }
   return slugs;
 }
+
+export const collectSubclassGrantedSpellSlugs = collectGrantedSpellSlugsAtLevel;

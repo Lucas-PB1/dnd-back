@@ -34,6 +34,7 @@ import './views/v-phb-beastborne-aspect-benefit.entity';
 import './views/v-phb-class-economy-action.entity';
 import './views/v-phb-class-equipment.entity';
 import './views/v-phb-class-feature.entity';
+import './views/v-phb-class-granted-spell.entity';
 import './views/v-phb-class-panel-action.entity';
 import './views/v-phb-class-progression.entity';
 import './views/v-phb-class-skill-choice.entity';

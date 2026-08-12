@@ -18,6 +18,9 @@ describe('CharacterSpellsValidator', () => {
   let validator: CharacterSpellsValidator;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
   let grantedSpellCatalog: jest.Mocked<Pick<LoadGrantedSpellCatalog, 'loadMergeCatalog'>>;
+  let resolveSubclassOptionGrants: jest.Mocked<
+    Pick<import('@game/spellcasting/application/resolve-subclass-option-granted-spells').ResolveSubclassOptionGrantedSpells, 'resolveExtraGrantedSlugs'>
+  >;
 
   const ctx = {
     level: 1,
@@ -35,11 +38,15 @@ describe('CharacterSpellsValidator', () => {
         featFixedSpells: [],
       }),
     };
+    resolveSubclassOptionGrants = {
+      resolveExtraGrantedSlugs: jest.fn().mockResolvedValue(new Set()),
+    };
     validator = new CharacterSpellsValidator(
       dataSource as unknown as DataSource,
       {} as Repository<VSpellByClass>,
       {} as Repository<VPhbSubclassPreparedSpell>,
       grantedSpellCatalog as unknown as LoadGrantedSpellCatalog,
+      resolveSubclassOptionGrants as never,
     );
   });
 
@@ -52,7 +59,19 @@ describe('CharacterSpellsValidator', () => {
         ],
         ctx,
       ),
-    ).rejects.toThrow(/duplicate character spell entries/i);
+    ).rejects.toThrow(/mesma magia não pode aparecer mais de uma vez/i);
+  });
+
+  it('rejects the same slug as prepared and always_prepared', async () => {
+    await expect(
+      validator.validateCharacterSpells(
+        [
+          { spellSlug: 'restauracao-maior', listType: 'prepared' },
+          { spellSlug: 'restauracao-maior', listType: 'always_prepared' },
+        ],
+        ctx,
+      ),
+    ).rejects.toThrow(/mesma magia não pode aparecer mais de uma vez/i);
   });
 
   it('loads granted catalog and delegates spell validation', async () => {
@@ -65,6 +84,7 @@ describe('CharacterSpellsValidator', () => {
     expect(grantedSpellCatalog.loadMergeCatalog).toHaveBeenCalledWith({
       speciesSlugs: ['human'],
       featSlugs: ['magic-initiate', 'magic-initiate'],
+      classSlug: 'wizard',
     });
     expect(validateSpellListAccess).toHaveBeenCalled();
     expect(assertSpellQuotas).toHaveBeenCalled();

@@ -7,6 +7,7 @@ import { CharacterFeatDto, FeatOptionDto, SpeciesChoiceDto } from '@game/sheet/d
 import { UpdateCharacterDto } from '@game/sheet/dto/update-character.dto';
 import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { resolveEldritchGrantedSpellSlugs } from '../eldritch-granted-spells';
 
 export async function mergeUpdateCharacterSpells(input: {
@@ -14,11 +15,13 @@ export async function mergeUpdateCharacterSpells(input: {
   sheetInput: CharacterSheetInput;
   sheetSnapshot: CharacterSheetData;
   effective: {
+    classSlug: string;
     speciesSlug: string;
     subclassSlug: string | null;
     level: number;
   };
   previous: {
+    classSlug: string;
     speciesSlug: string;
     subclassSlug: string | null;
     level: number;
@@ -27,6 +30,7 @@ export async function mergeUpdateCharacterSpells(input: {
   effectiveFeatOptions: FeatOptionDto[];
   effectiveSpeciesChoices: SpeciesChoiceDto[] | undefined;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
+  resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells;
   dataSource: DataSource;
 }): Promise<void> {
   const {
@@ -39,31 +43,65 @@ export async function mergeUpdateCharacterSpells(input: {
     effectiveFeatOptions,
     effectiveSpeciesChoices,
     grantedSpellCatalog,
+    resolveSubclassOptionGrants,
     dataSource,
   } = input;
+
+  const effectiveSubclassOptions =
+    dto.subclassOptions !== undefined
+      ? dto.subclassOptions
+      : sheetSnapshot.subclassOptions;
+  const previousSubclassOptions = sheetSnapshot.subclassOptions;
 
   const featSlugs = [
     ...effectiveCharacterFeats.map((f) => f.featSlug),
     ...sheetSnapshot.characterFeats.map((f) => f.featSlug),
   ];
-  const { speciesCatalog, featFixedSpells, subclassGrantedSpells } =
+  const { speciesCatalog, featFixedSpells, subclassGrantedSpells, classGrantedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
       speciesSlugs: [effective.speciesSlug, previous.speciesSlug],
       featSlugs,
       subclassSlug: effective.subclassSlug,
+      classSlug: effective.classSlug,
+      subclassOptions: effectiveSubclassOptions,
     });
-  const previousSubclassGrantedSpells =
-    await grantedSpellCatalog.loadSubclassGrantedSpells(previous.subclassSlug);
+  const [previousSubclassGrantedSpells, previousClassGrantedSpells] =
+    await Promise.all([
+      grantedSpellCatalog.loadSubclassGrantedSpells(
+        previous.subclassSlug,
+        previousSubclassOptions,
+      ),
+      grantedSpellCatalog.loadClassGrantedSpells(previous.classSlug),
+    ]);
 
   const nextClassOptions =
     dto.classOptions !== undefined
       ? dto.classOptions
       : sheetSnapshot.classOptions;
-  const [extraGrantedSpellSlugs, previousExtraGrantedSpellSlugs] =
-    await Promise.all([
-      resolveEldritchGrantedSpellSlugs(dataSource, nextClassOptions),
-      resolveEldritchGrantedSpellSlugs(dataSource, sheetSnapshot.classOptions),
-    ]);
+  const [
+    eldritchGranted,
+    previousEldritchGranted,
+    loreGranted,
+    previousLoreGranted,
+  ] = await Promise.all([
+    resolveEldritchGrantedSpellSlugs(dataSource, nextClassOptions),
+    resolveEldritchGrantedSpellSlugs(dataSource, sheetSnapshot.classOptions),
+    resolveSubclassOptionGrants.resolveExtraGrantedSlugs(
+      effective.subclassSlug,
+      effective.level,
+      effectiveSubclassOptions,
+    ),
+    resolveSubclassOptionGrants.resolveExtraGrantedSlugs(
+      previous.subclassSlug,
+      previous.level,
+      previousSubclassOptions,
+    ),
+  ]);
+  const extraGrantedSpellSlugs = unionSets(eldritchGranted, loreGranted);
+  const previousExtraGrantedSpellSlugs = unionSets(
+    previousEldritchGranted,
+    previousLoreGranted,
+  );
 
   sheetInput.characterSpells = mergeGrantedSpells(
     dto.characterSpells ?? sheetSnapshot.characterSpells,
@@ -82,6 +120,8 @@ export async function mergeUpdateCharacterSpells(input: {
       featFixedSpells,
       subclassGrantedSpells,
       previousSubclassGrantedSpells,
+      classGrantedSpells,
+      previousClassGrantedSpells,
       extraGrantedSpellSlugs,
       previousExtraGrantedSpellSlugs,
     },
@@ -90,4 +130,12 @@ export async function mergeUpdateCharacterSpells(input: {
   if (dto.featOptions === undefined && dto.characterFeats !== undefined) {
     sheetInput.featOptions = effectiveFeatOptions;
   }
+}
+
+function unionSets(...sets: ReadonlySet<string>[]): Set<string> {
+  const result = new Set<string>();
+  for (const set of sets) {
+    for (const slug of set) result.add(slug);
+  }
+  return result;
 }

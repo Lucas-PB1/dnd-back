@@ -11,6 +11,7 @@ import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '@game/inventory/application/seed-starting-inventory.handler';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
+import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';
 import { assertAndConsumeHighElfCantripSwap } from './update-character/assert-high-elf-cantrip-swap';
 import { clearStaleSheetChoices } from './update-character/clear-stale-sheet-choices';
@@ -35,6 +36,7 @@ export class UpdateCharacterHandler {
     private readonly mapper: CharacterMapper,
     private readonly seedStartingInventory: SeedStartingInventoryHandler,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly resolveSubclassOptionGrants: ResolveSubclassOptionGrantedSpells,
     private readonly dataSource: DataSource,
   ) {}
 
@@ -129,6 +131,7 @@ export class UpdateCharacterHandler {
       levelChanged,
       speciesChanged,
       subclassChanged,
+      classChanged,
     );
 
     const sheetInput = toSheetInput(dto);
@@ -145,6 +148,7 @@ export class UpdateCharacterHandler {
         sheetSnapshot,
         effective,
         previous: {
+          classSlug: row.classSlug,
           speciesSlug: row.speciesSlug,
           subclassSlug: row.subclassSlug,
           level: row.level,
@@ -153,6 +157,7 @@ export class UpdateCharacterHandler {
         effectiveFeatOptions,
         effectiveSpeciesChoices,
         grantedSpellCatalog: this.grantedSpellCatalog,
+        resolveSubclassOptionGrants: this.resolveSubclassOptionGrants,
         dataSource: this.dataSource,
       });
     }

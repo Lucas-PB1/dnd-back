@@ -48,6 +48,7 @@ Tabelas dedicadas (`phb_elf_lineage`, …) **removidas**. Dados em `phb_option_v
 |--------|-------------|------|
 | Talentos fixos | `phb_spell_grant` (`origin_type=feat`) | `v_phb_feat_granted_spell` |
 | Espécie + linhagem | grant + option_value + traits | `v_phb_species_granted_spell` |
+| Classe | `phb_spell_grant` (`origin_type=class`) | `v_phb_class_granted_spell` |
 | Subclasse | `phb_subclass_prepared_spell` | `v_phb_subclass_prepared_spell` |
 
 `phb_spell_source` é **metadado** (listas/origem) — não substitui as views de concessão mecânica.

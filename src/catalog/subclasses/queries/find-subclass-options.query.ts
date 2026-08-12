@@ -7,6 +7,12 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
 import { SubclassOptionResponseDto } from '../dto/subclass-option-response.dto';
 
+const STATIC_VALUE_TYPES = new Set([
+  'catalog',
+  'terrain',
+  'fighting_style',
+]);
+
 @Injectable()
 export class FindSubclassOptionsQuery {
   constructor(
@@ -30,78 +36,106 @@ export class FindSubclassOptionsQuery {
       throw new NotFoundException(`Subclass '${subclassSlug}' not found`);
     }
 
-    const rows = await this.dataSourceQuery(subclass.id, characterLevel);
-    const grouped = this.groupOptions(rows);
+    const [defs, valueRows] = await Promise.all([
+      this.loadOptionDefs(subclass.id, characterLevel),
+      this.loadOptionValues(subclass.id, characterLevel),
+    ]);
+    const grouped = this.groupOptions(defs, valueRows);
     return paginate(grouped, page, limit);
   }
 
-  private async dataSourceQuery(
-    subclassId: string,
-    characterLevel: number,
-  ): Promise<
-    {
-      optionKey: string;
-      optionLabel: string;
-      unlockLevel: number;
-      valueType: string;
-      valueId: string;
-      valueLabel: string;
-      sortOrder: number;
-    }[]
-  > {
-    return this.optionValuesRepo.manager.query(
+  private loadOptionDefs(subclassId: string, characterLevel: number) {
+    return this.optionValuesRepo.manager.query<
+      {
+        optionKey: string;
+        optionLabel: string;
+        unlockLevel: number;
+        valueType: string;
+        spellMaxLevel: number | null;
+        spellSchoolSlugs: string[] | null;
+        sortOrder: number;
+      }[]
+    >(
       `SELECT def.option_key AS "optionKey",
               def.label AS "optionLabel",
               def.unlock_level AS "unlockLevel",
               def.value_type::text AS "valueType",
-              val.value_id AS "valueId",
-              val.label AS "valueLabel",
-              val.sort_order AS "sortOrder"
+              def.spell_max_level AS "spellMaxLevel",
+              def.spell_school_slugs AS "spellSchoolSlugs",
+              def.sort_order AS "sortOrder"
        FROM rpg.phb_option_def def
-       JOIN rpg.phb_option_value val
-         ON val.scope = def.scope
-        AND val.owner_id = def.owner_id
-        AND val.option_key = def.option_key
        WHERE def.scope = 'subclass'::rpg.option_scope
          AND def.owner_id = $1
          AND def.unlock_level <= $2
-       ORDER BY def.unlock_level ASC, def.option_key ASC, val.sort_order ASC`,
+       ORDER BY def.unlock_level ASC, def.sort_order ASC, def.option_key ASC`,
+      [subclassId, characterLevel],
+    );
+  }
+
+  private loadOptionValues(subclassId: string, characterLevel: number) {
+    return this.optionValuesRepo.manager.query<
+      {
+        optionKey: string;
+        valueId: string;
+        valueLabel: string;
+        sortOrder: number;
+      }[]
+    >(
+      `SELECT val.option_key AS "optionKey",
+              val.value_id AS "valueId",
+              val.label AS "valueLabel",
+              val.sort_order AS "sortOrder"
+       FROM rpg.phb_option_value val
+       JOIN rpg.phb_option_def def
+         ON def.scope = val.scope
+        AND def.owner_id = val.owner_id
+        AND def.option_key = val.option_key
+       WHERE val.scope = 'subclass'::rpg.option_scope
+         AND val.owner_id = $1
+         AND def.unlock_level <= $2
+       ORDER BY val.option_key ASC, val.sort_order ASC`,
       [subclassId, characterLevel],
     );
   }
 
   private groupOptions(
-    rows: {
+    defs: {
       optionKey: string;
       optionLabel: string;
       unlockLevel: number;
       valueType: string;
+      spellMaxLevel: number | null;
+      spellSchoolSlugs: string[] | null;
+      sortOrder: number;
+    }[],
+    valueRows: {
+      optionKey: string;
       valueId: string;
       valueLabel: string;
       sortOrder: number;
     }[],
   ): SubclassOptionResponseDto[] {
-    const map = new Map<string, SubclassOptionResponseDto>();
-
-    for (const row of rows) {
-      let group = map.get(row.optionKey);
-      if (!group) {
-        group = {
-          optionKey: row.optionKey,
-          label: row.optionLabel,
-          unlockLevel: row.unlockLevel,
-          valueType: row.valueType,
-          values: [],
-        };
-        map.set(row.optionKey, group);
-      }
-      group.values.push({
+    const valuesByKey = new Map<string, SubclassOptionResponseDto['values']>();
+    for (const row of valueRows) {
+      const list = valuesByKey.get(row.optionKey) ?? [];
+      list.push({
         valueId: row.valueId,
         label: row.valueLabel,
         sortOrder: row.sortOrder,
       });
+      valuesByKey.set(row.optionKey, list);
     }
 
-    return [...map.values()];
+    return defs.map((def) => ({
+      optionKey: def.optionKey,
+      label: def.optionLabel,
+      unlockLevel: def.unlockLevel,
+      valueType: def.valueType,
+      spellMaxLevel: def.spellMaxLevel,
+      spellSchoolSlugs: def.spellSchoolSlugs,
+      values: STATIC_VALUE_TYPES.has(def.valueType)
+        ? (valuesByKey.get(def.optionKey) ?? [])
+        : [],
+    }));
   }
 }

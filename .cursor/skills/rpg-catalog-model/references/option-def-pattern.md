@@ -1,12 +1,13 @@
 # Padrão option_def / option_value
 
-Três famílias — **não unificar** em tabela genérica.
+Tabela unificada `phb_option_def` / `phb_option_value` com `scope` + `owner_id`.
 
-| Domínio | Def | Value | FK composta |
-|---------|-----|-------|-------------|
-| Espécie | `phb_species_option_def` | `phb_species_option_value` | `(species_id, option_key)` |
-| Talento | `phb_feat_option_def` | `phb_feat_option_value` | `(feat_id, option_key)` |
-| Subclasse | `phb_subclass_option_def` | `phb_subclass_option_value` | `(subclass_id, option_key)` |
+| `scope` | `owner_id` | Exemplo |
+|---------|------------|---------|
+| `species` | `phb_species.id` | linhagem élfica |
+| `feat` | `phb_feat.id` | magia de Iniciado |
+| `subclass` | `phb_subclass.id` | Presa do Caçador |
+| `class` | `phb_class.id` | Ordem Divina / Ordem Primal |
 
 ## Colunas extras por domínio
 

@@ -18,9 +18,11 @@ import { FindClassEquipmentQuery } from './queries/find-class-equipment.query';
 import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { FindClassFeaturesQuery } from './queries/find-class-features.query';
 import { FindClassProgressionQuery } from './queries/find-class-progression.query';
+import { FindClassOptionsQuery } from './queries/find-class-options.query';
 import { ClassResponseDto } from './dto/class-response.dto';
 import { ClassSpellsQueryDto } from './dto/class-spells-query.dto';
 import { ClassFeaturesQueryDto } from './dto/class-features-query.dto';
+import { ClassOptionsQueryDto } from './dto/class-options-query.dto';
 
 @ApiTags('catalog-classes')
 @Controller('classes')
@@ -35,6 +37,7 @@ export class ClassesController {
     private readonly findClassSkills: FindClassSkillsQuery,
     private readonly findClassFeatures: FindClassFeaturesQuery,
     private readonly findClassProgression: FindClassProgressionQuery,
+    private readonly findClassOptions: FindClassOptionsQuery,
   ) {}
 
   @Get()
@@ -108,6 +111,17 @@ export class ClassesController {
   @ApiNotFoundResponse({ description: 'Class not found or no skill pool' })
   findSkills(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findClassSkills.execute(slug, query.page, query.limit);
+  }
+
+  @Get(':slug/options')
+  @ApiOperation({ summary: 'Selectable class feature options by character level (paginated)' })
+  @ApiParam({ name: 'slug', example: 'cleric' })
+  @ApiQuery({ name: 'level', required: false, type: Number, description: 'Character level (1–20)' })
+  @ApiOkResponse({ description: 'Paginated class option groups with values' })
+  @ApiNotFoundResponse({ description: 'Class not found' })
+  findOptions(@Param('slug') slug: string, @Query() query: ClassOptionsQueryDto) {
+    const level = query.level !== undefined ? Number(query.level) : 20;
+    return this.findClassOptions.execute(slug, level, query.page, query.limit);
   }
 
   @Get(':slug/features')
