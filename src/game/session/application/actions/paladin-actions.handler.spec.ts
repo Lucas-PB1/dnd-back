@@ -10,10 +10,12 @@ describe('PaladinActionsHandler', () => {
     patch: jest.fn().mockResolvedValue({ ...stateResponse, tempHp: 12 }),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
+  const mechanicalCatalog = { load: async () => ({ economyActions: [] }) };
   const handler = new PaladinActionsHandler(
     access as never,
     state as never,
     domain as never,
+    mechanicalCatalog as never,
   );
 
   const paladin = {

@@ -70,6 +70,21 @@ describe('armor-class', () => {
     expect(result.armorClassNote).toBe('Sem armadura');
   });
 
+  it('applies Manikin infiltrator preset when unarmored', () => {
+    const result = computeArmorClassFromEquipment(scores, [], {
+      manikinArmorPresetSlug: 'infiltrator',
+    });
+    expect(result.armorClass).toBe(13);
+    expect(result.armorClassNote).toContain('Infiltrador');
+  });
+
+  it('ignores Manikin preset when wearing body armor', () => {
+    const result = computeArmorClassFromEquipment(scores, [leather], {
+      manikinArmorPresetSlug: 'tormentor',
+    });
+    expect(result.armorClass).toBe(13);
+  });
+
   it('light armor adds full dex mod', () => {
     const result = computeArmorClassFromEquipment(scores, [leather]);
     expect(result.armorClass).toBe(13);

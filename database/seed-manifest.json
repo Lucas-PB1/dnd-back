@@ -13,7 +13,8 @@
     "valdas": "V001-V023",
     "valdasGunslinger": "G001-G028",
     "valdasPlayerPack2": "P001-P013",
-    "combat": "C001-C044",
-    "totalFiles": 143
+    "steinhardtEldritchHunt": "H001-H025",
+    "combat": "C001-C051",
+    "totalFiles": 157
   }
 }

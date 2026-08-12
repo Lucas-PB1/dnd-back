@@ -118,6 +118,70 @@ JOIN rpg.phb_species sp ON sp.id = t.species_id
 JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'seasonId'
   AND t.choice_kind = 'mandrake_season'::rpg.species_choice_kind
 UNION ALL
+-- Manikin armor preset (option_key = 'armorPresetId')
+SELECT
+  sp.slug,
+  t.name,
+  t.choice_kind,
+  ov.value_id,
+  ov.label,
+  COALESCE(ov.level1_benefit, ov.benefit),
+  NULL::text,
+  NULL::text,
+  NULL::text
+FROM rpg.phb_species_trait t
+JOIN rpg.phb_species sp ON sp.id = t.species_id
+JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'armorPresetId'
+  AND t.choice_kind = 'manikin_armor'::rpg.species_choice_kind
+UNION ALL
+-- Manikin service model (option_key = 'serviceModelId')
+SELECT
+  sp.slug,
+  t.name,
+  t.choice_kind,
+  ov.value_id,
+  ov.label,
+  COALESCE(ov.level1_benefit, ov.benefit),
+  NULL::text,
+  NULL::text,
+  NULL::text
+FROM rpg.phb_species_trait t
+JOIN rpg.phb_species sp ON sp.id = t.species_id
+JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'serviceModelId'
+  AND t.choice_kind = 'manikin_service_model'::rpg.species_choice_kind
+UNION ALL
+-- Scourgeborne madness (option_key = 'madnessId')
+SELECT
+  sp.slug,
+  t.name,
+  t.choice_kind,
+  ov.value_id,
+  ov.label,
+  COALESCE(ov.level1_benefit, ov.benefit),
+  NULL::text,
+  NULL::text,
+  NULL::text
+FROM rpg.phb_species_trait t
+JOIN rpg.phb_species sp ON sp.id = t.species_id
+JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'madnessId'
+  AND t.choice_kind = 'scourgeborne_madness'::rpg.species_choice_kind
+UNION ALL
+-- Scourgeborne monstrous lineage (option_key = 'monstrousLineageId')
+SELECT
+  sp.slug,
+  t.name,
+  t.choice_kind,
+  ov.value_id,
+  ov.label,
+  COALESCE(ov.level1_benefit, ov.benefit),
+  NULL::text,
+  NULL::text,
+  NULL::text
+FROM rpg.phb_species_trait t
+JOIN rpg.phb_species sp ON sp.id = t.species_id
+JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'monstrousLineageId'
+  AND t.choice_kind = 'scourgeborne_lineage'::rpg.species_choice_kind
+UNION ALL
 SELECT
   sp.slug,
   t.name,
@@ -210,7 +274,8 @@ JOIN (
     'human_size'::rpg.species_choice_kind,
     'aasimar_size'::rpg.species_choice_kind,
     'tiefling_size'::rpg.species_choice_kind,
-    'geppettin_size'::rpg.species_choice_kind
+    'geppettin_size'::rpg.species_choice_kind,
+    'manikin_size'::rpg.species_choice_kind
   )
 UNION ALL
 -- Truques swappable do Alto Elfo (opcional)

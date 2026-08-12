@@ -28,6 +28,7 @@ const SEED_PACKS = [
   'valdas',
   'valdas-gunslinger',
   'valdas-player-pack-2',
+  'steinhardt-eldritch-hunt',
   'dmg',
   'combat',
 ];

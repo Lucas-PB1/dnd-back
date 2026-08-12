@@ -6,6 +6,8 @@ import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { SubclassOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import {
+  BLADE_HOLY_CANTRIP_KEYS,
+  BLOOD_STRIKE_OPTION_KEY_RE,
   LORE_BONUS_SKILL_KEYS,
   LORE_MAGICAL_DISCOVERY_KEYS,
   WIZARD_VERSATILITY_OPTION_KEYS,
@@ -50,6 +52,9 @@ export class CharacterSubclassOptionValueValidator {
 
       if (def.valueType === 'catalog' || def.valueType === 'terrain') {
         await this.assertCatalogValue(subclass.id, option);
+        if (BLOOD_STRIKE_OPTION_KEY_RE.test(def.optionKey)) {
+          this.assertDistinctBloodStrikes(options);
+        }
         continue;
       }
       if (def.valueType === 'skill_list') {
@@ -138,12 +143,30 @@ export class CharacterSubclassOptionValueValidator {
       return;
     }
 
+    if (BLADE_HOLY_CANTRIP_KEYS.has(def.optionKey)) {
+      await this.validateClericCantrip(option);
+      this.assertDistinctPair(options, [...BLADE_HOLY_CANTRIP_KEYS]);
+      return;
+    }
+
     if (WIZARD_VERSATILITY_OPTION_KEYS.has(def.optionKey)) {
       await this.validateWizardVersatility(def, option);
       const prefix = def.optionKey.replace(/\d+$/, '');
       this.assertDistinctPair(
         options,
         [`${prefix}1`, `${prefix}2`],
+      );
+    }
+  }
+
+  private assertDistinctBloodStrikes(options: SubclassOptionDto[]): void {
+    const values = options
+      .filter((entry) => BLOOD_STRIKE_OPTION_KEY_RE.test(entry.optionKey))
+      .map((entry) => entry.valueId)
+      .filter(Boolean);
+    if (new Set(values).size !== values.length) {
+      throw new BadRequestException(
+        'Golpes de Sangue devem ser diferentes entre si',
       );
     }
   }
@@ -159,6 +182,25 @@ export class CharacterSubclassOptionValueValidator {
     if (new Set(values).size !== values.length) {
       throw new BadRequestException(
         'Subclass spell choices must be different',
+      );
+    }
+  }
+
+  private async validateClericCantrip(
+    option: SubclassOptionDto,
+  ): Promise<void> {
+    const rows = await this.dataSource.query<{ ok: number }[]>(
+      `SELECT 1 AS ok
+       FROM rpg.v_spell_by_class v
+       WHERE v.class_slug = 'cleric'
+         AND v.spell_slug = $1
+         AND v.spell_level = 0
+       LIMIT 1`,
+      [option.valueId],
+    );
+    if (rows.length === 0) {
+      throw new BadRequestException(
+        `Spell '${option.valueId}' is not a Cleric cantrip`,
       );
     }
   }

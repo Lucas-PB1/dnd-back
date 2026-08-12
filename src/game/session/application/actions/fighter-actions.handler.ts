@@ -28,6 +28,8 @@ import {
 } from './fighter/battle-master-actions';
 import { useDungeonPrecautionAction } from './fighter/dungeoneer-actions';
 import { usePsiWarriorAction } from './fighter/psi-warrior-actions';
+import { useBloodStrikeAction } from './fighter/blood-hound-actions';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 
 const PSI_PREFIX = 'psi:';
 
@@ -131,8 +133,19 @@ export class FighterActionsHandler {
           precautionDto,
         );
       }
+      case 'blood-strike': {
+        if (!dto.optionSlug) {
+          throw new BadRequestException(
+            'optionSlug é obrigatório (opção de Golpe de Sangue)',
+          );
+        }
+        return useBloodStrikeAction(deps, userId, characterId, {
+          optionSlug: dto.optionSlug,
+          takeLowerBloodCost: dto.takeLowerBloodCost,
+        });
+      }
       default:
-        throw new BadRequestException(`Ação de Guerreiro desconhecida: ${slug}`);
+        return resolveDeclaredEconomyTableAction(deps, character, slug);
     }
   }
 }

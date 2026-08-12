@@ -25,10 +25,12 @@ describe('DruidActionsHandler', () => {
     })),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
+  const mechanicalCatalog = { load: async () => ({ economyActions: [] }) };
   const handler = new DruidActionsHandler(
     access as never,
     state as never,
     domain as never,
+    mechanicalCatalog as never,
   );
   const druid = {
     id: 'druid-1',

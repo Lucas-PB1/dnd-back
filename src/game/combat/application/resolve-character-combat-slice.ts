@@ -7,6 +7,7 @@ import { aggregateClassCombatContributions } from '../domain/aggregate-class-com
 import { featCombatNotes } from '../domain/feat/combat-notes';
 import { itemCombatNotes } from '../domain/item/combat-notes';
 import { speciesCombatNotes } from '../domain/species/combat-notes';
+import { manikinArmorPresetFromChoices } from '../domain/species/manikin-armor';
 import { paladinSavingThrowAuraBonus } from '../domain/paladin';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
@@ -114,6 +115,10 @@ export async function resolveCharacterCombatSlice(input: {
     itemAcBonus: itemEffects.acBonus,
     itemAcBonusNames: itemEffects.sourceNames,
     equippedItems,
+    manikinArmorPresetSlug: manikinArmorPresetFromChoices(
+      speciesSlug,
+      speciesChoices,
+    ),
   });
   const weaponAttacks = await equippedWeaponAttacks.resolve(
     characterId,

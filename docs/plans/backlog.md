@@ -32,6 +32,14 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** (dnd-api) · 
 
 ### Ativo
 
+- [x] **Steinhardt Eldritch Hunt — handlers mesa (P0):** `H022` `phb_spell_class`; C047 Blade completo; `resolveDeclaredEconomyTableAction` (spend+nota; `brittle-bone-armor` aplica tempHp). Automações profundas (beemote, golpes de sangue, etc.) sob pedido (`rpg-class-mesa-api`).
+- [x] **Steinhardt Eldritch Hunt — P1 ficha/create:** Blade L13 truques Clérigo (`holyRevelationCantrip*`); CA Manikin (`armorPresetId`); resources+economy espécie (`H023`/`C049`); unicidade `bloodStrike*`; Torturer pool 12 (6×2).
+- [x] **Steinhardt Eldritch Hunt — corpos das magias:** `H004` preenchido a partir de `docs/source/new/spell` (+ `gravity-spike`, `blind-ambush`).
+- [x] **Steinhardt Eldritch Hunt — picks create:** `H007` — Poderes Enxertados (`graftedPowers`); Golpes de Sangue (`bloodStrike1`–`7`).
+- [x] **Steinhardt Eldritch Hunt — feats/backgrounds:** `H008`–`H015` a partir de `docs/source/new/fea` (4 talentos + 3 antecedentes).
+- [x] **Steinhardt Eldritch Hunt — species:** `H016`–`H018` (Manikin, Nascido do Flagelo + escolhas) a partir de `docs/source/new/rac`.
+- [x] **Steinhardt Eldritch Hunt — itens/armas:** `H019`–`H021` (props, armas mundanas, itens mágicos) a partir de `docs/source/new/weapons`.
+- [x] **Steinhardt Eldritch Hunt — polish mesa (P2):** feat/item economy (`H024`/`H025`/`C050`/`C051`); Beemote nota rica; Golpe de Sangue com Custo de Sangue (PV) + Sinfonia L15.
 - [x] **Create wizard — escolhas de classe (auditoria S023):** A/B em `S076`; perícia extra Bárbaro L3; idiomas Druida (Druídico), Ladino (Gíria+1) e Patrulheiro L2 (+2); Combatente Abençoado/Druídico; Arcana Mística; Maestria/Assinatura (UI); Segredos Mágicos L10; efeito mecânico Ordem Divina/Primal. SSOT: `database/seeds/phb/S023_phb_class_feature.sql`.
 - [x] **Create — magias always_prepared de classe (S023):** `phb_spell_grant` (`origin_type=class`) + `v_phb_class_granted_spell`; merge no create/update/preview. Druida L1 `falar-com-animais`; Patrulheiro L1 `marca-do-predador`; Paladino L2 `destruicao-divina` + L5 `convocar-montaria`; Bruxo L9 `contato-extraplanar`; Bardo L20 `palavra-de-poder-matar` + `palavra-de-poder-salvar`.
 - [x] **Create — picks de subclasse (S027 × S004):** seeds `S011`; validação API; pickers dinâmicos no wizard (`step-subclass-options.tsx` + `subclass-option-field.tsx`).

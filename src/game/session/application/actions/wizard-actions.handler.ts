@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isWizardClass } from '@game/combat/domain/wizard';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
@@ -7,6 +8,7 @@ import {
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import type { WizardActionDeps } from './wizard/wizard-action-deps';
 import {
   resolveArcaneRecovery,
@@ -37,6 +39,7 @@ export class WizardActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
   private deps(): WizardActionDeps {
@@ -108,6 +111,12 @@ export class WizardActionsHandler {
         return resolveMissileFlag(deps, character, 'giga', true);
       case 'disarm-giga-missile':
         return resolveMissileFlag(deps, character, 'giga', false);
+      default:
+        return resolveDeclaredEconomyTableAction(
+          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          character,
+          dto.actionSlug,
+        );
     }
   }
 }

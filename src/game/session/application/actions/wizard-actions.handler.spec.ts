@@ -11,10 +11,12 @@ describe('WizardActionsHandler', () => {
     buildResponse: jest.fn().mockResolvedValue(stateResponse),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
+  const mechanicalCatalog = { load: async () => ({ economyActions: [] }) };
   const handler = new WizardActionsHandler(
     access as never,
     state as never,
     domain as never,
+    mechanicalCatalog as never,
   );
   const wizard = {
     id: 'wiz-1',

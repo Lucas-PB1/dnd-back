@@ -5,7 +5,7 @@ import { PhbOptionDef } from '@entities/phb-option.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { SubclassOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import {
-  LORE_MAGICAL_DISCOVERY_KEYS,
+  SUBCLASS_GRANTED_SPELL_OPTION_KEYS,
   collectSubclassOptionGrantedSpellSlugs,
 } from '@game/sheet/domain/validation/class-options/subclass-option-effects';
 
@@ -35,7 +35,9 @@ export class ResolveSubclassOptionGrantedSpells {
     });
     const unlockByKey = new Map(
       defs
-        .filter((def) => LORE_MAGICAL_DISCOVERY_KEYS.has(def.optionKey))
+        .filter((def) =>
+          SUBCLASS_GRANTED_SPELL_OPTION_KEYS.has(def.optionKey),
+        )
         .map((def) => [def.optionKey, def.unlockLevel ?? 6]),
     );
 

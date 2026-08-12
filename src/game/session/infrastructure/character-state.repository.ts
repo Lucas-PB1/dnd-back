@@ -133,6 +133,21 @@ export class CharacterStateRepository {
     return patchStateOp(this.coreDeps(), character, dto);
   }
 
+  /** Persiste PV atuais (dano/cura de table-action) e devolve o state completo. */
+  async applyCurrentHitPoints(
+    character: PlayerCharacter,
+    hitPointsCurrent: number,
+  ): Promise<CharacterStateResponseDto> {
+    const max = character.hitPointsMax;
+    const capped =
+      max == null
+        ? Math.max(0, hitPointsCurrent)
+        : Math.min(max, Math.max(0, hitPointsCurrent));
+    character.hitPointsCurrent = capped;
+    await this.characters.save(character);
+    return this.buildResponse(character);
+  }
+
   castSpell(character: PlayerCharacter, dto: CastSpellDto) {
     return castSpellOp(this.coreDeps(), character, dto);
   }

@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isPaladinClass } from '@game/combat/domain/paladin';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
@@ -7,6 +8,7 @@ import {
   UsePaladinTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import type { PaladinActionDeps } from './paladin/paladin-action-deps';
 import {
   resolveAbjureEnemies,
@@ -29,6 +31,7 @@ export class PaladinActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
   private deps(): PaladinActionDeps {
@@ -75,6 +78,12 @@ export class PaladinActionsHandler {
         return resolveUndyingSentinel(deps, character);
       case 'reveler':
         return resolveReveler(deps, character);
+      default:
+        return resolveDeclaredEconomyTableAction(
+          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          character,
+          dto.actionSlug,
+        );
     }
   }
 }

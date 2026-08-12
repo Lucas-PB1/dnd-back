@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isBarbarianClass } from '@game/combat/domain/barbarian';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
@@ -7,6 +8,7 @@ import {
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import type { BarbarianActionDeps } from './barbarian/barbarian-action-deps';
 import {
   resolveRecoverAllRage,
@@ -43,6 +45,7 @@ export class BarbarianActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
   private deps(): BarbarianActionDeps {
@@ -117,6 +120,12 @@ export class BarbarianActionsHandler {
         return resolveShieldBlock(deps, character);
       case 'i-cast-fist':
         return resolveICastFist(deps, character);
+      default:
+        return resolveDeclaredEconomyTableAction(
+          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          character,
+          dto.actionSlug,
+        );
     }
   }
 }

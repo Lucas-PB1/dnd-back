@@ -7,6 +7,7 @@ import {
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import { assertCharacterSubclass } from '../core/table-action-guards';
 import type { RogueActionDeps } from './rogue/rogue-action-deps';
 import {
@@ -84,6 +85,12 @@ export class RogueActionsHandler {
         return resolveArachnoidWeb(deps, character);
       case 'magic-device-charge':
         return resolveMagicDeviceCharge(deps, character);
+      default:
+        return resolveDeclaredEconomyTableAction(
+          deps,
+          character,
+          dto.actionSlug,
+        );
     }
   }
 }

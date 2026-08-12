@@ -68,7 +68,12 @@ CREATE TYPE rpg.species_choice_kind AS ENUM (
   'geppettin_size',
   'mandrake_skill',
   'mandrake_casting_ability',
-  'mandrake_season'
+  'mandrake_season',
+  'manikin_size',
+  'manikin_armor',
+  'manikin_service_model',
+  'scourgeborne_madness',
+  'scourgeborne_lineage'
 );
 
 CREATE TYPE rpg.weapon_category AS ENUM ('simple', 'martial');

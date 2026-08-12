@@ -9,47 +9,30 @@ import {
   Min,
 } from 'class-validator';
 
+const ROGUE_TABLE_ACTION_SLUGS = [
+  'psychic-blade-main',
+  'psychic-blade-bonus',
+  'psi-bolstered-knack',
+  'guided-strike',
+  'psychic-whispers',
+  'psychic-teleport',
+  'psychic-veil',
+  'rend-mind',
+  'spell-thief',
+  'arachnoid-web',
+  'magic-device-charge',
+  'armor-of-the-faithful',
+  'rend-the-blasphemous',
+  'chains-of-judgement',
+  'divine-retaliation',
+  'erupting-blades',
+  'final-judgement-spirits',
+] as const;
+
 export class UseRogueTableActionDto {
-  @ApiProperty({
-    enum: [
-      'psychic-blade-main',
-      'psychic-blade-bonus',
-      'psi-bolstered-knack',
-      'guided-strike',
-      'psychic-whispers',
-      'psychic-teleport',
-      'psychic-veil',
-      'rend-mind',
-      'spell-thief',
-      'arachnoid-web',
-      'magic-device-charge',
-    ],
-  })
-  @IsIn([
-    'psychic-blade-main',
-    'psychic-blade-bonus',
-    'psi-bolstered-knack',
-    'guided-strike',
-    'psychic-whispers',
-    'psychic-teleport',
-    'psychic-veil',
-    'rend-mind',
-    'spell-thief',
-    'arachnoid-web',
-    'magic-device-charge',
-  ])
-  actionSlug!:
-    | 'psychic-blade-main'
-    | 'psychic-blade-bonus'
-    | 'psi-bolstered-knack'
-    | 'guided-strike'
-    | 'psychic-whispers'
-    | 'psychic-teleport'
-    | 'psychic-veil'
-    | 'rend-mind'
-    | 'spell-thief'
-    | 'arachnoid-web'
-    | 'magic-device-charge';
+  @ApiProperty({ enum: ROGUE_TABLE_ACTION_SLUGS })
+  @IsIn([...ROGUE_TABLE_ACTION_SLUGS])
+  actionSlug!: (typeof ROGUE_TABLE_ACTION_SLUGS)[number];
 
   @ApiPropertyOptional({ description: 'Total atual do teste ou ataque' })
   @IsOptional()
@@ -153,44 +136,25 @@ export class UseMonkTableActionDto {
     | 'recover-knockout';
 }
 
+const PALADIN_TABLE_ACTION_SLUGS = [
+  'lay-on-hands',
+  'cure-poison',
+  'divine-sense',
+  'abjure-enemies',
+  'oath-channel',
+  'inspiring-smite',
+  'peerless-athlete',
+  'glorious-defense',
+  'undying-sentinel',
+  'reveler',
+  'hunt-the-prey',
+  'perfect-hunter',
+] as const;
+
 export class UsePaladinTableActionDto {
-  @ApiProperty({
-    enum: [
-      'lay-on-hands',
-      'cure-poison',
-      'divine-sense',
-      'abjure-enemies',
-      'oath-channel',
-      'inspiring-smite',
-      'peerless-athlete',
-      'glorious-defense',
-      'undying-sentinel',
-      'reveler',
-    ],
-  })
-  @IsIn([
-    'lay-on-hands',
-    'cure-poison',
-    'divine-sense',
-    'abjure-enemies',
-    'oath-channel',
-    'inspiring-smite',
-    'peerless-athlete',
-    'glorious-defense',
-    'undying-sentinel',
-    'reveler',
-  ])
-  actionSlug!:
-    | 'lay-on-hands'
-    | 'cure-poison'
-    | 'divine-sense'
-    | 'abjure-enemies'
-    | 'oath-channel'
-    | 'inspiring-smite'
-    | 'peerless-athlete'
-    | 'glorious-defense'
-    | 'undying-sentinel'
-    | 'reveler';
+  @ApiProperty({ enum: PALADIN_TABLE_ACTION_SLUGS })
+  @IsIn([...PALADIN_TABLE_ACTION_SLUGS])
+  actionSlug!: (typeof PALADIN_TABLE_ACTION_SLUGS)[number];
 
   @ApiPropertyOptional({
     minimum: 1,
@@ -202,44 +166,26 @@ export class UsePaladinTableActionDto {
   amount?: number;
 }
 
+const RANGER_TABLE_ACTION_SLUGS = [
+  'hunters-mark-free',
+  'tireless',
+  'natures-veil',
+  'fey-reinforcements',
+  'misty-wanderer',
+  'primal-companion',
+  'hunter-defense',
+  'gloom-stalker-dodge',
+  'set-bestial-aspect',
+  'feral-howl',
+  'torturer-technique',
+  'veil-of-pain',
+  'mental-agony',
+] as const;
+
 export class UseRangerTableActionDto {
-  @ApiProperty({
-    enum: [
-      'hunters-mark-free',
-      'tireless',
-      'natures-veil',
-      'fey-reinforcements',
-      'misty-wanderer',
-      'primal-companion',
-      'hunter-defense',
-      'gloom-stalker-dodge',
-      'set-bestial-aspect',
-      'feral-howl',
-    ],
-  })
-  @IsIn([
-    'hunters-mark-free',
-    'tireless',
-    'natures-veil',
-    'fey-reinforcements',
-    'misty-wanderer',
-    'primal-companion',
-    'hunter-defense',
-    'gloom-stalker-dodge',
-    'set-bestial-aspect',
-    'feral-howl',
-  ])
-  actionSlug!:
-    | 'hunters-mark-free'
-    | 'tireless'
-    | 'natures-veil'
-    | 'fey-reinforcements'
-    | 'misty-wanderer'
-    | 'primal-companion'
-    | 'hunter-defense'
-    | 'gloom-stalker-dodge'
-    | 'set-bestial-aspect'
-    | 'feral-howl';
+  @ApiProperty({ enum: RANGER_TABLE_ACTION_SLUGS })
+  @IsIn([...RANGER_TABLE_ACTION_SLUGS])
+  actionSlug!: (typeof RANGER_TABLE_ACTION_SLUGS)[number];
 
   @ApiPropertyOptional({
     minimum: 0,
@@ -265,6 +211,8 @@ const FIGHTER_TABLE_ACTION_SLUGS = [
   'psi:mental-guard',
   'psi:energy-bulwark',
   'psi:telekinetic-master',
+  'blood-strike',
+  'blood-explosion',
 ] as const;
 
 export class UseFighterTableActionDto {
@@ -317,6 +265,22 @@ export class UseFighterTableActionDto {
   @IsInt()
   @Min(1)
   dc?: number;
+
+  @ApiPropertyOptional({
+    example: 'hunting-strike',
+    description: 'Opção de Golpe de Sangue (blood-strike)',
+  })
+  @IsOptional()
+  @IsString()
+  optionSlug?: string;
+
+  @ApiPropertyOptional({
+    description:
+      'Sangue da Criação (L10+): rerrola o Custo de Sangue e fica com o menor',
+  })
+  @IsOptional()
+  @IsBoolean()
+  takeLowerBloodCost?: boolean;
 }
 
 const GUNSLINGER_TABLE_ACTION_SLUGS = [
@@ -382,6 +346,10 @@ const BARBARIAN_TABLE_ACTION_SLUGS = [
   'magic-missile-throws',
   'shield-block',
   'i-cast-fist',
+  'electrified-chains',
+  'fulgurant-strike',
+  'lightning-step',
+  'roaring-crash',
 ] as const;
 
 export class UseBarbarianTableActionDto {

@@ -7,6 +7,7 @@ import {
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import type { RangerActionDeps } from './ranger/ranger-action-deps';
 import {
   resolveHuntersMarkFree,
@@ -74,6 +75,12 @@ export class RangerActionsHandler {
         return resolveSetBestialAspect(deps, character, dto.level);
       case 'feral-howl':
         return resolveFeralHowl(deps, character);
+      default:
+        return resolveDeclaredEconomyTableAction(
+          deps,
+          character,
+          dto.actionSlug,
+        );
     }
   }
 }

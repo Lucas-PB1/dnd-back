@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isDruidClass } from '@game/combat/domain/druid';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
@@ -7,6 +8,7 @@ import {
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import type { DruidActionDeps } from './druid/druid-action-deps';
 import {
   resolveWildResurgenceShape,
@@ -35,6 +37,7 @@ import {
   resolveNaturalRecovery,
   resolveNatureSanctuary,
 } from './druid/land-actions';
+import { resolveWickerboneBehemoth } from './druid/symbiosis-actions';
 
 const NATURAL_RECOVERY_SLUGS = {
   'natural-recovery-1': 1,
@@ -50,10 +53,17 @@ export class DruidActionsHandler {
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
-  private deps(): DruidActionDeps {
-    return { state: this.state, domain: this.domain };
+  private deps(): DruidActionDeps & {
+    mechanicalCatalog: LoadCombatMechanicalCatalog;
+  } {
+    return {
+      state: this.state,
+      domain: this.domain,
+      mechanicalCatalog: this.mechanicalCatalog,
+    };
   }
 
   async useTableAction(
@@ -116,9 +126,13 @@ export class DruidActionsHandler {
         return resolveCityShape(deps, character);
       case 'wall-warp':
         return resolveWallWarp(deps, character);
+      case 'wickerbone-behemoth':
+        return resolveWickerboneBehemoth(deps, character);
       default:
-        throw new BadRequestException(
-          `Ação de druida desconhecida: ${String(dto.actionSlug)}`,
+        return resolveDeclaredEconomyTableAction(
+          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          character,
+          dto.actionSlug,
         );
     }
   }

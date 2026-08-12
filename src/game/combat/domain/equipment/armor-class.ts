@@ -1,4 +1,5 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { computeManikinArmorPreset } from '../species/manikin-armor';
 
 export type EquippedArmorPiece = {
   itemSlug: string;
@@ -28,6 +29,10 @@ export type ArmorClassContext = {
   itemAcBonus?: number;
   /** Nomes dos itens que contribuíram para itemAcBonus. */
   itemAcBonusNames?: readonly string[];
+  /**
+   * Preset de CA do Manikin (`manikin_armor`). Aplicado só sem armadura de corpo.
+   */
+  manikinArmorPresetSlug?: string | null;
 };
 
 const BODY_ARMOR = new Set(['light', 'medium', 'heavy']);
@@ -109,17 +114,29 @@ export function computeArmorClassFromEquipment(
       noteParts.push('Mestre em Armadura Média');
     }
   } else {
-    const unarmored = pickBestUnarmoredDefense(
-      scores,
-      hasShield,
-      context?.unarmoredDefenses ?? [],
-    );
-    if (unarmored) {
-      armorClass = unarmored.armorClass;
-      noteParts.push(unarmored.label);
+    const manikin = context?.manikinArmorPresetSlug
+      ? computeManikinArmorPreset(scores, context.manikinArmorPresetSlug)
+      : null;
+    if (manikin) {
+      armorClass = manikin.armorClass;
+      noteParts.push(manikin.label);
+      if (manikin.countsAsWornArmor && hasStyleOrFeat(context, 'defense')) {
+        armorClass += 1;
+        noteParts.push('Defensivo');
+      }
     } else {
-      armorClass = 10 + abilityMod(scores.destreza);
-      noteParts.push('Sem armadura');
+      const unarmored = pickBestUnarmoredDefense(
+        scores,
+        hasShield,
+        context?.unarmoredDefenses ?? [],
+      );
+      if (unarmored) {
+        armorClass = unarmored.armorClass;
+        noteParts.push(unarmored.label);
+      } else {
+        armorClass = 10 + abilityMod(scores.destreza);
+        noteParts.push('Sem armadura');
+      }
     }
   }
 

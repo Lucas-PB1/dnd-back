@@ -5,11 +5,12 @@
 3. `subclass/S001`–`S007`
 4. `valdas/V001`–`V023`
 5. `valdas-gunslinger/G001`–`G028`
-6. `valdas-player-pack-2/P001`–`P011`
-7. `dmg/` — itens mágicos DMG 2024
-8. `combat/C001`–… — catálogo mecânico de combate (manobras, Golpe Astuto, economy/painéis, …)
+6. `valdas-player-pack-2/P001`–`P013`
+7. `steinhardt-eldritch-hunt/H001`–`H025` — Steinhardt Eldritch Hunt Player Pack (subclasses, magias, feats, backgrounds, species, itens, resources)
+8. `dmg/` — itens mágicos DMG 2024
+9. `combat/C001`–… — catálogo mecânico de combate (manobras, Golpe Astuto, economy/painéis, …)
 
-Packs aplicados nesta ordem (Gunslinger depende de magias do Player Pack, ex.: `finger-guns`; Pack 2 depende da edição Valdas e da classe Gunslinger).
+Packs aplicados nesta ordem (Gunslinger depende de magias do Player Pack, ex.: `finger-guns`; Pack 2 depende da edição Valdas e da classe Gunslinger; Eldritch Hunt é independente após classes PHB).
 
 ## Como aplicar
 

@@ -8,6 +8,21 @@ export const LORE_MAGICAL_DISCOVERY_KEYS = new Set([
   'magicalDiscovery2',
 ]);
 
+/** Blade of Radiance — Revelações Santas (2 truques de Clérigo). */
+export const BLADE_HOLY_CANTRIP_KEYS = new Set([
+  'holyRevelationCantrip1',
+  'holyRevelationCantrip2',
+]);
+
+/** Chaves de magia always_prepared vindas de picks de subclasse. */
+export const SUBCLASS_GRANTED_SPELL_OPTION_KEYS = new Set([
+  ...LORE_MAGICAL_DISCOVERY_KEYS,
+  ...BLADE_HOLY_CANTRIP_KEYS,
+]);
+
+/** Prefixo dos slots de Golpe de Sangue (valores únicos entre slots). */
+export const BLOOD_STRIKE_OPTION_KEY_RE = /^bloodStrike\d+$/;
+
 export const LORE_BONUS_SKILL_KEYS = new Set([
   'loreBonusSkill1',
   'loreBonusSkill2',
@@ -44,7 +59,7 @@ export function resolveLandTerrainSlug(
   );
 }
 
-/** Magias always_prepared vindas de picks de subclasse (Descobertas Mágicas). */
+/** Magias always_prepared vindas de picks de subclasse (Descobertas / Revelações). */
 export function collectSubclassOptionGrantedSpellSlugs(
   level: number,
   subclassOptions: readonly SubclassOptionPick[] | undefined,
@@ -54,7 +69,7 @@ export function collectSubclassOptionGrantedSpellSlugs(
   if (!subclassOptions?.length) return slugs;
 
   for (const option of subclassOptions) {
-    if (!LORE_MAGICAL_DISCOVERY_KEYS.has(option.optionKey)) continue;
+    if (!SUBCLASS_GRANTED_SPELL_OPTION_KEYS.has(option.optionKey)) continue;
     const unlock = unlockLevelByKey.get(option.optionKey) ?? 6;
     if (level >= unlock && option.valueId) {
       slugs.add(option.valueId);

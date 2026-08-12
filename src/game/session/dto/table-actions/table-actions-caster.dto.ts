@@ -175,6 +175,7 @@ const DRUID_TABLE_ACTION_SLUGS = [
   'natural-recovery-5',
   'city-shape',
   'wall-warp',
+  'wickerbone-behemoth',
 ] as const;
 
 export class UseDruidTableActionDto {
@@ -215,6 +216,8 @@ const WIZARD_TABLE_ACTION_SLUGS = [
   'disarm-missile-shield',
   'arm-giga-missile',
   'disarm-giga-missile',
+  'brittle-bone-armor',
+  'bone-puppetry',
 ] as const;
 
 export class UseWizardTableActionDto {

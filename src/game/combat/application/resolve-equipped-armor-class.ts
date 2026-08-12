@@ -19,6 +19,7 @@ export type ArmorClassResolveInput = {
   itemAcBonusNames?: readonly string[];
   /** Snapshot compartilhado — evita novo `find` no combat slice. */
   equippedItems?: PlayerCharacterItem[];
+  manikinArmorPresetSlug?: string | null;
 };
 
 @Injectable()
@@ -71,6 +72,7 @@ export class ResolveEquippedArmorClass {
       unarmoredDefenses,
       itemAcBonus: context.itemAcBonus,
       itemAcBonusNames: context.itemAcBonusNames,
+      manikinArmorPresetSlug: context.manikinArmorPresetSlug,
     });
   }
 }
