@@ -74,6 +74,8 @@ describe('CharacterStateRepository', () => {
         bestialAspectLevel: 0,
         missileShieldArmed: false,
         gigaMissileArmed: false,
+        starryFormActive: false,
+        stellarConstellation: null,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 
@@ -142,6 +144,8 @@ describe('CharacterStateRepository', () => {
         bestialAspectLevel: 0,
         missileShieldArmed: false,
         gigaMissileArmed: false,
+        starryFormActive: false,
+        stellarConstellation: null,
       } as PlayerCharacterState;
       stateRepo.findOne.mockResolvedValue(existing);
 
