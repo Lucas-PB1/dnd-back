@@ -8,6 +8,7 @@ import {
   resolveBackgroundAbilityBoostInput,
 } from '@game/sheet/domain/origin/background-ability-boost';
 import { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
+import { isPickableLanguageChoice } from './language-choice-rules';
 
 @Injectable()
 export class CharacterBackgroundValidator {
@@ -110,7 +111,7 @@ export class CharacterBackgroundValidator {
 
   /**
    * PHB 2024: idiomas fixos do antecedente + escolhas + extras de classe.
-   * Escolhas = qualquer idioma do catálogo que não seja já concedido.
+   * Escolhas = idiomas padrão (não raros), exceto Druídico/Gíria dos Ladrões.
    */
   async validateBackgroundLanguages(
     backgroundSlug: string,
@@ -177,7 +178,12 @@ export class CharacterBackgroundValidator {
     }
 
     for (const slug of choices) {
-      await this.catalogLookup.assertLanguageSlug(slug);
+      const language = await this.catalogLookup.findLanguageOrFail(slug);
+      if (!isPickableLanguageChoice(slug, language)) {
+        throw new BadRequestException(
+          `Language '${slug}' is not available as a language choice (standard languages only)`,
+        );
+      }
     }
   }
 }

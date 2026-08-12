@@ -124,6 +124,36 @@ describe('AddInventoryItemHandler', () => {
     );
   });
 
+  it('rejects class-granted catalog items', async () => {
+    catalogLookup.assertItemInCatalog.mockResolvedValue({
+      slug: 'psychic-blade',
+      cost: null,
+      properties: { grantedBySubclass: 'soulknife' },
+    });
+
+    await expect(
+      handler.execute('u1', 'ch1', { itemSlug: 'psychic-blade' }),
+    ).rejects.toThrow(/cannot be purchased or stored/i);
+    expect(inventory.add).not.toHaveBeenCalled();
+  });
+
+  it('rejects standalone coverage items', async () => {
+    catalogLookup.assertItemInCatalog.mockResolvedValue({
+      slug: 'armadura-adamantina',
+      cost: { text: '400 PO' },
+      properties: {
+        kind: 'coverage',
+        appliesTo: 'armor',
+        appliesFilter: 'Qualquer Média ou Pesada',
+      },
+    });
+
+    await expect(
+      handler.execute('u1', 'ch1', { itemSlug: 'armadura-adamantina' }),
+    ).rejects.toThrow(/attach it to a base piece/i);
+    expect(inventory.add).not.toHaveBeenCalled();
+  });
+
   it('rejects magical items without catalog cost when paying', async () => {
     campaignAccess.resolveInventoryPaymentContext.mockResolvedValue({
       inCampaign: true,

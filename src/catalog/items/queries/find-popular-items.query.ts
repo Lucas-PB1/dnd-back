@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { PhbItemCatalogStats } from '@entities/phb-item-catalog-stats.entity';
 import { ItemsMapper } from '../items.mapper';
 import { ItemSummaryResponseDto } from '../dto/item-summary-response.dto';
+import { EXCLUDE_CLASS_GRANTED_ITEMS_JOIN_SQL } from '../domain/class-granted-catalog-item';
 
 /** Mais comprados / vistos — telemetria (dicas Beyond shop). */
 @Injectable()
@@ -24,6 +25,7 @@ export class FindPopularItemsQuery {
       `SELECT i.slug, i.name, i.item_type, i.cost, i.weight, i.properties
        FROM rpg.phb_item_catalog_stats s
        JOIN rpg.phb_item i ON i.slug = s.item_slug
+       WHERE ${EXCLUDE_CLASS_GRANTED_ITEMS_JOIN_SQL}
        ORDER BY s.${orderCol} DESC, i.name ASC
        LIMIT $1`,
       [capped],

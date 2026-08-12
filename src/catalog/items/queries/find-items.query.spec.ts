@@ -35,8 +35,10 @@ describe('FindItemsQuery', () => {
     });
   });
 
-  it('skips filters when absent', async () => {
+  it('always excludes class-granted catalog items', async () => {
     await query.execute();
-    expect(qb.andWhere).not.toHaveBeenCalled();
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      `(item.properties->>'grantedBySubclass' IS NULL AND item.properties->>'grantedByClass' IS NULL)`,
+    );
   });
 });

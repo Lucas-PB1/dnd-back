@@ -73,6 +73,39 @@ describe('PurchaseInventoryHandler', () => {
     );
   });
 
+  it('rejects class-granted catalog items', async () => {
+    catalogLookup.assertItemInCatalog.mockResolvedValue({
+      slug: 'psychic-blade',
+      cost: { text: '1 PO' },
+      properties: { grantedBySubclass: 'soulknife' },
+    });
+
+    await expect(
+      handler.execute('u1', 'c1', {
+        lines: [{ itemSlug: 'psychic-blade', quantity: 1 }],
+      }),
+    ).rejects.toThrow(/cannot be purchased or stored/i);
+    expect(inventory.debitWealth).not.toHaveBeenCalled();
+  });
+
+  it('rejects standalone coverage items', async () => {
+    catalogLookup.assertItemInCatalog.mockResolvedValue({
+      slug: 'armadura-de-vulnerabilidade',
+      cost: { text: '4000 PO' },
+      properties: {
+        kind: 'coverage',
+        appliesTo: 'armor',
+        appliesFilter: 'Qualquer Leve, Média ou Pesada',
+      },
+    });
+
+    await expect(
+      handler.execute('u1', 'c1', {
+        lines: [{ itemSlug: 'armadura-de-vulnerabilidade', quantity: 1 }],
+      }),
+    ).rejects.toThrow(/requires attachToBaseSlug/i);
+  });
+
   it('debits service without inventoriing', async () => {
     await handler.execute('u1', 'c1', {
       lines: [{ itemSlug: 'estadia', quantity: 1 }],

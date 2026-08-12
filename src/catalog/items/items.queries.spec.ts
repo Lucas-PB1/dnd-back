@@ -74,6 +74,9 @@ describe('Items queries', () => {
     });
     const qb = repo.createQueryBuilder.mock.results[0].value;
     expect(qb.andWhere).toHaveBeenCalledWith(
+      `(item.properties->>'grantedBySubclass' IS NULL AND item.properties->>'grantedByClass' IS NULL)`,
+    );
+    expect(qb.andWhere).toHaveBeenCalledWith(
       `(item.properties->>'magic') = 'true'`,
     );
     expect(qb.andWhere).toHaveBeenCalledWith(

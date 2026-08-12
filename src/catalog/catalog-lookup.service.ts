@@ -137,7 +137,11 @@ export class CatalogLookupService {
   }
 
   async assertLanguageSlug(slug: string): Promise<void> {
-    requireCatalog(
+    await this.findLanguageOrFail(slug);
+  }
+
+  async findLanguageOrFail(slug: string): Promise<PhbLanguage> {
+    return requireCatalog(
       await this.languagesRepo.findOne({ where: { slug } }),
       `Language '${slug}' not found in catalog`,
     );

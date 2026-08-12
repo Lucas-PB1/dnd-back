@@ -19,7 +19,13 @@ import {
   type CoinPurse,
 } from '../domain/coin-purse';
 import { parseItemCoverage } from '../domain/coverage/item-coverage';
+import {
+  assertAttachCoverageSlugIsCoverage,
+  assertCoverageLineHasTarget,
+  assertNotStandaloneCoverageItem,
+} from '../domain/coverage/coverage-inventory-rules';
 import { isServiceItem } from '../domain/item-kind';
+import { assertNotClassGrantedCatalogItem } from '@catalog/items/domain/class-granted-catalog-item';
 import { CharacterInventoryResponseDto } from '../dto/inventory.dto';
 import { PurchaseInventoryDto } from '../dto/purchase-inventory.dto';
 import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
@@ -130,6 +136,7 @@ export class PurchaseInventoryHandler {
       const quantity = line.quantity ?? 1;
       const catalog = await this.catalogLookup.assertItemInCatalog(line.itemSlug);
       const props = (catalog.properties ?? null) as Record<string, unknown> | null;
+      assertNotClassGrantedCatalogItem(line.itemSlug, props);
       const coverage = parseItemCoverage(props);
       const service = isServiceItem(props);
 
@@ -152,7 +159,18 @@ export class PurchaseInventoryHandler {
         continue;
       }
 
+      if (coverage) {
+        assertCoverageLineHasTarget(line.itemSlug, line);
+      }
+
       if (line.attachCoverageSlug) {
+        const covCatalog = await this.catalogLookup.assertItemInCatalog(
+          line.attachCoverageSlug,
+        );
+        assertAttachCoverageSlugIsCoverage(
+          line.attachCoverageSlug,
+          (covCatalog.properties ?? null) as Record<string, unknown> | null,
+        );
         inventoryLines.push({ itemSlug: line.itemSlug, quantity });
         inventoryLines.push({
           itemSlug: line.attachCoverageSlug,
@@ -163,9 +181,6 @@ export class PurchaseInventoryHandler {
           coverageSlug: line.attachCoverageSlug,
           bonus: line.attachCoverageBonus,
         });
-        const covCatalog = await this.catalogLookup.assertItemInCatalog(
-          line.attachCoverageSlug,
-        );
         const covPriced = this.tryAddCost(covCatalog.cost, 1, totalCost);
         totalCost = covPriced.total;
         if (covPriced.ok) pricedLineCount += 1;

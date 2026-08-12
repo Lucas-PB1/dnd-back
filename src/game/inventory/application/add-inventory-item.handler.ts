@@ -18,6 +18,8 @@ import {
   scaleCoinPurse,
 } from '../domain/coin-purse';
 import { isServiceItem } from '../domain/item-kind';
+import { assertNotClassGrantedCatalogItem } from '@catalog/items/domain/class-granted-catalog-item';
+import { assertNotStandaloneCoverageItem } from '../domain/coverage/coverage-inventory-rules';
 
 @Injectable()
 export class AddInventoryItemHandler {
@@ -40,7 +42,10 @@ export class AddInventoryItemHandler {
       'write',
     );
     const catalog = await this.catalogLookup.assertItemInCatalog(dto.itemSlug);
-    if (isServiceItem(catalog.properties as Record<string, unknown> | null)) {
+    const props = catalog.properties as Record<string, unknown> | null;
+    assertNotClassGrantedCatalogItem(dto.itemSlug, props);
+    assertNotStandaloneCoverageItem(dto.itemSlug, props);
+    if (isServiceItem(props)) {
       throw new BadRequestException(
         'Serviços não entram na mochila — use POST …/inventory/purchase.',
       );

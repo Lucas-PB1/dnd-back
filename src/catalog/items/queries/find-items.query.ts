@@ -11,6 +11,7 @@ import { PhbItem } from '@entities/phb-item.entity';
 import { ItemResponseDto } from '../dto/item-response.dto';
 import { ItemSummaryResponseDto } from '../dto/item-summary-response.dto';
 import { ItemsMapper } from '../items.mapper';
+import { EXCLUDE_CLASS_GRANTED_ITEMS_SQL } from '../domain/class-granted-catalog-item';
 
 export type FindItemsFilters = {
   itemType?: string;
@@ -40,6 +41,8 @@ export class FindItemsQuery {
     const qb = this.itemsRepo
       .createQueryBuilder('item')
       .orderBy('item.name', 'ASC');
+
+    qb.andWhere(EXCLUDE_CLASS_GRANTED_ITEMS_SQL);
 
     if (filters.fields === 'summary') {
       qb.select([
