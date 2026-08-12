@@ -37,6 +37,9 @@ export class BackgroundsMapper {
       editionSlug: row.editionSlug,
       originFeatSlug: row.featSlug,
       originFeatName: row.featName,
+      originFeatChoiceSlugs: Array.isArray(row.originFeatChoiceSlugs)
+        ? row.originFeatChoiceSlugs
+        : [],
       toolProficiencyKind: row.toolProficiencyKind,
       toolProficiencyDescription: row.toolProficiencyDescription,
       toolItemSlug: row.toolItemSlug,

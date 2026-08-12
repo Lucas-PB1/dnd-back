@@ -15,6 +15,8 @@ CREATE TABLE rpg.phb_option_value (
   spell_level5_id BIGINT REFERENCES rpg.phb_spell(id),
   spell_1_id BIGINT REFERENCES rpg.phb_spell(id),
   spell_2_id BIGINT REFERENCES rpg.phb_spell(id),
+  -- NULL = herda da espécie-pai; preenchido quando a opção vem de outra edição (ex. Alfar no Elfo).
+  edition_slug TEXT,
   PRIMARY KEY (scope, owner_id, option_key, value_id),
   FOREIGN KEY (scope, owner_id, option_key)
     REFERENCES rpg.phb_option_def(scope, owner_id, option_key) ON DELETE CASCADE

@@ -50,6 +50,13 @@ export class BackgroundResponseDto {
   @ApiPropertyOptional({ example: 'Iniciado em Magia' })
   originFeatName!: string | null;
 
+  @ApiPropertyOptional({
+    type: [String],
+    example: ['fisher', 'northern-raider'],
+    description: 'Talentos de origem à escolha quando originFeatSlug é null',
+  })
+  originFeatChoiceSlugs!: string[];
+
   @ApiPropertyOptional({ enum: ['fixed', 'choice'] })
   toolProficiencyKind!: string | null;
 

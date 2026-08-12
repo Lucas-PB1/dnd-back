@@ -10,6 +10,12 @@ export interface FeatAbilityPrerequisite {
   minimumScore: number;
 }
 
+export interface FeatOptionPrerequisite {
+  featSlug: string;
+  optionKey: string;
+  valueId: string;
+}
+
 @ViewEntity({ schema: 'rpg', name: 'v_phb_feat' })
 export class VPhbFeat {
   @ViewColumn({ name: 'feat_slug' })
@@ -47,6 +53,29 @@ export class VPhbFeat {
 
   @ViewColumn({ name: 'requires_fighting_style' })
   requiresFightingStyle!: boolean;
+
+  @ViewColumn({ name: 'requires_weapon_mastery' })
+  requiresWeaponMastery!: boolean;
+
+  /** Slugs de talentos que o personagem precisa já ter. */
+  @ViewColumn({ name: 'required_feat_slugs' })
+  requiredFeatSlugs!: string[];
+
+  /** Perícias exigidas (todas). */
+  @ViewColumn({ name: 'required_skill_slugs' })
+  requiredSkillSlugs!: string[];
+
+  /** Espécies aceitas (qualquer uma). */
+  @ViewColumn({ name: 'required_species_slugs' })
+  requiredSpeciesSlugs!: string[];
+
+  /** Proficiências de arma exigidas (todas). */
+  @ViewColumn({ name: 'required_weapon_proficiency_slugs' })
+  requiredWeaponProficiencySlugs!: string[];
+
+  /** Opções de talento já adquirido exigidas (ex.: Adepto Elemental / cold). */
+  @ViewColumn({ name: 'required_feat_options' })
+  requiredFeatOptions!: FeatOptionPrerequisite[];
 
   @ViewColumn({ name: 'source_chapter' })
   sourceChapter!: number | null;

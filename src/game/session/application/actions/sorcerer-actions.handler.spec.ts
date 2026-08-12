@@ -25,11 +25,27 @@ describe('SorcererActionsHandler', () => {
   const dataSource = {
     query: jest.fn().mockResolvedValue([{ value_id: 'subtle-spell' }]),
   };
+  const mechanicalCatalog = {
+    load: async () => ({
+      gunslingerManeuvers: [],
+      battleMasterManeuvers: [],
+      cunningStrikeEffects: [],
+      tableActions: [],
+      personaMasks: [],
+      personaMaskSlugs: [],
+      beastborneAspectBenefits: [],
+      dungeoneerSlayerLabels: [],
+      precautionSpells: [],
+      economyActions: [],
+      panelActions: [],
+    }),
+  };
   const handler = new SorcererActionsHandler(
     access as never,
     state as never,
     domain as never,
     dataSource as never,
+    mechanicalCatalog as never,
   );
   const sorcerer = {
     id: 'sorc-1',

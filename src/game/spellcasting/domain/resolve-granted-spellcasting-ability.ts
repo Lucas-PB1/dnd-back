@@ -123,6 +123,10 @@ export function resolveSpellcastingAbilityForSpell(input: {
   }
 
   if (source === 'species') {
+    const andariCantrip = choiceSlugOfAndari(input.speciesChoices);
+    if (andariCantrip && andariCantrip === input.spellSlug) {
+      return 'sabedoria';
+    }
     return (
       castingAbilityFromSpeciesChoices(input.speciesChoices) ??
       input.classAbilitySlug
@@ -130,4 +134,15 @@ export function resolveSpellcastingAbilityForSpell(input: {
   }
 
   return input.classAbilitySlug;
+}
+
+function choiceSlugOfAndari(
+  speciesChoices: readonly SpeciesChoiceDto[] | undefined,
+): string | undefined {
+  const lineage = speciesChoices?.find(
+    (c) => c.choiceKind === 'bearfolk_lineage',
+  )?.choiceSlug;
+  if (lineage !== 'andari') return undefined;
+  return speciesChoices?.find((c) => c.choiceKind === 'andari_druid_cantrip')
+    ?.choiceSlug;
 }

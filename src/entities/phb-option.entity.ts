@@ -82,4 +82,8 @@ export class PhbOptionValue {
 
   @Column({ name: 'spell_2_id', type: 'bigint', nullable: true })
   spell2Id!: string | null;
+
+  /** NULL = inherits parent species; set when option comes from another edition. */
+  @Column({ name: 'edition_slug', type: 'text', nullable: true })
+  editionSlug!: string | null;
 }

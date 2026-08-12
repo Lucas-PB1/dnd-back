@@ -24,4 +24,11 @@ export class SpeciesTraitChoiceResponseDto {
 
   @ApiPropertyOptional()
   damageType!: string | null;
+
+  @ApiPropertyOptional({
+    example: 'northlands-heroes-2024-en',
+    description:
+      'Edition that owns this choice; null = always available with the species',
+  })
+  editionSlug!: string | null;
 }

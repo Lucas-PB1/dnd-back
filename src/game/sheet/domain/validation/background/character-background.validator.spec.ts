@@ -195,6 +195,42 @@ describe('CharacterBackgroundValidator', () => {
       ).resolves.toBeUndefined();
 
       await expect(
+        validator.validateBackgroundOriginFeat(
+          {
+            backgroundSlug: 'seafarer',
+            featSlug: null,
+            originFeatChoiceSlugs: ['fisher', 'northern-raider'],
+          },
+          [],
+        ),
+      ).rejects.toThrow(/exactly one origin feat/i);
+
+      await expect(
+        validator.validateBackgroundOriginFeat(
+          {
+            backgroundSlug: 'seafarer',
+            featSlug: null,
+            originFeatChoiceSlugs: ['fisher', 'northern-raider'],
+          },
+          [
+            { featSlug: 'fisher', instanceIndex: 0 },
+            { featSlug: 'northern-raider', instanceIndex: 0 },
+          ],
+        ),
+      ).rejects.toThrow(/exactly one origin feat/i);
+
+      await expect(
+        validator.validateBackgroundOriginFeat(
+          {
+            backgroundSlug: 'seafarer',
+            featSlug: null,
+            originFeatChoiceSlugs: ['fisher', 'northern-raider'],
+          },
+          [{ featSlug: 'fisher', instanceIndex: 0 }],
+        ),
+      ).resolves.toBeUndefined();
+
+      await expect(
         validator.validateBackgroundToolChoice(
           { backgroundSlug: 'criminal', toolProficiencyKind: 'choice', toolItemSlug: null },
           null,

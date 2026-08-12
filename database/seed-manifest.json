@@ -2,19 +2,20 @@
   "generatedAt": "2026-07-29T17:00:00.000Z",
   "note": "Baseline canônico — contagens atuais (G028 + T080)",
   "migrations": {
-    "tables": "T001-T074",
-    "views": "V001-V050",
+    "tables": "T001-T081",
+    "views": "V001-V056",
     "player": "P001-P026",
-    "totalFiles": 130
+    "totalFiles": 140
   },
   "seeds": {
     "phb": "S000-S078",
     "subclass": "S001-S011",
     "valdas": "V001-V023",
     "valdasGunslinger": "G001-G028",
-    "valdasPlayerPack2": "P001-P013",
+    "valdasPlayerPack2": "P001-P014",
     "steinhardtEldritchHunt": "H001-H025",
-    "combat": "C001-C051",
-    "totalFiles": 157
+    "northlandsHeroes": "N001-N023",
+    "combat": "C001-C055",
+    "totalFiles": 179
   }
 }

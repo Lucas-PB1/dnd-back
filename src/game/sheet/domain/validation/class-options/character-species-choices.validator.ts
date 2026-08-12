@@ -5,7 +5,7 @@ import { assertUnique } from '@common/assert';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 
-const OPTIONAL_KINDS = new Set(['high_elf_cantrip']);
+const OPTIONAL_KINDS = new Set(['high_elf_cantrip', 'andari_druid_cantrip']);
 
 @Injectable()
 export class CharacterSpeciesChoicesValidator {
@@ -63,6 +63,7 @@ export class CharacterSpeciesChoicesValidator {
     }
 
     await this.validateOptionalHighElfCantrip(speciesSlug, choices, optionalChoices);
+    await this.validateAndariDruidCantrip(speciesSlug, choices, optionalChoices);
     this.validateGeppettinSizeRequiresMarionette(speciesSlug, choices);
   }
 
@@ -113,6 +114,48 @@ export class CharacterSpeciesChoicesValidator {
     if (rows.length === 0) {
       throw new BadRequestException(
         `High Elf cantrip '${highElf.choiceSlug}' must be a Wizard cantrip`,
+      );
+    }
+  }
+
+  private async validateAndariDruidCantrip(
+    speciesSlug: string,
+    allChoices: NonNullable<CharacterSheetInput['speciesChoices']>,
+    optionalChoices: NonNullable<CharacterSheetInput['speciesChoices']>,
+  ): Promise<void> {
+    const andariCantrip = optionalChoices.find(
+      (c) => c.choiceKind === 'andari_druid_cantrip',
+    );
+    const lineage = allChoices.find(
+      (c) => c.choiceKind === 'bearfolk_lineage',
+    )?.choiceSlug;
+    const isAndari = speciesSlug === 'bearfolk' && lineage === 'andari';
+
+    if (!andariCantrip) {
+      if (isAndari) {
+        throw new BadRequestException(
+          `Species choice 'andari_druid_cantrip' is required for bearfolk_lineage 'andari'`,
+        );
+      }
+      return;
+    }
+
+    if (!isAndari) {
+      throw new BadRequestException(
+        `Species choice 'andari_druid_cantrip' requires bearfolk_lineage 'andari'`,
+      );
+    }
+
+    const rows = await this.dataSource.query<{ ok: number }[]>(
+      `SELECT 1 AS ok
+       FROM rpg.v_spell_by_class
+       WHERE class_slug = 'druid' AND spell_level = 0 AND spell_slug = $1
+       LIMIT 1`,
+      [andariCantrip.choiceSlug],
+    );
+    if (rows.length === 0) {
+      throw new BadRequestException(
+        `Andari cantrip '${andariCantrip.choiceSlug}' must be a Druid cantrip`,
       );
     }
   }

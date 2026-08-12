@@ -21,6 +21,7 @@ const SPECIFIC_WEAPON_PROFICIENCY: Record<string, string> = {
   'espada-longa': 'longsword',
   rapieira: 'rapier',
   'espada-curta': 'shortsword',
+  machadinhas: 'handaxe',
 };
 
 export function abilityMod(score: number): number {

@@ -12,6 +12,7 @@ function choiceSlugOf(
  * Slugs de magia concedidos por espécie a partir do catálogo,
  * filtrados por escolhas da ficha e nível.
  * Alto Elfo: `high_elf_cantrip` substitui o truque L1 default do catálogo.
+ * Andari: `andari_druid_cantrip` adiciona o truque de Druida escolhido.
  */
 export function collectSpeciesGrantedSpellSlugs(
   speciesSlug: string | undefined,
@@ -38,6 +39,7 @@ export function collectSpeciesGrantedSpellSlugs(
   }
 
   applyHighElfCantripOverride(speciesSlug, speciesChoices, catalogRows, slugs);
+  applyAndariDruidCantrip(speciesSlug, speciesChoices, slugs);
   return slugs;
 }
 
@@ -63,4 +65,16 @@ function applyHighElfCantripOverride(
     }
   }
   slugs.add(cantrip);
+}
+
+/** Andari (Bearfolk): adiciona o truque de Druida escolhido (sem default no catálogo). */
+function applyAndariDruidCantrip(
+  speciesSlug: string,
+  speciesChoices: readonly SpeciesChoiceDto[] | undefined,
+  slugs: Set<string>,
+): void {
+  if (speciesSlug !== 'bearfolk') return;
+  if (choiceSlugOf(speciesChoices, 'bearfolk_lineage') !== 'andari') return;
+  const cantrip = choiceSlugOf(speciesChoices, 'andari_druid_cantrip');
+  if (cantrip) slugs.add(cantrip);
 }

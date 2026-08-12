@@ -11,8 +11,6 @@ Wiring de mesa, economy e gaps de regra **não** moram aqui.
 | `dmg-2024-itens-magicos-az.json` | Intermediário do gerador |
 | `dmg-2024-itens-magicos-az-index.md` | Índice humano dos ~338 itens |
 | `dmg-wiring-status.md` | Status dos lotes de wiring → seeds |
-| `phb-2024-equipment-prices-audit.md` | Audit histórico preços Cap. 6 vs S031 |
-| `phb-2024-equipment-gaps-catalog.md` | Audit histórico gaps Cap. 6 vs S031 |
 
 ## Regenerar seeds
 
@@ -23,17 +21,16 @@ node scripts/generate-dmg-consumable-lote.mjs # → D011 + C016
 node scripts/generate-dmg-coverage-lote.mjs   # → D013
 ```
 
-Lista completa de seeds: [`database/seeds/dmg/README.md`](../database/seeds/dmg/README.md).
+Lista completa de seeds: [`database/seeds/dmg/README.md`](../../database/seeds/dmg/README.md).
 
 ## Docs relacionados (fora desta pasta)
 
 - Modelo mesa: [`docs/architecture/dmg-item-mesa.md`](../architecture/dmg-item-mesa.md)
 - Regras Treasure × gaps: [`docs/architecture/treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md)
-- Auditoria artefatos: [`docs/plans/audit-dmg-artifacts.md`](../../docs/plans/audit-dmg-artifacts.md) (repo root)
+- Backlog: [`docs/plans/backlog.md`](../plans/backlog.md)
 
 ## Não colocar aqui
 
 - Scrapes HTML do D&D Beyond / pastas `_files`
-- Taxonomias YAML de planejamento (substituídas por `dmg-wiring-status.md`)
-- Extratos automáticos gigantes do HTML
+- Extratos one-shot de packs já seedados (Steinhardt, Northlands, …)
 - Planos de feature (vão em `docs/plans/` ou `docs/architecture/`)

@@ -28,4 +28,8 @@ export class VPhbSpeciesTraitChoices {
 
   @ViewColumn({ name: 'damage_type' })
   damageType!: string | null;
+
+  /** NULL = always available with the species; otherwise only when edition is enabled. */
+  @ViewColumn({ name: 'edition_slug' })
+  editionSlug!: string | null;
 }

@@ -35,6 +35,7 @@ describe('Backgrounds queries', () => {
     abilityOptionNames: ['Sabedoria'],
     featSlug: 'magic-initiate',
     featName: 'Iniciado em Magia',
+    originFeatChoiceSlugs: [],
     toolProficiencyKind: 'fixed',
     toolProficiencyDescription: 'Suprimentos de Calígrafo',
     toolItemSlug: 'suprimentos-de-caligrafo',

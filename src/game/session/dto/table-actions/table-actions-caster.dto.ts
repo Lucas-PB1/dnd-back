@@ -21,6 +21,9 @@ const CLERIC_TABLE_ACTION_SLUGS = [
   'legendary-aspect-rend',
   'legendary-aspect-tail',
   'legendary-aspect-wings',
+  'adjust-the-skein',
+  'pluck-the-threads',
+  'intertwined-fate',
 ] as const;
 
 export class UseClericTableActionDto {
@@ -48,6 +51,8 @@ const BARD_TABLE_ACTION_SLUGS = [
   'persona-gladiator',
   'persona-jester',
   'set-persona-masks',
+  'bragi-rune',
+  'battle-sagas',
 ] as const;
 
 export class UseBardTableActionDto {
@@ -88,6 +93,9 @@ const SORCERER_TABLE_ACTION_SLUGS = [
   'heroic-soul',
   'mystical-maneuver',
   'warp-implosion',
+  'spirit-guidance',
+  'spirit-aura',
+  'spirit-secrets',
 ] as const;
 
 export class UseSorcererTableActionDto {
@@ -125,6 +133,8 @@ const WARLOCK_TABLE_ACTION_SLUGS = [
   'searing-vengeance',
   'beguiling-defenses',
   'clairvoyant-combatant',
+  'context-switch',
+  'harbinger-of-chaos',
 ] as const;
 
 export class UseWarlockTableActionDto {
@@ -176,6 +186,9 @@ const DRUID_TABLE_ACTION_SLUGS = [
   'city-shape',
   'wall-warp',
   'wickerbone-behemoth',
+  'wolf-mantle',
+  'defend-the-pack',
+  'children-of-great-wolf',
 ] as const;
 
 export class UseDruidTableActionDto {

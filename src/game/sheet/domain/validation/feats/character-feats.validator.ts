@@ -23,6 +23,8 @@ export class CharacterFeatsValidator {
       bySlug.set(feat.featSlug, list);
     }
 
+    const ownedSlugs = new Set(bySlug.keys());
+
     for (const [slug, instances] of bySlug) {
       const feat = await this.catalogLookup.assertFeatInCatalog(slug);
 
@@ -35,6 +37,15 @@ export class CharacterFeatsValidator {
         if (indices[i] !== i) {
           throw new BadRequestException(
             `Feat '${slug}' instance indices must be contiguous starting at 0`,
+          );
+        }
+      }
+
+      const required = feat.requiredFeatSlugs ?? [];
+      for (const requiredSlug of required) {
+        if (!ownedSlugs.has(requiredSlug)) {
+          throw new BadRequestException(
+            `Feat '${slug}' requires feat '${requiredSlug}'`,
           );
         }
       }

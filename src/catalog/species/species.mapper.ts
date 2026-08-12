@@ -17,6 +17,13 @@ function editionSlugFromSourceMeta(
     : DEFAULT_PHB_EDITION_SLUG;
 }
 
+function variantOfFromSourceMeta(
+  sourceMeta: Record<string, unknown> | null,
+): string | null {
+  const raw = sourceMeta?.variantOf;
+  return typeof raw === 'string' && raw.trim() ? raw.trim() : null;
+}
+
 @Injectable()
 export class SpeciesMapper {
   toSummaryDto(row: PhbSpecies): SpeciesSummaryResponseDto {
@@ -24,6 +31,7 @@ export class SpeciesMapper {
       slug: row.slug,
       name: row.name,
       editionSlug: editionSlugFromSourceMeta(row.sourceMeta),
+      variantOf: variantOfFromSourceMeta(row.sourceMeta),
     };
   }
 
@@ -38,6 +46,7 @@ export class SpeciesMapper {
       speed: row.speed,
       description: row.description,
       editionSlug: editionSlugFromSourceMeta(row.sourceMeta),
+      variantOf: variantOfFromSourceMeta(row.sourceMeta),
     };
   }
 
@@ -59,6 +68,7 @@ export class SpeciesMapper {
       spellLevel3Slug: row.spellLevel3Slug,
       spellLevel5Slug: row.spellLevel5Slug,
       damageType: row.damageType,
+      editionSlug: row.editionSlug,
     };
   }
 }

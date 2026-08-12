@@ -270,6 +270,27 @@ describe('granted-spells', () => {
       );
       expect([...swapped].sort()).toEqual(['detectar-magia', 'raio-de-fogo']);
     });
+
+    it('adds Andari Druid cantrip when andari_druid_cantrip is chosen', () => {
+      const without = collectSpeciesGrantedSpellSlugs(
+        'bearfolk',
+        [{ choiceKind: 'bearfolk_lineage', choiceSlug: 'andari' }],
+        1,
+        [],
+      );
+      expect([...without]).toEqual([]);
+
+      const withCantrip = collectSpeciesGrantedSpellSlugs(
+        'bearfolk',
+        [
+          { choiceKind: 'bearfolk_lineage', choiceSlug: 'andari' },
+          { choiceKind: 'andari_druid_cantrip', choiceSlug: 'druidismo' },
+        ],
+        1,
+        [],
+      );
+      expect([...withCantrip]).toEqual(['druidismo']);
+    });
   });
 
   describe('mergeCharacterSpellsWithGrantedSources', () => {

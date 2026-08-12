@@ -5,8 +5,8 @@ description: Glossário PHB 2024 PT-BR e convenções de slug da API. Use quando
 
 # Glossário PT-BR + slugs
 
-SSOT de nomes: `docs/Glossário de Termos Traduzidos V. 5.1.26.xlsx` (Livro do X),  
-exceto override de mesa documentado em `terms-pt-br.md` (ex.: Ranger → **Patrulheiro**).  
+SSOT de nomes: [`docs/glossary/termos-traduzidos.json`](../../../docs/glossary/termos-traduzidos.json)  
+(+ override de mesa em `terms-pt-br.md`, ex.: Ranger → **Patrulheiro**).  
 Resumo operacional: [`terms-pt-br.md`](references/terms-pt-br.md)
 
 ## Slugs no banco / URL

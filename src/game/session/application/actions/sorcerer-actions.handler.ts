@@ -1,5 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import {
   isSorcererClass,
   METAMAGIC_OPTION_KEY,
@@ -12,6 +13,7 @@ import {
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import type { SorcererActionDeps } from './sorcerer/sorcerer-action-deps';
 import {
   convertPointsToSlot,
@@ -38,6 +40,7 @@ export class SorcererActionsHandler {
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
     private readonly dataSource: DataSource,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
   private deps(): SorcererActionDeps {
@@ -160,6 +163,12 @@ export class SorcererActionsHandler {
         return resolveMysticalManeuver(deps, character);
       case 'warp-implosion':
         return resolveWarpImplosion(deps, character);
+      default:
+        return resolveDeclaredEconomyTableAction(
+          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          character,
+          dto.actionSlug,
+        );
     }
   }
 }

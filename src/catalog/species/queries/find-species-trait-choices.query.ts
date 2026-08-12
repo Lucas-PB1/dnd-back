@@ -20,12 +20,24 @@ export class FindSpeciesTraitChoicesQuery {
     speciesSlug: string,
     page = 1,
     limit = 100,
+    editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<SpeciesTraitChoiceResponseDto>> {
     await this.catalogLookup.findSpeciesOrFail(speciesSlug);
-    const rows = await this.traitChoicesRepo.find({
-      where: { speciesSlug },
-      order: { traitName: 'ASC', choiceName: 'ASC' },
-    });
+
+    const qb = this.traitChoicesRepo
+      .createQueryBuilder('c')
+      .where('c.species_slug = :speciesSlug', { speciesSlug })
+      .orderBy('c.trait_name', 'ASC')
+      .addOrderBy('c.choice_name', 'ASC');
+
+    if (editionSlugs?.length) {
+      qb.andWhere(
+        '(c.edition_slug IS NULL OR c.edition_slug IN (:...editionSlugs))',
+        { editionSlugs },
+      );
+    }
+
+    const rows = await qb.getMany();
     return paginateOrNotFound(
       rows,
       (row) => this.mapper.toTraitChoiceDto(row),

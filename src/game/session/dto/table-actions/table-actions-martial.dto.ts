@@ -149,6 +149,9 @@ const PALADIN_TABLE_ACTION_SLUGS = [
   'reveler',
   'hunt-the-prey',
   'perfect-hunter',
+  'encouraging-smite',
+  'guardian-of-the-dead',
+  'spirit-of-the-valkyrie',
 ] as const;
 
 export class UsePaladinTableActionDto {
@@ -213,6 +216,8 @@ const FIGHTER_TABLE_ACTION_SLUGS = [
   'psi:telekinetic-master',
   'blood-strike',
   'blood-explosion',
+  'marauders-reprisal',
+  'unstoppable-assault',
 ] as const;
 
 export class UseFighterTableActionDto {

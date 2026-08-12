@@ -31,6 +31,7 @@ import {
   resolveUnbreakableMajesty,
   resolveVirtuosoSkill,
 } from './bard/subclass-actions';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 
 @Injectable()
 export class BardActionsHandler {
@@ -102,6 +103,12 @@ export class BardActionsHandler {
         return resolvePersonaJester(deps, character);
       case 'set-persona-masks':
         return resolveSetPersonaMasks(deps, character, dto.masks ?? []);
+      default:
+        return resolveDeclaredEconomyTableAction(
+          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          character,
+          dto.actionSlug,
+        );
     }
   }
 }

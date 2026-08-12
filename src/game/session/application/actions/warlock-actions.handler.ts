@@ -1,4 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isWarlockClass } from '@game/combat/domain/warlock';
 import { AssertCanBindPactWeaponService } from '@game/inventory/application/assert-can-bind-pact-weapon.service';
 import { CharacterInventoryRepository } from '@game/inventory/infrastructure/character-inventory.repository';
@@ -9,6 +10,7 @@ import {
   UseWarlockTableActionDto,
 } from '@game/session/dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import type { WarlockActionDeps } from './warlock/warlock-action-deps';
 import {
   resolveDarkOnesOwnLuck,
@@ -34,6 +36,7 @@ export class WarlockActionsHandler {
     private readonly domain: CharacterDomainService,
     private readonly inventory: CharacterInventoryRepository,
     private readonly assertCanBindPact: AssertCanBindPactWeaponService,
+    private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
   ) {}
 
   private deps(): WarlockActionDeps {
@@ -90,6 +93,12 @@ export class WarlockActionsHandler {
         return resolveBeguilingDefenses(deps, character);
       case 'clairvoyant-combatant':
         return resolveClairvoyantCombatant(deps, character);
+      default:
+        return resolveDeclaredEconomyTableAction(
+          { state: this.state, mechanicalCatalog: this.mechanicalCatalog },
+          character,
+          dto.actionSlug,
+        );
     }
   }
 }

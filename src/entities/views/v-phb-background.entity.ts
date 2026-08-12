@@ -44,6 +44,10 @@ export class VPhbBackground {
   @ViewColumn({ name: 'feat_name' })
   featName!: string | null;
 
+  /** Slugs de talento de origem quando o antecedente permite escolha. */
+  @ViewColumn({ name: 'origin_feat_choice_slugs' })
+  originFeatChoiceSlugs!: string[] | null;
+
   @ViewColumn({ name: 'tool_proficiency_kind' })
   toolProficiencyKind!: string | null;
 

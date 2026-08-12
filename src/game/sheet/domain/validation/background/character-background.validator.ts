@@ -62,14 +62,32 @@ export class CharacterBackgroundValidator {
   }
 
   async validateBackgroundOriginFeat(
-    background: { featSlug: string | null },
+    background: {
+      backgroundSlug?: string;
+      featSlug: string | null;
+      originFeatChoiceSlugs?: string[] | null;
+    },
     characterFeats: CharacterFeatDto[],
   ): Promise<void> {
     const origin = background.featSlug?.trim();
-    if (!origin) return;
-    if (!characterFeats.some((feat) => feat.featSlug === origin)) {
+    if (origin) {
+      if (!characterFeats.some((feat) => feat.featSlug === origin)) {
+        throw new BadRequestException(
+          `Background origin feat '${origin}' must be included in characterFeats`,
+        );
+      }
+      return;
+    }
+
+    const choices = background.originFeatChoiceSlugs ?? [];
+    if (choices.length === 0) return;
+
+    const picked = characterFeats.filter((feat) => choices.includes(feat.featSlug));
+    const uniquePicked = [...new Set(picked.map((feat) => feat.featSlug))];
+    if (uniquePicked.length !== 1) {
+      const label = background.backgroundSlug ?? 'background';
       throw new BadRequestException(
-        `Background origin feat '${origin}' must be included in characterFeats`,
+        `Background '${label}' requires exactly one origin feat from: ${choices.join(', ')}`,
       );
     }
   }

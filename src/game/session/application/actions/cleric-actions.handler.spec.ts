@@ -13,10 +13,26 @@ describe('ClericActionsHandler', () => {
     })),
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
+  const mechanicalCatalog = {
+    load: async () => ({
+      gunslingerManeuvers: [],
+      battleMasterManeuvers: [],
+      cunningStrikeEffects: [],
+      tableActions: [],
+      personaMasks: [],
+      personaMaskSlugs: [],
+      beastborneAspectBenefits: [],
+      dungeoneerSlayerLabels: [],
+      precautionSpells: [],
+      economyActions: [],
+      panelActions: [],
+    }),
+  };
   const handler = new ClericActionsHandler(
     access as never,
     state as never,
     domain as never,
+    mechanicalCatalog as never,
   );
   const cleric = {
     id: 'cleric-1',

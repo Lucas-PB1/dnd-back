@@ -16,6 +16,17 @@ export class FeatAbilityPrerequisiteDto {
   minimumScore!: number;
 }
 
+export class FeatOptionPrerequisiteDto {
+  @ApiProperty({ example: 'elemental-adept' })
+  featSlug!: string;
+
+  @ApiProperty({ example: 'damageType' })
+  optionKey!: string;
+
+  @ApiProperty({ example: 'cold' })
+  valueId!: string;
+}
+
 export class FeatResponseDto {
   @ApiProperty({ example: 'alert' })
   slug!: string;
@@ -52,6 +63,43 @@ export class FeatResponseDto {
 
   @ApiProperty()
   requiresFightingStyle!: boolean;
+
+  @ApiProperty()
+  requiresWeaponMastery!: boolean;
+
+  @ApiProperty({
+    type: [String],
+    example: ['blessing-of-baldur'],
+    description: 'Talentos que devem constar na ficha antes deste',
+  })
+  requiredFeatSlugs!: string[];
+
+  @ApiProperty({
+    type: [String],
+    example: ['deception'],
+    description: 'Perícias que o personagem precisa ter',
+  })
+  requiredSkillSlugs!: string[];
+
+  @ApiProperty({
+    type: [String],
+    example: ['giantkin', 'trollkin'],
+    description: 'Espécies aceitas (qualquer uma)',
+  })
+  requiredSpeciesSlugs!: string[];
+
+  @ApiProperty({
+    type: [String],
+    example: ['armas-marciais'],
+    description: 'Proficiências de arma exigidas (todas)',
+  })
+  requiredWeaponProficiencySlugs!: string[];
+
+  @ApiProperty({
+    type: [FeatOptionPrerequisiteDto],
+    description: 'Opções de talento já adquirido exigidas',
+  })
+  requiredFeatOptions!: FeatOptionPrerequisiteDto[];
 
   @ApiPropertyOptional()
   sourceChapter!: number | null;

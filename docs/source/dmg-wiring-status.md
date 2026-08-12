@@ -31,7 +31,7 @@ MVP recover: `recover_all_on_long` ≈ amanhecer; 1dN parcial via `D041`.
 ## Notas
 
 - Cast de item: `spell_slug` + `itemCast*` (`POST …/spells/cast`). Backfill geral varinhas/cajados: `C042`.
-- Artefatos (11): ver [`docs/plans/audit-dmg-artifacts.md`](../../docs/plans/audit-dmg-artifacts.md).
+- Artefatos (11): wiring em `D042`–`D045` / `C045`; status na tabela acima.
 - 1ª sintonia: rola `artifactRandomQuota` + copia `sentience` → `player_character_item.instance_properties` (`P027`). Tabelas: `dmg_artifact_random_property` / `dmg_sentient_trait_table`.
 - Props expandido: magia rolada do catálogo (`artifactSpell`, CD 18, 1× até DL via `artifactRandomCast`); regen `1d6` (`POST …/inventory/actions` com `actionSlug: artifact-regen`); `abilityPenalty` persiste em `abilityPenalties` até `restauracao-maior` (não é cursed).
 - Gaps de regra geral (dawn real, curse, conflict senciente, d6 1–5 RAW na magia): [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md).

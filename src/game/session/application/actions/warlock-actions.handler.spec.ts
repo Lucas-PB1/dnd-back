@@ -20,12 +20,28 @@ describe('WarlockActionsHandler', () => {
     assertItemIsMeleeWeapon: jest.fn(),
     assert: jest.fn(),
   };
+  const mechanicalCatalog = {
+    load: async () => ({
+      gunslingerManeuvers: [],
+      battleMasterManeuvers: [],
+      cunningStrikeEffects: [],
+      tableActions: [],
+      personaMasks: [],
+      personaMaskSlugs: [],
+      beastborneAspectBenefits: [],
+      dungeoneerSlayerLabels: [],
+      precautionSpells: [],
+      economyActions: [],
+      panelActions: [],
+    }),
+  };
   const handler = new WarlockActionsHandler(
     access as never,
     state as never,
     domain as never,
     inventory as never,
     assertCanBindPact as never,
+    mechanicalCatalog as never,
   );
   const warlock = {
     id: 'war-1',

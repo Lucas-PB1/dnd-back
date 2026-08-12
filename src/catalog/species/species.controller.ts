@@ -52,7 +52,12 @@ export class SpeciesController {
   @ApiOkResponse({ description: 'Paginated trait choices (lineage, ancestry, etc.)' })
   @ApiNotFoundResponse({ description: 'Species not found or no choices' })
   findTraitChoices(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findSpeciesTraitChoices.execute(slug, query.page, query.limit);
+    return this.findSpeciesTraitChoices.execute(
+      slug,
+      query.page,
+      query.limit,
+      query.editionSlugs,
+    );
   }
 
   @Get(':slug')
