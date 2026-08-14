@@ -47,7 +47,7 @@ describe('FindFeatOptionsQuery', () => {
   });
 
   it('returns option definitions for a feat', async () => {
-    const result = await query.execute('skilled', 1, 20);
+    const result = await query.execute('', undefined, 20);
     expect(result.data).toHaveLength(1);
     expect(result.data[0].optionKey).toBe('proficiency1');
     expect(result.data[0].valueType).toBe('proficiency');

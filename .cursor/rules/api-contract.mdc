@@ -13,7 +13,8 @@ Frontend: repo **`dnd-front`**. CORS: `FRONTEND_URL`.
 - Plural: `/classes`, `/spells`, `/armor`, `/weapons` (não `/equipment/armor`)
 - Detalhe por slug: `/classes/fighter`, `/spells/bola-de-fogo`
 - Nested: `/classes/:slug/spells`, `/backgrounds/:slug/equipment`
-- Paginação: `?page=1&limit=20` (max 100)
+- Paginação: `?cursor=&limit=20` (max 100); resposta `meta: { limit, nextCursor, hasMore }` — **sem** `page`/`total`/`OFFSET`
+
 - Catálogo: **GET only**; Bearer só em `game/*`
 - JSON camelCase; **sem** BIGINT na URL/response
 - Swagger: `@ApiTags` / `@ApiProperty`; UI `/api`

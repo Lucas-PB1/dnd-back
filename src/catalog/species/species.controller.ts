@@ -29,7 +29,7 @@ export class SpeciesController {
   @ApiOkResponse({ description: 'Paginated species list' })
   findAll(@Query() query: SpeciesQueryDto) {
     return this.findSpecies.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.editionSlugs,
@@ -43,7 +43,7 @@ export class SpeciesController {
   @ApiOkResponse({ description: 'Paginated species traits' })
   @ApiNotFoundResponse({ description: 'Species not found' })
   findTraits(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findSpeciesTraits.execute(slug, query.page, query.limit);
+    return this.findSpeciesTraits.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/trait-choices')
@@ -54,7 +54,7 @@ export class SpeciesController {
   findTraitChoices(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findSpeciesTraitChoices.execute(
       slug,
-      query.page,
+      query.cursor,
       query.limit,
       query.editionSlugs,
     );

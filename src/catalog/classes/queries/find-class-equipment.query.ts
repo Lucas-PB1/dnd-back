@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { ClassEquipmentResponseDto } from '../dto/class-equipment-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 
@@ -18,7 +22,7 @@ export class FindClassEquipmentQuery {
 
   async execute(
     classSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<ClassEquipmentResponseDto>> {
     await this.catalogLookup.findClassOrFail(classSlug);
@@ -26,12 +30,18 @@ export class FindClassEquipmentQuery {
       where: { classSlug },
       order: { packageSlug: 'ASC', sortOrder: 'ASC' },
     });
-    return paginateOrNotFound(
-      rows,
-      (row) => this.mapper.toEquipmentDto(row),
-      page,
-      limit,
-      `Class '${classSlug}' has no starting equipment`,
+    requireNonEmpty(rows, `Class '${classSlug}' has no starting equipment`);
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toEquipmentDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['packageSlug', 'sortOrder'],
+        encodeRow: (row) => ({
+          packageSlug: row.packageSlug,
+          sortOrder: row.sortOrder,
+        }),
+      },
     );
   }
 }

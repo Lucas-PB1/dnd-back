@@ -3,9 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { requireNonEmpty } from '@common/require-found';
 import {
   PaginatedResponseDto,
-  paginateOrNotFound,
+  paginateByKeys,
 } from '@common/dto/pagination.dto';
 import { SubclassSpellSlotsResponseDto } from '../dto/subclass-spellcasting-response.dto';
 
@@ -19,7 +20,7 @@ export class FindSubclassSpellSlotsQuery {
 
   async execute(
     subclassSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<SubclassSpellSlotsResponseDto>> {
     await this.catalogLookup.findSubclassOrFail(subclassSlug);
@@ -27,9 +28,12 @@ export class FindSubclassSpellSlotsQuery {
       where: { subclassSlug },
       order: { classLevel: 'ASC' },
     });
-    return paginateOrNotFound(
+    requireNonEmpty(
       rows,
-      (row) => ({
+      `Subclass '${subclassSlug}' has no spell slot progression`,
+    );
+    return paginateByKeys(
+      rows.map((row) => ({
         classLevel: row.classLevel,
         patternSlug: row.patternSlug,
         patternName: row.patternName,
@@ -38,10 +42,13 @@ export class FindSubclassSpellSlotsQuery {
         preparedSpells: row.preparedSpells,
         spellListClassSlug: row.spellListClassSlug,
         spellSlots: row.spellSlots,
-      }),
-      page,
-      limit,
-      `Subclass '${subclassSlug}' has no spell slot progression`,
+      })),
+      {
+        cursor,
+        limit,
+        keyNames: ['classLevel'],
+        encodeRow: (row) => ({ classLevel: row.classLevel }),
+      },
     );
   }
 }

@@ -9,8 +9,9 @@ describe('FindCharacterLevelsQuery', () => {
       toCharacterLevelDto: jest.fn((row) => ({ level: row.level })),
     };
     const query = new FindCharacterLevelsQuery(levelsRepo as never, mapper as never);
-    const result = await query.execute(1, 1);
+    const result = await query.execute(undefined, 1);
     expect(result.data).toEqual([{ level: 1 }]);
-    expect(result.meta.total).toBe(2);
+    expect(result.meta.hasMore).toBe(true);
+    expect(result.meta.nextCursor).toBeTruthy();
   });
 });

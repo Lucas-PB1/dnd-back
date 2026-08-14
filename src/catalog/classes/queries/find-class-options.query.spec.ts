@@ -50,7 +50,7 @@ describe('FindClassOptionsQuery', () => {
       },
     ]);
 
-    const result = await query.execute('cleric', 12, 1, 20);
+    const result = await query.execute('cleric', 12, undefined, 20);
 
     expect(catalogLookup.findClassOrFail).toHaveBeenCalledWith('cleric');
     expect(optionValuesRepo.manager.query).toHaveBeenCalledWith(
@@ -67,6 +67,7 @@ describe('FindClassOptionsQuery', () => {
     optionValuesRepo.manager.query.mockResolvedValue([]);
     const result = await query.execute('fighter', 5);
     expect(result.data).toEqual([]);
-    expect(result.meta.total).toBe(0);
+    expect(result.meta.hasMore).toBe(false);
+    expect(result.meta.nextCursor).toBeNull();
   });
 });

@@ -34,13 +34,13 @@ describe('Reference queries', () => {
     alignmentsRepo.find.mockResolvedValue([
       { id: '1', slug: 'lawful-good', name: 'Leal e Bom', abbreviation: 'LB', description: null },
     ]);
-    const result = await findAlignments.execute(1, 20);
+    const result = await findAlignments.execute(undefined, 20);
     expect(result.data[0].slug).toBe('lawful-good');
   });
 
   it('findAllCharacterLevels returns levels', async () => {
     levelsRepo.find.mockResolvedValue([{ level: 1, proficiencyBonus: 2, xpThreshold: 0 }]);
-    const result = await findCharacterLevels.execute(1, 20);
+    const result = await findCharacterLevels.execute(undefined, 20);
     expect(result.data[0].level).toBe(1);
   });
 });

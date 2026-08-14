@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbBackgroundToolOption } from '@entities/views/v-phb-background-tool-option.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { BackgroundToolResponseDto } from '../dto/background-tool-response.dto';
 import { BackgroundsMapper } from '../backgrounds.mapper';
 
@@ -18,7 +22,7 @@ export class FindBackgroundToolsQuery {
 
   async execute(
     backgroundSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 50,
   ): Promise<PaginatedResponseDto<BackgroundToolResponseDto>> {
     const background = await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
@@ -31,15 +35,24 @@ export class FindBackgroundToolsQuery {
 
     const rows = await this.toolsRepo.find({
       where: { backgroundSlug },
-      order: { itemName: 'ASC' },
+      order: { itemName: 'ASC', itemSlug: 'ASC' },
     });
 
-    return paginateOrNotFound(
+    requireNonEmpty(
       rows,
-      (row) => this.mapper.toToolDto(row),
-      page,
-      limit,
       `Background '${backgroundSlug}' has no tool options configured`,
+    );
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toToolDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['itemName', 'itemSlug'],
+        encodeRow: (row) => ({
+          itemName: row.itemName,
+          itemSlug: row.itemSlug,
+        }),
+      },
     );
   }
 }

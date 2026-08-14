@@ -9,9 +9,8 @@ describe('FindFightingStylesQuery', () => {
   beforeEach(() => {
     qb = {
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ slug: 'defense' }]),
     };
@@ -21,7 +20,7 @@ describe('FindFightingStylesQuery', () => {
   });
 
   it('filters by class and search', async () => {
-    const result = await query.execute(1, 20, 'fighter', 'defesa');
+    const result = await query.execute(undefined, 20, 'fighter', 'defesa');
     expect(qb.andWhere).toHaveBeenCalledWith(
       expect.stringContaining('ILIKE :q'),
       { q: '%defesa%' },

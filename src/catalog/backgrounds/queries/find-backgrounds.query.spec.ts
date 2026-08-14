@@ -9,9 +9,8 @@ describe('FindBackgroundsQuery', () => {
   beforeEach(() => {
     qb = {
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ backgroundSlug: 'soldier' }]),
     };
@@ -21,7 +20,7 @@ describe('FindBackgroundsQuery', () => {
   });
 
   it('searches and maps backgrounds', async () => {
-    const result = await query.execute(1, 20, 'soldado');
+    const result = await query.execute(undefined, 20, 'soldado');
     expect(qb.andWhere).toHaveBeenCalled();
     expect(result.data).toEqual([{ slug: 'soldier' }]);
   });

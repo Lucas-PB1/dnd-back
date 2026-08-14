@@ -7,7 +7,7 @@ import { PhbWeaponProperty } from '@entities/phb-weapon-property.entity';
 import {
   applyIlikeSearch,
   PaginatedResponseDto,
-  paginateQb,
+  paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { WeaponResponseDto } from '../dto/weapon-response.dto';
 import { EquipmentMapper } from '../equipment.mapper';
@@ -16,6 +16,11 @@ import {
   loadWeaponPropertyRows,
   weaponPropsOf,
 } from '../weapon-props';
+
+const WEAPON_CURSOR_KEYS = [
+  { expr: 'item.name', name: 'name' },
+  { expr: 'item.slug', name: 'slug' },
+] as const;
 
 @Injectable()
 export class FindWeaponsQuery {
@@ -30,7 +35,7 @@ export class FindWeaponsQuery {
   ) {}
 
   async execute(
-    page = 1,
+    cursor?: string,
     limit = 20,
     q?: string,
     category?: string,
@@ -38,7 +43,8 @@ export class FindWeaponsQuery {
     const qb = this.weaponsRepo
       .createQueryBuilder('weapon')
       .innerJoinAndSelect('weapon.item', 'item')
-      .orderBy('item.name', 'ASC');
+      .orderBy('item.name', 'ASC')
+      .addOrderBy('item.slug', 'ASC');
 
     applyIlikeSearch(qb, [
       'item.name',
@@ -53,7 +59,15 @@ export class FindWeaponsQuery {
       qb.andWhere('weapon.category = :category', { category: categoryValue });
     }
 
-    const { rows, meta } = await paginateQb(qb, page, limit);
+    const { rows, meta } = await paginateQbCursor(qb, {
+      cursor,
+      limit,
+      keys: WEAPON_CURSOR_KEYS,
+      encodeRow: (row) => ({
+        name: row.item.name,
+        slug: row.item.slug,
+      }),
+    });
     return { data: await this.mapRows(rows), meta };
   }
 

@@ -1,10 +1,12 @@
 import { BadRequestException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 import { resolveLandTerrainSlug } from '@game/sheet/domain/validation/class-options/subclass-option-effects';
+
+type SpellListMeta = { spellLevel: number };
 
 export async function validateSpellListAccess(
   classSpellsRepo: Repository<VSpellByClass>,
@@ -19,37 +21,53 @@ export async function validateSpellListAccess(
   extraListClassSlugs: readonly string[] = [],
   subclassOptions?: CharacterSheetInput['subclassOptions'],
 ): Promise<void> {
-  const landTerrain = resolveLandTerrainSlug(ctx.subclassSlug, subclassOptions);
-  for (const spell of spells) {
-    if (featGranted.has(spell.spellSlug)) continue;
-    if (speciesGranted.has(spell.spellSlug)) continue;
-    if (extraGranted.has(spell.spellSlug)) continue;
+  const pending = spells.filter(
+    (spell) =>
+      !featGranted.has(spell.spellSlug) &&
+      !speciesGranted.has(spell.spellSlug) &&
+      !extraGranted.has(spell.spellSlug),
+  );
+  if (pending.length === 0) return;
 
-    const inListClass = await classSpellsRepo.findOne({
+  const spellSlugs = [...new Set(pending.map((spell) => spell.spellSlug))];
+  const classSlugs = [
+    ...new Set(
+      [spellListClassSlug, ctx.classSlug, ...extraListClassSlugs].filter(Boolean),
+    ),
+  ];
+
+  const [classRows, subclassRows] = await Promise.all([
+    classSpellsRepo.find({
       where: {
-        classSlug: spellListClassSlug,
-        spellSlug: spell.spellSlug,
+        classSlug: In(classSlugs),
+        spellSlug: In(spellSlugs),
       },
-    });
+    }),
+    ctx.subclassSlug
+      ? subclassSpellsRepo.find({
+          where: {
+            subclassSlug: ctx.subclassSlug,
+            spellSlug: In(spellSlugs),
+          },
+        })
+      : Promise.resolve([]),
+  ]);
 
+  const classByKey = new Map(
+    classRows.map((row) => [`${row.classSlug}:${row.spellSlug}`, row] as const),
+  );
+  const subclassBySpell = new Map(
+    subclassRows.map((row) => [row.spellSlug, row] as const),
+  );
+  const landTerrain = resolveLandTerrainSlug(ctx.subclassSlug, subclassOptions);
+
+  for (const spell of pending) {
+    const inListClass = classByKey.get(`${spellListClassSlug}:${spell.spellSlug}`);
     const inClass =
       spellListClassSlug === ctx.classSlug
         ? inListClass
-        : await classSpellsRepo.findOne({
-            where: {
-              classSlug: ctx.classSlug,
-              spellSlug: spell.spellSlug,
-            },
-          });
-
-    const inSubclass =
-      ctx.subclassSlug &&
-      (await subclassSpellsRepo.findOne({
-        where: {
-          subclassSlug: ctx.subclassSlug,
-          spellSlug: spell.spellSlug,
-        },
-      }));
+        : classByKey.get(`${ctx.classSlug}:${spell.spellSlug}`);
+    const inSubclass = subclassBySpell.get(spell.spellSlug);
 
     const landSubclassMatch =
       inSubclass &&
@@ -57,15 +75,16 @@ export async function validateSpellListAccess(
       inSubclass.terrainSlug != null &&
       inSubclass.terrainSlug !== landTerrain;
 
-    const subclassAllowed = inSubclass && !landSubclassMatch;
+    const subclassAllowed = Boolean(inSubclass && !landSubclassMatch);
 
-    let extraListMeta: { spellLevel: number } | null = null;
+    let extraListMeta: SpellListMeta | null = null;
     if (!inListClass && !inClass && !inSubclass) {
       for (const extraSlug of extraListClassSlugs) {
-        extraListMeta = await classSpellsRepo.findOne({
-          where: { classSlug: extraSlug, spellSlug: spell.spellSlug },
-        });
-        if (extraListMeta) break;
+        const hit = classByKey.get(`${extraSlug}:${spell.spellSlug}`);
+        if (hit) {
+          extraListMeta = hit;
+          break;
+        }
       }
     }
 

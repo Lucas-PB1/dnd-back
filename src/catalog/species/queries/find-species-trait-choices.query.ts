@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { SpeciesTraitChoiceResponseDto } from '../dto/species-trait-choice-response.dto';
 import { SpeciesMapper } from '../species.mapper';
 
@@ -18,7 +22,7 @@ export class FindSpeciesTraitChoicesQuery {
 
   async execute(
     speciesSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 100,
     editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<SpeciesTraitChoiceResponseDto>> {
@@ -28,7 +32,8 @@ export class FindSpeciesTraitChoicesQuery {
       .createQueryBuilder('c')
       .where('c.species_slug = :speciesSlug', { speciesSlug })
       .orderBy('c.trait_name', 'ASC')
-      .addOrderBy('c.choice_name', 'ASC');
+      .addOrderBy('c.choice_name', 'ASC')
+      .addOrderBy('c.choice_slug', 'ASC');
 
     if (editionSlugs?.length) {
       qb.andWhere(
@@ -38,12 +43,18 @@ export class FindSpeciesTraitChoicesQuery {
     }
 
     const rows = await qb.getMany();
-    return paginateOrNotFound(
-      rows,
-      (row) => this.mapper.toTraitChoiceDto(row),
-      page,
-      limit,
-      `Species '${speciesSlug}' has no trait choices`,
+    requireNonEmpty(rows, `Species '${speciesSlug}' has no trait choices`);
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toTraitChoiceDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['traitName', 'choiceSlug'],
+        encodeRow: (row) => ({
+          traitName: row.traitName,
+          choiceSlug: row.choiceSlug,
+        }),
+      },
     );
   }
 }

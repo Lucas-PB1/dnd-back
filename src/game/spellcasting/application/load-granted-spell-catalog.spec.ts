@@ -1,3 +1,4 @@
+import { In } from 'typeorm';
 import { LoadGrantedSpellCatalog } from './load-granted-spell-catalog';
 import { VPhbSpeciesGrantedSpell } from '@entities/views/v-phb-species-granted-spell.entity';
 import { VPhbFeatGrantedSpell } from '@entities/views/v-phb-feat-granted-spell.entity';
@@ -75,11 +76,13 @@ describe('LoadGrantedSpellCatalog', () => {
 
     it('filters feat rows by slug set', async () => {
       featGrants.find.mockResolvedValue([
-        { featSlug: 'magic-initiate', spellSlug: 'bless' },
         { featSlug: 'fey-touched', spellSlug: 'misty-step' },
       ] as VPhbFeatGrantedSpell[]);
       const rows = await service.loadFeatFixedSpells(['fey-touched']);
       expect(rows).toEqual([{ featSlug: 'fey-touched', spellSlug: 'misty-step' }]);
+      expect(featGrants.find).toHaveBeenCalledWith({
+        where: { featSlug: In(['fey-touched']) },
+      });
     });
   });
 

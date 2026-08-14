@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { ClassProgressionResponseDto } from '../dto/class-progression-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 
@@ -18,7 +22,7 @@ export class FindClassProgressionQuery {
 
   async execute(
     classSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 25,
   ): Promise<PaginatedResponseDto<ClassProgressionResponseDto>> {
     await this.catalogLookup.findClassOrFail(classSlug);
@@ -26,12 +30,15 @@ export class FindClassProgressionQuery {
       where: { classSlug },
       order: { level: 'ASC' },
     });
-    return paginateOrNotFound(
-      rows,
-      (row) => this.mapper.toProgressionDto(row),
-      page,
-      limit,
-      `Class '${classSlug}' has no level progression`,
+    requireNonEmpty(rows, `Class '${classSlug}' has no level progression`);
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toProgressionDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['level'],
+        encodeRow: (row) => ({ level: row.level }),
+      },
     );
   }
 }

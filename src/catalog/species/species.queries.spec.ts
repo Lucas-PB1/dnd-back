@@ -58,7 +58,7 @@ describe('Species queries', () => {
     traitsRepo.find.mockResolvedValue([
       { id: '1', species: sample, name: 'Visão no Escuro', description: '...', choiceKind: null },
     ]);
-    const result = await findSpeciesTraits.execute('dwarf', 1, 20);
+    const result = await findSpeciesTraits.execute('', undefined, 20);
     expect(result.data[0].name).toBe('Visão no Escuro');
   });
 

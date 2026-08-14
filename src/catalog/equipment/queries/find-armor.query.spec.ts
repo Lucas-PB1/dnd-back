@@ -6,9 +6,8 @@ describe('FindArmorQuery', () => {
   let query: FindArmorQuery;
   let qb: {
     orderBy: jest.Mock;
+    addOrderBy: jest.Mock;
     andWhere: jest.Mock;
-    getCount: jest.Mock;
-    skip: jest.Mock;
     take: jest.Mock;
     getMany: jest.Mock;
   };
@@ -16,9 +15,8 @@ describe('FindArmorQuery', () => {
   beforeEach(() => {
     qb = {
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ itemSlug: 'leather-armor' }]),
     };
@@ -28,7 +26,7 @@ describe('FindArmorQuery', () => {
   });
 
   it('filters by category and maps', async () => {
-    const result = await query.execute(1, 20, 'couro', 'light');
+    const result = await query.execute(undefined, 20, 'couro', 'light');
     expect(qb.andWhere).toHaveBeenCalledWith('armor.category_slug = :categorySlug', {
       categorySlug: 'light',
     });

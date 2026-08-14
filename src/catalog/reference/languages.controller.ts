@@ -24,7 +24,7 @@ export class LanguagesController {
   @ApiOkResponse({ description: 'Paginated language list' })
   findAll(@Query() query: LanguagesQueryDto) {
     return this.findLanguages.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.rare,

@@ -96,6 +96,10 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 
 Contratos estáveis para a API — ver pasta `060_views/` e skill `phb-query-views`. Principais: `v_phb_class_equipment`, `v_phb_background_equipment`, `v_phb_species_trait_choices`, `v_phb_species_granted_spell`, `v_phb_feat_granted_spell`, `mv_spell_by_class`.
 
+Ficha do jogador (GET): `rpg.get_character_sheet_bundle` (P030/P032 — filhos + PB + boosts de classe + size da espécie) + `rpg.get_character_combat_bundle` (P031 — inventário/itens/armadura/defesa sem armadura).
+
+Magias por classe (API): entity `VSpellByClass` lê **`mv_spell_by_class`** (não a view viva). `REFRESH … CONCURRENTLY` no fim de `npm run db:seed`.
+
 ## Contagem vs meta 45–60
 
 Após lotes A–G o schema ficou em **~81** tabelas base (não 45–60). Justificativa no ADR: pacote de combate tipado + runtime completo + cobertura PHB/Valdas mantidos de propósito; a consolidação removeu fragmentação (lookups, lineages, options, packages, grants, afinidades, modifiers), não o domínio mecânico.

@@ -30,9 +30,10 @@ describe('FindBackgroundToolsQuery', () => {
       toolProficiencyKind: 'choice',
     });
     toolsRepo.find.mockResolvedValue([{ itemSlug: 'smiths-tools' }]);
-    const result = await query.execute('artisan', 1, 50);
+    const result = await query.execute('artisan', undefined, 50);
     expect(result.data).toEqual([{ slug: 'smiths-tools' }]);
-    expect(result.meta.total).toBe(1);
+    expect(result.meta.hasMore).toBe(false);
+    expect(result.meta.nextCursor).toBeNull();
   });
 
   it('throws when choice background has no configured options', async () => {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { VPhbSpeciesGrantedSpell } from '@entities/views/v-phb-species-granted-spell.entity';
 import { VPhbFeatGrantedSpell } from '@entities/views/v-phb-feat-granted-spell.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
@@ -57,20 +57,13 @@ export class LoadGrantedSpellCatalog {
     featSlugs?: readonly string[],
   ): Promise<FeatGrantedSpellRow[]> {
     if (featSlugs && featSlugs.length === 0) return [];
-    const rows = await this.featGrants.find();
-    if (!featSlugs) {
-      return rows.map((row) => ({
-        featSlug: row.featSlug,
-        spellSlug: row.spellSlug,
-      }));
-    }
-    const wanted = new Set(featSlugs);
-    return rows
-      .filter((row) => wanted.has(row.featSlug))
-      .map((row) => ({
-        featSlug: row.featSlug,
-        spellSlug: row.spellSlug,
-      }));
+    const rows = featSlugs
+      ? await this.featGrants.find({ where: { featSlug: In([...featSlugs]) } })
+      : await this.featGrants.find();
+    return rows.map((row) => ({
+      featSlug: row.featSlug,
+      spellSlug: row.spellSlug,
+    }));
   }
 
   async loadSubclassGrantedSpells(
@@ -104,23 +97,21 @@ export class LoadGrantedSpellCatalog {
     subclassOptions?: readonly SubclassOptionPick[];
   }): Promise<GrantedSpellMergeCatalog> {
     const uniqueSpecies = [...new Set(input.speciesSlugs.filter(Boolean))];
-    const speciesCatalog =
-      uniqueSpecies.length === 0
-        ? []
-        : (
-            await Promise.all(
-              uniqueSpecies.map((slug) => this.loadSpeciesCatalog(slug)),
-            )
-          ).flat();
 
-    const featFixedSpells = await this.loadFeatFixedSpells(input.featSlugs);
-    const [subclassGrantedSpells, classGrantedSpells] = await Promise.all([
-      this.loadSubclassGrantedSpells(input.subclassSlug, input.subclassOptions),
-      this.loadClassGrantedSpells(input.classSlug),
-    ]);
+    const [speciesParts, featFixedSpells, subclassGrantedSpells, classGrantedSpells] =
+      await Promise.all([
+        uniqueSpecies.length === 0
+          ? Promise.resolve([] as SpeciesGrantedSpellRow[])
+          : Promise.all(
+              uniqueSpecies.map((slug) => this.loadSpeciesCatalog(slug)),
+            ).then((parts) => parts.flat()),
+        this.loadFeatFixedSpells(input.featSlugs),
+        this.loadSubclassGrantedSpells(input.subclassSlug, input.subclassOptions),
+        this.loadClassGrantedSpells(input.classSlug),
+      ]);
 
     return {
-      speciesCatalog,
+      speciesCatalog: speciesParts,
       featFixedSpells,
       subclassGrantedSpells,
       classGrantedSpells,

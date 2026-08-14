@@ -12,6 +12,6 @@ export class AlignmentsController {
   @ApiOperation({ summary: 'List PHB alignments (paginated)' })
   @ApiOkResponse({ description: 'Paginated alignment list' })
   findAll(@Query() query: PaginationQueryDto) {
-    return this.findAlignments.execute(query.page, query.limit);
+    return this.findAlignments.execute(query.cursor, query.limit);
   }
 }

@@ -3,9 +3,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
+import { PaginatedResponseDto, paginateQbCursor } from '@common/dto/pagination.dto';
 import { ClassSpellResponseDto } from '../dto/class-spell-response.dto';
 import { ClassesMapper } from '../classes.mapper';
+
+const CLASS_SPELL_CURSOR_KEYS = [
+  { expr: 'row.spellLevel', name: 'spellLevel' },
+  { expr: 'row.spellSlug', name: 'spellSlug' },
+] as const;
 
 @Injectable()
 export class FindClassSpellsQuery {
@@ -18,19 +23,36 @@ export class FindClassSpellsQuery {
 
   async execute(
     classSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
     maxLevel?: number,
   ): Promise<PaginatedResponseDto<ClassSpellResponseDto>> {
-    await this.catalogLookup.findClassOrFail(classSlug);
+    const qb = this.spellsByClassRepo
+      .createQueryBuilder('row')
+      .where('row.classSlug = :classSlug', { classSlug })
+      .orderBy('row.spellLevel', 'ASC')
+      .addOrderBy('row.spellSlug', 'ASC');
 
-    let rows = await this.spellsByClassRepo.find({
-      where: { classSlug },
-      order: { spellLevel: 'ASC', spellName: 'ASC' },
-    });
     if (maxLevel !== undefined) {
-      rows = rows.filter((row) => row.spellLevel <= maxLevel);
+      qb.andWhere('row.spellLevel <= :maxLevel', { maxLevel });
     }
-    return paginate(rows.map((row) => this.mapper.toClassSpellDto(row)), page, limit);
+
+    const [, { rows, meta }] = await Promise.all([
+      this.catalogLookup.findClassOrFail(classSlug),
+      paginateQbCursor(qb, {
+        cursor,
+        limit,
+        keys: CLASS_SPELL_CURSOR_KEYS,
+        encodeRow: (row) => ({
+          spellLevel: Number(row.spellLevel),
+          spellSlug: row.spellSlug,
+        }),
+      }),
+    ]);
+
+    return {
+      data: rows.map((row) => this.mapper.toClassSpellDto(row)),
+      meta,
+    };
   }
 }

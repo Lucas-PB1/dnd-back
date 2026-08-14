@@ -3,7 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PhbSpeciesTrait } from '@entities/phb-species-trait.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { SpeciesTraitResponseDto } from '../dto/species-trait-response.dto';
 import { SpeciesMapper } from '../species.mapper';
 
@@ -18,7 +21,7 @@ export class FindSpeciesTraitsQuery {
 
   async execute(
     speciesSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<SpeciesTraitResponseDto>> {
     await this.catalogLookup.findSpeciesOrFail(speciesSlug);
@@ -27,6 +30,14 @@ export class FindSpeciesTraitsQuery {
       where: { species: { slug: speciesSlug } },
       order: { name: 'ASC' },
     });
-    return paginate(rows.map((row) => this.mapper.toTraitDto(row)), page, limit);
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toTraitDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['name'],
+        encodeRow: (row) => ({ name: row.name }),
+      },
+    );
   }
 }

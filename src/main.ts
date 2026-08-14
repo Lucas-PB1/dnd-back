@@ -7,6 +7,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { RequestTimingInterceptor } from './common/interceptors/request-timing.interceptor';
 import { corsConfig } from './config/cors.config';
 import { swaggerSetupOptions } from './config/swagger.config';
 import { createSwaggerDocument } from './config/swagger-document';
@@ -18,6 +19,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalInterceptors(new RequestTimingInterceptor());
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,

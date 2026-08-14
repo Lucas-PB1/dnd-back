@@ -1,4 +1,5 @@
-﻿import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
+﻿import { DataSource } from 'typeorm';
+import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
 import {
   applyAbilityPenalties,
   collectAbilityPenaltiesFromInventory,
@@ -12,13 +13,12 @@ import { paladinSavingThrowAuraBonus } from '../domain/paladin';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
-import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
-import { In, Repository } from 'typeorm';
 import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { SizeCategory } from '../domain/equipment';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
-import { PhbItem } from '@entities/phb-item.entity';
+import { sheetProfile } from '@common/perf/sheet-profile';
+import { loadCharacterCombatBundle } from '../infrastructure/load-character-combat-bundle';
 
 export type MappedCombatSlice = {
   armorClass: number;
@@ -31,18 +31,10 @@ export type MappedCombatSlice = {
   speedPenaltyMeters: Awaited<
     ReturnType<ResolveEquipmentCompliance['resolve']>
   >['speedPenaltyMeters'];
-  /** Bônus de deslocamento de itens ativos (metros). */
   itemSpeedBonusMeters: number;
-  /** Bônus de PV máximos de itens ativos. */
   itemHpBonus: number;
-  /** Notas de combate de classe + espécie + talento + item (Passivas). */
   classCombatNotes: string[];
-  /** Ataques por Ação Atacar (Guerreiro Extra Attack). */
   attacksPerAction: number;
-  /**
-   * Bônus de salvaguarda vindo de auras/features de classe (ex.: Aura de Proteção).
-   * SSOT no domain da API — o front só exibe; não recalcula.
-   */
   savingThrowAuraBonus: number;
 };
 
@@ -58,14 +50,12 @@ export async function resolveCharacterCombatSlice(input: {
   proficiencyBonus: number;
   featSlugs: string[];
   fightingStyleSlugs: string[];
-  /** Itens ativos (equipado + sintonizado) e charms anexados. */
-  activeItemSlugs?: string[];
   masteredWeaponSlugs: string[];
   sizeCategory: SizeCategory;
+  dataSource: DataSource;
   equippedArmorClass: ResolveEquippedArmorClass;
   equippedWeaponAttacks: ResolveEquippedWeaponAttacks;
   equipmentCompliance: ResolveEquipmentCompliance;
-  inventoryItems: Repository<PlayerCharacterItem>;
   permanentItemEffects: ResolveActivePermanentItemEffects;
 }): Promise<MappedCombatSlice> {
   const {
@@ -80,23 +70,33 @@ export async function resolveCharacterCombatSlice(input: {
     proficiencyBonus,
     featSlugs,
     fightingStyleSlugs,
-    activeItemSlugs,
     masteredWeaponSlugs,
     sizeCategory,
+    dataSource,
     equippedArmorClass,
     equippedWeaponAttacks,
     equipmentCompliance,
-    inventoryItems,
     permanentItemEffects,
   } = input;
 
-  const inventoryRows = await inventoryItems.find({ where: { characterId } });
+  const bundle = await sheetProfile('combat.p031', () =>
+    loadCharacterCombatBundle(
+      dataSource,
+      characterId,
+      classSlug,
+      subclassSlug,
+    ),
+  );
+  const inventoryRows = bundle.inventory;
   const equippedItems = inventoryRows.filter((row) => row.location === 'equipped');
   const hasShield = equippedItems.some((row) => row.equipmentSlot === 'shield');
 
-  const itemEffects = await permanentItemEffects.resolve(characterId, {
-    inventoryRows,
-  });
+  const itemEffects = await sheetProfile('combat.itemEffects', () =>
+    permanentItemEffects.resolve(characterId, {
+      inventoryRows,
+      catalogItems: bundle.items,
+    }),
+  );
   const withItemBonuses = applyItemAbilityBonuses(
     abilityScores,
     itemEffects.abilityBonuses,
@@ -107,48 +107,54 @@ export async function resolveCharacterCombatSlice(input: {
     collectAbilityPenaltiesFromInventory(inventoryRows),
   );
 
-  const armor = await equippedArmorClass.resolve(characterId, combatScores, {
-    classSlug,
-    subclassSlug,
-    featSlugs,
-    fightingStyleSlugs,
-    itemAcBonus: itemEffects.acBonus,
-    itemAcBonusNames: itemEffects.sourceNames,
-    equippedItems,
-    manikinArmorPresetSlug: manikinArmorPresetFromChoices(
-      speciesSlug,
-      speciesChoices,
-    ),
-  });
-  const weaponAttacks = await equippedWeaponAttacks.resolve(
-    characterId,
-    combatScores,
-    {
+  const armor = await sheetProfile('combat.armor', () =>
+    equippedArmorClass.resolve(characterId, combatScores, {
       classSlug,
       subclassSlug,
-      level,
-      proficiencyBonus,
       featSlugs,
       fightingStyleSlugs,
-      classOptions,
-      sizeCategory,
-      hasShield,
-      masteredWeaponSlugs,
-      itemAttackBonus: itemEffects.attackBonus,
-      itemDamageBonus: itemEffects.damageBonus,
+      itemAcBonus: itemEffects.acBonus,
+      itemAcBonusNames: itemEffects.sourceNames,
       equippedItems,
-    },
+      armorCatalogRows: bundle.armor,
+      unarmoredDefenses: bundle.unarmoredDefenses,
+      manikinArmorPresetSlug: manikinArmorPresetFromChoices(
+        speciesSlug,
+        speciesChoices,
+      ),
+    }),
   );
-
-  const compliance = await equipmentCompliance.resolve(characterId, {
-    classSlug,
-    strengthScore: combatScores.forca,
-    featSlugs,
-    classOptions,
-    sizeCategory,
-    hasShield,
-    equippedItems,
-  });
+  const [weaponAttacks, compliance] = await Promise.all([
+    sheetProfile('combat.weapons', () =>
+      equippedWeaponAttacks.resolve(characterId, combatScores, {
+        classSlug,
+        subclassSlug,
+        level,
+        proficiencyBonus,
+        featSlugs,
+        fightingStyleSlugs,
+        classOptions,
+        sizeCategory,
+        hasShield,
+        masteredWeaponSlugs,
+        itemAttackBonus: itemEffects.attackBonus,
+        itemDamageBonus: itemEffects.damageBonus,
+        equippedItems,
+      }),
+    ),
+    sheetProfile('combat.compliance', () =>
+      equipmentCompliance.resolve(characterId, {
+        classSlug,
+        strengthScore: combatScores.forca,
+        featSlugs,
+        classOptions,
+        sizeCategory,
+        hasShield,
+        equippedItems,
+        armorCatalogRows: bundle.armor,
+      }),
+    ),
+  ]);
 
   const classCombat = aggregateClassCombatContributions({
     classSlug,
@@ -159,12 +165,12 @@ export async function resolveCharacterCombatSlice(input: {
   const featNotes = featCombatNotes({
     featSlugs: [...featSlugs, ...fightingStyleSlugs],
   });
+  const propertiesBySlug = new Map(
+    bundle.items.map((item) => [item.slug, item.properties] as const),
+  );
   const itemNotes = itemCombatNotes({
-    itemSlugs: activeItemSlugs ?? [],
-    propertiesBySlug: await loadItemCombatNoteProperties(
-      inventoryItems,
-      activeItemSlugs ?? [],
-    ),
+    itemSlugs: bundle.activeItemSlugs,
+    propertiesBySlug,
   });
 
   return {
@@ -190,20 +196,4 @@ export async function resolveCharacterCombatSlice(input: {
       charismaModifier: abilityModifier(combatScores.carisma),
     }),
   };
-}
-
-async function loadItemCombatNoteProperties(
-  inventoryItems: Repository<PlayerCharacterItem>,
-  itemSlugs: readonly string[],
-): Promise<Map<string, Record<string, unknown> | null>> {
-  const map = new Map<string, Record<string, unknown> | null>();
-  if (itemSlugs.length === 0) return map;
-  const rows = await inventoryItems.manager.getRepository(PhbItem).find({
-    where: { slug: In([...itemSlugs]) },
-    select: ['slug', 'properties'],
-  });
-  for (const row of rows) {
-    map.set(row.slug, row.properties);
-  }
-  return map;
 }

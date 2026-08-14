@@ -39,7 +39,8 @@ describe('Catalog API (e2e)', () => {
       .expect(200)
       .expect((res) => {
         expect(res.body.data).toBeInstanceOf(Array);
-        expect(res.body.meta.total).toBeGreaterThanOrEqual(12);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta).toEqual(expect.objectContaining({ hasMore: expect.any(Boolean), limit: expect.any(Number) }));
       }));
 
   it('GET /classes/fighter', () =>
@@ -51,7 +52,8 @@ describe('Catalog API (e2e)', () => {
       .expect(200)
       .expect((res) => {
         expect(res.body.data).toBeInstanceOf(Array);
-        expect(res.body.meta.total).toBeGreaterThanOrEqual(4);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta).toEqual(expect.objectContaining({ hasMore: expect.any(Boolean), limit: expect.any(Number) }));
         expect(res.body.data.some((s: { slug: string }) => s.slug === 'champion')).toBe(true);
       }));
 
@@ -86,7 +88,8 @@ describe('Catalog API (e2e)', () => {
       .get('/subclasses/champion/mechanics')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThan(0);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta.hasMore).toEqual(expect.any(Boolean));
       }));
 
   it('GET /subclasses/life/spells', () =>
@@ -94,7 +97,8 @@ describe('Catalog API (e2e)', () => {
       .get('/subclasses/life/spells')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThan(0);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta.hasMore).toEqual(expect.any(Boolean));
       }));
 
   it('GET /species', () =>
@@ -102,7 +106,8 @@ describe('Catalog API (e2e)', () => {
       .get('/species')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThanOrEqual(10);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta).toEqual(expect.objectContaining({ hasMore: expect.any(Boolean), limit: expect.any(Number) }));
       }));
 
   it('GET /species/dwarf', () =>
@@ -124,7 +129,8 @@ describe('Catalog API (e2e)', () => {
       .get('/backgrounds/acolyte/skills')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThan(0);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta.hasMore).toEqual(expect.any(Boolean));
         expect(res.body.data.some((s: { slug: string }) => s.slug === 'insight')).toBe(
           true,
         );
@@ -175,7 +181,8 @@ describe('Catalog API (e2e)', () => {
       .get('/spells')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThanOrEqual(391);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta).toEqual(expect.objectContaining({ hasMore: expect.any(Boolean), limit: expect.any(Number) }));
       }));
 
   it('GET /spells/alarme', () =>
@@ -194,7 +201,8 @@ describe('Catalog API (e2e)', () => {
       .get('/classes/wizard/spell-slots')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThanOrEqual(20);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta).toEqual(expect.objectContaining({ hasMore: expect.any(Boolean), limit: expect.any(Number) }));
       }));
 
   it('GET /classes/fighter/equipment', () =>
@@ -210,7 +218,8 @@ describe('Catalog API (e2e)', () => {
       .get('/classes/fighter/skills')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThan(0);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta.hasMore).toEqual(expect.any(Boolean));
       }));
 
   it('GET /feats/alert', () =>
@@ -224,7 +233,8 @@ describe('Catalog API (e2e)', () => {
       .get('/abilities')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBe(6);
+        expect(res.body.data.length).toBe(6);
+        expect(res.body.meta.hasMore).toBe(false);
       }));
 
   it('GET /weapons/longsword', () =>
@@ -238,7 +248,8 @@ describe('Catalog API (e2e)', () => {
       .get('/species/dwarf/traits')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThan(0);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta.hasMore).toEqual(expect.any(Boolean));
       }));
 
   it('GET /subclasses/battle-master/options?level=5', () =>
@@ -331,7 +342,8 @@ describe('Catalog API (e2e)', () => {
       .get('/alignments')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBe(9);
+        expect(res.body.data.length).toBe(9);
+        expect(res.body.meta.hasMore).toBe(false);
       }));
 
   it('GET /languages', () =>
@@ -339,7 +351,8 @@ describe('Catalog API (e2e)', () => {
       .get('/languages')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBeGreaterThanOrEqual(10);
+        expect(res.body.data.length).toBeGreaterThan(0);
+        expect(res.body.meta).toEqual(expect.objectContaining({ hasMore: expect.any(Boolean), limit: expect.any(Number) }));
       }));
 
   it('GET /character-levels', () =>
@@ -347,7 +360,8 @@ describe('Catalog API (e2e)', () => {
       .get('/character-levels')
       .expect(200)
       .expect((res) => {
-        expect(res.body.meta.total).toBe(20);
+        expect(res.body.data.length).toBe(20);
+        expect(res.body.meta.hasMore).toBe(false);
         expect(res.body.data[0].level).toBe(1);
       }));
 

@@ -1,9 +1,10 @@
 import { BadRequestException } from '@nestjs/common';
+import { In } from 'typeorm';
 import { validateSpellListAccess } from './validate-spell-list-access';
 
 describe('validateSpellListAccess', () => {
-  let classSpellsRepo: { findOne: jest.Mock };
-  let subclassSpellsRepo: { findOne: jest.Mock };
+  let classSpellsRepo: { find: jest.Mock; findOne: jest.Mock };
+  let subclassSpellsRepo: { find: jest.Mock; findOne: jest.Mock };
   const ctx = {
     classSlug: 'wizard',
     subclassSlug: 'evoker',
@@ -13,8 +14,8 @@ describe('validateSpellListAccess', () => {
   };
 
   beforeEach(() => {
-    classSpellsRepo = { findOne: jest.fn() };
-    subclassSpellsRepo = { findOne: jest.fn() };
+    classSpellsRepo = { find: jest.fn().mockResolvedValue([]), findOne: jest.fn() };
+    subclassSpellsRepo = { find: jest.fn().mockResolvedValue([]), findOne: jest.fn() };
   });
 
   async function run(
@@ -41,35 +42,42 @@ describe('validateSpellListAccess', () => {
   it('skips feat and species granted spells', async () => {
     await run([{ spellSlug: 'fire-bolt' }], { featGranted: ['fire-bolt'] });
     await run([{ spellSlug: 'light' }], { speciesGranted: ['light'] });
-    expect(classSpellsRepo.findOne).not.toHaveBeenCalled();
+    expect(classSpellsRepo.find).not.toHaveBeenCalled();
   });
 
   it('accepts spell on list class when list equals class', async () => {
-    classSpellsRepo.findOne.mockResolvedValue({ spellLevel: 1 });
-    subclassSpellsRepo.findOne.mockResolvedValue(null);
+    classSpellsRepo.find.mockResolvedValue([
+      { classSlug: 'wizard', spellSlug: 'magic-missile', spellLevel: 1 },
+    ]);
     await expect(run([{ spellSlug: 'magic-missile' }])).resolves.toBeUndefined();
+    expect(classSpellsRepo.find).toHaveBeenCalledTimes(1);
   });
 
   it('also checks character class when spell list differs', async () => {
-    classSpellsRepo.findOne
-      .mockResolvedValueOnce(null)
-      .mockResolvedValueOnce({ spellLevel: 1 });
-    subclassSpellsRepo.findOne.mockResolvedValue(null);
+    classSpellsRepo.find.mockResolvedValue([
+      { classSlug: 'wizard', spellSlug: 'cure-wounds', spellLevel: 1 },
+    ]);
     await run([{ spellSlug: 'cure-wounds' }], { spellListClassSlug: 'cleric' });
-    expect(classSpellsRepo.findOne).toHaveBeenCalledTimes(2);
+    expect(classSpellsRepo.find).toHaveBeenCalledWith({
+      where: {
+        classSlug: In(['cleric', 'wizard']),
+        spellSlug: In(['cure-wounds']),
+      },
+    });
   });
 
   it('accepts subclass-only spells', async () => {
-    classSpellsRepo.findOne.mockResolvedValue(null);
-    subclassSpellsRepo.findOne.mockResolvedValue({ spellSlug: 'chromatic-orb' });
+    classSpellsRepo.find.mockResolvedValue([]);
+    subclassSpellsRepo.find.mockResolvedValue([
+      { spellSlug: 'chromatic-orb', terrainSlug: null },
+    ]);
     await expect(run([{ spellSlug: 'chromatic-orb' }])).resolves.toBeUndefined();
   });
 
   it('accepts magical secrets extra class lists', async () => {
-    classSpellsRepo.findOne
-      .mockResolvedValueOnce(null)
-      .mockResolvedValueOnce({ spellLevel: 2 });
-    subclassSpellsRepo.findOne.mockResolvedValue(null);
+    classSpellsRepo.find.mockResolvedValue([
+      { classSlug: 'cleric', spellSlug: 'cura-ferimentos', spellLevel: 2 },
+    ]);
     await validateSpellListAccess(
       classSpellsRepo as never,
       subclassSpellsRepo as never,
@@ -82,24 +90,43 @@ describe('validateSpellListAccess', () => {
       new Set(),
       ['cleric'],
     );
-    expect(classSpellsRepo.findOne).toHaveBeenCalledWith({
-      where: { classSlug: 'cleric', spellSlug: 'cura-ferimentos' },
+    expect(classSpellsRepo.find).toHaveBeenCalledWith({
+      where: {
+        classSlug: In(['bard', 'cleric']),
+        spellSlug: In(['cura-ferimentos']),
+      },
     });
   });
 
   it('rejects unknown spells', async () => {
-    classSpellsRepo.findOne.mockResolvedValue(null);
-    subclassSpellsRepo.findOne.mockResolvedValue(null);
+    classSpellsRepo.find.mockResolvedValue([]);
+    subclassSpellsRepo.find.mockResolvedValue([]);
     await expect(run([{ spellSlug: 'wish' }])).rejects.toThrow(BadRequestException);
   });
 
   it('rejects spells above max circle unless subclass-granted', async () => {
-    classSpellsRepo.findOne.mockResolvedValue({ spellLevel: 5 });
-    subclassSpellsRepo.findOne.mockResolvedValue(null);
+    classSpellsRepo.find.mockResolvedValue([
+      { classSlug: 'wizard', spellSlug: 'fireball', spellLevel: 5 },
+    ]);
+    subclassSpellsRepo.find.mockResolvedValue([]);
     await expect(run([{ spellSlug: 'fireball' }])).rejects.toThrow(/exceeds max circle/i);
 
-    classSpellsRepo.findOne.mockResolvedValue({ spellLevel: 5 });
-    subclassSpellsRepo.findOne.mockResolvedValue({ spellSlug: 'fireball' });
+    classSpellsRepo.find.mockResolvedValue([
+      { classSlug: 'wizard', spellSlug: 'fireball', spellLevel: 5 },
+    ]);
+    subclassSpellsRepo.find.mockResolvedValue([
+      { spellSlug: 'fireball', terrainSlug: null },
+    ]);
     await expect(run([{ spellSlug: 'fireball' }])).resolves.toBeUndefined();
+  });
+
+  it('loads membership in one batch for many spells', async () => {
+    classSpellsRepo.find.mockResolvedValue([
+      { classSlug: 'wizard', spellSlug: 'a', spellLevel: 1 },
+      { classSlug: 'wizard', spellSlug: 'b', spellLevel: 1 },
+    ]);
+    await run([{ spellSlug: 'a' }, { spellSlug: 'b' }]);
+    expect(classSpellsRepo.find).toHaveBeenCalledTimes(1);
+    expect(subclassSpellsRepo.find).toHaveBeenCalledTimes(1);
   });
 });

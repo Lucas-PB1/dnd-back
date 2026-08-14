@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbSubclassMechanics } from '@entities/views/v-phb-subclass-mechanics.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { SubclassMechanicResponseDto } from '../dto/subclass-mechanic-response.dto';
 import { SubclassesMapper } from '../subclasses.mapper';
 
@@ -18,7 +22,7 @@ export class FindSubclassMechanicsQuery {
 
   async execute(
     subclassSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<SubclassMechanicResponseDto>> {
     await this.catalogLookup.findSubclassOrFail(subclassSlug);
@@ -26,12 +30,18 @@ export class FindSubclassMechanicsQuery {
       where: { subclassSlug },
       order: { featureLevel: 'ASC', featureName: 'ASC' },
     });
-    return paginateOrNotFound(
-      rows,
-      (row) => this.mapper.toMechanicDto(row),
-      page,
-      limit,
-      `Subclass '${subclassSlug}' has no mechanics data`,
+    requireNonEmpty(rows, `Subclass '${subclassSlug}' has no mechanics data`);
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toMechanicDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['featureLevel', 'featureName'],
+        encodeRow: (row) => ({
+          featureLevel: row.featureLevel,
+          featureName: row.featureName,
+        }),
+      },
     );
   }
 }

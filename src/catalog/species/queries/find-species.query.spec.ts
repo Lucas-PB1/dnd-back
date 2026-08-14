@@ -9,9 +9,8 @@ describe('FindSpeciesQuery', () => {
   beforeEach(() => {
     qb = {
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ slug: 'human' }]),
     };
@@ -21,7 +20,7 @@ describe('FindSpeciesQuery', () => {
   });
 
   it('searches and maps species', async () => {
-    const result = await query.execute(1, 20, 'humano');
+    const result = await query.execute(undefined, 20, 'humano');
     expect(qb.andWhere).toHaveBeenCalled();
     expect(result.data).toEqual([{ slug: 'human' }]);
   });

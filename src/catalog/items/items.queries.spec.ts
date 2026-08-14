@@ -29,10 +29,9 @@ describe('Items queries', () => {
   beforeEach(async () => {
     const qb = {
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
       getMany: jest.fn().mockResolvedValue([sample]),
     };
     repo = {
@@ -54,20 +53,20 @@ describe('Items queries', () => {
   });
 
   it('findAll maps rows', async () => {
-    const result = await findItems.execute(1, 20);
+    const result = await findItems.execute(undefined, 20);
     const item = result.data[0] as ItemResponseDto;
     expect(item.name).toBe('Espada Longa');
     expect(item.costText).toBe('15 PO');
   });
 
   it('findAll applies search filter', async () => {
-    await findItems.execute(1, 20, 'espada');
+    await findItems.execute(undefined, 20, 'espada');
     const qb = repo.createQueryBuilder.mock.results[0].value;
     expect(qb.andWhere).toHaveBeenCalled();
   });
 
   it('findAll applies magic and edition filters', async () => {
-    await findItems.execute(1, 20, undefined, {
+    await findItems.execute(undefined, 20, undefined, {
       magic: true,
       editionSlugs: ['dmg-2024-pt'],
       rarity: 'rare',

@@ -98,7 +98,7 @@ describe('Subclasses queries', () => {
 
   it('findMechanics returns paginated mechanics', async () => {
     mechanicsRepo.find.mockResolvedValue([sampleMechanic]);
-    const result = await findSubclassMechanics.execute('champion', 1, 20);
+    const result = await findSubclassMechanics.execute('', undefined, 20);
     expect(result.data[0].featureName).toBe('Atleta Extraordinário');
   });
 
@@ -109,7 +109,7 @@ describe('Subclasses queries', () => {
 
   it('findSpells returns paginated spells', async () => {
     spellsRepo.find.mockResolvedValue([sampleSpell]);
-    const result = await findSubclassSpells.execute('life', 1, 20);
+    const result = await findSubclassSpells.execute('', undefined, 20);
     expect(result.data[0].slug).toBe('curar-ferimentos');
   });
 

@@ -7,9 +7,8 @@ describe('FindFeatsQuery', () => {
   let qb: {
     select: jest.Mock;
     orderBy: jest.Mock;
+    addOrderBy: jest.Mock;
     andWhere: jest.Mock;
-    getCount: jest.Mock;
-    skip: jest.Mock;
     take: jest.Mock;
     getMany: jest.Mock;
   };
@@ -18,9 +17,8 @@ describe('FindFeatsQuery', () => {
     qb = {
       select: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ featSlug: 'alert' }]),
     };
@@ -37,7 +35,7 @@ describe('FindFeatsQuery', () => {
   });
 
   it('paginates and maps feats with search', async () => {
-    const result = await query.execute(1, 20, 'alerta', 'origin');
+    const result = await query.execute(undefined, 20, 'alerta', 'origin');
     expect(qb.andWhere).toHaveBeenCalledWith(
       expect.stringContaining('ILIKE :q'),
       { q: '%alerta%' },
@@ -47,7 +45,7 @@ describe('FindFeatsQuery', () => {
     });
     expect(result).toEqual({
       data: [{ slug: 'alert' }],
-      meta: { page: 1, limit: 20, total: 1, totalPages: 1 },
+      meta: { limit: 20, nextCursor: null, hasMore: false },
     });
   });
 
@@ -58,7 +56,7 @@ describe('FindFeatsQuery', () => {
 
   it('maps summary when fields=summary', async () => {
     const result = await query.execute(
-      1,
+      undefined,
       20,
       undefined,
       undefined,

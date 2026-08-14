@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { BackgroundEquipmentResponseDto } from '../dto/background-equipment-response.dto';
 import { BackgroundsMapper } from '../backgrounds.mapper';
 
@@ -18,7 +22,7 @@ export class FindBackgroundEquipmentQuery {
 
   async execute(
     backgroundSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<BackgroundEquipmentResponseDto>> {
     await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
@@ -26,12 +30,21 @@ export class FindBackgroundEquipmentQuery {
       where: { backgroundSlug },
       order: { packageSlug: 'ASC', sortOrder: 'ASC' },
     });
-    return paginateOrNotFound(
+    requireNonEmpty(
       rows,
-      (row) => this.mapper.toEquipmentDto(row),
-      page,
-      limit,
       `Background '${backgroundSlug}' has no starting equipment`,
+    );
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toEquipmentDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['packageSlug', 'sortOrder'],
+        encodeRow: (row) => ({
+          packageSlug: row.packageSlug,
+          sortOrder: row.sortOrder,
+        }),
+      },
     );
   }
 }

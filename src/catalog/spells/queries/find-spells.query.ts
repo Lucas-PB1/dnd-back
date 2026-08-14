@@ -6,11 +6,16 @@ import {
   applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
-  paginateQb,
+  paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { SpellResponseDto } from '../dto/spell-response.dto';
 import { SpellSummaryResponseDto } from '../dto/spell-summary-response.dto';
 import { SpellsMapper } from '../spells.mapper';
+
+const SPELL_CURSOR_KEYS = [
+  { expr: 'spell.level', name: 'level' },
+  { expr: 'spell.slug', name: 'slug' },
+] as const;
 
 @Injectable()
 export class FindSpellsQuery {
@@ -21,7 +26,7 @@ export class FindSpellsQuery {
   ) {}
 
   async execute(
-    page = 1,
+    cursor?: string,
     limit = 20,
     q?: string,
     level?: number,
@@ -34,7 +39,7 @@ export class FindSpellsQuery {
     const qb = this.spellsRepo
       .createQueryBuilder('spell')
       .orderBy('spell.level', 'ASC')
-      .addOrderBy('spell.name', 'ASC');
+      .addOrderBy('spell.slug', 'ASC');
 
     if (fields === 'summary') {
       qb.select([
@@ -64,7 +69,12 @@ export class FindSpellsQuery {
     }
     applyEditionSlugFilter(qb, 'spell.editionSlug', editionSlugs);
 
-    const { rows, meta } = await paginateQb(qb, page, limit);
+    const { rows, meta } = await paginateQbCursor(qb, {
+      cursor,
+      limit,
+      keys: SPELL_CURSOR_KEYS,
+      encodeRow: (row) => ({ level: Number(row.level), slug: row.slug }),
+    });
     const data =
       fields === 'summary'
         ? rows.map((row) => this.mapper.toSummaryDto(row))

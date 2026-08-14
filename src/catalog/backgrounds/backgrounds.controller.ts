@@ -33,7 +33,7 @@ export class BackgroundsController {
   @ApiOkResponse({ description: 'Paginated backgrounds list' })
   findAll(@Query() query: BackgroundsQueryDto) {
     return this.findBackgrounds.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.editionSlugs,
@@ -47,7 +47,7 @@ export class BackgroundsController {
   @ApiOkResponse({ description: 'Paginated starting equipment list' })
   @ApiNotFoundResponse({ description: 'Background not found or no equipment data' })
   findEquipment(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findBackgroundEquipment.execute(slug, query.page, query.limit);
+    return this.findBackgroundEquipment.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/skills')
@@ -56,7 +56,7 @@ export class BackgroundsController {
   @ApiOkResponse({ description: 'Paginated background skills list' })
   @ApiNotFoundResponse({ description: 'Background not found or no skills data' })
   findSkills(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findBackgroundSkills.execute(slug, query.page, query.limit);
+    return this.findBackgroundSkills.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/tools')
@@ -65,7 +65,7 @@ export class BackgroundsController {
   @ApiOkResponse({ description: 'Paginated tool choice list' })
   @ApiNotFoundResponse({ description: 'Background not found or no tool choices' })
   findTools(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findBackgroundTools.execute(slug, query.page, query.limit);
+    return this.findBackgroundTools.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/languages')
@@ -76,7 +76,7 @@ export class BackgroundsController {
   @ApiOkResponse({ description: 'Paginated fixed languages list' })
   @ApiNotFoundResponse({ description: 'Background not found or no language grants' })
   findLanguages(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findBackgroundLanguages.execute(slug, query.page, query.limit);
+    return this.findBackgroundLanguages.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug')

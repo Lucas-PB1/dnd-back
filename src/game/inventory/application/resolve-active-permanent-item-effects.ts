@@ -28,7 +28,14 @@ export class ResolveActivePermanentItemEffects {
 
   async resolve(
     characterId: string,
-    options?: { inventoryRows?: PlayerCharacterItem[] },
+    options?: {
+      inventoryRows?: PlayerCharacterItem[];
+      catalogItems?: Array<{
+        slug: string;
+        name: string;
+        properties: Record<string, unknown> | null;
+      }>;
+    },
   ): Promise<ActivePermanentItemEffects> {
     const rows =
       options?.inventoryRows ??
@@ -46,9 +53,11 @@ export class ResolveActivePermanentItemEffects {
         ),
       ),
     ];
-    const catalog = await this.catalogItems.find({
-      where: { slug: In(slugs) },
-    });
+    const catalog =
+      options?.catalogItems ??
+      (await this.catalogItems.find({
+        where: { slug: In(slugs) },
+      }));
     const bySlug = new Map(catalog.map((item) => [item.slug, item]));
 
     const forEffects: InventoryItemForEffects[] = rows.map((row) => {

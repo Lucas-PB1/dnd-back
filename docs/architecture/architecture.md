@@ -68,13 +68,14 @@ flowchart TB
 
 | Lado | Catálogo | Game |
 |------|----------|------|
-| **Query** | Views `v_phb_*`, GET público | GET com auth, leitura de ficha |
+| **Query** | Views `v_phb_*`, GET público | `get_character_sheet_bundle` (RPC JSONB) + DTO montado no mapper |
 | **Command** | Nenhum (seeds offline) | POST/PATCH personagem, level-up, inventário, sessão |
-| **Modelo leitura** | ViewEntity / SQL view | DTO de resposta |
+| **Modelo leitura** | ViewEntity / SQL view | RPC sheet + slices combate/magia |
 | **Modelo escrita** | — | Handler + domain + repository |
 
 ```
 Catalog:  HTTP GET → Query → ViewEntity → Postgres view
+Game:     HTTP GET ficha → Query → RPC sheet bundle (+ combate/magia) → DTO
 Game:     HTTP POST → Handler → Domain → Repository → Postgres
 ```
 

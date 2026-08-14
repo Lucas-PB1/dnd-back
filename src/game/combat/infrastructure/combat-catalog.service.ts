@@ -56,15 +56,16 @@ export class CombatCatalogService {
   async loadUnarmoredDefenses(
     input: UnarmoredDefenseInput,
   ): Promise<UnarmoredDefenseRow[]> {
-    const rows = await this.unarmoredRepo.find();
+    const where = unarmoredDefenseWhere(input);
+    if (where.length === 0) return [];
 
-    return rows
-      .filter((row) => this.matchesUnarmoredDefense(row, input))
-      .map((row) => ({
-        label: row.label,
-        secondAbility: row.secondAbilitySlug as keyof AbilityScores,
-        allowsShield: row.allowsShield,
-      }));
+    const rows = await this.unarmoredRepo.find({ where });
+
+    return rows.map((row) => ({
+      label: row.label,
+      secondAbility: row.secondAbilitySlug as keyof AbilityScores,
+      allowsShield: row.allowsShield,
+    }));
   }
 
   private matchesHitPointsSource(
@@ -84,16 +85,18 @@ export class CombatCatalogService {
     return false;
   }
 
-  private matchesUnarmoredDefense(
-    row: VPhbUnarmoredDefense,
-    input: UnarmoredDefenseInput,
-  ): boolean {
-    if (row.sourceKind === 'class') {
-      return Boolean(input.classSlug) && row.sourceSlug === input.classSlug;
-    }
-    if (row.sourceKind === 'subclass') {
-      return Boolean(input.subclassSlug) && row.sourceSlug === input.subclassSlug;
-    }
-    return false;
+}
+
+function unarmoredDefenseWhere(
+  input: UnarmoredDefenseInput,
+): Array<Pick<VPhbUnarmoredDefense, 'sourceKind' | 'sourceSlug'>> {
+  const where: Array<Pick<VPhbUnarmoredDefense, 'sourceKind' | 'sourceSlug'>> =
+    [];
+  if (input.classSlug) {
+    where.push({ sourceKind: 'class', sourceSlug: input.classSlug });
   }
+  if (input.subclassSlug) {
+    where.push({ sourceKind: 'subclass', sourceSlug: input.subclassSlug });
+  }
+  return where;
 }

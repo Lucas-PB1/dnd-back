@@ -102,13 +102,13 @@ describe('Backgrounds queries', () => {
 
   it('findEquipmentByBackgroundSlug returns equipment', async () => {
     equipmentRepo.find.mockResolvedValue([sampleEquipment]);
-    const result = await findBackgroundEquipment.execute('acolyte', 1, 20);
+    const result = await findBackgroundEquipment.execute('', undefined, 20);
     expect(result.data[0].itemSlug).toBe('holy-symbol');
   });
 
   it('findSkillsByBackgroundSlug returns skills', async () => {
     skillsRepo.find.mockResolvedValue([sampleSkill]);
-    const result = await findBackgroundSkills.execute('acolyte', 1, 20);
+    const result = await findBackgroundSkills.execute('', undefined, 20);
     expect(result.data[0].slug).toBe('insight');
   });
 });

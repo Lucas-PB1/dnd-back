@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PhbAbility } from '@entities/phb-ability.entity';
-import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { AbilityResponseDto } from '../dto/ability-response.dto';
 import { AbilitiesMapper } from '../abilities.mapper';
 
@@ -14,8 +17,21 @@ export class FindAbilitiesQuery {
     private readonly mapper: AbilitiesMapper,
   ) {}
 
-  async execute(page = 1, limit = 20): Promise<PaginatedResponseDto<AbilityResponseDto>> {
-    const rows = await this.abilitiesRepo.find({ order: { sortOrder: 'ASC' } });
-    return paginate(rows.map((row) => this.mapper.toDto(row)), page, limit);
+  async execute(
+    cursor?: string,
+    limit = 20,
+  ): Promise<PaginatedResponseDto<AbilityResponseDto>> {
+    const rows = await this.abilitiesRepo.find({
+      order: { sortOrder: 'ASC', slug: 'ASC' },
+    });
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['sortOrder', 'slug'],
+        encodeRow: (row) => ({ sortOrder: row.sortOrder, slug: row.slug }),
+      },
+    );
   }
 }

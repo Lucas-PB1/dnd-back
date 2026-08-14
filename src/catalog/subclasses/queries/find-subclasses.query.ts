@@ -6,10 +6,16 @@ import {
   applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
-  paginateQb,
+  paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { SubclassResponseDto } from '../dto/subclass-response.dto';
 import { SubclassesMapper } from '../subclasses.mapper';
+
+const SUBCLASS_CURSOR_KEYS = [
+  { expr: 'sc.className', name: 'className' },
+  { expr: 'sc.subclassName', name: 'subclassName' },
+  { expr: 'sc.subclassSlug', name: 'subclassSlug' },
+] as const;
 
 @Injectable()
 export class FindSubclassesQuery {
@@ -20,7 +26,7 @@ export class FindSubclassesQuery {
   ) {}
 
   async execute(
-    page = 1,
+    cursor?: string,
     limit = 20,
     q?: string,
     classSlug?: string,
@@ -29,7 +35,8 @@ export class FindSubclassesQuery {
     const qb = this.subclassesRepo
       .createQueryBuilder('sc')
       .orderBy('sc.className', 'ASC')
-      .addOrderBy('sc.subclassName', 'ASC');
+      .addOrderBy('sc.subclassName', 'ASC')
+      .addOrderBy('sc.subclassSlug', 'ASC');
 
     applyIlikeSearch(qb, [
       'sc.subclassName',
@@ -46,7 +53,16 @@ export class FindSubclassesQuery {
     }
     applyEditionSlugFilter(qb, 'sc.editionSlug', editionSlugs);
 
-    const { rows, meta } = await paginateQb(qb, page, limit);
+    const { rows, meta } = await paginateQbCursor(qb, {
+      cursor,
+      limit,
+      keys: SUBCLASS_CURSOR_KEYS,
+      encodeRow: (row) => ({
+        className: row.className,
+        subclassName: row.subclassName,
+        subclassSlug: row.subclassSlug,
+      }),
+    });
     return { data: rows.map((row) => this.mapper.toSubclassDto(row)), meta };
   }
 }

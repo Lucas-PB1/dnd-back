@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
-import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
+import { PaginatedResponseDto, paginateByKeys } from '@common/dto/pagination.dto';
 import { FeatOptionResponseDto } from '../dto/feat-option-response.dto';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class FindFeatOptionsQuery {
 
   async execute(
     featSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<FeatOptionResponseDto>> {
     const feat = await this.featRepo.findOne({ where: { slug: featSlug } });
@@ -63,6 +63,11 @@ export class FindFeatOptionsQuery {
         : [],
     }));
 
-    return paginate(options, page, limit);
+    return paginateByKeys(options, {
+      cursor,
+      limit,
+      keyNames: ['optionKey'],
+      encodeRow: (row) => ({ optionKey: row.optionKey }),
+    });
   }
 }

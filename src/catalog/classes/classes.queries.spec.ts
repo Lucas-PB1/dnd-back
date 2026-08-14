@@ -37,7 +37,9 @@ describe('Classes queries', () => {
     Pick<Repository<VPhbClass>, 'find' | 'findOne' | 'createQueryBuilder'>
   >;
   let subclassesRepo: jest.Mocked<Pick<Repository<VPhbSubclass>, 'find'>>;
-  let spellsByClassRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'find'>>;
+  let spellsByClassRepo: jest.Mocked<
+    Pick<Repository<VSpellByClass>, 'find' | 'createQueryBuilder'>
+  >;
   let spellSlotsRepo: jest.Mocked<Pick<Repository<VClassSpellSlots>, 'find'>>;
   let equipmentRepo: jest.Mocked<Pick<Repository<VPhbClassEquipment>, 'find'>>;
   let skillsRepo: jest.Mocked<Pick<Repository<VPhbClassSkillChoice>, 'find'>>;
@@ -131,22 +133,31 @@ describe('Classes queries', () => {
   };
 
   beforeEach(async () => {
-    const qb = {
-      orderBy: jest.fn().mockReturnThis(),
-      addOrderBy: jest.fn().mockReturnThis(),
-      andWhere: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
-      take: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      getMany: jest.fn().mockResolvedValue([sample]),
+    const makeListQb = (rows: unknown[], count = 1) => {
+      const qb = {
+        orderBy: jest.fn().mockReturnThis(),
+        addOrderBy: jest.fn().mockReturnThis(),
+        andWhere: jest.fn().mockReturnThis(),
+        where: jest.fn().mockReturnThis(),
+        take: jest.fn().mockReturnThis(),
+        getMany: jest.fn().mockResolvedValue(rows),
+        clone: jest.fn(),
+      };
+      qb.clone.mockImplementation(() => makeListQb(rows, count));
+      return qb;
     };
+    const qb = makeListQb([sample], 1);
     classesRepo = {
       find: jest.fn(),
       findOne: jest.fn(),
       createQueryBuilder: jest.fn().mockReturnValue(qb as never),
     };
     subclassesRepo = { find: jest.fn() };
-    spellsByClassRepo = { find: jest.fn() };
+    const spellsQb = makeListQb([sampleSpell], 1);
+    spellsByClassRepo = {
+      find: jest.fn(),
+      createQueryBuilder: jest.fn().mockReturnValue(spellsQb as never),
+    };
     spellSlotsRepo = { find: jest.fn() };
     equipmentRepo = { find: jest.fn() };
     skillsRepo = { find: jest.fn() };
@@ -210,7 +221,7 @@ describe('Classes queries', () => {
   });
 
   it('findAll returns paginated data', async () => {
-    const result = await findClasses.execute(1, 20);
+    const result = await findClasses.execute(undefined, 20);
     expect(result.data[0].slug).toBe('fighter');
   });
 
@@ -219,13 +230,13 @@ describe('Classes queries', () => {
       orderBy: jest.fn().mockReturnThis(),
       addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
       getMany: jest.fn().mockResolvedValue([sample]),
+      clone: jest.fn(),
     };
+    qb.clone.mockImplementation(() => ({ ...qb, clone: qb.clone }));
     classesRepo.createQueryBuilder.mockReturnValue(qb as never);
-    await findClasses.execute(1, 20, 'fighter');
+    await findClasses.execute(undefined, 20, 'fighter');
     expect(qb.andWhere).toHaveBeenCalled();
   });
 
@@ -242,23 +253,35 @@ describe('Classes queries', () => {
 
   it('findSubclassesByClassSlug returns paginated subclasses', async () => {
     subclassesRepo.find.mockResolvedValue([sampleSubclass]);
-    const result = await findClassSubclasses.execute('fighter', 1, 20);
+    const result = await findClassSubclasses.execute('', undefined, 20);
     expect(result.data[0].slug).toBe('champion');
   });
 
-  it('findSpellsByClassSlug filters by maxLevel', async () => {
-    spellsByClassRepo.find.mockResolvedValue([
-      sampleSpell,
-      { ...sampleSpell, spellLevel: 5, spellSlug: 'cone-de-frio', spellName: 'Cone de Frio' },
-    ]);
-    const result = await findClassSpells.execute('wizard', 1, 20, 1);
+  it('findSpellsByClassSlug filters by maxLevel via SQL', async () => {
+    const spellsQb = {
+      where: jest.fn().mockReturnThis(),
+      andWhere: jest.fn().mockReturnThis(),
+      orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
+      take: jest.fn().mockReturnThis(),
+      getMany: jest.fn().mockResolvedValue([sampleSpell]),
+      clone: jest.fn(),
+    };
+    spellsQb.clone.mockImplementation(() => ({ ...spellsQb, clone: spellsQb.clone }));
+    spellsByClassRepo.createQueryBuilder.mockReturnValue(spellsQb as never);
+
+    const result = await findClassSpells.execute('', undefined, 20, 1);
     expect(result.data).toHaveLength(1);
     expect(result.data[0].slug).toBe('alarme');
+    expect(spellsQb.andWhere).toHaveBeenCalledWith(
+      'row.spellLevel <= :maxLevel',
+      { maxLevel: 1 },
+    );
   });
 
   it('findSpellSlotsByClassSlug returns slots', async () => {
     spellSlotsRepo.find.mockResolvedValue([sampleSlots]);
-    const result = await findClassSpellSlots.execute('wizard', 1, 20);
+    const result = await findClassSpellSlots.execute('', undefined, 20);
     expect(result.data[0].classLevel).toBe(5);
   });
 
@@ -269,7 +292,7 @@ describe('Classes queries', () => {
 
   it('findEquipmentByClassSlug returns equipment', async () => {
     equipmentRepo.find.mockResolvedValue([sampleEquipment]);
-    const result = await findClassEquipment.execute('fighter', 1, 20);
+    const result = await findClassEquipment.execute('', undefined, 20);
     expect(result.data[0].itemSlug).toBe('longsword');
   });
 
@@ -283,7 +306,7 @@ describe('Classes queries', () => {
         skillName: 'Atletismo',
       },
     ]);
-    const result = await findClassSkills.execute('fighter', 1, 20);
+    const result = await findClassSkills.execute('', undefined, 20);
     expect(result.data[0].slug).toBe('athletics');
   });
 
@@ -292,7 +315,7 @@ describe('Classes queries', () => {
       sampleFeature,
       { ...sampleFeature, featureLevel: 5, featureName: 'Inspiração de Bardo' },
     ]);
-    const result = await findClassFeatures.execute('bard', 1, 50, 1);
+    const result = await findClassFeatures.execute('', undefined, 50, 1);
     expect(result.data).toHaveLength(1);
     expect(result.data[0].featureName).toBe('Conjuração');
   });

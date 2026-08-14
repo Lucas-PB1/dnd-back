@@ -48,7 +48,7 @@ describe('FindSpeciesTraitChoicesQuery', () => {
 
   it('filters by editionSlugs when provided', async () => {
     qb.getMany.mockResolvedValue([{ choiceSlug: 'drow' }]);
-    await query.execute('elf', 1, 100, ['phb-2024-pt']);
+    await query.execute('', undefined, 100, ['phb-2024-pt']);
     expect(qb.andWhere).toHaveBeenCalledWith(
       '(c.edition_slug IS NULL OR c.edition_slug IN (:...editionSlugs))',
       { editionSlugs: ['phb-2024-pt'] },

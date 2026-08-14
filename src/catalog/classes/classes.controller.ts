@@ -45,7 +45,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated class list' })
   findAll(@Query() query: ClassesQueryDto) {
     return this.findClasses.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.editionSlugs,
@@ -61,7 +61,7 @@ export class ClassesController {
   findSubclasses(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
     return this.findClassSubclasses.execute(
       slug,
-      query.page,
+      query.cursor,
       query.limit,
       query.editionSlugs,
     );
@@ -74,7 +74,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated class spell list' })
   @ApiNotFoundResponse({ description: 'Class not found' })
   findSpells(@Param('slug') slug: string, @Query() query: ClassSpellsQueryDto) {
-    return this.findClassSpells.execute(slug, query.page, query.limit, query.maxLevel);
+    return this.findClassSpells.execute(slug, query.cursor, query.limit, query.maxLevel);
   }
 
   @Get(':slug/spell-slots')
@@ -83,7 +83,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated spell slot table' })
   @ApiNotFoundResponse({ description: 'Class not found or no spellcasting' })
   findSpellSlots(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findClassSpellSlots.execute(slug, query.page, query.limit);
+    return this.findClassSpellSlots.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/progression')
@@ -92,7 +92,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated progression by level (1–20)' })
   @ApiNotFoundResponse({ description: 'Class not found' })
   findProgression(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findClassProgression.execute(slug, query.page, query.limit);
+    return this.findClassProgression.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/equipment')
@@ -101,7 +101,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated starting equipment list' })
   @ApiNotFoundResponse({ description: 'Class not found or no equipment data' })
   findEquipment(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findClassEquipment.execute(slug, query.page, query.limit);
+    return this.findClassEquipment.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/skills')
@@ -110,7 +110,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated class skill list' })
   @ApiNotFoundResponse({ description: 'Class not found or no skill pool' })
   findSkills(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findClassSkills.execute(slug, query.page, query.limit);
+    return this.findClassSkills.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/options')
@@ -121,7 +121,7 @@ export class ClassesController {
   @ApiNotFoundResponse({ description: 'Class not found' })
   findOptions(@Param('slug') slug: string, @Query() query: ClassOptionsQueryDto) {
     const level = query.level !== undefined ? Number(query.level) : 20;
-    return this.findClassOptions.execute(slug, level, query.page, query.limit);
+    return this.findClassOptions.execute(slug, level, query.cursor, query.limit);
   }
 
   @Get(':slug/features')
@@ -131,7 +131,7 @@ export class ClassesController {
   @ApiOkResponse({ description: 'Paginated class feature list' })
   @ApiNotFoundResponse({ description: 'Class not found or no features data' })
   findFeatures(@Param('slug') slug: string, @Query() query: ClassFeaturesQueryDto) {
-    return this.findClassFeatures.execute(slug, query.page, query.limit, query.maxLevel);
+    return this.findClassFeatures.execute(slug, query.cursor, query.limit, query.maxLevel);
   }
 
   @Get(':slug')

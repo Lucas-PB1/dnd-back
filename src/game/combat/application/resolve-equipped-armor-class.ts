@@ -7,6 +7,7 @@ import type { AbilityScores } from '@game/shared/infrastructure/player-character
 import {
   computeArmorClassFromEquipment,
   type EquippedArmorPiece,
+  type UnarmoredDefenseRow,
 } from '../domain/equipment';
 import { CombatCatalogService } from '../infrastructure/combat-catalog.service';
 
@@ -20,6 +21,14 @@ export type ArmorClassResolveInput = {
   /** Snapshot compartilhado — evita novo `find` no combat slice. */
   equippedItems?: PlayerCharacterItem[];
   manikinArmorPresetSlug?: string | null;
+  /** Catálogo de armadura já carregado (combat bundle). */
+  armorCatalogRows?: Array<{
+    itemSlug: string;
+    itemName: string;
+    categorySlug: string;
+    acBase: number;
+  }>;
+  unarmoredDefenses?: UnarmoredDefenseRow[];
 };
 
 @Injectable()
@@ -50,21 +59,28 @@ export class ResolveEquippedArmorClass {
     let pieces: EquippedArmorPiece[] = [];
     if (armorSlots.length > 0) {
       const slugs = armorSlots.map((row) => row.itemSlug);
-      const catalogRows = await this.armorCatalog.find({
-        where: { itemSlug: In(slugs) },
-      });
-      pieces = catalogRows.map((row) => ({
-        itemSlug: row.itemSlug,
-        itemName: row.itemName,
-        categorySlug: row.categorySlug,
-        acBase: row.acBase,
-      }));
+      const catalogRows =
+        context.armorCatalogRows ??
+        (await this.armorCatalog.find({
+          where: { itemSlug: In(slugs) },
+        }));
+      const wanted = new Set(slugs);
+      pieces = catalogRows
+        .filter((row) => wanted.has(row.itemSlug))
+        .map((row) => ({
+          itemSlug: row.itemSlug,
+          itemName: row.itemName,
+          categorySlug: row.categorySlug,
+          acBase: row.acBase,
+        }));
     }
 
-    const unarmoredDefenses = await this.combatCatalog.loadUnarmoredDefenses({
-      classSlug: context.classSlug,
-      subclassSlug: context.subclassSlug,
-    });
+    const unarmoredDefenses =
+      context.unarmoredDefenses ??
+      (await this.combatCatalog.loadUnarmoredDefenses({
+        classSlug: context.classSlug,
+        subclassSlug: context.subclassSlug,
+      }));
 
     return computeArmorClassFromEquipment(scores, pieces, {
       featSlugs: context.featSlugs,

@@ -12,6 +12,7 @@ import { annotateSpellSources } from './annotate-spell-sources';
 import { LoadGrantedSpellCatalog } from './load-granted-spell-catalog';
 import { resolveSpellcastingStats } from './resolve-spellcasting-stats';
 import type { CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
+import { sheetProfile } from '@common/perf/sheet-profile';
 
 const ABILITY_SLUGS = new Set<AbilityKey>([
   'forca',
@@ -86,9 +87,19 @@ export async function resolveCharacterSpellcastingSlice(input: {
     featSlugs,
   } = input;
 
-  const spellcastingAbilitySlug = await loadSpellcastingAbilitySlug(
-    dataSource,
-    classSlug,
+  // Grants só anotam fontes em magias já na ficha — sem spells, zero I/O.
+  if (sheet.characterSpells.length === 0) {
+    return {
+      characterSpells: [],
+      spellcastingAbilitySlug: null,
+      spellSaveDc: null,
+      spellAttackBonus: null,
+    };
+  }
+
+  const spellcastingAbilitySlug = await sheetProfile(
+    'spell.ability',
+    () => loadSpellcastingAbilitySlug(dataSource, classSlug),
   );
   const spellcasting = resolveSpellcastingStats({
     spellcastingAbilitySlug,
@@ -96,12 +107,16 @@ export async function resolveCharacterSpellcastingSlice(input: {
     abilityModifiers,
   });
 
-  const { speciesCatalog, featFixedSpells } =
-    await grantedSpellCatalog.loadMergeCatalog({
-      speciesSlugs: [speciesSlug],
-      featSlugs,
-      classSlug,
-    });
+  const { speciesCatalog, featFixedSpells } = await sheetProfile(
+    'spell.grants',
+    () =>
+      grantedSpellCatalog.loadMergeCatalog({
+        speciesSlugs: [speciesSlug],
+        featSlugs,
+        // classGrantedSpells não entra no annotate do GET
+        classSlug: null,
+      }),
+  );
   const featGrantedSlugs = collectFeatGrantedSpellSlugs(
     sheet.featOptions,
     sheet.characterFeats,
@@ -113,9 +128,8 @@ export async function resolveCharacterSpellcastingSlice(input: {
     level,
     speciesCatalog,
   );
-  const subclassSpellSlugs = await loadSubclassSpellSlugs(
-    subclassSpellsRepo,
-    subclassSlug,
+  const subclassSpellSlugs = await sheetProfile('spell.subclass', () =>
+    loadSubclassSpellSlugs(subclassSpellsRepo, subclassSlug),
   );
   const annotated = annotateSpellSources(sheet.characterSpells, {
     featGrantedSlugs,

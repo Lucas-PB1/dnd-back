@@ -28,6 +28,14 @@ export type EquipmentComplianceResolveInput = {
   hasShield?: boolean;
   /** Snapshot compartilhado — evita novo `find` no combat slice. */
   equippedItems?: PlayerCharacterItem[];
+  /** Catálogo de armadura já carregado (combat bundle). */
+  armorCatalogRows?: Array<{
+    itemSlug: string;
+    itemName: string;
+    categorySlug: string;
+    strengthReq: number | null;
+    stealthDisadvantage: boolean;
+  }>;
 };
 
 @Injectable()
@@ -52,22 +60,40 @@ export class ResolveEquipmentCompliance {
         where: { characterId, location: 'equipped' },
       }));
 
+    if (equipped.length === 0) {
+      return {
+        lacksArmorTraining: false,
+        strengthPenalty: null,
+        stealthDisadvantage: false,
+        cannotCastSpells: false,
+        strDexTestDisadvantage: false,
+        speedPenaltyMeters: 0,
+        warnings: [],
+      };
+    }
+
     const armorSlots = equipped.filter(
       (row) => row.equipmentSlot === 'armor' || row.equipmentSlot === 'shield',
     );
 
     let pieces: EquippedArmorCompliancePiece[] = [];
     if (armorSlots.length > 0) {
-      const catalogRows = await this.armorCatalog.find({
-        where: { itemSlug: In(armorSlots.map((row) => row.itemSlug)) },
-      });
-      pieces = catalogRows.map((row) => ({
-        itemSlug: row.itemSlug,
-        itemName: row.itemName,
-        categorySlug: row.categorySlug,
-        strengthReq: row.strengthReq,
-        stealthDisadvantage: row.stealthDisadvantage,
-      }));
+      const slugs = armorSlots.map((row) => row.itemSlug);
+      const catalogRows =
+        input.armorCatalogRows ??
+        (await this.armorCatalog.find({
+          where: { itemSlug: In(slugs) },
+        }));
+      const wanted = new Set(slugs);
+      pieces = catalogRows
+        .filter((row) => wanted.has(row.itemSlug))
+        .map((row) => ({
+          itemSlug: row.itemSlug,
+          itemName: row.itemName,
+          categorySlug: row.categorySlug,
+          strengthReq: row.strengthReq,
+          stealthDisadvantage: row.stealthDisadvantage,
+        }));
     }
 
     const weaponPieces =

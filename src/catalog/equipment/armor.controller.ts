@@ -24,7 +24,7 @@ export class ArmorController {
   @ApiOkResponse({ description: 'Paginated armor list' })
   findAll(@Query() query: ArmorQueryDto) {
     return this.findArmor.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.category,

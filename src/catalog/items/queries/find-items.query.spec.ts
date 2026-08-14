@@ -11,8 +11,6 @@ describe('FindItemsQuery', () => {
       orderBy: jest.fn().mockReturnThis(),
       addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ slug: 'rope' }]),
     };
@@ -22,7 +20,7 @@ describe('FindItemsQuery', () => {
   });
 
   it('searches and filters by item type', async () => {
-    const result = await query.execute(1, 20, 'corda', { itemType: 'gear' });
+    const result = await query.execute(undefined, 20, 'corda', { itemType: 'gear' });
     expect(qb.andWhere).toHaveBeenCalledWith('item.itemType = :itemType', {
       itemType: 'gear',
     });
@@ -30,7 +28,7 @@ describe('FindItemsQuery', () => {
   });
 
   it('filters multiple item types', async () => {
-    await query.execute(1, 20, undefined, { itemType: 'gear,tool' });
+    await query.execute(undefined, 20, undefined, { itemType: 'gear,tool' });
     expect(qb.andWhere).toHaveBeenCalledWith('item.itemType IN (:...types)', {
       types: ['gear', 'tool'],
     });
@@ -44,14 +42,14 @@ describe('FindItemsQuery', () => {
   });
 
   it('can exclude coverage overlays', async () => {
-    await query.execute(1, 20, undefined, { excludeCoverage: true });
+    await query.execute(undefined, 20, undefined, { excludeCoverage: true });
     expect(qb.andWhere).toHaveBeenCalledWith(
       `(item.properties->>'kind' IS NULL OR (item.properties->>'kind') <> 'coverage')`,
     );
   });
 
   it('can filter attunement and sort by cost', async () => {
-    await query.execute(1, 20, undefined, {
+    await query.execute(undefined, 20, undefined, {
       requiresAttunement: true,
       sort: 'cost_desc',
     });

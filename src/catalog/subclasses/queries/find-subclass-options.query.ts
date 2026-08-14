@@ -4,7 +4,10 @@ import { Repository } from 'typeorm';
 import { PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { SubclassOptionResponseDto } from '../dto/subclass-option-response.dto';
 
 const STATIC_VALUE_TYPES = new Set([
@@ -26,7 +29,7 @@ export class FindSubclassOptionsQuery {
   async execute(
     subclassSlug: string,
     characterLevel = 20,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<SubclassOptionResponseDto>> {
     await this.catalogLookup.findSubclassOrFail(subclassSlug);
@@ -41,7 +44,12 @@ export class FindSubclassOptionsQuery {
       this.loadOptionValues(subclass.id, characterLevel),
     ]);
     const grouped = this.groupOptions(defs, valueRows);
-    return paginate(grouped, page, limit);
+    return paginateByKeys(grouped, {
+      cursor,
+      limit,
+      keyNames: ['optionKey'],
+      encodeRow: (row) => ({ optionKey: row.optionKey }),
+    });
   }
 
   private loadOptionDefs(subclassId: string, characterLevel: number) {

@@ -45,9 +45,7 @@ describe('Spells queries', () => {
       orderBy: jest.fn().mockReturnThis(),
       addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(total),
       getMany: jest.fn().mockResolvedValue(rows),
     };
   }
@@ -72,9 +70,10 @@ describe('Spells queries', () => {
 
   it('findAll returns paginated data', async () => {
     repo.createQueryBuilder.mockReturnValue(mockQb([sample], 1) as never);
-    const result = await findSpells.execute(1, 20);
+    const result = await findSpells.execute(undefined, 20);
     expect(result.data[0].slug).toBe('alarme');
-    expect(result.meta.total).toBe(1);
+    expect(result.meta.hasMore).toBe(false);
+    expect(result.meta.nextCursor).toBeNull();
     expect(result.data[0]).toHaveProperty('description');
   });
 
@@ -82,7 +81,7 @@ describe('Spells queries', () => {
     const qb = mockQb([sample], 1);
     repo.createQueryBuilder.mockReturnValue(qb as never);
     const result = await findSpells.execute(
-      1,
+      undefined,
       20,
       undefined,
       undefined,
@@ -104,7 +103,7 @@ describe('Spells queries', () => {
   it('findAll applies search filter', async () => {
     const qb = mockQb([sample], 1);
     repo.createQueryBuilder.mockReturnValue(qb as never);
-    await findSpells.execute(1, 20, 'alarme');
+    await findSpells.execute(undefined, 20, 'alarme');
     expect(qb.andWhere).toHaveBeenCalled();
   });
 

@@ -1,6 +1,11 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-@ViewEntity({ schema: 'rpg', name: 'v_spell_by_class' })
+/**
+ * Read model de magias por classe.
+ * Aponta para a MV (`mv_spell_by_class`) — mesma forma que `v_spell_by_class`,
+ * sem recalcular JOINs a cada request. Refresh após seeds.
+ */
+@ViewEntity({ schema: 'rpg', name: 'mv_spell_by_class' })
 export class VSpellByClass {
   @ViewColumn({ name: 'class_slug' })
   classSlug!: string;

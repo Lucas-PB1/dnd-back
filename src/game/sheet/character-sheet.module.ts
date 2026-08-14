@@ -58,7 +58,6 @@ import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { PatchCharacterWealthHandler } from './application/patch-character-wealth.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
-import { PhbSpecies } from '@entities/phb-species.entity';
 import { CampaignModule } from '../campaign/campaign.module';
 
 @Module({
@@ -84,7 +83,6 @@ import { CampaignModule } from '../campaign/campaign.module';
       PhbFeatRef,
       PhbOptionDef,
       PlayerCharacterItem,
-      PhbSpecies,
     ]),
     GameSharedModule,
     CatalogModule,

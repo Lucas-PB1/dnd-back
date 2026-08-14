@@ -24,7 +24,7 @@ export class SkillsController {
   @ApiOkResponse({ description: 'Paginated skill list' })
   findAll(@Query() query: SkillsQueryDto) {
     return this.findSkills.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.ability,

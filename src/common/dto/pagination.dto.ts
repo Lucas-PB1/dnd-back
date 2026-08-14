@@ -10,6 +10,26 @@ import {
 } from 'class-validator';
 import { SelectQueryBuilder } from 'typeorm';
 import { requireNonEmpty } from '../require-found';
+import {
+  isAfterTuple,
+  normalizeLimit,
+  paginateCursor,
+  type CursorPaginatedMeta,
+  type CursorValues,
+} from './pagination-cursor';
+
+export {
+  applyAscendingCursor,
+  decodeCursor,
+  encodeCursor,
+  isAfterTuple,
+  normalizeLimit,
+  paginateCursor,
+  paginateQbCursor,
+  type CursorKeyDef,
+  type CursorPaginatedMeta,
+  type CursorValues,
+} from './pagination-cursor';
 
 /** Fallback when species/source_meta omit editionSlug (PHB seeds). */
 export const DEFAULT_PHB_EDITION_SLUG = 'phb-2024-pt';
@@ -25,12 +45,12 @@ export function parseEditionSlugsParam(value: unknown): string[] | undefined {
 }
 
 export class PaginationQueryDto {
-  @ApiPropertyOptional({ default: 1, minimum: 1 })
+  @ApiPropertyOptional({
+    description: 'Cursor opaco da página anterior (`meta.nextCursor`). Omitir na 1ª página.',
+  })
   @IsOptional()
-  @Type(() => Number)
-  @IsInt()
-  @Min(1)
-  page?: number = 1;
+  @IsString()
+  cursor?: string;
 
   @ApiPropertyOptional({ default: 20, minimum: 1, maximum: 100 })
   @IsOptional()
@@ -72,33 +92,20 @@ export class CategorySearchQueryDto extends SearchQueryDto {
   category?: string;
 }
 
-export class PaginatedMetaDto {
-  @ApiPropertyOptional()
-  page!: number;
-
+export class PaginatedMetaDto implements CursorPaginatedMeta {
   @ApiPropertyOptional()
   limit!: number;
 
-  @ApiPropertyOptional()
-  total!: number;
+  @ApiPropertyOptional({ nullable: true })
+  nextCursor!: string | null;
 
   @ApiPropertyOptional()
-  totalPages!: number;
+  hasMore!: boolean;
 }
 
 export class PaginatedResponseDto<T> {
   data!: T[];
   meta!: PaginatedMetaDto;
-}
-
-export function normalizePagination(page = 1, limit = 20): {
-  page: number;
-  limit: number;
-} {
-  return {
-    page: Math.max(1, page),
-    limit: Math.min(100, Math.max(1, limit)),
-  };
 }
 
 /** Aplica `OR col ILIKE :q` nas colunas/expressões informadas. */
@@ -137,59 +144,49 @@ export function filterRowsByEditionSlug<T extends { editionSlug?: string | null 
   });
 }
 
-/**
- * Pagina um QueryBuilder (count + page clamp, igual a `paginate` in-memory).
- * Filtros/`orderBy` devem estar aplicados antes.
- */
-export async function paginateQb<T extends object>(
-  qb: SelectQueryBuilder<T>,
-  page = 1,
-  limit = 20,
-): Promise<{ rows: T[]; meta: PaginatedMetaDto }> {
-  const { page: safePage, limit: safeLimit } = normalizePagination(page, limit);
-  const total = await qb.getCount();
-  const totalPages = Math.max(1, Math.ceil(total / safeLimit) || 1);
-  const currentPage = Math.min(safePage, totalPages);
-  const rows = await qb
-    .skip((currentPage - 1) * safeLimit)
-    .take(safeLimit)
-    .getMany();
-
-  return {
-    rows,
-    meta: {
-      page: currentPage,
-      limit: safeLimit,
-      total,
-      totalPages,
-    },
-  };
-}
-
-export function paginate<T>(
+/** Cursor in-memory por slug (listas ordenadas por nome/slug). */
+export function paginateBySlug<T extends { slug: string }>(
   items: T[],
-  page: number,
-  limit: number,
+  cursor?: string,
+  limit?: number,
 ): PaginatedResponseDto<T> {
-  const { page: safePage, limit: safeLimit } = normalizePagination(page, limit);
-  const total = items.length;
-  const totalPages = Math.max(1, Math.ceil(total / safeLimit));
-  const currentPage = Math.min(safePage, totalPages);
-  const start = (currentPage - 1) * safeLimit;
-  return {
-    data: items.slice(start, start + safeLimit),
-    meta: { page: currentPage, limit: safeLimit, total, totalPages },
-  };
+  const keyNames = ['slug'] as const;
+  return paginateCursor(items, {
+    cursor,
+    limit,
+    keyNames,
+    encodeRow: (row) => ({ slug: row.slug }),
+    isAfter: (row, cur) => isAfterTuple([row.slug], cur, keyNames),
+  });
 }
 
-/** Nested catalog: exige linhas, mapeia e pagina. */
-export function paginateOrNotFound<TRow, TDto>(
+/** Cursor in-memory com chave composta (valores já ordenados ASC). */
+export function paginateByKeys<T>(
+  items: T[],
+  options: {
+    cursor?: string;
+    limit?: number;
+    keyNames: readonly string[];
+    encodeRow: (row: T) => CursorValues;
+  },
+): PaginatedResponseDto<T> {
+  return paginateCursor(items, {
+    ...options,
+    isAfter: (row, cur) => {
+      const values = options.keyNames.map((name) => options.encodeRow(row)[name]);
+      return isAfterTuple(values, cur, options.keyNames);
+    },
+  });
+}
+
+/** Nested catalog: exige linhas, mapeia e pagina por cursor de slug no DTO. */
+export function paginateOrNotFound<TRow, TDto extends { slug: string }>(
   rows: TRow[],
   mapFn: (row: TRow) => TDto,
-  page: number,
-  limit: number,
+  cursor: string | undefined,
+  limit: number | undefined,
   emptyMessage: string,
 ): PaginatedResponseDto<TDto> {
   requireNonEmpty(rows, emptyMessage);
-  return paginate(rows.map(mapFn), page, limit);
+  return paginateBySlug(rows.map(mapFn), cursor, limit);
 }

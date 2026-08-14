@@ -107,6 +107,12 @@ async function seedOne(label, url) {
       console.log('ok');
     }
 
+    process.stdout.write('  refresh rpg.mv_spell_by_class... ');
+    await client.query(
+      'REFRESH MATERIALIZED VIEW CONCURRENTLY rpg.mv_spell_by_class',
+    );
+    console.log('ok');
+
     console.log(`  ${files.length} seed(s) aplicado(s)`);
   } finally {
     await client.end();

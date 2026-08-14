@@ -7,9 +7,8 @@ describe('FindSkillsQuery', () => {
   let qb: {
     leftJoinAndSelect: jest.Mock;
     orderBy: jest.Mock;
+    addOrderBy: jest.Mock;
     andWhere: jest.Mock;
-    getCount: jest.Mock;
-    skip: jest.Mock;
     take: jest.Mock;
     getMany: jest.Mock;
   };
@@ -18,9 +17,8 @@ describe('FindSkillsQuery', () => {
     qb = {
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ slug: 'stealth' }]),
     };
@@ -30,7 +28,7 @@ describe('FindSkillsQuery', () => {
   });
 
   it('joins ability, filters and maps', async () => {
-    const result = await query.execute(1, 20, 'furt', 'destreza');
+    const result = await query.execute(undefined, 20, 'furt', 'destreza');
     expect(qb.leftJoinAndSelect).toHaveBeenCalledWith('skill.ability', 'ability');
     expect(qb.andWhere).toHaveBeenCalledWith('ability.slug = :abilitySlug', {
       abilitySlug: 'destreza',
@@ -39,7 +37,7 @@ describe('FindSkillsQuery', () => {
   });
 
   it('skips ability filter when blank', async () => {
-    await query.execute(1, 20, undefined, '  ');
+    await query.execute(undefined, 20, undefined, '  ');
     expect(qb.andWhere).not.toHaveBeenCalledWith(
       'ability.slug = :abilitySlug',
       expect.anything(),

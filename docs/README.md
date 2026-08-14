@@ -33,6 +33,7 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |-----|----------|
+| [`plans/measure-latency.md`](plans/measure-latency.md) | Medir hot paths (cursor + X-Response-Time) |
 | [`plans/backlog.md`](plans/backlog.md) | Checklist — o que ainda falta |
 | [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Extração Character Threads — **adiado** (sistema novo) |
 | [`plans/northlands-magic-and-miscellany.md`](plans/northlands-magic-and-miscellany.md) | Cap. 5 — catálogo seedado; veículos/montarias **adiados** |

@@ -90,7 +90,7 @@ describe('CombatCatalogService', () => {
   });
 
   describe('loadUnarmoredDefenses', () => {
-    it('filters class and subclass defenses', async () => {
+    it('queries only matching class and subclass defenses', async () => {
       unarmoredRepo.find.mockResolvedValue([
         {
           sourceKind: 'class',
@@ -106,25 +106,17 @@ describe('CombatCatalogService', () => {
           secondAbilitySlug: 'sabedoria',
           allowsShield: false,
         },
-        {
-          sourceKind: 'class',
-          sourceSlug: 'monk',
-          label: 'Wrong',
-          secondAbilitySlug: 'sabedoria',
-          allowsShield: true,
-        },
-        {
-          sourceKind: 'feat',
-          sourceSlug: 'x',
-          label: 'Ignored',
-          secondAbilitySlug: 'destreza',
-          allowsShield: false,
-        },
       ]);
 
       const rows = await service.loadUnarmoredDefenses({
         classSlug: 'barbarian',
         subclassSlug: 'monk-way',
+      });
+      expect(unarmoredRepo.find).toHaveBeenCalledWith({
+        where: [
+          { sourceKind: 'class', sourceSlug: 'barbarian' },
+          { sourceKind: 'subclass', sourceSlug: 'monk-way' },
+        ],
       });
       expect(rows).toEqual([
         {
@@ -138,6 +130,11 @@ describe('CombatCatalogService', () => {
           allowsShield: false,
         },
       ]);
+    });
+
+    it('returns empty without querying when no class/subclass', async () => {
+      await expect(service.loadUnarmoredDefenses({})).resolves.toEqual([]);
+      expect(unarmoredRepo.find).not.toHaveBeenCalled();
     });
   });
 });

@@ -16,7 +16,6 @@ import { CharacterDomainService } from './domain/core/character-domain.service';
 import { CharacterSheetValidator } from './domain/validation/character-sheet.validator';
 import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
-import { PhbSpecies } from '@entities/phb-species.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
@@ -149,7 +148,12 @@ describe('Characters application layer', () => {
         {
           provide: DataSource,
           useValue: {
-            query: jest.fn().mockResolvedValue([{ ok: 1 }]),
+            query: jest.fn().mockImplementation((sql: string) => {
+              if (typeof sql === 'string' && sql.includes('auth.users')) {
+                return Promise.resolve([{ ok: 1 }]);
+              }
+              return Promise.resolve([]);
+            }),
           },
         },
         { provide: getRepositoryToken(PlayerCharacter), useValue: repo },
@@ -202,22 +206,17 @@ describe('Characters application layer', () => {
           },
         },
         {
-          provide: getRepositoryToken(PhbSpecies),
-          useValue: {
-            findOne: jest.fn().mockResolvedValue({
-              slug: 'dwarf',
-              size: 'Médio (cerca de 1,20-1,50 metro de altura)',
-            }),
-          },
-        },
-        {
           provide: getRepositoryToken(PlayerCharacterItem),
           useValue: {
             exist: jest.fn().mockResolvedValue(false),
             find: jest.fn().mockResolvedValue([]),
+            manager: {
+              getRepository: jest.fn().mockReturnValue({
+                find: jest.fn().mockResolvedValue([]),
+              }),
+            },
           },
-        },
-        {
+        },        {
           provide: getRepositoryToken(VPhbSubclassPreparedSpell),
           useValue: { find: jest.fn().mockResolvedValue([]) },
         },

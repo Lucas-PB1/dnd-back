@@ -24,7 +24,7 @@ export class SpellsController {
   @ApiOkResponse({ description: 'Paginated spell list' })
   findAll(@Query() query: SpellsQueryDto) {
     return this.findSpells.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.level,

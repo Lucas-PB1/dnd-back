@@ -12,6 +12,8 @@
     "vercel:dev": "vercel dev --listen 3000",
     "vercel:smoke": "node scripts/vercel-local-smoke.mjs",
     "smoke:health": "node scripts/smoke-health.mjs",
+    "measure:latency": "node scripts/measure-latency.mjs",
+    "measure:character": "node scripts/measure-character-once.mjs",
     "db:reset": "node scripts/dev-reset.mjs",
     "db:migrate": "node scripts/run-migrations.mjs",
     "db:seed": "node scripts/run-seeds.mjs",

@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
-import { PaginatedResponseDto, paginate } from '@common/dto/pagination.dto';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { CharacterLevelResponseDto } from '../dto/character-level-response.dto';
 import { ReferenceMapper } from '../reference.mapper';
 
@@ -14,8 +17,21 @@ export class FindCharacterLevelsQuery {
     private readonly mapper: ReferenceMapper,
   ) {}
 
-  async execute(page = 1, limit = 20): Promise<PaginatedResponseDto<CharacterLevelResponseDto>> {
-    const rows = await this.characterLevelsRepo.find({ order: { level: 'ASC' } });
-    return paginate(rows.map((row) => this.mapper.toCharacterLevelDto(row)), page, limit);
+  async execute(
+    cursor?: string,
+    limit = 20,
+  ): Promise<PaginatedResponseDto<CharacterLevelResponseDto>> {
+    const rows = await this.characterLevelsRepo.find({
+      order: { level: 'ASC' },
+    });
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toCharacterLevelDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['level'],
+        encodeRow: (row) => ({ level: row.level }),
+      },
+    );
   }
 }

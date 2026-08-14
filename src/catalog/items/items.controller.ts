@@ -42,7 +42,7 @@ export class ItemsController {
   @ApiOperation({ summary: 'List PHB items (paginated, searchable)' })
   @ApiOkResponse({ description: 'Paginated item list' })
   findAll(@Query() query: ItemsQueryDto) {
-    return this.findItems.execute(query.page, query.limit, query.q, {
+    return this.findItems.execute(query.cursor, query.limit, query.q, {
       itemType: query.itemType,
       magic:
         query.magic === 'true' ? true : query.magic === 'false' ? false : undefined,

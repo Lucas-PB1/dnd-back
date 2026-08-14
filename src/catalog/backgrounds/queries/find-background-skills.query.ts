@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbBackgroundSkill } from '@entities/views/v-phb-background-skill.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { BackgroundSkillResponseDto } from '../dto/background-skill-response.dto';
 import { BackgroundsMapper } from '../backgrounds.mapper';
 
@@ -18,20 +22,23 @@ export class FindBackgroundSkillsQuery {
 
   async execute(
     backgroundSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<BackgroundSkillResponseDto>> {
     await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
     const rows = await this.skillsRepo.find({
       where: { backgroundSlug },
-      order: { skillName: 'ASC' },
+      order: { skillName: 'ASC', skillSlug: 'ASC' },
     });
-    return paginateOrNotFound(
-      rows,
-      (row) => this.mapper.toSkillDto(row),
-      page,
-      limit,
-      `Background '${backgroundSlug}' has no fixed skills`,
+    requireNonEmpty(rows, `Background '${backgroundSlug}' has no fixed skills`);
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toSkillDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['name', 'slug'],
+        encodeRow: (row) => ({ name: row.name, slug: row.slug }),
+      },
     );
   }
 }

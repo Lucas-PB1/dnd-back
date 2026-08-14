@@ -36,7 +36,7 @@ export class SubclassesController {
   @ApiOkResponse({ description: 'Paginated subclass list' })
   findAll(@Query() query: SubclassesQueryDto) {
     return this.findSubclasses.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.class,
@@ -54,7 +54,7 @@ export class SubclassesController {
     @Query() query: PaginationQueryDto & { level?: number },
   ) {
     const level = query.level !== undefined ? Number(query.level) : 20;
-    return this.findSubclassOptions.execute(slug, level, query.page, query.limit);
+    return this.findSubclassOptions.execute(slug, level, query.cursor, query.limit);
   }
 
   @Get(':slug/mechanics')
@@ -63,7 +63,7 @@ export class SubclassesController {
   @ApiOkResponse({ description: 'Paginated subclass mechanics list' })
   @ApiNotFoundResponse({ description: 'Subclass not found or no mechanics data' })
   findMechanics(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findSubclassMechanics.execute(slug, query.page, query.limit);
+    return this.findSubclassMechanics.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/spells')
@@ -72,7 +72,7 @@ export class SubclassesController {
   @ApiOkResponse({ description: 'Paginated subclass spell list' })
   @ApiNotFoundResponse({ description: 'Subclass not found or no prepared spells' })
   findSpells(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findSubclassSpells.execute(slug, query.page, query.limit);
+    return this.findSubclassSpells.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/spell-slots')
@@ -81,7 +81,7 @@ export class SubclassesController {
   @ApiOkResponse({ description: 'Paginated subclass spell slot table' })
   @ApiNotFoundResponse({ description: 'Subclass not found or no spellcasting slots' })
   findSpellSlots(@Param('slug') slug: string, @Query() query: PaginationQueryDto) {
-    return this.findSubclassSpellSlots.execute(slug, query.page, query.limit);
+    return this.findSubclassSpellSlots.execute(slug, query.cursor, query.limit);
   }
 
   @Get(':slug/spellcasting')

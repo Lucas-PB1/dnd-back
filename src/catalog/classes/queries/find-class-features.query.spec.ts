@@ -25,7 +25,7 @@ describe('FindClassFeaturesQuery', () => {
   });
 
   it('filters features by maxLevel', async () => {
-    const result = await query.execute('fighter', 1, 50, 1);
+    const result = await query.execute('', undefined, 50, 1);
     expect(result.data).toEqual([{ name: 'A' }]);
   });
 

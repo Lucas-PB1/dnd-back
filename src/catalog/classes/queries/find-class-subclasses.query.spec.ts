@@ -20,9 +20,10 @@ describe('FindClassSubclassesQuery', () => {
   });
 
   it('validates class and paginates subclasses', async () => {
-    const result = await query.execute('fighter', 1, 20);
+    const result = await query.execute('fighter', undefined, 20);
     expect(catalogLookup.findClassOrFail).toHaveBeenCalledWith('fighter');
     expect(result.data).toEqual([{ slug: 'champion' }]);
+    expect(result.meta).toMatchObject({ hasMore: false, limit: 20 });
   });
 
   it('allows empty subclass list', async () => {

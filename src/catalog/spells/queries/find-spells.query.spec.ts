@@ -11,8 +11,6 @@ describe('FindSpellsQuery', () => {
       orderBy: jest.fn().mockReturnThis(),
       addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ slug: 'fireball' }]),
     };
@@ -22,7 +20,7 @@ describe('FindSpellsQuery', () => {
   });
 
   it('filters by level and school', async () => {
-    const result = await query.execute(1, 20, 'bola', 3, 'evocation');
+    const result = await query.execute(undefined, 20, 'bola', 3, 'evocation');
     expect(qb.andWhere).toHaveBeenCalledWith('spell.level = :level', { level: 3 });
     expect(qb.andWhere).toHaveBeenCalledWith('spell.schoolSlug = :schoolSlug', {
       schoolSlug: 'evocation',

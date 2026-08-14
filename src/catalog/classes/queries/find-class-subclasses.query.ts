@@ -6,7 +6,7 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import {
   filterRowsByEditionSlug,
   PaginatedResponseDto,
-  paginate,
+  paginateByKeys,
 } from '@common/dto/pagination.dto';
 import { SubclassResponseDto } from '@catalog/subclasses/dto/subclass-response.dto';
 import { ClassesMapper } from '../classes.mapper';
@@ -22,7 +22,7 @@ export class FindClassSubclassesQuery {
 
   async execute(
     classSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
     editionSlugs?: string[],
   ): Promise<PaginatedResponseDto<SubclassResponseDto>> {
@@ -30,13 +30,17 @@ export class FindClassSubclassesQuery {
 
     const rows = await this.subclassesRepo.find({
       where: { classSlug },
-      order: { subclassName: 'ASC' },
+      order: { subclassName: 'ASC', subclassSlug: 'ASC' },
     });
     const filtered = filterRowsByEditionSlug(rows, editionSlugs);
-    return paginate(
+    return paginateByKeys(
       filtered.map((row) => this.mapper.toSubclassDto(row)),
-      page,
-      limit,
+      {
+        cursor,
+        limit,
+        keyNames: ['name', 'slug'],
+        encodeRow: (row) => ({ name: row.name, slug: row.slug }),
+      },
     );
   }
 }

@@ -6,11 +6,16 @@ import {
   applyEditionSlugFilter,
   applyIlikeSearch,
   PaginatedResponseDto,
-  paginateQb,
+  paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { FeatResponseDto } from '../dto/feat-response.dto';
 import { FeatSummaryResponseDto } from '../dto/feat-summary-response.dto';
 import { FeatsMapper } from '../feats.mapper';
+
+const FEAT_CURSOR_KEYS = [
+  { expr: 'feat.featName', name: 'featName' },
+  { expr: 'feat.featSlug', name: 'featSlug' },
+] as const;
 
 @Injectable()
 export class FindFeatsQuery {
@@ -21,7 +26,7 @@ export class FindFeatsQuery {
   ) {}
 
   async execute(
-    page = 1,
+    cursor?: string,
     limit = 20,
     q?: string,
     category?: string,
@@ -30,7 +35,8 @@ export class FindFeatsQuery {
   ): Promise<PaginatedResponseDto<FeatResponseDto | FeatSummaryResponseDto>> {
     const qb = this.featsRepo
       .createQueryBuilder('feat')
-      .orderBy('feat.featName', 'ASC');
+      .orderBy('feat.featName', 'ASC')
+      .addOrderBy('feat.featSlug', 'ASC');
 
     if (fields === 'summary') {
       qb.select(['feat.featSlug', 'feat.featName', 'feat.categorySlug']);
@@ -50,7 +56,15 @@ export class FindFeatsQuery {
     }
     applyEditionSlugFilter(qb, 'feat.editionSlug', editionSlugs);
 
-    const { rows, meta } = await paginateQb(qb, page, limit);
+    const { rows, meta } = await paginateQbCursor(qb, {
+      cursor,
+      limit,
+      keys: FEAT_CURSOR_KEYS,
+      encodeRow: (row) => ({
+        featName: row.featName,
+        featSlug: row.featSlug,
+      }),
+    });
     const data =
       fields === 'summary'
         ? rows.map((row) => this.mapper.toSummaryDto(row))

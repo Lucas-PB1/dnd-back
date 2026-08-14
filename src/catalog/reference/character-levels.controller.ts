@@ -12,6 +12,6 @@ export class CharacterLevelsController {
   @ApiOperation({ summary: 'Character level table — XP thresholds and proficiency bonus (paginated)' })
   @ApiOkResponse({ description: 'Paginated character level table' })
   findAll(@Query() query: PaginationQueryDto) {
-    return this.findCharacterLevels.execute(query.page, query.limit);
+    return this.findCharacterLevels.execute(query.cursor, query.limit);
   }
 }

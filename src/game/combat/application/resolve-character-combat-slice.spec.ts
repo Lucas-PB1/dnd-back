@@ -1,130 +1,99 @@
 import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
 import { resolveCharacterCombatSlice } from './resolve-character-combat-slice';
 
-/**
- * Conta leituras em `player_character_item` no caminho do combat slice.
- * Usado como baseline/after da Fase 2.1 (dedupe de inventário).
- */
-describe('resolveCharacterCombatSlice inventory query count', () => {
-  it('loads inventory once when resolvers accept a shared snapshot', async () => {
+describe('resolveCharacterCombatSlice combat bundle', () => {
+  it('loads combat data via one RPC and reuses the snapshot', async () => {
     const inventoryRows = [
       {
         characterId: 'ch1',
         itemSlug: 'leather-armor',
+        quantity: 1,
         location: 'equipped',
         equipmentSlot: 'armor',
         attuned: false,
+        isPactWeapon: false,
+        attachedCharmSlug: null,
         attachedCoverageSlug: null,
-        attachedCoverageAttuned: false,
         attachedCoverageBonus: null,
+        attachedCoverageAttuned: false,
+        attachedCoverageSpellSlug: null,
+        boundSpellSlug: null,
+        instanceProperties: null,
+        containedInItemSlug: null,
       },
       {
         characterId: 'ch1',
         itemSlug: 'longsword',
+        quantity: 1,
         location: 'equipped',
         equipmentSlot: 'main_hand',
         attuned: false,
+        isPactWeapon: false,
+        attachedCharmSlug: null,
         attachedCoverageSlug: null,
-        attachedCoverageAttuned: false,
         attachedCoverageBonus: null,
-      },
-      {
-        characterId: 'ch1',
-        itemSlug: 'rations',
-        location: 'backpack',
-        equipmentSlot: null,
-        attuned: false,
-        attachedCoverageSlug: null,
         attachedCoverageAttuned: false,
-        attachedCoverageBonus: null,
+        attachedCoverageSpellSlug: null,
+        boundSpellSlug: null,
+        instanceProperties: null,
+        containedInItemSlug: null,
       },
     ];
 
-    const findCalls: unknown[] = [];
-    const existCalls: unknown[] = [];
-    const inventoryItems = {
-      find: jest.fn(async (opts: unknown) => {
-        findCalls.push(opts);
-        return inventoryRows;
-      }),
-      exist: jest.fn(async (opts: unknown) => {
-        existCalls.push(opts);
-        return false;
-      }),
+    const dataSource = {
+      query: jest.fn().mockResolvedValue([
+        {
+          bundle: {
+            inventory: inventoryRows,
+            activeItemSlugs: ['leather-armor', 'longsword'],
+            items: [
+              { slug: 'leather-armor', name: 'Couro', properties: {} },
+              { slug: 'longsword', name: 'Espada longa', properties: {} },
+            ],
+            armor: [
+              {
+                itemSlug: 'leather-armor',
+                itemName: 'Couro',
+                categorySlug: 'light',
+                acBase: 11,
+                strengthReq: null,
+                stealthDisadvantage: false,
+              },
+            ],
+            unarmoredDefenses: [],
+          },
+        },
+      ]),
     };
 
     const permanentItemEffects = {
-      resolve: jest.fn(async (_id: string, opts?: { inventoryRows?: unknown[] }) => {
-        // Se o slice passar snapshot, o service não precisa achar de novo —
-        // o mock só registra se ainda cair no repo via slice.
-        if (!opts?.inventoryRows) {
-          await inventoryItems.find({ where: { characterId: 'ch1' } });
-        }
-        return {
-          abilityBonuses: {},
-          abilityScoreCaps: {},
-          acBonus: 0,
-          sourceNames: [],
-          attackBonus: 0,
-          damageBonus: 0,
-          speedBonusMeters: 0,
-          hpBonus: 0,
-        };
+      resolve: jest.fn().mockResolvedValue({
+        abilityBonuses: {},
+        abilityScoreCaps: {},
+        acBonus: 0,
+        sourceNames: [],
+        attackBonus: 0,
+        damageBonus: 0,
+        speedBonusMeters: 0,
+        hpBonus: 0,
       }),
     };
 
     const equippedArmorClass = {
-      resolve: jest.fn(
-        async (
-          _id: string,
-          _scores: unknown,
-          ctx: { equippedItems?: unknown[] } = {},
-        ) => {
-          if (!ctx.equippedItems) {
-            await inventoryItems.find({
-              where: { characterId: 'ch1', location: 'equipped' },
-            });
-          }
-          return { armorClass: 11, armorClassNote: 'test' };
-        },
-      ),
+      resolve: jest.fn().mockResolvedValue({
+        armorClass: 11,
+        armorClassNote: 'test',
+      }),
     };
-
     const equippedWeaponAttacks = {
-      resolve: jest.fn(
-        async (
-          _id: string,
-          _scores: unknown,
-          ctx: { equippedItems?: unknown[] },
-        ) => {
-          if (!ctx.equippedItems) {
-            await inventoryItems.find({
-              where: {
-                characterId: 'ch1',
-                location: 'equipped',
-              },
-            });
-          }
-          return [];
-        },
-      ),
+      resolve: jest.fn().mockResolvedValue([]),
     };
-
     const equipmentCompliance = {
-      resolve: jest.fn(
-        async (_id: string, input: { equippedItems?: unknown[] }) => {
-          if (!input.equippedItems) {
-            await inventoryItems.find({
-              where: { characterId: 'ch1', location: 'equipped' },
-            });
-          }
-          return {
-            warnings: [],
-            cannotCastSpells: false,
-            speedPenaltyMeters: 0,
-          };
-        },
-      ),
+      resolve: jest.fn().mockResolvedValue({
+        warnings: [],
+        cannotCastSpells: false,
+        speedPenaltyMeters: 0,
+      }),
     };
 
     await resolveCharacterCombatSlice({
@@ -139,32 +108,32 @@ describe('resolveCharacterCombatSlice inventory query count', () => {
       fightingStyleSlugs: [],
       masteredWeaponSlugs: [],
       sizeCategory: 'medium',
+      dataSource: dataSource as never,
       equippedArmorClass: equippedArmorClass as never,
       equippedWeaponAttacks: equippedWeaponAttacks as never,
       equipmentCompliance: equipmentCompliance as never,
-      inventoryItems: inventoryItems as never,
       permanentItemEffects: permanentItemEffects as never,
     });
 
-    const inventoryReads = findCalls.length + existCalls.length;
-    // After Fase 2.1: 1 find (all rows). Before: 1 find all + 1 exist + 3 find equipped = 5.
-    expect({
-      findCalls: findCalls.length,
-      existCalls: existCalls.length,
-      inventoryReads,
-    }).toEqual({
-      findCalls: 1,
-      existCalls: 0,
-      inventoryReads: 1,
-    });
+    expect(dataSource.query).toHaveBeenCalledTimes(1);
+    expect(dataSource.query).toHaveBeenCalledWith(
+      expect.stringContaining('get_character_combat_bundle'),
+      ['ch1', 'fighter', null],
+    );
     expect(permanentItemEffects.resolve).toHaveBeenCalledWith(
       'ch1',
-      expect.objectContaining({ inventoryRows }),
+      expect.objectContaining({
+        inventoryRows: expect.any(Array),
+        catalogItems: expect.any(Array),
+      }),
     );
     expect(equippedArmorClass.resolve).toHaveBeenCalledWith(
       'ch1',
       expect.anything(),
-      expect.objectContaining({ equippedItems: expect.any(Array) }),
+      expect.objectContaining({
+        equippedItems: expect.any(Array),
+        armorCatalogRows: expect.any(Array),
+      }),
     );
   });
 });

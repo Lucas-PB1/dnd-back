@@ -31,5 +31,6 @@ export function corsConfig(): CorsOptions {
       callback(null, false);
     },
     credentials: true,
+    exposedHeaders: ['X-Response-Time'],
   };
 }

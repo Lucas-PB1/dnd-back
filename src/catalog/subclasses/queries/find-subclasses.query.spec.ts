@@ -8,8 +8,6 @@ describe('FindSubclassesQuery', () => {
     orderBy: jest.Mock;
     addOrderBy: jest.Mock;
     andWhere: jest.Mock;
-    getCount: jest.Mock;
-    skip: jest.Mock;
     take: jest.Mock;
     getMany: jest.Mock;
   };
@@ -19,8 +17,6 @@ describe('FindSubclassesQuery', () => {
       orderBy: jest.fn().mockReturnThis(),
       addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ subclassSlug: 'champion' }]),
     };
@@ -30,7 +26,7 @@ describe('FindSubclassesQuery', () => {
   });
 
   it('filters by class and maps', async () => {
-    const result = await query.execute(1, 20, 'campe', 'fighter');
+    const result = await query.execute(undefined, 20, 'campe', 'fighter');
     expect(qb.andWhere).toHaveBeenCalledWith('sc.classSlug = :classSlug', {
       classSlug: 'fighter',
     });
@@ -38,7 +34,7 @@ describe('FindSubclassesQuery', () => {
   });
 
   it('skips class filter when blank', async () => {
-    await query.execute(1, 20);
+    await query.execute(undefined, 20);
     expect(qb.andWhere).not.toHaveBeenCalledWith(
       'sc.classSlug = :classSlug',
       expect.anything(),

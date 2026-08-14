@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, In, Repository } from 'typeorm';
+import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacterSkill } from './player-character-skill.entity';
 import {
   PlayerCharacterEquipment,
@@ -52,16 +52,7 @@ export class CharacterSheetRepository {
   ) {}
 
   private loadDeps() {
-    return {
-      dataSource: this.dataSource,
-      skills: this.skills,
-      speciesChoices: this.speciesChoices,
-      options: this.options,
-      feats: this.feats,
-      spells: this.spells,
-      equipment: this.equipment,
-      languages: this.languages,
-    };
+    return { dataSource: this.dataSource };
   }
 
   private syncDeps() {

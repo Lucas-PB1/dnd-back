@@ -59,18 +59,18 @@ describe('Fighting styles queries', () => {
   it('findAll paginates and maps rows', async () => {
     const qb = {
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([sample]),
     };
     repo.createQueryBuilder.mockReturnValue(qb as never);
 
-    const result = await findAll.execute(1, 20, 'fighter');
+    const result = await findAll.execute(undefined, 20, 'fighter');
     expect(qb.andWhere).toHaveBeenCalled();
     expect(result.data).toHaveLength(1);
     expect(result.data[0].slug).toBe('dueling');
-    expect(result.meta.total).toBe(1);
+    expect(result.meta.hasMore).toBe(false);
+    expect(result.meta.nextCursor).toBeNull();
   });
 });

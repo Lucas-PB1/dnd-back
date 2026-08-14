@@ -4,10 +4,15 @@ import { Repository } from 'typeorm';
 import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
 import {
   PaginatedResponseDto,
-  paginateQb,
+  paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { FightingStyleResponseDto } from '../dto/fighting-style-response.dto';
 import { FightingStylesMapper } from '../fighting-styles.mapper';
+
+const STYLE_CURSOR_KEYS = [
+  { expr: 'style.name', name: 'name' },
+  { expr: 'style.slug', name: 'slug' },
+] as const;
 
 @Injectable()
 export class FindFightingStylesQuery {
@@ -18,14 +23,15 @@ export class FindFightingStylesQuery {
   ) {}
 
   async execute(
-    page = 1,
+    cursor?: string,
     limit = 20,
     classSlug?: string,
     q?: string,
   ): Promise<PaginatedResponseDto<FightingStyleResponseDto>> {
     const qb = this.stylesRepo
       .createQueryBuilder('style')
-      .orderBy('style.name', 'ASC');
+      .orderBy('style.name', 'ASC')
+      .addOrderBy('style.slug', 'ASC');
 
     const trimmedQ = q?.trim();
     if (trimmedQ) {
@@ -50,7 +56,12 @@ export class FindFightingStylesQuery {
       );
     }
 
-    const { rows, meta } = await paginateQb(qb, page, limit);
+    const { rows, meta } = await paginateQbCursor(qb, {
+      cursor,
+      limit,
+      keys: STYLE_CURSOR_KEYS,
+      encodeRow: (row) => ({ name: row.name, slug: row.slug }),
+    });
     return { data: rows.map((row) => this.mapper.toDto(row)), meta };
   }
 }

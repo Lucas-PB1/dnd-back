@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbClassFeature } from '@entities/views/v-phb-class-feature.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { ClassFeatureResponseDto } from '../dto/class-feature-response.dto';
 import { ClassesMapper } from '../classes.mapper';
 
@@ -18,7 +22,7 @@ export class FindClassFeaturesQuery {
 
   async execute(
     classSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 50,
     maxLevel?: number,
   ): Promise<PaginatedResponseDto<ClassFeatureResponseDto>> {
@@ -32,12 +36,18 @@ export class FindClassFeaturesQuery {
       rows = rows.filter((row) => row.featureLevel <= maxLevel);
     }
 
-    return paginateOrNotFound(
-      rows,
-      (row) => this.mapper.toClassFeatureDto(row),
-      page,
-      limit,
-      `Class '${classSlug}' has no class features data`,
+    requireNonEmpty(rows, `Class '${classSlug}' has no class features data`);
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toClassFeatureDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['featureLevel', 'featureName'],
+        encodeRow: (row) => ({
+          featureLevel: row.featureLevel,
+          featureName: row.featureName,
+        }),
+      },
     );
   }
 }

@@ -9,9 +9,8 @@ describe('FindClassesQuery', () => {
   beforeEach(() => {
     qb = {
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([{ classSlug: 'fighter' }]),
     };
@@ -21,7 +20,7 @@ describe('FindClassesQuery', () => {
   });
 
   it('searches and maps', async () => {
-    const result = await query.execute(1, 20, 'guer');
+    const result = await query.execute(undefined, 20, 'guer');
     expect(qb.andWhere).toHaveBeenCalled();
     expect(result.data).toEqual([{ slug: 'fighter' }]);
   });

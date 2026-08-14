@@ -6,11 +6,16 @@ import {
   applyIlikeSearch,
   DEFAULT_PHB_EDITION_SLUG,
   PaginatedResponseDto,
-  paginateQb,
+  paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { SpeciesResponseDto } from '../dto/species-response.dto';
 import { SpeciesSummaryResponseDto } from '../dto/species-summary-response.dto';
 import { SpeciesMapper } from '../species.mapper';
+
+const SPECIES_CURSOR_KEYS = [
+  { expr: 'species.name', name: 'name' },
+  { expr: 'species.slug', name: 'slug' },
+] as const;
 
 @Injectable()
 export class FindSpeciesQuery {
@@ -21,7 +26,7 @@ export class FindSpeciesQuery {
   ) {}
 
   async execute(
-    page = 1,
+    cursor?: string,
     limit = 20,
     q?: string,
     editionSlugs?: string[],
@@ -31,7 +36,8 @@ export class FindSpeciesQuery {
   > {
     const qb = this.speciesRepo
       .createQueryBuilder('species')
-      .orderBy('species.name', 'ASC');
+      .orderBy('species.name', 'ASC')
+      .addOrderBy('species.slug', 'ASC');
 
     if (fields === 'summary') {
       qb.select([
@@ -61,7 +67,12 @@ export class FindSpeciesQuery {
       );
     }
 
-    const { rows, meta } = await paginateQb(qb, page, limit);
+    const { rows, meta } = await paginateQbCursor(qb, {
+      cursor,
+      limit,
+      keys: SPECIES_CURSOR_KEYS,
+      encodeRow: (row) => ({ name: row.name, slug: row.slug }),
+    });
     const data =
       fields === 'summary'
         ? rows.map((row) => this.mapper.toSummaryDto(row))

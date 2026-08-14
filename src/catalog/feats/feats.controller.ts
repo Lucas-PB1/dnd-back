@@ -36,7 +36,7 @@ export class FeatsController {
   @ApiOkResponse({ description: 'Paginated feat list' })
   findAll(@Query() query: FeatsQueryDto) {
     return this.findFeats.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.category,
@@ -79,6 +79,6 @@ export class FeatsController {
     @Param('slug') slug: string,
     @Query() query: PaginationQueryDto,
   ): Promise<PaginatedResponseDto<FeatOptionResponseDto>> {
-    return this.findFeatOptions.execute(slug, query.page, query.limit);
+    return this.findFeatOptions.execute(slug, query.cursor, query.limit);
   }
 }

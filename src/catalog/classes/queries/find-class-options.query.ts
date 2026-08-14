@@ -5,7 +5,7 @@ import { PhbOptionValue } from '@entities/phb-option.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import {
   PaginatedResponseDto,
-  paginate,
+  paginateByKeys,
 } from '@common/dto/pagination.dto';
 import { ClassOptionResponseDto } from '../dto/class-option-response.dto';
 
@@ -31,7 +31,7 @@ export class FindClassOptionsQuery {
   async execute(
     classSlug: string,
     characterLevel = 20,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<ClassOptionResponseDto>> {
     await this.catalogLookup.findClassOrFail(classSlug);
@@ -56,7 +56,12 @@ export class FindClassOptionsQuery {
        ORDER BY def.unlock_level ASC NULLS FIRST, def.sort_order ASC, def.option_key ASC, val.sort_order ASC`,
       [classSlug, characterLevel],
     );
-    return paginate(this.groupOptions(rows), page, limit);
+    return paginateByKeys(this.groupOptions(rows), {
+      cursor,
+      limit,
+      keyNames: ['optionKey'],
+      encodeRow: (row) => ({ optionKey: row.optionKey }),
+    });
   }
 
   private groupOptions(rows: OptionRow[]): ClassOptionResponseDto[] {

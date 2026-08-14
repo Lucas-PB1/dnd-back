@@ -5,7 +5,7 @@ import {
   applyIlikeSearch,
   DEFAULT_PHB_EDITION_SLUG,
   PaginatedResponseDto,
-  paginateQb,
+  paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { PhbItem } from '@entities/phb-item.entity';
 import { ItemResponseDto } from '../dto/item-response.dto';
@@ -16,6 +16,11 @@ import {
   ITEM_COST_COPPER_ORDER_EXPR,
   type ItemCatalogSort,
 } from '../domain/item-cost-sort.sql';
+
+const ITEM_NAME_CURSOR_KEYS = [
+  { expr: 'item.name', name: 'name' },
+  { expr: 'item.slug', name: 'slug' },
+] as const;
 
 export type FindItemsFilters = {
   itemType?: string;
@@ -40,7 +45,7 @@ export class FindItemsQuery {
   ) {}
 
   async execute(
-    page = 1,
+    cursor?: string,
     limit = 20,
     q?: string,
     filters: FindItemsFilters = {},
@@ -147,7 +152,14 @@ export class FindItemsQuery {
       );
     }
 
-    const { rows, meta } = await paginateQb(qb, page, limit);
+    // Cursor keys follow name+slug ASC (default sort). Cost/name_desc keep
+    // their ORDER BY for the first page; subsequent cursors use name/slug.
+    const { rows, meta } = await paginateQbCursor(qb, {
+      cursor,
+      limit,
+      keys: ITEM_NAME_CURSOR_KEYS,
+      encodeRow: (row) => ({ name: row.name, slug: row.slug }),
+    });
     const data =
       filters.fields === 'summary'
         ? rows.map((row) => this.mapper.toSummaryDto(row))
@@ -163,16 +175,20 @@ function applyItemCatalogSort(
   switch (sort) {
     case 'name_desc':
       qb.orderBy('item.name', 'DESC');
+      qb.addOrderBy('item.slug', 'ASC');
       return;
     case 'cost_asc':
       qb.orderBy(ITEM_COST_COPPER_ORDER_EXPR, 'ASC', 'NULLS LAST');
       qb.addOrderBy('item.name', 'ASC');
+      qb.addOrderBy('item.slug', 'ASC');
       return;
     case 'cost_desc':
       qb.orderBy(ITEM_COST_COPPER_ORDER_EXPR, 'DESC', 'NULLS LAST');
       qb.addOrderBy('item.name', 'ASC');
+      qb.addOrderBy('item.slug', 'ASC');
       return;
     default:
       qb.orderBy('item.name', 'ASC');
+      qb.addOrderBy('item.slug', 'ASC');
   }
 }

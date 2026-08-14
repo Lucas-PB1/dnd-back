@@ -27,9 +27,8 @@ describe('FindWeaponsQuery', () => {
   let qb: {
     innerJoinAndSelect: jest.Mock;
     orderBy: jest.Mock;
+    addOrderBy: jest.Mock;
     andWhere: jest.Mock;
-    getCount: jest.Mock;
-    skip: jest.Mock;
     take: jest.Mock;
     getMany: jest.Mock;
   };
@@ -38,9 +37,8 @@ describe('FindWeaponsQuery', () => {
     qb = {
       innerJoinAndSelect: jest.fn().mockReturnThis(),
       orderBy: jest.fn().mockReturnThis(),
+      addOrderBy: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
-      getCount: jest.fn().mockResolvedValue(1),
-      skip: jest.fn().mockReturnThis(),
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([weaponRow()]),
     };
@@ -57,7 +55,7 @@ describe('FindWeaponsQuery', () => {
   });
 
   it('builds query, paginates and maps weapons', async () => {
-    const result = await query.execute(1, 20, 'sword', 'martial');
+    const result = await query.execute(undefined, 20, 'sword', 'martial');
 
     expect(weaponsRepo.createQueryBuilder).toHaveBeenCalledWith('weapon');
     expect(qb.innerJoinAndSelect).toHaveBeenCalledWith('weapon.item', 'item');
@@ -69,12 +67,11 @@ describe('FindWeaponsQuery', () => {
     expect(qb.andWhere).toHaveBeenCalledWith('weapon.category = :category', {
       category: 'martial',
     });
-    expect(qb.getCount).toHaveBeenCalled();
-    expect(qb.getMany).toHaveBeenCalled();
+        expect(qb.getMany).toHaveBeenCalled();
     expect(mapper.toWeaponDto).toHaveBeenCalled();
     expect(result).toEqual({
       data: [{ slug: 'longsword' }],
-      meta: { page: 1, limit: 20, total: 1, totalPages: 1 },
+      meta: { limit: 20, nextCursor: null, hasMore: false },
     });
   });
 

@@ -5,10 +5,15 @@ import { PhbSkill } from '@entities/phb-skill.entity';
 import {
   applyIlikeSearch,
   PaginatedResponseDto,
-  paginateQb,
+  paginateQbCursor,
 } from '@common/dto/pagination.dto';
 import { SkillResponseDto } from '../dto/skill-response.dto';
 import { SkillsMapper } from '../skills.mapper';
+
+const SKILL_CURSOR_KEYS = [
+  { expr: 'skill.name', name: 'name' },
+  { expr: 'skill.slug', name: 'slug' },
+] as const;
 
 @Injectable()
 export class FindSkillsQuery {
@@ -19,7 +24,7 @@ export class FindSkillsQuery {
   ) {}
 
   async execute(
-    page = 1,
+    cursor?: string,
     limit = 20,
     q?: string,
     ability?: string,
@@ -27,7 +32,8 @@ export class FindSkillsQuery {
     const qb = this.skillsRepo
       .createQueryBuilder('skill')
       .leftJoinAndSelect('skill.ability', 'ability')
-      .orderBy('skill.name', 'ASC');
+      .orderBy('skill.name', 'ASC')
+      .addOrderBy('skill.slug', 'ASC');
 
     applyIlikeSearch(qb, [
       'skill.name',
@@ -41,7 +47,12 @@ export class FindSkillsQuery {
       qb.andWhere('ability.slug = :abilitySlug', { abilitySlug });
     }
 
-    const { rows, meta } = await paginateQb(qb, page, limit);
+    const { rows, meta } = await paginateQbCursor(qb, {
+      cursor,
+      limit,
+      keys: SKILL_CURSOR_KEYS,
+      encodeRow: (row) => ({ name: row.name, slug: row.slug }),
+    });
     return { data: rows.map((row) => this.mapper.toDto(row)), meta };
   }
 }

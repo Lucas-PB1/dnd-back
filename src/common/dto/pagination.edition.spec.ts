@@ -1,7 +1,6 @@
 import {
   DEFAULT_PHB_EDITION_SLUG,
   filterRowsByEditionSlug,
-  normalizePagination,
   parseEditionSlugsParam,
 } from './pagination.dto';
 
@@ -34,12 +33,5 @@ describe('edition slug catalog helpers', () => {
 
   it('exports default PHB edition constant', () => {
     expect(DEFAULT_PHB_EDITION_SLUG).toBe('phb-2024-pt');
-  });
-});
-
-describe('normalizePagination', () => {
-  it('clamps page and limit', () => {
-    expect(normalizePagination(0, 0)).toEqual({ page: 1, limit: 1 });
-    expect(normalizePagination(2, 200)).toEqual({ page: 2, limit: 100 });
   });
 });

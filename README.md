@@ -118,7 +118,7 @@ Header: `Authorization: Bearer <supabase_access_token>`
 | `GET /backgrounds` | Lista antecedentes (paginado) |
 | `GET /backgrounds/:slug` | Detalhe por slug (ex.: `acolyte`) |
 
-Query de paginação: `?page=1&limit=20` (default 20, max 100). Slugs em **inglês** (como no seed).
+Query de paginação: `?cursor=&limit=20` (default 20, max 100); `meta.nextCursor` / `hasMore`. Slugs em **inglês** (como no seed).
 
 ## Stack (decisão de infra)
 

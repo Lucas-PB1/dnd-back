@@ -3,7 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { VPhbBackgroundLanguage } from '@entities/views/v-phb-background-language.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
-import { PaginatedResponseDto, paginateOrNotFound } from '@common/dto/pagination.dto';
+import { requireNonEmpty } from '@common/require-found';
+import {
+  PaginatedResponseDto,
+  paginateByKeys,
+} from '@common/dto/pagination.dto';
 import { BackgroundLanguageResponseDto } from '../dto/background-language-response.dto';
 import { BackgroundsMapper } from '../backgrounds.mapper';
 
@@ -18,20 +22,26 @@ export class FindBackgroundLanguagesQuery {
 
   async execute(
     backgroundSlug: string,
-    page = 1,
+    cursor?: string,
     limit = 20,
   ): Promise<PaginatedResponseDto<BackgroundLanguageResponseDto>> {
     await this.catalogLookup.findBackgroundOrFail(backgroundSlug);
     const rows = await this.languagesRepo.find({
       where: { backgroundSlug },
-      order: { languageName: 'ASC' },
+      order: { languageName: 'ASC', languageSlug: 'ASC' },
     });
-    return paginateOrNotFound(
+    requireNonEmpty(
       rows,
-      (row) => this.mapper.toLanguageDto(row),
-      page,
-      limit,
       `Background '${backgroundSlug}' has no fixed languages`,
+    );
+    return paginateByKeys(
+      rows.map((row) => this.mapper.toLanguageDto(row)),
+      {
+        cursor,
+        limit,
+        keyNames: ['name', 'slug'],
+        encodeRow: (row) => ({ name: row.name, slug: row.slug }),
+      },
     );
   }
 }

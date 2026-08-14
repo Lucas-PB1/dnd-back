@@ -24,7 +24,7 @@ export class WeaponsController {
   @ApiOkResponse({ description: 'Paginated weapon list' })
   findAll(@Query() query: WeaponsQueryDto) {
     return this.findWeapons.execute(
-      query.page,
+      query.cursor,
       query.limit,
       query.q,
       query.category,

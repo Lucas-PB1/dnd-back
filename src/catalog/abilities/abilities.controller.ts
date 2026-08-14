@@ -12,6 +12,6 @@ export class AbilitiesController {
   @ApiOperation({ summary: 'List PHB abilities (paginated)' })
   @ApiOkResponse({ description: 'Paginated ability list' })
   findAll(@Query() query: PaginationQueryDto) {
-    return this.findAbilities.execute(query.page, query.limit);
+    return this.findAbilities.execute(query.cursor, query.limit);
   }
 }
