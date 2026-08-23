@@ -74,6 +74,7 @@ export class FindItemsQuery {
       ?.split(',')
       .map((value) => value.trim())
       .filter(Boolean);
+
     if (types?.length === 1) {
       qb.andWhere('item.itemType = :itemType', { itemType: types[0] });
     } else if (types && types.length > 1) {
@@ -111,6 +112,7 @@ export class FindItemsQuery {
       ?.split(',')
       .map((value) => value.trim())
       .filter(Boolean);
+
     if (kinds?.length === 1) {
       qb.andWhere(`(item.properties->>'kind') = :kind`, { kind: kinds[0] });
     } else if (kinds && kinds.length > 1) {
@@ -142,6 +144,7 @@ export class FindItemsQuery {
     const editionSlugs = filters.editionSlugs
       ?.map((slug) => slug.trim())
       .filter(Boolean);
+      
     if (editionSlugs?.length) {
       qb.andWhere(
         `COALESCE(item.properties->>'editionSlug', :defaultEdition) IN (:...editionSlugs)`,
@@ -160,10 +163,12 @@ export class FindItemsQuery {
       keys: ITEM_NAME_CURSOR_KEYS,
       encodeRow: (row) => ({ name: row.name, slug: row.slug }),
     });
+
     const data =
       filters.fields === 'summary'
         ? rows.map((row) => this.mapper.toSummaryDto(row))
         : rows.map((row) => this.mapper.toDto(row));
+
     return { data, meta };
   }
 }
