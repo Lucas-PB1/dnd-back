@@ -83,6 +83,7 @@ async function recoverArtifactRandomSpellUses(
   dataSource: DataSource,
   characterId: string,
 ): Promise<void> {
+  if (typeof dataSource?.getRepository !== 'function') return;
   const items = dataSource.getRepository(PlayerCharacterItem);
   const rows = await items.find({ where: { characterId } });
   for (const row of rows) {

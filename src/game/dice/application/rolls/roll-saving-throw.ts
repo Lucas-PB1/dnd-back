@@ -26,6 +26,9 @@ import type { CharacterResourceSpender } from '@game/session/domain/character-re
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 
 async function loadAbilityPenalties(dataSource: DataSource, characterId: string) {
+  if (typeof dataSource?.getRepository !== 'function') {
+    return collectAbilityPenaltiesFromInventory([]);
+  }
   const rows = await dataSource.getRepository(PlayerCharacterItem).find({
     where: { characterId },
   });
