@@ -28,7 +28,7 @@ describe('corsConfig', () => {
     expect(cb).toHaveBeenCalledWith(null, true);
   });
 
-  it('allows localhost and 127.0.0.1 frontends', () => {
+  it('allows localhost, 127.0.0.1 and [::1] frontends', () => {
     const cb1 = jest.fn();
     originCb().origin('http://localhost:3001', cb1);
     expect(cb1).toHaveBeenCalledWith(null, true);
@@ -36,6 +36,10 @@ describe('corsConfig', () => {
     const cb2 = jest.fn();
     originCb().origin('http://127.0.0.1:3001', cb2);
     expect(cb2).toHaveBeenCalledWith(null, true);
+
+    const cb3 = jest.fn();
+    originCb().origin('http://[::1]:3001', cb3);
+    expect(cb3).toHaveBeenCalledWith(null, true);
   });
 
   it('allows FRONTEND_URL when set (single or comma-separated)', () => {

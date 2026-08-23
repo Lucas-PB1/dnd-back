@@ -1,11 +1,6 @@
 import type { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
-const LOCAL_FRONTENDS = [
-  'http://localhost:3001',
-  'http://127.0.0.1:3001',
-  'http://localhost:3000',
-  'http://127.0.0.1:3000',
-];
+const LOCAL_ORIGIN_REGEX = /^http:\/\/(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/;
 const VERCEL_APP_ORIGIN = /^https:\/\/[\w.-]+\.vercel\.app$/;
 
 function isAllowedOrigin(origin: string): boolean {
@@ -19,7 +14,7 @@ function isAllowedOrigin(origin: string): boolean {
   if (VERCEL_APP_ORIGIN.test(origin)) {
     return true;
   }
-  if (LOCAL_FRONTENDS.includes(origin)) {
+  if (LOCAL_ORIGIN_REGEX.test(origin)) {
     return true;
   }
   return false;
