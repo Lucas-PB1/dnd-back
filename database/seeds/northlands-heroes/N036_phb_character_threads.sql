@@ -43,7 +43,7 @@ VALUES
   'northlands-heroes-2024-en',
   'Marcado pela Maldição',
   'Azar pessoal que, ao disparar, pode ajudar aliados. Busca de expiação.',
-  'Features disparam quando o d20 (save / teste / ataque, conforme o intervalo) cai dentro do intervalo indicado. Features não se sobrepõem — após o gatilho, outra não dispara até o início do próximo turno depois que a duração acaba. Cada milestone substitui os benefícios anteriores deste thread (exceto o Least, que é o primeiro).',
+  'Os benefícios disparam quando o d20 (salvaguarda / teste / ataque, conforme o intervalo) cai dentro do intervalo indicado. Os benefícios não se sobrepõem — após o gatilho, outro não dispara até o início do próximo turno depois que a duração acaba. Cada marco substitui os benefícios anteriores deste thread (exceto o Menor, que é o primeiro).',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'northlands-heroes-2024-en:heroes-of-the-sagas'),
   2
 ),
@@ -61,7 +61,7 @@ VALUES
   'northlands-heroes-2024-en',
   'Atado ao Destino',
   'Sabe como (ou em que circunstância) vai morrer — não se vence nem se perde. Deve ser escolha consciente do jogador.',
-  'Pode não poder morrer “antes da hora”, mas chega ao fim em qualquer estado. Se morrer cedo sem ressurreição: o GM pode aplicar ferimento permanente, perda de item poderoso, Exhaustion até o próximo milestone, etc. (acordo jogador/GM).',
+  'Pode não poder morrer “antes da hora”, mas chega ao fim em qualquer estado. Se morrer cedo sem ressurreição: o GM pode aplicar ferimento permanente, perda de item poderoso, Exaustão até o próximo marco, etc. (acordo jogador/GM).',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'northlands-heroes-2024-en:heroes-of-the-sagas'),
   4
 ),
@@ -160,17 +160,17 @@ FROM (VALUES
   ('bloodsworn', 'greater', 'tenacity', 'Tenacidade', 'No início do turno, encerra Assustado, Incapacitado, Paralisado ou Atordoado (1/Descanso Longo).', NULL, 1),
   ('bloodsworn', 'superior', 'dire-oath', 'Juramento Terrível', 'Após Descanso Longo, nomeia uma criatura: vantagem em ataques e testes para achá-la/aprender sobre ela por 24h (recarrega em 7 dias).', NULL, 1),
   -- Cursemarked
-  ('cursemarked', 'least', 'tides-of-fate', 'Marés do Destino [1–3, Saves]', '−3 m de deslocamento; um aliado +3 m. Greater Sacrifice opcional (deslocamento 0 → aliado sem OA e ignora terreno difícil; 1/DL).', NULL, 1),
-  ('cursemarked', 'lesser', 'burdens-shield', 'Escudo do Fardo [1–5, Saves/Testes]', '−2 CA; aliado +2 CA. Substitui Least. Greater Sacrifice opcional (−4/+4 ou benefício de Marés).', NULL, 1),
-  ('cursemarked', 'greater', 'threads-entwined', 'Fios Entrelaçados [1–7, Saves/Testes/Ataques]', 'Sem Ações Bônus/Reações; aliado ganha Reação para Dash/Ajudar/Esconder/ataque. Substitui anteriores. Greater Sacrifice opcional (só move / abre mão da ação → ação extra do aliado, sem Magia).', NULL, 1),
-  ('cursemarked', 'superior', 'two-edged-gift', 'Dádiva de Dois Gumes [1–9, Saves/Testes/Ataques]', 'Metade do dano; próximo acerto do aliado causa dano máximo. Substitui anteriores. Greater Sacrifice → sem dano próprio; próximo ataque do aliado é crítico automático.', NULL, 1),
+  ('cursemarked', 'least', 'tides-of-fate', 'Marés do Destino [1–3, Salvaguardas]', '−3 m de deslocamento; um aliado +3 m. Grande Sacrifício opcional (deslocamento 0 → aliado sem ataques de oportunidade e ignora terreno difícil; 1/DL).', NULL, 1),
+  ('cursemarked', 'lesser', 'burdens-shield', 'Escudo do Fardo [1–5, Salvaguardas/Testes]', '−2 CA; aliado +2 CA. Substitui Menor. Grande Sacrifício opcional (−4/+4 ou benefício de Marés).', NULL, 1),
+  ('cursemarked', 'greater', 'threads-entwined', 'Fios Entrelaçados [1–7, Salvaguardas/Testes/Ataques]', 'Sem Ações Bônus/Reações; aliado ganha Reação para Disparar/Ajudar/Esconder-se/ataque. Substitui anteriores. Grande Sacrifício opcional (só se move / abre mão da ação → ação extra do aliado, sem Magia).', NULL, 1),
+  ('cursemarked', 'superior', 'two-edged-gift', 'Dádiva de Dois Gumes [1–9, Salvaguardas/Testes/Ataques]', 'Metade do dano; próximo acerto do aliado causa dano máximo. Substitui anteriores. Grande Sacrifício → sem dano próprio; próximo ataque do aliado é crítico automático.', NULL, 1),
   -- Explorer
   ('explorer', 'least', 'celebrity-explorer', 'Explorador Celebridade', '30% de desconto / frequentemente grátis em serviços comuns.', 'a', 1),
   ('explorer', 'least', 'explorers-aptitude', 'Aptidão de Explorador', 'Proficiência em Atletismo, História ou Percepção.', 'a', 2),
-  ('explorer', 'lesser', 'traversal-expert', 'Especialista em Travessia', 'Ação Bônus Dash + ignora Terreno Difícil + vantagem em Atletismo para escalar/saltar/nadar (1/DC ou DL).', 'a', 1),
+  ('explorer', 'lesser', 'traversal-expert', 'Especialista em Travessia', 'Ação Bônus Disparar + ignora Terreno Difícil + vantagem em Atletismo para escalar/saltar/nadar (1/DC ou DL).', 'a', 1),
   ('explorer', 'lesser', 'scouts-awareness', 'Alerta do Batedor', '1h: você e aliados a 9 m têm vantagem em saves vs armadilhas/perigos não mágicos (1/DL).', 'a', 2),
   ('explorer', 'greater', 'ennobled', 'Enobrecido', 'Título e propriedade; vantagem em Carisma com quem se impressiona.', 'a', 1),
-  ('explorer', 'greater', 'wayfarers-steps', 'Passos do Viajante', 'Não se perde; Ação Bônus Dash + até 4 aliados Dash sem OA (1/DL).', 'a', 2),
+  ('explorer', 'greater', 'wayfarers-steps', 'Passos do Viajante', 'Não se perde; Ação Bônus Disparar + até 4 aliados Disparar sem ataques de oportunidade (1/DL).', 'a', 2),
   ('explorer', 'superior', 'far-traveler', 'Viajante Distante', 'Ritmo Rápido sem penalidade; vantagem em acampamento/forrageio e Adestrar Animais.', NULL, 1),
   ('explorer', 'superior', 'one-with-the-land', 'Um com a Terra', 'Efeito semelhante a Commune with Nature em 1 minuto; 24h.', NULL, 2),
   -- Fatebound

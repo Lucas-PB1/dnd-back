@@ -146,6 +146,13 @@ export class InventoryItemResponseDto {
   })
   isCoverage!: boolean;
 
+  @ApiPropertyOptional({
+    example: 'large-vehicle',
+    nullable: true,
+    description: 'phb_item.properties.kind (transporte, coverage, etc.)',
+  })
+  propertiesKind!: string | null;
+
   @ApiProperty({
     example: false,
     description: 'True quando phb_item.properties.magic = true',

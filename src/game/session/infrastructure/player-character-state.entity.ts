@@ -77,4 +77,8 @@ export class PlayerCharacterState {
   /** Constelação brilhando na Forma Estrelada: archer | dragon | chalice. */
   @Column({ name: 'stellar_constellation', type: 'text', nullable: true })
   stellarConstellation!: string | null;
+
+  /** Veículo/montaria em que o PC está a bordo (game_actor). */
+  @Column({ name: 'boarded_actor_id', type: 'uuid', nullable: true })
+  boardedActorId!: string | null;
 }

@@ -13,6 +13,7 @@ import {
   itemEffectsStatus,
 } from '@game/inventory/domain/item-effects-active';
 import { parseItemWeightKg } from '@game/inventory/domain/encumbrance';
+import { itemPropertiesKind } from '@game/inventory/domain/item-kind';
 
 export function inventoryItemToDtoFromCatalog(
   catalogBySlug: Map<string, PhbItem>,
@@ -68,6 +69,7 @@ export function inventoryItemToDtoFromCatalog(
     attachedCoverageSpellSlug: row.attachedCoverageSpellSlug ?? null,
     boundSpellSlug: row.boundSpellSlug ?? null,
     isCoverage,
+    propertiesKind: itemPropertiesKind(props),
     isMagic,
     instanceProperties: row.instanceProperties ?? null,
     costText: catalogCostText(catalog?.cost ?? null),

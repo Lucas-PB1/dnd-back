@@ -45,6 +45,7 @@ export class FindFeatOptionsQuery {
         valueId: value.valueId,
         label: value.label,
         sortOrder: value.sortOrder,
+        benefit: value.benefit ?? value.level1Benefit ?? null,
       });
       valuesByKey.set(value.optionKey, list);
     }

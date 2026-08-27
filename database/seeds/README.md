@@ -11,7 +11,7 @@ Dados do catálogo PHB 2024 e Valdas Spire of Secrets. **Um arquivo por tabela.*
 | `valdas-gunslinger/G###_<tabela>.sql` | Classe Gunslinger (`G001`–`G028`) |
 | `valdas-player-pack-2/P###_<tabela>.sql` | Valdas Player Pack 2 (`P001`–`P014`) |
 | `steinhardt-eldritch-hunt/H###_<tabela>.sql` | Steinhardt Eldritch Hunt Player Pack (`H001`–`H025`) |
-| `northlands-heroes/N###_<tabela>.sql` | Northlands Worldbook — Heroes of the Sagas (`N001`–`N036`; Cap. 5 + Character Threads; veículos em `creatures/M003`) |
+| `northlands-heroes/N###_<tabela>.sql` | Northlands Worldbook — Heroes of the Sagas (`N001`–`N037`; Cap. 5 + Character Threads + longships em `N037`; veículos/templates em `creatures/M003`) |
 | `combat/C###_*.sql` | Economia/painel/recursos (`C001`–`C056`; Eir `C056`; Northlands C052–C055) |
 | `dmg/D###_*.sql` | Itens mágicos DMG 2024 Cap. 7 A–Z (`D010_phb_item`) |
 

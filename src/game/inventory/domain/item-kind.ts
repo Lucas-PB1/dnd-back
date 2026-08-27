@@ -24,6 +24,13 @@ export function isTransportItemKind(kind: string | null): boolean {
   );
 }
 
+/** Itens que podem virar game_actor vehicle/mount via Vincular. */
+export function isBoardableTransportItemKind(kind: string | null): boolean {
+  return (
+    kind === 'mount' || kind === 'drawn-vehicle' || kind === 'large-vehicle'
+  );
+}
+
 export function isContainerItem(
   properties: Record<string, unknown> | null | undefined,
   itemSlug: string,

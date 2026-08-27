@@ -1,5 +1,5 @@
 -- Armaduras e equipamento de aventura mundanos — Northlands Cap. 5
--- (sem montarias / trenós / longships — alinhar modelo de veículo antes)
+-- Longships / trenó: N037_phb_item_northlands_longships.sql (+ templates em creatures/M003)
 
 -- —— Armaduras ——
 INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, properties)

@@ -52,6 +52,7 @@ export class FindFeatOptionsBySlugsQuery {
         valueId: value.valueId,
         label: value.label,
         sortOrder: value.sortOrder,
+        benefit: value.benefit ?? value.level1Benefit ?? null,
       });
       valuesByOwnerKey.set(key, list);
     }

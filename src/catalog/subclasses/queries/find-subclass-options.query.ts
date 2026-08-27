@@ -87,12 +87,14 @@ export class FindSubclassOptionsQuery {
         valueId: string;
         valueLabel: string;
         sortOrder: number;
+        benefit: string | null;
       }[]
     >(
       `SELECT val.option_key AS "optionKey",
               val.value_id AS "valueId",
               val.label AS "valueLabel",
-              val.sort_order AS "sortOrder"
+              val.sort_order AS "sortOrder",
+              COALESCE(val.benefit, val.level1_benefit) AS "benefit"
        FROM rpg.phb_option_value val
        JOIN rpg.phb_option_def def
          ON def.scope = val.scope
@@ -121,6 +123,7 @@ export class FindSubclassOptionsQuery {
       valueId: string;
       valueLabel: string;
       sortOrder: number;
+      benefit: string | null;
     }[],
   ): SubclassOptionResponseDto[] {
     const valuesByKey = new Map<string, SubclassOptionResponseDto['values']>();
@@ -130,6 +133,7 @@ export class FindSubclassOptionsQuery {
         valueId: row.valueId,
         label: row.valueLabel,
         sortOrder: row.sortOrder,
+        benefit: row.benefit,
       });
       valuesByKey.set(row.optionKey, list);
     }

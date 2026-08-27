@@ -146,25 +146,33 @@ INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, 
            'stellarConstellation', 'chalice', 'Taça', 3)
          ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET label = EXCLUDED.label;
 
-INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order)
+INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order, benefit)
          VALUES ('subclass'::rpg.option_scope, (SELECT id FROM rpg.phb_subclass WHERE slug = 'hunter'),
-           'huntersPrey', 'colossus-slayer', 'Assassino de Colossos', 1)
-         ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET label = EXCLUDED.label;
+           'huntersPrey', 'colossus-slayer', 'Assassino de Colossos', 1,
+           'Ao atingir com arma uma criatura com PV abaixo do máximo, causa +1d8 de dano (1× por turno).')
+         ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE
+           SET label = EXCLUDED.label, benefit = EXCLUDED.benefit;
 
-INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order)
+INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order, benefit)
          VALUES ('subclass'::rpg.option_scope, (SELECT id FROM rpg.phb_subclass WHERE slug = 'hunter'),
-           'huntersPrey', 'horde-breaker', 'Destruidor de Hordas', 2)
-         ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET label = EXCLUDED.label;
+           'huntersPrey', 'horde-breaker', 'Destruidor de Hordas', 2,
+           '1× por turno, ao atacar com arma, pode atacar outra criatura a 1,5 m do alvo original (mesmo alcance, ainda não atacada neste turno).')
+         ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE
+           SET label = EXCLUDED.label, benefit = EXCLUDED.benefit;
 
-INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order)
+INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order, benefit)
          VALUES ('subclass'::rpg.option_scope, (SELECT id FROM rpg.phb_subclass WHERE slug = 'hunter'),
-           'defensiveTactics', 'multiattack-defense', 'Defesa Contra Ataques Múltiplos', 1)
-         ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET label = EXCLUDED.label;
+           'defensiveTactics', 'multiattack-defense', 'Defesa Contra Ataques Múltiplos', 1,
+           'Ao ser atingido por uma criatura, ela tem Desvantagem nas demais jogadas de ataque contra você neste turno.')
+         ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE
+           SET label = EXCLUDED.label, benefit = EXCLUDED.benefit;
 
-INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order)
+INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order, benefit)
          VALUES ('subclass'::rpg.option_scope, (SELECT id FROM rpg.phb_subclass WHERE slug = 'hunter'),
-           'defensiveTactics', 'escape-the-horde', 'Escapar de Hordas', 2)
-         ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE SET label = EXCLUDED.label;
+           'defensiveTactics', 'escape-the-horde', 'Escapar de Hordas', 2,
+           'Ataques de Oportunidade têm Desvantagem contra você.')
+         ON CONFLICT (scope, owner_id, option_key, value_id) DO UPDATE
+           SET label = EXCLUDED.label, benefit = EXCLUDED.benefit;
 
 INSERT INTO rpg.phb_option_value (scope, owner_id, option_key, value_id, label, sort_order)
          VALUES ('subclass'::rpg.option_scope, (SELECT id FROM rpg.phb_subclass WHERE slug = 'beast-master'),

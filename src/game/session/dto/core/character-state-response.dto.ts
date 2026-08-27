@@ -194,4 +194,11 @@ export class CharacterStateResponseDto {
     description: 'Constelação ativa na Forma Estrelada',
   })
   stellarConstellation!: string | null;
+
+  @ApiPropertyOptional({
+    example: null,
+    nullable: true,
+    description: 'game_actor (veículo/montaria) em que o PC está a bordo',
+  })
+  boardedActorId!: string | null;
 }

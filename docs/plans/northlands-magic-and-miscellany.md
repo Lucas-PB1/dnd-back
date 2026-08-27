@@ -15,7 +15,7 @@ JSON máquina: [`docs/source/northlands-cap5-extract.json`](../source/northlands
 | 86 itens mágicos (PT) | `N029` + overlay `northlands-cap5-magic-items-pt.json` | feito |
 | Espírito Curador (XGE) | `N024` + Spirit Caller L5 | feito |
 | Masterwork (cobertura) | `N034` | feito — attach `bonus=1` |
-| Montarias / trenós / longships | `M003` | feito — veículos Northlands |
+| Montarias / trenós / longships | `M003` + `N037` | feito — templates + itens de transporte (slug alinhado) |
 | Bestiário Cap. 5 + Leviathan Avatar | `M004` | feito — inclui summon `leviathan-avatar` |
 
 ## Contagens

@@ -9,6 +9,12 @@ export class FeatOptionValueDto {
 
   @ApiProperty({ example: 1 })
   sortOrder!: number;
+
+  @ApiPropertyOptional({
+    nullable: true,
+    example: 'Você pode usar magias desta lista.',
+  })
+  benefit!: string | null;
 }
 
 export class FeatOptionResponseDto {

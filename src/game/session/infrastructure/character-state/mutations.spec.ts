@@ -39,6 +39,7 @@ describe('mutations', () => {
     gigaMissileArmed: false,
     starryFormActive: false,
     stellarConstellation: null,
+    boardedActorId: null,
   } as PlayerCharacterState;
 
   const buildResponse = jest.fn().mockResolvedValue({ id: 'char1' });

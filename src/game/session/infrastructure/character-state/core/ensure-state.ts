@@ -30,6 +30,7 @@ export async function findOrCreateCharacterState(
       gigaMissileArmed: false,
       starryFormActive: false,
       stellarConstellation: null,
+      boardedActorId: null,
     });
     await stateRepo.save(row);
   }

@@ -9,6 +9,12 @@ export class SubclassOptionValueDto {
 
   @ApiProperty({ example: 1 })
   sortOrder!: number;
+
+  @ApiPropertyOptional({
+    nullable: true,
+    example: 'Você ganha +2 em jogadas de ataque à distância.',
+  })
+  benefit!: string | null;
 }
 
 export class SubclassOptionResponseDto {
