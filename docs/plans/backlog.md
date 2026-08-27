@@ -3,7 +3,7 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **abertos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-08-26 (Leviathan + Character Threads MVP)
+**Última revisão:** 2026-08-27 (Actors / boarding / longships + mobile sheet modal)
 
 Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**.
 
@@ -17,6 +17,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-cla
 | Classes mesa PHB (critério skills) | Pronto (13 classes) |
 | Packs Steinhardt + Northlands (Waves 1–4 + polish create + pente fino) | Pronto |
 | Itens DMG mesa (wiring) | Pronto — [`dmg-wiring-status.md`](../source/dmg-wiring-status.md) |
+| Actors: vincular veículo + boarding + ficha em modal | Pronto (`P040` + `N037` + UI) |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
 
 ---

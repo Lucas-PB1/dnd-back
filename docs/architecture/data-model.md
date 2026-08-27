@@ -105,7 +105,8 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 ## Runtime (ficha / campanha / actors)
 
 - `player_character` (+ skill, spell, language, feat, item, equipment, state, species_choice, option)
-- **`game_actor`** (+ speed, action, spell, state) — criaturas, montarias, navios, companions; **separado** de `player_character`
+- **`player_character_state.boarded_actor_id`** — PC a bordo de um `game_actor` (vehicle/mount); migração `P040`
+- **`game_actor`** (+ speed, action, spell, state) — criaturas, montarias, navios, companions; **separado** de `player_character`; veículos vinculados usam `parent_character_id`
 - `campaign`, `campaign_member`, `campaign_character`, `campaign_encounter`, `campaign_encounter_combatant`
 - Criticals: FKs ownership, subclass∈class, XOR combatant (`pc` ↔ `character_id` **ou** `actor` ↔ `actor_id`), UNIQUEs de membership
 
