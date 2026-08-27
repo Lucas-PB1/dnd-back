@@ -1,5 +1,6 @@
 -- View rpg.v_phb_species_trait_choices — edition_slug por option_value
--- Substitui V051; NULL = escolha da espécie-base (sempre disponível com a espécie).
+-- Substitui o antigo V051 (packs Eldritch Hunt + Northlands).
+-- NULL edition_slug = escolha da espécie-base (sempre disponível com a espécie).
 
 CREATE OR REPLACE VIEW rpg.v_phb_species_trait_choices AS
 -- Elf lineage (option_key = 'lineageId')
