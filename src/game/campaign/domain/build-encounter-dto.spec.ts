@@ -1,6 +1,7 @@
 import { buildCampaignEncounterDto } from './build-encounter-dto';
 import type { CampaignEncounter } from '../infrastructure/campaign-encounter.entity';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
+import type { ActorCombatantEnrichment } from '../application/enrich-encounter-actors';
 
 function encounter(
   overrides: Partial<CampaignEncounter> = {},
@@ -27,12 +28,9 @@ function combatant(
   return {
     id: 'cb1',
     encounterId: 'e1',
-    kind: 'creature',
+    kind: 'actor',
     characterId: null,
-    displayName: 'Goblin',
-    hpCurrent: 3,
-    hpMax: 7,
-    armorClass: 15,
+    actorId: 'actor1',
     initiativeTotal: 12,
     initiativeModifier: 2,
     sortOrder: 0,
@@ -41,6 +39,20 @@ function combatant(
   };
 }
 
+const actorEnrichment = (): Map<string, ActorCombatantEnrichment> =>
+  new Map([
+    [
+      'actor1',
+      {
+        name: 'Goblin',
+        armorClass: 15,
+        hpCurrent: 3,
+        hpMax: 7,
+        conditions: [],
+      },
+    ],
+  ]);
+
 describe('buildCampaignEncounterDto', () => {
   it('hides exact creature HP for players when visibility is percent', () => {
     const dto = buildCampaignEncounterDto({
@@ -48,6 +60,7 @@ describe('buildCampaignEncounterDto', () => {
       combatants: [combatant({})],
       pcNameById: new Map(),
       pcEnrichmentByCharacterId: new Map(),
+      actorEnrichmentByActorId: actorEnrichment(),
       viewer: 'player',
     });
     expect(dto.combatants[0].hpCurrent).toBeNull();
@@ -62,6 +75,7 @@ describe('buildCampaignEncounterDto', () => {
       combatants: [combatant({})],
       pcNameById: new Map(),
       pcEnrichmentByCharacterId: new Map(),
+      actorEnrichmentByActorId: actorEnrichment(),
       viewer: 'dm',
     });
     expect(dto.combatants[0].hpCurrent).toBe(3);

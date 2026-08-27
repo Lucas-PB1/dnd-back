@@ -77,10 +77,7 @@ export class CampaignEncounterRepository {
             encounterId: encounter.id,
             kind: 'pc',
             characterId,
-            displayName: null,
-            hpCurrent: null,
-            hpMax: null,
-            armorClass: null,
+            actorId: null,
             initiativeTotal: null,
             initiativeModifier: null,
             sortOrder: index,
@@ -93,12 +90,9 @@ export class CampaignEncounterRepository {
     return encounter;
   }
 
-  async addCreature(input: {
+  async addActor(input: {
     encounterId: string;
-    name: string;
-    hpMax: number;
-    hpCurrent: number;
-    armorClass: number;
+    actorId: string;
     initiativeModifier: number | null;
   }): Promise<CampaignEncounterCombatant> {
     const count = await this.combatants.count({
@@ -107,12 +101,9 @@ export class CampaignEncounterRepository {
     return this.combatants.save(
       this.combatants.create({
         encounterId: input.encounterId,
-        kind: 'creature',
+        kind: 'actor',
         characterId: null,
-        displayName: input.name.trim(),
-        hpMax: input.hpMax,
-        hpCurrent: input.hpCurrent,
-        armorClass: input.armorClass,
+        actorId: input.actorId,
         initiativeTotal: null,
         initiativeModifier: input.initiativeModifier,
         sortOrder: count,
@@ -156,6 +147,7 @@ export class CampaignEncounterRepository {
 
   async refreshSortOrders(
     encounterId: string,
+    actorNameById: Map<string, string> = new Map(),
   ): Promise<CampaignEncounterCombatant[]> {
     const rows = await this.listCombatants(encounterId);
     const pcIds = rows
@@ -171,8 +163,8 @@ export class CampaignEncounterRepository {
         initiativeModifier: row.initiativeModifier,
         isActive: row.isActive,
         displayName:
-          row.kind === 'creature'
-            ? (row.displayName ?? 'Criatura')
+          row.kind === 'actor' && row.actorId
+            ? (actorNameById.get(row.actorId) ?? 'Actor')
             : (nameById.get(row.characterId ?? '') ??
               row.characterId ??
               row.id),

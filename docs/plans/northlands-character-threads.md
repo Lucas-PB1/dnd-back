@@ -3,15 +3,16 @@
 Fonte original: scrape Beyond `#CharacterThreads` (Northlands Worldbook: Heroes of the Sagas).  
 Edição: `northlands-heroes-2024-en`. HTML de scrape **não** é mantido no repo — este doc é a SSOT da extração.
 
-## Não implementar ainda
+## Status de implementação
 
-Sistema **novo**, fora do modelo PHB atual (não é background, feat, species trait nem class option). Exige schema próprio, opções na ficha e UI de progresso — **não** está no escopo do polish create Nem Cap. 5.
+| Fatia | Status |
+|-------|--------|
+| Catálogo (`phb_character_thread*`, `N036`, `GET /character-threads`) | **feito** |
+| Estado na ficha (`player_character_thread*`, mutações `/characters/:id/thread`, bundle) | **feito** |
+| UI Traços + step opcional no create wizard | **feito** |
+| Runtime mesa (Cursemarked brackets, Fatebound morte, economy 1/LR) | **fase 2** — pedido explícito |
 
-Esboço futuro (não binding):
-
-- Tabela(s) de catálogo: thread slug + goal templates + milestone ranks/features
-- Estado na ficha: thread ativo, goal texto, milestones alcançados, benefícios desbloqueados
-- Regras especiais (Cursemarked brackets; Fatebound e morte) pedem runtime na mesa, não só texto de catálogo
+Modelo: 1 thread `active` por personagem; completar mantém benefícios; abandonar limpa milestones.
 
 ---
 
@@ -146,6 +147,7 @@ Servo jurado de jarl/rei/rainha para missão específica (não necessariamente v
 
 ## Referências no repo
 
-- Backlog: item aberto “Northlands — Character Threads”
-- Pack seeds Northlands: `database/seeds/northlands-heroes/` (sem threads)
+- Backlog: fase 2 mesa em [`backlog.md`](backlog.md)
+- Seeds: `database/seeds/northlands-heroes/N036_phb_character_threads.sql`
+- Migrations: `T085_character_threads.sql`, `V063_character_thread_bundle.sql`, `P039_player_character_thread.sql`
 - Cap. 5 (Magic and Miscellany) permanece fora deste doc

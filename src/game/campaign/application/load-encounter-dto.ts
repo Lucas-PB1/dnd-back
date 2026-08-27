@@ -8,6 +8,7 @@ import {
 } from '../domain/build-encounter-dto';
 import type { CampaignEncounterDto } from '../dto/encounter.dto';
 import { EnrichEncounterPcs } from './enrich-encounter-pcs';
+import { EnrichEncounterActors } from './enrich-encounter-actors';
 
 @Injectable()
 export class LoadEncounterDto {
@@ -15,6 +16,7 @@ export class LoadEncounterDto {
     private readonly campaigns: CampaignRepository,
     private readonly encounters: CampaignEncounterRepository,
     private readonly enrichPcs: EnrichEncounterPcs,
+    private readonly enrichActors: EnrichEncounterActors,
   ) {}
 
   async load(
@@ -25,13 +27,20 @@ export class LoadEncounterDto {
     const pcIds = combatantRows
       .map((row) => row.characterId)
       .filter((id): id is string => id != null);
+    const actorIds = combatantRows
+      .map((row) => row.actorId)
+      .filter((id): id is string => id != null);
     const characters = await this.campaigns.findCharactersByIds(pcIds);
-    const enrichment = await this.enrichPcs.enrich(characters);
+    const [pcEnrichment, actorEnrichment] = await Promise.all([
+      this.enrichPcs.enrich(characters),
+      this.enrichActors.enrich(actorIds),
+    ]);
     return buildCampaignEncounterDto({
       encounter,
       combatants: combatantRows,
       pcNameById: new Map(characters.map((c) => [c.id, c.name])),
-      pcEnrichmentByCharacterId: enrichment,
+      pcEnrichmentByCharacterId: pcEnrichment,
+      actorEnrichmentByActorId: actorEnrichment,
       viewer,
     });
   }

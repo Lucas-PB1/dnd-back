@@ -9,17 +9,23 @@ describe('LoadEncounterDto', () => {
     };
     const encounters = {
       listCombatants: jest.fn().mockResolvedValue([
-        { id: 'cb1', characterId: 'pc1', kind: 'pc' },
-        { id: 'cb2', characterId: null, kind: 'creature' },
+        { id: 'cb1', characterId: 'pc1', actorId: null, kind: 'pc' },
+        { id: 'cb2', characterId: null, actorId: 'actor1', kind: 'actor' },
       ]),
     };
     const enrichPcs = {
       enrich: jest.fn().mockResolvedValue(new Map([['pc1', { armorClass: 16 }]])),
     };
+    const enrichActors = {
+      enrich: jest.fn().mockResolvedValue(
+        new Map([['actor1', { name: 'Goblin', armorClass: 13, hpCurrent: 5, hpMax: 7 }]]),
+      ),
+    };
     const service = new LoadEncounterDto(
       campaigns as never,
       encounters as never,
       enrichPcs as never,
+      enrichActors as never,
     );
 
     const encounter = {
@@ -38,6 +44,7 @@ describe('LoadEncounterDto', () => {
     expect(encounters.listCombatants).toHaveBeenCalledWith('e1');
     expect(campaigns.findCharactersByIds).toHaveBeenCalledWith(['pc1']);
     expect(enrichPcs.enrich).toHaveBeenCalled();
+    expect(enrichActors.enrich).toHaveBeenCalledWith(['actor1']);
     expect(dto).toMatchObject({
       id: 'e1',
       name: 'Ambush',

@@ -3,6 +3,7 @@ import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetData } from '../domain/character-sheet.types';
 import type { MappedCombatSlice } from '@game/combat/application/resolve-character-combat-slice';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import type { CharacterThreadBundleDto } from '../dto/character-thread.dto';
 
 type SpellcastingSlice = {
   characterSpells: CharacterResponseDto['characterSpells'];
@@ -25,6 +26,7 @@ export function assembleCharacterResponseDto(input: {
   derived: DerivedSlice;
   combat: MappedCombatSlice;
   spellcasting: SpellcastingSlice;
+  thread: CharacterThreadBundleDto | null;
 }): CharacterResponseDto {
   const { row, loaded, combat, spellcasting, derived } = input;
   return {
@@ -84,6 +86,7 @@ export function assembleCharacterResponseDto(input: {
       gold: row.coinGold,
       platinum: row.coinPlatinum,
     },
+    thread: input.thread,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
   };

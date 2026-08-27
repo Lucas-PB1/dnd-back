@@ -4,6 +4,8 @@ import type { CampaignEncounter } from '../infrastructure/campaign-encounter.ent
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import type { EncounterViewer } from '../domain/build-encounter-dto';
 import type { PatchEncounterCombatantDto } from '../dto/encounter.dto';
+import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
+import { clampHitPointsCurrent } from '@game/shared/domain/combat-vitals';
 
 export function viewerFromMember(member: CampaignMember): EncounterViewer {
   return member.role === 'dm' || member.role === 'assistant' ? 'dm' : 'player';
@@ -24,6 +26,7 @@ export function assertPlayerCanViewEncounter(
 export function applyCombatantPatch(
   combatant: CampaignEncounterCombatant,
   dto: PatchEncounterCombatantDto,
+  actor?: GameActor | null,
 ): void {
   if (dto.initiativeTotal !== undefined) {
     combatant.initiativeTotal = dto.initiativeTotal;
@@ -33,7 +36,7 @@ export function applyCombatantPatch(
   }
   if (dto.isActive !== undefined) combatant.isActive = dto.isActive;
 
-  if (combatant.kind !== 'creature') {
+  if (combatant.kind !== 'actor') {
     if (
       dto.displayName !== undefined ||
       dto.hpCurrent !== undefined ||
@@ -41,23 +44,24 @@ export function applyCombatantPatch(
       dto.armorClass !== undefined
     ) {
       throw new BadRequestException(
-        'displayName/hp/armorClass patches apply only to creatures',
+        'displayName/hp/armorClass patches apply only to actor combatants',
       );
     }
     return;
   }
 
+  if (!actor) {
+    throw new BadRequestException('Actor combatant is missing linked actor');
+  }
+
   if (dto.displayName !== undefined) {
-    combatant.displayName = dto.displayName.trim();
+    actor.name = dto.displayName.trim();
   }
-  if (dto.hpCurrent !== undefined) combatant.hpCurrent = dto.hpCurrent;
-  if (dto.hpMax !== undefined) combatant.hpMax = dto.hpMax;
-  if (dto.armorClass !== undefined) combatant.armorClass = dto.armorClass;
-  if (
-    combatant.hpCurrent != null &&
-    combatant.hpMax != null &&
-    combatant.hpCurrent > combatant.hpMax
-  ) {
-    combatant.hpCurrent = combatant.hpMax;
-  }
+  if (dto.hpCurrent !== undefined) actor.hitPointsCurrent = dto.hpCurrent;
+  if (dto.hpMax !== undefined) actor.hitPointsMax = dto.hpMax;
+  if (dto.armorClass !== undefined) actor.armorClass = dto.armorClass;
+  actor.hitPointsCurrent = clampHitPointsCurrent(
+    actor.hitPointsCurrent,
+    actor.hitPointsMax,
+  ) as number | null;
 }

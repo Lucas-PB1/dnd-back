@@ -3,7 +3,7 @@
 Único plano ativo do **dnd-api** (+ front). Só itens **abertos**.  
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`.
 
-**Última revisão:** 2026-08-12 (pente fino Northlands + Cap. 5 parcial)
+**Última revisão:** 2026-08-26 (Leviathan + Character Threads MVP)
 
 Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**.
 
@@ -23,8 +23,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-cla
 
 ## Ativo
 
-- [ ] **Northlands — Character Threads:** Bloodsworn, Cursemarked, Explorer, Fatebound, Herald, Legend Hunter, Sworn Huskarl — sistema novo. Extração: [`northlands-character-threads.md`](northlands-character-threads.md). Sem schema/API/UI. **Espera** — não é gap de seed.
-- [ ] **Northlands — Cap. 5 veículos:** montarias / trenós / longships — **espera modelo de ficha** antes de seed. Armas/gear/magias/itens/Masterwork já feitos (`N024`–`N035`). Extração: [`northlands-magic-and-miscellany.md`](northlands-magic-and-miscellany.md).
+- [ ] **Northlands — Character Threads (fase 2 / mesa):** gatilhos Cursemarked (brackets d20), Fatebound na morte, economy 1/LR dos benefícios. MVP ficha já feito (`T085`/`P039`/`N036` + API + Traços/wizard). Extração: [`northlands-character-threads.md`](northlands-character-threads.md).
 - [ ] **Northlands — pente fino residual (opcional):** M6 features só texto; Greater Freyr usos PB/dia — ver [`northlands-audit.md`](northlands-audit.md).
 
 ---

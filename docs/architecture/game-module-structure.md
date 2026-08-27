@@ -21,7 +21,8 @@ BC Game (modular monolith)
 ├── inventory/        # mochila + equipado
 ├── session/          # slots, condições, concentração
 ├── dice/             # motor de dados + rolls da ficha (ataque, dano, perícia, ST, iniciativa)
-└── campaign/         # mesa + encontro (PCs enriquecidos + criaturas manuais; visão jogador)
+├── actor/            # fichas de mesa (criatura, montaria, navio, companion) — GameActorModule
+└── campaign/         # mesa + encontro (PCs enriquecidos + actors linkados; visão jogador)
 ```
 
 Ownership combat/spellcasting: módulos Nest `combat/` e `spellcasting/` (use cases em `application/`).
@@ -33,10 +34,25 @@ Cada submódulo:
 ├── application/        # handlers / queries (subpastas por concern se >~10 arquivos)
 ├── domain/             # regras D&D deste agregado
 ├── infrastructure/     # entities + repos (helpers em subpastas)
-├── controllers/        # @Controller('characters') — mesmas URLs
+├── controllers/        # @Controller('characters' | 'actors') — URLs por agregado
 ├── dto/                # `index.ts` + subpastas por família
 └── *.module.ts
 ```
+
+### `actor/` (agregado `game_actor`)
+
+Ficha **jogável na mesa**, mais simples que PHB — sem class/species/feat/inventário de PC.
+
+```
+actor/
+├── controllers/          # ActorsController (/actors), ActorSessionController (/actors/:id/state)
+├── application/          # CRUD, spawn-from-template, roll attack, state
+├── infrastructure/       # GameActor*, ActorRepository, bundle loader (RPC P035)
+├── dto/
+└── actor.module.ts
+```
+
+Shared DRY: `game/shared/domain/ability-scores.ts`, `combat-vitals.ts`; acesso espelha `PlayerCharacterAccessService` via `GameActorAccessService`.
 
 ### `session/` (organização interna)
 
@@ -80,6 +96,11 @@ flowchart TB
   subgraph shared [game/shared]
     R[CharacterRepository]
     A[PlayerCharacterAccessService]
+    AS[AbilityScores / combat-vitals]
+  end
+
+  subgraph actor [game/actor]
+    GA[GameActorRepository / Access]
   end
 
   subgraph catalog [BC Catalog]
@@ -111,11 +132,18 @@ flowchart TB
   dice --> shared
   dice --> combat
   dice --> sheet
+  actor --> shared
+  actor --> catalog
+  actor --> dice
+  campaign --> shared
+  campaign --> actor
 ```
 
 | De | Para | Permitido |
 |----|------|-----------|
 | `sheet` | `shared`, `catalog`, `combat`, `spellcasting` | sim |
+| `actor` | `shared`, `catalog`, `dice` | sim |
+| `campaign` | `shared`, `actor` | sim |
 | `combat` | `shared`, `catalog`, `inventory` (entity) | sim |
 | `spellcasting` | `catalog` (views); DTO/tipos type-only de sheet | sim |
 | `spellcasting` | `sheet` Nest providers / infra | **não** |
@@ -139,12 +167,15 @@ Todos os controllers usam `@Controller('characters')`:
 | **inventory** | `GET/POST/PATCH/DELETE /characters/:id/inventory/*` |
 | **session** | `GET/PATCH /characters/:id/state`, `POST .../spells/cast`, `POST .../rest` |
 | **dice** | `POST /characters/:id/rolls/{attack,damage,skill,saving-throw,initiative}` |
+| **actor** | `GET/POST/PATCH/DELETE /actors`, `GET /actors/:id`, `POST /actors/spawn-from-template`, `GET/PATCH /actors/:id/state`, `POST /actors/:id/rolls/attack` |
 
 ## O que fica onde
 
 | Capability | Tabela(s) | Submódulo |
 |------------|-----------|-----------|
 | Núcleo da ficha | `player_character` | shared + sheet |
+| Actor de mesa | `game_actor` (+ speed, action, spell, state) | actor |
+| Template criatura/veículo | `phb_creature_template*`, `phb_vehicle_template*` | catalog (read) + spawn em actor |
 | Escolhas PHB | `player_character_skill`, `_species_choice`, … | sheet |
 | CA / ataques / compliance | inventário equipado + views PHB | combat |
 | Grants / CD / ataque mágico | views granted + ficha | spellcasting |
@@ -168,5 +199,7 @@ Já está dividido — **12 módulos** (`classes/`, `spells/`, …). Game deve e
 - [x] Remover legado `characters.service.ts` (já removido)
 - [x] `game/combat` — M1 (`CombatModule`; dice → combat)
 - [x] `game/spellcasting` — M2 (`SpellcastingModule`; grants fora de sheet)
+- [x] `game/actor` — agregado `game_actor` (CRUD + state + spawn template)
+- [x] `campaign` — combatentes `kind=actor` + FK `actor_id`
 
-**Última revisão:** 2026-08-06 — session reorg (controllers/dto/application/character-state em subpastas)
+**Última revisão:** 2026-08-26 — módulo `game/actor` + combatentes linkados a `game_actor`

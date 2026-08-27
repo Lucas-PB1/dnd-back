@@ -7,6 +7,7 @@ import {
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { CampaignEncounter } from '../infrastructure/campaign-encounter.entity';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
+import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 
 function member(role: CampaignMember['role']): CampaignMember {
   return {
@@ -43,16 +44,49 @@ function combatant(
     encounterId: 'e1',
     kind: 'pc',
     characterId: 'char1',
-    displayName: null,
-    hpCurrent: null,
-    hpMax: null,
-    armorClass: null,
+    actorId: null,
     initiativeTotal: null,
     initiativeModifier: null,
     sortOrder: 0,
     isActive: true,
     ...overrides,
   };
+}
+
+function actor(overrides: Partial<GameActor> = {}): GameActor {
+  return {
+    id: 'actor1',
+    ownerUserId: 'u1',
+    campaignId: 'c1',
+    parentCharacterId: null,
+    actorKind: 'creature',
+    templateSlug: null,
+    name: ' Goblin ',
+    hitPointsMax: 10,
+    hitPointsCurrent: 20,
+    armorClass: 15,
+    initiativeModifier: null,
+    proficiencyBonus: null,
+    abilityScores: {
+      forca: 10,
+      destreza: 10,
+      constituicao: 10,
+      inteligencia: 10,
+      sabedoria: 10,
+      carisma: 10,
+    },
+    sizeSlug: null,
+    notes: null,
+    spellcastingAbilitySlug: null,
+    spellSaveDc: null,
+    spellAttackBonus: null,
+    damageThreshold: null,
+    crewCapacity: null,
+    cargoCapacityLb: null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    ...overrides,
+  } as GameActor;
 }
 
 describe('encounter-combatant-ops', () => {
@@ -113,21 +147,25 @@ describe('encounter-combatant-ops', () => {
       expect(pc.initiativeModifier).toBe(2);
     });
 
-    it('trims creature displayName and clamps hpCurrent to hpMax', () => {
-      const creature = combatant({
-        kind: 'creature',
-        displayName: ' Goblin ',
-        hpCurrent: 20,
-        hpMax: 10,
+    it('trims actor displayName and clamps hpCurrent to hpMax', () => {
+      const actorRow = actor();
+      const actorCombatant = combatant({
+        kind: 'actor',
+        characterId: null,
+        actorId: 'actor1',
       });
-      applyCombatantPatch(creature, {
-        displayName: '  Orc  ',
-        hpCurrent: 15,
-        hpMax: 10,
-      });
-      expect(creature.displayName).toBe('Orc');
-      expect(creature.hpMax).toBe(10);
-      expect(creature.hpCurrent).toBe(10);
+      applyCombatantPatch(
+        actorCombatant,
+        {
+          displayName: '  Orc  ',
+          hpCurrent: 15,
+          hpMax: 10,
+        },
+        actorRow,
+      );
+      expect(actorRow.name).toBe('Orc');
+      expect(actorRow.hitPointsMax).toBe(10);
+      expect(actorRow.hitPointsCurrent).toBe(10);
     });
   });
 });

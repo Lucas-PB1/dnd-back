@@ -25,8 +25,11 @@ import {
   PlayerCharacterOption,
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
+  PlayerCharacterThread,
+  PlayerCharacterThreadMilestone,
 } from './infrastructure/player-sheet.entities';
 import { CharactersController } from './characters.controller';
+import { CharacterThreadController } from './character-thread.controller';
 import { CharacterSheetRepository } from './infrastructure/character-sheet.repository';
 import { CharacterMapper } from './infrastructure/character.mapper';
 import { CharacterDomainService } from './domain/core/character-domain.service';
@@ -58,7 +61,11 @@ import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { PatchCharacterWealthHandler } from './application/patch-character-wealth.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
+import { LoadCharacterThreadBundleQuery } from './application/load-character-thread-bundle.query';
+import { CharacterThreadCommands } from './application/character-thread.commands';
 import { CampaignModule } from '../campaign/campaign.module';
+import { PhbCharacterThread } from '@entities/phb-character-thread.entity';
+import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-thread-bundle.entity';
 
 @Module({
   imports: [
@@ -70,6 +77,10 @@ import { CampaignModule } from '../campaign/campaign.module';
       PlayerCharacterSpell,
       PlayerCharacterEquipment,
       PlayerCharacterLanguage,
+      PlayerCharacterThread,
+      PlayerCharacterThreadMilestone,
+      PhbCharacterThread,
+      VPhbCharacterThreadBundle,
       PhbCharacterLevel,
       VPhbSpeciesTraitChoices,
       VSpellByClass,
@@ -91,7 +102,7 @@ import { CampaignModule } from '../campaign/campaign.module';
     CombatModule,
     SpellcastingModule,
   ],
-  controllers: [CharactersController],
+  controllers: [CharactersController, CharacterThreadController],
   providers: [
     CharacterDomainService,
     CharacterBackgroundValidator,
@@ -124,6 +135,8 @@ import { CampaignModule } from '../campaign/campaign.module';
     DeleteCharacterHandler,
     PatchCharacterWealthHandler,
     CharacterSpellLookup,
+    LoadCharacterThreadBundleQuery,
+    CharacterThreadCommands,
   ],
   exports: [
     CharacterDomainService,

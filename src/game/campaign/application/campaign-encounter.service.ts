@@ -1,4 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { DEFAULT_ABILITY_SCORES } from '@game/shared/domain/ability-scores';
+import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
+import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import { CampaignRepository } from '../infrastructure/campaign.repository';
 import { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
 import {
@@ -22,6 +27,9 @@ export class CampaignEncounterService {
     private readonly campaigns: CampaignRepository,
     private readonly encounters: CampaignEncounterRepository,
     private readonly loadDto: LoadEncounterDto,
+    private readonly actorPersistence: ActorPersistenceService,
+    @InjectRepository(GameActor)
+    private readonly actors: Repository<GameActor>,
   ) {}
 
   async create(
@@ -92,15 +100,28 @@ export class CampaignEncounterService {
       campaignId,
       encounterId,
     );
-    await this.encounters.addCreature({
+
+    const actor = await this.actorPersistence.createWithChildren(
+      this.actors.create({
+        ownerUserId: userId,
+        campaignId,
+        actorKind: 'creature',
+        name: dto.name.trim(),
+        hitPointsMax: dto.hpMax,
+        hitPointsCurrent: dto.hpCurrent ?? dto.hpMax,
+        armorClass: dto.armorClass,
+        initiativeModifier: dto.initiativeModifier ?? null,
+        abilityScores: DEFAULT_ABILITY_SCORES,
+      }),
+      { actorKind: 'creature', name: dto.name },
+    );
+
+    await this.encounters.addActor({
       encounterId: encounter.id,
-      name: dto.name,
-      hpMax: dto.hpMax,
-      hpCurrent: dto.hpCurrent ?? dto.hpMax,
-      armorClass: dto.armorClass,
+      actorId: actor.id,
       initiativeModifier: dto.initiativeModifier ?? null,
     });
-    await this.encounters.refreshSortOrders(encounter.id);
+    await this.encounters.refreshSortOrders(encounter.id, new Map([[actor.id, actor.name]]));
     return this.loadDto.load(encounter, 'dm');
   }
 
@@ -117,9 +138,19 @@ export class CampaignEncounterService {
       encounterId,
       combatantId,
     );
-    applyCombatantPatch(combatant, dto);
+    const linkedActor =
+      combatant.kind === 'actor' && combatant.actorId
+        ? await this.actors.findOne({ where: { id: combatant.actorId } })
+        : null;
+    applyCombatantPatch(combatant, dto, linkedActor);
+    if (linkedActor) {
+      await this.actors.save(linkedActor);
+    }
     await this.encounters.saveCombatant(combatant);
-    await this.encounters.refreshSortOrders(encounterId);
+    await this.encounters.refreshSortOrders(
+      encounterId,
+      linkedActor ? new Map([[linkedActor.id, linkedActor.name]]) : new Map(),
+    );
     return this.loadDto.load(
       await this.encounters.findEncounterInCampaignOrFail(
         campaignId,

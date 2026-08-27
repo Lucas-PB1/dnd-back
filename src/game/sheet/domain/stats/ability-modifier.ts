@@ -1,3 +1,7 @@
-export function abilityModifier(score: number): number {
-  return Math.floor((score - 10) / 2);
-}
+export {
+  abilityModifier,
+  computeAbilityModifiers,
+  DEFAULT_ABILITY_SCORES,
+  type AbilityModifiers,
+  type AbilityScores,
+} from '@game/shared/domain/ability-scores';

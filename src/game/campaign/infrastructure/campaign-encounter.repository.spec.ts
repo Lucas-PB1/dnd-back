@@ -22,8 +22,8 @@ function encounter(overrides: Partial<CampaignEncounter> = {}): CampaignEncounte
 
 function combatant(overrides: Partial<CampaignEncounterCombatant> = {}): CampaignEncounterCombatant {
   return {
-    id: 'cb1', encounterId: 'enc1', kind: 'pc', characterId: 'ch1', displayName: null,
-    hpCurrent: null, hpMax: null, armorClass: null, initiativeTotal: 18,
+    id: 'cb1', encounterId: 'enc1', kind: 'pc', characterId: 'ch1', actorId: null,
+    initiativeTotal: 18,
     initiativeModifier: 3, sortOrder: 0, isActive: true, ...overrides,
   } as CampaignEncounterCombatant;
 }
@@ -91,25 +91,22 @@ describe('CampaignEncounterRepository', () => {
     });
   });
 
-  describe('addCreature', () => {
-    it('appends creature with next sort order', async () => {
+  describe('addActor', () => {
+    it('appends actor combatant with next sort order', async () => {
       combatants.count.mockResolvedValue(2);
-      const row = await repository.addCreature({
+      const row = await repository.addActor({
         encounterId: 'enc1',
-        name: ' Goblin ',
-        hpMax: 7,
-        hpCurrent: 7,
-        armorClass: 15,
+        actorId: 'actor-1',
         initiativeModifier: 2,
       });
       expect(combatants.create).toHaveBeenCalledWith(
         expect.objectContaining({
-          kind: 'creature',
-          displayName: 'Goblin',
+          kind: 'actor',
+          actorId: 'actor-1',
           sortOrder: 2,
         }),
       );
-      expect(row.displayName).toBe('Goblin');
+      expect(row.actorId).toBe('actor-1');
     });
   });
 
@@ -134,19 +131,19 @@ describe('CampaignEncounterRepository', () => {
       expect(campaigns.findCharactersByIds).toHaveBeenCalledWith(['ch1', 'ch1']);
     });
 
-    it('uses creature display name when kind is creature', async () => {
-      const creature = combatant({
-        id: 'cb-creature',
-        kind: 'creature',
+    it('uses actor name map when kind is actor', async () => {
+      const actorCombatant = combatant({
+        id: 'cb-actor',
+        kind: 'actor',
         characterId: null,
-        displayName: 'Goblin',
+        actorId: 'actor-1',
         initiativeTotal: 15,
         sortOrder: 1,
       });
       const pc = combatant({ id: 'cb-pc', initiativeTotal: 12, sortOrder: 0 });
-      combatants.find.mockResolvedValue([pc, creature]);
-      await repository.refreshSortOrders('enc1');
-      expect(creature.sortOrder).toBe(0);
+      combatants.find.mockResolvedValue([pc, actorCombatant]);
+      await repository.refreshSortOrders('enc1', new Map([['actor-1', 'Goblin']]));
+      expect(actorCombatant.sortOrder).toBe(0);
       expect(pc.sortOrder).toBe(1);
       expect(campaigns.findCharactersByIds).toHaveBeenCalledWith(['ch1']);
     });

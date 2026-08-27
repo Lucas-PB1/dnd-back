@@ -94,3 +94,56 @@ export class PlayerCharacterLanguage {
   @PrimaryColumn({ name: 'language_slug' })
   languageSlug!: string;
 }
+
+export type PlayerCharacterThreadStatus =
+  | 'active'
+  | 'completed'
+  | 'abandoned';
+
+export type CharacterThreadMilestoneRank =
+  | 'least'
+  | 'lesser'
+  | 'greater'
+  | 'superior';
+
+@Entity({ schema: 'rpg', name: 'player_character_thread' })
+export class PlayerCharacterThread {
+  @PrimaryGeneratedColumn('uuid')
+  id!: string;
+
+  @Column({ name: 'character_id', type: 'uuid' })
+  characterId!: string;
+
+  @Column({ name: 'thread_slug', type: 'text' })
+  threadSlug!: string;
+
+  @Column({ type: 'text' })
+  status!: PlayerCharacterThreadStatus;
+
+  @Column({ name: 'goal_index', type: 'int', nullable: true })
+  goalIndex!: number | null;
+
+  @Column({ name: 'goal_text', type: 'text', nullable: true })
+  goalText!: string | null;
+
+  @Column({ name: 'started_at', type: 'timestamptz' })
+  startedAt!: Date;
+
+  @Column({ name: 'ended_at', type: 'timestamptz', nullable: true })
+  endedAt!: Date | null;
+}
+
+@Entity({ schema: 'rpg', name: 'player_character_thread_milestone' })
+export class PlayerCharacterThreadMilestone {
+  @PrimaryColumn({ name: 'character_thread_id', type: 'uuid' })
+  characterThreadId!: string;
+
+  @PrimaryColumn({ type: 'text' })
+  rank!: CharacterThreadMilestoneRank;
+
+  @PrimaryColumn({ name: 'benefit_key', type: 'text' })
+  benefitKey!: string;
+
+  @Column({ name: 'reached_at', type: 'timestamptz' })
+  reachedAt!: Date;
+}

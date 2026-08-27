@@ -33,12 +33,9 @@ const enc = (): CampaignEncounter => ({
 const cb = (o: Partial<CampaignEncounterCombatant>): CampaignEncounterCombatant => ({
   id: 'cb1',
   encounterId: 'e1',
-  kind: 'creature',
+  kind: 'actor',
   characterId: null,
-  displayName: 'Goblin',
-  hpCurrent: 5,
-  hpMax: 7,
-  armorClass: 13,
+  actorId: 'actor1',
   initiativeTotal: null,
   initiativeModifier: 2,
   sortOrder: 0,
@@ -99,7 +96,7 @@ describe('CampaignEncounterInitiativeService', () => {
     );
   });
 
-  it('rollOne rolls creature initiative for dm', async () => {
+  it('rollOne rolls actor initiative for dm', async () => {
     const combatant = cb({ initiativeModifier: 2 });
     encounters.findCombatantByIdOrFail.mockResolvedValue(combatant);
     mockRoll.mockReturnValue(d20(15));
@@ -109,9 +106,9 @@ describe('CampaignEncounterInitiativeService', () => {
     expect(encounters.refreshSortOrders).toHaveBeenCalledWith('e1');
   });
 
-  it('rollOne forbids player rolling for creature or closed encounter', async () => {
+  it('rollOne forbids player rolling for actor or closed encounter', async () => {
     campaigns.requireMember.mockResolvedValue({ role: 'player', userId: 'u1' } as CampaignMember);
-    encounters.findCombatantByIdOrFail.mockResolvedValue(cb({ kind: 'creature' }));
+    encounters.findCombatantByIdOrFail.mockResolvedValue(cb({ kind: 'actor' }));
     await expect(service.rollOne('u1', 'c1', 'e1', 'cb1', {})).rejects.toBeInstanceOf(
       ForbiddenException,
     );

@@ -3,6 +3,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterDiceModule } from '../dice/character-dice.module';
 import { CombatModule } from '../combat/combat.module';
+import { ActorModule } from '../actor/actor.module';
+import { GameActor } from '../actor/infrastructure/game-actor.entity';
+import { GameActorState } from '../actor/infrastructure/game-actor-state.entity';
 import { PlayerCharacterState } from '../session/infrastructure/player-character-state.entity';
 import { Campaign } from './infrastructure/campaign.entity';
 import { CampaignMember } from './infrastructure/campaign-member.entity';
@@ -15,6 +18,7 @@ import { CampaignService } from './application/campaign.service';
 import { CampaignEncounterService } from './application/campaign-encounter.service';
 import { CampaignEncounterInitiativeService } from './application/campaign-encounter-initiative.service';
 import { EnrichEncounterPcs } from './application/enrich-encounter-pcs';
+import { EnrichEncounterActors } from './application/enrich-encounter-actors';
 import { LoadEncounterDto } from './application/load-encounter-dto';
 import { CampaignsController } from './campaigns.controller';
 import { CampaignEncountersController } from './campaign-encounters.controller';
@@ -24,6 +28,7 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
     GameSharedModule,
     CombatModule,
     forwardRef(() => CharacterDiceModule),
+    forwardRef(() => ActorModule),
     TypeOrmModule.forFeature([
       Campaign,
       CampaignMember,
@@ -31,6 +36,8 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
       CampaignEncounter,
       CampaignEncounterCombatant,
       PlayerCharacterState,
+      GameActor,
+      GameActorState,
     ]),
   ],
   controllers: [CampaignsController, CampaignEncountersController],
@@ -41,6 +48,7 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
     CampaignEncounterService,
     CampaignEncounterInitiativeService,
     EnrichEncounterPcs,
+    EnrichEncounterActors,
     LoadEncounterDto,
   ],
   exports: [CampaignRepository, CampaignService],

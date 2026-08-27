@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-export type EncounterCombatantKind = 'pc' | 'creature';
+export type EncounterCombatantKind = 'pc' | 'actor';
 
 @Entity({ schema: 'rpg', name: 'campaign_encounter_combatant' })
 export class CampaignEncounterCombatant {
@@ -16,17 +16,8 @@ export class CampaignEncounterCombatant {
   @Column({ name: 'character_id', type: 'uuid', nullable: true })
   characterId!: string | null;
 
-  @Column({ name: 'display_name', type: 'text', nullable: true })
-  displayName!: string | null;
-
-  @Column({ name: 'hp_current', type: 'int', nullable: true })
-  hpCurrent!: number | null;
-
-  @Column({ name: 'hp_max', type: 'int', nullable: true })
-  hpMax!: number | null;
-
-  @Column({ name: 'armor_class', type: 'int', nullable: true })
-  armorClass!: number | null;
+  @Column({ name: 'actor_id', type: 'uuid', nullable: true })
+  actorId!: string | null;
 
   @Column({ name: 'initiative_total', type: 'int', nullable: true })
   initiativeTotal!: number | null;

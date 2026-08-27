@@ -15,6 +15,9 @@ import { ReferenceModule } from './reference/reference.module';
 import { CombatMechanicalModule } from './combat-mechanical/combat-mechanical.module';
 import { EldritchInvocationsModule } from './eldritch-invocations/eldritch-invocations.module';
 import { MetamagicsModule } from './metamagics/metamagics.module';
+import { CreatureTemplatesModule } from './creature-templates/creature-templates.module';
+import { VehicleTemplatesModule } from './vehicle-templates/vehicle-templates.module';
+import { CharacterThreadsModule } from './character-threads/character-threads.module';
 
 @Module({
   imports: [
@@ -34,7 +37,10 @@ import { MetamagicsModule } from './metamagics/metamagics.module';
     CombatMechanicalModule,
     EldritchInvocationsModule,
     MetamagicsModule,
+    CreatureTemplatesModule,
+    VehicleTemplatesModule,
+    CharacterThreadsModule,
   ],
-  exports: [CatalogLookupModule, ItemsModule],
+  exports: [CatalogLookupModule, ItemsModule, CharacterThreadsModule],
 })
 export class CatalogModule {}

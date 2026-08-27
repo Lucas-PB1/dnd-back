@@ -22,12 +22,9 @@ function combatant(
   return {
     id: 'cb1',
     encounterId: 'e1',
-    kind: 'creature',
+    kind: 'actor',
     characterId: null,
-    displayName: 'Goblin',
-    hpCurrent: 5,
-    hpMax: 7,
-    armorClass: 13,
+    actorId: 'actor1',
     initiativeTotal: null,
     initiativeModifier: 2,
     sortOrder: 0,
@@ -78,8 +75,8 @@ describe('encounter-initiative-roll', () => {
       expect(encounters.saveCombatant).toHaveBeenCalledWith(pc);
     });
 
-    it('uses d20+modifier for creatures', async () => {
-      const creature = combatant({ kind: 'creature', initiativeModifier: 2 });
+    it('uses d20+modifier for actors', async () => {
+      const actorCombatant = combatant({ kind: 'actor', initiativeModifier: 2 });
       mockRollD20Check.mockReturnValue({
         expression: '1d20+2',
         total: 14,
@@ -92,15 +89,15 @@ describe('encounter-initiative-roll', () => {
         rolls,
         encounters,
         userId: 'u1',
-        combatant: creature,
+        combatant: actorCombatant,
         dto: {},
       });
 
       expect(rolls.rollInitiative).not.toHaveBeenCalled();
       expect(mockRollD20Check).toHaveBeenCalledWith(2, 'normal');
-      expect(creature.initiativeTotal).toBe(14);
-      expect(creature.initiativeModifier).toBe(2);
-      expect(encounters.saveCombatant).toHaveBeenCalledWith(creature);
+      expect(actorCombatant.initiativeTotal).toBe(14);
+      expect(actorCombatant.initiativeModifier).toBe(2);
+      expect(encounters.saveCombatant).toHaveBeenCalledWith(actorCombatant);
     });
   });
 
@@ -111,7 +108,7 @@ describe('encounter-initiative-roll', () => {
           campaigns,
           userId: 'u1',
           role: 'dm',
-          combatant: combatant({ kind: 'creature' }),
+          combatant: combatant({ kind: 'actor' }),
         }),
       ).resolves.toBeUndefined();
 
@@ -120,7 +117,7 @@ describe('encounter-initiative-roll', () => {
           campaigns,
           userId: 'u1',
           role: 'assistant',
-          combatant: combatant({ kind: 'creature' }),
+          combatant: combatant({ kind: 'actor' }),
         }),
       ).resolves.toBeUndefined();
     });
@@ -140,7 +137,7 @@ describe('encounter-initiative-roll', () => {
       ).resolves.toBeUndefined();
     });
 
-    it('forbids player rolling for other PC or creature', async () => {
+    it('forbids player rolling for other PC or actor', async () => {
       campaigns.findCharactersByIds = jest
         .fn()
         .mockResolvedValue([{ id: 'char2', userId: 'other' }]);
@@ -159,7 +156,7 @@ describe('encounter-initiative-roll', () => {
           campaigns,
           userId: 'u1',
           role: 'player',
-          combatant: combatant({ kind: 'creature' }),
+          combatant: combatant({ kind: 'actor' }),
         }),
       ).rejects.toThrow(ForbiddenException);
     });

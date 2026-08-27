@@ -1,6 +1,6 @@
 # Northlands — Cap. 5 Magic and Miscellany (extração)
 
-Fonte: scrape Beyond Cap. 5 (`docs/source/new/…Magic and Miscellany….html`).
+Fonte: extrato Cap. 5 (`docs/source/northlands-cap5-extract.json`; scrape Beyond descartado após seed).
 Edição: `northlands-heroes-2024-en`.
 JSON máquina: [`docs/source/northlands-cap5-extract.json`](../source/northlands-cap5-extract.json) (86 itens, 78 magias).
 
@@ -15,7 +15,8 @@ JSON máquina: [`docs/source/northlands-cap5-extract.json`](../source/northlands
 | 86 itens mágicos (PT) | `N029` + overlay `northlands-cap5-magic-items-pt.json` | feito |
 | Espírito Curador (XGE) | `N024` + Spirit Caller L5 | feito |
 | Masterwork (cobertura) | `N034` | feito — attach `bonus=1` |
-| Montarias / trenós / longships | — | **adiado** — espera modelo de ficha |
+| Montarias / trenós / longships | `M003` | feito — veículos Northlands |
+| Bestiário Cap. 5 + Leviathan Avatar | `M004` | feito — inclui summon `leviathan-avatar` |
 
 ## Contagens
 

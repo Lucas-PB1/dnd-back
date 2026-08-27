@@ -17,6 +17,7 @@ import {
   EquipmentWarningResponseDto,
   WeaponAttackResponseDto,
 } from './character-combat-response.dto';
+import { CharacterThreadBundleDto } from './character-thread.dto';
 
 export { AbilityScoresDto } from './ability-scores.dto';
 export { CharacterCampaignRefDto } from './character-campaign-ref.dto';
@@ -232,6 +233,12 @@ export class CharacterResponseDto {
 
   @ApiProperty({ type: CoinPurseDto, description: 'Saldo das 5 moedas D&D' })
   coins!: CoinPurseDto;
+
+  @ApiPropertyOptional({
+    type: CharacterThreadBundleDto,
+    description: 'Character Thread ativo + histórico (Northlands)',
+  })
+  thread!: CharacterThreadBundleDto | null;
 }
 
 /** Resumo para GET /characters — sem sheet/combat/magias. */

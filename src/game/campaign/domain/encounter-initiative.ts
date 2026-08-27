@@ -47,11 +47,4 @@ export function advanceEncounterTurn(input: {
   return { currentTurnIndex: next, round: input.round };
 }
 
-/** PV como percentual 0–100 para jogadores (criaturas). */
-export function hitPointsPercent(
-  current: number | null | undefined,
-  max: number | null | undefined,
-): number | null {
-  if (max == null || max <= 0 || current == null) return null;
-  return Math.max(0, Math.min(100, Math.round((current / max) * 100)));
-}
+export { hitPointsPercent } from '@game/shared/domain/combat-vitals';

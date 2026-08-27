@@ -1,22 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 
-export interface AbilityScores {
-  forca: number;
-  destreza: number;
-  constituicao: number;
-  inteligencia: number;
-  sabedoria: number;
-  carisma: number;
-}
+import {
+  AbilityScores,
+  DEFAULT_ABILITY_SCORES,
+} from '../domain/ability-scores';
 
-export const DEFAULT_ABILITY_SCORES: AbilityScores = {
-  forca: 10,
-  destreza: 10,
-  constituicao: 10,
-  inteligencia: 10,
-  sabedoria: 10,
-  carisma: 10,
-};
+export type { AbilityScores };
+export { DEFAULT_ABILITY_SCORES };
 
 @Entity({ schema: 'rpg', name: 'player_character' })
 export class PlayerCharacter {

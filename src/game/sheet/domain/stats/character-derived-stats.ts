@@ -1,4 +1,9 @@
-import { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import {
+  abilityModifier,
+  AbilityScores,
+  computeAbilityModifiers,
+  type AbilityModifiers,
+} from '@game/shared/domain/ability-scores';
 import { computeUnarmoredArmorClass } from '@game/combat/domain/equipment';
 import { classOrderSkillCheckBonus } from '../validation/class-options/class-order-effects';
 import {
@@ -6,21 +11,11 @@ import {
   skillProficiencyRank,
 } from './character-check-bonuses';
 
-export type AbilityModifiers = AbilityScores;
+export { computeAbilityModifiers };
+export type { AbilityModifiers };
 
 function abilityModifierValue(score: number): number {
-  return Math.floor((score - 10) / 2);
-}
-
-export function computeAbilityModifiers(scores: AbilityScores): AbilityModifiers {
-  return {
-    forca: abilityModifierValue(scores.forca),
-    destreza: abilityModifierValue(scores.destreza),
-    constituicao: abilityModifierValue(scores.constituicao),
-    inteligencia: abilityModifierValue(scores.inteligencia),
-    sabedoria: abilityModifierValue(scores.sabedoria),
-    carisma: abilityModifierValue(scores.carisma),
-  };
+  return abilityModifier(score);
 }
 
 export function computePassivePerception(

@@ -7,9 +7,12 @@ import { CampaignEncounterService } from './campaign-encounter.service';
 import type { CampaignRepository } from '../infrastructure/campaign.repository';
 import type { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
 import type { LoadEncounterDto } from './load-encounter-dto';
+import type { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import type { CampaignEncounter } from '../infrastructure/campaign-encounter.entity';
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
+import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
+import type { Repository } from 'typeorm';
 
 const enc = (o: Partial<CampaignEncounter> = {}): CampaignEncounter => ({
   id: 'e1',
@@ -46,7 +49,7 @@ describe('CampaignEncounterService', () => {
       | 'findActiveOrFail'
       | 'findEncounterInCampaignOrFail'
       | 'saveEncounter'
-      | 'addCreature'
+      | 'addActor'
       | 'refreshSortOrders'
       | 'findCombatantByIdOrFail'
       | 'saveCombatant'
@@ -55,6 +58,8 @@ describe('CampaignEncounterService', () => {
     >
   >;
   let loadDto: jest.Mocked<Pick<LoadEncounterDto, 'load'>>;
+  let actorPersistence: jest.Mocked<Pick<ActorPersistenceService, 'createWithChildren'>>;
+  let actors: jest.Mocked<Pick<Repository<GameActor>, 'create' | 'findOne' | 'save'>>;
   const dto = { id: 'e1', name: 'Fight' };
 
   beforeEach(() => {
@@ -68,7 +73,7 @@ describe('CampaignEncounterService', () => {
       findActiveOrFail: jest.fn().mockResolvedValue(enc()),
       findEncounterInCampaignOrFail: jest.fn().mockResolvedValue(enc()),
       saveEncounter: jest.fn().mockResolvedValue(undefined),
-      addCreature: jest.fn().mockResolvedValue(undefined),
+      addActor: jest.fn().mockResolvedValue(undefined),
       refreshSortOrders: jest.fn().mockResolvedValue(undefined),
       findCombatantByIdOrFail: jest.fn(),
       saveCombatant: jest.fn().mockResolvedValue(undefined),
@@ -76,10 +81,25 @@ describe('CampaignEncounterService', () => {
       advanceTurn: jest.fn().mockResolvedValue(enc({ currentTurnIndex: 1 })),
     };
     loadDto = { load: jest.fn().mockResolvedValue(dto) };
+    actorPersistence = {
+      createWithChildren: jest.fn().mockResolvedValue({
+        id: 'actor1',
+        name: 'Goblin',
+        hitPointsMax: 7,
+        hitPointsCurrent: 7,
+      } as GameActor),
+    };
+    actors = {
+      create: jest.fn().mockImplementation((row?: unknown) => row as GameActor),
+      findOne: jest.fn(),
+      save: jest.fn().mockResolvedValue(undefined),
+    };
     service = new CampaignEncounterService(
       campaigns as unknown as CampaignRepository,
       encounters as unknown as CampaignEncounterRepository,
       loadDto as unknown as LoadEncounterDto,
+      actorPersistence as unknown as ActorPersistenceService,
+      actors as unknown as Repository<GameActor>,
     );
   });
 
@@ -130,19 +150,37 @@ describe('CampaignEncounterService', () => {
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 
-  it('addCreature adds creature and refreshes order', async () => {
+  it('addCreature creates actor, links combatant and refreshes order', async () => {
     await service.addCreature('u1', 'c1', 'e1', { name: 'Goblin', hpMax: 7, armorClass: 13 });
-    expect(encounters.addCreature).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'Goblin', hpCurrent: 7 }),
+    expect(actorPersistence.createWithChildren).toHaveBeenCalled();
+    expect(encounters.addActor).toHaveBeenCalledWith(
+      expect.objectContaining({ actorId: 'actor1' }),
     );
-    expect(encounters.refreshSortOrders).toHaveBeenCalledWith('e1');
+    expect(encounters.refreshSortOrders).toHaveBeenCalledWith(
+      'e1',
+      expect.any(Map),
+    );
   });
 
   it('patchCombatant and removeCombatant mutate combatants', async () => {
-    const cb = { id: 'cb1', kind: 'creature', hpMax: 10, hpCurrent: 10 } as CampaignEncounterCombatant;
+    const linkedActor = {
+      id: 'actor1',
+      name: 'Goblin',
+      hitPointsMax: 10,
+      hitPointsCurrent: 10,
+    } as GameActor;
+    const cb = {
+      id: 'cb1',
+      kind: 'actor',
+      actorId: 'actor1',
+    } as CampaignEncounterCombatant;
     encounters.findCombatantByIdOrFail.mockResolvedValue(cb);
+    actors.findOne.mockResolvedValue(linkedActor);
+    encounters.findEncounterInCampaignOrFail.mockResolvedValue(enc());
+
     await service.patchCombatant('u1', 'c1', 'e1', 'cb1', { hpCurrent: 5 });
-    expect(cb.hpCurrent).toBe(5);
+    expect(linkedActor.hitPointsCurrent).toBe(5);
+    expect(actors.save).toHaveBeenCalledWith(linkedActor);
     expect(encounters.saveCombatant).toHaveBeenCalledWith(cb);
 
     await service.removeCombatant('u1', 'c1', 'e1', 'cb1');

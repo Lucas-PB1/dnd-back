@@ -33,6 +33,7 @@ const SEED_PACKS = [
   'northlands-heroes',
   'dmg',
   'combat',
+  'creatures',
 ];
 
 /** @param {string} arg */

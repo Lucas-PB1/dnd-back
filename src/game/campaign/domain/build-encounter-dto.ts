@@ -5,6 +5,7 @@ import {
   sortCombatantsByInitiative,
 } from './encounter-initiative';
 import type { CampaignEncounterDto } from '../dto/encounter.dto';
+import type { ActorCombatantEnrichment } from '../application/enrich-encounter-actors';
 
 export type EncounterViewer = 'dm' | 'player';
 
@@ -23,13 +24,14 @@ export function buildCampaignEncounterDto(input: {
   combatants: CampaignEncounterCombatant[];
   pcNameById: Map<string, string>;
   pcEnrichmentByCharacterId: Map<string, PcCombatantEnrichment>;
+  actorEnrichmentByActorId: Map<string, ActorCombatantEnrichment>;
   viewer: EncounterViewer;
 }): CampaignEncounterDto {
   const sorted = sortCombatantsByInitiative(
     input.combatants.map((row) => ({
       ...row,
       combatantId: row.id,
-      displayName: resolveDisplayName(row, input.pcNameById),
+      displayName: resolveDisplayName(row, input.pcNameById, input.actorEnrichmentByActorId),
     })),
   );
   const active = sorted.filter((row) => row.isActive);
@@ -54,13 +56,17 @@ export function buildCampaignEncounterDto(input: {
     creatureHpVisibility: input.encounter.creatureHpVisibility,
     currentCombatantId: current?.id ?? null,
     currentCharacterId: current?.characterId ?? null,
+    currentActorId: current?.actorId ?? null,
     combatants: sorted.map((row) =>
       mapCombatantDto({
         row,
         displayName: row.displayName,
         isCurrentTurn: current?.id === row.id,
-        enrichment: row.characterId
+        pcEnrichment: row.characterId
           ? input.pcEnrichmentByCharacterId.get(row.characterId)
+          : undefined,
+        actorEnrichment: row.actorId
+          ? input.actorEnrichmentByActorId.get(row.actorId)
           : undefined,
         viewer: input.viewer,
         creatureHpVisibility: input.encounter.creatureHpVisibility,
@@ -72,9 +78,10 @@ export function buildCampaignEncounterDto(input: {
 function resolveDisplayName(
   row: CampaignEncounterCombatant,
   pcNameById: Map<string, string>,
+  actorEnrichmentByActorId: Map<string, ActorCombatantEnrichment>,
 ): string {
-  if (row.kind === 'creature') {
-    return row.displayName?.trim() || 'Criatura';
+  if (row.kind === 'actor' && row.actorId) {
+    return actorEnrichmentByActorId.get(row.actorId)?.name ?? 'Actor';
   }
   if (row.characterId) {
     return pcNameById.get(row.characterId) ?? row.characterId;
@@ -86,7 +93,8 @@ function mapCombatantDto(input: {
   row: CampaignEncounterCombatant & { displayName: string };
   displayName: string;
   isCurrentTurn: boolean;
-  enrichment?: PcCombatantEnrichment;
+  pcEnrichment?: PcCombatantEnrichment;
+  actorEnrichment?: ActorCombatantEnrichment;
   viewer: EncounterViewer;
   creatureHpVisibility: CampaignEncounter['creatureHpVisibility'];
 }): CampaignEncounterDto['combatants'][number] {
@@ -94,6 +102,7 @@ function mapCombatantDto(input: {
     id: input.row.id,
     kind: input.row.kind,
     characterId: input.row.characterId,
+    actorId: input.row.actorId,
     displayName: input.displayName,
     initiativeTotal: input.row.initiativeTotal,
     initiativeModifier: input.row.initiativeModifier,
@@ -110,30 +119,31 @@ function mapCombatantDto(input: {
     inspiration: null as boolean | null,
   };
 
-  if (input.row.kind === 'pc' && input.enrichment) {
+  if (input.row.kind === 'pc' && input.pcEnrichment) {
     return {
       ...base,
-      level: input.enrichment.level,
-      armorClass: input.enrichment.armorClass,
-      hpCurrent: input.enrichment.hpCurrent,
-      hpMax: input.enrichment.hpMax,
+      level: input.pcEnrichment.level,
+      armorClass: input.pcEnrichment.armorClass,
+      hpCurrent: input.pcEnrichment.hpCurrent,
+      hpMax: input.pcEnrichment.hpMax,
       hpPercent: hitPointsPercent(
-        input.enrichment.hpCurrent,
-        input.enrichment.hpMax,
+        input.pcEnrichment.hpCurrent,
+        input.pcEnrichment.hpMax,
       ),
-      featSlugs: input.enrichment.featSlugs,
-      conditions: input.enrichment.conditions,
-      inspiration: input.enrichment.inspiration,
+      featSlugs: input.pcEnrichment.featSlugs,
+      conditions: input.pcEnrichment.conditions,
+      inspiration: input.pcEnrichment.inspiration,
     };
   }
 
-  if (input.row.kind === 'creature') {
+  if (input.row.kind === 'actor' && input.actorEnrichment) {
     return {
       ...base,
-      armorClass: input.row.armorClass,
+      armorClass: input.actorEnrichment.armorClass,
+      conditions: input.actorEnrichment.conditions,
       ...creatureHpFields({
-        hpCurrent: input.row.hpCurrent,
-        hpMax: input.row.hpMax,
+        hpCurrent: input.actorEnrichment.hpCurrent,
+        hpMax: input.actorEnrichment.hpMax,
         viewer: input.viewer,
         visibility: input.creatureHpVisibility,
       }),

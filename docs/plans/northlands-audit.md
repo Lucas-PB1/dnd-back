@@ -4,8 +4,8 @@
 **Edição:** `northlands-heroes-2024-en`.  
 **Skills:** `rpg-class-mesa-api` · `rpg-class-mesa-front` · `rpg-catalog-model`.
 
-Escopo: Waves 1–4 + Cap. 5 seedado (armas/gear/magias/itens + Masterwork).  
-**Adiado (quase pronto / espera modelo):** Character Threads; montarias/veículos/longships.
+Escopo: Waves 1–4 + Cap. 5 seedado (armas/gear/magias/itens + Masterwork + veículos + Leviathan).  
+**Fase 2:** Character Threads na mesa (Cursemarked/Fatebound runtime).
 
 ---
 
@@ -18,19 +18,21 @@ Escopo: Waves 1–4 + Cap. 5 seedado (armas/gear/magias/itens + Masterwork).
 - [x] Recursos
 - [x] Economy / panel / table-actions (C052–C056)
 - [x] Passivas lado direito
-- [x] Cap. 5 catálogo (salvo veículos)
+- [x] Cap. 5 catálogo (armas/gear/magias/itens)
+- [x] Veículos / montarias / longships (`M003`)
+- [x] Bestiário Northlands + Leviathan Avatar (`M004`)
+- [x] Character Threads MVP — schema + seed `N036` + catálogo/ficha/wizard
 - [x] Blessings origem + Eir resource/mesa + Greater ASI/grants
 - [x] Path of the Titan mesa
 - [x] Masterwork (cobertura `obra-prima` / `obra-prima-municao`)
-- [ ] Veículos / montarias / longships — **adiado** (modelo de ficha)
-- [ ] Character Threads — **adiado** (schema/API/UI novos)
+- [ ] Character Threads fase 2 — runtime mesa (Cursemarked brackets, Fatebound morte, resources)
 
 ---
 
 ## OK
 
 ### Pack / create
-- Seeds `N001`–`N035` no manifesto; citação Cap. 4 + Cap. 5.
+- Seeds `N001`–`N036` no manifesto; citação Cap. 4 + Cap. 5.
 - 7 espécies + option_def/value (`N006`–`N008`); resources espécie (`N009`).
 - Andari cantrip: enum + `V057`/`V058` + validator API + front filter.
 - 9 antecedentes; `preordained-hero` / `seafarer` com `origin_feat_choice_slugs` + pick no wizard.
@@ -41,6 +43,7 @@ Escopo: Waves 1–4 + Cap. 5 seedado (armas/gear/magias/itens + Masterwork).
 - Loki: Enganação fixa na ficha (`FIXED_FEAT_SKILL_SLUGS`).
 - Giantkin Cloud/Storm: FKs magia (`N035`) + view `V060`.
 - Masterwork: itens cobertura (`N034`); attach exige `bonus === 1`; arma mágica pode receber (sem stack do +1).
+- Character Threads: catálogo `T085`/`V063`/`N036`; estado `P039`; API + Traços + wizard opcional.
 
 ### Cap. 5
 - Mastery Pull + 7 armas (`N025`).
@@ -48,6 +51,7 @@ Escopo: Waves 1–4 + Cap. 5 seedado (armas/gear/magias/itens + Masterwork).
 - 78 magias PT + listas (`N026`/`N027` — **208** vínculos classe; doc “209” era falso alarme).
 - 86 itens mágicos PT (`N029`).
 - Masterwork como cobertura (`N034`).
+- Veículos Cap. 5 (`M003`); bestiário + Leviathan Avatar (`M004`).
 
 ### Mesa
 - 7/8 subclasses com trio C052 + C053 + C054; Titan em C052–C054.
@@ -71,12 +75,11 @@ Escopo: Waves 1–4 + Cap. 5 seedado (armas/gear/magias/itens + Masterwork).
 
 ---
 
-## Adiado — espera modelo / sistema novo
+## Adiado — fase 2 / mesa
 
 | Tema | Por quê | Doc |
 |------|---------|-----|
-| **Character Threads** (7) | Schema + API + UI novos; não é gap de seed | [`northlands-character-threads.md`](northlands-character-threads.md) |
-| **Veículos / montarias / longships** Cap. 5 | Quase ficha (montaria, carga, tripulation); alinhar inventário/veículo antes de seed | [`northlands-magic-and-miscellany.md`](northlands-magic-and-miscellany.md) |
+| **Character Threads — mesa** | Cursemarked brackets, Fatebound morte, resources 1/LR | [`northlands-character-threads.md`](northlands-character-threads.md) |
 
 ---
 
@@ -126,7 +129,6 @@ Escopo: Waves 1–4 + Cap. 5 seedado (armas/gear/magias/itens + Masterwork).
 
 ## Próximas levas (só com pedido)
 
-1. Character Threads (sistema novo)
-2. Cap. 5 veículos após modelo de ficha
-3. M6 features texto → lembrete/economy (opcional)
-4. Greater Freyr usos PB/dia (se quiser fidelidade total)
+1. Character Threads fase 2 (mesa: Cursemarked / Fatebound / resources)
+2. M6 features texto → lembrete/economy (opcional)
+3. Greater Freyr usos PB/dia (se quiser fidelidade total)

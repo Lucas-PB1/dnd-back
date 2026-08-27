@@ -133,11 +133,14 @@ export class EncounterCombatantDto {
   @ApiProperty()
   id!: string;
 
-  @ApiProperty({ enum: ['pc', 'creature'] })
-  kind!: 'pc' | 'creature';
+  @ApiProperty({ enum: ['pc', 'actor'] })
+  kind!: 'pc' | 'actor';
 
   @ApiPropertyOptional({ nullable: true })
   characterId!: string | null;
+
+  @ApiPropertyOptional({ nullable: true })
+  actorId!: string | null;
 
   @ApiProperty({ example: 'Thorin' })
   displayName!: string;
@@ -224,6 +227,12 @@ export class CampaignEncounterDto {
     description: 'characterId se o turno atual for um PC',
   })
   currentCharacterId!: string | null;
+
+  @ApiPropertyOptional({
+    nullable: true,
+    description: 'actorId se o turno atual for um actor',
+  })
+  currentActorId!: string | null;
 
   @ApiProperty({ type: [EncounterCombatantDto] })
   combatants!: EncounterCombatantDto[];

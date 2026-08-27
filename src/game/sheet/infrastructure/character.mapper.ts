@@ -32,6 +32,7 @@ import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/validati
 import { collectMasteredWeaponSlugs } from '../domain/validation/class-options/class-weapon-mastery-slots';
 import { assembleCharacterResponseDto } from './assemble-character-response-dto';
 import { sheetProfile } from '@common/perf/sheet-profile';
+import { LoadCharacterThreadBundleQuery } from '../application/load-character-thread-bundle.query';
 
 @Injectable()
 export class CharacterMapper {
@@ -46,6 +47,7 @@ export class CharacterMapper {
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
+    private readonly loadCharacterThread: LoadCharacterThreadBundleQuery,
   ) {}
 
   async toDto(
@@ -96,7 +98,7 @@ export class CharacterMapper {
       loaded.subclassOptions,
     );
 
-    const [combat, spellcasting] = await Promise.all([
+    const [combat, spellcasting, thread] = await Promise.all([
       sheetProfile('combat', () =>
         resolveCharacterCombatSlice({
           characterId: row.id,
@@ -137,6 +139,7 @@ export class CharacterMapper {
           featSlugs,
         }),
       ),
+      sheetProfile('thread', () => this.loadCharacterThread.execute(row.id)),
     ]);
 
     return assembleCharacterResponseDto({
@@ -148,6 +151,7 @@ export class CharacterMapper {
       derived,
       combat,
       spellcasting,
+      thread,
     });
   }
 

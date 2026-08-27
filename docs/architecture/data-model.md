@@ -28,6 +28,7 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 | `resource_owner_kind` | class, subclass |
 | `combat_modifier_kind` | hp_bonus, unarmored_defense |
 | `hit_die`, `feat_category`, `condition_slug`, … | Lote A (lookups → ENUM) |
+| `actor_kind`, `innate_spell_usage`, `actor_action_bucket` | Fichas de mesa (`game_actor*`) — `011_actor_types.sql` |
 
 ## Clusters
 
@@ -86,17 +87,37 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - `phb_feat` (`category` ENUM), `phb_feat_benefit`, `phb_feat_requirement` (+ ability)
 - Opções via `phb_option_*` (`scope='feat'`)
 
-## Runtime (ficha / campanha)
+### 10. Creature / vehicle templates (catálogo read-only)
+
+- `phb_creature_template` + filhos (`_speed`, `_action`, `_spell`)
+- `phb_vehicle_template` + filhos (`_speed`, `_action`)
+- Views: `v_phb_creature_template_bundle`, `v_phb_vehicle_template_bundle` (`V061`)
+
+### 11. Character Threads (Northlands)
+
+- Catálogo: `phb_character_thread` + `_goal` + `_milestone` + `_milestone_benefit` (`T085`)
+- View: `v_phb_character_thread_bundle` (`V063`)
+- Estado: `player_character_thread` + `_milestone` (`P039`) — no máx. 1 `active` por personagem
+- Seed: `N036`
+- Seed: `database/seeds/creatures/` (ex.: Primal Companion Terra)
+- Spawn runtime: `rpg.spawn_game_actor_from_template(template_slug, …)`
+
+## Runtime (ficha / campanha / actors)
 
 - `player_character` (+ skill, spell, language, feat, item, equipment, state, species_choice, option)
+- **`game_actor`** (+ speed, action, spell, state) — criaturas, montarias, navios, companions; **separado** de `player_character`
 - `campaign`, `campaign_member`, `campaign_character`, `campaign_encounter`, `campaign_encounter_combatant`
-- Criticals: FKs ownership, subclass∈class, XOR combatant, UNIQUEs de membership
+- Criticals: FKs ownership, subclass∈class, XOR combatant (`pc` ↔ `character_id` **ou** `actor` ↔ `actor_id`), UNIQUEs de membership
+
+Combatente de encontro: `kind IN ('pc','actor')`. Criaturas manuais viram `game_actor` linkado por `actor_id` (sem colunas duplicadas de PV/CA/nome no combatente).
 
 ## Views (read models)
 
 Contratos estáveis para a API — ver pasta `060_views/` e skill `phb-query-views`. Principais: `v_phb_class_equipment`, `v_phb_background_equipment`, `v_phb_species_trait_choices`, `v_phb_species_granted_spell`, `v_phb_feat_granted_spell`, `mv_spell_by_class`.
 
 Ficha do jogador (GET): `rpg.get_character_sheet_bundle` (P030/P032 — filhos + PB + boosts de classe + size da espécie) + `rpg.get_character_combat_bundle` (P031 — inventário/itens/armadura/defesa sem armadura).
+
+Ficha de actor (GET): `rpg.get_game_actor_bundle` (P035 — actor + speeds + actions + spells + state).
 
 Magias por classe (API): entity `VSpellByClass` lê **`mv_spell_by_class`** (não a view viva). `REFRESH … CONCURRENTLY` no fim de `npm run db:seed`.
 
