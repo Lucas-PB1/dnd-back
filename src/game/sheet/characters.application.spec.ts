@@ -24,6 +24,7 @@ import { LoadGrantedSpellCatalog } from '../spellcasting/application/load-grante
 import { ResolveSubclassOptionGrantedSpells } from '../spellcasting/application/resolve-subclass-option-granted-spells';
 import { CampaignCharacterAccessService } from '../campaign/infrastructure/campaign-character-access.service';
 import { CampaignService } from '../campaign/application/campaign.service';
+import { LoadCharacterThreadBundleQuery } from './application/load-character-thread-bundle.query';
 
 describe('Characters application layer', () => {
   let createHandler: CreateCharacterHandler;
@@ -253,6 +254,12 @@ describe('Characters application layer', () => {
             listCampaignRefsByCharacterIds: jest
               .fn()
               .mockResolvedValue(new Map()),
+          },
+        },
+        {
+          provide: LoadCharacterThreadBundleQuery,
+          useValue: {
+            execute: jest.fn().mockResolvedValue({ active: null, history: [] }),
           },
         },
       ],
