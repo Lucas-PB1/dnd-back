@@ -60,6 +60,8 @@ import { CreateCharacterHandler } from './application/create-character.handler';
 import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { PatchCharacterWealthHandler } from './application/patch-character-wealth.handler';
+import { GetCharacterNotesQuery } from './application/get-character-notes.query';
+import { UpdateCharacterNotesHandler } from './application/update-character-notes.handler';
 import { CharacterSpellLookup } from './application/character-spell-lookup';
 import { LoadCharacterThreadBundleQuery } from './application/load-character-thread-bundle.query';
 import { CharacterThreadCommands } from './application/character-thread.commands';
@@ -134,6 +136,8 @@ import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-threa
     UpdateCharacterHandler,
     DeleteCharacterHandler,
     PatchCharacterWealthHandler,
+    GetCharacterNotesQuery,
+    UpdateCharacterNotesHandler,
     CharacterSpellLookup,
     LoadCharacterThreadBundleQuery,
     CharacterThreadCommands,

@@ -9,6 +9,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Put,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -30,10 +31,16 @@ import { CreateCharacterHandler } from './application/create-character.handler';
 import { UpdateCharacterHandler } from './application/update-character.handler';
 import { DeleteCharacterHandler } from './application/delete-character.handler';
 import { PatchCharacterWealthHandler } from './application/patch-character-wealth.handler';
+import { GetCharacterNotesQuery } from './application/get-character-notes.query';
+import { UpdateCharacterNotesHandler } from './application/update-character-notes.handler';
 import { CreateCharacterDto } from './dto/create-character.dto';
 import { UpdateCharacterDto } from './dto/update-character.dto';
 import { PatchCharacterWealthDto } from './dto/coin-purse.dto';
 import { CoinPurseDto } from './dto/coin-purse.dto';
+import {
+  CharacterNotesResponseDto,
+  UpdateCharacterNotesDto,
+} from './dto/character-notes.dto';
 import {
   CharacterResponseDto,
   CharacterSummaryResponseDto,
@@ -52,6 +59,8 @@ export class CharactersController {
     private readonly updateCharacter: UpdateCharacterHandler,
     private readonly deleteCharacter: DeleteCharacterHandler,
     private readonly patchWealth: PatchCharacterWealthHandler,
+    private readonly getNotes: GetCharacterNotesQuery,
+    private readonly updateNotes: UpdateCharacterNotesHandler,
   ) {}
 
   @Get()
@@ -108,6 +117,29 @@ export class CharactersController {
     @Body() dto: PatchCharacterWealthDto,
   ): Promise<CoinPurseDto> {
     return this.patchWealth.execute(user.id, id, dto);
+  }
+
+  @Get(':id/notes')
+  @ApiOperation({ summary: 'Get session notes for a character' })
+  @ApiOkResponse({ type: CharacterNotesResponseDto })
+  @ApiNotFoundResponse()
+  getNotesByCharacter(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+  ): Promise<CharacterNotesResponseDto> {
+    return this.getNotes.execute(user.id, id);
+  }
+
+  @Put(':id/notes')
+  @ApiOperation({ summary: 'Save session notes for a character' })
+  @ApiOkResponse({ type: CharacterNotesResponseDto })
+  @ApiNotFoundResponse()
+  saveNotes(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateCharacterNotesDto,
+  ): Promise<CharacterNotesResponseDto> {
+    return this.updateNotes.execute(user.id, id, dto);
   }
 
   @Delete(':id')

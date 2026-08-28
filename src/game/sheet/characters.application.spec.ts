@@ -91,6 +91,7 @@ describe('Characters application layer', () => {
     coinElectrum: 0,
     coinGold: 0,
     coinPlatinum: 0,
+    sessionNotes: '',
     createdAt: new Date(),
     updatedAt: new Date(),
   };

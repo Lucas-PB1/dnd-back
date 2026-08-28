@@ -83,6 +83,9 @@ export class PlayerCharacter {
   @Column({ name: 'coin_platinum', type: 'int', default: 0 })
   coinPlatinum!: number;
 
+  @Column({ name: 'session_notes', type: 'text', default: '' })
+  sessionNotes!: string;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt!: Date;
 
