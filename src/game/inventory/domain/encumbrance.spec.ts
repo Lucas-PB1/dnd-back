@@ -10,6 +10,8 @@ describe('encumbrance', () => {
   it('parses PT weight strings', () => {
     expect(parseItemWeightKg('0,5 kg')).toBe(0.5);
     expect(parseItemWeightKg('2 kg')).toBe(2);
+    expect(parseItemWeightKg('5 lb.')).toBe(2.5);
+    expect(parseItemWeightKg('100 libras')).toBe(50);
     expect(parseItemWeightKg(null)).toBe(0);
     expect(parseItemWeightKg('unknown')).toBe(0);
   });

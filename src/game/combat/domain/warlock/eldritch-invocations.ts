@@ -1,3 +1,4 @@
+import { feetToMeters } from '@game/shared/domain/metric';
 import {
   BLAST_INVOCATION_SLUGS,
   ELDRITCH_INVOCATION_CANTRIP_OPTION_KEY,
@@ -159,7 +160,7 @@ export function parseSpellRangeMeters(
   }
   const feet = rangeText.match(/(\d+(?:[.,]\d+)?)\s*(?:ft|feet|pés|pes)/i);
   if (feet) {
-    return Number(feet[1].replace(',', '.')) * 0.3;
+    return feetToMeters(Number(feet[1].replace(',', '.')));
   }
   return null;
 }
