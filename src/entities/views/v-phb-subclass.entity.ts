@@ -20,6 +20,9 @@ export class VPhbSubclass {
   @ViewColumn({ name: 'summary' })
   summary!: string | null;
 
+  @ViewColumn({ name: 'image_url' })
+  imageUrl!: string | null;
+
   @ViewColumn({ name: 'source_chapter' })
   sourceChapter!: number | null;
 

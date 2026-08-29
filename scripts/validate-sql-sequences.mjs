@@ -102,6 +102,8 @@ checkSeq('database/seeds/valdas', 'V');
 checkSeq('database/seeds/valdas-gunslinger', 'G');
 checkSeq('database/seeds/valdas-player-pack-2', 'P');
 checkSeq('database/seeds/combat', 'C');
+checkSeq('database/seeds/griffons-saddlebag', 'R');
+checkSeq('database/seeds/grim-hollow', 'J');
 
 const stale = [
   'S014' + 'a_',

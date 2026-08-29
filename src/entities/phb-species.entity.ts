@@ -31,4 +31,7 @@ export class PhbSpecies {
 
   @Column({ name: 'source_meta', type: 'jsonb', nullable: true })
   sourceMeta!: Record<string, unknown> | null;
+
+  @Column({ name: 'image_url', type: 'text', nullable: true })
+  imageUrl!: string | null;
 }

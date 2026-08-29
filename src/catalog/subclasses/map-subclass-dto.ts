@@ -13,5 +13,6 @@ export function mapSubclassDto(row: VPhbSubclass): SubclassResponseDto {
     editionSlug: row.editionSlug,
     spellSourceSlug: row.spellSourceSlug,
     spellSourceLabel: row.spellSourceLabel,
+    imageUrl: row.imageUrl,
   };
 }

@@ -38,6 +38,7 @@ export class SpeciesMapper {
       speed: row.speed,
       description: row.description,
       editionSlug: editionSlugFromSourceMeta(row.sourceMeta),
+      imageUrl: row.imageUrl,
     };
   }
 

@@ -30,6 +30,7 @@ describe('Subclasses queries', () => {
     editionSlug: 'phb-2024-pt',
     spellSourceSlug: null,
     spellSourceLabel: null,
+    imageUrl: null,
   };
 
   const sampleMechanic: VPhbSubclassMechanics = {

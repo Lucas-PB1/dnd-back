@@ -14,7 +14,9 @@ describe('Species queries', () => {
   let findSpeciesBySlug: FindSpeciesBySlugQuery;
   let speciesRepo: jest.Mocked<Pick<Repository<PhbSpecies>, 'find' | 'findOne'>>;
   let traitsRepo: jest.Mocked<Pick<Repository<PhbSpeciesTrait>, 'find'>>;
-  let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findSpeciesOrFail'>>;
+  let catalogLookup: jest.Mocked<
+    Pick<CatalogLookupService, 'findPlayableSpeciesOrFail' | 'findSpeciesOrFail'>
+  >;
 
   const sample: PhbSpecies = {
     id: '1',
@@ -27,12 +29,17 @@ describe('Species queries', () => {
     speed: '9 metros',
     description: 'Test',
     sourceMeta: null,
+    imageUrl: null,
   };
 
   beforeEach(async () => {
     speciesRepo = { find: jest.fn(), findOne: jest.fn() };
     traitsRepo = { find: jest.fn() };
     catalogLookup = {
+      findPlayableSpeciesOrFail: jest.fn(async (slug) => {
+        if (slug === 'invalid') throw new NotFoundException();
+        return sample;
+      }),
       findSpeciesOrFail: jest.fn(async (slug) => {
         if (slug === 'invalid') throw new NotFoundException();
         return sample;

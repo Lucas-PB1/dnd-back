@@ -30,4 +30,7 @@ export class SubclassResponseDto {
 
   @ApiPropertyOptional()
   spellSourceLabel!: string | null;
+
+  @ApiPropertyOptional({ example: '/catalog/subclasses/champion.png' })
+  imageUrl!: string | null;
 }

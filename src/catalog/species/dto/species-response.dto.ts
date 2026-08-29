@@ -32,4 +32,7 @@ export class SpeciesResponseDto {
     description: 'Rulebook edition slug (from source_meta or PHB default)',
   })
   editionSlug!: string | null;
+
+  @ApiPropertyOptional({ example: '/catalog/species/feathren.png' })
+  imageUrl!: string | null;
 }
