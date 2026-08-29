@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { SpeciesResponseDto } from '../dto/species-response.dto';
 import { SpeciesMapper } from '../species.mapper';
+import { isSpeciesExcludedFromCatalog } from '../domain/species-edition-gating';
 
 @Injectable()
 export class FindSpeciesBySlugQuery {
@@ -10,8 +11,14 @@ export class FindSpeciesBySlugQuery {
     private readonly mapper: SpeciesMapper,
   ) {}
 
-  async execute(slug: string): Promise<SpeciesResponseDto> {
-    const row = await this.catalogLookup.findSpeciesOrFail(slug);
+  async execute(
+    slug: string,
+    editionSlugs?: string[],
+  ): Promise<SpeciesResponseDto> {
+    if (isSpeciesExcludedFromCatalog(slug, editionSlugs)) {
+      throw new NotFoundException(`Species '${slug}' not found`);
+    }
+    const row = await this.catalogLookup.findPlayableSpeciesOrFail(slug);
     return this.mapper.toDto(row);
   }
 }

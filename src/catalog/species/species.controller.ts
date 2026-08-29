@@ -65,7 +65,10 @@ export class SpeciesController {
   @ApiParam({ name: 'slug', example: 'elf' })
   @ApiOkResponse({ type: SpeciesResponseDto })
   @ApiNotFoundResponse({ description: 'Species not found' })
-  findOne(@Param('slug') slug: string): Promise<SpeciesResponseDto> {
-    return this.findSpeciesBySlug.execute(slug);
+  findOne(
+    @Param('slug') slug: string,
+    @Query() query: Pick<SpeciesQueryDto, 'editionSlugs'>,
+  ): Promise<SpeciesResponseDto> {
+    return this.findSpeciesBySlug.execute(slug, query.editionSlugs);
   }
 }

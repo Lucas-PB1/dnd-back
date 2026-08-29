@@ -58,13 +58,13 @@ INSERT INTO rpg.phb_class_economy_action (
 ),
 (
   'species-baugsmidr-sense-magic', NULL,
-  (SELECT id FROM rpg.phb_species WHERE slug = 'baugsmidr-dwarf'), NULL,
+  (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'), NULL,
   'Sentir Magia', 'bonus'::rpg.action_economy_bucket, 1,
   'baugsmidr-sense-magic', NULL, true,
   'AB: detectar magia e criaturas (36 m)',
   'Ação Bônus: sinta magia a 36 m até o fim do próximo turno; auras e escolas; Aberrações/Celestiais/Fey/Ínferos/Mortos-Vivos. Usos = PB / Descanso Longo.',
   'spend-resource', NULL, 360,
-  NULL, NULL
+  'dwarfCultureId', 'baugsmidr'
 )
 ON CONFLICT (action_id) DO UPDATE SET
   class_id = EXCLUDED.class_id,

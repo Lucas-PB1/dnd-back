@@ -27,4 +27,10 @@ export class ItemSummaryResponseDto {
 
   @ApiPropertyOptional({ example: false })
   magic!: boolean;
+
+  @ApiPropertyOptional({
+    example: '/catalog/mounts/camelo.png',
+    nullable: true,
+  })
+  imageUrl!: string | null;
 }

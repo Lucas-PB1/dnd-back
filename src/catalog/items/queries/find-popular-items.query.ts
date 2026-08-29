@@ -22,7 +22,7 @@ export class FindPopularItemsQuery {
     const orderCol = metric === 'view' ? 'view_count' : 'purchase_count';
     const capped = Math.min(Math.max(limit, 1), 40);
     const raw = await this.stats.query(
-      `SELECT i.slug, i.name, i.item_type, i.cost, i.weight, i.properties
+      `SELECT i.slug, i.name, i.item_type, i.cost, i.weight, i.properties, i.image_url
        FROM rpg.phb_item_catalog_stats s
        JOIN rpg.phb_item i ON i.slug = s.item_slug
        WHERE ${EXCLUDE_CLASS_GRANTED_ITEMS_JOIN_SQL}
@@ -40,6 +40,7 @@ export class FindPopularItemsQuery {
         weight: (row.weight as string | null) ?? null,
         properties: (row.properties as Record<string, unknown> | null) ?? null,
         description: null,
+        imageUrl: (row.image_url as string | null) ?? null,
         id: '0',
       }),
     );

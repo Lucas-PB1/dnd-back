@@ -20,6 +20,12 @@ export class ItemResponseDto {
   description!: string | null;
 
   @ApiPropertyOptional({
+    example: '/catalog/mounts/camelo.png',
+    nullable: true,
+  })
+  imageUrl!: string | null;
+
+  @ApiPropertyOptional({
     description: 'Type-specific JSON (tools: attribute/crafting; weapons: ids; etc.)',
   })
   properties!: Record<string, unknown> | null;

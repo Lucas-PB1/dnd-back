@@ -12,6 +12,7 @@ describe('filter-species-resources-by-option', () => {
     expect(choiceKindForOptionKey('giantkinAncestryId')).toBe(
       'giantkin_ancestry',
     );
+    expect(choiceKindForOptionKey('dwarfCultureId')).toBe('dwarf_culture');
   });
 
   it('keeps ungated resources', () => {
@@ -66,6 +67,34 @@ describe('filter-species-resources-by-option', () => {
     expect(
       isSpeciesResourceAllowedByChoices('giant-ancestry', gates, [
         { choiceKind: 'giant_ancestry', choiceSlug: 'cloud' },
+      ]),
+    ).toBe(true);
+  });
+
+  it('gates dwarf resources by dwarf_culture choice', () => {
+    const gates = [
+      {
+        resourceSlug: 'stonecunning',
+        requiresOptionKey: 'dwarfCultureId',
+        requiresOptionValue: 'phb',
+      },
+      {
+        resourceSlug: 'baugsmidr-sense-magic',
+        requiresOptionKey: 'dwarfCultureId',
+        requiresOptionValue: 'baugsmidr',
+      },
+    ];
+    expect(
+      isSpeciesResourceAllowedByChoices('stonecunning', gates, [
+        { choiceKind: 'dwarf_culture', choiceSlug: 'phb' },
+      ]),
+    ).toBe(true);
+    expect(
+      isSpeciesResourceAllowedByChoices('stonecunning', gates, []),
+    ).toBe(false);
+    expect(
+      isSpeciesResourceAllowedByChoices('baugsmidr-sense-magic', gates, [
+        { choiceKind: 'dwarf_culture', choiceSlug: 'baugsmidr' },
       ]),
     ).toBe(true);
   });

@@ -2,10 +2,10 @@ import type { SpeciesChoiceLike } from './combat-notes';
 
 /** Passivas Northlands para o painel Passivas (lado direito). */
 export function northlandsSpeciesCombatNotes(
-  speciesSlug: string,
+  speciesSlugOrCulture: string,
   _speciesChoices?: readonly SpeciesChoiceLike[],
 ): string[] {
-  switch (speciesSlug) {
+  switch (speciesSlugOrCulture) {
     case 'bearfolk':
       return [
         'Pelagem Espessa: Resistência a Gélido; Imunidade a frio extremo.',
@@ -33,13 +33,13 @@ export function northlandsSpeciesCombatNotes(
         'Visão no Escuro; Garras; Faro; Proeza Predatória.',
         'Mudar Aspecto: use a Economia; Força Bestial concede PV temp. (2× PB).',
       ];
-    case 'baugsmidr-dwarf':
+    case 'baugsmidr':
       return [
         'Visão no Escuro 36 m; Resiliência Anã (Veneno).',
         'Artesão Mágico / Lore Arcano: declare na mesa.',
         'Sentir Magia: use a Economia.',
       ];
-    case 'fjord-dwarf':
+    case 'fjord':
       return [
         'Visão no Escuro; Tenacidade Anã (+1 PV máx./nível).',
         'Guerreiro dos Fiordes / Maestria das Ondas: declare na mesa.',

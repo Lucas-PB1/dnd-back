@@ -32,11 +32,4 @@ export class SpeciesResponseDto {
     description: 'Rulebook edition slug (from source_meta or PHB default)',
   })
   editionSlug!: string | null;
-
-  @ApiPropertyOptional({
-    example: 'dwarf',
-    description:
-      'Base species slug when this row is a culture/variant of another (source_meta.variantOf)',
-  })
-  variantOf!: string | null;
 }

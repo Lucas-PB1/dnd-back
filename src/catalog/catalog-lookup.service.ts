@@ -59,6 +59,16 @@ export class CatalogLookupService {
     );
   }
 
+  async findPlayableSpeciesOrFail(speciesSlug: string): Promise<PhbSpecies> {
+    const row = await this.findSpeciesOrFail(speciesSlug);
+    if (isTraitPackageSpecies(row)) {
+      throw new BadRequestException(
+        `Species '${speciesSlug}' is not a playable species`,
+      );
+    }
+    return row;
+  }
+
   async findBackgroundOrFail(backgroundSlug: string): Promise<VPhbBackground> {
     return requireFound(
       await this.backgroundsRepo.findOne({ where: { backgroundSlug } }),
@@ -102,10 +112,20 @@ export class CatalogLookupService {
   }
 
   async assertSpeciesSlug(speciesSlug: string): Promise<void> {
-    requireCatalog(
-      await this.speciesRepo.findOne({ where: { slug: speciesSlug } }),
+    await this.assertPlayableSpeciesSlug(speciesSlug);
+  }
+
+  async assertPlayableSpeciesSlug(speciesSlug: string): Promise<void> {
+    const row = await this.speciesRepo.findOne({ where: { slug: speciesSlug } });
+    const species = requireCatalog(
+      row,
       `Species '${speciesSlug}' not found in catalog`,
     );
+    if (isTraitPackageSpecies(species)) {
+      throw new BadRequestException(
+        `Species '${speciesSlug}' is not a playable species`,
+      );
+    }
   }
 
   async assertBackgroundSlug(backgroundSlug: string): Promise<void> {
@@ -237,4 +257,9 @@ export class CatalogLookupService {
       }
     }
   }
+}
+
+function isTraitPackageSpecies(row: PhbSpecies): boolean {
+  const raw = row.sourceMeta?.variantOf;
+  return typeof raw === 'string' && raw.trim().length > 0;
 }

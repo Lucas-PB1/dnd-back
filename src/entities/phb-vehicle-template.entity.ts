@@ -25,4 +25,7 @@ export class PhbVehicleTemplate {
 
   @Column({ name: 'cargo_capacity_lb', type: 'int', nullable: true })
   cargoCapacityLb!: number | null;
+
+  @Column({ name: 'image_url', type: 'text', nullable: true })
+  imageUrl!: string | null;
 }

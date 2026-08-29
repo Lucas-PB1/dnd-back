@@ -31,7 +31,7 @@ INSERT INTO rpg.phb_class_economy_action (
   'stonecunning', NULL, true,
   'Sismiconsciência 18 m (10 min; em pedra)',
   'Ação Bônus: ganhe Sismiconsciência 18 m por 10 minutos enquanto estiver em ou tocando pedra (natural ou trabalhada). Usos = PB; recupera no Descanso Longo.',
-  'spend-resource', NULL, 202, NULL, NULL
+  'spend-resource', NULL, 202, 'dwarfCultureId', 'phb'
 ),
 (
   'species-dragonborn-breath', NULL,

@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { GameActor } from '../infrastructure/game-actor.entity';
 import { ActorSheetLoader } from '../infrastructure/actor-sheet.loader';
+import { TemplateImageResolver } from '../application/template-image.resolver';
 import {
   ActorResponseDto,
   ActorSummaryResponseDto,
@@ -8,7 +9,10 @@ import {
 
 @Injectable()
 export class ActorMapper {
-  constructor(private readonly sheetLoader: ActorSheetLoader) {}
+  constructor(
+    private readonly sheetLoader: ActorSheetLoader,
+    private readonly templateImages: TemplateImageResolver,
+  ) {}
 
   toSummary(actor: GameActor): ActorSummaryResponseDto {
     return {
@@ -28,10 +32,12 @@ export class ActorMapper {
 
   async toDto(actor: GameActor): Promise<ActorResponseDto> {
     const sheet = await this.sheetLoader.load(actor.id);
+    const imageUrl = await this.templateImages.resolve(actor.templateSlug);
     return {
       ...this.toSummary(actor),
       parentCharacterId: actor.parentCharacterId,
       templateSlug: actor.templateSlug,
+      imageUrl,
       initiativeModifier: actor.initiativeModifier,
       proficiencyBonus: actor.proficiencyBonus,
       abilityScores: actor.abilityScores,

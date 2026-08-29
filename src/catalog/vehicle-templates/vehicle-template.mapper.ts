@@ -16,6 +16,7 @@ export class VehicleTemplateMapper {
       armorClass: row.armorClass,
       hitPoints: row.hitPoints,
       crewCapacity: row.crewCapacity,
+      imageUrl: row.imageUrl,
     };
   }
 
@@ -33,6 +34,7 @@ export class VehicleTemplateMapper {
       cargoCapacityLb: row.cargoCapacityLb,
       cargoCapacityLabel: row.cargoCapacityLabel,
       initiativeModifier: row.initiativeModifier,
+      imageUrl: row.imageUrl,
       abilityScores: row.abilityScores,
       speeds: row.speeds ?? [],
       actions: row.actions ?? [],

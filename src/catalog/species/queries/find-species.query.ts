@@ -11,6 +11,10 @@ import {
 import { SpeciesResponseDto } from '../dto/species-response.dto';
 import { SpeciesSummaryResponseDto } from '../dto/species-summary-response.dto';
 import { SpeciesMapper } from '../species.mapper';
+import {
+  GOLIATH_SPECIES_SLUG,
+  shouldExcludeGoliathFromCatalog,
+} from '../domain/species-edition-gating';
 
 const SPECIES_CURSOR_KEYS = [
   { expr: 'species.name', name: 'name' },
@@ -65,6 +69,14 @@ export class FindSpeciesQuery {
           editionSlugs: slugs,
         },
       );
+    }
+
+    qb.andWhere(`COALESCE(species.source_meta->>'variantOf', '') = ''`);
+
+    if (shouldExcludeGoliathFromCatalog(slugs)) {
+      qb.andWhere('species.slug <> :excludedGoliathSlug', {
+        excludedGoliathSlug: GOLIATH_SPECIES_SLUG,
+      });
     }
 
     const { rows, meta } = await paginateQbCursor(qb, {

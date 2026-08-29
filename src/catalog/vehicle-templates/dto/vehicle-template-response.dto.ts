@@ -23,6 +23,12 @@ export class VehicleTemplateSummaryResponseDto {
 
   @ApiPropertyOptional({ nullable: true })
   crewCapacity!: number | null;
+
+  @ApiPropertyOptional({
+    example: '/catalog/ships/aeronave.png',
+    nullable: true,
+  })
+  imageUrl!: string | null;
 }
 
 export class VehicleTemplateResponseDto extends VehicleTemplateSummaryResponseDto {

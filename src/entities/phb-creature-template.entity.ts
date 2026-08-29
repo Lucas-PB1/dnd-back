@@ -28,4 +28,7 @@ export class PhbCreatureTemplate {
 
   @Column({ name: 'hit_points_avg', type: 'int', nullable: true })
   hitPointsAvg!: number | null;
+
+  @Column({ name: 'image_url', type: 'text', nullable: true })
+  imageUrl!: string | null;
 }

@@ -1,3 +1,5 @@
+import { DWARF_CULTURE_KIND } from '@catalog/species/domain/species-culture';
+
 /**
  * Filtra grants de recurso de espécie pelas mesmas gates `requires_option_*`
  * das economy actions (ex.: C055) — SSOT do catálogo, sem lista de slugs.
@@ -31,10 +33,20 @@ const OPTION_KEY_TO_CHOICE_KIND: Record<string, string> = {
   giantkinAncestryId: 'giantkin_ancestry',
   trollkinAncestryId: 'trollkin_ancestry',
   seasonId: 'mandrake_season',
+  dwarfCultureId: DWARF_CULTURE_KIND,
 };
 
 export function choiceKindForOptionKey(optionKey: string): string {
   return OPTION_KEY_TO_CHOICE_KIND[optionKey] ?? optionKey;
+}
+
+function choiceSlugForOptionKey(
+  optionKey: string,
+  choices: readonly SpeciesChoiceRef[],
+): string | null {
+  const choiceKind = choiceKindForOptionKey(optionKey);
+  const found = choices.find((c) => c.choiceKind === choiceKind)?.choiceSlug;
+  return found ?? null;
 }
 
 function gateMatchesChoices(
@@ -44,10 +56,7 @@ function gateMatchesChoices(
   const key = gate.requiresOptionKey;
   const value = gate.requiresOptionValue;
   if (!key || !value) return true;
-  const choiceKind = choiceKindForOptionKey(key);
-  return choices.some(
-    (c) => c.choiceKind === choiceKind && c.choiceSlug === value,
-  );
+  return choiceSlugForOptionKey(key, choices) === value;
 }
 
 /**

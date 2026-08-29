@@ -299,6 +299,12 @@ export class ActorResponseDto extends ActorSummaryResponseDto {
   @ApiPropertyOptional({ nullable: true })
   templateSlug!: string | null;
 
+  @ApiPropertyOptional({
+    example: '/catalog/mounts/camelo.png',
+    nullable: true,
+  })
+  imageUrl!: string | null;
+
   @ApiPropertyOptional({ nullable: true })
   initiativeModifier!: number | null;
 

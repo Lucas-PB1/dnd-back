@@ -27,6 +27,25 @@ describe('FindSpeciesQuery', () => {
 
   it('skips search when q absent', async () => {
     await query.execute();
-    expect(qb.andWhere).not.toHaveBeenCalled();
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      `COALESCE(species.source_meta->>'variantOf', '') = ''`,
+    );
+  });
+
+  it('excludes goliath when Northlands is in catalog scope', async () => {
+    await query.execute(undefined, 20, undefined, ['northlands-heroes-2024-en']);
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      'species.slug <> :excludedGoliathSlug',
+      { excludedGoliathSlug: 'goliath' },
+    );
+  });
+
+  it('keeps goliath when only PHB is selected', async () => {
+    qb.andWhere.mockClear();
+    await query.execute(undefined, 20, undefined, ['phb-2024-pt']);
+    expect(qb.andWhere).not.toHaveBeenCalledWith(
+      'species.slug <> :excludedGoliathSlug',
+      { excludedGoliathSlug: 'goliath' },
+    );
   });
 });

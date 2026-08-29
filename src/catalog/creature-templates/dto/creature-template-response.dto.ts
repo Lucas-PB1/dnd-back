@@ -24,6 +24,13 @@ export class CreatureTemplateSummaryResponseDto {
 
   @ApiPropertyOptional({ example: 7 })
   hitPointsAvg!: number | null;
+
+  @ApiPropertyOptional({
+    example: '/catalog/mounts/camelo.png',
+    nullable: true,
+    description: 'Caminho público da ilustração no front',
+  })
+  imageUrl!: string | null;
 }
 
 export class CreatureTemplateSpeedDto {

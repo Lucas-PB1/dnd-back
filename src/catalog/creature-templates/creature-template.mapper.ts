@@ -18,6 +18,7 @@ export class CreatureTemplateMapper {
       challengeRating: row.challengeRating,
       armorClass: row.armorClass,
       hitPointsAvg: row.hitPointsAvg,
+      imageUrl: row.imageUrl,
     };
   }
 
@@ -37,6 +38,7 @@ export class CreatureTemplateMapper {
       proficiencyBonus: row.proficiencyBonus,
       hitPointsFormula: row.hitPointsFormula,
       initiativeModifier: row.initiativeModifier,
+      imageUrl: row.imageUrl,
       abilityScores: row.abilityScores,
       spellcastingAbilitySlug: row.spellcastingAbilitySlug,
       spellSaveDc: row.spellSaveDc,

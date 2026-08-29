@@ -23,6 +23,9 @@ export class PhbItem {
   @Column({ type: 'text', nullable: true })
   description!: string | null;
 
+  @Column({ name: 'image_url', type: 'text', nullable: true })
+  imageUrl!: string | null;
+
   @Column({ type: 'jsonb', nullable: true })
   properties!: Record<string, unknown> | null;
 }

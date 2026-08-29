@@ -1,0 +1,74 @@
+{
+  "source": "PHB 2024 Cap. 6 (Equipment) + Apêndice B / SRD 5.2.1 (CC-BY)",
+  "rulePt": "Montaria ajuda a atravessar terreno selvagem; o foco principal é carregar equipamento. Capacidade de carga na tabela de equipamento; ficha completa no Apêndice B.",
+  "itemSlugMatchesTemplateSlug": true,
+  "mounts": [
+    {
+      "itemSlug": "camelo",
+      "namePt": "Camelo",
+      "srdId": "srd:camel",
+      "carryingCapacityLb": 450,
+      "costGp": 50,
+      "imageUrl": "/catalog/mounts/camelo.png"
+    },
+    {
+      "itemSlug": "elefante",
+      "namePt": "Elefante",
+      "srdId": "srd:elephant",
+      "carryingCapacityLb": 1320,
+      "costGp": 200,
+      "statBlockVariant": "phb-2024",
+      "imageUrl": "/catalog/mounts/elefante.png"
+    },
+    {
+      "itemSlug": "cavalo-de-carga",
+      "namePt": "Cavalo de Carga",
+      "srdId": "srd:draft-horse",
+      "carryingCapacityLb": 540,
+      "costGp": 50,
+      "imageUrl": "/catalog/mounts/cavalo-de-carga.png"
+    },
+    {
+      "itemSlug": "cavalo-de-montaria",
+      "namePt": "Cavalo de Montaria",
+      "srdId": "srd:riding-horse",
+      "carryingCapacityLb": 480,
+      "costGp": 75,
+      "imageUrl": "/catalog/mounts/cavalo-de-montaria.png"
+    },
+    {
+      "itemSlug": "mastim",
+      "namePt": "Mastim",
+      "srdId": "srd:mastiff",
+      "carryingCapacityLb": 195,
+      "costGp": 25,
+      "imageUrl": "/catalog/mounts/mastim.png"
+    },
+    {
+      "itemSlug": "mula",
+      "namePt": "Mula",
+      "srdId": "srd:mule",
+      "carryingCapacityLb": 420,
+      "costGp": 8,
+      "imageUrl": "/catalog/mounts/mula.png"
+    },
+    {
+      "itemSlug": "ponei",
+      "namePt": "Pônei",
+      "srdId": "srd:pony",
+      "carryingCapacityLb": 225,
+      "costGp": 30,
+      "imageUrl": "/catalog/mounts/ponei.png"
+    },
+    {
+      "itemSlug": "cavalo-de-guerra",
+      "namePt": "Cavalo de Guerra",
+      "srdId": "srd:warhorse",
+      "carryingCapacityLb": 540,
+      "costGp": 400,
+      "statBlockVariant": "phb-2024",
+      "imageUrl": "/catalog/mounts/cavalo-de-guerra.png"
+    }
+  ],
+  "imagesImportedAt": "2026-08-29T19:24:10.180Z"
+}

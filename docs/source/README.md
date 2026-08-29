@@ -14,9 +14,14 @@ Wiring de mesa, economy e gaps de regra **não** moram aqui.
 | `northlands-cap5-extract.json` | Cap. 5 Northlands (itens/magias/equip.) — SSOT pós-scrape |
 | `northlands-cap5-spells-pt.json` / `northlands-cap5-magic-items-pt.json` | Overlay PT Cap. 5 |
 | `northlands-stat-blocks.json` | Stat blocks criaturas/veículos Northlands — SSOT pós-scrape |
+| `phb-cap6-mounts-extract.json` | Montarias PHB (Cap. 6) — dados + slugs de imagem |
+| `phb-cap6-barding-extract.json` | Regra de barding (Cap. 6) — conferência pendente |
+| `srd-5.2.1-monsters.json` | SRD 5.2.1 (CC-BY) — stat blocks para seeds de criaturas |
+| `monaria/images/*.png` | Arte de montarias PHB (extraídas do scrape Beyond) |
+| `phb-equipment-images/07-*.png` | Ilustrações Cap. 7 equipamento — a destrinchar |
 
-Scrape Beyond e scripts `extract-northlands-*` / dicionário PT de scrape foram **descartados** após seed.  
-Editar JSON → regenerar seeds com `gen-northlands-*.mjs`; checar com `audit-northlands-*.mjs`.
+Scrape Beyond (HTML / pastas `_files` / JS / CSS) foi **removido** após extração das imagens.  
+Para reimportar montarias: `node scripts/import-phb-mount-images.mjs` (lê `monaria/images/`).
 
 ## Regenerar seeds
 
@@ -40,6 +45,6 @@ Lista completa de seeds: [`database/seeds/dmg/README.md`](../../database/seeds/d
 
 ## Não colocar aqui
 
-- Scrapes Beyond HTML / pastas `_files` (JS/CSS/imagens)
+- Scrapes Beyond HTML / pastas `_files` (JS/CSS) — rodar `node scripts/cleanup-docs-source-scrapes.mjs` após salvar imagens
 - Extratos one-shot de packs **já seedados** (além dos JSON Northlands acima)
 - Planos de feature (vão em `docs/plans/` ou `docs/architecture/`)

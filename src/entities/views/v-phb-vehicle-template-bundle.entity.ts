@@ -46,6 +46,9 @@ export class VPhbVehicleTemplateBundle {
   @ViewColumn({ name: 'ability_scores' })
   abilityScores!: Record<string, number> | null;
 
+  @ViewColumn({ name: 'image_url' })
+  imageUrl!: string | null;
+
   @ViewColumn()
   speeds!: TemplateSpeedRow[];
 

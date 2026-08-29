@@ -1,0 +1,23 @@
+{
+  "source": "PHB 2024 — Equipment (D&D Beyond HTML export)",
+  "section": "Barding",
+  "ruleEn": "Barding is armor designed for a mount. Any type of armor on the Armor table in this chapter can be purchased as barding. The cost is four times the normal cost, and it weighs twice as much.",
+  "rulePt": "Armadura feita para montaria. Qualquer tipo de armadura da tabela de Armaduras deste capítulo pode ser comprada como barding. O custo é quatro vezes o normal e o peso é o dobro.",
+  "costMultiplier": 4,
+  "weightMultiplier": 2,
+  "appliesTo": "armor-table-without-shield",
+  "baseArmorSlugs": [
+    "padded",
+    "leather",
+    "studded-leather",
+    "hide",
+    "chain-shirt",
+    "scale-mail",
+    "breastplate",
+    "half-plate",
+    "ring-mail",
+    "chain-mail",
+    "splint",
+    "plate"
+  ]
+}

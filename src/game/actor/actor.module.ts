@@ -83,6 +83,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     RollActorAttackHandler,
     LinkCharacterVehicleHandler,
     BoardCharacterVehicleHandler,
+    TemplateImageResolver,
   ],
   exports: [
     ActorRepository,

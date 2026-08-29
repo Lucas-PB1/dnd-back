@@ -78,6 +78,9 @@ export class VPhbCreatureTemplateBundle {
   @ViewColumn({ name: 'hit_points_formula' })
   hitPointsFormula!: string | null;
 
+  @ViewColumn({ name: 'image_url' })
+  imageUrl!: string | null;
+
   @ViewColumn({ name: 'spellcasting_ability_slug' })
   spellcastingAbilitySlug!: string | null;
 

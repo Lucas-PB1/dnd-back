@@ -29,6 +29,7 @@ export class ItemsMapper {
       kind: propString(properties, 'kind'),
       consumable: properties?.consumable === true,
       magic: properties?.magic === true,
+      imageUrl: row.imageUrl,
     };
   }
 
@@ -40,6 +41,7 @@ export class ItemsMapper {
       costText: costTextOf(row.cost),
       weight: row.weight,
       description: row.description,
+      imageUrl: row.imageUrl,
       properties: row.properties,
     };
   }

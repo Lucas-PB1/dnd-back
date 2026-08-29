@@ -1,5 +1,8 @@
 import { northlandsSpeciesCombatNotes } from './northlands-combat-notes';
 import { steinhardtSpeciesCombatNotes } from './steinhardt-species-combat-notes';
+import {
+  resolveDwarfCulture,
+} from '@catalog/species/domain/species-culture';
 
 export type SpeciesChoiceLike = {
   choiceKind: string;
@@ -45,13 +48,21 @@ export function speciesCombatNotes(input: {
       notes.push('Resistência a dano Necrótico e Radiante.');
       notes.push('Visão no Escuro 18 m.');
       break;
-    case 'dwarf':
-      notes.push('Visão no Escuro 36 m.');
-      notes.push(
-        'Resistência a Veneno; Vantagem contra a condição Envenenado.',
-      );
-      notes.push('Tenacidade Anã: +1 PV máx. por nível.');
+    case 'dwarf': {
+      const culture = resolveDwarfCulture(speciesSlug, speciesChoices);
+      if (culture === 'baugsmidr' || culture === 'fjord') {
+        notes.push(...northlandsSpeciesCombatNotes(culture, speciesChoices));
+        break;
+      }
+      if (culture === 'phb' || culture === null) {
+        notes.push('Visão no Escuro 36 m.');
+        notes.push(
+          'Resistência a Veneno; Vantagem contra a condição Envenenado.',
+        );
+        notes.push('Tenacidade Anã: +1 PV máx. por nível.');
+      }
       break;
+    }
     case 'dragonborn': {
       notes.push('Visão no Escuro 18 m.');
       const ancestry = choiceSlug(speciesChoices, 'dragon_ancestry');
@@ -146,8 +157,6 @@ export function speciesCombatNotes(input: {
     case 'giantkin':
     case 'trollkin':
     case 'werekin':
-    case 'baugsmidr-dwarf':
-    case 'fjord-dwarf':
       notes.push(...northlandsSpeciesCombatNotes(speciesSlug, speciesChoices));
       break;
     default:

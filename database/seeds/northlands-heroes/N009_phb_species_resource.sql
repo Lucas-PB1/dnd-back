@@ -41,7 +41,7 @@ VALUES
     'baugsmidr-sense-magic',
     'Sentir Magia',
     'species'::rpg.resource_scope,
-    (SELECT id FROM rpg.phb_species WHERE slug = 'baugsmidr-dwarf'),
+    (SELECT id FROM rpg.phb_species WHERE slug = 'dwarf'),
     1
   )
 ON CONFLICT (slug) DO UPDATE SET
@@ -156,7 +156,7 @@ SELECT
   FALSE, FALSE, TRUE
 FROM rpg.phb_species sp
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'baugsmidr-sense-magic' AND rd.species_id = sp.id
-WHERE sp.slug = 'baugsmidr-dwarf'
+WHERE sp.slug = 'dwarf'
 ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
   max_formula = EXCLUDED.max_formula,
   fixed_max = EXCLUDED.fixed_max,
