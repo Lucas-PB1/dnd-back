@@ -1,19 +1,25 @@
 /**
- * Extrai PNGs das exportações D&D Beyond em docs/source/monaria
- * e copia para dnd-front/public/catalog/mounts/{slug}.png
+ * Extrai PNGs das exportações D&D Beyond em docs/source/montarias
+ * e copia para dnd-api/public/catalog/mounts/{slug}.png
  *
- * Uso: node scripts/import-phb-mount-images.mjs
+ * Uso:
+ *   node scripts/import-phb-mount-images.mjs
+ *   node scripts/import-phb-mount-images.mjs --prune-source
+ *   node scripts/import-phb-mount-images.mjs --seeds-only
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+const args = new Set(process.argv.slice(2));
+const pruneSource = args.has('--prune-source');
+const seedsOnly = args.has('--seeds-only');
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const frontRoot = path.join(apiRoot, '..', 'dnd-front');
-const sourceDir = path.join(apiRoot, 'docs/source/monaria');
+const sourceDir = path.join(apiRoot, 'docs/source/montarias');
 const sourceImagesDir = path.join(sourceDir, 'images');
-const outDir = path.join(frontRoot, 'public/catalog/mounts');
+const outDir = path.join(apiRoot, 'public/catalog/mounts');
 const extractPath = path.join(apiRoot, 'docs/source/phb-cap6-mounts-extract.json');
 
 const DDB_NAME_TO_SLUG = {
@@ -54,9 +60,71 @@ function resolveSourceFile(htmlPath, src) {
   const base = path.dirname(htmlPath);
   const candidate = path.normalize(path.join(base, decoded));
   if (!candidate.startsWith(sourceDir)) {
-    throw new Error(`Caminho inválido fora de monaria: ${candidate}`);
+    throw new Error(`Caminho inválido fora de montarias: ${candidate}`);
   }
   return candidate;
+}
+
+function writeSeeds(imported) {
+  const itemSeedLines = [
+    '-- PHB montarias — image_url em phb_item (itens da loja; templates em creatures/M006)',
+    '-- Gerado por scripts/import-phb-mount-images.mjs',
+    '',
+  ];
+  const creatureSeedLines = [
+    '-- PHB montarias — image_url em phb_creature_template (após M005)',
+    '-- Gerado por scripts/import-phb-mount-images.mjs',
+    '',
+  ];
+  for (const row of imported) {
+    creatureSeedLines.push(
+      `UPDATE rpg.phb_creature_template SET image_url = '${row.publicPath}' WHERE slug = '${row.slug}';`,
+    );
+    itemSeedLines.push(
+      `UPDATE rpg.phb_item SET image_url = '${row.publicPath}' WHERE slug = '${row.slug}';`,
+    );
+  }
+  itemSeedLines.push('');
+  creatureSeedLines.push('');
+
+  const itemSeedPath = path.join(apiRoot, 'database/seeds/phb/S079_phb_mount_images.sql');
+  const creatureSeedPath = path.join(
+    apiRoot,
+    'database/seeds/creatures/M006_phb_mount_images.sql',
+  );
+  fs.writeFileSync(itemSeedPath, itemSeedLines.join('\n'));
+  fs.writeFileSync(creatureSeedPath, creatureSeedLines.join('\n'));
+  console.log(`\nSeeds: ${itemSeedPath}`);
+  console.log(`       ${creatureSeedPath}`);
+}
+
+function pruneSourceImages(imported) {
+  for (const row of imported) {
+    if (!row.sourceFile) continue;
+    const full = path.join(apiRoot, row.sourceFile);
+    if (fs.existsSync(full)) {
+      fs.unlinkSync(full);
+      console.log(`removido: ${row.sourceFile}`);
+    }
+  }
+}
+
+function loadFromPublic(extract) {
+  return extract.mounts
+    .filter((mount) => mount.imageUrl)
+    .map((mount) => {
+      const fileName = path.basename(mount.imageUrl);
+      const publicFile = path.join(outDir, fileName);
+      if (!fs.existsSync(publicFile)) {
+        throw new Error(`PNG ausente no public: ${publicFile}`);
+      }
+      return {
+        slug: mount.itemSlug,
+        nameEn: mount.itemSlug,
+        publicPath: mount.imageUrl,
+        sourceFile: null,
+      };
+    });
 }
 
 fs.mkdirSync(outDir, { recursive: true });
@@ -115,11 +183,20 @@ if (imageFiles.length > 0) {
   }
 }
 
+const extract = JSON.parse(fs.readFileSync(extractPath, 'utf8'));
+
 if (imported.length === 0) {
-  throw new Error('Nenhuma imagem importada — verifique docs/source/monaria');
+  if (seedsOnly) {
+    const fromPublic = loadFromPublic(extract);
+    writeSeeds(fromPublic);
+    console.log(`\nImagens: ${outDir} (${fromPublic.length} arquivos, seeds-only)`);
+    process.exit(0);
+  }
+  throw new Error(
+    'Nenhuma imagem importada — verifique docs/source/montarias ou use --seeds-only',
+  );
 }
 
-const extract = JSON.parse(fs.readFileSync(extractPath, 'utf8'));
 extract.mounts = extract.mounts.map((mount) => {
   const row = imported.find((item) => item.slug === mount.itemSlug);
   return row ? { ...mount, imageUrl: row.publicPath } : mount;
@@ -127,34 +204,10 @@ extract.mounts = extract.mounts.map((mount) => {
 extract.imagesImportedAt = new Date().toISOString();
 fs.writeFileSync(extractPath, `${JSON.stringify(extract, null, 2)}\n`);
 
-const itemSeedLines = [
-  '-- PHB montarias — image_url em phb_item (itens da loja; templates em creatures/M006)',
-  '-- Gerado por scripts/import-phb-mount-images.mjs',
-  '',
-];
-const creatureSeedLines = [
-  '-- PHB montarias — image_url em phb_creature_template (após M005)',
-  '-- Gerado por scripts/import-phb-mount-images.mjs',
-  '',
-];
-for (const row of imported) {
-  creatureSeedLines.push(
-    `UPDATE rpg.phb_creature_template SET image_url = '${row.publicPath}' WHERE slug = '${row.slug}';`,
-  );
-  itemSeedLines.push(
-    `UPDATE rpg.phb_item SET image_url = '${row.publicPath}' WHERE slug = '${row.slug}';`,
-  );
-}
-itemSeedLines.push('');
-creatureSeedLines.push('');
+writeSeeds(imported);
 
-const itemSeedPath = path.join(apiRoot, 'database/seeds/phb/S079_phb_mount_images.sql');
-const creatureSeedPath = path.join(
-  apiRoot,
-  'database/seeds/creatures/M006_phb_mount_images.sql',
-);
-fs.writeFileSync(itemSeedPath, itemSeedLines.join('\n'));
-fs.writeFileSync(creatureSeedPath, creatureSeedLines.join('\n'));
-console.log(`\nSeeds: ${itemSeedPath}`);
-console.log(`       ${creatureSeedPath}`);
+if (pruneSource) {
+  pruneSourceImages(imported);
+}
+
 console.log(`Imagens: ${outDir} (${imported.length} arquivos)`);

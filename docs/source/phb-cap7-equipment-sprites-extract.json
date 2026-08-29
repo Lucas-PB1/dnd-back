@@ -1,0 +1,120 @@
+{
+  "source": "PHB 2024 Cap. 7 — sprites compostos (D&D Beyond)",
+  "note": "Recorte via split-phb-equipment-sprites.mjs. Use crops manuais quando o blob automático junta ou troca itens; caso contrário itemSlugs na ordem do blob (reading-order ou sort:x).",
+  "outputDir": "dnd-api/public/catalog/equipment",
+  "publicPathPrefix": "/catalog/equipment",
+  "composites": [
+    {
+      "source": "07-058.simple-melee.png",
+      "group": "simple-melee",
+      "notes": "Crops manuais — blob troca eixo spear/javelin e funde club com greatclub.",
+      "crops": [
+        { "slug": "club", "left": 11, "top": 142, "width": 123, "height": 577 },
+        { "slug": "handaxe", "left": 368, "top": 210, "width": 199, "height": 465 },
+        { "slug": "light-hammer", "left": 887, "top": 82, "width": 214, "height": 553 },
+        { "slug": "sickle", "left": 1243, "top": 0, "width": 250, "height": 420 },
+        { "slug": "dagger", "left": 255, "top": 474, "width": 130, "height": 468 },
+        { "slug": "spear", "left": 1578, "top": 69, "width": 122, "height": 1354 },
+        { "slug": "javelin", "left": 692, "top": 0, "width": 178, "height": 1430 },
+        { "slug": "mace", "left": 978, "top": 701, "width": 151, "height": 572 },
+        { "slug": "quarterstaff", "left": 1245, "top": 337, "width": 74, "height": 1083 },
+        { "slug": "greatclub", "left": 0, "top": 938, "width": 694, "height": 500 }
+      ]
+    },
+    {
+      "source": "07-059.simple-range.png",
+      "group": "simple-range",
+      "crops": [
+        { "slug": "dart", "left": 15, "top": 188, "width": 336, "height": 209 },
+        { "slug": "sling", "left": 722, "top": 76, "width": 370, "height": 430 },
+        { "slug": "light-crossbow", "left": 0, "top": 448, "width": 610, "height": 350 },
+        { "slug": "shortbow", "left": 1198, "top": 1, "width": 502, "height": 857 }
+      ]
+    },
+    {
+      "source": "07-060.martial-range.png",
+      "group": "martial-range",
+      "crops": [
+        { "slug": "blowgun", "left": 218, "top": 292, "width": 492, "height": 178 },
+        { "slug": "hand-crossbow", "left": 0, "top": 468, "width": 438, "height": 318 },
+        { "slug": "heavy-crossbow", "left": 852, "top": 201, "width": 572, "height": 380 },
+        { "slug": "musket", "left": 443, "top": 568, "width": 1093, "height": 118 },
+        { "slug": "pistol", "left": 894, "top": 667, "width": 458, "height": 168 },
+        { "slug": "longbow", "left": 1549, "top": 0, "width": 151, "height": 956 }
+      ]
+    },
+    {
+      "source": "07-061.martial-melee.png",
+      "group": "martial-melee",
+      "notes": "Crops manuais — blob reading-order troca battleaxe/greataxe, longsword/greatsword/shortsword e funde rapier+scimitar.",
+      "crops": [
+        { "slug": "battleaxe", "left": 55, "top": 151, "width": 252, "height": 453 },
+        { "slug": "flail", "left": 374, "top": 157, "width": 339, "height": 299 },
+        { "slug": "longsword", "left": 688, "top": 39, "width": 681, "height": 135 },
+        { "slug": "maul", "left": 703, "top": 165, "width": 666, "height": 199 },
+        { "slug": "morningstar", "left": 1383, "top": 0, "width": 152, "height": 456 },
+        { "slug": "greataxe", "left": 0, "top": 648, "width": 255, "height": 644 },
+        { "slug": "glaive", "left": 302, "top": 397, "width": 113, "height": 1017 },
+        { "slug": "greatsword", "left": 424, "top": 500, "width": 184, "height": 914 },
+        { "slug": "halberd", "left": 596, "top": 414, "width": 214, "height": 996 },
+        { "slug": "pike", "left": 810, "top": 308, "width": 130, "height": 1108 },
+        { "slug": "shortsword", "left": 923, "top": 364, "width": 476, "height": 134 },
+        { "slug": "rapier", "left": 938, "top": 500, "width": 614, "height": 142 },
+        { "slug": "scimitar", "left": 1147, "top": 600, "width": 480, "height": 130 },
+        { "slug": "trident", "left": 977, "top": 654, "width": 142, "height": 921 },
+        { "slug": "warhammer", "left": 1117, "top": 873, "width": 207, "height": 450 },
+        { "slug": "war-pick", "left": 1325, "top": 734, "width": 222, "height": 466 },
+        { "slug": "whip", "left": 1212, "top": 1244, "width": 488, "height": 318 },
+        { "slug": "lance", "left": 0, "top": 1415, "width": 937, "height": 160 }
+      ]
+    },
+    {
+      "source": "07-062.light-armor-and-shields.png",
+      "group": "light-armor",
+      "sort": "x",
+      "dropExtraBlobs": true,
+      "itemSlugs": ["padded", "leather", "studded-leather", "shield"],
+      "notes": "Dois escudos no arte; dropExtraBlobs remove o segundo."
+    },
+    {
+      "source": "07-063.medium-armor.png",
+      "group": "medium-armor",
+      "itemSlugs": [
+        "scale-mail",
+        "half-plate",
+        "hide",
+        "chain-shirt",
+        "breastplate"
+      ]
+    },
+    {
+      "source": "07-064.heavy-armor.png",
+      "group": "heavy-armor",
+      "notes": "Crops manuais — blob na placa deixava só greave (blob 04); placa completa é blob 05.",
+      "crops": [
+        { "slug": "ring-mail", "left": 0, "top": 232, "width": 398, "height": 553 },
+        { "slug": "chain-mail", "left": 442, "top": 140, "width": 412, "height": 488 },
+        { "slug": "splint", "left": 876, "top": 387, "width": 368, "height": 398 },
+        { "slug": "plate", "left": 1253, "top": 0, "width": 447, "height": 622 }
+      ]
+    },
+    {
+      "source": "07-004.lamp-net.png",
+      "group": "gear",
+      "notes": "Rede: crop manual — blob fundia lanterna+rede.",
+      "crops": [
+        { "slug": "lanterna-foca-facho", "left": 1, "top": 0, "width": 284, "height": 584 },
+        { "slug": "rede", "left": 330, "top": 0, "width": 520, "height": 1029 }
+      ]
+    }
+  ],
+  "sceneIllustrations": [
+    "07-001.inventor-vi.png",
+    "07-003.arcane-focus.png",
+    "07-005.adventurer-with-tools.png",
+    "07-006.wizard-familiar-shopping.png"
+  ],
+  "sceneNote": "Ilustrações de cena — não recortar por item; reservar para headers de capítulo ou descartar.",
+  "imagesImportedAt": "2026-08-29T20:47:46.299Z",
+  "imageCount": 53
+}

@@ -1,8 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import request from 'supertest';
 import { App } from 'supertest/types';
 import { AppModule } from '../src/app.module';
+import { useCatalogStaticAssets } from '../src/config/catalog-static.config';
 import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
 
 describe('Catalog API (e2e)', () => {
@@ -14,6 +16,7 @@ describe('Catalog API (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    useCatalogStaticAssets(app as NestExpressApplication);
     app.useGlobalFilters(new HttpExceptionFilter());
     app.useGlobalPipes(
       new ValidationPipe({ whitelist: true, transform: true, transformOptions: { enableImplicitConversion: true } }),
@@ -32,6 +35,18 @@ describe('Catalog API (e2e)', () => {
       .expect((res) => {
         expect(res.body.status).toBeDefined();
       }));
+
+  it('GET /catalog/equipment/battleaxe.png serves catalog asset', () =>
+    request(app.getHttpServer())
+      .get('/catalog/equipment/battleaxe.png')
+      .expect(200)
+      .expect('Content-Type', /image\/png/));
+
+  it('GET /catalog/mounts/camelo.png serves catalog asset', () =>
+    request(app.getHttpServer())
+      .get('/catalog/mounts/camelo.png')
+      .expect(200)
+      .expect('Content-Type', /image\/png/));
 
   it('GET /classes returns paginated list', () =>
     request(app.getHttpServer())

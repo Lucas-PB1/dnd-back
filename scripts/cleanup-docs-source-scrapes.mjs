@@ -1,6 +1,6 @@
 /**
  * Limpa scrapes D&D Beyond em docs/source:
- * - Extrai PNGs de montarias → docs/source/monaria/images/{slug}.png
+ * - Extrai PNGs de montarias → docs/source/montarias/images/{slug}.png
  * - Extrai ilustrações PHB equipamento (07-*.png) → docs/source/phb-equipment-images/
  * - Remove HTML, pastas *_files, JS/CSS/.download e demais lixo do scrape
  *
@@ -55,18 +55,18 @@ function copyFile(src, dest) {
 }
 
 function extractMountImages() {
-  const monariaDir = path.join(sourceRoot, 'monaria');
-  const outDir = path.join(monariaDir, 'images');
+  const montariasDir = path.join(sourceRoot, 'montarias');
+  const outDir = path.join(montariasDir, 'images');
   ensureDir(outDir);
 
   const htmlFiles = fs
-    .readdirSync(monariaDir)
+    .readdirSync(montariasDir)
     .filter((name) => name.endsWith('.html'));
 
   const imported = [];
 
   for (const file of htmlFiles) {
-    const htmlPath = path.join(monariaDir, file);
+    const htmlPath = path.join(montariasDir, file);
     const html = fs.readFileSync(htmlPath, 'utf8');
     const match = html.match(/<img\b[^>]*class="monster-image"[^>]*>/i);
     if (!match) {
@@ -141,14 +141,14 @@ function removeScrapeArtifacts() {
     }
   }
 
-  const monariaDir = path.join(sourceRoot, 'monaria');
-  if (fs.existsSync(monariaDir)) {
-    for (const name of fs.readdirSync(monariaDir)) {
+  const montariasDir = path.join(sourceRoot, 'montarias');
+  if (fs.existsSync(montariasDir)) {
+    for (const name of fs.readdirSync(montariasDir)) {
       if (name === 'images') continue;
-      const full = path.join(monariaDir, name);
+      const full = path.join(montariasDir, name);
       if (name.endsWith('.html') || name.endsWith('_files')) {
         rmrf(full);
-        removed.push(`monaria/${name}`);
+        removed.push(`montarias/${name}`);
       }
     }
   }

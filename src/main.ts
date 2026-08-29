@@ -3,9 +3,11 @@ import './entities/trace-entities-for-vercel';
 import 'reflect-metadata';
 
 import { NestFactory } from '@nestjs/core';
+import { NestExpressApplication } from '@nestjs/platform-express';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { useCatalogStaticAssets } from './config/catalog-static.config';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { RequestTimingInterceptor } from './common/interceptors/request-timing.interceptor';
 import { corsConfig } from './config/cors.config';
@@ -16,7 +18,9 @@ import { validateDeployEnv } from './config/validate-env';
 async function bootstrap() {
   validateDeployEnv();
 
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  useCatalogStaticAssets(app);
 
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalInterceptors(new RequestTimingInterceptor());

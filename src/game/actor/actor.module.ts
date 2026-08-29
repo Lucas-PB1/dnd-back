@@ -13,6 +13,7 @@ import {
   BoardCharacterVehicleHandler,
   LinkCharacterVehicleHandler,
 } from './application/character-vehicle.handlers';
+import { TemplateImageResolver } from './application/template-image.resolver';
 import { CreateActorHandler } from './application/create-actor.handler';
 import { DeleteActorHandler } from './application/delete-actor.handler';
 import { GetActorQuery } from './application/get-actor.query';

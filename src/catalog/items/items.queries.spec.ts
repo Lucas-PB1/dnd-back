@@ -24,6 +24,7 @@ describe('Items queries', () => {
     weight: '1,5 kg',
     description: null,
     properties: null,
+    imageUrl: null,
   };
 
   beforeEach(async () => {

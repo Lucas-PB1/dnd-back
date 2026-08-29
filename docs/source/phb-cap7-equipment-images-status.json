@@ -1,0 +1,1108 @@
+{
+  "version": 1,
+  "publicPathPrefix": "/catalog/equipment",
+  "items": {
+    "club": {
+      "slug": "club",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.090Z",
+      "frozen": {
+        "left": 11,
+        "top": 142,
+        "width": 123,
+        "height": 577
+      },
+      "blobIndex": null,
+      "cropIndex": 0,
+      "lastExport": {
+        "left": 11,
+        "top": 142,
+        "width": 123,
+        "height": 577,
+        "exportedAt": "2026-08-29T20:42:40.228Z",
+        "from": "frozen"
+      }
+    },
+    "handaxe": {
+      "slug": "handaxe",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.216Z",
+      "frozen": {
+        "left": 368,
+        "top": 210,
+        "width": 199,
+        "height": 465
+      },
+      "blobIndex": null,
+      "cropIndex": 1,
+      "lastExport": {
+        "left": 368,
+        "top": 210,
+        "width": 199,
+        "height": 465,
+        "exportedAt": "2026-08-29T20:42:40.247Z",
+        "from": "frozen"
+      }
+    },
+    "light-hammer": {
+      "slug": "light-hammer",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.314Z",
+      "frozen": {
+        "left": 887,
+        "top": 82,
+        "width": 214,
+        "height": 553
+      },
+      "blobIndex": null,
+      "cropIndex": 2,
+      "lastExport": {
+        "left": 887,
+        "top": 82,
+        "width": 214,
+        "height": 553,
+        "exportedAt": "2026-08-29T20:42:40.265Z",
+        "from": "frozen"
+      }
+    },
+    "sickle": {
+      "slug": "sickle",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.405Z",
+      "frozen": {
+        "left": 1243,
+        "top": 0,
+        "width": 250,
+        "height": 420
+      },
+      "blobIndex": null,
+      "cropIndex": 3,
+      "lastExport": {
+        "left": 1243,
+        "top": 0,
+        "width": 250,
+        "height": 420,
+        "exportedAt": "2026-08-29T20:42:40.281Z",
+        "from": "frozen"
+      }
+    },
+    "dagger": {
+      "slug": "dagger",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.492Z",
+      "frozen": {
+        "left": 255,
+        "top": 474,
+        "width": 130,
+        "height": 468
+      },
+      "blobIndex": null,
+      "cropIndex": 4,
+      "lastExport": {
+        "left": 255,
+        "top": 474,
+        "width": 130,
+        "height": 468,
+        "exportedAt": "2026-08-29T20:42:40.304Z",
+        "from": "frozen"
+      }
+    },
+    "spear": {
+      "slug": "spear",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.575Z",
+      "frozen": {
+        "left": 1578,
+        "top": 69,
+        "width": 122,
+        "height": 1354
+      },
+      "blobIndex": null,
+      "cropIndex": 5,
+      "lastExport": {
+        "left": 1578,
+        "top": 69,
+        "width": 122,
+        "height": 1354,
+        "exportedAt": "2026-08-29T20:42:40.332Z",
+        "from": "frozen"
+      }
+    },
+    "javelin": {
+      "slug": "javelin",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.661Z",
+      "frozen": {
+        "left": 692,
+        "top": 0,
+        "width": 178,
+        "height": 1430
+      },
+      "blobIndex": null,
+      "cropIndex": 6,
+      "lastExport": {
+        "left": 692,
+        "top": 0,
+        "width": 178,
+        "height": 1430,
+        "exportedAt": "2026-08-29T20:42:40.365Z",
+        "from": "frozen"
+      }
+    },
+    "mace": {
+      "slug": "mace",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.742Z",
+      "frozen": {
+        "left": 978,
+        "top": 701,
+        "width": 151,
+        "height": 572
+      },
+      "blobIndex": null,
+      "cropIndex": 7,
+      "lastExport": {
+        "left": 978,
+        "top": 701,
+        "width": 151,
+        "height": 572,
+        "exportedAt": "2026-08-29T20:42:40.401Z",
+        "from": "frozen"
+      }
+    },
+    "quarterstaff": {
+      "slug": "quarterstaff",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.844Z",
+      "frozen": {
+        "left": 1245,
+        "top": 337,
+        "width": 74,
+        "height": 1083
+      },
+      "blobIndex": null,
+      "cropIndex": 8,
+      "lastExport": {
+        "left": 1245,
+        "top": 337,
+        "width": 74,
+        "height": 1083,
+        "exportedAt": "2026-08-29T20:42:40.434Z",
+        "from": "frozen"
+      }
+    },
+    "greatclub": {
+      "slug": "greatclub",
+      "group": "simple-melee",
+      "source": "07-058.simple-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:42:39.936Z",
+      "frozen": {
+        "left": 0,
+        "top": 938,
+        "width": 694,
+        "height": 500
+      },
+      "blobIndex": null,
+      "cropIndex": 9,
+      "lastExport": {
+        "left": 0,
+        "top": 938,
+        "width": 694,
+        "height": 500,
+        "exportedAt": "2026-08-29T20:42:40.465Z",
+        "from": "frozen"
+      }
+    },
+    "dart": {
+      "slug": "dart",
+      "group": "simple-range",
+      "source": "07-059.simple-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:39:24.991Z",
+      "frozen": {
+        "left": 15,
+        "top": 188,
+        "width": 336,
+        "height": 209
+      },
+      "blobIndex": null,
+      "cropIndex": 0
+    },
+    "sling": {
+      "slug": "sling",
+      "group": "simple-range",
+      "source": "07-059.simple-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:39:25.069Z",
+      "frozen": {
+        "left": 722,
+        "top": 76,
+        "width": 370,
+        "height": 430
+      },
+      "blobIndex": null,
+      "cropIndex": 1
+    },
+    "light-crossbow": {
+      "slug": "light-crossbow",
+      "group": "simple-range",
+      "source": "07-059.simple-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:39:25.149Z",
+      "frozen": {
+        "left": 0,
+        "top": 448,
+        "width": 610,
+        "height": 350
+      },
+      "blobIndex": null,
+      "cropIndex": 2
+    },
+    "shortbow": {
+      "slug": "shortbow",
+      "group": "simple-range",
+      "source": "07-059.simple-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:39:25.228Z",
+      "frozen": {
+        "left": 1198,
+        "top": 1,
+        "width": 502,
+        "height": 857
+      },
+      "blobIndex": null,
+      "cropIndex": 3
+    },
+    "blowgun": {
+      "slug": "blowgun",
+      "group": "martial-range",
+      "source": "07-060.martial-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:40:40.431Z",
+      "frozen": {
+        "left": 218,
+        "top": 292,
+        "width": 492,
+        "height": 178
+      },
+      "blobIndex": null,
+      "cropIndex": 0
+    },
+    "hand-crossbow": {
+      "slug": "hand-crossbow",
+      "group": "martial-range",
+      "source": "07-060.martial-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:40:40.524Z",
+      "frozen": {
+        "left": 0,
+        "top": 468,
+        "width": 438,
+        "height": 318
+      },
+      "blobIndex": null,
+      "cropIndex": 1
+    },
+    "heavy-crossbow": {
+      "slug": "heavy-crossbow",
+      "group": "martial-range",
+      "source": "07-060.martial-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:40:40.625Z",
+      "frozen": {
+        "left": 852,
+        "top": 201,
+        "width": 572,
+        "height": 380
+      },
+      "blobIndex": null,
+      "cropIndex": 2
+    },
+    "musket": {
+      "slug": "musket",
+      "group": "martial-range",
+      "source": "07-060.martial-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:40:40.718Z",
+      "frozen": {
+        "left": 443,
+        "top": 568,
+        "width": 1093,
+        "height": 118
+      },
+      "blobIndex": null,
+      "cropIndex": 3
+    },
+    "pistol": {
+      "slug": "pistol",
+      "group": "martial-range",
+      "source": "07-060.martial-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:40:40.804Z",
+      "frozen": {
+        "left": 894,
+        "top": 667,
+        "width": 458,
+        "height": 168
+      },
+      "blobIndex": null,
+      "cropIndex": 4
+    },
+    "longbow": {
+      "slug": "longbow",
+      "group": "martial-range",
+      "source": "07-060.martial-range.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:40:40.887Z",
+      "frozen": {
+        "left": 1549,
+        "top": 0,
+        "width": 151,
+        "height": 956
+      },
+      "blobIndex": null,
+      "cropIndex": 5
+    },
+    "battleaxe": {
+      "slug": "battleaxe",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:31.599Z",
+      "frozen": {
+        "left": 55,
+        "top": 151,
+        "width": 252,
+        "height": 453
+      },
+      "blobIndex": null,
+      "cropIndex": 0
+    },
+    "flail": {
+      "slug": "flail",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:31.677Z",
+      "frozen": {
+        "left": 374,
+        "top": 157,
+        "width": 339,
+        "height": 299
+      },
+      "blobIndex": null,
+      "cropIndex": 1
+    },
+    "longsword": {
+      "slug": "longsword",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": "ajuste crop",
+      "verifiedAt": "2026-08-29T20:36:59.851Z",
+      "frozen": {
+        "left": 688,
+        "top": 39,
+        "width": 681,
+        "height": 135
+      },
+      "blobIndex": null,
+      "cropIndex": 2
+    },
+    "maul": {
+      "slug": "maul",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:31.834Z",
+      "frozen": {
+        "left": 703,
+        "top": 165,
+        "width": 666,
+        "height": 199
+      },
+      "blobIndex": null,
+      "cropIndex": 3
+    },
+    "morningstar": {
+      "slug": "morningstar",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:31.911Z",
+      "frozen": {
+        "left": 1383,
+        "top": 0,
+        "width": 152,
+        "height": 456
+      },
+      "blobIndex": null,
+      "cropIndex": 4
+    },
+    "greataxe": {
+      "slug": "greataxe",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:31.994Z",
+      "frozen": {
+        "left": 0,
+        "top": 648,
+        "width": 255,
+        "height": 644
+      },
+      "blobIndex": null,
+      "cropIndex": 5
+    },
+    "glaive": {
+      "slug": "glaive",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.076Z",
+      "frozen": {
+        "left": 302,
+        "top": 397,
+        "width": 113,
+        "height": 1017
+      },
+      "blobIndex": null,
+      "cropIndex": 6
+    },
+    "greatsword": {
+      "slug": "greatsword",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.161Z",
+      "frozen": {
+        "left": 424,
+        "top": 500,
+        "width": 184,
+        "height": 914
+      },
+      "blobIndex": null,
+      "cropIndex": 7
+    },
+    "halberd": {
+      "slug": "halberd",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.252Z",
+      "frozen": {
+        "left": 596,
+        "top": 414,
+        "width": 214,
+        "height": 996
+      },
+      "blobIndex": null,
+      "cropIndex": 8
+    },
+    "pike": {
+      "slug": "pike",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.332Z",
+      "frozen": {
+        "left": 810,
+        "top": 308,
+        "width": 130,
+        "height": 1108
+      },
+      "blobIndex": null,
+      "cropIndex": 9
+    },
+    "shortsword": {
+      "slug": "shortsword",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.414Z",
+      "frozen": {
+        "left": 923,
+        "top": 364,
+        "width": 476,
+        "height": 134
+      },
+      "blobIndex": null,
+      "cropIndex": 10
+    },
+    "rapier": {
+      "slug": "rapier",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.494Z",
+      "frozen": {
+        "left": 938,
+        "top": 500,
+        "width": 614,
+        "height": 142
+      },
+      "blobIndex": null,
+      "cropIndex": 11
+    },
+    "scimitar": {
+      "slug": "scimitar",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.578Z",
+      "frozen": {
+        "left": 1147,
+        "top": 600,
+        "width": 480,
+        "height": 130
+      },
+      "blobIndex": null,
+      "cropIndex": 12
+    },
+    "trident": {
+      "slug": "trident",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.660Z",
+      "frozen": {
+        "left": 977,
+        "top": 654,
+        "width": 142,
+        "height": 921
+      },
+      "blobIndex": null,
+      "cropIndex": 13
+    },
+    "warhammer": {
+      "slug": "warhammer",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.742Z",
+      "frozen": {
+        "left": 1117,
+        "top": 873,
+        "width": 207,
+        "height": 450
+      },
+      "blobIndex": null,
+      "cropIndex": 14
+    },
+    "war-pick": {
+      "slug": "war-pick",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.827Z",
+      "frozen": {
+        "left": 1325,
+        "top": 734,
+        "width": 222,
+        "height": 466
+      },
+      "blobIndex": null,
+      "cropIndex": 15
+    },
+    "whip": {
+      "slug": "whip",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:36:32.915Z",
+      "frozen": {
+        "left": 1212,
+        "top": 1244,
+        "width": 488,
+        "height": 318
+      },
+      "blobIndex": null,
+      "cropIndex": 16
+    },
+    "lance": {
+      "slug": "lance",
+      "group": "martial-melee",
+      "source": "07-061.martial-melee.png",
+      "method": "crop",
+      "status": "ok",
+      "note": "ajuste crop",
+      "verifiedAt": "2026-08-29T20:36:59.942Z",
+      "frozen": {
+        "left": 0,
+        "top": 1415,
+        "width": 937,
+        "height": 160
+      },
+      "blobIndex": null,
+      "cropIndex": 17
+    },
+    "padded": {
+      "slug": "padded",
+      "group": "light-armor",
+      "source": "07-062.light-armor-and-shields.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:43:22.715Z",
+      "frozen": {
+        "left": 0,
+        "top": 73,
+        "width": 366,
+        "height": 409
+      },
+      "blobIndex": 0,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 0,
+        "top": 73,
+        "width": 366,
+        "height": 409,
+        "exportedAt": "2026-08-29T20:43:23.688Z",
+        "from": "frozen"
+      }
+    },
+    "leather": {
+      "slug": "leather",
+      "group": "light-armor",
+      "source": "07-062.light-armor-and-shields.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:43:22.778Z",
+      "frozen": {
+        "left": 398,
+        "top": 80,
+        "width": 359,
+        "height": 388
+      },
+      "blobIndex": 1,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 398,
+        "top": 80,
+        "width": 359,
+        "height": 388,
+        "exportedAt": "2026-08-29T20:43:23.724Z",
+        "from": "frozen"
+      }
+    },
+    "studded-leather": {
+      "slug": "studded-leather",
+      "group": "light-armor",
+      "source": "07-062.light-armor-and-shields.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:43:22.838Z",
+      "frozen": {
+        "left": 792,
+        "top": 95,
+        "width": 386,
+        "height": 339
+      },
+      "blobIndex": 2,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 792,
+        "top": 95,
+        "width": 386,
+        "height": 339,
+        "exportedAt": "2026-08-29T20:43:23.762Z",
+        "from": "frozen"
+      }
+    },
+    "shield": {
+      "slug": "shield",
+      "group": "light-armor",
+      "source": "07-062.light-armor-and-shields.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:43:22.900Z",
+      "frozen": {
+        "left": 1251,
+        "top": 0,
+        "width": 219,
+        "height": 400
+      },
+      "blobIndex": 3,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 1251,
+        "top": 0,
+        "width": 219,
+        "height": 400,
+        "exportedAt": "2026-08-29T20:43:23.799Z",
+        "from": "frozen"
+      }
+    },
+    "scale-mail": {
+      "slug": "scale-mail",
+      "group": "medium-armor",
+      "source": "07-063.medium-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:44:05.201Z",
+      "frozen": {
+        "left": 667,
+        "top": 0,
+        "width": 397,
+        "height": 460
+      },
+      "blobIndex": 0,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 667,
+        "top": 0,
+        "width": 397,
+        "height": 460,
+        "exportedAt": "2026-08-29T20:44:06.725Z",
+        "from": "frozen"
+      }
+    },
+    "half-plate": {
+      "slug": "half-plate",
+      "group": "medium-armor",
+      "source": "07-063.medium-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:44:05.381Z",
+      "frozen": {
+        "left": 1377,
+        "top": 48,
+        "width": 323,
+        "height": 408
+      },
+      "blobIndex": 1,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 1377,
+        "top": 48,
+        "width": 323,
+        "height": 408,
+        "exportedAt": "2026-08-29T20:44:06.755Z",
+        "from": "frozen"
+      }
+    },
+    "hide": {
+      "slug": "hide",
+      "group": "medium-armor",
+      "source": "07-063.medium-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:44:05.472Z",
+      "frozen": {
+        "left": 0,
+        "top": 77,
+        "width": 355,
+        "height": 521
+      },
+      "blobIndex": 2,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 0,
+        "top": 77,
+        "width": 355,
+        "height": 521,
+        "exportedAt": "2026-08-29T20:44:06.788Z",
+        "from": "frozen"
+      }
+    },
+    "chain-shirt": {
+      "slug": "chain-shirt",
+      "group": "medium-armor",
+      "source": "07-063.medium-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:44:05.640Z",
+      "frozen": {
+        "left": 348,
+        "top": 300,
+        "width": 345,
+        "height": 379
+      },
+      "blobIndex": 3,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 348,
+        "top": 300,
+        "width": 345,
+        "height": 379,
+        "exportedAt": "2026-08-29T20:44:06.818Z",
+        "from": "frozen"
+      }
+    },
+    "breastplate": {
+      "slug": "breastplate",
+      "group": "medium-armor",
+      "source": "07-063.medium-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:44:05.794Z",
+      "frozen": {
+        "left": 1060,
+        "top": 297,
+        "width": 339,
+        "height": 325
+      },
+      "blobIndex": 4,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 1060,
+        "top": 297,
+        "width": 339,
+        "height": 325,
+        "exportedAt": "2026-08-29T20:44:06.845Z",
+        "from": "frozen"
+      }
+    },
+    "ring-mail": {
+      "slug": "ring-mail",
+      "group": "heavy-armor",
+      "source": "07-064.heavy-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:47:45.860Z",
+      "frozen": {
+        "left": 0,
+        "top": 232,
+        "width": 398,
+        "height": 553
+      },
+      "blobIndex": 0,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 0,
+        "top": 232,
+        "width": 398,
+        "height": 553,
+        "exportedAt": "2026-08-29T20:48:04.493Z",
+        "from": "frozen"
+      }
+    },
+    "chain-mail": {
+      "slug": "chain-mail",
+      "group": "heavy-armor",
+      "source": "07-064.heavy-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:47:45.944Z",
+      "frozen": {
+        "left": 442,
+        "top": 140,
+        "width": 412,
+        "height": 488
+      },
+      "blobIndex": 1,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 442,
+        "top": 140,
+        "width": 412,
+        "height": 488,
+        "exportedAt": "2026-08-29T20:48:04.533Z",
+        "from": "frozen"
+      }
+    },
+    "splint": {
+      "slug": "splint",
+      "group": "heavy-armor",
+      "source": "07-064.heavy-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:47:46.038Z",
+      "frozen": {
+        "left": 876,
+        "top": 387,
+        "width": 368,
+        "height": 398
+      },
+      "blobIndex": 2,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 876,
+        "top": 387,
+        "width": 368,
+        "height": 398,
+        "exportedAt": "2026-08-29T20:48:04.563Z",
+        "from": "frozen"
+      }
+    },
+    "plate": {
+      "slug": "plate",
+      "group": "heavy-armor",
+      "source": "07-064.heavy-armor.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:47:46.128Z",
+      "frozen": {
+        "left": 1253,
+        "top": 0,
+        "width": 447,
+        "height": 622
+      },
+      "blobIndex": 3,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 1253,
+        "top": 0,
+        "width": 447,
+        "height": 622,
+        "exportedAt": "2026-08-29T20:48:04.597Z",
+        "from": "frozen"
+      }
+    },
+    "lanterna-foca-facho": {
+      "slug": "lanterna-foca-facho",
+      "group": "gear",
+      "source": "07-004.lamp-net.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:47:46.210Z",
+      "frozen": {
+        "left": 1,
+        "top": 0,
+        "width": 284,
+        "height": 584
+      },
+      "blobIndex": 0,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 1,
+        "top": 0,
+        "width": 284,
+        "height": 584,
+        "exportedAt": "2026-08-29T20:48:04.868Z",
+        "from": "frozen"
+      }
+    },
+    "rede": {
+      "slug": "rede",
+      "group": "gear",
+      "source": "07-004.lamp-net.png",
+      "method": "blob",
+      "status": "ok",
+      "note": null,
+      "verifiedAt": "2026-08-29T20:47:46.298Z",
+      "frozen": {
+        "left": 330,
+        "top": 0,
+        "width": 520,
+        "height": 1029
+      },
+      "blobIndex": 1,
+      "cropIndex": null,
+      "lastExport": {
+        "left": 330,
+        "top": 0,
+        "width": 520,
+        "height": 1029,
+        "exportedAt": "2026-08-29T20:48:04.895Z",
+        "from": "frozen"
+      }
+    }
+  },
+  "updatedAt": "2026-08-29T20:48:04.895Z"
+}
