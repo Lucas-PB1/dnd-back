@@ -1,0 +1,1417 @@
+{
+  "source": {
+    "editionSlug": "grim-hollow-players-guide-2024-en",
+    "citationSlug": "grim-hollow-players-guide-2024-en:chapter-5-advanced-weapons-equipment",
+    "book": "Grim Hollow: Player's Guide",
+    "chapter": 5,
+    "chapterTitle": "Advanced Weapons & Equipment"
+  },
+  "meleeWeapons": [
+    {
+      "slug": "catchpole",
+      "name": "Catchpole",
+      "damage": "1d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "hafted",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Hafted *, Reach , Two-Handed",
+      "masterySlug": "entangling",
+      "weight": "2,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Catchpole). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "cavalry-flail",
+      "name": "Cavalry Flail",
+      "damage": "1d8",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "momentum"
+      ],
+      "propertyMeta": {
+        "momentumDice": "1d12"
+      },
+      "propertiesRaw": "Momentum * (1d12)",
+      "masterySlug": "swift",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Cavalry Flail). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "cavalry-hammer",
+      "name": "Cavalry Hammer",
+      "damage": "1d8",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "armor-piercing",
+        "momentum"
+      ],
+      "propertyMeta": {
+        "momentumDice": "1d12"
+      },
+      "propertiesRaw": "Armor-Piercing *, Momentum * (1d12)",
+      "masterySlug": "slow",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Cavalry Hammer). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "cavalry-pick",
+      "name": "Cavalry Pick",
+      "damage": "1d8",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "armor-piercing",
+        "momentum"
+      ],
+      "propertyMeta": {
+        "momentumDice": "1d12"
+      },
+      "propertiesRaw": "Armor-Piercing *, Momentum * (1d12)",
+      "masterySlug": "sap",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Cavalry Pick). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "chakram",
+      "name": "Chakram",
+      "damage": "1d6",
+      "damageType": "Cortante",
+      "propertySlugs": [
+        "finesse",
+        "light",
+        "thrown"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 45,
+          "max": 180
+        }
+      },
+      "propertiesRaw": "Finesse , Light , Thrown (Range 30/120)",
+      "masterySlug": "returning",
+      "weight": "500 g",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Chakram). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "claymore",
+      "name": "Claymore",
+      "damage": "2d6",
+      "damageType": "Cortante",
+      "propertySlugs": [
+        "heavy",
+        "two-handed"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Heavy , Two-Handed",
+      "masterySlug": "brutal",
+      "weight": "3,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Claymore). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "double-blade",
+      "name": "Double Blade",
+      "damage": "1d6",
+      "damageType": "Cortante",
+      "propertySlugs": [
+        "double",
+        "momentum",
+        "two-handed"
+      ],
+      "propertyMeta": {
+        "momentumDice": "1d10"
+      },
+      "propertiesRaw": "Double *, Momentum * (1d10), Two-Handed",
+      "masterySlug": "set",
+      "weight": "2,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Double Blade). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "double-spear",
+      "name": "Double Spear",
+      "damage": "1d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "double",
+        "momentum",
+        "two-handed"
+      ],
+      "propertyMeta": {
+        "momentumDice": "1d10"
+      },
+      "propertiesRaw": "Double *, Momentum * (1d10), Two-Handed",
+      "masterySlug": "set",
+      "weight": "2 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Double Spear). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "elite-rapier",
+      "name": "Elite Rapier",
+      "damage": "1d8",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "finesse"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Finesse",
+      "masterySlug": "swift",
+      "weight": "1 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Elite Rapier). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "fighting-chain",
+      "name": "Fighting Chain",
+      "damage": "1d4",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "double",
+        "finesse",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Double *, Finesse , Reach , Two-Handed",
+      "masterySlug": "disarming",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Fighting Chain). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "fighting-chain-brutal",
+      "name": "Fighting Chain, Brutal",
+      "damage": "1d6",
+      "damageType": "Cortante",
+      "propertySlugs": [
+        "double",
+        "finesse",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Double *, Finesse , Reach , Two-Handed",
+      "masterySlug": "brutal",
+      "weight": "3 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Fighting Chain, Brutal). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "fighting-chain-hook",
+      "name": "Fighting Chain, Hook",
+      "damage": "1d4",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "damage",
+        "double",
+        "finesse",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {
+        "damageTypes": [
+          "Piercing"
+        ]
+      },
+      "propertiesRaw": "Damage (Piercing)*, Double *, Finesse , Reach , Two-Handed",
+      "masterySlug": "entangling",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Fighting Chain, Hook). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "fighting-chain-sickle",
+      "name": "Fighting Chain, Sickle",
+      "damage": "1d4",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "damage",
+        "double",
+        "finesse",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {
+        "damageTypes": [
+          "Slashing"
+        ]
+      },
+      "propertiesRaw": "Damage (Slashing)*, Double *, Finesse , Reach , Two-Handed",
+      "masterySlug": "entangling",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Fighting Chain, Sickle). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "gladiator-net",
+      "name": "Gladiator Net",
+      "damage": "1d6",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "thrown"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 15,
+          "max": 45
+        }
+      },
+      "propertiesRaw": "Thrown (Range 10/30)",
+      "masterySlug": "entangling",
+      "weight": "2,5 kg",
+      "cost": {
+        "text": "350 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Gladiator Net). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "guardian-poleaxe",
+      "name": "Guardian Poleaxe",
+      "damage": "1d10",
+      "damageType": "Cortante",
+      "propertySlugs": [
+        "damage",
+        "hafted",
+        "heavy",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {
+        "damageTypes": [
+          "Piercing"
+        ]
+      },
+      "propertiesRaw": "Damage (Piercing)*, Hafted *, Heavy , Reach , Two-Handed",
+      "masterySlug": "set",
+      "weight": "4,5 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Guardian Poleaxe). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "knightly-lance",
+      "name": "Knightly Lance",
+      "damage": "2d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "momentum",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {
+        "momentumDice": "2d10"
+      },
+      "propertiesRaw": "Momentum * (2d10), Reach , Two-Handed (Unless Mounted)",
+      "masterySlug": "set",
+      "weight": "3 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Knightly Lance). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "knightly-sword",
+      "name": "Knightly Sword",
+      "damage": "1d8",
+      "damageType": "Cortante",
+      "propertySlugs": [
+        "versatile"
+      ],
+      "propertyMeta": {
+        "versatileDamage": "1d10"
+      },
+      "propertiesRaw": "Versatile (1d10)",
+      "masterySlug": "defending",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Knightly Sword). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "military-fork",
+      "name": "Military Fork",
+      "damage": "2d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "hafted",
+        "heavy",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Hafted *, Heavy , Reach , Two-Handed",
+      "masterySlug": "disarming",
+      "weight": "4 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Military Fork). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "parrying-dagger",
+      "name": "Parrying Dagger",
+      "damage": "1d4",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "finesse",
+        "light",
+        "thrown"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 30,
+          "max": 90
+        }
+      },
+      "propertiesRaw": "Finesse , Light , Thrown (Range 20/60)",
+      "masterySlug": "disarming",
+      "weight": "500 g",
+      "cost": {
+        "text": "350 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Parrying Dagger). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "polearm",
+      "name": "Polearm",
+      "damage": "1d12",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "hafted",
+        "heavy",
+        "reach",
+        "two-handed"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Hafted *, Heavy , Reach , Two-Handed",
+      "masterySlug": "set",
+      "weight": "6 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Polearm). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "punching-dagger",
+      "name": "Punching Dagger",
+      "damage": "1d4",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "armor-piercing",
+        "finesse",
+        "light"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Armor-Piercing *, Finesse , Light",
+      "masterySlug": "defending",
+      "weight": "500 g",
+      "cost": {
+        "text": "300 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Punching Dagger). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "returning-club",
+      "name": "Returning Club",
+      "damage": "1d4",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "light",
+        "thrown"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 30,
+          "max": 90
+        }
+      },
+      "propertiesRaw": "Light , Thrown (Range 20/60)",
+      "masterySlug": "returning",
+      "weight": "1 kg",
+      "cost": {
+        "text": "300 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Returning Club). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "sabre",
+      "name": "Sabre",
+      "damage": "1d8",
+      "damageType": "Cortante",
+      "propertySlugs": [
+        "finesse"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Finesse",
+      "masterySlug": "swift",
+      "weight": "1 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Sabre). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "sheathed-staff",
+      "name": "Sheathed Staff",
+      "damage": "1d6",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "double",
+        "versatile"
+      ],
+      "propertyMeta": {
+        "versatileDamage": "1d8"
+      },
+      "propertiesRaw": "Double *, Versatile (1d8)",
+      "masterySlug": "topple",
+      "weight": "3 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Sheathed Staff). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "side-handle-baton",
+      "name": "Side-handle Baton",
+      "damage": "1d4",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "finesse",
+        "light"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Finesse , Light",
+      "masterySlug": "swift",
+      "weight": "1 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Side-handle Baton). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "wrath-axe",
+      "name": "Wrath Axe",
+      "damage": "2d6",
+      "damageType": "Cortante",
+      "propertySlugs": [
+        "hafted",
+        "momentum",
+        "heavy",
+        "two-handed"
+      ],
+      "propertyMeta": {
+        "momentumDice": "2d8"
+      },
+      "propertiesRaw": "Hafted *, Heavy , Momentum * (2d8), Two-Handed",
+      "masterySlug": "brutal",
+      "weight": "6 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Wrath Axe). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "wrath-maul",
+      "name": "Wrath Maul",
+      "damage": "2d6",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "hafted",
+        "momentum",
+        "heavy",
+        "two-handed"
+      ],
+      "propertyMeta": {
+        "momentumDice": "2d8"
+      },
+      "propertiesRaw": "Hafted *, Heavy , Momentum * (2d8), Two-Handed",
+      "masterySlug": "brutal",
+      "weight": "7,5 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Wrath Maul). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    }
+  ],
+  "rangedWeapons": [
+    {
+      "slug": "arbalest",
+      "name": "Arbalest",
+      "damage": "2d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "heavy",
+        "two-handed",
+        "loading",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 120,
+          "max": 450
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 80/300; Bolt), Heavy , Loading , Two-Handed",
+      "masterySlug": null,
+      "weight": "10 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Arbalest). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "blackpowder-pistol",
+      "name": "Blackpowder Pistol",
+      "damage": "2d4",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "blackpowder",
+        "light",
+        "loading",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 30,
+          "max": 120
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 20/80; Paper Cartridge Bullet), Blackpowder , Light , Loading",
+      "masterySlug": "vex",
+      "weight": "2 kg",
+      "cost": {
+        "text": "200 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Blackpowder Pistol). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "blackpowder-rifle",
+      "name": "Blackpowder Rifle",
+      "damage": "2d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "blackpowder",
+        "two-handed",
+        "loading",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 120,
+          "max": 450
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 80/300; Paper Cartridge Bullet), Blackpowder , Loading , Two-Handed",
+      "masterySlug": "slow",
+      "weight": "5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Blackpowder Rifle). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "blunderbuss-grim-hollow",
+      "name": "Blunderbuss",
+      "damage": "2d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "blackpowder",
+        "cumbersome",
+        "two-handed",
+        "loading",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 45,
+          "max": 135
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 30/90; Paper Cartridge Bullet), Blackpowder , Cumbersome , Loading , Two-Handed",
+      "masterySlug": "scatter",
+      "weight": "5 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Blunderbuss). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "blunderbuss-hand",
+      "name": "Blunderbuss, Hand",
+      "damage": "2d4",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "blackpowder",
+        "loading",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 22.5,
+          "max": 90
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 15/60; Paper Cartridge Bullet), Blackpowder , Loading",
+      "masterySlug": "scatter",
+      "weight": "2 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Blunderbuss, Hand). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "composite-longbow",
+      "name": "Composite Longbow",
+      "damage": "1d8",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "heavy",
+        "two-handed",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 300,
+          "max": 900
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 200/600; Arrow), Heavy , Two-Handed",
+      "masterySlug": null,
+      "weight": "1 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Composite Longbow). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "composite-shortbow",
+      "name": "Composite Shortbow",
+      "damage": "1d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "two-handed",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "range": {
+          "normal": 150,
+          "max": 600
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 100/400; Arrow), Two-Handed",
+      "masterySlug": null,
+      "weight": "1 kg",
+      "cost": {
+        "text": "400 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Composite Shortbow). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "dragon-pistol",
+      "name": "Dragon Pistol",
+      "damage": "2d4",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "blackpowder",
+        "loading",
+        "ammunition"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Ammunition (Range 20; Dragon Shot), Blackpowder , Loading",
+      "masterySlug": "scatter",
+      "weight": "2 kg",
+      "cost": {
+        "text": "350 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Dragon Pistol). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "dragon-rifle",
+      "name": "Dragon Rifle",
+      "damage": "2d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "blackpowder",
+        "loading",
+        "ammunition"
+      ],
+      "propertyMeta": {},
+      "propertiesRaw": "Ammunition (Range 30; Dragon Shot), Blackpowder , Loading",
+      "masterySlug": "scatter",
+      "weight": "2 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Dragon Rifle). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "flame-bellows",
+      "name": "Flame Bellows",
+      "damage": "2d6",
+      "damageType": "Fire",
+      "propertySlugs": [
+        "cumbersome",
+        "magazine",
+        "two-handed",
+        "loading",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "magazine": "20"
+      },
+      "propertiesRaw": "Ammunition (Range 15; Bellows Cannister), Cumbersome , Loading , Magazine (20), Two-Handed",
+      "masterySlug": "scatter",
+      "weight": "5,5 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Flame Bellows). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "repeater-crossbow",
+      "name": "Repeater Crossbow",
+      "damage": "1d8",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "magazine",
+        "repeater",
+        "two-handed",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "magazine": "6",
+        "range": {
+          "normal": 120,
+          "max": 450
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 80/300; Bolt), Magazine (6), Repeater *, Two-Handed",
+      "masterySlug": "slow",
+      "weight": "3,5 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Repeater Crossbow). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "repeater-crossbow-hand",
+      "name": "Repeater Crossbow, Hand",
+      "damage": "1d6",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "magazine",
+        "repeater",
+        "light",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "magazine": "3",
+        "range": {
+          "normal": 45,
+          "max": 180
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 30/120; Bolt), Light , Magazine (3), Repeater *",
+      "masterySlug": "vex",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Repeater Crossbow, Hand). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "repeater-crossbow-heavy",
+      "name": "Repeater Crossbow, Heavy",
+      "damage": "1d10",
+      "damageType": "Perfurante",
+      "propertySlugs": [
+        "magazine",
+        "repeater",
+        "heavy",
+        "two-handed",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "magazine": "9",
+        "range": {
+          "normal": 150,
+          "max": 600
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 100/400; Bolt), Heavy , Magazine (9), Repeater *, Two-Handed",
+      "masterySlug": null,
+      "weight": "10 kg",
+      "cost": {
+        "text": "1,000 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Repeater Crossbow, Heavy). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "repeater-needler",
+      "name": "Repeater Needler",
+      "damage": "1 Piercing",
+      "damageType": null,
+      "propertySlugs": [
+        "magazine",
+        "repeater",
+        "light",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "magazine": "6",
+        "range": {
+          "normal": 45,
+          "max": 180
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 30/120; Blowgun Needle), Light , Magazine (6), Repeater *",
+      "masterySlug": "vex",
+      "weight": "1,5 kg",
+      "cost": {
+        "text": "500 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Repeater Needler). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    },
+    {
+      "slug": "repeater-slinger",
+      "name": "Repeater Slinger",
+      "damage": "1d8",
+      "damageType": "Contundente",
+      "propertySlugs": [
+        "magazine",
+        "repeater",
+        "two-handed",
+        "ammunition"
+      ],
+      "propertyMeta": {
+        "magazine": "9",
+        "range": {
+          "normal": 120,
+          "max": 450
+        }
+      },
+      "propertiesRaw": "Ammunition (Range 80/300; Bullet), Magazine (9), Repeater *, Two-Handed",
+      "masterySlug": "slow",
+      "weight": "4,5 kg",
+      "cost": {
+        "text": "750 PO"
+      },
+      "kind": "weapon",
+      "description": "Arma avançada de Grim Hollow (Repeater Slinger). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+    }
+  ],
+  "equipment": [
+    {
+      "slug": "blessed-stake",
+      "name": "Blessed Stake",
+      "cost": {
+        "text": "250 PO"
+      },
+      "weight": "50 g",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Blessed Stake)."
+    },
+    {
+      "slug": "breath-of-beleth-poison",
+      "name": "Breath of Beleth",
+      "cost": {
+        "text": "150 PO"
+      },
+      "weight": "125 g",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Breath of Beleth)."
+    },
+    {
+      "slug": "buckler-grim-hollow",
+      "name": "Buckler",
+      "cost": {
+        "text": "20 PO"
+      },
+      "weight": "2 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Buckler)."
+    },
+    {
+      "slug": "concealed-blade",
+      "name": "Concealed Blade",
+      "cost": {
+        "text": "50 PO"
+      },
+      "weight": "1 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Concealed Blade)."
+    },
+    {
+      "slug": "fire-bomb",
+      "name": "Fire Bomb",
+      "cost": {
+        "text": "100 PO"
+      },
+      "weight": "250 g",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Fire Bomb)."
+    },
+    {
+      "slug": "grappling-gun",
+      "name": "Grappling Gun",
+      "cost": {
+        "text": "200 PO"
+      },
+      "weight": "1,5 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Grappling Gun)."
+    },
+    {
+      "slug": "hunters-armor",
+      "name": "Hunter’s Armor",
+      "cost": {
+        "text": "+500 PO"
+      },
+      "weight": null,
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Hunter’s Armor)."
+    },
+    {
+      "slug": "iron-net",
+      "name": "Iron Net",
+      "cost": {
+        "text": "150 PO"
+      },
+      "weight": "10 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Iron Net)."
+    },
+    {
+      "slug": "mastercraft-instrument",
+      "name": "Mastercraft Instrument",
+      "cost": {
+        "text": "+250 PO"
+      },
+      "weight": null,
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Mastercraft Instrument)."
+    },
+    {
+      "slug": "noisemaker",
+      "name": "Noisemaker",
+      "cost": {
+        "text": "50 PO"
+      },
+      "weight": "2,5 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Noisemaker)."
+    },
+    {
+      "slug": "prosthetics",
+      "name": "Prosthetics",
+      "cost": {
+        "text": "500 PO"
+      },
+      "weight": "5 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Prosthetics)."
+    },
+    {
+      "slug": "retractable-shield",
+      "name": "Retractable Shield",
+      "cost": {
+        "text": "300 PO"
+      },
+      "weight": "3 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Retractable Shield)."
+    },
+    {
+      "slug": "seeing-glass",
+      "name": "Seeing Glass",
+      "cost": {
+        "text": "300 PO"
+      },
+      "weight": "1,5 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Seeing Glass)."
+    },
+    {
+      "slug": "shadowsteel-focus",
+      "name": "Shadowsteel Focus",
+      "cost": {
+        "text": "500 PO"
+      },
+      "weight": null,
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Shadowsteel Focus)."
+    },
+    {
+      "slug": "smoke-bomb",
+      "name": "Smoke Bomb",
+      "cost": {
+        "text": "50 PO"
+      },
+      "weight": "1,5 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Smoke Bomb)."
+    },
+    {
+      "slug": "stitching-needle",
+      "name": "Stitching Needle",
+      "cost": {
+        "text": "250 PO"
+      },
+      "weight": "25 g",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Stitching Needle)."
+    },
+    {
+      "slug": "tower-shield-grim-hollow",
+      "name": "Tower Shield",
+      "cost": {
+        "text": "200 PO"
+      },
+      "weight": "25 kg",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Tower Shield)."
+    },
+    {
+      "slug": "watchers-candle",
+      "name": "Watcher’s Candle",
+      "cost": {
+        "text": "250 PO"
+      },
+      "weight": "125 g",
+      "kind": "gear",
+      "description": "Equipamento avançado de Grim Hollow (Watcher’s Candle)."
+    }
+  ],
+  "ammunition": [
+    {
+      "slug": "arrows-and-bolts-bludgeoning-1",
+      "name": "Bludgeoning (1)",
+      "cost": {
+        "text": "5 CP"
+      },
+      "weight": "50 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/10 lb.",
+      "kind": "ammunition",
+      "section": "arrows-and-bolts",
+      "description": "Equipamento avançado de Grim Hollow (Bludgeoning (1))."
+    },
+    {
+      "slug": "arrows-and-bolts-ranging-1",
+      "name": "Ranging (1)",
+      "cost": {
+        "text": "1 SP"
+      },
+      "weight": "13 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/40 lb.",
+      "kind": "ammunition",
+      "section": "arrows-and-bolts",
+      "description": "Equipamento avançado de Grim Hollow (Ranging (1))."
+    },
+    {
+      "slug": "arrows-and-bolts-slashing-1",
+      "name": "Slashing (1)",
+      "cost": {
+        "text": "1 SP"
+      },
+      "weight": "50 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/10 lb.",
+      "kind": "ammunition",
+      "section": "arrows-and-bolts",
+      "description": "Equipamento avançado de Grim Hollow (Slashing (1))."
+    },
+    {
+      "slug": "arrows-and-bolts-whistling-1",
+      "name": "Whistling (1)",
+      "cost": {
+        "text": "1 SP"
+      },
+      "weight": "25 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/20 lb.",
+      "kind": "ammunition",
+      "section": "arrows-and-bolts",
+      "description": "Equipamento avançado de Grim Hollow (Whistling (1))."
+    },
+    {
+      "slug": "sling-bullets-piercing-1",
+      "name": "Piercing (1)",
+      "cost": {
+        "text": "1 CP"
+      },
+      "weight": "50 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/10 lb.",
+      "kind": "ammunition",
+      "section": "sling-bullets",
+      "description": "Equipamento avançado de Grim Hollow (Piercing (1))."
+    },
+    {
+      "slug": "sling-bullets-ranging-1",
+      "name": "Ranging (1)",
+      "cost": {
+        "text": "5 CP"
+      },
+      "weight": "25 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/20 lb.",
+      "kind": "ammunition",
+      "section": "sling-bullets",
+      "description": "Equipamento avançado de Grim Hollow (Ranging (1))."
+    },
+    {
+      "slug": "sling-bullets-whistling-1",
+      "name": "Whistling (1)",
+      "cost": {
+        "text": "5 CP"
+      },
+      "weight": "25 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/20 lb.",
+      "kind": "ammunition",
+      "section": "sling-bullets",
+      "description": "Equipamento avançado de Grim Hollow (Whistling (1))."
+    },
+    {
+      "slug": "alchemical-ammunition-arrow-1",
+      "name": "Arrow (1)",
+      "cost": {
+        "text": "75 PO"
+      },
+      "weight": "100 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/5 lb.",
+      "kind": "ammunition",
+      "section": "alchemical-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Arrow (1))."
+    },
+    {
+      "slug": "alchemical-ammunition-bolt-1",
+      "name": "Bolt (1)",
+      "cost": {
+        "text": "75 PO"
+      },
+      "weight": "100 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/5 lb.",
+      "kind": "ammunition",
+      "section": "alchemical-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Bolt (1))."
+    },
+    {
+      "slug": "alchemical-ammunition-sling-bullet-1",
+      "name": "Sling Bullet (1)",
+      "cost": {
+        "text": "55 PO"
+      },
+      "weight": "100 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/5 lb.",
+      "kind": "ammunition",
+      "section": "alchemical-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Sling Bullet (1))."
+    },
+    {
+      "slug": "specialized-ammunition-arrow-5",
+      "name": "Arrow (5)",
+      "cost": {
+        "text": "100 PO"
+      },
+      "weight": "125 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/4 lb.",
+      "kind": "ammunition",
+      "section": "specialized-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Arrow (5))."
+    },
+    {
+      "slug": "specialized-ammunition-bolt-5",
+      "name": "Bolt (5)",
+      "cost": {
+        "text": "100 PO"
+      },
+      "weight": "250 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/2 lb.",
+      "kind": "ammunition",
+      "section": "specialized-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Bolt (5))."
+    },
+    {
+      "slug": "specialized-ammunition-paper-cartridge-bullet-10",
+      "name": "Paper Cartridge Bullet (10)",
+      "cost": {
+        "text": "250 PO"
+      },
+      "weight": "250 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/2 lb.",
+      "kind": "ammunition",
+      "section": "specialized-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Paper Cartridge Bullet (10))."
+    },
+    {
+      "slug": "specialized-ammunition-sling-bullet-5",
+      "name": "Sling Bullet (5)",
+      "cost": {
+        "text": "100 PO"
+      },
+      "weight": "250 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1/2 lb",
+      "kind": "ammunition",
+      "section": "specialized-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Sling Bullet (5))."
+    },
+    {
+      "slug": "other-ranged-ammunition-bellows-cannister",
+      "name": "Bellows Cannister (20 shots)",
+      "cost": {
+        "text": "5 PO"
+      },
+      "weight": "2 kg",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "4 lb.",
+      "kind": "ammunition",
+      "section": "other-ranged-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Bellows Cannister (20 shots))."
+    },
+    {
+      "slug": "other-ranged-ammunition-dragon-shot",
+      "name": "Dragon Shot (20)",
+      "cost": {
+        "text": "5 PO"
+      },
+      "weight": "1 kg",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "2 lb.",
+      "kind": "ammunition",
+      "section": "other-ranged-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Dragon Shot (20))."
+    },
+    {
+      "slug": "other-ranged-ammunition-magazine",
+      "name": "Magazine",
+      "cost": {
+        "text": "5 PO"
+      },
+      "weight": "500 g",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "1 lb.",
+      "kind": "ammunition",
+      "section": "other-ranged-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Magazine)."
+    },
+    {
+      "slug": "other-ranged-ammunition-paper-cartridge-bullet",
+      "name": "Paper Cartridge Bullet (20)",
+      "cost": {
+        "text": "3 PO"
+      },
+      "weight": "1 kg",
+      "propertySlugs": [],
+      "propertyMeta": {},
+      "propertiesRaw": "2 lb.",
+      "kind": "ammunition",
+      "section": "other-ranged-ammunition",
+      "description": "Equipamento avançado de Grim Hollow (Paper Cartridge Bullet (20))."
+    }
+  ],
+  "extractedAt": "2026-08-29T21:36:11.053Z"
+}

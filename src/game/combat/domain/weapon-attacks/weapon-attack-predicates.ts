@@ -6,6 +6,7 @@ import type {
 
 const SIMPLE_PROFICIENCY = 'armas-simples';
 const MARTIAL_PROFICIENCY = 'armas-marciais';
+const ADVANCED_PROFICIENCY = 'armas-avancadas';
 const MARTIAL_LIGHT_PROFICIENCY = 'armas-marciais-leves';
 /** Martial Ranged only (ex.: Gunslinger) — martial + ammunition. */
 const MARTIAL_RANGED_PROFICIENCY = 'armas-marciais-a-distancia';
@@ -79,6 +80,9 @@ export function isProficient(
   if (hasStyleOrFeat(context, 'martial-weapon-training')) {
     proficiencySlugs.push(MARTIAL_PROFICIENCY);
   }
+  if (hasStyleOrFeat(context, 'advanced-weapon-proficiency')) {
+    proficiencySlugs.push(ADVANCED_PROFICIENCY);
+  }
 
   for (const slug of proficiencySlugs) {
     const specific = SPECIFIC_WEAPON_PROFICIENCY[slug];
@@ -103,6 +107,9 @@ export function isProficient(
     ) {
       return true;
     }
+  }
+  if (piece.category === 'advanced') {
+    return proficiencySlugs.includes(ADVANCED_PROFICIENCY);
   }
   return false;
 }

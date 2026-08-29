@@ -165,6 +165,25 @@ describe('computeWeaponAttacks', () => {
     expect(blade.proficient).toBe(true);
   });
 
+  it('grants advanced proficiency from advanced-weapon-proficiency feat', () => {
+    const catchpole = (): EquippedWeaponPiece => ({
+      itemSlug: 'catchpole',
+      itemName: 'Catchpole',
+      category: 'advanced',
+      damage: '1d6',
+      damageType: 'Perfurante',
+      propertySlugs: ['hafted', 'reach', 'two-handed'],
+      equipmentSlot: 'main_hand',
+      versatileDamage: null,
+    });
+    const [attack] = computeWeaponAttacks(scores(), [catchpole()], {
+      proficiencyBonus: 2,
+      weaponProficiencySlugs: ['armas-simples'],
+      featSlugs: ['advanced-weapon-proficiency'],
+    });
+    expect(attack.proficient).toBe(true);
+  });
+
   it('grants martial proficiency from martial-weapon-training feat', () => {
     const [attack] = computeWeaponAttacks(scores(), [longsword()], {
       proficiencyBonus: 2,

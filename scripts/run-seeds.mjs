@@ -31,6 +31,8 @@ const SEED_PACKS = [
   'valdas-player-pack-2',
   'steinhardt-eldritch-hunt',
   'northlands-heroes',
+  'griffons-saddlebag',
+  'grim-hollow',
   'dmg',
   'combat',
   'creatures',
