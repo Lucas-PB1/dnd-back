@@ -9,7 +9,7 @@ VALUES (
   'Caminho da Glaciar',
   'Domine inimigos com a força de uma nevasca e armadura de gelo',
   'Nascidos na gélida e imponente Everglaciar, bárbaros do Caminho da Glaciar aprenderam a abrigar a quietude, a paciência e a determinação implacável da paisagem gelada — e sua destruição.',
-  'Nascidos na gélida e imponente Everglaciar, bárbaros do Caminho da Glaciar aprenderam a abrigar a quietude, a paciência e a determinação implacável da paisagem gelada — e sua destruição. Esses guerreiros transformam o corpo em bunkers móveis poderosos, tão difíceis de derrubar quanto de escapar.
+  'Nascidos na gélida e imponente Everglaciar, bárbaros do Caminho da Glaciar aprenderam a abrigar a quietude, a paciência e a determinação implacável da paisagem gelada — e sua destruição. Esses guerreiros transformam o corpo em fortalezas móveis poderosas, tão difíceis de derrubar quanto de escapar.
 
 Quem segue este caminho costuma ser caçador treinado que aprecia a perseguição paciente. Prosperam no perigo que impõem às presas em fuga e se orgulham da abordagem lenta e constante.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'griffons-saddlebag-book-one-2024-en:part-ii-character-options')
@@ -30,7 +30,7 @@ VALUES (
   'Colégio da Coreografia',
   'Inspire aliados e confunda inimigos com movimento ágil',
   'Bardos do Colégio da Coreografia contam histórias e performam sem som, usando movimento feérico e mágico para inspirar e confundir.',
-  'Bardos do Colégio da Coreografia contam histórias e performam sem som, escolhendo mover-se com graça feérica e magia para evitar danos e inspirar outros. Essas danças vêm da Festerwood, cujos esporos radiantes e luz geravam performances miraculosas e perigos mortais. Estão do taverna local aos palcos mais altos, comovendo multidões ou incitando rebelião. Em cada passo, inspiram coragem, movimento e participação.',
+  'Bardos do Colégio da Coreografia contam histórias e apresentam performances sem som, escolhendo mover-se com graça feérica e magia para evitar danos e inspirar outros. Essas danças vêm da Festerwood, cujos esporos radiantes e luz geravam apresentações miraculosas e perigos mortais. Da taverna local aos palcos mais altos, comovem multidões ou incitam rebelião. Em cada passo, inspiram coragem, movimento e participação.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'griffons-saddlebag-book-one-2024-en:part-ii-character-options')
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -87,7 +87,7 @@ VALUES (
   'couatl-herald',
   (SELECT id FROM rpg.phb_class WHERE slug = 'fighter'),
   'Arauto Couatl',
-  'Mostre misericórdia e apoie aliados como paragono de civismo',
+  'Mostre misericórdia e apoie aliados como ícone de civismo',
   'Guerreiros marciais que neutralizavam ameaças sem recorrer sempre à força letal — símbolos de paz na outrora grande cidade de Hearth.',
   'Os Arautos Couatl eram guerreiros marciais cujo intento era neutralizar ameaças sem sempre recorrer à força letal. Eram símbolos amados de paz na outrora grande cidade de Hearth, cuja destruição se perdeu quase por completo na história. Você pode vir de uma linhagem oculta que escapou do colapso, ou ter encontrado diários antigos de um instrutor da cidade. Um verdadeiro Arauto Couatl defende todas as vidas, independentemente das transgressões.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'griffons-saddlebag-book-one-2024-en:part-ii-character-options')
@@ -149,7 +149,7 @@ VALUES (
   (SELECT id FROM rpg.phb_class WHERE slug = 'ranger'),
   'Caçador Invernal',
   'Use armadilhas geladas para imobilizar presas',
-  'Mestres do controle originários da Everglaciar, experts em manter presas e adversários à distância.',
+  'Mestres do controle originários da Everglaciar, especialistas em manter presas e adversários à distância.',
   'Caçadores Invernais dominam controle e mantêm adversários e presas indefesos e à distância. Originários da Everglaciar, são caçadores treinados que permanecem de pé quando outros cairiam, usando magia e acrobacia para proteger a si e aos aliados.',
   (SELECT id FROM rpg.phb_source_citation WHERE slug = 'griffons-saddlebag-book-one-2024-en:part-ii-character-options')
 )

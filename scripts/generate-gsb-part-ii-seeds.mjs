@@ -24,7 +24,7 @@ const SUBCLASSES = [
     summary:
       'Nascidos na gélida e imponente Everglaciar, bárbaros do Caminho da Glaciar aprenderam a abrigar a quietude, a paciência e a determinação implacável da paisagem gelada — e sua destruição.',
     description:
-      'Nascidos na gélida e imponente Everglaciar, bárbaros do Caminho da Glaciar aprenderam a abrigar a quietude, a paciência e a determinação implacável da paisagem gelada — e sua destruição. Esses guerreiros transformam o corpo em bunkers móveis poderosos, tão difíceis de derrubar quanto de escapar.\n\nQuem segue este caminho costuma ser caçador treinado que aprecia a perseguição paciente. Prosperam no perigo que impõem às presas em fuga e se orgulham da abordagem lenta e constante.',
+      'Nascidos na gélida e imponente Everglaciar, bárbaros do Caminho da Glaciar aprenderam a abrigar a quietude, a paciência e a determinação implacável da paisagem gelada — e sua destruição. Esses guerreiros transformam o corpo em fortalezas móveis poderosas, tão difíceis de derrubar quanto de escapar.\n\nQuem segue este caminho costuma ser caçador treinado que aprecia a perseguição paciente. Prosperam no perigo que impõem às presas em fuga e se orgulham da abordagem lenta e constante.',
   },
   {
     slug: 'college-of-choreography',
@@ -34,7 +34,7 @@ const SUBCLASSES = [
     summary:
       'Bardos do Colégio da Coreografia contam histórias e performam sem som, usando movimento feérico e mágico para inspirar e confundir.',
     description:
-      'Bardos do Colégio da Coreografia contam histórias e performam sem som, escolhendo mover-se com graça feérica e magia para evitar danos e inspirar outros. Essas danças vêm da Festerwood, cujos esporos radiantes e luz geravam performances miraculosas e perigos mortais. Estão do taverna local aos palcos mais altos, comovendo multidões ou incitando rebelião. Em cada passo, inspiram coragem, movimento e participação.',
+      'Bardos do Colégio da Coreografia contam histórias e apresentam performances sem som, escolhendo mover-se com graça feérica e magia para evitar danos e inspirar outros. Essas danças vêm da Festerwood, cujos esporos radiantes e luz geravam apresentações miraculosas e perigos mortais. Da taverna local aos palcos mais altos, comovem multidões ou incitam rebelião. Em cada passo, inspiram coragem, movimento e participação.',
   },
   {
     slug: 'astral-domain',
@@ -60,7 +60,7 @@ const SUBCLASSES = [
     slug: 'couatl-herald',
     classSlug: 'fighter',
     name: 'Arauto Couatl',
-    tagline: 'Mostre misericórdia e apoie aliados como paragono de civismo',
+    tagline: 'Mostre misericórdia e apoie aliados como ícone de civismo',
     summary:
       'Guerreiros marciais que neutralizavam ameaças sem recorrer sempre à força letal — símbolos de paz na outrora grande cidade de Hearth.',
     description:
@@ -92,7 +92,7 @@ const SUBCLASSES = [
     name: 'Caçador Invernal',
     tagline: 'Use armadilhas geladas para imobilizar presas',
     summary:
-      'Mestres do controle originários da Everglaciar, experts em manter presas e adversários à distância.',
+      'Mestres do controle originários da Everglaciar, especialistas em manter presas e adversários à distância.',
     description:
       'Caçadores Invernais dominam controle e mantêm adversários e presas indefesos e à distância. Originários da Everglaciar, são caçadores treinados que permanecem de pé quando outros cairiam, usando magia e acrobacia para proteger a si e aos aliados.',
   },
@@ -155,13 +155,13 @@ Quando uma criatura sofre dano Gélido assim, a Velocidade dela cai 3 m até o i
 Como Ação Bônus nos turnos seguintes enquanto a Fúria durar, pode gastar um Dado de Vida para ganhar esses PV temporários de novo.`],
     [10, 'Sono Profundo', `Pode entrar em hibernação profunda num Descanso Longo. Fica gelado ao toque e parece morto a inspeção e magias que determinem seu estado. Ruído não o acorda.
 
-Desperta após 6 horas, ao sofrer dano ou quando alguém usa ação para esbofeteá-lo. Se completar 6 horas contínuas, recebe benefícios de Descanso Longo e um pool especial de Dados de Vida ( = mod. Constituição, mín. 1) de Bárbaro até o próximo Descanso Longo.`],
-    [14, 'Pisoteio Avalanche', `Como ação Mágica, pode pisotear o chão e enviar tremor. Cada criatura escolhida numa Emanação de 4,5 m centrada em você faz salvaguarda de Destreza (CD 8 + mod. Força + PB). Em falha: dano Contundente = 3d6 + mod. Força e condição Caído.`],
+Desperta após 6 horas, ao sofrer dano ou quando alguém usa uma ação para esbofeteá-lo. Se completar 6 horas contínuas, recebe benefícios de Descanso Longo e uma reserva especial de Dados de Vida ( = mod. Constituição, mín. 1) de Bárbaro até o próximo Descanso Longo.`],
+    [14, 'Pisoteio Glacial', `Como uma ação Mágica, você pode pisotear o chão e enviar um tremor. Cada criatura escolhida numa Emanação de 4,5 metros centrada em você faz uma salvaguarda de Destreza (CD 8 + mod. de Força + Bônus de Proficiência). Em uma falha, a criatura sofre dano Contundente igual a 3d6 + mod. de Força e tem a condição Caído.`],
   ],
   'college-of-choreography': [
     [3, 'Movimento Rápido', `Sua Velocidade aumenta 3 m. Aumenta mais 1,5 m no nível 6 de Bardo (total +4,5 m) e no 14 (+6 m).`],
     [3, 'Dança Inspiradora', `Como Ação Bônus, gaste uma Inspiração de Bardo para dançar e reanimar criatura à vista. Role o dado de Inspiração; ela ganha PV temporários = resultado + mod. Carisma (mín. 2). Ao ganhar PV temporários assim, pode usar Reação para se mover até a Velocidade sem provocar Ataques de Oportunidade ou fazer a ação Esquivar.`],
-    [6, 'Movimento Encantador', `Movimentos tão graciosos que inimigos frios sentem remorso por interromper sua dança. Quando uma criatura acerta você com Ataque de Oportunidade ou ataque enquanto você se beneficia de Esquivar, sofre dano Psíquico = mod. Carisma + metade do nível de Bardo (arred. p/ baixo).
+    [6, 'Movimento Encantador', `Movimentos tão graciosos que inimigos frios sentem remorso por interromper sua dança. Quando uma criatura acerta você com Ataque de Oportunidade ou ataque enquanto você se beneficia de Esquivar, sofre dano Psíquico = mod. Carisma + metade do nível de Bardo (arredondado para baixo).
 
 Você sempre tem Enfeitiçar Pessoa preparada e pode conjurá-la sem componente Verbal. Com este recurso, conjura sem gastar espaço como magia de 3º círculo; alvos não têm Vantagem na salvaguarda por combate. 1× / Descanso Longo.`],
     [14, 'Dança Infinita', `Quando uma criatura ganharia PV temporários de Dança Inspiradora, pode usar Reação para fazer um ataque com arma ou Ataque Desarmado.
@@ -179,7 +179,7 @@ Além disso, pode Esquivar como Ação Bônus; sempre que usar Ação Bônus par
 
 • Ao conjurar Passo Nebuloso com Canalizar Divindade, pode escolher criatura involuntária a até 9 m; ela faz salvaguarda de Carisma contra sua CD de magia ou a troca falha e o uso de Canalizar Divindade é perdido.
 
-• Ao trocar de lugar com sucesso via Canalizar Divindade, pode conjurar magia de círculo 0–5 de alcance Toque como parte da mesma Ação Bônus, mirando a criatura com quem trocou.`],
+• Ao trocar de lugar com sucesso via Canalizar Divindade, pode conjurar magia de círculos de 0º a 5º de alcance Toque como parte da mesma Ação Bônus, mirando a criatura com quem trocou.`],
   ],
   'the-unbroken-circle': [
     [3, 'Bordão Místico Aprimorado', `Ao conjurar Bordão Místico, pode imbuir qualquer arma corpo a corpo que segure; pode manter o dado de dano normal em vez de d8. Pode usar qualquer arma com proficiência como foco de conjuração.`],
@@ -189,7 +189,7 @@ Além disso, pode Esquivar como Ação Bônus; sempre que usar Ação Bônus par
     [10, 'Druida de Guerra', `Ao usar a ação Atacar, pode substituir um ataque por conjuração de um truque de Druida com tempo de conjuração de ação.`],
     [14, 'Armadura da Natureza', `Sempre sob efeito de Pele-Casca.
 
-No início de cada turno, ganha PV temporários = metade do nível de Druida (arred. p/ baixo). Ao assumir Forma Selvagem, ganha PV temporários = nível de Druida + metade do nível (arred. p/ baixo).`],
+No início de cada turno, ganha PV temporários = metade do nível de Druida (arredondado para baixo). Ao assumir Forma Selvagem, ganha PV temporários = nível de Druida + metade do nível (arredondado para baixo).`],
   ],
   'couatl-herald': [
     [3, 'Agente de Misericórdia', `Reservatório de magia positiva representado por Dados de Misericórdia (veja tabela por nível de Guerreiro). Recupera todos no Descanso Curto ou Longo.
@@ -199,19 +199,19 @@ Presença Benevolente. Em testes de Intuição ou Carisma (Atuação/Persuasão)
 Golpe Implacável. Uma vez por turno ao acertar com arma ou Ataque Desarmado, gaste um dado para dano Radiante extra = valor do dado.
 
 Proteção Pacífica. Como Ação Bônus, gaste um dado: PV temporários = dado + mod. Carisma (mín. 1).`],
-    [3, 'Um do Povo', `Proficiência em Intuição e Persuasão. Ao reduzir criatura a 0 PV com ataque corpo a corpo ou à distância, pode nocauteá-la (1 PV, Inconsciente, inicia Descanso Curto) até recuperar PV ou alguém prestar primeiros socorros (Medicina CD 10).`],
+    [3, 'Um do Povo', `Proficiência em Intuição e Persuasão. Ao reduzir criatura a 0 PV com ataque corpo a corpo ou à distância, pode nocauteá-la (1 PV, Inconsciente, inicia Descanso Curto) até recuperar PV ou alguém prestar primeiros socorros (teste de Medicina CD 10).`],
     [7, 'Portador de Paz', `Dano com arma ou Ataque Desarmado pode ser Radiante ou tipo normal.
 
 Sempre tem Acalmar Emoções e Santuário preparadas (Carisma, sem componentes Somático/Material). Cada uma 1× sem espaço / Descanso Curto ou Longo.`],
     [10, 'Mente Calma', `Ao persuadir criatura a desescalar violência, recupera um Dado de Misericórdia (um por criatura afetada). Imunidade a Enfeitiçado e Amedrontado.`],
-    [15, 'Paragono', `Como Ação Bônus, ordene criatura à vista a até 9 m e gaste um Dado de Misericórdia. Se ouvir você: PV temporários = dado + mod. Carisma (mín. 1) e Reação para mover metade da Velocidade sem provocar oportunidade e atacar. Dano nocauteante em vez de matar.`],
+    [15, 'Paragona', `Como uma Ação Bônus, você pode ordenar uma criatura à vista a até 9 metros e gastar um Dado de Misericórdia. Se a criatura puder ouvir você, ela ganha Pontos de Vida temporários iguais ao valor do dado + mod. de Carisma (mínimo de 1) e pode usar uma Reação para se mover até metade da Velocidade sem provocar Ataques de Oportunidade e fazer um ataque. Dano nocauteante em vez de matar.`],
     [18, 'Executor Heráldico', `Pode usar Golpe Implacável uma vez por turno sem gastar dado; se o fizer, pode usar de novo no turno gastando dado normalmente.
 
 Ao nocautear em vez de matar, o alvo permanece Inconsciente por 8 h ou até você/aliado sacudi-lo, mesmo se recuperar PV ou receber primeiros socorros.`],
   ],
   'warrior-of-the-celestial': [
     [3, 'Conexão Celestial', `Telepatia com qualquer criatura à vista a até 9 m. Não precisa compartilhar idioma, mas ela deve entender ao menos um. Não concede resposta telepática.`],
-    [3, 'Golpe de Busca da Alma', `Ao tocar ou acertar com Ataque Desarmado, gaste 1 Ponto de Foco (sem ação) para sondar a alma até o fim do seu próximo turno (ou 1 min fora de combate): emoções e desejo mais óbvio; à critério do Mestre, PV ou fragmento de história. Vantagem no próximo ataque e em Intuição contra o alvo.
+    [3, 'Golpe de Busca da Alma', `Ao tocar ou acertar com Ataque Desarmado, gaste 1 Ponto de Foco (sem ação) para sondar a alma até o fim do seu próximo turno (ou 1 minuto fora de combate): emoções e desejo mais óbvio; à critério do Mestre, PV ou fragmento de história. Vantagem no próximo ataque e em Intuição contra o alvo.
 
 Ao acertar com ataque de Rajada de Golpes, pode usar sem gastar Ponto de Foco.`],
     [6, 'Foco Estabilizador', `Como ação Mágica, toque criatura Ferida e gaste 1+ Pontos de Foco: cada ponto restaura 5 PV (máx. metade do máximo de PV). Pode gastar 2 pontos para conjurar Aprimorar Atributo, Restauração Menor ou Proteção Contra o Bem e o Mal sem espaço ou material (Sabedoria).`],
@@ -248,19 +248,19 @@ Caminhante do Gelo. Terreno difícil de gelo/neve não custa movimento extra; Va
 
 Pé Firme. Não pode estar Caído salvo se também Incapacitado.`],
     [11, 'Armadilha Mágica', `Como Ação Bônus, cria armadilha imperceptível no chão. Primeira criatura Grande ou menor (exceto você/designados) que entrar no espaço no próximo minuto: salvaguarda de Destreza vs. CD de magia. Falha: 2d8 Perfurante e Velocidade 0 até fim do seu próximo turno. Metade do dano em sucesso. Usos = mod. Sabedoria (mín. 1) / Descanso Longo.`],
-    [15, 'Defesas Tropeçadas', `Quando criatura a até 1,5 m erra ataque contra você, Reação para desequilibrá-la: Grande ou menor fica Caída; senão Velocidade reduzida pela metade até fim do turno (salvo Imunidade a Caído). Depois, ataque ou move metade da Velocidade sem provocar oportunidade dela.`],
+    [15, 'Defesas Tropeçadas', `Quando criatura a até 1,5 m erra ataque contra você, Reação para desequilibrá-la: Grande ou menor fica Caída; senão Velocidade reduzida pela metade até fim do turno (salvo Imunidade a Caído). Depois, ataque ou move metade da Velocidade sem provocar Ataques de Oportunidade dela.`],
   ],
   'runetagger': [
     [3, 'Impressionista', `Perícia em Suprimentos de Calígrafo e Pintor; nunca fica sem pincéis. Como ação Mágica, cria suprimentos numa mão livre e tinta ou tinta de qualquer cor. Objetos somem se saírem de você ou se recriar.
 
 Ao terminar marca com tinta, pode imbuir efeito de Mensagem: marca brilha (Meia-luz 1,5 m); quem tocar ouve a mensagem telepática e a marca perde o efeito.`],
-    [3, 'Runas', `4 Pontos de Runa; recupera no Descanso Curto ou Longo. Ao acertar corpo a corpo, gaste 1 ponto para marcar criatura por até 1 min (some se apagada com ação).
+    [3, 'Runas', `4 Pontos de Runa; recupera no Descanso Curto ou Longo. Ao acertar corpo a corpo, gaste 1 ponto para marcar criatura por até 1 minuto (some se apagada com ação).
 
-Cryos: alvo não pode fazer Reações até início do seu próximo turno.
+Crios: o alvo não pode fazer Reações até o início do seu próximo turno.
 
-Hexxus: Reação quando alvo passa em teste/ataque a até 18 m: −1d6 no resultado.
+Maldíx: como uma Reação quando o alvo passa em um teste de atributo ou rolagem de ataque a até 18 metros, você reduz o resultado em 1d6.
 
-Locus: próximo ataque contra o alvo tem Vantagem; se acertar, +1d6 Ácido.`],
+Locus: o próximo ataque contra o alvo tem Vantagem; se acertar, causa 1d6 de dano Ácido extra.`],
     [9, 'Artista da Fuga', `Vantagem em testes/salvaguardas para evitar ou encerrar Agarrado/Restringido. Pode escapar como Ação Bônus se normalmente exigiria ação.
 
 A até 1,5 m de superfície sólida, Ação Bônus + 1 Ponto de Runa: Invisível por 10 min (termina ao atacar, causar dano, conjurar ou sair do espaço).`],
@@ -276,13 +276,13 @@ A até 1,5 m de superfície sólida, Ação Bônus + 1 Ponto de Runa: Invisível
 Congelar Água. Criar Gelo também funciona em água (5 m de profundidade, Cubo de 1,5 m).
 
 Resistência a dano Gélido.`],
-    [14, 'Congelamento Súbito', `Movimento no gelo não provoca oportunidade. Reação quando criatura a 1,5 m acerta você: dano Gélido = mod. Carisma + metade do nível de Feiticeiro; pode usar Criar Gelo como parte da Reação.`],
+    [14, 'Congelamento Súbito', `Movimento no gelo não provoca Ataques de Oportunidade. Reação quando criatura a 1,5 m acerta você: dano Gélido = mod. Carisma + metade do nível de Feiticeiro; pode usar Criar Gelo como parte da Reação.`],
     [18, 'Alma Congelada', `Imunidade a dano Gélido; Resistência a Ígneo. Sempre tem Muralha de Gelo preparada, sem componente material; 1× sem espaço / Descanso Longo (painéis planos não precisam ser contíguos).`],
   ],
   'astral-griffon-patron': [
     [3, 'Magias do Grifo Astral', `Magias sempre preparadas conforme tabela (níveis de Bruxo 3, 5, 7 e 9).`],
     [3, 'Míssil Astral', `Conjura Mísseis Mágicos sem espaço usos = mod. Carisma (mín. 1) / Descanso Longo. Dardos podem mirar alvo invisível; se fora de alcance, voam erraticamente e somem por rasgo planar.`],
-    [3, 'Acuidade Extradimensional', `Bolso dimensional permanente: até 22 kg de material inanimado, volume máx. ~28 L, acessível pelas mãos. Colocar Bolsa de Holding, Haversack ou Buraco Portable destrói o item e espalha conteúdos no Astral; bolso inacessível por 7 dias.
+    [3, 'Acuidade Extradimensional', `Bolso dimensional permanente: até 22 kg de material inanimado, volume máx. ~28 L, acessível pelas mãos. Colocar Bolsa de Holding, Mochila dos Munióculos de Heward ou Buraco Portátil destrói o item e espalha conteúdos no Astral; bolso inacessível por 7 dias.
 
 Sente espaços extradimensionais (exceto o seu) a até 18 m (não revela quantidade/local).`],
     [6, 'Escape Planar', `Reação ao sofrer dano: metade do dano, desaparece em semiplano inofensivo sobreposto ao plano atual. Percebe o plano de origem e move-se normalmente, imperceptível lá. Permanece até fim do seu próximo turno ou retorno voluntário. 1× / Descanso Curto ou Longo.`],
@@ -298,7 +298,7 @@ Resistência a dano de Força.`],
 
 Perito em Criação. Proficiência em três Ferramentas de Artesão; troca uma por outra ao fim de cada Descanso Longo.
 
-Ofício Arcano. Ao craftar com ferramenta proficiente, subtrai mod. Inteligência (mín. 1) das horas diárias (mín. 2 h/dia).`],
+Ofício Arcano. Ao criar itens com ferramenta na qual você é proficiente, subtrai mod. Inteligência (mín. 1) das horas diárias (mín. 2 h/dia).`],
     [3, 'Criação Menor', `Ao conjurar magia de círculo 1+, cria Cubo de material inanimado até 1,5 m de lado a até 9 m (18 m no nível 10). Peso ≈ 5× comprimento do lado em kg; suporta 10× peso. Máximo de Cubos = nível de Mago. Dispersa com Ação Bônus ou após 1 h/dano. CA = 10 + mod. Int; 1 PV; Imunidade a Força.
 
 Detonação. Ao dispersar, pode detonar: salvaguarda de Destreza vs. CD de magia em raio de 3 m, dano Força = 1d6 + metade do nível de Mago. Usos de detonação = mod. Int (mín. 1) / Descanso Longo; restaura com espaço de círculo 1+.`],
@@ -309,6 +309,40 @@ Detonação. Ao dispersar, pode detonar: salvaguarda de Destreza vs. CD de magia
     [14, 'Rematerializar', `Reação ao ver objeto ou estrutura Grande ou menor não mágico destruído a até 18 m: destroços somem. Até 8 h depois, ação Mágica recria intacto a até 18 m. Se no ar, cai; criatura abaixo: salvaguarda de Destreza vs. CD de magia, dano Contundente por queda (P/M/G: 1d6/2d6/3d6). 1× / Descanso Longo.`],
   ],
 };
+
+const FEATHREN_TRAITS = [
+  { name: 'Visão no Escuro', description: 'Você tem Visão no Escuro com alcance de 18 metros.' },
+  {
+    name: 'Ancestria Feathren',
+    description: `Escolha uma opção Aviária e uma Felina nas tabelas de Ancestria Feathren.
+
+Você conhece o truque da opção aviária e a magia Identificar. No 3º nível de personagem, aprende a magia da opção felina. No 5º, aprende Aprimorar Atributo. Sempre tem essas magias preparadas; cada uma 1× sem espaço ou componente material / Descanso Longo (também pode usar espaços).
+
+Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para essas magias (escolha ao definir as ancestrias).`,
+  },
+  { name: 'Fala Fraterna', description: 'Comunica ideias simples a aves e felinos Grandes ou menores, incluindo grifos. Eles entendem suas palavras, mas você não os entende automaticamente. Você tem Vantagem em testes de Sabedoria (Lidar com Animais) e de Carisma para influenciá-los.' },
+  { name: 'Criador Natural', description: 'Imbuído com essência criativa do grifo astral: proficiência em duas Ferramentas de Artesão à escolha; aprende nova ferramenta em metade do tempo normal.' },
+  { name: 'Garras', description: 'Ataques Desarmados com garras causam 1d6 Perfurante em vez de Contundente.' },
+];
+
+const FEATHREN_AVIAN = [
+  { valueId: 'jay-owl-raven', label: 'Gaio, Coruja ou Corvo', benefit: 'Truque: Taumaturgia.' },
+  { valueId: 'eagle-falcon-hawk', label: 'Águia, Falcão ou Gavião', benefit: 'Truque: Mensagem.' },
+  { valueId: 'cardinal-mockingbird-parrot', label: 'Cardeal, Sabiá ou Papagaio', benefit: 'Truque: Prestidigitação Arcana.' },
+];
+
+const FEATHREN_FELINE = [
+  { valueId: 'lion-panther-saber', label: 'Leão, Pantera ou Tigre-dentes-de-sabre', benefit: 'Magia (3º nível de personagem): Detectar o Bem e o Mal.' },
+  { valueId: 'cheetah-serval-tiger', label: 'Guepardo, Serval ou Tigre', benefit: 'Magia (3º nível de personagem): Detectar Veneno e Doença.' },
+  { valueId: 'jaguar-lynx-snow-leopard', label: 'Onça, Lince ou Leopardo-das-neves', benefit: 'Magia (3º nível de personagem): Detectar Magia.' },
+];
+
+function toAnchorId(slug) {
+  return slug
+    .split('-')
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+    .join('');
+}
 
 const PREPARED = {
   'astral-domain': {
@@ -370,11 +404,11 @@ writeFile(
 INSERT INTO rpg.phb_edition (slug, label, book, language, extracted_at, notes)
 VALUES (
   '${EDITION}',
-  'Griffon''s Saddlebag Book One 2024',
-  'The Griffon''s Saddlebag: Book One',
+  'Griffon''s Saddlebag: Livro Um 2024',
+  'Griffon''s Saddlebag: Livro Um',
   'pt',
   NOW(),
-  'Griffon''s Saddlebag Book One — Part II: Character Options; textos traduzidos para PT-BR (regras 2024)'
+  'Griffon''s Saddlebag: Livro Um — Parte II: Opções de Personagem; textos em PT-BR (regras 2024)'
 )
 ON CONFLICT (slug) DO UPDATE SET
   label = EXCLUDED.label,
@@ -390,7 +424,7 @@ VALUES (
   '${CITATION}',
   (SELECT id FROM rpg.phb_edition WHERE slug = '${EDITION}'),
   2,
-  'The Griffon''s Saddlebag: Book One — Parte II: Opções de Personagem',
+  'Griffon''s Saddlebag: Livro Um — Parte II: Opções de Personagem',
   NOW()
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -428,7 +462,19 @@ ON CONFLICT (slug) DO UPDATE SET
 writeFile('database/seeds/griffons-saddlebag/R002_phb_subclass.sql', r002);
 
 // R003
-let r003 = `-- Seed Griffon's Saddlebag Book One — subclass features (Part II)\n-- 63 features; fonte: docs/source/extracts/griffons-saddlebag/book-one-part-ii.json\n\n`;
+let r003 = `-- Seed Griffon's Saddlebag Book One — subclass features (Part II)
+-- 63 features; fonte: docs/source/extracts/griffons-saddlebag/book-one-part-ii.json
+
+-- Features renomeadas (evita duplicata: ON CONFLICT é por subclass_id + level + name)
+DELETE FROM rpg.phb_subclass_feature f
+USING rpg.phb_subclass s
+WHERE f.subclass_id = s.id
+  AND (
+    (s.slug = 'path-of-the-glacier' AND f.level = 14 AND f.name = 'Pisoteio Avalanche')
+    OR (s.slug = 'couatl-herald' AND f.level = 15 AND f.name = 'Paragono')
+  );
+
+`;
 let featureCount = 0;
 for (const [slug, feats] of Object.entries(FEATURES)) {
   for (const [level, name, desc] of feats) {
@@ -488,7 +534,7 @@ VALUES (
 Herança Variada. Feathren unem aspectos marcantes de criaturas díspares: pernas felinas, tórax, braços e cabeça aviários. Poucos se parecem; plumagem, pelagem e porte variam (águia/leão, coruja/tigre, etc.). Adoram joias e enfeites — anéis em garras, orelhas emplumadas e cauda. Muitos não resistem a arrumar penas e adornos ao ver o reflexo.
 
 Confiantes e Curiosos. Dotados de confiança compartilhada, passam a vida aprendendo ofícios novos, preferindo resolver enigmas sozinhos. Encontram camaradagem entre pares de paixões comuns e gostam de trocar histórias sobre interesses.',
-  '{"editionSlug":"${EDITION}","book":"The Griffon''s Saddlebag: Book One","language":"pt","citationSlug":"${CITATION}","source":"griffons-saddlebag"}'::jsonb
+  '{"editionSlug":"${EDITION}","book":"Griffon''s Saddlebag: Livro Um","language":"pt","citationSlug":"${CITATION}","source":"griffons-saddlebag"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -538,7 +584,7 @@ Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para essas m
   (
     (SELECT id FROM rpg.phb_species WHERE slug = 'feathren'),
     'Fala Fraterna',
-    'Comunica ideias simples a aves e felinos Grandes ou menores, incluindo grifos. Eles entendem suas palavras, mas você não os entende automaticamente. Vantagem em Sabedoria (Lidar com Animais) e testes de Carisma para influenciá-los.',
+    'Comunica ideias simples a aves e felinos Grandes ou menores, incluindo grifos. Eles entendem suas palavras, mas você não os entende automaticamente. Você tem Vantagem em testes de Sabedoria (Lidar com Animais) e de Carisma para influenciá-los.',
     NULL
   ),
   (
@@ -856,6 +902,61 @@ SELECT * FROM (
   WHERE g.origin_type = 'species'::rpg.spell_grant_origin
 ) AS granted;
 `,
+);
+
+// Extract JSON (PT) — fonte canônica para seeds e documentação
+const extract = {
+  source: 'Part II_ Character Options - The Griffon\'s Saddlebag_ Book One - Dungeons & Dragons - Sources - D&D Beyond.html',
+  extractedAt: new Date().toISOString(),
+  language: 'pt',
+  edition: {
+    slug: EDITION,
+    label: "Griffon's Saddlebag: Livro Um 2024",
+    book: "Griffon's Saddlebag: Livro Um",
+    citationSlug: CITATION,
+    chapterTitle: "Griffon's Saddlebag: Livro Um — Parte II: Opções de Personagem",
+  },
+  species: {
+    slug: 'feathren',
+    name: 'Feathren',
+    creatureType: 'Humanoide',
+    size: 'Médio (cerca de 1,50–1,80 m)',
+    speed: '9 metros',
+    description: `Feathren são algo novo feito de algo antigo — um passo além da herança grifo, celebrando individualidade entre vaias do povo comum. Nascidos originalmente no Plano Astral, onde tudo pode se perder, ser encontrado e refeito, agora caminham o Plano Material em busca de ideias, materiais e direção. Curiosos, muitos viram aventureiros e artesãos.
+
+Herança Variada. Feathren unem aspectos marcantes de criaturas díspares: pernas felinas, tórax, braços e cabeça aviários. Poucos se parecem; plumagem, pelagem e porte variam (águia/leão, coruja/tigre, etc.). Adoram joias e enfeites — anéis em garras, orelhas emplumadas e cauda. Muitos não resistem a arrumar penas e adornos ao ver o reflexo.
+
+Confiantes e Curiosos. Dotados de confiança compartilhada, passam a vida aprendendo ofícios novos, preferindo resolver enigmas sozinhos. Encontram camaradagem entre pares de paixões comuns e gostam de trocar histórias sobre interesses.`,
+    namesSection: 'Nomes Feathren',
+    traits: FEATHREN_TRAITS,
+    avianAncestry: FEATHREN_AVIAN,
+    felineAncestry: FEATHREN_FELINE,
+  },
+  subclasses: SUBCLASSES.map((sc) => ({
+    anchorId: toAnchorId(sc.slug),
+    slug: sc.slug,
+    classSlug: sc.classSlug,
+    name: sc.name,
+    tagline: sc.tagline,
+    summary: sc.summary,
+    description: sc.description,
+    features: (FEATURES[sc.slug] ?? []).map(([level, name, description]) => ({
+      level,
+      name,
+      description,
+    })),
+    spellTables: PREPARED[sc.slug]
+      ? Object.entries(PREPARED[sc.slug]).map(([unlockLevel, spells]) => ({
+          unlockLevel: Number(unlockLevel),
+          spells,
+        }))
+      : [],
+  })),
+};
+
+writeFile(
+  'docs/source/extracts/griffons-saddlebag/book-one-part-ii.json',
+  `${JSON.stringify(extract, null, 2)}\n`,
 );
 
 console.log('Done. Output:', outDir);

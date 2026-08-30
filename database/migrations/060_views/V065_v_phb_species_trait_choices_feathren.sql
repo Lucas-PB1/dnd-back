@@ -402,6 +402,7 @@ JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.ow
   AND t.choice_kind = 'feathren_feline_ancestry'::rpg.species_choice_kind
 LEFT JOIN rpg.phb_spell s3 ON s3.id = ov.spell_level3_id
 UNION ALL
+UNION ALL
 -- Variante cultural anã (option_key = 'dwarfCultureId')
 SELECT
   sp.slug,

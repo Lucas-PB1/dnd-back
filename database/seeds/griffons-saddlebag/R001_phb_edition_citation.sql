@@ -3,11 +3,11 @@
 INSERT INTO rpg.phb_edition (slug, label, book, language, extracted_at, notes)
 VALUES (
   'griffons-saddlebag-book-one-2024-en',
-  'Griffon''s Saddlebag Book One 2024',
-  'The Griffon''s Saddlebag: Book One',
+  'Griffon''s Saddlebag: Livro Um 2024',
+  'Griffon''s Saddlebag: Livro Um',
   'pt',
   NOW(),
-  'Griffon''s Saddlebag Book One — Part II: Character Options; textos traduzidos para PT-BR (regras 2024)'
+  'Griffon''s Saddlebag: Livro Um — Parte II: Opções de Personagem; textos em PT-BR (regras 2024)'
 )
 ON CONFLICT (slug) DO UPDATE SET
   label = EXCLUDED.label,
@@ -23,7 +23,7 @@ VALUES (
   'griffons-saddlebag-book-one-2024-en:part-ii-character-options',
   (SELECT id FROM rpg.phb_edition WHERE slug = 'griffons-saddlebag-book-one-2024-en'),
   2,
-  'The Griffon''s Saddlebag: Book One — Parte II: Opções de Personagem',
+  'Griffon''s Saddlebag: Livro Um — Parte II: Opções de Personagem',
   NOW()
 )
 ON CONFLICT (slug) DO UPDATE SET

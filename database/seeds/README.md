@@ -12,9 +12,9 @@ Dados do catálogo PHB 2024 e Valdas Spire of Secrets. **Um arquivo por tabela.*
 | `valdas-player-pack-2/P###_<tabela>.sql` | Valdas Player Pack 2 (`P001`–`P014`) |
 | `steinhardt-eldritch-hunt/H###_<tabela>.sql` | Steinhardt Eldritch Hunt Player Pack (`H001`–`H025`) |
 | `northlands-heroes/N###_<tabela>.sql` | Northlands Worldbook — Heroes of the Sagas (`N001`–`N037`; Cap. 5 + Character Threads + longships em `N037`; veículos/templates em `creatures/M003`) |
-| `griffons-saddlebag/R###_<tabela>.sql` | The Griffon's Saddlebag: Book One — Part II Character Options (`R001`–`R009`: Feathren + 12 subclasses + stubs de magia + `image_url`) |
+| `griffons-saddlebag/R###_<tabela>.sql` | The Griffon's Saddlebag: Book One — Part II Character Options (`R001`–`R011`: Feathren + 12 subclasses + stubs de magia + `image_url` + recursos de combate GSB) |
 | `grim-hollow/J###_<tabela>.sql` | Grim Hollow Player's Guide Cap. 5 — armas/equipamento avançados (`J001`–`J008`) |
-| `combat/C###_*.sql` | Economia/painel/recursos (`C001`–`C056`; Eir `C056`; Northlands C052–C055) |
+| `combat/C###_*.sql` | Economia/painel/recursos (`C001`–`C062`; Eir `C056`; Northlands C052–C055; GSB Book One C057–C062) |
 | `dmg/D###_*.sql` | Itens mágicos DMG 2024 Cap. 7 A–Z (`D010_phb_item`) |
 
 **Regra:** stats de arma (dano, tipo, propriedades, maestria) vivem no catálogo (`phb_item` / `phb_weapon`), nunca hardcoded no domain TypeScript.

@@ -1,6 +1,15 @@
 -- Seed Griffon's Saddlebag Book One — subclass features (Part II)
 -- 63 features; fonte: docs/source/extracts/griffons-saddlebag/book-one-part-ii.json
 
+-- Features renomeadas (evita duplicata: ON CONFLICT é por subclass_id + level + name)
+DELETE FROM rpg.phb_subclass_feature f
+USING rpg.phb_subclass s
+WHERE f.subclass_id = s.id
+  AND (
+    (s.slug = 'path-of-the-glacier' AND f.level = 14 AND f.name = 'Pisoteio Avalanche')
+    OR (s.slug = 'couatl-herald' AND f.level = 15 AND f.name = 'Paragono')
+  );
+
 INSERT INTO rpg.phb_subclass_feature (
   subclass_id, level, name, description
 )
@@ -56,7 +65,7 @@ VALUES (
   'Sono Profundo',
   'Pode entrar em hibernação profunda num Descanso Longo. Fica gelado ao toque e parece morto a inspeção e magias que determinem seu estado. Ruído não o acorda.
 
-Desperta após 6 horas, ao sofrer dano ou quando alguém usa ação para esbofeteá-lo. Se completar 6 horas contínuas, recebe benefícios de Descanso Longo e um pool especial de Dados de Vida ( = mod. Constituição, mín. 1) de Bárbaro até o próximo Descanso Longo.'
+Desperta após 6 horas, ao sofrer dano ou quando alguém usa uma ação para esbofeteá-lo. Se completar 6 horas contínuas, recebe benefícios de Descanso Longo e uma reserva especial de Dados de Vida ( = mod. Constituição, mín. 1) de Bárbaro até o próximo Descanso Longo.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -67,8 +76,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'path-of-the-glacier'),
   14,
-  'Pisoteio Avalanche',
-  'Como ação Mágica, pode pisotear o chão e enviar tremor. Cada criatura escolhida numa Emanação de 4,5 m centrada em você faz salvaguarda de Destreza (CD 8 + mod. Força + PB). Em falha: dano Contundente = 3d6 + mod. Força e condição Caído.'
+  'Pisoteio Glacial',
+  'Como uma ação Mágica, você pode pisotear o chão e enviar um tremor. Cada criatura escolhida numa Emanação de 4,5 metros centrada em você faz uma salvaguarda de Destreza (CD 8 + mod. de Força + Bônus de Proficiência). Em uma falha, a criatura sofre dano Contundente igual a 3d6 + mod. de Força e tem a condição Caído.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -104,7 +113,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'college-of-choreography'),
   6,
   'Movimento Encantador',
-  'Movimentos tão graciosos que inimigos frios sentem remorso por interromper sua dança. Quando uma criatura acerta você com Ataque de Oportunidade ou ataque enquanto você se beneficia de Esquivar, sofre dano Psíquico = mod. Carisma + metade do nível de Bardo (arred. p/ baixo).
+  'Movimentos tão graciosos que inimigos frios sentem remorso por interromper sua dança. Quando uma criatura acerta você com Ataque de Oportunidade ou ataque enquanto você se beneficia de Esquivar, sofre dano Psíquico = mod. Carisma + metade do nível de Bardo (arredondado para baixo).
 
 Você sempre tem Enfeitiçar Pessoa preparada e pode conjurá-la sem componente Verbal. Com este recurso, conjura sem gastar espaço como magia de 3º círculo; alvos não têm Vantagem na salvaguarda por combate. 1× / Descanso Longo.'
 )
@@ -186,7 +195,7 @@ VALUES (
 
 • Ao conjurar Passo Nebuloso com Canalizar Divindade, pode escolher criatura involuntária a até 9 m; ela faz salvaguarda de Carisma contra sua CD de magia ou a troca falha e o uso de Canalizar Divindade é perdido.
 
-• Ao trocar de lugar com sucesso via Canalizar Divindade, pode conjurar magia de círculo 0–5 de alcance Toque como parte da mesma Ação Bônus, mirando a criatura com quem trocou.'
+• Ao trocar de lugar com sucesso via Canalizar Divindade, pode conjurar magia de círculos de 0º a 5º de alcance Toque como parte da mesma Ação Bônus, mirando a criatura com quem trocou.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -260,7 +269,7 @@ VALUES (
   'Armadura da Natureza',
   'Sempre sob efeito de Pele-Casca.
 
-No início de cada turno, ganha PV temporários = metade do nível de Druida (arred. p/ baixo). Ao assumir Forma Selvagem, ganha PV temporários = nível de Druida + metade do nível (arred. p/ baixo).'
+No início de cada turno, ganha PV temporários = metade do nível de Druida (arredondado para baixo). Ao assumir Forma Selvagem, ganha PV temporários = nível de Druida + metade do nível (arredondado para baixo).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -290,7 +299,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'couatl-herald'),
   3,
   'Um do Povo',
-  'Proficiência em Intuição e Persuasão. Ao reduzir criatura a 0 PV com ataque corpo a corpo ou à distância, pode nocauteá-la (1 PV, Inconsciente, inicia Descanso Curto) até recuperar PV ou alguém prestar primeiros socorros (Medicina CD 10).'
+  'Proficiência em Intuição e Persuasão. Ao reduzir criatura a 0 PV com ataque corpo a corpo ou à distância, pode nocauteá-la (1 PV, Inconsciente, inicia Descanso Curto) até recuperar PV ou alguém prestar primeiros socorros (teste de Medicina CD 10).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -327,8 +336,8 @@ INSERT INTO rpg.phb_subclass_feature (
 VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'couatl-herald'),
   15,
-  'Paragono',
-  'Como Ação Bônus, ordene criatura à vista a até 9 m e gaste um Dado de Misericórdia. Se ouvir você: PV temporários = dado + mod. Carisma (mín. 1) e Reação para mover metade da Velocidade sem provocar oportunidade e atacar. Dano nocauteante em vez de matar.'
+  'Paragona',
+  'Como uma Ação Bônus, você pode ordenar uma criatura à vista a até 9 metros e gastar um Dado de Misericórdia. Se a criatura puder ouvir você, ela ganha Pontos de Vida temporários iguais ao valor do dado + mod. de Carisma (mínimo de 1) e pode usar uma Reação para se mover até metade da Velocidade sem provocar Ataques de Oportunidade e fazer um ataque. Dano nocauteante em vez de matar.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -366,7 +375,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'warrior-of-the-celestial'),
   3,
   'Golpe de Busca da Alma',
-  'Ao tocar ou acertar com Ataque Desarmado, gaste 1 Ponto de Foco (sem ação) para sondar a alma até o fim do seu próximo turno (ou 1 min fora de combate): emoções e desejo mais óbvio; à critério do Mestre, PV ou fragmento de história. Vantagem no próximo ataque e em Intuição contra o alvo.
+  'Ao tocar ou acertar com Ataque Desarmado, gaste 1 Ponto de Foco (sem ação) para sondar a alma até o fim do seu próximo turno (ou 1 minuto fora de combate): emoções e desejo mais óbvio; à critério do Mestre, PV ou fragmento de história. Vantagem no próximo ataque e em Intuição contra o alvo.
 
 Ao acertar com ataque de Rajada de Golpes, pode usar sem gastar Ponto de Foco.'
 )
@@ -542,7 +551,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'winter-trapper'),
   15,
   'Defesas Tropeçadas',
-  'Quando criatura a até 1,5 m erra ataque contra você, Reação para desequilibrá-la: Grande ou menor fica Caída; senão Velocidade reduzida pela metade até fim do turno (salvo Imunidade a Caído). Depois, ataque ou move metade da Velocidade sem provocar oportunidade dela.'
+  'Quando criatura a até 1,5 m erra ataque contra você, Reação para desequilibrá-la: Grande ou menor fica Caída; senão Velocidade reduzida pela metade até fim do turno (salvo Imunidade a Caído). Depois, ataque ou move metade da Velocidade sem provocar Ataques de Oportunidade dela.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -568,13 +577,13 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'runetagger'),
   3,
   'Runas',
-  '4 Pontos de Runa; recupera no Descanso Curto ou Longo. Ao acertar corpo a corpo, gaste 1 ponto para marcar criatura por até 1 min (some se apagada com ação).
+  '4 Pontos de Runa; recupera no Descanso Curto ou Longo. Ao acertar corpo a corpo, gaste 1 ponto para marcar criatura por até 1 minuto (some se apagada com ação).
 
-Cryos: alvo não pode fazer Reações até início do seu próximo turno.
+Crios: o alvo não pode fazer Reações até o início do seu próximo turno.
 
-Hexxus: Reação quando alvo passa em teste/ataque a até 18 m: −1d6 no resultado.
+Maldíx: como uma Reação quando o alvo passa em um teste de atributo ou rolagem de ataque a até 18 metros, você reduz o resultado em 1d6.
 
-Locus: próximo ataque contra o alvo tem Vantagem; se acertar, +1d6 Ácido.'
+Locus: o próximo ataque contra o alvo tem Vantagem; se acertar, causa 1d6 de dano Ácido extra.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -676,7 +685,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'frost-sorcery'),
   14,
   'Congelamento Súbito',
-  'Movimento no gelo não provoca oportunidade. Reação quando criatura a 1,5 m acerta você: dano Gélido = mod. Carisma + metade do nível de Feiticeiro; pode usar Criar Gelo como parte da Reação.'
+  'Movimento no gelo não provoca Ataques de Oportunidade. Reação quando criatura a 1,5 m acerta você: dano Gélido = mod. Carisma + metade do nível de Feiticeiro; pode usar Criar Gelo como parte da Reação.'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;
@@ -724,7 +733,7 @@ VALUES (
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'astral-griffon-patron'),
   3,
   'Acuidade Extradimensional',
-  'Bolso dimensional permanente: até 22 kg de material inanimado, volume máx. ~28 L, acessível pelas mãos. Colocar Bolsa de Holding, Haversack ou Buraco Portable destrói o item e espalha conteúdos no Astral; bolso inacessível por 7 dias.
+  'Bolso dimensional permanente: até 22 kg de material inanimado, volume máx. ~28 L, acessível pelas mãos. Colocar Bolsa de Holding, Mochila dos Munióculos de Heward ou Buraco Portátil destrói o item e espalha conteúdos no Astral; bolso inacessível por 7 dias.
 
 Sente espaços extradimensionais (exceto o seu) a até 18 m (não revela quantidade/local).'
 )
@@ -782,7 +791,7 @@ VALUES (
 
 Perito em Criação. Proficiência em três Ferramentas de Artesão; troca uma por outra ao fim de cada Descanso Longo.
 
-Ofício Arcano. Ao craftar com ferramenta proficiente, subtrai mod. Inteligência (mín. 1) das horas diárias (mín. 2 h/dia).'
+Ofício Arcano. Ao criar itens com ferramenta na qual você é proficiente, subtrai mod. Inteligência (mín. 1) das horas diárias (mín. 2 h/dia).'
 )
 ON CONFLICT (subclass_id, level, name) DO UPDATE SET
   description = EXCLUDED.description;

@@ -27,7 +27,7 @@ docs/source/
 |-------|----------|-------------|
 | `dmg/` | `items-az.txt`, `items-az.json`, `items-az-index.md`, `wiring-status.md` | `D010+`, economy |
 | `grim-hollow/` | `cap1-heritages.json` … `cap6-transformations.json` | pack `grim-hollow` J009–J021 |
-| `griffons-saddlebag/` | `book-one-part-ii.json` | pack `griffons-saddlebag` R001–R009 |
+| `griffons-saddlebag/` | `book-one-part-ii.json` | pack `griffons-saddlebag` R001–R011 (+ combate C057–C062) |
 | `northlands/` | `cap5.json`, overlays PT, `stat-blocks.json` | N026–N029, M003–M004 |
 | `phb/` | `cap6-mounts.json`, `cap6-barding.json`, sprites Cap. 7 | M005–M006, S079, equipamento |
 | `srd/` | `monsters-5.2.1.json` | criaturas SRD (CC-BY) |

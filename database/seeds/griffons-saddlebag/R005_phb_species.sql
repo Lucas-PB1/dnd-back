@@ -14,7 +14,7 @@ VALUES (
 Herança Variada. Feathren unem aspectos marcantes de criaturas díspares: pernas felinas, tórax, braços e cabeça aviários. Poucos se parecem; plumagem, pelagem e porte variam (águia/leão, coruja/tigre, etc.). Adoram joias e enfeites — anéis em garras, orelhas emplumadas e cauda. Muitos não resistem a arrumar penas e adornos ao ver o reflexo.
 
 Confiantes e Curiosos. Dotados de confiança compartilhada, passam a vida aprendendo ofícios novos, preferindo resolver enigmas sozinhos. Encontram camaradagem entre pares de paixões comuns e gostam de trocar histórias sobre interesses.',
-  '{"editionSlug":"griffons-saddlebag-book-one-2024-en","book":"The Griffon''s Saddlebag: Book One","language":"pt","citationSlug":"griffons-saddlebag-book-one-2024-en:part-ii-character-options","source":"griffons-saddlebag"}'::jsonb
+  '{"editionSlug":"griffons-saddlebag-book-one-2024-en","book":"Griffon''s Saddlebag: Livro Um","language":"pt","citationSlug":"griffons-saddlebag-book-one-2024-en:part-ii-character-options","source":"griffons-saddlebag"}'::jsonb
 )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,

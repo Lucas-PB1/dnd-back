@@ -33,7 +33,7 @@ Inteligência, Sabedoria ou Carisma é seu atributo de conjuração para essas m
   (
     (SELECT id FROM rpg.phb_species WHERE slug = 'feathren'),
     'Fala Fraterna',
-    'Comunica ideias simples a aves e felinos Grandes ou menores, incluindo grifos. Eles entendem suas palavras, mas você não os entende automaticamente. Vantagem em Sabedoria (Lidar com Animais) e testes de Carisma para influenciá-los.',
+    'Comunica ideias simples a aves e felinos Grandes ou menores, incluindo grifos. Eles entendem suas palavras, mas você não os entende automaticamente. Você tem Vantagem em testes de Sabedoria (Lidar com Animais) e de Carisma para influenciá-los.',
     NULL
   ),
   (
