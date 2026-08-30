@@ -21,8 +21,11 @@ Wiring de mesa, economy e gaps de regra **não** moram aqui.
 | `phb-equipment-images/07-*.png` | Sprites compostos Cap. 7 |
 | `phb-cap7-equipment-sprites-extract.json` | Manifesto crops / ordem de blob |
 | `phb-cap7-equipment-images-status.json` | Verificação item a item (`ok` / `wrong` / `pending`) |
+| `ghpg-cap3-backgrounds-extract.json` | Cap. 3 GHPG — antecedentes PHB 2024 (SSOT pós-scrape) |
+| `ghpg-cap4-feats-extract.json` | Cap. 4 GHPG — talentos |
+| `ghpg-cap6-transformations-extract.json` | Cap. 6 GHPG — transformações opcionais |
 
-Scrape Beyond (HTML / pastas `_files` / JS / CSS) foi **removido** após extração das imagens.
+HTML de scrape Beyond (`docs/source/new/grim/`, `*.html`, `*_files/`) fica **fora do git** (ver `.gitignore`).
 
 **Imagens de catálogo:** fluxo completo em [`catalog-images.md`](./catalog-images.md).
 
