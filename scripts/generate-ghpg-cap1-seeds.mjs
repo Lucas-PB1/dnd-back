@@ -1,5 +1,6 @@
 /**
- * Gera seeds J009–J013 (Grim Hollow — Cap. 1 Heritages & Cap. 3 Backgrounds estrutura).
+ * Gera seeds J009–J011 (Grim Hollow — Cap. 1 Heritages).
+ * Antecedentes: use scripts/generate-ghpg-cap3-seeds.mjs (J015+).
  * Uso: node scripts/generate-ghpg-cap1-seeds.mjs
  */
 import fs from 'fs';
@@ -9,7 +10,6 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
 const cap1Path = path.join(apiRoot, 'docs/source/ghpg-cap1-heritages-extract.json');
-const cap3Path = path.join(apiRoot, 'docs/source/ghpg-cap3-backgrounds-structure.json');
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 
 const EDITION = 'grim-hollow-players-guide-2024-en';
@@ -212,12 +212,10 @@ WHERE slug = ${sqlLiteral(EDITION)};
 `;
 
 const cap1 = JSON.parse(fs.readFileSync(cap1Path, 'utf8'));
-const cap3 = JSON.parse(fs.readFileSync(cap3Path, 'utf8'));
 
 fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, 'J009_phb_edition_citation_cap1_cap3.sql'), citationsSql, 'utf8');
 fs.writeFileSync(path.join(outDir, 'J010_phb_species_heritage.sql'), buildHeritageSpeciesSql(cap1), 'utf8');
 fs.writeFileSync(path.join(outDir, 'J011_phb_species_heritage_trait.sql'), buildHeritageTraitsSql(cap1), 'utf8');
-fs.writeFileSync(path.join(outDir, 'J012_phb_background_advanced.sql'), buildBackgroundsSql(cap3), 'utf8');
 
-console.log('Seeds J009–J012 gerados em database/seeds/grim-hollow/');
+console.log('Seeds J010–J011 gerados em database/seeds/grim-hollow/');
+console.log('Antecedentes: node scripts/generate-ghpg-cap3-seeds.mjs');

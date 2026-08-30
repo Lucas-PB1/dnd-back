@@ -1,0 +1,1794 @@
+{
+  "source": {
+    "editionSlug": "grim-hollow-players-guide-2024-en",
+    "citationSlug": "grim-hollow-players-guide-2024-en:chapter-3-backgrounds",
+    "book": "Grim Hollow: Player's Guide",
+    "chapter": 3,
+    "chapterTitle": "Backgrounds",
+    "htmlFile": "Chapter 3_ Backgrounds - Grim Hollow_ Player’s Guide - Dungeons & Dragons - Sources - D&D Beyond.html"
+  },
+  "extractedAt": "2026-08-30T05:43:02.797Z",
+  "backgroundCount": 25,
+  "optionalRule": {
+    "id": "BackgroundsandAbilityScoresAside",
+    "title": "Backgrounds and Ability Scores",
+    "text": "Backgrounds and Ability Scores The base 5e 2024 rules indicate that some of your ability score increases come from your character background, and suggested abilities used for increases are listed within each background. As pointed out in Chapter 1: Heritages and Traits , we suggest that you do not limit which abilities can be increased based on character background. Regardless, if your campaign does limit abilities that can be increased based on backgrounds, we provide suggestions as per the base 5e 2024 rules.",
+    "heritageAbilityScoresUnlimited": true,
+    "chapterReference": "chapter-1-heritages-traits"
+  },
+  "backgrounds": [
+    {
+      "slug": "gh-agent-of-the-augustine",
+      "anchorId": "AgentoftheAugustine",
+      "nameEn": "Agent of the Augustine",
+      "namePt": "Agente da Augustine",
+      "abilitySlugs": [
+        "inteligencia",
+        "sabedoria",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "insightful-collector",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "history",
+        "persuasion"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Forgery Kit",
+        "itemSlug": "kit-de-falsificacao",
+        "ddbSlug": "forgery-kit",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Book",
+              "itemSlug": "livro",
+              "ddbSlug": "book",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Magnifying Glass",
+              "itemSlug": "lupa",
+              "ddbSlug": "magnifying-glass",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Parchment",
+              "itemSlug": "pergaminho",
+              "ddbSlug": "parchment",
+              "quantity": 10,
+              "choiceText": null
+            },
+            {
+              "name": "Robe",
+              "itemSlug": "tunica",
+              "ddbSlug": "robe",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Forgery Kit",
+              "itemSlug": "kit-de-falsificacao",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Forgery Kit"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You’ve used your education and knowledge from working on behalf of the Augustine Trading Company. You’ve been generally held in high regard by those who can use the knowledge you’ve gained, while others look upon your work for the organization as unsavory. Your training, however, makes you a versatile problem-solver.",
+        "You’ve learned your craft from smugglers, merchants, blackmailers, and brigands who came before you. You may still work for the organization, or your may have had to cut ties for being too honest, too dishonest, or just in the wrong place at the wrong time. Whatever your connections, you have traveled more than most people in Etharis can ever dream of."
+      ],
+      "description": "You’ve used your education and knowledge from working on behalf of the Augustine Trading Company. You’ve been generally held in high regard by those who can use the knowledge you’ve gained, while others look upon your work for the organization as unsavory. Your training, however, makes you a versatile problem-solver.\n\nYou’ve learned your craft from smugglers, merchants, blackmailers, and brigands who came before you. You may still work for the organization, or your may have had to cut ties for being too honest, too dishonest, or just in the wrong place at the wrong time. Whatever your connections, you have traveled more than most people in Etharis can ever dream of.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-antiquarian",
+      "anchorId": "Antiquarian",
+      "nameEn": "Antiquarian",
+      "namePt": "Antiquário",
+      "abilitySlugs": [
+        "destreza",
+        "constituicao",
+        "inteligencia"
+      ],
+      "feat": {
+        "slug": "skilled",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "arcana",
+        "history"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Tinker’s Tools",
+        "itemSlug": "ferramentas-de-funileiro",
+        "ddbSlug": "tinkers-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Parchment",
+              "itemSlug": "pergaminho",
+              "ddbSlug": "parchment",
+              "quantity": 10,
+              "choiceText": null
+            },
+            {
+              "name": "Robe",
+              "itemSlug": "tunica",
+              "ddbSlug": "robe",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Tinker’s Tools",
+              "itemSlug": "ferramentas-de-funileiro",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Ancient Maps",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Ancient Maps"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You are fascinated with studying history and identifying ancient artifacts, relics, and texts. You seek to gather rare and lost items to add to your collection or the collections of others. Your skill with identifying the properties of artifacts and historical objects makes you an adept problem-solver, especially when ancient relics and languages are involved.",
+        "Funding expeditions to search for these artifacts is often expensive, meaning you seldom travel without the backing of a wealthy patron or organization. These groups, like the Antiquarians they fund, have motives that range from the beneficent to the sinister. If you diverge from the intended goals of your benefactors, you might find yourself unfunded at best and hunted at worst."
+      ],
+      "description": "You are fascinated with studying history and identifying ancient artifacts, relics, and texts. You seek to gather rare and lost items to add to your collection or the collections of others. Your skill with identifying the properties of artifacts and historical objects makes you an adept problem-solver, especially when ancient relics and languages are involved.\n\nFunding expeditions to search for these artifacts is often expensive, meaning you seldom travel without the backing of a wealthy patron or organization. These groups, like the Antiquarians they fund, have motives that range from the beneficent to the sinister. If you diverge from the intended goals of your benefactors, you might find yourself unfunded at best and hunted at worst.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-beast-hunter",
+      "anchorId": "BeastHunter",
+      "nameEn": "Beast Hunter",
+      "namePt": "Caçador de Feras",
+      "abilitySlugs": [
+        "forca",
+        "destreza",
+        "inteligencia"
+      ],
+      "feat": {
+        "slug": "blood-hound",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "animal-handling",
+        "survival"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Leatherworker’s Tools",
+        "itemSlug": "ferramentas-de-coureiro",
+        "ddbSlug": "leatherworkers-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 5,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Spear",
+              "itemSlug": "spear",
+              "ddbSlug": "spear",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Hunting Trap",
+              "itemSlug": "armadilha-de-caca",
+              "ddbSlug": "hunting-trap",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Leatherworker’s Tools",
+              "itemSlug": "ferramentas-de-coureiro",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Leatherworker’s Tools"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You make your living by trapping, hunting, and killing vicious beasts. Your efforts might provide meat and furs for settlements or for trade. When a nearby beast is particularly vicious, you become a community’s best defense against the destruction wildlife can cause. While you hunt mundane beasts, you know there are more dangerous and supernatural creatures roaming the darkness.",
+        "You and your fellow hunters are often as brutish as the creatures you hunt, heavily scarred from close encounters with your prey. In order to take down your prey, you must think and react as they might."
+      ],
+      "description": "You make your living by trapping, hunting, and killing vicious beasts. Your efforts might provide meat and furs for settlements or for trade. When a nearby beast is particularly vicious, you become a community’s best defense against the destruction wildlife can cause. While you hunt mundane beasts, you know there are more dangerous and supernatural creatures roaming the darkness.\n\nYou and your fellow hunters are often as brutish as the creatures you hunt, heavily scarred from close encounters with your prey. In order to take down your prey, you must think and react as they might.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-beggar",
+      "anchorId": "Beggar",
+      "nameEn": "Beggar",
+      "namePt": "Mendigo",
+      "abilitySlugs": [
+        "forca",
+        "destreza",
+        "sabedoria"
+      ],
+      "feat": {
+        "slug": "survivor",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "insight",
+        "persuasion"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Disguise Kit",
+        "itemSlug": "kit-de-disfarce",
+        "ddbSlug": "disguise-kit",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 12,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Robe",
+              "itemSlug": "tunica",
+              "ddbSlug": "robe",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Disguise Kit",
+              "itemSlug": "kit-de-disfarce",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Many who fall on hard times have no other option than begging for coppers. Considered the lowest rung of society, you are looked down upon in either pity or contempt by other members of society, when they bother to notice you at all. For your part, you see people at their best and at their worst—a more honest representation than they show their peers or superiors.",
+        "If you are from a major metropolis of Etharis, you might be much more than you appear. You may act as an informant, spy, distraction, or worse—working right under the noses of those who treat you as part of the scenery. This might make you wealthier than you let on, and people in the know treat you with a modicum of respect and caution.",
+        "I was told everything I was doing on my raids was for the glory of Clan Völgr and for the well-being of the entire world. The speakers of the Prismatic Circle told us that the Great Wyrm Gormadraug was wakening, and we had to ensure its continued slumber. But the things I’ve seen. The blood and the sacrifices. It was all too much."
+      ],
+      "description": "Many who fall on hard times have no other option than begging for coppers. Considered the lowest rung of society, you are looked down upon in either pity or contempt by other members of society, when they bother to notice you at all. For your part, you see people at their best and at their worst—a more honest representation than they show their peers or superiors.\n\nIf you are from a major metropolis of Etharis, you might be much more than you appear. You may act as an informant, spy, distraction, or worse—working right under the noses of those who treat you as part of the scenery. This might make you wealthier than you let on, and people in the know treat you with a modicum of respect and caution.\n\nI was told everything I was doing on my raids was for the glory of Clan Völgr and for the well-being of the entire world. The speakers of the Prismatic Circle told us that the Great Wyrm Gormadraug was wakening, and we had to ensure its continued slumber. But the things I’ve seen. The blood and the sacrifices. It was all too much.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-chapter-knight",
+      "anchorId": "ChapterKnight",
+      "nameEn": "Chapter Knight",
+      "namePt": "Cavaleiro de Capítulo",
+      "abilitySlugs": [
+        "forca",
+        "sabedoria",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "savage-attacker",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "animal-handling",
+        "athletics"
+      ],
+      "toolProficiency": {
+        "kind": "choice",
+        "description": "Choose one kind of Musical Instrument",
+        "itemSlug": null,
+        "toolCategorySlug": "instrument"
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 6,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Shield",
+              "itemSlug": "shield",
+              "ddbSlug": "shield",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Musical Instrument (same as above)",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Musical Instrument (same as above)"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Knights of the Charneault Kingdom are more than soldiers. You’re an exemplar of the virtues that maintain peace and prosperity in the realm. Through training and study, you’ve dedicated your life to upholding noble ideals such as strength, bravery, charity, temperance, and tradition. Your shield bears a coat of arms which symbolizes the tenets to which you’re sworn—those of your household or Knight Chapter. If you are still a squire, yet to accomplish your first quest, your shield is blank.",
+        "You might receive many honors during your journeys, though much will be expected of you. Folk may look to you as a protector, leader, or keeper of traditions—or you may be feared as a stern justiciar of the Crown’s justice. The path of a knight is difficult and perilous, and not all who walk it maintain their virtues."
+      ],
+      "description": "Knights of the Charneault Kingdom are more than soldiers. You’re an exemplar of the virtues that maintain peace and prosperity in the realm. Through training and study, you’ve dedicated your life to upholding noble ideals such as strength, bravery, charity, temperance, and tradition. Your shield bears a coat of arms which symbolizes the tenets to which you’re sworn—those of your household or Knight Chapter. If you are still a squire, yet to accomplish your first quest, your shield is blank.\n\nYou might receive many honors during your journeys, though much will be expected of you. Folk may look to you as a protector, leader, or keeper of traditions—or you may be feared as a stern justiciar of the Crown’s justice. The path of a knight is difficult and perilous, and not all who walk it maintain their virtues.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-courtier",
+      "anchorId": "Courtier",
+      "nameEn": "Courtier",
+      "namePt": "Cortesão",
+      "abilitySlugs": [
+        "inteligencia",
+        "sabedoria",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "skilled",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "insight",
+        "persuasion"
+      ],
+      "toolProficiency": {
+        "kind": "choice",
+        "description": "Musical Instrument or Artisan’s Tools",
+        "itemSlug": null,
+        "toolCategorySlug": null,
+        "choiceOptions": [
+          "instrument",
+          "artisan"
+        ]
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 15,
+          "items": [
+            {
+              "name": "Fine Clothes",
+              "itemSlug": "roupas-finas",
+              "ddbSlug": "fine-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Musical Instrument or Artisan’s Tools (same as above)",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Musical Instrument or Artisan’s Tools (same as above)"
+            },
+            {
+              "name": "Family Heirloom",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Family Heirloom"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You were either born into a role within the courts or power structures of your area, or you worked your way into the company of the powerful or elite through perseverance, skill, trickery, or some combination of those. You draw upon the power of your institutions to gain what you need—but you’re always at the mercy of those institutions as well.",
+        "You may have a specialized role within the system, such as a court jester or sommelier. Or you may occupy a more generic role as a hanger-on, whose role is undefined but whose power rests in simply being connected to someone with the power to get what is needed."
+      ],
+      "description": "You were either born into a role within the courts or power structures of your area, or you worked your way into the company of the powerful or elite through perseverance, skill, trickery, or some combination of those. You draw upon the power of your institutions to gain what you need—but you’re always at the mercy of those institutions as well.\n\nYou may have a specialized role within the system, such as a court jester or sommelier. Or you may occupy a more generic role as a hanger-on, whose role is undefined but whose power rests in simply being connected to someone with the power to get what is needed.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-disgraced-raider",
+      "anchorId": "DisgracedRaider",
+      "nameEn": "Disgraced Raider",
+      "namePt": "Saqueador Desonrado",
+      "abilitySlugs": [
+        "forca",
+        "constituicao",
+        "sabedoria"
+      ],
+      "feat": {
+        "slug": "savage-attacker",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "athletics",
+        "nature"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Navigator’s Tools",
+        "itemSlug": "ferramentas-de-navegador",
+        "ddbSlug": "navigators-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Spear",
+              "itemSlug": "spear",
+              "ddbSlug": "spear",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Navigator’s Tools",
+              "itemSlug": "ferramentas-de-navegador",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Navigator’s Tools"
+            },
+            {
+              "name": "Dilapidated Rowboat",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Dilapidated Rowboat"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You were a raider associated with one of the greatly feared Valikan clans . The terror you and your allies struck within sailing distance of your homeland was massive and palpable. The risks were great, but the respect was undeniable.",
+        "You lost that respect, however, when something went wrong. Perhaps you lost your nerve and fled the battlefield. Perhaps you lost your mind and killed when you were only supposed to capture. Perhaps you saw the terror you inspired in others as a moral failing rather than a point of honor. Regardless, you were cast out of your clan and told never to return. You now travel Etharis having to live with what you’ve done and the shame (or honor) of your clan’s shunning."
+      ],
+      "description": "You were a raider associated with one of the greatly feared Valikan clans . The terror you and your allies struck within sailing distance of your homeland was massive and palpable. The risks were great, but the respect was undeniable.\n\nYou lost that respect, however, when something went wrong. Perhaps you lost your nerve and fled the battlefield. Perhaps you lost your mind and killed when you were only supposed to capture. Perhaps you saw the terror you inspired in others as a moral failing rather than a point of honor. Regardless, you were cast out of your clan and told never to return. You now travel Etharis having to live with what you’ve done and the shame (or honor) of your clan’s shunning.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-envoy",
+      "anchorId": "Envoy",
+      "nameEn": "Envoy",
+      "namePt": "Enviado",
+      "abilitySlugs": [
+        "forca",
+        "constituicao",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "skilled",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "insight",
+        "persuasion"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Calligrapher’s Supplies",
+        "itemSlug": "suprimentos-de-caligrafo",
+        "ddbSlug": "calligraphers-supplies",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 10,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Fine Clothes",
+              "itemSlug": "roupas-finas",
+              "ddbSlug": "fine-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Signet Ring",
+              "itemSlug": null,
+              "ddbSlug": "signet-ring",
+              "quantity": 1,
+              "choiceText": "Signet Ring"
+            },
+            {
+              "name": "Calligrapher’s Supplies",
+              "itemSlug": "suprimentos-de-caligrafo",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Diplomatic Papers",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Diplomatic Papers"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You are the official representative of a government or other powerful group, traveling to further the objectives of the group you represent. You must be ready at a moment’s notice to travel to the next town, or to other parts of the world. Such travel requires not just social skills but also a strong drive and a hardy disposition.",
+        "Your responsibilities change based on the organization you represent and their goals: forge alliances or maintain existing ones, establish business ties, oversee far-ranging projects, etc. However, many of your tasks are reactive: responding to a noble’s threats, securing defensive pacts in times of conflict, or bolstering border defenses. Everywhere you go, something is at stake."
+      ],
+      "description": "You are the official representative of a government or other powerful group, traveling to further the objectives of the group you represent. You must be ready at a moment’s notice to travel to the next town, or to other parts of the world. Such travel requires not just social skills but also a strong drive and a hardy disposition.\n\nYour responsibilities change based on the organization you represent and their goals: forge alliances or maintain existing ones, establish business ties, oversee far-ranging projects, etc. However, many of your tasks are reactive: responding to a noble’s threats, securing defensive pacts in times of conflict, or bolstering border defenses. Everywhere you go, something is at stake.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-executioner",
+      "anchorId": "Executioner",
+      "nameEn": "Executioner",
+      "namePt": "Carrasco",
+      "abilitySlugs": [
+        "forca",
+        "constituicao",
+        "inteligencia"
+      ],
+      "feat": {
+        "slug": "deathbound",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "athletics",
+        "medicine"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Smith’s Tools",
+        "itemSlug": "ferramentas-de-ferreiro",
+        "ddbSlug": "smiths-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 10,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Smith’s Tools",
+              "itemSlug": "ferramentas-de-ferreiro",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Someone Else’s Journal",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Someone Else’s Journal"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You were employed as an executioner by some group or organization in a position of power. Your legally sanctioned murders have given you a strong arm and a knowledge of death and fatal blows.",
+        "You may have worked for the Crimson Court, dispatching those who work against the nobility (if their blood is not worth draining). You may have worked for the Arcanist Inquisition, putting unrepentant mages to death. You may have carried out sanctioned sacrifices for the Prismatic Circle.",
+        "For some reason, you left your career: maybe you were wracked by guilt, maybe the group you worked for fell out of power, maybe you displeased your bosses, or maybe you decided to move on to a different occupation. But your actions have stayed with you, and your time as a dealer of death have made a lasting impact."
+      ],
+      "description": "You were employed as an executioner by some group or organization in a position of power. Your legally sanctioned murders have given you a strong arm and a knowledge of death and fatal blows.\n\nYou may have worked for the Crimson Court, dispatching those who work against the nobility (if their blood is not worth draining). You may have worked for the Arcanist Inquisition, putting unrepentant mages to death. You may have carried out sanctioned sacrifices for the Prismatic Circle.\n\nFor some reason, you left your career: maybe you were wracked by guilt, maybe the group you worked for fell out of power, maybe you displeased your bosses, or maybe you decided to move on to a different occupation. But your actions have stayed with you, and your time as a dealer of death have made a lasting impact.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-explorer",
+      "anchorId": "Explorer",
+      "nameEn": "Explorer",
+      "namePt": "Explorador",
+      "abilitySlugs": [
+        "forca",
+        "constituicao",
+        "sabedoria"
+      ],
+      "feat": {
+        "slug": "alert",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "athletics",
+        "survival"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Navigator’s Tools",
+        "itemSlug": "ferramentas-de-navegador",
+        "ddbSlug": "navigators-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Maps",
+              "itemSlug": "mapa",
+              "ddbSlug": "map",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Navigator’s Tools",
+              "itemSlug": "ferramentas-de-navegador",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Navigator’s Tools"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You pursue a life traversing the wilds, driven by wanderlust or the orders of a distant patron. For you, there is no greater pursuit than to discover the lost, forgotten, and unseen reaches of the world. You may travel unaccompanied or lead companions, establishing encampments in remote areas or living completely off the land. You might lead pioneers looking to settle uncharted lands.",
+        "You may help establish settlements in the areas you explore, but before long, your attention wanders, and the call of the unknown beckons too strongly to ignore. And when that happens, you blaze a new trail into the darkness, rushing headlong into whatever thrills await.",
+        "In the seedier parts of the city, I’ve seen rats the size of wechselkind strolling down the alleys like they’re tax-paying citizens. I saw a swarm of ‘em eat a family as they were sitting down for dinner. Some people say Walstein is a ruin overflowing with monsters. Well, I say they should take a good look at Liesech. Maybe not a ruin, but definitely not lacking in the monster department.",
+        "- Freelance Exterminator in Liesech"
+      ],
+      "description": "You pursue a life traversing the wilds, driven by wanderlust or the orders of a distant patron. For you, there is no greater pursuit than to discover the lost, forgotten, and unseen reaches of the world. You may travel unaccompanied or lead companions, establishing encampments in remote areas or living completely off the land. You might lead pioneers looking to settle uncharted lands.\n\nYou may help establish settlements in the areas you explore, but before long, your attention wanders, and the call of the unknown beckons too strongly to ignore. And when that happens, you blaze a new trail into the darkness, rushing headlong into whatever thrills await.\n\nIn the seedier parts of the city, I’ve seen rats the size of wechselkind strolling down the alleys like they’re tax-paying citizens. I saw a swarm of ‘em eat a family as they were sitting down for dinner. Some people say Walstein is a ruin overflowing with monsters. Well, I say they should take a good look at Liesech. Maybe not a ruin, but definitely not lacking in the monster department.\n\n- Freelance Exterminator in Liesech",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-exterminator",
+      "anchorId": "Exterminator",
+      "nameEn": "Exterminator",
+      "namePt": "Exterminador",
+      "abilitySlugs": [
+        "destreza",
+        "constituicao",
+        "inteligencia"
+      ],
+      "feat": {
+        "slug": "magic-initiate",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "animal-handling",
+        "medicine"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Poisoner’s Kit",
+        "itemSlug": "kit-de-veneno",
+        "ddbSlug": "poisoners-kit",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Hunting Trap",
+              "itemSlug": "armadilha-de-caca",
+              "ddbSlug": "hunting-trap",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Poisoner’s Kit",
+              "itemSlug": "kit-de-veneno",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Etharis is overrun with vermin, but you focus on the pests of the four-legged variety. In the cities these are generally rats and other rodents. In the country, the pests might come in the form of raccoons or other critters that steal food and destroy structures piece by piece.",
+        "You’ve trained in the arts of getting pests away from people and coin away from clients. You may run an honest business, helping farmers and shop owners eliminate potentially life-threatening pests. Or you may introduce those pests in the first place, then solve the problem you created, skipping town before your ploy is discovered."
+      ],
+      "description": "Etharis is overrun with vermin, but you focus on the pests of the four-legged variety. In the cities these are generally rats and other rodents. In the country, the pests might come in the form of raccoons or other critters that steal food and destroy structures piece by piece.\n\nYou’ve trained in the arts of getting pests away from people and coin away from clients. You may run an honest business, helping farmers and shop owners eliminate potentially life-threatening pests. Or you may introduce those pests in the first place, then solve the problem you created, skipping town before your ploy is discovered.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-fey-blessed",
+      "anchorId": "FeyBlessed",
+      "nameEn": "Fey-Blessed",
+      "namePt": "Abençoado pelas Fadas",
+      "abilitySlugs": [
+        "destreza",
+        "constituicao",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "magic-initiate",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "arcana",
+        "performance"
+      ],
+      "toolProficiency": {
+        "kind": "choice",
+        "description": "Choose one kind of Musical Instrument",
+        "itemSlug": null,
+        "toolCategorySlug": "instrument"
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Musical Instrument (same as above)",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Musical Instrument (same as above)"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "The powerful and fickle faerie-folk of your area have taken note of you, and your existence pleases them. Whether you were born under a lucky star, had a favorable run-in with a nature spirit, or simply were in the right place at the right time, the fey favor you with small gifts and boons. You find small trinkets in your shoes when you wake up in the morning. Beasts of the forest and field are more receptive to your presence and your training. Will this blessing somehow turn into a curse later in your life?",
+        "People you encounter instantly recognize your connection with the Realm of Faerie. Sometimes this works to your favor, as folks seem entranced by your glowing personality. Others see your power as a curse just waiting to seep into their lives. And they may not be wrong!"
+      ],
+      "description": "The powerful and fickle faerie-folk of your area have taken note of you, and your existence pleases them. Whether you were born under a lucky star, had a favorable run-in with a nature spirit, or simply were in the right place at the right time, the fey favor you with small gifts and boons. You find small trinkets in your shoes when you wake up in the morning. Beasts of the forest and field are more receptive to your presence and your training. Will this blessing somehow turn into a curse later in your life?\n\nPeople you encounter instantly recognize your connection with the Realm of Faerie. Sometimes this works to your favor, as folks seem entranced by your glowing personality. Others see your power as a curse just waiting to seep into their lives. And they may not be wrong!",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-free-swords-mercenary",
+      "anchorId": "FreeSwordsMercenary",
+      "nameEn": "Free Swords Mercenary",
+      "namePt": "Mercenário das Espadas Livres",
+      "abilitySlugs": [
+        "forca",
+        "destreza",
+        "constituicao"
+      ],
+      "feat": {
+        "slug": "free-sword-mercenarys-will",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "acrobatics",
+        "athletics"
+      ],
+      "toolProficiency": {
+        "kind": "choice",
+        "description": "Gaming Set (your choice)",
+        "itemSlug": null,
+        "toolCategorySlug": null,
+        "choiceItemSlugs": [
+          "conjunto-de-dados",
+          "xadrez-do-dragao",
+          "baralho",
+          "ante-dos-tres-dragoes"
+        ]
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 10,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Spear",
+              "itemSlug": "spear",
+              "ddbSlug": "spear",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Robe",
+              "itemSlug": "tunica",
+              "ddbSlug": "robe",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Gaming Set (same as above)",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Gaming Set (same as above)"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Mud, blood, and coin have been your entire life since joining the Company of Free Swords. You may have been recruited from a fighting pit in Unterland, joined as a fugitive to escape justice, or been found as a babe in the mud and raised as a Free Sword. Your history before joining the Company doesn’t matter now. Your comrades are your family. Violence is your trade.",
+        "The infantry ranks of the Free Swords live by the unspoken rule of Etharis—it’s a place where only the strong survive. Your ambitions may stretch only as far as your payment for enduring the next battle. Few expect anything more from you. Yet a hidden ideal may truly drive your actions, or you may hope to lead your own company one day."
+      ],
+      "description": "Mud, blood, and coin have been your entire life since joining the Company of Free Swords. You may have been recruited from a fighting pit in Unterland, joined as a fugitive to escape justice, or been found as a babe in the mud and raised as a Free Sword. Your history before joining the Company doesn’t matter now. Your comrades are your family. Violence is your trade.\n\nThe infantry ranks of the Free Swords live by the unspoken rule of Etharis—it’s a place where only the strong survive. Your ambitions may stretch only as far as your payment for enduring the next battle. Few expect anything more from you. Yet a hidden ideal may truly drive your actions, or you may hope to lead your own company one day.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-heretic",
+      "anchorId": "Heretic",
+      "nameEn": "Heretic",
+      "namePt": "Herege",
+      "abilitySlugs": [
+        "forca",
+        "destreza",
+        "sabedoria"
+      ],
+      "feat": {
+        "slug": "magic-initiate",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "deception",
+        "religion"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Disguise Kit",
+        "itemSlug": "kit-de-disfarce",
+        "ddbSlug": "disguise-kit",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 10,
+          "items": [
+            {
+              "name": "Holy Symbol",
+              "itemSlug": "simbolo-sagrado",
+              "ddbSlug": "holy-symbol",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Disguise Kit",
+              "itemSlug": "kit-de-disfarce",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Heretical Text",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Heretical Text"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You have learned that the dominant religious beliefs of your region are lies. The corrupting forces may be in charge, but you will not rest until you have shown their lies as corrupt and untrue. Your beliefs, and your willingness to speak that truth, have put you in danger from the authorities.",
+        "You travel the road or live in hiding, trying to stay one step ahead of those who wish to silence you. You sometimes find those who believe as you do, and in those moments of unity you find peace and safety. But it is only a matter of time before your outspoken opposition to the status quo puts you in danger again.",
+        "Her parents wailed the day little Inga disappeared, even though she was the youngest of their twelve brood. They got over it quick enough. Then, twenty years later, when they’ve got great-grandkids running around, Inga turns up on their doorstep—and she hadn’t aged a day. Worse yet, she seems off. Like she knows things. I’m keeping my cats away from their yard just in case. I expect the Inquisitors to investigate soon. Because I told them about her."
+      ],
+      "description": "You have learned that the dominant religious beliefs of your region are lies. The corrupting forces may be in charge, but you will not rest until you have shown their lies as corrupt and untrue. Your beliefs, and your willingness to speak that truth, have put you in danger from the authorities.\n\nYou travel the road or live in hiding, trying to stay one step ahead of those who wish to silence you. You sometimes find those who believe as you do, and in those moments of unity you find peace and safety. But it is only a matter of time before your outspoken opposition to the status quo puts you in danger again.\n\nHer parents wailed the day little Inga disappeared, even though she was the youngest of their twelve brood. They got over it quick enough. Then, twenty years later, when they’ve got great-grandkids running around, Inga turns up on their doorstep—and she hadn’t aged a day. Worse yet, she seems off. Like she knows things. I’m keeping my cats away from their yard just in case. I expect the Inquisitors to investigate soon. Because I told them about her.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-inquisitor-of-the-faithful",
+      "anchorId": "InquisitoroftheFaithful",
+      "nameEn": "Inquisitor of the Faithful",
+      "namePt": "Inquisidor dos Fiéis",
+      "abilitySlugs": [
+        "forca",
+        "sabedoria",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "convincing-inquisitor",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "intimidation",
+        "religion"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Navigator’s Tools",
+        "itemSlug": "ferramentas-de-navegador",
+        "ddbSlug": "navigators-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 10,
+          "items": [
+            {
+              "name": "Club",
+              "itemSlug": "club",
+              "ddbSlug": "club",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Navigator’s Tools",
+              "itemSlug": "ferramentas-de-navegador",
+              "ddbSlug": "navigators-tools",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Book",
+              "itemSlug": "livro",
+              "ddbSlug": "book",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Holy Symbol",
+              "itemSlug": "simbolo-sagrado",
+              "ddbSlug": "holy-symbol",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Manacles",
+              "itemSlug": "grilhoes",
+              "ddbSlug": "manacles",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Interrogator’s Tools",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Interrogator’s Tools"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You are a servant of the Watchers of the Faithful, hunting down heretics and blasphemers within your own faith, cultists of sinister powers, or other threats to your divine order. Divine justice does not discriminate, and you have mercilessly punished crimes both mundane and supernatural—tasks that come with little glory.",
+        "Your home is the road, and you must travel to wherever rumors of the sinful and the deviant take you. Corruption is just as likely to fester within as without, so you must be ever watchful of those who travel with you. Those found guilty, wherever they hail from and whatever their reason, must be faced without mercy."
+      ],
+      "description": "You are a servant of the Watchers of the Faithful, hunting down heretics and blasphemers within your own faith, cultists of sinister powers, or other threats to your divine order. Divine justice does not discriminate, and you have mercilessly punished crimes both mundane and supernatural—tasks that come with little glory.\n\nYour home is the road, and you must travel to wherever rumors of the sinful and the deviant take you. Corruption is just as likely to fester within as without, so you must be ever watchful of those who travel with you. Those found guilty, wherever they hail from and whatever their reason, must be faced without mercy.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-lapsed-inquisitor",
+      "anchorId": "LapsedInquisitor",
+      "nameEn": "Lapsed Inquisitor",
+      "namePt": "Inquisidor Desviado",
+      "abilitySlugs": [
+        "forca",
+        "sabedoria",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "convincing-inquisitor",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "persuasion",
+        "religion"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Navigator’s Tools",
+        "itemSlug": "ferramentas-de-navegador",
+        "ddbSlug": "navigators-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Club",
+              "itemSlug": "club",
+              "ddbSlug": "club",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Disguise Kit",
+              "itemSlug": "kit-de-disfarce",
+              "ddbSlug": "disguise-kit",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Navigator’s Tools",
+              "itemSlug": "ferramentas-de-navegador",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Navigator’s Tools"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You spent years traveling the countryside as a member of the Arcanist Inquisition, seeking out heretics and blasphemers, daemons and arcanists. Your work uncovered hidden evil that likely saved the lives of countless innocents. However, on more than one occasion, your or others’ zeal brought low innocents.",
+        "After a crisis of conscience, you left the ranks of the inquisitors. Leaving the Inquisition is itself a dangerous prospect, but you could no longer abide. Maybe someone you love and care for is starting to show arcane affinities that would have led to their destruction. Maybe you are. Maybe the last investigation you carried out opened your eyes to new realities. Now you are living with a target on your back. Your former peers don’t take kindly to people leaving their ranks. Those you persecuted have not forgotten your deeds. But life must still be lived, and there’s more than one way to find and destroy the evil in the world."
+      ],
+      "description": "You spent years traveling the countryside as a member of the Arcanist Inquisition, seeking out heretics and blasphemers, daemons and arcanists. Your work uncovered hidden evil that likely saved the lives of countless innocents. However, on more than one occasion, your or others’ zeal brought low innocents.\n\nAfter a crisis of conscience, you left the ranks of the inquisitors. Leaving the Inquisition is itself a dangerous prospect, but you could no longer abide. Maybe someone you love and care for is starting to show arcane affinities that would have led to their destruction. Maybe you are. Maybe the last investigation you carried out opened your eyes to new realities. Now you are living with a target on your back. Your former peers don’t take kindly to people leaving their ranks. Those you persecuted have not forgotten your deeds. But life must still be lived, and there’s more than one way to find and destroy the evil in the world.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-one-of-the-taken",
+      "anchorId": "OneoftheTaken",
+      "nameEn": "One of the Taken",
+      "namePt": "Um dos Tomados",
+      "abilitySlugs": [
+        "destreza",
+        "sabedoria",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "magic-initiate",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "arcana",
+        "nature"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Woodcarver’s Tools",
+        "itemSlug": "ferramentas-de-carpinteiro",
+        "ddbSlug": "woodcarvers-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Herbalism Kit",
+              "itemSlug": "kit-de-herbalismo",
+              "ddbSlug": "herbalism-kit",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Woodcarver’s Tools",
+              "itemSlug": "ferramentas-de-carpinteiro",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "On the fringes of the civilized world, parents warn their children not to wander away from their homes, especially at night. The many creatures that haunt the forests, from the faerie-folk to the minions of the Great Beast, spell doom for the innocent who stray too far into the darkness. You failed to heed your parents’ warnings, and you were taken. In fact, those who know of your experience use that word to describe you: Taken.",
+        "You do not remember what happened to you while you were away, but through some mysterious and possibly fortunate circumstances, you wandered back into town after months or years of going missing. Maybe the fairies whisked you off to some magical realm. Maybe evil cultists of an Arch Daemon held you prisoner, planning to sacrifice you to their dark leader when the time was right, and you found a way to escape. Maybe one of the Beast’s warped and feral minions took a liking to you and kept you as a pet. Whatever your story, you can’t remember your time away. But that doesn’t mean you weren’t changed by it."
+      ],
+      "description": "On the fringes of the civilized world, parents warn their children not to wander away from their homes, especially at night. The many creatures that haunt the forests, from the faerie-folk to the minions of the Great Beast, spell doom for the innocent who stray too far into the darkness. You failed to heed your parents’ warnings, and you were taken. In fact, those who know of your experience use that word to describe you: Taken.\n\nYou do not remember what happened to you while you were away, but through some mysterious and possibly fortunate circumstances, you wandered back into town after months or years of going missing. Maybe the fairies whisked you off to some magical realm. Maybe evil cultists of an Arch Daemon held you prisoner, planning to sacrifice you to their dark leader when the time was right, and you found a way to escape. Maybe one of the Beast’s warped and feral minions took a liking to you and kept you as a pet. Whatever your story, you can’t remember your time away. But that doesn’t mean you weren’t changed by it.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-physician",
+      "anchorId": "Physician",
+      "nameEn": "Physician",
+      "namePt": "Médico",
+      "abilitySlugs": [
+        "destreza",
+        "inteligencia",
+        "sabedoria"
+      ],
+      "feat": {
+        "slug": "triage-expert",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "medicine",
+        "nature"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Herbalism Kit",
+        "itemSlug": "kit-de-herbalismo",
+        "ddbSlug": "herbalism-kit",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 10,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Healer’s Kit",
+              "itemSlug": "kit-de-curandeiro",
+              "ddbSlug": "healers-kit",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Book",
+              "itemSlug": "livro",
+              "ddbSlug": "book",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Robe",
+              "itemSlug": "tunica",
+              "ddbSlug": "robe",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Herbalism Kit",
+              "itemSlug": "kit-de-herbalismo",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Bandages",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Bandages"
+            },
+            {
+              "name": "Jar of Leeches",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Jar of Leeches"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Your skills treating the sick and injured have given you a vast knowledge of illnesses and remedies based on the latest science—or the most recent theories from those who like to push the limits of what science might allow.",
+        "You may have come into the field in a variety of ways and with a variety of specialties. You might have learned at an institute with the finest medical minds in all of Etharis. Or you might have learned your skills through trial and error, as the poor residents of the surrounding area come to you based on rumors of your preternatural healing powers that are rather mundane."
+      ],
+      "description": "Your skills treating the sick and injured have given you a vast knowledge of illnesses and remedies based on the latest science—or the most recent theories from those who like to push the limits of what science might allow.\n\nYou may have come into the field in a variety of ways and with a variety of specialties. You might have learned at an institute with the finest medical minds in all of Etharis. Or you might have learned your skills through trial and error, as the poor residents of the surrounding area come to you based on rumors of your preternatural healing powers that are rather mundane.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-pioneer",
+      "anchorId": "Pioneer",
+      "nameEn": "Pioneer",
+      "namePt": "Pioneiro",
+      "abilitySlugs": [
+        "forca",
+        "constituicao",
+        "sabedoria"
+      ],
+      "feat": {
+        "slug": "survivor",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "athletics",
+        "survival"
+      ],
+      "toolProficiency": {
+        "kind": "choice",
+        "description": "Carpenter’s or Mason’s Tools",
+        "itemSlug": null,
+        "toolCategorySlug": "artisan",
+        "choiceItemSlugs": [
+          "ferramentas-de-carpinteiro",
+          "ferramentas-de-pedreiro"
+        ]
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Mule",
+              "itemSlug": "mula",
+              "ddbSlug": "mule",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Cart",
+              "itemSlug": "carroca",
+              "ddbSlug": "cart",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Carpenter’s or Mason’s Tools (same as above)",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Carpenter’s or Mason’s Tools (same as above)"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "There is still land in Etharis where no one has lived before, and pioneers are the hardy folk who set out to tame that land for the first time. You’ve learned to find a suitable area to live, set up the beginnings of a village, build the dwellings needed for settlers, then move on.",
+        "You have weathered punishing storms, migrations, and harsh winters. You and yours have adapted to the environment. Everything you own is built with your own two hands, and your aptitude in working with natural materials has provided you with shelter, tools, and clothing."
+      ],
+      "description": "There is still land in Etharis where no one has lived before, and pioneers are the hardy folk who set out to tame that land for the first time. You’ve learned to find a suitable area to live, set up the beginnings of a village, build the dwellings needed for settlers, then move on.\n\nYou have weathered punishing storms, migrations, and harsh winters. You and yours have adapted to the environment. Everything you own is built with your own two hands, and your aptitude in working with natural materials has provided you with shelter, tools, and clothing.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-pit-fighter",
+      "anchorId": "PitFighter",
+      "nameEn": "Pit Fighter",
+      "namePt": "Lutador de Arena",
+      "abilitySlugs": [
+        "forca",
+        "destreza",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "savage-attacker",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "athletics",
+        "performance"
+      ],
+      "toolProficiency": {
+        "kind": "choice",
+        "description": "Gaming Set (your choice)",
+        "itemSlug": null,
+        "toolCategorySlug": null,
+        "choiceItemSlugs": [
+          "conjunto-de-dados",
+          "xadrez-do-dragao",
+          "baralho",
+          "ante-dos-tres-dragoes"
+        ]
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 10,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Spear",
+              "itemSlug": "spear",
+              "ddbSlug": "spear",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Robe",
+              "itemSlug": "tunica",
+              "ddbSlug": "robe",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Gaming Set (same as above)",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Gaming Set (same as above)"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Unterland was the first of the provinces to host blood-sport arenas, back in the days before the formation of the Bürach Empire . Since then, the practice has been driven underground, but, like poison spreading silently throughout a healthy body, it has infiltrated nearly every major city.",
+        "Ostensibly illegal, you can almost always find small groups of desperate individuals putting their lives on the line for the amusement and enrichment of others. This hidden network of arenas has recently been organized into the self-proclaimed Pit Fighter’s Guild and developed a series of coded phrases and symbols to identify its members. You follow the unspoken rule of Etharis: only the strong survive.",
+        "So few survive the Pox that you don’t often hear what it’s like. Well let me tell you. It’s like dying and being reborn so many times. The pain is unbearable, until it isn’t. The hallucinations are like dreams. And then when it passes, people look at you like you’re a ghost, like you’re an apparition haunting your own decimated body."
+      ],
+      "description": "Unterland was the first of the provinces to host blood-sport arenas, back in the days before the formation of the Bürach Empire . Since then, the practice has been driven underground, but, like poison spreading silently throughout a healthy body, it has infiltrated nearly every major city.\n\nOstensibly illegal, you can almost always find small groups of desperate individuals putting their lives on the line for the amusement and enrichment of others. This hidden network of arenas has recently been organized into the self-proclaimed Pit Fighter’s Guild and developed a series of coded phrases and symbols to identify its members. You follow the unspoken rule of Etharis: only the strong survive.\n\nSo few survive the Pox that you don’t often hear what it’s like. Well let me tell you. It’s like dying and being reborn so many times. The pain is unbearable, until it isn’t. The hallucinations are like dreams. And then when it passes, people look at you like you’re a ghost, like you’re an apparition haunting your own decimated body.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-pox-touched",
+      "anchorId": "PoxTouched",
+      "nameEn": "Pox-Touched",
+      "namePt": "Tocado pela Peste",
+      "abilitySlugs": [
+        "constituicao",
+        "inteligencia",
+        "sabedoria"
+      ],
+      "feat": {
+        "slug": "triage-expert",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "intimidation",
+        "medicine"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Herbalism Kit",
+        "itemSlug": "kit-de-herbalismo",
+        "ddbSlug": "herbalism-kit",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Herbalism Kit",
+              "itemSlug": "kit-de-herbalismo",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "When you fell ill with the Weeping Pox, you assumed you would die from it, as had so many before you. Your neighbors shunned you, fearing that you would spread the disease to them and their families. Then a miracle happened. A stranger came to you and offered to help. The stranger brought forth strange medicines, providing you with curative draughts and elixirs. And just as the disease reached its worst stages, the symptoms began to vanish. Before long, you were cured of the disease.",
+        "The sores and scars of the disease, however, still play across your body—an unsubtle reminder of the terrible scourge you survived. The stranger left you after the treatments concluded, but you retained some of the knowledge that the healer used while caring for you. Those who marvel at your recovery also fear you: they harbor some suspicion that you made deals with dark powers to drive away the disease."
+      ],
+      "description": "When you fell ill with the Weeping Pox, you assumed you would die from it, as had so many before you. Your neighbors shunned you, fearing that you would spread the disease to them and their families. Then a miracle happened. A stranger came to you and offered to help. The stranger brought forth strange medicines, providing you with curative draughts and elixirs. And just as the disease reached its worst stages, the symptoms began to vanish. Before long, you were cured of the disease.\n\nThe sores and scars of the disease, however, still play across your body—an unsubtle reminder of the terrible scourge you survived. The stranger left you after the treatments concluded, but you retained some of the knowledge that the healer used while caring for you. Those who marvel at your recovery also fear you: they harbor some suspicion that you made deals with dark powers to drive away the disease.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-prisoner",
+      "anchorId": "Prisoner",
+      "nameEn": "Prisoner",
+      "namePt": "Prisioneiro",
+      "abilitySlugs": [
+        "destreza",
+        "constituicao",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "alert",
+        "source": "phb",
+        "variant": null
+      },
+      "skillSlugs": [
+        "deception",
+        "sleight-of-hand"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Thieves’ Tools",
+        "itemSlug": "ferramentas-de-ladrao",
+        "ddbSlug": "thieves-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Thieves’ Tools",
+              "itemSlug": "ferramentas-de-ladrao",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Something from your past landed you in prison. Your transgressions might be real or imagined, against a just society or a corrupt one. Regardless of how you became a prisoner, you have learned to survive within your environment.",
+        "As a prisoner, you’ve had to learn to deal with guards, other prisoners, and the unpleasant environment. Part of that survival was learning to find, craft, or steal small items that make your incarceration more tolerable. Whether your release was long ago or about to happen, your time as a Prisoner has changed you."
+      ],
+      "description": "Something from your past landed you in prison. Your transgressions might be real or imagined, against a just society or a corrupt one. Regardless of how you became a prisoner, you have learned to survive within your environment.\n\nAs a prisoner, you’ve had to learn to deal with guards, other prisoners, and the unpleasant environment. Part of that survival was learning to find, craft, or steal small items that make your incarceration more tolerable. Whether your release was long ago or about to happen, your time as a Prisoner has changed you.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-released-thrall",
+      "anchorId": "ReleasedThrall",
+      "nameEn": "Released Thrall",
+      "namePt": "Servo Libertado",
+      "abilitySlugs": [
+        "constituicao",
+        "inteligencia",
+        "sabedoria"
+      ],
+      "feat": {
+        "slug": "survivor",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "perception",
+        "stealth"
+      ],
+      "toolProficiency": {
+        "kind": "choice",
+        "description": "Artisan’s Tools (your choice)",
+        "itemSlug": null,
+        "toolCategorySlug": "artisan"
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Dagger",
+              "itemSlug": "dagger",
+              "ddbSlug": "dagger",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Traveler’s Clothes",
+              "itemSlug": "roupas-viagem",
+              "ddbSlug": "travelers-clothes",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Artisan’s Tools (same as above)",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Artisan’s Tools (same as above)"
+            },
+            {
+              "name": "Bag of Trinkets from your travels",
+              "itemSlug": null,
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Bag of Trinkets from your travels"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Valikan raiders search for many things: food, goods, weapons, and thralls. You were one of those taken by the clans because you had skills that the clan lacked in their cold northern home. Once you arrived, you were given a choice: join the clan or find your own way home. You chose the latter.",
+        "You then had to find your way through the cold and dangerous lands of Valika —and whatever other lands separated you from your home. You had to be ever watchful of other threats, hiding when danger presented itself. No place is safe, and you must take every opportunity to advance toward your goals."
+      ],
+      "description": "Valikan raiders search for many things: food, goods, weapons, and thralls. You were one of those taken by the clans because you had skills that the clan lacked in their cold northern home. Once you arrived, you were given a choice: join the clan or find your own way home. You chose the latter.\n\nYou then had to find your way through the cold and dangerous lands of Valika —and whatever other lands separated you from your home. You had to be ever watchful of other threats, hiding when danger presented itself. No place is safe, and you must take every opportunity to advance toward your goals.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-scion-of-the-thaumaturge",
+      "anchorId": "ScionoftheThaumaturge",
+      "nameEn": "Scion of the Thaumaturge",
+      "namePt": "Herdeiro do Taumaturgo",
+      "abilitySlugs": [
+        "inteligencia",
+        "sabedoria",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "fortuneofthe-thaumaturge",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "arcana",
+        "insight"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Cartographer’s Tools",
+        "itemSlug": "ferramentas-de-cartografo",
+        "ddbSlug": "cartographers-tools",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Ink",
+              "itemSlug": "tinta",
+              "ddbSlug": "ink",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Parchment",
+              "itemSlug": "pergaminho",
+              "ddbSlug": "parchment",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Robe",
+              "itemSlug": "tunica",
+              "ddbSlug": "robe",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Cartographer’s Tools",
+              "itemSlug": "ferramentas-de-cartografo",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": null
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "You served a mysterious organization simply called the Thaumaturge. You received orders to perform tasks that ranged from the mundane to the inscrutable. Your contact assured you that even if the tasks made no sense, you were serving the greater good of your home, and of all Etharis.",
+        "Your tasks led you to new locations. You secretly met with other members of the organization, and you looked to the stars to give you signs and portents about the future. You may still be performing these tasks, or years may have passed since your last contact, but you know that there are forces beyond understanding that pull on people’s strings and make them dance."
+      ],
+      "description": "You served a mysterious organization simply called the Thaumaturge. You received orders to perform tasks that ranged from the mundane to the inscrutable. Your contact assured you that even if the tasks made no sense, you were serving the greater good of your home, and of all Etharis.\n\nYour tasks led you to new locations. You secretly met with other members of the organization, and you looked to the stars to give you signs and portents about the future. You may still be performing these tasks, or years may have passed since your last contact, but you know that there are forces beyond understanding that pull on people’s strings and make them dance.",
+      "actionEconomy": []
+    },
+    {
+      "slug": "gh-syndicate-smuggler",
+      "anchorId": "SyndicateSmuggler",
+      "nameEn": "Syndicate Smuggler",
+      "namePt": "Contrabandista do Sindicato",
+      "abilitySlugs": [
+        "destreza",
+        "inteligencia",
+        "carisma"
+      ],
+      "feat": {
+        "slug": "resolutionofthe-syndicate",
+        "source": "ghpg",
+        "variant": null
+      },
+      "skillSlugs": [
+        "history",
+        "stealth"
+      ],
+      "toolProficiency": {
+        "kind": "fixed",
+        "description": "Forgery Kit",
+        "itemSlug": "kit-de-falsificacao",
+        "ddbSlug": "forgery-kit",
+        "toolCategorySlug": null
+      },
+      "equipment": {
+        "goldOptionB": 50,
+        "optionA": {
+          "gold": 8,
+          "items": [
+            {
+              "name": "Chest",
+              "itemSlug": "bau",
+              "ddbSlug": "chest",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Parchment",
+              "itemSlug": "pergaminho",
+              "ddbSlug": "parchment",
+              "quantity": 1,
+              "choiceText": null
+            },
+            {
+              "name": "Costume",
+              "itemSlug": null,
+              "ddbSlug": "costume",
+              "quantity": 1,
+              "choiceText": "Costume"
+            },
+            {
+              "name": "Forgery Kit",
+              "itemSlug": "kit-de-falsificacao",
+              "ddbSlug": null,
+              "quantity": 1,
+              "choiceText": "Forgery Kit"
+            }
+          ]
+        }
+      },
+      "loreParagraphs": [
+        "Goods from one side of Etharis often fetch a fair price on the other side. Transporting such goods are a hassle—dealing with the bureaucracy of customs and taxes is an even larger one. Thankfully, as a representative of the Ebon Syndicate, you are there to eliminate at least part of the hassle.",
+        "Whether you move goods by land, sea, river, or air, crossing borders and avoiding detection are your specialty. Sometimes having a way to hide goods is the game. Other times falsifying paperwork or bribing guards does the trick. However you manage to do it, you get what people want into their hands for the right price.",
+        "//"
+      ],
+      "description": "Goods from one side of Etharis often fetch a fair price on the other side. Transporting such goods are a hassle—dealing with the bureaucracy of customs and taxes is an even larger one. Thankfully, as a representative of the Ebon Syndicate, you are there to eliminate at least part of the hassle.\n\nWhether you move goods by land, sea, river, or air, crossing borders and avoiding detection are your specialty. Sometimes having a way to hide goods is the game. Other times falsifying paperwork or bribing guards does the trick. However you manage to do it, you get what people want into their hands for the right price.\n\n//",
+      "actionEconomy": []
+    }
+  ]
+}

@@ -19,3 +19,8 @@ dist/
 scripts/smoke-*-report.json
 tmp/
 .DS_Store
+
+# HTML de extração (D&D Beyond) — manter só JSON/scripts no repo
+docs/source/new/
+docs/source/**/*_files/
+docs/source/**/*.html

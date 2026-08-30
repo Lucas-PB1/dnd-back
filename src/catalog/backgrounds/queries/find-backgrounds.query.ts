@@ -31,7 +31,7 @@ export class FindBackgroundsQuery {
     q?: string,
     editionSlugs?: string[],
     fields?: 'summary',
-    includeCatalogOnly = false,
+    _includeCatalogOnly = false,
   ): Promise<
     PaginatedResponseDto<BackgroundResponseDto | BackgroundSummaryResponseDto>
   > {
@@ -55,10 +55,6 @@ export class FindBackgroundsQuery {
       'background.summary',
     ], q);
     applyEditionSlugFilter(qb, 'background.editionSlug', editionSlugs);
-
-    if (!includeCatalogOnly) {
-      qb.andWhere(`background.background_slug NOT LIKE 'gh-%'`);
-    }
 
     const { rows, meta } = await paginateQbCursor(qb, {
       cursor,
