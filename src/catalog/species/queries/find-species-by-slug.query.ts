@@ -18,7 +18,7 @@ export class FindSpeciesBySlugQuery {
     if (isSpeciesExcludedFromCatalog(slug, editionSlugs)) {
       throw new NotFoundException(`Species '${slug}' not found`);
     }
-    const row = await this.catalogLookup.findPlayableSpeciesOrFail(slug);
+    const row = await this.catalogLookup.findSpeciesOrFail(slug);
     return this.mapper.toDto(row);
   }
 }

@@ -61,7 +61,7 @@ export class CatalogLookupService {
 
   async findPlayableSpeciesOrFail(speciesSlug: string): Promise<PhbSpecies> {
     const row = await this.findSpeciesOrFail(speciesSlug);
-    if (isTraitPackageSpecies(row)) {
+    if (isNonPlayableSpecies(row)) {
       throw new BadRequestException(
         `Species '${speciesSlug}' is not a playable species`,
       );
@@ -262,4 +262,13 @@ export class CatalogLookupService {
 function isTraitPackageSpecies(row: PhbSpecies): boolean {
   const raw = row.sourceMeta?.variantOf;
   return typeof raw === 'string' && raw.trim().length > 0;
+}
+
+function isCatalogOnlySpecies(row: PhbSpecies): boolean {
+  const raw = row.sourceMeta?.catalogOnly;
+  return raw === true || raw === 'true' || raw === 1 || raw === '1';
+}
+
+function isNonPlayableSpecies(row: PhbSpecies): boolean {
+  return isTraitPackageSpecies(row) || isCatalogOnlySpecies(row);
 }

@@ -4,7 +4,7 @@ import { FindSpeciesBySlugQuery } from './find-species-by-slug.query';
 describe('FindSpeciesBySlugQuery', () => {
   it('maps found species', async () => {
     const catalogLookup = {
-      findPlayableSpeciesOrFail: jest.fn().mockResolvedValue({ slug: 'human' }),
+      findSpeciesOrFail: jest.fn().mockResolvedValue({ slug: 'human' }),
     };
     const mapper = { toDto: jest.fn().mockReturnValue({ slug: 'human' }) };
     const query = new FindSpeciesBySlugQuery(catalogLookup as never, mapper as never);
@@ -13,7 +13,7 @@ describe('FindSpeciesBySlugQuery', () => {
 
   it('rejects goliath when Northlands is in catalog scope', async () => {
     const catalogLookup = {
-      findPlayableSpeciesOrFail: jest.fn(),
+      findSpeciesOrFail: jest.fn(),
     };
     const query = new FindSpeciesBySlugQuery(
       catalogLookup as never,
@@ -22,12 +22,12 @@ describe('FindSpeciesBySlugQuery', () => {
     await expect(
       query.execute('goliath', ['northlands-heroes-2024-en']),
     ).rejects.toBeInstanceOf(NotFoundException);
-    expect(catalogLookup.findPlayableSpeciesOrFail).not.toHaveBeenCalled();
+    expect(catalogLookup.findSpeciesOrFail).not.toHaveBeenCalled();
   });
 
   it('allows goliath when only PHB is selected', async () => {
     const catalogLookup = {
-      findPlayableSpeciesOrFail: jest.fn().mockResolvedValue({ slug: 'goliath' }),
+      findSpeciesOrFail: jest.fn().mockResolvedValue({ slug: 'goliath' }),
     };
     const mapper = { toDto: jest.fn().mockReturnValue({ slug: 'goliath' }) };
     const query = new FindSpeciesBySlugQuery(catalogLookup as never, mapper as never);
@@ -38,7 +38,7 @@ describe('FindSpeciesBySlugQuery', () => {
 
   it('propagates lookup failure', async () => {
     const catalogLookup = {
-      findPlayableSpeciesOrFail: jest.fn().mockRejectedValue(new Error('not found')),
+      findSpeciesOrFail: jest.fn().mockRejectedValue(new Error('not found')),
     };
     const query = new FindSpeciesBySlugQuery(
       catalogLookup as never,

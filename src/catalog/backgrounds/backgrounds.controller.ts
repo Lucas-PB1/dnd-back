@@ -38,6 +38,7 @@ export class BackgroundsController {
       query.q,
       query.editionSlugs,
       query.fields,
+      query.includeCatalogOnly,
     );
   }
 

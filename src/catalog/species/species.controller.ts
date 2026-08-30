@@ -34,6 +34,7 @@ export class SpeciesController {
       query.q,
       query.editionSlugs,
       query.fields,
+      query.includeCatalogOnly,
     );
   }
 

@@ -35,6 +35,7 @@ export class FindSpeciesQuery {
     q?: string,
     editionSlugs?: string[],
     fields?: 'summary',
+    includeCatalogOnly = false,
   ): Promise<
     PaginatedResponseDto<SpeciesResponseDto | SpeciesSummaryResponseDto>
   > {
@@ -72,6 +73,12 @@ export class FindSpeciesQuery {
     }
 
     qb.andWhere(`COALESCE(species.source_meta->>'variantOf', '') = ''`);
+
+    if (!includeCatalogOnly) {
+      qb.andWhere(
+        `COALESCE(species.source_meta->>'catalogOnly', 'false') NOT IN ('true', '1')`,
+      );
+    }
 
     if (shouldExcludeGoliathFromCatalog(slugs)) {
       qb.andWhere('species.slug <> :excludedGoliathSlug', {

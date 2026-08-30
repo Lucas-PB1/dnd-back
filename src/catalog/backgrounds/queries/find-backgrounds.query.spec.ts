@@ -25,8 +25,10 @@ describe('FindBackgroundsQuery', () => {
     expect(result.data).toEqual([{ slug: 'soldier' }]);
   });
 
-  it('skips search when q absent', async () => {
+  it('excludes GH advanced backgrounds by default', async () => {
     await query.execute();
-    expect(qb.andWhere).not.toHaveBeenCalled();
+    expect(qb.andWhere).toHaveBeenCalledWith(
+      `background.background_slug NOT LIKE 'gh-%'`,
+    );
   });
 });

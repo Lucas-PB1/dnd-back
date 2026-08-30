@@ -1,0 +1,56 @@
+{
+  "source": "grim-hollow-wiki-structure",
+  "note": "Estrutura de antecedentes avançados GH (Cap. 3). Textos mecânicos resumidos em PT; detalhes completos no GHPG.",
+  "backgrounds": [
+    {
+      "slug": "gh-academic",
+      "namePt": "Acadêmico",
+      "professions": ["Antiquário", "Arquivista", "Médico"]
+    },
+    {
+      "slug": "gh-aristocrat",
+      "namePt": "Aristocrata",
+      "professions": ["Cortesão", "Enviado", "Nobre"]
+    },
+    {
+      "slug": "gh-clan-member",
+      "namePt": "Membro do clã",
+      "professions": ["Saqueador", "Xamã", "Membro da tribo"]
+    },
+    {
+      "slug": "gh-clergy",
+      "namePt": "Clero",
+      "professions": ["Inquisidor", "Pregador", "Sacerdote"]
+    },
+    {
+      "slug": "gh-common-folk",
+      "namePt": "Povo comum",
+      "professions": ["Aldeão", "Artista", "Mercador"]
+    },
+    {
+      "slug": "gh-criminal",
+      "namePt": "Criminoso",
+      "professions": ["Charlatão", "Assassino", "Ladrão"]
+    },
+    {
+      "slug": "gh-militarist",
+      "namePt": "Militarista",
+      "professions": ["Espadachim livre", "Guarda", "Soldado"]
+    },
+    {
+      "slug": "gh-outlander",
+      "namePt": "Forasteiro",
+      "professions": ["Caçador de feras", "Pioneiro", "Explorador"]
+    },
+    {
+      "slug": "gh-pauper",
+      "namePt": "Pobre",
+      "professions": ["Mendigo", "Vagabundo", "Lutador de fosso"]
+    },
+    {
+      "slug": "gh-seafarer",
+      "namePt": "Marinheiro",
+      "professions": ["Marinheiro", "Estivador", "Coletor do mar"]
+    }
+  ]
+}
