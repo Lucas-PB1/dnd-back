@@ -39,6 +39,48 @@ node scripts/import-phb-mount-images.mjs --seeds-only
 4. `node scripts/import-phb-mount-images.mjs --prune-source` — remove PNGs de `_assets/montarias/images/`
 5. Rodar seeds no DB se `image_url` ainda for `NULL`
 
+## Lote GH Cap. 2 — Subclasses Grim Hollow ✅
+
+Estado (2026-08-30):
+
+- 40 PNGs em `dnd-api/public/catalog/subclasses/{slug}.png`
+- `extracts/grim-hollow/cap2-subclasses-en.json` com `imageFile` por subclasse
+- Seed `database/seeds/grim-hollow/J034_catalog_subclass_images.sql`
+- Compêndio: `/subclasses` (filtro Fontes → Grim Hollow) e `/subclasses/{slug}`
+
+### Regenerar
+
+```bash
+cd dnd-api
+node scripts/extract-ghpg-cap2.mjs
+node scripts/import-ghpg-cap2-subclass-images.mjs
+# aplicar J034 no DB
+node scripts/verify-ghpg-compendium.mjs
+```
+
+`--seeds-only` no import gera só o SQL se a pasta `_files` do Cap. 2 não estiver local.
+
+## Lote GH Cap. 5 — Equipamento avançado ✅ (parcial)
+
+Estado (2026-08-30):
+
+- 5 ilustrações no scrape Beyond (`06-001`…`06-005` + JPG artificer)
+- `scripts/lib/ghpg-cap5-image-fallbacks.mjs` — bundles do scrape + fallbacks PHB (sprites S080)
+- `extracts/grim-hollow/cap5-advanced-equipment-images.json` — SSOT `imageUrl` por slug (78/78)
+- Seed `database/seeds/grim-hollow/J008_catalog_images.sql`
+
+Itens sem arte GH própria usam sprite PHB parecido (ex.: `cavalry-flail` → `flail.png`) ou ilustração de cena compartilhada (munição → `arrows-shield.png`).
+
+### Regenerar
+
+```bash
+cd dnd-api
+node scripts/import-ghpg-cap5-images.mjs          # copia PNGs do scrape + seed
+node scripts/import-ghpg-cap5-images.mjs --seeds-only
+```
+
+Requer pasta `Chapter 5*_files` em `docs/source/scrap/` (ou `_scrapes/grim-hollow/`) para copiar os 5 arquivos GH; fallbacks PHB funcionam sem ela.
+
 ## Lote 2 — Equipamento PHB (Cap. 7) 🔜
 
 Sprites do Beyond vêm **agrupados** (ex.: `07-059.simple-range.png` = dardo + besta + funda + arco no mesmo PNG).

@@ -15,6 +15,8 @@ export const apiRoot = path.join(__dirname, '../..');
 export const docsSource = path.join(apiRoot, 'docs/source');
 export const extractsDir = path.join(docsSource, 'extracts');
 export const scrapesDir = path.join(docsSource, '_scrapes');
+/** HTML Beyond salvo manualmente (ex.: Cap. 2 GH em `scrap/`) */
+export const scrapDir = path.join(docsSource, 'scrap');
 export const assetsDir = path.join(docsSource, '_assets');
 
 /** @param {...string} segments */
@@ -41,9 +43,14 @@ export const extracts = {
   },
   grimHollow: {
     cap1Heritages: extractPath('grim-hollow/cap1-heritages.json'),
+    cap2Subclasses: extractPath('grim-hollow/cap2-subclasses.json'),
+    cap2SubclassesEn: extractPath('grim-hollow/cap2-subclasses-en.json'),
+    cap2FeaturesPt: extractPath('grim-hollow/cap2-features-pt.json'),
     cap3Backgrounds: extractPath('grim-hollow/cap3-backgrounds.json'),
     cap4Feats: extractPath('grim-hollow/cap4-feats.json'),
     cap5AdvancedEquipment: extractPath('grim-hollow/cap5-advanced-equipment.json'),
+    cap5AdvancedEquipmentPt: extractPath('grim-hollow/cap5-advanced-equipment-pt.json'),
+    cap5AdvancedEquipmentImages: extractPath('grim-hollow/cap5-advanced-equipment-images.json'),
     cap6Transformations: extractPath('grim-hollow/cap6-transformations.json'),
   },
   griffonsSaddlebag: {
@@ -64,6 +71,10 @@ export const extracts = {
   srd: {
     monsters521: extractPath('srd/monsters-5.2.1.json'),
   },
+};
+
+export const scrap = {
+  grimHollow: scrapDir,
 };
 
 export const scrapes = {

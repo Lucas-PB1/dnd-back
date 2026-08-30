@@ -9,6 +9,7 @@ import {
   type ClassProgressionMasteryRow,
 } from './class-weapon-mastery-slots';
 import { isProficient, type EquippedWeaponPiece } from '@game/combat/domain/weapon-attacks';
+import { collectFightingStyleSlugsFromSubclassOptions } from './fighting-style-feat-options';
 
 @Injectable()
 export class CharacterWeaponMasteryValidator {
@@ -17,6 +18,7 @@ export class CharacterWeaponMasteryValidator {
   async validateClassWeaponMasteryOptions(
     ctx: CharacterSheetContext,
     options: NonNullable<CharacterSheetInput['classOptions']>,
+    sheet?: Pick<CharacterSheetInput, 'characterFeats' | 'subclassOptions'>,
   ): Promise<void> {
     const masteryOptions = options.filter((option) =>
       isClassWeaponMasteryOptionKey(option.optionKey),
@@ -53,11 +55,24 @@ export class CharacterWeaponMasteryValidator {
       await this.loadWeaponMasteryEligibility(ctx.classSlug),
     );
     const weaponProficiencySlugs = await this.loadClassWeaponProficiencySlugs(ctx.classSlug);
+    const featSlugs = (sheet?.characterFeats ?? ctx.characterFeats ?? []).map(
+      (feat) => feat.featSlug,
+    );
+    const fightingStyleSlugs = collectFightingStyleSlugsFromSubclassOptions(
+      sheet?.subclassOptions,
+    );
     const chosen = masteryOptions.map((option) => option.valueId);
     assertUnique(chosen, 'Weapon mastery choices must be distinct');
 
     for (const option of masteryOptions) {
-      await this.assertMasteryWeaponChoice(ctx.classSlug, option.valueId, eligibility, weaponProficiencySlugs);
+      await this.assertMasteryWeaponChoice(
+        ctx.classSlug,
+        option.valueId,
+        eligibility,
+        weaponProficiencySlugs,
+        featSlugs,
+        fightingStyleSlugs,
+      );
     }
   }
 
@@ -79,6 +94,8 @@ export class CharacterWeaponMasteryValidator {
     weaponSlug: string,
     eligibility: ReturnType<typeof parseWeaponMasteryEligibility>,
     weaponProficiencySlugs: string[],
+    featSlugs: string[],
+    fightingStyleSlugs: string[],
   ): Promise<void> {
     const rows = await this.dataSource.query<
       {
@@ -144,6 +161,8 @@ export class CharacterWeaponMasteryValidator {
       !isProficient(piece, {
         proficiencyBonus: 2,
         weaponProficiencySlugs,
+        featSlugs,
+        fightingStyleSlugs,
       })
     ) {
       throw new BadRequestException(

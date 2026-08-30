@@ -1,0 +1,43 @@
+-- Grim Hollow Cap. 2 — image_url em phb_subclass
+-- Gerado por scripts/import-ghpg-cap2-subclass-images.mjs
+
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/carver-guild.png' WHERE slug = 'carver-guild';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/devourer-guild.png' WHERE slug = 'devourer-guild';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/occultist-guild.png' WHERE slug = 'occultist-guild';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/trapper-guild.png' WHERE slug = 'trapper-guild';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/pathofthe-fractured.png' WHERE slug = 'pathofthe-fractured';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/pathofthe-primal-spirit.png' WHERE slug = 'pathofthe-primal-spirit';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/pathofthe-wrathful-dead.png' WHERE slug = 'pathofthe-wrathful-dead';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/collegeof-adventurers.png' WHERE slug = 'collegeof-adventurers';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/collegeof-fools.png' WHERE slug = 'collegeof-fools';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/collegeof-requiems.png' WHERE slug = 'collegeof-requiems';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/eldritch-domain.png' WHERE slug = 'eldritch-domain';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/inquisition-domain.png' WHERE slug = 'inquisition-domain';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/purification-domain.png' WHERE slug = 'purification-domain';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/circleof-blood.png' WHERE slug = 'circleof-blood';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/circleof-entropy.png' WHERE slug = 'circleof-entropy';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/circleof-mutation.png' WHERE slug = 'circleof-mutation';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/bulwark-warrior.png' WHERE slug = 'bulwark-warrior';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/living-crucible.png' WHERE slug = 'living-crucible';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/nightwatcher.png' WHERE slug = 'nightwatcher';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/warriorofthe-leaden-crown.png' WHERE slug = 'warriorofthe-leaden-crown';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/warriorof-pride.png' WHERE slug = 'warriorof-pride';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/warriorof-regret.png' WHERE slug = 'warriorof-regret';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/oathof-pestilence.png' WHERE slug = 'oathof-pestilence';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/oathof-slaughter.png' WHERE slug = 'oathof-slaughter';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/oathof-zeal.png' WHERE slug = 'oathof-zeal';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/green-reaper.png' WHERE slug = 'green-reaper';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/primordial-archer.png' WHERE slug = 'primordial-archer';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/vermin-lord.png' WHERE slug = 'vermin-lord';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/highway-rider.png' WHERE slug = 'highway-rider';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/misfortune-bringer.png' WHERE slug = 'misfortune-bringer';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/sanguine-thief.png' WHERE slug = 'sanguine-thief';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/apocalypse-sorcery.png' WHERE slug = 'apocalypse-sorcery';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/haunted-sorcery.png' WHERE slug = 'haunted-sorcery';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/wretched-bloodline-sorcery.png' WHERE slug = 'wretched-bloodline-sorcery';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/the-coven.png' WHERE slug = 'the-coven';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/the-first-vampire-patron.png' WHERE slug = 'the-first-vampire-patron';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/the-parasite-patron.png' WHERE slug = 'the-parasite-patron';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/daemonologist.png' WHERE slug = 'daemonologist';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/plague-doctor.png' WHERE slug = 'plague-doctor';
+UPDATE rpg.phb_subclass SET image_url = '/catalog/subclasses/sangromancer.png' WHERE slug = 'sangromancer';

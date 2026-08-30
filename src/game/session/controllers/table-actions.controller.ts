@@ -31,6 +31,7 @@ import { DruidActionsHandler } from '../application/actions/druid-actions.handle
 import { WizardActionsHandler } from '../application/actions/wizard-actions.handler';
 import { FighterActionsHandler } from '../application/actions/fighter-actions.handler';
 import { GunslingerActionsHandler } from '../application/actions/gunslinger-actions.handler';
+import { MonsterHunterActionsHandler } from '../application/actions/monster-hunter-actions.handler';
 import {
   TableActionResponseDto,
   UseBarbarianTableActionDto,
@@ -46,6 +47,7 @@ import {
   UseSorcererTableActionDto,
   UseWarlockTableActionDto,
   UseWizardTableActionDto,
+  UseMonsterHunterTableActionDto,
   UseManeuverResponseDto,
 } from '../dto';
 
@@ -69,6 +71,7 @@ export class TableActionsController {
     private readonly wizard: WizardActionsHandler,
     private readonly fighter: FighterActionsHandler,
     private readonly gunslinger: GunslingerActionsHandler,
+    private readonly monsterHunter: MonsterHunterActionsHandler,
   ) {}
 
   @Post(':id/fighter/table-action')
@@ -251,5 +254,19 @@ export class TableActionsController {
     @Body() dto: UseWizardTableActionDto,
   ): Promise<TableActionResponseDto> {
     return this.wizard.useTableAction(user.id, id, dto);
+  }
+
+  @Post(':id/monster-hunter/table-action')
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({
+    summary: 'Resolve a Monster Hunter tabletop action',
+  })
+  @ApiOkResponse({ type: TableActionResponseDto })
+  useMonsterHunterTableAction(
+    @CurrentUser() user: AuthUser,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UseMonsterHunterTableActionDto,
+  ): Promise<TableActionResponseDto> {
+    return this.monsterHunter.useTableAction(user.id, id, dto);
   }
 }

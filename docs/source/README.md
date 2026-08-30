@@ -16,6 +16,7 @@ docs/source/
     phb/
     srd/
   _scrapes/                  # HTML Beyond temporário (gitignored)
+  scrap/                     # HTML Beyond manual (Cap. 2 GH, etc.)
   _assets/                   # PNGs temporários de import (gitignored)
 ```
 
@@ -26,7 +27,7 @@ docs/source/
 | Pasta | Arquivos | Seeds / uso |
 |-------|----------|-------------|
 | `dmg/` | `items-az.txt`, `items-az.json`, `items-az-index.md`, `wiring-status.md` | `D010+`, economy |
-| `grim-hollow/` | `cap1-heritages.json` … `cap6-transformations.json` | pack `grim-hollow` J009–J021 |
+| `grim-hollow/` | `cap1-heritages.json` … `cap6-transformations.json`, `cap2-subclasses-en.json`, `cap2-features-pt.json` | pack `grim-hollow` J009–J035; combate C063–C068 |
 | `griffons-saddlebag/` | `book-one-part-ii.json` | pack `griffons-saddlebag` R001–R011 (+ combate C057–C062) |
 | `northlands/` | `cap5.json`, overlays PT, `stat-blocks.json` | N026–N029, M003–M004 |
 | `phb/` | `cap6-mounts.json`, `cap6-barding.json`, sprites Cap. 7 | M005–M006, S079, equipamento |
@@ -39,6 +40,7 @@ Salvar HTML exportado do D&D Beyond em subpastas por livro:
 | Subpasta | Conteúdo |
 |----------|----------|
 | `_scrapes/grim-hollow/` | Capítulos GHPG (`Chapter 1` … `Chapter 6`) |
+| `scrap/` | Export manual (ex.: Cap. 2 Classes & Subclasses) — lido antes de `_scrapes` |
 | `_scrapes/griffons-saddlebag/` | Part II Book One, Book Two, etc. |
 | `_scrapes/phb/` | Equipamento, montarias |
 | `_scrapes/northlands/` | Worldbook |
@@ -63,6 +65,11 @@ Após import para `public/catalog/`: `--prune-source` ou apagar manualmente.
 # 1. Salvar HTML em _scrapes/<livro>/
 # 2. Extrair JSON
 node scripts/extract-ghpg-cap1.mjs          # → extracts/grim-hollow/cap1-heritages.json
+node scripts/extract-ghpg-cap2.mjs          # → cap2-subclasses-en.json
+node scripts/build-ghpg-cap2-features-pt-overlay.mjs
+node scripts/generate-ghpg-cap2-seeds.mjs
+node scripts/import-ghpg-cap2-subclass-images.mjs
+node scripts/generate-ghpg-cap2-subclass-options.mjs
 node scripts/extract-gsb-part-ii.mjs        # → extracts/griffons-saddlebag/book-one-part-ii.json
 
 # 3. Limpar lixo de scrape
@@ -70,6 +77,7 @@ node scripts/cleanup-docs-source-scrapes.mjs
 
 # 4. Gerar seeds
 node scripts/generate-ghpg-cap1-seeds.mjs
+node scripts/generate-ghpg-cap2-seeds.mjs
 node scripts/generate-gsb-part-ii-seeds.mjs
 
 # 5. Aplicar no DB

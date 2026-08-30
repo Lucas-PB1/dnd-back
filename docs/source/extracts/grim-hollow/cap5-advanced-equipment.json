@@ -4,7 +4,119 @@
     "citationSlug": "grim-hollow-players-guide-2024-en:chapter-5-advanced-weapons-equipment",
     "book": "Grim Hollow: Player's Guide",
     "chapter": 5,
-    "chapterTitle": "Advanced Weapons & Equipment"
+    "chapterTitle": "Advanced Weapons & Equipment",
+    "htmlPath": "D:\\Projetos\\dnd-work\\dnd-api\\docs\\source\\scrap\\Chapter 5_ Advanced Weapons & Equipment - Grim Hollow_ Player’s Guide - Dungeons & Dragons - Sources - D&D Beyond.html"
+  },
+  "rules": {
+    "advancedWeaponTraining": {
+      "kind": "advanced-weapon",
+      "proficiencySlug": "armas-avancadas",
+      "featSlug": "advanced-weapon-proficiency",
+      "fightingStyleSlug": "advanced-weapon-proficiency",
+      "disadvantageWithoutProficiency": true,
+      "specialPropertiesRequireProficiency": true,
+      "masteryRequiresAdvancedProficiency": true,
+      "introEn": "Mastery of Advanced weapons requires military training and skill. To use any of the special properties or the Weapon Mastery properties of an Advanced weapon, you must take the Advanced Weapon Proficiency feat .\n\nThe following properties are new or altered for Advanced weapons. Wielders of Advanced weapons have Disadvantage on attack rolls with these weapons unless they are proficient with the weapon.\n\nAn Armor-Piercing weapon is a Melee weapon designed to punch through armor or thick hide. When you make an attack roll using an Armor-Piercing weapon, you gain a +1 bonus to the attack roll if your target is wearing armor or has an Armor Class of 18 or higher.\n\nBlackpowder weapons fire projectiles with ear-splitting noise, shredding armor with deadly force. When fired, Blackpowder weapons emit a deafening crack audible 300 feet away. A Blackpowder weapon exposed to heavy rain, submerged, or similarly drenched in water, can’t fire until dried for 1 hour. These weapons use paper cartridge bullets as ammunition.\n\nCumbersome weapons are difficult to wield but are effective ranged tools for those strong enough to wield them. When making an attack with a Cumbersome weapon, you must use your Strength modifier for the attack and damage rolls.\n\nA Damage property weapon can deal different types of damage. When you hit with an attack from this weapon, choose one of the damage types allowed.\n\nA Double weapon functions as two Light weapons, one in each hand, for the purposes of two-weapon fighting. If a Double weapon has the Reach property, you can use only one of these properties per turn.\n\nA Hafted weapon’s haft can function well as an off-hand attack. After you use the Attack action to attack with a Hafted weapon, you can use a Bonus Action to make a melee attack with the haft. The haft deals 1d6 Bludgeoning damage, and you add your ability modifier to damage.\n\nA weapon with the Magazine property also has a number and an ammunition type. The weapon holds that amount and type of ammunition, which you can expend before needing to reload the weapon. As a Bonus Action, you may remove a Magazine and then reload it with a new Magazine. A Magazine weapon comes with two empty magazines included in the weapon’s cost and weight. An additional empty magazine for a Magazine weapon costs 25 GP. Loading an empty Magazine with ammunition takes 1 minute.\n\nMomentum weapons allow you to deliver devastating attacks as part of rapid movement. When you hit with a Momentum weapon after you moved 20 feet or more in a straight line during the same turn, upgrade the damage dice to the weapon’s Momentum Dice value.\n\nRepeater weapons can fire ammo in quick succession, using multiple barrels or quick-reloading mechanisms. When you take the Attack action with a Repeater weapon, you can shoot multiple times if you have features that let you attack more than once as part of that action, such as Extra Attack. After taking the Attack action you can use a Bonus Action to attack once with the same weapon. You don't add your ability modifier to the Bonus Action's attack, unless that modifier is negative.\n\nThe following are new Mastery Properties usable by characters who have a feature, such as Weapon Mastery, that unlocks the property for the character. Characters must also be proficient with Advanced weapons to use any Mastery Properties of an Advanced weapon.\n\nA Brutal weapon is designed for maximum damage. Brutal weapons score Critical Hits on a natural roll of 19 or 20. If your Critical Range is already increased, instead increase it by 1 point (such as from 19-20 to 18-20). When you score a Critical Hit with a Brutal weapon against a creature, the weapon deals one additional die of damage.\n\nA Defending weapon is either made for parrying, has advanced techniques for use in parrying, or both. When wielding a Defending weapon, you may use your Reaction when you are hit by a melee attack roll. Roll 1d4 and add the result to your AC against the triggering attack.\n\nA Disarming weapon can catch a foe’s weapon, allowing you to remove it from their grasp. When you take the Attack action on your turn and hit with a Disarming weapon, you can use your Bonus Action later on the same turn to disarm the target. Both you and the attacker must make opposed attack rolls, ignoring any sources of Advantage and Disadvantage . If your result is higher and the weapon is something the target can drop, the weapon falls from the target’s grasp, landing in its space.\n\nIf your winning result on the opposed attack roll was a Critical Hit, you can choose for the weapon either to land in a space of your choice up to 15 feet from the target, or to land in your hand if you have a free hand.\n\nWhen you take the Attack action on your turn and hit with an Entangling weapon, you can use a Bonus Action later on the same turn to entangle the target. The target must succeed on a Dexterity saving throw (DC 10 plus your Proficiency Bonus) or have the Grappled condition until it escapes or until you release the weapon. The target succeeds automatically if it is Huge or larger.\n\nTo escape, the target must use an action to make a Strength ( Athletics ) or Dexterity ( Acrobatics ) check against the same DC. On a success, the target no longer has the Grappled condition. While a creature is Grappled by this weapon, you can't use it to attack a different creature.\n\nA Returning weapon allows you to hurl the weapon in such a way that it returns to you. When you make a ranged attack with a Returning weapon, the weapon returns to you immediately after hitting or missing the target. You can catch the weapon if you have a hand free to do so.\n\nScatter weapons can devastate multiple enemies at once. When you take the Attack action and hit a creature with a Scatter weapon, measure the weapon’s scatter range from the target’s space (or one square the creature occupies if it is Large or larger). Creatures other than the original target that fall within the weapon’s scatter range take damage equal to your 1 + your Dexterity modifier (minimum 2). This damage is of the same type you dealt to the original target.\n\nWeapons with the Set property allow you to prepare for an oncoming attack. If a target enters your reach while you wield a weapon with this property, you can use your Reaction to make a melee attack with the weapon against that target.\n\nA weapon with the Strong-Draw quality requires great strength to use. You have Disadvantage on attack rolls with a Strong-Draw weapon unless your Strength is 13 or higher. You add both your Strength and Dexterity modifiers to damage with a Strong-Draw weapon.\n\nSwift weapons help you recover quickly from missed attacks. When you miss with a Swift weapon, you have Advantage on the first attack roll you make with the weapon against the same target before the end of your next turn. If that attack hits, it also deals an extra 1d4 damage of the weapon’s normal damage type."
+    },
+    "advancedAmmunition": {
+      "kind": "advanced-ammunition",
+      "minLevel": 3,
+      "requiresWeaponProficiency": true,
+      "introEn": "Just as industrious crafters and disciplined masters have created advanced weapons and techniques, so too have they created ammunition to deal specialized damage. To utilize Advanced Ammunition , you must have proficiency with the weapon that uses the ammo, and you must be level 3 or higher.\n\nAdvanced Ammunition named after a damage type deals that damage type. Arrows and bolts can have wide heads that deal Slashing damage or blunt tips that deal Bludgeoning damage. A sling bullet can have facets that deal Piercing damage. All such ammo is heavier than normal; the weapon’s maximum range while using it is halved."
+    },
+    "advancedEquipment": {
+      "introEn": "The brilliant engineers and crafters who designed and built Etharis’s highly advanced weapons and ammunition did not stop there. Other inventions of war—and of peace—became invaluable to the soldiers, guards, and adventurers of Etharis.\n\nSome pieces of Advanced equipment, such as the corrupting Shadowsteel Focus, need special training to fully employ. Other items, like the Retractable Shield, are usable by anyone proficient with shields. And many other pieces of equipment are usable by anyone—though few would be able to afford and maintain these mechanical, alchemical, or even magical marvels.\n\nAs they are expensive and difficult to make, access to Advanced equipment is limited—maybe even as limited as some magic items. The largest cities, or locations housing master crafters, may only have a few items of Advanced equipment.\n\nThe following items are considered Advanced equipment.",
+      "tiersEn": [
+        "A Blessed Stake is a necessary tool in the arsenal of vampire hunters everywhere. This wooden spike, roughly a foot in length, has been blessed by a servant of an Arch Seraph in a special ceremony.",
+        "As an Attack action, a wielder can make a melee attack using Strength. Against most foes, this deals 1d4 Piercing damage. Against a Vampire that has the Stunned or Incapacitated condition, a successful attack with the Blessed Stake kills the Vampire.",
+        "If the Vampire is CR 10 or lower, the Vampire instantly crumbles to dust. If the Vampire is more powerful, its form remains whole for one year before crumbling to dust. If the Blessed Stake is removed before then, the Vampire rises with 1 Hit Point.",
+        "Named after the Arch Daemon of Fear, this poison creates an extremely powerful hallucinogenic effect that evokes a victim’s worst fears. The poison is airborne, and victims need only breathe it in to suffer its effects. On the rare occasions it has been used, people in crammed rooms have jumped out of windows or even killed each other out of abject fear."
+      ]
+    },
+    "weaponProperties": [
+      {
+        "anchor": "wpropArmorPiercing",
+        "slug": "armor-piercing",
+        "descriptionEn": "An Armor-Piercing weapon is a Melee weapon designed to punch through armor or thick hide. When you make an attack roll using an Armor-Piercing weapon, you gain a +1 bonus to the attack roll if your target is wearing armor or has an Armor Class of 18 or higher."
+      },
+      {
+        "anchor": "wpropBlackpowder",
+        "slug": "blackpowder",
+        "descriptionEn": "Blackpowder weapons fire projectiles with ear-splitting noise, shredding armor with deadly force. When fired, Blackpowder weapons emit a deafening crack audible 300 feet away. A Blackpowder weapon exposed to heavy rain, submerged, or similarly drenched in water, can’t fire until dried for 1 hour. These weapons use paper cartridge bullets as ammunition."
+      },
+      {
+        "anchor": "wpropCumbersome",
+        "slug": "cumbersome",
+        "descriptionEn": "Cumbersome weapons are difficult to wield but are effective ranged tools for those strong enough to wield them. When making an attack with a Cumbersome weapon, you must use your Strength modifier for the attack and damage rolls."
+      },
+      {
+        "anchor": "wpropDamage",
+        "slug": "damage",
+        "descriptionEn": "A Damage property weapon can deal different types of damage. When you hit with an attack from this weapon, choose one of the damage types allowed."
+      },
+      {
+        "anchor": "wpropDouble",
+        "slug": "double",
+        "descriptionEn": "A Double weapon functions as two Light weapons, one in each hand, for the purposes of two-weapon fighting. If a Double weapon has the Reach property, you can use only one of these properties per turn."
+      },
+      {
+        "anchor": "wpropHafted",
+        "slug": "hafted",
+        "descriptionEn": "A Hafted weapon’s haft can function well as an off-hand attack. After you use the Attack action to attack with a Hafted weapon, you can use a Bonus Action to make a melee attack with the haft. The haft deals 1d6 Bludgeoning damage, and you add your ability modifier to damage."
+      },
+      {
+        "anchor": "wpropMagazine",
+        "slug": "magazine",
+        "descriptionEn": "A weapon with the Magazine property also has a number and an ammunition type. The weapon holds that amount and type of ammunition, which you can expend before needing to reload the weapon. As a Bonus Action, you may remove a Magazine and then reload it with a new Magazine. A Magazine weapon comes with two empty magazines included in the weapon’s cost and weight. An additional empty magazine for a Magazine weapon costs 25 GP. Loading an empty Magazine with ammunition takes 1 minute."
+      },
+      {
+        "anchor": "wpropMomentum",
+        "slug": "momentum",
+        "descriptionEn": "Momentum weapons allow you to deliver devastating attacks as part of rapid movement. When you hit with a Momentum weapon after you moved 20 feet or more in a straight line during the same turn, upgrade the damage dice to the weapon’s Momentum Dice value."
+      }
+    ],
+    "weaponMasteries": [
+      {
+        "anchor": "wpropBrutal",
+        "slug": "brutal",
+        "descriptionEn": "A Brutal weapon is designed for maximum damage. Brutal weapons score Critical Hits on a natural roll of 19 or 20. If your Critical Range is already increased, instead increase it by 1 point (such as from 19-20 to 18-20). When you score a Critical Hit with a Brutal weapon against a creature, the weapon deals one additional die of damage."
+      },
+      {
+        "anchor": "wpropDefending",
+        "slug": "defending",
+        "descriptionEn": "A Defending weapon is either made for parrying, has advanced techniques for use in parrying, or both. When wielding a Defending weapon, you may use your Reaction when you are hit by a melee attack roll. Roll 1d4 and add the result to your AC against the triggering attack."
+      },
+      {
+        "anchor": "wpropDisarming",
+        "slug": "disarming",
+        "descriptionEn": "A Disarming weapon can catch a foe’s weapon, allowing you to remove it from their grasp. When you take the Attack action on your turn and hit with a Disarming weapon, you can use your Bonus Action later on the same turn to disarm the target. Both you and the attacker must make opposed attack rolls, ignoring any sources of Advantage and Disadvantage . If your result is higher and the weapon is something the target can drop, the weapon falls from the target’s grasp, landing in its space. If your winning result on the opposed attack roll was a Critical Hit, you can choose for the weapon either to land in a space of your choice up to 15 feet from the target, or to land in your hand if you have a free hand."
+      },
+      {
+        "anchor": "wpropEntangling",
+        "slug": "entangling",
+        "descriptionEn": "When you take the Attack action on your turn and hit with an Entangling weapon, you can use a Bonus Action later on the same turn to entangle the target. The target must succeed on a Dexterity saving throw (DC 10 plus your Proficiency Bonus) or have the Grappled condition until it escapes or until you release the weapon. The target succeeds automatically if it is Huge or larger. To escape, the target must use an action to make a Strength ( Athletics ) or Dexterity ( Acrobatics ) check against the same DC. On a success, the target no longer has the Grappled condition. While a creature is Grappled by this weapon, you can't use it to attack a different creature."
+      },
+      {
+        "anchor": "wpropReturning",
+        "slug": "returning",
+        "descriptionEn": "A Returning weapon allows you to hurl the weapon in such a way that it returns to you. When you make a ranged attack with a Returning weapon, the weapon returns to you immediately after hitting or missing the target. You can catch the weapon if you have a hand free to do so."
+      },
+      {
+        "anchor": "wpropScatter",
+        "slug": "scatter",
+        "descriptionEn": "Scatter weapons can devastate multiple enemies at once. When you take the Attack action and hit a creature with a Scatter weapon, measure the weapon’s scatter range from the target’s space (or one square the creature occupies if it is Large or larger). Creatures other than the original target that fall within the weapon’s scatter range take damage equal to your 1 + your Dexterity modifier (minimum 2). This damage is of the same type you dealt to the original target."
+      },
+      {
+        "anchor": "wpropSet",
+        "slug": "set",
+        "descriptionEn": "Weapons with the Set property allow you to prepare for an oncoming attack. If a target enters your reach while you wield a weapon with this property, you can use your Reaction to make a melee attack with the weapon against that target."
+      },
+      {
+        "anchor": "wpropStrong-Draw",
+        "slug": "strong-draw",
+        "descriptionEn": "A weapon with the Strong-Draw quality requires great strength to use. You have Disadvantage on attack rolls with a Strong-Draw weapon unless your Strength is 13 or higher. You add both your Strength and Dexterity modifiers to damage with a Strong-Draw weapon."
+      }
+    ]
   },
   "meleeWeapons": [
     {
@@ -25,7 +137,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Catchpole). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "cavalry-flail",
@@ -45,7 +169,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Cavalry Flail). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "cavalry-hammer",
@@ -66,7 +202,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Cavalry Hammer). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "cavalry-pick",
@@ -87,7 +235,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Cavalry Pick). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "chakram",
@@ -112,7 +272,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Chakram). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "claymore",
@@ -131,7 +303,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Claymore). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "double-blade",
@@ -153,7 +337,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Double Blade). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "double-spear",
@@ -175,7 +371,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Double Spear). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "elite-rapier",
@@ -193,7 +401,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Elite Rapier). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "fighting-chain",
@@ -214,7 +434,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Fighting Chain). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "fighting-chain-brutal",
@@ -235,7 +467,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Fighting Chain, Brutal). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "fighting-chain-hook",
@@ -261,7 +505,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Fighting Chain, Hook). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "fighting-chain-sickle",
@@ -287,7 +543,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Fighting Chain, Sickle). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "gladiator-net",
@@ -310,7 +578,19 @@
         "text": "350 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Gladiator Net). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "guardian-poleaxe",
@@ -336,7 +616,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Guardian Poleaxe). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "knightly-lance",
@@ -358,7 +650,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Knightly Lance). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "knightly-sword",
@@ -378,7 +682,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Knightly Sword). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "military-fork",
@@ -399,7 +715,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Military Fork). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "parrying-dagger",
@@ -424,7 +752,19 @@
         "text": "350 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Parrying Dagger). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "polearm",
@@ -445,7 +785,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Polearm). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "punching-dagger",
@@ -465,7 +817,19 @@
         "text": "300 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Punching Dagger). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "returning-club",
@@ -489,7 +853,19 @@
         "text": "300 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Returning Club). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "sabre",
@@ -507,7 +883,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Sabre). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "sheathed-staff",
@@ -528,7 +916,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Sheathed Staff). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "side-handle-baton",
@@ -547,7 +947,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Side-handle Baton). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "wrath-axe",
@@ -570,7 +982,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Wrath Axe). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "wrath-maul",
@@ -593,7 +1017,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Wrath Maul). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     }
   ],
   "rangedWeapons": [
@@ -621,7 +1057,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Arbalest). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "blackpowder-pistol",
@@ -647,7 +1095,19 @@
         "text": "200 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Blackpowder Pistol). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "blackpowder-rifle",
@@ -673,7 +1133,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Blackpowder Rifle). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "blunderbuss-grim-hollow",
@@ -700,7 +1172,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Blunderbuss). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "blunderbuss-hand",
@@ -725,7 +1209,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Blunderbuss, Hand). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "composite-longbow",
@@ -750,7 +1246,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Composite Longbow). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "composite-shortbow",
@@ -774,7 +1282,19 @@
         "text": "400 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Composite Shortbow). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "dragon-pistol",
@@ -794,7 +1314,19 @@
         "text": "350 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Dragon Pistol). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "dragon-rifle",
@@ -814,7 +1346,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Dragon Rifle). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "flame-bellows",
@@ -838,7 +1382,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Flame Bellows). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "repeater-crossbow",
@@ -865,7 +1421,19 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Repeater Crossbow). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "repeater-crossbow-hand",
@@ -892,7 +1460,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Repeater Crossbow, Hand). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "repeater-crossbow-heavy",
@@ -920,7 +1500,19 @@
         "text": "1,000 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Repeater Crossbow, Heavy). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "repeater-needler",
@@ -947,7 +1539,19 @@
         "text": "500 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Repeater Needler). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     },
     {
       "slug": "repeater-slinger",
@@ -974,189 +1578,414 @@
         "text": "750 PO"
       },
       "kind": "weapon",
-      "description": "Arma avançada de Grim Hollow (Repeater Slinger). Requer proficiência em Armas Avançadas para usar propriedades especiais e maestria."
+      "catalogKind": "advanced-weapon",
+      "itemType": "weapon",
+      "ddbKind": "weapons",
+      "requirement": {
+        "kind": "advanced-weapon",
+        "proficiencySlug": "armas-avancadas",
+        "featSlug": "advanced-weapon-proficiency",
+        "fightingStyleSlug": "advanced-weapon-proficiency",
+        "disadvantageWithoutProficiency": true,
+        "specialPropertiesRequireProficiency": true,
+        "masteryRequiresAdvancedProficiency": true
+      },
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
     }
   ],
   "equipment": [
     {
       "slug": "blessed-stake",
       "name": "Blessed Stake",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "250 PO"
       },
       "weight": "50 g",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Blessed Stake)."
+      "kind": "equipment",
+      "catalogKind": "weapon-like-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": true,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "A Blessed Stake is a necessary tool in the arsenal of vampire hunters everywhere. This wooden spike, roughly a foot in length, has been blessed by a servant of an Arch Seraph in a special ceremony. As an Attack action, a wielder can make a melee attack using Strength. Against most foes, this deals 1d4 Piercing damage. Against a Vampire that has the Stunned or Incapacitated condition, a successful attack with the Blessed Stake kills the Vampire. If the Vampire is CR 10 or lower, the Vampire instantly crumbles to dust. If the Vampire is more powerful, its form remains whole for one year before crumbling to dust. If the Blessed Stake is removed before then, the Vampire rises with 1 Hit Point."
     },
     {
       "slug": "breath-of-beleth-poison",
       "name": "Breath of Beleth",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "150 PO"
       },
       "weight": "125 g",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Breath of Beleth)."
+      "kind": "equipment",
+      "catalogKind": "poison",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "Named after the Arch Daemon of Fear, this poison creates an extremely powerful hallucinogenic effect that evokes a victim’s worst fears. The poison is airborne, and victims need only breathe it in to suffer its effects. On the rare occasions it has been used, people in crammed rooms have jumped out of windows or even killed each other out of abject fear. Rumors say that the poison has been forbidden even by the Ebon Syndicate , deeming it too dangerous, too extravagant, and too conspicuous. Chances are that such a powerful substance wasn’t simply abandoned, however, and other rumors say the Ebon Syndicate still uses a milder version during interrogation. Breath of Beleth (Inhaled). A creature who breathes and is in the same space as an open container of the substance must succeed at a DC 15 Constitution saving throw or have the Poisoned condition for 1 minute. While Poisoned in this way, a creature has the Frightened condition, and it is Hostile to all creatures it can see. If a creature moves within 5 feet of a creature Poisoned in this way, the Poisoned creature must use the Dash action on its turn to move away. If it cannot move away, it must instead use the Attack action against the adjacent creature."
     },
     {
       "slug": "buckler-grim-hollow",
       "name": "Buckler",
+      "ddbKind": "armor",
       "cost": {
         "text": "20 PO"
       },
       "weight": "2 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Buckler)."
+      "kind": "equipment",
+      "catalogKind": "armor-shield",
+      "itemType": "armor",
+      "listInCatalog": true,
+      "armor": {
+        "acFormula": "+1",
+        "strengthReq": null,
+        "stealthDisadvantage": false,
+        "shieldVariant": "buckler"
+      },
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "shield",
+        "notesPt": "Usável por qualquer personagem proficiente em escudos."
+      },
+      "description": "This small shield is worn on the forearm. While worn, it gives you +1 to AC, and it can be used as a Martial Melee weapon with the Light property that deals 1d4 Bludgeoning damage."
     },
     {
       "slug": "concealed-blade",
       "name": "Concealed Blade",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "50 PO"
       },
       "weight": "1 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Concealed Blade)."
+      "kind": "equipment",
+      "catalogKind": "weapon-like-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": true,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "A Concealed Blade is a dagger built into a mechanism hidden within a bracer or gauntlet. When you roll Initiative, you can make a Dexterity ( Deception ) check opposed by others’ Wisdom ( Perception ) checks. You have Advantage on the first attack made in the first round of combat against any enemy who failed their check."
     },
     {
       "slug": "fire-bomb",
       "name": "Fire Bomb",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "100 PO"
       },
       "weight": "250 g",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Fire Bomb)."
+      "kind": "equipment",
+      "catalogKind": "adventuring-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "You can throw a Fire Bomb by using an Attack action. Target one space you can see within 20 feet. A creature in this space must make on a DC 15 Dexterity saving throw. On a failed save, a creature in that space takes 2d6 Slashing damage and 4d6 Fire damage and starts Burning . Creatures adjacent to the attacked space take half that damage and are not Burning."
     },
     {
       "slug": "grappling-gun",
       "name": "Grappling Gun",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "200 PO"
       },
       "weight": "1,5 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Grappling Gun)."
+      "kind": "equipment",
+      "catalogKind": "adventuring-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "A Grappling Gun can shoot a Grappling Hook attached to a rope up to 150 feet, and the hook catches with a successful DC 10 Dexterity ( Acrobatics ) check. Additionally, if you are falling, you can use a Reaction to shoot the Grappling Gun at an attachable surface to stop your fall. You still must succeed on the check to ensure the Grappling Hook catches on a solid object. On a successful check, you stop your fall."
     },
     {
       "slug": "hunters-armor",
       "name": "Hunter’s Armor",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "+500 PO"
       },
       "weight": null,
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Hunter’s Armor)."
+      "kind": "equipment",
+      "catalogKind": "armor-upgrade",
+      "itemType": "other",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": {
+        "appliesTo": "armor",
+        "costModifierText": "+500 PO"
+      },
+      "weaponLike": false,
+      "requirement": {
+        "kind": "armor-upgrade",
+        "notesPt": "Modificador de +500 PO aplicado a qualquer tipo de armadura."
+      },
+      "description": "Hunter’s Armor is a favorite of monster hunters across the length and breadth of Etharis. Any type of armor can be constructed as Hunter’s Armor by paying the listed extra cost. This reinforces the most vital areas with adamantine and mithral threads to turn devastating hits into normal wounds. If a blow would cause a Grievous Wound, roll a d20. On an 11 or higher, the blow does not deliver a Grievous Wound."
     },
     {
       "slug": "iron-net",
       "name": "Iron Net",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "150 PO"
       },
       "weight": "10 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Iron Net)."
+      "kind": "equipment",
+      "catalogKind": "adventuring-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "This net is comprised of tiny interlocking iron rings. It acts as a normal Net , with the following changes: The Iron Net’s range is 10 feet. The DC of the Strength ( Athletics ) check to escape is 15. The Iron Net has AC 13 and 15 HP. These I don’t sell to just anyone, but you seem to be a rather…discerning customer. —Back-alley Arms Merchant"
     },
     {
       "slug": "mastercraft-instrument",
       "name": "Mastercraft Instrument",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "+250 PO"
       },
       "weight": null,
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Mastercraft Instrument)."
+      "kind": "equipment",
+      "catalogKind": "tool-instrument-upgrade",
+      "itemType": "other",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": {
+        "appliesTo": "musical-instrument",
+        "costModifierText": "+250 PO"
+      },
+      "weaponLike": false,
+      "requirement": {
+        "kind": "instrument",
+        "minProficiencyBonus": 4,
+        "notesPt": "Vantagem em Performance exige proficiência no instrumento e bônus de proficiência +4."
+      },
+      "description": "These musical instruments are not just the work of the finest luthiers and artisans in Etharis, they have secret embellishments and innovations that can add to a musical performance. If you are proficient in the instrument and have a Proficiency Bonus of at least +4, all Charisma ( Performance ) checks made using a Mastercraft Instrument have Advantage ."
     },
     {
       "slug": "noisemaker",
       "name": "Noisemaker",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "50 PO"
       },
       "weight": "2,5 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Noisemaker)."
+      "kind": "equipment",
+      "catalogKind": "adventuring-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "This small mechanical device is a specialty of gnomish crafters. As a Utilize action, you can throw the Noisemaker into a space within 60 feet. When it lands, it makes a loud noise of some kind, depending on the whims of the creator: a musical clash, a whistling, a whirring, a buzzing, etc. This noise can be heard up to half a mile away. A creature with an Intelligence score of 3 or less that is within 60 feet of the device when it goes off must succeed in a DC 10 Wisdom saving throw. On a failed save, the creature has the Frightened condition for one minute. As an Influence action, another creature who the Frightened creature can see or hear can attempt a DC 20 Wisdom ( Handle Animal ) or Charisma ( Persuasion ) check. On a success, the Frightened condition ends on that creature."
     },
     {
       "slug": "prosthetics",
       "name": "Prosthetics",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "500 PO"
       },
       "weight": "5 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Prosthetics)."
+      "kind": "equipment",
+      "catalogKind": "prosthetic",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "The brutal warfare and vicious monsters prevalent across Etharis leave many with Grievous Wounds, including missing limbs and other potentially debilitating injuries. The engineers and crafters of the world have made great strides in helping those people deal with those injuries through Prosthetics. When a creature with a Grievous Wound uses a Prosthetic, they ignore the penalties imposed by the Grievous Wound while wearing a Prosthetic that replaces the lost or wounded body part. Some Prosthetics can be enchanted with magic, giving them even further powers. Rules for Magical Prosthetics can be found in the Grim Hollow Campaign Guide ."
     },
     {
       "slug": "retractable-shield",
       "name": "Retractable Shield",
+      "ddbKind": "armor",
       "cost": {
         "text": "300 PO"
       },
       "weight": "3 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Retractable Shield)."
+      "kind": "equipment",
+      "catalogKind": "armor-shield",
+      "itemType": "armor",
+      "listInCatalog": true,
+      "armor": {
+        "acFormula": "+2",
+        "strengthReq": null,
+        "stealthDisadvantage": false,
+        "shieldVariant": "retractable"
+      },
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "shield",
+        "notesPt": "Usável por qualquer personagem proficiente em escudos."
+      },
+      "description": "This mechanized shield retracts into a bracer worn on the forearm. With a quick motion, it can be expanded just as an opponent believes they’ve snuck a blow. You can wear the Retractable Shield as a bracer on your forearm, and it does not count as having that hand occupied while the shield is retracted. As a Reaction to an attack hitting you, you can extend the shield, giving you a bonus to your Armor Class equal to your Proficiency Bonus against that attack. If this changes the attack from a hit into a miss, you may make one melee attack with a weapon or an Unarmed Strike against the provoking creature if they are within reach. The shield remains extended until the start of your next turn. As a free interaction with an object on your turn, you can either extend or retract the shield. While the shield is extended, it occupies your hand and confers a +2 bonus to your Armor Class."
     },
     {
       "slug": "seeing-glass",
       "name": "Seeing Glass",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "300 PO"
       },
       "weight": "1,5 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Seeing Glass)."
+      "kind": "equipment",
+      "catalogKind": "adventuring-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "This ornate silver hand mirror is decorated with a motif of withered roses. The mirror’s reflection always shows the true form of any creature viewed in it as if the viewer had Truesight . If the Seeing Glass is turned upon a vampire, the glass immediately shatters and is destroyed."
     },
     {
       "slug": "shadowsteel-focus",
       "name": "Shadowsteel Focus",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "500 PO"
       },
       "weight": null,
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Shadowsteel Focus)."
+      "kind": "equipment",
+      "catalogKind": "spellcasting-focus",
+      "itemType": "focus",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "feat-benefits",
+        "featSlugs": [
+          "shadowsteel-adept",
+          "shadowsteel-master"
+        ],
+        "notesPt": "Funciona como foco de conjuração sem treino extra; benefícios dos talentos Shadowsteel exigem os feats homônimos."
+      },
+      "description": "A Shadowsteel Focus is a Spellcasting Focus that contains some amount of Shadowsteel. Any Spellcasting Focus can be made as a Shadowsteel Focus. There is no benefit to using a Shadowsteel Focus instead of a Spellcasting Focus; however, a spellcaster with the Shadowsteel Adept feat and Shadowsteel Master feat feats can gain the benefits associated with that feat when they use a Shadowsteel Focus."
     },
     {
       "slug": "smoke-bomb",
       "name": "Smoke Bomb",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "50 PO"
       },
       "weight": "1,5 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Smoke Bomb)."
+      "kind": "equipment",
+      "catalogKind": "adventuring-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "As a Utilize action, you can throw this smoky glass vial to a space up to 30 feet away. When the vial breaks, the concoction creates a 10-foot-radius Sphere of smoke. The area is Heavily Obscured . The smoke lasts for 1d4 + 2 rounds, or half as long in a windy area."
     },
     {
       "slug": "stitching-needle",
       "name": "Stitching Needle",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "250 PO"
       },
       "weight": "25 g",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Stitching Needle)."
+      "kind": "equipment",
+      "catalogKind": "adventuring-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "This black iron needle easily pierces the skin. If a creature’s mouth is sewn shut with a Stitching Needle, it loses the ability to speak and cast spells with verbal components. The creature gains the ability to communicate with telepathy out to a range of 60 feet. Stitching the mouth of a willing, unconscious, or incapacitated creature takes 10 minutes. Removing the stitches takes 1 minute."
     },
     {
       "slug": "tower-shield-grim-hollow",
       "name": "Tower Shield",
+      "ddbKind": "armor",
       "cost": {
         "text": "200 PO"
       },
       "weight": "25 kg",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Tower Shield)."
+      "kind": "equipment",
+      "catalogKind": "armor-shield",
+      "itemType": "armor",
+      "listInCatalog": true,
+      "armor": {
+        "acFormula": "+3",
+        "strengthReq": 15,
+        "stealthDisadvantage": false,
+        "shieldVariant": "tower",
+        "speedPenaltyM": 3
+      },
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "shield",
+        "notesPt": "Usável por qualquer personagem proficiente em escudos."
+      },
+      "description": "This large shield provides more protection than a typical shield. While wielding a Tower Shield, you gain +3 to Armor Class. If you use an action to set the Tower Shield, you have Three-Quarters Cover until the start of your next turn. Additionally, your Speed becomes 0 and cannot be increased during that time. To wield a Tower Shield, you must have a Strength of at least 15 and your Speed is reduced by 10 feet while wielding the shield."
     },
     {
       "slug": "watchers-candle",
       "name": "Watcher’s Candle",
+      "ddbKind": "adventuring-gear",
       "cost": {
         "text": "250 PO"
       },
       "weight": "125 g",
-      "kind": "gear",
-      "description": "Equipamento avançado de Grim Hollow (Watcher’s Candle)."
+      "kind": "equipment",
+      "catalogKind": "adventuring-gear",
+      "itemType": "gear",
+      "listInCatalog": true,
+      "armor": null,
+      "upgrade": null,
+      "weaponLike": false,
+      "requirement": {
+        "kind": "none"
+      },
+      "description": "This black tapered candle cannot be lit. When a Celestial, Fey, Fiend, or Undead comes within 120 feet of the candle, its wick ignites and burns with a purple flame. Once the candle has ignited, it burns for one hour, and it cannot be used again. Watcher’s Candles cannot function if they are wrapped in packaging or stowed in a container."
     }
   ],
   "ammunition": [
@@ -1168,11 +1997,23 @@
       },
       "weight": "50 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/10 lb.",
+      "propertyMeta": {
+        "section": "arrows-and-bolts",
+        "damageType": "bludgeoning",
+        "halvesMaxRange": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "arrows-and-bolts",
-      "description": "Equipamento avançado de Grim Hollow (Bludgeoning (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "arrows-and-bolts-ranging-1",
@@ -1181,12 +2022,24 @@
         "text": "1 SP"
       },
       "weight": "13 g",
-      "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/40 lb.",
+      "propertySlugs": [
+        "ranging"
+      ],
+      "propertyMeta": {
+        "section": "arrows-and-bolts"
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "arrows-and-bolts",
-      "description": "Equipamento avançado de Grim Hollow (Ranging (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "arrows-and-bolts-slashing-1",
@@ -1196,11 +2049,23 @@
       },
       "weight": "50 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/10 lb.",
+      "propertyMeta": {
+        "section": "arrows-and-bolts",
+        "damageType": "slashing",
+        "halvesMaxRange": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "arrows-and-bolts",
-      "description": "Equipamento avançado de Grim Hollow (Slashing (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "arrows-and-bolts-whistling-1",
@@ -1209,12 +2074,26 @@
         "text": "1 SP"
       },
       "weight": "25 g",
-      "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/20 lb.",
+      "propertySlugs": [
+        "whistling"
+      ],
+      "propertyMeta": {
+        "section": "arrows-and-bolts",
+        "damageType": "bludgeoning",
+        "halvesMaxRange": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "arrows-and-bolts",
-      "description": "Equipamento avançado de Grim Hollow (Whistling (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "sling-bullets-piercing-1",
@@ -1224,11 +2103,23 @@
       },
       "weight": "50 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/10 lb.",
+      "propertyMeta": {
+        "section": "sling-bullets",
+        "damageType": "piercing",
+        "halvesMaxRange": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "sling-bullets",
-      "description": "Equipamento avançado de Grim Hollow (Piercing (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "sling-bullets-ranging-1",
@@ -1237,12 +2128,24 @@
         "text": "5 CP"
       },
       "weight": "25 g",
-      "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/20 lb.",
+      "propertySlugs": [
+        "ranging"
+      ],
+      "propertyMeta": {
+        "section": "sling-bullets"
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "sling-bullets",
-      "description": "Equipamento avançado de Grim Hollow (Ranging (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "sling-bullets-whistling-1",
@@ -1251,12 +2154,26 @@
         "text": "5 CP"
       },
       "weight": "25 g",
-      "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/20 lb.",
+      "propertySlugs": [
+        "whistling"
+      ],
+      "propertyMeta": {
+        "section": "sling-bullets",
+        "damageType": "bludgeoning",
+        "halvesMaxRange": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "sling-bullets",
-      "description": "Equipamento avançado de Grim Hollow (Whistling (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "alchemical-ammunition-arrow-1",
@@ -1266,11 +2183,22 @@
       },
       "weight": "100 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/5 lb.",
+      "propertyMeta": {
+        "section": "alchemical-ammunition",
+        "alchemical": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "alchemical-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Arrow (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "alchemical-ammunition-bolt-1",
@@ -1280,11 +2208,22 @@
       },
       "weight": "100 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/5 lb.",
+      "propertyMeta": {
+        "section": "alchemical-ammunition",
+        "alchemical": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "alchemical-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Bolt (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "alchemical-ammunition-sling-bullet-1",
@@ -1294,11 +2233,22 @@
       },
       "weight": "100 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/5 lb.",
+      "propertyMeta": {
+        "section": "alchemical-ammunition",
+        "alchemical": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "alchemical-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Sling Bullet (1))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "specialized-ammunition-arrow-5",
@@ -1308,11 +2258,22 @@
       },
       "weight": "125 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/4 lb.",
+      "propertyMeta": {
+        "section": "specialized-ammunition",
+        "specialized": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "specialized-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Arrow (5))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "specialized-ammunition-bolt-5",
@@ -1322,11 +2283,22 @@
       },
       "weight": "250 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/2 lb.",
+      "propertyMeta": {
+        "section": "specialized-ammunition",
+        "specialized": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "specialized-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Bolt (5))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "specialized-ammunition-paper-cartridge-bullet-10",
@@ -1336,11 +2308,22 @@
       },
       "weight": "250 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/2 lb.",
+      "propertyMeta": {
+        "section": "specialized-ammunition",
+        "specialized": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "specialized-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Paper Cartridge Bullet (10))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "specialized-ammunition-sling-bullet-5",
@@ -1350,11 +2333,22 @@
       },
       "weight": "250 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1/2 lb",
+      "propertyMeta": {
+        "section": "specialized-ammunition",
+        "specialized": true
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "specialized-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Sling Bullet (5))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "other-ranged-ammunition-bellows-cannister",
@@ -1364,11 +2358,21 @@
       },
       "weight": "2 kg",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "4 lb.",
+      "propertyMeta": {
+        "section": "other-ranged-ammunition"
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "other-ranged-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Bellows Cannister (20 shots))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "other-ranged-ammunition-dragon-shot",
@@ -1378,11 +2382,21 @@
       },
       "weight": "1 kg",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "2 lb.",
+      "propertyMeta": {
+        "section": "other-ranged-ammunition"
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "other-ranged-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Dragon Shot (20))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     },
     {
       "slug": "other-ranged-ammunition-magazine",
@@ -1392,11 +2406,21 @@
       },
       "weight": "500 g",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "1 lb.",
+      "propertyMeta": {
+        "section": "other-ranged-ammunition"
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "other-ranged-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Magazine)."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "A weapon with the Magazine property also has a number and an ammunition type. The weapon holds that amount and type of ammunition, which you can expend before needing to reload the weapon. As a Bonus Action, you may remove a Magazine and then reload it with a new Magazine. A Magazine weapon comes with two empty magazines included in the weapon’s cost and weight. An additional empty magazine for a Magazine weapon costs 25 GP. Loading an empty Magazine with ammunition takes 1 minute."
     },
     {
       "slug": "other-ranged-ammunition-paper-cartridge-bullet",
@@ -1406,12 +2430,22 @@
       },
       "weight": "1 kg",
       "propertySlugs": [],
-      "propertyMeta": {},
-      "propertiesRaw": "2 lb.",
+      "propertyMeta": {
+        "section": "other-ranged-ammunition"
+      },
+      "propertiesRaw": null,
       "kind": "ammunition",
+      "catalogKind": "ammunition",
+      "itemType": "gear",
+      "ddbKind": null,
       "section": "other-ranged-ammunition",
-      "description": "Equipamento avançado de Grim Hollow (Paper Cartridge Bullet (20))."
+      "requirement": {
+        "kind": "advanced-ammunition",
+        "minLevel": 3,
+        "requiresWeaponProficiency": true
+      },
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
     }
   ],
-  "extractedAt": "2026-08-29T21:36:11.053Z"
+  "extractedAt": "2026-08-30T16:38:31.791Z"
 }

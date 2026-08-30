@@ -8,8 +8,11 @@ describe('fighting-style-unlock', () => {
     expect(fightingStyleUnlockLevel('fighter')).toBe(1);
     expect(fightingStyleUnlockLevel('paladin')).toBe(2);
     expect(fightingStyleUnlockLevel('ranger')).toBe(2);
+    expect(fightingStyleUnlockLevel('gunslinger')).toBe(1);
+    expect(fightingStyleUnlockLevel('monster-hunter')).toBe(2);
     expect(fightingStyleUnlockLevel('cleric')).toBeNull();
     expect(classHasFightingStylePick('fighter', 1)).toBe(true);
+    expect(classHasFightingStylePick('gunslinger', 1)).toBe(true);
     expect(classHasFightingStylePick('paladin', 1)).toBe(false);
     expect(classHasFightingStylePick('paladin', 2)).toBe(true);
     expect(classHasFightingStylePick('ranger', 2)).toBe(true);

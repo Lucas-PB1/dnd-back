@@ -53,6 +53,8 @@ export class EquipmentMapper {
           }
         : null,
       imageUrl: row.item.imageUrl ?? null,
+      editionSlug:
+        typeof raw.editionSlug === 'string' ? raw.editionSlug : null,
     };
   }
 
@@ -69,6 +71,8 @@ export class EquipmentMapper {
       stealthDisadvantage: row.stealthDisadvantage,
       costText: row.costText,
       weight: row.weight,
+      editionSlug: row.editionSlug,
+      imageUrl: row.imageUrl,
     };
   }
 }

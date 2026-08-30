@@ -33,4 +33,10 @@ export class ArmorResponseDto {
 
   @ApiPropertyOptional({ example: '5 kg' })
   weight!: string | null;
+
+  @ApiPropertyOptional({ example: 'grim-hollow-players-guide-2024-en' })
+  editionSlug!: string | null;
+
+  @ApiPropertyOptional({ example: '/catalog/equipment/buckler-grim-hollow.png' })
+  imageUrl!: string | null;
 }

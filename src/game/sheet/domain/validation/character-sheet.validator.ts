@@ -59,6 +59,7 @@ export class CharacterSheetValidator {
         ctx.classSlug,
         feats,
         input.subclassOptions,
+        ctx.level,
       );
     }
 
@@ -70,7 +71,14 @@ export class CharacterSheetValidator {
         input.speciesChoices,
         input.featOptions,
       );
-      await this.classOptionsValidator.validateClassWeaponMasteryOptions(ctx, input.classOptions);
+      await this.classOptionsValidator.validateClassWeaponMasteryOptions(
+        ctx,
+        input.classOptions,
+        {
+          characterFeats: input.characterFeats ?? ctx.characterFeats,
+          subclassOptions: input.subclassOptions,
+        },
+      );
       await this.classOptionsValidator.validateSpellMasteryOptions(
         ctx,
         input.classOptions,
@@ -166,11 +174,13 @@ export class CharacterSheetValidator {
     classSlug: string,
     characterFeats: CharacterFeatDto[],
     subclassOptions: CharacterSheetInput['subclassOptions'],
+    level = 1,
   ): Promise<void> {
     return this.classOptionsValidator.validateFightingStyleSelections(
       classSlug,
       characterFeats,
       subclassOptions,
+      level,
     );
   }
 

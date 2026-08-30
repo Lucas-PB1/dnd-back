@@ -132,6 +132,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       'fighter',
       ctx.characterFeats,
       subclassOptions,
+      ctx.level,
     );
   });
 

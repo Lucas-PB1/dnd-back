@@ -4,6 +4,7 @@ import { assertUnique } from '@common/assert';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { CharacterFeatDto, CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
+import { isGeneralFeatFightingStylePick } from '@game/shared/domain/fighting-style-general-feat';
 import {
   FIGHTING_STYLE_FEAT_CATEGORY,
   collectFightingStyleSlugsFromSubclassOptions,
@@ -38,6 +39,7 @@ export class CharacterClassOptionsValidator {
     classSlug: string,
     characterFeats: CharacterFeatDto[],
     subclassOptions: CharacterSheetInput['subclassOptions'],
+    level = 1,
   ): Promise<void> {
     const allowedSlugs = await this.loadClassFightingStyleSlugs(classSlug);
     const allowed = new Set(allowedSlugs);
@@ -46,6 +48,10 @@ export class CharacterClassOptionsValidator {
     for (const feat of characterFeats) {
       const meta = await this.catalogLookup.assertFeatInCatalog(feat.featSlug);
       if (meta.categorySlug !== FIGHTING_STYLE_FEAT_CATEGORY) continue;
+      if (isGeneralFeatFightingStylePick(feat.featSlug, level)) {
+        styleSlugs.push(feat.featSlug);
+        continue;
+      }
       if (!allowed.has(feat.featSlug)) {
         throw new BadRequestException(
           `Fighting style feat '${feat.featSlug}' is not available for class '${classSlug}'`,
@@ -141,8 +147,13 @@ export class CharacterClassOptionsValidator {
   async validateClassWeaponMasteryOptions(
     ctx: CharacterSheetContext,
     options: NonNullable<CharacterSheetInput['classOptions']>,
+    sheet?: Pick<CharacterSheetInput, 'characterFeats' | 'subclassOptions'>,
   ): Promise<void> {
-    return this.weaponMasteryValidator.validateClassWeaponMasteryOptions(ctx, options);
+    return this.weaponMasteryValidator.validateClassWeaponMasteryOptions(
+      ctx,
+      options,
+      sheet,
+    );
   }
 
   async validateSpellMasteryOptions(

@@ -55,4 +55,7 @@ export class WeaponResponseDto {
 
   @ApiPropertyOptional({ example: '/catalog/equipment/catchpole.png' })
   imageUrl!: string | null;
+
+  @ApiPropertyOptional({ example: 'grim-hollow-players-guide-2024-en' })
+  editionSlug!: string | null;
 }

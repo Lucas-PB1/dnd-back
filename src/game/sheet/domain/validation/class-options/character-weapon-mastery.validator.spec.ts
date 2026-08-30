@@ -144,6 +144,29 @@ describe('CharacterWeaponMasteryValidator', () => {
     ).rejects.toThrow(/has no mastery property/i);
   });
 
+  it('accepts advanced weapon when advanced-weapon-proficiency feat is owned', async () => {
+    mockFighterQueries({
+      slug: 'catchpole',
+      name: 'Catchpole',
+      category: 'advanced',
+      damage: '1d8',
+      damage_type: 'bludgeoning',
+      properties: { propertyIds: ['reach'] },
+      mastery_slug: 'entangling',
+    });
+
+    await expect(
+      validator.validateClassWeaponMasteryOptions(
+        ctx,
+        [{ optionKey: 'masteryWeapon1', valueId: 'catchpole' }],
+        {
+          characterFeats: [{ featSlug: 'advanced-weapon-proficiency', instanceIndex: 0 }],
+          subclassOptions: [],
+        },
+      ),
+    ).resolves.toBeUndefined();
+  });
+
   it('rejects unknown weapon slug', async () => {
     dataSource.query.mockImplementation((sql: string) => {
       if (sql.includes('phb_class_progression')) {

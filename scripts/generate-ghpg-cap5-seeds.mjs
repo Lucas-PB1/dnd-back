@@ -1,5 +1,5 @@
 /**
- * Gera seeds J001–J008 (Grim Hollow Player's Guide — Cap. 5).
+ * Gera seeds J001–J007 e J036 (Grim Hollow Player's Guide — Cap. 5).
  * Uso: node scripts/generate-ghpg-cap5-seeds.mjs
  */
 import fs from 'fs';
@@ -7,10 +7,18 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { extracts } from './lib/docs-source.mjs';
+import { isArmorShieldKind } from './lib/ghpg-cap5-catalog.mjs';
+import { CAP5_MASTERY_DESCRIPTIONS_PT } from './lib/ghpg-cap5-descriptions-pt.mjs';
+import {
+  CAP5_MASTERY_NAMES_PT,
+  CAP5_NAMES_PT,
+  CAP5_PROPERTY_NAMES_PT,
+} from './lib/ghpg-cap5-names-pt.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
 const extractPath = extracts.grimHollow.cap5AdvancedEquipment;
+const ptOverlayPath = extracts.grimHollow.cap5AdvancedEquipmentPt;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 const migTypes = path.join(apiRoot, 'database/migrations/010_types');
 const migViews = path.join(apiRoot, 'database/migrations/060_views');
@@ -113,57 +121,36 @@ const NEW_PROPERTIES = [
   ],
 ];
 
-const NEW_MASTERIES = [
-  [
-    'brutal',
-    'Brutal',
-    'Quando você rola o dano de um ataque com esta arma, pode rolar novamente qualquer dado que mostrar 1 ou 2 no dano da arma e usar o novo resultado.',
-  ],
-  [
-    'defending',
-    'Defensiva',
-    'Se você atingir uma criatura com esta arma, pode usar uma Reação para ganhar +1 na CA contra ataques dessa criatura até o início do seu próximo turno.',
-  ],
-  [
-    'disarming',
-    'Desarmar',
-    'Se você atingir uma criatura com esta arma, pode forçá-la a fazer uma salvaguarda de Força; em falha, deixa cair um objeto que segura.',
-  ],
-  [
-    'entangling',
-    'Enredar',
-    'Se você atingir uma criatura com esta arma, pode restringir o movimento dela (condição Enredado ou redução de Deslocamento conforme a arma).',
-  ],
-  [
-    'returning',
-    'Retorno',
-    'Após arremessar esta arma, ela retorna à sua mão no final do seu turno se não houver obstáculo.',
-  ],
-  [
-    'set',
-    'Preparada',
-    'Se você não se moveu neste turno, o primeiro ataque com esta arma tem Vantagem.',
-  ],
-  [
-    'strong-draw',
-    'Tensão Forte',
-    'Se você não se moveu neste turno antes do ataque, adicione +2 à jogada de dano do ataque à distância.',
-  ],
-  [
-    'swift',
-    'Rápida',
-    'Após acertar um ataque com esta arma, você pode se mover até 3 metros sem provocar Ataques de Oportunidade.',
-  ],
+const GHPG_CAP5_MASTERY_SLUGS = [
+  'brutal',
+  'defending',
+  'disarming',
+  'entangling',
+  'returning',
+  'scatter',
+  'set',
+  'strong-draw',
+  'swift',
 ];
 
-/** @param {Record<string, unknown>} meta @param {string[]} propertySlugs */
-function buildItemProperties(meta, propertySlugs, masterySlug) {
+/** @type {[string, string, string][]} */
+const NEW_MASTERIES = GHPG_CAP5_MASTERY_SLUGS.map((slug) => [
+  slug,
+  CAP5_MASTERY_NAMES_PT[slug] ?? slug,
+  CAP5_MASTERY_DESCRIPTIONS_PT[slug] ?? '',
+]);
+
+/** @param {Record<string, unknown>} meta @param {string[]} propertySlugs @param {string | null | undefined} masterySlug @param {Record<string, unknown> | undefined} requirement @param {{ catalogKind?: string, ddbKind?: string | null }} [catalog] */
+function buildItemProperties(meta, propertySlugs, masterySlug, requirement, catalog = {}) {
   const props = {
     propertyIds: propertySlugs,
     source: SOURCE,
     editionSlug: EDITION,
     citationSlug: CITATION_CAP5,
+    catalogKind: catalog.catalogKind ?? 'advanced-weapon',
+    ...(catalog.ddbKind ? { ddbKind: catalog.ddbKind } : {}),
   };
+  if (requirement) props.advancedRequirement = requirement;
   if (masterySlug) props.masteryId = masterySlug;
   if (meta.range) props.range = meta.range;
   if (meta.versatileDamage) props.versatileDamage = meta.versatileDamage;
@@ -173,8 +160,68 @@ function buildItemProperties(meta, propertySlugs, masterySlug) {
   return props;
 }
 
-/** @param {import('../docs/source/extracts/grim-hollow/cap5-advanced-equipment.json')} extract */
-function generateSeeds(extract) {
+/** @param {Record<string, unknown>} item @param {Record<string, unknown>} [extra] */
+function buildCatalogItemProperties(item, extra = {}) {
+  const props = {
+    source: SOURCE,
+    editionSlug: EDITION,
+    citationSlug: CITATION_CAP5,
+    catalogKind: item.catalogKind,
+    ...(item.ddbKind ? { ddbKind: item.ddbKind } : {}),
+    ...(item.requirement ? { advancedRequirement: item.requirement } : {}),
+    ...extra,
+  };
+  if (item.weaponLike) props.weaponLike = true;
+  if (item.upgrade) props.catalogUpgrade = item.upgrade;
+  if (item.listInCatalog === false) props.listInCatalog = false;
+  if (item.armor?.shieldVariant) {
+    props.shieldVariant = item.armor.shieldVariant;
+    props.shieldProficiencySlug = 'shield';
+    if (item.armor.speedPenaltyM != null) {
+      props.speedPenaltyM = item.armor.speedPenaltyM;
+    }
+  }
+  if (item.catalogKind === 'spellcasting-focus') {
+    props.spellcastingFocus = true;
+  }
+  return props;
+}
+
+/** @param {Record<string, { items?: Record<string, { name?: string, description?: string }>, weaponProperties?: Record<string, { name?: string, description?: string }>, weaponMasteries?: Record<string, { name?: string, description?: string }> }> | null} ptOverlay @param {string} slug @param {string} fallbackName @param {string} fallbackDescription */
+function resolveItemPt(ptOverlay, slug, fallbackName, fallbackDescription) {
+  const row = ptOverlay?.items?.[slug];
+  return {
+    name: row?.name ?? CAP5_NAMES_PT[slug] ?? fallbackName,
+    description: row?.description ?? fallbackDescription,
+  };
+}
+
+/** @param {typeof NEW_PROPERTIES} rows @param {Record<string, { name?: string, description?: string }> | undefined} fromOverlay */
+function resolvePropertyRows(rows, fromOverlay) {
+  return rows.map(([slug, fallbackName, fallbackDescription]) => {
+    const row = fromOverlay?.[slug];
+    return [
+      slug,
+      row?.name ?? CAP5_PROPERTY_NAMES_PT[slug] ?? fallbackName,
+      row?.description ?? fallbackDescription,
+    ];
+  });
+}
+
+/** @param {typeof NEW_MASTERIES} rows @param {Record<string, { name?: string, description?: string }> | undefined} fromOverlay */
+function resolveMasteryRows(rows, fromOverlay) {
+  return rows.map(([slug, fallbackName, fallbackDescription]) => {
+    const row = fromOverlay?.[slug];
+    return [
+      slug,
+      row?.name ?? CAP5_MASTERY_NAMES_PT[slug] ?? fallbackName,
+      row?.description ?? fallbackDescription,
+    ];
+  });
+}
+
+/** @param {import('../docs/source/extracts/grim-hollow/cap5-advanced-equipment.json')} extract @param {Record<string, unknown>} ptOverlay */
+function generateSeeds(extract, ptOverlay) {
   fs.mkdirSync(outDir, { recursive: true });
 
   const j001 = `-- Grim Hollow Player's Guide — edição + citações Cap. 4 e 5
@@ -219,10 +266,15 @@ ON CONFLICT (slug) DO UPDATE SET
 `;
   fs.writeFileSync(path.join(outDir, 'J001_phb_edition_citation.sql'), j001);
 
-  const propValues = NEW_PROPERTIES.map(
-    ([slug, name, description]) =>
-      `  (${sqlLiteral(slug)}, ${sqlLiteral(name)}, ${sqlLiteral(description)})`,
-  ).join(',\n');
+  const propValues = resolvePropertyRows(
+    NEW_PROPERTIES,
+    ptOverlay?.weaponProperties,
+  )
+    .map(
+      ([slug, name, description]) =>
+        `  (${sqlLiteral(slug)}, ${sqlLiteral(name)}, ${sqlLiteral(description)})`,
+    )
+    .join(',\n');
 
   const j002 = `-- Propriedades de arma avançadas (Grim Hollow Cap. 5)
 
@@ -235,10 +287,15 @@ ON CONFLICT (slug) DO UPDATE SET
 `;
   fs.writeFileSync(path.join(outDir, 'J002_phb_weapon_property.sql'), j002);
 
-  const masteryValues = NEW_MASTERIES.map(
-    ([slug, name, description]) =>
-      `  (${sqlLiteral(slug)}, ${sqlLiteral(name)}, ${sqlLiteral(description)})`,
-  ).join(',\n');
+  const masteryValues = resolveMasteryRows(
+    NEW_MASTERIES,
+    ptOverlay?.weaponMasteries,
+  )
+    .map(
+      ([slug, name, description]) =>
+        `  (${sqlLiteral(slug)}, ${sqlLiteral(name)}, ${sqlLiteral(description)})`,
+    )
+    .join(',\n');
 
   const j003 = `-- Maestrias de arma avançadas (Grim Hollow Cap. 5)
 
@@ -306,9 +363,16 @@ ON CONFLICT (slug) DO UPDATE SET
   const linkRows = [];
 
   for (const w of weapons) {
-    const props = buildItemProperties(w.propertyMeta ?? {}, w.propertySlugs ?? [], w.masterySlug);
+    const pt = resolveItemPt(ptOverlay, w.slug, w.name, w.description);
+    const props = buildItemProperties(
+      w.propertyMeta ?? {},
+      w.propertySlugs ?? [],
+      w.masterySlug,
+      w.requirement,
+      { catalogKind: w.catalogKind ?? 'advanced-weapon', ddbKind: w.ddbKind ?? 'weapons' },
+    );
     itemRows.push(
-      `  (${sqlLiteral(w.slug)}, 'weapon'::rpg.item_type, ${sqlLiteral(w.name)}, ${sqlJson(w.cost)}, ${w.weight ? sqlLiteral(w.weight) : 'NULL'}, ${sqlLiteral(w.description)}, ${sqlJson(props)})`,
+      `  (${sqlLiteral(w.slug)}, 'weapon'::rpg.item_type, ${sqlLiteral(pt.name)}, ${sqlJson(w.cost)}, ${w.weight ? sqlLiteral(w.weight) : 'NULL'}, ${sqlLiteral(pt.description)}, ${sqlJson(props)})`,
     );
     const masterySql = w.masterySlug
       ? `(SELECT id FROM rpg.phb_weapon_mastery WHERE slug = ${sqlLiteral(w.masterySlug)})`
@@ -349,12 +413,18 @@ ${linkRows.join('\n')}
 `;
   fs.writeFileSync(path.join(outDir, 'J005_phb_weapon_advanced.sql'), j005);
 
-  const gearRows = extract.equipment.map(
-    (g) =>
-      `  (${sqlLiteral(g.slug)}, 'gear'::rpg.item_type, ${sqlLiteral(g.name)}, ${sqlJson(g.cost)}, ${g.weight ? sqlLiteral(g.weight) : 'NULL'}, ${sqlLiteral(g.description)}, ${sqlJson({ source: SOURCE, editionSlug: EDITION, citationSlug: CITATION_CAP5 })})`,
-  );
+  const equipment = extract.equipment ?? [];
+  const shields = equipment.filter((g) => isArmorShieldKind(g.catalogKind));
+  const gearItems = equipment.filter((g) => !isArmorShieldKind(g.catalogKind));
 
-  const j006 = `-- Equipamento avançado Grim Hollow (Cap. 5)
+  const gearRows = gearItems.map((g) => {
+    const pt = resolveItemPt(ptOverlay, g.slug, g.name, g.description);
+    const itemType = g.itemType ?? 'gear';
+    const props = buildCatalogItemProperties(g);
+    return `  (${sqlLiteral(g.slug)}, ${sqlLiteral(itemType)}::rpg.item_type, ${sqlLiteral(pt.name)}, ${sqlJson(g.cost)}, ${g.weight ? sqlLiteral(g.weight) : 'NULL'}, ${sqlLiteral(pt.description)}, ${sqlJson(props)})`;
+  });
+
+  const j006 = `-- Equipamento avançado Grim Hollow (Cap. 5) — gear, focos, upgrades, venenos
 
 INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, properties)
 VALUES
@@ -369,16 +439,53 @@ ON CONFLICT (slug) DO UPDATE SET
 `;
   fs.writeFileSync(path.join(outDir, 'J006_phb_gear_advanced.sql'), j006);
 
+  const shieldItemRows = shields.map((s) => {
+    const pt = resolveItemPt(ptOverlay, s.slug, s.name, s.description);
+    const props = buildCatalogItemProperties(s);
+    return `  (${sqlLiteral(s.slug)}, 'armor'::rpg.item_type, ${sqlLiteral(pt.name)}, ${sqlJson(s.cost)}, ${s.weight ? sqlLiteral(s.weight) : 'NULL'}, ${sqlLiteral(pt.description)}, ${sqlJson(props)})`;
+  });
+
+  const shieldArmorRows = shields.map((s) => {
+    const armor = s.armor ?? { acFormula: '+2', strengthReq: null, stealthDisadvantage: false };
+    const strengthSql = armor.strengthReq != null ? String(armor.strengthReq) : 'NULL';
+    const stealthSql = armor.stealthDisadvantage ? 'TRUE' : 'FALSE';
+    return `  ((SELECT id FROM rpg.phb_item WHERE slug = ${sqlLiteral(s.slug)}), (SELECT id FROM rpg.phb_armor_category WHERE slug = 'shield'), NULL, ${sqlLiteral(armor.acFormula)}, ${strengthSql}, ${stealthSql})`;
+  });
+
+  const j036 = `-- Escudos avançados Grim Hollow (Cap. 5) — phb_armor
+
+INSERT INTO rpg.phb_item (slug, item_type, name, cost, weight, description, properties)
+VALUES
+${shieldItemRows.join(',\n')}
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name,
+  cost = EXCLUDED.cost,
+  weight = EXCLUDED.weight,
+  description = EXCLUDED.description,
+  properties = EXCLUDED.properties,
+  item_type = EXCLUDED.item_type;
+
+INSERT INTO rpg.phb_armor (item_id, category_id, ac_base, ac_formula, strength_req, stealth_disadvantage)
+VALUES
+${shieldArmorRows.join(',\n')}
+ON CONFLICT (item_id) DO UPDATE SET
+  category_id = EXCLUDED.category_id,
+  ac_base = EXCLUDED.ac_base,
+  ac_formula = EXCLUDED.ac_formula,
+  strength_req = EXCLUDED.strength_req,
+  stealth_disadvantage = EXCLUDED.stealth_disadvantage;
+`;
+  fs.writeFileSync(path.join(outDir, 'J036_phb_armor_advanced_shields.sql'), j036);
+
   const ammoRows = extract.ammunition.map((a) => {
-    const props = {
+    const pt = resolveItemPt(ptOverlay, a.slug, a.name, a.description);
+    const props = buildCatalogItemProperties(a, {
       ammunition: true,
-      source: SOURCE,
-      editionSlug: EDITION,
-      citationSlug: CITATION_CAP5,
       propertyIds: a.propertySlugs ?? [],
+      section: a.section,
       ...a.propertyMeta,
-    };
-    return `  (${sqlLiteral(a.slug)}, 'gear'::rpg.item_type, ${sqlLiteral(a.name)}, ${sqlJson(a.cost)}, ${a.weight ? sqlLiteral(a.weight) : 'NULL'}, ${sqlLiteral(a.description)}, ${sqlJson(props)})`;
+    });
+    return `  (${sqlLiteral(a.slug)}, 'gear'::rpg.item_type, ${sqlLiteral(pt.name)}, ${sqlJson(a.cost)}, ${a.weight ? sqlLiteral(a.weight) : 'NULL'}, ${sqlLiteral(pt.description)}, ${sqlJson(props)})`;
   });
 
   const j007 = `-- Munição avançada Grim Hollow (Cap. 5)
@@ -397,7 +504,9 @@ ON CONFLICT (slug) DO UPDATE SET
   fs.writeFileSync(path.join(outDir, 'J007_phb_ammunition_advanced.sql'), j007);
 
   console.log(`Seeds em ${outDir}`);
-  console.log(`  weapons=${weapons.length} gear=${extract.equipment.length} ammo=${extract.ammunition.length}`);
+  console.log(
+    `  weapons=${weapons.length} shields=${shields.length} gear=${gearItems.length} ammo=${extract.ammunition.length}`,
+  );
 }
 
 const t088 = `-- Categoria de arma avançada (Grim Hollow)
@@ -434,6 +543,14 @@ if (!fs.existsSync(extractPath)) {
   process.exit(1);
 }
 
+if (!fs.existsSync(ptOverlayPath)) {
+  console.error(
+    `Overlay PT ausente: ${ptOverlayPath}. Rode build-ghpg-cap5-pt-overlay.mjs primeiro.`,
+  );
+  process.exit(1);
+}
+
 const extract = JSON.parse(fs.readFileSync(extractPath, 'utf8'));
-generateSeeds(extract);
+const ptOverlay = JSON.parse(fs.readFileSync(ptOverlayPath, 'utf8'));
+generateSeeds(extract, ptOverlay);
 console.log('Migrações: 014_weapon_category_advanced.sql, V068_v_phb_weapon_proficiency_advanced.sql');

@@ -34,4 +34,10 @@ export class VPhbArmor {
 
   @ViewColumn({ name: 'weight' })
   weight!: string | null;
+
+  @ViewColumn({ name: 'edition_slug' })
+  editionSlug!: string | null;
+
+  @ViewColumn({ name: 'image_url' })
+  imageUrl!: string | null;
 }

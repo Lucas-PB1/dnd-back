@@ -214,6 +214,7 @@ export class UpdateCharacterHandler {
         dto.classSlug ?? row.classSlug,
         effectiveCharacterFeats,
         effectiveSubclassOptions,
+        dto.level ?? row.level,
       );
     }
 

@@ -48,3 +48,5 @@ export {
   UseDruidTableActionDto,
   UseWizardTableActionDto,
 } from './table-actions/table-actions-caster.dto';
+
+export { UseMonsterHunterTableActionDto } from './table-actions/table-actions-monster-hunter.dto';

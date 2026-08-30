@@ -1,0 +1,395 @@
+{
+  "generatedAt": "2026-08-30T17:08:35.297Z",
+  "sourceExtract": "D:\\Projetos\\dnd-work\\dnd-api\\docs\\source\\extracts\\grim-hollow\\cap5-advanced-equipment.json",
+  "items": {
+    "catchpole": {
+      "name": "Forquilha de Captura",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "cavalry-flail": {
+      "name": "Mangual de Cavalaria",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "cavalry-hammer": {
+      "name": "Martelo de Cavalaria",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "cavalry-pick": {
+      "name": "Picareta de Cavalaria",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "chakram": {
+      "name": "Chakram",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "claymore": {
+      "name": "Claymore",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "double-blade": {
+      "name": "Lâmina Dupla",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "double-spear": {
+      "name": "Lança Dupla",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "elite-rapier": {
+      "name": "Rapieira de Elite",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "fighting-chain": {
+      "name": "Corrente de Combate",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "fighting-chain-brutal": {
+      "name": "Corrente de Combate, Brutal",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "fighting-chain-hook": {
+      "name": "Corrente de Combate, Gancho",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "fighting-chain-sickle": {
+      "name": "Corrente de Combate, Foice",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "gladiator-net": {
+      "name": "Rede de Gladiador",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "guardian-poleaxe": {
+      "name": "Bordão-Machado Guardião",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "knightly-lance": {
+      "name": "Lança de Cavaleiro",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "knightly-sword": {
+      "name": "Espada de Cavaleiro",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "military-fork": {
+      "name": "Forquilha Militar",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "parrying-dagger": {
+      "name": "Adaga de Aparar",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "polearm": {
+      "name": "Arma de Haste",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "punching-dagger": {
+      "name": "Adaga de Soco",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "returning-club": {
+      "name": "Clava Retornável",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "sabre": {
+      "name": "Sabre",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "sheathed-staff": {
+      "name": "Bordão Embainhado",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "side-handle-baton": {
+      "name": "Bastão de Cabo Lateral",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "wrath-axe": {
+      "name": "Machado da Ira",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "wrath-maul": {
+      "name": "Malho da Ira",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "arbalest": {
+      "name": "Arcobalista",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "blackpowder-pistol": {
+      "name": "Pistola de Pólvora",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "blackpowder-rifle": {
+      "name": "Rifle de Pólvora",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "blunderbuss-grim-hollow": {
+      "name": "Bacamarte",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "blunderbuss-hand": {
+      "name": "Bacamarte de Mão",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "composite-longbow": {
+      "name": "Arco Longo Composto",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "composite-shortbow": {
+      "name": "Arco Curto Composto",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "dragon-pistol": {
+      "name": "Pistola Dragão",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "dragon-rifle": {
+      "name": "Rifle Dragão",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "flame-bellows": {
+      "name": "Fole de Chamas",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "repeater-crossbow": {
+      "name": "Besta Repetidora",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "repeater-crossbow-hand": {
+      "name": "Besta Repetidora de Mão",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "repeater-crossbow-heavy": {
+      "name": "Besta Repetidora Pesada",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "repeater-needler": {
+      "name": "Agulheiro Repetidor",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "repeater-slinger": {
+      "name": "Funda Repetidora",
+      "description": "Arma avançada de Grim Hollow. Sem proficiência em Armas Avançadas, você tem Desvantagem nos ataques. Propriedades marcadas com * e maestrias exigem o talento Proficiência em Armas Avançadas (Estilo de Luta ou talento Geral a partir do nível 8)."
+    },
+    "blessed-stake": {
+      "name": "Estaca Abençoada",
+      "description": "A Estaca Abençoada é ferramenta indispensável no arsenal de caçadores de vampiros. Este estoque de madeira, com cerca de 30 cm, foi abençoado por um servo de um Arquisserafim em cerimônia especial. Como ação Atacar, quem empunha pode fazer um ataque corpo a corpo usando Força. Contra a maioria dos inimigos, causa 1d4 de dano Perfurante. Contra um Vampiro com as condições Atordoado ou Incapacitado, um ataque bem-sucedido com a Estaca Abençoada mata o Vampiro. Se o Vampiro tiver ND 10 ou inferior, desintegra-se instantaneamente. Se for mais poderoso, o corpo permanece intacto por um ano antes de virar pó. Se a estaca for removida antes disso, o Vampiro ressurge com 1 Ponto de Vida."
+    },
+    "breath-of-beleth-poison": {
+      "name": "Veneno Sopro de Beleth",
+      "description": "Batizado com o nome do Arquidaemônio do Medo, este veneno provoca alucinações extremas que evocam os piores temores da vítima. O veneno é aerossolizado: basta respirá-lo para sofrer os efeitos. Nas raras ocasiões em que foi usado, pessoas em salas lotadas pularam de janelas ou até se mataram por puro terror. Dizem que até a Síndicate Ébano o proibiu por ser perigoso demais, extravagante e chamativo — embora rumores afirmem que ainda empregam uma versão mais fraca em interrogatórios. Sopro de Beleth (inalado). Uma criatura que respira e está no mesmo espaço que um recipiente aberto do veneno deve passar em uma salvaguarda de Constituição CD 15 ou recebe a condição Envenenado por 1 minuto. Enquanto Envenenado assim, a criatura tem a condição Amedrontado e é Hostil a todas as criaturas que possa ver. Se uma criatura se mover para até 1,5 m de uma criatura Envenenada assim, a Envenenada deve usar a ação Correr no turno para se afastar. Se não puder, deve usar a ação Atacar contra a criatura adjacente."
+    },
+    "buckler-grim-hollow": {
+      "name": "Broquel",
+      "description": "Este escudo pequeno é usado no antebraço. Enquanto estiver equipado, concede +1 na CA e pode ser usado como arma corpo a corpo Marcial com a propriedade Leve que causa 1d4 de dano Contundente."
+    },
+    "concealed-blade": {
+      "name": "Lâmina Oculta",
+      "description": "A Lâmina Oculta é uma adaga embutida em um mecanismo escondido em uma braçadeira ou manopla. Ao rolar Iniciativa, você pode fazer um teste de Destreza (Enganação) oposto aos testes de Sabedoria (Percepção) dos outros. Você tem Vantagem no primeiro ataque do primeiro turno de combate contra qualquer inimigo que falhou no teste."
+    },
+    "fire-bomb": {
+      "name": "Bomba Incendiária",
+      "description": "Você pode arremessar uma Bomba Incendiária usando a ação Atacar. Escolha um espaço que possa ver em até 6 m. Uma criatura nesse espaço deve fazer uma salvaguarda de Destreza CD 15. Em falha, a criatura sofre 2d6 de dano Cortante e 4d6 de dano de Fogo e fica em Chamas. Criaturas adjacentes ao espaço atacado sofrem metade desse dano e não ficam em Chamas."
+    },
+    "grappling-gun": {
+      "name": "Pistola de Gancho",
+      "description": "A Pistola de Gancho dispara um gancho preso a uma corda em até 45 m; o gancho se fixa com um teste bem-sucedido de Destreza (Acrobacia) CD 10. Além disso, se estiver caindo, você pode usar uma Reação para disparar a pistola em uma superfície fixável e interromper a queda. Ainda é preciso passar no teste para garantir que o gancho prenda em um objeto sólido; em caso de sucesso, você para de cair."
+    },
+    "hunters-armor": {
+      "name": "Armadura de Caçador",
+      "description": "A Armadura de Caçador é favorita de caçadores de monstros por toda Etharis. Qualquer tipo de armadura pode ser construído como Armadura de Caçador pagando o custo extra indicado. Reforça as áreas vitais com fios de adamantina e mithral para transformar golpes devastadores em ferimentos comuns. Se um golpe causaria uma Ferida Grave, role 1d20. Em 11 ou mais, o golpe não inflige Ferida Grave."
+    },
+    "iron-net": {
+      "name": "Rede de Ferro",
+      "description": "Esta rede é feita de minúsculos anéis de ferro entrelaçados. Funciona como uma Rede normal, com as seguintes alterações: alcance da Rede de Ferro é 3 m; a CD do teste de Força (Atletismo) para escapar é 15; a Rede de Ferro tem CA 13 e 15 PV."
+    },
+    "mastercraft-instrument": {
+      "name": "Instrumento Magistral",
+      "description": "Estes instrumentos musicais não são apenas obra dos melhores luthiers e artesãos de Etharis: trazem embelezamentos secretos e inovações que enriquecem a performance. Se você for proficiente no instrumento e tiver Bônus de Proficiência de pelo menos +4, todos os testes de Carisma (Atuação) feitos com um Instrumento Magistral têm Vantagem."
+    },
+    "noisemaker": {
+      "name": "Gerador de Barulho",
+      "description": "Este pequeno dispositivo mecânico é especialidade de artesãos gnômicos. Como ação Utilizar, você pode arremessar o Gerador de Barulho em um espaço em até 18 m. Ao pousar, emite um barulho alto — choque musical, assobio, zumbido etc., conforme o criador. O som pode ser ouvido em até 750 m. Uma criatura com Inteligência 3 ou menos em até 18 m quando o dispositivo dispara deve passar em uma salvaguarda de Sabedoria CD 10. Em falha, recebe a condição Amedrontado por 1 minuto. Como ação Influenciar, outra criatura que a Amedrontada possa ver ou ouvir pode fazer um teste de Sabedoria (Lidar com Animais) ou Carisma (Persuasão) CD 20. Em sucesso, a condição Amedrontado termina naquela criatura."
+    },
+    "prosthetics": {
+      "name": "Próteses",
+      "description": "A guerra brutal e os monstros ferozes de Etharis deixam muitos com Feridas Graves, incluindo membros perdidos e outras lesões debilitantes. Engenheiros e artesãos do mundo avançaram muito em ajudar essas pessoas com Próteses. Quando uma criatura com Ferida Grave usa uma Prótese, ignora as penalidades impostas pela Ferida Grave enquanto usar uma Prótese que substitua a parte perdida ou ferida. Algumas Próteses podem ser encantadas com magia, ganhando poderes adicionais. Regras para Próteses Mágicas estão no Grim Hollow Campaign Guide."
+    },
+    "retractable-shield": {
+      "name": "Escudo Retrátil",
+      "description": "Este escudo mecanizado retrai em uma braçadeira no antebraço. Com um movimento rápido, expande-se no instante em que o oponente acredita ter acertado um golpe surpresa. Você pode usar o Escudo Retrátil como braçadeira no antebraço; enquanto retraído, não conta como mão ocupada. Como Reação a um ataque que o acerte, você pode estender o escudo e ganhar bônus na CA igual ao seu Bônus de Proficiência contra esse ataque. Se isso transformar um acerto em erro, você pode fazer um ataque corpo a corpo com uma arma ou um Ataque Desarmado contra a criatura provocadora, se estiver ao alcance. O escudo permanece estendido até o início do seu próximo turno. Como interação livre com um objeto no seu turno, você pode estender ou retrair o escudo. Enquanto estendido, ocupa a mão e concede +2 na CA."
+    },
+    "seeing-glass": {
+      "name": "Espelho da Visão",
+      "description": "Este espelho de mão de prata ornamentado traz um motivo de rosas murchas. O reflexo sempre mostra a forma verdadeira de qualquer criatura vista nele, como se o observador tivesse Visão Verdadeira. Se o Espelho da Visão for apontado a um vampiro, o vidro estilhaça-se imediatamente e é destruído."
+    },
+    "shadowsteel-focus": {
+      "name": "Foco de Aço-sombrio",
+      "description": "Um Foco de Aço-sombrio é um Foco de Conjuração que contém alguma quantidade de Aço-sombrio. Qualquer Foco de Conjuração pode ser feito como Foco de Aço-sombrio. Não há benefício em usar um Foco de Aço-sombrio em vez de um Foco de Conjuração comum; porém, um conjurador com os talentos Adepto de Aço-sombrio e Mestre de Aço-sombrio pode obter os benefícios associados a esses talentos ao usar um Foco de Aço-sombrio."
+    },
+    "smoke-bomb": {
+      "name": "Bomba de Fumaça",
+      "description": "Como ação Utilizar, você pode arremessar este frasco de vidro fumegante em um espaço em até 9 m. Ao quebrar, a mistura cria uma esfera de fumaça de 3 m de raio. A área fica Fortemente Obscurecida. A fumaça dura 1d4 + 2 rodadas, ou metade desse tempo em área ventosa."
+    },
+    "stitching-needle": {
+      "name": "Agulha de Costura",
+      "description": "Esta agulha de ferro negro perfura a pele com facilidade. Se a boca de uma criatura for costurada com uma Agulha de Costura, ela perde a capacidade de falar e de conjurar magias com componentes verbais. A criatura ganha telepatia com alcance de 18 m. Costurar a boca de uma criatura consentente, inconsciente ou incapacitada leva 10 minutos. Remover os pontos leva 1 minuto."
+    },
+    "tower-shield-grim-hollow": {
+      "name": "Escudo Torre",
+      "description": "Este escudo grande oferece mais proteção que um escudo comum. Enquanto empunhar um Escudo Torre, você ganha +3 na CA. Se usar uma ação para firmar o Escudo Torre, você tem Cobertura de Três Quartos até o início do seu próximo turno. Além disso, seu Deslocamento torna-se 0 e não pode ser aumentado nesse período. Para empunhar um Escudo Torre, você precisa de Força 15 ou superior; seu Deslocamento é reduzido em 3 m enquanto empunhar o escudo."
+    },
+    "watchers-candle": {
+      "name": "Vela do Vigia",
+      "description": "Esta vela cônica preta não pode ser acesa manualmente. Quando um Celestial, Feérico, Infernal ou Morto-vivo chega a até 36 m da vela, o pavio acende com chama roxa. Depois de acesa, queima por uma hora e não pode ser usada novamente. Velas do Vigia não funcionam se estiverem embaladas ou guardadas em um recipiente."
+    },
+    "arrows-and-bolts-bludgeoning-1": {
+      "name": "Flecha/Virote Contundente (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "arrows-and-bolts-ranging-1": {
+      "name": "Flecha/Virote de Alcance Estendido (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "arrows-and-bolts-slashing-1": {
+      "name": "Flecha/Virote Cortante (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "arrows-and-bolts-whistling-1": {
+      "name": "Flecha/Virote Assobiadora (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "sling-bullets-piercing-1": {
+      "name": "Projétil de Funda Perfurante (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "sling-bullets-ranging-1": {
+      "name": "Projétil de Funda de Alcance Estendido (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "sling-bullets-whistling-1": {
+      "name": "Projétil de Funda Assobiador (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "alchemical-ammunition-arrow-1": {
+      "name": "Flecha Alquímica (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "alchemical-ammunition-bolt-1": {
+      "name": "Virote Alquímico (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "alchemical-ammunition-sling-bullet-1": {
+      "name": "Projétil de Funda Alquímico (1)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "specialized-ammunition-arrow-5": {
+      "name": "Flecha Especializada (5)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "specialized-ammunition-bolt-5": {
+      "name": "Virote Especializado (5)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "specialized-ammunition-paper-cartridge-bullet-10": {
+      "name": "Projétil de Cartucho de Papel (10)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "specialized-ammunition-sling-bullet-5": {
+      "name": "Projétil de Funda Especializado (5)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "other-ranged-ammunition-bellows-cannister": {
+      "name": "Cartucho de Fole (20 disparos)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "other-ranged-ammunition-dragon-shot": {
+      "name": "Tiro Dragão (20)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    },
+    "other-ranged-ammunition-magazine": {
+      "name": "Pente",
+      "description": "Uma arma com Pente também indica um número e um tipo de munição. A arma comporta essa quantidade e tipo, que você gasta antes de precisar recarregar. Como Ação Bônus, você pode remover um pente e recarregar com um pente novo. Uma arma com Pente vem com dois pentes vazios incluídos no custo e peso. Um pente vazio adicional custa 25 PO. Carregar um pente vazio leva 1 minuto."
+    },
+    "other-ranged-ammunition-paper-cartridge-bullet": {
+      "name": "Projétil de Cartucho de Papel (20)",
+      "description": "Munição avançada de Grim Hollow. Exige proficiência na arma que dispara a munição e nível 3 ou superior."
+    }
+  },
+  "weaponProperties": {
+    "armor-piercing": {
+      "name": "Perfuração de Armadura",
+      "description": "Uma arma com Perfuração de Armadura é uma arma corpo a corpo feita para atravessar armadura ou couro grosso. Ao fazer uma jogada de ataque com uma arma com Perfuração de Armadura, você ganha +1 na jogada se o alvo estiver usando armadura ou tiver Classe de Armadura 18 ou superior."
+    },
+    "blackpowder": {
+      "name": "Pólvora",
+      "description": "Armas de pólvora disparam projéteis com estrondo ensurdecedor, rasgando armaduras com força letal. Ao disparar, emitem um estalo audível em até 90 m. Uma arma de pólvora exposta a chuva forte, submersa ou encharcada de outro modo não pode disparar até secar por 1 hora. Usam projéteis de cartucho de papel como munição."
+    },
+    "cumbersome": {
+      "name": "Desajeitada",
+      "description": "Armas Desajeitadas são difíceis de manejar, mas ferramentas à distância eficazes para quem tem força suficiente. Ao atacar com uma arma Desajeitada, você deve usar o modificador de Força nas jogadas de ataque e de dano."
+    },
+    "damage": {
+      "name": "Dano",
+      "description": "Uma arma com a propriedade Dano pode causar tipos de dano diferentes. Ao acertar um ataque com esta arma, escolha um dos tipos de dano permitidos."
+    },
+    "double": {
+      "name": "Dupla",
+      "description": "Uma arma Dupla funciona como duas armas Leves, uma em cada mão, para combate com duas armas. Se uma arma Dupla tiver a propriedade Alcance, você só pode usar uma dessas propriedades por turno."
+    },
+    "hafted": {
+      "name": "Haste",
+      "description": "A haste de uma arma com Haste serve bem para um ataque com a mão secundária. Depois de usar a ação Atacar com uma arma com Haste, você pode usar uma Ação Bônus para fazer um ataque corpo a corpo com a haste. A haste causa 1d6 de dano Contundente e você adiciona o modificador de atributo ao dano."
+    },
+    "magazine": {
+      "name": "Pente",
+      "description": "Uma arma com Pente também indica um número e um tipo de munição. A arma comporta essa quantidade e tipo, que você gasta antes de precisar recarregar. Como Ação Bônus, você pode remover um pente e recarregar com um pente novo. Uma arma com Pente vem com dois pentes vazios incluídos no custo e peso. Um pente vazio adicional custa 25 PO. Carregar um pente vazio leva 1 minuto."
+    },
+    "momentum": {
+      "name": "Momentum",
+      "description": "Armas com Momentum permitem golpes devastadores em movimento rápido. Ao acertar com uma arma com Momentum depois de se mover 6 m ou mais em linha reta no mesmo turno, melhore os dados de dano para o valor de Dados de Momentum da arma."
+    }
+  },
+  "weaponMasteries": {
+    "brutal": {
+      "name": "Brutal",
+      "description": "Uma arma Brutal é feita para dano máximo. Armas Brutais marcam Acertos Críticos em 19 ou 20 natural. Se sua margem crítica já estiver aumentada, aumente-a em 1 ponto (de 19–20 para 18–20, por exemplo). Ao marcar um Acerto Crítico com uma arma Brutal contra uma criatura, a arma causa um dado de dano adicional."
+    },
+    "defending": {
+      "name": "Defensiva",
+      "description": "Uma arma Defensiva é feita para aparar ou traz técnicas avançadas de parada. Ao empunhar uma arma Defensiva, você pode usar sua Reação quando for atingido por uma jogada de ataque corpo a corpo. Role 1d4 e some o resultado à sua CA contra o ataque que a disparou."
+    },
+    "disarming": {
+      "name": "Desarmar",
+      "description": "Uma arma de Desarmar pode prender a arma do inimigo e arrancá-la de suas mãos. Ao usar a ação Atacar no seu turno e acertar com uma arma de Desarmar, você pode usar uma Ação Bônus ainda no mesmo turno para desarmar o alvo. Você e o alvo fazem jogadas de ataque opostas, ignorando Vantagem e Desvantagem. Se o seu resultado for maior e a arma puder ser largada, ela cai no espaço do alvo. Se o seu resultado vencedor foi um Acerto Crítico, você pode escolher que a arma caia em um espaço à sua escolha em até 4,5 m do alvo ou na sua mão livre."
+    },
+    "entangling": {
+      "name": "Enredar",
+      "description": "Ao usar a ação Atacar no seu turno e acertar com uma arma de Enredar, você pode usar uma Ação Bônus ainda no mesmo turno para enredar o alvo. O alvo deve passar em uma salvaguarda de Destreza (CD 10 + seu Bônus de Proficiência) ou recebe a condição Agarrado até escapar ou até você soltar a arma. Alvos Enormes ou maiores passam automaticamente. Para escapar, o alvo usa uma ação para fazer um teste de Força (Atletismo) ou Destreza (Acrobacia) contra a mesma CD. Em sucesso, deixa de estar Agarrado. Enquanto uma criatura estiver Agarrada por esta arma, você não pode usá-la para atacar outra criatura."
+    },
+    "returning": {
+      "name": "Retorno",
+      "description": "Uma arma de Retorno pode ser arremessada de modo a voltar para você. Ao fazer um ataque à distância com uma arma de Retorno, ela volta imediatamente após acertar ou errar. Você pode pegá-la se tiver uma mão livre."
+    },
+    "scatter": {
+      "name": "Dispersão",
+      "description": "Armas de Dispersão podem devastar vários inimigos de uma vez. Ao usar a ação Atacar e acertar uma criatura com uma arma de Dispersão, meça o alcance de dispersão a partir do espaço do alvo (ou de um quadrado que uma criatura Grande ou maior ocupa). Criaturas além do alvo original dentro do alcance de dispersão sofrem dano igual a 1 + seu modificador de Destreza (mínimo 2), do mesmo tipo que você causou ao alvo original."
+    },
+    "set": {
+      "name": "Preparada",
+      "description": "Armas com a propriedade Preparada permitem antecipar um ataque iminente. Se um alvo entrar no seu alcance enquanto você empunha uma arma com esta propriedade, você pode usar sua Reação para fazer um ataque corpo a corpo com a arma contra esse alvo."
+    },
+    "strong-draw": {
+      "name": "Tensão Forte",
+      "description": "Uma arma com Tensão Forte exige grande força. Você tem Desvantagem em jogadas de ataque com uma arma de Tensão Forte, a menos que sua Força seja 13 ou superior. Você soma os modificadores de Força e Destreza ao dano com uma arma de Tensão Forte."
+    },
+    "swift": {
+      "name": "Rápida",
+      "description": "Armas Rápidas ajudam a se recuperar rapidamente de ataques errados. Ao errar com uma arma Rápida, você tem Vantagem na primeira jogada de ataque com a mesma arma contra o mesmo alvo antes do fim do seu próximo turno. Se esse ataque acertar, causa 1d4 de dano extra do tipo normal da arma."
+    }
+  },
+  "rules": {
+    "advancedWeaponTrainingIntro": "Mastery of Advanced weapons requires military training and skill. To use any of the special properties or the Maestria em Armas properties of an Advanced weapon, you must take the Advanced Weapon Proficiency feat .\n\nThe following properties are new or altered for Advanced weapons. Wielders of Advanced weapons have Desvantagem on jogada de ataques with these weapons unless they are proficient with the weapon.\n\nAn Armor-Perfurante weapon is a arma corpo a corpo designed to punch through armor or thick hide. Quando você make uma jogada de ataque using an Armor-Perfurante weapon, you gain a +1 bonus to the jogada de ataque se vocêr target is wearing armor or has an Armor Class of 18 or higher.\n\nBlackpowder weapons fire projectiles with ear-splitting noise, shredding armor with deadly force. When fired, Blackpowder weapons emit a deafening crack audible 90 m away. A Blackpowder weapon exposed to heavy rain, submerged, or similarly drenched in water, can’t fire until dried por 1 hora. These weapons use paper cartridge bullets as ammunition.\n\nCumbersome weapons are difficult to wield but are effective ranged tools for those strong enough to wield them. When making an attack with a Cumbersome weapon, you must use your modificador de Força for the attack and jogada de danos.\n\nA Damage property weapon can deal different types of damage. Quando você acerta with an attack from this weapon, choose one of the damage types allowed.\n\nA Double weapon functions as two Light weapons, one in each hand, for the purposes of two-weapon fighting. If a Double weapon has the Reach property, você pode use only one of these properties per turn.\n\nA Hafted weapon’s haft can function well as an off-hand attack. After you use the ação Atacar to attack with a Hafted weapon, você pode use a Ação Bônus to make a melee attack with the haft. The haft deals 1d6 Contundente damage, and you add your ability modifier to damage.\n\nA weapon with the Magazine property also hcomo number and an ammunition type. The weapon holds that amount and type of ammunition, which você pode expend before needing to reload the weapon. Como Ação Bônus, you may remove a Magazine and then reload it with a new Magazine. A Magazine weapon comes with two empty magazines included in the weapon’s cost and weight. An additional empty magazine for a Magazine weapon costs 25 PO. Loading an empty Magazine with ammunition takes 1 minute.\n\nMomentum weapons allow you to deliver devastating attacks as part of rapid movement. Quando você acerta with a Momentum weapon after you moved 6 m or more in a straight line during the same turn, upgrade the damage dice to the weapon’s Momentum Dice value.\n\nRepeater weapons can fire ammo in quick succession, using multiple barrels or quick-reloading mechanisms. Quando você realiza the ação Atacar with a Repeater weapon, você pode shoot multiple times se você have features that let you attack more than once as part of that action, such as Ataque Extra. After taking the ação Atacar você pode use a Ação Bônus to attack once with the same weapon. Você não add your ability modifier to the Ação Bônus's attack, unless that modifier is negative.\n\nThe following are new Mastery Properties usable by characters who have a feature, such as Maestria em Armas, that unlocks the property for the character. Characters must also be proficient with Advanced weapons to use any Mastery Properties of an Advanced weapon.\n\nA Brutal weapon is designed for maximum damage. Brutal weapons score Acerto Críticos on a natural roll of 19 or 20. Se vocêr Critical Range is already increased, instead increase it by 1 point (such as from 19-20 to 18-20). Quando você score a Acerto Crítico with a Brutal weapon against a creature, the weapon deals one additional die of damage.\n\nA Defending weapon is either made for parrying, has advanced techniques for use in parrying, or both. When wielding a Defending weapon, you may use your Reação when you are hit by a melee jogada de ataque. Roll 1d4 and add the result to your AC against the triggering attack.\n\nA Disarming weapon can catch a foe’s weapon, allowing you to remove it from their grasp. Quando você realiza the ação Atacar no seu turno and hit with a Disarming weapon, você pode use your Ação Bônus later on the same turn to disarm the target. Both you and the attacker must make opposed jogada de ataques, ignoring any sources of Vantagem and Desvantagem . Se vocêr result is higher and the weapon is something the target can drop, the weapon falls from the target’s grasp, landing in its space.\n\nSe vocêr winning result on the opposed jogada de ataque wcomo Acerto Crítico, você pode choose for the weapon either to land in a space de sua escolha up to 4,5 m from the target, or to land in your hand se você have a free hand.\n\nQuando você realiza the ação Atacar no seu turno and hit with an Entangling weapon, você pode use a Ação Bônus later on the same turn to entangle the target. The target must succeed on a Destreza salvaguarda (CD 10 mais seu Bônus de Proficiência) or have the condição Agarrado until it escapes or until you release the weapon. The target succeeds automatically if it is Huge or larger.\n\nTo escape, the target must use an action to make a Força ( Athletics ) or Destreza ( Acrobatics ) check against the same CD. On a success, the target no longer has the condição Agarrado. While a creature is Agarrado by this weapon, você pode't use it to attack a different creature.\n\nA Returning weapon allows you to hurl the weapon in such a way that it returns to you. Quando você make a ranged attack with a Returning weapon, the weapon returns to you immediately after hitting or missing the target. Você pode catch the weapon se você have a hand free to do so.\n\nScatter weapons can devastate multiple enemies at once. Quando você realiza the ação Atacar and hit a creature with a Scatter weapon, measure the weapon’s scatter range from the target’s space (or one square the creature occupies if it is Large or larger). Creatures other than the original target that fall within the weapon’s scatter range take damage igual a your 1 + your modificador de Destreza (minimum 2). This damage is of the same type você causat to the original target.\n\nWeapons with the Set property allow you to prepare for an oncoming attack. If a target enters your reach while you wield a weapon with this property, você pode use your Reação to make a melee attack with the weapon against that target.\n\nA weapon with the Strong-Draw quality requires great strength to use. Você tem Desvantagem on jogada de ataques with a Strong-Draw weapon unless your Força is 13 or higher. You add both your Força and modificador de Destrezas to damage with a Strong-Draw weapon.\n\nSwift weapons help you recover quickly from missed attacks. Quando você miss with a Swift weapon, you have Vantagem on the first jogada de ataque you make with the weapon against the same target before the end of your next turn. If that attack hits, it also deals an extra 1d4 damage of the weapon’s normal damage type.",
+    "advancedAmmunitionIntro": "Just as industrious crafters and disciplined masters have created advanced weapons and techniques, so too have they created ammunition to deal specialized damage. To utilize Advanced Ammunition , you must have proficiency with the weapon that uses the ammo, and you must be level 3 or higher.\n\nAdvanced Ammunition named after a damage type deals that damage type. Arrows and bolts can have wide heads that deal Cortante damage or blunt tips that deal Contundente damage. A sling bullet can have facets that deal Perfurante damage. All such ammo is heavier than normal; the weapon’s maximum range while using it is halved.",
+    "advancedEquipmentIntro": "The brilliant engineers and crafters who designed and built Etharis’s highly advanced weapons and ammunition did not stop there. Other inventions of war—and of peace—became invaluable to the soldiers, guards, and adventurers of Etharis.\n\nSome pieces of Advanced equipment, such as the corrupting Shadowsteel Focus, need special training to fully employ. Other items, like the Retractable Escudo, are usable by anyone proficient with shields. And many other pieces of equipment are usable by anyone—though few would be able to afford and maintain these mechanical, alchemical, or even magical marvels.\n\nAs they are expensive and difficult to make, access to Advanced equipment is limited—maybe even as limited as some magic items. The largest cities, or locations housing master crafters, may only have a few items of Advanced equipment.\n\nThe following items are considered Advanced equipment."
+  }
+}

@@ -84,7 +84,10 @@ export async function assertCreateProgressionPicks(input: {
     );
   }
   if (masterySlots.length > 0) {
-    await classOptionsValidator.validateClassWeaponMasteryOptions(ctx, provided);
+    await classOptionsValidator.validateClassWeaponMasteryOptions(ctx, provided, {
+      characterFeats: sheet.characterFeats,
+      subclassOptions: sheet.subclassOptions,
+    });
   }
 
   const masterySpellKeys =

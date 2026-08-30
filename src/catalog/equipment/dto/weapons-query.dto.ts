@@ -4,7 +4,7 @@ import { CategorySearchQueryDto } from '@common/dto/pagination.dto';
 
 export class WeaponsQueryDto extends CategorySearchQueryDto {
   @ApiPropertyOptional({
-    description: 'Weapon category (simple | martial)',
+    description: 'Weapon category (simple | martial | advanced)',
     example: 'simple',
   })
   @IsOptional()

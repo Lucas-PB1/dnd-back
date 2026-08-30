@@ -62,11 +62,30 @@ export function extractBlock(html, headingId, level = 3) {
 }
 
 export function findGrimChapterHtml(grimDir, chapterNumber) {
+  if (!grimDir || !fs.existsSync(grimDir)) return undefined;
   const needle = `Chapter ${chapterNumber}`;
   return fs
     .readdirSync(grimDir)
     .filter((n) => n.includes(needle) && n.endsWith('.html'))
     .map((n) => path.join(grimDir, n))[0];
+}
+
+/** Cap. N GHPG: `docs/source/scrap` primeiro, depois `_scrapes/grim-hollow`. */
+export function findGhpgChapterHtml(chapterNumber, ...dirs) {
+  for (const dir of dirs) {
+    const found = findGrimChapterHtml(dir, chapterNumber);
+    if (found) return found;
+  }
+  return undefined;
+}
+
+/** @deprecated Use findGhpgChapterHtml(2, ...) */
+export function findGhpgCap2Html(...dirs) {
+  return findGhpgChapterHtml(2, ...dirs);
+}
+
+export function findGhpgCap5Html(...dirs) {
+  return findGhpgChapterHtml(5, ...dirs);
 }
 
 export const ABILITY_SLUG_MAP = {

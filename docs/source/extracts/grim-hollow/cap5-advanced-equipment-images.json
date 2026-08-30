@@ -1,0 +1,242 @@
+{
+  "generatedAt": "2026-08-30T16:54:55.674Z",
+  "scrapeBundles": 5,
+  "covered": 78,
+  "total": 78,
+  "items": {
+    "alchemical-ammunition-arrow-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "alchemical-ammunition-bolt-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "alchemical-ammunition-sling-bullet-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "arbalest": {
+      "imageUrl": "/catalog/equipment/heavy-crossbow.png"
+    },
+    "arrows-and-bolts-bludgeoning-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "arrows-and-bolts-ranging-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "arrows-and-bolts-slashing-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "arrows-and-bolts-whistling-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "blackpowder-pistol": {
+      "imageUrl": "/catalog/equipment/pistol.png"
+    },
+    "blackpowder-rifle": {
+      "imageUrl": "/catalog/equipment/musket.png"
+    },
+    "blessed-stake": {
+      "imageUrl": "/catalog/equipment/gh-advanced-gear.jpg"
+    },
+    "blunderbuss-grim-hollow": {
+      "imageUrl": "/catalog/equipment/musket.png"
+    },
+    "blunderbuss-hand": {
+      "imageUrl": "/catalog/equipment/musket.png"
+    },
+    "breath-of-beleth-poison": {
+      "imageUrl": "/catalog/equipment/smoke-bomb.png"
+    },
+    "buckler-grim-hollow": {
+      "imageUrl": "/catalog/equipment/shield.png"
+    },
+    "catchpole": {
+      "imageUrl": "/catalog/equipment/catchpole.png"
+    },
+    "cavalry-flail": {
+      "imageUrl": "/catalog/equipment/flail.png"
+    },
+    "cavalry-hammer": {
+      "imageUrl": "/catalog/equipment/warhammer.png"
+    },
+    "cavalry-pick": {
+      "imageUrl": "/catalog/equipment/war-pick.png"
+    },
+    "chakram": {
+      "imageUrl": "/catalog/equipment/dart.png"
+    },
+    "claymore": {
+      "imageUrl": "/catalog/equipment/greatsword.png"
+    },
+    "composite-longbow": {
+      "imageUrl": "/catalog/equipment/longbow.png"
+    },
+    "composite-shortbow": {
+      "imageUrl": "/catalog/equipment/shortbow.png"
+    },
+    "concealed-blade": {
+      "imageUrl": "/catalog/equipment/gh-advanced-gear.jpg"
+    },
+    "double-blade": {
+      "imageUrl": "/catalog/equipment/greatsword.png"
+    },
+    "double-spear": {
+      "imageUrl": "/catalog/equipment/spear.png"
+    },
+    "dragon-pistol": {
+      "imageUrl": "/catalog/equipment/pistol.png"
+    },
+    "dragon-rifle": {
+      "imageUrl": "/catalog/equipment/musket.png"
+    },
+    "elite-rapier": {
+      "imageUrl": "/catalog/equipment/rapier.png"
+    },
+    "fighting-chain": {
+      "imageUrl": "/catalog/equipment/whip.png"
+    },
+    "fighting-chain-brutal": {
+      "imageUrl": "/catalog/equipment/whip.png"
+    },
+    "fighting-chain-hook": {
+      "imageUrl": "/catalog/equipment/whip.png"
+    },
+    "fighting-chain-sickle": {
+      "imageUrl": "/catalog/equipment/whip.png"
+    },
+    "fire-bomb": {
+      "imageUrl": "/catalog/equipment/fire-bomb.png"
+    },
+    "flame-bellows": {
+      "imageUrl": "/catalog/equipment/blowgun.png"
+    },
+    "gladiator-net": {
+      "imageUrl": "/catalog/equipment/rede.png"
+    },
+    "grappling-gun": {
+      "imageUrl": "/catalog/equipment/gh-advanced-gear.jpg"
+    },
+    "guardian-poleaxe": {
+      "imageUrl": "/catalog/equipment/catchpole.png"
+    },
+    "hunters-armor": {
+      "imageUrl": "/catalog/equipment/fire-bomb.png"
+    },
+    "iron-net": {
+      "imageUrl": "/catalog/equipment/rede.png"
+    },
+    "knightly-lance": {
+      "imageUrl": "/catalog/equipment/lance.png"
+    },
+    "knightly-sword": {
+      "imageUrl": "/catalog/equipment/longsword.png"
+    },
+    "mastercraft-instrument": {
+      "imageUrl": "/catalog/equipment/gh-advanced-gear.jpg"
+    },
+    "military-fork": {
+      "imageUrl": "/catalog/equipment/catchpole.png"
+    },
+    "noisemaker": {
+      "imageUrl": "/catalog/equipment/gh-advanced-gear.jpg"
+    },
+    "other-ranged-ammunition-bellows-cannister": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "other-ranged-ammunition-dragon-shot": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "other-ranged-ammunition-magazine": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "other-ranged-ammunition-paper-cartridge-bullet": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "parrying-dagger": {
+      "imageUrl": "/catalog/equipment/dagger.png"
+    },
+    "polearm": {
+      "imageUrl": "/catalog/equipment/catchpole.png"
+    },
+    "prosthetics": {
+      "imageUrl": "/catalog/equipment/gh-advanced-gear.jpg"
+    },
+    "punching-dagger": {
+      "imageUrl": "/catalog/equipment/dagger.png"
+    },
+    "repeater-crossbow": {
+      "imageUrl": "/catalog/equipment/light-crossbow.png"
+    },
+    "repeater-crossbow-hand": {
+      "imageUrl": "/catalog/equipment/hand-crossbow.png"
+    },
+    "repeater-crossbow-heavy": {
+      "imageUrl": "/catalog/equipment/heavy-crossbow.png"
+    },
+    "repeater-needler": {
+      "imageUrl": "/catalog/equipment/blowgun.png"
+    },
+    "repeater-slinger": {
+      "imageUrl": "/catalog/equipment/sling.png"
+    },
+    "retractable-shield": {
+      "imageUrl": "/catalog/equipment/shield.png"
+    },
+    "returning-club": {
+      "imageUrl": "/catalog/equipment/club.png"
+    },
+    "sabre": {
+      "imageUrl": "/catalog/equipment/scimitar.png"
+    },
+    "seeing-glass": {
+      "imageUrl": "/catalog/equipment/fire-bomb.png"
+    },
+    "shadowsteel-focus": {
+      "imageUrl": "/catalog/equipment/fire-bomb.png"
+    },
+    "sheathed-staff": {
+      "imageUrl": "/catalog/equipment/quarterstaff.png"
+    },
+    "side-handle-baton": {
+      "imageUrl": "/catalog/equipment/club.png"
+    },
+    "sling-bullets-piercing-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "sling-bullets-ranging-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "sling-bullets-whistling-1": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "smoke-bomb": {
+      "imageUrl": "/catalog/equipment/smoke-bomb.png"
+    },
+    "specialized-ammunition-arrow-5": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "specialized-ammunition-bolt-5": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "specialized-ammunition-paper-cartridge-bullet-10": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "specialized-ammunition-sling-bullet-5": {
+      "imageUrl": "/catalog/equipment/arrows-shield.png"
+    },
+    "stitching-needle": {
+      "imageUrl": "/catalog/equipment/gh-advanced-gear.jpg"
+    },
+    "tower-shield-grim-hollow": {
+      "imageUrl": "/catalog/equipment/shield.png"
+    },
+    "watchers-candle": {
+      "imageUrl": "/catalog/equipment/gh-advanced-gear.jpg"
+    },
+    "wrath-axe": {
+      "imageUrl": "/catalog/equipment/battleaxe.png"
+    },
+    "wrath-maul": {
+      "imageUrl": "/catalog/equipment/maul.png"
+    }
+  }
+}

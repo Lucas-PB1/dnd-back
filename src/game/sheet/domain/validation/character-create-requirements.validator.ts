@@ -95,6 +95,7 @@ export class CharacterCreateRequirementsValidator {
       ctx.classSlug,
       createFeats,
       input.subclassOptions,
+      ctx.level,
     );
 
     const classFeatureKeys =

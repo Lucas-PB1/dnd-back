@@ -34,6 +34,7 @@ import { SorcererActionsHandler } from './application/actions/sorcerer-actions.h
 import { WarlockActionsHandler } from './application/actions/warlock-actions.handler';
 import { DruidActionsHandler } from './application/actions/druid-actions.handler';
 import { WizardActionsHandler } from './application/actions/wizard-actions.handler';
+import { MonsterHunterActionsHandler } from './application/actions/monster-hunter-actions.handler';
 
 @Module({
   imports: [
@@ -77,6 +78,7 @@ import { WizardActionsHandler } from './application/actions/wizard-actions.handl
     WarlockActionsHandler,
     DruidActionsHandler,
     WizardActionsHandler,
+    MonsterHunterActionsHandler,
   ],
   exports: [CharacterStateRepository],
 })
