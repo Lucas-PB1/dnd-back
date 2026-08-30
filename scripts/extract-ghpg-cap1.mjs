@@ -4,12 +4,10 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
+import { extracts, scrapes } from './lib/docs-source.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const apiRoot = path.join(__dirname, '..');
-const grimDir = path.join(apiRoot, 'docs/source/new/grim');
-const outPath = path.join(apiRoot, 'docs/source/ghpg-cap1-heritages-extract.json');
+const grimDir = scrapes.grimHollow;
+const outPath = extracts.grimHollow.cap1Heritages;
 
 const htmlPath = fs
   .readdirSync(grimDir)
@@ -17,7 +15,7 @@ const htmlPath = fs
   .map((n) => path.join(grimDir, n))[0];
 
 if (!htmlPath) {
-  console.error('HTML Cap. 1 GHPG não encontrado em docs/source/new/grim');
+  console.error('HTML Cap. 1 GHPG não encontrado em docs/source/_scrapes/grim-hollow');
   process.exit(1);
 }
 

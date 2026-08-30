@@ -6,23 +6,23 @@ Como popular ilustrações no front (`dnd-front/public/catalog/…`), gerar seed
 
 | Camada | Caminho | Papel |
 |--------|---------|--------|
-| Fonte (temporária) | `docs/source/montarias/images/*.png` | PNGs extraídos do Beyond — **apagar após import** |
-| Fonte (temporária) | `docs/source/phb-equipment-images/07-*.png` | Ilustrações Cap. 7 — mapear → slug, depois apagar |
-| SSOT metadados | `docs/source/phb-cap6-mounts-extract.json` | Slugs, custos, `imageUrl` das 8 montarias — **manter** |
-| SSOT regra (não é imagem) | `docs/source/phb-cap6-barding-extract.json` | Regra de barding ×4/×2 — **manter** |
+| Fonte (temporária) | `docs/source/_assets/montarias/images/*.png` | PNGs extraídos do Beyond — **apagar após import** |
+| Fonte (temporária) | `docs/source/_assets/phb-equipment/07-*.png` | Ilustrações Cap. 7 — mapear → slug, depois apagar |
+| SSOT metadados | `docs/source/extracts/phb/cap6-mounts.json` | Slugs, custos, `imageUrl` das 8 montarias — **manter** |
+| SSOT regra (não é imagem) | `docs/source/extracts/phb/cap6-barding.json` | Regra de barding ×4/×2 — **manter** |
 | Assets públicos | `dnd-front/public/catalog/mounts/{slug}.png` | Servidos pelo Next — **commitar** |
 | DB | `database/seeds/creatures/M006_*.sql`, `phb/S079_*.sql` | `UPDATE … image_url` — **manter** |
 
-A “coisinha minúscula” em `docs/source` é o **`phb-cap6-barding-extract.json`**: só a regra de armadura de montaria (custo ×4, peso ×2), não ilustração.
+A “coisinha minúscula” em `extracts/phb/cap6-barding.json` é só a regra de armadura de montaria (custo ×4, peso ×2), não ilustração.
 
 ## Lote 1 — Montarias PHB (Cap. 6) ✅
 
 Estado atual (2026-08-29):
 
 - 8 PNGs em `public/catalog/mounts/`
-- `phb-cap6-mounts-extract.json` com `imageUrl` e `imagesImportedAt`
+- `extracts/phb/cap6-mounts.json` com `imageUrl` e `imagesImportedAt`
 - Seeds `M006_phb_mount_images.sql` + `S079_phb_mount_images.sql`
-- `montarias/images/` vazio (fonte já descartada — correto)
+- `_assets/montarias/images/` vazio (fonte já descartada — correto)
 
 ### Reimportar / regenerar seeds (sem fonte)
 
@@ -33,10 +33,10 @@ node scripts/import-phb-mount-images.mjs --seeds-only
 
 ### Novo scrape de montarias
 
-1. Salvar HTML em `docs/source/montarias/` **ou** PNGs nomeados por slug em `montarias/images/`
+1. Salvar HTML em `docs/source/_scrapes/phb/` **ou** PNGs nomeados por slug em `_assets/montarias/images/`
 2. `node scripts/cleanup-docs-source-scrapes.mjs` (se veio HTML + `_files`)
 3. `node scripts/import-phb-mount-images.mjs`
-4. `node scripts/import-phb-mount-images.mjs --prune-source` — remove PNGs de `montarias/images/`
+4. `node scripts/import-phb-mount-images.mjs --prune-source` — remove PNGs de `_assets/montarias/images/`
 5. Rodar seeds no DB se `image_url` ainda for `NULL`
 
 ## Lote 2 — Equipamento PHB (Cap. 7) 🔜
@@ -53,7 +53,7 @@ Sprites compostos exigem **conferência visual** — não confiar só na ordem d
 4. `node scripts/verify-phb-equipment-sprites.mjs mark <slug> ok|wrong [--note "..."]`
 5. Ajustar só `wrong`/`pending`: `node scripts/split-phb-equipment-sprites.mjs --only wrong,pending`
 
-Registro: `phb-cap7-equipment-images-status.json` (`ok` congela crop em `frozen`).
+Registro: `extracts/phb/cap7-equipment-images-status.json` (`ok` congela crop em `frozen`).
 
 ### Recorte
 
@@ -64,7 +64,7 @@ node scripts/split-phb-equipment-sprites.mjs --only wrong,pending
 node scripts/split-phb-equipment-sprites.mjs --slug battleaxe
 ```
 
-Manifesto de crops/ordem: `phb-cap7-equipment-sprites-extract.json`
+Manifesto de crops/ordem: `extracts/phb/cap7-equipment-sprites.json`
 
 Próximo: seed `image_url` → apagar fonte quando o lote fechar.
 
@@ -83,21 +83,19 @@ Próximo: seed `image_url` → apagar fonte quando o lote fechar.
 
 Ilustrações de **cena** (`07-001`, `07-003`, `07-005`, `07-006`) — não recortar por item.
 
-### Antigo passo 2–4 (substituído pelo split acima)
-
 ## Lote 3+ — Criaturas, veículos, itens DMG
 
 | Fonte | Destino público | SSOT |
 |-------|-----------------|------|
-| `northlands-stat-blocks.json` | `public/catalog/creatures/` | stat block + `imageUrl` no JSON |
-| DMG itens mágicos | `public/catalog/magic-items/` | `dmg-2024-itens-magicos-az.json` |
+| `extracts/northlands/stat-blocks.json` | `public/catalog/creatures/` | stat block + `imageUrl` no JSON |
+| DMG itens mágicos | `public/catalog/magic-items/` | `extracts/dmg/items-az.json` |
 | Veículos | `public/catalog/vehicles/` | templates em seeds |
 
-Mesmo padrão: **PNG no front + `image_url` no seed + caminho no JSON de extrato**; descartar PNG/fonte em `docs/source` quando o lote estiver fechado.
+Mesmo padrão: **PNG no front + `image_url` no seed + caminho no JSON de extrato**; descartar PNG/fonte em `_assets/` quando o lote estiver fechado.
 
 ## O que nunca jogar fora
 
-- JSONs de extrato/regeneração listados em [`README.md`](./README.md)
+- JSONs em `extracts/` listados em [`README.md`](./README.md)
 - Seeds SQL gerados
 - PNGs já em `dnd-front/public/catalog/`
 - Scrapes HTML/`_files` **depois** de extrair imagens (cleanup remove)

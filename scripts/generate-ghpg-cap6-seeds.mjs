@@ -6,9 +6,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { extracts, scrapes } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const cap6Path = path.join(apiRoot, 'docs/source/ghpg-cap6-transformations-extract.json');
+const cap6Path = extracts.grimHollow.cap6Transformations;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 
 const CITATION_CAP6 = 'grim-hollow-players-guide-2024-en:chapter-6-transformations';
@@ -18,7 +20,7 @@ function sqlLiteral(value) {
   return `'${String(value ?? '').replace(/'/g, "''")}'`;
 }
 
-/** @param {import('../docs/source/ghpg-cap6-transformations-extract.json')} cap6 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap6-transformations.json')} cap6 */
 function buildTransformationsSql(cap6) {
   const featRows = cap6.transformations.map(
     (t) => `(

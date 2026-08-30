@@ -1,6 +1,6 @@
 -- PHB 2024 — montarias animais (Cap. 6 + Apêndice B)
 -- Slug do template = slug do item em S031 (spawn via itemSlug na ficha)
--- Fonte: docs/source/phb-cap6-mounts-extract.json + SRD 5.2.1 (CC-BY)
+-- Fonte: docs/source/extracts/phb/cap6-mounts.json + SRD 5.2.1 (CC-BY)
 -- Gerado por scripts/gen-phb-mount-seeds.mjs
 
 -- Camelo (camelo)

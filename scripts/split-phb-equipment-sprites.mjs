@@ -18,18 +18,15 @@ import sharp from 'sharp';
 import {
   loadManifest,
   loadStatus,
+  manifestPath,
   publicImagePath,
   saveStatus,
+  sourceDir,
   statusPath,
 } from './lib/phb-equipment-sprite-registry.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const sourceDir = path.join(apiRoot, 'docs/source/phb-equipment-images');
-const manifestPath = path.join(
-  apiRoot,
-  'docs/source/phb-cap7-equipment-sprites-extract.json',
-);
 const defaultOutDir = path.join(apiRoot, 'public/catalog/equipment');
 const reviewDir = path.join(sourceDir, '_review');
 

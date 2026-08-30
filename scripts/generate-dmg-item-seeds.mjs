@@ -1,17 +1,18 @@
 /**
  * Reextrai Cap.7 A–Z e gera seed SQL rpg.phb_item (pack dmg).
  * Uso: node scripts/generate-dmg-item-seeds.mjs
- * Fonte: docs/source/dmg-2024-itens-magicos-az.txt
+ * Fonte: docs/source/extracts/dmg/items-az.txt
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { extracts } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const sourceDir = path.join(__dirname, '../docs/source');
-const txtPath = path.join(sourceDir, 'dmg-2024-itens-magicos-az.txt');
-const outJson = path.join(sourceDir, 'dmg-2024-itens-magicos-az.json');
-const outIndex = path.join(sourceDir, 'dmg-2024-itens-magicos-az-index.md');
+const txtPath = extracts.dmg.itemsAzTxt;
+const outJson = extracts.dmg.itemsAz;
+const outIndex = extracts.dmg.itemsAzIndex;
 const outSql = path.join(__dirname, '../database/seeds/dmg/D010_phb_item.sql');
 
 const CATEGORY_PREFIX =

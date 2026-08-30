@@ -6,10 +6,12 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { extracts, scrapes } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const grimDir = path.join(apiRoot, 'docs/source/new/grim');
-const extractPath = path.join(apiRoot, 'docs/source/ghpg-cap1-heritages-extract.json');
+const grimDir = scrapes.grimHollow;
+const extractPath = extracts.grimHollow.cap1Heritages;
 const outDir = path.join(apiRoot, 'public/catalog/species');
 const seedPath = path.join(apiRoot, 'database/seeds/grim-hollow/J013_catalog_heritage_images.sql');
 

@@ -6,18 +6,16 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { extracts, findScrapeHtml, scrapes } from './lib/docs-source.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const sourceDir = path.join(apiRoot, 'docs/source');
+const sourceDir = scrapes.griffonsSaddlebag;
 
-const htmlPath = fs
-  .readdirSync(sourceDir)
-  .filter((n) => n.includes('Part II') && n.endsWith('.html'))
-  .map((n) => path.join(sourceDir, n))[0];
+const htmlPath = findScrapeHtml(sourceDir, 'part ii');
 
 if (!htmlPath) {
-  console.error('HTML Part II não encontrado em docs/source');
+  console.error('HTML Part II não encontrado em docs/source/_scrapes/griffons-saddlebag');
   process.exit(1);
 }
 
@@ -244,7 +242,7 @@ const subclasses = SUBCLASS_META.map((meta) => {
 
 const species = parseFeathren(html);
 
-const outPath = path.join(apiRoot, 'docs/source/gsb1-part-ii-character-options-extract.json');
+const outPath = extracts.griffonsSaddlebag.bookOnePartIi;
 const payload = {
   source: path.basename(htmlPath),
   extractedAt: new Date().toISOString(),

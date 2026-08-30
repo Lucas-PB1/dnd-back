@@ -1,5 +1,5 @@
 -- Seed Griffon's Saddlebag Book One — subclass features (Part II)
--- 63 features; fonte: docs/source/gsb1-part-ii-character-options-extract.json
+-- 63 features; fonte: docs/source/extracts/griffons-saddlebag/book-one-part-ii.json
 
 INSERT INTO rpg.phb_subclass_feature (
   subclass_id, level, name, description

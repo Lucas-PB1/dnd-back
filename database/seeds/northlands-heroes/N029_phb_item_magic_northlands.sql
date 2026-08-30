@@ -1,5 +1,5 @@
 -- Itens mágicos Northlands Cap. 5 (Magic and Miscellany)
--- Gerado por scripts/gen-northlands-cap5-magic-item-seeds.mjs — textos PT (overlay docs/source/northlands-cap5-magic-items-pt.json, 86 slugs).
+-- Gerado por scripts/gen-northlands-cap5-magic-item-seeds.mjs — textos PT (overlay docs/source/extracts/northlands/cap5-magic-items-pt.json, 86 slugs).
 -- Fonte: northlands-heroes-2024-en:magic-and-miscellany
 
 INSERT INTO rpg.phb_item (

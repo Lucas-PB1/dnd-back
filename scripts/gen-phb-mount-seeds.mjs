@@ -1,19 +1,21 @@
 /**
- * Gera M005_phb_mounts.sql a partir de docs/source/phb-cap6-mounts-extract.json + SRD 5.2.1
+ * Gera M005_phb_mounts.sql a partir de docs/source/extracts/phb/cap6-mounts.json + SRD 5.2.1
  * Uso: node scripts/gen-phb-mount-seeds.mjs
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { extracts } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
 
 const monsters = JSON.parse(
-  fs.readFileSync(path.join(rootDir, 'docs/source/srd-5.2.1-monsters.json'), 'utf8'),
+  fs.readFileSync(extracts.srd.monsters521, 'utf8'),
 ).monsters;
 const extract = JSON.parse(
-  fs.readFileSync(path.join(rootDir, 'docs/source/phb-cap6-mounts-extract.json'), 'utf8'),
+  fs.readFileSync(extracts.phb.cap6Mounts, 'utf8'),
 );
 
 const sizePt = { Large: 'Grande', Medium: 'Médio', Huge: 'Enorme' };
@@ -145,7 +147,7 @@ function sqlStr(value) {
 const lines = [];
 lines.push('-- PHB 2024 — montarias animais (Cap. 6 + Apêndice B)');
 lines.push('-- Slug do template = slug do item em S031 (spawn via itemSlug na ficha)');
-lines.push('-- Fonte: docs/source/phb-cap6-mounts-extract.json + SRD 5.2.1 (CC-BY)');
+lines.push('-- Fonte: docs/source/extracts/phb/cap6-mounts.json + SRD 5.2.1 (CC-BY)');
 lines.push('-- Gerado por scripts/gen-phb-mount-seeds.mjs');
 lines.push('');
 

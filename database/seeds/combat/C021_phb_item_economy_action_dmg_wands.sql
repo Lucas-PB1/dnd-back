@@ -1,5 +1,5 @@
 -- DMG §0 #7: economy varinhas (pool compartilhado + N botões)
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 -- Nota: gastar última carga → 1d20 (1 = destrói) é lembrete no texto.
 
 INSERT INTO rpg.phb_class_economy_action (

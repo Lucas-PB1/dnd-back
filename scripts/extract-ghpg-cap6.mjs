@@ -15,14 +15,14 @@ import {
   stripTags,
 } from './lib/ghpg-html-utils.mjs';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const apiRoot = path.join(__dirname, '..');
-const grimDir = path.join(apiRoot, 'docs/source/new/grim');
-const outPath = path.join(apiRoot, 'docs/source/ghpg-cap6-transformations-extract.json');
+import { extracts, scrapes } from './lib/docs-source.mjs';
+
+const grimDir = scrapes.grimHollow;
+const outPath = extracts.grimHollow.cap6Transformations;
 
 const htmlPath = findGrimChapterHtml(grimDir, 6);
 if (!htmlPath) {
-  console.error('HTML Cap. 6 GHPG não encontrado em docs/source/new/grim');
+  console.error('HTML Cap. 6 GHPG não encontrado em docs/source/_scrapes/grim-hollow');
   process.exit(1);
 }
 

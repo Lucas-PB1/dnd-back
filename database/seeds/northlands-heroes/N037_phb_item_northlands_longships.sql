@@ -1,5 +1,5 @@
 -- Longships Northlands (Cap. 5) — itens de transporte alinhados a M003 (phb_vehicle_template).
--- Fonte: docs/source/northlands-cap5-extract.json (sem preço de tabela no livro;
+-- Fonte: docs/source/extracts/northlands/cap5.json (sem preço de tabela no livro;
 -- custos aproximados vs. Navio Longo PHB 10.000 PO, por porte/tripulação).
 -- Slugs = templates: drakkar, karvi, knarr, skeid, snekkja (+ trenó ogre-war-sled).
 

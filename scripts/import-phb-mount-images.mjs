@@ -1,5 +1,5 @@
 /**
- * Extrai PNGs das exportações D&D Beyond em docs/source/montarias
+ * Extrai PNGs das exportações D&D Beyond em docs/source/_assets/montarias
  * e copia para dnd-api/public/catalog/mounts/{slug}.png
  *
  * Uso:
@@ -10,6 +10,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { assets, extracts } from './lib/docs-source.mjs';
 
 const args = new Set(process.argv.slice(2));
 const pruneSource = args.has('--prune-source');
@@ -17,10 +18,10 @@ const seedsOnly = args.has('--seeds-only');
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const sourceDir = path.join(apiRoot, 'docs/source/montarias');
-const sourceImagesDir = path.join(sourceDir, 'images');
+const sourceDir = assets.montarias;
+const sourceImagesDir = assets.montariasImages;
 const outDir = path.join(apiRoot, 'public/catalog/mounts');
-const extractPath = path.join(apiRoot, 'docs/source/phb-cap6-mounts-extract.json');
+const extractPath = extracts.phb.cap6Mounts;
 
 const DDB_NAME_TO_SLUG = {
   Camel: 'camelo',
@@ -193,7 +194,7 @@ if (imported.length === 0) {
     process.exit(0);
   }
   throw new Error(
-    'Nenhuma imagem importada — verifique docs/source/montarias ou use --seeds-only',
+    'Nenhuma imagem importada — verifique docs/source/_assets/montarias ou use --seeds-only',
   );
 }
 

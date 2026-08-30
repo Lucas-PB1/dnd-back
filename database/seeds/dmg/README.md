@@ -47,7 +47,7 @@ Itens mágicos do Cap. 7 (A–Z), extraídos da tradução comunitária do DMG 2
 Economy: `C016`–`C039` · `C040`/`C041` Enspelled · `C042` spell_slug · `C043` weapon coverages · `C044` Magi free cast · `C045` artefatos.  
 Cajado Magificado: resource `D024`/`C026` + `bound_spell_slug` (`P023`).  
 Artefato 1ª sintonia: `instance_properties` (`P027`) + tabelas `T075`/`T076`.  
-Status dos lotes: [`docs/source/dmg-wiring-status.md`](../../docs/source/dmg-wiring-status.md).
+Status dos lotes: [`docs/source/extracts/dmg/wiring-status.md`](../../docs/source/extracts/dmg/wiring-status.md).
 
 Cast de item (fase 6): `POST …/spells/cast` + `itemCastResourceSlug` / `itemCastSpendAmount` / `itemCastItemSlug` (Magi 0).  
 Recover 1dN: coluna `recover_on_long_dice` (`T073`) + `D041`.  

@@ -1,5 +1,5 @@
 -- DMG §0 #9b: economy maravilhosos simples (lote 2)
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 
 INSERT INTO rpg.phb_class_economy_action (
   action_id, class_id, species_id, feat_id, item_id, subclass_id, name, economy, unlock_level,

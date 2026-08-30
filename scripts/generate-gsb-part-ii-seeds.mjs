@@ -428,7 +428,7 @@ ON CONFLICT (slug) DO UPDATE SET
 writeFile('database/seeds/griffons-saddlebag/R002_phb_subclass.sql', r002);
 
 // R003
-let r003 = `-- Seed Griffon's Saddlebag Book One — subclass features (Part II)\n-- 63 features; fonte: docs/source/gsb1-part-ii-character-options-extract.json\n\n`;
+let r003 = `-- Seed Griffon's Saddlebag Book One — subclass features (Part II)\n-- 63 features; fonte: docs/source/extracts/griffons-saddlebag/book-one-part-ii.json\n\n`;
 let featureCount = 0;
 for (const [slug, feats] of Object.entries(FEATURES)) {
   for (const [level, name, desc] of feats) {

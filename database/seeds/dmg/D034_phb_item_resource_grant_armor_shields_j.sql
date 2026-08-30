@@ -1,5 +1,5 @@
 -- DMG §0 #9j: resources + permanentEffects (escudos / armaduras únicas)
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 -- +2 CA vs à distância (Apanhador) = lembrete (não cabe em acBonus flat)
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)

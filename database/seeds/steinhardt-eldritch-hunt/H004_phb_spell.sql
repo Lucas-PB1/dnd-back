@@ -1,5 +1,5 @@
 -- Magias Steinhardt Eldritch Hunt Player Pack
--- Fonte: docs/source/new/spell (capítulo Spells)
+-- Fonte: docs/source/_scrapes/steinhardt (capítulo Spells)
 
 INSERT INTO rpg.phb_spell (
   slug, name, level, level_label, school_id,

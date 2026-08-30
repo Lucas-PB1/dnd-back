@@ -1,5 +1,5 @@
 -- Extrai Armadura Magificada colada em armadura-fumegante (como D014).
--- Fonte: docs/source/dmg-2024-itens-magicos-az.txt
+-- Fonte: docs/source/extracts/dmg/items-az.txt
 
 UPDATE rpg.phb_item
 SET description = 'Fumos tênues, inofensivos e sem odor se elevam desta armadura enquanto ela está sendo vestida.'

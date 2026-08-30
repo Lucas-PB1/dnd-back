@@ -6,7 +6,7 @@ Documento de referência para levar cada item do Cap. 7 à **mesma profundidade*
 
 Fontes:
 
-- Catálogo DMG: `database/seeds/dmg/D010_phb_item.sql` · índice `docs/source/dmg-2024-itens-magicos-az-index.md` · status lotes `docs/source/dmg-wiring-status.md`
+- Catálogo DMG: `database/seeds/dmg/D010_phb_item.sql` · índice `docs/source/extracts/dmg/items-az-index.md` · status lotes `docs/source/extracts/dmg/wiring-status.md`
 - Regras Treasure × gaps: `docs/architecture/treasure-rules-vs-sistema.md`
 - Economia de classe: `.cursor/skills/rpg-class-mesa-api/references/economia-painel.md`
 - Economia de item (Valdas): `database/seeds/combat/C013_phb_item_economy_action.sql`
@@ -355,7 +355,7 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 
 - Percorrer o índice A–Z **na ordem da §0** (não aleatório).
 - Para cada item: listar habilidades + `tipo` + bucket (ainda sem SQL).
-- Artefato sugerido: `docs/source/dmg-wiring-status.md` (status por lote; detalhe por item = seeds).
+- Artefato sugerido: `docs/source/extracts/dmg/wiring-status.md` (status por lote; detalhe por item = seeds).
 - Saída: contagem por tipo (quantos só passivos, quantos multi-ação, etc.).
 
 ### Fase 2 — Passivos numéricos (§0 #2) e marcar coberturas (§0 #3 / §3.1)
@@ -406,7 +406,7 @@ Cada fase é um **lote consciente**. Não misturar “auditar 338” com “seed
 3. Seeds na ordem: enrich passivo → resource → economy.
 4. Re-seed / apply só os arquivos tocados (preferir pooler session se `db.*` IPv6 falhar).
 5. Smoke: inventário → sintonizar → aba Ações → Usar / ±.
-6. Atualizar status em `docs/source/dmg-wiring-status.md` se o lote mudou.
+6. Atualizar status em `docs/source/extracts/dmg/wiring-status.md` se o lote mudou.
 
 ---
 

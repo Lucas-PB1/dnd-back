@@ -6,10 +6,11 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { extracts, scrapes } from './lib/docs-source.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const cap1Path = path.join(apiRoot, 'docs/source/ghpg-cap1-heritages-extract.json');
+const cap1Path = extracts.grimHollow.cap1Heritages;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 
 const EDITION = 'grim-hollow-players-guide-2024-en';
@@ -46,7 +47,7 @@ const CATEGORY_INTRO = {
     'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
 };
 
-/** @param {import('../docs/source/ghpg-cap1-heritages-extract.json')} cap1 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap1-heritages.json')} cap1 */
 function buildHeritageSpeciesSql(cap1) {
   const rows = cap1.heritages.map((h) => {
     const summary = CATEGORY_INTRO[h.category] ?? '';
@@ -94,7 +95,7 @@ ON CONFLICT (slug) DO UPDATE SET
 `;
 }
 
-/** @param {import('../docs/source/ghpg-cap1-heritages-extract.json')} cap1 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap1-heritages.json')} cap1 */
 function buildHeritageTraitsSql(cap1) {
   const lines = [];
 
@@ -140,47 +141,6 @@ function buildHeritageTraitsSql(cap1) {
   }
 
   return `-- Grim Hollow Cap. 1 — traços de herança\n\n${lines.join('\n\n')}\n`;
-}
-
-/** @param {import('../docs/source/ghpg-cap3-backgrounds-structure.json')} cap3 */
-function buildBackgroundsSql(cap3) {
-  const rows = cap3.backgrounds.map((bg) => {
-    const profList = bg.professions.map((p) => `• ${p}`).join('\n');
-    const description = `Antecedente avançado do Grim Hollow. Escolha uma profissão e avance em 4 patentes (dado de profissão d4→d10, propriedades e talentos).\n\nProfissões:\n${profList}\n\nRecomenda-se que todo o grupo use antecedentes avançados ou nenhum.`;
-    return `(
-  ${sqlLiteral(bg.slug)},
-  ${sqlLiteral(bg.namePt)},
-  ${sqlLiteral(description)},
-  ${sqlLiteral('Antecedente avançado (GH)')},
-  ${sqlLiteral('Patentes, propriedades e dado de profissão — ver Grim Hollow PG Cap. 3.')},
-  NULL,
-  (SELECT id FROM rpg.phb_source_citation WHERE slug = ${sqlLiteral(CITATION_CAP3)}),
-  0,
-  NULL,
-  NULL,
-  NULL,
-  NULL,
-  0
-)`;
-  });
-
-  return `-- Grim Hollow Cap. 3 — antecedentes avançados (catálogo)
-
-INSERT INTO rpg.phb_background (
-  slug, name, description, tagline, summary,
-  feat_id, source_citation_id, equipment_gold_option,
-  tool_proficiency_description, tool_proficiency_kind, tool_item_id, tool_category_id,
-  language_choice_count
-)
-VALUES
-${rows.join(',\n')}
-ON CONFLICT (slug) DO UPDATE SET
-  name = EXCLUDED.name,
-  description = EXCLUDED.description,
-  tagline = EXCLUDED.tagline,
-  summary = EXCLUDED.summary,
-  source_citation_id = EXCLUDED.source_citation_id;
-`;
 }
 
 const citationsSql = `-- Grim Hollow — citações Cap. 1 e Cap. 3

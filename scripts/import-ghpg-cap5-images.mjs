@@ -13,9 +13,11 @@ import { fileURLToPath } from 'url';
 const args = new Set(process.argv.slice(2));
 const seedsOnly = args.has('--seeds-only');
 
+import { extracts, scrapes } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const grimDir = path.join(apiRoot, 'docs/source/new/grim');
+const grimDir = scrapes.grimHollow;
 const outDir = path.join(apiRoot, 'public/catalog/equipment');
 const seedPath = path.join(apiRoot, 'database/seeds/grim-hollow/J008_catalog_images.sql');
 

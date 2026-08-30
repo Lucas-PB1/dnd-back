@@ -1,5 +1,5 @@
 -- DMG §0 #9e: economy maravilhosos passivos/à vontade (lote 5)
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 -- Manuais/tomos: +2 atributo permanente no personagem; item perde magia.
 
 INSERT INTO rpg.phb_class_economy_action (

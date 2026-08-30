@@ -1,5 +1,5 @@
 -- DMG §0 #9i: resources + permanentEffects (utilitários densos leves + armas)
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 -- Cast/link magia = fase 6
 -- carrilhao / pó espirro: sem recover_all_on_long (consome)
 

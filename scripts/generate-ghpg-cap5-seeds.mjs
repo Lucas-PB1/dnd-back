@@ -6,9 +6,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { extracts } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const extractPath = path.join(apiRoot, 'docs/source/ghpg-cap5-advanced-equipment-extract.json');
+const extractPath = extracts.grimHollow.cap5AdvancedEquipment;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 const migTypes = path.join(apiRoot, 'database/migrations/010_types');
 const migViews = path.join(apiRoot, 'database/migrations/060_views');
@@ -171,7 +173,7 @@ function buildItemProperties(meta, propertySlugs, masterySlug) {
   return props;
 }
 
-/** @param {import('../docs/source/ghpg-cap5-advanced-equipment-extract.json')} extract */
+/** @param {import('../docs/source/extracts/grim-hollow/cap5-advanced-equipment.json')} extract */
 function generateSeeds(extract) {
   fs.mkdirSync(outDir, { recursive: true });
 

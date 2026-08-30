@@ -1,14 +1,15 @@
 /**
- * Gera seeds SQL a partir de docs/source/northlands-stat-blocks.json
+ * Gera seeds SQL a partir de docs/source/extracts/northlands/stat-blocks.json
  * Uso: node scripts/gen-northlands-stat-block-seeds.mjs
  */
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { extracts } from './lib/docs-source.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const rootDir = path.join(__dirname, '..');
-const JSON_IN = path.join(rootDir, 'docs/source/northlands-stat-blocks.json');
+const JSON_IN = extracts.northlands.statBlocks;
 const OUT_DIR = path.join(rootDir, 'database/seeds/creatures');
 
 function sqlStr(value) {

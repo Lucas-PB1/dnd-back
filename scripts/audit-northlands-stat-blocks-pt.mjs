@@ -6,8 +6,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { extracts } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const JSON_IN = path.join(__dirname, '../docs/source/northlands-stat-blocks.json');
+const JSON_IN = extracts.northlands.statBlocks;
 
 /** Marcadores D&D / regras ainda em EN. */
 const EN_MARKERS =

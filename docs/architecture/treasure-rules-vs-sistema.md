@@ -1,7 +1,7 @@
 # Treasure (DMG 2024) × lacunas do sistema
 
 Fonte: regras gerais do Cap. 7 Treasure (DMG 2024 / Beyond).  
-Modelo mesa: [`dmg-item-mesa.md`](./dmg-item-mesa.md) · wiring: [`docs/source/dmg-wiring-status.md`](../source/dmg-wiring-status.md).
+Modelo mesa: [`dmg-item-mesa.md`](./dmg-item-mesa.md) · wiring: [`docs/source/extracts/dmg/wiring-status.md`](../source/dmg-wiring-status.md).
 
 Objetivo: regras do capítulo (não o A–Z de itens) que **explicam falhas** ou **faltam** no wiring atual.
 
@@ -158,6 +158,6 @@ Sem tracking de HP de objeto / indestrutível no inventário.
 
 ## Fora do escopo deste doc
 
-- Catálogo A–Z de itens → `D010` / [`docs/source/dmg-2024-itens-magicos-az-index.md`](../source/dmg-2024-itens-magicos-az-index.md).
+- Catálogo A–Z de itens → `D010` / [`docs/source/extracts/dmg/items-az-index.md`](../source/extracts/dmg/items-az-index.md).
 - Tabelas de hoard / gems / art objects → loot, não economy da ficha.
 - Crafting completo → feature de downtime separada.

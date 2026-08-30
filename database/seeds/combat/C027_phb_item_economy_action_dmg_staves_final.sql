@@ -1,5 +1,5 @@
 -- DMG §0 #8f: economy Acrobata + Poder + Magi
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 -- Magias custo 0 = lembrete (sem spend). Absorção/Golpe Retributivo = lembrete.
 
 INSERT INTO rpg.phb_class_economy_action (

@@ -1,5 +1,5 @@
 -- DMG §0 #8c: resources cajados simples (1 botão + Sortilégios)
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)
 VALUES

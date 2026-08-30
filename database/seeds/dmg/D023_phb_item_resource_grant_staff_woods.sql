@@ -1,5 +1,5 @@
 -- DMG §0 #8d: Cajado das Matas (resource + permanentEffects arma +2)
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 -- +2 ataque mágico = passive-note (sem campo em permanentEffects)
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)

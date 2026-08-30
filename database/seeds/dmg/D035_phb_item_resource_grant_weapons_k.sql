@@ -1,5 +1,5 @@
 -- DMG §0 #9k: resources + permanentEffects (armas únicas restantes)
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 -- Cast/link magia = fase 6 · artefatos = PE + botões chave + lembretes
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)

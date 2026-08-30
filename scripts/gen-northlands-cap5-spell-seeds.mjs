@@ -2,13 +2,15 @@
  * Gera seeds Cap. 5 Northlands (magias + spell_class) a partir do JSON de extração.
  * Uso: node scripts/gen-northlands-cap5-spell-seeds.mjs
  *
- * Slugs EN kebab estáveis. Se existir docs/source/northlands-cap5-spells-pt.json,
+ * Slugs EN kebab estáveis. Se existir docs/source/extracts/northlands/cap5-spells-pt.json,
  * usa name/description/higherLevels PT por slug; caso contrário, textos EN da fonte.
  */
 import fs from 'fs';
 
-const JSON_PATH = 'docs/source/northlands-cap5-extract.json';
-const PT_PATH = 'docs/source/northlands-cap5-spells-pt.json';
+import { extracts } from './lib/docs-source.mjs';
+
+const JSON_PATH = extracts.northlands.cap5;
+const PT_PATH = extracts.northlands.cap5SpellsPt;
 const SPELL_OUT = 'database/seeds/northlands-heroes/N026_phb_spell_cap5.sql';
 const CLASS_OUT = 'database/seeds/northlands-heroes/N027_phb_spell_class_cap5.sql';
 const CITATION = 'northlands-heroes-2024-en:magic-and-miscellany';

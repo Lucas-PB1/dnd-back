@@ -1,5 +1,5 @@
 -- Magias Northlands Cap. 5 (Magic and Miscellany)
--- Gerado por scripts/gen-northlands-cap5-spell-seeds.mjs — textos PT (overlay docs/source/northlands-cap5-spells-pt.json, 78 slugs).
+-- Gerado por scripts/gen-northlands-cap5-spell-seeds.mjs — textos PT (overlay docs/source/extracts/northlands/cap5-spells-pt.json, 78 slugs).
 -- Fonte: northlands-heroes-2024-en:magic-and-miscellany
 
 INSERT INTO rpg.phb_spell (

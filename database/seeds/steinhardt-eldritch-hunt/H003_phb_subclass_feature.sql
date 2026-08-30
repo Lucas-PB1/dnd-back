@@ -1,5 +1,5 @@
 -- Seed Steinhardt Eldritch Hunt — subclass features (Player Pack)
--- Fonte: docs/source/new (capítulo Subclasses)
+-- Fonte: docs/source/_scrapes/steinhardt (capítulo Subclasses)
 
 INSERT INTO rpg.phb_subclass_feature (
   subclass_id, level, name, description

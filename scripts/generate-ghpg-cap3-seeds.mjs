@@ -6,10 +6,12 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { extracts } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const cap3Path = path.join(apiRoot, 'docs/source/ghpg-cap3-backgrounds-extract.json');
-const cap4Path = path.join(apiRoot, 'docs/source/ghpg-cap4-feats-extract.json');
+const cap3Path = extracts.grimHollow.cap3Backgrounds;
+const cap4Path = extracts.grimHollow.cap4Feats;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 
 const EDITION = 'grim-hollow-players-guide-2024-en';
@@ -72,7 +74,7 @@ WHERE slug = ${sqlLiteral(EDITION)};
 `;
 }
 
-/** @param {import('../docs/source/ghpg-cap4-feats-extract.json')} cap4 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap4-feats.json')} cap4 */
 function buildFeatsSql(cap4) {
   const ghFeats = cap4.feats.filter((f) => f.slug !== 'advanced-weapon-proficiency');
   const featRows = ghFeats.map(
@@ -171,7 +173,7 @@ function toolProficiencySql(bg) {
   };
 }
 
-/** @param {import('../docs/source/ghpg-cap3-backgrounds-extract.json')} cap3 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap3-backgrounds.json')} cap3 */
 function buildBackgroundsSql(cap3) {
   const optionalNote = cap3.optionalRule?.heritageAbilityScoresUnlimited
     ? '\n\nRegra opcional (GH Cap. 1): os aumentos de atributo da herança não precisam ser limitados pelas sugestões do antecedente.'
@@ -225,7 +227,7 @@ ON CONFLICT (slug) DO UPDATE SET
 `;
 }
 
-/** @param {import('../docs/source/ghpg-cap3-backgrounds-extract.json')} cap3 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap3-backgrounds.json')} cap3 */
 function buildAbilitySkillSql(cap3) {
   const abilityLines = [];
   const skillLines = [];
@@ -257,7 +259,7 @@ ON CONFLICT (background_id, skill_id) DO NOTHING;
 `;
 }
 
-/** @param {import('../docs/source/ghpg-cap3-backgrounds-extract.json')} cap3 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap3-backgrounds.json')} cap3 */
 function buildEquipmentSql(cap3) {
   const packageLines = [];
   const itemLines = [];
@@ -337,7 +339,7 @@ const INSTRUMENT_SLUGS = [
   'viola',
 ];
 
-/** @param {import('../docs/source/ghpg-cap3-backgrounds-extract.json').backgrounds[0]['toolProficiency']} tp */
+/** @param {import('../docs/source/extracts/grim-hollow/cap3-backgrounds.json').backgrounds[0]['toolProficiency']} tp */
 function resolveToolOptionSlugs(tp) {
   if (!tp || tp.kind !== 'choice') return [];
   if (tp.choiceItemSlugs?.length) return tp.choiceItemSlugs;
@@ -349,7 +351,7 @@ function resolveToolOptionSlugs(tp) {
   return [];
 }
 
-/** @param {import('../docs/source/ghpg-cap3-backgrounds-extract.json')} cap3 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap3-backgrounds.json')} cap3 */
 function buildToolOptionsSql(cap3) {
   const lines = [];
   for (const bg of cap3.backgrounds) {

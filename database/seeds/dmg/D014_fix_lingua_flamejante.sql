@@ -1,5 +1,5 @@
 -- Corrige parse colado: remove slug monstro e cria lingua-flamejante limpa.
--- Fonte: docs/source/dmg-2024-itens-magicos-az.txt (linha de caption removida).
+-- Fonte: docs/source/extracts/dmg/items-az.txt (linha de caption removida).
 
 -- 1) Insere / atualiza a Língua Flamejante correta
 INSERT INTO rpg.phb_item (

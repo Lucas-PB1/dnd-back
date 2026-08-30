@@ -1,5 +1,5 @@
 -- DMG §0 #9h: resources anéis finais + varinhas lote 2
--- Ver docs/source/dmg-wiring-status.md
+-- Ver docs/source/extracts/dmg/wiring-status.md
 -- Cast real / link de magia = fase 6
 
 INSERT INTO rpg.phb_resource_definition (slug, name, scope, item_id, min_level)

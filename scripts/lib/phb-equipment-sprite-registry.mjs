@@ -1,18 +1,11 @@
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-export const apiRoot = path.join(__dirname, '../..');
-export const sourceDir = path.join(apiRoot, 'docs/source/phb-equipment-images');
-export const manifestPath = path.join(
-  apiRoot,
-  'docs/source/phb-cap7-equipment-sprites-extract.json',
-);
-export const statusPath = path.join(
-  apiRoot,
-  'docs/source/phb-cap7-equipment-images-status.json',
-);
+import { apiRoot, assets, extracts } from './docs-source.mjs';
+
+export const sourceDir = assets.phbEquipment;
+export const manifestPath = extracts.phb.cap7EquipmentSprites;
+export const statusPath = extracts.phb.cap7EquipmentImagesStatus;
 export const publicDir = path.join(apiRoot, 'public/catalog/equipment');
 export const reviewDir = path.join(sourceDir, '_review');
 

@@ -1,8 +1,8 @@
 # Northlands — Cap. 5 Magic and Miscellany (extração)
 
-Fonte: extrato Cap. 5 (`docs/source/northlands-cap5-extract.json`; scrape Beyond descartado após seed).
+Fonte: extrato Cap. 5 (`docs/source/extracts/northlands/cap5.json`; scrape Beyond descartado após seed).
 Edição: `northlands-heroes-2024-en`.
-JSON máquina: [`docs/source/northlands-cap5-extract.json`](../source/northlands-cap5-extract.json) (86 itens, 78 magias).
+JSON máquina: [`docs/source/extracts/northlands/cap5.json`](../source/extracts/northlands/cap5.json) (86 itens, 78 magias).
 
 ## Status seeds
 

@@ -1,62 +1,100 @@
-# `docs/source` — catálogo DMG (extração)
+# `docs/source` — dados de catálogo
 
-Pasta **só** para artefatos de regeneração do catálogo Cap. 7 (A–Z) e extratos Northlands já processados.  
-Wiring de mesa, economy e gaps de regra **não** moram aqui.
+Pasta para **artefatos de regeneração de seeds**. Wiring de mesa e regras de jogo ficam em `docs/architecture/`.
 
-## O que fica
+## Estrutura
 
-| Arquivo | Papel |
-|---------|--------|
-| `dmg-2024-itens-magicos-az.txt` | Texto-fonte (tradução comunitária) |
-| `dmg-2024-itens-magicos-az.json` | Intermediário do gerador |
-| `dmg-2024-itens-magicos-az-index.md` | Índice humano dos ~338 itens |
-| `dmg-wiring-status.md` | Status dos lotes de wiring → seeds |
-| `northlands-cap5-extract.json` | Cap. 5 Northlands (itens/magias/equip.) — SSOT pós-scrape |
-| `northlands-cap5-spells-pt.json` / `northlands-cap5-magic-items-pt.json` | Overlay PT Cap. 5 |
-| `northlands-stat-blocks.json` | Stat blocks criaturas/veículos Northlands — SSOT pós-scrape |
-| `phb-cap6-mounts-extract.json` | Montarias PHB (Cap. 6) — dados + `imageUrl` (lote ✅) |
-| `phb-cap6-barding-extract.json` | Regra de barding (Cap. 6) — **não é imagem**; SSOT ×4/×2 |
-| `srd-5.2.1-monsters.json` | SRD 5.2.1 (CC-BY) — stat blocks para seeds de criaturas |
-| `montarias/images/*.png` | Fonte temporária de montarias — vazio após `--prune-source` |
-| `phb-equipment-images/07-*.png` | Sprites compostos Cap. 7 |
-| `phb-cap7-equipment-sprites-extract.json` | Manifesto crops / ordem de blob |
-| `phb-cap7-equipment-images-status.json` | Verificação item a item (`ok` / `wrong` / `pending`) |
-| `ghpg-cap3-backgrounds-extract.json` | Cap. 3 GHPG — antecedentes PHB 2024 (SSOT pós-scrape) |
-| `ghpg-cap4-feats-extract.json` | Cap. 4 GHPG — talentos |
-| `ghpg-cap6-transformations-extract.json` | Cap. 6 GHPG — transformações opcionais |
-
-HTML de scrape Beyond (`docs/source/new/grim/`, `*.html`, `*_files/`) fica **fora do git** (ver `.gitignore`).
-
-**Imagens de catálogo:** fluxo completo em [`catalog-images.md`](./catalog-images.md).
-
-```bash
-node scripts/import-phb-mount-images.mjs              # montarias → public + seeds
-node scripts/import-phb-mount-images.mjs --prune-source  # + apaga montarias/images
-node scripts/import-phb-mount-images.mjs --seeds-only    # só regenera seeds do public
+```
+docs/source/
+  README.md
+  catalog-images.md          # fluxo de imagens → public/catalog
+  extracts/                  # JSON/MD versionados (SSOT pós-scrape)
+    dmg/
+    grim-hollow/
+    griffons-saddlebag/
+    northlands/
+    phb/
+    srd/
+  _scrapes/                  # HTML Beyond temporário (gitignored)
+  _assets/                   # PNGs temporários de import (gitignored)
 ```
 
-## Regenerar seeds
+**Caminhos nos scripts:** `scripts/lib/docs-source.mjs` (`extracts`, `scrapes`, `assets`).
+
+## `extracts/` — o que fica no git
+
+| Pasta | Arquivos | Seeds / uso |
+|-------|----------|-------------|
+| `dmg/` | `items-az.txt`, `items-az.json`, `items-az-index.md`, `wiring-status.md` | `D010+`, economy |
+| `grim-hollow/` | `cap1-heritages.json` … `cap6-transformations.json` | pack `grim-hollow` J009–J021 |
+| `griffons-saddlebag/` | `book-one-part-ii.json` | pack `griffons-saddlebag` R001–R009 |
+| `northlands/` | `cap5.json`, overlays PT, `stat-blocks.json` | N026–N029, M003–M004 |
+| `phb/` | `cap6-mounts.json`, `cap6-barding.json`, sprites Cap. 7 | M005–M006, S079, equipamento |
+| `srd/` | `monsters-5.2.1.json` | criaturas SRD (CC-BY) |
+
+## `_scrapes/` — scrape Beyond (local, não commitar)
+
+Salvar HTML exportado do D&D Beyond em subpastas por livro:
+
+| Subpasta | Conteúdo |
+|----------|----------|
+| `_scrapes/grim-hollow/` | Capítulos GHPG (`Chapter 1` … `Chapter 6`) |
+| `_scrapes/griffons-saddlebag/` | Part II Book One, Book Two, etc. |
+| `_scrapes/phb/` | Equipamento, montarias |
+| `_scrapes/northlands/` | Worldbook |
+| `_scrapes/dmg/` | DMG |
+
+Depois de extrair: `node scripts/cleanup-docs-source-scrapes.mjs` (remove HTML/`_files`).
+
+Para apagar **toda** a pasta de scrapes: `--purge-all-scrapes`.
+
+## `_assets/` — imagens temporárias
+
+| Subpasta | Uso |
+|----------|-----|
+| `_assets/montarias/images/` | PNGs antes de `import-phb-mount-images.mjs` |
+| `_assets/phb-equipment/` | Sprites `07-*.png` antes do split |
+
+Após import para `public/catalog/`: `--prune-source` ou apagar manualmente.
+
+## Pipeline típico
 
 ```bash
-# Na pasta dnd-api:
-node scripts/generate-dmg-item-seeds.mjs      # → D010 + json + index
-node scripts/generate-dmg-consumable-lote.mjs # → D011 + C016
-node scripts/generate-dmg-coverage-lote.mjs   # → D013
-node scripts/gen-northlands-stat-block-seeds.mjs       # → M003/M004
-node scripts/gen-northlands-cap5-spell-seeds.mjs       # → N026/N027
-node scripts/gen-northlands-cap5-magic-item-seeds.mjs  # → N029
+# 1. Salvar HTML em _scrapes/<livro>/
+# 2. Extrair JSON
+node scripts/extract-ghpg-cap1.mjs          # → extracts/grim-hollow/cap1-heritages.json
+node scripts/extract-gsb-part-ii.mjs        # → extracts/griffons-saddlebag/book-one-part-ii.json
+
+# 3. Limpar lixo de scrape
+node scripts/cleanup-docs-source-scrapes.mjs
+
+# 4. Gerar seeds
+node scripts/generate-ghpg-cap1-seeds.mjs
+node scripts/generate-gsb-part-ii-seeds.mjs
+
+# 5. Aplicar no DB
+node scripts/apply-seed-pack.mjs grim-hollow --target=supabase
 ```
 
-Lista completa de seeds: [`database/seeds/dmg/README.md`](../../database/seeds/dmg/README.md).
+## Regenerar por edição
 
-## Docs relacionados (fora desta pasta)
+```bash
+node scripts/generate-dmg-item-seeds.mjs
+node scripts/gen-northlands-stat-block-seeds.mjs
+node scripts/gen-northlands-cap5-spell-seeds.mjs
+node scripts/gen-northlands-cap5-magic-item-seeds.mjs
+node scripts/import-phb-mount-images.mjs --seeds-only
+```
 
-- Modelo mesa: [`docs/architecture/dmg-item-mesa.md`](../architecture/dmg-item-mesa.md)
-- Regras Treasure × gaps: [`docs/architecture/treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sistema.md)
-- Backlog: [`docs/plans/backlog.md`](../plans/backlog.md)
+Imagens: ver [`catalog-images.md`](./catalog-images.md).
 
 ## Não colocar aqui
 
-- Scrapes Beyond HTML / pastas `_files` (JS/CSS) — rodar `node scripts/cleanup-docs-source-scrapes.mjs` após salvar imagens
-- Extratos one-shot de packs **já seedados** (além dos JSON Northlands acima)
-- Planos de feature (vão em `docs/plans/` ou `docs/architecture/`)
+- Scrapes HTML / `_files` no git (`.gitignore`)
+- Planos de feature (`docs/plans/`)
+- JSON one-shot já seedado sem script de regeneração
+
+## Docs relacionados
+
+- Modelo mesa DMG: [`docs/architecture/dmg-item-mesa.md`](../architecture/dmg-item-mesa.md)
+- Seeds DMG: [`database/seeds/dmg/README.md`](../../database/seeds/dmg/README.md)

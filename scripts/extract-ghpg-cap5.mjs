@@ -7,10 +7,10 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const apiRoot = path.join(__dirname, '..');
-const grimDir = path.join(apiRoot, 'docs/source/new/grim');
-const outPath = path.join(apiRoot, 'docs/source/ghpg-cap5-advanced-equipment-extract.json');
+import { extracts, scrapes } from './lib/docs-source.mjs';
+
+const grimDir = scrapes.grimHollow;
+const outPath = extracts.grimHollow.cap5AdvancedEquipment;
 
 const htmlPath = fs
   .readdirSync(grimDir)
@@ -18,7 +18,7 @@ const htmlPath = fs
   .map((n) => path.join(grimDir, n))[0];
 
 if (!htmlPath) {
-  console.error('HTML Cap. 5 GHPG não encontrado em docs/source/new/grim');
+  console.error('HTML Cap. 5 GHPG não encontrado em docs/source/_scrapes/grim-hollow');
   process.exit(1);
 }
 

@@ -6,9 +6,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
+import { extracts } from './lib/docs-source.mjs';
+
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const cap1Path = path.join(apiRoot, 'docs/source/ghpg-cap1-heritages-extract.json');
+const cap1Path = extracts.grimHollow.cap1Heritages;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 const viewsDir = path.join(apiRoot, 'database/migrations/060_views');
 const v065Path = path.join(viewsDir, 'V065_v_phb_species_trait_choices_feathren.sql');
@@ -42,7 +44,7 @@ function heritageAllowsSizeChoice(heritage) {
   return /Pequeno ou Médio|Small or Medium/i.test(blob);
 }
 
-/** @param {import('../docs/source/ghpg-cap1-heritages-extract.json')} cap1 */
+/** @param {import('../docs/source/extracts/grim-hollow/cap1-heritages.json')} cap1 */
 function buildJ021(cap1) {
   const lines = [
     '-- Grim Hollow Cap. 1 — heranças jogáveis: pool de traços + 8 slots por herança',

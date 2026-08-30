@@ -2,14 +2,16 @@
  * Gera seed Cap. 5 Northlands — 86 itens mágicos → N029.
  * Uso: node scripts/gen-northlands-cap5-magic-item-seeds.mjs
  *
- * Fonte: docs/source/northlands-cap5-extract.json
- * Overlay opcional PT: docs/source/northlands-cap5-magic-items-pt.json
+ * Fonte: docs/source/extracts/northlands/cap5.json
+ * Overlay opcional PT: docs/source/extracts/northlands/cap5-magic-items-pt.json
  *   { "slug": { "name": "...", "description": "...", "header": "..." } }
  */
 import fs from 'fs';
 
-const JSON_PATH = 'docs/source/northlands-cap5-extract.json';
-const PT_PATH = 'docs/source/northlands-cap5-magic-items-pt.json';
+import { extracts } from './lib/docs-source.mjs';
+
+const JSON_PATH = extracts.northlands.cap5;
+const PT_PATH = extracts.northlands.cap5MagicItemsPt;
 const OUT = 'database/seeds/northlands-heroes/N029_phb_item_magic_northlands.sql';
 const CITATION = 'northlands-heroes-2024-en:magic-and-miscellany';
 
