@@ -1,0 +1,568 @@
+{
+  "source": "Part II_ Character Options - The Griffon’s Saddlebag_ Book One - Dungeons & Dragons - Sources - D&D Beyond.html",
+  "extractedAt": "2026-08-29T21:13:02.436Z",
+  "edition": {
+    "slug": "griffons-saddlebag-book-one-2024-en",
+    "label": "Griffon's Saddlebag Book One 2024",
+    "book": "The Griffon's Saddlebag: Book One",
+    "citationSlug": "griffons-saddlebag-book-one-2024-en:part-ii-character-options",
+    "chapterTitle": "The Griffon's Saddlebag: Book One — Part II: Character Options"
+  },
+  "species": {
+    "slug": "feathren",
+    "name": "Feathren",
+    "creatureType": "Humanoid",
+    "size": "Medium (about 5–6 feet tall)",
+    "speed": "30 feet",
+    "description": "Feathren\n\nReil’s talons moved quickly across the surface, tearing through concepts with her charcoal on the paper as easily as flesh. Her piercing eyes darted about the page in search of ideas to explore. Finding none, she moved to a new sheet and put the old one atop the stack to the side.\n\nShe stared at the now empty parchment in front of her and twirled the stick of charcoal in her hand. Her feathers were ruffled and the rings on her swinging tail clinked softly as they moved back and forth in Concentration.\n\nThe sound of hammers against metal could be heard from the workshop below, resonating with a familiar rhythm and ring that matched the pace of her thought, charcoal, and tail. She was a pendulum in motion: a clock that counted down to the stroke of brilliance, and when it rang out, the satisfied trills of victory would echo throughout the chamber.\n\nVyrre Olmeck, The Face of Creation\n\nFeathren are the representation of something new from something old. A step beyond their ancestral griffon heritage, these bipedal creatures celebrate their individuality amidst the cries and jeers from common folk. Originally born from the Astral Plane, where all things can be lost, found, and remade, feathren now walk the Material Plane in search of new ideas, materials, and direction. Filled with endless curiosity, many make their way through the world as adventurers and artisans, taking care to learn what they can from their experiences before moving on to the next one.\n\nVaried Heritage\n\nConfident and Curious",
+    "namesSection": "Feathren Names",
+    "traits": [
+      {
+        "name": "Darkvision.",
+        "description": "You have Darkvision with a range of 60 feet."
+      },
+      {
+        "name": "Feathren Ancestry.",
+        "description": "Your unique mix of avian and feline ancestry grants you supernatural abilities. Use the Feathren Ancestry tables to determine your combination of physical features, choosing one Avian option and one Feline option."
+      },
+      {
+        "name": "Kindred Speech.",
+        "description": "You can communicate simple ideas to birds and cats that are Large or smaller, including griffons. They can understand your words, though you have no special ability to understand them in return. You have Advantage on Wisdom (Animal Handling) checks and Charisma checks you make to influence them."
+      },
+      {
+        "name": "Natural Creator.",
+        "description": "You are imbued with a mote of the astral griffon’s creative essence. You have proficiency with two Artisan’s Tools of your choice, and you can gain proficiency with a new tool in half the normal amount of time."
+      },
+      {
+        "name": "Talons.",
+        "description": "When you use your Unarmed Strike to deal damage with your talons, it deals 1d6 Piercing damage instead of the usual Bludgeoning damage."
+      }
+    ],
+    "avianAncestry": [],
+    "felineAncestry": []
+  },
+  "subclasses": [
+    {
+      "anchorId": "PathOfTheGlacier",
+      "slug": "path-of-the-glacier",
+      "classSlug": "barbarian",
+      "name": "Path of the Glacier",
+      "tagline": "Overpower Foes with the Might of a Blizzard and Armor of Ice",
+      "summary": "Born from the frigid and daunting Everglacier, Barbarians who walk the Path of the Glacier have learned to harbor the resolute stillness, patience, and unwavering determination and destruction of the icy landscape. These warriors transform their bodies into powerful moving bunkers that are as difficult to take down as they are to escape from.",
+      "description": "Born from the frigid and daunting Everglacier, Barbarians who walk the Path of the Glacier have learned to harbor the resolute stillness, patience, and unwavering determination and destruction of the icy landscape. These warriors transform their bodies into powerful moving bunkers that are as difficult to take down as they are to escape from.\n\nBarbarians who follow this path are often trained hunters who enjoy the patient stalking of prey. They thrive on the peril they impose on their fleeing targets and take special pride in their slow-and-steady approach.",
+      "features": [
+        {
+          "anchorId": "ebf671f7-4f68-49ac-822b-bfdc7f2af495",
+          "level": 3,
+          "name": "Permafrost",
+          "description": "Your skin becomes icy to the touch, outwardly manifesting the cold and patient well of power within you. You gain the following benefits.\n\n Frosted Flesh. While you aren’t wearing any armor, you gain a +1 bonus to AC.\n\n Rage Extension. Whenever your Rage would end while you don’t have the Unconscious condition, you can choose to extend it (no action required). You can use this feature a number of times equal to your Constitution modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\n Resistance. You have Resistance to Cold damage.\n\nPath of the Glacier Barbarian"
+        },
+        {
+          "anchorId": "02a4eabb-ef28-4065-b19a-32bf165adb11",
+          "level": 3,
+          "name": "Frostbite",
+          "description": "You can unleash the unforgiving cold inside of you with your attacks. Once on each of your turns while your Rage is active, you can choose to release a burst of sheer cold when you hit a target with a Strength-based attack. When you do, the target takes an extra 1d6 Cold damage from the attack. This extra damage increases by 1d6 when you reach Barbarian levels 9 (2d6) and 16 (3d6).\n\nWhen a creature takes Cold damage in this way, its Speed is reduced by 10 feet until the start of your next turn."
+        },
+        {
+          "anchorId": "d2ac0ed1-b1e9-40ca-bfc5-eb068dc82db8",
+          "level": 6,
+          "name": "Cold Fortress",
+          "description": "You learn to further channel the icy resilience within you. When you enter your Rage and aren’t wearing any armor, your skin becomes shielded by a protective layer of frost. This frost grants you a number of Temporary Hit Points equal to 1d12 plus your Constitution modifier.\n\nYou can take a Bonus Action on your following turns while your Rage is active to expend a Hit Die and gain these Temporary Hit Points again."
+        },
+        {
+          "anchorId": "989ec3fa-b138-4c0e-88b2-0c709a558379",
+          "level": 10,
+          "name": "Deep Sleep",
+          "description": "You can choose to enter a deep state of hibernation when you take a Long Rest. While resting in this way, you’re cold to the touch and appear dead to all outward inspection and to spells or other magical effects used to determine your status. Noise and other distractions fail to wake you.\n\nYou awaken from this rest after 6 hours, when you take damage, or when a creature uses its action to slap you awake. If you finish a continuous 6 hours of sleep in this way, you gain the benefits of finishing a Long Rest, and you gain a special pool of Hit Dice, which lasts until the end of your next Long Rest and can be used as normal. This pool has a number of Barbarian Hit Dice in it equal to your Constitution modifier (minimum of 1 Hit Die)."
+        },
+        {
+          "anchorId": "eae857c9-f5cb-4ea2-8ab6-5428100872c7",
+          "level": 14,
+          "name": "Avalanche Stomp",
+          "description": "You become as mighty as an unstoppable glacier. As a Magic action, you can stomp the ground to send out a tremor. Each creature of your choice in a 15-foot Emanation originating from you must make a Dexterity saving throw (DC 8 plus your Strength modifier and Proficiency Bonus). On a failed save, a creature takes Bludgeoning damage equal to 3d6 plus your Strength modifier, and it has the Prone condition."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "CollegeOfChoreography",
+      "slug": "college-of-choreography",
+      "classSlug": "bard",
+      "name": "College of Choreography",
+      "tagline": "Inspire Your Allies and Confound Enemies with Deft Movement",
+      "summary": "Bards of the College of Choreography tell stories and perform music without making a sound, choosing to instead move with Fey-like grace and magic to evade harm and inspire others. These dances originate from the Festerwood, whose radiant spores and light made for miraculous performances and deadly hazards. These Bards can be found anywhere from the local tavern to the highest levels of theater, moving crowds to tears as quickly as rebellion. At every turn, they inspire others to be brave, move, and join in.",
+      "description": "Bards of the College of Choreography tell stories and perform music without making a sound, choosing to instead move with Fey-like grace and magic to evade harm and inspire others. These dances originate from the Festerwood, whose radiant spores and light made for miraculous performances and deadly hazards. These Bards can be found anywhere from the local tavern to the highest levels of theater, moving crowds to tears as quickly as rebellion. At every turn, they inspire others to be brave, move, and join in.",
+      "features": [
+        {
+          "anchorId": "1d96b859-3af1-4453-900e-d51d842ec6ab",
+          "level": 3,
+          "name": "Fast movement",
+          "description": "Your Speed increases by 10 feet. It increases by another 5 feet when you reach Bard levels 6 (total increase of 15 feet) and 14 (total increase of 20 feet)."
+        },
+        {
+          "anchorId": "434c8429-bb08-4a79-b9ef-09172bf5d7e3",
+          "level": 3,
+          "name": "Inspirational Dance",
+          "description": "You learn how to use the universal language of dance. As a Bonus Action, you can expend one use of your Bardic Inspiration to dance and reinvigorate another creature of your choice who can see you.\n\nBard of the College of Choreography\n\nWhen you do, roll your Bardic Inspiration die; that creature gains a number of Temporary Hit Points equal to the number rolled plus your Charisma modifier (minimum of 2 Temporary Hit Points). When a creature gains Temporary Hit Points in this way, it can immediately take a Reaction to move up to its Speed without provoking Opportunity Attacks or take the Dodge action."
+        },
+        {
+          "anchorId": "a9e4b02e-734e-4053-ae0d-acb22513ec60",
+          "level": 6,
+          "name": "Entrancing Movement",
+          "description": "Your movements become so graceful that even the most cold-hearted enemies are filled with remorse for having stopped your dance. Whenever a creature hits you with an Opportunity Attack or hits you with an attack roll while you’re benefiting from the Dodge action, that creature takes Psychic damage equal to your Charisma modifier plus half your Bard level (round down).\n\nIn addition, you always have the Charm Person spell prepared, and you can cast it without a Verbal component. With this feature, you can cast it without expending a spell slot; when you do, it is cast as a level 3 spell, and the targets don’t make their saving throws with Advantage as a result of you or your allies fighting them. Once you cast the spell with this feature, you can’t do so in this way again until you finish a Long Rest."
+        },
+        {
+          "anchorId": "299478e2-8ae7-46fa-894a-586dc11a646e",
+          "level": 14,
+          "name": "Endless Dance",
+          "description": "Your dance has become so invigorating that it can inspire an ally to attack. When a creature would gain Temporary Hit Points from your Inspirational Dance feature, it can instead choose to take a Reaction to make one attack using a weapon or an Unarmed Strike.\n\nIn addition, your endless dancing allows you to more easily avoid being hit. You can take the Dodge action as a Bonus Action, and whenever you take a Bonus Action to expend a Bardic Inspiration die, you can take the Dodge action as part of that Bonus Action."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "AstralDomain",
+      "slug": "astral-domain",
+      "classSlug": "cleric",
+      "name": "Astral Domain",
+      "tagline": "Control the Flow of Space and Planar Magic",
+      "summary": "Gods of the Astral Plane are as lost to time and space as the realm they reign over. The Astral Plane fills the gaps between the planes of existence and is an important balancing force in the cosmic ecosystem of the multiverse. Practitioners of this domain see the absence of anything as something and consider the Astral Plane as the ultimate destination of all things. These acolytes follow the ultimate path to their destination, and help shepherd others along their way in a grand mission of entropy. Clerics of the Astral Domain are chaotic by nature, but typically choose to destroy evil where they find it and hasten its inevitable journey to the Astral Plane.",
+      "description": "Gods of the Astral Plane are as lost to time and space as the realm they reign over. The Astral Plane fills the gaps between the planes of existence and is an important balancing force in the cosmic ecosystem of the multiverse. Practitioners of this domain see the absence of anything as something and consider the Astral Plane as the ultimate destination of all things. These acolytes follow the ultimate path to their destination, and help shepherd others along their way in a grand mission of entropy. Clerics of the Astral Domain are chaotic by nature, but typically choose to destroy evil where they find it and hasten its inevitable journey to the Astral Plane.",
+      "features": [
+        {
+          "anchorId": "1f2efe44-de58-4104-8374-3fc1c9eab675",
+          "level": 3,
+          "name": "Astral Domain Spells",
+          "description": "Your connection to this divine domain ensures you always have certain spells ready. When you reach a Cleric level specified in the Astral Domain Spells table, you thereafter always have the listed spells prepared.\n\nCleric of the Astral Domain\n\nAstral Domain Spells \n\nCleric Level\nSpells\n\n3\nBlur, Guiding Bolt, Invisibility, Longstrider, Starry Wisp\n\n5\nBlink, Slow\n\n7\nBanishment, Dimension Door\n\n9\nTeleportation Circle, Wall of Force"
+        },
+        {
+          "anchorId": "c433be25-d080-4581-8fdd-af55f61abc3a",
+          "level": 3,
+          "name": "Create Void",
+          "description": "As a Bonus Action, you can expend a use of your Channel Divinity to open a planar tear at a point you can see within 60 feet of you, creating a powerful vacuum in a 15-foot-radius Sphere centered on that point. Each creature in the area must make a Dexterity saving throw. On a failed save, a creature takes Force damage equal to 1d8 plus your Cleric level and is pulled up to 15 feet toward the point. On a successful save, a creature takes half as much Force damage only. The tear then vanishes."
+        },
+        {
+          "anchorId": "63c3d67f-f93c-4c9f-9c76-39a24a4a3ac0",
+          "level": 3,
+          "name": "Planar Reach",
+          "description": "You can create and reach through brief holes in the fabric of reality. When you cast a spell that has a range of Touch, you can make the spell’s range 30 feet instead. You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest."
+        },
+        {
+          "anchorId": "b9ca7bb5-58c1-4828-b422-188871d60027",
+          "level": 6,
+          "name": "Spatial Exchange",
+          "description": "You always have the Misty Step spell prepared. You can cast it by expending a use of your Channel Divinity rather than a spell slot. When you cast it in this way, you can choose a space within 30 feet of yourself that is occupied by a creature. If that creature is willing, you both teleport, swapping places; this effect fails if there isn’t enough room for you or the creature to teleport there."
+        },
+        {
+          "anchorId": "21ebc52c-bc9e-410a-80ed-ce2df6cf3c0b",
+          "level": 17,
+          "name": "Supreme Switching",
+          "description": "Your Spatial Exchange feature improves in the following ways:\n\n Whenever you cast Misty Step, you can swap places with a willing creature, even if you cast it using a spell slot instead of your Channel Divinity.\n\n When you cast Misty Step using your Channel Divinity, you can now choose a space within 30 feet of yourself that is occupied by an unwilling creature, swapping places with it as normal. If the creature succeeds on a Charisma saving throw against your spell save DC, this effect fails and that use of your Channel Divinity is wasted.\n\n Whenever you successfully swap places with another creature using your Channel Divinity, you can cast a level 0–5 spell with a range of Touch as part of that Bonus Action. The spell must have a casting time of an action or a Bonus Action, and it must target the creature you’re swapping places with. The spell takes effect as you and the other creature appear in your new spaces."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "TheUnbrokenCircle",
+      "slug": "the-unbroken-circle",
+      "classSlug": "druid",
+      "name": "The Unbroken Circle",
+      "tagline": "Use the Strength of Nature Itself to Empower Your Martial Prowess",
+      "summary": "The Unbroken Circle is an order of Druids who have abandoned the patient teachings of their predecessors, deciding instead to take up arms in defense of the wilderness. These combative Druids form militias and harness the fury of nature itself to forcefully remove any encroaching evil that threatens their sacred lands.",
+      "description": "The Unbroken Circle is an order of Druids who have abandoned the patient teachings of their predecessors, deciding instead to take up arms in defense of the wilderness. These combative Druids form militias and harness the fury of nature itself to forcefully remove any encroaching evil that threatens their sacred lands.\n\nWhile the chaotic bend of nature is found within these Druids, their bodies and impulses are tamed through training and discipline. Originally from the unforgiving Festerwood, this circle’s teachings are as rigorous as the forest, blending a mixture of offense and defense to stand up to all of the world’s challenges.",
+      "features": [
+        {
+          "anchorId": "f5241727-dcf4-4f18-ac7a-a46e5810074e",
+          "level": 3,
+          "name": "Improved Shillelagh",
+          "description": "When you cast Shillelagh, you can cause any Melee weapon you are holding to be imbued with nature’s power; you can choose for the weapon to retain its normal damage die instead of becoming a d8. In addition, you can use any weapon with which you have proficiency as a Spellcasting Focus for your Druid spells."
+        },
+        {
+          "anchorId": "4ad3e405-0ed0-4570-b839-c67aaacf0fbb",
+          "level": 3,
+          "name": "Unbroken Circle Spells",
+          "description": "When you reach a Druid level specified in the Unbroken Circle Spells table, you thereafter always have the listed spells prepared.\n\nDruid of the Unbroken Circle\n\nUnbroken Circle Spells \n\nDruid Level\nSpells\n\n3\nEnsnaring Strike, Shillelagh, Shining Smite, True Strike\n\n5\nHaste\n\n7\nFire Shield\n\n9\nFlame Strike"
+        },
+        {
+          "anchorId": "7031d090-922c-4282-ac62-29e8028efe7e",
+          "level": 3,
+          "name": "Wild Recovery",
+          "description": "You gain the ability to recover using the wild, bestial magic that courses through you. As a Bonus Action, you can expend a use of your Wild Shape to regain a number of Hit Points equal to 2d6 plus your Druid level. This healing increases by 1d6 when you reach Druid levels 10 (3d6 plus your Druid level) and 14 (4d6 plus your Druid level)."
+        },
+        {
+          "anchorId": "0a20ad79-bc19-4579-9ba6-f863db13b0bb",
+          "level": 6,
+          "name": "Shillelagh mastery",
+          "description": "While you’re wielding a weapon under the effect of Shillelagh, you can attack twice with the weapon instead of once whenever you take the Attack action on your turn. In addition, you gain a +1 bonus to attack rolls and damage rolls made with that weapon; this bonus increases to +2 when you reach Druid level 10 and +3 when you reach Druid level 14. If the weapon already granted a bonus to attack rolls and damage rolls, you must choose whether to use that bonus or the one granted by this feature when attacking with it."
+        },
+        {
+          "anchorId": "979d5e86-3b4c-4b4d-9638-6a7c74544265",
+          "level": 10,
+          "name": "War Druid",
+          "description": "When you take the Attack action on your turn, you can replace one of the attacks with a casting of one of your Druid cantrips that has a casting time of an action."
+        },
+        {
+          "anchorId": "e5b027b1-9023-40af-b62d-5971271b2f21",
+          "level": 14,
+          "name": "Nature Armor",
+          "description": "Your connection to nature helps to shield you from harm. You’re always under the effect of the Barkskin spell.\n\nIn addition, at the start of each of your turns, you gain a number of Temporary Hit Points equal to half your Druid level (round down). When you assume a Wild Shape form, you gain a number of Temporary Hit Points equal to your Druid level plus half your Druid level (round down).\n\nShillelagh is pronounced “sha-lay-lee,” in case you mumble your way through that one like I do."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "CouatlHerald",
+      "slug": "couatl-herald",
+      "classSlug": "fighter",
+      "name": "Couatl Herald",
+      "tagline": "Show Mercy to Enemies and Support Allies as a Paragon of Civility and Restraint",
+      "summary": "The Couatl Heralds were, or are, martial warriors whose intention was to neutralize threats without always resorting to deadly force. These combatants were a beloved symbol of peace in the once great city of Hearth, whose terrible destruction has been all but entirely lost to history. Perhaps you come from a long line of sequestered heralds who had escaped the city before its collapse, or maybe you found the age-old journals of one of the city’s training officers. Regardless of how you come across this knowledge, training, and virtue, a true Couatl Herald defends the lives of all, regardless of their transgressions.",
+      "description": "The Couatl Heralds were, or are, martial warriors whose intention was to neutralize threats without always resorting to deadly force. These combatants were a beloved symbol of peace in the once great city of Hearth, whose terrible destruction has been all but entirely lost to history. Perhaps you come from a long line of sequestered heralds who had escaped the city before its collapse, or maybe you found the age-old journals of one of the city’s training officers. Regardless of how you come across this knowledge, training, and virtue, a true Couatl Herald defends the lives of all, regardless of their transgressions.",
+      "features": [
+        {
+          "anchorId": "66ef1f4c-db23-4123-b2aa-3c23127ab08b",
+          "level": 3,
+          "name": "Agent of Mercy",
+          "description": "You harbor a wellspring of positive magic within yourself. It is represented by your Mercy Dice, which fuel features you have from this subclass. The Mercy Dice table shows the die size and number of these dice you have when you reach certain Fighter levels.\n\nMercy Dice \n\nFighter Level\nDie Size\nNumber\n\n3\nd6\n3\n\n7\nd6\n4\n\n10\nd8\n4\n\n15\nd8\n5\n\n18\nd10\n5\n\nCouatl Herald Fighter\n\nA Mercy Die is expended when you use it. You regain all expended Mercy Dice when you finish a Short or Long Rest.\n\n Benevolent Presence. When you make a Wisdom (Insight) check or Charisma (Performance or Persuasion) check, you can expend one or more Mercy Dice and add those dice to the roll.\n\n Merciless Strike. Once on each of your turns when you hit a creature with an attack roll using a weapon or an Unarmed Strike, you can expend a Mercy Die to deal extra Radiant damage to the target equal to the Mercy Die roll.\n\n Peaceful Ward. As a Bonus Action, you can expend a Mercy Die to gain Temporary Hit Points equal to the Mercy Die roll plus your Charisma modifier (minimum of 1 Temporary Hit Point)."
+        },
+        {
+          "anchorId": "f7bcec77-4bfc-4181-9ea8-26c90f133039",
+          "level": 3,
+          "name": "One of the People",
+          "description": "You gain proficiency in the Insight and Persuasion skills. In addition, when you would reduce a creature to 0 Hit Points with a melee or ranged attack, you can choose to knock it out, instead reducing the creature to 1 Hit Point. The creature then has the Unconscious condition and starts a Short Rest. The creature remains Unconscious until it regains any Hit Points or until someone uses an action to administer first aid to it, which requires a successful DC 10 Wisdom (Medicine) check."
+        },
+        {
+          "anchorId": "d6edbda7-7884-43c1-8d84-d58d32186ffb",
+          "level": 7,
+          "name": "Peacebringer",
+          "description": "Whenever you deal damage with a weapon or an Unarmed Strike, it can deal your choice of Radiant damage or its normal damage type.\n\nIn addition, you always have the Calm Emotions and Sanctuary spells prepared. Your spellcasting ability for them is Charisma, and you can cast them without needing Somatic or Material components. With this feature, you can cast each of these spells without expending a spell slot. Once you cast a spell with this feature, you can’t cast that spell in this way again until you finish a Short or Long Rest."
+        },
+        {
+          "anchorId": "adf0698e-e523-42a2-b4a8-03d617d0bd83",
+          "level": 10,
+          "name": "Calm Mind",
+          "description": "Whenever you successfully persuade a creature to stand down or deescalate an otherwise violent situation, you regain one expended Mercy Die. If multiple creatures are persuaded in this way, you regain one expended Mercy Die for each affected creature.\n\nIn addition, you have Immunity to the Charmed and Frightened conditions."
+        },
+        {
+          "anchorId": "28f7bcd4-affd-404d-a66b-7140d8fa1ef6",
+          "level": 15,
+          "name": "Paragon",
+          "description": "You’ve learned how to lead your allies using magical words of empowerment. As a Bonus Action, you can command a creature you can see within 30 feet of you and expend a Mercy Die. If the creature can hear you, it gains Temporary Hit Points equal to the Mercy Die roll plus your Charisma modifier (minimum of 1 Temporary Hit Point), and it can immediately take a Reaction to move up to half its Speed without provoking Opportunity Attacks and make one attack with a weapon or an Unarmed Strike.\n\nIf damage dealt by an attack made in this way would reduce a creature to 0 Hit Points, that creature is magically knocked out instead."
+        },
+        {
+          "anchorId": "3f5c568c-8e35-4bef-9e48-1719f8d21a6d",
+          "level": 18,
+          "name": "Heraldic Enforcer",
+          "description": "Your training has taught you to strike with the magic and force of a mighty couatl. You can use your Merciless Strike once on each of your turns without expending a Mercy Die. If you do so, you can use your Merciless Strike again this turn, expending a Mercy Die as normal.\n\nIn addition, if you choose to knock a creature out instead of killing it when you would reduce it to 0 Hit Points, the target magically remains Unconscious for 8 hours or until you or an ally takes an action to shake it awake, even if the target regains Hit Points or someone uses an action to administer first aid to it."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "WarriorOfTheCelestial",
+      "slug": "warrior-of-the-celestial",
+      "classSlug": "monk",
+      "name": "Warrior of the Celestial",
+      "tagline": "Divine Answers, Support Allies, and Smite Foes with Holy Energy",
+      "summary": "Monks of the Way of the Celestial are peacekeepers and protectors of their chosen kin. These monks meditate to achieve a greater understanding of a divine being, granting them the ability to channel celestial energies into their own. These martial defenders are pensive, patient, and understanding, but they offer little mercy when evil intentions are made clear.",
+      "description": "Monks of the Way of the Celestial are peacekeepers and protectors of their chosen kin. These monks meditate to achieve a greater understanding of a divine being, granting them the ability to channel celestial energies into their own. These martial defenders are pensive, patient, and understanding, but they offer little mercy when evil intentions are made clear.\n\nThe Way of the Celestial originated from the lost city of Hearth as a tribute to the city’s guardian couatl protectors. While these teachings are far from common knowledge, there’s no telling what small, protected monasteries may still exist after the city’s untimely destruction. Regardless of how you come upon this tradition, the wisdom of the celestials guides its every principle.",
+      "features": [
+        {
+          "anchorId": "65ae25bc-9892-4796-84f4-c08a1c7cd527",
+          "level": 3,
+          "name": "Celestial Connection",
+          "description": "You can speak telepathically to any creature you can see within 30 feet of yourself. You don’t need to share a language with the creature for it to understand your telepathic communications, but the creature must be able to understand at least one language. Your communication doesn’t give the creature the ability to respond to you telepathically."
+        },
+        {
+          "anchorId": "94606d38-343d-4cf5-8a2b-18e451160bf9",
+          "level": 3,
+          "name": "Soul-searching Strike",
+          "description": "Warrior of the Celestial Monk\n\nWhen you touch a creature or hit it with an Unarmed Strike, you can expend 1 Focus Point (no action required) to peer into its soul. Until the end of your next turn, or for 1 minute if you aren’t in combat, you are aware of the target’s emotions and its most obvious desire. At the GM’s option, you may also discern its current number of Hit Points or one piece of the target’s history. In addition, you have Advantage on the next attack roll you make against the target before the end of your turn, and you have Advantage on Wisdom (Insight) checks made to interact with the target until this effect ends.\n\nWhenever you hit a creature with an attack granted by your Flurry of Blows, you can use this feature without expending a Focus Point."
+        },
+        {
+          "anchorId": "b7c9416e-3b9f-47f5-a0d0-e7a98676ee0b",
+          "level": 6,
+          "name": "Stabilizing Focus",
+          "description": "You can harness and channel healing energy. As a Magic action, you can touch a Bloodied creature and expend 1 or more Focus Points. For each Focus Point you expend, the creature regains 5 Hit Points. This feature can restore a creature to no more than half its Hit Point maximum.\n\nIn addition, you can expend 2 Focus Points to cast one of the following spells without a spell slot or Material component: Enhance Ability, Lesser Restoration, or Protection from Evil and Good. Your spellcasting ability for these spells is Wisdom."
+        },
+        {
+          "anchorId": "9f54c22f-7098-45dd-a732-babc6c9e3916",
+          "level": 11,
+          "name": "Celestial Emissary",
+          "description": "Your connection to Celestials can be used to expand your mind’s reach. You always have the Dream and Scrying spells prepared. Your spellcasting ability for them is Wisdom, and with this feature, you can cast them without expending a spell slot or needing Material components. Whenever you use this feature to cast Dream without expending a spell slot, only you can act as the dream messenger. Once you cast a spell with this feature, you can’t cast that spell in this way again until you finish a Long Rest.\n\nIn addition, when you make an attack roll with Advantage and hit, you can cause the target to take extra Radiant damage equal to one roll of your Martial Arts die. You can deal this extra damage a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest."
+        },
+        {
+          "anchorId": "ed432416-0041-4e32-9774-c48c5c979630",
+          "level": 17,
+          "name": "Heavenborne",
+          "description": "Your energy is perfectly intertwined with both harmful and healing Celestial magic. You gain the following benefits.\n\n Improved Stabilizing Focus. You can use your Stabilizing Focus as a Bonus Action. In addition, when you use your Stabilizing Focus, you can target a Bloodied creature up to 30 feet away from you instead of one you touch.\n\n Limited Flight. You gain a Fly Speed equal to your Speed. This benefit only works in short bursts; you fall if you end your turn in the air and nothing else is holding you aloft.\n\n Soul Strike. Your Unarmed Strikes deal an extra 1d4 Radiant damage on a hit."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "OathOfTheHearth",
+      "slug": "oath-of-the-hearth",
+      "classSlug": "paladin",
+      "name": "Oath of the Hearth",
+      "tagline": "Protect Your Friends with Your Warmth and Incinerate Those Who Would Harm Them",
+      "summary": "The Oath of the Hearth originates from the city of the same name, whose tragic downfall has been all but lost to history over centuries. These Paladins swore an oath to protect this tropical, sunlit city in the name of their celestial guardians. Until the end, they fulfilled their oaths. You may swear this oath because you have an age-old connection to the city through your bloodline, or you may have established a connection to the city’s principles through stories or interaction with a related celestial being. Regardless of your reasons for taking it, those who swear this oath adorn their armor with symbols of community, fire, and the sun to reflect their commitment to the city and the lives that were led there.",
+      "description": "The Oath of the Hearth originates from the city of the same name, whose tragic downfall has been all but lost to history over centuries. These Paladins swore an oath to protect this tropical, sunlit city in the name of their celestial guardians. Until the end, they fulfilled their oaths. You may swear this oath because you have an age-old connection to the city through your bloodline, or you may have established a connection to the city’s principles through stories or interaction with a related celestial being. Regardless of your reasons for taking it, those who swear this oath adorn their armor with symbols of community, fire, and the sun to reflect their commitment to the city and the lives that were led there.\n\nThese Paladins share the following tenets:",
+      "features": [
+        {
+          "anchorId": "80bdc674-7982-48af-917d-97538b183b93",
+          "level": 3,
+          "name": "Oath of the Hearth Spells",
+          "description": "The magic of your oath ensures you always have certain spells ready; when you reach a Paladin level specified in the Oath of the Hearth Spells table, you thereafter always have the listed spells prepared.\n\nOath of the Hearth Spells \n\nPaladin Level\nSpells\n\n3\nBurning Hands, Find Familiar\n\n5\nAid, Continual Flame\n\n9\nBeacon of Hope, Daylight\n\n13\nFire Shield, Guardian of Faith\n\n17\nFlame Strike, Rary's Telepathic Bond"
+        },
+        {
+          "anchorId": "6fc47e6c-4318-4ae6-b93d-f9e197e35b3b",
+          "level": 3,
+          "name": "Burning Weapon",
+          "description": "When you take the Attack action, you can expend one use of your Channel Divinity to ignite one Melee weapon that you’re holding with fiery energy. For 10 minutes or until you use this feature again, you deal extra Fire damage equal to your Charisma modifier (minimum of 1) whenever you hit a target with that weapon, and each time you hit with it, you can cause it to deal its normal damage type or Fire damage.\n\nThe weapon also emits Bright Light in a 20-foot radius and Dim Light for an additional 20 feet.\n\nYou can end this effect early (no action required). This effect also ends if you aren’t carrying the weapon."
+        },
+        {
+          "anchorId": "d6e8b079-2a18-4962-be50-9117036ffc27",
+          "level": 7,
+          "name": "Aura of Warmth",
+          "description": "You and your allies have Resistance to Cold and Fire damage while in your Aura of Protection."
+        },
+        {
+          "anchorId": "b73dcec6-11eb-4260-8ec1-d16fec23b18f",
+          "level": 15,
+          "name": "Insulating Ward",
+          "description": "Whenever you cast a level 1+ Paladin spell with a spell slot or cast a level 1+ spell without a spell slot using a Paladin feature, you and allies within your Aura of Protection each gain a number of Temporary Hit Points equal to the spell’s level plus your Charisma modifier (minimum of 2 Temporary Hit Points)."
+        },
+        {
+          "anchorId": "f7ebc5ec-17d0-4462-b5ee-3dcf50471413",
+          "level": 20,
+          "name": "Burning Spirit",
+          "description": "You can magically ignite yourself to embody your fiery soul. As a Bonus Action, you gain the benefits below for 10 minutes or until you end them (no action required). Once you use this feature, you can’t use it again until you finish a Long Rest. You can also restore your use of it by expending a level 5 spell slot (no action required).\n\n Firelight. You shed Bright Light that fills your Aura of Protection and Dim Light for an additional 30 feet.\n\n Fleet of Foot. Your Speed increases by 10 feet. In addition, you can pass through and end a move in a space occupied by another creature as if that space were unoccupied, and ending a turn in a space with another creature doesn’t cause you or that creature to have the Prone condition.\n\n Vengeful Flame. At the end of each of your turns, each creature of your choice in a 10-foot Emanation originating from you takes Fire damage equal to twice your Charisma modifier (minimum of 2 Fire damage).\n\nHearth and the Couatl Heralds\n\nHearth was a prosperous city that fell to ruin from dark and corrupting forces. Its guardians were elder couatl whose wisdom and clear leadership brought the thriving metropolis to its greatest heights. Its civilian protectors were the Couatl Heralds, the proud guards who kept the peace within the community and followed their celestial leaders’ guidance.\n\nYou can read more about Hearth later in this book.\n\nThe Couatl were our divine protectors. They were calm amidst the din of our kind. What can we offer them in return for their service and sacrifice other than our best?\n\nThose who fought, fought bravely. They gave everything they had, but in the end, their broken bodies weren’t enough to defend the city’s walls. They died protecting those they loved, those they barely knew, and those that needed defending.\n\n— Final excerpt from the journal of Brother Riane, last of the Couatl Heralds from the Lost City of Hearth."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "WinterTrapper",
+      "slug": "winter-trapper",
+      "classSlug": "ranger",
+      "name": "Winter Trapper",
+      "tagline": "Employ Icy Snares to Render Your Quarry Frozen and Helpless",
+      "summary": "Winter Trappers are masters of control and keep both their adversaries and quarries helpless and at bay. Originating from the Everglacier, these trained hunters are experts at staying upright when others would surely fall, and they have learned how to use magic and acrobatics to keep both themselves and their allies out of harm’s reach.",
+      "description": "Winter Trappers are masters of control and keep both their adversaries and quarries helpless and at bay. Originating from the Everglacier, these trained hunters are experts at staying upright when others would surely fall, and they have learned how to use magic and acrobatics to keep both themselves and their allies out of harm’s reach.",
+      "features": [
+        {
+          "anchorId": "4b84c668-bf88-4335-b341-0acfb11c7f37",
+          "level": 3,
+          "name": "Pin Down",
+          "description": "You learn how to keep your prey exactly where you want them. Once per turn when you hit a creature with a weapon or an Unarmed Strike, you can cause it to take an extra 1d6 damage of the attack’s normal damage type and reduce the creature’s Speed by 10 feet until the start of your next turn.\n\nWhen you reach Ranger level 11, this extra damage increases to 1d8, and the target also can’t make Opportunity Attacks until the start of your next turn."
+        },
+        {
+          "anchorId": "e9a7351c-a36d-48d8-8aeb-3c5650d68561",
+          "level": 3,
+          "name": "Winter Trapper Magic",
+          "description": "When you reach a Ranger level specified in the Winter Trapper Spells table, you thereafter always have the listed spells prepared.\n\nWinter Trapper Spells \n\nRanger Level\nSpells\n\n3\nIce Knife\n\n5\nMirror Image\n\n9\nSleet Storm\n\n13\nHallucinatory Terrain\n\n17\nHold Monster"
+        },
+        {
+          "anchorId": "c4de816d-a551-4733-8572-25b7ca6f25cc",
+          "level": 7,
+          "name": "Arctic Predator",
+          "description": "Your archetype’s wintry history grants you the following benefits.\n\n Helpless Prey. When you make an attack against a target that has the Prone condition while you’re more than 5 feet away from it, you don’t have Disadvantage on the attack roll as a result of that condition.\n\n Ice Walker. Difficult Terrain composed of ice or snow doesn’t cost you extra movement, and you have Advantage on Dexterity (Stealth) checks while in icy or snowy terrain.\n\n Sure-Footed. You can’t have the Prone condition unless you also have the Incapacitated condition."
+        },
+        {
+          "anchorId": "d140cd12-4454-4f86-8dfa-a733b0854b46",
+          "level": 11,
+          "name": "Magic Snare",
+          "description": "As a Bonus Action, you can imperceptibly create a magical trap in the ground at your feet. The first Large or smaller creature other than you that enters that space in the next minute springs the trap and must make a Dexterity saving throw against your spell save DC; the trap can’t be sprung by you or creatures you designate when you create it. On a failed save, a creature takes 2d8 Piercing damage, and its Speed is reduced to 0 until the end of your next turn. On a successful save, a creature takes half as much damage only.\n\nA creature that can see Invisible objects (such as one benefiting from See Invisibility or Truesight) can see these traps. You can use this feature a number of times equal to your Wisdom modifier (minimum of once), and you regain all expended uses when you finish a Long Rest."
+        },
+        {
+          "anchorId": "1f8f0e94-d569-4aba-a7a1-ffb1a409a6a5",
+          "level": 15,
+          "name": "Tripped Defenses",
+          "description": "You have learned to use a creature’s mistakes against them. When a creature you can see within 5 feet of you misses you with an attack roll, you can take a Reaction to attempt to throw it off balance. If the target is a Large or smaller creature, it has the Prone condition; otherwise, its Speed is halved until the end of the current turn unless it has Immunity to the Prone condition. Immediately after you do this, you can either make one attack with a weapon or an Unarmed Strike against that creature or move up to half your Speed without provoking an Opportunity Attack from that creature."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "Runetagger",
+      "slug": "runetagger",
+      "classSlug": "rogue",
+      "name": "Runetagger",
+      "tagline": "Use Powerful Runes to Weaken Enemies and Escape from Harm",
+      "summary": "You concentrate your efforts on perfecting your art, developing special marks to claim and cripple your targets. Rebel leaders, artists, spies, and other members of the political underworld might belong to this archetype. Originally a tactic for subterfuge and assassination for denizens of the Festerwood, those who employ these powerful works of art are famously difficult to pin down. The magical marks left behind become a calling card for any Runetagger, and as their strength and notoriety grow from the deeds that they commit (both good and evil), so too does the renown for their art.",
+      "description": "You concentrate your efforts on perfecting your art, developing special marks to claim and cripple your targets. Rebel leaders, artists, spies, and other members of the political underworld might belong to this archetype. Originally a tactic for subterfuge and assassination for denizens of the Festerwood, those who employ these powerful works of art are famously difficult to pin down. The magical marks left behind become a calling card for any Runetagger, and as their strength and notoriety grow from the deeds that they commit (both good and evil), so too does the renown for their art.",
+      "features": [
+        {
+          "anchorId": "e0de6549-118a-43b5-914c-e87090232bd3",
+          "level": 3,
+          "name": "Impressionist",
+          "description": "You gain Expertise with Calligrapher’s Supplies and Painter’s Supplies, and you’re never without your brushes. As a Magic action, you can create either Calligrapher’s Supplies or Painter’s Supplies in one of your free hands. When you do, you can also create either Ink (if you created Calligrapher’s Supplies) or a Vial of paint (if you created Painter’s Supplies); the ink or paint can be any color of your choice. Items created in this way immediately vanish if they are ever not on your person or if you take this action again.\n\nRunetagger Rogue\n\nIn addition, whenever you finish making a mark or rune with ink or paint, you can imbue it with the effect of the Message spell. When you do, the mark is visibly magical and sheds Dim Light in a 5-foot radius. A creature that touches the glowing mark telepathically hears the message you imbued in it. Once the message is heard, the mark loses these properties and becomes nonmagical."
+        },
+        {
+          "anchorId": "c5905743-ef7b-4eb5-b203-99ee405fe359",
+          "level": 3,
+          "name": "Runes",
+          "description": "You have 4 Rune Points, which fuel various magical effects from this subclass. When you hit a creature with a melee attack using a weapon or an Unarmed Strike, you can spend 1 Rune Point to mark that creature with a magical rune in a flourish of paint and weaponry. These runes remain on a marked creature for up to 1 minute. A rune vanishes early if its magic fades (as described below) or if a creature takes an action to wipe it off. You regain all spent Rune Points when you finish a Short or Long Rest.\n\nWhen you mark a creature with this feature, you can choose to leave one of the following runes.\n\n Cryos. The marked creature can’t take Reactions until the start of your next turn, at which point the rune’s magic fades.\n\n Hexxus. When the marked creature succeeds on an ability check or attack roll, you can take a Reaction to activate the rune; the marked creature must be within 60 feet of you and you must be able to see it. When you activate the rune, the creature subtracts 1d6 from its roll, potentially turning the success into a failure. Once the rune has been activated, its magic fades.\n\n Locus. The next attack roll made against the marked creature has Advantage, and if that attack hits, it deals an extra 1d6 Acid damage. The rune’s magic fades after the next attack roll against the creature hits or misses."
+        },
+        {
+          "anchorId": "46aae505-2287-4bb4-a61f-b818ca0e0e68",
+          "level": 9,
+          "name": "Escape Artist",
+          "description": "You become slippery and evasive, capable of worming out of even the tightest holds. You have Advantage on ability checks and saving throws made to avoid or end the Grappled and Restrained conditions. When you have one of those conditions, you can attempt to escape as a Bonus Action if doing so would normally require an action.\n\nIn addition, while you’re within 5 feet of a solid surface (such as the ground or a wall), you can take a Bonus Action and spend 1 Rune Point to magically create a rune on that surface. When you do, you have the Invisible condition for 10 minutes. The condition ends early immediately after you make an attack roll, deal damage, cast a spell, or leave the space where you created the rune."
+        },
+        {
+          "anchorId": "05eeb80a-d666-45fe-8eb3-0192817fbea7",
+          "level": 13,
+          "name": "Resourceful",
+          "description": "Your mastery over the arts is lauded by friends and feared by foes. Whenever you roll Initiative, you regain spent Rune Points until you have two if you have fewer than that. In addition, whenever you deal Sneak Attack damage and add one of your Cunning Strike effects, you can spend 1 or more Rune Points to reduce the number of Sneak Attack damage dice you must forgo by one for each Rune Point spent."
+        },
+        {
+          "anchorId": "389d0746-bcb7-4167-adfb-8a6ab643abc9",
+          "level": 17,
+          "name": "Lead Paint",
+          "description": "You’re able to apply more ink or paint whenever you leave a rune, using it to expose weak points in a target’s defense and guide your strikes. Whenever you hit a creature marked with one of your runes or spend a Rune Point to mark it with one of your runes as part of that attack, you don’t need Advantage on the attack roll or an ally within 5 feet of the target to use your Sneak Attack against it; you still can’t use your Sneak Attack if you have Disadvantage on the attack roll. When you do, your Sneak Attack damage increases by 2d6 damage for the attack."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "FrostSorcery",
+      "slug": "frost-sorcery",
+      "classSlug": "sorcerer",
+      "name": "Frost Sorcery",
+      "tagline": "Summon Storms and Sheets of Slick Ice to Control the Battlefield",
+      "summary": "Your magic is created by pieces of the Everheart, the center and driving force behind the expanding Everglacier wastelands. This power within you might be passed down through ancestors who protected the glacier’s magical core, or it might have been forced upon you through a chance encounter with the enchanted ice itself. Regardless of the source of your power, you are a creature of cold incarnate.",
+      "description": "Your magic is created by pieces of the Everheart, the center and driving force behind the expanding Everglacier wastelands. This power within you might be passed down through ancestors who protected the glacier’s magical core, or it might have been forced upon you through a chance encounter with the enchanted ice itself. Regardless of the source of your power, you are a creature of cold incarnate.",
+      "features": [
+        {
+          "anchorId": "06bb814e-8b7e-4f90-9a94-c5bb9d2782c9",
+          "level": 3,
+          "name": "Create Ice",
+          "description": "While touching a solid surface (such as the ground or a wall), you can take a Bonus Action to magically create icy terrain on up to five 5-foot squares, starting with the surface you’re touching. Each square covers a solid surface and must be contiguous with at least one other square. The ice-covered squares are Difficult Terrain and last until the end of your next turn.\n\nFrost Sorcerer\n\nYou can spend 1 or more Sorcery Points you take this Bonus Action to freeze an additional five contiguous squares for each Sorcery Point spent."
+        },
+        {
+          "anchorId": "b359e49a-1058-4493-9473-87d776f73156",
+          "level": 3,
+          "name": "Frost Spells",
+          "description": "When you reach a Sorcerer level specified in the Frost Spells table, you thereafter always have the listed spells prepared.\n\nFrost Spells \n\nSorcerer Level\nSpells\n\n3\nBlindness/Deafness, Ice Knife, Misty Step, Sleep\n\n5\nSleet Storm, Slow\n\n7\nFire Shield, Ice Storm\n\n9\nCone of Cold, Conjure Elemental (Cold damage only)"
+        },
+        {
+          "anchorId": "ad16cae0-9939-4054-ac07-c282117791d9",
+          "level": 3,
+          "name": "Frozen Body",
+          "description": "Your skin takes on a faintly ice-like, crystalline glow. Your Hit Point maximum increases by 3, and it increases by 1 whenever you gain another Sorcerer level.\n\nIn addition, Difficult Terrain composed of ice or snow doesn’t cost you extra movement, and when you walk on ice, you only spend 1 foot of movement for every 2 feet you move."
+        },
+        {
+          "anchorId": "2f6ee108-c2d7-43ef-9283-acb10a40839b",
+          "level": 6,
+          "name": "Cold-Hearted",
+          "description": "Your icy core manifests outwardly, granting you the following benefits.\n\n Cryomancy. When you deal Cold damage to a Large or smaller creature with a spell, you can spend 1 or more Sorcery Points to attempt to freeze that creature in place. When you do, that creature’s Speed is reduced by 15 feet for each Sorcery Point you spend; this reduction lasts until the end of the creature’s next turn. If you reduce a creature’s Speed to 0 in this way, it takes 2d6 Cold damage.\n\n Freeze Water. You can now use your Create Ice feature to turn water into icy terrain, in addition to solid surfaces. When you do, the ice extends 5 feet deep, freezing up to a 5-foot Cube. These Cubes can support Large or smaller creatures; if a Huge or larger creature moves onto one of these Cubes, it reverts to its water form early.\n\n Resistance. You have Resistance to Cold damage."
+        },
+        {
+          "anchorId": "333b842b-7fb0-47b6-acb5-9a683243209d",
+          "level": 14,
+          "name": "Flash Freeze",
+          "description": "You’re most confident on the ice. Your movement doesn’t provoke Opportunity Attacks while you’re moving on icy terrain.\n\nIn addition, when a creature you can see within 5 feet of yourself hits you with an attack roll, you can take a Reaction to deal Cold damage to the attacker equal to your Charisma modifier plus half your Sorcerer level (round down). When you do, you can use your Create Ice feature as part of that Reaction."
+        },
+        {
+          "anchorId": "87acd3cc-1740-461e-8f7a-12484ad4c721",
+          "level": 18,
+          "name": "Frozen Soul",
+          "description": "You have Immunity to Cold damage and Resistance to Fire damage.\n\nIn addition, you always have the Wall of Ice spell prepared, and you can cast it without a Material component. You can also cast it once without a spell slot; if you choose for its form to be flat when cast in this way, the panels of ice don’t need to be contiguous with one another. Once you use this feature to cast the spell without a spell slot, you can’t do so again until you finish a Long Rest."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "TheAstralGriffon",
+      "slug": "astral-griffon-patron",
+      "classSlug": "warlock",
+      "name": "The Astral Griffon",
+      "tagline": "Control Your Own Extradimensional Space",
+      "summary": "You have made a pact with a powerful demigod of the Astral Plane named Criir: a griffon whose control over space, creation, and pocket dimensions extends throughout the multiverse. They aim to expand their eclectic collection of treasures, both magical and mundane. These treasures may be worth very little in the average shop, but to the Astral Griffon, they hold a special place in history or the fabric of existence. Your binding may lead you far and wide in search of foreign Artifacts as quickly as it would a nearby pub for a tarnished locket. Regardless of the task, the Griffon’s aims are rarely subject to distinctly good or evil motives.",
+      "description": "You have made a pact with a powerful demigod of the Astral Plane named Criir: a griffon whose control over space, creation, and pocket dimensions extends throughout the multiverse. They aim to expand their eclectic collection of treasures, both magical and mundane. These treasures may be worth very little in the average shop, but to the Astral Griffon, they hold a special place in history or the fabric of existence. Your binding may lead you far and wide in search of foreign Artifacts as quickly as it would a nearby pub for a tarnished locket. Regardless of the task, the Griffon’s aims are rarely subject to distinctly good or evil motives.",
+      "features": [
+        {
+          "anchorId": "2ced3650-7dae-49a9-9636-113b084e32c1",
+          "level": 3,
+          "name": "Astral Griffon Spells",
+          "description": "The magic of your patron ensures you always have certain spells ready; when you reach a Warlock level specified in the Astral Griffon Spells table, you thereafter always have the listed spells prepared.\n\nWarlock of the Astral Griffon\n\nAstral Griffon Spells \n\nWarlock Level\nSpells\n\n3\nIdentify, Locate Object, Magic Missile, Rope Trick\n\n5\nBlink, Clairvoyance\n\n7\nMordenkainen's Private Sanctum, Leomund's Secret Chest\n\n9\nLegend Lore, Passwall"
+        },
+        {
+          "anchorId": "82679d52-f727-4494-87ef-f413aff2deeb",
+          "level": 3,
+          "name": "Astral Missile",
+          "description": "You can cast Magic Missile without expending a spell slot a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a Long Rest. When you cast it in this way, the darts can target a creature you can’t see; if the target isn’t within range, the dart flies haphazardly before vanishing through an instantaneous planar tear."
+        },
+        {
+          "anchorId": "1f4b9a73-8e3e-4de8-83b0-d0c859746e40",
+          "level": 3,
+          "name": "Extradimensional Acuity",
+          "description": "Your patron grants you the ability to maintain a small pocket dimension. This extradimensional space is always accessible to you and can hold up to 50 pounds of inanimate material, not exceeding a volume of 1 cubic foot. You can access and interact with this space using your hands the same way you would with a normal container. Your hands disappear within the space while they’re accessing it.\n\nPlacing a Bag of Holding, Heward's Handy Haversack, Portable Hole, or similar item inside your pocket dimension instantly destroys that item, and the contents of the two extradimensional spaces are scattered in the Astral Plane. When this happens, you are unable to access your pocket dimension again until 7 days have passed.\n\nIn addition, you can sense whether extradimensional spaces (other than the one given to you by your patron) are present within 60 feet of you. This feature doesn’t reveal their location or number."
+        },
+        {
+          "anchorId": "a5db2406-99e5-48db-82a7-bf53fc4d5a3f",
+          "level": 6,
+          "name": "Planar Escape",
+          "description": "You can hide yourself in a temporary extradimensional space to avoid harm. When you take damage, you can take a Reaction to halve that damage against you and disappear into a harmless demiplane, which overlaps with your current plane. You can perceive the plane you left and move normally while in this demiplane, but you are imperceptible to creatures on the overlapped plane. You remain in this demiplane until the end of your next turn or until you choose to return to the plane you left (no action required). Once you use this feature, you can’t do so again until you finish a Short or Long Rest."
+        },
+        {
+          "anchorId": "416a4cdc-773b-46da-8ef6-1ebb2b63c410",
+          "level": 10,
+          "name": "Extradimensional Mastery",
+          "description": "The fabric of existence is clear to you. You gain the following benefits.\n\n Astral Clarity. You can take a Magic action to enhance your perception of reality. For 10 minutes, you have Advantage on Wisdom (Perception) checks that rely on sight, and you have Truesight with a range of 30 feet. You can use this feature a number of times equal to your Charisma modifier (minimum of once), and you regain all expended uses when you finish a Long Rest.\n\n Magical Snoop. While you’re within 10 feet of a magic item that contains an extradimensional space, you can sense what objects are stored within it.\n\n Resistance. You have Resistance to Force damage."
+        },
+        {
+          "anchorId": "70b081b6-da5b-41ef-9290-256793aa10c2",
+          "level": 14,
+          "name": "Pocketeer",
+          "description": "You’ve learned how to mold extradimensional spaces beyond their normal limits. Your pocket dimension can now hold up to 250 pounds of inanimate material, not exceeding a volume of 10 cubic feet.\n\nIn addition, you can take a Magic action to target an object you can see within 30 feet of yourself that isn’t being worn, shunting it into your pocket dimension; if there isn’t enough space in your pocket dimension for the object, this effect fails and your action is wasted. If the object is being carried by a creature, that creature must succeed on a Wisdom saving throw against your spell save DC to avoid this effect. The object remains in your pocket dimension until you retrieve it. If you don’t retrieve the object before the end of your next turn, it reappears in an unoccupied space within 5 feet of you or in your hands if you have any free (your choice each time). Once you use this effect to target an object that is being carried by a creature, you can’t do so again until you finish a Short or Long Rest.\n\nYou can tell a lot about a person based on what they hide away in their pockets.\n\nYou? You’re alright."
+        }
+      ],
+      "spellTables": []
+    },
+    {
+      "anchorId": "Materializer",
+      "slug": "materializer",
+      "classSlug": "wizard",
+      "name": "Materializer",
+      "tagline": "Easily Create and Destroy Matter as a Master Artisan and Arcanist",
+      "summary": "Some Wizards abandon the limitations set by magic schools and instead focus on the binding force that holds everything together. These mages spend their efforts weaving and recreating matter from thin air to create art as well as utility. They value the craftsmanship taught by artisans around the world and consider their skills and creations to be a form of magic all its own.",
+      "description": "Some Wizards abandon the limitations set by magic schools and instead focus on the binding force that holds everything together. These mages spend their efforts weaving and recreating matter from thin air to create art as well as utility. They value the craftsmanship taught by artisans around the world and consider their skills and creations to be a form of magic all its own.\n\nSome arcanists focus on altering the living, whereas Materializers focus on creating and enhancing the inanimate. These mages see beauty in the possibility presented by raw materials and are found as readily studying ancient lore as they are in the center of a bustling forge. Many followers of this tradition take great care and pride in their Component Pouches and find great kinship among Bards, artists, and other craftsmen.",
+      "features": [
+        {
+          "anchorId": "74d61f2d-0122-4df4-aa5b-9330b1dd388c",
+          "level": 3,
+          "name": "Arcane Artisan",
+          "description": "You have dedicated your studies to creation and the magic surrounding it. You gain the following benefits.\n\nMaterializer Wizard\n\n Bonus Cantrip. You know the Mending cantrip. If you already know it, you learn a different Wizard cantrip of your choice. The cantrip doesn’t count against your number of cantrips known.\n\n Creation Savant. You gain proficiency with three Artisan’s Tools of your choice. Whenever you finish a Long Rest, you can replace your proficiency with one type of Artisan’s Tools with a different type of Artisan’s Tools of your choice.\n\n Mage Craft. Your exceptional wit and aptitude allow you to do more with less time. While crafting using a set of Artisan’s Tools with which you have proficiency, you can subtract your Intelligence modifier (minimum of 1) from the number of hours you must work each day, allowing you to complete a full day’s work in 7 hours or less (to a minimum of 2 hours)."
+        },
+        {
+          "anchorId": "ee646101-f70b-4345-b666-94da574cffe2",
+          "level": 3,
+          "name": "Minor Creation",
+          "description": "When you cast a level 1+ spell, you can magically create a Cube of inanimate material of your choice that is no larger than 5 feet on a side. The Cube appears in an unoccupied space you can see on the ground within 30 feet of you, or it appears magically connected to another Cube within that range that you created with this feature. Once you reach Wizard level 10, the range increases to 60 feet. A Cube created in this way weighs a number of pounds equal to 5 times its length on a side, regardless of its material. The Cubes can support up to 10 times their weight, potentially serving as a bridge, and they can provide cover for creatures behind them.\n\nYou can have a total number of these Cubes in existence at a time equal to your Wizard level. You can dismiss any number of the Cubes of your choice as a Bonus Action. Otherwise, a Cube disappears after 1 hour or if it takes any damage. The Cubes are objects that have an AC equal to 10 + your Intelligence modifier, 1 Hit Point, and Immunity to Force damage.\n\n Cube Detonation. When you take a Bonus Action to dismiss one or more of the Cubes, you can choose to detonate any of them instead, destroying them. Each creature within 10 feet of a detonated Cube must make a Dexterity saving throw against your spell save DC. A creature takes Force damage equal to 1d6 + half your Wizard level (round down) on a failed save or half as much damage on a successful one. You can detonate a total number of Cubes—all at once or with multiple separate Bonus Actions—equal to your Intelligence modifier (minimum of 1), and you regain all expended uses of doing so when you finish a Long Rest. You can also restore uses of it by expending a level 1+ spell slot (no action required), regaining a number of uses equal to the slot’s level."
+        },
+        {
+          "anchorId": "cd427a0d-1b68-4a11-b239-2f73e242f432",
+          "level": 6,
+          "name": "Material Enhancement",
+          "description": "Your attention to both magic and mundane detail gives you a heightened understanding and control over them. As a Magic action, you can touch a weapon, suit of armor, or other object. Until the end of your next Short or Long Rest, the object becomes magical if it isn’t already, and gains your choice of up to two of the following benefits:\n\n (Weapon Only) The wielder of the weapon gains a +1 bonus to attack rolls and damage rolls made with it; this bonus increases to +2 when you reach Wizard level 10 and +3 when you reach Wizard level 14. If the weapon already granted a bonus to attack rolls and damage rolls, the wielder must choose whether to use that bonus or the one granted by this feature when attacking with it.\n\n (Armor Only) The wearer of the armor gains a +1 bonus to Armor Class; this bonus increases to +2 when you reach Wizard level 10 and +3 when you reach Wizard level 14. If the armor already granted a bonus to AC, the wearer must choose whether to use that bonus or the one granted by this feature when calculating its Armor Class.\n\n (Armor Only) The armor doesn’t impose Disadvantage on Dexterity (Stealth) checks if it normally would.\n\n The object sheds Bright Light in a 20-foot radius and Dim Light for an additional 20 feet. As a Bonus Action, a creature holding the object can cause it to stop or resume shedding this light.\n\n The object’s weight is halved. If the object is a suit of armor, it doesn’t have a Strength requirement if it normally would. If it’s a weapon with the Heavy property, it doesn’t impose Disadvantage on the wielder’s attack rolls as a result of that property.\n\n When a creature throws the object, it flies back to the creature’s hand immediately after hitting or missing its target.\n\n You change any of the object’s colors, smells, and textures.\n\nYou can use this feature twice, expending one use for each benefit you give an object. You regain all expended uses of this feature when you finish a Short or Long Rest. Once you give an object a benefit in this way, you can’t give that benefit to an object again until you regain your expended uses of this feature."
+        },
+        {
+          "anchorId": "c848b633-ef5a-4f0b-aa30-f4fd1165d1d3",
+          "level": 10,
+          "name": "Dematerialize",
+          "description": "Your spells deal double damage to objects and structures, and whenever you deal damage to a Construct, it takes an extra 1d8 Force damage."
+        },
+        {
+          "anchorId": "b65fe6b1-3ee3-4640-925b-96571155eea0",
+          "level": 14,
+          "name": "Rematerialize",
+          "description": "When you see a Large or smaller nonmagical object or structure be destroyed within 60 feet of you, you can take a Reaction to cause its debris to magically vanish. Once within the next 8 hours, you can take a Magic action to recreate the item, causing it to reappear intact in an unoccupied space you choose within 60 feet of you.\n\nIf the item is recreated in the air, it immediately falls. Any creature below it must make a Dexterity saving throw against your spell save DC. On a failed save, a creature takes Bludgeoning damage for every 10 feet the item fell before reaching it. The amount of damage dealt is based on the item’s size: Small or smaller (1d6), Medium (2d6), or Large (3d6). On a successful save, a creature takes half as much Bludgeoning damage. Unless the object is at least one size smaller than a creature it falls on, that creature is pushed to the nearest unoccupied space.\n\nOnce you use this feature, you can’t use it again until you finish a Long Rest.\n\n    \n\n    \n           \n\n        \n        \n        \n            \n            \n                \n            \n        \n        \n\n        \n        \n        \n            \n            \n\n            \n            \n                \n            \n\n        \n              \n    \n\n    \n\n    \n     \n\n    \n\n                        \n\n// \n\n#site .u-typography-format table {\n table-layout:auto;\n}\n\n                    \n                \n            \n            \n            \n            \n                \n                    \n                \n            \n            \n        \n        \n\n    \n        \n            Our Terms of Service and Privacy Notice have recently been updated to provide greater clarity as to how disputes are handled and transparency regarding the collection and use of personal data. Please review them here:&nbsp;Terms of Service,&nbsp;Privacy Notice. By continuing to use the services, you agree to the new Terms.\n        \n    \n    \n        \n            \n                \n            \n            \n                Support\n                \n                    Help Portal\n\n                    Support Forum\n\n                    System Status\n\n                    \n                       Do Not Sell or Share My Personal Information\n                    \n\n                    \n                       Your Privacy Choices\n                    \n\n                    \n                        Cookie Notice\n                    \n\n                    System Reference Document (SRD)\n\n                \n            \n            \n                About\n                \n                    Contact Us\n\n                    Careers\n\n                    Wizards of the Coast\n\n                    Credits\n\n                \n            \n            \n                Find us on social media\n                \n                    \n\n                    \n\n                    \n \n                    \n\n                    \n\n                    \n\n                    \n\n                \n            \n            \n                Download the D&D Beyond App\n                \n                    \n\n                    \n\n                \n            \n        \n    \n    \n        \n            © 2017-2026&nbsp;Wizards of the Coast LLC | All Rights Reserved\n            Dungeons & Dragons, D&D Beyond, D&D, Wizards of the Coast, the dragon ampersand, and all other Wizards of the Coast product names, campaign settings, their respective logos, and The World's Greatest Roleplaying Game are © and trademark Wizards of the Coast in the U.S.A. and other countries. © 2026 Wizards.\n        \n        \n            Privacy Policy\n            \n        \n        \n            Terms of Service\n            \n        \n        \n            \n        \n    \n    \n        document.addEventListener('DOMContentLoaded', function onDOMContentLoaded() {\n            const currentYear = new Date().getFullYear();\n            try {\n                document.getElementById(\"ddb-footer__year--1\").innerText = currentYear;\n                document.getElementById(\"ddb-footer__year--2\").innerText = currentYear;\n            } catch (e) {\n                console.error(\"Couldn't update footer's year.\")\n            }\n        });\n    \n    \n.ddb-footer {\n    --common-0: #fff;\n    --common-1000: #000;\n    --grey-400: #a2acb2;\n    --footer-background: #242527;\n\n    margin-top: 20px;\n    padding: 0;\n    background: var(--common-1000);\n    line-height: 21px;\n}\n\n.ddb-footer * {\n    margin: 0;\n    padding: 0;\n}\n\n.ddb-footer .ddb-footer__privacy-policy-notice {\n    display: block;\n    background: var(--common-1000);\n    color: var(--grey-400);\n    font-size: 15px;\n    padding: 0.75rem 3.75rem;\n    text-align: center;\n    max-width: 1200px;\n    margin: 0 auto;\n}\n\na.ddb-footer__link,\na.ddb-footer__link:visited {\n    font-size: 15px;\n    color: var(--common-0);\n    text-decoration: none;\n}\n\na.ddb-footer__link:hover {\n    color: var(--grey-400);\n    text-decoration: none;\n}\n\n.ddb-footer__main {\n    min-height: 265px;\n    background: var(--footer-background);\n}\n\n.ddb-footer__main__container {\n    max-width: 1440px;\n    display: grid;\n    justify-content: start;\n    column-gap: 64px;\n    grid-template-columns: repeat(5, auto);\n    grid-template-rows: 1fr auto;\n    margin: 0 auto;\n    padding: 64px 48px;\n}\n\n.ddb-footer__main__header {\n    margin-bottom: 4px;\n    color: var(--grey-400);\n    font-size: 12px;\n    font-weight: 700;\n    text-transform: uppercase;\n}\n\n.ddb-footer__main__header--socials {\n    margin-bottom: 14px;\n}\n\n.ddb-footer__main__list {\n    list-style-type: none;\n}\n\n.ddb-footer__main__list--horizontal {\n    display: flex;\n    flex-wrap: wrap;\n    align-items: center;\n}\n\n.ddb-footer__main__list--horizontal li {\n    margin-right: 24px;\n    margin-bottom: 10px;\n}\n\n.ddb-footer__main__list--horizontal li:last-of-type {\n    margin-right: 0;\n}\n\n.ddb-footer__main__list-item--vertical {\n    margin-bottom: 4px;\n}\n\n.ddb--footer__main__apps-icon {\n  display: block;\n  width: 7.375rem;\n  margin-top: 0.625rem;\n  margin-bottom: 0.5rem;\n}\n\n.ddb-footer__socials-main {\n  box-sizing: border-box;\n  justify-content: start;\n  max-width: 90rem;\n  margin: 0 auto;\n  padding: 2.5rem 3rem 1.5rem 3.25rem;\n}\n\n.ddb-footer__social-icon {\n  height: 1.45rem;\n  margin-right: 0.10rem;\n  margin-bottom: 0.625rem;\n}\n\n.ddb-footer__bottom {\n    background: var(--common-1000);\n    display: grid;\n    grid-template-columns: 11fr auto auto 42px;\n    grid-column-gap: 30px;\n    box-sizing: border-box;\n    max-width: 1440px;\n    grid-template-rows: 1fr auto;\n    align-content: center;\n    align-items: center;\n    padding: 14px 48px 16px;\n    margin: 0 auto;\n    color: var(--grey-400);\n    font-size: 0.75rem;\n}\n\n.ddb-footer__bottom__text-container {\n    max-width: 906px;\n}\n\n.ddb-footer__bottom__header {\n    color: var(--grey-400);\n    font-size: 12px;\n    margin-bottom: 4px;\n    font-weight: 700;\n    text-transform: uppercase;\n}\n\na.ddb-footer__bottom__link,\na.ddb-footer__bottom__link:visited,\na.ddb-footer__bottom__link:hover {\n    color: var(--grey-400);\n    font-size: 12px;\n    font-weight: 700;\n    text-decoration: none;\n    text-transform: uppercase;\n}\n\n@media screen and (max-width: 480px) {\n  .ddb-footer__social-icon {\n    height: 1.2rem;\n    margin-right: 0.2rem;\n  }\n\n  .ddb--footer__main__apps-icon {\n    width: 9rem;\n  }\n\n  .ddb--footer__download-apps {\n    grid-column: span 2;\n  }\n}\n\n@media screen and (max-width: 1227px) {\n    .ddb-footer__main__container {\n        column-gap: 30px;\n    }\n}\n\n@media screen and (max-width: 959px) {\n    .ddb-footer__main__container {\n        grid-template-columns: repeat(2, 1fr);\n        grid-template-rows: auto auto;\n        grid-column-gap: 2.5rem;\n        column-gap: 40px;\n        padding: 24px 52px;\n    }\n\n    .ddb-footer__main__list {\n        margin-bottom: 24px;\n    }\n\n    .ddb-footer__main__list--apps {\n        margin-bottom: 0;\n    }\n\n    .ddb-footer__main__container__logo-container {\n        grid-column: span 2;\n        place-self: center;\n        margin-bottom: 34px;\n    }\n\n    .ddb-footer__main__header {\n        margin-bottom: 12px;\n    }\n\n    .ddb-footer__main__header--socials {\n        margin-bottom: 20px;\n    }\n\n    .ddb-footer__main__socials-container {\n        grid-column: span 2;\n    }\n\n    .ddb-footer__bottom {\n        min-height: 250px;\n        grid-template-columns: auto auto;\n        grid-template-rows: auto auto auto;\n        align-content: start;\n    }\n\n    .ddb-footer__bottom__text-container {\n        grid-column: span 2;\n        margin-bottom: 24px;\n    }\n\n    .ddb-footer__bottom__header {\n        margin-bottom: 16px;\n    }\n\n    .ddb-footer__bottom__esrb-logo-container {\n        margin-top: 16px;\n    }\n}\n    \n\n    \n\n        \n\n        \n\n    if (window.Cobalt) {\n        Cobalt.Device.initialize();\n        Cobalt.Burger.initializeEarly();\n\n        Cobalt.Constants.initialize({\"StaticURL\":\"/content/1-1-131-0\",\"SkinPath\":\"/content/1-1-131-0/skins/Waterdeep\",\"MediaURL\":\"https://www.dndbeyond.com/\",\"AvatarURL\":\"https://www.dndbeyond.com/avatars\",\"AttachmentURL\":\"https://www.dndbeyond.com/attachments\",\"ActiveConfiguration\":\"production\",\"PrivacyPolicyLastUpdated\":\"635857344000000000\"});\n\n        Cobalt.Constants.BuildVersion = \"1-1-131-0\";\n        Cobalt.Constants.IsDevelopment = false;\n        Cobalt.Constants.IgnoredUserIDs = [];\n        Cobalt.Constants.FacebookAppID = \"\";\n        Cobalt.Constants.QuoteCssClasses = \"\";\n        Cobalt.User.EnabledLanguageIDs = [1];\n        Cobalt.User.MaxQuoteDepth = 5;\n        Cobalt.User.AuthToken = \"eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0.._uWrIqQiRoaF9jNk61KbsQ.M0EvZRfL9sERw1HB5VJYQGOY74Dp2mTOwSGCMWZoTkc_SPeYLr7DNKP80-drbqVC.UnVJ4wpbbnBZk-jD-aaSqg\";\n        Cobalt.TinyMCE.extraPlugins = \"\";\n        Cobalt.TinyMCE.extraButtons = \"\";\n        Cobalt.TinyMCE.extraCustomPlugins = \"\";\n\n        // NOTE: if you need to debug into tinymce, then change the following line to tinymce.js\n        Cobalt.TinyMCE.url = Cobalt.Constants.StaticURL + \"/js/tinymce/tiny_mce/tinymce.min.js\";\n        Cobalt.TinyMCE.customPluginUrl = Cobalt.Constants.StaticURL + \"/js/tinymce/custom_plugins\";\n        Cobalt.TinyMCE.skin_url = Cobalt.Constants.StaticURL + \"/js/tinymce/custom_skin\";\n\n        \n        Cobalt.Constants.SiteID = 62;\n        Cobalt.Constants.SiteName = \"D&D Beyond\";\n        Cobalt.TinyMCE.fontColorEnabled = true;\n        Cobalt.TinyMCE.fontSizeEnabled = true;\n        Cobalt.TinyMCE.fontFamilyEnabled = true;\n        Cobalt.TinyMCE.textAlignmentEnabled = true;\n        Cobalt.TinyMCE.smiliesEnabled = false;\n        Cobalt.TinyMCE.forceSimpleBBCodeEditor = false;\n        Cobalt.Constants.NestedQuotePreference  = 1;\n        \n        $.ajaxSetup({\n            data: {},\n            timeout: 30000\n        });\n\n        \n\n            Cobalt.User.IsAuthenticated = true;\n\n            \n\n            Cobalt.User.ID = 120680655;\n        \n\n        //bbcode entries\n        \n        Cobalt.Markup.customBBcodeButtons = [];\n\n        \n\n        Cobalt.CMS.CobaltCss = [\"/content/1-1-131-0/skins/global-TinyMCE/css/compiled.css\"];\n        Cobalt.CMS.ProjectCss = [\"/content/1-1-131-0/skins/waterdeep/css/compiled.css\"];\n\n        // set the tracking id for google analytics on this site\n        Cobalt.Analytics.trackingId = 'UA-26524418-48';\n    }\n\n    if (window.Cobalt) {\n        Cobalt.runOnLoad(function () {\n            Cobalt.initialize([{dependency:Cobalt.ViewTracking, priority:99, name:'Cobalt.ViewTracking'},{dependency:Cobalt.Social, priority:99, name:'Cobalt.Social'},{dependency:Cobalt.Analytics, priority:99, name:'Cobalt.Analytics'},{dependency:Cobalt.Tabs, priority:99, name:'Cobalt.Tabs'},{dependency:Cobalt.NiceDates, priority:99, name:'Cobalt.NiceDates'},{dependency:Cobalt.Core, priority:99, name:'Cobalt.Core'},{dependency:Cobalt.Forms, priority:99, name:'Cobalt.Forms'},{dependency:Cobalt.UI, priority:99, name:'Cobalt.UI'},{dependency:Cobalt.Auth, priority:99, name:'Cobalt.Auth'},{dependency:Cobalt.Notifications, priority:99, name:'Cobalt.Notifications'},{dependency:Cobalt.Feedback, priority:99, name:'Cobalt.Feedback'},{dependency:Cobalt.WarningNotification, priority:99, name:'Cobalt.WarningNotification'},{dependency:Cobalt.Footer, priority:99, name:'Cobalt.Footer'},{dependency:Cobalt.Tidbit, priority:99, name:'Cobalt.Tidbit'},{dependency:Cobalt.BunnyEars, priority:99, name:'Cobalt.BunnyEars'},{dependency:Cobalt.TinyMCE, priority:99, name:'Cobalt.TinyMCE'}]);\n        });\n    }\n\n    \n\nvar DATALAYER_OBJECT_NAME=\"dataLayer\",referrerOverride=function(a){var c=window[DATALAYER_OBJECT_NAME]||[];c.push({event:\"optimizely-referrer-override\",\"optimizely-referrer\":a})},sendCampaignData=function(a,c){if(a=optimizely.get(\"data\")&&optimizely.get(\"data\").campaigns[a]&&optimizely.get(\"data\").campaigns[a].integrationSettings&&optimizely.get(\"data\").campaigns[a].integrationSettings.google_universal_analytics&&optimizely.get(\"data\").campaigns[a].integrationSettings.google_universal_analytics.universal_analytics_slot){var e=\nwindow[DATALAYER_OBJECT_NAME]||[];e.push({event:\"campaign-decided\",\"optimizely-dimension-value\":c,\"optimizely-dimension-number\":a})}},initNewOptimizelyIntegration=function(a,c){var e=!1,g=function(b){var d=window.optimizely.get&&window.optimizely.get(\"state\"),f=d.getRedirectInfo()&&d.getRedirectInfo().referrer;!e&&f&&(a(f),e=!0);d=d.getDecisionString({campaignId:b});c(b,d)},h=function(){window.optimizely=window.optimizely||[];window.optimizely.push({type:\"addListener\",filter:{type:\"lifecycle\",name:\"campaignDecided\"},\nhandler:function(b){b=b.data.campaign.id;g(b)}})},k=function(){var b=window.optimizely&&window.optimizely.get&&window.optimizely.get(\"state\");if(b){b=b.getCampaignStates({isActive:!0});for(var d in b)g(d)}};k();h()},initOptimizelyIntegration=function(a,c){initNewOptimizelyIntegration(a,c)};initOptimizelyIntegration(referrerOverride,sendCampaignData);\n!function(b,e,f,g,a,c,d){b.fbq||(a=b.fbq=function(){a.callMethod?a.callMethod.apply(a,arguments):a.queue.push(arguments)},b._fbq||(b._fbq=a),a.push=a,a.loaded=!0,a.version=\"2.0\",a.queue=[],c=e.createElement(f),c.async=!0,c.src=g,d=e.getElementsByTagName(f)[0],d.parentNode.insertBefore(c,d))}(window,document,\"script\",\"https://connect.facebook.net/en_US/fbevents.js\");fbq(\"init\",\"1490426964380018\");fbq(\"track\",\"PageView\");\n\ntry{(function(){function d(c,e){c=c.split(\";\");for(var b=0;b\n\t!function(d,g,e){d.TiktokAnalyticsObject=e;var a=d[e]=d[e]||[];a.methods=\"page track identify instances debug on off once ready alias group enableCookie disableCookie\".split(\" \");a.setAndDefer=function(b,c){b[c]=function(){b.push([c].concat(Array.prototype.slice.call(arguments,0)))}};for(d=0;d\n\t(function(a,e,b,f,g,c,d){a[b]=a[b]||function(){(a[b].q=a[b].q||[]).push(arguments)};c=e.createElement(f);c.async=1;c.src=\"https://www.clarity.ms/tag/\"+g;d=e.getElementsByTagName(f)[0];d.parentNode.insertBefore(c,d)})(window,document,\"clarity\",\"script\",\"exc3x4tbdq\");"
+        }
+      ],
+      "spellTables": []
+    }
+  ]
+}
