@@ -41,9 +41,17 @@ const checks = [
     expectMin: 4,
   },
   {
-    label: 'pioneer ferramentas (escolha)',
-    sql: `SELECT tool_proficiency_kind kind FROM rpg.phb_background WHERE slug = 'gh-pioneer'`,
-    expectKind: 'choice',
+    label: 'heranças GH jogáveis (sem índice)',
+    sql: `SELECT COUNT(*)::int n FROM rpg.phb_species
+      WHERE slug LIKE 'gh-%' AND slug <> 'gh-heritage-traits'
+        AND COALESCE(source_meta->>'catalogOnly', 'false') NOT IN ('true', '1')`,
+    expect: 17,
+  },
+  {
+    label: 'pool trait choices gh-dwarf slot 1',
+    sql: `SELECT COUNT(*)::int n FROM rpg.v_phb_species_trait_choices
+      WHERE species_slug = 'gh-dwarf' AND choice_kind = 'gh_heritage_trait_1'`,
+    expectMin: 100,
   },
 ];
 

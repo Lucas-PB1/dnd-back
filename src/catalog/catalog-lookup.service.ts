@@ -126,6 +126,11 @@ export class CatalogLookupService {
         `Species '${speciesSlug}' is not a playable species`,
       );
     }
+    if (isCatalogOnlySpecies(species)) {
+      throw new BadRequestException(
+        `Species '${speciesSlug}' is catalog-only and not playable`,
+      );
+    }
   }
 
   async assertBackgroundSlug(backgroundSlug: string): Promise<void> {

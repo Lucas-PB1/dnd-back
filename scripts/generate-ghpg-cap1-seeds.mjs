@@ -59,7 +59,7 @@ function buildHeritageSpeciesSql(cap1) {
   ${sqlLiteral(h.description)},
   ${sqlLiteral(summary)},
   ${sqlLiteral(h.categoryLabelPt)},
-  ${sourceMeta({ kind: 'heritage', heritageCategory: h.category, catalogOnly: true })}
+  ${sourceMeta({ kind: 'heritage', heritageCategory: h.category })}
 )`;
   });
 
@@ -75,7 +75,7 @@ function buildHeritageSpeciesSql(cap1) {
   ${sourceMeta({ kind: 'heritage-trait-index', catalogOnly: true })}
 )`);
 
-  return `-- Grim Hollow Cap. 1 — heritages (catálogo; não jogáveis no wizard PHB)
+  return `-- Grim Hollow Cap. 1 — heritages jogáveis (wizard GH) + índice de traços
 
 INSERT INTO rpg.phb_species (
   slug, name, creature_type, size, speed, description, summary, tagline, source_meta

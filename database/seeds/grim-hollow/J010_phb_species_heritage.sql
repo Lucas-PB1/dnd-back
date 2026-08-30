@@ -1,4 +1,4 @@
--- Grim Hollow Cap. 1 — heritages (catálogo; não jogáveis no wizard PHB)
+-- Grim Hollow Cap. 1 — heritages jogáveis (wizard GH) + índice de traços
 
 INSERT INTO rpg.phb_species (
   slug, name, creature_type, size, speed, description, summary, tagline, source_meta
@@ -31,7 +31,7 @@ Traditional Dragonborn Traits
 For most Dragonborn, a unique physiology defines and shapes their innate capabilities.',
   'Herança comum em Etharis — equivalente às “raças” tradicionais, mas com traços modulares escolhidos na criação.',
   'Herança comum',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common"}'::jsonb
 ),
 (
   'gh-dwarf',
@@ -64,7 +64,7 @@ Traditional Dwarf Traits
 Dwarves are known for their natural resilience and for the degree to which they have adapted to living in the deeps beneath hills and mountains, where few other folks can thrive.',
   'Herança comum em Etharis — equivalente às “raças” tradicionais, mas com traços modulares escolhidos na criação.',
   'Herança comum',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common"}'::jsonb
 ),
 (
   'gh-elf',
@@ -93,7 +93,7 @@ Traditional Elf Traits
 The ancient traditions followed by many Elves reflect a mastery of mind, body, and magic.',
   'Herança comum em Etharis — equivalente às “raças” tradicionais, mas com traços modulares escolhidos na criação.',
   'Herança comum',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common"}'::jsonb
 ),
 (
   'gh-gnome',
@@ -126,7 +126,7 @@ Traditional Gnome Traits
 For many Gnomes, an instinctive quickness of body and mind shapes their approach to life and learning.',
   'Herança comum em Etharis — equivalente às “raças” tradicionais, mas com traços modulares escolhidos na criação.',
   'Herança comum',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common"}'::jsonb
 ),
 (
   'gh-halfling',
@@ -157,7 +157,7 @@ Traditional Halfling Traits
 Many Halflings possess innate instincts of courage and curiosity, even if only a few get the chance to use them.',
   'Herança comum em Etharis — equivalente às “raças” tradicionais, mas com traços modulares escolhidos na criação.',
   'Herança comum',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common"}'::jsonb
 ),
 (
   'gh-human',
@@ -186,7 +186,7 @@ Traditional Human Traits
 Though Humans are no more drawn to violence than any other folk, many possess an innate ambition, a hunger for exploration, and a willingness to stand against danger.',
   'Herança comum em Etharis — equivalente às “raças” tradicionais, mas com traços modulares escolhidos na criação.',
   'Herança comum',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"common"}'::jsonb
 ),
 (
   'gh-dreamer',
@@ -219,7 +219,7 @@ Traditional Dreamer Traits
 Their long sleep and the lingering dreams that come with it shape the minds and instincts of many Dreamers.',
   'Herança rara — povo pouco comum em Etharis, com traços modulares.',
   'Herança rara',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"rare","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"rare"}'::jsonb
 ),
 (
   'gh-grudgel',
@@ -250,7 +250,7 @@ Traditional Grudgel Traits
 Many Grudgels are shaped by living as wanderers and by a long-held fascination with crafting and magic.',
   'Herança rara — povo pouco comum em Etharis, com traços modulares.',
   'Herança rara',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"rare","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"rare"}'::jsonb
 ),
 (
   'gh-laneshi',
@@ -279,7 +279,7 @@ Traditional Laneshi Traits
 Their unique undersea culture shapes the talents and drives of many Laneshi.',
   'Herança rara — povo pouco comum em Etharis, com traços modulares.',
   'Herança rara',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"rare","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"rare"}'::jsonb
 ),
 (
   'gh-ogresh',
@@ -308,7 +308,7 @@ Traditional Ogresh Traits
 A wandering lifestyle, and an innate ability to read other creatures, shapes and defines many Ogresh.',
   'Herança rara — povo pouco comum em Etharis, com traços modulares.',
   'Herança rara',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"rare","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"rare"}'::jsonb
 ),
 (
   'gh-accursed',
@@ -335,7 +335,7 @@ Traditional Accursed Traits
 The unique nature behind your creation or the evolution of your exceedingly rare kind dictates the traits that define you. If you resemble or once lived as one of the standard heritages of Etharis, you might choose one or more of the traits of that heritage as a starting point. But you are free to choose any traits as you determine, creating a character whose unique nature shapes their experience in the world.',
   'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
   'Herança eldritch',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch"}'::jsonb
 ),
 (
   'gh-arisen',
@@ -368,7 +368,7 @@ Traditional Arisen Traits
 The artificial forms that all Arisen share often establish the baseline of their talents and instincts.',
   'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
   'Herança eldritch',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch"}'::jsonb
 ),
 (
   'gh-dhampir',
@@ -399,7 +399,7 @@ Traditional Dhampir Traits
 The vampiric features they inherit inevitably mark the Dhampir as who they are.',
   'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
   'Herança eldritch',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch"}'::jsonb
 ),
 (
   'gh-disembodied',
@@ -430,7 +430,7 @@ Traditional Disembodied Traits
 Most Disembodied retain a touch of the ethereal magic that marks them as creatures of two worlds.',
   'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
   'Herança eldritch',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch"}'::jsonb
 ),
 (
   'gh-downcast',
@@ -461,7 +461,7 @@ Traditional Downcast Traits
 Many Downcast channel magic driven by the vestiges of celestial power that still flow through them.',
   'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
   'Herança eldritch',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch"}'::jsonb
 ),
 (
   'gh-wechselkind',
@@ -492,7 +492,7 @@ Traditional Wechselkind Traits
 The magical and artificial nature shapes the aptitudes and innate features of all Wechselkind.',
   'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
   'Herança eldritch',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch"}'::jsonb
 ),
 (
   'gh-wulven',
@@ -521,7 +521,7 @@ Traditional Wulven Traits
 Many Wulven channel the natural instincts—and often the natural fierceness—of the creature their curse links them to.',
   'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
   'Herança eldritch',
-  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch","catalogOnly":true}'::jsonb
+  '{"editionSlug":"grim-hollow-players-guide-2024-en","book":"Grim Hollow: Player''s Guide","language":"pt","citationSlug":"grim-hollow-players-guide-2024-en:chapter-1-heritages-traits","source":"grim-hollow","kind":"heritage","heritageCategory":"eldritch"}'::jsonb
 ),
 (
   'gh-heritage-traits',

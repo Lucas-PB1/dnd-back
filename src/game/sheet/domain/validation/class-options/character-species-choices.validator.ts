@@ -6,6 +6,21 @@ import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-cho
 import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
 
 const OPTIONAL_KINDS = new Set(['high_elf_cantrip', 'andari_druid_cantrip']);
+const GH_HERITAGE_TRAIT_SLOTS = [
+  'gh_heritage_trait_1',
+  'gh_heritage_trait_2',
+  'gh_heritage_trait_3',
+  'gh_heritage_trait_4',
+  'gh_heritage_trait_5',
+  'gh_heritage_trait_6',
+  'gh_heritage_trait_7',
+  'gh_heritage_trait_8',
+] as const;
+const GH_HERITAGE_INDEX_SLUG = 'gh-heritage-traits';
+
+function isGrimHollowHeritageSlug(speciesSlug: string): boolean {
+  return speciesSlug.startsWith('gh-') && speciesSlug !== GH_HERITAGE_INDEX_SLUG;
+}
 
 @Injectable()
 export class CharacterSpeciesChoicesValidator {
@@ -20,6 +35,11 @@ export class CharacterSpeciesChoicesValidator {
     choices: CharacterSheetInput['speciesChoices'],
   ): Promise<void> {
     if (!choices) return;
+
+    if (isGrimHollowHeritageSlug(speciesSlug)) {
+      await this.validateGrimHollowHeritageChoices(speciesSlug, choices);
+      return;
+    }
 
     const rows = await this.speciesTraitChoicesRepo.find({ where: { speciesSlug } });
     const optionalChoices = choices.filter((c) => OPTIONAL_KINDS.has(c.choiceKind));
@@ -65,6 +85,66 @@ export class CharacterSpeciesChoicesValidator {
     await this.validateOptionalHighElfCantrip(speciesSlug, choices, optionalChoices);
     await this.validateAndariDruidCantrip(speciesSlug, choices, optionalChoices);
     this.validateGeppettinSizeRequiresMarionette(speciesSlug, choices);
+  }
+
+  private async validateGrimHollowHeritageChoices(
+    speciesSlug: string,
+    choices: NonNullable<CharacterSheetInput['speciesChoices']>,
+  ): Promise<void> {
+    const rows = await this.speciesTraitChoicesRepo.find({ where: { speciesSlug } });
+    const ghChoices = choices.filter((c) => c.choiceKind.startsWith('gh_heritage_'));
+
+    for (const kind of GH_HERITAGE_TRAIT_SLOTS) {
+      if (!ghChoices.some((c) => c.choiceKind === kind && c.choiceSlug?.trim())) {
+        throw new BadRequestException(`Missing heritage trait choice for '${kind}'`);
+      }
+    }
+
+    const speedTrade = ghChoices.find(
+      (c) => c.choiceKind === 'gh_heritage_speed_trade',
+    )?.choiceSlug;
+    const hasSpeedTradeRow = rows.some((r) => r.choiceKind === 'gh_heritage_speed_trade');
+    if (hasSpeedTradeRow && !speedTrade) {
+      throw new BadRequestException(
+        `Missing heritage choice for 'gh_heritage_speed_trade'`,
+      );
+    }
+    if (speedTrade === 'yes') {
+      const ninth = ghChoices.find((c) => c.choiceKind === 'gh_heritage_trait_9');
+      if (!ninth?.choiceSlug?.trim()) {
+        throw new BadRequestException(
+          `Heritage speed trade requires 'gh_heritage_trait_9'`,
+        );
+      }
+    }
+
+    const hasSizeRow = rows.some((r) => r.choiceKind === 'gh_heritage_size');
+    if (hasSizeRow) {
+      const size = ghChoices.find((c) => c.choiceKind === 'gh_heritage_size')?.choiceSlug;
+      if (!size) {
+        throw new BadRequestException(`Missing heritage choice for 'gh_heritage_size'`);
+      }
+    }
+
+    const allowedKinds = new Set(rows.map((r) => r.choiceKind));
+    for (const choice of ghChoices) {
+      if (!allowedKinds.has(choice.choiceKind)) {
+        throw new BadRequestException(
+          `Species choice kind '${choice.choiceKind}' is not valid for '${speciesSlug}'`,
+        );
+      }
+      const valid = rows.some(
+        (row) => row.choiceKind === choice.choiceKind && row.choiceSlug === choice.choiceSlug,
+      );
+      if (!valid) {
+        throw new BadRequestException(
+          `Species choice '${choice.choiceKind}/${choice.choiceSlug}' is invalid for '${speciesSlug}'`,
+        );
+      }
+    }
+
+    const kinds = ghChoices.map((c) => c.choiceKind);
+    assertUnique(kinds, 'Duplicate heritage choice slots are not allowed');
   }
 
   private validateGeppettinSizeRequiresMarionette(
