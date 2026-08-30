@@ -19,6 +19,7 @@ describe('EquipmentMapper', () => {
           propertyIds: ['versatile', 'missing'],
           versatileDamage: '1d10',
         },
+        imageUrl: '/catalog/equipment/longsword.png',
       },
     } as unknown as PhbWeapon;
 
@@ -40,6 +41,7 @@ describe('EquipmentMapper', () => {
         range: null,
         mastery: null,
         propertyDetails: [{ slug: 'versatile', name: 'Versátil' }],
+        imageUrl: '/catalog/equipment/longsword.png',
       });
     });
 

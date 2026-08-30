@@ -52,6 +52,7 @@ export class EquipmentMapper {
             description: mastery.description,
           }
         : null,
+      imageUrl: row.item.imageUrl ?? null,
     };
   }
 

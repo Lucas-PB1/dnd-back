@@ -52,4 +52,7 @@ export class WeaponResponseDto {
 
   @ApiPropertyOptional({ type: WeaponTraitDto })
   mastery!: WeaponTraitDto | null;
+
+  @ApiPropertyOptional({ example: '/catalog/equipment/catchpole.png' })
+  imageUrl!: string | null;
 }
