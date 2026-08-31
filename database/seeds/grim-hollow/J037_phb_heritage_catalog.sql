@@ -429,10 +429,10 @@ VALUES
   'GiftedPerformerRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Um Espetáculo a Contemplar',
-  'Quando você quer se destacar, tem um dom natural para impressionar os outros. Você tem proficiência na perícia Atuação.
+  'Quando você deseja se destacar, tem um dom natural para impressionar os outros. Você tem proficiência na perícia Atuação.
 
 Um Espetáculo a Contemplar. Se você escolher este traço duas vezes, você tem Vantagem em testes de Atuação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Quando você quer se destacar, tem um dom natural para impressionar os outros. Você tem proficiência na perícia Atuação.',
+  'Quando você deseja se destacar, tem um dom natural para impressionar os outros. Você tem proficiência na perícia Atuação.',
   'Um Espetáculo a Contemplar. Se você escolher este traço duas vezes, você tem Vantagem em testes de Atuação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Um Espetáculo a Contemplar',
   2,
@@ -443,15 +443,15 @@ Um Espetáculo a Contemplar. Se você escolher este traço duas vezes, você tem
   'EnvironmentalAwarenessExploration',
   'exploration'::rpg.heritage_trait_category,
   'Percepção Adaptativa',
-  'O mundo natural é um lugar perigoso, e sua conexão to specific parts of that world grants you an edge in survival. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. While in esse ambiente, whenever você faz an ability check to assess structures, monuments, or natural features; to find food or drinkable water; or to track creatures, você é considerado como tendo proficiency in the a perícia apropriada para o teste, e você soma o dobro your Bônus de Proficiência to o teste em vez do seu bônus normal.
+  'O mundo natural é um lugar perigoso, e sua conexão com partes específicas dele lhe dá vantagem na sobrevivência. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. Enquanto estiver nesse ambiente, sempre que fizer um teste de atributo para avaliar estruturas, monumentos ou feições naturais; para encontrar comida ou água potável; ou para rastrear criaturas, você é considerado como tendo proficiência na perícia apropriada para o teste e adiciona o dobro do seu Bônus de Proficiência ao teste em vez do bônus normal.
 
 Percepção Adaptativa. Se você escolher este traço várias vezes, você ganha o benefício para um novo ambiente a cada vez.
 
-Além disso, when você faz an ability check using Percepção Ambiental, você tem Vantagem em o teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'O mundo natural é um lugar perigoso, e sua conexão to specific parts of that world grants you an edge in survival. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. While in esse ambiente, whenever você faz an ability check to assess structures, monuments, or natural features; to find food or drinkable water; or to track creatures, você é considerado como tendo proficiency in the a perícia apropriada para o teste, e você soma o dobro your Bônus de Proficiência to o teste em vez do seu bônus normal.',
+Além disso, quando você faz um teste de atributo usando Consciência Ambiental, você tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'O mundo natural é um lugar perigoso, e sua conexão com partes específicas dele lhe dá vantagem na sobrevivência. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. Enquanto estiver nesse ambiente, sempre que fizer um teste de atributo para avaliar estruturas, monumentos ou feições naturais; para encontrar comida ou água potável; ou para rastrear criaturas, você é considerado como tendo proficiência na perícia apropriada para o teste e adiciona o dobro do seu Bônus de Proficiência ao teste em vez do bônus normal.',
   'Percepção Adaptativa. Se você escolher este traço várias vezes, você ganha o benefício para um novo ambiente a cada vez.
 
-Além disso, when você faz an ability check using Percepção Ambiental, você tem Vantagem em o teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Além disso, quando você faz um teste de atributo usando Consciência Ambiental, você tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Percepção Adaptativa',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -465,13 +465,13 @@ Além disso, when você faz an ability check using Percepção Ambiental, você 
 
 Aliado Animal. Se você escolher este traço duas vezes, você tem Vantagem em testes de Adestrar Animais. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Algo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela sicou meu próprio cão contra mim.
+Algo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela soltou meu próprio cão contra mim.
 
 — Vizinho ressentido',
   'Tempo entre feras lhe deu jeito com essas criaturas. Você tem proficiência na perícia Adestrar Animais.',
   'Aliado Animal. Se você escolher este traço duas vezes, você tem Vantagem em testes de Adestrar Animais. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Algo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela sicou meu próprio cão contra mim.
+Algo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela soltou meu próprio cão contra mim.
 
 — Vizinho ressentido',
   'Aliado Animal',
@@ -483,15 +483,15 @@ Algo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela sic
   'ArtisanalFocusRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Perícia Artesanal',
-  'Você reverencia a perícia artesanal de ancestrais há muito mortos. Choose an Artisan’s Tool. Você tem proficiência com essa ferramenta.
+  'Você reverencia a perícia artesanal de ancestrais há muito mortos. Escolha uma Ferramenta de Artesão. Você tem proficiência com essa ferramenta.
 
 Perícia Artesanal. Se você escolher este traço várias vezes, você ganha proficiência com uma nova ferramenta a cada vez.
 
-Além disso, você tem Vantagem em testes de ability made using qualquer ferramenta que você escolheu com Foco Artesanal. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Você reverencia a perícia artesanal de ancestrais há muito mortos. Choose an Artisan’s Tool. Você tem proficiência com essa ferramenta.',
+Além disso, você tem Vantagem em testes de atributo feitos com qualquer ferramenta que selecionou com Foco Artesanal. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Você reverencia a perícia artesanal de ancestrais há muito mortos. Escolha uma Ferramenta de Artesão. Você tem proficiência com essa ferramenta.',
   'Perícia Artesanal. Se você escolher este traço várias vezes, você ganha proficiência com uma nova ferramenta a cada vez.
 
-Além disso, você tem Vantagem em testes de ability made using qualquer ferramenta que você escolheu com Foco Artesanal. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Além disso, você tem Vantagem em testes de atributo feitos com qualquer ferramenta que selecionou com Foco Artesanal. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Perícia Artesanal',
   NULL,
   'choice_each_take'::rpg.heritage_trait_take_mode
@@ -501,11 +501,11 @@ Além disso, você tem Vantagem em testes de ability made using qualquer ferrame
   'QuickSlipCombat',
   'combat'::rpg.heritage_trait_category,
   'Escorregão Astuto',
-  'Even in the thick of battle, anything that obscures your enemies’ view of you gives you a chance to strike unseen. Você pode realizar the Hide action como Ação Bônus on each of your turns. Você deve have appropriate cover to attempt to hide, as normal.
+  'Mesmo no auge da batalha, qualquer coisa que obscureça a visão que seus inimigos têm de você lhe dá chance de atacar sem ser visto. Você pode tomar a ação Esconder-se como Ação Bônus em cada um dos seus turnos. Você deve ter cobertura apropriada para tentar se esconder, como de costume.
 
-Escorregão Astuto. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade. você faz with the Hide action quando você use Quick Slip.',
-  'Even in the thick of battle, anything that obscures your enemies’ view of you gives you a chance to strike unseen. Você pode realizar the Hide action como Ação Bônus on each of your turns. Você deve have appropriate cover to attempt to hide, as normal.',
-  'Escorregão Astuto. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade. você faz with the Hide action quando você use Quick Slip.',
+Escorregão Astuto. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade que fizer com a ação Esconder-se ao usar Escorregão Rápido.',
+  'Mesmo no auge da batalha, qualquer coisa que obscureça a visão que seus inimigos têm de você lhe dá chance de atacar sem ser visto. Você pode tomar a ação Esconder-se como Ação Bônus em cada um dos seus turnos. Você deve ter cobertura apropriada para tentar se esconder, como de costume.',
+  'Escorregão Astuto. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade que fizer com a ação Esconder-se ao usar Escorregão Rápido.',
   'Escorregão Astuto',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -529,10 +529,10 @@ Determinação Atlética. Se você escolher este traço duas vezes, você tem Va
   'BattlefieldControlCombat',
   'combat'::rpg.heritage_trait_category,
   'Domínio de Campo de Batalha',
-  'When foes attempt to press you in melee, they do so at their peril. Other creatures provoke Ataque de Oportunidades from you whenever they move into your reach, in addition to when they move out of your reach.
+  'Quando inimigos tentam pressioná-lo em combate corpo a corpo, fazem-no por sua conta e risco. Outras criaturas provocam Ataques de Oportunidade de você sempre que entram no seu alcance, além de quando saem do seu alcance.
 
 Domínio de Campo de Batalha. Se você escolher este traço duas vezes, você tem Vantagem em Ataques de Oportunidade. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'When foes attempt to press you in melee, they do so at their peril. Other creatures provoke Ataque de Oportunidades from you whenever they move into your reach, in addition to when they move out of your reach.',
+  'Quando inimigos tentam pressioná-lo em combate corpo a corpo, fazem-no por sua conta e risco. Outras criaturas provocam Ataques de Oportunidade de você sempre que entram no seu alcance, além de quando saem do seu alcance.',
   'Domínio de Campo de Batalha. Se você escolher este traço duas vezes, você tem Vantagem em Ataques de Oportunidade. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Domínio de Campo de Batalha',
   2,
@@ -543,11 +543,11 @@ Domínio de Campo de Batalha. Se você escolher este traço duas vezes, você te
   'ConnectiontoNatureRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Vínculo com a Natureza',
-  'Você aprendeu que prestar atenção ao ambiente ao redor é a melhor forma de prever suas ameaças. Você tem proficiência na perícia Naturezazaza.
+  'Você aprendeu que prestar atenção ao ambiente ao redor é a melhor forma de prever suas ameaças. Você tem proficiência na perícia Natureza.
 
-Bond with Naturezazaza. Se você escolher este traço duas vezes, você tem Vantagem em testes de Naturezazaza. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Você aprendeu que prestar atenção ao ambiente ao redor é a melhor forma de prever suas ameaças. Você tem proficiência na perícia Naturezazaza.',
-  'Vínculo com a Natureza. zazaza. Se você escolher este traço duas vezes, você tem Vantagem em testes de Naturezazaza. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Vínculo com a Natureza. Se você escolher este traço duas vezes, você tem Vantagem em testes de Natureza. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Você aprendeu que prestar atenção ao ambiente ao redor é a melhor forma de prever suas ameaças. Você tem proficiência na perícia Natureza.',
+  'Vínculo com a Natureza. Se você escolher este traço duas vezes, você tem Vantagem em testes de Natureza. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   NULL,
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -557,11 +557,11 @@ Bond with Naturezazaza. Se você escolher este traço duas vezes, você tem Vant
   'TimelyBoonCombat',
   'combat'::rpg.heritage_trait_category,
   'Nascido Sob a Sorte',
-  'Fortune favors you at times when a threat might send you down. Quando você falha a salvaguarda, você pode usar your Reação to roll a d4 and add it to the save, potentially turning it into a success. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'A fortuna o favorece em momentos em que uma ameaça poderia derrubá-lo. Quando você falha em uma salvaguarda, pode usar sua Reação para rolar 1d4 e adicioná-lo à salvaguarda, potencialmente transformando-a em sucesso. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Nascido Sob a Sorte. Se você escolher este traço duas vezes, você rola a d8 instead of a d4 quando você use Timely Boon.',
-  'Fortune favors you at times when a threat might send you down. Quando você falha a salvaguarda, você pode usar your Reação to roll a d4 and add it to the save, potentially turning it into a success. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Nascido Sob a Sorte. Se você escolher este traço duas vezes, você rola a d8 instead of a d4 quando você use Timely Boon.',
+Nascido Sob a Sorte. Se você escolher este traço duas vezes, você rola 1d8 em vez de 1d4 quando usa Bênção Oportuna.',
+  'A fortuna o favorece em momentos em que uma ameaça poderia derrubá-lo. Quando você falha em uma salvaguarda, pode usar sua Reação para rolar 1d4 e adicioná-lo à salvaguarda, potencialmente transformando-a em sucesso. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Nascido Sob a Sorte. Se você escolher este traço duas vezes, você rola 1d8 em vez de 1d4 quando usa Bênção Oportuna.',
   'Nascido Sob a Sorte',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -571,10 +571,10 @@ Nascido Sob a Sorte. Se você escolher este traço duas vezes, você rola a d8 i
   'InstinctiveStealthRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Desaparecimento Calculado',
-  'When trouble comes for you, you excel at making sure it can’t find you. Você tem proficiência na perícia Furtividade.
+  'Quando o perigo vem atrás de você, você se destaca em garantir que ele não o encontre. Você tem proficiência na perícia Furtividade.
 
 Desaparecimento Calculado. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'When trouble comes for you, you excel at making sure it can’t find you. Você tem proficiência na perícia Furtividade.',
+  'Quando o perigo vem atrás de você, você se destaca em garantir que ele não o encontre. Você tem proficiência na perícia Furtividade.',
   'Desaparecimento Calculado. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Desaparecimento Calculado',
   2,
@@ -585,11 +585,11 @@ Desaparecimento Calculado. Se você escolher este traço duas vezes, você tem V
   'CenteredCombat',
   'combat'::rpg.heritage_trait_category,
   'Fio Centrado',
-  'By focusing your inner strength, você ganha a needed edge. Como Ação Bônus, you grant yourself Vantagem em uma jogada de ataque or ability check você faz before the start of your next turn. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Ao concentrar sua força interior, você obtém a vantagem de que precisa. Como Ação Bônus, você concede a si mesmo Vantagem em uma jogada de ataque ou teste de atributo que fizer antes do início do seu próximo turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Fio Centrado. Se você escolher este traço duas vezes, quando você succeed on the jogada de ataque or ability check made while using Centered, você pode escolher one creature within 9 m of you. That creature has Vantagem em the next jogada de ataque or ability check they make before the start of your next turn.',
-  'By focusing your inner strength, você ganha a needed edge. Como Ação Bônus, you grant yourself Vantagem em uma jogada de ataque or ability check você faz before the start of your next turn. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Fio Centrado. Se você escolher este traço duas vezes, quando você succeed on the jogada de ataque or ability check made while using Centered, você pode escolher one creature within 9 m of you. That creature has Vantagem em the next jogada de ataque or ability check they make before the start of your next turn.',
+Fio Centrado. Se você escolher este traço duas vezes, quando você tem sucesso na jogada de ataque ou no teste de atributo feito ao usar Centrado, pode escolher uma criatura a até 9 m de você. Essa criatura tem Vantagem na próxima jogada de ataque ou teste de atributo que fizer antes do início do seu próximo turno.',
+  'Ao concentrar sua força interior, você obtém a vantagem de que precisa. Como Ação Bônus, você concede a si mesmo Vantagem em uma jogada de ataque ou teste de atributo que fizer antes do início do seu próximo turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Fio Centrado. Se você escolher este traço duas vezes, quando você tem sucesso na jogada de ataque ou no teste de atributo feito ao usar Centrado, pode escolher uma criatura a até 9 m de você. Essa criatura tem Vantagem na próxima jogada de ataque ou teste de atributo que fizer antes do início do seu próximo turno.',
   'Fio Centrado',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -613,11 +613,11 @@ Médico de Combate. Se você escolher este traço duas vezes, você tem Vantagem
   'CraftersEyeRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Astúcia do Artífice',
-  'The history of Etharis is written in relics, and you read that history better than most. Quando você faz a História check related to any object (an item, device, building, or material) and você tem proficiency in an Artisan’s Tool associated with creating that object, você é considerado proficiente em História e você soma o dobro your Bônus de Proficiência to o teste em vez do seu bônus normal.
+  'A história de Etharis está escrita em relíquias, e você lê essa história melhor do que a maioria. Quando faz um teste de História relacionado a qualquer objeto (um item, dispositivo, edifício ou material) e tem proficiência em uma Ferramenta de Artesão associada à criação desse objeto, você é considerado proficiente em História e adiciona o dobro do seu Bônus de Proficiência ao teste em vez do bônus normal.
 
-Astúcia do Artífice. Se você escolher este traço duas vezes, você tem Vantagem em testes de the História. você faz with Crafter’s Eye. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'The history of Etharis is written in relics, and you read that history better than most. Quando você faz a História check related to any object (an item, device, building, or material) and você tem proficiency in an Artisan’s Tool associated with creating that object, você é considerado proficiente em História e você soma o dobro your Bônus de Proficiência to o teste em vez do seu bônus normal.',
-  'Astúcia do Artífice. Se você escolher este traço duas vezes, você tem Vantagem em testes de the História. você faz with Crafter’s Eye. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Astúcia do Artífice. Se você escolher este traço duas vezes, você tem Vantagem nos testes de História que faz com Olho do Artífice. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'A história de Etharis está escrita em relíquias, e você lê essa história melhor do que a maioria. Quando faz um teste de História relacionado a qualquer objeto (um item, dispositivo, edifício ou material) e tem proficiência em uma Ferramenta de Artesão associada à criação desse objeto, você é considerado proficiente em História e adiciona o dobro do seu Bônus de Proficiência ao teste em vez do bônus normal.',
+  'Astúcia do Artífice. Se você escolher este traço duas vezes, você tem Vantagem nos testes de História que faz com Olho do Artífice. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Astúcia do Artífice',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -627,11 +627,11 @@ Astúcia do Artífice. Se você escolher este traço duas vezes, você tem Vanta
   'DamageResistanceCombat',
   'combat'::rpg.heritage_trait_category,
   'Imunidade a Dano',
-  'Exposure to the worst effects of a specific energy has given you a tolerance to its effects. Você tem Resistência to one of o seguinte damage types de sua escolha: Acid, Cold, Fire, Lightning, Poison, or Thunder.
+  'A exposição aos piores efeitos de uma energia específica lhe deu tolerância a ela. Você tem Resistência a um dos seguintes tipos de dano, à sua escolha: Ácido, Gélido, Fogo, Relâmpago, Veneno ou Trovejante.
 
-Damage Imunidade. Se você escolher este traço duas vezes, como Reação to taking damage of the type you chose for Damage Resistência, você ganha Imunidade to that damage type até o fim do seu próximo turno. You regain the use este recurso quando você finish a Descanso Curto.',
-  'Exposure to the worst effects of a specific energy has given you a tolerance to its effects. Você tem Resistência to one of o seguinte damage types de sua escolha: Acid, Cold, Fire, Lightning, Poison, or Thunder.',
-  'Damage Imunidade. Se você escolher este traço duas vezes, como Reação to taking damage of the type you chose for Damage Resistência, você ganha Imunidade to that damage type até o fim do seu próximo turno. You regain the use este recurso quando você finish a Descanso Curto.',
+Imunidade a Dano. Se você escolher este traço duas vezes, como Reação a receber dano do tipo que escolheu para Resistência a Dano, você ganha Imunidade a esse tipo de dano até o fim do seu próximo turno. Você recupera o uso deste recurso ao terminar um Descanso Curto.',
+  'A exposição aos piores efeitos de uma energia específica lhe deu tolerância a ela. Você tem Resistência a um dos seguintes tipos de dano, à sua escolha: Ácido, Gélido, Fogo, Relâmpago, Veneno ou Trovejante.',
+  'Imunidade a Dano. Se você escolher este traço duas vezes, como Reação a receber dano do tipo que escolheu para Resistência a Dano, você ganha Imunidade a esse tipo de dano até o fim do seu próximo turno. Você recupera o uso deste recurso ao terminar um Descanso Curto.',
   'Imunidade a Dano',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -655,11 +655,11 @@ Lore Profundo. Se você escolher este traço duas vezes, você tem Vantagem em t
   'ResilientEarsExploration',
   'exploration'::rpg.heritage_trait_category,
   'Audição Determinada',
-  'Even as destruction rains down around you, your hearing stays sharp. Você tem Vantagem em salvaguardas against having the Deafened condition.
+  'Mesmo enquanto a destruição cai ao seu redor, sua audição permanece aguçada. Você tem Vantagem em salvaguardas contra a condição Surdo.
 
-Audição Determinada. Se você escolher este traço duas vezes, você tem Vantagem em testes de Percepção. que envolvem audição. Além disso, Quando você falha a salvaguarda against being Deafened, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Even as destruction rains down around you, your hearing stays sharp. Você tem Vantagem em salvaguardas against having the Deafened condition.',
-  'Audição Determinada. Se você escolher este traço duas vezes, você tem Vantagem em testes de Percepção. que envolvem audição. Além disso, Quando você falha a salvaguarda against being Deafened, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Audição Determinada. Se você escolher este traço duas vezes, você tem Vantagem em testes de Percepção que envolvem audição. Além disso, quando falha em uma salvaguarda contra ficar Surdo, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Mesmo enquanto a destruição cai ao seu redor, sua audição permanece aguçada. Você tem Vantagem em salvaguardas contra a condição Surdo.',
+  'Audição Determinada. Se você escolher este traço duas vezes, você tem Vantagem em testes de Percepção que envolvem audição. Além disso, quando falha em uma salvaguarda contra ficar Surdo, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Audição Determinada',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -683,11 +683,11 @@ Sobrevivente Determinado. Se você escolher este traço duas vezes, você tem Va
   'HoldBreathExploration',
   'exploration'::rpg.heritage_trait_category,
   'Fôlego Inesgotável',
-  'Whether trapped under black water or resisting poisonous fumes, you refuse to give in. Você pode hold your breath for up to 1 hour.
+  'Seja preso sob águas negras ou resistindo a fumos venenosos, você se recusa a ceder. Você pode prender a respiração por até 1 hora.
 
-Fôlego Inesgotável. Se você escolher este traço duas vezes, você pode hold your breath for up to 8 hours.',
-  'Whether trapped under black water or resisting poisonous fumes, you refuse to give in. Você pode hold your breath for up to 1 hour.',
-  'Fôlego Inesgotável. Se você escolher este traço duas vezes, você pode hold your breath for up to 8 hours.',
+Fôlego Inesgotável. Se você escolher este traço duas vezes, você pode prender a respiração por até 8 horas.',
+  'Seja preso sob águas negras ou resistindo a fumos venenosos, você se recusa a ceder. Você pode prender a respiração por até 1 hora.',
+  'Fôlego Inesgotável. Se você escolher este traço duas vezes, você pode prender a respiração por até 8 horas.',
   'Fôlego Inesgotável',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -697,11 +697,11 @@ Fôlego Inesgotável. Se você escolher este traço duas vezes, você pode hold 
   'EtherealFadeExploration',
   'exploration'::rpg.heritage_trait_category,
   'Foco Etéreo',
-  'Shifting away from the mortal world lets you move through and observe that world unseen. Como ação Mágica, you fade from the Material Plane into the Ethereal Plane por 1 minuto. While you remain in this state, você pode’t interact with the Material Plane, and effects on the Material Plane can’t affect you, including spells and creatures. Você pode move and hear as normal, and you see everything in shades of gray. When the effect ends, you reappear in the Material Plane in the closest unoccupied space to where you faded from. Você pode end the effect early como Ação Bônus. You regain the use of este recurso again quando você finish a Descanso Longo.
+  'Deslocar-se para longe do mundo mortal permite que você se mova e observe esse mundo sem ser visto. Como uma ação Mágica, você se desvanece do Plano Material para o Plano Etéreo por 1 minuto. Enquanto permanece nesse estado, não pode interagir com o Plano Material, e efeitos no Plano Material não podem afetá-lo, incluindo magias e criaturas. Você pode se mover e ouvir normalmente, e vê tudo em tons de cinza. Quando o efeito termina, você reaparece no Plano Material no espaço desocupado mais próximo de onde se desvaneceu. Você pode encerrar o efeito antecipadamente como Ação Bônus. Você recupera o uso deste recurso ao terminar um Descanso Longo.
 
-Foco Etéreo. Se você escolher este traço duas vezes, você tem Vantagem when making Sabedoria testes como parte de uma Search Ação.',
-  'Shifting away from the mortal world lets you move through and observe that world unseen. Como ação Mágica, you fade from the Material Plane into the Ethereal Plane por 1 minuto. While you remain in this state, você pode’t interact with the Material Plane, and effects on the Material Plane can’t affect you, including spells and creatures. Você pode move and hear as normal, and you see everything in shades of gray. When the effect ends, you reappear in the Material Plane in the closest unoccupied space to where you faded from. Você pode end the effect early como Ação Bônus. You regain the use of este recurso again quando você finish a Descanso Longo.',
-  'Foco Etéreo. Se você escolher este traço duas vezes, você tem Vantagem when making Sabedoria testes como parte de uma Search Ação.',
+Foco Etéreo. Se você escolher este traço duas vezes, você tem Vantagem ao fazer testes de Sabedoria como parte de uma ação Procurar.',
+  'Deslocar-se para longe do mundo mortal permite que você se mova e observe esse mundo sem ser visto. Como uma ação Mágica, você se desvanece do Plano Material para o Plano Etéreo por 1 minuto. Enquanto permanece nesse estado, não pode interagir com o Plano Material, e efeitos no Plano Material não podem afetá-lo, incluindo magias e criaturas. Você pode se mover e ouvir normalmente, e vê tudo em tons de cinza. Quando o efeito termina, você reaparece no Plano Material no espaço desocupado mais próximo de onde se desvaneceu. Você pode encerrar o efeito antecipadamente como Ação Bônus. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Foco Etéreo. Se você escolher este traço duas vezes, você tem Vantagem ao fazer testes de Sabedoria como parte de uma ação Procurar.',
   'Foco Etéreo',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -711,11 +711,11 @@ Foco Etéreo. Se você escolher este traço duas vezes, você tem Vantagem when 
   'LargerTargetCombat',
   'combat'::rpg.heritage_trait_category,
   'Ainda Maior',
-  'Foes that outsize you quickly learn to fear your wrath. Se você hit a creature that is one size larger than you, você pode escolher to deal extra damage to the creature igual a your Bônus de Proficiência. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Inimigos maiores que você logo aprendem a temer sua fúria. Se acertar uma criatura que seja um tamanho maior que você, pode escolher causar dano extra à criatura igual ao seu Bônus de Proficiência. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Ainda Maior. Se você escolher este traço duas vezes, Larger Target applies to creatures of any size larger than you.',
-  'Foes that outsize you quickly learn to fear your wrath. Se você hit a creature that is one size larger than you, você pode escolher to deal extra damage to the creature igual a your Bônus de Proficiência. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Ainda Maior. Se você escolher este traço duas vezes, Larger Target applies to creatures of any size larger than you.',
+Ainda Maior. Se você escolher este traço duas vezes, Alvo Maior se aplica a criaturas de qualquer tamanho maior que você.',
+  'Inimigos maiores que você logo aprendem a temer sua fúria. Se acertar uma criatura que seja um tamanho maior que você, pode escolher causar dano extra à criatura igual ao seu Bônus de Proficiência. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Ainda Maior. Se você escolher este traço duas vezes, Alvo Maior se aplica a criaturas de qualquer tamanho maior que você.',
   'Ainda Maior',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -725,11 +725,11 @@ Ainda Maior. Se você escolher este traço duas vezes, Larger Target applies to 
   'CommandingInsightRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Intuição Excepcional',
-  'Those who attempt to deceive you do so in vain. Você tem proficiência na perícia Intuição.
+  'Aqueles que tentam enganá-lo o fazem em vão. Você tem proficiência na perícia Intuição.
 
-Exceptional Intuição. Se você escolher este traço duas vezes, você tem Vantagem em testes de Intuição. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Those who attempt to deceive you do so in vain. Você tem proficiência na perícia Intuição.',
-  'Exceptional Intuição. Se você escolher este traço duas vezes, você tem Vantagem em testes de Intuição. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Intuição Excepcional. Se você escolher este traço duas vezes, você tem Vantagem em testes de Intuição. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Aqueles que tentam enganá-lo o fazem em vão. Você tem proficiência na perícia Intuição.',
+  'Intuição Excepcional. Se você escolher este traço duas vezes, você tem Vantagem em testes de Intuição. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Intuição Excepcional',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -739,10 +739,10 @@ Exceptional Intuição. Se você escolher este traço duas vezes, você tem Vant
   'EagerDeceiverRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Enganador Expert',
-  'You long ago learned that being open with others only gives them power over you. Você tem proficiência na perícia Enganação.
+  'Há muito você aprendeu que ser aberto com os outros só lhes dá poder sobre você. Você tem proficiência na perícia Enganação.
 
 Enganador Expert. Se você escolher este traço duas vezes, você tem Vantagem em testes de Enganação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'You long ago learned that being open with others only gives them power over you. Você tem proficiência na perícia Enganação.',
+  'Há muito você aprendeu que ser aberto com os outros só lhes dá poder sobre você. Você tem proficiência na perícia Enganação.',
   'Enganador Expert. Se você escolher este traço duas vezes, você tem Vantagem em testes de Enganação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Enganador Expert',
   2,
@@ -753,11 +753,11 @@ Enganador Expert. Se você escolher este traço duas vezes, você tem Vantagem e
   'ImproviserRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Improvisador Expert',
-  'When needs demand, you get the job done better than most. Como Ação Bônus, choose one skill or tool that you don’t have proficiency with. Você tem proficiência na perícia that. or with essa ferramenta por 1 hora. You regain the use of este recurso quando você finish a Descanso Longo.
+  'Quando a necessidade exige, você cumpre a tarefa melhor do que a maioria. Como Ação Bônus, escolha uma perícia ou ferramenta com a qual você não tem proficiência. Você tem proficiência nessa perícia ou com essa ferramenta por 1 hora. Você recupera o uso deste recurso ao terminar um Descanso Longo.
 
-Improvisador Expert. Se você escolher este traço duas vezes, você tem Vantagem em testes de ability. você faz using the skill or tool you select with Improviser. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'When needs demand, you get the job done better than most. Como Ação Bônus, choose one skill or tool that you don’t have proficiency with. Você tem proficiência na perícia that. or with essa ferramenta por 1 hora. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Improvisador Expert. Se você escolher este traço duas vezes, você tem Vantagem em testes de ability. você faz using the skill or tool you select with Improviser. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Improvisador Expert. Se você escolher este traço duas vezes, você tem Vantagem em testes de atributo que fizer usando a perícia ou ferramenta selecionada com Improvisador. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Quando a necessidade exige, você cumpre a tarefa melhor do que a maioria. Como Ação Bônus, escolha uma perícia ou ferramenta com a qual você não tem proficiência. Você tem proficiência nessa perícia ou com essa ferramenta por 1 hora. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Improvisador Expert. Se você escolher este traço duas vezes, você tem Vantagem em testes de atributo que fizer usando a perícia ou ferramenta selecionada com Improvisador. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Improvisador Expert',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -767,11 +767,11 @@ Improvisador Expert. Se você escolher este traço duas vezes, você tem Vantage
   'IntrinsicOrientationExploration',
   'exploration'::rpg.heritage_trait_category,
   'Orientação Expert',
-  'A single misstep can lead to ruin, but your instincts for direction keep you from going astray. You always know which way is north, and você pode reckon a cardinal direction of the GM’s determination while on other planes. Além disso, você tem Vantagem em testes de ability made to avoid becoming lost, to navigate, or to track.
+  'Um único passo em falso pode levar à ruína, mas seus instintos de direção o impedem de se perder. Você sempre sabe qual direção é o norte e pode determinar uma direção cardeal à escolha do Mestre enquanto estiver em outros planos. Além disso, você tem Vantagem em testes de atributo feitos para evitar se perder, navegar ou rastrear.
 
-Orientação Expert. Se você escolher este traço duas vezes, Quando você falha an ability check made to avoid becoming lost, to navigate, or to track, você pode escolher to succeed instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'A single misstep can lead to ruin, but your instincts for direction keep you from going astray. You always know which way is north, and você pode reckon a cardinal direction of the GM’s determination while on other planes. Além disso, você tem Vantagem em testes de ability made to avoid becoming lost, to navigate, or to track.',
-  'Orientação Expert. Se você escolher este traço duas vezes, Quando você falha an ability check made to avoid becoming lost, to navigate, or to track, você pode escolher to succeed instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Orientação Expert. Se você escolher este traço duas vezes, quando falha em um teste de atributo feito para evitar se perder, navegar ou rastrear, pode escolher ter sucesso em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Um único passo em falso pode levar à ruína, mas seus instintos de direção o impedem de se perder. Você sempre sabe qual direção é o norte e pode determinar uma direção cardeal à escolha do Mestre enquanto estiver em outros planos. Além disso, você tem Vantagem em testes de atributo feitos para evitar se perder, navegar ou rastrear.',
+  'Orientação Expert. Se você escolher este traço duas vezes, quando falha em um teste de atributo feito para evitar se perder, navegar ou rastrear, pode escolher ter sucesso em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Orientação Expert',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -781,11 +781,11 @@ Orientação Expert. Se você escolher este traço duas vezes, Quando você falh
   'NimbleMovesRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Prestidigitação Requintada',
-  'Você tem learned the value of being able to manipulate the world around you without attracting the notice of others. Você tem proficiência na perícia Sleight of Hand.
+  'Você aprendeu o valor de manipular o mundo ao redor sem atrair a atenção dos outros. Você tem proficiência na perícia Prestidigitação.
 
-Prestidigitação Requintada. Se você escolher este traço duas vezes, você tem Vantagem em testes de Sleight of Hand. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Você tem learned the value of being able to manipulate the world around you without attracting the notice of others. Você tem proficiência na perícia Sleight of Hand.',
-  'Prestidigitação Requintada. Se você escolher este traço duas vezes, você tem Vantagem em testes de Sleight of Hand. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Prestidigitação Requintada. Se você escolher este traço duas vezes, você tem Vantagem em testes de Prestidigitação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Você aprendeu o valor de manipular o mundo ao redor sem atrair a atenção dos outros. Você tem proficiência na perícia Prestidigitação.',
+  'Prestidigitação Requintada. Se você escolher este traço duas vezes, você tem Vantagem em testes de Prestidigitação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Prestidigitação Requintada',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -795,15 +795,15 @@ Prestidigitação Requintada. Se você escolher este traço duas vezes, você te
   'MagicalFortificationCombat',
   'combat'::rpg.heritage_trait_category,
   'Fortificação Estendida',
-  'The more that magic threatens you, the more your resilience to it increases. Choose an ability score: Força, Destreza, Constituição, Inteligência, Sabedoria, or Carisma. Você tem Vantagem em salvaguardas using that ability score against spells and other magical effects.
+  'Quanto mais a magia o ameaça, mais sua resiliência a ela aumenta. Escolha um atributo: Força, Destreza, Constituição, Inteligência, Sabedoria ou Carisma. Você tem Vantagem em salvaguardas usando esse atributo contra magias e outros efeitos mágicos.
 
-Fortificação Estendida. Se você escolher this trait multiple times, você tem Vantagem em salvaguardas using a new ability score each time.
+Fortificação Estendida. Se você escolher este traço várias vezes, você tem Vantagem em salvaguardas usando um novo atributo a cada vez.
 
-Além disso, se você fail a salvaguarda against a spell or other magical effect and you do not have proficiency with that salvaguarda, você pode usar your Reação to reroll the save. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'The more that magic threatens you, the more your resilience to it increases. Choose an ability score: Força, Destreza, Constituição, Inteligência, Sabedoria, or Carisma. Você tem Vantagem em salvaguardas using that ability score against spells and other magical effects.',
-  'Fortificação Estendida. Se você escolher this trait multiple times, você tem Vantagem em salvaguardas using a new ability score each time.
+Além disso, se falhar em uma salvaguarda contra uma magia ou outro efeito mágico e não tiver proficiência nessa salvaguarda, pode usar sua Reação para rerrolar a salvaguarda. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Quanto mais a magia o ameaça, mais sua resiliência a ela aumenta. Escolha um atributo: Força, Destreza, Constituição, Inteligência, Sabedoria ou Carisma. Você tem Vantagem em salvaguardas usando esse atributo contra magias e outros efeitos mágicos.',
+  'Fortificação Estendida. Se você escolher este traço várias vezes, você tem Vantagem em salvaguardas usando um novo atributo a cada vez.
 
-Além disso, se você fail a salvaguarda against a spell or other magical effect and you do not have proficiency with that salvaguarda, você pode usar your Reação to reroll the save. You regain the use of este recurso quando você finish a Descanso Longo.',
+Além disso, se falhar em uma salvaguarda contra uma magia ou outro efeito mágico e não tiver proficiência nessa salvaguarda, pode usar sua Reação para rerrolar a salvaguarda. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Fortificação Estendida',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -813,15 +813,15 @@ Além disso, se você fail a salvaguarda against a spell or other magical effect
   'ToughnessCombat',
   'combat'::rpg.heritage_trait_category,
   'Extra Resistente',
-  'An intrinsic hardiness marks you as one born for battle. Your máximo de Pontos de Vida increases by 1, and it increases by 1 each time você ganha a level.
+  'Uma robustez intrínseca marca você como alguém nascido para a batalha. Seu máximo de Pontos de Vida aumenta em 1, e aumenta em 1 cada vez que você sobe de nível.
 
-Extra Resistente. Se você escolher este traço duas vezes, your máximo de Pontos de Vida increases by 2 instead of 1, and it increases by 2 each time você ganha a level.
+Extra Resistente. Se você escolher este traço duas vezes, seu máximo de Pontos de Vida aumenta em 2 em vez de 1, e aumenta em 2 cada vez que você sobe de nível.
 
-Além disso, when você faz a salvaguarda against an effect that would decrease your máximo de Pontos de Vida, você tem Vantagem em the save. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'An intrinsic hardiness marks you as one born for battle. Your máximo de Pontos de Vida increases by 1, and it increases by 1 each time você ganha a level.',
-  'Extra Resistente. Se você escolher este traço duas vezes, your máximo de Pontos de Vida increases by 2 instead of 1, and it increases by 2 each time você ganha a level.
+Além disso, quando faz uma salvaguarda contra um efeito que reduziria seu máximo de Pontos de Vida, você tem Vantagem na salvaguarda. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Uma robustez intrínseca marca você como alguém nascido para a batalha. Seu máximo de Pontos de Vida aumenta em 1, e aumenta em 1 cada vez que você sobe de nível.',
+  'Extra Resistente. Se você escolher este traço duas vezes, seu máximo de Pontos de Vida aumenta em 2 em vez de 1, e aumenta em 2 cada vez que você sobe de nível.
 
-Além disso, when você faz a salvaguarda against an effect that would decrease your máximo de Pontos de Vida, você tem Vantagem em the save. You regain the use of este recurso quando você finish a Descanso Longo.',
+Além disso, quando faz uma salvaguarda contra um efeito que reduziria seu máximo de Pontos de Vida, você tem Vantagem na salvaguarda. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Extra Resistente',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -831,11 +831,11 @@ Além disso, when você faz a salvaguarda against an effect that would decrease 
   'PowerNapExploration',
   'exploration'::rpg.heritage_trait_category,
   'Resiliência Extrema',
-  'Quando você don’t know how long it might be before your next full respite, you learn to take maximum advantage of any rest você pode get. When taking a Descanso Curto, você pode escolher to sleep por 1 hora. Se você do so, you reduce your Exhaustion by one level and regain a Dado de Vida in addition to the other benefits of a Descanso Curto.
+  'Quando você não sabe quanto tempo pode demorar até o próximo descanso completo, aprende a tirar o máximo proveito de qualquer descanso que conseguir. Ao fazer um Descanso Curto, pode escolher dormir por 1 hora. Se o fizer, reduz sua Exaustão em um nível e recupera um Dado de Vida além dos outros benefícios de um Descanso Curto.
 
-Resiliência Extrema. Se você escolher este traço duas vezes, when using Power Nap, você pode escolher to regain a single resource that would normally refresh on a Descanso Longo. For example, a Sorcerer could choose to regain a Sorcery Point on a Descanso Curto.',
-  'Quando você don’t know how long it might be before your next full respite, you learn to take maximum advantage of any rest você pode get. When taking a Descanso Curto, você pode escolher to sleep por 1 hora. Se você do so, you reduce your Exhaustion by one level and regain a Dado de Vida in addition to the other benefits of a Descanso Curto.',
-  'Resiliência Extrema. Se você escolher este traço duas vezes, when using Power Nap, você pode escolher to regain a single resource that would normally refresh on a Descanso Longo. For example, a Sorcerer could choose to regain a Sorcery Point on a Descanso Curto.',
+Resiliência Extrema. Se você escolher este traço duas vezes, ao usar Cochilo Revigorante, pode escolher recuperar um único recurso que normalmente se renovaria em um Descanso Longo. Por exemplo, um Feiticeiro poderia escolher recuperar um Ponto de Feitiçaria em um Descanso Curto.',
+  'Quando você não sabe quanto tempo pode demorar até o próximo descanso completo, aprende a tirar o máximo proveito de qualquer descanso que conseguir. Ao fazer um Descanso Curto, pode escolher dormir por 1 hora. Se o fizer, reduz sua Exaustão em um nível e recupera um Dado de Vida além dos outros benefícios de um Descanso Curto.',
+  'Resiliência Extrema. Se você escolher este traço duas vezes, ao usar Cochilo Revigorante, pode escolher recuperar um único recurso que normalmente se renovaria em um Descanso Longo. Por exemplo, um Feiticeiro poderia escolher recuperar um Ponto de Feitiçaria em um Descanso Curto.',
   'Resiliência Extrema',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -845,11 +845,11 @@ Resiliência Extrema. Se você escolher este traço duas vezes, when using Power
   'ShroudoftheWildExploration',
   'exploration'::rpg.heritage_trait_category,
   'Manto Impecável',
-  'With any degree of obscuration, your instinctive ability to conceal yourself lets you avoid your enemies’ notice. Você pode realizar the Hide action even quando você are only Lightly Obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.
+  'Com qualquer grau de obscurecimento, sua habilidade instintiva de se ocultar permite evitar a atenção dos inimigos. Você pode tomar a ação Esconder-se mesmo quando estiver apenas Levemente Obscurecido por folhagem, chuva forte, neve caindo, névoa e outros fenômenos naturais.
 
-Manto Impecável. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade. using the Hide action while using Shroud of the Wild.',
-  'With any degree of obscuration, your instinctive ability to conceal yourself lets you avoid your enemies’ notice. Você pode realizar the Hide action even quando você are only Lightly Obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.',
-  'Manto Impecável. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade. using the Hide action while using Shroud of the Wild.',
+Manto Impecável. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade usando a ação Esconder-se enquanto usa Manto Selvagem.',
+  'Com qualquer grau de obscurecimento, sua habilidade instintiva de se ocultar permite evitar a atenção dos inimigos. Você pode tomar a ação Esconder-se mesmo quando estiver apenas Levemente Obscurecido por folhagem, chuva forte, neve caindo, névoa e outros fenômenos naturais.',
+  'Manto Impecável. Se você escolher este traço duas vezes, você tem Vantagem em testes de Furtividade usando a ação Esconder-se enquanto usa Manto Selvagem.',
   'Manto Impecável',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -859,11 +859,11 @@ Manto Impecável. Se você escolher este traço duas vezes, você tem Vantagem e
   'FocusedReservesCombat',
   'combat'::rpg.heritage_trait_category,
   'Fio Concentrado',
-  'No matter how badly beaten down you are, you find the will to keep fighting quando você most need it. Como Reação after you take damage, você pode roll um número de d6s igual a your Bônus de Proficiência and gain Pontos de Vida Temporários igual a the total. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Por mais abatido que esteja, você encontra a vontade de continuar lutando quando mais precisa. Como Reação depois de receber dano, pode rolar um número de d6s igual ao seu Bônus de Proficiência e ganhar Pontos de Vida Temporários iguais ao total. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Fio Concentrado. Se você escolher este traço duas vezes, você pode reroll 1s and 2s quando você use Focused Reserves, but you must use the new rolls.',
-  'No matter how badly beaten down you are, you find the will to keep fighting quando você most need it. Como Reação after you take damage, você pode roll um número de d6s igual a your Bônus de Proficiência and gain Pontos de Vida Temporários igual a the total. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Fio Concentrado. Se você escolher este traço duas vezes, você pode reroll 1s and 2s quando você use Focused Reserves, but you must use the new rolls.',
+Fio Concentrado. Se você escolher este traço duas vezes, você pode rerrolar 1s e 2s quando usa Reservas Concentradas, mas deve usar as novas rolagens.',
+  'Por mais abatido que esteja, você encontra a vontade de continuar lutando quando mais precisa. Como Reação depois de receber dano, pode rolar um número de d6s igual ao seu Bônus de Proficiência e ganhar Pontos de Vida Temporários iguais ao total. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Fio Concentrado. Se você escolher este traço duas vezes, você pode rerrolar 1s e 2s quando usa Reservas Concentradas, mas deve usar as novas rolagens.',
   'Fio Concentrado',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -873,11 +873,11 @@ Fio Concentrado. Se você escolher este traço duas vezes, você pode reroll 1s 
   'QuickInitiativeCombat',
   'combat'::rpg.heritage_trait_category,
   'Iniciativa Concentrada',
-  'Danger is never far away from you, and you are always ready for it. You add your Bônus de Proficiência to your Initiative rolls.
+  'O perigo nunca está longe de você, e você está sempre pronto para ele. Você adiciona seu Bônus de Proficiência às suas rolagens de Iniciativa.
 
-Iniciativa Concentrada. Se você escolher este traço duas vezes, when você rola Initiative, você pode treat a roll of 9 or lower as se você rolled a 10.',
-  'Danger is never far away from you, and you are always ready for it. You add your Bônus de Proficiência to your Initiative rolls.',
-  'Iniciativa Concentrada. Se você escolher este traço duas vezes, when você rola Initiative, você pode treat a roll of 9 or lower as se você rolled a 10.',
+Iniciativa Concentrada. Se você escolher este traço duas vezes, quando rola Iniciativa, pode tratar uma rolagem de 9 ou menos como se tivesse rolado 10.',
+  'O perigo nunca está longe de você, e você está sempre pronto para ele. Você adiciona seu Bônus de Proficiência às suas rolagens de Iniciativa.',
+  'Iniciativa Concentrada. Se você escolher este traço duas vezes, quando rola Iniciativa, pode tratar uma rolagem de 9 ou menos como se tivesse rolado 10.',
   'Iniciativa Concentrada',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -887,15 +887,15 @@ Iniciativa Concentrada. Se você escolher este traço duas vezes, when você rol
   'MasterfulAptitudeRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Maestria Concentrada',
-  'Your discipline and focus give you an edge that others lack. Choose one of your skill or tool proficiencies. Você tem Expertise on ability testes made using the chosen proficiency.
+  'Sua disciplina e foco lhe dão uma vantagem que outros não têm. Escolha uma de suas proficiências em perícia ou ferramenta. Você tem Expertise em testes de atributo feitos com a proficiência escolhida.
 
-Maestria Concentrada. Se você escolher this trait multiple times, você ganha its benefit for a new skill proficiency or tool proficiency each time.
+Maestria Concentrada. Se você escolher este traço várias vezes, você ganha o benefício para uma nova proficiência em perícia ou ferramenta a cada vez.
 
-Além disso, when você faz a check using a skill or tool for which you’ve taken Masterful Aptitude, você tem Vantagem em o teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Your discipline and focus give you an edge that others lack. Choose one of your skill or tool proficiencies. Você tem Expertise on ability testes made using the chosen proficiency.',
-  'Maestria Concentrada. Se você escolher this trait multiple times, você ganha its benefit for a new skill proficiency or tool proficiency each time.
+Além disso, quando faz um teste usando uma perícia ou ferramenta para a qual escolheu Aptidão Magistral, você tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Sua disciplina e foco lhe dão uma vantagem que outros não têm. Escolha uma de suas proficiências em perícia ou ferramenta. Você tem Expertise em testes de atributo feitos com a proficiência escolhida.',
+  'Maestria Concentrada. Se você escolher este traço várias vezes, você ganha o benefício para uma nova proficiência em perícia ou ferramenta a cada vez.
 
-Além disso, when você faz a check using a skill or tool for which you’ve taken Masterful Aptitude, você tem Vantagem em o teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Além disso, quando faz um teste usando uma perícia ou ferramenta para a qual escolheu Aptidão Magistral, você tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Maestria Concentrada',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -905,11 +905,11 @@ Além disso, when você faz a check using a skill or tool for which you’ve tak
   'RuthlessResponseCombat',
   'combat'::rpg.heritage_trait_category,
   'Crueldade Concentrada',
-  'A creature that gets the drop on you is met with a swift and brutal reply. Quando você realiza damage from a creature within your reach, você pode usar your Reação to make a melee attack with a weapon or an Ataque Desarmado against that creature. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Uma criatura que o pega de surpresa encontra uma resposta rápida e brutal. Quando você recebe dano de uma criatura dentro do seu alcance, pode usar sua Reação para fazer um ataque corpo a corpo com uma arma ou um Ataque Desarmado contra essa criatura. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Crueldade Concentrada. Se você escolher este traço duas vezes, você tem Vantagem em jogada de ataques made using Ruthless Response.',
-  'A creature that gets the drop on you is met with a swift and brutal reply. Quando você realiza damage from a creature within your reach, você pode usar your Reação to make a melee attack with a weapon or an Ataque Desarmado against that creature. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Crueldade Concentrada. Se você escolher este traço duas vezes, você tem Vantagem em jogada de ataques made using Ruthless Response.',
+Crueldade Concentrada. Se você escolher este traço duas vezes, você tem Vantagem em jogadas de ataque feitas usando Resposta Cruel.',
+  'Uma criatura que o pega de surpresa encontra uma resposta rápida e brutal. Quando você recebe dano de uma criatura dentro do seu alcance, pode usar sua Reação para fazer um ataque corpo a corpo com uma arma ou um Ataque Desarmado contra essa criatura. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Crueldade Concentrada. Se você escolher este traço duas vezes, você tem Vantagem em jogadas de ataque feitas usando Resposta Cruel.',
   'Crueldade Concentrada',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -919,10 +919,10 @@ Crueldade Concentrada. Se você escolher este traço duas vezes, você tem Vanta
   'MovedByFaithRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Força da Fé',
-  'The grimmest myths and legends of the past hold the keys to shaping the future. Você tem proficiência na perícia Religião.
+  'Os mitos e lendas mais sombrios do passado guardam as chaves para moldar o futuro. Você tem proficiência na perícia Religião.
 
 Força da Fé. Se você escolher este traço duas vezes, você tem Vantagem em testes de Religião. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'The grimmest myths and legends of the past hold the keys to shaping the future. Você tem proficiência na perícia Religião.',
+  'Os mitos e lendas mais sombrios do passado guardam as chaves para moldar o futuro. Você tem proficiência na perícia Religião.',
   'Força da Fé. Se você escolher este traço duas vezes, você tem Vantagem em testes de Religião. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Força da Fé',
   2,
@@ -933,11 +933,11 @@ Força da Fé. Se você escolher este traço duas vezes, você tem Vantagem em t
   'SuppleSqueezeExploration',
   'exploration'::rpg.heritage_trait_category,
   'Espremimento em Velocidade Plena',
-  'With an effort of will, you contort your body into the tightest spaces. Você pode squeeze through a space that is large enough for a creature two sizes smaller than you, rather than one size smaller.
+  'Com um esforço de vontade, você contorce o corpo pelos espaços mais apertados. Você pode se espremer por um espaço grande o bastante para uma criatura dois tamanhos menor que você, em vez de um tamanho menor.
 
-Espremimento em Velocidade Plena. Se você escolher este traço duas vezes, squeezing does not cost you additional movement, and you do not have DesVantagem em jogada de ataques and Destreza salvaguardas while squeezing.',
-  'With an effort of will, you contort your body into the tightest spaces. Você pode squeeze through a space that is large enough for a creature two sizes smaller than you, rather than one size smaller.',
-  'Espremimento em Velocidade Plena. Se você escolher este traço duas vezes, squeezing does not cost you additional movement, and you do not have DesVantagem em jogada de ataques and Destreza salvaguardas while squeezing.',
+Espremimento em Velocidade Plena. Se você escolher este traço duas vezes, espremer-se não lhe custa deslocamento adicional, e você não tem Desvantagem em jogadas de ataque e salvaguardas de Destreza enquanto se espreme.',
+  'Com um esforço de vontade, você contorce o corpo pelos espaços mais apertados. Você pode se espremer por um espaço grande o bastante para uma criatura dois tamanhos menor que você, em vez de um tamanho menor.',
+  'Espremimento em Velocidade Plena. Se você escolher este traço duas vezes, espremer-se não lhe custa deslocamento adicional, e você não tem Desvantagem em jogadas de ataque e salvaguardas de Destreza enquanto se espreme.',
   'Espremimento em Velocidade Plena',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -947,11 +947,11 @@ Espremimento em Velocidade Plena. Se você escolher este traço duas vezes, sque
   'ChargingAttackCombat',
   'combat'::rpg.heritage_trait_category,
   'Investida Furiosa',
-  'The fury with which you throw yourself into battle forces your foes to feel your wrath. Se você move at least 6 m straight toward a target and then hit it with a melee attack with a weapon or an Ataque Desarmado on the same turn, você pode make another attack against the same target como Ação Bônus with the same weapon.
+  'A fúria com que você se lança à batalha força os inimigos a sentirem sua ira. Se você se mover pelo menos 6 m em linha reta em direção a um alvo e então o acertar com um ataque corpo a corpo com uma arma ou um Ataque Desarmado no mesmo turno, pode fazer outro ataque contra o mesmo alvo como Ação Bônus com a mesma arma.
 
-Investida Furiosa. Se você escolher este traço duas vezes, quando você use Charging Attack, você tem Vantagem em all attacks after the triggering movement até o fim de your turn. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'The fury with which you throw yourself into battle forces your foes to feel your wrath. Se você move at least 6 m straight toward a target and then hit it with a melee attack with a weapon or an Ataque Desarmado on the same turn, você pode make another attack against the same target como Ação Bônus with the same weapon.',
-  'Investida Furiosa. Se você escolher este traço duas vezes, quando você use Charging Attack, você tem Vantagem em all attacks after the triggering movement até o fim de your turn. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Investida Furiosa. Se você escolher este traço duas vezes, quando usa Ataque de Investida, você tem Vantagem em todos os ataques após o movimento desencadeador até o fim do seu turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'A fúria com que você se lança à batalha força os inimigos a sentirem sua ira. Se você se mover pelo menos 6 m em linha reta em direção a um alvo e então o acertar com um ataque corpo a corpo com uma arma ou um Ataque Desarmado no mesmo turno, pode fazer outro ataque contra o mesmo alvo como Ação Bônus com a mesma arma.',
+  'Investida Furiosa. Se você escolher este traço duas vezes, quando usa Ataque de Investida, você tem Vantagem em todos os ataques após o movimento desencadeador até o fim do seu turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Investida Furiosa',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -961,19 +961,19 @@ Investida Furiosa. Se você escolher este traço duas vezes, quando você use Ch
   'BurstOfSpeedExploration',
   'exploration'::rpg.heritage_trait_category,
   'Velocidade Furiosa',
-  'The many things that want to kill you must catch you first. On your turn, você pode increase your Speed by 9 m até o fim de your turn. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'As muitas coisas que querem matá-lo precisam alcançá-lo primeiro. No seu turno, você pode aumentar seu Deslocamento em 9 m até o fim do turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Velocidade Furiosa. Se você escolher este traço duas vezes, on a turn quando você use Burst of Speed, you don’t provoke Ataque de Oportunidades.
+Velocidade Furiosa. Se você escolher este traço duas vezes, em um turno em que usa Explosão de Velocidade, você não provoca Ataques de Oportunidade.
 
-On the battlefield, quick feet are the best suit of armor you could ask for. If an enemy can’t reach you, it can’t hurt you. Now pick up those knees!
+No campo de batalha, pés rápidos são a melhor armadura que se pode pedir. Se um inimigo não consegue alcançá-lo, não pode feri-lo. Agora erga esses joelhos!
 
-—Militia Drillmaster',
-  'The many things that want to kill you must catch you first. On your turn, você pode increase your Speed by 9 m até o fim de your turn. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Velocidade Furiosa. Se você escolher este traço duas vezes, on a turn quando você use Burst of Speed, you don’t provoke Ataque de Oportunidades.
+— Instrutor de milícia',
+  'As muitas coisas que querem matá-lo precisam alcançá-lo primeiro. No seu turno, você pode aumentar seu Deslocamento em 9 m até o fim do turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Velocidade Furiosa. Se você escolher este traço duas vezes, em um turno em que usa Explosão de Velocidade, você não provoca Ataques de Oportunidade.
 
-On the battlefield, quick feet are the best suit of armor you could ask for. If an enemy can’t reach you, it can’t hurt you. Now pick up those knees!
+No campo de batalha, pés rápidos são a melhor armadura que se pode pedir. Se um inimigo não consegue alcançá-lo, não pode feri-lo. Agora erga esses joelhos!
 
-—Militia Drillmaster',
+— Instrutor de milícia',
   'Velocidade Furiosa',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -983,11 +983,11 @@ On the battlefield, quick feet are the best suit of armor you could ask for. If 
   'TenaciousCombat',
   'combat'::rpg.heritage_trait_category,
   'Difícil de Matar',
-  'Your enemies might put you down, but you are never down for long. Você tem Vantagem em Death Salvaguardas.
+  'Seus inimigos podem derrubá-lo, mas você nunca fica no chão por muito tempo. Você tem Vantagem em Salvaguardas contra a Morte.
 
-Difícil de Matar. Se você escolher este traço duas vezes, quando você drop to 0 Pontos de Vida but don’t die outright, you remain conscious. Você deve make Death Salvaguardas as normal while at 0 Pontos de Vida, and you suffer a Death Salvaguarda failure each time you take any damage, but você pode otherwise act freely. Você pode’t become Stable while you remain at 0 Pontos de Vida in this way.',
-  'Your enemies might put you down, but you are never down for long. Você tem Vantagem em Death Salvaguardas.',
-  'Difícil de Matar. Se você escolher este traço duas vezes, quando você drop to 0 Pontos de Vida but don’t die outright, you remain conscious. Você deve make Death Salvaguardas as normal while at 0 Pontos de Vida, and you suffer a Death Salvaguarda failure each time you take any damage, but você pode otherwise act freely. Você pode’t become Stable while you remain at 0 Pontos de Vida in this way.',
+Difícil de Matar. Se você escolher este traço duas vezes, quando cai a 0 Pontos de Vida mas não morre imediatamente, permanece consciente. Você deve fazer Salvaguardas contra a Morte normalmente enquanto estiver a 0 Pontos de Vida, e sofre uma falha em Salvaguarda contra a Morte cada vez que recebe qualquer dano, mas pode agir livremente de outro modo. Você não pode ficar Estável enquanto permanecer a 0 Pontos de Vida dessa forma.',
+  'Seus inimigos podem derrubá-lo, mas você nunca fica no chão por muito tempo. Você tem Vantagem em Salvaguardas contra a Morte.',
+  'Difícil de Matar. Se você escolher este traço duas vezes, quando cai a 0 Pontos de Vida mas não morre imediatamente, permanece consciente. Você deve fazer Salvaguardas contra a Morte normalmente enquanto estiver a 0 Pontos de Vida, e sofre uma falha em Salvaguarda contra a Morte cada vez que recebe qualquer dano, mas pode agir livremente de outro modo. Você não pode ficar Estável enquanto permanecer a 0 Pontos de Vida dessa forma.',
   'Difícil de Matar',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -997,11 +997,11 @@ Difícil de Matar. Se você escolher este traço duas vezes, quando você drop t
   'MediumArmorTrainingCombat',
   'combat'::rpg.heritage_trait_category,
   'Treinamento em Armadura Pesada',
-  'The pounding you routinely take in combat requires a formidable layer of defense. Você tem training with Medium armor and with Escudos.
+  'A surra que você leva rotineiramente em combate exige uma camada formidável de defesa. Você tem treinamento com armadura média e com Escudos.
 
-Treinamento em Armadura Pesada. Se você escolher este traço duas vezes, você tem training with armadura pesada.',
-  'The pounding you routinely take in combat requires a formidable layer of defense. Você tem training with Medium armor and with Escudos.',
-  'Treinamento em Armadura Pesada. Se você escolher este traço duas vezes, você tem training with armadura pesada.',
+Treinamento em Armadura Pesada. Se você escolher este traço duas vezes, você tem treinamento com armadura pesada.',
+  'A surra que você leva rotineiramente em combate exige uma camada formidável de defesa. Você tem treinamento com armadura média e com Escudos.',
+  'Treinamento em Armadura Pesada. Se você escolher este traço duas vezes, você tem treinamento com armadura pesada.',
   'Treinamento em Armadura Pesada',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1011,11 +1011,11 @@ Treinamento em Armadura Pesada. Se você escolher este traço duas vezes, você 
   'HelpingHandExplorationCombat',
   'combat'::rpg.heritage_trait_category,
   'Táticas Úteis',
-  'You excel at aiding your allies, knowing that the time will come quando você need them to return the favor. Você pode usar the ação Ajudar como Ação Bônus to assist any ally making an ability check. (This is an Exploration trait.)
+  'Você se destaca em auxiliar aliados, sabendo que virá o momento em que precisará que retribua o favor. Você pode usar a ação Ajudar como Ação Bônus para auxiliar qualquer aliado fazendo um teste de atributo. (Este é um traço de Exploração.)
 
-Táticas Úteis. Se você escolher este traço duas vezes, quando você use Helping Hand, você pode also assist an ally making uma jogada de ataque. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo. (This is a Combat trait.)',
-  'You excel at aiding your allies, knowing that the time will come quando você need them to return the favor. Você pode usar the ação Ajudar como Ação Bônus to assist any ally making an ability check. (This is an Exploration trait.)',
-  'Táticas Úteis. Se você escolher este traço duas vezes, quando você use Helping Hand, você pode also assist an ally making uma jogada de ataque. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo. (This is a Combat trait.)',
+Táticas Úteis. Se você escolher este traço duas vezes, quando usa Mão Amiga, também pode auxiliar um aliado fazendo uma jogada de ataque. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo. (Este é um traço de Combate.)',
+  'Você se destaca em auxiliar aliados, sabendo que virá o momento em que precisará que retribua o favor. Você pode usar a ação Ajudar como Ação Bônus para auxiliar qualquer aliado fazendo um teste de atributo. (Este é um traço de Exploração.)',
+  'Táticas Úteis. Se você escolher este traço duas vezes, quando usa Mão Amiga, também pode auxiliar um aliado fazendo uma jogada de ataque. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo. (Este é um traço de Combate.)',
   'Táticas Úteis',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1025,11 +1025,11 @@ Táticas Úteis. Se você escolher este traço duas vezes, quando você use Help
   'MasterOfDistractionCombat',
   'combat'::rpg.heritage_trait_category,
   'Distração Obstructiva',
-  'You draw your foes’ attention to you, intending it to be the last diversion they ever see. As an Influence action, you put on a tactical display (bravado, cowardice, confusion, or some other tactic) that gets your enemies’ attention. Until the end of your next turn, any attack on an enemy within 3 m of you that could see you quando você took the Influence action is made with Vantagem . Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Você atrai a atenção dos inimigos para si, pretendendo que seja a última distração que eles vejam. Como uma ação Influenciar, você faz uma demonstração tática (bravata, covardia, confusão ou outra tática) que captura a atenção dos inimigos. Até o fim do seu próximo turno, qualquer ataque contra um inimigo a até 3 m de você que pudesse vê-lo quando você tomou a ação Influenciar é feito com Vantagem. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Distração Obstructiva. Se você escolher este traço duas vezes, quando você use Master of Distraction, one affected enemy de sua escolha also has DesVantagem em jogada de ataques it makes against any of your allies até o fim do seu próximo turno.',
-  'You draw your foes’ attention to you, intending it to be the last diversion they ever see. As an Influence action, you put on a tactical display (bravado, cowardice, confusion, or some other tactic) that gets your enemies’ attention. Until the end of your next turn, any attack on an enemy within 3 m of you that could see you quando você took the Influence action is made with Vantagem . Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Distração Obstructiva. Se você escolher este traço duas vezes, quando você use Master of Distraction, one affected enemy de sua escolha also has DesVantagem em jogada de ataques it makes against any of your allies até o fim do seu próximo turno.',
+Distração Obstructiva. Se você escolher este traço duas vezes, quando usa Mestre da Distração, um inimigo afetado à sua escolha também tem Desvantagem em jogadas de ataque que fizer contra qualquer um dos seus aliados até o fim do seu próximo turno.',
+  'Você atrai a atenção dos inimigos para si, pretendendo que seja a última distração que eles vejam. Como uma ação Influenciar, você faz uma demonstração tática (bravata, covardia, confusão ou outra tática) que captura a atenção dos inimigos. Até o fim do seu próximo turno, qualquer ataque contra um inimigo a até 3 m de você que pudesse vê-lo quando você tomou a ação Influenciar é feito com Vantagem. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Distração Obstructiva. Se você escolher este traço duas vezes, quando usa Mestre da Distração, um inimigo afetado à sua escolha também tem Desvantagem em jogadas de ataque que fizer contra qualquer um dos seus aliados até o fim do seu próximo turno.',
   'Distração Obstructiva',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1039,11 +1039,11 @@ Distração Obstructiva. Se você escolher este traço duas vezes, quando você 
   'InuredToTheElementsExploration',
   'exploration'::rpg.heritage_trait_category,
   'Imune aos Elementos',
-  'Even beneath scorching sun and in freezing cold, you hold yourself strong. Você tem Vantagem em Constituição salvaguardas made to resist the effects of extreme cold or extreme heat.
+  'Mesmo sob sol escaldante e no frio congelante, você se mantém firme. Você tem Vantagem em salvaguardas de Constituição feitas para resistir aos efeitos de frio extremo ou calor extremo.
 
-Imune to the Elements. Se você escolher este traço duas vezes, you automatically succeed on Constituição salvaguardas to resist the effects of extreme cold or extreme heat.',
-  'Even beneath scorching sun and in freezing cold, you hold yourself strong. Você tem Vantagem em Constituição salvaguardas made to resist the effects of extreme cold or extreme heat.',
-  'Imune to the Elements. Se você escolher este traço duas vezes, you automatically succeed on Constituição salvaguardas to resist the effects of extreme cold or extreme heat.',
+Imune aos Elementos. Se você escolher este traço duas vezes, você tem sucesso automático em salvaguardas de Constituição para resistir aos efeitos de frio extremo ou calor extremo.',
+  'Mesmo sob sol escaldante e no frio congelante, você se mantém firme. Você tem Vantagem em salvaguardas de Constituição feitas para resistir aos efeitos de frio extremo ou calor extremo.',
+  'Imune aos Elementos. Se você escolher este traço duas vezes, você tem sucesso automático em salvaguardas de Constituição para resistir aos efeitos de frio extremo ou calor extremo.',
   'Imune aos Elementos',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1053,11 +1053,11 @@ Imune to the Elements. Se você escolher este traço duas vezes, you automatical
   'FocusedMindCombat',
   'combat'::rpg.heritage_trait_category,
   'Mente Inabalável',
-  'Your strength of will protects you from magic that would corrupt your mind. Você tem Vantagem em salvaguardas against being Charmed .
+  'Sua força de vontade o protege de magia que corromperia sua mente. Você tem Vantagem em salvaguardas contra ficar Enfeitiçado.
 
-Mente Inabalável. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against being Charmed, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Your strength of will protects you from magic that would corrupt your mind. Você tem Vantagem em salvaguardas against being Charmed .',
-  'Mente Inabalável. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against being Charmed, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Mente Inabalável. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra ficar Enfeitiçado, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Sua força de vontade o protege de magia que corromperia sua mente. Você tem Vantagem em salvaguardas contra ficar Enfeitiçado.',
+  'Mente Inabalável. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra ficar Enfeitiçado, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Mente Inabalável',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1067,11 +1067,11 @@ Mente Inabalável. Se você escolher este traço duas vezes, Quando você falha 
   'DarkvisionExploration',
   'exploration'::rpg.heritage_trait_category,
   'Visão no Escuro Aprimorada',
-  'A life spent in shadow has made you grow accustomed to the gloom. Você pode see in Dim Light within 18 m of you as if it were Bright Light , and in Darkness within 18 m of you as if it were Dim Light. Você pode’t discern color in Darkness, only shades of gray.
+  'Uma vida na sombra acostumou você à penumbra. Você enxerga em Luz Fraca a até 18 m de você como se fosse Luz Clara, e na Escuridão a até 18 m de você como se fosse Luz Fraca. Você não distingue cores na Escuridão, apenas tons de cinza.
 
-Visão no Escuro Aprimorada. Se você escolher este traço duas vezes, the range of your Darkvision increases to 36 m.',
-  'A life spent in shadow has made you grow accustomed to the gloom. Você pode see in Dim Light within 18 m of you as if it were Bright Light , and in Darkness within 18 m of you as if it were Dim Light. Você pode’t discern color in Darkness, only shades of gray.',
-  'Visão no Escuro Aprimorada. Se você escolher este traço duas vezes, the range of your Darkvision increases to 36 m.',
+Visão no Escuro Aprimorada. Se você escolher este traço duas vezes, o alcance da sua Visão no Escuro aumenta para 36 m.',
+  'Uma vida na sombra acostumou você à penumbra. Você enxerga em Luz Fraca a até 18 m de você como se fosse Luz Clara, e na Escuridão a até 18 m de você como se fosse Luz Fraca. Você não distingue cores na Escuridão, apenas tons de cinza.',
+  'Visão no Escuro Aprimorada. Se você escolher este traço duas vezes, o alcance da sua Visão no Escuro aumenta para 36 m.',
   'Visão no Escuro Aprimorada',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1081,11 +1081,11 @@ Visão no Escuro Aprimorada. Se você escolher este traço duas vezes, the range
   'MenacingRoarCombat',
   'combat'::rpg.heritage_trait_category,
   'Rugido Incomparável',
-  'Your battle cry can cause even the most formidable foes to quail before you. Como Ação Bônus, you emit a roar, shout, or other loud vocal outburst. Each creature de sua escolha within 3 m of you that can hear you must succeed on a Sabedoria salvaguarda (CD = 8 + your Bônus de Proficiência + your modificador de Constituição) or have the Amedrontado condtion até o fim do seu próximo turno. You regain the use of este recurso quando você finish a Descanso Longo.
+  'Seu grito de guerra pode fazer até os inimigos mais formidáveis tremerem diante de você. Como Ação Bônus, você emite um rugido, grito ou outro brado vocal alto. Cada criatura à sua escolha a até 3 m de você que possa ouvi-lo deve ter sucesso em uma salvaguarda de Sabedoria (CD = 8 + seu Bônus de Proficiência + seu modificador de Constituição) ou ficar com a condição Amedrontado até o fim do seu próximo turno. Você recupera o uso deste recurso ao terminar um Descanso Longo.
 
-Rugido Incomparável. Se você escolher este traço duas vezes, quando você use Menacing Roar, one target de sua escolha has DesVantagem em the salvaguarda.',
-  'Your battle cry can cause even the most formidable foes to quail before you. Como Ação Bônus, you emit a roar, shout, or other loud vocal outburst. Each creature de sua escolha within 3 m of you that can hear you must succeed on a Sabedoria salvaguarda (CD = 8 + your Bônus de Proficiência + your modificador de Constituição) or have the Amedrontado condtion até o fim do seu próximo turno. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Rugido Incomparável. Se você escolher este traço duas vezes, quando você use Menacing Roar, one target de sua escolha has DesVantagem em the salvaguarda.',
+Rugido Incomparável. Se você escolher este traço duas vezes, quando usa Rugido Ameaçador, um alvo à sua escolha tem Desvantagem na salvaguarda.',
+  'Seu grito de guerra pode fazer até os inimigos mais formidáveis tremerem diante de você. Como Ação Bônus, você emite um rugido, grito ou outro brado vocal alto. Cada criatura à sua escolha a até 3 m de você que possa ouvi-lo deve ter sucesso em uma salvaguarda de Sabedoria (CD = 8 + seu Bônus de Proficiência + seu modificador de Constituição) ou ficar com a condição Amedrontado até o fim do seu próximo turno. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Rugido Incomparável. Se você escolher este traço duas vezes, quando usa Rugido Ameaçador, um alvo à sua escolha tem Desvantagem na salvaguarda.',
   'Rugido Incomparável',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1095,15 +1095,15 @@ Rugido Incomparável. Se você escolher este traço duas vezes, quando você use
   'StandingLeapExploration',
   'exploration'::rpg.heritage_trait_category,
   'Salto Incrível',
-  'Threats on the ground are of little concern as you leap over them with ease. Você pode make a Long Jump of up to 6 m and a High Jump of up to 3 m, with or without a running start. Se vocêr Speed is less than the distance você pode Long Jump, você pode leap only a distance igual a your Speed.
+  'Ameaças no chão pouco o preocupam, pois você salta sobre elas com facilidade. Você pode fazer um Salto em Distância de até 6 m e um Salto em Altura de até 3 m, com ou sem corrida. Se seu Deslocamento for menor que a distância do Salto em Distância, você só pode saltar uma distância igual ao seu Deslocamento.
 
-Salto Incrível. Se você escolher este traço duas vezes, você pode make a Long Jump of up to 9 m and a High Jump of up to 4,5 m, as limited by your speed.
+Salto Incrível. Se você escolher este traço duas vezes, você pode fazer um Salto em Distância de até 9 m e um Salto em Altura de até 4,5 m, limitado pelo seu deslocamento.
 
-Além disso, quando você jump out of another creature’s reach, the movement of the jump does not provoke Ataque de Oportunidades from that creature. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Threats on the ground are of little concern as you leap over them with ease. Você pode make a Long Jump of up to 6 m and a High Jump of up to 3 m, with or without a running start. Se vocêr Speed is less than the distance você pode Long Jump, você pode leap only a distance igual a your Speed.',
-  'Salto Incrível. Se você escolher este traço duas vezes, você pode make a Long Jump of up to 9 m and a High Jump of up to 4,5 m, as limited by your speed.
+Além disso, quando salta para fora do alcance de outra criatura, o movimento do salto não provoca Ataques de Oportunidade dessa criatura. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Ameaças no chão pouco o preocupam, pois você salta sobre elas com facilidade. Você pode fazer um Salto em Distância de até 6 m e um Salto em Altura de até 3 m, com ou sem corrida. Se seu Deslocamento for menor que a distância do Salto em Distância, você só pode saltar uma distância igual ao seu Deslocamento.',
+  'Salto Incrível. Se você escolher este traço duas vezes, você pode fazer um Salto em Distância de até 9 m e um Salto em Altura de até 4,5 m, limitado pelo seu deslocamento.
 
-Além disso, quando você jump out of another creature’s reach, the movement of the jump does not provoke Ataque de Oportunidades from that creature. You regain the use of este recurso quando você finish a Descanso Longo.',
+Além disso, quando salta para fora do alcance de outra criatura, o movimento do salto não provoca Ataques de Oportunidade dessa criatura. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Salto Incrível',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1113,11 +1113,11 @@ Além disso, quando você jump out of another creature’s reach, the movement o
   'BraveCombat',
   'combat'::rpg.heritage_trait_category,
   'Coragem Contagiante',
-  'The horrors you’ve lived through have hardened you. Você tem Vantagem em salvaguardas to avoid being Amedrontado .
+  'Os horrores que você viveu o endureceram. Você tem Vantagem em salvaguardas para evitar ficar Amedrontado.
 
-Coragem Contagiante. Se você escolher este traço duas vezes, você pode usar your Reação to bolster the spirits of your allies, granting one ally who can see or hear you Vantagem em a salvaguarda against being Amedrontado. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'The horrors you’ve lived through have hardened you. Você tem Vantagem em salvaguardas to avoid being Amedrontado .',
-  'Coragem Contagiante. Se você escolher este traço duas vezes, você pode usar your Reação to bolster the spirits of your allies, granting one ally who can see or hear you Vantagem em a salvaguarda against being Amedrontado. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Coragem Contagiante. Se você escolher este traço duas vezes, você pode usar sua Reação para fortalecer o ânimo dos aliados, concedendo a um aliado que possa vê-lo ou ouvi-lo Vantagem em uma salvaguarda contra ficar Amedrontado. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Os horrores que você viveu o endureceram. Você tem Vantagem em salvaguardas para evitar ficar Amedrontado.',
+  'Coragem Contagiante. Se você escolher este traço duas vezes, você pode usar sua Reação para fortalecer o ânimo dos aliados, concedendo a um aliado que possa vê-lo ou ouvi-lo Vantagem em uma salvaguarda contra ficar Amedrontado. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Coragem Contagiante',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1127,15 +1127,15 @@ Coragem Contagiante. Se você escolher este traço duas vezes, você pode usar y
   'PolyglotRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Expert em Idiomas',
-  'The advantages of mastering the languages of enemies and allies alike are clear to you. Você aprende dois languages de sua escolha.
+  'As vantagens de dominar as línguas de inimigos e aliados são claras para você. Você aprende dois idiomas à sua escolha.
 
-Expert em Idiomas. Se você escolher this trait multiple times, you learn two new languages each time.
+Expert em Idiomas. Se você escolher este traço várias vezes, você aprende dois novos idiomas a cada vez.
 
-Além disso, você tem Vantagem em testes de Influence action ability made to interact with another creature using any language you selected with Polyglot. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'The advantages of mastering the languages of enemies and allies alike are clear to you. Você aprende dois languages de sua escolha.',
-  'Expert em Idiomas. Se você escolher this trait multiple times, you learn two new languages each time.
+Além disso, você tem Vantagem em testes de atributo de ação Influenciar feitos para interagir com outra criatura usando qualquer idioma que selecionou com Poliglota. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'As vantagens de dominar as línguas de inimigos e aliados são claras para você. Você aprende dois idiomas à sua escolha.',
+  'Expert em Idiomas. Se você escolher este traço várias vezes, você aprende dois novos idiomas a cada vez.
 
-Além disso, você tem Vantagem em testes de Influence action ability made to interact with another creature using any language you selected with Polyglot. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Além disso, você tem Vantagem em testes de atributo de ação Influenciar feitos para interagir com outra criatura usando qualquer idioma que selecionou com Poliglota. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Expert em Idiomas',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -1145,11 +1145,11 @@ Além disso, você tem Vantagem em testes de Influence action ability made to in
   'LightArmorTrainingCombat',
   'combat'::rpg.heritage_trait_category,
   'Perícia em Armadura Leve',
-  'Dealing with the threats you face requires the right combination of protection and movement. Você tem training with Light armor.
+  'Lidar com as ameaças que enfrenta exige a combinação certa de proteção e movimento. Você tem treinamento com armadura leve.
 
-Perícia em Armadura Leve. Se você escolher este traço duas vezes, your AC increases by 1 while wearing Light armor.',
-  'Dealing with the threats you face requires the right combination of protection and movement. Você tem training with Light armor.',
-  'Perícia em Armadura Leve. Se você escolher este traço duas vezes, your AC increases by 1 while wearing Light armor.',
+Perícia em Armadura Leve. Se você escolher este traço duas vezes, sua CA aumenta em 1 enquanto estiver vestindo armadura leve.',
+  'Lidar com as ameaças que enfrenta exige a combinação certa de proteção e movimento. Você tem treinamento com armadura leve.',
+  'Perícia em Armadura Leve. Se você escolher este traço duas vezes, sua CA aumenta em 1 enquanto estiver vestindo armadura leve.',
   'Perícia em Armadura Leve',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1159,15 +1159,15 @@ Perícia em Armadura Leve. Se você escolher este traço duas vezes, your AC inc
   'FadeAwayExploration',
   'exploration'::rpg.heritage_trait_category,
   'Desvanecimento Longo',
-  'Você tem learned to avoid notice at all costs, letting you momentarily obscure yourself from observation. Como Ação Bônus, você pode take the Hide action to conceal yourself without needing to be Heavily Obscured or behind Three-Quarters Cover or Total Cover . You need not be out of a creature’s line of sight to use this ability.
+  'Você aprendeu a evitar atenção a qualquer custo, permitindo obscurecer-se momentaneamente da observação. Como Ação Bônus, pode tomar a ação Esconder-se para se ocultar sem precisar estar Fortemente Obscurecido ou atrás de Cobertura de Três Quartos ou Cobertura Total. Você não precisa estar fora da linha de visão de uma criatura para usar esta habilidade.
 
-You become visible at the start of your next turn unless você tem moved into a position that allows you to use the Hide action normally. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+Você se torna visível no início do seu próximo turno, a menos que tenha se movido para uma posição que permita usar a ação Esconder-se normalmente. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Desvanecimento Longo. Se você escolher este traço duas vezes, você tem Vantagem em your ability check quando você take the Hide action from Fade Away, and you become visible at the end of your next turn instead of the start of your next turn.',
-  'Você tem learned to avoid notice at all costs, letting you momentarily obscure yourself from observation. Como Ação Bônus, você pode take the Hide action to conceal yourself without needing to be Heavily Obscured or behind Three-Quarters Cover or Total Cover . You need not be out of a creature’s line of sight to use this ability.',
-  'You become visible at the start of your next turn unless você tem moved into a position that allows you to use the Hide action normally. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+Desvanecimento Longo. Se você escolher este traço duas vezes, você tem Vantagem no teste de atributo quando toma a ação Esconder-se de Desvanecer, e se torna visível no fim do seu próximo turno em vez do início do seu próximo turno.',
+  'Você aprendeu a evitar atenção a qualquer custo, permitindo obscurecer-se momentaneamente da observação. Como Ação Bônus, pode tomar a ação Esconder-se para se ocultar sem precisar estar Fortemente Obscurecido ou atrás de Cobertura de Três Quartos ou Cobertura Total. Você não precisa estar fora da linha de visão de uma criatura para usar esta habilidade.
 
-Desvanecimento Longo. Se você escolher este traço duas vezes, você tem Vantagem em your ability check quando você take the Hide action from Fade Away, and you become visible at the end of your next turn instead of the start of your next turn.',
+Você se torna visível no início do seu próximo turno, a menos que tenha se movido para uma posição que permita usar a ação Esconder-se normalmente. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Desvanecimento Longo. Se você escolher este traço duas vezes, você tem Vantagem no teste de atributo quando toma a ação Esconder-se de Desvanecer, e se torna visível no fim do seu próximo turno em vez do início do seu próximo turno.',
   'Desvanecimento Longo',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1177,10 +1177,10 @@ Desvanecimento Longo. Se você escolher este traço duas vezes, você tem Vantag
   'MagicalInsightRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Historiador Mágico',
-  'Magic is power in the right hands, and those hands are yours. Você tem proficiência na perícia Arcanismo.
+  'Magia é poder nas mãos certas — e essas mãos são as suas. Você tem proficiência na perícia Arcanismo.
 
 Historiador Mágico. Se você escolher este traço duas vezes, você tem Vantagem em testes de Arcanismo. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Magic is power in the right hands, and those hands are yours. Você tem proficiência na perícia Arcanismo.',
+  'Magia é poder nas mãos certas — e essas mãos são as suas. Você tem proficiência na perícia Arcanismo.',
   'Historiador Mágico. Se você escolher este traço duas vezes, você tem Vantagem em testes de Arcanismo. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Historiador Mágico',
   2,
@@ -1191,11 +1191,11 @@ Historiador Mágico. Se você escolher este traço duas vezes, você tem Vantage
   'MagicalSavvyRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Erudito Mágico',
-  'Whether through intensive study or the innate touch of magic in your blood, você tem the ability to invoke magical spells. Você aprende um cantrip de sua escolha from any spell list, which you cast using the associated ability score: Inteligência for magia de Magos, Sabedoria for Cleric and Druid spells, and Carisma for Bard, Sorcerer, and Warlock spells. If the spell appears on multiple spell lists, choose one to determine the spellcasting attribute for that spell.
+  'Seja por estudo intensivo ou pelo toque inato de magia em seu sangue, você tem a capacidade de invocar magias. Você aprende um truque à sua escolha de qualquer lista de magias, que conjura usando o atributo associado: Inteligência para magias de Mago, Sabedoria para magias de Clérigo e Druida, e Carisma para magias de Bardo, Feiticeiro e Bruxo. Se a magia aparecer em várias listas, escolha uma para determinar o atributo de conjuração dessa magia.
 
-Erudito Mágico. Se você escolher this trait multiple times, you select a different cantrip each time, or você pode select a level 1 spell from the same list como cantrip você tem previously chosen. Se você select a level 1 spell, você pode cast it once without expending a espaço de magia, and você recupera the ability to cast it in that way quando você finish a Descanso Longo. Se você have levels in the associated spellcasting class, you always have this spell prepared, and it doesn’t count against the number of spells você pode prepare each day.',
-  'Whether through intensive study or the innate touch of magic in your blood, você tem the ability to invoke magical spells. Você aprende um cantrip de sua escolha from any spell list, which you cast using the associated ability score: Inteligência for magia de Magos, Sabedoria for Cleric and Druid spells, and Carisma for Bard, Sorcerer, and Warlock spells. If the spell appears on multiple spell lists, choose one to determine the spellcasting attribute for that spell.',
-  'Erudito Mágico. Se você escolher this trait multiple times, you select a different cantrip each time, or você pode select a level 1 spell from the same list como cantrip você tem previously chosen. Se você select a level 1 spell, você pode cast it once without expending a espaço de magia, and você recupera the ability to cast it in that way quando você finish a Descanso Longo. Se você have levels in the associated spellcasting class, you always have this spell prepared, and it doesn’t count against the number of spells você pode prepare each day.',
+Erudito Mágico. Se você escolher este traço várias vezes, você seleciona um truque diferente a cada vez, ou pode selecionar uma magia de 1º nível da mesma lista de um truque que já tenha escolhido. Se selecionar uma magia de 1º nível, pode conjurá-la uma vez sem gastar um espaço de magia, e recupera a capacidade de conjurá-la dessa forma ao terminar um Descanso Longo. Se tiver níveis na classe de conjuração associada, você sempre tem essa magia preparada, e ela não conta contra o número de magias que pode preparar a cada dia.',
+  'Seja por estudo intensivo ou pelo toque inato de magia em seu sangue, você tem a capacidade de invocar magias. Você aprende um truque à sua escolha de qualquer lista de magias, que conjura usando o atributo associado: Inteligência para magias de Mago, Sabedoria para magias de Clérigo e Druida, e Carisma para magias de Bardo, Feiticeiro e Bruxo. Se a magia aparecer em várias listas, escolha uma para determinar o atributo de conjuração dessa magia.',
+  'Erudito Mágico. Se você escolher este traço várias vezes, você seleciona um truque diferente a cada vez, ou pode selecionar uma magia de 1º nível da mesma lista de um truque que já tenha escolhido. Se selecionar uma magia de 1º nível, pode conjurá-la uma vez sem gastar um espaço de magia, e recupera a capacidade de conjurá-la dessa forma ao terminar um Descanso Longo. Se tiver níveis na classe de conjuração associada, você sempre tem essa magia preparada, e ela não conta contra o número de magias que pode preparar a cada dia.',
   'Erudito Mágico',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -1205,15 +1205,15 @@ Erudito Mágico. Se você escolher this trait multiple times, you select a diffe
   'ImpromptuArtisanRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Mestre Artesão',
-  'You’ve never known the luxury of always having the gear you need, but você tem more than learned to make do. Se você possess Artisan’s Tools with which você tem proficiency, and se você have access to appropriate raw materials and any additional necessary equipment (as the GM determines), você pode usar a Descanso Curto to craft any one nonmagical item worth 10 PO or less, including:
+  'Você nunca conheceu o luxo de sempre ter o equipamento de que precisa, mas aprendeu mais do que bem a se virar. Se possuir Ferramentas de Artesão com as quais tem proficiência, e se tiver acesso a matérias-primas apropriadas e a qualquer equipamento adicional necessário (conforme o Mestre determinar), pode usar um Descanso Curto para fabricar qualquer um item não mágico que valha 10 PO ou menos.
 
-The gear you create is workable but not high quality, and can’t be sold except as the GM determines.
+O equipamento que você cria é utilizável, mas não de alta qualidade, e não pode ser vendido exceto conforme o Mestre determinar.
 
-Mestre Artesão. Se você escolher este traço duas vezes, você pode usar Impromptu Artisan during a Descanso Longo, during which you craft one nonmagical item worth 50 PO or less.',
-  'You’ve never known the luxury of always having the gear you need, but você tem more than learned to make do. Se você possess Artisan’s Tools with which você tem proficiency, and se você have access to appropriate raw materials and any additional necessary equipment (as the GM determines), você pode usar a Descanso Curto to craft any one nonmagical item worth 10 PO or less, including:',
-  'The gear you create is workable but not high quality, and can’t be sold except as the GM determines.
+Mestre Artesão. Se você escolher este traço duas vezes, você pode usar Artesão Improvisado durante um Descanso Longo, no qual fabrica um item não mágico que valha 50 PO ou menos.',
+  'Você nunca conheceu o luxo de sempre ter o equipamento de que precisa, mas aprendeu mais do que bem a se virar. Se possuir Ferramentas de Artesão com as quais tem proficiência, e se tiver acesso a matérias-primas apropriadas e a qualquer equipamento adicional necessário (conforme o Mestre determinar), pode usar um Descanso Curto para fabricar qualquer um item não mágico que valha 10 PO ou menos.
 
-Mestre Artesão. Se você escolher este traço duas vezes, você pode usar Impromptu Artisan during a Descanso Longo, during which you craft one nonmagical item worth 50 PO or less.',
+O equipamento que você cria é utilizável, mas não de alta qualidade, e não pode ser vendido exceto conforme o Mestre determinar.',
+  'Mestre Artesão. Se você escolher este traço duas vezes, você pode usar Artesão Improvisado durante um Descanso Longo, no qual fabrica um item não mágico que valha 50 PO ou menos.',
   'Mestre Artesão',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1223,11 +1223,11 @@ Mestre Artesão. Se você escolher este traço duas vezes, você pode usar Impro
   'CalculatingListenerRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Mestre Manipulador',
-  'The weak-willed around you are easy targets for your manipulation. By conversing with a nonhostile creature for at least 1 minute, você pode attempt to charm them. The creature must succeed on a Sabedoria salvaguarda (CD = 8 + your modificador de Carisma + your Bônus de Proficiência) or have the Charmed condition por 1 hora. At the GM’s discretion, you also learn one piece of information that the target knows that relates to the topic of conversation while you speak to them. Regardless of whether or not the target succeeds on the salvaguarda, they remain unaware of your attempt. You regain use of este recurso quando você finish a Short or Descanso Longo.
+  'Os de vontade fraca ao seu redor são alvos fáceis para sua manipulação. Ao conversar com uma criatura não hostil por pelo menos 1 minuto, você pode tentar enfeitiçá-la. A criatura deve ter sucesso em uma salvaguarda de Sabedoria (CD = 8 + seu modificador de Carisma + seu Bônus de Proficiência) ou ficar com a condição Enfeitiçado por 1 hora. A critério do Mestre, você também aprende uma informação que o alvo conhece relacionada ao tema da conversa enquanto fala com ele. Independentemente de o alvo ter sucesso ou não na salvaguarda, ele permanece alheio à sua tentativa. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.
 
-Mestre Manipulador. Se você escolher este traço duas vezes, a creature has DesVantagem em the salvaguarda, and it has the Charmed condition por 8 horas on a failed save.',
-  'The weak-willed around you are easy targets for your manipulation. By conversing with a nonhostile creature for at least 1 minute, você pode attempt to charm them. The creature must succeed on a Sabedoria salvaguarda (CD = 8 + your modificador de Carisma + your Bônus de Proficiência) or have the Charmed condition por 1 hora. At the GM’s discretion, you also learn one piece of information that the target knows that relates to the topic of conversation while you speak to them. Regardless of whether or not the target succeeds on the salvaguarda, they remain unaware of your attempt. You regain use of este recurso quando você finish a Short or Descanso Longo.',
-  'Mestre Manipulador. Se você escolher este traço duas vezes, a creature has DesVantagem em the salvaguarda, and it has the Charmed condition por 8 horas on a failed save.',
+Mestre Manipulador. Se você escolher este traço duas vezes, uma criatura tem Desvantagem na salvaguarda, e fica com a condição Enfeitiçado por 8 horas em uma falha.',
+  'Os de vontade fraca ao seu redor são alvos fáceis para sua manipulação. Ao conversar com uma criatura não hostil por pelo menos 1 minuto, você pode tentar enfeitiçá-la. A criatura deve ter sucesso em uma salvaguarda de Sabedoria (CD = 8 + seu modificador de Carisma + seu Bônus de Proficiência) ou ficar com a condição Enfeitiçado por 1 hora. A critério do Mestre, você também aprende uma informação que o alvo conhece relacionada ao tema da conversa enquanto fala com ele. Independentemente de o alvo ter sucesso ou não na salvaguarda, ele permanece alheio à sua tentativa. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.',
+  'Mestre Manipulador. Se você escolher este traço duas vezes, uma criatura tem Desvantagem na salvaguarda, e fica com a condição Enfeitiçado por 8 horas em uma falha.',
   'Mestre Manipulador',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1237,11 +1237,11 @@ Mestre Manipulador. Se você escolher este traço duas vezes, a creature has Des
   'LuckyCombat',
   'combat'::rpg.heritage_trait_category,
   'Mestre da Fortuna',
-  'The luck you carry will see you through the worst Etharis has to offer. Quando você rola a 1 on a Teste D20, você pode reroll that die but must use the new roll. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'A sorte que você carrega o levará através do pior que Etharis tem a oferecer. Quando rola 1 em um Teste de d20, pode rerrolar esse dado, mas deve usar a nova rolagem. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Mestre da Fortuna. Se você escolher este traço duas vezes, você tem Vantagem em the reroll made with Lucky.',
-  'The luck you carry will see you through the worst Etharis has to offer. Quando você rola a 1 on a Teste D20, você pode reroll that die but must use the new roll. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Mestre da Fortuna. Se você escolher este traço duas vezes, você tem Vantagem em the reroll made with Lucky.',
+Mestre da Fortuna. Se você escolher este traço duas vezes, você tem Vantagem na rerrolagem feita com Sortudo.',
+  'A sorte que você carrega o levará através do pior que Etharis tem a oferecer. Quando rola 1 em um Teste de d20, pode rerrolar esse dado, mas deve usar a nova rolagem. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Mestre da Fortuna. Se você escolher este traço duas vezes, você tem Vantagem na rerrolagem feita com Sortudo.',
   'Mestre da Fortuna',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1251,11 +1251,11 @@ Mestre da Fortuna. Se você escolher este traço duas vezes, você tem Vantagem 
   'AwesomeCriticalCombat',
   'combat'::rpg.heritage_trait_category,
   'Crítico Máximo',
-  'When fortune favors your blade, você conhece how to make it count. Quando você score a Acerto Crítico with a melee attack with a weapon or an Ataque Desarmado , você pode roll one of the weapon’s damage dice one additional time and add it to the extra damage of the Acerto Crítico.
+  'Quando a fortuna favorece sua lâmina, você sabe como fazer valer a pena. Quando marca um Acerto Crítico com um ataque corpo a corpo com uma arma ou um Ataque Desarmado, pode rolar um dos dados de dano da arma uma vez adicional e adicioná-lo ao dano extra do Acerto Crítico.
 
-Crítico Máximo. Se você escolher este traço duas vezes, quando você use Awesome Critical, você pode add the maximum of the weapon’s original damage dice and the extra Awesome Critical die to the extra damage of the Acerto Crítico, rather than rolling them. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'When fortune favors your blade, você conhece how to make it count. Quando você score a Acerto Crítico with a melee attack with a weapon or an Ataque Desarmado , você pode roll one of the weapon’s damage dice one additional time and add it to the extra damage of the Acerto Crítico.',
-  'Crítico Máximo. Se você escolher este traço duas vezes, quando você use Awesome Critical, você pode add the maximum of the weapon’s original damage dice and the extra Awesome Critical die to the extra damage of the Acerto Crítico, rather than rolling them. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Crítico Máximo. Se você escolher este traço duas vezes, quando usa Crítico Formidável, pode adicionar o máximo dos dados de dano originais da arma e do dado extra de Crítico Formidável ao dano extra do Acerto Crítico, em vez de rolá-los. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Quando a fortuna favorece sua lâmina, você sabe como fazer valer a pena. Quando marca um Acerto Crítico com um ataque corpo a corpo com uma arma ou um Ataque Desarmado, pode rolar um dos dados de dano da arma uma vez adicional e adicioná-lo ao dano extra do Acerto Crítico.',
+  'Crítico Máximo. Se você escolher este traço duas vezes, quando usa Crítico Formidável, pode adicionar o máximo dos dados de dano originais da arma e do dado extra de Crítico Formidável ao dano extra do Acerto Crítico, em vez de rolá-los. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Crítico Máximo',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1265,15 +1265,11 @@ Crítico Máximo. Se você escolher este traço duas vezes, quando você use Awe
   'PersonalBastionCombat',
   'combat'::rpg.heritage_trait_category,
   'Bastião Móvel',
-  'Focusing all your resolve, you stand fast and watch your enemies flail against your defenses. Como ação Mágica, you become motionless and gain o seguinte effects:
+  'Concentrando toda a sua determinação, você permanece firme e vê os inimigos se esgotarem contra suas defesas. Como uma ação Mágica, você fica imóvel e ganha os seguintes efeitos: você não pode tomar ações e não pode usar sua Ação Bônus, exceto para encerrar o efeito deste traço.
 
-Você pode’t take actions, and você pode’t use your Ação Bônus except to end the effect of this trait.
-
-Bastião Móvel. Se você escolher este traço duas vezes, quando você use Personal Bastion, your Speed is reduced to half your normal Speed (rounded down), you do not have DesVantagem em Destreza salvaguardas, and você pode usar Ação Bônuss.',
-  'Focusing all your resolve, you stand fast and watch your enemies flail against your defenses. Como ação Mágica, you become motionless and gain o seguinte effects:',
-  'Você pode’t take actions, and você pode’t use your Ação Bônus except to end the effect of this trait.
-
-Bastião Móvel. Se você escolher este traço duas vezes, quando você use Personal Bastion, your Speed is reduced to half your normal Speed (rounded down), you do not have DesVantagem em Destreza salvaguardas, and você pode usar Ação Bônuss.',
+Bastião Móvel. Se você escolher este traço duas vezes, quando usa Bastião Pessoal, seu Deslocamento é reduzido à metade do Deslocamento normal (arredondado para baixo), você não tem Desvantagem em salvaguardas de Destreza e pode usar Ações Bônus.',
+  'Concentrando toda a sua determinação, você permanece firme e vê os inimigos se esgotarem contra suas defesas. Como uma ação Mágica, você fica imóvel e ganha os seguintes efeitos: você não pode tomar ações e não pode usar sua Ação Bônus, exceto para encerrar o efeito deste traço.',
+  'Bastião Móvel. Se você escolher este traço duas vezes, quando usa Bastião Pessoal, seu Deslocamento é reduzido à metade do Deslocamento normal (arredondado para baixo), você não tem Desvantagem em salvaguardas de Destreza e pode usar Ações Bônus.',
   'Bastião Móvel',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1283,11 +1279,11 @@ Bastião Móvel. Se você escolher este traço duas vezes, quando você use Pers
   'EnemyInMotionCombat',
   'combat'::rpg.heritage_trait_category,
   'Intuição em Movimento',
-  'A lifetime spent wandering lets you judge when others’ movement works to your benefit. Quando você faz uma jogada de ataque against a creature or make a salvaguarda against a creature’s attack, spell, or ability, você pode usar a Reação to have Vantagem em the jogada de ataque or salvaguarda if that creature moved since the end of your last turn. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Uma vida de andanças permite julgar quando o movimento dos outros trabalha a seu favor. Quando faz uma jogada de ataque contra uma criatura ou uma salvaguarda contra o ataque, magia ou habilidade de uma criatura, pode usar uma Reação para ter Vantagem na jogada de ataque ou salvaguarda se essa criatura se moveu desde o fim do seu último turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Moving Intuição. Se você escolher este traço duas vezes, Enemy in Motion also lets you use your Reação to affect an ally''s jogada de ataque or salvaguarda se vocêr ally is within 9 m.',
-  'A lifetime spent wandering lets you judge when others’ movement works to your benefit. Quando você faz uma jogada de ataque against a creature or make a salvaguarda against a creature’s attack, spell, or ability, você pode usar a Reação to have Vantagem em the jogada de ataque or salvaguarda if that creature moved since the end of your last turn. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Moving Intuição. Se você escolher este traço duas vezes, Enemy in Motion also lets you use your Reação to affect an ally''s jogada de ataque or salvaguarda se vocêr ally is within 9 m.',
+Intuição em Movimento. Se você escolher este traço duas vezes, Inimigo em Movimento também permite usar sua Reação para afetar a jogada de ataque ou salvaguarda de um aliado se esse aliado estiver a até 9 m.',
+  'Uma vida de andanças permite julgar quando o movimento dos outros trabalha a seu favor. Quando faz uma jogada de ataque contra uma criatura ou uma salvaguarda contra o ataque, magia ou habilidade de uma criatura, pode usar uma Reação para ter Vantagem na jogada de ataque ou salvaguarda se essa criatura se moveu desde o fim do seu último turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Intuição em Movimento. Se você escolher este traço duas vezes, Inimigo em Movimento também permite usar sua Reação para afetar a jogada de ataque ou salvaguarda de um aliado se esse aliado estiver a até 9 m.',
   'Intuição em Movimento',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1297,11 +1293,11 @@ Moving Intuição. Se você escolher este traço duas vezes, Enemy in Motion als
   'PassThroughExploration',
   'exploration'::rpg.heritage_trait_category,
   'Passagem Ágil',
-  'Making use of constant movement lets you minimize the threat of larger foes. Você pode move through the space of any creature at least one size larger than you.
+  'Usar movimento constante permite minimizar a ameaça de inimigos maiores. Você pode se mover através do espaço de qualquer criatura pelo menos um tamanho maior que você.
 
-Passagem Ágil. Se você escolher este traço duas vezes, you do not treat another creature’s space as Difficult Terrain .',
-  'Making use of constant movement lets you minimize the threat of larger foes. Você pode move through the space of any creature at least one size larger than you.',
-  'Passagem Ágil. Se você escolher este traço duas vezes, you do not treat another creature’s space as Difficult Terrain .',
+Passagem Ágil. Se você escolher este traço duas vezes, você não trata o espaço de outra criatura como Terreno Difícil.',
+  'Usar movimento constante permite minimizar a ameaça de inimigos maiores. Você pode se mover através do espaço de qualquer criatura pelo menos um tamanho maior que você.',
+  'Passagem Ágil. Se você escolher este traço duas vezes, você não trata o espaço de outra criatura como Terreno Difícil.',
   'Passagem Ágil',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1311,11 +1307,11 @@ Passagem Ágil. Se você escolher este traço duas vezes, you do not treat anoth
   'ReachAttackCombat',
   'combat'::rpg.heritage_trait_category,
   'Alcance Oportuno',
-  'As you hurl yourself into battle, your foes discover that trying to keep away from you won’t save them. Your reach increases by 1,5 m. This extra reach doesn’t apply to Ataque de Oportunidades.
+  'Ao se lançar à batalha, seus inimigos descobrem que tentar manter distância não os salvará. Seu alcance aumenta em 1,5 m. Esse alcance extra não se aplica a Ataques de Oportunidade.
 
-Alcance Oportuno. Se você escolher este traço duas vezes, your extra reach from Reach Attack applies to Ataque de Oportunidades.',
-  'As you hurl yourself into battle, your foes discover that trying to keep away from you won’t save them. Your reach increases by 1,5 m. This extra reach doesn’t apply to Ataque de Oportunidades.',
-  'Alcance Oportuno. Se você escolher este traço duas vezes, your extra reach from Reach Attack applies to Ataque de Oportunidades.',
+Alcance Oportuno. Se você escolher este traço duas vezes, seu alcance extra de Ataque de Alcance se aplica a Ataques de Oportunidade.',
+  'Ao se lançar à batalha, seus inimigos descobrem que tentar manter distância não os salvará. Seu alcance aumenta em 1,5 m. Esse alcance extra não se aplica a Ataques de Oportunidade.',
+  'Alcance Oportuno. Se você escolher este traço duas vezes, seu alcance extra de Ataque de Alcance se aplica a Ataques de Oportunidade.',
   'Alcance Oportuno',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1325,11 +1321,11 @@ Alcance Oportuno. Se você escolher este traço duas vezes, your extra reach fro
   'MightyShoveCombat',
   'combat'::rpg.heritage_trait_category,
   'Empurrão Avassalador',
-  'Your powerful blows send your targets reeling. Quando você acerta uma creature no more than one size larger than you with a melee attack, você pode usar a Ação Bônus to attempt to shove that creature. The target must succeed on a Força or Destreza salvaguarda (CD = 8 + your modificador de Força + your Bônus de Proficiência) or be pushed up to 3 m away from you.
+  'Seus golpes poderosos fazem os alvos cambalearem. Quando acerta uma criatura de no máximo um tamanho maior que você com um ataque corpo a corpo, pode usar uma Ação Bônus para tentar empurrar essa criatura. O alvo deve ter sucesso em uma salvaguarda de Força ou Destreza (CD = 8 + seu modificador de Força + seu Bônus de Proficiência) ou ser empurrado até 3 m para longe de você.
 
-Empurrão Avassalador. Se você escolher este traço duas vezes, quando você use Mighty Shove, the target creature has DesVantagem em the salvaguarda.',
-  'Your powerful blows send your targets reeling. Quando você acerta uma creature no more than one size larger than you with a melee attack, você pode usar a Ação Bônus to attempt to shove that creature. The target must succeed on a Força or Destreza salvaguarda (CD = 8 + your modificador de Força + your Bônus de Proficiência) or be pushed up to 3 m away from you.',
-  'Empurrão Avassalador. Se você escolher este traço duas vezes, quando você use Mighty Shove, the target creature has DesVantagem em the salvaguarda.',
+Empurrão Avassalador. Se você escolher este traço duas vezes, quando usa Empurrão Formidável, a criatura alvo tem Desvantagem na salvaguarda.',
+  'Seus golpes poderosos fazem os alvos cambalearem. Quando acerta uma criatura de no máximo um tamanho maior que você com um ataque corpo a corpo, pode usar uma Ação Bônus para tentar empurrar essa criatura. O alvo deve ter sucesso em uma salvaguarda de Força ou Destreza (CD = 8 + seu modificador de Força + seu Bônus de Proficiência) ou ser empurrado até 3 m para longe de você.',
+  'Empurrão Avassalador. Se você escolher este traço duas vezes, quando usa Empurrão Formidável, a criatura alvo tem Desvantagem na salvaguarda.',
   'Empurrão Avassalador',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1339,11 +1335,11 @@ Empurrão Avassalador. Se você escolher este traço duas vezes, quando você us
   'PackTacticsCombat',
   'combat'::rpg.heritage_trait_category,
   'Instinto de Matilha',
-  'Staying close to your allies in combat makes you even more dangerous. Quando você start your turn with at least one ally who isn’t Incapacitado within 1,5 m of another creature você pode see, você pode usar your Reação to have Vantagem em jogada de ataques against that creature até o fim de your turn.
+  'Manter-se perto dos aliados em combate o torna ainda mais perigoso. Quando inicia o turno com pelo menos um aliado que não esteja Incapacitado a até 1,5 m de outra criatura que você possa ver, pode usar sua Reação para ter Vantagem em jogadas de ataque contra essa criatura até o fim do seu turno.
 
-Instinto de Matilha. Se você escolher este traço duas vezes, gaining Vantagem from Pack Tactics requires no action.',
-  'Staying close to your allies in combat makes you even more dangerous. Quando você start your turn with at least one ally who isn’t Incapacitado within 1,5 m of another creature você pode see, você pode usar your Reação to have Vantagem em jogada de ataques against that creature até o fim de your turn.',
-  'Instinto de Matilha. Se você escolher este traço duas vezes, gaining Vantagem from Pack Tactics requires no action.',
+Instinto de Matilha. Se você escolher este traço duas vezes, obter Vantagem de Táticas de Matilha não exige ação.',
+  'Manter-se perto dos aliados em combate o torna ainda mais perigoso. Quando inicia o turno com pelo menos um aliado que não esteja Incapacitado a até 1,5 m de outra criatura que você possa ver, pode usar sua Reação para ter Vantagem em jogadas de ataque contra essa criatura até o fim do seu turno.',
+  'Instinto de Matilha. Se você escolher este traço duas vezes, obter Vantagem de Táticas de Matilha não exige ação.',
   'Instinto de Matilha',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1353,11 +1349,11 @@ Instinto de Matilha. Se você escolher este traço duas vezes, gaining Vantagem 
   'PackHunterCombat',
   'combat'::rpg.heritage_trait_category,
   'Líder de Matilha',
-  'Fighting in the thick of battle lets you aid your allies when it counts. When an ally within 3 m of you is about to make uma jogada de ataque or a salvaguarda, você pode usar a Reação to grant that ally Vantagem em the attack or save. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Lutar no meio da batalha permite auxiliar os aliados quando importa. Quando um aliado a até 3 m de você está prestes a fazer uma jogada de ataque ou uma salvaguarda, pode usar uma Reação para conceder a esse aliado Vantagem no ataque ou na salvaguarda. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Líder de Matilha. Se você escolher este traço duas vezes, Pack Hunter can be triggered by any ally within 9 m of you. Além disso, if the jogada de ataque misses or the salvaguarda fails, you don’t lose that usage of Pack Hunter.',
-  'Fighting in the thick of battle lets you aid your allies when it counts. When an ally within 3 m of you is about to make uma jogada de ataque or a salvaguarda, você pode usar a Reação to grant that ally Vantagem em the attack or save. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Líder de Matilha. Se você escolher este traço duas vezes, Pack Hunter can be triggered by any ally within 9 m of you. Além disso, if the jogada de ataque misses or the salvaguarda fails, you don’t lose that usage of Pack Hunter.',
+Líder de Matilha. Se você escolher este traço duas vezes, Caçador de Matilha pode ser desencadeado por qualquer aliado a até 9 m de você. Além disso, se a jogada de ataque errar ou a salvaguarda falhar, você não perde esse uso de Caçador de Matilha.',
+  'Lutar no meio da batalha permite auxiliar os aliados quando importa. Quando um aliado a até 3 m de você está prestes a fazer uma jogada de ataque ou uma salvaguarda, pode usar uma Reação para conceder a esse aliado Vantagem no ataque ou na salvaguarda. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Líder de Matilha. Se você escolher este traço duas vezes, Caçador de Matilha pode ser desencadeado por qualquer aliado a até 9 m de você. Além disso, se a jogada de ataque errar ou a salvaguarda falhar, você não perde esse uso de Caçador de Matilha.',
   'Líder de Matilha',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1367,19 +1363,19 @@ Líder de Matilha. Se você escolher este traço duas vezes, Pack Hunter can be 
   'OutofPhaseCombat',
   'combat'::rpg.heritage_trait_category,
   'Mudança de Fase',
-  'Your corporeal presence shifts and fades, softening your enemies’ ability to harm you. Como Ação Bônus, por 1 minuto, all creatures have DesVantagem em jogada de ataques against you, and você pode move through other creature’s spaces without treating them as Difficult Terrain. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Sua presença corpórea oscila e se desvanece, enfraquecendo a capacidade dos inimigos de feri-lo. Como Ação Bônus, por 1 minuto, todas as criaturas têm Desvantagem em jogadas de ataque contra você, e você pode se mover através dos espaços de outras criaturas sem tratá-los como Terreno Difícil. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Mudança de Fase. Se você escolher este traço duas vezes, quando você use Out of Phase, você pode extend its benefit to any ally within 3 m of you.
+Mudança de Fase. Se você escolher este traço duas vezes, quando usa Fora de Fase, pode estender o benefício a qualquer aliado a até 3 m de você.
 
-Clear a special cell for this one. She’s got tricks.
+Prepare uma cela especial para essa. Ela tem truques.
 
-—Castinellan Jailor',
-  'Your corporeal presence shifts and fades, softening your enemies’ ability to harm you. Como Ação Bônus, por 1 minuto, all creatures have DesVantagem em jogada de ataques against you, and você pode move through other creature’s spaces without treating them as Difficult Terrain. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Mudança de Fase. Se você escolher este traço duas vezes, quando você use Out of Phase, você pode extend its benefit to any ally within 3 m of you.
+— Carcereiro castinelano',
+  'Sua presença corpórea oscila e se desvanece, enfraquecendo a capacidade dos inimigos de feri-lo. Como Ação Bônus, por 1 minuto, todas as criaturas têm Desvantagem em jogadas de ataque contra você, e você pode se mover através dos espaços de outras criaturas sem tratá-los como Terreno Difícil. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Mudança de Fase. Se você escolher este traço duas vezes, quando usa Fora de Fase, pode estender o benefício a qualquer aliado a até 3 m de você.
 
-Clear a special cell for this one. She’s got tricks.
+Prepare uma cela especial para essa. Ela tem truques.
 
-—Castinellan Jailor',
+— Carcereiro castinelano',
   'Mudança de Fase',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1389,11 +1385,11 @@ Clear a special cell for this one. She’s got tricks.
   'InbornPerceptionRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Percepção Penetrante',
-  'The best way to avoid danger is to make sure you’re the first person to notice it. Você tem proficiência na perícia Percepção.
+  'A melhor forma de evitar o perigo é garantir que você seja a primeira pessoa a notá-lo. Você tem proficiência na perícia Percepção.
 
-Perfurante Percepção. Se você escolher este traço duas vezes, você tem Vantagem em testes de Percepção. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'The best way to avoid danger is to make sure you’re the first person to notice it. Você tem proficiência na perícia Percepção.',
-  'Perfurante Percepção. Se você escolher este traço duas vezes, você tem Vantagem em testes de Percepção. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Percepção Penetrante. Se você escolher este traço duas vezes, você tem Vantagem em testes de Percepção. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'A melhor forma de evitar o perigo é garantir que você seja a primeira pessoa a notá-lo. Você tem proficiência na perícia Percepção.',
+  'Percepção Penetrante. Se você escolher este traço duas vezes, você tem Vantagem em testes de Percepção. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Percepção Penetrante',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1403,11 +1399,11 @@ Perfurante Percepção. Se você escolher este traço duas vezes, você tem Vant
   'PoisonResilienceExploration',
   'exploration'::rpg.heritage_trait_category,
   'Indenização ao Veneno',
-  'Your exceptional fortitude lets you shrug off the effects of even the worst toxins. Você tem Vantagem em salvaguardas against being Envenenado .
+  'Sua fortaleza excepcional permite ignorar os efeitos até das piores toxinas. Você tem Vantagem em salvaguardas contra ficar Envenenado.
 
-Indenização ao Veneno. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against being Envenenado, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Your exceptional fortitude lets you shrug off the effects of even the worst toxins. Você tem Vantagem em salvaguardas against being Envenenado .',
-  'Indenização ao Veneno. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against being Envenenado, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Indenização ao Veneno. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra ficar Envenenado, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Sua fortaleza excepcional permite ignorar os efeitos até das piores toxinas. Você tem Vantagem em salvaguardas contra ficar Envenenado.',
+  'Indenização ao Veneno. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra ficar Envenenado, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Indenização ao Veneno',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1417,23 +1413,23 @@ Indenização ao Veneno. Se você escolher este traço duas vezes, Quando você 
   'BreathWeaponCombat',
   'combat'::rpg.heritage_trait_category,
   'Sopro Potente',
-  'A connection to draconic or elemental fury lets you unleash a blast of destructive energy. Quando você select this trait, choose a damage type: Acid, Cold, Fire, Lightning, Poison, or Thunder. Then choose an area of effect: a Line that is 1,5 m wide and 9 m long, or a 4,5 m Cone .
+  'Uma conexão com a fúria dracônica ou elemental permite liberar uma rajada de energia destrutiva. Ao selecionar este traço, escolha um tipo de dano: Ácido, Gélido, Fogo, Relâmpago, Veneno ou Trovejante. Em seguida, escolha uma área de efeito: uma Linha de 1,5 m de largura e 9 m de comprimento, ou um Cone de 4,5 m.
 
-Quando você use a ação Mágica to expel your Breath Weapon, each creature in the area of effect must make a Destreza salvaguarda (CD = 8 + your modificador de Constituição + your Bônus de Proficiência). A target creature takes 1d8 damage of the chosen type on a failed save, or half as much damage on a successful one. This damage increases by 1d8 Quando você alcança character levels 5 (2d8), 11 (3d8), and 17 (4d8).
-
-Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
-
-Sopro Potente. Se você escolher this trait multiple times, você ganha an additional breath weapon each time, with its own number of uses, damage type, and area of effect.
-
-Além disso, quando você use any of your Breath Weapons, one target de sua escolha has DesVantagem em the salvaguarda. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'A connection to draconic or elemental fury lets you unleash a blast of destructive energy. Quando você select this trait, choose a damage type: Acid, Cold, Fire, Lightning, Poison, or Thunder. Then choose an area of effect: a Line that is 1,5 m wide and 9 m long, or a 4,5 m Cone .',
-  'Quando você use a ação Mágica to expel your Breath Weapon, each creature in the area of effect must make a Destreza salvaguarda (CD = 8 + your modificador de Constituição + your Bônus de Proficiência). A target creature takes 1d8 damage of the chosen type on a failed save, or half as much damage on a successful one. This damage increases by 1d8 Quando você alcança character levels 5 (2d8), 11 (3d8), and 17 (4d8).
+Quando usa uma ação Mágica para expelir seu Sopro Elemental, cada criatura na área de efeito deve fazer uma salvaguarda de Destreza (CD = 8 + seu modificador de Constituição + seu Bônus de Proficiência). Uma criatura alvo sofre 1d8 de dano do tipo escolhido em uma falha, ou metade desse dano em um sucesso. Esse dano aumenta em 1d8 quando você alcança os níveis de personagem 5 (2d8), 11 (3d8) e 17 (4d8).
 
 Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Sopro Potente. Se você escolher this trait multiple times, você ganha an additional breath weapon each time, with its own number of uses, damage type, and area of effect.
+Sopro Potente. Se você escolher este traço várias vezes, você ganha um sopro elemental adicional a cada vez, com seu próprio número de usos, tipo de dano e área de efeito.
 
-Além disso, quando você use any of your Breath Weapons, one target de sua escolha has DesVantagem em the salvaguarda. You regain the use of este recurso quando você finish a Descanso Longo.',
+Além disso, quando usa qualquer um dos seus Sopros Elementais, um alvo à sua escolha tem Desvantagem na salvaguarda. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Uma conexão com a fúria dracônica ou elemental permite liberar uma rajada de energia destrutiva. Ao selecionar este traço, escolha um tipo de dano: Ácido, Gélido, Fogo, Relâmpago, Veneno ou Trovejante. Em seguida, escolha uma área de efeito: uma Linha de 1,5 m de largura e 9 m de comprimento, ou um Cone de 4,5 m.
+
+Quando usa uma ação Mágica para expelir seu Sopro Elemental, cada criatura na área de efeito deve fazer uma salvaguarda de Destreza (CD = 8 + seu modificador de Constituição + seu Bônus de Proficiência). Uma criatura alvo sofre 1d8 de dano do tipo escolhido em uma falha, ou metade desse dano em um sucesso. Esse dano aumenta em 1d8 quando você alcança os níveis de personagem 5 (2d8), 11 (3d8) e 17 (4d8).
+
+Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Sopro Potente. Se você escolher este traço várias vezes, você ganha um sopro elemental adicional a cada vez, com seu próprio número de usos, tipo de dano e área de efeito.
+
+Além disso, quando usa qualquer um dos seus Sopros Elementais, um alvo à sua escolha tem Desvantagem na salvaguarda. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Sopro Potente',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -1443,11 +1439,11 @@ Além disso, quando você use any of your Breath Weapons, one target de sua esco
   'PowerfulBuildExplorationCombat',
   'combat'::rpg.heritage_trait_category,
   'Empurrão Poderoso',
-  'Whether carrying well-earned loot or the body of a fallen companion, you shoulder that load with ease. You count as one size larger when determining your carrying capacity and the weight você pode push, drag, or lift. A Small creature with this trait can use any weapon with the Heavy property as long as they have proficiency with that weapon. (This is an Exploration trait.)
+  'Seja carregando espólio bem conquistado ou o corpo de um companheiro caído, você carrega esse peso com facilidade. Você conta como um tamanho maior ao determinar sua capacidade de carga e o peso que pode empurrar, arrastar ou erguer. Uma criatura Pequena com este traço pode usar qualquer arma com a propriedade Pesada, desde que tenha proficiência com essa arma. (Este é um traço de Exploração.)
 
-Empurrão Poderoso. Se você escolher este traço duas vezes, você pode move or knock foes prone with ease. Quando você use Unarmed Attack to shove a creature 1,5 m or give it the condição Caído, the target has DesVantagem em the salvaguarda. (This is a Combat trait.)',
-  'Whether carrying well-earned loot or the body of a fallen companion, you shoulder that load with ease. You count as one size larger when determining your carrying capacity and the weight você pode push, drag, or lift. A Small creature with this trait can use any weapon with the Heavy property as long as they have proficiency with that weapon. (This is an Exploration trait.)',
-  'Empurrão Poderoso. Se você escolher este traço duas vezes, você pode move or knock foes prone with ease. Quando você use Unarmed Attack to shove a creature 1,5 m or give it the condição Caído, the target has DesVantagem em the salvaguarda. (This is a Combat trait.)',
+Empurrão Poderoso. Se você escolher este traço duas vezes, você pode mover ou derrubar inimigos com facilidade. Quando usa Ataque Desarmado para empurrar uma criatura 1,5 m ou conceder-lhe a condição Caído, o alvo tem Desvantagem na salvaguarda. (Este é um traço de Combate.)',
+  'Seja carregando espólio bem conquistado ou o corpo de um companheiro caído, você carrega esse peso com facilidade. Você conta como um tamanho maior ao determinar sua capacidade de carga e o peso que pode empurrar, arrastar ou erguer. Uma criatura Pequena com este traço pode usar qualquer arma com a propriedade Pesada, desde que tenha proficiência com essa arma. (Este é um traço de Exploração.)',
+  'Empurrão Poderoso. Se você escolher este traço duas vezes, você pode mover ou derrubar inimigos com facilidade. Quando usa Ataque Desarmado para empurrar uma criatura 1,5 m ou conceder-lhe a condição Caído, o alvo tem Desvantagem na salvaguarda. (Este é um traço de Combate.)',
   'Empurrão Poderoso',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1457,11 +1453,11 @@ Empurrão Poderoso. Se você escolher este traço duas vezes, você pode move or
   'NaturesVoiceRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Voz Primal',
-  'Mastering the subtle expression of fauna and flora grants you an edge in dealing with the threats of the wilderness. Through sounds and gestures, você pode communicate simple ideas with Beasts and Plant creatures, understanding if a creature is hungry, for example. This gives you no specific ability to control such creatures, and você pode’t understand or learn detailed information from them.
+  'Dominar a expressão sutil da fauna e da flora lhe dá vantagem ao lidar com as ameaças da natureza. Por meio de sons e gestos, você pode comunicar ideias simples a Bestas e criaturas do tipo Planta, entendendo se uma criatura está com fome, por exemplo. Isso não lhe dá habilidade específica de controlar tais criaturas, e você não pode entender ou obter informações detalhadas delas.
 
-Voz Primal. Se você escolher este traço duas vezes, você tem Vantagem em testes de ability. made como parte de uman Influence action to interact with a Beast or Plant creature.',
-  'Mastering the subtle expression of fauna and flora grants you an edge in dealing with the threats of the wilderness. Through sounds and gestures, você pode communicate simple ideas with Beasts and Plant creatures, understanding if a creature is hungry, for example. This gives you no specific ability to control such creatures, and você pode’t understand or learn detailed information from them.',
-  'Voz Primal. Se você escolher este traço duas vezes, você tem Vantagem em testes de ability. made como parte de uman Influence action to interact with a Beast or Plant creature.',
+Voz Primal. Se você escolher este traço duas vezes, você tem Vantagem em testes de atributo feitos como parte de uma ação Influenciar para interagir com uma Besta ou criatura do tipo Planta.',
+  'Dominar a expressão sutil da fauna e da flora lhe dá vantagem ao lidar com as ameaças da natureza. Por meio de sons e gestos, você pode comunicar ideias simples a Bestas e criaturas do tipo Planta, entendendo se uma criatura está com fome, por exemplo. Isso não lhe dá habilidade específica de controlar tais criaturas, e você não pode entender ou obter informações detalhadas delas.',
+  'Voz Primal. Se você escolher este traço duas vezes, você tem Vantagem em testes de atributo feitos como parte de uma ação Influenciar para interagir com uma Besta ou criatura do tipo Planta.',
   'Voz Primal',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1471,35 +1467,11 @@ Voz Primal. Se você escolher este traço duas vezes, você tem Vantagem em test
   'WellProtectedCombat',
   'combat'::rpg.heritage_trait_category,
   'Cobertura Protetora',
-  'Your ability to roll with even the worst attacks means that armor would only slow you down. Quando você are not wearing armor, your AC is igual a 13 + your modificador de Destreza.
+  'Sua capacidade de absorver até os piores ataques significa que armadura só o atrasaria. Quando não estiver vestindo armadura, sua CA é igual a 13 + seu modificador de Destreza.
 
-Cobertura Protetora. Se você escolher este traço duas vezes, when você faz a Destreza salvaguarda or are targeted by a ranged attack, você pode usar a Reação to have Vantagem em the salvaguarda or impose DesVantagem em the ranged jogada de ataque. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
-
-Alternate Rules: Wounds and Resting
-
-The Grim Hollow Campaign Guide contains alternate rules for resting and receiving both Grievous Wounds and Permanent Wounds. These alternate rules are meant to enhance game play in a dark fantasy world where the heroes have to overcome every sort of obstacle to achieve their goals.
-
-Grievous Wounds are applied to characters that would be dropped to 0 Pontos de Vida, but instead choose to gain a lingering wound that stays with them. These wounds remain until a character takes a Descanso Longo (see Resting below) and undergoes treatment by a physician or someone trained in Medicina .
-
-Permanent Wounds occur when a creature takes multiple Grievous Wounds, or when a character dies and is brought back to life. The challenges of Permanent Wounds can be offset with certain magic items or prosthetics.
-
-The dark-fantasy vibe of Grim Hollow necessitates a change to the effects of Short and Descanso Longos. Grievous Wounds can be healed by taking a Descanso Longo, but those rests in Grim Hollow take 32 hours of resting in a completely safe environment.
-
-//',
-  'Your ability to roll with even the worst attacks means that armor would only slow you down. Quando você are not wearing armor, your AC is igual a 13 + your modificador de Destreza.',
-  'Cobertura Protetora. Se você escolher este traço duas vezes, when você faz a Destreza salvaguarda or are targeted by a ranged attack, você pode usar a Reação to have Vantagem em the salvaguarda or impose DesVantagem em the ranged jogada de ataque. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
-
-Alternate Rules: Wounds and Resting
-
-The Grim Hollow Campaign Guide contains alternate rules for resting and receiving both Grievous Wounds and Permanent Wounds. These alternate rules are meant to enhance game play in a dark fantasy world where the heroes have to overcome every sort of obstacle to achieve their goals.
-
-Grievous Wounds are applied to characters that would be dropped to 0 Pontos de Vida, but instead choose to gain a lingering wound that stays with them. These wounds remain until a character takes a Descanso Longo (see Resting below) and undergoes treatment by a physician or someone trained in Medicina .
-
-Permanent Wounds occur when a creature takes multiple Grievous Wounds, or when a character dies and is brought back to life. The challenges of Permanent Wounds can be offset with certain magic items or prosthetics.
-
-The dark-fantasy vibe of Grim Hollow necessitates a change to the effects of Short and Descanso Longos. Grievous Wounds can be healed by taking a Descanso Longo, but those rests in Grim Hollow take 32 hours of resting in a completely safe environment.
-
-//',
+Cobertura Protetora. Se você escolher este traço duas vezes, quando faz uma salvaguarda de Destreza ou é alvo de um ataque à distância, pode usar uma Reação para ter Vantagem na salvaguarda ou impor Desvantagem na jogada de ataque à distância. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Sua capacidade de absorver até os piores ataques significa que armadura só o atrasaria. Quando não estiver vestindo armadura, sua CA é igual a 13 + seu modificador de Destreza.',
+  'Cobertura Protetora. Se você escolher este traço duas vezes, quando faz uma salvaguarda de Destreza ou é alvo de um ataque à distância, pode usar uma Reação para ter Vantagem na salvaguarda ou impor Desvantagem na jogada de ataque à distância. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Cobertura Protetora',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1509,11 +1481,11 @@ The dark-fantasy vibe of Grim Hollow necessitates a change to the effects of Sho
   'SwimmerExploration',
   'exploration'::rpg.heritage_trait_category,
   'Natação Acelerada',
-  'Você é in your element while in the water, moving with grace and ease. Você tem a Swim Speed igual a your Speed.
+  'Você está em seu elemento na água, movendo-se com graça e facilidade. Você tem um Deslocamento de Natação igual ao seu Deslocamento.
 
-Natação Acelerada. Se você escolher este traço duas vezes, você pode usar the Dash action como Ação Bônus while swimming.',
-  'Você é in your element while in the water, moving with grace and ease. Você tem a Swim Speed igual a your Speed.',
-  'Natação Acelerada. Se você escolher este traço duas vezes, você pode usar the Dash action como Ação Bônus while swimming.',
+Natação Acelerada. Se você escolher este traço duas vezes, você pode usar a ação Disparar como Ação Bônus enquanto nada.',
+  'Você está em seu elemento na água, movendo-se com graça e facilidade. Você tem um Deslocamento de Natação igual ao seu Deslocamento.',
+  'Natação Acelerada. Se você escolher este traço duas vezes, você pode usar a ação Disparar como Ação Bônus enquanto nada.',
   'Natação Acelerada',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1523,11 +1495,11 @@ Natação Acelerada. Se você escolher este traço duas vezes, você pode usar t
   'AwakenedMindCombat',
   'combat'::rpg.heritage_trait_category,
   'Reavivado',
-  'The dangers of Etharis have given you a focus that allows you to shrug off debilitating magical effects. You automatically succeed on salvaguardas against magical effects that would give you the Incapacitado , Stunned , or Unconscious conditions. This does not include effects that leave you Unconscious because you are reduced to 0 Pontos de Vida.
+  'Os perigos de Etharis lhe deram um foco que permite ignorar efeitos mágicos debilitantes. Você tem sucesso automático em salvaguardas contra efeitos mágicos que lhe concederiam as condições Incapacitado, Atordoado ou Inconsciente. Isso não inclui efeitos que o deixam Inconsciente por ser reduzido a 0 Pontos de Vida.
 
-Reavivado. Se você escolher este traço duas vezes, you also have Vantagem em Inteligência, Sabedoria, and Carisma salvaguardas.',
-  'The dangers of Etharis have given you a focus that allows you to shrug off debilitating magical effects. You automatically succeed on salvaguardas against magical effects that would give you the Incapacitado , Stunned , or Unconscious conditions. This does not include effects that leave you Unconscious because you are reduced to 0 Pontos de Vida.',
-  'Reavivado. Se você escolher este traço duas vezes, you also have Vantagem em Inteligência, Sabedoria, and Carisma salvaguardas.',
+Reavivado. Se você escolher este traço duas vezes, você também tem Vantagem em salvaguardas de Inteligência, Sabedoria e Carisma.',
+  'Os perigos de Etharis lhe deram um foco que permite ignorar efeitos mágicos debilitantes. Você tem sucesso automático em salvaguardas contra efeitos mágicos que lhe concederiam as condições Incapacitado, Atordoado ou Inconsciente. Isso não inclui efeitos que o deixam Inconsciente por ser reduzido a 0 Pontos de Vida.',
+  'Reavivado. Se você escolher este traço duas vezes, você também tem Vantagem em salvaguardas de Inteligência, Sabedoria e Carisma.',
   'Reavivado',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1537,15 +1509,15 @@ Reavivado. Se você escolher este traço duas vezes, you also have Vantagem em I
   'UnnaturalHealerRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Curandeiro Regenerativo',
-  'Your innate healing abilities let you recover from some of the grimmest wounds. During a Descanso Longo, você pode automatically reverse Grievous Wounds. Além disso, você pode reattach any severed body parts (fingers, legs, tails, and so on), which are automatically restored at the end of the Descanso Longo. Se vocêr severed body parts aren’t available, você pode replace them with the same body parts of another creature of the same general anatomy as you. Se você wish to intentionally swap out body parts with replacements, você pode sever your own body parts with no pain or discomfort.
+  'Suas habilidades de cura inatas permitem recuperar-se de algumas das feridas mais terríveis. Durante um Descanso Longo, você pode reverter automaticamente Feridas Graves. Além disso, pode reatar quaisquer partes do corpo decepadas (dedos, pernas, caudas e assim por diante), que são restauradas automaticamente ao fim do Descanso Longo. Se suas partes decepadas não estiverem disponíveis, pode substituí-las pelas mesmas partes do corpo de outra criatura da mesma anatomia geral que a sua. Se desejar trocar intencionalmente partes do corpo por substitutos, pode decepá-las sem dor ou desconforto.
 
-The ability to make use of unusual body parts (for example, giving yourself the taloned paw of a lion se você lose a hand) are left to the GM’s discretion. In any event, swapping a severed body part for an unusual body part grants you no mechanical Vantagems not covered by other traits (see “ Features and Traits ”).
+A capacidade de usar partes do corpo incomuns (por exemplo, dar a si mesmo a pata com garras de um leão se perder uma mão) fica a critério do Mestre. Em qualquer caso, trocar uma parte decepada por uma parte incomum não concede Vantagens mecânicas não cobertas por outros traços (veja “Características e Traços”).
 
-Curandeiro Regenerativo. Se você escolher este traço duas vezes, you automatically reverse Permanent Wounds during a Descanso Longo. Além disso, você pode restore any severed body part during a Descanso Longo, as if subject to the Regenerate spell. Você pode usar this trait to create unusual regenerated body parts at the GM’s determination.',
-  'Your innate healing abilities let you recover from some of the grimmest wounds. During a Descanso Longo, você pode automatically reverse Grievous Wounds. Além disso, você pode reattach any severed body parts (fingers, legs, tails, and so on), which are automatically restored at the end of the Descanso Longo. Se vocêr severed body parts aren’t available, você pode replace them with the same body parts of another creature of the same general anatomy as you. Se você wish to intentionally swap out body parts with replacements, você pode sever your own body parts with no pain or discomfort.',
-  'The ability to make use of unusual body parts (for example, giving yourself the taloned paw of a lion se você lose a hand) are left to the GM’s discretion. In any event, swapping a severed body part for an unusual body part grants you no mechanical Vantagems not covered by other traits (see “ Features and Traits ”).
+Curandeiro Regenerativo. Se você escolher este traço duas vezes, você reverte automaticamente Feridas Permanentes durante um Descanso Longo. Além disso, pode restaurar qualquer parte do corpo decepada durante um Descanso Longo, como se sujeito à magia Regeneração. Você pode usar este traço para criar partes regeneradas incomuns conforme determinação do Mestre.',
+  'Suas habilidades de cura inatas permitem recuperar-se de algumas das feridas mais terríveis. Durante um Descanso Longo, você pode reverter automaticamente Feridas Graves. Além disso, pode reatar quaisquer partes do corpo decepadas (dedos, pernas, caudas e assim por diante), que são restauradas automaticamente ao fim do Descanso Longo. Se suas partes decepadas não estiverem disponíveis, pode substituí-las pelas mesmas partes do corpo de outra criatura da mesma anatomia geral que a sua. Se desejar trocar intencionalmente partes do corpo por substitutos, pode decepá-las sem dor ou desconforto.
 
-Curandeiro Regenerativo. Se você escolher este traço duas vezes, you automatically reverse Permanent Wounds during a Descanso Longo. Além disso, você pode restore any severed body part during a Descanso Longo, as if subject to the Regenerate spell. Você pode usar this trait to create unusual regenerated body parts at the GM’s determination.',
+A capacidade de usar partes do corpo incomuns (por exemplo, dar a si mesmo a pata com garras de um leão se perder uma mão) fica a critério do Mestre. Em qualquer caso, trocar uma parte decepada por uma parte incomum não concede Vantagens mecânicas não cobertas por outros traços (veja “Características e Traços”).',
+  'Curandeiro Regenerativo. Se você escolher este traço duas vezes, você reverte automaticamente Feridas Permanentes durante um Descanso Longo. Além disso, pode restaurar qualquer parte do corpo decepada durante um Descanso Longo, como se sujeito à magia Regeneração. Você pode usar este traço para criar partes regeneradas incomuns conforme determinação do Mestre.',
   'Curandeiro Regenerativo',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1555,11 +1527,11 @@ Curandeiro Regenerativo. Se você escolher este traço duas vezes, you automatic
   'HuntersInstinctCombat',
   'combat'::rpg.heritage_trait_category,
   'Instinto Implacável',
-  'You summon a surge of ferocity quando vocêr prey least expects it. No fim de each Descanso Longo, você ganha um número de d8s igual a your Bônus de Proficiência. Quando você faz an attack with a weapon or an Ataque Desarmado , você pode roll a d8 and add it to either the jogada de ataque or the jogada de dano. Se você add it to the d20 roll, você pode decide to roll the d8 after the d20 roll is made, but you must do so before the outcome of the roll is known.
+  'Você convoca um surto de ferocidade quando sua presa menos espera. Ao fim de cada Descanso Longo, você ganha um número de d8s igual ao seu Bônus de Proficiência. Quando faz um ataque com uma arma ou um Ataque Desarmado, pode rolar 1d8 e adicioná-lo à jogada de ataque ou à jogada de dano. Se o adicionar à rolagem de d20, pode decidir rolar o d8 depois que a rolagem de d20 for feita, mas deve fazê-lo antes que o resultado da rolagem seja conhecido.
 
-Instinto Implacável. Se você escolher este traço duas vezes, whenever you use Hunter’s Instinct for uma jogada de ataque, if the jogada de ataque misses, you retain the d8 and can use it again.',
-  'You summon a surge of ferocity quando vocêr prey least expects it. No fim de each Descanso Longo, você ganha um número de d8s igual a your Bônus de Proficiência. Quando você faz an attack with a weapon or an Ataque Desarmado , você pode roll a d8 and add it to either the jogada de ataque or the jogada de dano. Se você add it to the d20 roll, você pode decide to roll the d8 after the d20 roll is made, but you must do so before the outcome of the roll is known.',
-  'Instinto Implacável. Se você escolher este traço duas vezes, whenever you use Hunter’s Instinct for uma jogada de ataque, if the jogada de ataque misses, you retain the d8 and can use it again.',
+Instinto Implacável. Se você escolher este traço duas vezes, sempre que usa Instinto do Caçador para uma jogada de ataque, se a jogada de ataque errar, você retém o d8 e pode usá-lo novamente.',
+  'Você convoca um surto de ferocidade quando sua presa menos espera. Ao fim de cada Descanso Longo, você ganha um número de d8s igual ao seu Bônus de Proficiência. Quando faz um ataque com uma arma ou um Ataque Desarmado, pode rolar 1d8 e adicioná-lo à jogada de ataque ou à jogada de dano. Se o adicionar à rolagem de d20, pode decidir rolar o d8 depois que a rolagem de d20 for feita, mas deve fazê-lo antes que o resultado da rolagem seja conhecido.',
+  'Instinto Implacável. Se você escolher este traço duas vezes, sempre que usa Instinto do Caçador para uma jogada de ataque, se a jogada de ataque errar, você retém o d8 e pode usá-lo novamente.',
   'Instinto Implacável',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1569,11 +1541,11 @@ Instinto Implacável. Se você escolher este traço duas vezes, whenever you use
   'DriverExploration',
   'exploration'::rpg.heritage_trait_category,
   'Condutor Notável',
-  'The roads and waterways of Etharis are often no less dangerous than the open wilderness, and you dedicate yourself to moving others safely on those routes. Você tem proficiência com Navigator’s Tools , and você tem Vantagem em testes de ability made to drive a vehicle.
+  'As estradas e vias navegáveis de Etharis muitas vezes não são menos perigosas que a natureza selvagem, e você se dedica a transportar outros com segurança por essas rotas. Você tem proficiência com Ferramentas de Navegador e tem Vantagem em testes de atributo feitos para conduzir um veículo.
 
-Condutor Notável. Se você escolher este traço duas vezes, você pode make testes involving driving a vehicle that require an action without having to use your action. Você pode only get this free use once per round.',
-  'The roads and waterways of Etharis are often no less dangerous than the open wilderness, and you dedicate yourself to moving others safely on those routes. Você tem proficiência com Navigator’s Tools , and você tem Vantagem em testes de ability made to drive a vehicle.',
-  'Condutor Notável. Se você escolher este traço duas vezes, você pode make testes involving driving a vehicle that require an action without having to use your action. Você pode only get this free use once per round.',
+Condutor Notável. Se você escolher este traço duas vezes, você pode fazer testes envolvendo conduzir um veículo que exigiriam uma ação sem precisar usar sua ação. Você só obtém esse uso gratuito uma vez por rodada.',
+  'As estradas e vias navegáveis de Etharis muitas vezes não são menos perigosas que a natureza selvagem, e você se dedica a transportar outros com segurança por essas rotas. Você tem proficiência com Ferramentas de Navegador e tem Vantagem em testes de atributo feitos para conduzir um veículo.',
+  'Condutor Notável. Se você escolher este traço duas vezes, você pode fazer testes envolvendo conduzir um veículo que exigiriam uma ação sem precisar usar sua ação. Você só obtém esse uso gratuito uma vez por rodada.',
   'Condutor Notável',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1583,11 +1555,11 @@ Condutor Notável. Se você escolher este traço duas vezes, você pode make tes
   'IrrepressibleSightExploration',
   'exploration'::rpg.heritage_trait_category,
   'Visão Resoluta',
-  'Any foe você pode see is a foe você pode take down—so você faz sure nothing prevents you from seeing. Você tem Vantagem em salvaguardas against having the Blinded condition.
+  'Qualquer inimigo que você possa ver é um inimigo que pode derrubar — então você garante que nada o impeça de ver. Você tem Vantagem em salvaguardas contra a condição Cego.
 
-Visão Resoluta. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against having the Blinded condition, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso after you finish a Descanso Longo.',
-  'Any foe você pode see is a foe você pode take down—so você faz sure nothing prevents you from seeing. Você tem Vantagem em salvaguardas against having the Blinded condition.',
-  'Visão Resoluta. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against having the Blinded condition, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso after you finish a Descanso Longo.',
+Visão Resoluta. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra a condição Cego, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Qualquer inimigo que você possa ver é um inimigo que pode derrubar — então você garante que nada o impeça de ver. Você tem Vantagem em salvaguardas contra a condição Cego.',
+  'Visão Resoluta. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra a condição Cego, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Visão Resoluta',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1597,11 +1569,11 @@ Visão Resoluta. Se você escolher este traço duas vezes, Quando você falha a 
   'MeditativeRestExploration',
   'exploration'::rpg.heritage_trait_category,
   'Descanso Restaurador',
-  'Sleep is a luxury you’ve never needed to afford. Quando você rest, you meditate deeply for 4 hours, dreaming but remaining conscious. After resting in this way, você ganha the same benefit that other humanoids do from 8 hours of sleep.
+  'O sono é um luxo de que você nunca precisou. Quando descansa, medita profundamente por 4 horas, sonhando mas permanecendo consciente. Após descansar dessa forma, você ganha o mesmo benefício que outros humanoides obtêm de 8 horas de sono.
 
-Descanso Restaurador. Se você escolher este traço duas vezes, you need to spend only 2 hours in your meditation to gain the benefit of 8 hours of sleep, and você ganha a d6 at the end of each Descanso Longo. Before the end of your next Descanso Longo, você pode roll the d6 and add it to any d20 Test você faz. Você pode decide to roll the d6 after the d20 Test is made, but you must do so before the outcome of the roll is known.',
-  'Sleep is a luxury you’ve never needed to afford. Quando você rest, you meditate deeply for 4 hours, dreaming but remaining conscious. After resting in this way, você ganha the same benefit that other humanoids do from 8 hours of sleep.',
-  'Descanso Restaurador. Se você escolher este traço duas vezes, you need to spend only 2 hours in your meditation to gain the benefit of 8 hours of sleep, and você ganha a d6 at the end of each Descanso Longo. Before the end of your next Descanso Longo, você pode roll the d6 and add it to any d20 Test você faz. Você pode decide to roll the d6 after the d20 Test is made, but you must do so before the outcome of the roll is known.',
+Descanso Restaurador. Se você escolher este traço duas vezes, você precisa passar apenas 2 horas na meditação para obter o benefício de 8 horas de sono, e ganha 1d6 ao fim de cada Descanso Longo. Antes do fim do seu próximo Descanso Longo, pode rolar o d6 e adicioná-lo a qualquer Teste de d20 que fizer. Você pode decidir rolar o d6 depois que o Teste de d20 for feito, mas deve fazê-lo antes que o resultado da rolagem seja conhecido.',
+  'O sono é um luxo de que você nunca precisou. Quando descansa, medita profundamente por 4 horas, sonhando mas permanecendo consciente. Após descansar dessa forma, você ganha o mesmo benefício que outros humanoides obtêm de 8 horas de sono.',
+  'Descanso Restaurador. Se você escolher este traço duas vezes, você precisa passar apenas 2 horas na meditação para obter o benefício de 8 horas de sono, e ganha 1d6 ao fim de cada Descanso Longo. Antes do fim do seu próximo Descanso Longo, pode rolar o d6 e adicioná-lo a qualquer Teste de d20 que fizer. Você pode decidir rolar o d6 depois que o Teste de d20 for feito, mas deve fazê-lo antes que o resultado da rolagem seja conhecido.',
   'Descanso Restaurador',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1611,11 +1583,11 @@ Descanso Restaurador. Se você escolher este traço duas vezes, you need to spen
   'DivineSangromancyCombat',
   'combat'::rpg.heritage_trait_category,
   'Erudito em Sangromancia',
-  'A connection to the life force of others lets you shape that force to their benefit. Whenever an allied creature within 9 m of você recuperas Pontos de Vida, você pode spend a Hit Die and add the roll of the die to the number of Pontos de Vida gained by the ally.
+  'Uma conexão com a força vital dos outros permite moldar essa força em benefício deles. Sempre que uma criatura aliada a até 9 m de você recupera Pontos de Vida, você pode gastar um Dado de Vida e adicionar a rolagem do dado ao número de Pontos de Vida ganhos pelo aliado.
 
-Sangromancia Savant. Se você escolher este traço duas vezes, quando você use Divine Sangromancia, you also regain Pontos de Vida igual a your Hit Die roll.',
-  'A connection to the life force of others lets you shape that force to their benefit. Whenever an allied creature within 9 m of você recuperas Pontos de Vida, você pode spend a Hit Die and add the roll of the die to the number of Pontos de Vida gained by the ally.',
-  'Sangromancia Savant. Se você escolher este traço duas vezes, quando você use Divine Sangromancia, you also regain Pontos de Vida igual a your Hit Die roll.',
+Erudito em Sangromancia. Se você escolher este traço duas vezes, quando usa Sangromancia Divina, também recupera Pontos de Vida iguais à rolagem do seu Dado de Vida.',
+  'Uma conexão com a força vital dos outros permite moldar essa força em benefício deles. Sempre que uma criatura aliada a até 9 m de você recupera Pontos de Vida, você pode gastar um Dado de Vida e adicionar a rolagem do dado ao número de Pontos de Vida ganhos pelo aliado.',
+  'Erudito em Sangromancia. Se você escolher este traço duas vezes, quando usa Sangromancia Divina, também recupera Pontos de Vida iguais à rolagem do seu Dado de Vida.',
   'Erudito em Sangromancia',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1625,19 +1597,19 @@ Sangromancia Savant. Se você escolher este traço duas vezes, quando você use 
   'DreamwalkingRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Sonhos Secretos',
-  'Sempre que você rest, you touch the dreams of those around you, seeding their thoughts and memories into your own mind. Quando você faz an ability check to recall lore or knowledge, você tem Vantagem em o teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Sempre que descansa, você toca os sonhos daqueles ao redor, semeando seus pensamentos e memórias em sua própria mente. Quando faz um teste de atributo para recordar lore ou conhecimento, tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Sonhos Secretos. Se você escolher este traço duas vezes, você ganha an instinctive knowledge of the secrets of other creatures while you touch their dreams. Using a Search action, you focus on one creature você pode see and make a CD 15 Sabedoria Intuição check. With a successful check, you learn one secret of the GM’s choice known to that creature. The secrets of creatures that don’t have a language come to you as vague images and impressions. You regain the use of este recurso quando você finish a Short or Descanso Longo.
+Sonhos Secretos. Se você escolher este traço duas vezes, você ganha um conhecimento instintivo dos segredos de outras criaturas enquanto toca seus sonhos. Usando uma ação Procurar, você se concentra em uma criatura que possa ver e faz um teste de Intuição de Sabedoria CD 15. Com um sucesso, aprende um segredo à escolha do Mestre conhecido por essa criatura. Os segredos de criaturas que não têm idioma chegam a você como imagens e impressões vagas. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.
 
-Why bother with interrogation? Just let him rest a few hours. I’ll get you your answers.
+Para que se preocupar com interrogatório? Deixe-o descansar algumas horas. Eu trago suas respostas.
 
-—Varrigan the Dreamwalker',
-  'Sempre que você rest, you touch the dreams of those around you, seeding their thoughts and memories into your own mind. Quando você faz an ability check to recall lore or knowledge, você tem Vantagem em o teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Sonhos Secretos. Se você escolher este traço duas vezes, você ganha an instinctive knowledge of the secrets of other creatures while you touch their dreams. Using a Search action, you focus on one creature você pode see and make a CD 15 Sabedoria Intuição check. With a successful check, you learn one secret of the GM’s choice known to that creature. The secrets of creatures that don’t have a language come to you as vague images and impressions. You regain the use of este recurso quando você finish a Short or Descanso Longo.
+— Varrigan, o Caminhante dos Sonhos',
+  'Sempre que descansa, você toca os sonhos daqueles ao redor, semeando seus pensamentos e memórias em sua própria mente. Quando faz um teste de atributo para recordar lore ou conhecimento, tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Sonhos Secretos. Se você escolher este traço duas vezes, você ganha um conhecimento instintivo dos segredos de outras criaturas enquanto toca seus sonhos. Usando uma ação Procurar, você se concentra em uma criatura que possa ver e faz um teste de Intuição de Sabedoria CD 15. Com um sucesso, aprende um segredo à escolha do Mestre conhecido por essa criatura. Os segredos de criaturas que não têm idioma chegam a você como imagens e impressões vagas. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.
 
-Why bother with interrogation? Just let him rest a few hours. I’ll get you your answers.
+Para que se preocupar com interrogatório? Deixe-o descansar algumas horas. Eu trago suas respostas.
 
-—Varrigan the Dreamwalker',
+— Varrigan, o Caminhante dos Sonhos',
   'Sonhos Secretos',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1647,15 +1619,15 @@ Why bother with interrogation? Just let him rest a few hours. I’ll get you you
   'ArtificialFormExploration',
   'exploration'::rpg.heritage_trait_category,
   'Autorreparo',
-  'You were made, not born, e seu unnatural origin forever marks you as different. Você é a Construct, but your enchanted form still benefits from healing spells. Você pode also heal yourself by spending Dados de Vida during Descanso Curtos and Descanso Longos, as normal.
+  'Você foi feito, não nascido, e sua origem antinatural o marca para sempre como diferente. Você é um Constructo, mas sua forma encantada ainda se beneficia de magias de cura. Você também pode se curar gastando Dados de Vida durante Descansos Curtos e Descansos Longos, como de costume.
 
-You don’t need to eat, drink, sleep, or breathe. Você deve still be inactive por 8 horas during a Descanso Longo to gain its benefits.
+Você não precisa comer, beber, dormir ou respirar. Ainda deve permanecer inativo por 8 horas durante um Descanso Longo para obter seus benefícios.
 
-Autorreparo. Se você escolher este traço duas vezes, when the Mending cantrip is cast on you, você pode spend a Hit Die to regain um número de Pontos de Vida igual a the roll of the die mais seu modificador de Constituição (minimum 1 Hit Point). Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'You were made, not born, e seu unnatural origin forever marks you as different. Você é a Construct, but your enchanted form still benefits from healing spells. Você pode also heal yourself by spending Dados de Vida during Descanso Curtos and Descanso Longos, as normal.',
-  'You don’t need to eat, drink, sleep, or breathe. Você deve still be inactive por 8 horas during a Descanso Longo to gain its benefits.
+Autorreparo. Se você escolher este traço duas vezes, quando o truque Conserto é conjurado em você, pode gastar um Dado de Vida para recuperar um número de Pontos de Vida igual à rolagem do dado mais seu modificador de Constituição (mínimo 1 Ponto de Vida). Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Você foi feito, não nascido, e sua origem antinatural o marca para sempre como diferente. Você é um Constructo, mas sua forma encantada ainda se beneficia de magias de cura. Você também pode se curar gastando Dados de Vida durante Descansos Curtos e Descansos Longos, como de costume.
 
-Autorreparo. Se você escolher este traço duas vezes, when the Mending cantrip is cast on you, você pode spend a Hit Die to regain um número de Pontos de Vida igual a the roll of the die mais seu modificador de Constituição (minimum 1 Hit Point). Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Você não precisa comer, beber, dormir ou respirar. Ainda deve permanecer inativo por 8 horas durante um Descanso Longo para obter seus benefícios.',
+  'Autorreparo. Se você escolher este traço duas vezes, quando o truque Conserto é conjurado em você, pode gastar um Dado de Vida para recuperar um número de Pontos de Vida igual à rolagem do dado mais seu modificador de Constituição (mínimo 1 Ponto de Vida). Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Autorreparo',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1665,15 +1637,15 @@ Autorreparo. Se você escolher este traço duas vezes, when the Mending cantrip 
   'NaturalCamouflageExploration',
   'exploration'::rpg.heritage_trait_category,
   'Camuflagem Compartilhada',
-  'Your ability to fade into the background of familiar territory helps keep you safe from threats. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. Você tem Vantagem em testes de Furtividade made with the Hide action while in esse ambiente.
+  'Sua capacidade de se fundir ao fundo de território familiar ajuda a mantê-lo a salvo de ameaças. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. Você tem Vantagem em testes de Furtividade feitos com a ação Esconder-se enquanto estiver nesse ambiente.
 
-Camuflagem Compartilhada. Se você escolher this trait multiple times, você ganha its benefits for a new environment each time.
+Camuflagem Compartilhada. Se você escolher este traço várias vezes, você ganha os benefícios para um novo ambiente a cada vez.
 
-Além disso, quando você take the Hide action, você pode forgo making a Furtividade check while in any environment chosen with Natural Camouflage, instead treating o teste as se você had rolled a 15. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Your ability to fade into the background of familiar territory helps keep you safe from threats. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. Você tem Vantagem em testes de Furtividade made with the Hide action while in esse ambiente.',
-  'Camuflagem Compartilhada. Se você escolher this trait multiple times, você ganha its benefits for a new environment each time.
+Além disso, quando toma a ação Esconder-se, pode abrir mão de fazer um teste de Furtividade enquanto estiver em qualquer ambiente escolhido com Camuflagem Natural, tratando o teste como se tivesse rolado 15. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Sua capacidade de se fundir ao fundo de território familiar ajuda a mantê-lo a salvo de ameaças. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. Você tem Vantagem em testes de Furtividade feitos com a ação Esconder-se enquanto estiver nesse ambiente.',
+  'Camuflagem Compartilhada. Se você escolher este traço várias vezes, você ganha os benefícios para um novo ambiente a cada vez.
 
-Além disso, quando você take the Hide action, você pode forgo making a Furtividade check while in any environment chosen with Natural Camouflage, instead treating o teste as se você had rolled a 15. You regain the use of este recurso quando você finish a Descanso Longo.',
+Além disso, quando toma a ação Esconder-se, pode abrir mão de fazer um teste de Furtividade enquanto estiver em qualquer ambiente escolhido com Camuflagem Natural, tratando o teste como se tivesse rolado 15. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Camuflagem Compartilhada',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -1683,15 +1655,15 @@ Além disso, quando você take the Hide action, você pode forgo making a Furtiv
   'FleetofFootExploration',
   'exploration'::rpg.heritage_trait_category,
   'Agilidade Compartilhada',
-  'As you’ve learned more than once, moving fast is often the best way to avoid trouble. Your Speed increases by 1,5 m.
+  'Como você já aprendeu mais de uma vez, mover-se rápido costuma ser a melhor forma de evitar problemas. Seu Deslocamento aumenta em 1,5 m.
 
-Agilidade Compartilhada. Se você escolher este traço duas vezes, your Speed increases by another 1,5 m, for a total increase of 3 m.
+Agilidade Compartilhada. Se você escolher este traço duas vezes, seu Deslocamento aumenta em mais 1,5 m, para um aumento total de 3 m.
 
-Além disso, como Ação Bônus, choose any number of creatures within 9 m. Those creatures gain a 10 foot bonus to their Speed por 1 minuto. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'As you’ve learned more than once, moving fast is often the best way to avoid trouble. Your Speed increases by 1,5 m.',
-  'Agilidade Compartilhada. Se você escolher este traço duas vezes, your Speed increases by another 1,5 m, for a total increase of 3 m.
+Além disso, como Ação Bônus, escolha qualquer número de criaturas a até 9 m. Essas criaturas ganham um bônus de 3 m ao Deslocamento por 1 minuto. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Como você já aprendeu mais de uma vez, mover-se rápido costuma ser a melhor forma de evitar problemas. Seu Deslocamento aumenta em 1,5 m.',
+  'Agilidade Compartilhada. Se você escolher este traço duas vezes, seu Deslocamento aumenta em mais 1,5 m, para um aumento total de 3 m.
 
-Além disso, como Ação Bônus, choose any number of creatures within 9 m. Those creatures gain a 10 foot bonus to their Speed por 1 minuto. You regain the use of este recurso quando você finish a Descanso Longo.',
+Além disso, como Ação Bônus, escolha qualquer número de criaturas a até 9 m. Essas criaturas ganham um bônus de 3 m ao Deslocamento por 1 minuto. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   NULL,
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1701,11 +1673,11 @@ Além disso, como Ação Bônus, choose any number of creatures within 9 m. Thos
   'NaturalMovementExploration',
   'exploration'::rpg.heritage_trait_category,
   'Movimento Compartilhado',
-  'The time you’ve spent in the natural world lets you travel at speed, and hinders the abilities of those who would hunt you. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. While in esse ambiente, moving through nonmagical Difficult Terrain costs you no extra movement, and ability testes made to track você tem Desvantagem.
+  'O tempo que passou no mundo natural permite viajar com velocidade e dificulta aqueles que o caçariam. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. Enquanto estiver nesse ambiente, mover-se através de Terreno Difícil não mágico não lhe custa deslocamento extra, e testes de atributo feitos para rastreá-lo têm Desvantagem.
 
-Movimento Compartilhado. Se você escolher this trait multiple times, você ganha its benefits for a new environment each time. Além disso, while in any environment chosen for Natural Movement, como Ação Bônus, você pode grant creatures de sua escolha the benefit of Natural Movement por 1 hora, as long as those creatures remain within 36 m of you and can see you.',
-  'The time you’ve spent in the natural world lets you travel at speed, and hinders the abilities of those who would hunt you. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. While in esse ambiente, moving through nonmagical Difficult Terrain costs you no extra movement, and ability testes made to track você tem Desvantagem.',
-  'Movimento Compartilhado. Se você escolher this trait multiple times, você ganha its benefits for a new environment each time. Além disso, while in any environment chosen for Natural Movement, como Ação Bônus, você pode grant creatures de sua escolha the benefit of Natural Movement por 1 hora, as long as those creatures remain within 36 m of you and can see you.',
+Movimento Compartilhado. Se você escolher este traço várias vezes, você ganha os benefícios para um novo ambiente a cada vez. Além disso, enquanto estiver em qualquer ambiente escolhido para Movimento Natural, como Ação Bônus, pode conceder a criaturas à sua escolha o benefício de Movimento Natural por 1 hora, desde que essas criaturas permaneçam a até 36 m de você e possam vê-lo.',
+  'O tempo que passou no mundo natural permite viajar com velocidade e dificulta aqueles que o caçariam. Escolha um ambiente: ártico, costeiro, deserto, floresta, pradaria, colina e montanha, pântano, subterrâneo ou subaquático. Enquanto estiver nesse ambiente, mover-se através de Terreno Difícil não mágico não lhe custa deslocamento extra, e testes de atributo feitos para rastreá-lo têm Desvantagem.',
+  'Movimento Compartilhado. Se você escolher este traço várias vezes, você ganha os benefícios para um novo ambiente a cada vez. Além disso, enquanto estiver em qualquer ambiente escolhido para Movimento Natural, como Ação Bônus, pode conceder a criaturas à sua escolha o benefício de Movimento Natural por 1 hora, desde que essas criaturas permaneçam a até 36 m de você e possam vê-lo.',
   'Movimento Compartilhado',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -1715,11 +1687,11 @@ Movimento Compartilhado. Se você escolher this trait multiple times, você ganh
   'ProwessRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Maestria em Perícia',
-  'Your ingenuity and inventiveness help keep you alive in a dangerous world. Before você faz an ability check using a skill you are proficient with, você pode add your Bônus de Proficiência again. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Sua engenhosidade e inventividade ajudam a mantê-lo vivo em um mundo perigoso. Antes de fazer um teste de atributo usando uma perícia com a qual é proficiente, pode adicionar seu Bônus de Proficiência novamente. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Maestria em Perícia. Se você escolher este traço duas vezes, Quando você falha an ability check made using the Skill Prowess trait, você pode reroll o teste and must use the new roll.',
-  'Your ingenuity and inventiveness help keep you alive in a dangerous world. Before você faz an ability check using a skill you are proficient with, você pode add your Bônus de Proficiência again. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Maestria em Perícia. Se você escolher este traço duas vezes, Quando você falha an ability check made using the Skill Prowess trait, você pode reroll o teste and must use the new roll.',
+Maestria em Perícia. Se você escolher este traço duas vezes, quando falha em um teste de atributo feito usando o traço Proeza em Perícia, pode rerrolar o teste e deve usar a nova rolagem.',
+  'Sua engenhosidade e inventividade ajudam a mantê-lo vivo em um mundo perigoso. Antes de fazer um teste de atributo usando uma perícia com a qual é proficiente, pode adicionar seu Bônus de Proficiência novamente. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Maestria em Perícia. Se você escolher este traço duas vezes, quando falha em um teste de atributo feito usando o traço Proeza em Perícia, pode rerrolar o teste e deve usar a nova rolagem.',
   'Maestria em Perícia',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1729,11 +1701,11 @@ Maestria em Perícia. Se você escolher este traço duas vezes, Quando você fal
   'EveninSleepExploration',
   'exploration'::rpg.heritage_trait_category,
   'Proteção do Sono',
-  'An instinctive sense for danger protects you at all times. While você tem the Unconscious condition while asleep, you are aware of your surroundings and can make Percepção testes normally.
+  'Um senso instintivo de perigo o protege o tempo todo. Enquanto tiver a condição Inconsciente por estar dormindo, você está ciente do entorno e pode fazer testes de Percepção normalmente.
 
-Proteção do Sono. Se você escolher este traço duas vezes, while you are asleep, you automatically detect the presence of any creature intending harm to you that moves within 9 m of you. A creature that is simply capable of harming you does not trigger this trait until it has intent to do so. For example, a wild animal might approach you cautiously, then decide to attack only when it realizes you are sleeping.',
-  'An instinctive sense for danger protects you at all times. While você tem the Unconscious condition while asleep, you are aware of your surroundings and can make Percepção testes normally.',
-  'Proteção do Sono. Se você escolher este traço duas vezes, while you are asleep, you automatically detect the presence of any creature intending harm to you that moves within 9 m of you. A creature that is simply capable of harming you does not trigger this trait until it has intent to do so. For example, a wild animal might approach you cautiously, then decide to attack only when it realizes you are sleeping.',
+Proteção do Sono. Se você escolher este traço duas vezes, enquanto estiver dormindo, detecta automaticamente a presença de qualquer criatura com intenção de feri-lo que se mova a até 9 m de você. Uma criatura que simplesmente seja capaz de feri-lo não desencadeia este traço até ter a intenção de fazê-lo. Por exemplo, um animal selvagem pode se aproximar com cautela e só decidir atacar quando perceber que você está dormindo.',
+  'Um senso instintivo de perigo o protege o tempo todo. Enquanto tiver a condição Inconsciente por estar dormindo, você está ciente do entorno e pode fazer testes de Percepção normalmente.',
+  'Proteção do Sono. Se você escolher este traço duas vezes, enquanto estiver dormindo, detecta automaticamente a presença de qualquer criatura com intenção de feri-lo que se mova a até 9 m de você. Uma criatura que simplesmente seja capaz de feri-lo não desencadeia este traço até ter a intenção de fazê-lo. Por exemplo, um animal selvagem pode se aproximar com cautela e só decidir atacar quando perceber que você está dormindo.',
   NULL,
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1743,11 +1715,11 @@ Proteção do Sono. Se você escolher este traço duas vezes, while you are asle
   'UncheckedCombat',
   'combat'::rpg.heritage_trait_category,
   'Libertação Ágil',
-  'Your ability to stay in motion is second to none, and foes try in vain to pin you down. Você tem Vantagem em salvaguardas against being Restrained .
+  'Sua capacidade de permanecer em movimento não tem igual, e os inimigos tentam em vão imobilizá-lo. Você tem Vantagem em salvaguardas contra ficar Contido.
 
-Libertação Ágil. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against being Restrained, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Your ability to stay in motion is second to none, and foes try in vain to pin you down. Você tem Vantagem em salvaguardas against being Restrained .',
-  'Libertação Ágil. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against being Restrained, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Libertação Ágil. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra ficar Contido, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Sua capacidade de permanecer em movimento não tem igual, e os inimigos tentam em vão imobilizá-lo. Você tem Vantagem em salvaguardas contra ficar Contido.',
+  'Libertação Ágil. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra ficar Contido, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Libertação Ágil',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1757,31 +1729,31 @@ Libertação Ágil. Se você escolher este traço duas vezes, Quando você falha
   'ArtificeExpertiseExplorationCombat',
   'combat'::rpg.heritage_trait_category,
   'Fumante',
-  'Working with detritus and shattered objects has granted you an affinity for repairing and remaking things. Você tem proficiência com Tinker’s Tools . (This is an Exploration trait.)
+  'Trabalhar com detritos e objetos quebrados lhe deu afinidade por reparar e refazer coisas. Você tem proficiência com Ferramentas de Funileiro. (Este é um traço de Exploração.)
 
-Além disso, você pode usar your Tinker’s Tools and 10 PO worth of appropriate materials to spend 10 minutes creating a small clockwork device. The device must fit in the palm of your hand, and can serve one of o seguinte functions:
+Além disso, pode usar suas Ferramentas de Funileiro e 10 PO em materiais apropriados para gastar 10 minutos criando um pequeno dispositivo de mecanismo. O dispositivo deve caber na palma da mão e pode servir a uma das seguintes funções:
 
-Fumante. The device exudes smoke in a 1,5 m Cube por 1 minuto. Any objects or creatures within this Cube are considered Lightly Obscured .
+Fumante. O dispositivo exala fumaça em um Cubo de 1,5 m por 1 minuto. Quaisquer objetos ou criaturas dentro desse Cubo são considerados Levemente Obscurecidos.
 
-Lighter. The device emits a small flame the size of a candle’s that can light flammable objects.
+Isqueiro. O dispositivo emite uma pequena chama do tamanho da de uma vela que pode acender objetos inflamáveis.
 
-Compass. The device always points north, or in a cardinal direction of the GM’s determination on another plane.
+Bússola. O dispositivo sempre aponta para o norte, ou para uma direção cardeal à determinação do Mestre em outro plano.
 
-Expert Gadgeteer. Se você escolher este traço duas vezes, você pode make a device in 1 minute instead of 10 minutes. Além disso, você pode escolher to imbue a device with o seguinte extra function: (This is a Combat trait.)
+Fumante. Se você escolher este traço duas vezes, você pode fazer um dispositivo em 1 minuto em vez de 10 minutos. Além disso, pode escolher imbuir um dispositivo com a seguinte função extra: (Este é um traço de Combate.)
 
-Distractor. This device is set with blinking lights that can captivate other creatures. Como Ação Bônus, you place or toss the device into a space within 9 m of you. A creature sharing a space with the device must succeed on a CD 10 Inteligência salvaguarda. On a failure, attacks against that creature have Vantagem until the start of your next turn. A creature can use an action to destroy the device. Você pode give up to three of your devices the Distractor feature. You regain the ability to do so quando você finish a Descanso Longo.',
-  'Working with detritus and shattered objects has granted you an affinity for repairing and remaking things. Você tem proficiência com Tinker’s Tools . (This is an Exploration trait.)',
-  'Além disso, você pode usar your Tinker’s Tools and 10 PO worth of appropriate materials to spend 10 minutes creating a small clockwork device. The device must fit in the palm of your hand, and can serve one of o seguinte functions:
+Distrator. Este dispositivo é equipado com luzes piscantes que podem cativar outras criaturas. Como Ação Bônus, você coloca ou arremessa o dispositivo em um espaço a até 9 m de você. Uma criatura que compartilhe o espaço com o dispositivo deve ter sucesso em uma salvaguarda de Inteligência CD 10. Em uma falha, ataques contra essa criatura têm Vantagem até o início do seu próximo turno. Uma criatura pode usar uma ação para destruir o dispositivo. Você pode conceder a até três dos seus dispositivos a característica Distrator. Você recupera a capacidade de fazê-lo ao terminar um Descanso Longo.',
+  'Trabalhar com detritos e objetos quebrados lhe deu afinidade por reparar e refazer coisas. Você tem proficiência com Ferramentas de Funileiro. (Este é um traço de Exploração.)
 
-Fumante. The device exudes smoke in a 1,5 m Cube por 1 minuto. Any objects or creatures within this Cube are considered Lightly Obscured .
+Além disso, pode usar suas Ferramentas de Funileiro e 10 PO em materiais apropriados para gastar 10 minutos criando um pequeno dispositivo de mecanismo. O dispositivo deve caber na palma da mão e pode servir a uma das seguintes funções:
 
-Lighter. The device emits a small flame the size of a candle’s that can light flammable objects.
+Fumante. O dispositivo exala fumaça em um Cubo de 1,5 m por 1 minuto. Quaisquer objetos ou criaturas dentro desse Cubo são considerados Levemente Obscurecidos.
 
-Compass. The device always points north, or in a cardinal direction of the GM’s determination on another plane.
+Isqueiro. O dispositivo emite uma pequena chama do tamanho da de uma vela que pode acender objetos inflamáveis.
 
-Expert Gadgeteer. Se você escolher este traço duas vezes, você pode make a device in 1 minute instead of 10 minutes. Além disso, você pode escolher to imbue a device with o seguinte extra function: (This is a Combat trait.)
+Bússola. O dispositivo sempre aponta para o norte, ou para uma direção cardeal à determinação do Mestre em outro plano.',
+  'Fumante. Se você escolher este traço duas vezes, você pode fazer um dispositivo em 1 minuto em vez de 10 minutos. Além disso, pode escolher imbuir um dispositivo com a seguinte função extra: (Este é um traço de Combate.)
 
-Distractor. This device is set with blinking lights that can captivate other creatures. Como Ação Bônus, you place or toss the device into a space within 9 m of you. A creature sharing a space with the device must succeed on a CD 10 Inteligência salvaguarda. On a failure, attacks against that creature have Vantagem until the start of your next turn. A creature can use an action to destroy the device. Você pode give up to three of your devices the Distractor feature. You regain the ability to do so quando você finish a Descanso Longo.',
+Distrator. Este dispositivo é equipado com luzes piscantes que podem cativar outras criaturas. Como Ação Bônus, você coloca ou arremessa o dispositivo em um espaço a até 9 m de você. Uma criatura que compartilhe o espaço com o dispositivo deve ter sucesso em uma salvaguarda de Inteligência CD 10. Em uma falha, ataques contra essa criatura têm Vantagem até o início do seu próximo turno. Uma criatura pode usar uma ação para destruir o dispositivo. Você pode conceder a até três dos seus dispositivos a característica Distrator. Você recupera a capacidade de fazê-lo ao terminar um Descanso Longo.',
   'Fumante',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1791,11 +1763,11 @@ Distractor. This device is set with blinking lights that can captivate other cre
   'PsychicSpiritCombat',
   'combat'::rpg.heritage_trait_category,
   'Força do Espírito',
-  'Your strength of mind shields you from unnatural forces. Você tem Resistência to dano Psíquico.
+  'A força de sua mente o protege de forças antinaturais. Você tem Resistência a dano Psíquico.
 
-Spirit’s Força. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against an effect that deals dano Psíquico, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Your strength of mind shields you from unnatural forces. Você tem Resistência to dano Psíquico.',
-  'Spirit’s Força. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against an effect that deals dano Psíquico, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Força do Espírito. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra um efeito que causa dano Psíquico, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'A força de sua mente o protege de forças antinaturais. Você tem Resistência a dano Psíquico.',
+  'Força do Espírito. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra um efeito que causa dano Psíquico, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Força do Espírito',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1805,11 +1777,11 @@ Spirit’s Força. Se você escolher este traço duas vezes, Quando você falha 
   'StalwartReservesCombat',
   'combat'::rpg.heritage_trait_category,
   'Fio Inabalável',
-  'Each time you lay into a foe, their state of peril lends you vigor. Quando você acerta uma creature with a melee attack, você pode usar your Reação to roll um número de d4s igual a your Bônus de Proficiência and gain Pontos de Vida Temporários igual a the total rolled. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Cada vez que você ataca um inimigo, o estado de perigo dele lhe empresta vigor. Quando acerta uma criatura com um ataque corpo a corpo, pode usar sua Reação para rolar um número de d4s igual ao seu Bônus de Proficiência e ganhar Pontos de Vida Temporários iguais ao total rolado. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Fio Inabalável. Se você escolher este traço duas vezes, você pode take the maximum number of Pontos de Vida Temporários rather than rolling.',
-  'Each time you lay into a foe, their state of peril lends you vigor. Quando você acerta uma creature with a melee attack, você pode usar your Reação to roll um número de d4s igual a your Bônus de Proficiência and gain Pontos de Vida Temporários igual a the total rolled. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Fio Inabalável. Se você escolher este traço duas vezes, você pode take the maximum number of Pontos de Vida Temporários rather than rolling.',
+Fio Inabalável. Se você escolher este traço duas vezes, você pode obter o número máximo de Pontos de Vida Temporários em vez de rolar.',
+  'Cada vez que você ataca um inimigo, o estado de perigo dele lhe empresta vigor. Quando acerta uma criatura com um ataque corpo a corpo, pode usar sua Reação para rolar um número de d4s igual ao seu Bônus de Proficiência e ganhar Pontos de Vida Temporários iguais ao total rolado. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Fio Inabalável. Se você escolher este traço duas vezes, você pode obter o número máximo de Pontos de Vida Temporários em vez de rolar.',
   'Fio Inabalável',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1819,23 +1791,23 @@ Fio Inabalável. Se você escolher este traço duas vezes, você pode take the m
   'SteadyExploration',
   'exploration'::rpg.heritage_trait_category,
   'Firmeza',
-  'No matter what kind of upheaval surrounds you, you ste seu ground. Você tem Vantagem em salvaguardas against having the condição Caído.
+  'Não importa que tipo de convulsão o cerca, você mantém a posição. Você tem Vantagem em salvaguardas contra a condição Caído.
 
-Firmeza. Se você escolher este traço duas vezes, standing from Caído takes only five feet of movement instead of half your movement.
+Firmeza. Se você escolher este traço duas vezes, levantar-se de Caído consome apenas 1,5 m de deslocamento em vez da metade do seu deslocamento.
 
-Além disso, Quando você falha a salvaguarda against being knocked Caído, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.
+Além disso, quando falha em uma salvaguarda contra ser derrubado (Caído), pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.
 
-Don’t stay down. Never stay down. Se você stay down, you’re dead.
+Não fique no chão. Nunca fique no chão. Se ficar no chão, você está morto.
 
-—Caçador de Monstros’s Guide to Sobrevivência',
-  'No matter what kind of upheaval surrounds you, you ste seu ground. Você tem Vantagem em salvaguardas against having the condição Caído.',
-  'Firmeza. Se você escolher este traço duas vezes, standing from Caído takes only five feet of movement instead of half your movement.
+— Guia de Sobrevivência do Caçador de Monstros',
+  'Não importa que tipo de convulsão o cerca, você mantém a posição. Você tem Vantagem em salvaguardas contra a condição Caído.',
+  'Firmeza. Se você escolher este traço duas vezes, levantar-se de Caído consome apenas 1,5 m de deslocamento em vez da metade do seu deslocamento.
 
-Além disso, Quando você falha a salvaguarda against being knocked Caído, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.
+Além disso, quando falha em uma salvaguarda contra ser derrubado (Caído), pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.
 
-Don’t stay down. Never stay down. Se você stay down, you’re dead.
+Não fique no chão. Nunca fique no chão. Se ficar no chão, você está morto.
 
-—Caçador de Monstros’s Guide to Sobrevivência',
+— Guia de Sobrevivência do Caçador de Monstros',
   'Firmeza',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1845,11 +1817,11 @@ Don’t stay down. Never stay down. Se você stay down, you’re dead.
   'TouchOfLifeCombat',
   'combat'::rpg.heritage_trait_category,
   'Força da Vida',
-  'Effects that corrupt the essence of other living creatures are of little concern to you. Você tem Resistência to dano Necrótico.
+  'Efeitos que corrompem a essência de outras criaturas vivas pouco o preocupam. Você tem Resistência a dano Necrótico.
 
-Força of Life. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against an effect that deals dano Necrótico, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Effects that corrupt the essence of other living creatures are of little concern to you. Você tem Resistência to dano Necrótico.',
-  'Força of Life. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against an effect that deals dano Necrótico, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Força da Vida. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra um efeito que causa dano Necrótico, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Efeitos que corrompem a essência de outras criaturas vivas pouco o preocupam. Você tem Resistência a dano Necrótico.',
+  'Força da Vida. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra um efeito que causa dano Necrótico, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Força da Vida',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1859,11 +1831,11 @@ Força of Life. Se você escolher este traço duas vezes, Quando você falha a s
   'FirstStrikeCombat',
   'combat'::rpg.heritage_trait_category,
   'Golpe Forte',
-  'Hesitation in others is a weakness you’ve learned to take deadly advantage of. Quando você acerta uma creature that hasn’t taken a turn in the combat yet, your attack deals an extra 2d6 damage. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
+  'Hesitação nos outros é uma fraqueza de que você aprendeu a tirar vantagem mortal. Quando acerta uma criatura que ainda não agiu no combate, seu ataque causa 2d6 de dano extra. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Golpe Forte. Se você escolher este traço duas vezes, você pode usar the maximum value of the extra damage dice from First Strike, rather than rolling. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Hesitation in others is a weakness you’ve learned to take deadly advantage of. Quando você acerta uma creature that hasn’t taken a turn in the combat yet, your attack deals an extra 2d6 damage. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Golpe Forte. Se você escolher este traço duas vezes, você pode usar the maximum value of the extra damage dice from First Strike, rather than rolling. You regain the use of este recurso quando você finish a Descanso Longo.',
+Golpe Forte. Se você escolher este traço duas vezes, você pode usar o valor máximo dos dados de dano extra de Primeiro Golpe, em vez de rolar. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Hesitação nos outros é uma fraqueza de que você aprendeu a tirar vantagem mortal. Quando acerta uma criatura que ainda não agiu no combate, seu ataque causa 2d6 de dano extra. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Golpe Forte. Se você escolher este traço duas vezes, você pode usar o valor máximo dos dados de dano extra de Primeiro Golpe, em vez de rolar. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Golpe Forte',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1873,11 +1845,11 @@ Golpe Forte. Se você escolher este traço duas vezes, você pode usar the maxim
   'IntuitiveAcrobatRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Expert em Acrobacias',
-  'Staying loose and limber means being able to get out of even the tightest spots quando vocêr life is on the line. Você tem proficiência na perícia Acrobatics.
+  'Manter-se solto e ágil significa conseguir sair até dos apertos mais apertados quando a vida está em jogo. Você tem proficiência na perícia Acrobacia.
 
-Expert em Acrobacias. Se você escolher este traço duas vezes, você tem Vantagem em testes de Acrobatics. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Staying loose and limber means being able to get out of even the tightest spots quando vocêr life is on the line. Você tem proficiência na perícia Acrobatics.',
-  'Expert em Acrobacias. Se você escolher este traço duas vezes, você tem Vantagem em testes de Acrobatics. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Expert em Acrobacias. Se você escolher este traço duas vezes, você tem Vantagem em testes de Acrobacia. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Manter-se solto e ágil significa conseguir sair até dos apertos mais apertados quando a vida está em jogo. Você tem proficiência na perícia Acrobacia.',
+  'Expert em Acrobacias. Se você escolher este traço duas vezes, você tem Vantagem em testes de Acrobacia. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Expert em Acrobacias',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1887,11 +1859,11 @@ Expert em Acrobacias. Se você escolher este traço duas vezes, você tem Vantag
   'CreatureCoverCombat',
   'combat'::rpg.heritage_trait_category,
   'Cobertura Sutil',
-  'By slipping behind enemies or allies alike, you are able to fade from view with ease. Você pode realizar the Hide action even when você tem Half Cover from a creature, as long as that creature is of a size larger than you.
+  'Ao esgueirar-se atrás de inimigos ou aliados, você consegue sumir de vista com facilidade. Você pode tomar a ação Esconder-se mesmo quando tiver Meia Cobertura de uma criatura, desde que essa criatura seja de um tamanho maior que você.
 
-Cobertura Sutil. Se você escolher este traço duas vezes, você pode take the Hide action when você tem Half Cover from a creature the same size as you.',
-  'By slipping behind enemies or allies alike, you are able to fade from view with ease. Você pode realizar the Hide action even when você tem Half Cover from a creature, as long as that creature is of a size larger than you.',
-  'Cobertura Sutil. Se você escolher este traço duas vezes, você pode take the Hide action when você tem Half Cover from a creature the same size as you.',
+Cobertura Sutil. Se você escolher este traço duas vezes, você pode tomar a ação Esconder-se quando tiver Meia Cobertura de uma criatura do mesmo tamanho que você.',
+  'Ao esgueirar-se atrás de inimigos ou aliados, você consegue sumir de vista com facilidade. Você pode tomar a ação Esconder-se mesmo quando tiver Meia Cobertura de uma criatura, desde que essa criatura seja de um tamanho maior que você.',
+  'Cobertura Sutil. Se você escolher este traço duas vezes, você pode tomar a ação Esconder-se quando tiver Meia Cobertura de uma criatura do mesmo tamanho que você.',
   'Cobertura Sutil',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1901,11 +1873,11 @@ Cobertura Sutil. Se você escolher este traço duas vezes, você pode take the H
   'SkirmishTacticsCombat',
   'combat'::rpg.heritage_trait_category,
   'Escaramuçador Supremo',
-  'Your brutal strike leaves your foe reeling as you slip away. Quando você acerta uma hostile creature with an attack with a weapon or an Ataque Desarmado , Ataque de Oportunidades against you by that creature have Desvantagem até o fim de your turn.
+  'Seu golpe brutal deixa o inimigo cambaleante enquanto você se esquiva. Quando acerta uma criatura hostil com um ataque com uma arma ou um Ataque Desarmado, Ataques de Oportunidade contra você por essa criatura têm Desvantagem até o fim do seu turno.
 
-Escaramuçador Supremo. Se você escolher este traço duas vezes, quando você hit a hostile creature with an attack with a weapon attack or an Ataque Desarmado, você pode take the Desengajar action como Ação Bônus até o fim de your turn.',
-  'Your brutal strike leaves your foe reeling as you slip away. Quando você acerta uma hostile creature with an attack with a weapon or an Ataque Desarmado , Ataque de Oportunidades against you by that creature have Desvantagem até o fim de your turn.',
-  'Escaramuçador Supremo. Se você escolher este traço duas vezes, quando você hit a hostile creature with an attack with a weapon attack or an Ataque Desarmado, você pode take the Desengajar action como Ação Bônus até o fim de your turn.',
+Escaramuçador Supremo. Se você escolher este traço duas vezes, quando acerta uma criatura hostil com um ataque com arma ou um Ataque Desarmado, pode tomar a ação Desengajar como Ação Bônus até o fim do seu turno.',
+  'Seu golpe brutal deixa o inimigo cambaleante enquanto você se esquiva. Quando acerta uma criatura hostil com um ataque com uma arma ou um Ataque Desarmado, Ataques de Oportunidade contra você por essa criatura têm Desvantagem até o fim do seu turno.',
+  'Escaramuçador Supremo. Se você escolher este traço duas vezes, quando acerta uma criatura hostil com um ataque com arma ou um Ataque Desarmado, pode tomar a ação Desengajar como Ação Bônus até o fim do seu turno.',
   'Escaramuçador Supremo',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1915,11 +1887,11 @@ Escaramuçador Supremo. Se você escolher este traço duas vezes, quando você h
   'SlipperyCombat',
   'combat'::rpg.heritage_trait_category,
   'Escorregão Supremo',
-  'Any enemy that tries to grab you is in for a surprise. Você tem Vantagem em testes de Atletismo and Acrobatics to escape a grapple.
+  'Qualquer inimigo que tentar agarrá-lo terá uma surpresa. Você tem Vantagem em testes de Atletismo e Acrobacia para escapar de um agarrão.
 
-Escorregão Supremo. Se você escolher este traço duas vezes, Quando você falha an Atletismo or Acrobatics check to escape a grapple, você pode usar your Reação to succeed instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Any enemy that tries to grab you is in for a surprise. Você tem Vantagem em testes de Atletismo and Acrobatics to escape a grapple.',
-  'Escorregão Supremo. Se você escolher este traço duas vezes, Quando você falha an Atletismo or Acrobatics check to escape a grapple, você pode usar your Reação to succeed instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Escorregão Supremo. Se você escolher este traço duas vezes, quando falha em um teste de Atletismo ou Acrobacia para escapar de um agarrão, pode usar sua Reação para ter sucesso em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Qualquer inimigo que tentar agarrá-lo terá uma surpresa. Você tem Vantagem em testes de Atletismo e Acrobacia para escapar de um agarrão.',
+  'Escorregão Supremo. Se você escolher este traço duas vezes, quando falha em um teste de Atletismo ou Acrobacia para escapar de um agarrão, pode usar sua Reação para ter sucesso em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Escorregão Supremo',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1929,10 +1901,10 @@ Escorregão Supremo. Se você escolher este traço duas vezes, Quando você falh
   'NaturalAttackCombat',
   'combat'::rpg.heritage_trait_category,
   'Golpe Rápido',
-  'The gift of natural weaponry means you are never unarmed, as your foes learn to their peril. Your Ataque Desarmados deal damage igual a 1d6 + your Força or modificador de Destreza. The type of damage dealt by your Ataque Desarmados can be Contundente, Perfurante, or Cortante, based on the type of natural weaponry you possess (claws, horns, a tail, and so forth).
+  'O dom de armamento natural significa que você nunca está desarmado, como seus inimigos aprendem por sua conta e risco. Seus Ataques Desarmados causam dano igual a 1d6 + seu modificador de Força ou Destreza. O tipo de dano causado pelos seus Ataques Desarmados pode ser Contundente, Perfurante ou Cortante, conforme o tipo de armamento natural que você possui (garras, chifres, cauda e assim por diante).
 
 Golpe Rápido. Se você escolher este traço duas vezes, você pode usar Ataque Desarmado como Ação Bônus. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'The gift of natural weaponry means you are never unarmed, as your foes learn to their peril. Your Ataque Desarmados deal damage igual a 1d6 + your Força or modificador de Destreza. The type of damage dealt by your Ataque Desarmados can be Contundente, Perfurante, or Cortante, based on the type of natural weaponry you possess (claws, horns, a tail, and so forth).',
+  'O dom de armamento natural significa que você nunca está desarmado, como seus inimigos aprendem por sua conta e risco. Seus Ataques Desarmados causam dano igual a 1d6 + seu modificador de Força ou Destreza. O tipo de dano causado pelos seus Ataques Desarmados pode ser Contundente, Perfurante ou Cortante, conforme o tipo de armamento natural que você possui (garras, chifres, cauda e assim por diante).',
   'Golpe Rápido. Se você escolher este traço duas vezes, você pode usar Ataque Desarmado como Ação Bônus. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Golpe Rápido',
   2,
@@ -1943,15 +1915,11 @@ Golpe Rápido. Se você escolher este traço duas vezes, você pode usar Ataque 
   'FirmInfluenceRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Influência Aterradora',
-  'Others have learned to fear you—and for good reason.
-
-Você tem proficiência na perícia Intimidação.
+  'Os outros aprenderam a temê-lo — e por bom motivo. Você tem proficiência na perícia Intimidação.
 
 Influência Aterradora. Se você escolher este traço duas vezes, você tem Vantagem em testes de Intimidação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Others have learned to fear you—and for good reason.',
-  'Você tem proficiência na perícia Intimidação.
-
-Influência Aterradora. Se você escolher este traço duas vezes, você tem Vantagem em testes de Intimidação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Os outros aprenderam a temê-lo — e por bom motivo. Você tem proficiência na perícia Intimidação.',
+  'Influência Aterradora. Se você escolher este traço duas vezes, você tem Vantagem em testes de Intimidação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Influência Aterradora',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1961,10 +1929,10 @@ Influência Aterradora. Se você escolher este traço duas vezes, você tem Vant
   'MindfulInvestigatorRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Investigador Minucioso',
-  'Putting together the pieces of even the darkest mysteries is second nature to you. Você tem proficiência na perícia Investigação.
+  'Juntar as peças até dos mistérios mais sombrios é segunda natureza para você. Você tem proficiência na perícia Investigação.
 
 Investigador Minucioso. Se você escolher este traço duas vezes, você tem Vantagem em testes de Investigação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Putting together the pieces of even the darkest mysteries is second nature to you. Você tem proficiência na perícia Investigação.',
+  'Juntar as peças até dos mistérios mais sombrios é segunda natureza para você. Você tem proficiência na perícia Investigação.',
   'Investigador Minucioso. Se você escolher este traço duas vezes, você tem Vantagem em testes de Investigação. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Investigador Minucioso',
   2,
@@ -1975,11 +1943,11 @@ Investigador Minucioso. Se você escolher este traço duas vezes, você tem Vant
   'DrainingAttackCombat',
   'combat'::rpg.heritage_trait_category,
   'Até a Última Gota',
-  'As your enemy’s life force ebbs, you grow ever stronger. Se você have the Natural Attack trait, each time you hit with an Ataque Desarmado , você ganha Pontos de Vida Temporários igual a the damage dealt by the attack.
+  'À medida que a força vital do inimigo se esvai, você fica cada vez mais forte. Se você tiver o traço Ataque Natural, cada vez que acertar com um Ataque Desarmado, ganha Pontos de Vida Temporários iguais ao dano causado pelo ataque.
 
-Até a Última Gota. Se você escolher este traço duas vezes, quando você use Draining Attack, the target also takes a penalty to their máximo de Pontos de Vida igual a the damage dealt by the attack. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'As your enemy’s life force ebbs, you grow ever stronger. Se você have the Natural Attack trait, each time you hit with an Ataque Desarmado , você ganha Pontos de Vida Temporários igual a the damage dealt by the attack.',
-  'Até a Última Gota. Se você escolher este traço duas vezes, quando você use Draining Attack, the target also takes a penalty to their máximo de Pontos de Vida igual a the damage dealt by the attack. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Até a Última Gota. Se você escolher este traço duas vezes, quando usa Ataque Drenante, o alvo também sofre uma penalidade ao máximo de Pontos de Vida igual ao dano causado pelo ataque. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'À medida que a força vital do inimigo se esvai, você fica cada vez mais forte. Se você tiver o traço Ataque Natural, cada vez que acertar com um Ataque Desarmado, ganha Pontos de Vida Temporários iguais ao dano causado pelo ataque.',
+  'Até a Última Gota. Se você escolher este traço duas vezes, quando usa Ataque Drenante, o alvo também sofre uma penalidade ao máximo de Pontos de Vida igual ao dano causado pelo ataque. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Até a Última Gota',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1989,10 +1957,10 @@ Até a Última Gota. Se você escolher este traço duas vezes, quando você use 
   'PersuasiveKnackRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Língua de Ouro',
-  'Você tem learned that the best way to deal with certain threats is to keep those threats from escalating. Você tem proficiência na perícia Persuasão.
+  'Você aprendeu que a melhor forma de lidar com certas ameaças é impedir que elas escalem. Você tem proficiência na perícia Persuasão.
 
 Língua de Ouro. Se você escolher este traço duas vezes, você tem Vantagem em testes de Persuasão. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Você tem learned that the best way to deal with certain threats is to keep those threats from escalating. Você tem proficiência na perícia Persuasão.',
+  'Você aprendeu que a melhor forma de lidar com certas ameaças é impedir que elas escalem. Você tem proficiência na perícia Persuasão.',
   'Língua de Ouro. Se você escolher este traço duas vezes, você tem Vantagem em testes de Persuasão. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Língua de Ouro',
   2,
@@ -2003,11 +1971,11 @@ Língua de Ouro. Se você escolher este traço duas vezes, você tem Vantagem em
   'RelentlessEnduranceCombat',
   'combat'::rpg.heritage_trait_category,
   'Resistência Incomparável',
-  'The battles you need yet to fight are many, and death is not an option. Quando você are reduced to 0 Pontos de Vida but not killed outright, você pode drop to 1 Hit Point instead. You regain the use of este recurso quando você finish a Descanso Longo.
+  'As batalhas que ainda precisa travar são muitas, e a morte não é uma opção. Quando é reduzido a 0 Pontos de Vida mas não morto imediatamente, pode cair a 1 Ponto de Vida em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.
 
-Resistência Incomparável. Se você escolher este traço duas vezes, quando você use Relentless Endurance, you drop to 1d6 Pontos de Vida + your Bônus de Proficiência. Além disso, quando você use Relentless Endurance, você pode usar a Reação to spend up to five Dados de Vida, rolling them and gaining that number of Pontos de Vida.',
-  'The battles you need yet to fight are many, and death is not an option. Quando você are reduced to 0 Pontos de Vida but not killed outright, você pode drop to 1 Hit Point instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'Resistência Incomparável. Se você escolher este traço duas vezes, quando você use Relentless Endurance, you drop to 1d6 Pontos de Vida + your Bônus de Proficiência. Além disso, quando você use Relentless Endurance, você pode usar a Reação to spend up to five Dados de Vida, rolling them and gaining that number of Pontos de Vida.',
+Resistência Incomparável. Se você escolher este traço duas vezes, quando usa Resistência Implacável, você cai a 1d6 Pontos de Vida + seu Bônus de Proficiência. Além disso, quando usa Resistência Implacável, pode usar uma Reação para gastar até cinco Dados de Vida, rolando-os e ganhando esse número de Pontos de Vida.',
+  'As batalhas que ainda precisa travar são muitas, e a morte não é uma opção. Quando é reduzido a 0 Pontos de Vida mas não morto imediatamente, pode cair a 1 Ponto de Vida em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Resistência Incomparável. Se você escolher este traço duas vezes, quando usa Resistência Implacável, você cai a 1d6 Pontos de Vida + seu Bônus de Proficiência. Além disso, quando usa Resistência Implacável, pode usar uma Reação para gastar até cinco Dados de Vida, rolando-os e ganhando esse número de Pontos de Vida.',
   'Resistência Incomparável',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -2017,11 +1985,11 @@ Resistência Incomparável. Se você escolher este traço duas vezes, quando voc
   'TirelessExploration',
   'exploration'::rpg.heritage_trait_category,
   'Vigoroso',
-  'An innate resilience lets you shake off conditions that would take others down. Você tem Vantagem em salvaguardas connected to gaining or removing nível de Exaustãos.
+  'Uma resiliência inata permite sacudir condições que derrubariam outros. Você tem Vantagem em salvaguardas ligadas a ganhar ou remover níveis de Exaustão.
 
-Vigoroso. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against Exhaustion, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
-  'An innate resilience lets you shake off conditions that would take others down. Você tem Vantagem em salvaguardas connected to gaining or removing nível de Exaustãos.',
-  'Vigoroso. Se você escolher este traço duas vezes, Quando você falha a salvaguarda against Exhaustion, você pode usar your Reação to succeed on the save instead. You regain the use of este recurso quando você finish a Descanso Longo.',
+Vigoroso. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra Exaustão, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
+  'Uma resiliência inata permite sacudir condições que derrubariam outros. Você tem Vantagem em salvaguardas ligadas a ganhar ou remover níveis de Exaustão.',
+  'Vigoroso. Se você escolher este traço duas vezes, quando falha em uma salvaguarda contra Exaustão, pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Vigoroso',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -2031,15 +1999,15 @@ Vigoroso. Se você escolher este traço duas vezes, Quando você falha a salvagu
   'InstrumentalistRoleplaying',
   'roleplaying'::rpg.heritage_trait_category,
   'Virtuoso',
-  'In the quieter moments, music can help you forget the horrors you’ve seen. Você tem proficiência com two instruments de sua escolha.
+  'Nos momentos mais quietos, a música ajuda a esquecer os horrores que você viu. Você tem proficiência com dois instrumentos à sua escolha.
 
-Virtuoso. Se você escolher this trait multiple times, você ganha proficiency with two new instruments each time.
+Virtuoso. Se você escolher este traço várias vezes, você ganha proficiência com dois novos instrumentos a cada vez.
 
-Além disso, você tem Vantagem em testes de ability made using any instrument. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'In the quieter moments, music can help you forget the horrors you’ve seen. Você tem proficiência com two instruments de sua escolha.',
-  'Virtuoso. Se você escolher this trait multiple times, você ganha proficiency with two new instruments each time.
+Além disso, você tem Vantagem em testes de atributo feitos com qualquer instrumento. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Nos momentos mais quietos, a música ajuda a esquecer os horrores que você viu. Você tem proficiência com dois instrumentos à sua escolha.',
+  'Virtuoso. Se você escolher este traço várias vezes, você ganha proficiência com dois novos instrumentos a cada vez.
 
-Além disso, você tem Vantagem em testes de ability made using any instrument. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Além disso, você tem Vantagem em testes de atributo feitos com qualquer instrumento. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Virtuoso',
   NULL,
   'stack'::rpg.heritage_trait_take_mode
@@ -2049,15 +2017,15 @@ Além disso, você tem Vantagem em testes de ability made using any instrument. 
   'ClimberExploration',
   'exploration'::rpg.heritage_trait_category,
   'Caminhante de Paredes',
-  'Sometimes staying away from what threatens you means getting clear of those threats. Você tem a Climb Speed igual a your Speed.
+  'Às vezes, manter distância do que o ameaça significa afastar-se dessas ameaças. Você tem um Deslocamento de Escalada igual ao seu Deslocamento.
 
-Caminhante de Paredes. Se você escolher este traço duas vezes, você pode usar your Climb Speed to move up, down, and across vertical surfaces and upside down along ceilings, while leaving your hands free.
+Caminhante de Paredes. Se você escolher este traço duas vezes, você pode usar seu Deslocamento de Escalada para se mover para cima, para baixo e através de superfícies verticais e de cabeça para baixo ao longo de tetos, mantendo as mãos livres.
 
-Além disso, while using climbing movement, você pode usar the Dash action como Ação Bônus. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Sometimes staying away from what threatens you means getting clear of those threats. Você tem a Climb Speed igual a your Speed.',
-  'Caminhante de Paredes. Se você escolher este traço duas vezes, você pode usar your Climb Speed to move up, down, and across vertical surfaces and upside down along ceilings, while leaving your hands free.
+Além disso, enquanto usa movimento de escalada, pode usar a ação Disparar como Ação Bônus. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Às vezes, manter distância do que o ameaça significa afastar-se dessas ameaças. Você tem um Deslocamento de Escalada igual ao seu Deslocamento.',
+  'Caminhante de Paredes. Se você escolher este traço duas vezes, você pode usar seu Deslocamento de Escalada para se mover para cima, para baixo e através de superfícies verticais e de cabeça para baixo ao longo de tetos, mantendo as mãos livres.
 
-Além disso, while using climbing movement, você pode usar the Dash action como Ação Bônus. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Além disso, enquanto usa movimento de escalada, pode usar a ação Disparar como Ação Bônus. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Caminhante de Paredes',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -2067,11 +2035,11 @@ Além disso, while using climbing movement, você pode usar the Dash action como
   'AmphibiousExploration',
   'exploration'::rpg.heritage_trait_category,
   'Nascido da Água',
-  'Surviving underwater is second nature to you. Você pode breathe air and water.
+  'Sobreviver debaixo d’água é segunda natureza para você. Você pode respirar ar e água.
 
-Nascido da Água. Se você escolher este traço duas vezes, você tem Vantagem em testes de ability. or salvaguardas made while submerged in water. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Surviving underwater is second nature to you. Você pode breathe air and water.',
-  'Nascido da Água. Se você escolher este traço duas vezes, você tem Vantagem em testes de ability. or salvaguardas made while submerged in water. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+Nascido da Água. Se você escolher este traço duas vezes, você tem Vantagem em testes de atributo ou salvaguardas feitos enquanto estiver submerso na água. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
+  'Sobreviver debaixo d’água é segunda natureza para você. Você pode respirar ar e água.',
+  'Nascido da Água. Se você escolher este traço duas vezes, você tem Vantagem em testes de atributo ou salvaguardas feitos enquanto estiver submerso na água. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Nascido da Água',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -2081,11 +2049,11 @@ Nascido da Água. Se você escolher este traço duas vezes, você tem Vantagem e
   'WeaponAptitudeCombat',
   'combat'::rpg.heritage_trait_category,
   'Especialista em Armas',
-  'The weapons you wield might save your life one day, and você conhece their secrets. Você tem proficiência com three weapons de sua escolha.
+  'As armas que empunha podem salvar sua vida um dia, e você conhece seus segredos. Você tem proficiência com três armas à sua escolha.
 
-Especialista em Armas. Se você escolher this trait multiple times, você ganha proficiency with three new weapons each time. Além disso, choose one weapon with which você tem proficiency. Você tem a +1 bonus to jogada de danos with that weapon.',
-  'The weapons you wield might save your life one day, and você conhece their secrets. Você tem proficiência com three weapons de sua escolha.',
-  'Especialista em Armas. Se você escolher this trait multiple times, você ganha proficiency with three new weapons each time. Além disso, choose one weapon with which você tem proficiency. Você tem a +1 bonus to jogada de danos with that weapon.',
+Especialista em Armas. Se você escolher este traço várias vezes, você ganha proficiência com três novas armas a cada vez. Além disso, escolha uma arma com a qual tenha proficiência. Você tem um bônus de +1 nas jogadas de dano com essa arma.',
+  'As armas que empunha podem salvar sua vida um dia, e você conhece seus segredos. Você tem proficiência com três armas à sua escolha.',
+  'Especialista em Armas. Se você escolher este traço várias vezes, você ganha proficiência com três novas armas a cada vez. Além disso, escolha uma arma com a qual tenha proficiência. Você tem um bônus de +1 nas jogadas de dano com essa arma.',
   'Especialista em Armas',
   NULL,
   'stack'::rpg.heritage_trait_take_mode

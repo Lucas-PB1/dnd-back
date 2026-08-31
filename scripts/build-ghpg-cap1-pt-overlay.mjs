@@ -11,6 +11,7 @@ import {
   CAP1_BASE_TRAIT_NAMES_PT,
   CAP1_TRAIT_NAMES_PT,
 } from './lib/ghpg-cap1-names-pt.mjs';
+import { CAP1_TRAIT_BENEFITS_PT } from './lib/ghpg-cap1-trait-benefits-pt.mjs';
 import { translateGhpgBody } from './lib/ghpg-mechanical-glossary.mjs';
 import {
   applyModularTraitRawPatterns,
@@ -77,14 +78,25 @@ function translateTraitField(text, trait) {
 }
 
 for (const t of extract.traits) {
+  const curated = CAP1_TRAIT_BENEFITS_PT[t.slug];
+  const benefitBase = curated
+    ? curated.benefitBase
+    : translateTraitField(t.benefitBase ?? t.description, t);
+  const benefitImproved = curated
+    ? curated.benefitImproved
+    : t.benefitImproved
+      ? translateTraitField(t.benefitImproved, t)
+      : null;
+  const description = curated
+    ? [benefitBase, benefitImproved].filter(Boolean).join('\n\n')
+    : translateTraitField(t.description, t);
+
   overlay.traits[t.slug] = {
     name: resolveTraitName(t),
     category: CATEGORY_PT[t.category] ?? t.category,
-    description: translateTraitField(t.description, t),
-    benefitBase: translateTraitField(t.benefitBase ?? t.description, t),
-    benefitImproved: t.benefitImproved
-      ? translateTraitField(t.benefitImproved, t)
-      : null,
+    description,
+    benefitBase,
+    benefitImproved,
     improvedName: t.improvedName ? resolveTraitName(t) : null,
   };
 }
