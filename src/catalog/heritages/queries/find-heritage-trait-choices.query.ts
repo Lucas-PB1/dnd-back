@@ -41,11 +41,8 @@ export class FindHeritageTraitChoicesQuery {
       {
         cursor,
         limit,
-        keyNames: ['choiceKind', 'traitSlug'],
-        encodeRow: (row) => ({
-          choiceKind: row.choiceKind,
-          traitSlug: row.traitSlug,
-        }),
+        keyNames: ['sortOrder'],
+        encodeRow: (row) => ({ sortOrder: row.sortOrder }),
       },
     );
   }
