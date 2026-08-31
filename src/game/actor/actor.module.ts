@@ -13,6 +13,7 @@ import {
   BoardCharacterVehicleHandler,
   LinkCharacterVehicleHandler,
 } from './application/character-vehicle.handlers';
+import { SyncCharacterCompanionHandler } from './application/sync-character-companion.handler';
 import { TemplateImageResolver } from './application/template-image.resolver';
 import { CreateActorHandler } from './application/create-actor.handler';
 import { DeleteActorHandler } from './application/delete-actor.handler';
@@ -28,6 +29,7 @@ import { ActorsController } from './controllers/actors.controller';
 import { ActorSessionController } from './controllers/actor-session.controller';
 import { CharacterActorsController } from './controllers/character-actors.controller';
 import { CharacterVehiclesController } from './controllers/character-vehicles.controller';
+import { CharacterCompanionsController } from './controllers/character-companions.controller';
 import { GameActorAccessService } from './game-actor-access.service';
 import { ActorMapper } from './infrastructure/actor.mapper';
 import { ActorPersistenceService } from './infrastructure/actor-persistence.service';
@@ -64,6 +66,7 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     ActorSessionController,
     CharacterActorsController,
     CharacterVehiclesController,
+    CharacterCompanionsController,
   ],
   providers: [
     ActorRepository,
@@ -84,12 +87,14 @@ import { GameActorState } from './infrastructure/game-actor-state.entity';
     RollActorAttackHandler,
     LinkCharacterVehicleHandler,
     BoardCharacterVehicleHandler,
+    SyncCharacterCompanionHandler,
     TemplateImageResolver,
   ],
   exports: [
     ActorRepository,
     GameActorAccessService,
     ActorPersistenceService,
+    SyncCharacterCompanionHandler,
     TypeOrmModule,
   ],
 })

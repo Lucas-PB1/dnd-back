@@ -27,7 +27,7 @@ docs/source/
 | Pasta | Arquivos | Seeds / uso |
 |-------|----------|-------------|
 | `dmg/` | `items-az.txt`, `items-az.json`, `items-az-index.md`, `wiring-status.md` | `D010+`, economy |
-| `grim-hollow/` | `cap1-heritages.json` … `cap6-transformations.json`, `cap2-subclasses-en.json`, `cap2-features-pt.json` | pack `grim-hollow` J009–J035; combate C063–C068 |
+| `grim-hollow/` | `cap1-heritages.json` … `cap7-spells.json`, `cap2-subclasses-en.json`, `cap2-features-pt.json` | pack `grim-hollow` J009–J044; combate C063–C073 |
 | `griffons-saddlebag/` | `book-one-part-ii.json` | pack `griffons-saddlebag` R001–R011 (+ combate C057–C062) |
 | `northlands/` | `cap5.json`, overlays PT, `stat-blocks.json` | N026–N029, M003–M004 |
 | `phb/` | `cap6-mounts.json`, `cap6-barding.json`, sprites Cap. 7 | M005–M006, S079, equipamento |

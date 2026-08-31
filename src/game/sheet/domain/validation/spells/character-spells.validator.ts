@@ -20,7 +20,8 @@ import {
   SubclassSpellcastingInfo,
 } from './spell-progression-queries';
 import { magicalSecretsListSlugs } from './magical-secrets';
-import { validateSpellListAccess } from './validate-spell-list-access';
+import { loadSangromancySpellSlugsAmong } from '@game/spellcasting/domain/sangromancy/load-sangromancy-spell-slugs';
+import { isSangromancerWizard, usesWizardPlusSangromancyList } from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
 
 @Injectable()
 export class CharacterSpellsValidator {
@@ -93,6 +94,16 @@ export class CharacterSpellsValidator {
       ctx.subclassSlug,
     );
 
+    const pendingSlugs = [
+      ...new Set(spells.map((spell) => spell.spellSlug)),
+    ];
+    const sangromancyAllowedSlugs = usesWizardPlusSangromancyList(
+      ctx.classSlug,
+      ctx.subclassSlug,
+    )
+      ? await loadSangromancySpellSlugsAmong(this.dataSource, pendingSlugs)
+      : new Set<string>();
+
     await validateSpellListAccess(
       this.classSpellsRepo,
       this.subclassSpellsRepo,
@@ -105,6 +116,7 @@ export class CharacterSpellsValidator {
       extraGranted,
       magicalSecretsListSlugs(ctx.classSlug, ctx.level),
       subclassOptions,
+      sangromancyAllowedSlugs,
     );
 
     await assertSpellQuotas(

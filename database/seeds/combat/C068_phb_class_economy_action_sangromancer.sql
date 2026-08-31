@@ -1,4 +1,6 @@
 -- Economy actions — Sangromante (mecânicas sem keyword Action/Bonus no HTML)
+-- Sangue por Sangue: rider 1×/turno; gasta Dado de Sangromancia (ou DV — declare na mesa).
+-- Renovação Rubra: após DC; 1/LR; handler restaura dados de sangromancia.
 
 INSERT INTO rpg.phb_class_economy_action (
   action_id, class_id, subclass_id, name, economy, unlock_level,
@@ -14,9 +16,9 @@ INSERT INTO rpg.phb_class_economy_action (
   10,
   'sangromancy-dice',
   NULL,
-  false,
+  true,
   '1×/turno: dano extra = dado de Vida ou Sangromancia',
-  'Uma vez por turno ao causar dano com magia de Mago, gaste um Dado de Vida ou um Dado de Sangromancia, role o dado e cause dano extra a um alvo igual ao resultado. Se o alvo estiver Ferido, role duas vezes e use o maior.',
+  'Uma vez por turno ao causar dano com magia de Mago, gaste um Dado de Vida ou um Dado de Sangromancia, role o dado e cause dano extra a um alvo igual ao resultado. Se o alvo estiver Ferido, role duas vezes e use o maior. (Botão gasta Dado de Sangromancia; se usar Dado de Vida, declare e ajuste o recurso.)',
   'blood-for-blood',
   NULL,
   415
@@ -28,9 +30,9 @@ INSERT INTO rpg.phb_class_economy_action (
   'Renovação Rubra',
   'free'::rpg.action_economy_bucket,
   14,
+  'red-renewal',
   NULL,
-  NULL,
-  false,
+  true,
   'Após DC: recupera metade dos Dados de Vida + Sangromancia',
   'Ao terminar um Descanso Curto, recupera Dados de Vida e Dados de Sangromancia gastos em quantidade igual à metade do seu nível de Mago. 1× até o próximo Descanso Longo.',
   'red-renewal',
@@ -44,7 +46,10 @@ ON CONFLICT (action_id) DO UPDATE SET
   economy = EXCLUDED.economy,
   unlock_level = EXCLUDED.unlock_level,
   resource_slug = EXCLUDED.resource_slug,
+  free_resource_slug = EXCLUDED.free_resource_slug,
+  always_spends_resource = EXCLUDED.always_spends_resource,
   summary = EXCLUDED.summary,
   description = EXCLUDED.description,
   table_action = EXCLUDED.table_action,
+  spend_amount = EXCLUDED.spend_amount,
   sort_order = EXCLUDED.sort_order;

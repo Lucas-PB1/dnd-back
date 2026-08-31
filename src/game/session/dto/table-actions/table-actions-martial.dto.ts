@@ -176,6 +176,8 @@ const RANGER_TABLE_ACTION_SLUGS = [
   'fey-reinforcements',
   'misty-wanderer',
   'primal-companion',
+  'primal-companion-summon',
+  'primal-companion-restore',
   'hunter-defense',
   'gloom-stalker-dodge',
   'set-bestial-aspect',
@@ -200,6 +202,14 @@ export class UseRangerTableActionDto {
   @Min(0)
   @Max(5)
   level?: number;
+
+  @ApiPropertyOptional({
+    enum: ['strike', 'help', 'dash', 'disengage', 'dodge'],
+    description: 'Comando do companheiro primal (primal-companion)',
+  })
+  @IsOptional()
+  @IsIn(['strike', 'help', 'dash', 'disengage', 'dodge'])
+  companionCommand?: 'strike' | 'help' | 'dash' | 'disengage' | 'dodge';
 }
 
 const FIGHTER_TABLE_ACTION_SLUGS = [
@@ -359,6 +369,9 @@ const BARBARIAN_TABLE_ACTION_SLUGS = [
   'crushing-steps',
   'titanic-strikes',
   'titans-fury',
+  'primal-companion',
+  'primal-companion-summon',
+  'primal-companion-restore',
 ] as const;
 
 export class UseBarbarianTableActionDto {
@@ -374,4 +387,12 @@ export class UseBarbarianTableActionDto {
   @IsInt()
   @Min(1)
   diceCount?: number;
+
+  @ApiPropertyOptional({
+    enum: ['strike', 'help', 'dash', 'disengage', 'dodge'],
+    description: 'Comando do companheiro primal (primal-companion)',
+  })
+  @IsOptional()
+  @IsIn(['strike', 'help', 'dash', 'disengage', 'dodge'])
+  companionCommand?: 'strike' | 'help' | 'dash' | 'disengage' | 'dodge';
 }

@@ -55,10 +55,8 @@ INSERT INTO rpg.phb_subclass_table_action (
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'), 'hair-trigger-action', 'Gatilho Instantâneo', 3, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'), 'horse-lord', 'Cavalo Senhor', 9, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'highway-rider'), 'horse-lord-action', 'Cavalo Senhor', 9, NULL, false, false, false, NULL, NULL),
-  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'), 'spell-shield', 'Magia Shield', 3, NULL, false, false, false, NULL, NULL),
-  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'), 'spell-shield-action', 'Magia Shield', 3, NULL, false, false, false, NULL, NULL),
-  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'), 'rebuke-invoker', 'Repreender Invoker', 6, NULL, false, false, false, NULL, NULL),
-  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'), 'rebuke-invoker-action', 'Repreender Invoker', 6, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'), 'spell-shield', 'Escudo Mágico', 3, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'), 'rebuke-invoker', 'Repreender Invocador', 6, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'), 'compound-creator', 'Composto Criador', 3, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'), 'compound-creator-action', 'Composto Criador', 3, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'living-crucible'), 'rapid-consumption', 'Rápida Consumption', 10, NULL, false, false, false, NULL, NULL),
@@ -130,7 +128,7 @@ INSERT INTO rpg.phb_subclass_table_action (
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'primordial-archer'), 'primordial-magic-action', 'Primordial Magic', 15, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'purification-domain'), 'ward-against-corruption', 'Proteção Contra Corrupção', 6, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sangromancer'), 'blood-for-blood', 'Sangue por Sangue', 10, 'sangromancy-dice', true, false, false, NULL, NULL),
-  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sangromancer'), 'red-renewal', 'Renovação Rubra', 14, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sangromancer'), 'red-renewal', 'Renovação Rubra', 14, 'red-renewal', true, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sanguine-thief'), 'bloodstitch', 'Costura Sangrenta', 13, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'sanguine-thief'), 'bloody-exit', 'Sanguinário Saída', 17, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'the-coven'), 'hag-s-guile', 'Hag’s Astúcia', 6, NULL, false, false, false, NULL, NULL),
@@ -177,4 +175,9 @@ ON CONFLICT (subclass_id, slug) DO UPDATE SET
   unlock_level = EXCLUDED.unlock_level,
   free_resource_slug = EXCLUDED.free_resource_slug,
   always_spends_pool = EXCLUDED.always_spends_pool;
+
+-- Remover duplicatas geradas (mesmo feature com bucket fantasma).
+DELETE FROM rpg.phb_subclass_table_action
+WHERE subclass_id = (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain')
+  AND slug IN ('spell-shield-action', 'rebuke-invoker-action');
 

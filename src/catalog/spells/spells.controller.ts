@@ -31,6 +31,7 @@ export class SpellsController {
       query.school,
       query.editionSlugs,
       query.fields,
+      query.sangromancy,
     );
   }
 

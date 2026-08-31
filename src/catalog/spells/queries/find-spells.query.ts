@@ -8,6 +8,7 @@ import {
   PaginatedResponseDto,
   paginateQbCursor,
 } from '@common/dto/pagination.dto';
+import { sangromancyDescriptionSqlPattern } from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
 import { SpellResponseDto } from '../dto/spell-response.dto';
 import { SpellSummaryResponseDto } from '../dto/spell-summary-response.dto';
 import { SpellsMapper } from '../spells.mapper';
@@ -33,6 +34,7 @@ export class FindSpellsQuery {
     school?: string,
     editionSlugs?: string[],
     fields?: 'summary',
+    sangromancy?: boolean,
   ): Promise<
     PaginatedResponseDto<SpellResponseDto | SpellSummaryResponseDto>
   > {
@@ -66,6 +68,11 @@ export class FindSpellsQuery {
     const schoolSlug = school?.trim();
     if (schoolSlug) {
       qb.andWhere('spell.schoolSlug = :schoolSlug', { schoolSlug });
+    }
+    if (sangromancy) {
+      qb.andWhere('spell.description LIKE :sangromancyTag', {
+        sangromancyTag: sangromancyDescriptionSqlPattern(),
+      });
     }
     applyEditionSlugFilter(qb, 'spell.editionSlug', editionSlugs);
 

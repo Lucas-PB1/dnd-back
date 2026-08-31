@@ -6,6 +6,7 @@ describe('resolveDeclaredEconomyTableAction', () => {
   const state = {
     useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
     buildResponse: jest.fn().mockResolvedValue(stateResponse),
+    recoverClassResource: jest.fn().mockResolvedValue(stateResponse),
     patch: jest.fn().mockImplementation(async (_c, dto) => ({
       ...stateResponse,
       ...dto,
@@ -61,6 +62,19 @@ describe('resolveDeclaredEconomyTableAction', () => {
       tableAction: 'lightning-step',
       summary: 'Mover + dano elétrico',
     },
+    {
+      id: 'wizard-sangromancer-red-renewal',
+      name: 'Renovação Rubra',
+      economy: 'free' as const,
+      classSlug: 'wizard',
+      minLevel: 14,
+      subclassSlug: 'sangromancer',
+      resourceSlug: 'red-renewal',
+      alwaysSpendsResource: true,
+      tableAction: 'red-renewal',
+      description:
+        'Após DC: recupera metade do nível em Dados de Vida e Sangromancia.',
+    },
   ];
 
   const mechanicalCatalog = {
@@ -85,6 +99,7 @@ describe('resolveDeclaredEconomyTableAction', () => {
     jest.clearAllMocks();
     state.useClassResource.mockResolvedValue({ state: stateResponse });
     state.buildResponse.mockResolvedValue(stateResponse);
+    state.recoverClassResource.mockResolvedValue(stateResponse);
     state.patch.mockImplementation(async (_c, dto) => ({
       ...stateResponse,
       ...dto,
@@ -178,5 +193,31 @@ describe('resolveDeclaredEconomyTableAction', () => {
         'erupting-blades',
       ),
     ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('recovers sangromancy dice on red-renewal', async () => {
+    const sangro = {
+      id: 'wizard-sangro',
+      classSlug: 'wizard',
+      subclassSlug: 'sangromancer',
+      level: 14,
+    };
+    const result = await resolveDeclaredEconomyTableAction(
+      { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
+      sangro as never,
+      'red-renewal',
+    );
+    expect(state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'wizard-sangro' }),
+      'red-renewal',
+      1,
+    );
+    expect(state.recoverClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'wizard-sangro' }),
+      'sangromancy-dice',
+      7,
+    );
+    expect(result.total).toBe(7);
+    expect(result.note).toContain('7 Dado(s) de Sangromancia');
   });
 });

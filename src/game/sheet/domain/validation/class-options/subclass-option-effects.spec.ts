@@ -52,4 +52,13 @@ describe('subclass-option-effects', () => {
       ]),
     ).toEqual(new Set(['escudo', 'armadura-arcana']));
   });
+
+  it('collects sangromancy savant spellbook picks', () => {
+    expect(
+      collectSubclassSpellbookBonusSlugs([
+        { optionKey: 'sangromancySavant1', valueId: 'blood-tide' },
+        { optionKey: 'sangromancySavant2', valueId: 'crimson-lash' },
+      ]),
+    ).toEqual(new Set(['blood-tide', 'crimson-lash']));
+  });
 });

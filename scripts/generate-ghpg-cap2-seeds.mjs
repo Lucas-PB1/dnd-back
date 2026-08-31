@@ -8,7 +8,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { extracts } from './lib/docs-source.mjs';
-import { SPELL_SLUG_MAP } from './lib/ghpg-cap2-spell-slug-map.mjs';
+import {
+  CURATED_SPELL_GRANTS,
+  SPELL_SLUG_MAP,
+  SPELL_SLUG_MISSING_IN_CATALOG,
+} from './lib/ghpg-cap2-spell-slug-map.mjs';
 import { translateFeatureName } from './lib/ghpg-cap2-feature-names-pt.mjs';
 import {
   CLASS_FEATURE_NAME_PT,
@@ -353,35 +357,119 @@ ON CONFLICT (subclass_id, level, name) DO UPDATE SET
 writeFile('database/seeds/grim-hollow/J028_phb_subclass_feature.sql', j028);
 console.log('subclass features:', featureCount);
 
-// J029 — prepared spells
-let j029 = `-- Grim Hollow Cap. 2 — prepared spells\n\n`;
-let preparedLinks = 0;
-for (const sc of subclasses) {
-  for (const table of sc.spellTables ?? []) {
-    for (const row of table.rows ?? []) {
-      const spells = row.spells
-        .map((name) => SPELL_SLUG_MAP[name] ?? null)
-        .filter(Boolean);
-      if (spells.length === 0) continue;
-      preparedLinks += spells.length;
-      j029 += `-- ${sc.slug} L${row.level}\n`;
-      j029 += `INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
-SELECT s.id, ${row.level}, sp.id, NULL
+// J029 — prepared spells (spellTables + grants curated de prosa)
+const cap7Spells = JSON.parse(
+  fs.readFileSync(extracts.grimHollow.cap7Spells, 'utf8'),
+).spells;
+const CAP7_BY_NAME = new Map(
+  cap7Spells.map((s) => [normalizeSpellName(s.name).toLowerCase(), s.slug]),
+);
+
+function normalizeSpellName(name) {
+  return String(name)
+    .replace(/[\u2018\u2019\u201A\u2032]/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function looksLikeSpellName(name) {
+  const n = normalizeSpellName(name);
+  if (!n || n.length > 48) return false;
+  if (
+    /the creature|condition\.|disadvantage|advantage on|feet away|can’t|can't|must succeed/i.test(
+      n,
+    )
+  ) {
+    return false;
+  }
+  if (/\.$/.test(n) && n.split(/\s+/).length > 3) return false;
+  return /^[A-Z]/.test(n);
+}
+
+function resolveSpellSlug(rawName) {
+  const name = normalizeSpellName(rawName);
+  if (!looksLikeSpellName(name)) return { kind: 'noise' };
+  if (SPELL_SLUG_MAP[name]) return { kind: 'ok', slug: SPELL_SLUG_MAP[name] };
+  const cap7 = CAP7_BY_NAME.get(name.toLowerCase());
+  if (cap7) return { kind: 'ok', slug: cap7 };
+  if (SPELL_SLUG_MISSING_IN_CATALOG.includes(name)) {
+    return { kind: 'missing-catalog', name };
+  }
+  return { kind: 'unmapped', name };
+}
+
+function resolveSpellSlugs(names) {
+  const slugs = [];
+  const skipped = [];
+  for (const raw of names) {
+    const hit = resolveSpellSlug(raw);
+    if (hit.kind === 'ok') slugs.push(hit.slug);
+    else if (hit.kind === 'noise') continue;
+    else skipped.push(hit.name);
+  }
+  return { slugs: [...new Set(slugs)], skipped };
+}
+
+function appendPreparedBlock(buf, subclassSlug, level, spellSlugs) {
+  if (spellSlugs.length === 0) return buf;
+  return (
+    buf +
+    `-- ${subclassSlug} L${level}\n` +
+    `INSERT INTO rpg.phb_subclass_prepared_spell (subclass_id, unlock_level, spell_id, terrain)
+SELECT s.id, ${level}, sp.id, NULL
 FROM rpg.phb_subclass s, rpg.phb_spell sp
-WHERE s.slug = '${sc.slug}' AND sp.slug IN (
-  ${spells.map((x) => `'${x}'`).join(', ')}
+WHERE s.slug = '${subclassSlug}' AND sp.slug IN (
+  ${spellSlugs.map((x) => `'${x}'`).join(', ')}
 )
 ON CONFLICT ON CONSTRAINT uq_subclass_prepared_spell DO NOTHING;
 
+`
+  );
+}
+
+let j029 = `-- Grim Hollow Cap. 2 — prepared spells
+-- Gerado por generate-ghpg-cap2-seeds.mjs (spellTables + CURATED_SPELL_GRANTS)
+
 `;
+let preparedLinks = 0;
+const skippedNames = new Set();
+for (const sc of subclasses) {
+  for (const table of sc.spellTables ?? []) {
+    for (const row of table.rows ?? []) {
+      const { slugs, skipped } = resolveSpellSlugs(row.spells ?? []);
+      for (const s of skipped) skippedNames.add(`${sc.slug}: ${s}`);
+      if (slugs.length === 0) continue;
+      preparedLinks += slugs.length;
+      j029 = appendPreparedBlock(j029, sc.slug, row.level, slugs);
     }
   }
 }
+
+j029 += `-- Grants curated (prosa Cap.2 sem spellTables)\n\n`;
+for (const grant of CURATED_SPELL_GRANTS) {
+  const { slugs, skipped } = resolveSpellSlugs(grant.spells);
+  for (const s of skipped) skippedNames.add(`${grant.subclass}: ${s}`);
+  if (slugs.length === 0) continue;
+  preparedLinks += slugs.length;
+  j029 = appendPreparedBlock(j029, grant.subclass, grant.level, slugs);
+}
+
+if (skippedNames.size > 0) {
+  j029 += `-- Skipped (ausente no catálogo phb_spell ou sem mapa):\n`;
+  for (const line of [...skippedNames].sort()) {
+    j029 += `--   ${line}\n`;
+  }
+  j029 += '\n';
+}
+
 if (preparedLinks === 0) {
   j029 += '-- (nenhum vínculo — preencha SPELL_SLUG_MAP no gerador após revisar tabelas do extract)\n';
 }
 writeFile('database/seeds/grim-hollow/J029_phb_subclass_prepared_spell.sql', j029);
 console.log('prepared spell links:', preparedLinks);
+if (skippedNames.size) {
+  console.log('skipped spell names:', [...skippedNames].sort().join('; '));
+}
 
 // Extract PT (metadados + overrides aplicados)
 const extractPt = {

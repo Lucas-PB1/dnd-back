@@ -12,6 +12,12 @@ import {
   LORE_MAGICAL_DISCOVERY_KEYS,
   WIZARD_VERSATILITY_OPTION_KEYS,
 } from './subclass-option-effects';
+import {
+  SANGROMANCY_SAVANT_OPTION_KEYS,
+  SANGROMANCY_SCHOOL_FILTER_SLUG,
+  isSangromancySavantOptionKey,
+  sangromancyDescriptionSqlPattern,
+} from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
 
 const LORE_SPELL_LIST_CLASS_SLUGS = ['cleric', 'druid', 'wizard'] as const;
 
@@ -156,6 +162,12 @@ export class CharacterSubclassOptionValueValidator {
         options,
         [`${prefix}1`, `${prefix}2`],
       );
+      return;
+    }
+
+    if (isSangromancySavantOptionKey(def.optionKey)) {
+      await this.validateSangromancySavant(def, option);
+      this.assertDistinctAcrossKeys(options, [...SANGROMANCY_SAVANT_OPTION_KEYS]);
     }
   }
 
@@ -172,6 +184,13 @@ export class CharacterSubclassOptionValueValidator {
   }
 
   private assertDistinctPair(
+    options: SubclassOptionDto[],
+    keys: readonly string[],
+  ): void {
+    this.assertDistinctAcrossKeys(options, keys);
+  }
+
+  private assertDistinctAcrossKeys(
     options: SubclassOptionDto[],
     keys: readonly string[],
   ): void {
@@ -222,6 +241,34 @@ export class CharacterSubclassOptionValueValidator {
     if (rows.length === 0) {
       throw new BadRequestException(
         `Spell '${option.valueId}' is not a valid Lore magical discovery`,
+      );
+    }
+  }
+
+  private async validateSangromancySavant(
+    def: PhbOptionDef,
+    option: SubclassOptionDto,
+  ): Promise<void> {
+    const maxLevel = def.spellMaxLevel ?? 2;
+    const schoolSlugs = def.spellSchoolSlugs ?? [];
+    if (!schoolSlugs.includes(SANGROMANCY_SCHOOL_FILTER_SLUG)) {
+      throw new BadRequestException(
+        `Subclass option '${def.optionKey}' is misconfigured for Sangromancy`,
+      );
+    }
+
+    const rows = await this.dataSource.query<{ ok: number }[]>(
+      `SELECT 1 AS ok
+       FROM rpg.phb_spell s
+       WHERE s.slug = $1
+         AND s.level BETWEEN 1 AND $2
+         AND s.description LIKE $3
+       LIMIT 1`,
+      [option.valueId, maxLevel, sangromancyDescriptionSqlPattern()],
+    );
+    if (rows.length === 0) {
+      throw new BadRequestException(
+        `Spell '${option.valueId}' is not a valid Sangromancy choice for '${def.optionKey}'`,
       );
     }
   }

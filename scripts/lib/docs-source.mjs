@@ -53,6 +53,7 @@ export const extracts = {
     cap5AdvancedEquipmentImages: extractPath('grim-hollow/cap5-advanced-equipment-images.json'),
     cap1HeritagesPt: extractPath('grim-hollow/cap1-heritages-pt.json'),
     cap6Transformations: extractPath('grim-hollow/cap6-transformations.json'),
+    cap7Spells: extractPath('grim-hollow/cap7-spells.json'),
   },
   griffonsSaddlebag: {
     bookOnePartIi: extractPath('griffons-saddlebag/book-one-part-ii.json'),

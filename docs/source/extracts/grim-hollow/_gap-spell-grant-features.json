@@ -1,0 +1,144 @@
+{
+  "occultist-guild": [
+    {
+      "level": 3,
+      "name": "Spellcasting",
+      "description": "Your study of the occult gives you the ability to cast spells. Cantrips. You learn two cantrips of your choice from the Wizard spell list. Whenever you gain a Monster Hunter level, you can replace one of these cantrips with another of your choice from the Wizard spell list. When you reach Monster Hunter level 10, you learn another Wizard cantrip of your choice. Spell Slots. The Occultist Spellcasting table shows how many spell slots you have to cast your level 1+ spells. You regain all expended spell slots when you finish a Long Rest. Prepared Spells of Level 1+. You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose three level 1 Wizard spells. Burning Hands , Detect Magic , and Protection from Evil and Good are recommended. The number of spells on your list increases as you gain Monster Hunter levels, as shown in the Prepared Spells column of the Occultist Spellcasting table. Whenever that number increases, choose additional spells from the Wizard spell list until the number of spells on your list matches the number on the table. The chosen spells must be of a level for which you have spell slots. For example, if you’re a level 7 Monster Hunter, your list of prepared spells can include five Wizard spells of levels 1 and 2 in any combination. Changing Your Prepared Spells. Whenever you gain a Monster Hunter level, you can replace one spell on your list with another Wizard spell. Spellcasting Ability. Intelligence is your spellcasting ability for your Wizard spells. Spellcasting Focus. You can use an Arcane Focus as Spellcasting Focus for your Wizard spells."
+    },
+    {
+      "level": 10,
+      "name": "Occult Knowledge",
+      "description": "Your knowledge of magic has increased so that you learn to cast Rituals. You can cast any spell as a Ritual if that spell has the Ritual tag and it’s a spell you have prepared. In addition, you learn two spells of your choice. These spells can come from the Cleric, Druid, or Wizard spell list or any combination thereof (see a class’s section for its spell list). A spell you choose must have the Ritual tag. When you reach Monster Hunter level 14, you can replace one of the spells you know from this feature with another spell of your choice from any spell list. The new spell must have the Ritual tag."
+    },
+    {
+      "level": 15,
+      "name": "Magical Aegis",
+      "description": "You gain the ability to extend a protective charm. You radiate an unseeable aura in a 20-foot Emanation that originates from you. The aura is inactive while you have the Incapacitated condition. You and allies in your aura have Advantage on saving throws against spells cast by creature types in your Monster Grimoire. Additionally, you always have the Counterspell spell prepared. You can cast Counterspell once without expending a spell slot. Once you cast the spell with this feature, you can’t do so in this way again until you finish a Long Rest."
+    }
+  ],
+  "collegeof-fools": [
+    {
+      "level": 3,
+      "name": "Antagonistic Antics",
+      "description": "You know the Vicious Mockery cantrip. If you already know it, you learn a different Bard cantrip of your choice. The cantrip doesn’t count against your number of cantrips known. Additionally, you always have the Dissonant Whispers spell prepared. In addition, when you take the Dash , Disengage , or Influence action on your turn, you can take a Bonus Action on the same turn to cast Vicious Mockery ."
+    }
+  ],
+  "collegeof-requiems": [
+    {
+      "level": 3,
+      "name": "Chilling Melody",
+      "description": "You learn two Necromancy cantrips of your choice. These count as Bard spells for you but don’t count against the number of cantrips you know."
+    },
+    {
+      "level": 6,
+      "name": "Stir the Bones",
+      "description": "You always have the Animate Dead spell prepared. It counts as a Bard spell for you. When you expend a use of Bardic Inspiration, choose Undead creatures under your control within 60 feet of yourself, up to a number equal to your Charisma modifier (minimum of one creature). The chosen creatures each gain a Bardic Inspiration die. These extra Bardic Inspiration dice do not count against your limit. When an Undead creature under your control expends a Bardic Inspiration die on an attack roll, it can also add the number rolled on the Bardic Inspiration die to the attack’s damage roll if that attack hits."
+    }
+  ],
+  "circleof-mutation": [
+    {
+      "level": 14,
+      "name": "Apex Predator",
+      "description": "Your mastery of mutation has made you an apex predator, granting you the following benefits. Evolved Attacks. Once per turn, you can deal an extra 2d10 Force damage to a target you hit with a Wild Shape form’s attack. Mutate Beasts. As a Magic action, you can touch a Beast and expend a spell slot, causing the target to mutate. You gain Mutation Points equal to the slot’s level, which you must immediately spend on Mutations for the Beast. Unspent Mutation Points are lost. Mutations remain until the Beast is targeted by this feature again. A Remove Curse , Greater Restoration or similar magic ends the Mutations."
+    }
+  ],
+  "pathofthe-primal-spirit": [
+    {
+      "level": 6,
+      "name": "Kin to Beasts",
+      "description": "You always have the Animal Friendship and Speak with Animals spells prepared. You can cast each of these spells without expending a spell slot. Once you cast either spell in this way, you can’t cast that spell in this way again until you finish a Short or Long Rest. You can also cast these spells using spell slots you have of the appropriate level. Constitution is your spellcasting ability for them."
+    },
+    {
+      "level": 10,
+      "name": "Skinrider’s Trance",
+      "description": "You take a Magic action to enter a trance and choose your primal companion or one Beast currently under the effect of your Animal Friendship spell within 60 feet of yourself. For the duration of this trance, you possess the chosen creature. Once you possess a creature’s body, you control it. Your Hit Points, Hit Point Dice, Strength, Dexterity, Constitution, Speed , and senses are replaced by the creature’s. You otherwise keep your game statistics. This possession ends if you choose to exit the trance (no action required by you), if the Beast you’re possessing is reduced to 0 Hit Points, or if you and the Beast are on different planes of existence. While in this trance, your body falls into a catatonic state. You can’t move or take Reactions, and you’re unaware of your surroundings. You can remain in the trance for a number of hours up to half your Barbarian level plus your Constitution modifier. Once you use this feature, you can’t use it again until you finish a Long Rest. You can also restore your use of it by expending one use of your Rage (no action required)."
+    }
+  ],
+  "pathofthe-wrathful-dead": [
+    {
+      "level": 10,
+      "name": "Death Is but a Door",
+      "description": "Your familiarity with death has left you resistant to its call. You gain the following benefits. Hard to Kill. You have Advantage on Death Saving Throws. In addition, you must fail four Death Saving Throws to die instead of three as normal. Return the Spirit. You can call the spirits of the deceased to restore life essence to a nearby creature. You can cast the Cure Wounds , Raise Dead , or Revivify spell without providing Material components. When you do, you gain 1 Exhaustion level for Cure Wounds , 2 Exhuastion levels for Revivify , and 3 Exhaustion levels for Raise Dead . Constitution is your spellcasting ability for this feature. Once you use this feature, you can’t use it again until you finish a Long Rest unless you expend two uses of your Rage (no action required) to restore your use of it. He’s a creepy fella, always muttering to himself and seeing things that just aren’t there. But there’s no one I’d rather have watching my back."
+    }
+  ],
+  "sanguine-thief": [
+    {
+      "level": 3,
+      "name": "Spellcasting",
+      "description": "You have learned to cast Wizard spells, as well as spells from the Sangromancy school. All Sangromancy spells and cantrips are treated as Wizard spells for the purposes of this subclass. Cantrips. You know three cantrips from the Wizard spell list and from the list of Sangromancy spells. Whenever you gain a Rogue level, you can replace one of your cantrips with another Wizard cantrip of your choice. Guilherme Castro When you reach Rogue level 10, you learn another Wizard cantrip of your choice. Spell Slots. The Sanguine Thief Spellcasting table shows how many spell slots you have to cast your level 1+ spells. You regain all expended spell slots when you finish a Long Rest. Prepared Spells of Level 1+. You prepare the list of level 1+ spells that are available for you to cast with this feature. To start, choose three level 1 Wizard spells. The number of spells on your list increases as you gain Rogue levels, as shown in the Prepared Spells column of the Sanguine Thief Spellcasting table. Whenever that number increases, choose additional Wizard spells until the number of spells on your list matches the number in the Sanguine Thief Spellcasting table. The chosen spells must be of a level for which you have spell slots. Changing Your Prepared Spells. Whenever you gain a Rogue level, you can replace one spell on your list with another Wizard spell for which you have spell slots. Spellcasting Ability. Intelligence is your spellcasting ability for your Wizard spells. Spellcasting Focus. You can use an Arcane Focus as a Spellcasting Focus for your Wizard spells."
+    },
+    {
+      "level": 3,
+      "name": "Stolen Power",
+      "description": "You draw magic from blood. It is represented by your Sangromancy Dice, which fuel powers you have from this subclass. You have a pool of d8s that you can use on Sanguine Thief features. The number of damage dice in the pool equals the number of damage dice as shown in the Sneak Attack column of the Rogue Features table. You can’t have more Sangromancy Dice than the number of damage dice shown in the Sneak Attack column for your level, unless you have Sangromancy Dice from a different source. Blood Magic. You can spend Sangromancy Dice instead of Hit Dice when you cast Sangromancy spells. Your pool regains all expended dice when you finish a Long Rest."
+    },
+    {
+      "level": 3,
+      "name": "Steal Blood",
+      "description": "When you deal Sneak Attack damage, you can restore 1 Sangromancy Die. If you are Bloodied , instead of restoring 1 Sangromancy Die when you deal Sneak Attack damage, you can immediately roll the die and regain a number of Hit Points equal to the roll’s total. You can use this feature a number of times equal to your Intelligence modifier (minimum of once). You regain all expended uses when you finish a Long Rest."
+    },
+    {
+      "level": 9,
+      "name": "Bloody Blades",
+      "description": "When you finish a Long Rest, you can spend up to 2 Hit Dice or Sangromancy Dice to create a number of Daggers equal to the number of dice spent in this way. Each Dagger counts as an Arcane Focus for your Sanguine Thief spells, and you can cast spells with Somatic components even if you wield these weapons in one or both hands. Additionally, when you score a Critical Hit with this weapon, you can cause the weapon to deal extra damage to the target. The extra damage is a number of d8s equal to the number of Hit Dice or Sangromancy Dice spent on this feature. The extra damage is Necrotic. The Daggers last until you finish a Long Rest."
+    },
+    {
+      "level": 13,
+      "name": "Bloodstitch",
+      "description": "As a Magic action, you can spend 3 Hit Dice or Sangromancy Dice to fling a wave of needle-like blood shards. When you do so, each creature of your choice in a 30-foot Emanation originating from you must make a Dexterity saving throw against your spell save DC, taking 3d8 Necrotic damage on a failed save or half as much damage on a successful one. You regain 1 Hit Die or Sangromancy Die (your choice) for each creature reduced to 0 Hit Points by this feature. Once you use this feature, you can’t do so again until you finish a Short or Long Rest."
+    },
+    {
+      "level": 17,
+      "name": "Bloody Exit",
+      "description": "When a creature hits you with an attack roll, you can take a Reaction and spend 5 Hit Dice or Sangromancy Dice to turn into bloody mist. The attack automatically misses you, you can teleport up to 30 feet to an unoccupied space you can see, and you regain your normal form. As part of this Reaction, you can make an attack with a Melee weapon immediately after you teleport. On a hit, this attack deals an extra 5d8 Necrotic damage to the target. Once you use this feature, you can’t use it again until you finish a Short or Long Rest."
+    }
+  ],
+  "highway-rider": [
+    {
+      "level": 3,
+      "name": "Trusty Mount",
+      "description": "You always have the Find Steed spell prepared. With this feature, you can cast it without a spell slot or components, and your spellcasting ability for it is Intelligence. Once you cast the spell with this feature, you can’t do so in this way again until you finish a Long Rest."
+    }
+  ],
+  "wretched-bloodline-sorcery": [
+    {
+      "level": 3,
+      "name": "Blood Ties",
+      "description": "Your senses easily attune to the supernatural forces that caused your inherited affliction. You always have the Detect Evil and Good spell prepared and can cast it without expending a spell slot. In addition, choose one of the following types of creatures as the being that cursed your ancestor: Fey, Fiend, or Undead. On each of your turns while you maintain Concentration on Detect Evil and Good , including the turn when you cast it, creatures of the chosen type have Disadvantage on attack rolls against you, and you can’t be possessed, Charmed , or Frightened by such creatures. Once you cast the spell with this feature, you can’t do so in this way again until you finish a Short or Long Rest."
+    },
+    {
+      "level": 6,
+      "name": "Share the Burden",
+      "description": "You always have the Bestow Curse spell prepared. You can cast the spell by spending 3 Sorcery Points instead of a spell slot. When you cast the spell in this way, the spell doesn’t require Concentration , and its range changes to 60 feet for that casting."
+    }
+  ],
+  "the-parasite-patron": [
+    {
+      "level": 3,
+      "name": "Spell Siphon",
+      "description": "Your patron has taught you to siphon magic from your enemies and make it your own. Immediately after a creature you can see within 60 feet of you casts a spell, you can take a Reaction to force the creature to make a Charisma saving throw. The DC equals your spell save DC. On a failed save, that creature can't cast the spell again until 8 hours have passed. While this effect lasts, if the spell was at least level 1 and of a level you can cast, you have that spell prepared. Tony Sart The maximum number of spell levels you can have siphoned at once equals 1 plus your Charisma modifier (minimum of 1). If you have the Incapacitated condition or die, you lose all siphoned spells. When you finish a Long Rest, you lose all siphoned spells."
+    },
+    {
+      "level": 10,
+      "name": "Spawn Pawn",
+      "description": "You always have the Dominate Person spell prepared. You can also cast it once without a spell slot, and you regain the ability to do so when you finish a Long Rest. In addition, taking damage can’t break your Concentration on Dominate Person . When a creature succeeds on its saving throw, it takes Psychic damage equal to your Warlock level."
+    },
+    {
+      "level": 14,
+      "name": "Larval Regeneration",
+      "description": "When you die, a larval parasite bursts from your corpse. You control the parasite. The parasite uses the Rat stat block except it has your Hit Points; Hit Point Dice; Intelligence, Wisdom, and Charisma scores; class features; languages; and feats. It can’t cast spells. In addition, it has the following ability: Burrowing Possession. As a Magic action, the parasite can cause a Humanoid within 5 feet of it to make a Strength or Dexterity saving throw (your choice) against your Warlock spell save DC. On a failed save, the parasite burrows into the creature, dealing Piercing damage equal to your Warlock level. While burrowed inside a creature, the parasite can’t take any action, Bonus Action, or Reaction, has Total Cover , and has Immunity to all damage except Psychic damage. On each of the creature’s subsequent turns, it can use its action to make a Constitution saving throw against your Warlock spell save DC. If the creature succeeds, the parasite is ejected from its body and into an unoccupied space of the creature’s choice within 5 feet of it. If the parasite is burrowed inside the creature when the creature’s turn ends, the creature takes Necrotic damage equal to twice your Warlock level. If this damage reduces the creature to 0 Hit Points, it immediately dies, the parasite disappears, and you take over the body of the Humanoid as if you had been targeted by the Reincarnate spell and rolled the species the Humanoid had been. If you are returned to life, such as by the Revivify spell, your parasite immediately disappears. Once you use this feature, you can’t use it again until you finish a Long Rest."
+    }
+  ],
+  "warriorofthe-leaden-crown": [
+    {
+      "level": 3,
+      "name": "Psionic Prowess",
+      "description": "Your psychic powers have manifested in the ability to cast certain spells. You know the Mage Hand cantrip. You can cast it without Verbal or Somatic components, and you can make the spectral hand Invisible . In addition, you can cast certain spells by expending Focus Points. You can take a Magic action and expend 1 Focus Point to cast Detect Evil and Good or Protection from Evil and Good . You can also take a Magic action and expend 2 Focus Points to cast Hold Person , Levitate , or Shatter . Wisdom is your spellcasting ability for these spells, and you can cast them without Material components."
+    },
+    {
+      "level": 17,
+      "name": "Psionic Mastery",
+      "description": "After much training, you have mastered the psionic disciplines necessary to defend mortals from planar threats. As a Magic action, you can spend 5 Focus Points to cast Dispel Evil and Good , Hold Monster , Telekinesis , or Wall of Force . Wisdom is your spellcasting ability for these spells, and you can cast them without Material components."
+    }
+  ]
+}

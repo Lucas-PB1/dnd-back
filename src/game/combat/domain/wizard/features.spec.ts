@@ -55,5 +55,21 @@ describe('wizard-features', () => {
     expect(mmNotes.some((n) => n.includes('Mísseis Versáteis'))).toBe(false);
     expect(mmNotes.some((n) => n.includes('Escudo de Mísseis'))).toBe(false);
     expect(mmNotes.some((n) => n.includes('Giga-Míssil'))).toBe(false);
+
+    const sangroL6 = wizardCombatNotes({
+      classSlug: 'wizard',
+      subclassSlug: 'sangromancer',
+      level: 6,
+    });
+    expect(sangroL6.some((n) => n.includes('Dados de Sangromancia'))).toBe(true);
+    expect(sangroL6.some((n) => n.includes('Vigor Sanguíneo'))).toBe(true);
+    expect(sangroL6.some((n) => n.includes('Sangue por Sangue'))).toBe(false);
+
+    const sangroL14 = wizardCombatNotes({
+      classSlug: 'wizard',
+      subclassSlug: 'sangromancer',
+      level: 14,
+    });
+    expect(sangroL14.some((n) => n.includes('Renovação Rubra'))).toBe(true);
   });
 });

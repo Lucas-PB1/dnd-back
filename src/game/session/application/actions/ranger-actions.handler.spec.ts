@@ -32,10 +32,14 @@ describe('RangerActionsHandler', () => {
       panelActions: [],
     }),
   };
+  const syncCompanion = { execute: jest.fn() };
+  const dataSource = {} as never;
   const handler = new RangerActionsHandler(
     access as never,
     state as never,
     mechanicalCatalog as never,
+    syncCompanion as never,
+    dataSource,
   );
 
   const ranger = {

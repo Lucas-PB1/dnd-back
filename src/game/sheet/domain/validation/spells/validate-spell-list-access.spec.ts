@@ -3,7 +3,11 @@ import { In } from 'typeorm';
 import { validateSpellListAccess } from './validate-spell-list-access';
 
 describe('validateSpellListAccess', () => {
-  let classSpellsRepo: { find: jest.Mock; findOne: jest.Mock };
+  let classSpellsRepo: {
+    find: jest.Mock;
+    findOne: jest.Mock;
+    manager: { query: jest.Mock };
+  };
   let subclassSpellsRepo: { find: jest.Mock; findOne: jest.Mock };
   const ctx = {
     classSlug: 'wizard',
@@ -14,7 +18,11 @@ describe('validateSpellListAccess', () => {
   };
 
   beforeEach(() => {
-    classSpellsRepo = { find: jest.fn().mockResolvedValue([]), findOne: jest.fn() };
+    classSpellsRepo = {
+      find: jest.fn().mockResolvedValue([]),
+      findOne: jest.fn(),
+      manager: { query: jest.fn().mockResolvedValue([]) },
+    };
     subclassSpellsRepo = { find: jest.fn().mockResolvedValue([]), findOne: jest.fn() };
   });
 
@@ -25,6 +33,7 @@ describe('validateSpellListAccess', () => {
       speciesGranted?: string[];
       spellListClassSlug?: string;
       maxSpellLevel?: number;
+      sangromancyAllowedSlugs?: string[];
     } = {},
   ): Promise<void> {
     await validateSpellListAccess(
@@ -36,6 +45,10 @@ describe('validateSpellListAccess', () => {
       new Set(opts.speciesGranted ?? []),
       opts.spellListClassSlug ?? 'wizard',
       opts.maxSpellLevel ?? 2,
+      new Set(),
+      [],
+      undefined,
+      new Set(opts.sangromancyAllowedSlugs ?? []),
     );
   }
 
@@ -118,6 +131,19 @@ describe('validateSpellListAccess', () => {
       { spellSlug: 'fireball', terrainSlug: null },
     ]);
     await expect(run([{ spellSlug: 'fireball' }])).resolves.toBeUndefined();
+  });
+
+  it('accepts sangromancy spells for sangromancer when tagged', async () => {
+    classSpellsRepo.find.mockResolvedValue([]);
+    subclassSpellsRepo.find.mockResolvedValue([]);
+    (classSpellsRepo.manager.query as jest.Mock).mockResolvedValue([
+      { slug: 'blood-tide', level: 1 },
+    ]);
+    await expect(
+      run([{ spellSlug: 'blood-tide' }], {
+        sangromancyAllowedSlugs: ['blood-tide'],
+      }),
+    ).resolves.toBeUndefined();
   });
 
   it('loads membership in one batch for many spells', async () => {

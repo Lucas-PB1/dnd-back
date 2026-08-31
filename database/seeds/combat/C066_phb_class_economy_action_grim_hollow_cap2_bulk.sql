@@ -218,15 +218,15 @@ INSERT INTO rpg.phb_class_economy_action (
   'gh-cleric-inquisition-domain-spell-escudo-bonus',
   (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'),
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
-  'Spell Escudo',
+  'Escudo Mágico',
   'bonus'::rpg.action_economy_bucket,
   3,
   NULL,
   NULL,
   false,
-  'AB: As a Ação Bônus, you can expend one use of your Channel Divinity to bestow a temporary resilience against arcane harm f…',
-  'As a Ação Bônus, you can expend one use of your Channel Divinity to bestow a temporary resilience against arcane harm for 10 minutes. Choose a creature you can see (including yourself) within 9 m of yourself. The chosen creature gains Pontos de Vida Temporários equal to 1d10 plus your Cleric level. While a creature has Pontos de Vida Temporários granted by your Spell Escudo, the creature has Vantagem on salvaguardas against spells, and it has Resistência to the damage of spells. If any of these Pontos de Vida Temporários remain when Spell Escudo ends, they vanish.',
-  'spell-escudo',
+  'AB: gasta Canalizar Divindade → PV temp. + resist. a magias (10 min)',
+  'Ação Bônus: gaste um uso de Canalizar Divindade. Escolha uma criatura que você possa ver (incluindo você) a até 9 m. Ela ganha PV temporários = 1d10 + seu nível de Clérigo. Enquanto tiver esses PV temp., tem Vantagem em salvaguardas contra magias e Resistência ao dano de magias. PV temp. restantes somem quando o efeito acaba (10 min).',
+  'spell-shield',
   NULL,
   337
 ),
@@ -259,22 +259,6 @@ INSERT INTO rpg.phb_class_economy_action (
   'Ação: As a Magic action, you expend a use of your Channel Divinity to choose a point within 36 m of you that you can see and …',
   'As a Magic action, you expend a use of your Channel Divinity to choose a point within 36 m of you that you can see and roll on the Eldritch Effects table. Each creature in a 4,5 m-radius Sphere centered on that point must succeed on a Sabedoria salvaguarda against your spell save CD or suffer the rolled effect for 1 minute. At the end of each of its turns, the target repeats the save, ending the effect on itself on a success.',
   'prophecy-of-doom',
-  NULL,
-  338
-),
-(
-  'gh-cleric-inquisition-domain-spell-escudo',
-  (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'),
-  (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
-  'Spell Escudo (Ação)',
-  'action'::rpg.action_economy_bucket,
-  3,
-  NULL,
-  NULL,
-  false,
-  'Ação: As a Ação Bônus, you can expend one use of your Channel Divinity to bestow a temporary resilience against arcane harm f…',
-  'As a Ação Bônus, you can expend one use of your Channel Divinity to bestow a temporary resilience against arcane harm for 10 minutes. Choose a creature you can see (including yourself) within 9 m of yourself. The chosen creature gains Pontos de Vida Temporários equal to 1d10 plus your Cleric level. While a creature has Pontos de Vida Temporários granted by your Spell Escudo, the creature has Vantagem on salvaguardas against spells, and it has Resistência to the damage of spells. If any of these Pontos de Vida Temporários remain when Spell Escudo ends, they vanish.',
-  'spell-escudo-action',
   NULL,
   338
 ),
@@ -442,14 +426,14 @@ INSERT INTO rpg.phb_class_economy_action (
   'gh-cleric-inquisition-domain-rebuke-invoker-reaction',
   (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'),
   (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
-  'Rebuke Invoker',
+  'Repreender Invocador',
   'reaction'::rpg.action_economy_bucket,
   6,
   NULL,
   NULL,
   false,
-  'Reação: As a Reação in response to a creature you can see within 18 m of yourself using a Magic action to cast a spell, you can…',
-  'As a Reação in response to a creature you can see within 18 m of yourself using a Magic action to cast a spell, you can force the creature to make a Constituição salvaguarda against your spell save CD. On a failed save, the creature takes 1d8 dano de Força, plus another 1d8 per level of the espaço de magia the creature expended. Truques are considered level 1 spells for this ability. On a successful save, the creature takes half as much damage instead. You can use this feature a number of times equal to your modificador de Sabedoria (minimum once). You regain all expended uses of this feature when you finish a Descanso Longo.',
+  'Reação vs magia (18 m): Con ou dano de Força (Sab mod ×/LR)',
+  'Reação quando uma criatura a até 18 m usa ação Mágica para conjurar: salvaguarda de Constituição vs CD de magia. Falha: 1d8 Força + 1d8 por nível do espaço (truque = 1º). Sucesso: metade. Usos = mod. Sabedoria (mín. 1); recupera no Descanso Longo.',
   'rebuke-invoker',
   NULL,
   351
@@ -469,22 +453,6 @@ INSERT INTO rpg.phb_class_economy_action (
   'cunning-and-brutal',
   NULL,
   352
-),
-(
-  'gh-cleric-inquisition-domain-rebuke-invoker',
-  (SELECT id FROM rpg.phb_class WHERE slug = 'cleric'),
-  (SELECT id FROM rpg.phb_subclass WHERE slug = 'inquisition-domain'),
-  'Rebuke Invoker (Ação)',
-  'action'::rpg.action_economy_bucket,
-  6,
-  NULL,
-  NULL,
-  false,
-  'Ação: As a Reação in response to a creature you can see within 18 m of yourself using a Magic action to cast a spell, you can…',
-  'As a Reação in response to a creature you can see within 18 m of yourself using a Magic action to cast a spell, you can force the creature to make a Constituição salvaguarda against your spell save CD. On a failed save, the creature takes 1d8 dano de Força, plus another 1d8 per level of the espaço de magia the creature expended. Truques are considered level 1 spells for this ability. On a successful save, the creature takes half as much damage instead. You can use this feature a number of times equal to your modificador de Sabedoria (minimum once). You regain all expended uses of this feature when you finish a Descanso Longo.',
-  'rebuke-invoker-action',
-  NULL,
-  353
 ),
 (
   'gh-barbarian-pathofthe-fractured-cunning-and-brutal',
@@ -2656,4 +2624,11 @@ ON CONFLICT (action_id) DO UPDATE SET
   description = EXCLUDED.description,
   table_action = EXCLUDED.table_action,
   sort_order = EXCLUDED.sort_order;
+
+-- Falso positivo do classificador: Spell Shield é só Ação Bônus (não Ação).
+DELETE FROM rpg.phb_class_economy_action
+WHERE action_id IN (
+  'gh-cleric-inquisition-domain-spell-escudo',
+  'gh-cleric-inquisition-domain-rebuke-invoker'
+);
 

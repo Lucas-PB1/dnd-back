@@ -76,6 +76,16 @@ export async function resolveDeclaredEconomyTableAction(
     note = `${note} PV temporários aplicados: ${tempHp} (metade do nível).`;
   }
 
+  if (actionSlug === 'red-renewal') {
+    const dice = Math.max(1, Math.floor(character.level / 2));
+    state = await deps.state.recoverClassResource(
+      character,
+      'sangromancy-dice',
+      dice,
+    );
+    note = `${note} Recuperados ${dice} Dado(s) de Sangromancia. Recupere também ${dice} Dado(s) de Vida gastos.`;
+  }
+
   return {
     state,
     actionName: action.name,
@@ -86,6 +96,9 @@ export async function resolveDeclaredEconomyTableAction(
       : {}),
     ...(spendAmount > 0 && actionSlug === 'marauders-reprisal'
       ? { total: Math.floor(character.level / 2) }
+      : {}),
+    ...(actionSlug === 'red-renewal'
+      ? { total: Math.max(1, Math.floor(character.level / 2)) }
       : {}),
   };
 }

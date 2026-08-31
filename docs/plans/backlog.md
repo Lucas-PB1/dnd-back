@@ -16,6 +16,8 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-cla
 | Ficha / inventário / sessão / campanha / encontro | Pronto |
 | Classes mesa PHB (critério skills) | Pronto (13 classes) |
 | Packs Steinhardt + Northlands (Waves 1–4 + polish create + pente fino) | Pronto |
+| Grim Hollow Cap. 2 catálogo + economy bulk | Catálogo OK; mesa fina aberta — [`grim-hollow-mesa-audit.md`](grim-hollow-mesa-audit.md) |
+| Grim Hollow Cap. 1 heranças | Wizard/prosa OK; C070–C072 pendente apply + passivos |
 | Itens DMG mesa (wiring) | Pronto — [`dmg-wiring-status.md`](../source/dmg-wiring-status.md) |
 | Actors: vincular veículo + boarding + ficha em modal | Pronto (`P040` + `N037` + UI) |
 | Combate situacional / monstros / iniciativa extra | **Adiado** |
@@ -24,6 +26,7 @@ Padrão de classe jogável (mesa): skills **`rpg-class-mesa-api`** · **`rpg-cla
 
 ## Ativo
 
+- [ ] **Grim Hollow — mesa Cap. 2 + Cap. 1:** AE guildas MH, resources, J029 gaps, passivos tipados, aplicar C070–C072/T093. Plano: [`grim-hollow-mesa-audit.md`](grim-hollow-mesa-audit.md).
 - [ ] **Northlands — Character Threads (fase 2 / mesa):** gatilhos Cursemarked (brackets d20), Fatebound na morte, economy 1/LR dos benefícios. MVP ficha já feito (`T085`/`P039`/`N036` + API + Traços/wizard). Extração: [`northlands-character-threads.md`](northlands-character-threads.md).
 - [ ] **Northlands — pente fino residual (opcional):** M6 features só texto; Greater Freyr usos PB/dia — ver [`northlands-audit.md`](northlands-audit.md).
 

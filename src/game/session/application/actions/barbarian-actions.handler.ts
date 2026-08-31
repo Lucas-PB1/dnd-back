@@ -1,6 +1,9 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectDataSource } from '@nestjs/typeorm';
+import { DataSource } from 'typeorm';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isBarbarianClass } from '@game/combat/domain/barbarian';
+import { SyncCharacterCompanionHandler } from '@game/actor/application/sync-character-companion.handler';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
@@ -9,6 +12,10 @@ import {
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
+import {
+  resolveCompanionCommand,
+  resolveCompanionSummon,
+} from './shared/companion-table-actions';
 import type { BarbarianActionDeps } from './barbarian/barbarian-action-deps';
 import {
   resolveRecoverAllRage,
@@ -46,6 +53,9 @@ export class BarbarianActionsHandler {
     private readonly state: CharacterStateRepository,
     private readonly domain: CharacterDomainService,
     private readonly mechanicalCatalog: LoadCombatMechanicalCatalog,
+    private readonly syncCompanion: SyncCharacterCompanionHandler,
+    @InjectDataSource()
+    private readonly dataSource: DataSource,
   ) {}
 
   private deps(): BarbarianActionDeps {
@@ -53,6 +63,14 @@ export class BarbarianActionsHandler {
       access: this.access,
       state: this.state,
       domain: this.domain,
+    };
+  }
+
+  private companionDeps() {
+    return {
+      state: this.state,
+      dataSource: this.dataSource,
+      syncCompanion: this.syncCompanion,
     };
   }
 
@@ -120,6 +138,34 @@ export class BarbarianActionsHandler {
         return resolveShieldBlock(deps, character);
       case 'i-cast-fist':
         return resolveICastFist(deps, character);
+      case 'primal-companion-summon':
+        return resolveCompanionSummon(
+          this.companionDeps(),
+          userId,
+          character,
+          'pathofthe-primal-spirit',
+          'Espírito Primal',
+          'Invocar Companheiro Primal',
+        );
+      case 'primal-companion-restore':
+        return resolveCompanionSummon(
+          this.companionDeps(),
+          userId,
+          character,
+          'pathofthe-primal-spirit',
+          'Espírito Primal',
+          'Restaurar Companheiro Primal',
+          true,
+        );
+      case 'primal-companion':
+        return resolveCompanionCommand(
+          this.companionDeps(),
+          character,
+          'pathofthe-primal-spirit',
+          'Espírito Primal',
+          'Companheiro Primal',
+          dto.companionCommand ?? 'strike',
+        );
       default:
         return resolveDeclaredEconomyTableAction(
           { state: this.state, mechanicalCatalog: this.mechanicalCatalog },

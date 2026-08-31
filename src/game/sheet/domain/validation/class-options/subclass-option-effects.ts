@@ -40,6 +40,14 @@ export const WIZARD_VERSATILITY_OPTION_KEYS = new Set([
   'illusionVersatility2',
 ]);
 
+import { SANGROMANCY_SAVANT_OPTION_KEYS } from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
+
+export { SANGROMANCY_SAVANT_OPTION_KEYS };
+
+const SANGROMANCY_SAVANT_KEY_SET = new Set<string>(
+  SANGROMANCY_SAVANT_OPTION_KEYS as readonly string[],
+);
+
 export const SUBCLASS_SKILL_OPTION_KEYS = new Set([
   ...LORE_BONUS_SKILL_KEYS,
   'warScholarSkill',
@@ -78,7 +86,7 @@ export function collectSubclassOptionGrantedSpellSlugs(
   return slugs;
 }
 
-/** Magias gratuitas no grimório (Versado em {Escola}). */
+/** Magias gratuitas no grimório (Versado em {Escola} / Sangromancia). */
 export function collectSubclassSpellbookBonusSlugs(
   subclassOptions: readonly SubclassOptionPick[] | undefined,
 ): Set<string> {
@@ -86,7 +94,10 @@ export function collectSubclassSpellbookBonusSlugs(
   if (!subclassOptions?.length) return slugs;
 
   for (const option of subclassOptions) {
-    if (!WIZARD_VERSATILITY_OPTION_KEYS.has(option.optionKey)) continue;
+    const isBonus =
+      WIZARD_VERSATILITY_OPTION_KEYS.has(option.optionKey) ||
+      SANGROMANCY_SAVANT_KEY_SET.has(option.optionKey);
+    if (!isBonus) continue;
     if (option.valueId) slugs.add(option.valueId);
   }
   return slugs;

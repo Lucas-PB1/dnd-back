@@ -20,6 +20,7 @@ export async function validateSpellListAccess(
   extraGranted: ReadonlySet<string> = new Set(),
   extraListClassSlugs: readonly string[] = [],
   subclassOptions?: CharacterSheetInput['subclassOptions'],
+  sangromancyAllowedSlugs: ReadonlySet<string> = new Set(),
 ): Promise<void> {
   const pending = spells.filter(
     (spell) =>
@@ -61,6 +62,28 @@ export async function validateSpellListAccess(
   );
   const landTerrain = resolveLandTerrainSlug(ctx.subclassSlug, subclassOptions);
 
+  const sangromancyOnlySlugs = spellSlugs.filter(
+    (slug) =>
+      sangromancyAllowedSlugs.has(slug) &&
+      !classByKey.has(`${spellListClassSlug}:${slug}`) &&
+      !classByKey.has(`${ctx.classSlug}:${slug}`) &&
+      !subclassBySpell.has(slug),
+  );
+  const sangromancyLevelBySlug = new Map<string, number>();
+  if (sangromancyOnlySlugs.length > 0) {
+    const rows = await classSpellsRepo.manager.query<
+      { slug: string; level: number }[]
+    >(
+      `SELECT slug, level
+       FROM rpg.phb_spell
+       WHERE slug = ANY($1::text[])`,
+      [sangromancyOnlySlugs],
+    );
+    for (const row of rows) {
+      sangromancyLevelBySlug.set(row.slug, Number(row.level));
+    }
+  }
+
   for (const spell of pending) {
     const inListClass = classByKey.get(`${spellListClassSlug}:${spell.spellSlug}`);
     const inClass =
@@ -89,16 +112,32 @@ export async function validateSpellListAccess(
     }
 
     if (!inListClass && !inClass && !subclassAllowed && !extraListMeta) {
-      throw new BadRequestException(
-        `Spell '${spell.spellSlug}' is not available for this character's class/subclass/feats/species`,
-      );
+      if (!sangromancyAllowedSlugs.has(spell.spellSlug)) {
+        throw new BadRequestException(
+          `Spell '${spell.spellSlug}' is not available for this character's class/subclass/feats/species`,
+        );
+      }
     }
 
     const listMeta = inListClass ?? inClass ?? extraListMeta;
-    if (listMeta && !subclassAllowed && listMeta.spellLevel > maxSpellLevel) {
+    const sangromancyOnly =
+      !listMeta && sangromancyAllowedSlugs.has(spell.spellSlug);
+    if (
+      listMeta &&
+      !subclassAllowed &&
+      listMeta.spellLevel > maxSpellLevel
+    ) {
       throw new BadRequestException(
         `Spell '${spell.spellSlug}' (circle ${listMeta.spellLevel}) exceeds max circle ${maxSpellLevel} for ${ctx.classSlug} level ${ctx.level}`,
       );
+    }
+    if (sangromancyOnly) {
+      const sangLevel = sangromancyLevelBySlug.get(spell.spellSlug) ?? 0;
+      if (sangLevel > maxSpellLevel) {
+        throw new BadRequestException(
+          `Spell '${spell.spellSlug}' (circle ${sangLevel}) exceeds max circle ${maxSpellLevel} for ${ctx.classSlug} level ${ctx.level}`,
+        );
+      }
     }
   }
 }

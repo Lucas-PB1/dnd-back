@@ -1,0 +1,85 @@
+import { BadRequestException } from '@nestjs/common';
+import { DataSource } from 'typeorm';
+import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import type { TableActionResponseDto } from '@game/session/dto';
+import {
+  formatCompanionCommandNote,
+  isCompanionCommandSlug,
+} from '@game/companion/domain/companion-commands';
+import { resolveCompanionConfig } from '@game/companion/domain/companion-profiles';
+import { loadCharacterSheet } from '@game/sheet/infrastructure/character-sheet/load-character-sheet';
+import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import type { SyncCharacterCompanionHandler } from '@game/actor/application/sync-character-companion.handler';
+import {
+  assertCharacterLevel,
+  assertCharacterSubclass,
+} from '@game/session/application/core/table-action-guards';
+
+export type CompanionTableActionDeps = {
+  state: CharacterStateRepository;
+  dataSource: DataSource;
+  syncCompanion: SyncCharacterCompanionHandler;
+};
+
+export async function resolveCompanionSummon(
+  deps: CompanionTableActionDeps,
+  userId: string,
+  character: PlayerCharacter,
+  subclassSlug: string,
+  subclassLabel: string,
+  actionName: string,
+  restoreHp = false,
+): Promise<TableActionResponseDto> {
+  assertCharacterSubclass(character, subclassSlug, subclassLabel);
+  assertCharacterLevel(character, 3, character.classSlug ?? 'classe', actionName);
+
+  const synced = await deps.syncCompanion.execute(userId, character.id, {
+    restoreHp,
+  });
+  const hp =
+    synced.hitPointsCurrent != null && synced.hitPointsMax != null
+      ? `${synced.hitPointsCurrent}/${synced.hitPointsMax} PV`
+      : 'PV na ficha do companheiro';
+
+  return {
+    state: await deps.state.buildResponse(character),
+    actionName,
+    resourceSpent: false,
+    note: `${actionName}: ${synced.name} (${synced.variantLabel}) — ${hp}.${synced.reused ? ' Companheiro já ativo; ficha atualizada.' : ''}`,
+  };
+}
+
+export async function resolveCompanionCommand(
+  deps: CompanionTableActionDeps,
+  character: PlayerCharacter,
+  subclassSlug: string,
+  subclassLabel: string,
+  actionName: string,
+  command?: string,
+): Promise<TableActionResponseDto> {
+  assertCharacterSubclass(character, subclassSlug, subclassLabel);
+  assertCharacterLevel(character, 3, character.classSlug ?? 'classe', actionName);
+
+  if (!command || !isCompanionCommandSlug(command)) {
+    throw new BadRequestException(
+      'Informe companionCommand: strike, help, dash, disengage ou dodge',
+    );
+  }
+
+  const sheet = await loadCharacterSheet(
+    { dataSource: deps.dataSource },
+    character.id,
+    character.backgroundSlug,
+  );
+  const config = resolveCompanionConfig(
+    character.subclassSlug,
+    sheet.subclassOptions,
+  );
+
+  return {
+    state: await deps.state.buildResponse(character),
+    actionName,
+    resourceSpent: false,
+    note: formatCompanionCommandNote(command, config?.variantLabel),
+  };
+}

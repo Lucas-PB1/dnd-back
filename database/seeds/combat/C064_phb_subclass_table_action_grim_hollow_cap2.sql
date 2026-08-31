@@ -6,11 +6,22 @@ INSERT INTO rpg.phb_subclass_table_action (
 )
 VALUES
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'), 'close-quarters', 'Corpo a Corpo', 3, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'), 'true-grit', 'Determinação Inabalável', 7, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'), 'terrorize-the-terrors', 'Aterrorizar os Terrores', 10, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'carver-guild'), 'controlled-footwork', 'Passos Controlados', 18, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'), 'consume-portion', 'Consumir Porção', 3, 'devourer-portion', true, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'), 'harvest-portion', 'Colher Porção', 3, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'), 'synchronized-response', 'Resposta Sincronizada', 7, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'), 'destroy-decoction', 'Destruir Decocção', 15, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'devourer-guild'), 'acquired-taste', 'Paladar Adquirido', 18, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'), 'elemental-ammo', 'Munição Elemental', 3, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'), 'runic-bomb', 'Bomba Rúnica', 3, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'), 'set-weretrap', 'Armadilha Weretrap', 3, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'), 'scorpion-anchor', 'Âncora Escorpião', 3, NULL, false, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'), 'agile-response', 'Resposta Ágil', 10, NULL, false, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'), 'phase-leap', 'Salto de Fase', 15, 'trapper-phase-leap', true, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'), 'armor-regen', 'Regeneração da Armadura', 15, 'trapper-regen-dice', true, false, false, NULL, NULL),
+  ((SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'), 'rapid-tinkerer', 'Engenho Rápido', 18, 'trapper-rapid-tinker', true, false, false, NULL, NULL),
   ((SELECT id FROM rpg.phb_subclass WHERE slug = 'occultist-guild'), 'arcane-response', 'Resposta Arcana', 18, NULL, false, false, false, NULL, NULL)
 ON CONFLICT (subclass_id, slug) DO UPDATE
   SET name = EXCLUDED.name,

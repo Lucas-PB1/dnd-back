@@ -1,0 +1,41 @@
+{
+  "generatedAt": "2026-08-31T20:18:05.329Z",
+  "subclassCount": 40,
+  "notedSubclassCount": 40,
+  "missingNotes": [],
+  "extraNotes": [],
+  "hpCandidates": [
+    {
+      "subclassSlug": "wretched-bloodline-sorcery",
+      "feature": "Wretched Curse",
+      "level": 3,
+      "flat": 1,
+      "perLevel": 1,
+      "fromLevel": 3,
+      "classKeyword": "sorcerer",
+      "conditional": true
+    },
+    {
+      "subclassSlug": "sangromancer",
+      "feature": "Sanguine Vigor",
+      "level": 6,
+      "flat": 6,
+      "perLevel": 1,
+      "fromLevel": 6,
+      "classKeyword": "wizard",
+      "conditional": false
+    }
+  ],
+  "hpSeedable": [
+    {
+      "subclassSlug": "sangromancer",
+      "feature": "Sanguine Vigor",
+      "level": 6,
+      "flat": 6,
+      "perLevel": 1,
+      "fromLevel": 6,
+      "classKeyword": "wizard",
+      "conditional": false
+    }
+  ]
+}

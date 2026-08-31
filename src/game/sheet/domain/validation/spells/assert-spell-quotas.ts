@@ -9,6 +9,8 @@ import {
 } from '@game/spellcasting/domain/spell-quota';
 import { extraCantripsFromClassOrder } from '../class-options/class-order-effects';
 import { collectSubclassSpellbookBonusSlugs } from '../class-options/subclass-option-effects';
+import { usesWizardPlusSangromancyList } from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
+import { loadSangromancySpellLevelsUpTo } from '@game/spellcasting/domain/sangromancy/load-sangromancy-spell-slugs';
 import {
   loadSpellProgressionLimits,
   SubclassSpellcastingInfo,
@@ -35,6 +37,23 @@ export async function assertSpellQuotas(
   const catalogRows = await classSpellsRepo.find({
     where: { classSlug: catalogClassSlug },
   });
+  let catalog = catalogRows.map((item) => ({
+    slug: item.spellSlug,
+    level: item.spellLevel,
+  }));
+  if (usesWizardPlusSangromancyList(ctx.classSlug, ctx.subclassSlug)) {
+    const sangromancyRows = await loadSangromancySpellLevelsUpTo(
+      dataSource,
+      9,
+    );
+    const bySlug = new Map(catalog.map((row) => [row.slug, row]));
+    for (const row of sangromancyRows) {
+      if (!bySlug.has(row.slug)) {
+        bySlug.set(row.slug, { slug: row.slug, level: row.level });
+      }
+    }
+    catalog = [...bySlug.values()];
+  }
   const quotaSpells = spells.filter(
     (spell) => !spellbookBonus.has(spell.spellSlug),
   );
@@ -42,10 +61,7 @@ export async function assertSpellQuotas(
     classSlug: catalogClassSlug,
     level: ctx.level,
     characterSpells: quotaSpells,
-    catalog: catalogRows.map((item) => ({
-      slug: item.spellSlug,
-      level: item.spellLevel,
-    })),
+    catalog,
     cantripsMax:
       limits.cantripsMax == null
         ? null

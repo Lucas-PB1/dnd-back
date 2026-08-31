@@ -25,6 +25,22 @@ VALUES
     NULL,
     (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
     15
+  ),
+  (
+    'trapper-regen-dice',
+    'Dados de Regeneração (Armadura)',
+    'subclass'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
+    15
+  ),
+  (
+    'trapper-rapid-tinker',
+    'Engenho Rápido',
+    'subclass'::rpg.resource_scope,
+    NULL,
+    (SELECT id FROM rpg.phb_subclass WHERE slug = 'trapper-guild'),
+    18
   )
 ON CONFLICT (slug) DO UPDATE SET
   name = EXCLUDED.name,
@@ -51,7 +67,7 @@ SELECT
 FROM rpg.phb_subclass s
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'devourer-portion'
 LEFT JOIN rpg.phb_subclass_feature sf
-  ON sf.subclass_id = s.id AND sf.name = 'Transmuting Metabolism'
+  ON sf.subclass_id = s.id AND sf.name = 'Metabolismo Transmutador'
 WHERE s.slug = 'devourer-guild'
 ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
   max_formula = EXCLUDED.max_formula,
@@ -97,9 +113,51 @@ SELECT
 FROM rpg.phb_subclass s
 JOIN rpg.phb_resource_definition rd ON rd.slug = 'trapper-phase-leap'
 LEFT JOIN rpg.phb_subclass_feature sf
-  ON sf.subclass_id = s.id AND sf.name = 'Monster-Hide Armor'
+  ON sf.subclass_id = s.id AND sf.name = 'Armadura de Pele de Monstro'
 WHERE s.slug = 'trapper-guild'
 ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
   fixed_max = EXCLUDED.fixed_max,
   feature_id = EXCLUDED.feature_id,
+  recover_all_on_long = EXCLUDED.recover_all_on_long;
+
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT
+  'subclass'::rpg.resource_owner_kind,
+  s.id,
+  rd.id,
+  15,
+  'fixed'::rpg.resource_max_formula,
+  6,
+  FALSE,
+  FALSE,
+  TRUE
+FROM rpg.phb_subclass s
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'trapper-regen-dice'
+WHERE s.slug = 'trapper-guild'
+ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
+  fixed_max = EXCLUDED.fixed_max,
+  recover_all_on_long = EXCLUDED.recover_all_on_long;
+
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long
+)
+SELECT
+  'subclass'::rpg.resource_owner_kind,
+  s.id,
+  rd.id,
+  18,
+  'fixed'::rpg.resource_max_formula,
+  2,
+  FALSE,
+  FALSE,
+  TRUE
+FROM rpg.phb_subclass s
+JOIN rpg.phb_resource_definition rd ON rd.slug = 'trapper-rapid-tinker'
+WHERE s.slug = 'trapper-guild'
+ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
+  fixed_max = EXCLUDED.fixed_max,
   recover_all_on_long = EXCLUDED.recover_all_on_long;
