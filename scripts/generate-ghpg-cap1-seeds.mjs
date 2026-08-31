@@ -6,11 +6,12 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { extracts, scrapes } from './lib/docs-source.mjs';
+import { extracts } from './lib/docs-source.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
 const cap1Path = extracts.grimHollow.cap1Heritages;
+const ptOverlayPath = extracts.grimHollow.cap1HeritagesPt;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 
 const EDITION = 'grim-hollow-players-guide-2024-en';
@@ -47,7 +48,44 @@ const CATEGORY_INTRO = {
     'Herança eldritch — origem sobrenatural ou amaldiçoada; sistema modular de 8 traços (combate, exploração e interpretação).',
 };
 
-/** @param {import('../docs/source/extracts/grim-hollow/cap1-heritages.json')} cap1 */
+const CATEGORY_LABEL = {
+  combat: 'Combate',
+  exploration: 'Exploração',
+  roleplaying: 'Interpretação',
+};
+
+/** @param {Record<string, unknown> | null} overlay */
+function mergeCap1(cap1, overlay) {
+  return {
+    ...cap1,
+    heritages: cap1.heritages.map((h) => {
+      const pt = overlay?.heritages?.[h.slug];
+      if (!pt) return h;
+      return {
+        ...h,
+        description: pt.description ?? h.description,
+        size: pt.size ?? h.size,
+        speed: pt.speed ?? h.speed,
+        baseTraits: h.baseTraits.map((t, index) => ({
+          name: pt.baseTraits?.[index]?.name ?? t.name,
+          description: pt.baseTraits?.[index]?.description ?? t.description,
+        })),
+      };
+    }),
+    traits: cap1.traits.map((t) => {
+      const pt = overlay?.traits?.[t.slug];
+      if (!pt) return t;
+      return {
+        ...t,
+        name: pt.name ?? t.name,
+        description: pt.description ?? t.description,
+        improvedName: pt.improvedName ?? t.improvedName,
+      };
+    }),
+  };
+}
+
+/** @param {ReturnType<typeof mergeCap1>} cap1 */
 function buildHeritageSpeciesSql(cap1) {
   const rows = cap1.heritages.map((h) => {
     const summary = CATEGORY_INTRO[h.category] ?? '';
@@ -95,13 +133,17 @@ ON CONFLICT (slug) DO UPDATE SET
 `;
 }
 
-/** @param {import('../docs/source/extracts/grim-hollow/cap1-heritages.json')} cap1 */
+/** @param {ReturnType<typeof mergeCap1>} cap1 */
 function buildHeritageTraitsSql(cap1) {
   const lines = [];
 
   for (const h of cap1.heritages) {
     for (const t of h.baseTraits) {
-      if (t.name === 'Your draconic heritage marks you as a unique folk among the other heritages of Etharis') {
+      if (
+        t.name === 'Your draconic heritage marks you as a unique folk among the other heritages of Etharis' ||
+        t.name.startsWith('Typically short and stout') ||
+        t.name.startsWith('Though elves might pass')
+      ) {
         continue;
       }
       lines.push(
@@ -121,19 +163,14 @@ function buildHeritageTraitsSql(cap1) {
           ? `Traço tradicional sugerido (${label}).\n\n${trait.description}`
           : `Traço tradicional sugerido (${label}).`;
         lines.push(
-          `INSERT INTO rpg.phb_species_trait (species_id, name, description, choice_kind) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = ${sqlLiteral(h.slug)}), ${sqlLiteral(`[Tradicional · ${label}] ${tr.name}`)}, ${sqlLiteral(body)}, NULL) ON CONFLICT (species_id, name) DO UPDATE SET description = EXCLUDED.description;`,
+          `INSERT INTO rpg.phb_species_trait (species_id, name, description, choice_kind) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = ${sqlLiteral(h.slug)}), ${sqlLiteral(`[Tradicional · ${label}] ${trait?.name ?? tr.name}`)}, ${sqlLiteral(body)}, NULL) ON CONFLICT (species_id, name) DO UPDATE SET description = EXCLUDED.description;`,
         );
       }
     }
   }
 
   for (const t of cap1.traits) {
-    const cat =
-      t.category === 'combat'
-        ? 'Combate'
-        : t.category === 'exploration'
-          ? 'Exploração'
-          : 'Interpretação';
+    const cat = CATEGORY_LABEL[t.category] ?? t.category;
     const improved = t.improvedName ? `\n\nTomar novamente: ${t.improvedName}.` : '';
     lines.push(
       `INSERT INTO rpg.phb_species_trait (species_id, name, description, choice_kind) VALUES ((SELECT id FROM rpg.phb_species WHERE slug = 'gh-heritage-traits'), ${sqlLiteral(`[${cat}] ${t.name}`)}, ${sqlLiteral(`${t.description}${improved}`)}, NULL) ON CONFLICT (species_id, name) DO UPDATE SET description = EXCLUDED.description;`,
@@ -167,15 +204,20 @@ ON CONFLICT (slug) DO UPDATE SET
   chapter_title = EXCLUDED.chapter_title,
   extracted_at = EXCLUDED.extracted_at;
 
-UPDATE rpg.phb_edition SET notes = 'Grim Hollow — heranças, antecedentes avançados, armas e equipamento; textos em PT-BR onde disponível'
+UPDATE rpg.phb_edition SET notes = 'Grim Hollow — heranças, subclasses, antecedentes, talentos, equipamento avançado e transformações; textos em PT-BR onde disponível'
 WHERE slug = ${sqlLiteral(EDITION)};
 `;
 
-const cap1 = JSON.parse(fs.readFileSync(cap1Path, 'utf8'));
+const cap1Raw = JSON.parse(fs.readFileSync(cap1Path, 'utf8'));
+const ptOverlay = fs.existsSync(ptOverlayPath)
+  ? JSON.parse(fs.readFileSync(ptOverlayPath, 'utf8'))
+  : null;
+const cap1 = mergeCap1(cap1Raw, ptOverlay);
 
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, 'J010_phb_species_heritage.sql'), buildHeritageSpeciesSql(cap1), 'utf8');
 fs.writeFileSync(path.join(outDir, 'J011_phb_species_heritage_trait.sql'), buildHeritageTraitsSql(cap1), 'utf8');
 
 console.log('Seeds J010–J011 gerados em database/seeds/grim-hollow/');
+console.log(`  overlay PT: ${ptOverlay ? 'sim' : 'não'}`);
 console.log('Antecedentes: node scripts/generate-ghpg-cap3-seeds.mjs');

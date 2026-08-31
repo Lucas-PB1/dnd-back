@@ -1,6 +1,6 @@
 {
   "source": "Chapter 1_ Heritages & Traits - Grim Hollow_ Player’s Guide - Dungeons & Dragons - Sources - D&D Beyond.html",
-  "extractedAt": "2026-08-30T04:50:37.167Z",
+  "extractedAt": "2026-08-31T13:00:31.945Z",
   "heritageCount": 17,
   "traitCount": 107,
   "heritages": [
@@ -11,7 +11,7 @@
       "category": "common",
       "categoryLabelPt": "Herança comum",
       "description": "Dragonborn walk with pride through a world that greets them with equal parts fear and admiration. Their powerful resemblance to dragons makes them remarkable among other common folk. Thick scales cover their bodies, sharp claws tip their fingers, fangs line their jaws. They do not possess the legendary size or impressive wings of their presumed ancestors, but to be dragonborn is to be blessed with the breath and beauty of a dragon.\n\nSome claim that the dragonborn must be the most ancient among all heritages. During the Era of Expansion, humanity discovered a kingdom already shattered in Etharis’s most southern regions. Not even the dragonborn themselves could recount the history that had led to the destruction of their once-great capital—the granite city of Ember Cairn. When dragonborn prayed, they were met with silence from their gods. They dwelled in the ruins of their own inheritance.\n\nIt was not difficult for humans to settle the southern lands that would become Castinella. Disillusion and desperation caused the dragonborn to abandon their ancestral lands and scatter across Etharis, searching for the answers as to why their gods fell silent. It was in this same period human missionaries began teaching their own religions to the dragonborn that remained—of the Aetheric War and the Divine Seraphs. The dragonborn came to believe that their gods had not abandoned them but had been destroyed by the Aether Kindred. With a new faith to fill the void of their lost beliefs, the dragonborn of Castinella became among the most zealous adherents of the Eternal Dogma.\n\nCastinella awarded the dragonborn a small region of their ancestral land to call their own. From this humble start, they rebuilt the ancient city of Ember Cairn. Those who were scattered across the continent began to undertake pilgrimages to the city, where they were encouraged to embrace worship of the Divine Seraphs. With their ancient prayers seemingly answered at last, many dragonborn were drawn to become clerics, missionaries, and inquisitors, spreading their new beliefs with burning passion—and more often than not with burning fire.\n\nYour draconic heritage marks you as a unique folk among the other heritages of Etharis.\n\nAge. Young Dragonborn grow quickly. They walk hours after hatching, attain the size and development of a 10-year-old human child by the age of 3, and reach adulthood by 15. Dragonborn live to be about 80.\n\nSize. Dragonborn are typically tall and solidly built, with most standing well over 6 feet tall and averaging almost 250 pounds. Your size is Medium.\n\nSpeed. 30 feet.\n\nTraditional Dragonborn Traits\n\nFor most Dragonborn, a unique physiology defines and shapes their innate capabilities.",
-      "size": "Dragonborn are typically tall and solidly built, with most standing well over 1.8 m tall and averaging almost 250 pounds. Your size is Médio.",
+      "size": "Dragonborn are typically tall and solidly built, with most standing well over 1.8 m tall and com cerca de 125 kg em média. Your size is Médio.",
       "speed": "9 m.",
       "baseTraits": [
         {
@@ -24,7 +24,7 @@
         },
         {
           "name": "Size",
-          "description": "Size. Dragonborn are typically tall and solidly built, with most standing well over 1.8 m tall and averaging almost 250 pounds. Your size is Médio."
+          "description": "Size. Dragonborn are typically tall and solidly built, with most standing well over 1.8 m tall and com cerca de 125 kg em média. Your size is Médio."
         },
         {
           "name": "Speed",
@@ -75,12 +75,12 @@
     },
     {
       "slug": "gh-dwarf",
-      "nameEn": "Dwarve",
+      "nameEn": "Dwarf",
       "namePt": "Anão",
       "category": "common",
       "categoryLabelPt": "Herança comum",
       "description": "Ancient and dauntless as the mountains they call home, the dwarves first appeared in Etharis long before recorded history. As talented and diligent crafters, the dwarves forged their kingdoms in the valleys and foothills of the two oldest mountains on the continent: the Rock-Teeth and the Grey Spine. Beneath these vast ranges ran rich veins of mithral and gold. The dwarves who mined and crafted these metals quickly became famous across Etharis.\n\nDuring the wars of the Era of Expansion, the dwarves barricaded themselves within their greatest capitals: the tiered city of Stehlenwald and the mountain stronghold of Grabenstein. Both fortress cities were once thought impregnable. The dwarves of Grabenstein fought valiantly for their homelands, withstanding multiple sieges until eventually their walls were ruined, their thanedoms uprooted, and their rich mines claimed by human warlords. These conquerors’ descendants would later lay the groundwork for the Bürach Empire.\n\nThe dwarven kingdom of Stehlenwald endured. Rather than share the fate of their northern cousins, the Stehlenwald dwarves dug deeper into the heart of the mountain. There, miners laid eyes upon a new metal, impenetrable to the weapons of their enemies: adamantine. With armor and weapons crafted from adamantine, dwarf battalions managed to push the invaders back to their homelands, but at a great cost. The population of Stehlenwald was decimated by war and famine. Isolation within the mountains was the only option for survival for those who remained.\n\nBy the time of the rise of human kingdoms, the proud dwarves of Stehlenwald had recovered from war. They emerged from the mountains at last to discover the political landscape had dramatically changed, leaving them surrounded and vastly outnumbered by the armies of the Bürach Empire. Realizing there was only one way for his people to survive and prosper, the dwarf king struck a deal with the Bürach Empire. The dwarves would surrender their lands and become members of the empire, as long as they could govern themselves independently.\n\nGreat numbers of dwarves still cannot forgive the great loss of life and sovereignty their ancestors once endured. It’s a common phrase in Etharis that it’s easier to move a mountain than a dwarf. But though deep wounds still exist in the Bürach Empire, dwarves have become among the most prosperous and accepted peoples in all nations of Etharis.\n\nTypically short and stout, Dwarves are among the most recognizable folk of Etharis.\n\nAge. Dwarves physically mature by their late teens, but are considered young until they reach the age of 50. On average, they live about 350 years.\n\nSize. Dwarves stand between 4 and 5 feet tall and average about 150 pounds. Your size is Medium.\n\nSpeed. 30 feet. Your Speed is not reduced by wearing heavy armor. You can reduce your Speed by 5 feet to gain an extra traditional trait.\n\nMay your drink be strong and your hammer strike true.\n\nTraditional Dwarf Traits\n\nDwarves are known for their natural resilience and for the degree to which they have adapted to living in the deeps beneath hills and mountains, where few other folks can thrive.",
-      "size": "Dwarves stand between 4 and 1.5 m tall and average about 150 pounds. Your size is Médio.",
+      "size": "Dwarves stand between 4 and 1.5 m tall and cerca de 75 kg em média. Your size is Médio.",
       "speed": "9 m. Your Speed is not reduced by wearing heavy armor. You can reduce your Speed by 1.5 m to gain an extra traditional trait.",
       "baseTraits": [
         {
@@ -93,7 +93,7 @@
         },
         {
           "name": "Size",
-          "description": "Size. Dwarves stand between 4 and 1.5 m tall and average about 150 pounds. Your size is Médio."
+          "description": "Size. Dwarves stand between 4 and 1.5 m tall and cerca de 75 kg em média. Your size is Médio."
         },
         {
           "name": "Speed",
@@ -105,20 +105,55 @@
         }
       ],
       "traditionalTraits": {
-        "combat": [],
-        "exploration": [],
-        "roleplaying": []
+        "combat": [
+          {
+            "anchorId": "DamageResistanceCombat",
+            "name": "Damage Resistance"
+          },
+          {
+            "anchorId": "ToughnessCombat",
+            "name": "Toughness"
+          },
+          {
+            "anchorId": "WeaponAptitudeCombat",
+            "name": "Weapon Aptitude"
+          }
+        ],
+        "exploration": [
+          {
+            "anchorId": "DarkvisionExploration",
+            "name": "Darkvision"
+          },
+          {
+            "anchorId": "PoisonResilienceExploration",
+            "name": "Poison Resilience"
+          },
+          {
+            "anchorId": "SteadyExploration",
+            "name": "Steady"
+          }
+        ],
+        "roleplaying": [
+          {
+            "anchorId": "ArtisanalFocusRoleplaying",
+            "name": "Artisanal Focus"
+          },
+          {
+            "anchorId": "CraftersEyeRoleplaying",
+            "name": "Crafter’s Eye"
+          }
+        ]
       },
       "imageFile": "02-003.dwarf.png"
     },
     {
       "slug": "gh-elf",
-      "nameEn": "Elve",
+      "nameEn": "Elf",
       "namePt": "Elfo",
       "category": "common",
       "categoryLabelPt": "Herança comum",
       "description": "The proud and elegant elves were among the first people to dwell in the forests of Etharis. Their long history is entwined with fables from the distant past. Tall, graceful, and extraordinarily beautiful, these ancient folk believe they are descended from the nature spirits who cultivated the mortal realm. The elves claim the forests and river lands of Caer Neiada as their ancestral home, in what is now the Charneault Kingdom. Within those deep woods they created magnificent domains, ever taking guidance and blessing from the ageless spirits of the forest.\n\nMany elves are blessed with keen eyesight and a talent for archery. Their deep knowledge of the woodlands and their affinity with the fey enable them to conceal themselves effortlessly within their own domains. Their deadly and nimble armies made them a force to be reckoned with in the early days of Etharis. However, their unchallenged dominion over the forests combined with their long lives made the elves arrogant, setting themselves above and away from other folk—especially humans, who they considered primitive and barbaric. And so the elves failed to recognize the humans as a plausible threat.\n\nThe Era of Expansion cost the elves dearly. Their kingdoms were shattered, with many of their forests reduced to ash and blackened stumps. Though their battle prowess never dimmed, the elves found themselves outnumbered and unable to repel war-hungry armies burning and lumbering their sheltering woodlands. They instead retreated deep into their forests on the outskirts of human civilization, where they believed the Spirits of Nature would still protect them. When the elves eventually reemerged, they formed a pact with humankind that birthed the Charneault Kingdom.\n\nIn the end, the sorrow of the elves for their lost paradise empowered them to recreate that beauty in music and arts. They have crafted heartbreaking songs of a lost past that echo among the trees in the night. In these ballads they call themselves the ulufey, meaning mortal fey and the descendants of the fey sidhe. The faerie courts who had once guided the elves were not vanquished in the Era of Expansion and many hope such Spirits of Nature will aid in restoring elven lands to their ancient grace.\n\nThough elves might pass as humans at a distance, their fine features typically make them immediately recognizable to other folk.\n\nAge. Although elves reach physical maturity at about the same age as humans, the elven understanding of adulthood goes beyond physical growth to encompass worldly experience. An Elf typically claims adulthood and an adult name around the age of 100, and can live to be 750 years old.\n\nSize. Elves range from under 5 to over 6 feet tall and often have slender builds. Your size is Medium.\n\nSpeed. 30 feet.\n\nTraditional Elf Traits\n\nThe ancient traditions followed by many Elves reflect a mastery of mind, body, and magic.",
-      "size": "Elves range from under 5 to over 1.8 m tall and often have slender builds. Your size is Médio.",
+      "size": "Elves range from menos de 1,5 m to over 1.8 m tall and often have slender builds. Your size is Médio.",
       "speed": "9 m.",
       "baseTraits": [
         {
@@ -131,7 +166,7 @@
         },
         {
           "name": "Size",
-          "description": "Size. Elves range from under 5 to over 1.8 m tall and often have slender builds. Your size is Médio."
+          "description": "Size. Elves range from menos de 1,5 m to over 1.8 m tall and often have slender builds. Your size is Médio."
         },
         {
           "name": "Speed",
@@ -139,9 +174,44 @@
         }
       ],
       "traditionalTraits": {
-        "combat": [],
-        "exploration": [],
-        "roleplaying": []
+        "combat": [
+          {
+            "anchorId": "AwakenedMindCombat",
+            "name": "Awakened Mind"
+          },
+          {
+            "anchorId": "FocusedMindCombat",
+            "name": "Focused Mind"
+          },
+          {
+            "anchorId": "WeaponAptitudeCombat",
+            "name": "Weapon Aptitude"
+          }
+        ],
+        "exploration": [
+          {
+            "anchorId": "DarkvisionExploration",
+            "name": "Darkvision"
+          },
+          {
+            "anchorId": "MeditativeRestExploration",
+            "name": "Meditative Rest"
+          },
+          {
+            "anchorId": "ShroudoftheWildExploration",
+            "name": "Shroud of the Wild"
+          }
+        ],
+        "roleplaying": [
+          {
+            "anchorId": "InbornPerceptionRoleplaying",
+            "name": "Inborn Perception"
+          },
+          {
+            "anchorId": "MagicalSavvyRoleplaying",
+            "name": "Magical Savvy"
+          }
+        ]
       },
       "imageFile": "02-004.elf.png"
     },
@@ -152,7 +222,7 @@
       "category": "common",
       "categoryLabelPt": "Herança comum",
       "description": "Ingenious and full of energy, gnomes are thought to be distant cousins of the dwarves. Shorter than their dwarf kin and less bulky, these small-framed folk are often known for their ever-working brains and great aptitude for invention. Gnomes are clever, curious, sometimes mischievous, but culturally very diligent.\n\nGnomes have created some of the most impressive mechanical wonders of Etharis. Cannons, automatons, flintlocks, and explosives are all reputed to be results of gnomish crafting. The process of tinkering is as important as the result. Gnomes create new inventions simply to prove it can be done. It’s said among other folk that if you’re looking for a gnome in a populated city, you need only wait for the explosion to guide your steps.\n\nDuring the Era of Expansion, gnomes fled their settlements outside the sheltering mountains to seek the protection of dwarf cities such as Stehlenwald. There, they shared the fate of their dwarf cousins as human armies besieged the soaring stone walls of the city. While the dwarves eventually gazed upon adamantine, the ingenious minds of the gnomes hatched other plans with the gifts from the mountains.\n\nGnome alchemists worked day and night, mixing chemicals and powders, until they invented a new weapon: explosives. As the adamantine-clad dwarves charged the besieging human armies, they were supported by the sound of explosions as gnome artillery hurled cannonballs and dynamite at the enemy. Beneath the barrage, the human forces were quickly broken. The effects of the never-before-seen explosives struck fear into their minds, as if witnessing a new and terrible sorcery. A first great battle had been won, but the losses for both gnomes and dwarves were great. So did the gnomes follow the dwarves of Stehlenwald into their centuries-long isolation—and when the dwarf king voluntarily brought his people into the Bürach Empire, the gnomes followed.\n\nCuriously, gnomes have an affinity with the natural world. Those who did not flee for the safety of mountains were called back to their ancestral homes deep in Etharis’s forests. Perhaps this suggests a common ancestor with the elves, also.\n\nMost Gnomes are marked by the slight features and long lives that are common among their kind.\n\nAge. Gnomes are physically mature by 18, and most are expected to settle down into an adult life by around age 40. They can live to almost 500 years.\n\nSize. Gnomes are between 3 and 4 feet tall and average about 40 pounds. Your size is Small.\n\nSpeed. 30 feet. You can reduce your Speed by 5 feet to gain an extra traditional trait.\n\nThey’re grubby little folk, always smeared with ash and blackpowder. Couldn’t ask for better engineers though.\n\nTraditional Gnome Traits\n\nFor many Gnomes, an instinctive quickness of body and mind shapes their approach to life and learning.",
-      "size": "Gnomes are between 3 and 1.2 m tall and average about 40 pounds. Your size is Pequeno.",
+      "size": "Gnomes are between 3 and 1.2 m tall and cerca de 20 kg em média. Your size is Pequeno.",
       "speed": "9 m. You can reduce your Speed by 1.5 m to gain an extra traditional trait.",
       "baseTraits": [
         {
@@ -165,7 +235,7 @@
         },
         {
           "name": "Size",
-          "description": "Size. Gnomes are between 3 and 1.2 m tall and average about 40 pounds. Your size is Pequeno."
+          "description": "Size. Gnomes are between 3 and 1.2 m tall and cerca de 20 kg em média. Your size is Pequeno."
         },
         {
           "name": "Speed",
@@ -229,7 +299,7 @@
       "category": "common",
       "categoryLabelPt": "Herança comum",
       "description": "Over the centuries in which humankind proved an unstoppable force in conquering Etharis, humans earned the enmity of most other folk. All who tried to oppose them were met with violence. One group, however, chose not to contest human ascendancy and instead survived by adapting to human hegemony.\n\nThe Era of Expansion did not affect the halflings of Etharis as it did the folk of other heritages. Halflings hold less value for mundane riches like gold or jewels and were therefore happy paying tithes to stronger and better-armed humans who offered them protection. Though brave and spirited, halflings lack the ambition for nation building. Their humble shires easily adapted to becoming breadbaskets for human-made empires and kingdoms. Halflings also fit into human culture perfectly by acquiring useful positions such as merchants, advisors, teachers, or scholars. Even though the halflings did not agree with the violent ways of humans, they kept their silence and ensured their survival.\n\nHalflings are a resilient but peaceful people. What most of these tiny folk seek in life is a quiet place to settle, far away from conflict and war. They enjoy good music, fine food, and a good laugh when they can, and have a passion for lore, learning, and wild tales. But this does not mean that halflings are unable to fend for themselves in a dangerous world. They’re courageous folk when standing against foes they cannot elude or escape, and accounts of halfling adventurers seeking ancient and hidden knowledge are some of the most famous stories among their kind.\n\nHalflings have long used the lore they gather to build impressive libraries on specific subjects. Within the countless volumes of these libraries lie generations of knowledge pertaining to the interests and passions of these folk, including domestic crafts, nature, and history.\n\nWhatever their approach to life, most Halfling characters are defined by their diminutive stature.\n\nAge. A Halfling reaches adulthood at the age of 20 and generally lives into the middle of their second century.\n\nSize. Halflings average about 3 feet tall and weigh about 40 pounds. Your size is Small.\n\nSpeed. 30 feet. You can reduce your Speed by 5 feet to gain an extra traditional trait.\n\nThe halflings prove trickier than I first suspected, though content enough with current arrangements. I wouldn’t push things.\n\nTraditional Halfling Traits\n\nMany Halflings possess innate instincts of courage and curiosity, even if only a few get the chance to use them.",
-      "size": "Halflings average about 0.9 m tall and weigh about 40 pounds. Your size is Pequeno.",
+      "size": "Halflings average about 0.9 m tall and weigh cerca de 20 kg. Your size is Pequeno.",
       "speed": "9 m. You can reduce your Speed by 1.5 m to gain an extra traditional trait.",
       "baseTraits": [
         {
@@ -242,7 +312,7 @@
         },
         {
           "name": "Size",
-          "description": "Size. Halflings average about 0.9 m tall and weigh about 40 pounds. Your size is Pequeno."
+          "description": "Size. Halflings average about 0.9 m tall and weigh cerca de 20 kg. Your size is Pequeno."
         },
         {
           "name": "Speed",
@@ -301,7 +371,7 @@
     },
     {
       "slug": "gh-human",
-      "nameEn": "HumanHumans",
+      "nameEn": "Human",
       "namePt": "Humano",
       "category": "common",
       "categoryLabelPt": "Herança comum",
@@ -361,7 +431,7 @@
             "name": "Keen Survivor"
           },
           {
-            "anchorId": "SkillProwessRoleplaying",
+            "anchorId": "ProwessRoleplaying",
             "name": "Skill Prowess"
           }
         ]
@@ -444,7 +514,7 @@
       "category": "rare",
       "categoryLabelPt": "Herança rara",
       "description": "Legends in Etharis speak of an age of orcs. This ancient heritage has its roots in Etharis’ North, from where history claims they spread to terrorize other cultures. Orcs, as the term has become understood, were formidable warriors with endless thirst for battle. Yet tales of their armies nearly conquering all Etharis are almost certainly the propaganda of fearful outside cultures.\n\nThose same legends speak of how the orcs abandoned their lands en masse—not because of enemy incursions or natural disaster, but because of some mysterious calling from their ancestors to sail west across the sea. While it’s agreed that orcs did flee Etharis in a great fleet, their legacy calling to Thorgard av Holgar a century later, it seems apocryphal that an entire heritage could simply disappear across the sea. Indeed, the truth is more complex than any of those old tales can tell.\n\nThe descendants of the orcs call themselves grudgels. Their lack of resemblance to the dreadful legends about their ancestors causes the uneducated to assume orcs and grudgels are different. But what truly separates them is merely time and evolving culture.\n\nGrudgels are an imposing folk whose physical presence has not diminished since the legends of orc warriors. Yet even where they are most populous among the Valikan Clans, grudgels are no more or less predisposed to battle or taking the path of the warrior than any other folk. Grudgels are also talented artisans, wanderers, magic weavers, and star gazers. They alone hold the secrets of forging stryllum, a strange substance that occurs when starlight is solidified into glass. Grudgels are hard-working, peaceable among friends, and have a knack for keeping calm under pressure. But they’re more than capable of defending themselves against the threats of the wilderness and folk looking for a fight.\n\nOutside of the North, grudgels remain rare enough in Etharis that folk are less likely to meet one than hear fearful rumors regarding their kind. While a grudgel working as a bodyguard or mercenary can make use of such rumors, the one thing that seemingly connects all grudgels is a shared disinterest in discussing or hearing the ancient legends of the orcs. But whether this extends from wanting to distance themselves from the violent past of their kin, or from some secret knowledge of why the orcs vanished from Etharis, only they know.\n\nThe Grudgels’ ancient heritage marks them as distinct figures among the folk of Etharis.\n\nAge. Grudgels reach adulthood at about the age of 16, and can live to their seventh decade or more.\n\nSize. Grudgels are taller and stockier than many other humanoids, typically ranging from 6 to 7 feet in height, and weighing 200 pounds or more. Your size is Medium.\n\nSpeed. 30 feet.\n\nTraditional Grudgel Traits\n\nMany Grudgels are shaped by living as wanderers and by a long-held fascination with crafting and magic.",
-      "size": "Grudgels are taller and stockier than many other humanoids, typically ranging from 6 to 2.1 m in height, and weighing 200 pounds or more. Your size is Médio.",
+      "size": "Grudgels are taller and stockier than many other humanoids, typically ranging from 6 to 2.1 m in height, and weighing 100 kg or more. Your size is Médio.",
       "speed": "9 m.",
       "baseTraits": [
         {
@@ -457,7 +527,7 @@
         },
         {
           "name": "Size",
-          "description": "Size. Grudgels are taller and stockier than many other humanoids, typically ranging from 6 to 2.1 m in height, and weighing 200 pounds or more. Your size is Médio."
+          "description": "Size. Grudgels are taller and stockier than many other humanoids, typically ranging from 6 to 2.1 m in height, and weighing 100 kg or more. Your size is Médio."
         },
         {
           "name": "Speed",
@@ -582,7 +652,7 @@
       "category": "rare",
       "categoryLabelPt": "Herança rara",
       "description": "The more populous cultures of Etharis all have stories about the ogresh, although few have seen these gentle giants in person. Tales describe them as solitary, wise figures who often serve as founts of information and advice for nearby communities. Adventure tales abound in which a protagonist receives counsel from an ogresh before setting off on their quest, even as others describe royal advisors with a distinctive set of broad features. These tales are not without merit, as ogresh can be worldly from their travels in their younger years. Yet even outside the scope of such stories, those who know the ogresh often view them as something of an exotic oddity.\n\nIn truth, the scarcity of the ogresh is a result of their particular biology. Young ogresh mature slowly, and during an extended youth that might last decades, they are driven by a deep-seated sense of wanderlust. This feeling compels them to travel in search of a suitable area to settle—one holding ample natural resources, a local population of sentient creatures, and a lack of other ogresh nearby. Once they decide upon an area, an ogresh enters the second stage of their life, which is marked by a drastically increased appetite and a mostly sedentary lifestyle. More than a single ogresh could easily deplete the surplus of a small village, so the reason for their wanderlust is a simple case of biological necessity.\n\nGiven their reliance on other folk for survival, it comes as no surprise that many ogresh are masters of social interaction. But some folk maintain that the ogresh ability to glean insight from others has an unnatural quality to it, revealing more to the ogresh than most creatures would willingly share.\n\nHe’s a fantastic investigator. Most suspects confess as soon as they see him, and the rest spill after a few moments of conversation.\n\nAn ogresh’s formidable size and slow aging makes them stand out in settled lands.\n\nAge. Ogresh reach maturity around age 25 but are considered youthful by their kin for decades afterward. They can live as long as 300 years.\n\nSize. Young Ogresh typically stand 6 to 7 feet tall, and sport a distinctively wide and heavy build. A young Ogresh usually ranges between 200 and 300 pounds, while an older Ogresh can reach upward of 700 to 800 pounds. Your size is Medium.\n\nSpeed. 30 feet.\n\nTraditional Ogresh Traits\n\nA wandering lifestyle, and an innate ability to read other creatures, shapes and defines many Ogresh.",
-      "size": "Young Ogresh typically stand 6 to 2.1 m tall, and sport a distinctively wide and heavy build. A young Ogresh usually ranges between 200 and 300 pounds, while an older Ogresh can reach upward of 700 to 800 pounds. Your size is Médio.",
+      "size": "Young Ogresh typically stand 6 to 2.1 m tall, and sport a distinctively wide and heavy build. A young Ogresh usually ranges between 200 and 150 kg, while an older Ogresh can reach upward of 700 to 400 kg. Your size is Médio.",
       "speed": "9 m.",
       "baseTraits": [
         {
@@ -595,7 +665,7 @@
         },
         {
           "name": "Size",
-          "description": "Size. Young Ogresh typically stand 6 to 2.1 m tall, and sport a distinctively wide and heavy build. A young Ogresh usually ranges between 200 and 300 pounds, while an older Ogresh can reach upward of 700 to 800 pounds. Your size is Médio."
+          "description": "Size. Young Ogresh typically stand 6 to 2.1 m tall, and sport a distinctively wide and heavy build. A young Ogresh usually ranges between 200 and 150 kg, while an older Ogresh can reach upward of 700 to 400 kg. Your size is Médio."
         },
         {
           "name": "Speed",
@@ -789,7 +859,7 @@
             "name": "Draining Attack"
           },
           {
-            "anchorId": "NaturalAttackFangsCombat",
+            "anchorId": "NaturalAttackCombat",
             "name": "Natural Attack"
           },
           {
@@ -813,7 +883,7 @@
             "name": "Eager Deceiver"
           },
           {
-            "anchorId": "MagicalSavantRoleplaying",
+            "anchorId": "MagicalSavvyRoleplaying",
             "name": "Magical Savant"
           },
           {
@@ -866,7 +936,7 @@
             "name": "Master of Distraction"
           },
           {
-            "anchorId": "OutOfPhaseCombat",
+            "anchorId": "OutofPhaseCombat",
             "name": "Out of Phase"
           }
         ],
@@ -886,7 +956,7 @@
             "name": "Magical Insight"
           },
           {
-            "anchorId": "MagicalSavantRoleplaying",
+            "anchorId": "MagicalSavvyRoleplaying",
             "name": "Magical Savant"
           },
           {
@@ -955,7 +1025,7 @@
         ],
         "roleplaying": [
           {
-            "anchorId": "MagicalSavantRoleplaying",
+            "anchorId": "MagicalSavvyRoleplaying",
             "name": "Magical Savant"
           },
           {
@@ -977,7 +1047,7 @@
       "category": "eldritch",
       "categoryLabelPt": "Herança eldritch",
       "description": "A mother hears a sound in the night and worriedly checks on her sleeping toddler. Nothing appears amiss. But weeks later, an unseen glamour fades and a horror is revealed: the child has been stolen by the faerie, and a wechselkind is left in their place. For the faerie are callous and unchanging beings, and nothing inspires their fascination—and their envy—more than the malleable, bright spark of a young humanoid child.\n\nA wechselkind is a construct crafted of wood, clay, and ceramic in the form of a small child, animated by faerie magic and concealed in illusion that makes them appear identical to a stolen mortal babe. Once that glamour fades and the lie is revealed, a wechselkind is most often cast out by the stolen child’s family, if not destroyed. Occasionally, though, a family takes pity on the poor creature and attempts to raise them, only to find that while their mind develops normally, a wechselkind is forever bound in the unchanging form of a childlike doll.\n\nWhether nurtured or shunned, most wechselkind eventually find themselves living as outcasts, and learning to fend for themselves as best they can. The residual magic of their faerie glamour allows a wechselkind to conceal themself for short periods, whether in the guise of the child they replaced or an adult halfling, gnome, or other person of similar stature. With few physical needs, a wechselkind can easily wander from settlement to settlement, watching the people they encounter with envious eyes, and hoping for a place to finally fit in.\n\nWith the spread of the Weeping Pox, many wechselkind have emerged from hiding. With their immunity to disease, they’re able to aid healers in plague-stricken regions, gaining a measure of respect—or even admiration—from those able to see beyond their tragic origins. However, even wechselkind who are accepted among other folk often remain wary, fearing that once their usefulness is at an end, they might be cast out once more.\n\nEnchanted with powerful faerie magic, Wechselkind are unique among other Humanoids.\n\nAge. Wechselkind do not age as normal creatures do, forever trapped in the doll-like visage of their creation. Their maximum age is a function of natural wear and damage, and they are immune to magical aging effects.\n\nSize. Built to resemble a child, Wechselkind are between 2 and 3 feet tall and weigh between 35 and 55 pounds. Your size is Small.\n\nSpeed. 30 feet. You can reduce your Speed by 5 feet to gain an extra traditional trait.\n\nThey’re astoundingly quick studies and eager assistants. Thankfully, our patients don’t seem to mind the splinters.\n\nTraditional Wechselkind Traits\n\nThe magical and artificial nature shapes the aptitudes and innate features of all Wechselkind.",
-      "size": "Built to resemble a child, Wechselkind are between 2 and 0.9 m tall and weigh between 35 and 55 pounds. Your size is Pequeno.",
+      "size": "Built to resemble a child, Wechselkind are between 2 and 0.9 m tall and weigh between 35 and 27.5 kg. Your size is Pequeno.",
       "speed": "9 m. You can reduce your Speed by 1.5 m to gain an extra traditional trait.",
       "baseTraits": [
         {
@@ -990,7 +1060,7 @@
         },
         {
           "name": "Size",
-          "description": "Size. Built to resemble a child, Wechselkind are between 2 and 0.9 m tall and weigh between 35 and 55 pounds. Your size is Pequeno."
+          "description": "Size. Built to resemble a child, Wechselkind are between 2 and 0.9 m tall and weigh between 35 and 27.5 kg. Your size is Pequeno."
         },
         {
           "name": "Speed",
@@ -1032,7 +1102,7 @@
         ],
         "roleplaying": [
           {
-            "anchorId": "MagicalSavantRoleplaying",
+            "anchorId": "MagicalSavvyRoleplaying",
             "name": "Magical Savant"
           },
           {
@@ -1081,7 +1151,7 @@
             "name": "Hunter’s Instinct"
           },
           {
-            "anchorId": "NaturalAttackClawsCombat",
+            "anchorId": "NaturalAttackCombat",
             "name": "Natural Attack (Claws)"
           },
           {
@@ -1124,7 +1194,11 @@
       "name": "A Sight to Behold.",
       "category": "roleplaying",
       "description": "When you desire to stand out, you have a natural gift for impressing others. You have proficiency in the Performance skill.\n\nA Sight to Behold. If you take this trait twice, you have Advantage on Performance checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "A Sight to Behold"
+      "improvedName": "A Sight to Behold",
+      "benefitBase": "When you desire to stand out, you have a natural gift for impressing others. You have proficiency in the Performance skill.",
+      "benefitImproved": "A Sight to Behold. If you take this trait twice, you have Advantage on Performance checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "EnvironmentalAwarenessExploration",
@@ -1132,7 +1206,11 @@
       "name": "Adaptive Awareness.",
       "category": "exploration",
       "description": "The natural world is a dangerous place, and your connection to specific parts of that world grants you an edge in survival. Choose an environment: arctic, coastal, desert, forest, grassland, hill and mountain, swamp, subterranean, or underwater. While in that environment, whenever you make an ability check to assess structures, monuments, or natural features; to find food or drinkable water; or to track creatures, you are considered to have proficiency in the appropriate skill for the check, and you add double your Proficiency Bonus to the check instead of your normal bonus.\n\nAdaptive Awareness. If you take this trait multiple times, you gain its benefit for a new environment each time.\n\nAdditionally, when you make an ability check using Environmental Awareness, you have Advantage on the check. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Adaptive Awareness"
+      "improvedName": "Adaptive Awareness",
+      "benefitBase": "The natural world is a dangerous place, and your connection to specific parts of that world grants you an edge in survival. Choose an environment: arctic, coastal, desert, forest, grassland, hill and mountain, swamp, subterranean, or underwater. While in that environment, whenever you make an ability check to assess structures, monuments, or natural features; to find food or drinkable water; or to track creatures, you are considered to have proficiency in the appropriate skill for the check, and you add double your Proficiency Bonus to the check instead of your normal bonus.",
+      "benefitImproved": "Adaptive Awareness. If you take this trait multiple times, you gain its benefit for a new environment each time.\n\nAdditionally, when you make an ability check using Environmental Awareness, you have Advantage on the check. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
       "anchorId": "AnimalFriendRoleplaying",
@@ -1140,7 +1218,11 @@
       "name": "Animal Ally.",
       "category": "roleplaying",
       "description": "Time spent among beasts has gifted you a way with those creatures. You have proficiency in the Animal Handling skill.\n\nAnimal Ally. If you take this trait twice, you have Advantage on Animal Handling checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nSomething must be done about that elf. Last time I confronted her, she sicced my own dog on me.\n\n—Disgruntled Neighbor",
-      "improvedName": "Animal Ally"
+      "improvedName": "Animal Ally",
+      "benefitBase": "Time spent among beasts has gifted you a way with those creatures. You have proficiency in the Animal Handling skill.",
+      "benefitImproved": "Animal Ally. If you take this trait twice, you have Advantage on Animal Handling checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nSomething must be done about that elf. Last time I confronted her, she sicced my own dog on me.\n\n—Disgruntled Neighbor",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ArtisanalFocusRoleplaying",
@@ -1148,7 +1230,11 @@
       "name": "Artisanal Expertise.",
       "category": "roleplaying",
       "description": "You revere the crafting skill of ancestors long dead. Choose an Artisan’s Tool. You have proficiency with that tool.\n\nArtisanal Expertise. If you take this trait multiple times, you gain proficiency with a new tool each time.\n\nAdditionally, you have Advantage on ability checks made using any tool you selected with Artisanal Focus. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Artisanal Expertise"
+      "improvedName": "Artisanal Expertise",
+      "benefitBase": "You revere the crafting skill of ancestors long dead. Choose an Artisan’s Tool. You have proficiency with that tool.",
+      "benefitImproved": "Artisanal Expertise. If you take this trait multiple times, you gain proficiency with a new tool each time.\n\nAdditionally, you have Advantage on ability checks made using any tool you selected with Artisanal Focus. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": null,
+      "takeMode": "choice_each_take"
     },
     {
       "anchorId": "QuickSlipCombat",
@@ -1156,7 +1242,11 @@
       "name": "Astute Slip.",
       "category": "combat",
       "description": "Even in the thick of battle, anything that obscures your enemies’ view of you gives you a chance to strike unseen. You can take the Hide action as a Bonus Action on each of your turns. You must have appropriate cover to attempt to hide, as normal.\n\nAstute Slip. If you take this trait twice, you have Advantage on Stealth checks you make with the Hide action when you use Quick Slip.",
-      "improvedName": "Astute Slip"
+      "improvedName": "Astute Slip",
+      "benefitBase": "Even in the thick of battle, anything that obscures your enemies’ view of you gives you a chance to strike unseen. You can take the Hide action as a Bonus Action on each of your turns. You must have appropriate cover to attempt to hide, as normal.",
+      "benefitImproved": "Astute Slip. If you take this trait twice, you have Advantage on Stealth checks you make with the Hide action when you use Quick Slip.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "AthletesSpiritRoleplaying",
@@ -1164,7 +1254,11 @@
       "name": "Athlete’s Resolve.",
       "category": "roleplaying",
       "description": "Your reserves of physical power have kept you alive on more than one occasion. You have proficiency in the Athletics skill.\n\nAthlete’s Resolve. If you take this trait twice, you have Advantage on Athletics checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Athlete’s Resolve"
+      "improvedName": "Athlete’s Resolve",
+      "benefitBase": "Your reserves of physical power have kept you alive on more than one occasion. You have proficiency in the Athletics skill.",
+      "benefitImproved": "Athlete’s Resolve. If you take this trait twice, you have Advantage on Athletics checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "BattlefieldControlCombat",
@@ -1172,15 +1266,23 @@
       "name": "Battlefield Dominance.",
       "category": "combat",
       "description": "When foes attempt to press you in melee, they do so at their peril. Other creatures provoke Opportunity Attacks from you whenever they move into your reach, in addition to when they move out of your reach.\n\nBattlefield Dominance. If you take this trait twice, you have Advantage on Opportunity Attacks. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Battlefield Dominance"
+      "improvedName": "Battlefield Dominance",
+      "benefitBase": "When foes attempt to press you in melee, they do so at their peril. Other creatures provoke Opportunity Attacks from you whenever they move into your reach, in addition to when they move out of your reach.",
+      "benefitImproved": "Battlefield Dominance. If you take this trait twice, you have Advantage on Opportunity Attacks. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "ConnectiontoskillNatureskillRoleplaying",
+      "anchorId": "ConnectiontoNatureRoleplaying",
       "slug": "bond-with-nature",
       "name": "Bond with Nature.",
       "category": "roleplaying",
       "description": "You’ve learned that paying attention to the environment around you is the best way to predict its threats. You have proficiency in the Nature skill.\n\nBond with Nature. If you take this trait twice, you have Advantage on Nature checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": null,
+      "benefitBase": "You’ve learned that paying attention to the environment around you is the best way to predict its threats. You have proficiency in the Nature skill.",
+      "benefitImproved": "Bond with Nature. If you take this trait twice, you have Advantage on Nature checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "TimelyBoonCombat",
@@ -1188,15 +1290,23 @@
       "name": "Born Lucky.",
       "category": "combat",
       "description": "Fortune favors you at times when a threat might send you down. When you fail a saving throw, you can use your Reaction to roll a d4 and add it to the save, potentially turning it into a success. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nBorn Lucky. If you take this trait twice, you roll a d8 instead of a d4 when you use Timely Boon.",
-      "improvedName": "Born Lucky"
+      "improvedName": "Born Lucky",
+      "benefitBase": "Fortune favors you at times when a threat might send you down. When you fail a saving throw, you can use your Reaction to roll a d4 and add it to the save, potentially turning it into a success. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Born Lucky. If you take this trait twice, you roll a d8 instead of a d4 when you use Timely Boon.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "InstinctiveskillStealthskillRoleplaying",
+      "anchorId": "InstinctiveStealthRoleplaying",
       "slug": "calculated-disappearance",
       "name": "Calculated Disappearance.",
       "category": "roleplaying",
       "description": "When trouble comes for you, you excel at making sure it can’t find you. You have proficiency in the Stealth skill.\n\nCalculated Disappearance. If you take this trait twice, you have Advantage on Stealth checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": "Calculated Disappearance",
+      "benefitBase": "When trouble comes for you, you excel at making sure it can’t find you. You have proficiency in the Stealth skill.",
+      "benefitImproved": "Calculated Disappearance. If you take this trait twice, you have Advantage on Stealth checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "CenteredCombat",
@@ -1204,7 +1314,11 @@
       "name": "Centered Edge.",
       "category": "combat",
       "description": "By focusing your inner strength, you gain a needed edge. As a Bonus Action, you grant yourself Advantage on an attack roll or ability check you make before the start of your next turn. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nCentered Edge. If you take this trait twice, when you succeed on the attack roll or ability check made while using Centered, you can choose one creature within 30 feet of you. That creature has Advantage on the next attack roll or ability check they make before the start of your next turn.",
-      "improvedName": "Centered Edge"
+      "improvedName": "Centered Edge",
+      "benefitBase": "By focusing your inner strength, you gain a needed edge. As a Bonus Action, you grant yourself Advantage on an attack roll or ability check you make before the start of your next turn. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Centered Edge. If you take this trait twice, when you succeed on the attack roll or ability check made while using Centered, you can choose one creature within 30 feet of you. That creature has Advantage on the next attack roll or ability check they make before the start of your next turn.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "BornHealerRoleplaying",
@@ -1212,7 +1326,11 @@
       "name": "Combat Doctor.",
       "category": "roleplaying",
       "description": "When others suffer, you are there to help. You have proficiency in the Medicine skill.\n\nCombat Doctor. If you take this trait twice, you have Advantage on Medicine checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Combat Doctor"
+      "improvedName": "Combat Doctor",
+      "benefitBase": "When others suffer, you are there to help. You have proficiency in the Medicine skill.",
+      "benefitImproved": "Combat Doctor. If you take this trait twice, you have Advantage on Medicine checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "CraftersEyeRoleplaying",
@@ -1220,7 +1338,11 @@
       "name": "Crafter’s Cunning.",
       "category": "roleplaying",
       "description": "The history of Etharis is written in relics, and you read that history better than most. When you make a History check related to any object (an item, device, building, or material) and you have proficiency in an Artisan’s Tool associated with creating that object, you are considered proficient in History and you add double your Proficiency Bonus to the check instead of your normal bonus.\n\nCrafter’s Cunning. If you take this trait twice, you have Advantage on the History checks you make with Crafter’s Eye. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Crafter’s Cunning"
+      "improvedName": "Crafter’s Cunning",
+      "benefitBase": "The history of Etharis is written in relics, and you read that history better than most. When you make a History check related to any object (an item, device, building, or material) and you have proficiency in an Artisan’s Tool associated with creating that object, you are considered proficient in History and you add double your Proficiency Bonus to the check instead of your normal bonus.",
+      "benefitImproved": "Crafter’s Cunning. If you take this trait twice, you have Advantage on the History checks you make with Crafter’s Eye. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "DamageResistanceCombat",
@@ -1228,15 +1350,23 @@
       "name": "Damage Immunity.",
       "category": "combat",
       "description": "Exposure to the worst effects of a specific energy has given you a tolerance to its effects. You have Resistance to one of the following damage types of your choice: Acid, Cold, Fire, Lightning, Poison, or Thunder.\n\nDamage Immunity. If you take this trait twice, as a Reaction to taking damage of the type you chose for Damage Resistance, you gain Immunity to that damage type until the end of your next turn. You regain the use this feature when you finish a Short Rest.",
-      "improvedName": "Damage Immunity"
+      "improvedName": "Damage Immunity",
+      "benefitBase": "Exposure to the worst effects of a specific energy has given you a tolerance to its effects. You have Resistance to one of the following damage types of your choice: Acid, Cold, Fire, Lightning, Poison, or Thunder.",
+      "benefitImproved": "Damage Immunity. If you take this trait twice, as a Reaction to taking damage of the type you chose for Damage Resistance, you gain Immunity to that damage type until the end of your next turn. You regain the use this feature when you finish a Short Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "EmbracethePastRoleplaying",
+      "anchorId": "EmbraceThePastRoleplaying",
       "slug": "deep-lore",
       "name": "Deep Lore.",
       "category": "roleplaying",
       "description": "The lessons of the past are harsh, but learning those lessons might give you the best insight for navigating the future. You have proficiency in the History skill.\n\nDeep Lore. If you take this trait twice, you have Advantage on History checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": "Deep Lore",
+      "benefitBase": "The lessons of the past are harsh, but learning those lessons might give you the best insight for navigating the future. You have proficiency in the History skill.",
+      "benefitImproved": "Deep Lore. If you take this trait twice, you have Advantage on History checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ResilientEarsExploration",
@@ -1244,7 +1374,11 @@
       "name": "Determined Hearing.",
       "category": "exploration",
       "description": "Even as destruction rains down around you, your hearing stays sharp. You have Advantage on saving throws against having the Deafened condition.\n\nDetermined Hearing. If you take this trait twice, you have Advantage on Perception checks involving hearing. Additionally, when you fail a saving throw against being Deafened, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Determined Hearing"
+      "improvedName": "Determined Hearing",
+      "benefitBase": "Even as destruction rains down around you, your hearing stays sharp. You have Advantage on saving throws against having the Deafened condition.",
+      "benefitImproved": "Determined Hearing. If you take this trait twice, you have Advantage on Perception checks involving hearing. Additionally, when you fail a saving throw against being Deafened, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "KeenSurvivorRoleplaying",
@@ -1252,7 +1386,11 @@
       "name": "Determined Survivor.",
       "category": "roleplaying",
       "description": "The wilds of Etharis have claimed many who lack the skill to navigate them. You have proficiency in the Survival skill.\n\nDetermined Survivor. If you take this trait twice, you have Advantage on Survival checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Determined Survivor"
+      "improvedName": "Determined Survivor",
+      "benefitBase": "The wilds of Etharis have claimed many who lack the skill to navigate them. You have proficiency in the Survival skill.",
+      "benefitImproved": "Determined Survivor. If you take this trait twice, you have Advantage on Survival checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "HoldBreathExploration",
@@ -1260,7 +1398,11 @@
       "name": "Endless Breath.",
       "category": "exploration",
       "description": "Whether trapped under black water or resisting poisonous fumes, you refuse to give in. You can hold your breath for up to 1 hour.\n\nEndless Breath. If you take this trait twice, you can hold your breath for up to 8 hours.",
-      "improvedName": "Endless Breath"
+      "improvedName": "Endless Breath",
+      "benefitBase": "Whether trapped under black water or resisting poisonous fumes, you refuse to give in. You can hold your breath for up to 1 hour.",
+      "benefitImproved": "Endless Breath. If you take this trait twice, you can hold your breath for up to 8 hours.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "EtherealFadeExploration",
@@ -1268,7 +1410,11 @@
       "name": "Ethereal Focus.",
       "category": "exploration",
       "description": "Shifting away from the mortal world lets you move through and observe that world unseen. As a Magic action, you fade from the Material Plane into the Ethereal Plane for 1 minute. While you remain in this state, you can’t interact with the Material Plane, and effects on the Material Plane can’t affect you, including spells and creatures. You can move and hear as normal, and you see everything in shades of gray. When the effect ends, you reappear in the Material Plane in the closest unoccupied space to where you faded from. You can end the effect early as a Bonus Action. You regain the use of this feature again when you finish a Long Rest.\n\nEthereal Focus. If you take this trait twice, you have Advantage when making Wisdom checks as part of a Search Action.",
-      "improvedName": "Ethereal Focus"
+      "improvedName": "Ethereal Focus",
+      "benefitBase": "Shifting away from the mortal world lets you move through and observe that world unseen. As a Magic action, you fade from the Material Plane into the Ethereal Plane for 1 minute. While you remain in this state, you can’t interact with the Material Plane, and effects on the Material Plane can’t affect you, including spells and creatures. You can move and hear as normal, and you see everything in shades of gray. When the effect ends, you reappear in the Material Plane in the closest unoccupied space to where you faded from. You can end the effect early as a Bonus Action. You regain the use of this feature again when you finish a Long Rest.",
+      "benefitImproved": "Ethereal Focus. If you take this trait twice, you have Advantage when making Wisdom checks as part of a Search Action.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "LargerTargetCombat",
@@ -1276,15 +1422,23 @@
       "name": "Even Larger.",
       "category": "combat",
       "description": "Foes that outsize you quickly learn to fear your wrath. If you hit a creature that is one size larger than you, you can choose to deal extra damage to the creature equal to your Proficiency Bonus. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nEven Larger. If you take this trait twice, Larger Target applies to creatures of any size larger than you.",
-      "improvedName": "Even Larger"
+      "improvedName": "Even Larger",
+      "benefitBase": "Foes that outsize you quickly learn to fear your wrath. If you hit a creature that is one size larger than you, you can choose to deal extra damage to the creature equal to your Proficiency Bonus. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Even Larger. If you take this trait twice, Larger Target applies to creatures of any size larger than you.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "CommandingskillInsightskillRoleplaying",
+      "anchorId": "CommandingInsightRoleplaying",
       "slug": "exceptional-insight",
       "name": "Exceptional Insight.",
       "category": "roleplaying",
       "description": "Those who attempt to deceive you do so in vain. You have proficiency in the Insight skill.\n\nExceptional Insight. If you take this trait twice, you have Advantage on Insight checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": "Exceptional Insight",
+      "benefitBase": "Those who attempt to deceive you do so in vain. You have proficiency in the Insight skill.",
+      "benefitImproved": "Exceptional Insight. If you take this trait twice, you have Advantage on Insight checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "EagerDeceiverRoleplaying",
@@ -1292,7 +1446,11 @@
       "name": "Expert Deceiver.",
       "category": "roleplaying",
       "description": "You long ago learned that being open with others only gives them power over you. You have proficiency in the Deception skill.\n\nExpert Deceiver. If you take this trait twice, you have Advantage on Deception checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Expert Deceiver"
+      "improvedName": "Expert Deceiver",
+      "benefitBase": "You long ago learned that being open with others only gives them power over you. You have proficiency in the Deception skill.",
+      "benefitImproved": "Expert Deceiver. If you take this trait twice, you have Advantage on Deception checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ImproviserRoleplaying",
@@ -1300,7 +1458,11 @@
       "name": "Expert Improviser.",
       "category": "roleplaying",
       "description": "When needs demand, you get the job done better than most. As a Bonus Action, choose one skill or tool that you don’t have proficiency with. You have proficiency in that skill or with that tool for 1 hour. You regain the use of this feature when you finish a Long Rest.\n\nExpert Improviser. If you take this trait twice, you have Advantage on ability checks you make using the skill or tool you select with Improviser. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Expert Improviser"
+      "improvedName": "Expert Improviser",
+      "benefitBase": "When needs demand, you get the job done better than most. As a Bonus Action, choose one skill or tool that you don’t have proficiency with. You have proficiency in that skill or with that tool for 1 hour. You regain the use of this feature when you finish a Long Rest.",
+      "benefitImproved": "Expert Improviser. If you take this trait twice, you have Advantage on ability checks you make using the skill or tool you select with Improviser. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "IntrinsicOrientationExploration",
@@ -1308,7 +1470,11 @@
       "name": "Expert Orientation.",
       "category": "exploration",
       "description": "A single misstep can lead to ruin, but your instincts for direction keep you from going astray. You always know which way is north, and you can reckon a cardinal direction of the GM’s determination while on other planes. Additionally, you have Advantage on ability checks made to avoid becoming lost, to navigate, or to track.\n\nExpert Orientation. If you take this trait twice, when you fail an ability check made to avoid becoming lost, to navigate, or to track, you can choose to succeed instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Expert Orientation"
+      "improvedName": "Expert Orientation",
+      "benefitBase": "A single misstep can lead to ruin, but your instincts for direction keep you from going astray. You always know which way is north, and you can reckon a cardinal direction of the GM’s determination while on other planes. Additionally, you have Advantage on ability checks made to avoid becoming lost, to navigate, or to track.",
+      "benefitImproved": "Expert Orientation. If you take this trait twice, when you fail an ability check made to avoid becoming lost, to navigate, or to track, you can choose to succeed instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "NimbleMovesRoleplaying",
@@ -1316,7 +1482,11 @@
       "name": "Exquisite Legerdemain.",
       "category": "roleplaying",
       "description": "You have learned the value of being able to manipulate the world around you without attracting the notice of others. You have proficiency in the Sleight of Hand skill.\n\nExquisite Legerdemain. If you take this trait twice, you have Advantage on Sleight of Hand checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Exquisite Legerdemain"
+      "improvedName": "Exquisite Legerdemain",
+      "benefitBase": "You have learned the value of being able to manipulate the world around you without attracting the notice of others. You have proficiency in the Sleight of Hand skill.",
+      "benefitImproved": "Exquisite Legerdemain. If you take this trait twice, you have Advantage on Sleight of Hand checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "MagicalFortificationCombat",
@@ -1324,7 +1494,11 @@
       "name": "Extended Fortification.",
       "category": "combat",
       "description": "The more that magic threatens you, the more your resilience to it increases. Choose an ability score: Strength, Dexterity, Constitution, Intelligence, Wisdom, or Charisma. You have Advantage on saving throws using that ability score against spells and other magical effects.\n\nExtended Fortification. If you take this trait multiple times, you have Advantage on saving throws using a new ability score each time.\n\nAdditionally, if you fail a saving throw against a spell or other magical effect and you do not have proficiency with that saving throw, you can use your Reaction to reroll the save. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Extended Fortification"
+      "improvedName": "Extended Fortification",
+      "benefitBase": "The more that magic threatens you, the more your resilience to it increases. Choose an ability score: Strength, Dexterity, Constitution, Intelligence, Wisdom, or Charisma. You have Advantage on saving throws using that ability score against spells and other magical effects.",
+      "benefitImproved": "Extended Fortification. If you take this trait multiple times, you have Advantage on saving throws using a new ability score each time.\n\nAdditionally, if you fail a saving throw against a spell or other magical effect and you do not have proficiency with that saving throw, you can use your Reaction to reroll the save. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ToughnessCombat",
@@ -1332,7 +1506,11 @@
       "name": "Extra Tough.",
       "category": "combat",
       "description": "An intrinsic hardiness marks you as one born for battle. Your Hit Point maximum increases by 1, and it increases by 1 each time you gain a level.\n\nExtra Tough. If you take this trait twice, your Hit Point maximum increases by 2 instead of 1, and it increases by 2 each time you gain a level.\n\nAdditionally, when you make a saving throw against an effect that would decrease your Hit Point maximum, you have Advantage on the save. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Extra Tough"
+      "improvedName": "Extra Tough",
+      "benefitBase": "An intrinsic hardiness marks you as one born for battle. Your Hit Point maximum increases by 1, and it increases by 1 each time you gain a level.",
+      "benefitImproved": "Extra Tough. If you take this trait twice, your Hit Point maximum increases by 2 instead of 1, and it increases by 2 each time you gain a level.\n\nAdditionally, when you make a saving throw against an effect that would decrease your Hit Point maximum, you have Advantage on the save. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PowerNapExploration",
@@ -1340,7 +1518,11 @@
       "name": "Extreme Resilience.",
       "category": "exploration",
       "description": "When you don’t know how long it might be before your next full respite, you learn to take maximum advantage of any rest you can get. When taking a Short Rest, you can choose to sleep for 1 hour. If you do so, you reduce your Exhaustion by one level and regain a Hit Point Die in addition to the other benefits of a Short Rest.\n\nExtreme Resilience. If you take this trait twice, when using Power Nap, you can choose to regain a single resource that would normally refresh on a Long Rest. For example, a Sorcerer could choose to regain a Sorcery Point on a Short Rest.",
-      "improvedName": "Extreme Resilience"
+      "improvedName": "Extreme Resilience",
+      "benefitBase": "When you don’t know how long it might be before your next full respite, you learn to take maximum advantage of any rest you can get. When taking a Short Rest, you can choose to sleep for 1 hour. If you do so, you reduce your Exhaustion by one level and regain a Hit Point Die in addition to the other benefits of a Short Rest.",
+      "benefitImproved": "Extreme Resilience. If you take this trait twice, when using Power Nap, you can choose to regain a single resource that would normally refresh on a Long Rest. For example, a Sorcerer could choose to regain a Sorcery Point on a Short Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ShroudoftheWildExploration",
@@ -1348,7 +1530,11 @@
       "name": "Faultless Shroud.",
       "category": "exploration",
       "description": "With any degree of obscuration, your instinctive ability to conceal yourself lets you avoid your enemies’ notice. You can take the Hide action even when you are only Lightly Obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.\n\nFaultless Shroud. If you take this trait twice, you have Advantage on Stealth checks using the Hide action while using Shroud of the Wild.",
-      "improvedName": null
+      "improvedName": "Faultless Shroud",
+      "benefitBase": "With any degree of obscuration, your instinctive ability to conceal yourself lets you avoid your enemies’ notice. You can take the Hide action even when you are only Lightly Obscured by foliage, heavy rain, falling snow, mist, and other natural phenomena.",
+      "benefitImproved": "Faultless Shroud. If you take this trait twice, you have Advantage on Stealth checks using the Hide action while using Shroud of the Wild.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "FocusedReservesCombat",
@@ -1356,7 +1542,11 @@
       "name": "Focused Edge.",
       "category": "combat",
       "description": "No matter how badly beaten down you are, you find the will to keep fighting when you most need it. As a Reaction after you take damage, you can roll a number of d6s equal to your Proficiency Bonus and gain Temporary Hit Points equal to the total. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nFocused Edge. If you take this trait twice, you can reroll 1s and 2s when you use Focused Reserves, but you must use the new rolls.",
-      "improvedName": "Focused Edge"
+      "improvedName": "Focused Edge",
+      "benefitBase": "No matter how badly beaten down you are, you find the will to keep fighting when you most need it. As a Reaction after you take damage, you can roll a number of d6s equal to your Proficiency Bonus and gain Temporary Hit Points equal to the total. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Focused Edge. If you take this trait twice, you can reroll 1s and 2s when you use Focused Reserves, but you must use the new rolls.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "QuickInitiativeCombat",
@@ -1364,7 +1554,11 @@
       "name": "Focused Initiative.",
       "category": "combat",
       "description": "Danger is never far away from you, and you are always ready for it. You add your Proficiency Bonus to your Initiative rolls.\n\nFocused Initiative. If you take this trait twice, when you roll Initiative, you can treat a roll of 9 or lower as if you rolled a 10.",
-      "improvedName": "Focused Initiative"
+      "improvedName": "Focused Initiative",
+      "benefitBase": "Danger is never far away from you, and you are always ready for it. You add your Proficiency Bonus to your Initiative rolls.",
+      "benefitImproved": "Focused Initiative. If you take this trait twice, when you roll Initiative, you can treat a roll of 9 or lower as if you rolled a 10.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "MasterfulAptitudeRoleplaying",
@@ -1372,7 +1566,11 @@
       "name": "Focused Mastery.",
       "category": "roleplaying",
       "description": "Your discipline and focus give you an edge that others lack. Choose one of your skill or tool proficiencies. You have Expertise on ability checks made using the chosen proficiency.\n\nFocused Mastery. If you take this trait multiple times, you gain its benefit for a new skill proficiency or tool proficiency each time.\n\nAdditionally, when you make a check using a skill or tool for which you’ve taken Masterful Aptitude, you have Advantage on the check. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Focused Mastery"
+      "improvedName": "Focused Mastery",
+      "benefitBase": "Your discipline and focus give you an edge that others lack. Choose one of your skill or tool proficiencies. You have Expertise on ability checks made using the chosen proficiency.",
+      "benefitImproved": "Focused Mastery. If you take this trait multiple times, you gain its benefit for a new skill proficiency or tool proficiency each time.\n\nAdditionally, when you make a check using a skill or tool for which you’ve taken Masterful Aptitude, you have Advantage on the check. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
       "anchorId": "RuthlessResponseCombat",
@@ -1380,15 +1578,23 @@
       "name": "Focused Ruthlessness.",
       "category": "combat",
       "description": "A creature that gets the drop on you is met with a swift and brutal reply. When you take damage from a creature within your reach, you can use your Reaction to make a melee attack with a weapon or an Unarmed Strike against that creature. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nFocused Ruthlessness. If you take this trait twice, you have Advantage on attack rolls made using Ruthless Response.",
-      "improvedName": "Focused Ruthlessness"
+      "improvedName": "Focused Ruthlessness",
+      "benefitBase": "A creature that gets the drop on you is met with a swift and brutal reply. When you take damage from a creature within your reach, you can use your Reaction to make a melee attack with a weapon or an Unarmed Strike against that creature. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Focused Ruthlessness. If you take this trait twice, you have Advantage on attack rolls made using Ruthless Response.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "MovedbyFaithRoleplaying",
+      "anchorId": "MovedByFaithRoleplaying",
       "slug": "force-of-faith",
       "name": "Force of Faith.",
       "category": "roleplaying",
       "description": "The grimmest myths and legends of the past hold the keys to shaping the future. You have proficiency in the Religion skill.\n\nForce of Faith. If you take this trait twice, you have Advantage on Religion checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": "Force of Faith",
+      "benefitBase": "The grimmest myths and legends of the past hold the keys to shaping the future. You have proficiency in the Religion skill.",
+      "benefitImproved": "Force of Faith. If you take this trait twice, you have Advantage on Religion checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "SuppleSqueezeExploration",
@@ -1396,7 +1602,11 @@
       "name": "Full-Speed Squeeze.",
       "category": "exploration",
       "description": "With an effort of will, you contort your body into the tightest spaces. You can squeeze through a space that is large enough for a creature two sizes smaller than you, rather than one size smaller.\n\nFull-Speed Squeeze. If you take this trait twice, squeezing does not cost you additional movement, and you do not have Disadvantage on attack rolls and Dexterity saving throws while squeezing.",
-      "improvedName": "Full-Speed Squeeze"
+      "improvedName": "Full-Speed Squeeze",
+      "benefitBase": "With an effort of will, you contort your body into the tightest spaces. You can squeeze through a space that is large enough for a creature two sizes smaller than you, rather than one size smaller.",
+      "benefitImproved": "Full-Speed Squeeze. If you take this trait twice, squeezing does not cost you additional movement, and you do not have Disadvantage on attack rolls and Dexterity saving throws while squeezing.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ChargingAttackCombat",
@@ -1404,15 +1614,23 @@
       "name": "Furious Charge.",
       "category": "combat",
       "description": "The fury with which you throw yourself into battle forces your foes to feel your wrath. If you move at least 20 feet straight toward a target and then hit it with a melee attack with a weapon or an Unarmed Strike on the same turn, you can make another attack against the same target as a Bonus Action with the same weapon.\n\nFurious Charge. If you take this trait twice, when you use Charging Attack, you have Advantage on all attacks after the triggering movement until the end of your turn. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Furious Charge"
+      "improvedName": "Furious Charge",
+      "benefitBase": "The fury with which you throw yourself into battle forces your foes to feel your wrath. If you move at least 20 feet straight toward a target and then hit it with a melee attack with a weapon or an Unarmed Strike on the same turn, you can make another attack against the same target as a Bonus Action with the same weapon.",
+      "benefitImproved": "Furious Charge. If you take this trait twice, when you use Charging Attack, you have Advantage on all attacks after the triggering movement until the end of your turn. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "BurstofSpeedExploration",
+      "anchorId": "BurstOfSpeedExploration",
       "slug": "furious-speed",
       "name": "Furious Speed.",
       "category": "exploration",
       "description": "The many things that want to kill you must catch you first. On your turn, you can increase your Speed by 30 feet until the end of your turn. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nFurious Speed. If you take this trait twice, on a turn when you use Burst of Speed, you don’t provoke Opportunity Attacks.\n\nOn the battlefield, quick feet are the best suit of armor you could ask for. If an enemy can’t reach you, it can’t hurt you. Now pick up those knees!\n\n—Militia Drillmaster",
-      "improvedName": null
+      "improvedName": "Furious Speed",
+      "benefitBase": "The many things that want to kill you must catch you first. On your turn, you can increase your Speed by 30 feet until the end of your turn. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Furious Speed. If you take this trait twice, on a turn when you use Burst of Speed, you don’t provoke Opportunity Attacks.\n\nOn the battlefield, quick feet are the best suit of armor you could ask for. If an enemy can’t reach you, it can’t hurt you. Now pick up those knees!\n\n—Militia Drillmaster",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "TenaciousCombat",
@@ -1420,7 +1638,11 @@
       "name": "Hard to Kill.",
       "category": "combat",
       "description": "Your enemies might put you down, but you are never down for long. You have Advantage on Death Saving Throws.\n\nHard to Kill. If you take this trait twice, when you drop to 0 Hit Points but don’t die outright, you remain conscious. You must make Death Saving Throws as normal while at 0 Hit Points, and you suffer a Death Saving Throw failure each time you take any damage, but you can otherwise act freely. You can’t become Stable while you remain at 0 Hit Points in this way.",
-      "improvedName": "Hard to Kill"
+      "improvedName": "Hard to Kill",
+      "benefitBase": "Your enemies might put you down, but you are never down for long. You have Advantage on Death Saving Throws.",
+      "benefitImproved": "Hard to Kill. If you take this trait twice, when you drop to 0 Hit Points but don’t die outright, you remain conscious. You must make Death Saving Throws as normal while at 0 Hit Points, and you suffer a Death Saving Throw failure each time you take any damage, but you can otherwise act freely. You can’t become Stable while you remain at 0 Hit Points in this way.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "MediumArmorTrainingCombat",
@@ -1428,7 +1650,11 @@
       "name": "Heavy Armor Training.",
       "category": "combat",
       "description": "The pounding you routinely take in combat requires a formidable layer of defense. You have training with Medium armor and with Shields.\n\nHeavy Armor Training. If you take this trait twice, you have training with Heavy armor.",
-      "improvedName": "Heavy Armor Training"
+      "improvedName": "Heavy Armor Training",
+      "benefitBase": "The pounding you routinely take in combat requires a formidable layer of defense. You have training with Medium armor and with Shields.",
+      "benefitImproved": "Heavy Armor Training. If you take this trait twice, you have training with Heavy armor.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "HelpingHandExplorationCombat",
@@ -1436,23 +1662,35 @@
       "name": "Helpful Tactics.",
       "category": "combat",
       "description": "You excel at aiding your allies, knowing that the time will come when you need them to return the favor. You can use the Help action as a Bonus Action to assist any ally making an ability check. (This is an Exploration trait.)\n\nHelpful Tactics. If you take this trait twice, when you use Helping Hand, you can also assist an ally making an attack roll. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest. (This is a Combat trait.)",
-      "improvedName": "Helpful Tactics†"
+      "improvedName": "Helpful Tactics†",
+      "benefitBase": "You excel at aiding your allies, knowing that the time will come when you need them to return the favor. You can use the Help action as a Bonus Action to assist any ally making an ability check. (This is an Exploration trait.)",
+      "benefitImproved": "Helpful Tactics. If you take this trait twice, when you use Helping Hand, you can also assist an ally making an attack roll. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest. (This is a Combat trait.)",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "MasterofDistractionCombat",
+      "anchorId": "MasterOfDistractionCombat",
       "slug": "hindering-distraction",
       "name": "Hindering Distraction.",
       "category": "combat",
       "description": "You draw your foes’ attention to you, intending it to be the last diversion they ever see. As an Influence action, you put on a tactical display (bravado, cowardice, confusion, or some other tactic) that gets your enemies’ attention. Until the end of your next turn, any attack on an enemy within 10 feet of you that could see you when you took the Influence action is made with Advantage . You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nHindering Distraction. If you take this trait twice, when you use Master of Distraction, one affected enemy of your choice also has Disadvantage on attack rolls it makes against any of your allies until the end of your next turn.",
-      "improvedName": null
+      "improvedName": "Hindering Distraction",
+      "benefitBase": "You draw your foes’ attention to you, intending it to be the last diversion they ever see. As an Influence action, you put on a tactical display (bravado, cowardice, confusion, or some other tactic) that gets your enemies’ attention. Until the end of your next turn, any attack on an enemy within 10 feet of you that could see you when you took the Influence action is made with Advantage . You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Hindering Distraction. If you take this trait twice, when you use Master of Distraction, one affected enemy of your choice also has Disadvantage on attack rolls it makes against any of your allies until the end of your next turn.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "InuredtotheElementsExploration",
+      "anchorId": "InuredToTheElementsExploration",
       "slug": "immune-to-the-elements",
       "name": "Immune to the Elements.",
       "category": "exploration",
       "description": "Even beneath scorching sun and in freezing cold, you hold yourself strong. You have Advantage on Constitution saving throws made to resist the effects of extreme cold or extreme heat.\n\nImmune to the Elements. If you take this trait twice, you automatically succeed on Constitution saving throws to resist the effects of extreme cold or extreme heat.",
-      "improvedName": null
+      "improvedName": "Immune to the Elements",
+      "benefitBase": "Even beneath scorching sun and in freezing cold, you hold yourself strong. You have Advantage on Constitution saving throws made to resist the effects of extreme cold or extreme heat.",
+      "benefitImproved": "Immune to the Elements. If you take this trait twice, you automatically succeed on Constitution saving throws to resist the effects of extreme cold or extreme heat.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "FocusedMindCombat",
@@ -1460,15 +1698,23 @@
       "name": "Immutable Mind.",
       "category": "combat",
       "description": "Your strength of will protects you from magic that would corrupt your mind. You have Advantage on saving throws against being Charmed .\n\nImmutable Mind. If you take this trait twice, when you fail a saving throw against being Charmed, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Immutable Mind"
+      "improvedName": "Immutable Mind",
+      "benefitBase": "Your strength of will protects you from magic that would corrupt your mind. You have Advantage on saving throws against being Charmed .",
+      "benefitImproved": "Immutable Mind. If you take this trait twice, when you fail a saving throw against being Charmed, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "senseDarkvisionsenseExploration",
+      "anchorId": "DarkvisionExploration",
       "slug": "improved-darkvision",
       "name": "Improved Darkvision.",
       "category": "exploration",
       "description": "A life spent in shadow has made you grow accustomed to the gloom. You can see in Dim Light within 60 feet of you as if it were Bright Light , and in Darkness within 60 feet of you as if it were Dim Light. You can’t discern color in Darkness, only shades of gray.\n\nImproved Darkvision. If you take this trait twice, the range of your Darkvision increases to 120 feet.",
-      "improvedName": null
+      "improvedName": "Improved Darkvision",
+      "benefitBase": "A life spent in shadow has made you grow accustomed to the gloom. You can see in Dim Light within 60 feet of you as if it were Bright Light , and in Darkness within 60 feet of you as if it were Dim Light. You can’t discern color in Darkness, only shades of gray.",
+      "benefitImproved": "Improved Darkvision. If you take this trait twice, the range of your Darkvision increases to 120 feet.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "MenacingRoarCombat",
@@ -1476,7 +1722,11 @@
       "name": "Incomparable Roar.",
       "category": "combat",
       "description": "Your battle cry can cause even the most formidable foes to quail before you. As a Bonus Action, you emit a roar, shout, or other loud vocal outburst. Each creature of your choice within 10 feet of you that can hear you must succeed on a Wisdom saving throw (DC = 8 + your Proficiency Bonus + your Constitution modifier) or have the Frightened condtion until the end of your next turn. You regain the use of this feature when you finish a Long Rest.\n\nIncomparable Roar. If you take this trait twice, when you use Menacing Roar, one target of your choice has Disadvantage on the saving throw.",
-      "improvedName": "Incomparable Roar"
+      "improvedName": "Incomparable Roar",
+      "benefitBase": "Your battle cry can cause even the most formidable foes to quail before you. As a Bonus Action, you emit a roar, shout, or other loud vocal outburst. Each creature of your choice within 10 feet of you that can hear you must succeed on a Wisdom saving throw (DC = 8 + your Proficiency Bonus + your Constitution modifier) or have the Frightened condtion until the end of your next turn. You regain the use of this feature when you finish a Long Rest.",
+      "benefitImproved": "Incomparable Roar. If you take this trait twice, when you use Menacing Roar, one target of your choice has Disadvantage on the saving throw.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "StandingLeapExploration",
@@ -1484,7 +1734,11 @@
       "name": "Incredible Leap.",
       "category": "exploration",
       "description": "Threats on the ground are of little concern as you leap over them with ease. You can make a Long Jump of up to 20 feet and a High Jump of up to 10 feet, with or without a running start. If your Speed is less than the distance you can Long Jump, you can leap only a distance equal to your Speed.\n\nIncredible Leap. If you take this trait twice, you can make a Long Jump of up to 30 feet and a High Jump of up to 15 feet, as limited by your speed.\n\nAdditionally, when you jump out of another creature’s reach, the movement of the jump does not provoke Opportunity Attacks from that creature. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Incredible Leap"
+      "improvedName": "Incredible Leap",
+      "benefitBase": "Threats on the ground are of little concern as you leap over them with ease. You can make a Long Jump of up to 20 feet and a High Jump of up to 10 feet, with or without a running start. If your Speed is less than the distance you can Long Jump, you can leap only a distance equal to your Speed.",
+      "benefitImproved": "Incredible Leap. If you take this trait twice, you can make a Long Jump of up to 30 feet and a High Jump of up to 15 feet, as limited by your speed.\n\nAdditionally, when you jump out of another creature’s reach, the movement of the jump does not provoke Opportunity Attacks from that creature. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "BraveCombat",
@@ -1492,7 +1746,11 @@
       "name": "Infectious Bravery.",
       "category": "combat",
       "description": "The horrors you’ve lived through have hardened you. You have Advantage on saving throws to avoid being Frightened .\n\nInfectious Bravery. If you take this trait twice, you can use your Reaction to bolster the spirits of your allies, granting one ally who can see or hear you Advantage on a saving throw against being Frightened. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Infectious Bravery"
+      "improvedName": "Infectious Bravery",
+      "benefitBase": "The horrors you’ve lived through have hardened you. You have Advantage on saving throws to avoid being Frightened .",
+      "benefitImproved": "Infectious Bravery. If you take this trait twice, you can use your Reaction to bolster the spirits of your allies, granting one ally who can see or hear you Advantage on a saving throw against being Frightened. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PolyglotRoleplaying",
@@ -1500,7 +1758,11 @@
       "name": "Language Expert.",
       "category": "roleplaying",
       "description": "The advantages of mastering the languages of enemies and allies alike are clear to you. You learn two languages of your choice.\n\nLanguage Expert. If you take this trait multiple times, you learn two new languages each time.\n\nAdditionally, you have Advantage on Influence action ability checks made to interact with another creature using any language you selected with Polyglot. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Language Expert"
+      "improvedName": "Language Expert",
+      "benefitBase": "The advantages of mastering the languages of enemies and allies alike are clear to you. You learn two languages of your choice.",
+      "benefitImproved": "Language Expert. If you take this trait multiple times, you learn two new languages each time.\n\nAdditionally, you have Advantage on Influence action ability checks made to interact with another creature using any language you selected with Polyglot. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
       "anchorId": "LightArmorTrainingCombat",
@@ -1508,7 +1770,11 @@
       "name": "Light Armor Expertise.",
       "category": "combat",
       "description": "Dealing with the threats you face requires the right combination of protection and movement. You have training with Light armor.\n\nLight Armor Expertise. If you take this trait twice, your AC increases by 1 while wearing Light armor.",
-      "improvedName": "Light Armor Expertise"
+      "improvedName": "Light Armor Expertise",
+      "benefitBase": "Dealing with the threats you face requires the right combination of protection and movement. You have training with Light armor.",
+      "benefitImproved": "Light Armor Expertise. If you take this trait twice, your AC increases by 1 while wearing Light armor.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "FadeAwayExploration",
@@ -1516,15 +1782,23 @@
       "name": "Long Fade.",
       "category": "exploration",
       "description": "You have learned to avoid notice at all costs, letting you momentarily obscure yourself from observation. As a Bonus Action, you can take the Hide action to conceal yourself without needing to be Heavily Obscured or behind Three-Quarters Cover or Total Cover . You need not be out of a creature’s line of sight to use this ability.\n\nYou become visible at the start of your next turn unless you have moved into a position that allows you to use the Hide action normally. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nLong Fade. If you take this trait twice, you have Advantage on your ability check when you take the Hide action from Fade Away, and you become visible at the end of your next turn instead of the start of your next turn.",
-      "improvedName": "Long Fade"
+      "improvedName": "Long Fade",
+      "benefitBase": "You have learned to avoid notice at all costs, letting you momentarily obscure yourself from observation. As a Bonus Action, you can take the Hide action to conceal yourself without needing to be Heavily Obscured or behind Three-Quarters Cover or Total Cover . You need not be out of a creature’s line of sight to use this ability.",
+      "benefitImproved": "You become visible at the start of your next turn unless you have moved into a position that allows you to use the Hide action normally. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nLong Fade. If you take this trait twice, you have Advantage on your ability check when you take the Hide action from Fade Away, and you become visible at the end of your next turn instead of the start of your next turn.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "MagicalskillInsightskillRoleplaying",
+      "anchorId": "MagicalInsightRoleplaying",
       "slug": "magical-historian",
       "name": "Magical Historian.",
       "category": "roleplaying",
       "description": "Magic is power in the right hands, and those hands are yours. You have proficiency in the Arcana skill.\n\nMagical Historian. If you take this trait twice, you have Advantage on Arcana checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": "Magical Historian",
+      "benefitBase": "Magic is power in the right hands, and those hands are yours. You have proficiency in the Arcana skill.",
+      "benefitImproved": "Magical Historian. If you take this trait twice, you have Advantage on Arcana checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "MagicalSavvyRoleplaying",
@@ -1532,7 +1806,11 @@
       "name": "Magical Savant.",
       "category": "roleplaying",
       "description": "Whether through intensive study or the innate touch of magic in your blood, you have the ability to invoke magical spells. You learn one cantrip of your choice from any spell list, which you cast using the associated ability score: Intelligence for Wizard spells, Wisdom for Cleric and Druid spells, and Charisma for Bard, Sorcerer, and Warlock spells. If the spell appears on multiple spell lists, choose one to determine the spellcasting attribute for that spell.\n\nMagical Savant. If you take this trait multiple times, you select a different cantrip each time, or you can select a level 1 spell from the same list as a cantrip you have previously chosen. If you select a level 1 spell, you can cast it once without expending a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. If you have levels in the associated spellcasting class, you always have this spell prepared, and it doesn’t count against the number of spells you can prepare each day.",
-      "improvedName": "Magical Savant"
+      "improvedName": "Magical Savant",
+      "benefitBase": "Whether through intensive study or the innate touch of magic in your blood, you have the ability to invoke magical spells. You learn one cantrip of your choice from any spell list, which you cast using the associated ability score: Intelligence for Wizard spells, Wisdom for Cleric and Druid spells, and Charisma for Bard, Sorcerer, and Warlock spells. If the spell appears on multiple spell lists, choose one to determine the spellcasting attribute for that spell.",
+      "benefitImproved": "Magical Savant. If you take this trait multiple times, you select a different cantrip each time, or you can select a level 1 spell from the same list as a cantrip you have previously chosen. If you select a level 1 spell, you can cast it once without expending a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. If you have levels in the associated spellcasting class, you always have this spell prepared, and it doesn’t count against the number of spells you can prepare each day.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ImpromptuArtisanRoleplaying",
@@ -1540,7 +1818,11 @@
       "name": "Master Artisan.",
       "category": "roleplaying",
       "description": "You’ve never known the luxury of always having the gear you need, but you have more than learned to make do. If you possess Artisan’s Tools with which you have proficiency, and if you have access to appropriate raw materials and any additional necessary equipment (as the GM determines), you can use a Short Rest to craft any one nonmagical item worth 10 GP or less, including:\n\nThe gear you create is workable but not high quality, and can’t be sold except as the GM determines.\n\nMaster Artisan. If you take this trait twice, you can use Impromptu Artisan during a Long Rest, during which you craft one nonmagical item worth 50 GP or less.",
-      "improvedName": "Master Artisan"
+      "improvedName": "Master Artisan",
+      "benefitBase": "You’ve never known the luxury of always having the gear you need, but you have more than learned to make do. If you possess Artisan’s Tools with which you have proficiency, and if you have access to appropriate raw materials and any additional necessary equipment (as the GM determines), you can use a Short Rest to craft any one nonmagical item worth 10 GP or less, including:",
+      "benefitImproved": "The gear you create is workable but not high quality, and can’t be sold except as the GM determines.\n\nMaster Artisan. If you take this trait twice, you can use Impromptu Artisan during a Long Rest, during which you craft one nonmagical item worth 50 GP or less.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "CalculatingListenerRoleplaying",
@@ -1548,7 +1830,11 @@
       "name": "Master Manipulator.",
       "category": "roleplaying",
       "description": "The weak-willed around you are easy targets for your manipulation. By conversing with a nonhostile creature for at least 1 minute, you can attempt to charm them. The creature must succeed on a Wisdom saving throw (DC = 8 + your Charisma modifier + your Proficiency Bonus) or have the Charmed condition for 1 hour. At the GM’s discretion, you also learn one piece of information that the target knows that relates to the topic of conversation while you speak to them. Regardless of whether or not the target succeeds on the saving throw, they remain unaware of your attempt. You regain use of this feature when you finish a Short or Long Rest.\n\nMaster Manipulator. If you take this trait twice, a creature has Disadvantage on the saving throw, and it has the Charmed condition for 8 hours on a failed save.",
-      "improvedName": "Master Manipulator"
+      "improvedName": "Master Manipulator",
+      "benefitBase": "The weak-willed around you are easy targets for your manipulation. By conversing with a nonhostile creature for at least 1 minute, you can attempt to charm them. The creature must succeed on a Wisdom saving throw (DC = 8 + your Charisma modifier + your Proficiency Bonus) or have the Charmed condition for 1 hour. At the GM’s discretion, you also learn one piece of information that the target knows that relates to the topic of conversation while you speak to them. Regardless of whether or not the target succeeds on the saving throw, they remain unaware of your attempt. You regain use of this feature when you finish a Short or Long Rest.",
+      "benefitImproved": "Master Manipulator. If you take this trait twice, a creature has Disadvantage on the saving throw, and it has the Charmed condition for 8 hours on a failed save.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "LuckyCombat",
@@ -1556,7 +1842,11 @@
       "name": "Master of Fortune.",
       "category": "combat",
       "description": "The luck you carry will see you through the worst Etharis has to offer. When you roll a 1 on a D20 Test, you can reroll that die but must use the new roll. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nMaster of Fortune. If you take this trait twice, you have Advantage on the reroll made with Lucky.",
-      "improvedName": "Master of Fortune"
+      "improvedName": "Master of Fortune",
+      "benefitBase": "The luck you carry will see you through the worst Etharis has to offer. When you roll a 1 on a D20 Test, you can reroll that die but must use the new roll. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Master of Fortune. If you take this trait twice, you have Advantage on the reroll made with Lucky.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "AwesomeCriticalCombat",
@@ -1564,7 +1854,11 @@
       "name": "Maximum Critical.",
       "category": "combat",
       "description": "When fortune favors your blade, you know how to make it count. When you score a Critical Hit with a melee attack with a weapon or an Unarmed Strike , you can roll one of the weapon’s damage dice one additional time and add it to the extra damage of the Critical Hit.\n\nMaximum Critical. If you take this trait twice, when you use Awesome Critical, you can add the maximum of the weapon’s original damage dice and the extra Awesome Critical die to the extra damage of the Critical Hit, rather than rolling them. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Maximum Critical"
+      "improvedName": "Maximum Critical",
+      "benefitBase": "When fortune favors your blade, you know how to make it count. When you score a Critical Hit with a melee attack with a weapon or an Unarmed Strike , you can roll one of the weapon’s damage dice one additional time and add it to the extra damage of the Critical Hit.",
+      "benefitImproved": "Maximum Critical. If you take this trait twice, when you use Awesome Critical, you can add the maximum of the weapon’s original damage dice and the extra Awesome Critical die to the extra damage of the Critical Hit, rather than rolling them. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PersonalBastionCombat",
@@ -1572,15 +1866,23 @@
       "name": "Mobile Bastion.",
       "category": "combat",
       "description": "Focusing all your resolve, you stand fast and watch your enemies flail against your defenses. As a Magic action, you become motionless and gain the following effects:\n\nYou can’t take actions, and you can’t use your Bonus Action except to end the effect of this trait.\n\nMobile Bastion. If you take this trait twice, when you use Personal Bastion, your Speed is reduced to half your normal Speed (rounded down), you do not have Disadvantage on Dexterity saving throws, and you can use Bonus Actions.",
-      "improvedName": "Mobile Bastion"
+      "improvedName": "Mobile Bastion",
+      "benefitBase": "Focusing all your resolve, you stand fast and watch your enemies flail against your defenses. As a Magic action, you become motionless and gain the following effects:",
+      "benefitImproved": "You can’t take actions, and you can’t use your Bonus Action except to end the effect of this trait.\n\nMobile Bastion. If you take this trait twice, when you use Personal Bastion, your Speed is reduced to half your normal Speed (rounded down), you do not have Disadvantage on Dexterity saving throws, and you can use Bonus Actions.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "EnemyinMotionCombat",
+      "anchorId": "EnemyInMotionCombat",
       "slug": "moving-insight",
       "name": "Moving Insight.",
       "category": "combat",
       "description": "A lifetime spent wandering lets you judge when others’ movement works to your benefit. When you make an attack roll against a creature or make a saving throw against a creature’s attack, spell, or ability, you can use a Reaction to have Advantage on the attack roll or saving throw if that creature moved since the end of your last turn. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nMoving Insight. If you take this trait twice, Enemy in Motion also lets you use your Reaction to affect an ally's attack roll or saving throw if your ally is within 30 feet.",
-      "improvedName": null
+      "improvedName": "Moving Insight",
+      "benefitBase": "A lifetime spent wandering lets you judge when others’ movement works to your benefit. When you make an attack roll against a creature or make a saving throw against a creature’s attack, spell, or ability, you can use a Reaction to have Advantage on the attack roll or saving throw if that creature moved since the end of your last turn. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Moving Insight. If you take this trait twice, Enemy in Motion also lets you use your Reaction to affect an ally's attack roll or saving throw if your ally is within 30 feet.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PassThroughExploration",
@@ -1588,7 +1890,11 @@
       "name": "Nimble Passage.",
       "category": "exploration",
       "description": "Making use of constant movement lets you minimize the threat of larger foes. You can move through the space of any creature at least one size larger than you.\n\nNimble Passage. If you take this trait twice, you do not treat another creature’s space as Difficult Terrain .",
-      "improvedName": "Nimble Passage"
+      "improvedName": "Nimble Passage",
+      "benefitBase": "Making use of constant movement lets you minimize the threat of larger foes. You can move through the space of any creature at least one size larger than you.",
+      "benefitImproved": "Nimble Passage. If you take this trait twice, you do not treat another creature’s space as Difficult Terrain .",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ReachAttackCombat",
@@ -1596,7 +1902,11 @@
       "name": "Opportune Reach.",
       "category": "combat",
       "description": "As you hurl yourself into battle, your foes discover that trying to keep away from you won’t save them. Your reach increases by 5 feet. This extra reach doesn’t apply to Opportunity Attacks.\n\nOpportune Reach. If you take this trait twice, your extra reach from Reach Attack applies to Opportunity Attacks.",
-      "improvedName": "Opportune Reach"
+      "improvedName": "Opportune Reach",
+      "benefitBase": "As you hurl yourself into battle, your foes discover that trying to keep away from you won’t save them. Your reach increases by 5 feet. This extra reach doesn’t apply to Opportunity Attacks.",
+      "benefitImproved": "Opportune Reach. If you take this trait twice, your extra reach from Reach Attack applies to Opportunity Attacks.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "MightyShoveCombat",
@@ -1604,7 +1914,11 @@
       "name": "Overwhelming Shove.",
       "category": "combat",
       "description": "Your powerful blows send your targets reeling. When you hit a creature no more than one size larger than you with a melee attack, you can use a Bonus Action to attempt to shove that creature. The target must succeed on a Strength or Dexterity saving throw (DC = 8 + your Strength modifier + your Proficiency Bonus) or be pushed up to 10 feet away from you.\n\nOverwhelming Shove. If you take this trait twice, when you use Mighty Shove, the target creature has Disadvantage on the saving throw.",
-      "improvedName": "Overwhelming Shove"
+      "improvedName": "Overwhelming Shove",
+      "benefitBase": "Your powerful blows send your targets reeling. When you hit a creature no more than one size larger than you with a melee attack, you can use a Bonus Action to attempt to shove that creature. The target must succeed on a Strength or Dexterity saving throw (DC = 8 + your Strength modifier + your Proficiency Bonus) or be pushed up to 10 feet away from you.",
+      "benefitImproved": "Overwhelming Shove. If you take this trait twice, when you use Mighty Shove, the target creature has Disadvantage on the saving throw.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PackTacticsCombat",
@@ -1612,7 +1926,11 @@
       "name": "Pack Instinct.",
       "category": "combat",
       "description": "Staying close to your allies in combat makes you even more dangerous. When you start your turn with at least one ally who isn’t Incapacitated within 5 feet of another creature you can see, you can use your Reaction to have Advantage on attack rolls against that creature until the end of your turn.\n\nPack Instinct. If you take this trait twice, gaining Advantage from Pack Tactics requires no action.",
-      "improvedName": "Pack Instinct"
+      "improvedName": "Pack Instinct",
+      "benefitBase": "Staying close to your allies in combat makes you even more dangerous. When you start your turn with at least one ally who isn’t Incapacitated within 5 feet of another creature you can see, you can use your Reaction to have Advantage on attack rolls against that creature until the end of your turn.",
+      "benefitImproved": "Pack Instinct. If you take this trait twice, gaining Advantage from Pack Tactics requires no action.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PackHunterCombat",
@@ -1620,7 +1938,11 @@
       "name": "Pack Leader.",
       "category": "combat",
       "description": "Fighting in the thick of battle lets you aid your allies when it counts. When an ally within 10 feet of you is about to make an attack roll or a saving throw, you can use a Reaction to grant that ally Advantage on the attack or save. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nPack Leader. If you take this trait twice, Pack Hunter can be triggered by any ally within 30 feet of you. Additionally, if the attack roll misses or the saving throw fails, you don’t lose that usage of Pack Hunter.",
-      "improvedName": "Pack Leader"
+      "improvedName": "Pack Leader",
+      "benefitBase": "Fighting in the thick of battle lets you aid your allies when it counts. When an ally within 10 feet of you is about to make an attack roll or a saving throw, you can use a Reaction to grant that ally Advantage on the attack or save. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Pack Leader. If you take this trait twice, Pack Hunter can be triggered by any ally within 30 feet of you. Additionally, if the attack roll misses or the saving throw fails, you don’t lose that usage of Pack Hunter.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "OutofPhaseCombat",
@@ -1628,15 +1950,23 @@
       "name": "Phase Shift.",
       "category": "combat",
       "description": "Your corporeal presence shifts and fades, softening your enemies’ ability to harm you. As a Bonus Action, for 1 minute, all creatures have Disadvantage on attack rolls against you, and you can move through other creature’s spaces without treating them as Difficult Terrain. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nPhase Shift. If you take this trait twice, when you use Out of Phase, you can extend its benefit to any ally within 10 feet of you.\n\nClear a special cell for this one. She’s got tricks.\n\n—Castinellan Jailor",
-      "improvedName": null
+      "improvedName": "Phase Shift",
+      "benefitBase": "Your corporeal presence shifts and fades, softening your enemies’ ability to harm you. As a Bonus Action, for 1 minute, all creatures have Disadvantage on attack rolls against you, and you can move through other creature’s spaces without treating them as Difficult Terrain. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Phase Shift. If you take this trait twice, when you use Out of Phase, you can extend its benefit to any ally within 10 feet of you.\n\nClear a special cell for this one. She’s got tricks.\n\n—Castinellan Jailor",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "InbornskillPerceptionskillRoleplaying",
+      "anchorId": "InbornPerceptionRoleplaying",
       "slug": "piercing-perception",
       "name": "Piercing Perception.",
       "category": "roleplaying",
       "description": "The best way to avoid danger is to make sure you’re the first person to notice it. You have proficiency in the Perception skill.\n\nPiercing Perception. If you take this trait twice, you have Advantage on Perception checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": "Piercing Perception",
+      "benefitBase": "The best way to avoid danger is to make sure you’re the first person to notice it. You have proficiency in the Perception skill.",
+      "benefitImproved": "Piercing Perception. If you take this trait twice, you have Advantage on Perception checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PoisonResilienceExploration",
@@ -1644,7 +1974,11 @@
       "name": "Poison Indemnity.",
       "category": "exploration",
       "description": "Your exceptional fortitude lets you shrug off the effects of even the worst toxins. You have Advantage on saving throws against being Poisoned .\n\nPoison Indemnity. If you take this trait twice, when you fail a saving throw against being Poisoned, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Poison Indemnity"
+      "improvedName": "Poison Indemnity",
+      "benefitBase": "Your exceptional fortitude lets you shrug off the effects of even the worst toxins. You have Advantage on saving throws against being Poisoned .",
+      "benefitImproved": "Poison Indemnity. If you take this trait twice, when you fail a saving throw against being Poisoned, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "BreathWeaponCombat",
@@ -1652,7 +1986,11 @@
       "name": "Potent Breath.",
       "category": "combat",
       "description": "A connection to draconic or elemental fury lets you unleash a blast of destructive energy. When you select this trait, choose a damage type: Acid, Cold, Fire, Lightning, Poison, or Thunder. Then choose an area of effect: a Line that is 5 feet wide and 30 feet long, or a 15-foot Cone .\n\nWhen you use a Magic action to expel your Breath Weapon, each creature in the area of effect must make a Dexterity saving throw (DC = 8 + your Constitution modifier + your Proficiency Bonus). A target creature takes 1d8 damage of the chosen type on a failed save, or half as much damage on a successful one. This damage increases by 1d8 when you reach character levels 5 (2d8), 11 (3d8), and 17 (4d8).\n\nYou can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nPotent Breath. If you take this trait multiple times, you gain an additional breath weapon each time, with its own number of uses, damage type, and area of effect.\n\nAdditionally, when you use any of your Breath Weapons, one target of your choice has Disadvantage on the saving throw. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Potent Breath"
+      "improvedName": "Potent Breath",
+      "benefitBase": "A connection to draconic or elemental fury lets you unleash a blast of destructive energy. When you select this trait, choose a damage type: Acid, Cold, Fire, Lightning, Poison, or Thunder. Then choose an area of effect: a Line that is 5 feet wide and 30 feet long, or a 15-foot Cone .",
+      "benefitImproved": "When you use a Magic action to expel your Breath Weapon, each creature in the area of effect must make a Dexterity saving throw (DC = 8 + your Constitution modifier + your Proficiency Bonus). A target creature takes 1d8 damage of the chosen type on a failed save, or half as much damage on a successful one. This damage increases by 1d8 when you reach character levels 5 (2d8), 11 (3d8), and 17 (4d8).\n\nYou can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nPotent Breath. If you take this trait multiple times, you gain an additional breath weapon each time, with its own number of uses, damage type, and area of effect.\n\nAdditionally, when you use any of your Breath Weapons, one target of your choice has Disadvantage on the saving throw. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PowerfulBuildExplorationCombat",
@@ -1660,7 +1998,11 @@
       "name": "Powerful Shove.",
       "category": "combat",
       "description": "Whether carrying well-earned loot or the body of a fallen companion, you shoulder that load with ease. You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift. A Small creature with this trait can use any weapon with the Heavy property as long as they have proficiency with that weapon. (This is an Exploration trait.)\n\nPowerful Shove. If you take this trait twice, you can move or knock foes prone with ease. When you use Unarmed Attack to shove a creature 5 feet or give it the Prone condition, the target has Disadvantage on the saving throw. (This is a Combat trait.)",
-      "improvedName": "Powerful Shove†"
+      "improvedName": "Powerful Shove†",
+      "benefitBase": "Whether carrying well-earned loot or the body of a fallen companion, you shoulder that load with ease. You count as one size larger when determining your carrying capacity and the weight you can push, drag, or lift. A Small creature with this trait can use any weapon with the Heavy property as long as they have proficiency with that weapon. (This is an Exploration trait.)",
+      "benefitImproved": "Powerful Shove. If you take this trait twice, you can move or knock foes prone with ease. When you use Unarmed Attack to shove a creature 5 feet or give it the Prone condition, the target has Disadvantage on the saving throw. (This is a Combat trait.)",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "NaturesVoiceRoleplaying",
@@ -1668,7 +2010,11 @@
       "name": "Primal Voice.",
       "category": "roleplaying",
       "description": "Mastering the subtle expression of fauna and flora grants you an edge in dealing with the threats of the wilderness. Through sounds and gestures, you can communicate simple ideas with Beasts and Plant creatures, understanding if a creature is hungry, for example. This gives you no specific ability to control such creatures, and you can’t understand or learn detailed information from them.\n\nPrimal Voice. If you take this trait twice, you have Advantage on ability checks made as part of an Influence action to interact with a Beast or Plant creature.",
-      "improvedName": "Primal Voice"
+      "improvedName": "Primal Voice",
+      "benefitBase": "Mastering the subtle expression of fauna and flora grants you an edge in dealing with the threats of the wilderness. Through sounds and gestures, you can communicate simple ideas with Beasts and Plant creatures, understanding if a creature is hungry, for example. This gives you no specific ability to control such creatures, and you can’t understand or learn detailed information from them.",
+      "benefitImproved": "Primal Voice. If you take this trait twice, you have Advantage on ability checks made as part of an Influence action to interact with a Beast or Plant creature.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "WellProtectedCombat",
@@ -1676,7 +2022,11 @@
       "name": "Protective Cover.",
       "category": "combat",
       "description": "Your ability to roll with even the worst attacks means that armor would only slow you down. When you are not wearing armor, your AC is equal to 13 + your Dexterity modifier.\n\nProtective Cover. If you take this trait twice, when you make a Dexterity saving throw or are targeted by a ranged attack, you can use a Reaction to have Advantage on the saving throw or impose Disadvantage on the ranged attack roll. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nAlternate Rules: Wounds and Resting\n\nThe Grim Hollow Campaign Guide contains alternate rules for resting and receiving both Grievous Wounds and Permanent Wounds. These alternate rules are meant to enhance game play in a dark fantasy world where the heroes have to overcome every sort of obstacle to achieve their goals.\n\nGrievous Wounds are applied to characters that would be dropped to 0 Hit Points, but instead choose to gain a lingering wound that stays with them. These wounds remain until a character takes a Long Rest (see Resting below) and undergoes treatment by a physician or someone trained in Medicine .\n\nPermanent Wounds occur when a creature takes multiple Grievous Wounds, or when a character dies and is brought back to life. The challenges of Permanent Wounds can be offset with certain magic items or prosthetics.\n\nThe dark-fantasy vibe of Grim Hollow necessitates a change to the effects of Short and Long Rests. Grievous Wounds can be healed by taking a Long Rest, but those rests in Grim Hollow take 32 hours of resting in a completely safe environment.\n\n//",
-      "improvedName": "Protective Cover"
+      "improvedName": "Protective Cover",
+      "benefitBase": "Your ability to roll with even the worst attacks means that armor would only slow you down. When you are not wearing armor, your AC is equal to 13 + your Dexterity modifier.",
+      "benefitImproved": "Protective Cover. If you take this trait twice, when you make a Dexterity saving throw or are targeted by a ranged attack, you can use a Reaction to have Advantage on the saving throw or impose Disadvantage on the ranged attack roll. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nAlternate Rules: Wounds and Resting\n\nThe Grim Hollow Campaign Guide contains alternate rules for resting and receiving both Grievous Wounds and Permanent Wounds. These alternate rules are meant to enhance game play in a dark fantasy world where the heroes have to overcome every sort of obstacle to achieve their goals.\n\nGrievous Wounds are applied to characters that would be dropped to 0 Hit Points, but instead choose to gain a lingering wound that stays with them. These wounds remain until a character takes a Long Rest (see Resting below) and undergoes treatment by a physician or someone trained in Medicine .\n\nPermanent Wounds occur when a creature takes multiple Grievous Wounds, or when a character dies and is brought back to life. The challenges of Permanent Wounds can be offset with certain magic items or prosthetics.\n\nThe dark-fantasy vibe of Grim Hollow necessitates a change to the effects of Short and Long Rests. Grievous Wounds can be healed by taking a Long Rest, but those rests in Grim Hollow take 32 hours of resting in a completely safe environment.\n\n//",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "SwimmerExploration",
@@ -1684,7 +2034,11 @@
       "name": "Quickened Swim.",
       "category": "exploration",
       "description": "You are in your element while in the water, moving with grace and ease. You have a Swim Speed equal to your Speed.\n\nQuickened Swim. If you take this trait twice, you can use the Dash action as a Bonus Action while swimming.",
-      "improvedName": "Quickened Swim"
+      "improvedName": "Quickened Swim",
+      "benefitBase": "You are in your element while in the water, moving with grace and ease. You have a Swim Speed equal to your Speed.",
+      "benefitImproved": "Quickened Swim. If you take this trait twice, you can use the Dash action as a Bonus Action while swimming.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "AwakenedMindCombat",
@@ -1692,7 +2046,11 @@
       "name": "Reawakened.",
       "category": "combat",
       "description": "The dangers of Etharis have given you a focus that allows you to shrug off debilitating magical effects. You automatically succeed on saving throws against magical effects that would give you the Incapacitated , Stunned , or Unconscious conditions. This does not include effects that leave you Unconscious because you are reduced to 0 Hit Points.\n\nReawakened. If you take this trait twice, you also have Advantage on Intelligence, Wisdom, and Charisma saving throws.",
-      "improvedName": "Reawakened"
+      "improvedName": "Reawakened",
+      "benefitBase": "The dangers of Etharis have given you a focus that allows you to shrug off debilitating magical effects. You automatically succeed on saving throws against magical effects that would give you the Incapacitated , Stunned , or Unconscious conditions. This does not include effects that leave you Unconscious because you are reduced to 0 Hit Points.",
+      "benefitImproved": "Reawakened. If you take this trait twice, you also have Advantage on Intelligence, Wisdom, and Charisma saving throws.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "UnnaturalHealerRoleplaying",
@@ -1700,7 +2058,11 @@
       "name": "Regenerative Healer.",
       "category": "roleplaying",
       "description": "Your innate healing abilities let you recover from some of the grimmest wounds. During a Long Rest, you can automatically reverse Grievous Wounds. Additionally, you can reattach any severed body parts (fingers, legs, tails, and so on), which are automatically restored at the end of the Long Rest. If your severed body parts aren’t available, you can replace them with the same body parts of another creature of the same general anatomy as you. If you wish to intentionally swap out body parts with replacements, you can sever your own body parts with no pain or discomfort.\n\nThe ability to make use of unusual body parts (for example, giving yourself the taloned paw of a lion if you lose a hand) are left to the GM’s discretion. In any event, swapping a severed body part for an unusual body part grants you no mechanical Advantages not covered by other traits (see “ Features and Traits ”).\n\nRegenerative Healer. If you take this trait twice, you automatically reverse Permanent Wounds during a Long Rest. Additionally, you can restore any severed body part during a Long Rest, as if subject to the Regenerate spell. You can use this trait to create unusual regenerated body parts at the GM’s determination.",
-      "improvedName": "Regenerative Healer"
+      "improvedName": "Regenerative Healer",
+      "benefitBase": "Your innate healing abilities let you recover from some of the grimmest wounds. During a Long Rest, you can automatically reverse Grievous Wounds. Additionally, you can reattach any severed body parts (fingers, legs, tails, and so on), which are automatically restored at the end of the Long Rest. If your severed body parts aren’t available, you can replace them with the same body parts of another creature of the same general anatomy as you. If you wish to intentionally swap out body parts with replacements, you can sever your own body parts with no pain or discomfort.",
+      "benefitImproved": "The ability to make use of unusual body parts (for example, giving yourself the taloned paw of a lion if you lose a hand) are left to the GM’s discretion. In any event, swapping a severed body part for an unusual body part grants you no mechanical Advantages not covered by other traits (see “ Features and Traits ”).\n\nRegenerative Healer. If you take this trait twice, you automatically reverse Permanent Wounds during a Long Rest. Additionally, you can restore any severed body part during a Long Rest, as if subject to the Regenerate spell. You can use this trait to create unusual regenerated body parts at the GM’s determination.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "HuntersInstinctCombat",
@@ -1708,7 +2070,11 @@
       "name": "Relentless Instinct.",
       "category": "combat",
       "description": "You summon a surge of ferocity when your prey least expects it. At the end of each Long Rest, you gain a number of d8s equal to your Proficiency Bonus. When you make an attack with a weapon or an Unarmed Strike , you can roll a d8 and add it to either the attack roll or the damage roll. If you add it to the d20 roll, you can decide to roll the d8 after the d20 roll is made, but you must do so before the outcome of the roll is known.\n\nRelentless Instinct. If you take this trait twice, whenever you use Hunter’s Instinct for an attack roll, if the attack roll misses, you retain the d8 and can use it again.",
-      "improvedName": "Relentless Instinct"
+      "improvedName": "Relentless Instinct",
+      "benefitBase": "You summon a surge of ferocity when your prey least expects it. At the end of each Long Rest, you gain a number of d8s equal to your Proficiency Bonus. When you make an attack with a weapon or an Unarmed Strike , you can roll a d8 and add it to either the attack roll or the damage roll. If you add it to the d20 roll, you can decide to roll the d8 after the d20 roll is made, but you must do so before the outcome of the roll is known.",
+      "benefitImproved": "Relentless Instinct. If you take this trait twice, whenever you use Hunter’s Instinct for an attack roll, if the attack roll misses, you retain the d8 and can use it again.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "DriverExploration",
@@ -1716,7 +2082,11 @@
       "name": "Remarkable Driver.",
       "category": "exploration",
       "description": "The roads and waterways of Etharis are often no less dangerous than the open wilderness, and you dedicate yourself to moving others safely on those routes. You have proficiency with Navigator’s Tools , and you have Advantage on ability checks made to drive a vehicle.\n\nRemarkable Driver. If you take this trait twice, you can make checks involving driving a vehicle that require an action without having to use your action. You can only get this free use once per round.",
-      "improvedName": "Remarkable Driver"
+      "improvedName": "Remarkable Driver",
+      "benefitBase": "The roads and waterways of Etharis are often no less dangerous than the open wilderness, and you dedicate yourself to moving others safely on those routes. You have proficiency with Navigator’s Tools , and you have Advantage on ability checks made to drive a vehicle.",
+      "benefitImproved": "Remarkable Driver. If you take this trait twice, you can make checks involving driving a vehicle that require an action without having to use your action. You can only get this free use once per round.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "IrrepressibleSightExploration",
@@ -1724,7 +2094,11 @@
       "name": "Resolute Sight.",
       "category": "exploration",
       "description": "Any foe you can see is a foe you can take down—so you make sure nothing prevents you from seeing. You have Advantage on saving throws against having the Blinded condition.\n\nResolute Sight. If you take this trait twice, when you fail a saving throw against having the Blinded condition, you can use your Reaction to succeed on the save instead. You regain the use of this feature after you finish a Long Rest.",
-      "improvedName": "Resolute Sight"
+      "improvedName": "Resolute Sight",
+      "benefitBase": "Any foe you can see is a foe you can take down—so you make sure nothing prevents you from seeing. You have Advantage on saving throws against having the Blinded condition.",
+      "benefitImproved": "Resolute Sight. If you take this trait twice, when you fail a saving throw against having the Blinded condition, you can use your Reaction to succeed on the save instead. You regain the use of this feature after you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "MeditativeRestExploration",
@@ -1732,7 +2106,11 @@
       "name": "Restorative Rest.",
       "category": "exploration",
       "description": "Sleep is a luxury you’ve never needed to afford. When you rest, you meditate deeply for 4 hours, dreaming but remaining conscious. After resting in this way, you gain the same benefit that other humanoids do from 8 hours of sleep.\n\nRestorative Rest. If you take this trait twice, you need to spend only 2 hours in your meditation to gain the benefit of 8 hours of sleep, and you gain a d6 at the end of each Long Rest. Before the end of your next Long Rest, you can roll the d6 and add it to any d20 Test you make. You can decide to roll the d6 after the d20 Test is made, but you must do so before the outcome of the roll is known.",
-      "improvedName": "Restorative Rest"
+      "improvedName": "Restorative Rest",
+      "benefitBase": "Sleep is a luxury you’ve never needed to afford. When you rest, you meditate deeply for 4 hours, dreaming but remaining conscious. After resting in this way, you gain the same benefit that other humanoids do from 8 hours of sleep.",
+      "benefitImproved": "Restorative Rest. If you take this trait twice, you need to spend only 2 hours in your meditation to gain the benefit of 8 hours of sleep, and you gain a d6 at the end of each Long Rest. Before the end of your next Long Rest, you can roll the d6 and add it to any d20 Test you make. You can decide to roll the d6 after the d20 Test is made, but you must do so before the outcome of the roll is known.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "DivineSangromancyCombat",
@@ -1740,7 +2118,11 @@
       "name": "Sangromancy Savant.",
       "category": "combat",
       "description": "A connection to the life force of others lets you shape that force to their benefit. Whenever an allied creature within 30 feet of you regains Hit Points, you can spend a Hit Die and add the roll of the die to the number of Hit Points gained by the ally.\n\nSangromancy Savant. If you take this trait twice, when you use Divine Sangromancy, you also regain Hit Points equal to your Hit Die roll.",
-      "improvedName": "Sangromancy Savant"
+      "improvedName": "Sangromancy Savant",
+      "benefitBase": "A connection to the life force of others lets you shape that force to their benefit. Whenever an allied creature within 30 feet of you regains Hit Points, you can spend a Hit Die and add the roll of the die to the number of Hit Points gained by the ally.",
+      "benefitImproved": "Sangromancy Savant. If you take this trait twice, when you use Divine Sangromancy, you also regain Hit Points equal to your Hit Die roll.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "DreamwalkingRoleplaying",
@@ -1748,7 +2130,11 @@
       "name": "Secret Dreams.",
       "category": "roleplaying",
       "description": "Whenever you rest, you touch the dreams of those around you, seeding their thoughts and memories into your own mind. When you make an ability check to recall lore or knowledge, you have Advantage on the check. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nSecret Dreams. If you take this trait twice, you gain an instinctive knowledge of the secrets of other creatures while you touch their dreams. Using a Search action, you focus on one creature you can see and make a DC 15 Wisdom Insight check. With a successful check, you learn one secret of the GM’s choice known to that creature. The secrets of creatures that don’t have a language come to you as vague images and impressions. You regain the use of this feature when you finish a Short or Long Rest.\n\nWhy bother with interrogation? Just let him rest a few hours. I’ll get you your answers.\n\n—Varrigan the Dreamwalker",
-      "improvedName": "Secret Dreams"
+      "improvedName": "Secret Dreams",
+      "benefitBase": "Whenever you rest, you touch the dreams of those around you, seeding their thoughts and memories into your own mind. When you make an ability check to recall lore or knowledge, you have Advantage on the check. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Secret Dreams. If you take this trait twice, you gain an instinctive knowledge of the secrets of other creatures while you touch their dreams. Using a Search action, you focus on one creature you can see and make a DC 15 Wisdom Insight check. With a successful check, you learn one secret of the GM’s choice known to that creature. The secrets of creatures that don’t have a language come to you as vague images and impressions. You regain the use of this feature when you finish a Short or Long Rest.\n\nWhy bother with interrogation? Just let him rest a few hours. I’ll get you your answers.\n\n—Varrigan the Dreamwalker",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ArtificialFormExploration",
@@ -1756,7 +2142,11 @@
       "name": "Self-Repair.",
       "category": "exploration",
       "description": "You were made, not born, and your unnatural origin forever marks you as different. You are a Construct, but your enchanted form still benefits from healing spells. You can also heal yourself by spending Hit Dice during Short Rests and Long Rests, as normal.\n\nYou don’t need to eat, drink, sleep, or breathe. You must still be inactive for 8 hours during a Long Rest to gain its benefits.\n\nSelf-Repair. If you take this trait twice, when the Mending cantrip is cast on you, you can spend a Hit Die to regain a number of Hit Points equal to the roll of the die plus your Constitution modifier (minimum 1 Hit Point). You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Self-Repair"
+      "improvedName": "Self-Repair",
+      "benefitBase": "You were made, not born, and your unnatural origin forever marks you as different. You are a Construct, but your enchanted form still benefits from healing spells. You can also heal yourself by spending Hit Dice during Short Rests and Long Rests, as normal.",
+      "benefitImproved": "You don’t need to eat, drink, sleep, or breathe. You must still be inactive for 8 hours during a Long Rest to gain its benefits.\n\nSelf-Repair. If you take this trait twice, when the Mending cantrip is cast on you, you can spend a Hit Die to regain a number of Hit Points equal to the roll of the die plus your Constitution modifier (minimum 1 Hit Point). You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "NaturalCamouflageExploration",
@@ -1764,7 +2154,11 @@
       "name": "Shared Camouflage.",
       "category": "exploration",
       "description": "Your ability to fade into the background of familiar territory helps keep you safe from threats. Choose an environment: arctic, coastal, desert, forest, grassland, hill and mountain, swamp, subterranean, or underwater. You have Advantage on Stealth checks made with the Hide action while in that environment.\n\nShared Camouflage. If you take this trait multiple times, you gain its benefits for a new environment each time.\n\nAdditionally, when you take the Hide action, you can forgo making a Stealth check while in any environment chosen with Natural Camouflage, instead treating the check as if you had rolled a 15. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Shared Camouflage"
+      "improvedName": "Shared Camouflage",
+      "benefitBase": "Your ability to fade into the background of familiar territory helps keep you safe from threats. Choose an environment: arctic, coastal, desert, forest, grassland, hill and mountain, swamp, subterranean, or underwater. You have Advantage on Stealth checks made with the Hide action while in that environment.",
+      "benefitImproved": "Shared Camouflage. If you take this trait multiple times, you gain its benefits for a new environment each time.\n\nAdditionally, when you take the Hide action, you can forgo making a Stealth check while in any environment chosen with Natural Camouflage, instead treating the check as if you had rolled a 15. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
       "anchorId": "FleetofFootExploration",
@@ -1772,7 +2166,11 @@
       "name": "Shared Fleetness.",
       "category": "exploration",
       "description": "As you’ve learned more than once, moving fast is often the best way to avoid trouble. Your Speed increases by 5 feet.\n\nShared Fleetness. If you take this trait twice, your Speed increases by another 5 feet, for a total increase of 10 feet.\n\nAdditionally, as a Bonus Action, choose any number of creatures within 30 feet. Those creatures gain a 10 foot bonus to their Speed for 1 minute. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": null,
+      "benefitBase": "As you’ve learned more than once, moving fast is often the best way to avoid trouble. Your Speed increases by 5 feet.",
+      "benefitImproved": "Shared Fleetness. If you take this trait twice, your Speed increases by another 5 feet, for a total increase of 10 feet.\n\nAdditionally, as a Bonus Action, choose any number of creatures within 30 feet. Those creatures gain a 10 foot bonus to their Speed for 1 minute. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "NaturalMovementExploration",
@@ -1780,15 +2178,23 @@
       "name": "Shared Movement.",
       "category": "exploration",
       "description": "The time you’ve spent in the natural world lets you travel at speed, and hinders the abilities of those who would hunt you. Choose an environment: arctic, coastal, desert, forest, grassland, hill and mountain, swamp, subterranean, or underwater. While in that environment, moving through nonmagical Difficult Terrain costs you no extra movement, and ability checks made to track you have Disadvantage.\n\nShared Movement. If you take this trait multiple times, you gain its benefits for a new environment each time. Additionally, while in any environment chosen for Natural Movement, as a Bonus Action, you can grant creatures of your choice the benefit of Natural Movement for 1 hour, as long as those creatures remain within 120 feet of you and can see you.",
-      "improvedName": "Shared Movement"
+      "improvedName": "Shared Movement",
+      "benefitBase": "The time you’ve spent in the natural world lets you travel at speed, and hinders the abilities of those who would hunt you. Choose an environment: arctic, coastal, desert, forest, grassland, hill and mountain, swamp, subterranean, or underwater. While in that environment, moving through nonmagical Difficult Terrain costs you no extra movement, and ability checks made to track you have Disadvantage.",
+      "benefitImproved": "Shared Movement. If you take this trait multiple times, you gain its benefits for a new environment each time. Additionally, while in any environment chosen for Natural Movement, as a Bonus Action, you can grant creatures of your choice the benefit of Natural Movement for 1 hour, as long as those creatures remain within 120 feet of you and can see you.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "SkillProwessRoleplaying",
+      "anchorId": "ProwessRoleplaying",
       "slug": "skill-mastery",
       "name": "Skill Mastery.",
       "category": "roleplaying",
       "description": "Your ingenuity and inventiveness help keep you alive in a dangerous world. Before you make an ability check using a skill you are proficient with, you can add your Proficiency Bonus again. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nSkill Mastery. If you take this trait twice, when you fail an ability check made using the Skill Prowess trait, you can reroll the check and must use the new roll.",
-      "improvedName": "Skill Mastery"
+      "improvedName": "Skill Mastery",
+      "benefitBase": "Your ingenuity and inventiveness help keep you alive in a dangerous world. Before you make an ability check using a skill you are proficient with, you can add your Proficiency Bonus again. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Skill Mastery. If you take this trait twice, when you fail an ability check made using the Skill Prowess trait, you can reroll the check and must use the new roll.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "EveninSleepExploration",
@@ -1796,7 +2202,11 @@
       "name": "Sleeping Ward.",
       "category": "exploration",
       "description": "An instinctive sense for danger protects you at all times. While you have the Unconscious condition while asleep, you are aware of your surroundings and can make Perception checks normally.\n\nSleeping Ward. If you take this trait twice, while you are asleep, you automatically detect the presence of any creature intending harm to you that moves within 30 feet of you. A creature that is simply capable of harming you does not trigger this trait until it has intent to do so. For example, a wild animal might approach you cautiously, then decide to attack only when it realizes you are sleeping.",
-      "improvedName": null
+      "improvedName": null,
+      "benefitBase": "An instinctive sense for danger protects you at all times. While you have the Unconscious condition while asleep, you are aware of your surroundings and can make Perception checks normally.",
+      "benefitImproved": "Sleeping Ward. If you take this trait twice, while you are asleep, you automatically detect the presence of any creature intending harm to you that moves within 30 feet of you. A creature that is simply capable of harming you does not trigger this trait until it has intent to do so. For example, a wild animal might approach you cautiously, then decide to attack only when it realizes you are sleeping.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "UncheckedCombat",
@@ -1804,7 +2214,11 @@
       "name": "Slip Free.",
       "category": "combat",
       "description": "Your ability to stay in motion is second to none, and foes try in vain to pin you down. You have Advantage on saving throws against being Restrained .\n\nSlip Free. If you take this trait twice, when you fail a saving throw against being Restrained, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Slip Free"
+      "improvedName": "Slip Free",
+      "benefitBase": "Your ability to stay in motion is second to none, and foes try in vain to pin you down. You have Advantage on saving throws against being Restrained .",
+      "benefitImproved": "Slip Free. If you take this trait twice, when you fail a saving throw against being Restrained, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ArtificeExpertiseExplorationCombat",
@@ -1812,7 +2226,11 @@
       "name": "Smoker.",
       "category": "combat",
       "description": "Working with detritus and shattered objects has granted you an affinity for repairing and remaking things. You have proficiency with Tinker’s Tools . (This is an Exploration trait.)\n\nAdditionally, you can use your Tinker’s Tools and 10 GP worth of appropriate materials to spend 10 minutes creating a small clockwork device. The device must fit in the palm of your hand, and can serve one of the following functions:\n\nSmoker. The device exudes smoke in a 5-foot Cube for 1 minute. Any objects or creatures within this Cube are considered Lightly Obscured .\n\nLighter. The device emits a small flame the size of a candle’s that can light flammable objects.\n\nCompass. The device always points north, or in a cardinal direction of the GM’s determination on another plane.\n\nExpert Gadgeteer. If you take this trait twice, you can make a device in 1 minute instead of 10 minutes. In addition, you can choose to imbue a device with the following extra function: (This is a Combat trait.)\n\nDistractor. This device is set with blinking lights that can captivate other creatures. As a Bonus Action, you place or toss the device into a space within 30 feet of you. A creature sharing a space with the device must succeed on a DC 10 Intelligence saving throw. On a failure, attacks against that creature have Advantage until the start of your next turn. A creature can use an action to destroy the device. You can give up to three of your devices the Distractor feature. You regain the ability to do so when you finish a Long Rest.",
-      "improvedName": "Expert Gadgeteer†"
+      "improvedName": "Expert Gadgeteer†",
+      "benefitBase": "Working with detritus and shattered objects has granted you an affinity for repairing and remaking things. You have proficiency with Tinker’s Tools . (This is an Exploration trait.)",
+      "benefitImproved": "Additionally, you can use your Tinker’s Tools and 10 GP worth of appropriate materials to spend 10 minutes creating a small clockwork device. The device must fit in the palm of your hand, and can serve one of the following functions:\n\nSmoker. The device exudes smoke in a 5-foot Cube for 1 minute. Any objects or creatures within this Cube are considered Lightly Obscured .\n\nLighter. The device emits a small flame the size of a candle’s that can light flammable objects.\n\nCompass. The device always points north, or in a cardinal direction of the GM’s determination on another plane.\n\nExpert Gadgeteer. If you take this trait twice, you can make a device in 1 minute instead of 10 minutes. In addition, you can choose to imbue a device with the following extra function: (This is a Combat trait.)\n\nDistractor. This device is set with blinking lights that can captivate other creatures. As a Bonus Action, you place or toss the device into a space within 30 feet of you. A creature sharing a space with the device must succeed on a DC 10 Intelligence saving throw. On a failure, attacks against that creature have Advantage until the start of your next turn. A creature can use an action to destroy the device. You can give up to three of your devices the Distractor feature. You regain the ability to do so when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PsychicSpiritCombat",
@@ -1820,7 +2238,11 @@
       "name": "Spirit’s Strength.",
       "category": "combat",
       "description": "Your strength of mind shields you from unnatural forces. You have Resistance to Psychic damage.\n\nSpirit’s Strength. If you take this trait twice, when you fail a saving throw against an effect that deals Psychic damage, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Spirit’s Strength"
+      "improvedName": "Spirit’s Strength",
+      "benefitBase": "Your strength of mind shields you from unnatural forces. You have Resistance to Psychic damage.",
+      "benefitImproved": "Spirit’s Strength. If you take this trait twice, when you fail a saving throw against an effect that deals Psychic damage, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "StalwartReservesCombat",
@@ -1828,7 +2250,11 @@
       "name": "Stalwart Edge.",
       "category": "combat",
       "description": "Each time you lay into a foe, their state of peril lends you vigor. When you hit a creature with a melee attack, you can use your Reaction to roll a number of d4s equal to your Proficiency Bonus and gain Temporary Hit Points equal to the total rolled. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nStalwart Edge. If you take this trait twice, you can take the maximum number of Temporary Hit Points rather than rolling.",
-      "improvedName": "Stalwart Edge"
+      "improvedName": "Stalwart Edge",
+      "benefitBase": "Each time you lay into a foe, their state of peril lends you vigor. When you hit a creature with a melee attack, you can use your Reaction to roll a number of d4s equal to your Proficiency Bonus and gain Temporary Hit Points equal to the total rolled. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Stalwart Edge. If you take this trait twice, you can take the maximum number of Temporary Hit Points rather than rolling.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "SteadyExploration",
@@ -1836,15 +2262,23 @@
       "name": "Stand Fast.",
       "category": "exploration",
       "description": "No matter what kind of upheaval surrounds you, you stand your ground. You have Advantage on saving throws against having the Prone condition.\n\nStand Fast. If you take this trait twice, standing from Prone takes only five feet of movement instead of half your movement.\n\nAdditionally, when you fail a saving throw against being knocked Prone, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.\n\nDon’t stay down. Never stay down. If you stay down, you’re dead.\n\n—Monster Hunter’s Guide to Survival",
-      "improvedName": "Stand Fast"
+      "improvedName": "Stand Fast",
+      "benefitBase": "No matter what kind of upheaval surrounds you, you stand your ground. You have Advantage on saving throws against having the Prone condition.",
+      "benefitImproved": "Stand Fast. If you take this trait twice, standing from Prone takes only five feet of movement instead of half your movement.\n\nAdditionally, when you fail a saving throw against being knocked Prone, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.\n\nDon’t stay down. Never stay down. If you stay down, you’re dead.\n\n—Monster Hunter’s Guide to Survival",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
-      "anchorId": "TouchofLifeCombat",
+      "anchorId": "TouchOfLifeCombat",
       "slug": "strength-of-life",
       "name": "Strength of Life.",
       "category": "combat",
       "description": "Effects that corrupt the essence of other living creatures are of little concern to you. You have Resistance to Necrotic damage.\n\nStrength of Life. If you take this trait twice, when you fail a saving throw against an effect that deals Necrotic damage, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": null
+      "improvedName": "Strength of Life",
+      "benefitBase": "Effects that corrupt the essence of other living creatures are of little concern to you. You have Resistance to Necrotic damage.",
+      "benefitImproved": "Strength of Life. If you take this trait twice, when you fail a saving throw against an effect that deals Necrotic damage, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "FirstStrikeCombat",
@@ -1852,7 +2286,11 @@
       "name": "Strong Strike.",
       "category": "combat",
       "description": "Hesitation in others is a weakness you’ve learned to take deadly advantage of. When you hit a creature that hasn’t taken a turn in the combat yet, your attack deals an extra 2d6 damage. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.\n\nStrong Strike. If you take this trait twice, you can use the maximum value of the extra damage dice from First Strike, rather than rolling. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Strong Strike"
+      "improvedName": "Strong Strike",
+      "benefitBase": "Hesitation in others is a weakness you’ve learned to take deadly advantage of. When you hit a creature that hasn’t taken a turn in the combat yet, your attack deals an extra 2d6 damage. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "benefitImproved": "Strong Strike. If you take this trait twice, you can use the maximum value of the extra damage dice from First Strike, rather than rolling. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "IntuitiveAcrobatRoleplaying",
@@ -1860,7 +2298,11 @@
       "name": "Stunt Expert.",
       "category": "roleplaying",
       "description": "Staying loose and limber means being able to get out of even the tightest spots when your life is on the line. You have proficiency in the Acrobatics skill.\n\nStunt Expert. If you take this trait twice, you have Advantage on Acrobatics checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Stunt Expert"
+      "improvedName": "Stunt Expert",
+      "benefitBase": "Staying loose and limber means being able to get out of even the tightest spots when your life is on the line. You have proficiency in the Acrobatics skill.",
+      "benefitImproved": "Stunt Expert. If you take this trait twice, you have Advantage on Acrobatics checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "CreatureCoverCombat",
@@ -1868,7 +2310,11 @@
       "name": "Subtle Cover.",
       "category": "combat",
       "description": "By slipping behind enemies or allies alike, you are able to fade from view with ease. You can take the Hide action even when you have Half Cover from a creature, as long as that creature is of a size larger than you.\n\nSubtle Cover. If you take this trait twice, you can take the Hide action when you have Half Cover from a creature the same size as you.",
-      "improvedName": "Subtle Cover"
+      "improvedName": "Subtle Cover",
+      "benefitBase": "By slipping behind enemies or allies alike, you are able to fade from view with ease. You can take the Hide action even when you have Half Cover from a creature, as long as that creature is of a size larger than you.",
+      "benefitImproved": "Subtle Cover. If you take this trait twice, you can take the Hide action when you have Half Cover from a creature the same size as you.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "SkirmishTacticsCombat",
@@ -1876,7 +2322,11 @@
       "name": "Supreme Skirmisher.",
       "category": "combat",
       "description": "Your brutal strike leaves your foe reeling as you slip away. When you hit a hostile creature with an attack with a weapon or an Unarmed Strike , Opportunity Attacks against you by that creature have Disadvantage until the end of your turn.\n\nSupreme Skirmisher. If you take this trait twice, when you hit a hostile creature with an attack with a weapon attack or an Unarmed Strike, you can take the Disengage action as a Bonus Action until the end of your turn.",
-      "improvedName": "Supreme Skirmisher"
+      "improvedName": "Supreme Skirmisher",
+      "benefitBase": "Your brutal strike leaves your foe reeling as you slip away. When you hit a hostile creature with an attack with a weapon or an Unarmed Strike , Opportunity Attacks against you by that creature have Disadvantage until the end of your turn.",
+      "benefitImproved": "Supreme Skirmisher. If you take this trait twice, when you hit a hostile creature with an attack with a weapon attack or an Unarmed Strike, you can take the Disengage action as a Bonus Action until the end of your turn.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "SlipperyCombat",
@@ -1884,7 +2334,11 @@
       "name": "Supreme Slip.",
       "category": "combat",
       "description": "Any enemy that tries to grab you is in for a surprise. You have Advantage on Athletics and Acrobatics checks to escape a grapple.\n\nSupreme Slip. If you take this trait twice, when you fail an Athletics or Acrobatics check to escape a grapple, you can use your Reaction to succeed instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Supreme Slip"
+      "improvedName": "Supreme Slip",
+      "benefitBase": "Any enemy that tries to grab you is in for a surprise. You have Advantage on Athletics and Acrobatics checks to escape a grapple.",
+      "benefitImproved": "Supreme Slip. If you take this trait twice, when you fail an Athletics or Acrobatics check to escape a grapple, you can use your Reaction to succeed instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "NaturalAttackCombat",
@@ -1892,7 +2346,11 @@
       "name": "Swift Strike.",
       "category": "combat",
       "description": "The gift of natural weaponry means you are never unarmed, as your foes learn to their peril. Your Unarmed Strikes deal damage equal to 1d6 + your Strength or Dexterity modifier. The type of damage dealt by your Unarmed Strikes can be Bludgeoning, Piercing, or Slashing, based on the type of natural weaponry you possess (claws, horns, a tail, and so forth).\n\nSwift Strike. If you take this trait twice, you can use Unarmed Strike as a Bonus Action. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Swift Strike"
+      "improvedName": "Swift Strike",
+      "benefitBase": "The gift of natural weaponry means you are never unarmed, as your foes learn to their peril. Your Unarmed Strikes deal damage equal to 1d6 + your Strength or Dexterity modifier. The type of damage dealt by your Unarmed Strikes can be Bludgeoning, Piercing, or Slashing, based on the type of natural weaponry you possess (claws, horns, a tail, and so forth).",
+      "benefitImproved": "Swift Strike. If you take this trait twice, you can use Unarmed Strike as a Bonus Action. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "FirmInfluenceRoleplaying",
@@ -1900,7 +2358,11 @@
       "name": "Terrifying Influence.",
       "category": "roleplaying",
       "description": "Others have learned to fear you—and for good reason.\n\nYou have proficiency in the Intimidation skill.\n\nTerrifying Influence. If you take this trait twice, you have Advantage on Intimidation checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Terrifying Influence"
+      "improvedName": "Terrifying Influence",
+      "benefitBase": "Others have learned to fear you—and for good reason.",
+      "benefitImproved": "You have proficiency in the Intimidation skill.\n\nTerrifying Influence. If you take this trait twice, you have Advantage on Intimidation checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "MindfulInvestigatorRoleplaying",
@@ -1908,7 +2370,11 @@
       "name": "Thorough Sleuth.",
       "category": "roleplaying",
       "description": "Putting together the pieces of even the darkest mysteries is second nature to you. You have proficiency in the Investigation skill.\n\nThorough Sleuth. If you take this trait twice, you have Advantage on Investigation checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Thorough Sleuth"
+      "improvedName": "Thorough Sleuth",
+      "benefitBase": "Putting together the pieces of even the darkest mysteries is second nature to you. You have proficiency in the Investigation skill.",
+      "benefitImproved": "Thorough Sleuth. If you take this trait twice, you have Advantage on Investigation checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "DrainingAttackCombat",
@@ -1916,7 +2382,11 @@
       "name": "To the Dregs.",
       "category": "combat",
       "description": "As your enemy’s life force ebbs, you grow ever stronger. If you have the Natural Attack trait, each time you hit with an Unarmed Strike , you gain Temporary Hit Points equal to the damage dealt by the attack.\n\nTo the Dregs. If you take this trait twice, when you use Draining Attack, the target also takes a penalty to their Hit Point maximum equal to the damage dealt by the attack. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "To the Dregs"
+      "improvedName": "To the Dregs",
+      "benefitBase": "As your enemy’s life force ebbs, you grow ever stronger. If you have the Natural Attack trait, each time you hit with an Unarmed Strike , you gain Temporary Hit Points equal to the damage dealt by the attack.",
+      "benefitImproved": "To the Dregs. If you take this trait twice, when you use Draining Attack, the target also takes a penalty to their Hit Point maximum equal to the damage dealt by the attack. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "PersuasiveKnackRoleplaying",
@@ -1924,7 +2394,11 @@
       "name": "Tongue of Gold.",
       "category": "roleplaying",
       "description": "You have learned that the best way to deal with certain threats is to keep those threats from escalating. You have proficiency in the Persuasion skill.\n\nTongue of Gold. If you take this trait twice, you have Advantage on Persuasion checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Tongue of Gold"
+      "improvedName": "Tongue of Gold",
+      "benefitBase": "You have learned that the best way to deal with certain threats is to keep those threats from escalating. You have proficiency in the Persuasion skill.",
+      "benefitImproved": "Tongue of Gold. If you take this trait twice, you have Advantage on Persuasion checks. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "RelentlessEnduranceCombat",
@@ -1932,7 +2406,11 @@
       "name": "Unparalleled Endurance.",
       "category": "combat",
       "description": "The battles you need yet to fight are many, and death is not an option. When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. You regain the use of this feature when you finish a Long Rest.\n\nUnparalleled Endurance. If you take this trait twice, when you use Relentless Endurance, you drop to 1d6 Hit Points + your Proficiency Bonus. Additionally, when you use Relentless Endurance, you can use a Reaction to spend up to five Hit Dice, rolling them and gaining that number of Hit Points.",
-      "improvedName": "Unparalleled Endurance"
+      "improvedName": "Unparalleled Endurance",
+      "benefitBase": "The battles you need yet to fight are many, and death is not an option. When you are reduced to 0 Hit Points but not killed outright, you can drop to 1 Hit Point instead. You regain the use of this feature when you finish a Long Rest.",
+      "benefitImproved": "Unparalleled Endurance. If you take this trait twice, when you use Relentless Endurance, you drop to 1d6 Hit Points + your Proficiency Bonus. Additionally, when you use Relentless Endurance, you can use a Reaction to spend up to five Hit Dice, rolling them and gaining that number of Hit Points.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "TirelessExploration",
@@ -1940,7 +2418,11 @@
       "name": "Vigorous.",
       "category": "exploration",
       "description": "An innate resilience lets you shake off conditions that would take others down. You have Advantage on saving throws connected to gaining or removing Exhaustion levels.\n\nVigorous. If you take this trait twice, when you fail a saving throw against Exhaustion, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
-      "improvedName": "Vigorous"
+      "improvedName": "Vigorous",
+      "benefitBase": "An innate resilience lets you shake off conditions that would take others down. You have Advantage on saving throws connected to gaining or removing Exhaustion levels.",
+      "benefitImproved": "Vigorous. If you take this trait twice, when you fail a saving throw against Exhaustion, you can use your Reaction to succeed on the save instead. You regain the use of this feature when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "InstrumentalistRoleplaying",
@@ -1948,7 +2430,11 @@
       "name": "Virtuoso.",
       "category": "roleplaying",
       "description": "In the quieter moments, music can help you forget the horrors you’ve seen. You have proficiency with two instruments of your choice.\n\nVirtuoso. If you take this trait multiple times, you gain proficiency with two new instruments each time.\n\nAdditionally, you have Advantage on ability checks made using any instrument. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Virtuoso"
+      "improvedName": "Virtuoso",
+      "benefitBase": "In the quieter moments, music can help you forget the horrors you’ve seen. You have proficiency with two instruments of your choice.",
+      "benefitImproved": "Virtuoso. If you take this trait multiple times, you gain proficiency with two new instruments each time.\n\nAdditionally, you have Advantage on ability checks made using any instrument. You can use this feature a number of times equal to twice your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": null,
+      "takeMode": "stack"
     },
     {
       "anchorId": "ClimberExploration",
@@ -1956,7 +2442,11 @@
       "name": "Wall Walker.",
       "category": "exploration",
       "description": "Sometimes staying away from what threatens you means getting clear of those threats. You have a Climb Speed equal to your Speed.\n\nWall Walker. If you take this trait twice, you can use your Climb Speed to move up, down, and across vertical surfaces and upside down along ceilings, while leaving your hands free.\n\nAdditionally, while using climbing movement, you can use the Dash action as a Bonus Action. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Wall Walker"
+      "improvedName": "Wall Walker",
+      "benefitBase": "Sometimes staying away from what threatens you means getting clear of those threats. You have a Climb Speed equal to your Speed.",
+      "benefitImproved": "Wall Walker. If you take this trait twice, you can use your Climb Speed to move up, down, and across vertical surfaces and upside down along ceilings, while leaving your hands free.\n\nAdditionally, while using climbing movement, you can use the Dash action as a Bonus Action. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "AmphibiousExploration",
@@ -1964,7 +2454,11 @@
       "name": "Water Born.",
       "category": "exploration",
       "description": "Surviving underwater is second nature to you. You can breathe air and water.\n\nWater Born. If you take this trait twice, you have Advantage on ability checks or saving throws made while submerged in water. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
-      "improvedName": "Water Born"
+      "improvedName": "Water Born",
+      "benefitBase": "Surviving underwater is second nature to you. You can breathe air and water.",
+      "benefitImproved": "Water Born. If you take this trait twice, you have Advantage on ability checks or saving throws made while submerged in water. You can use this feature a number of times equal to your Proficiency Bonus, regaining all expended uses when you finish a Long Rest.",
+      "maxTakes": 2,
+      "takeMode": "stack"
     },
     {
       "anchorId": "WeaponAptitudeCombat",
@@ -1972,7 +2466,11 @@
       "name": "Weapon Specialist.",
       "category": "combat",
       "description": "The weapons you wield might save your life one day, and you know their secrets. You have proficiency with three weapons of your choice.\n\nWeapon Specialist. If you take this trait multiple times, you gain proficiency with three new weapons each time. Additionally, choose one weapon with which you have proficiency. You have a +1 bonus to damage rolls with that weapon.",
-      "improvedName": "Weapon Specialist"
+      "improvedName": "Weapon Specialist",
+      "benefitBase": "The weapons you wield might save your life one day, and you know their secrets. You have proficiency with three weapons of your choice.",
+      "benefitImproved": "Weapon Specialist. If you take this trait multiple times, you gain proficiency with three new weapons each time. Additionally, choose one weapon with which you have proficiency. You have a +1 bonus to damage rolls with that weapon.",
+      "maxTakes": null,
+      "takeMode": "stack"
     }
   ]
 }

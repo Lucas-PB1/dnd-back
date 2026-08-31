@@ -15,6 +15,7 @@ import type {
   SpeciesChoiceDto,
   SubclassOptionDto,
 } from '@game/sheet/dto/character-sheet.dto';
+import { splitOriginChoices } from '@game/sheet/domain/heritage/origin-choices';
 
 export type CharacterSheetLoadDeps = {
   dataSource: DataSource;
@@ -31,6 +32,7 @@ type SheetBundleBoostJson = {
 type SheetBundleJson = {
   classSkillSlugs?: string[] | null;
   speciesChoices?: SpeciesChoiceDto[] | null;
+  heritageChoices?: SpeciesChoiceDto[] | null;
   subclassOptions?: SubclassOptionDto[] | null;
   classOptions?: ClassOptionDto[] | null;
   characterFeats?: CharacterFeatDto[] | null;
@@ -70,6 +72,7 @@ export async function loadGrantedSpellSheetSlice(
   const sheet = await loadCharacterSheet(deps, characterId);
   return {
     speciesChoices: sheet.speciesChoices,
+    heritageChoices: sheet.heritageChoices,
     classOptions: sheet.classOptions,
     characterFeats: sheet.characterFeats,
     featOptions: sheet.featOptions,
@@ -129,9 +132,17 @@ export function emptySheetData(): CharacterSheetData {
 function mapSheetBundle(bundle: SheetBundleJson | null | undefined): CharacterSheetData {
   if (!bundle) return emptySheetData();
 
+  const rawSpeciesChoices = bundle.speciesChoices ?? [];
+  const explicitHeritage = bundle.heritageChoices ?? [];
+  const split =
+    explicitHeritage.length > 0
+      ? { speciesChoices: rawSpeciesChoices, heritageChoices: explicitHeritage }
+      : splitOriginChoices(rawSpeciesChoices);
+
   return {
     classSkillSlugs: asStringArray(bundle.classSkillSlugs),
-    speciesChoices: bundle.speciesChoices ?? [],
+    speciesChoices: split.speciesChoices,
+    heritageChoices: split.heritageChoices,
     subclassOptions: bundle.subclassOptions ?? [],
     classOptions: bundle.classOptions ?? [],
     characterFeats: bundle.characterFeats ?? [],

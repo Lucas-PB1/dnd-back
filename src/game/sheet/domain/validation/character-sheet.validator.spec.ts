@@ -11,6 +11,7 @@ import { CharacterEquipmentValidator } from './equipment/character-equipment.val
 import { CharacterSpellsValidator } from './spells/character-spells.validator';
 import { CharacterClassOptionsValidator } from './class-options/character-class-options.validator';
 import { CharacterSpeciesChoicesValidator } from './class-options/character-species-choices.validator';
+import { CharacterHeritageChoicesValidator } from './class-options/character-heritage-choices.validator';
 import { CharacterSubclassOptionsValidator } from './class-options/character-subclass-options.validator';
 import { CharacterClassExpertiseValidator } from './class-options/character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './class-options/character-weapon-mastery.validator';
@@ -113,6 +114,9 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         speciesTraitChoicesRepo as unknown as Repository<VPhbSpeciesTraitChoices>,
         dataSource as unknown as DataSource,
       ),
+      {
+        validateHeritageChoices: jest.fn().mockResolvedValue(undefined),
+      } as unknown as CharacterHeritageChoicesValidator,
       new CharacterSubclassOptionsValidator(
         dataSource as unknown as DataSource,
         catalogLookup as unknown as CatalogLookupService,

@@ -11,6 +11,7 @@ describe('CatalogLookupService', () => {
   let service: CatalogLookupService;
   let classesRepo: Repo;
   let speciesRepo: Repo;
+  let heritageRepo: Repo;
   let backgroundsRepo: Repo;
   let subclassesRepo: Repo;
   let alignmentsRepo: Repo;
@@ -25,6 +26,7 @@ describe('CatalogLookupService', () => {
   beforeEach(() => {
     classesRepo = repo();
     speciesRepo = repo();
+    heritageRepo = repo();
     backgroundsRepo = repo();
     subclassesRepo = repo();
     alignmentsRepo = repo();
@@ -39,6 +41,7 @@ describe('CatalogLookupService', () => {
     service = new CatalogLookupService(
       classesRepo as never,
       speciesRepo as never,
+      heritageRepo as never,
       backgroundsRepo as never,
       subclassesRepo as never,
       alignmentsRepo as never,

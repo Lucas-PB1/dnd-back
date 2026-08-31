@@ -8,6 +8,10 @@ import { aggregateClassCombatContributions } from '../domain/aggregate-class-com
 import { featCombatNotes } from '../domain/feat/combat-notes';
 import { itemCombatNotes } from '../domain/item/combat-notes';
 import { speciesCombatNotes } from '../domain/species/combat-notes';
+import {
+  heritageCombatNotes,
+  loadHeritageHitPointsBonus,
+} from '../domain/heritage/heritage-combat-notes';
 import { manikinArmorPresetFromChoices } from '../domain/species/manikin-armor';
 import { paladinSavingThrowAuraBonus } from '../domain/paladin';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
@@ -33,6 +37,7 @@ export type MappedCombatSlice = {
   >['speedPenaltyMeters'];
   itemSpeedBonusMeters: number;
   itemHpBonus: number;
+  heritageHpBonus: number;
   classCombatNotes: string[];
   attacksPerAction: number;
   savingThrowAuraBonus: number;
@@ -43,7 +48,8 @@ export async function resolveCharacterCombatSlice(input: {
   abilityScores: AbilityScores;
   classSlug: string;
   subclassSlug: string | null;
-  speciesSlug: string;
+  speciesSlug?: string | null;
+  heritageChoices?: readonly { choiceKind: string; choiceSlug: string }[];
   speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[];
   classOptions?: readonly { optionKey: string; valueId: string }[];
   level: number;
@@ -64,6 +70,7 @@ export async function resolveCharacterCombatSlice(input: {
     classSlug,
     subclassSlug,
     speciesSlug,
+    heritageChoices,
     speciesChoices,
     classOptions,
     level,
@@ -162,6 +169,14 @@ export async function resolveCharacterCombatSlice(input: {
     level,
   });
   const speciesNotes = speciesCombatNotes({ speciesSlug, speciesChoices });
+  const heritageNotes = heritageCombatNotes({ heritageChoices });
+  const heritageHpBonus = await sheetProfile('combat.heritageHp', () =>
+    loadHeritageHitPointsBonus(
+      dataSource,
+      heritageChoices ?? [],
+      level,
+    ),
+  );
   const featNotes = featCombatNotes({
     featSlugs: [...featSlugs, ...fightingStyleSlugs],
   });
@@ -183,8 +198,10 @@ export async function resolveCharacterCombatSlice(input: {
     itemSpeedBonusMeters:
       itemEffects.speedBonusMeters + classCombat.speedBonusMeters,
     itemHpBonus: itemEffects.hpBonus,
+    heritageHpBonus,
     classCombatNotes: [
       ...speciesNotes,
+      ...heritageNotes,
       ...featNotes,
       ...itemNotes,
       ...classCombat.notes,

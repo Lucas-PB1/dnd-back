@@ -65,7 +65,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
   subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>;
   grantedSpellCatalog: LoadGrantedSpellCatalog;
   sheet: CharacterSheetData;
-  speciesSlug: string;
+  speciesSlug?: string | null;
   subclassSlug: string | null;
   level: number;
   classSlug: string;
@@ -111,7 +111,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     'spell.grants',
     () =>
       grantedSpellCatalog.loadMergeCatalog({
-        speciesSlugs: [speciesSlug],
+        speciesSlugs: speciesSlug ? [speciesSlug] : [],
         featSlugs,
         // classGrantedSpells não entra no annotate do GET
         classSlug: null,
@@ -123,7 +123,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     featFixedSpells,
   );
   const speciesGrantedSlugs = collectSpeciesGrantedSpellSlugs(
-    speciesSlug,
+    speciesSlug ?? '',
     sheet.speciesChoices,
     level,
     speciesCatalog,
@@ -143,7 +143,7 @@ export async function resolveCharacterSpellcastingSlice(input: {
     featOptions: sheet.featOptions,
     speciesChoices: sheet.speciesChoices,
     featFixedSpells,
-    speciesSlug,
+    speciesSlug: speciesSlug ?? undefined,
     speciesCatalog,
   });
 

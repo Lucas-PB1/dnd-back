@@ -48,6 +48,7 @@ export class CreateCharacterHandler {
     await this.catalogLookup.validateCharacterCatalogRefs({
       classSlug: dto.classSlug,
       speciesSlug: dto.speciesSlug,
+      heritageSlug: dto.heritageSlug,
       backgroundSlug: dto.backgroundSlug,
       subclassSlug: dto.subclassSlug,
       alignmentSlug: dto.alignmentSlug,
@@ -58,7 +59,8 @@ export class CreateCharacterHandler {
     const ctx = {
       level,
       classSlug: dto.classSlug,
-      speciesSlug: dto.speciesSlug,
+      speciesSlug: dto.speciesSlug?.trim() ?? '',
+      heritageSlug: dto.heritageSlug?.trim() || null,
       backgroundSlug: dto.backgroundSlug,
       subclassSlug: dto.subclassSlug ?? null,
     };
@@ -77,7 +79,7 @@ export class CreateCharacterHandler {
       dto.characterFeats,
     );
     characterFeats = resolveHumanOriginCharacterFeats(
-      dto.speciesSlug,
+      dto.speciesSlug ?? '',
       dto.speciesChoices,
       characterFeats,
     );
@@ -97,7 +99,7 @@ export class CreateCharacterHandler {
     const featSlugs = (sheetInput.characterFeats ?? []).map((f) => f.featSlug);
     const { speciesCatalog, featFixedSpells, subclassGrantedSpells, classGrantedSpells } =
       await this.grantedSpellCatalog.loadMergeCatalog({
-        speciesSlugs: [dto.speciesSlug],
+        speciesSlugs: dto.speciesSlug ? [dto.speciesSlug] : [],
         featSlugs,
         subclassSlug: dto.subclassSlug,
         classSlug: dto.classSlug,
@@ -118,7 +120,7 @@ export class CreateCharacterHandler {
       {
         featOptions: sheetInput.featOptions,
         characterFeats: sheetInput.characterFeats,
-        speciesSlug: dto.speciesSlug,
+        speciesSlug: dto.speciesSlug ?? undefined,
         speciesChoices: sheetInput.speciesChoices,
         level,
         speciesCatalog,
@@ -206,6 +208,7 @@ export class CreateCharacterHandler {
     return {
       classSkillSlugs: dto.classSkillSlugs,
       speciesChoices: dto.speciesChoices,
+      heritageChoices: dto.heritageChoices,
       subclassOptions: dto.subclassOptions,
       classOptions: dto.classOptions,
       characterFeats: characterFeats ?? dto.characterFeats,

@@ -4,18 +4,19 @@
  */
 import fs from 'fs';
 import path from 'path';
-import { extracts, scrapes } from './lib/docs-source.mjs';
+import { extracts, scrap, scrapes, findScrapeHtml } from './lib/docs-source.mjs';
+import { canonicalAnchorId } from './lib/ghpg-cap1-anchor.mjs';
 
-const grimDir = scrapes.grimHollow;
 const outPath = extracts.grimHollow.cap1Heritages;
 
-const htmlPath = fs
-  .readdirSync(grimDir)
-  .filter((n) => n.includes('Chapter 1') && n.endsWith('.html'))
-  .map((n) => path.join(grimDir, n))[0];
+const htmlPath =
+  findScrapeHtml(scrapes.grimHollow, 'Chapter 1') ??
+  findScrapeHtml(scrap.grimHollow, 'Chapter 1');
 
 if (!htmlPath) {
-  console.error('HTML Cap. 1 GHPG não encontrado em docs/source/_scrapes/grim-hollow');
+  console.error(
+    'HTML Cap. 1 GHPG não encontrado em docs/source/_scrapes/grim-hollow nem docs/source/scrap',
+  );
   process.exit(1);
 }
 
@@ -96,9 +97,9 @@ const HERITAGE_PT = {
 };
 
 const CATEGORY_PT = {
-  common: 'Herança comum',
-  rare: 'Herança rara',
-  eldritch: 'Herança eldritch',
+  common: 'Variante comum',
+  rare: 'Variante rara',
+  eldritch: 'Variante eldritch',
 };
 
 function extractBetween(htmlText, startRe, endRe) {
@@ -192,7 +193,8 @@ function extractBaseTraits(block, singularName) {
 }
 
 function parseTraditionalSidebar(block, heritageName) {
-  const singular = heritageName.replace(/s$/, '');
+  const singular =
+    TRADITIONAL_TRAIT_SIDEBAR_ID[heritageName] ?? heritageName.replace(/s$/, '');
   const re = new RegExp(
     `<aside class="grim--rules-sidebar" id="Traditional${singular}Traits"[\\s\\S]*?</aside>`,
     'i',
@@ -227,13 +229,17 @@ function parseTraditionalSidebar(block, heritageName) {
     const end = nextMarkers.length ? Math.min(...nextMarkers) : aside.length;
     const chunk = aside.slice(idx, end);
     for (const lm of chunk.matchAll(liRe)) {
-      groups[key].push({ anchorId: lm[1], name: stripTags(lm[2]) });
+      groups[key].push({
+        anchorId: canonicalAnchorId(lm[1]),
+        name: stripTags(lm[2]),
+      });
     }
     const plainLi = chunk.matchAll(/<li>\s*<a[^>]*#([^"]+)"[^>]*>([\s\S]*?)<\/a>/gi);
     for (const lm of plainLi) {
+      const anchorId = canonicalAnchorId(lm[1]);
       const name = stripTags(lm[2]);
-      if (!groups[key].some((t) => t.anchorId === lm[1])) {
-        groups[key].push({ anchorId: lm[1], name });
+      if (!groups[key].some((t) => t.anchorId === anchorId)) {
+        groups[key].push({ anchorId, name });
       }
     }
   }
@@ -241,8 +247,22 @@ function parseTraditionalSidebar(block, heritageName) {
   return groups;
 }
 
+function mergeTraitMapEntries(traitMap) {
+  const merged = new Map();
+  for (const entry of traitMap.values()) {
+    const key = canonicalAnchorId(entry.anchorId);
+    const existing = merged.get(key);
+    if (!existing) {
+      merged.set(key, { ...entry, anchorId: key });
+      continue;
+    }
+    if (entry.description.length > existing.description.length) {
+      merged.set(key, { ...entry, anchorId: key });
+    }
+  }
+  return merged;
+}
 function parseTraitDefinitions() {
-  const traits = [];
   const traitSection = extractBetween(html, /<h2[^>]*id="TraitListList"/i, /<div id="comp-next-nav"/i);
   const headingRe = /<h4[^>]*id="([^"]+)"[^>]*>[\s\S]*?<\/h4>([\s\S]*?)(?=<h4[^>]*id="|$)/gi;
 
@@ -259,6 +279,9 @@ function parseTraitDefinitions() {
     let category = 'combat';
     if (anchorId.endsWith('Exploration')) category = 'exploration';
     else if (anchorId.endsWith('Roleplaying')) category = 'roleplaying';
+    void name;
+    void paragraphs;
+    void category;
   }
 
   const allTraitRe =
@@ -286,15 +309,63 @@ function parseTraitDefinitions() {
       category,
       description: paragraphs.join('\n\n'),
       improvedName: null,
+      benefitBase: null,
+      benefitImproved: null,
+      maxTakes: null,
+      takeMode: 'stack',
     });
   }
 
   for (const pm of html.matchAll(/<a[^>]*#([A-Za-z]+(?:Combat|Exploration|Roleplaying))"[^>]*>([^<]+)<\/a>\s*→\s*([^<]+)/gi)) {
-    const entry = traitMap.get(pm[1]);
+    const raw = pm[1];
+    const entry =
+      traitMap.get(raw) ??
+      [...traitMap.values()].find((t) => canonicalAnchorId(t.anchorId) === canonicalAnchorId(raw));
     if (entry) entry.improvedName = stripTags(pm[3]);
   }
 
-  return [...traitMap.values()].sort((a, b) => a.name.localeCompare(b.name));
+  const merged = mergeTraitMapEntries(traitMap);
+  for (const entry of merged.values()) {
+    enrichTraitMetadata(entry);
+  }
+
+  return [...merged.values()].sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function splitBenefitParagraphs(description) {
+  const parts = String(description ?? '')
+    .split(/\n\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  return {
+    benefitBase: parts[0] ?? '',
+    benefitImproved: parts.length > 1 ? parts.slice(1).join('\n\n') : null,
+  };
+}
+
+function inferMaxTakes(description, improvedName) {
+  const text = String(description ?? '');
+  if (/take this trait multiple times/i.test(text)) return null;
+  if (/take this trait twice/i.test(text) || improvedName) return 2;
+  return 1;
+}
+
+function inferTakeMode(description) {
+  const text = String(description ?? '');
+  if (/take this trait multiple times/i.test(text)) {
+    if (/new tool each time|new breath weapon each time|each time you take/i.test(text)) {
+      return 'choice_each_take';
+    }
+  }
+  return 'stack';
+}
+
+function enrichTraitMetadata(entry) {
+  const { benefitBase, benefitImproved } = splitBenefitParagraphs(entry.description);
+  entry.benefitBase = benefitBase;
+  entry.benefitImproved = benefitImproved;
+  entry.maxTakes = inferMaxTakes(entry.description, entry.improvedName);
+  entry.takeMode = inferTakeMode(entry.description);
 }
 
 function feetToMeters(text) {
@@ -304,11 +375,116 @@ function feetToMeters(text) {
   });
 }
 
+const HERITAGE_TRADITIONAL_FALLBACK = {
+  Dwarves: {
+    combat: [
+      { anchorId: 'DamageResistanceCombat', name: 'Damage Resistance' },
+      { anchorId: 'ToughnessCombat', name: 'Toughness' },
+      { anchorId: 'WeaponAptitudeCombat', name: 'Weapon Aptitude' },
+    ],
+    exploration: [
+      { anchorId: 'DarkvisionExploration', name: 'Darkvision' },
+      { anchorId: 'PoisonResilienceExploration', name: 'Poison Resilience' },
+      { anchorId: 'SteadyExploration', name: 'Steady' },
+    ],
+    roleplaying: [
+      { anchorId: 'ArtisanalFocusRoleplaying', name: 'Artisanal Focus' },
+      { anchorId: 'CraftersEyeRoleplaying', name: "Crafter's Eye" },
+    ],
+  },
+  Elves: {
+    combat: [
+      { anchorId: 'AwakenedMindCombat', name: 'Awakened Mind' },
+      { anchorId: 'FocusedMindCombat', name: 'Focused Mind' },
+      { anchorId: 'WeaponAptitudeCombat', name: 'Weapon Aptitude' },
+    ],
+    exploration: [
+      { anchorId: 'DarkvisionExploration', name: 'Darkvision' },
+      { anchorId: 'MeditativeRestExploration', name: 'Meditative Rest' },
+      { anchorId: 'ShroudoftheWildExploration', name: 'Shroud of the Wild' },
+    ],
+    roleplaying: [
+      { anchorId: 'InbornPerceptionRoleplaying', name: 'Inborn Perception' },
+      {
+        anchorId: 'MagicalSavvyRoleplaying',
+        name: 'Magical Savvy (any cantrip)',
+      },
+    ],
+  },
+};
+
+const TRADITIONAL_TRAIT_SIDEBAR_ID = {
+  Dragonborn: 'Dragonborn',
+  Dwarves: 'Dwarf',
+  Elves: 'Elf',
+  Gnomes: 'Gnome',
+  Halflings: 'Halfling',
+  Humans: 'Human',
+  Dreamer: 'Dreamer',
+  Grudgel: 'Grudgel',
+  Laneshi: 'Laneshi',
+  Ogresh: 'Ogresh',
+  Accursed: 'Accursed',
+  Arisen: 'Arisen',
+  Dhampir: 'Dhampir',
+  Disembodied: 'Disembodied',
+  Downcast: 'Downcast',
+  Wechselkind: 'Wechselkind',
+  Wulven: 'Wulven',
+};
+
+const HERITAGE_NAME_EN = {
+  Dragonborn: 'Dragonborn',
+  Dwarves: 'Dwarf',
+  Elves: 'Elf',
+  Gnomes: 'Gnome',
+  Halflings: 'Halfling',
+  Humans: 'Human',
+  Dreamer: 'Dreamer',
+  Grudgel: 'Grudgel',
+  Laneshi: 'Laneshi',
+  Ogresh: 'Ogresh',
+  Accursed: 'Accursed',
+  Arisen: 'Arisen',
+  Dhampir: 'Dhampir',
+  Disembodied: 'Disembodied',
+  Downcast: 'Downcast',
+  Wechselkind: 'Wechselkind',
+  Wulven: 'Wulven',
+};
+
+function poundsToKg(text) {
+  return text
+    .replace(/averaging almost (\d+) pounds/gi, (_, n) => {
+      const kg = Number(n) * 0.5;
+      return `com cerca de ${kg} kg em média`;
+    })
+    .replace(/average about (\d+) pounds/gi, (_, n) => {
+      const kg = Number(n) * 0.5;
+      return `cerca de ${kg} kg em média`;
+    })
+    .replace(/about (\d+) pounds/gi, (_, n) => {
+      const kg = Number(n) * 0.5;
+      return `cerca de ${kg} kg`;
+    })
+    .replace(/(\d+)\s*pounds?/gi, (_, n) => {
+      const kg = Number(n) * 0.5;
+      return `${kg} kg`;
+    });
+}
+
 function localizeBaseTrait(text) {
   let t = feetToMeters(text);
+  t = poundsToKg(t);
   t = t.replace(/\bMedium\b/g, 'Médio');
   t = t.replace(/\bSmall\b/g, 'Pequeno');
   t = t.replace(/\bLarge\b/g, 'Grande');
+  t = t.replace(/\b5 feet\b/gi, '1,5 m');
+  t = t.replace(/\b4 and 5 feet\b/gi, '1,2 m a 1,5 m');
+  t = t.replace(/\bunder 5\b/gi, 'menos de 1,5 m');
+  t = t.replace(/\bover 6 feet\b/gi, 'mais de 1,8 m');
+  t = t.replace(/\b30 feet\b/gi, '9 m');
+  t = t.replace(/\b5 feet\b/gi, '1,5 m');
   return t;
 }
 
@@ -325,7 +501,14 @@ for (const section of HERITAGE_SECTIONS) {
       ...t,
       description: localizeBaseTrait(t.description),
     }));
-    const traditional = parseTraditionalSidebar(block, name);
+    const traditionalRaw = parseTraditionalSidebar(block, name);
+    const fallback = HERITAGE_TRADITIONAL_FALLBACK[name];
+    const traditionalTotal =
+      (traditionalRaw.combat?.length ?? 0) +
+      (traditionalRaw.exploration?.length ?? 0) +
+      (traditionalRaw.roleplaying?.length ?? 0);
+    const traditional =
+      traditionalTotal === 0 && fallback ? fallback : traditionalRaw;
     const imageFile = extractImageFile(block);
 
     let size = 'Médio';
@@ -337,7 +520,7 @@ for (const section of HERITAGE_SECTIONS) {
 
     heritages.push({
       slug: HERITAGE_SLUG[name],
-      nameEn: name.replace(/s$/, name === 'Humans' ? 'Humans' : ''),
+      nameEn: HERITAGE_NAME_EN[name] ?? name,
       namePt: HERITAGE_PT[name],
       category: section.category,
       categoryLabelPt: CATEGORY_PT[section.category],

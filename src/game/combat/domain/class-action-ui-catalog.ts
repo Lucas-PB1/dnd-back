@@ -14,6 +14,10 @@ export type ClassEconomyActionRecord = {
   featSlug?: string | null;
   /** Item mágico dono; omitido/null em linhas de classe/espécie/talento. */
   itemSlug?: string | null;
+  /** Traço de herança GH; omitido/null em linhas de classe/espécie. */
+  heritageTraitSlug?: string | null;
+  /** Mínimo de picks do mesmo traço para liberar a ação. */
+  minTraitTakes?: number;
   requiresOptionKey?: string;
   requiresOptionValue?: string;
   resourceSlug?: string;

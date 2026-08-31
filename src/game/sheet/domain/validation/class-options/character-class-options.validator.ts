@@ -10,6 +10,7 @@ import {
   collectFightingStyleSlugsFromSubclassOptions,
 } from './fighting-style-feat-options';
 import { CharacterSpeciesChoicesValidator } from './character-species-choices.validator';
+import { CharacterHeritageChoicesValidator } from './character-heritage-choices.validator';
 import { CharacterSubclassOptionsValidator } from './character-subclass-options.validator';
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
@@ -26,6 +27,7 @@ export class CharacterClassOptionsValidator {
     private readonly dataSource: DataSource,
     private readonly catalogLookup: CatalogLookupService,
     private readonly speciesChoicesValidator: CharacterSpeciesChoicesValidator,
+    private readonly heritageChoicesValidator: CharacterHeritageChoicesValidator,
     private readonly subclassOptionsValidator: CharacterSubclassOptionsValidator,
     private readonly expertiseValidator: CharacterClassExpertiseValidator,
     private readonly weaponMasteryValidator: CharacterWeaponMasteryValidator,
@@ -114,6 +116,25 @@ export class CharacterClassOptionsValidator {
     choices: CharacterSheetInput['speciesChoices'],
   ): Promise<void> {
     return this.speciesChoicesValidator.validateSpeciesChoices(speciesSlug, choices);
+  }
+
+  async validateHeritageChoices(
+    heritageSlug: string,
+    choices: CharacterSheetInput['heritageChoices'],
+  ): Promise<void> {
+    return this.heritageChoicesValidator.validateHeritageChoices(heritageSlug, choices);
+  }
+
+  async validateOriginChoices(
+    ctx: Pick<CharacterSheetContext, 'speciesSlug' | 'heritageSlug'>,
+    input: Pick<CharacterSheetInput, 'speciesChoices' | 'heritageChoices'>,
+  ): Promise<void> {
+    if (ctx.heritageSlug?.trim()) {
+      await this.validateHeritageChoices(ctx.heritageSlug, input.heritageChoices);
+      return;
+    }
+    if (!ctx.speciesSlug?.trim()) return;
+    await this.validateSpeciesChoices(ctx.speciesSlug, input.speciesChoices);
   }
 
   async validateSubclassOptions(

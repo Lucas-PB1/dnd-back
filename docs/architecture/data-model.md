@@ -61,6 +61,18 @@ Padrões DRY: [`catalog-patterns.md`](catalog-patterns.md)
 - Escolhas (incl. lineages): `phb_option_def` / `phb_option_value` com `scope='species'`
 - Views: `v_phb_species_trait_choices`, `v_phb_species_granted_spell`
 
+**PHB/SRD only** — heranças Grim Hollow usam cluster §4b (não `phb_species`).
+
+### 4b. Heritages (Grim Hollow)
+
+- `phb_heritage` — identidade (17 jogáveis): slug, size/speed, flags speed trade / size choice
+- `phb_heritage_trait` — pool global (~107): `benefit_base`, `benefit_improved`, `max_takes`, `take_mode`
+- `phb_heritage_traditional` — preset de 8 traços sugeridos por herança
+- Runtime: `player_character.heritage_slug` XOR `species_slug`; picks em `player_character_heritage_trait` (slots 1–9) + `player_character_heritage_config` (speed trade / tamanho)
+- Views: `v_phb_heritage_trait_choices`, `v_phb_heritage_traditional_build`, `v_phb_heritage_passive_modifier`, `v_phb_heritage_economy_action`
+- Mecânica: `phb_combat_modifier.heritage_trait_id`, `phb_class_economy_action.heritage_trait_id` + `min_trait_takes`
+- Seeds: `J037`/`J038` (catálogo), `C070+` (economy/modifiers), `J039` (cleanup legado `gh-*` em species)
+
 ### 5. Equipment
 
 - `phb_item` + `phb_weapon` / `phb_armor` / `phb_tool`

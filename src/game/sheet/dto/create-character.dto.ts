@@ -31,10 +31,17 @@ export class CreateCharacterDto extends CharacterSheetInputDto {
   @IsNotEmpty()
   classSlug!: string;
 
-  @ApiProperty({ example: 'dwarf' })
+  @ApiPropertyOptional({ example: 'dwarf' })
+  @ValidateIf((dto: CreateCharacterDto) => !dto.heritageSlug?.trim())
   @IsString()
   @IsNotEmpty()
-  speciesSlug!: string;
+  speciesSlug?: string;
+
+  @ApiPropertyOptional({ example: 'gh-dwarf' })
+  @ValidateIf((dto: CreateCharacterDto) => !dto.speciesSlug?.trim())
+  @IsString()
+  @IsNotEmpty()
+  heritageSlug?: string;
 
   @ApiProperty({ example: 'acolyte' })
   @IsString()

@@ -20,6 +20,12 @@ export class VPhbClassEconomyAction {
   @ViewColumn({ name: 'item_slug' })
   itemSlug!: string | null;
 
+  @ViewColumn({ name: 'heritage_trait_slug' })
+  heritageTraitSlug!: string | null;
+
+  @ViewColumn({ name: 'min_trait_takes' })
+  minTraitTakes!: number | null;
+
   @ViewColumn()
   name!: string;
 

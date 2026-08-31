@@ -37,10 +37,11 @@ function choiceSlug(
 
 /** Lembretes passivos de espécie para Passivas (não entram na Economia). */
 export function speciesCombatNotes(input: {
-  speciesSlug: string;
+  speciesSlug?: string | null;
   speciesChoices?: readonly SpeciesChoiceLike[];
 }): string[] {
   const { speciesSlug, speciesChoices } = input;
+  if (!speciesSlug) return [];
   const notes: string[] = [];
 
   switch (speciesSlug) {

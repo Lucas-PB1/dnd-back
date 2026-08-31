@@ -64,7 +64,10 @@ export class CharacterFactory {
       name: dto.name,
       level,
       classSlug: dto.classSlug,
-      speciesSlug: dto.speciesSlug,
+      speciesSlug: dto.heritageSlug?.trim()
+        ? null
+        : dto.speciesSlug?.trim() || null,
+      heritageSlug: dto.heritageSlug?.trim() || null,
       backgroundSlug: dto.backgroundSlug,
       subclassSlug: dto.subclassSlug ?? null,
       alignmentSlug: dto.alignmentSlug ?? null,
@@ -134,7 +137,8 @@ export class CharacterFactory {
     }
     if (dto.name !== undefined) row.name = dto.name;
     if (dto.classSlug !== undefined) row.classSlug = dto.classSlug;
-    if (dto.speciesSlug !== undefined) row.speciesSlug = dto.speciesSlug;
+    if (dto.speciesSlug !== undefined) row.speciesSlug = dto.speciesSlug ?? '';
+    if (dto.heritageSlug !== undefined) row.heritageSlug = dto.heritageSlug ?? null;
     if (dto.backgroundSlug !== undefined) row.backgroundSlug = dto.backgroundSlug;
     if (dto.subclassSlug !== undefined) row.subclassSlug = dto.subclassSlug ?? null;
     if (dto.alignmentSlug !== undefined) row.alignmentSlug = dto.alignmentSlug ?? null;

@@ -191,6 +191,13 @@ export class CharacterSheetInputDto {
   @Type(() => SpeciesChoiceDto)
   speciesChoices?: SpeciesChoiceDto[];
 
+  @ApiPropertyOptional({ type: [SpeciesChoiceDto] })
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SpeciesChoiceDto)
+  heritageChoices?: SpeciesChoiceDto[];
+
   @ApiPropertyOptional({ type: [SubclassOptionDto] })
   @IsOptional()
   @IsArray()

@@ -12,6 +12,7 @@ import type { ClassAbilityBoostRow } from './stats/class-ability-boost';
 export interface CharacterSheetData {
   classSkillSlugs: string[];
   speciesChoices: SpeciesChoiceDto[];
+  heritageChoices: SpeciesChoiceDto[];
   subclassOptions: SubclassOptionDto[];
   classOptions: ClassOptionDto[];
   characterFeats: CharacterFeatDto[];
@@ -30,6 +31,7 @@ export interface CharacterSheetData {
 export const EMPTY_SHEET_DATA: CharacterSheetData = {
   classSkillSlugs: [],
   speciesChoices: [],
+  heritageChoices: [],
   subclassOptions: [],
   classOptions: [],
   characterFeats: [],
@@ -47,6 +49,7 @@ export type GrantedSpellSheetSlice = Pick<
   | 'characterFeats'
   | 'featOptions'
   | 'speciesChoices'
+  | 'heritageChoices'
   | 'characterSpells'
   | 'classOptions'
 >;
@@ -54,6 +57,7 @@ export type GrantedSpellSheetSlice = Pick<
 export interface CharacterSheetInput {
   classSkillSlugs?: string[];
   speciesChoices?: SpeciesChoiceDto[];
+  heritageChoices?: SpeciesChoiceDto[];
   subclassOptions?: SubclassOptionDto[];
   classOptions?: ClassOptionDto[];
   characterFeats?: CharacterFeatDto[];
@@ -67,7 +71,8 @@ export interface CharacterSheetInput {
 export interface CharacterSheetContext {
   level: number;
   classSlug: string;
-  speciesSlug: string;
+  speciesSlug: string | null;
+  heritageSlug?: string | null;
   backgroundSlug: string;
   subclassSlug: string | null;
   characterFeats?: CharacterFeatDto[];

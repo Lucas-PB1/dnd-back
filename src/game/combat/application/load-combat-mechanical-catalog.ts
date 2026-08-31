@@ -244,6 +244,9 @@ export class LoadCombatMechanicalCatalog {
         speciesSlug: row.speciesSlug ?? undefined,
         featSlug: row.featSlug ?? undefined,
         itemSlug: row.itemSlug ?? undefined,
+        heritageTraitSlug: row.heritageTraitSlug ?? undefined,
+        minTraitTakes:
+          row.minTraitTakes == null ? undefined : Number(row.minTraitTakes),
         requiresOptionKey: row.requiresOptionKey ?? undefined,
         requiresOptionValue: row.requiresOptionValue ?? undefined,
         resourceSlug: row.resourceSlug ?? undefined,

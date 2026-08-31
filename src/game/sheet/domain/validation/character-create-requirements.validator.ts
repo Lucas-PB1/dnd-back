@@ -50,10 +50,7 @@ export class CharacterCreateRequirementsValidator {
       );
     }
 
-    await this.classOptionsValidator.validateSpeciesChoices(
-      ctx.speciesSlug,
-      input.speciesChoices,
-    );
+    await this.classOptionsValidator.validateOriginChoices(ctx, input);
 
     const unlockLevel = await this.classOptionsValidator.resolveSubclassUnlockLevel(
       ctx.classSlug,

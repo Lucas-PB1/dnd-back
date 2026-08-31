@@ -5,6 +5,7 @@ import { assertUnique, requireCatalog } from '../common/assert';
 import { requireFound } from '../common/require-found';
 import { VPhbClass } from '../entities/views/v-phb-class.entity';
 import { PhbSpecies } from '../entities/phb-species.entity';
+import { PhbHeritage } from '../entities/phb-heritage.entity';
 import { VPhbBackground } from '../entities/views/v-phb-background.entity';
 import { VPhbSubclass } from '../entities/views/v-phb-subclass.entity';
 import { PhbAlignment } from '../entities/phb-alignment.entity';
@@ -23,6 +24,8 @@ export class CatalogLookupService {
     private readonly classesRepo: Repository<VPhbClass>,
     @InjectRepository(PhbSpecies)
     private readonly speciesRepo: Repository<PhbSpecies>,
+    @InjectRepository(PhbHeritage)
+    private readonly heritageRepo: Repository<PhbHeritage>,
     @InjectRepository(VPhbBackground)
     private readonly backgroundsRepo: Repository<VPhbBackground>,
     @InjectRepository(VPhbSubclass)
@@ -56,6 +59,20 @@ export class CatalogLookupService {
     return requireFound(
       await this.speciesRepo.findOne({ where: { slug: speciesSlug } }),
       `Species '${speciesSlug}' not found`,
+    );
+  }
+
+  async findHeritageOrFail(heritageSlug: string): Promise<PhbHeritage> {
+    return requireFound(
+      await this.heritageRepo.findOne({ where: { slug: heritageSlug } }),
+      `Heritage '${heritageSlug}' not found`,
+    );
+  }
+
+  async assertHeritageSlug(heritageSlug: string): Promise<void> {
+    requireCatalog(
+      await this.heritageRepo.findOne({ where: { slug: heritageSlug } }),
+      `Heritage '${heritageSlug}' not found in catalog`,
     );
   }
 
@@ -209,16 +226,24 @@ export class CatalogLookupService {
 
   async validateCharacterCatalogRefs(input: {
     classSlug: string;
-    speciesSlug: string;
+    speciesSlug?: string | null;
+    heritageSlug?: string | null;
     backgroundSlug: string;
     subclassSlug?: string | null;
     alignmentSlug?: string | null;
   }): Promise<void> {
-    await Promise.all([
+    const originChecks: Promise<void>[] = [
       this.assertClassSlug(input.classSlug),
-      this.assertSpeciesSlug(input.speciesSlug),
       this.assertBackgroundSlug(input.backgroundSlug),
-    ]);
+    ];
+    if (input.heritageSlug?.trim()) {
+      originChecks.push(this.assertHeritageSlug(input.heritageSlug.trim()));
+    } else if (input.speciesSlug?.trim()) {
+      originChecks.push(this.assertSpeciesSlug(input.speciesSlug.trim()));
+    } else {
+      throw new BadRequestException('speciesSlug or heritageSlug is required');
+    }
+    await Promise.all(originChecks);
 
     if (input.subclassSlug) {
       await this.assertSubclassForClass(input.subclassSlug, input.classSlug);

@@ -86,9 +86,13 @@ export async function resolveClassResources(
     ? await loadSubclassResourceSchedule(dataSource, character.subclassSlug)
     : [];
   const [speciesRowsRaw, speciesChoices, speciesGates] = await Promise.all([
-    loadSpeciesResourceSchedule(dataSource, character.speciesSlug),
+    character.speciesSlug
+      ? loadSpeciesResourceSchedule(dataSource, character.speciesSlug)
+      : Promise.resolve([]),
     loadCharacterSpeciesChoices(dataSource, character.id),
-    loadSpeciesResourceOptionGates(dataSource, character.speciesSlug),
+    character.speciesSlug
+      ? loadSpeciesResourceOptionGates(dataSource, character.speciesSlug)
+      : Promise.resolve([]),
   ]);
   const speciesRows = filterSpeciesResourceScheduleByChoices(
     speciesRowsRaw,

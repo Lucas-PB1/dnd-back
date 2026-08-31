@@ -20,7 +20,7 @@ export async function resolveSpellCastEconomyForCharacter(
   );
   const { speciesCatalog, featFixedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
-      speciesSlugs: [character.speciesSlug],
+      speciesSlugs: character.speciesSlug ? [character.speciesSlug] : [],
       featSlugs: sheet.characterFeats.map((f) => f.featSlug),
       classSlug: character.classSlug,
     });
@@ -29,12 +29,14 @@ export async function resolveSpellCastEconomyForCharacter(
     sheet.characterFeats,
     featFixedSpells,
   );
-  const speciesGrantedSlugs = collectSpeciesGrantedSpellSlugs(
-    character.speciesSlug,
-    sheet.speciesChoices,
-    character.level,
-    speciesCatalog,
-  );
+  const speciesGrantedSlugs = character.speciesSlug
+    ? collectSpeciesGrantedSpellSlugs(
+        character.speciesSlug,
+        sheet.speciesChoices,
+        character.level,
+        speciesCatalog,
+      )
+    : new Set<string>();
   const [annotated] = annotateCharacterSpellSources(
     [{ spellSlug, listType: 'always_prepared' }],
     { featGrantedSlugs, speciesGrantedSlugs },
@@ -44,7 +46,7 @@ export async function resolveSpellCastEconomyForCharacter(
     source: annotated.source,
     featOptions: sheet.featOptions,
     featFixedSpells,
-    speciesSlug: character.speciesSlug,
+    speciesSlug: character.speciesSlug ?? undefined,
     speciesChoices: sheet.speciesChoices,
     speciesCatalog,
   });

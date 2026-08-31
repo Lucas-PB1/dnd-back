@@ -50,7 +50,9 @@ export class UpdateCharacterHandler {
     const effective = {
       level: dto.level ?? row.level,
       classSlug: dto.classSlug ?? row.classSlug,
-      speciesSlug: dto.speciesSlug ?? row.speciesSlug,
+      speciesSlug: dto.speciesSlug !== undefined ? (dto.speciesSlug ?? null) : row.speciesSlug,
+      heritageSlug:
+        dto.heritageSlug !== undefined ? (dto.heritageSlug ?? null) : row.heritageSlug,
       backgroundSlug: dto.backgroundSlug ?? row.backgroundSlug,
       subclassSlug:
         dto.subclassSlug !== undefined ? (dto.subclassSlug ?? null) : row.subclassSlug,
@@ -59,6 +61,7 @@ export class UpdateCharacterHandler {
     if (
       dto.classSlug !== undefined ||
       dto.speciesSlug !== undefined ||
+      dto.heritageSlug !== undefined ||
       dto.backgroundSlug !== undefined ||
       dto.subclassSlug !== undefined ||
       dto.alignmentSlug !== undefined
@@ -66,6 +69,7 @@ export class UpdateCharacterHandler {
       await this.catalogLookup.validateCharacterCatalogRefs({
         classSlug: effective.classSlug,
         speciesSlug: effective.speciesSlug,
+        heritageSlug: effective.heritageSlug,
         backgroundSlug: effective.backgroundSlug,
         subclassSlug: effective.subclassSlug,
         alignmentSlug: dto.alignmentSlug !== undefined ? dto.alignmentSlug : row.alignmentSlug,
@@ -106,6 +110,10 @@ export class UpdateCharacterHandler {
       dto.speciesChoices !== undefined
         ? dto.speciesChoices
         : sheetSnapshot.speciesChoices;
+    const effectiveHeritageChoices =
+      dto.heritageChoices !== undefined
+        ? dto.heritageChoices
+        : sheetSnapshot.heritageChoices;
 
     if (dto.speciesChoices !== undefined) {
       await assertAndConsumeHighElfCantripSwap(
@@ -168,9 +176,14 @@ export class UpdateCharacterHandler {
     const injectFeatOptions =
       (shouldResyncSpells || needsProficiencyContext) &&
       sheetInput.featOptions === undefined;
+    const injectHeritageChoices =
+      (shouldResyncSpells || needsProficiencyContext) &&
+      sheetInput.heritageChoices === undefined &&
+      effective.heritageSlug;
     const injectSpeciesChoices =
       (shouldResyncSpells || needsProficiencyContext) &&
-      sheetInput.speciesChoices === undefined;
+      sheetInput.speciesChoices === undefined &&
+      effective.speciesSlug;
     const injectClassOptions =
       shouldResyncSpells && sheetInput.classOptions === undefined;
 
@@ -185,6 +198,9 @@ export class UpdateCharacterHandler {
       ...(injectFeatOptions ? { featOptions: effectiveFeatOptions } : {}),
       ...(injectSpeciesChoices
         ? { speciesChoices: effectiveSpeciesChoices }
+        : {}),
+      ...(injectHeritageChoices
+        ? { heritageChoices: effectiveHeritageChoices }
         : {}),
       ...(injectClassOptions
         ? { classOptions: sheetSnapshot.classOptions }

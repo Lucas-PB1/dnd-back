@@ -25,8 +25,11 @@ export class PlayerCharacter {
   @Column({ type: 'text',  name: 'class_slug' })
   classSlug!: string;
 
-  @Column({ type: 'text',  name: 'species_slug' })
-  speciesSlug!: string;
+  @Column({ type: 'text', name: 'species_slug', nullable: true })
+  speciesSlug!: string | null;
+
+  @Column({ type: 'text', name: 'heritage_slug', nullable: true })
+  heritageSlug!: string | null;
 
   @Column({ type: 'text',  name: 'background_slug' })
   backgroundSlug!: string;

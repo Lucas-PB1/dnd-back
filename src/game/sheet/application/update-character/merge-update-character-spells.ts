@@ -16,13 +16,13 @@ export async function mergeUpdateCharacterSpells(input: {
   sheetSnapshot: CharacterSheetData;
   effective: {
     classSlug: string;
-    speciesSlug: string;
+    speciesSlug: string | null;
     subclassSlug: string | null;
     level: number;
   };
   previous: {
     classSlug: string;
-    speciesSlug: string;
+    speciesSlug: string | null;
     subclassSlug: string | null;
     level: number;
   };
@@ -59,7 +59,9 @@ export async function mergeUpdateCharacterSpells(input: {
   ];
   const { speciesCatalog, featFixedSpells, subclassGrantedSpells, classGrantedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
-      speciesSlugs: [effective.speciesSlug, previous.speciesSlug],
+      speciesSlugs: [effective.speciesSlug, previous.speciesSlug].filter(
+        (slug): slug is string => Boolean(slug),
+      ),
       featSlugs,
       subclassSlug: effective.subclassSlug,
       classSlug: effective.classSlug,
@@ -110,10 +112,10 @@ export async function mergeUpdateCharacterSpells(input: {
       characterFeats: effectiveCharacterFeats,
       previousFeatOptions: sheetSnapshot.featOptions,
       previousCharacterFeats: sheetSnapshot.characterFeats,
-      speciesSlug: effective.speciesSlug,
+      speciesSlug: effective.speciesSlug ?? undefined,
       speciesChoices: effectiveSpeciesChoices,
       level: effective.level,
-      previousSpeciesSlug: previous.speciesSlug,
+      previousSpeciesSlug: previous.speciesSlug ?? undefined,
       previousSpeciesChoices: sheetSnapshot.speciesChoices,
       previousLevel: previous.level,
       speciesCatalog,

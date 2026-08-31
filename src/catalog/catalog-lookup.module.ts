@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { VPhbClass } from '../entities/views/v-phb-class.entity';
 import { PhbSpecies } from '../entities/phb-species.entity';
+import { PhbHeritage } from '../entities/phb-heritage.entity';
 import { VPhbBackground } from '../entities/views/v-phb-background.entity';
 import { VPhbSubclass } from '../entities/views/v-phb-subclass.entity';
 import { PhbAlignment } from '../entities/phb-alignment.entity';
@@ -19,6 +20,7 @@ import { CatalogLookupService } from './catalog-lookup.service';
     TypeOrmModule.forFeature([
       VPhbClass,
       PhbSpecies,
+      PhbHeritage,
       VPhbBackground,
       VPhbSubclass,
       PhbAlignment,

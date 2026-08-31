@@ -11,6 +11,7 @@ import { extracts } from './lib/docs-source.mjs';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
 const cap1Path = extracts.grimHollow.cap1Heritages;
+const ptOverlayPath = extracts.grimHollow.cap1HeritagesPt;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 const viewsDir = path.join(apiRoot, 'database/migrations/060_views');
 const v065Path = path.join(viewsDir, 'V065_v_phb_species_trait_choices_feathren.sql');
@@ -44,8 +45,19 @@ function heritageAllowsSizeChoice(heritage) {
   return /Pequeno ou Médio|Small or Medium/i.test(blob);
 }
 
-/** @param {import('../docs/source/extracts/grim-hollow/cap1-heritages.json')} cap1 */
-function buildJ021(cap1) {
+/** @param {import('../docs/source/extracts/grim-hollow/cap1-heritages.json').traits[0]} trait @param {Record<string, unknown> | null} overlay */
+function resolveTraitForPlayable(trait, overlay) {
+  const pt = overlay?.traits?.[trait.slug];
+  if (!pt) return trait;
+  return {
+    ...trait,
+    name: pt.name ?? trait.name,
+    description: pt.description ?? trait.description,
+  };
+}
+
+/** @param {import('../docs/source/extracts/grim-hollow/cap1-heritages.json')} cap1 @param {Record<string, unknown> | null} overlay */
+function buildJ021(cap1, overlay) {
   const lines = [
     '-- Grim Hollow Cap. 1 — heranças jogáveis: pool de traços + 8 slots por herança',
     '',
@@ -56,7 +68,8 @@ ON CONFLICT (scope, owner_id, option_key) DO NOTHING;`,
     '',
   ];
 
-  const optionRows = cap1.traits.map((t, idx) => {
+  const optionRows = cap1.traits.map((raw, idx) => {
+    const t = resolveTraitForPlayable(raw, overlay);
     const label = `[${categoryLabelPt(t.category)}] ${t.name.replace(/\.$/, '')}`;
     const benefit = firstParagraph(t.description);
     return `(
@@ -244,9 +257,16 @@ ${ghUnions};
 }
 
 const cap1 = JSON.parse(fs.readFileSync(cap1Path, 'utf8'));
+const ptOverlay = fs.existsSync(ptOverlayPath)
+  ? JSON.parse(fs.readFileSync(ptOverlayPath, 'utf8'))
+  : null;
 
 fs.mkdirSync(outDir, { recursive: true });
-fs.writeFileSync(path.join(outDir, 'J021_phb_species_heritage_playable.sql'), `${buildJ021(cap1)}\n`, 'utf8');
+fs.writeFileSync(
+  path.join(outDir, 'J021_phb_species_heritage_playable.sql'),
+  `${buildJ021(cap1, ptOverlay)}\n`,
+  'utf8',
+);
 fs.writeFileSync(
   path.join(viewsDir, 'V070_v_phb_species_trait_choices_gh_heritage.sql'),
   buildV070(),

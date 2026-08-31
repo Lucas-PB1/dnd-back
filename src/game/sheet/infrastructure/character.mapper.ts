@@ -33,6 +33,8 @@ import { collectMasteredWeaponSlugs } from '../domain/validation/class-options/c
 import { assembleCharacterResponseDto } from './assemble-character-response-dto';
 import { sheetProfile } from '@common/perf/sheet-profile';
 import { LoadCharacterThreadBundleQuery } from '../application/load-character-thread-bundle.query';
+import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
+import { resolveAggregatedHeritageTraits } from '../domain/heritage/resolve-aggregated-heritage-traits';
 
 @Injectable()
 export class CharacterMapper {
@@ -46,6 +48,8 @@ export class CharacterMapper {
     private readonly permanentItemEffects: ResolveActivePermanentItemEffects,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
+    @InjectRepository(PhbHeritageTrait)
+    private readonly heritageTraitRepo: Repository<PhbHeritageTrait>,
     private readonly grantedSpellCatalog: LoadGrantedSpellCatalog,
     private readonly loadCharacterThread: LoadCharacterThreadBundleQuery,
   ) {}
@@ -98,14 +102,16 @@ export class CharacterMapper {
       loaded.subclassOptions,
     );
 
-    const [combat, spellcasting, thread] = await Promise.all([
+    const [combat, spellcasting, thread, aggregatedHeritageTraits] =
+      await Promise.all([
       sheetProfile('combat', () =>
         resolveCharacterCombatSlice({
           characterId: row.id,
           abilityScores: effectiveAbilityScores,
           classSlug: row.classSlug,
           subclassSlug: row.subclassSlug,
-          speciesSlug: row.speciesSlug,
+          speciesSlug: row.speciesSlug ?? undefined,
+          heritageChoices: loaded.heritageChoices,
           speciesChoices: loaded.speciesChoices,
           classOptions: loaded.classOptions,
           level: row.level,
@@ -130,7 +136,7 @@ export class CharacterMapper {
           subclassSpellsRepo: this.subclassSpellsRepo,
           grantedSpellCatalog: this.grantedSpellCatalog,
           sheet: loaded,
-          speciesSlug: row.speciesSlug,
+          speciesSlug: row.speciesSlug ?? undefined,
           subclassSlug: row.subclassSlug,
           level: row.level,
           classSlug: row.classSlug,
@@ -140,6 +146,14 @@ export class CharacterMapper {
         }),
       ),
       sheetProfile('thread', () => this.loadCharacterThread.execute(row.id)),
+      row.heritageSlug && loaded.heritageChoices.length > 0
+        ? sheetProfile('heritage.aggregate', () =>
+            resolveAggregatedHeritageTraits(
+              loaded.heritageChoices,
+              this.heritageTraitRepo,
+            ),
+          )
+        : Promise.resolve([]),
     ]);
 
     return assembleCharacterResponseDto({
@@ -152,6 +166,7 @@ export class CharacterMapper {
       combat,
       spellcasting,
       thread,
+      aggregatedHeritageTraits,
     });
   }
 
@@ -162,8 +177,9 @@ export class CharacterMapper {
       level: row.level,
       classSlug: row.classSlug,
       className: row.classSlug,
-      speciesSlug: row.speciesSlug,
-      speciesName: row.speciesSlug,
+      speciesSlug: row.speciesSlug || null,
+      heritageSlug: row.heritageSlug,
+      speciesName: row.heritageSlug ?? row.speciesSlug ?? "",
       backgroundSlug: row.backgroundSlug,
       subclassSlug: row.subclassSlug,
       subclassName: row.subclassSlug,

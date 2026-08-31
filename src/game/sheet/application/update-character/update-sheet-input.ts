@@ -13,6 +13,7 @@ export function toSheetInput(dto: UpdateCharacterDto): CharacterSheetInput {
   return {
     classSkillSlugs: dto.classSkillSlugs,
     speciesChoices: dto.speciesChoices,
+    heritageChoices: dto.heritageChoices,
     subclassOptions: dto.subclassOptions,
     classOptions: dto.classOptions,
     characterFeats: dto.characterFeats,
@@ -54,6 +55,7 @@ export function shouldResyncCharacterSpells(
     dto.featOptions !== undefined ||
     dto.characterFeats !== undefined ||
     dto.speciesChoices !== undefined ||
+    dto.heritageChoices !== undefined ||
     dto.classOptions !== undefined ||
     speciesChanged ||
     subclassChanged ||

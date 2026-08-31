@@ -44,8 +44,8 @@ export class CharacterSheetValidator {
       }
     }
 
-    if (input.speciesChoices !== undefined) {
-      await this.classOptionsValidator.validateSpeciesChoices(ctx.speciesSlug, input.speciesChoices);
+    if (input.speciesChoices !== undefined || input.heritageChoices !== undefined) {
+      await this.classOptionsValidator.validateOriginChoices(ctx, input);
     }
 
     if (input.subclassOptions !== undefined) {

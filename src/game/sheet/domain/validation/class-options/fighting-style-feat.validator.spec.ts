@@ -8,6 +8,7 @@ import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
 import { CharacterClassOptionsValidator } from './character-class-options.validator';
 import { CharacterSpeciesChoicesValidator } from './character-species-choices.validator';
+import { CharacterHeritageChoicesValidator } from './character-heritage-choices.validator';
 import { CharacterSubclassOptionsValidator } from './character-subclass-options.validator';
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
 import { CharacterWeaponMasteryValidator } from './character-weapon-mastery.validator';
@@ -30,6 +31,9 @@ function buildClassOptionsValidator(
     dataSource,
     catalogLookup,
     new CharacterSpeciesChoicesValidator(speciesTraitChoicesRepo, dataSource),
+    {
+      validateHeritageChoices: jest.fn().mockResolvedValue(undefined),
+    } as unknown as CharacterHeritageChoicesValidator,
     new CharacterSubclassOptionsValidator(
       dataSource,
       catalogLookup,

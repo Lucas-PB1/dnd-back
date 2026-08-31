@@ -1,5 +1,7 @@
 import { Repository } from 'typeorm';
 import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
+import { resolveOriginChoicesForSync } from '@game/sheet/domain/heritage/origin-choices';
+import { isHeritageChoiceKind } from '@game/sheet/domain/heritage/origin-choices';
 import { featInstanceKey } from '@game/sheet/domain/validation/feats/character-feat';
 import { PlayerCharacterSkill } from '../player-character-skill.entity';
 import {
@@ -10,6 +12,7 @@ import {
   PlayerCharacterSpeciesChoice,
   PlayerCharacterSpell,
 } from '../player-sheet.entities';
+import { syncHeritageChoices } from './sync-heritage-choices';
 
 export type CharacterSheetSyncDeps = {
   skills: Repository<PlayerCharacterSkill>;
@@ -19,6 +22,7 @@ export type CharacterSheetSyncDeps = {
   spells: Repository<PlayerCharacterSpell>;
   equipment: Repository<PlayerCharacterEquipment>;
   languages: Repository<PlayerCharacterLanguage>;
+  dataSource: import('typeorm').DataSource;
 };
 
 export async function syncCharacterSheet(
@@ -35,11 +39,22 @@ export async function syncCharacterSheet(
     }
   }
 
-  if (input.speciesChoices !== undefined) {
+  const originSync = resolveOriginChoicesForSync(input);
+  if (originSync?.kind === 'heritage') {
+    await syncHeritageChoices(
+      deps.dataSource,
+      characterId,
+      originSync.choices,
+    );
     await deps.speciesChoices.delete({ characterId });
-    if (input.speciesChoices.length > 0) {
+  } else if (originSync?.kind === 'species') {
+    await deps.speciesChoices.delete({ characterId });
+    const phbChoices = originSync.choices.filter(
+      (choice) => !isHeritageChoiceKind(choice.choiceKind),
+    );
+    if (phbChoices.length > 0) {
       await deps.speciesChoices.insert(
-        input.speciesChoices.map((choice) => ({
+        phbChoices.map((choice) => ({
           characterId,
           choiceKind: choice.choiceKind,
           choiceSlug: choice.choiceSlug,

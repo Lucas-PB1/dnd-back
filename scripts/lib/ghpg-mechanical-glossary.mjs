@@ -131,6 +131,22 @@ const REPLACEMENTS = [
   ['D20 Test', 'Teste D20'],
   ['Shields', 'Escudos'],
   ['Shield', 'Escudo'],
+  ['Animal Handling', 'Adestrar Animais'],
+  ['Performance', 'Atuação'],
+  ['Athletics', 'Atletismo'],
+  ['Stealth', 'Furtividade'],
+  ['Medicine', 'Medicina'],
+  ['History', 'História'],
+  ['Survival', 'Sobrevivência'],
+  ['Perception', 'Percepção'],
+  ['Nature', 'Natureza'],
+  ['Deception', 'Enganação'],
+  ['Intimidation', 'Intimidação'],
+  ['Persuasion', 'Persuasão'],
+  ['Investigation', 'Investigação'],
+  ['Insight', 'Intuição'],
+  ['Arcana', 'Arcanismo'],
+  ['Religion', 'Religião'],
 ];
 
 export function applyGhpgGlossary(text) {

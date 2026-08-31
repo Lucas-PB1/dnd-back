@@ -4,6 +4,7 @@ import { CharacterSheetData } from '../domain/character-sheet.types';
 import type { MappedCombatSlice } from '@game/combat/application/resolve-character-combat-slice';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { CharacterThreadBundleDto } from '../dto/character-thread.dto';
+import type { AggregatedHeritageTraitDto } from '../dto/character-response.dto';
 
 type SpellcastingSlice = {
   characterSpells: CharacterResponseDto['characterSpells'];
@@ -27,6 +28,7 @@ export function assembleCharacterResponseDto(input: {
   combat: MappedCombatSlice;
   spellcasting: SpellcastingSlice;
   thread: CharacterThreadBundleDto | null;
+  aggregatedHeritageTraits?: AggregatedHeritageTraitDto[];
 }): CharacterResponseDto {
   const { row, loaded, combat, spellcasting, derived } = input;
   return {
@@ -35,6 +37,7 @@ export function assembleCharacterResponseDto(input: {
     level: row.level,
     classSlug: row.classSlug,
     speciesSlug: row.speciesSlug,
+    heritageSlug: row.heritageSlug,
     backgroundSlug: row.backgroundSlug,
     subclassSlug: row.subclassSlug,
     alignmentSlug: row.alignmentSlug,
@@ -43,11 +46,16 @@ export function assembleCharacterResponseDto(input: {
     hitPointsMax:
       row.hitPointsMax === null
         ? null
-        : row.hitPointsMax + combat.itemHpBonus + input.classHpBonus,
+        : row.hitPointsMax +
+          combat.itemHpBonus +
+          combat.heritageHpBonus +
+          input.classHpBonus,
     hitPointsCurrent: row.hitPointsCurrent,
     proficiencyBonus: input.proficiencyBonus,
     classSkillSlugs: loaded.classSkillSlugs,
     speciesChoices: loaded.speciesChoices,
+    heritageChoices: loaded.heritageChoices,
+    aggregatedHeritageTraits: input.aggregatedHeritageTraits,
     subclassOptions: loaded.subclassOptions,
     classOptions: loaded.classOptions,
     characterFeats: loaded.characterFeats,

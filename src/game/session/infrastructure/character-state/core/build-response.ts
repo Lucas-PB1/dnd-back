@@ -115,7 +115,7 @@ async function buildGrantedSpellCastOptions(
   const sheet = await sheetRepository.loadGrantedSpellSlice(character.id);
     const { speciesCatalog, featFixedSpells } =
     await grantedSpellCatalog.loadMergeCatalog({
-      speciesSlugs: [character.speciesSlug],
+      speciesSlugs: character.speciesSlug ? [character.speciesSlug] : [],
       featSlugs: sheet.characterFeats.map((f) => f.featSlug),
       classSlug: character.classSlug,
     });
@@ -124,12 +124,14 @@ async function buildGrantedSpellCastOptions(
     sheet.characterFeats,
     featFixedSpells,
   );
-  const speciesGrantedSlugs = collectSpeciesGrantedSpellSlugs(
-    character.speciesSlug,
-    sheet.speciesChoices,
-    character.level,
-    speciesCatalog,
-  );
+  const speciesGrantedSlugs = character.speciesSlug
+    ? collectSpeciesGrantedSpellSlugs(
+        character.speciesSlug,
+        sheet.speciesChoices,
+        character.level,
+        speciesCatalog,
+      )
+    : new Set<string>();
   const annotated = annotateCharacterSpellSources(sheet.characterSpells, {
     featGrantedSlugs,
     speciesGrantedSlugs,
@@ -143,7 +145,7 @@ async function buildGrantedSpellCastOptions(
         source: spell.source,
         featOptions: sheet.featOptions,
         featFixedSpells,
-        speciesSlug: character.speciesSlug,
+        speciesSlug: character.speciesSlug ?? undefined,
         speciesChoices: sheet.speciesChoices,
         speciesCatalog,
       });

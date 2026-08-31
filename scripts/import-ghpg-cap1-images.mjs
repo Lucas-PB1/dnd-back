@@ -6,27 +6,39 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { extracts, scrapes } from './lib/docs-source.mjs';
+import { extracts, scrap, scrapes, findScrapeHtml } from './lib/docs-source.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
-const grimDir = scrapes.grimHollow;
-const extractPath = extracts.grimHollow.cap1Heritages;
-const outDir = path.join(apiRoot, 'public/catalog/species');
+const extractPathFile = extracts.grimHollow.cap1Heritages;
+const outDir = path.join(apiRoot, 'public/catalog/heritages');
 const seedPath = path.join(apiRoot, 'database/seeds/grim-hollow/J013_catalog_heritage_images.sql');
 
 const args = new Set(process.argv.slice(2));
 const seedsOnly = args.has('--seeds-only');
 
 function findChapter1FilesDir() {
-  const chapterDir = fs
-    .readdirSync(grimDir)
-    .find((name) => name.startsWith('Chapter 1') && name.endsWith('_files'));
-  if (!chapterDir) throw new Error('Pasta _files do Cap. 1 GHPG não encontrada');
-  return path.join(grimDir, chapterDir);
+  for (const htmlPath of [
+    findScrapeHtml(scrapes.grimHollow, 'Chapter 1'),
+    findScrapeHtml(scrap.grimHollow, 'Chapter 1'),
+  ]) {
+    if (!htmlPath) continue;
+    const filesDir = path.join(path.dirname(htmlPath), `${path.basename(htmlPath)}_files`);
+    if (fs.existsSync(filesDir)) return filesDir;
+  }
+  for (const dir of [scrapes.grimHollow, scrap.grimHollow]) {
+    if (!fs.existsSync(dir)) continue;
+    const match = fs
+      .readdirSync(dir)
+      .find((name) => name.includes('Chapter 1') && name.endsWith('_files'));
+    if (match) return path.join(dir, match);
+  }
+  throw new Error(
+    'Pasta _files do Cap. 1 GHPG não encontrada em _scrapes/grim-hollow nem scrap/',
+  );
 }
 
-const extract = JSON.parse(fs.readFileSync(extractPath, 'utf8'));
+const extract = JSON.parse(fs.readFileSync(extractPathFile, 'utf8'));
 const sourceDir = findChapter1FilesDir();
 fs.mkdirSync(outDir, { recursive: true });
 
@@ -44,14 +56,14 @@ for (const h of extract.heritages) {
       continue;
     }
     fs.copyFileSync(from, to);
-    console.log(`  ${h.imageFile} → catalog/species/${dest}`);
+    console.log(`  ${h.imageFile} → catalog/heritages/${dest}`);
   }
   updates.push(
-    `UPDATE rpg.phb_species SET image_url = '/catalog/species/${dest}' WHERE slug = '${h.slug}';`,
+    `UPDATE rpg.phb_heritage SET image_url = '/catalog/heritages/${dest}' WHERE slug = '${h.slug}';`,
   );
 }
 
-const sql = `-- Grim Hollow Cap. 1 — image_url em phb_species (heritages)
+const sql = `-- Grim Hollow Cap. 1 — image_url em phb_heritage
 -- Gerado por scripts/import-ghpg-cap1-images.mjs
 
 ${updates.join('\n')}

@@ -7,7 +7,7 @@ import { CharacterSummaryResponseDto } from '../dto/character-response.dto';
 import { CampaignService } from '@game/campaign/application/campaign.service';
 
 type CatalogLabelRow = {
-  kind: 'class' | 'species' | 'subclass';
+  kind: 'class' | 'species' | 'heritage' | 'subclass';
   slug: string;
   name: string;
 };
@@ -41,7 +41,14 @@ export class ListCharactersQuery {
     if (dtos.length === 0) return;
 
     const classSlugs = uniqueSlugs(dtos.map((d) => d.classSlug));
-    const speciesSlugs = uniqueSlugs(dtos.map((d) => d.speciesSlug));
+    const speciesSlugs = uniqueSlugs(
+      dtos
+        .map((d) => d.speciesSlug)
+        .filter((slug): slug is string => !!slug?.trim()),
+    );
+    const heritageSlugs = uniqueSlugs(
+      dtos.map((d) => d.heritageSlug).filter((slug): slug is string => !!slug?.trim()),
+    );
     const subclassSlugs = uniqueSlugs(
       dtos.map((d) => d.subclassSlug).filter((s): s is string => !!s),
     );
@@ -56,25 +63,37 @@ export class ListCharactersQuery {
       FROM rpg.phb_species
       WHERE slug = ANY($2::text[])
       UNION ALL
+      SELECT 'heritage'::text, slug, name
+      FROM rpg.phb_heritage
+      WHERE slug = ANY($3::text[])
+      UNION ALL
       SELECT 'subclass'::text, slug, name
       FROM rpg.phb_subclass
-      WHERE slug = ANY($3::text[])
+      WHERE slug = ANY($4::text[])
       `,
-      [classSlugs, speciesSlugs, subclassSlugs],
+      [classSlugs, speciesSlugs, heritageSlugs, subclassSlugs],
     )) as CatalogLabelRow[];
 
     const classNames = new Map<string, string>();
     const speciesNames = new Map<string, string>();
+    const heritageNames = new Map<string, string>();
     const subclassNames = new Map<string, string>();
     for (const row of rows) {
       if (row.kind === 'class') classNames.set(row.slug, row.name);
       else if (row.kind === 'species') speciesNames.set(row.slug, row.name);
+      else if (row.kind === 'heritage') heritageNames.set(row.slug, row.name);
       else subclassNames.set(row.slug, row.name);
     }
 
     for (const dto of dtos) {
       dto.className = classNames.get(dto.classSlug) ?? dto.classSlug;
-      dto.speciesName = speciesNames.get(dto.speciesSlug) ?? dto.speciesSlug;
+      dto.speciesName =
+        (dto.heritageSlug
+          ? heritageNames.get(dto.heritageSlug)
+          : speciesNames.get(dto.speciesSlug ?? '')) ??
+        dto.heritageSlug ??
+        dto.speciesSlug ??
+        '';
       dto.subclassName = dto.subclassSlug
         ? (subclassNames.get(dto.subclassSlug) ?? dto.subclassSlug)
         : null;

@@ -67,6 +67,7 @@ describe('Characters application layer', () => {
     level: 1,
     classSlug: 'fighter',
     speciesSlug: 'dwarf',
+    heritageSlug: null,
     backgroundSlug: 'acolyte',
     subclassSlug: null,
     alignmentSlug: null,

@@ -3,6 +3,7 @@ import { CatalogLookupModule } from './catalog-lookup.module';
 import { ClassesModule } from './classes/classes.module';
 import { SubclassesModule } from './subclasses/subclasses.module';
 import { SpeciesModule } from './species/species.module';
+import { HeritagesModule } from './heritages/heritages.module';
 import { BackgroundsModule } from './backgrounds/backgrounds.module';
 import { SpellsModule } from './spells/spells.module';
 import { FeatsModule } from './feats/feats.module';
@@ -25,6 +26,7 @@ import { CharacterThreadsModule } from './character-threads/character-threads.mo
     ClassesModule,
     SubclassesModule,
     SpeciesModule,
+    HeritagesModule,
     BackgroundsModule,
     SpellsModule,
     FeatsModule,

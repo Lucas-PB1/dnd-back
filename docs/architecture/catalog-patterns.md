@@ -63,6 +63,31 @@ Colunas em entidades raiz: `phb_class`, `phb_subclass`, `phb_background`, `phb_s
 
 ---
 
+## 4b. Heranças Grim Hollow (Cap. 1 — DONE)
+
+**Não** sobrecarregar `phb_species` com `gh-*` ou pool global de traços.
+
+| Camada | SSOT | Runtime |
+|--------|------|---------|
+| Identidade | `phb_heritage` | `player_character.heritage_slug` XOR `species_slug` |
+| Pool global (~107) | `phb_heritage_trait` | — |
+| Build tradicional | `phb_heritage_traditional` | preset via API `/heritages/:slug/traditional-build` |
+| Picks modulares | kinds `heritage_trait_1..9`, `heritage_speed_trade`, `heritage_size` | `player_character_heritage_trait` + `player_character_heritage_config` |
+
+Views: `v_phb_heritage_trait_choices`, `v_phb_heritage_traditional_build`, `v_phb_heritage_passive_modifier`, `v_phb_heritage_economy_action`.
+
+Mecânica mesa (sem JSONB genérico):
+
+- `phb_combat_modifier.heritage_trait_id` + `min_trait_takes` (ex.: Robustez → `hp_bonus`)
+- `phb_class_economy_action.heritage_trait_id` + `min_trait_takes` (ex.: Sopro Potente)
+- Catálogo unificado: `v_phb_class_economy_action` inclui `heritage_trait_slug`
+
+Seeds: `grim-hollow/J037–J040` (catálogo + runtime), `combat/C070+` (classificador Cap. 1).
+
+API: `src/catalog/heritages/`; validação `CharacterHeritageChoicesValidator`; ficha expõe `aggregatedHeritageTraits`.
+
+---
+
 ## 5. Pacotes de equipamento inicial (Lote D — DONE)
 
 | Domínio | Tabelas |

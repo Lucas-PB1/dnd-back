@@ -64,6 +64,7 @@ export class CharacterSheetRepository {
       spells: this.spells,
       equipment: this.equipment,
       languages: this.languages,
+      dataSource: this.dataSource,
     };
   }
 

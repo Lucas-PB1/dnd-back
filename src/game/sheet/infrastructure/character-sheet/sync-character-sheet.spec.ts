@@ -40,6 +40,7 @@ describe('syncCharacterSheet', () => {
       equipment: repo() as never,
       languages:
         repo<PlayerCharacterLanguage>() as unknown as Repository<PlayerCharacterLanguage>,
+      dataSource: { query: jest.fn().mockResolvedValue([]) } as never,
     };
   });
 
@@ -169,6 +170,7 @@ describe('clearCharacterSheet helpers', () => {
       spells: repo() as never,
       equipment: repo() as never,
       languages: repo() as never,
+      dataSource: { query: jest.fn().mockResolvedValue([]) } as never,
     };
   });
 

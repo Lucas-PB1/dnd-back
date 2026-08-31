@@ -6,6 +6,8 @@ import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
+import { VPhbHeritageTraitChoices } from '@entities/views/v-phb-heritage-trait-choices.entity';
+import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
@@ -39,6 +41,7 @@ import { CharacterEquipmentValidator } from './domain/validation/equipment/chara
 import { CharacterSpellsValidator } from './domain/validation/spells/character-spells.validator';
 import { CharacterClassOptionsValidator } from './domain/validation/class-options/character-class-options.validator';
 import { CharacterSpeciesChoicesValidator } from './domain/validation/class-options/character-species-choices.validator';
+import { CharacterHeritageChoicesValidator } from './domain/validation/class-options/character-heritage-choices.validator';
 import { CharacterSubclassOptionsValidator } from './domain/validation/class-options/character-subclass-options.validator';
 import { CharacterSubclassOptionValueValidator } from './domain/validation/class-options/character-subclass-option-value.validator';
 import { CharacterClassExpertiseValidator } from './domain/validation/class-options/character-class-expertise.validator';
@@ -85,6 +88,8 @@ import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-threa
       VPhbCharacterThreadBundle,
       PhbCharacterLevel,
       VPhbSpeciesTraitChoices,
+      VPhbHeritageTraitChoices,
+      PhbHeritageTrait,
       VSpellByClass,
       VPhbSpell,
       VPhbSubclassPreparedSpell,
@@ -111,6 +116,7 @@ import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-threa
     CharacterEquipmentValidator,
     CharacterSpellsValidator,
     CharacterSpeciesChoicesValidator,
+    CharacterHeritageChoicesValidator,
     CharacterSubclassOptionsValidator,
     CharacterSubclassOptionValueValidator,
     CharacterClassExpertiseValidator,

@@ -55,7 +55,7 @@ export class CharacterSpellsValidator {
     ];
     const { speciesCatalog, featFixedSpells } =
       await this.grantedSpellCatalog.loadMergeCatalog({
-        speciesSlugs: [ctx.speciesSlug],
+        speciesSlugs: ctx.speciesSlug ? [ctx.speciesSlug] : [],
         featSlugs,
         classSlug: ctx.classSlug,
       });
@@ -65,12 +65,14 @@ export class CharacterSpellsValidator {
       feats,
       featFixedSpells,
     );
-    const speciesGranted = collectSpeciesGrantedSpellSlugs(
-      ctx.speciesSlug,
-      speciesChoices,
-      ctx.level,
-      speciesCatalog,
-    );
+    const speciesGranted = ctx.speciesSlug
+      ? collectSpeciesGrantedSpellSlugs(
+          ctx.speciesSlug,
+          speciesChoices,
+          ctx.level,
+          speciesCatalog,
+        )
+      : new Set<string>();
     const eldritchGranted = await resolveEldritchGrantedSpellSlugs(
       this.dataSource,
       classOptions,
