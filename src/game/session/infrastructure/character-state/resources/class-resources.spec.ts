@@ -96,6 +96,7 @@ describe('character-state/class-resources', () => {
         if (text.includes('player_character_feat')) return [];
         if (text.includes('player_character_item')) return [];
         if (text.includes('player_character_species_choice')) return [];
+        if (text.includes('player_character_heritage_trait')) return [];
         if (text.includes('phb_class_economy_action')) return [];
         if (text.includes('phb_resource_grant')) return scheduleRows;
         if (text.includes('v_phb_class_progression')) {

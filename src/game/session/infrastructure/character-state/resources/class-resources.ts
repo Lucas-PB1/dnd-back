@@ -109,6 +109,10 @@ export async function resolveClassResources(
     itemSlugs.length > 0
       ? await loadItemResourceSchedule(dataSource, itemSlugs)
       : [];
+  const heritageRows = await loadHeritageResourceSchedule(
+    dataSource,
+    character.id,
+  );
   const progression = await loadClassProgressionSnapshot(
     dataSource,
     character.classSlug,
@@ -123,6 +127,7 @@ export async function resolveClassResources(
       ...speciesRows,
       ...featRows,
       ...itemRows,
+      ...heritageRows,
     ],
     level: character.level,
     proficiencyBonus: progression?.proficiencyBonus ?? 2,
@@ -389,6 +394,54 @@ export async function loadItemResourceSchedule(
      WHERE i.slug = ANY($1::text[])
      ORDER BY rd.slug, gr.unlock_level`,
     [itemSlugs],
+  );
+
+  return rows.map((row) => ({
+    resourceSlug: row.resource_slug,
+    resourceName: row.resource_name,
+    unlockLevel: row.unlock_level,
+    maxFormula: row.max_formula,
+    fixedMax: row.fixed_max,
+    recoverOneOnShort: row.recover_one_on_short,
+    recoverAllOnShort: row.recover_all_on_short,
+    recoverAllOnLong: row.recover_all_on_long,
+    recoverOnLongDice: row.recover_on_long_dice ?? null,
+  }));
+}
+
+/**
+ * Recursos de traços de herança GH — exige takes >= min_trait_takes do grant.
+ */
+export async function loadHeritageResourceSchedule(
+  dataSource: DataSource,
+  characterId: string,
+): Promise<ClassResourceScheduleRow[]> {
+  if (!characterId) return [];
+  const rows = await dataSource.query<ClassResourceDbRow[]>(
+    `SELECT
+       rd.slug AS resource_slug,
+       rd.name AS resource_name,
+       gr.unlock_level,
+       gr.max_formula::text AS max_formula,
+       gr.fixed_max,
+       gr.recover_one_on_short,
+       gr.recover_all_on_short,
+       gr.recover_all_on_long,
+       gr.recover_on_long_dice
+     FROM rpg.phb_resource_grant gr
+     JOIN rpg.phb_heritage_trait ht
+       ON ht.id = gr.owner_id
+      AND gr.owner_kind = 'heritage'::rpg.resource_owner_kind
+     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
+     JOIN (
+       SELECT trait_id, COUNT(*)::int AS take_count
+       FROM rpg.player_character_heritage_trait
+       WHERE character_id = $1::uuid
+       GROUP BY trait_id
+     ) picks ON picks.trait_id = ht.id
+     WHERE picks.take_count >= COALESCE(gr.min_trait_takes, 1)
+     ORDER BY rd.slug, gr.unlock_level`,
+    [characterId],
   );
 
   return rows.map((row) => ({

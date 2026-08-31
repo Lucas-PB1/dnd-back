@@ -1,6 +1,10 @@
 /**
- * Classifica traços GH Cap.1 → seeds tipados (combat_modifier / economy_action).
+ * Classifica traços GH Cap.1 → seeds tipados (combat_modifier / economy_action / resources).
  * Uso: node scripts/classify-gh-heritage-trait-mechanics.mjs
+ *
+ * Regras:
+ * - Detecta economia no benefitBase (min_takes=1) e benefitImproved (min_takes=2) em separado.
+ * - Passivos CORE (HP etc.) em C070; ações/reações em C071; recursos limitados em C072.
  */
 import fs from 'fs';
 import path from 'path';
@@ -16,124 +20,290 @@ const ptOverlay = fs.existsSync(extracts.grimHollow.cap1HeritagesPt)
   ? JSON.parse(fs.readFileSync(extracts.grimHollow.cap1HeritagesPt, 'utf8'))
   : null;
 
-const CORE_SLUGS = new Set([
-  'improved-darkvision',
-  'damage-immunity',
-  'extra-tough',
-  'weapon-specialist',
-  'helpful-tactics',
-  'magical-savant',
-  'potent-breath',
-  'stand-fast',
-  'artisanal-expertise',
-  'restorative-rest',
-]);
-
 /** @param {string} value */
 function sqlLiteral(value) {
   return `'${String(value ?? '').replace(/'/g, "''")}'`;
 }
 
 /** @param {typeof cap1.traits[0]} trait */
-function traitText(trait) {
+function traitDisplayName(trait) {
   const pt = ptOverlay?.traits?.[trait.slug];
-  return `${pt?.benefitBase ?? trait.benefitBase ?? ''} ${pt?.benefitImproved ?? trait.benefitImproved ?? ''} ${pt?.description ?? trait.description ?? ''}`.toLowerCase();
+  return (pt?.name ?? trait.name ?? trait.slug).replace(/\.$/, '').trim();
 }
 
-/** @param {typeof cap1.traits[0]} trait */
-function classifyTrait(trait) {
-  const text = traitText(trait);
-  const name = trait.name.toLowerCase();
+/**
+ * @param {string} text
+ * @returns {'action'|'bonus'|'reaction'|null}
+ */
+function detectEconomyBucket(text) {
+  if (!text?.trim()) return null;
+  if (/as a reaction\b|use a reaction\b|your reaction\b/i.test(text)) {
+    return 'reaction';
+  }
+  if (/as a magic action\b|magic action to\b/i.test(text)) {
+    return 'action';
+  }
+  if (/as an action\b/i.test(text) && !/can't take actions/i.test(text)) {
+    return 'action';
+  }
+  if (/as a bonus action\b|bonus action\b/i.test(text)) {
+    return 'bonus';
+  }
+  return null;
+}
 
-  if (trait.slug === 'extra-tough' || /hit point maximum increases by 1 per level/i.test(text)) {
-    return { kind: 'passive_hp', perLevel: 1, label: 'Robustez extra' };
+/**
+ * @param {string} text
+ * @returns {{ limited: boolean, pb: boolean, shortRest: boolean, longRest: boolean }}
+ */
+function detectResourceLimits(text) {
+  const pb =
+    /proficiency bonus/i.test(text) &&
+    /number of times|regaining all expended|regain all expended/i.test(text);
+  const shortRest =
+    /finish a short rest|when you finish a short rest/i.test(text) &&
+    (/regain the use|regaining|once/i.test(text) || /short rest/i.test(text));
+  const longRest =
+    !pb &&
+    /finish a long rest|when you finish a long rest/i.test(text) &&
+    /regain|regaining|use this feature/i.test(text);
+  return {
+    limited: pb || shortRest || longRest,
+    pb,
+    shortRest: shortRest && !pb,
+    longRest: longRest && !pb,
+  };
+}
+
+/**
+ * @param {typeof cap1.traits[0]} trait
+ * @param {'base'|'improved'} section
+ */
+function sectionText(trait, section) {
+  if (section === 'improved') {
+    return trait.benefitImproved ?? '';
   }
-  if (trait.slug === 'improved-darkvision' || /darkvision/i.test(text)) {
-    return {
-      kind: 'passive_sense',
-      label: 'Visão no escuro 18 m (36 m se 2×)',
-      sense: 'darkvision',
-      rangeMeters: 18,
-      improvedRangeMeters: 36,
-    };
+  // Sopro: mecânica de uso está no campo improved do extract — usa description.
+  if (trait.slug === 'potent-breath') {
+    return `${trait.benefitBase ?? ''}\n${trait.description ?? ''}`;
   }
-  if (trait.slug === 'damage-immunity' || (/resistance to one/i.test(text) && trait.slug.includes('damage'))) {
-    return { kind: 'passive_resistance', label: 'Resistência a dano (escolha)' };
+  return trait.benefitBase ?? trait.description ?? '';
+}
+
+/**
+ * @typedef {{
+ *   traitSlug: string,
+ *   actionId: string,
+ *   name: string,
+ *   economy: 'action'|'bonus'|'reaction',
+ *   minTakes: number,
+ *   summary: string,
+ *   description: string,
+ *   resourceSlug: string | null,
+ *   alwaysSpends: boolean,
+ *   resource?: { pb: boolean, shortRest: boolean, longRest: boolean, name: string }
+ * }} EconomyRow
+ */
+
+/**
+ * @param {typeof cap1.traits[0]} trait
+ * @returns {EconomyRow[]}
+ */
+function classifyEconomyRows(trait) {
+  /** @type {EconomyRow[]} */
+  const rows = [];
+  const name = traitDisplayName(trait);
+
+  for (const section of /** @type {const} */ (['base', 'improved'])) {
+    const text = sectionText(trait, section);
+    const economy = detectEconomyBucket(text);
+    if (!economy) continue;
+
+    const minTakes = section === 'improved' ? 2 : 1;
+    // Evita duplicar a mesma bucket se o improved só reforça o mesmo uso base
+    // (ex.: mobile-bastion improved cita bonus só para encerrar — ainda útil).
+    const limits = detectResourceLimits(text);
+    const actionId =
+      minTakes >= 2
+        ? `heritage-${trait.slug}-${economy}-x2`
+        : `heritage-${trait.slug}-${economy}`;
+
+    if (rows.some((row) => row.actionId === actionId)) continue;
+
+    const resourceSlug = limits.limited
+      ? `gh-${trait.slug}${minTakes >= 2 ? '-x2' : ''}`.slice(0, 60)
+      : null;
+
+    const descSource =
+      section === 'improved'
+        ? (trait.benefitImproved ?? text)
+        : (trait.benefitBase ?? text);
+    const description = translateGhpgBody(descSource).slice(0, 450);
+    const summary =
+      minTakes >= 2
+        ? `${name} (aprimorado)`
+        : name;
+
+    rows.push({
+      traitSlug: trait.slug,
+      actionId,
+      name: minTakes >= 2 ? `${name} (2×)` : name,
+      economy,
+      minTakes,
+      summary,
+      description,
+      resourceSlug,
+      alwaysSpends: Boolean(resourceSlug),
+      resource: resourceSlug
+        ? {
+            pb: limits.pb,
+            shortRest: limits.shortRest,
+            longRest: limits.longRest || (!limits.shortRest && !limits.pb),
+            name: summary,
+          }
+        : undefined,
+    });
   }
-  if (trait.slug === 'weapon-specialist' || /weapon.*proficiency/i.test(text)) {
-    return { kind: 'proficiency_grant', label: 'Proficiência em armas (escolha)' };
-  }
-  if (trait.slug === 'helpful-tactics') {
-    return { kind: 'check_advantage', label: 'Vantagem em testes de ajuda' };
-  }
-  if (trait.slug === 'magical-savant' || trait.slug === 'magical-savant') {
-    return { kind: 'spell_grant', label: 'Truques e magias de truque adicionais' };
-  }
-  if (trait.slug === 'stand-fast') {
-    return { kind: 'passive_save', label: 'Bônus em salvaguardas contra movimento' };
-  }
-  if (trait.slug === 'artisanal-expertise') {
-    return { kind: 'proficiency_grant', label: 'Proficiência em ferramentas (escolha)' };
-  }
-  if (trait.slug === 'restorative-rest') {
-    return {
-      kind: 'economy_passive',
-      actionId: 'heritage-restorative-rest',
-      name: 'Descanso Restaurador',
-      economy: 'passive',
-      summary: 'Gasta Dados de Vida adicionais no descanso curto',
-    };
-  }
-  if (trait.slug === 'potent-breath' || /breath weapon/i.test(text)) {
-    return {
-      kind: 'economy_action',
+
+  // Hardcode: sopro sempre ação mágica 1× (PB/LR), mesmo se o parser falhar no base.
+  if (trait.slug === 'potent-breath' && !rows.some((r) => r.minTakes === 1)) {
+    rows.unshift({
+      traitSlug: trait.slug,
       actionId: 'heritage-potent-breath',
-      name: 'Sopro Potente',
+      name: name,
       economy: 'action',
-      resourceSlug: 'potentBreath',
+      minTakes: 1,
       summary: 'Sopro elemental (PB usos/LR)',
-    };
+      description: translateGhpgBody(trait.description ?? '').slice(0, 450),
+      resourceSlug: 'potentBreath',
+      alwaysSpends: true,
+      resource: {
+        pb: true,
+        shortRest: false,
+        longRest: true,
+        name: name,
+      },
+    });
+  } else if (trait.slug === 'potent-breath') {
+    const base = rows.find((r) => r.minTakes === 1);
+    if (base) {
+      base.actionId = 'heritage-potent-breath';
+      base.resourceSlug = 'potentBreath';
+      base.alwaysSpends = true;
+      base.resource = {
+        pb: true,
+        shortRest: false,
+        longRest: true,
+        name: name,
+      };
+    }
   }
-  if (trait.slug === 'restorative-rest' || (/finish a short rest/i.test(text) && /spend.*hit dice/i.test(text))) {
-    return {
-      kind: 'economy_passive',
-      actionId: 'heritage-restorative-rest',
-      name: 'Descanso Restaurador',
-      economy: 'passive',
-      summary: 'Gasta Dados de Vida adicionais no descanso curto',
-    };
-  }
-  if (/proficiency in the/i.test(text) || /proficiency with/i.test(text)) {
-    return { kind: 'proficiency_grant', label: trait.name.replace(/\.$/, '') };
-  }
-  if (/bonus action/i.test(text) && /regain.*long rest/i.test(text)) {
-    return { kind: 'economy_action', economy: 'bonus', generic: true };
-  }
-  if (/as an action/i.test(text) && /regain.*long rest/i.test(text)) {
-    return { kind: 'economy_action', economy: 'action', generic: true };
-  }
-  if (/as a reaction/i.test(text)) {
-    return { kind: 'economy_reaction', generic: true };
-  }
-  if (/advantage on/i.test(text) && !/saving throw against/i.test(text)) {
-    return { kind: 'check_advantage', generic: true };
-  }
-  if (name.includes('speed') || /speed by/i.test(text)) {
-    return { kind: 'speed_modifier', generic: true };
-  }
-  return { kind: 'narrative_only' };
+
+  return rows;
+}
+
+/** @param {EconomyRow} row */
+function emitEconomyInsert(row) {
+  const resourceSql = row.resourceSlug
+    ? sqlLiteral(row.resourceSlug)
+    : 'NULL';
+  const tableAction = row.alwaysSpends ? "'spend-resource'" : 'NULL';
+  return `INSERT INTO rpg.phb_class_economy_action (
+  action_id, heritage_trait_id, name, economy, unlock_level,
+  resource_slug, always_spends_resource, summary, description, table_action, sort_order, min_trait_takes
+)
+SELECT
+  ${sqlLiteral(row.actionId)},
+  ht.id,
+  ${sqlLiteral(row.name)},
+  ${sqlLiteral(row.economy)}::rpg.action_economy_bucket,
+  1,
+  ${resourceSql},
+  ${row.alwaysSpends ? 'TRUE' : 'FALSE'},
+  ${sqlLiteral(row.summary)},
+  ${sqlLiteral(row.description)},
+  ${tableAction},
+  ${row.minTakes >= 2 ? 760 : 750},
+  ${row.minTakes}
+FROM rpg.phb_heritage_trait ht
+WHERE ht.slug = ${sqlLiteral(row.traitSlug)}
+ON CONFLICT (action_id) DO UPDATE SET
+  heritage_trait_id = EXCLUDED.heritage_trait_id,
+  name = EXCLUDED.name,
+  economy = EXCLUDED.economy,
+  resource_slug = EXCLUDED.resource_slug,
+  always_spends_resource = EXCLUDED.always_spends_resource,
+  summary = EXCLUDED.summary,
+  description = EXCLUDED.description,
+  table_action = EXCLUDED.table_action,
+  min_trait_takes = EXCLUDED.min_trait_takes;`;
+}
+
+/** @param {EconomyRow} row */
+function emitResourceInserts(row) {
+  if (!row.resourceSlug || !row.resource) return '';
+  const maxFormula = row.resource.pb
+    ? `'proficiency_bonus'::rpg.resource_max_formula`
+    : `'fixed'::rpg.resource_max_formula`;
+  const fixedMax = row.resource.pb ? 'NULL' : '1';
+  const recoverShort = row.resource.shortRest ? 'TRUE' : 'FALSE';
+  const recoverLong = row.resource.longRest || row.resource.pb ? 'TRUE' : 'FALSE';
+
+  return `-- ${row.traitSlug} @${row.minTakes}× → ${row.resourceSlug}
+INSERT INTO rpg.phb_resource_definition (slug, name, scope, heritage_trait_id, min_level)
+SELECT
+  ${sqlLiteral(row.resourceSlug)},
+  ${sqlLiteral(row.resource.name)},
+  'heritage'::rpg.resource_scope,
+  ht.id,
+  1
+FROM rpg.phb_heritage_trait ht
+WHERE ht.slug = ${sqlLiteral(row.traitSlug)}
+ON CONFLICT (slug) DO UPDATE SET
+  name = EXCLUDED.name,
+  scope = EXCLUDED.scope,
+  heritage_trait_id = EXCLUDED.heritage_trait_id;
+
+INSERT INTO rpg.phb_resource_grant (
+  owner_kind, owner_id, resource_id, unlock_level, max_formula, fixed_max,
+  recover_one_on_short, recover_all_on_short, recover_all_on_long, min_trait_takes
+)
+SELECT
+  'heritage'::rpg.resource_owner_kind,
+  ht.id,
+  rd.id,
+  1,
+  ${maxFormula},
+  ${fixedMax},
+  FALSE,
+  ${recoverShort},
+  ${recoverLong},
+  ${row.minTakes}
+FROM rpg.phb_heritage_trait ht
+JOIN rpg.phb_resource_definition rd ON rd.slug = ${sqlLiteral(row.resourceSlug)}
+WHERE ht.slug = ${sqlLiteral(row.traitSlug)}
+ON CONFLICT (owner_kind, owner_id, resource_id, unlock_level) DO UPDATE SET
+  max_formula = EXCLUDED.max_formula,
+  fixed_max = EXCLUDED.fixed_max,
+  recover_all_on_short = EXCLUDED.recover_all_on_short,
+  recover_all_on_long = EXCLUDED.recover_all_on_long,
+  min_trait_takes = EXCLUDED.min_trait_takes;`;
 }
 
 const modifierLines = [];
-const economyLines = [];
-const report = { total: 0, byKind: {} };
+const economyRows = [];
+const report = {
+  total: 0,
+  economyActions: 0,
+  withResource: 0,
+  byBucket: { action: 0, bonus: 0, reaction: 0 },
+  byMinTakes: { 1: 0, 2: 0 },
+};
 
 for (const trait of cap1.traits) {
   report.total += 1;
-  const effect = classifyTrait(trait);
-  report.byKind[effect.kind] = (report.byKind[effect.kind] ?? 0) + 1;
 
-  if (effect.kind === 'passive_hp') {
+  if (trait.slug === 'extra-tough') {
     modifierLines.push(`INSERT INTO rpg.phb_combat_modifier (
   kind, owner_kind, owner_id, heritage_trait_id, label, per_level_bonus, min_trait_takes
 )
@@ -142,157 +312,79 @@ SELECT
   'heritage'::rpg.combat_modifier_owner,
   ht.id,
   ht.id,
-  ${sqlLiteral(effect.label)},
-  ${effect.perLevel},
+  'Robustez extra',
+  1,
   1
 FROM rpg.phb_heritage_trait ht
-WHERE ht.slug = ${sqlLiteral(trait.slug)}
+WHERE ht.slug = 'extra-tough'
   AND NOT EXISTS (
     SELECT 1 FROM rpg.phb_combat_modifier cm
-    WHERE cm.heritage_trait_id = ht.id AND cm.kind = 'hp_bonus'::rpg.combat_modifier_kind
+    WHERE cm.heritage_trait_id = ht.id
+      AND cm.kind = 'hp_bonus'::rpg.combat_modifier_kind
+      AND cm.min_trait_takes = 1
   );`);
   }
 
-  if (effect.kind === 'economy_action' && trait.slug === 'potent-breath') {
-    const desc = translateGhpgBody(trait.benefitBase ?? trait.description).slice(0, 500);
-    economyLines.push(`INSERT INTO rpg.phb_class_economy_action (
-  action_id, heritage_trait_id, name, economy, unlock_level,
-  resource_slug, always_spends_resource, summary, description, table_action, sort_order, min_trait_takes
-)
-SELECT
-  ${sqlLiteral(effect.actionId)},
-  ht.id,
-  ${sqlLiteral(effect.name)},
-  ${sqlLiteral(effect.economy)}::rpg.action_economy_bucket,
-  1,
-  ${sqlLiteral(effect.resourceSlug)},
-  TRUE,
-  ${sqlLiteral(effect.summary)},
-  ${sqlLiteral(desc)},
-  'spend-resource',
-  700,
-  1
-FROM rpg.phb_heritage_trait ht
-WHERE ht.slug = 'potent-breath'
-ON CONFLICT (action_id) DO UPDATE SET
-  heritage_trait_id = EXCLUDED.heritage_trait_id,
-  name = EXCLUDED.name,
-  summary = EXCLUDED.summary,
-  description = EXCLUDED.description,
-  min_trait_takes = EXCLUDED.min_trait_takes;`);
+  for (const row of classifyEconomyRows(trait)) {
+    economyRows.push(row);
+    report.economyActions += 1;
+    report.byBucket[row.economy] += 1;
+    report.byMinTakes[row.minTakes] =
+      (report.byMinTakes[row.minTakes] ?? 0) + 1;
+    if (row.resourceSlug) report.withResource += 1;
   }
+}
 
-  if (effect.kind === 'economy_action' && effect.generic) {
-    const actionId = `heritage-${trait.slug}`;
-    const name = trait.name.replace(/\.$/, '');
-    economyLines.push(`INSERT INTO rpg.phb_class_economy_action (
-  action_id, heritage_trait_id, name, economy, unlock_level,
-  resource_slug, always_spends_resource, summary, description, table_action, sort_order, min_trait_takes
-)
-SELECT
-  ${sqlLiteral(actionId)},
-  ht.id,
-  ${sqlLiteral(name)},
-  ${sqlLiteral(effect.economy ?? 'bonus')}::rpg.action_economy_bucket,
-  1,
-  ${sqlLiteral(trait.slug.replace(/-/g, ''))},
-  TRUE,
-  ${sqlLiteral(name)},
-  ${sqlLiteral(translateGhpgBody(trait.benefitBase ?? trait.description).slice(0, 400))},
-  'spend-resource',
-  700,
-  1
-FROM rpg.phb_heritage_trait ht
-WHERE ht.slug = ${sqlLiteral(trait.slug)}
-ON CONFLICT (action_id) DO UPDATE SET
-  heritage_trait_id = EXCLUDED.heritage_trait_id,
-  name = EXCLUDED.name,
-  description = EXCLUDED.description;`);
-  }
-
-  if (effect.kind === 'economy_reaction' && CORE_SLUGS.has(trait.slug)) {
-    const actionId = `heritage-${trait.slug}-reaction`;
-    economyLines.push(`INSERT INTO rpg.phb_class_economy_action (
-  action_id, heritage_trait_id, name, economy, unlock_level,
-  resource_slug, always_spends_resource, summary, description, table_action, sort_order, min_trait_takes
-)
-SELECT
-  ${sqlLiteral(actionId)},
-  ht.id,
-  ${sqlLiteral(trait.name.replace(/\.$/, ''))},
-  'reaction'::rpg.action_economy_bucket,
-  1,
-  ${sqlLiteral(`${trait.slug.replace(/-/g, '')}Rx`)},
-  TRUE,
-  ${sqlLiteral(trait.improvedName ?? trait.name.replace(/\.$/, ''))},
-  ${sqlLiteral(translateGhpgBody(trait.benefitImproved ?? trait.benefitBase ?? '').slice(0, 400))},
-  'spend-resource',
-  701,
-  2
-FROM rpg.phb_heritage_trait ht
-WHERE ht.slug = ${sqlLiteral(trait.slug)}
-ON CONFLICT (action_id) DO UPDATE SET
-  heritage_trait_id = EXCLUDED.heritage_trait_id,
-  min_trait_takes = EXCLUDED.min_trait_takes;`);
-  }
+// Deduplicate actionIds (keep first)
+const seenIds = new Set();
+const uniqueEconomy = [];
+for (const row of economyRows) {
+  if (seenIds.has(row.actionId)) continue;
+  seenIds.add(row.actionId);
+  uniqueEconomy.push(row);
 }
 
 const outCombat = path.join(apiRoot, 'database/seeds/combat');
 fs.mkdirSync(outCombat, { recursive: true });
 
-const coreBody = `-- GH heritage traits — core 10 + classificador automático (Cap. 1)
+const coreBody = `-- GH heritage traits — passivos CORE (Cap. 1)
+-- Gerado por scripts/classify-gh-heritage-trait-mechanics.mjs
 
 ${modifierLines.join('\n\n')}
-
-${economyLines.join('\n\n')}
 `;
 
-fs.writeFileSync(path.join(outCombat, 'C070_phb_heritage_trait_mechanics_core.sql'), `${coreBody}\n`, 'utf8');
-
-const bulkTraits = cap1.traits.filter((t) => !CORE_SLUGS.has(t.slug));
-const bulkEconomy = [];
-for (const trait of cap1.traits) {
-  const effect = classifyTrait(trait);
-  if (
-    (effect.kind === 'economy_action' || effect.kind === 'economy_reaction') &&
-    effect.generic &&
-    !CORE_SLUGS.has(trait.slug)
-  ) {
-    const actionId =
-      effect.kind === 'economy_reaction'
-        ? `heritage-${trait.slug}-reaction`
-        : `heritage-${trait.slug}`;
-    if (economyLines.some((line) => line.includes(`'${actionId}'`))) continue;
-    bulkEconomy.push(`-- ${trait.slug}: ${effect.kind}`);
-    bulkEconomy.push(`INSERT INTO rpg.phb_class_economy_action (
-  action_id, heritage_trait_id, name, economy, unlock_level,
-  resource_slug, always_spends_resource, summary, description, table_action, sort_order, min_trait_takes
-)
-SELECT
-  ${sqlLiteral(actionId)},
-  ht.id,
-  ${sqlLiteral(trait.name.replace(/\.$/, ''))},
-  ${sqlLiteral(effect.economy ?? 'bonus')}::rpg.action_economy_bucket,
-  1,
-  ${sqlLiteral(trait.slug.replace(/-/g, '').slice(0, 40))},
-  TRUE,
-  ${sqlLiteral(trait.name.replace(/\.$/, ''))},
-  ${sqlLiteral(translateGhpgBody(trait.benefitBase ?? trait.description).slice(0, 350))},
-  'spend-resource',
-  750,
-  1
-FROM rpg.phb_heritage_trait ht
-WHERE ht.slug = ${sqlLiteral(trait.slug)}
-ON CONFLICT (action_id) DO NOTHING;`);
-  }
-}
-
 fs.writeFileSync(
-  path.join(outCombat, 'C071_phb_heritage_trait_mechanics_bulk.sql'),
-  `-- GH heritage traits — lote bulk (${bulkEconomy.length / 2} ações)\n\n${bulkEconomy.join('\n\n')}\n`,
+  path.join(outCombat, 'C070_phb_heritage_trait_mechanics_core.sql'),
+  `${coreBody}\n`,
   'utf8',
 );
 
-console.log('Classificação:', report.byKind);
-console.log('Gerado C070_phb_heritage_trait_mechanics_core.sql');
-console.log('Gerado C071_phb_heritage_trait_mechanics_bulk.sql');
+const bulkBody = `-- GH heritage traits — economia Cap. 1 (${uniqueEconomy.length} ações)
+-- Gerado por scripts/classify-gh-heritage-trait-mechanics.mjs
+
+${uniqueEconomy.map(emitEconomyInsert).join('\n\n')}
+`;
+
+fs.writeFileSync(
+  path.join(outCombat, 'C071_phb_heritage_trait_mechanics_bulk.sql'),
+  `${bulkBody}\n`,
+  'utf8',
+);
+
+const resourceRows = uniqueEconomy.filter((row) => row.resourceSlug);
+const resourceBody = `-- GH heritage traits — recursos Cap. 1 (${resourceRows.length} grants)
+-- Gerado por scripts/classify-gh-heritage-trait-mechanics.mjs
+-- Requer T093 (scope/owner heritage + min_trait_takes em grant).
+
+${resourceRows.map(emitResourceInserts).filter(Boolean).join('\n\n')}
+`;
+
+fs.writeFileSync(
+  path.join(outCombat, 'C072_phb_heritage_trait_resources.sql'),
+  `${resourceBody}\n`,
+  'utf8',
+);
+
+console.log('Classificação:', report);
+console.log('Ações únicas:', uniqueEconomy.length);
+console.log('Gerado C070 / C071 / C072');

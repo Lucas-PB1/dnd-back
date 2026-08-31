@@ -1,11 +1,15 @@
 import type { SpeciesChoiceDto } from '@game/sheet/dto/character-sheet.dto';
 
-const LEGACY_HERITAGE_CHOICE_PREFIXES = ['heritage_', 'gh_heritage_'] as const;
+/** Normaliza kinds antigos `gh_heritage_*` → `heritage_*` (pós J039). */
+export function normalizeHeritageChoiceKind(choiceKind: string): string {
+  return choiceKind.startsWith('gh_heritage_')
+    ? `heritage_${choiceKind.slice('gh_heritage_'.length)}`
+    : choiceKind;
+}
 
 export function isHeritageChoiceKind(choiceKind: string): boolean {
-  return LEGACY_HERITAGE_CHOICE_PREFIXES.some((prefix) =>
-    choiceKind.startsWith(prefix),
-  );
+  const normalized = normalizeHeritageChoiceKind(choiceKind);
+  return normalized.startsWith('heritage_');
 }
 
 export function splitOriginChoices(choices: readonly SpeciesChoiceDto[]): {
@@ -16,8 +20,9 @@ export function splitOriginChoices(choices: readonly SpeciesChoiceDto[]): {
   const heritageChoices: SpeciesChoiceDto[] = [];
 
   for (const choice of choices) {
-    if (isHeritageChoiceKind(choice.choiceKind)) {
-      heritageChoices.push(choice);
+    const choiceKind = normalizeHeritageChoiceKind(choice.choiceKind);
+    if (choiceKind.startsWith('heritage_')) {
+      heritageChoices.push({ ...choice, choiceKind });
     } else {
       speciesChoices.push(choice);
     }
@@ -34,7 +39,13 @@ export function resolveOriginChoicesForSync(input: {
   | { kind: 'species'; choices: SpeciesChoiceDto[] }
   | undefined {
   if (input.heritageChoices !== undefined) {
-    return { kind: 'heritage', choices: input.heritageChoices };
+    return {
+      kind: 'heritage',
+      choices: input.heritageChoices.map((choice) => ({
+        ...choice,
+        choiceKind: normalizeHeritageChoiceKind(choice.choiceKind),
+      })),
+    };
   }
   if (input.speciesChoices !== undefined) {
     return { kind: 'species', choices: input.speciesChoices };

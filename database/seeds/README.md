@@ -32,4 +32,6 @@ Numeração sequencial sem lacunas (ordem de dependência). Exemplos:
 
 Ordem de aplicação dos packs: `phb` → `subclass` → `valdas` → `valdas-gunslinger` → `valdas-player-pack-2` → `steinhardt-eldritch-hunt` → `northlands-heroes` → `griffons-saddlebag` → `grim-hollow` → `dmg` → `combat`.
 
+No pack `combat`, heranças GH Cap. 1: `C070` (HP), `C071` (economia ~44 ações), `C072` (recursos tipados; requer migration `T093`).
+
 Pack incremental em produção (sem truncate): `node scripts/apply-seed-pack.mjs <pack> --target=supabase`

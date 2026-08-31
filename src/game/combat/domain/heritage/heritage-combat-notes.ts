@@ -27,7 +27,11 @@ export function heritageCombatNotes(input: {
         );
         break;
       case 'damage-immunity':
-        notes.push('Resistência a um tipo de dano (escolha do traço).');
+        notes.push(
+          entry.takeCount >= 2
+            ? 'Resistência a um tipo de dano; reação → imunidade temporária (1×/SR).'
+            : 'Resistência a um tipo de dano (escolha do traço).',
+        );
         break;
       case 'extra-tough':
         notes.push(`+${entry.takeCount} PV máx. por nível (Robustez).`);
@@ -83,16 +87,24 @@ export async function loadHeritageHitPointsBonus(
 
   let bonus = 0;
   for (const entry of aggregated) {
-    const row = rows.find(
-      (candidate) =>
-        candidate.trait_slug === entry.traitSlug &&
-        entry.takeCount >= Number(candidate.min_trait_takes),
-    );
+    const matching = rows
+      .filter(
+        (candidate) =>
+          candidate.trait_slug === entry.traitSlug &&
+          entry.takeCount >= Number(candidate.min_trait_takes),
+      )
+      .sort(
+        (left, right) =>
+          Number(right.min_trait_takes) - Number(left.min_trait_takes),
+      );
+    const row = matching[0];
     if (!row) continue;
     const fromLevel = Number(row.from_level) || 1;
     if (level < fromLevel) continue;
     bonus += Number(row.flat_bonus) || 0;
-    bonus += (Number(row.per_level_bonus) || 0) * level;
+    // Extra Tough: +1/nível por take (2× → +2/nível).
+    const perLevel = Number(row.per_level_bonus) || 0;
+    bonus += perLevel * level * Math.max(1, entry.takeCount);
   }
   return bonus;
 }

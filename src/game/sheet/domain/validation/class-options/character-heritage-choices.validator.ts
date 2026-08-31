@@ -28,6 +28,33 @@ export class CharacterHeritageChoicesValidator {
       where: { heritageSlug },
     });
 
+    const traditionalTraitSlugs = new Set(
+      rows
+        .filter(
+          (row) =>
+            row.isTraditional && row.choiceKind.startsWith('heritage_trait_'),
+        )
+        .map((row) => row.traitSlug),
+    );
+
+    const catalogRows = rows
+      .filter((row) => {
+        if (!row.choiceKind.startsWith('heritage_trait_')) return true;
+        // Produto: só build tradicional (sem pool custom).
+        return traditionalTraitSlugs.has(row.traitSlug) && row.isTraditional;
+      })
+      .filter((row) => {
+        // Sem 9º traço via troca de deslocamento no fluxo padrão.
+        if (row.choiceKind === 'heritage_trait_9') return false;
+        if (
+          row.choiceKind === 'heritage_speed_trade' &&
+          row.traitSlug === 'yes'
+        ) {
+          return false;
+        }
+        return true;
+      });
+
     const traitSlugs = [
       ...new Set(
         choices
@@ -47,7 +74,7 @@ export class CharacterHeritageChoicesValidator {
     validateHeritageChoices({
       heritageSlug,
       choices,
-      catalogRows: rows.map((row) => ({
+      catalogRows: catalogRows.map((row) => ({
         choiceKind: row.choiceKind,
         traitSlug: row.traitSlug,
       })),
@@ -56,7 +83,7 @@ export class CharacterHeritageChoicesValidator {
         maxTakes: row.maxTakes,
       })),
       rules: {
-        allowsSpeedTrade: heritage.allowsSpeedTrade,
+        allowsSpeedTrade: false,
         allowsSizeChoice: heritage.allowsSizeChoice,
       },
     });
