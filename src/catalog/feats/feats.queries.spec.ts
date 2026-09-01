@@ -5,10 +5,14 @@ import { Repository } from 'typeorm';
 import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import { FeatsMapper } from './feats.mapper';
 import { FindFeatBySlugQuery } from './queries/find-feat-by-slug.query';
+import { FindFeatOriginBackgroundsQuery } from './queries/find-feat-origin-backgrounds.query';
 
 describe('Feats queries', () => {
   let findFeatBySlug: FindFeatBySlugQuery;
   let repo: jest.Mocked<Pick<Repository<VPhbFeat>, 'find' | 'findOne'>>;
+  let originBackgroundsQuery: jest.Mocked<
+    Pick<FindFeatOriginBackgroundsQuery, 'execute'>
+  >;
 
   const sample: VPhbFeat = {
     featSlug: 'alert',
@@ -37,10 +41,15 @@ describe('Feats queries', () => {
 
   beforeEach(async () => {
     repo = { find: jest.fn(), findOne: jest.fn() };
+    originBackgroundsQuery = { execute: jest.fn().mockResolvedValue([]) };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         FeatsMapper,
         FindFeatBySlugQuery,
+        {
+          provide: FindFeatOriginBackgroundsQuery,
+          useValue: originBackgroundsQuery,
+        },
         { provide: getRepositoryToken(VPhbFeat), useValue: repo },
       ],
     }).compile();
@@ -52,6 +61,8 @@ describe('Feats queries', () => {
     repo.findOne.mockResolvedValue(sample);
     const result = await findFeatBySlug.execute('alert');
     expect(result.name).toBe('Alerta');
+    expect(result.originBackgrounds).toEqual([]);
+    expect(originBackgroundsQuery.execute).toHaveBeenCalledWith('alert');
   });
 
   it('findBySlug throws NotFoundException', async () => {

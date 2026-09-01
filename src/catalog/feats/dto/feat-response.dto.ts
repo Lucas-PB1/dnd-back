@@ -8,6 +8,14 @@ export class FeatBenefitDto {
   description?: string;
 }
 
+export class FeatOriginBackgroundDto {
+  @ApiProperty({ example: 'gh-blood-hound' })
+  slug!: string;
+
+  @ApiProperty({ example: 'Farejador de Sangue' })
+  name!: string;
+}
+
 export class FeatAbilityPrerequisiteDto {
   @ApiProperty({ example: 'destreza' })
   abilitySlug!: string;
@@ -112,4 +120,10 @@ export class FeatResponseDto {
 
   @ApiProperty({ type: [FeatBenefitDto] })
   benefits!: FeatBenefitDto[];
+
+  @ApiProperty({
+    type: [FeatOriginBackgroundDto],
+    description: 'Antecedentes que concedem este talento de origem',
+  })
+  originBackgrounds!: FeatOriginBackgroundDto[];
 }

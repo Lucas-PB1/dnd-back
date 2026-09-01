@@ -7,7 +7,7 @@
     "chapterTitle": "Character Feats",
     "htmlFile": "Chapter 4_ Character Feats - Grim Hollow_ Player’s Guide - Dungeons & Dragons - Sources - D&D Beyond.html"
   },
-  "extractedAt": "2026-08-30T05:32:33.318Z",
+  "extractedAt": "2026-08-31T21:18:41.716Z",
   "featCount": 41,
   "byCategory": {
     "origin": 9,
@@ -23,7 +23,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "Your senses are heightened beyond those of most folk. Whether these senses were strengthened through training or the loss of other senses, or they simply matured as you did, you are a master of finding those whom you seek. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "Your senses are heightened beyond those of most folk. Whether these senses were strengthened through training or the loss of other senses, or they simply matured as you did, you are a master of finding those whom you seek.",
       "benefits": [
         {
           "name": "Motion Sensor",
@@ -37,7 +38,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Your senses are heightened beyond those of most folk. Whether these senses were strengthened through training or the loss of other senses, or they simply matured as you did, you are a master of finding those whom you seek. You gain the following benefits.\n\nMotion Sensor. Whenever a creature that is Small or larger moves within 10 feet of you while you do not have the Unconscious condition, you immediately become aware of its presence.\n\nNo Hiding. You have Advantage on Wisdom ( Perception ) checks that rely on sound or smell."
+      "description": "Your senses are heightened beyond those of most folk. Whether these senses were strengthened through training or the loss of other senses, or they simply matured as you did, you are a master of finding those whom you seek.\n\nMotion Sensor. Whenever a creature that is Small or larger moves within 10 feet of you while you do not have the Unconscious condition, you immediately become aware of its presence.\n\nNo Hiding. You have Advantage on Wisdom ( Perception ) checks that rely on sound or smell."
     },
     {
       "slug": "convincing-inquisitor",
@@ -46,7 +47,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "You know how to spot a liar, and you can get people to see your way, whether through charm, reasonable arguments, or force of will. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "You know how to spot a liar, and you can get people to see your way, whether through charm, reasonable arguments, or force of will.",
       "benefits": [
         {
           "name": "Charming Presence",
@@ -73,7 +75,7 @@
       "actionEconomy": [
         "action"
       ],
-      "description": "You know how to spot a liar, and you can get people to see your way, whether through charm, reasonable arguments, or force of will. You gain the following benefits.\n\nCharming Presence. When you take the Influence action, you don’t have Disadvantage on checks to influence Hostile creatures, and you have Advantage on checks to influence Indifferent creatures.\n\nMultiple Paths. You can use any ability modifier when you take the Influence action to make an Intimidation or Persuasion check.\n\nZealous Insight. When you succeed on a Search action’s Wisdom ( Insight ) check to detect lies or evasive answers, you have Advantage on Initiative rolls involving combat against that creature for 1 hour."
+      "description": "You know how to spot a liar, and you can get people to see your way, whether through charm, reasonable arguments, or force of will.\n\nCharming Presence. When you take the Influence action, you don’t have Disadvantage on checks to influence Hostile creatures, and you have Advantage on checks to influence Indifferent creatures.\n\nMultiple Paths. You can use any ability modifier when you take the Influence action to make an Intimidation or Persuasion check.\n\nZealous Insight. When you succeed on a Search action’s Wisdom ( Insight ) check to detect lies or evasive answers, you have Advantage on Initiative rolls involving combat against that creature for 1 hour."
     },
     {
       "slug": "deathbound",
@@ -82,7 +84,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "You have seen death many times, up close and personal, and sometimes at your own hand. These experiences have affected you deeply, teaching you about life and death. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "You have seen death many times, up close and personal, and sometimes at your own hand. These experiences have affected you deeply, teaching you about life and death.",
       "benefits": [
         {
           "name": "One Last Breath",
@@ -96,7 +99,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "You have seen death many times, up close and personal, and sometimes at your own hand. These experiences have affected you deeply, teaching you about life and death. You gain the following benefits.\n\nOne Last Breath. If you have two Death Saving Throw failures, you have Advantage on Death Saving Throws until you are no longer at 0 Hit Points.\n\nRecuperation. When you spend a Hit Point Die during a Short Rest to recover Hit Points, you can roll the Hit Point Die twice and use the higher roll."
+      "description": "You have seen death many times, up close and personal, and sometimes at your own hand. These experiences have affected you deeply, teaching you about life and death.\n\nOne Last Breath. If you have two Death Saving Throw failures, you have Advantage on Death Saving Throws until you are no longer at 0 Hit Points.\n\nRecuperation. When you spend a Hit Point Die during a Short Rest to recover Hit Points, you can roll the Hit Point Die twice and use the higher roll."
     },
     {
       "slug": "fortuneofthe-thaumaturge",
@@ -105,7 +108,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "Your connection to the Thaumaturge puts you in touch with forces outside mortal understanding, making others think you were born under a fortunate moon. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "Your connection to the Thaumaturge puts you in touch with forces outside mortal understanding, making others think you were born under a fortunate moon.",
       "benefits": [
         {
           "name": "Fortune’s Fortitude",
@@ -119,7 +123,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Your connection to the Thaumaturge puts you in touch with forces outside mortal understanding, making others think you were born under a fortunate moon. You gain the following benefits.\n\nFortune’s Fortitude. When you fail a D20 Test , you can expend and roll one Hit Point Die, adding that number to your result. You can do this only once per D20 Test. You can use this benefit a number of times equal to your Proficiency Bonus, and you regain all uses of this ability when you finish a Long Rest.\n\nFortune of the Unknown. When using the Fortune’s Fortitude benefit, if you roll the highest or lowest number on the Hit Point Die, you regain that Hit Point Die. It still counts as a use of Fortune’s Fortitude."
+      "description": "Your connection to the Thaumaturge puts you in touch with forces outside mortal understanding, making others think you were born under a fortunate moon.\n\nFortune’s Fortitude. When you fail a D20 Test , you can expend and roll one Hit Point Die, adding that number to your result. You can do this only once per D20 Test. You can use this benefit a number of times equal to your Proficiency Bonus, and you regain all uses of this ability when you finish a Long Rest.\n\nFortune of the Unknown. When using the Fortune’s Fortitude benefit, if you roll the highest or lowest number on the Hit Point Die, you regain that Hit Point Die. It still counts as a use of Fortune’s Fortitude."
     },
     {
       "slug": "free-sword-mercenarys-will",
@@ -128,7 +132,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "Your training with the Company of Free Swords has given you an increased stamina and an attitude that make you less likely to succumb to hardships. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "Your training with the Company of Free Swords has given you an increased stamina and an attitude that make you less likely to succumb to hardships.",
       "benefits": [
         {
           "name": "Hold the Ground",
@@ -146,7 +151,7 @@
       "actionEconomy": [
         "reaction"
       ],
-      "description": "Your training with the Company of Free Swords has given you an increased stamina and an attitude that make you less likely to succumb to hardships. You gain the following benefits.\n\nHold the Ground. When you are moved without using your movement by a creature, you can take a Reaction to reduce the distance you are moved by up to your Speed.\n\nResolute. You have Advantage on saving throws that would apply a condition."
+      "description": "Your training with the Company of Free Swords has given you an increased stamina and an attitude that make you less likely to succumb to hardships.\n\nHold the Ground. When you are moved without using your movement by a creature, you can take a Reaction to reduce the distance you are moved by up to your Speed.\n\nResolute. You have Advantage on saving throws that would apply a condition."
     },
     {
       "slug": "insightful-collector",
@@ -155,7 +160,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "Your expeditions, transactions, and mercantile activities on behalf of the Augustine Trading Company have put you in contact with collectors of historical artifacts, relics, and tomes. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "Your expeditions, transactions, and mercantile activities on behalf of the Augustine Trading Company have put you in contact with collectors of historical artifacts, relics, and tomes.",
       "benefits": [
         {
           "name": "Object Intuition",
@@ -173,7 +179,7 @@
       "actionEconomy": [
         "action"
       ],
-      "description": "Your expeditions, transactions, and mercantile activities on behalf of the Augustine Trading Company have put you in contact with collectors of historical artifacts, relics, and tomes. You gain the following benefits.\n\nObject Intuition. You can take a Study action to examine one magical object and learn its properties and how to use it without attuning to it or taking a Short Rest in physical contact with it, but you don’t learn any curse the item might bear. There is a cumulative 5% chance for every rarity above Common that you misidentify the nature and the power of the object.\n\nRare Find. You begin play in possession of a Common magic item. Work with your GM to decide on which object fits your character and the campaign."
+      "description": "Your expeditions, transactions, and mercantile activities on behalf of the Augustine Trading Company have put you in contact with collectors of historical artifacts, relics, and tomes.\n\nObject Intuition. You can take a Study action to examine one magical object and learn its properties and how to use it without attuning to it or taking a Short Rest in physical contact with it, but you don’t learn any curse the item might bear. There is a cumulative 5% chance for every rarity above Common that you misidentify the nature and the power of the object.\n\nRare Find. You begin play in possession of a Common magic item. Work with your GM to decide on which object fits your character and the campaign."
     },
     {
       "slug": "resolutionofthe-syndicate",
@@ -182,7 +188,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "Membership in the Ebon Syndicate provides perks—one of which is the motivation that comes with the understanding that the Syndicate kills those who fail too often. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "Membership in the Ebon Syndicate provides perks—one of which is the motivation that comes with the understanding that the Syndicate kills those who fail too often.",
       "benefits": [
         {
           "name": "Quick Strike",
@@ -196,7 +203,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Membership in the Ebon Syndicate provides perks—one of which is the motivation that comes with the understanding that the Syndicate kills those who fail too often. You gain the following benefits.\n\nQuick Strike. On your first turn after an Initiative roll, add 1d4 to the first damage roll you make. This extra damage increases to 2d4 at character level 9, and to 4d4 at character level 16.\n\nResilient. Your Hit Point maximum increases by an amount equal to your character level when you gain this feat. Whenever you gain a character level thereafter, your Hit Point maximum increases by an additional 1 Hit Point."
+      "description": "Membership in the Ebon Syndicate provides perks—one of which is the motivation that comes with the understanding that the Syndicate kills those who fail too often.\n\nQuick Strike. On your first turn after an Initiative roll, add 1d4 to the first damage roll you make. This extra damage increases to 2d4 at character level 9, and to 4d4 at character level 16.\n\nResilient. Your Hit Point maximum increases by an amount equal to your character level when you gain this feat. Whenever you gain a character level thereafter, your Hit Point maximum increases by an additional 1 Hit Point."
     },
     {
       "slug": "survivor",
@@ -205,7 +212,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "Your ability to make the best out of a bad situation has served you well. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "Your ability to make the best out of a bad situation has served you well.",
       "benefits": [
         {
           "name": "Hardy",
@@ -228,7 +236,7 @@
       "actionEconomy": [
         "action"
       ],
-      "description": "Your ability to make the best out of a bad situation has served you well. You gain the following benefits.\n\nHardy. You need half the amount of food per day based on your size.\n\nIntuitive. When you take the Study action, you have Advantage on Intelligence checks made when taking the Study action.\n\nShake It Off. Whenever you finish a Short Rest, your Exhaustion level, if any, decreases by 1. Additionally, when you finish a Long Rest, your Exhaustion level decreases by 2."
+      "description": "Your ability to make the best out of a bad situation has served you well.\n\nHardy. You need half the amount of food per day based on your size.\n\nIntuitive. When you take the Study action, you have Advantage on Intelligence checks made when taking the Study action.\n\nShake It Off. Whenever you finish a Short Rest, your Exhaustion level, if any, decreases by 1. Additionally, when you finish a Long Rest, your Exhaustion level decreases by 2."
     },
     {
       "slug": "triage-expert",
@@ -237,7 +245,8 @@
       "category": "origin",
       "repeatable": false,
       "prerequisite": null,
-      "intro": "You are trained in dealing with injuries on the battlefield, and with the saving of lives afterward. You gain the following benefits.",
+      "requirementStructured": null,
+      "intro": "You are trained in dealing with injuries on the battlefield, and with the saving of lives afterward.",
       "benefits": [
         {
           "name": "Bedside Manner",
@@ -255,7 +264,7 @@
       "actionEconomy": [
         "action"
       ],
-      "description": "You are trained in dealing with injuries on the battlefield, and with the saving of lives afterward. You gain the following benefits.\n\nBedside Manner. Whenever you cause a creature to regain Hit Points or the Blood and Bone benefit, you can roll one extra die and discard the lowest die.\n\nBlood and Bone. Taking the Utilize action and expending the use of a Healer’s Kit lets you heal a creature within 5 feet of you. The creature can expend and roll a Hit Point Die and regain that number of Hit Points."
+      "description": "You are trained in dealing with injuries on the battlefield, and with the saving of lives afterward.\n\nBedside Manner. Whenever you cause a creature to regain Hit Points or the Blood and Bone benefit, you can roll one extra die and discard the lowest die.\n\nBlood and Bone. Taking the Utilize action and expending the use of a Healer’s Kit lets you heal a creature within 5 feet of you. The creature can expend and roll a Hit Point Die and regain that number of Hit Points."
     },
     {
       "slug": "blackpowder-pistol-expert",
@@ -263,8 +272,16 @@
       "nameEn": "Blackpowder Pistol Expert",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+)\n\nYou have become practiced with the use of Blackpowder Pistols. You gain the following benefits.",
+      "prerequisite": "Level 4+",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "You have become practiced with the use of Blackpowder Pistols.",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -273,7 +290,12 @@
         },
         {
           "name": "Deadeye",
-          "description": "Attacking at long range doesn’t impose Disadvantage on your attack rolls with a Blackpowder Pistol . Quick Load. You ignore the Loading property of the Blackpowder Pistol.",
+          "description": "Attacking at long range doesn’t impose Disadvantage on your attack rolls with a Blackpowder Pistol .",
+          "actionEconomy": []
+        },
+        {
+          "name": "Quick Load",
+          "description": "You ignore the Loading property of the Blackpowder Pistol.",
           "actionEconomy": []
         },
         {
@@ -287,7 +309,7 @@
       "actionEconomy": [
         "reaction"
       ],
-      "description": "General Feat (Prerequisite: Level 4+)\n\nYou have become practiced with the use of Blackpowder Pistols. You gain the following benefits.\n\nAbility Score Increase. Increase your Dexterity, Constitution, or Intelligence score by 1, to a maximum of 20.\n\nDeadeye. Attacking at long range doesn’t impose Disadvantage on your attack rolls with a Blackpowder Pistol . Quick Load. You ignore the Loading property of the Blackpowder Pistol.\n\nTrick Shot. Immediately after a creature within 5 feet of you moves, you can take a Reaction to make a ranged attack with a Blackpowder Pistol against that creature."
+      "description": "You have become practiced with the use of Blackpowder Pistols.\n\nAbility Score Increase. Increase your Dexterity, Constitution, or Intelligence score by 1, to a maximum of 20.\n\nDeadeye. Attacking at long range doesn’t impose Disadvantage on your attack rolls with a Blackpowder Pistol .\n\nQuick Load. You ignore the Loading property of the Blackpowder Pistol.\n\nTrick Shot. Immediately after a creature within 5 feet of you moves, you can take a Reaction to make a ranged attack with a Blackpowder Pistol against that creature."
     },
     {
       "slug": "expanded-grip",
@@ -295,8 +317,21 @@
       "nameEn": "Expanded Grip",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Strength 13+)\n\nYour natural ability with larger weapons lets you use them in a way others can’t. You gain the following benefits.",
+      "prerequisite": "Level 4+, Strength 13+",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [
+          {
+            "abilitySlug": "forca",
+            "minimumScore": 13
+          }
+        ],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "Your natural ability with larger weapons lets you use them in a way others can’t.",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -315,7 +350,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "General Feat (Prerequisite: Level 4+, Strength 13+)\n\nYour natural ability with larger weapons lets you use them in a way others can’t. You gain the following benefits.\n\nAbility Score Increase. Increase your Strength, Dexterity, or Constitution score by 1, to a maximum of 20.\n\nOne-Handed Grip. When you use a Versatile weapon with one hand, the weapon deals the damage in parentheses when used to make a melee attack.\n\nZealous Grasp. If an effect forces you to drop what you are holding, you can make a DC 15 Strength saving throw to maintain your grip. When you are subjected to an effect that allows you to make a saving throw to maintain your grip, you have Advantage on the saving throw."
+      "description": "Your natural ability with larger weapons lets you use them in a way others can’t.\n\nAbility Score Increase. Increase your Strength, Dexterity, or Constitution score by 1, to a maximum of 20.\n\nOne-Handed Grip. When you use a Versatile weapon with one hand, the weapon deals the damage in parentheses when used to make a melee attack.\n\nZealous Grasp. If an effect forces you to drop what you are holding, you can make a DC 15 Strength saving throw to maintain your grip. When you are subjected to an effect that allows you to make a saving throw to maintain your grip, you have Advantage on the saving throw."
     },
     {
       "slug": "hulking-figure",
@@ -323,8 +358,21 @@
       "nameEn": "Hulking Figure",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Strength 13+)\n\nEither from extensive training or a natural build, you have a broad and formidable size for your species. You gain the following benefits.",
+      "prerequisite": "Level 4+, Strength 13+",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [
+          {
+            "abilitySlug": "forca",
+            "minimumScore": 13
+          }
+        ],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "Either from extensive training or a natural build, you have a broad and formidable size for your species.",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -348,7 +396,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "General Feat (Prerequisite: Level 4+, Strength 13+)\n\nEither from extensive training or a natural build, you have a broad and formidable size for your species. You gain the following benefits.\n\nAbility Score Increase. Increase your Strength or Constitution score by 1, to a maximum of 20.\n\nBrutal. Once per turn, you can deal an extra 1d4 Bludgeoning damage to a target you hit with an Unarmed Strike .\n\nIntimidating. When you make a Charisma ( Intimidation , Performance , or Persuasion ) check, you can also add your Strength modifier to the roll.\n\nPowerful. You count as one size larger (to a maximum size of Large) when determining your carrying capacity."
+      "description": "Either from extensive training or a natural build, you have a broad and formidable size for your species.\n\nAbility Score Increase. Increase your Strength or Constitution score by 1, to a maximum of 20.\n\nBrutal. Once per turn, you can deal an extra 1d4 Bludgeoning damage to a target you hit with an Unarmed Strike .\n\nIntimidating. When you make a Charisma ( Intimidation , Performance , or Persuasion ) check, you can also add your Strength modifier to the roll.\n\nPowerful. You count as one size larger (to a maximum size of Large) when determining your carrying capacity."
     },
     {
       "slug": "iron-gut",
@@ -356,8 +404,21 @@
       "nameEn": "Iron Gut",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Constitution 13+)\n\nYou can eat like a hill giant and drink like a fish. Years of punishing your stomach and liver have led to a powerful fortitude. You gain the following benefits.",
+      "prerequisite": "Level 4+, Constitution 13+",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [
+          {
+            "abilitySlug": "constituicao",
+            "minimumScore": 13
+          }
+        ],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "You can eat like a hill giant and drink like a fish. Years of punishing your stomach and liver have led to a powerful fortitude.",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -387,7 +448,7 @@
         "bonus",
         "action"
       ],
-      "description": "General Feat (Prerequisite: Level 4+, Constitution 13+)\n\nYou can eat like a hill giant and drink like a fish. Years of punishing your stomach and liver have led to a powerful fortitude. You gain the following benefits.\n\nAbility Score Increase. Increase your Strength, Constitution, or Charisma score by 1, to a maximum of 20.\n\nInured to Poison. You have Advantage on saving throws you make to avoid or end the Poisoned condition.\n\nEverything Looks Delicious. You have Advantage on Wisdom ( Survival ) checks to forage for food.\n\nQuick to Recover. As a Bonus Action, you can expend one of your Hit Point Dice, roll the die and add your Constitution modifier, and regain a number of Hit Points equal to the roll’s total. Once you use this benefit, you can’t use it again until you finish a Short or Long Rest."
+      "description": "You can eat like a hill giant and drink like a fish. Years of punishing your stomach and liver have led to a powerful fortitude.\n\nAbility Score Increase. Increase your Strength, Constitution, or Charisma score by 1, to a maximum of 20.\n\nInured to Poison. You have Advantage on saving throws you make to avoid or end the Poisoned condition.\n\nEverything Looks Delicious. You have Advantage on Wisdom ( Survival ) checks to forage for food.\n\nQuick to Recover. As a Bonus Action, you can expend one of your Hit Point Dice, roll the die and add your Constitution modifier, and regain a number of Hit Points equal to the roll’s total. Once you use this benefit, you can’t use it again until you finish a Short or Long Rest."
     },
     {
       "slug": "lightning-caster",
@@ -395,8 +456,16 @@
       "nameEn": "Lightning Caster",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Spellcasting or Pact Magic Feature)\n\nYour rapid-fire style of casting cantrips allows you to weave magic with uncanny speed. You gain the following benefits.",
+      "prerequisite": "Level 4+, Spellcasting or Pact Magic Feature",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": true,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "Your rapid-fire style of casting cantrips allows you to weave magic with uncanny speed.",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -424,7 +493,7 @@
         "reaction",
         "action"
       ],
-      "description": "General Feat (Prerequisite: Level 4+, Spellcasting or Pact Magic Feature)\n\nYour rapid-fire style of casting cantrips allows you to weave magic with uncanny speed. You gain the following benefits.\n\nAbility Score Increase. Increase your Intelligence, Wisdom, or Charisma score by 1, to a maximum of 20.\n\nDual Target. When you cast a cantrip with a casting time of an action that targets a single creature, you can use a Bonus Action to target a second creature within the cantrip’s range.\n\nImmediate Response. When you cast a spell as a Reaction , that spell doesn’t expend a spell slot. Once you use this benefit, you can’t use it again until you finish a Long Rest."
+      "description": "Your rapid-fire style of casting cantrips allows you to weave magic with uncanny speed.\n\nAbility Score Increase. Increase your Intelligence, Wisdom, or Charisma score by 1, to a maximum of 20.\n\nDual Target. When you cast a cantrip with a casting time of an action that targets a single creature, you can use a Bonus Action to target a second creature within the cantrip’s range.\n\nImmediate Response. When you cast a spell as a Reaction , that spell doesn’t expend a spell slot. Once you use this benefit, you can’t use it again until you finish a Long Rest."
     },
     {
       "slug": "medicianofthe-morbus-doctore",
@@ -432,8 +501,18 @@
       "nameEn": "Medician of the Morbus Doctore",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Triage Expert Feat)\n\nYou are a master of the medical sciences because of your association with a medical institute. You gain the following benefits.",
+      "prerequisite": "Level 4+, Triage Expert Feat",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "triage-expert"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "You are a master of the medical sciences because of your association with a medical institute.",
       "benefits": [
         {
           "name": "Adept Medic",
@@ -447,7 +526,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "General Feat (Prerequisite: Level 4+, Triage Expert Feat)\n\nYou are a master of the medical sciences because of your association with a medical institute. You gain the following benefits.\n\nAdept Medic. When you use the Blood and Bone benefit of the Triage Expert feat, the creature can spend up to three Hit Point Dice instead of one.\n\nBattle Surgeon. When you use the Blood and Bone benefit of the Triage Expert feat, the creature can spend three Hit Point Dice to end one of the following conditions on itself instead of regaining Hit Points: Blinded , Deafened , Paralyzed , Poisoned , or Stunned . Alternatively, you can cure one Grievous Wound affecting the creature (see Grim Hollow Campaign Guide )."
+      "description": "You are a master of the medical sciences because of your association with a medical institute.\n\nAdept Medic. When you use the Blood and Bone benefit of the Triage Expert feat, the creature can spend up to three Hit Point Dice instead of one.\n\nBattle Surgeon. When you use the Blood and Bone benefit of the Triage Expert feat, the creature can spend three Hit Point Dice to end one of the following conditions on itself instead of regaining Hit Points: Blinded , Deafened , Paralyzed , Poisoned , or Stunned . Alternatively, you can cure one Grievous Wound affecting the creature (see Grim Hollow Campaign Guide )."
     },
     {
       "slug": "nimble-physique",
@@ -455,8 +534,21 @@
       "nameEn": "Nimble Physique",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Dexterity 13+)\n\nYou are small and thin for your species. You have a mysterious and consistent ability to avoid danger. You gain the following benefits:",
+      "prerequisite": "Level 4+, Dexterity 13+",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [
+          {
+            "abilitySlug": "destreza",
+            "minimumScore": 13
+          }
+        ],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "You are small and thin for your species. You have a mysterious and consistent ability to avoid danger. You gain the following benefits:",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -481,7 +573,7 @@
         "bonus",
         "action"
       ],
-      "description": "General Feat (Prerequisite: Level 4+, Dexterity 13+)\n\nYou are small and thin for your species. You have a mysterious and consistent ability to avoid danger. You gain the following benefits:\n\nAbility Score Increase. Increase your Strength, Dexterity, or Constitution score by 1, to a maximum of 20.\n\nDodgy. While you aren’t wearing armor or wielding a Shield , you can take the Dodge action as a Bonus Action.\n\nSlippery. While you are Grappled or Restrained , your attacks don’t have Disadvantage and attacks against you don’t have Advantage ."
+      "description": "You are small and thin for your species. You have a mysterious and consistent ability to avoid danger. You gain the following benefits:\n\nAbility Score Increase. Increase your Strength, Dexterity, or Constitution score by 1, to a maximum of 20.\n\nDodgy. While you aren’t wearing armor or wielding a Shield , you can take the Dodge action as a Bonus Action.\n\nSlippery. While you are Grappled or Restrained , your attacks don’t have Disadvantage and attacks against you don’t have Advantage ."
     },
     {
       "slug": "sangromantic-initiate",
@@ -489,8 +581,16 @@
       "nameEn": "Sangromantic Initiate",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Spellcasting or Pact Magic Feature)\n\nYou have become adept enough with weaving blood magic to mitigate some of the harm of Sangromancy. You gain the following benefits.",
+      "prerequisite": "Level 4+, Spellcasting or Pact Magic Feature",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": true,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "You have become adept enough with weaving blood magic to mitigate some of the harm of Sangromancy.",
       "benefits": [
         {
           "name": "Blood Magic",
@@ -504,7 +604,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "General Feat (Prerequisite: Level 4+, Spellcasting or Pact Magic Feature)\n\nYou have become adept enough with weaving blood magic to mitigate some of the harm of Sangromancy. You gain the following benefits.\n\nBlood Magic. Choose a Sangromancy spell from any spell list of a level for which you have spell slots. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slot you have.\n\nSanguine Potency. You have a pool of two d12s that you can expend instead of Hit Point Dice when you cast Sangromancy spells. Your pool regains all expended dice when you finish a Long Rest."
+      "description": "You have become adept enough with weaving blood magic to mitigate some of the harm of Sangromancy.\n\nBlood Magic. Choose a Sangromancy spell from any spell list of a level for which you have spell slots. You always have that spell prepared. You can cast it once without a spell slot, and you regain the ability to cast it in that way when you finish a Long Rest. You can also cast the spell using any spell slot you have.\n\nSanguine Potency. You have a pool of two d12s that you can expend instead of Hit Point Dice when you cast Sangromancy spells. Your pool regains all expended dice when you finish a Long Rest."
     },
     {
       "slug": "shadowsteel-adept",
@@ -512,8 +612,16 @@
       "nameEn": "Shadowsteel Adept",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Spellcasting or Pact Magic Feature)\n\nYou have learned to tap into the dangerous but powerful art of Shadowsteel casting. You gain the following benefits.",
+      "prerequisite": "Level 4+, Spellcasting or Pact Magic Feature",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": true,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "You have learned to tap into the dangerous but powerful art of Shadowsteel casting.",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -537,7 +645,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "General Feat (Prerequisite: Level 4+, Spellcasting or Pact Magic Feature)\n\nYou have learned to tap into the dangerous but powerful art of Shadowsteel casting. You gain the following benefits.\n\nAbility Score Increase. Increase your Intelligence, Wisdom, or Charisma score by 1, to a maximum of 20.\n\nCurse Caster. You always have Shadowsteel curses prepared, and you can cast them with any spell slots you have.\n\nShadowsteel’s Bite. While holding your Shadowsteel Focus , you gain a +1 bonus to spell attack rolls and to the saving throw DCs of your spells.\n\nShadowsteel Weapon. If your Shadowsteel Focus is also a weapon, that weapon has a +1 bonus to weapon attack rolls and damage rolls."
+      "description": "You have learned to tap into the dangerous but powerful art of Shadowsteel casting.\n\nAbility Score Increase. Increase your Intelligence, Wisdom, or Charisma score by 1, to a maximum of 20.\n\nCurse Caster. You always have Shadowsteel curses prepared, and you can cast them with any spell slots you have.\n\nShadowsteel’s Bite. While holding your Shadowsteel Focus , you gain a +1 bonus to spell attack rolls and to the saving throw DCs of your spells.\n\nShadowsteel Weapon. If your Shadowsteel Focus is also a weapon, that weapon has a +1 bonus to weapon attack rolls and damage rolls."
     },
     {
       "slug": "shadowsteel-master",
@@ -545,8 +653,18 @@
       "nameEn": "Shadowsteel Master",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 8+, Shadowsteel Adept Feat)\n\nYour mastery over Shadowsteel grows stronger. You gain the following benefits.",
+      "prerequisite": "Level 8+, Shadowsteel Adept Feat",
+      "requirementStructured": {
+        "minimumLevel": 8,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "shadowsteel-adept"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "Your mastery over Shadowsteel grows stronger.",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -565,7 +683,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "General Feat (Prerequisite: Level 8+, Shadowsteel Adept Feat)\n\nYour mastery over Shadowsteel grows stronger. You gain the following benefits.\n\nAbility Score Increase. Increase your Intelligence, Wisdom, or Charisma score by 1, to a maximum of 20.\n\nNecrotic Harmony. While holding your Shadowsteel Focus , when you cast a spell that targets one or more creatures and requires an attack roll or saving throw, you can choose one target you hit or who failed the saving throw to also take 1d4 Necrotic damage for each spell slot level expended to cast the spell.\n\nNecrotic Weapon. If your Shadowsteel Focus is also a weapon, that weapon has a +2 bonus to weapon attack rolls and damage rolls. Additionally, once on each of your turns, when you hit a creature with a weapon attack roll using your Shadowsteel Focus, you can cause the target to take an extra 2d8 Necrotic damage."
+      "description": "Your mastery over Shadowsteel grows stronger.\n\nAbility Score Increase. Increase your Intelligence, Wisdom, or Charisma score by 1, to a maximum of 20.\n\nNecrotic Harmony. While holding your Shadowsteel Focus , when you cast a spell that targets one or more creatures and requires an attack roll or saving throw, you can choose one target you hit or who failed the saving throw to also take 1d4 Necrotic damage for each spell slot level expended to cast the spell.\n\nNecrotic Weapon. If your Shadowsteel Focus is also a weapon, that weapon has a +2 bonus to weapon attack rolls and damage rolls. Additionally, once on each of your turns, when you hit a creature with a weapon attack roll using your Shadowsteel Focus, you can cause the target to take an extra 2d8 Necrotic damage."
     },
     {
       "slug": "syndicate-spy",
@@ -573,8 +691,16 @@
       "nameEn": "Syndicate Spy",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Syndicate Smuggler background)\n\nRising in the ranks of the Ebon Syndicate has taught you the clandestine skills of spycraft, valuable in your trade as a racketeer. You gain the following benefits.",
+      "prerequisite": "Level 4+, Syndicate Smuggler background",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": "gh-syndicate-smuggler"
+      },
+      "intro": "Rising in the ranks of the Ebon Syndicate has taught you the clandestine skills of spycraft, valuable in your trade as a racketeer.",
       "benefits": [
         {
           "name": "Locksmith",
@@ -602,7 +728,7 @@
       "actionEconomy": [
         "action"
       ],
-      "description": "General Feat (Prerequisite: Level 4+, Syndicate Smuggler background)\n\nRising in the ranks of the Ebon Syndicate has taught you the clandestine skills of spycraft, valuable in your trade as a racketeer. You gain the following benefits.\n\nLocksmith. You have proficiency with Thieves’ Tools . While holding Thieves’ Tools, you can craft a key to a lock by spending 10 minutes with that lock.\n\nMaster of Disguise. You have proficiency with a Disguise Kit . If you spend 10 minutes donning a Costume , you decide what you look like, including your height, weight, facial features, sound of your voice, hair length, coloration, and other distinguishing characteristics. You can make yourself appear as a member of another species, though none of your statistics change. You can’t appear as a creature of a different size, and your basic shape stays the same; if you’re bipedal, you can’t use this benefit to become quadrupedal, for instance.\n\nMaster Calligrapher. You have proficiency with a Forgery Kit . You aren’t limited to 10 or fewer words when mimicking someone else’s handwriting.\n\nBlending In. When using the Hide action to conceal yourself from creatures that aren't Hostile to you, you need only be Lightly Obscured and you may use Charisma instead of Dexterity for the check."
+      "description": "Rising in the ranks of the Ebon Syndicate has taught you the clandestine skills of spycraft, valuable in your trade as a racketeer.\n\nLocksmith. You have proficiency with Thieves’ Tools . While holding Thieves’ Tools, you can craft a key to a lock by spending 10 minutes with that lock.\n\nMaster of Disguise. You have proficiency with a Disguise Kit . If you spend 10 minutes donning a Costume , you decide what you look like, including your height, weight, facial features, sound of your voice, hair length, coloration, and other distinguishing characteristics. You can make yourself appear as a member of another species, though none of your statistics change. You can’t appear as a creature of a different size, and your basic shape stays the same; if you’re bipedal, you can’t use this benefit to become quadrupedal, for instance.\n\nMaster Calligrapher. You have proficiency with a Forgery Kit . You aren’t limited to 10 or fewer words when mimicking someone else’s handwriting.\n\nBlending In. When using the Hide action to conceal yourself from creatures that aren't Hostile to you, you need only be Lightly Obscured and you may use Charisma instead of Dexterity for the check."
     },
     {
       "slug": "thrown-weapon-master",
@@ -610,8 +736,25 @@
       "nameEn": "Thrown Weapon Master",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+, Strength or Dexterity 13+)\n\nYou excel at thrown weapons. You gain the following benefits.",
+      "prerequisite": "Level 4+, Strength or Dexterity 13+",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [
+          {
+            "abilitySlug": "forca",
+            "minimumScore": 13
+          },
+          {
+            "abilitySlug": "destreza",
+            "minimumScore": 13
+          }
+        ],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "You excel at thrown weapons.",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -636,7 +779,7 @@
         },
         {
           "name": "Returning",
-          "description": "Simple weapons with the Thrown property that you are proficient with also have the Returning property (see Chapter 8: Advanced Weapons & Equipment ). Heritage Traits as Feat Alternatives If feats, especially Origin feats, don’t fit the tenor or power level of your campaign, a viable alternative is to allow players to take one or two extra Heritage Traits (see Chapter 1 ) instead of a feat. This gives the player even more flexibility in imagining and building a character to the player’s exact mechanical or roleplaying specifications. Many of the Heritage Traits can be explained as part of a background.",
+          "description": "Simple weapons with the Thrown property that you are proficient with also have the Returning property (see Chapter 8: Advanced Weapons & Equipment ).",
           "actionEconomy": []
         }
       ],
@@ -644,7 +787,7 @@
         "bonus",
         "action"
       ],
-      "description": "General Feat (Prerequisite: Level 4+, Strength or Dexterity 13+)\n\nYou excel at thrown weapons. You gain the following benefits.\n\nAbility Score Increase. Increase your Strength or Dexterity score by 1, to a maximum of 20.\n\nMultithrow. After you take the Attack action to make a ranged attack roll using a Simple weapon that has the Thrown property, you can make two additional ranged attacks using Simple weapons that have the Thrown property as a Bonus Action.\n\nQuick Hands. As a Bonus Action, you can retrieve and stow or wield all Simple weapons with the Thrown property that are within 5 feet of you. You need a free hand to perform this maneuver.\n\nReturning. Simple weapons with the Thrown property that you are proficient with also have the Returning property (see Chapter 8: Advanced Weapons & Equipment ). Heritage Traits as Feat Alternatives If feats, especially Origin feats, don’t fit the tenor or power level of your campaign, a viable alternative is to allow players to take one or two extra Heritage Traits (see Chapter 1 ) instead of a feat. This gives the player even more flexibility in imagining and building a character to the player’s exact mechanical or roleplaying specifications. Many of the Heritage Traits can be explained as part of a background."
+      "description": "You excel at thrown weapons.\n\nAbility Score Increase. Increase your Strength or Dexterity score by 1, to a maximum of 20.\n\nMultithrow. After you take the Attack action to make a ranged attack roll using a Simple weapon that has the Thrown property, you can make two additional ranged attacks using Simple weapons that have the Thrown property as a Bonus Action.\n\nQuick Hands. As a Bonus Action, you can retrieve and stow or wield all Simple weapons with the Thrown property that are within 5 feet of you. You need a free hand to perform this maneuver.\n\nReturning. Simple weapons with the Thrown property that you are proficient with also have the Returning property (see Chapter 8: Advanced Weapons & Equipment )."
     },
     {
       "slug": "witch-hunter",
@@ -652,8 +795,16 @@
       "nameEn": "Witch Hunter",
       "category": "general",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "General Feat (Prerequisite: Level 4+)\n\nYou have honed and perfected your skills fighting against spellcasters, possibly from your background hunting mages as part of the Arcanist Inquisition . You gain the following benefits.",
+      "prerequisite": "Level 4+",
+      "requirementStructured": {
+        "minimumLevel": 4,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "You have honed and perfected your skills fighting against spellcasters, possibly from your background hunting mages as part of the Arcanist Inquisition .",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -674,14 +825,14 @@
         },
         {
           "name": "Resist Curses",
-          "description": "You have Advantage on saving throws against all Shadowsteel curses, and also against spells with a duration of more than 10 minutes. Ah...you're not from around here. Let me give you a friendly word of advice. Keep your opinions to yourself. We're a quiet village, and we'd prefer to keep it that way. We don't need a sanctimonious outsider telling us how much better life could be with a little magic. — Helpful Castinellan Villager",
+          "description": "You have Advantage on saving throws against all Shadowsteel curses, and also against spells with a duration of more than 10 minutes.",
           "actionEconomy": []
         }
       ],
       "actionEconomy": [
         "reaction"
       ],
-      "description": "General Feat (Prerequisite: Level 4+)\n\nYou have honed and perfected your skills fighting against spellcasters, possibly from your background hunting mages as part of the Arcanist Inquisition . You gain the following benefits.\n\nAbility Score Increase. Increase your Strength, Constitution, or Wisdom score by 1, to a maximum of 20.\n\nDodge Spells. You can take a Reaction to avoid a spell that is targeting only you and doesn’t create an area of effect. Make a Wisdom saving throw against the spellcaster’s spell save DC. On a successful save, the creature must choose a new target or the spell is canceled. A canceled spell dissipates with no effect, and any resources used to cast it are wasted.\n\nKeep Your Enemies Close. When you hit a target that can cast spells with an attack roll using a Melee weapon or an Unarmed Strike , you can reduce its Speed by 15 feet until the start of your next turn.\n\nResist Curses. You have Advantage on saving throws against all Shadowsteel curses, and also against spells with a duration of more than 10 minutes. Ah...you're not from around here. Let me give you a friendly word of advice. Keep your opinions to yourself. We're a quiet village, and we'd prefer to keep it that way. We don't need a sanctimonious outsider telling us how much better life could be with a little magic. — Helpful Castinellan Villager"
+      "description": "You have honed and perfected your skills fighting against spellcasters, possibly from your background hunting mages as part of the Arcanist Inquisition .\n\nAbility Score Increase. Increase your Strength, Constitution, or Wisdom score by 1, to a maximum of 20.\n\nDodge Spells. You can take a Reaction to avoid a spell that is targeting only you and doesn’t create an area of effect. Make a Wisdom saving throw against the spellcaster’s spell save DC. On a successful save, the creature must choose a new target or the spell is canceled. A canceled spell dissipates with no effect, and any resources used to cast it are wasted.\n\nKeep Your Enemies Close. When you hit a target that can cast spells with an attack roll using a Melee weapon or an Unarmed Strike , you can reduce its Speed by 15 feet until the start of your next turn.\n\nResist Curses. You have Advantage on saving throws against all Shadowsteel curses, and also against spells with a duration of more than 10 minutes."
     },
     {
       "slug": "advanced-weapon-proficiency",
@@ -689,8 +840,16 @@
       "nameEn": "Advanced Weapon Proficiency",
       "category": "fighting-style",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Fighting Style Feat (Prerequisite: Fighting Style Feature, Special)\n\nYou gain the following benefits.",
+      "prerequisite": "Fighting Style Feature, Special",
+      "requirementStructured": {
+        "minimumLevel": null,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": true,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Weapon Proficiency",
@@ -704,7 +863,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Fighting Style Feat (Prerequisite: Fighting Style Feature, Special)\n\nYou gain the following benefits.\n\nWeapon Proficiency. You have proficiency with Advanced weapons, and your training allows you to use the mastery properties of those weapons.\n\nSpecial. This feat can be taken as a General feat by a character of level 8 or higher."
+      "description": "Weapon Proficiency. You have proficiency with Advanced weapons, and your training allows you to use the mastery properties of those weapons.\n\nSpecial. This feat can be taken as a General feat by a character of level 8 or higher."
     },
     {
       "slug": "close-combat-artillerist",
@@ -712,8 +871,16 @@
       "nameEn": "Close Combat Artillerist",
       "category": "fighting-style",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.",
+      "prerequisite": "Fighting Style Feature",
+      "requirementStructured": {
+        "minimumLevel": null,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": true,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Firing in Melee",
@@ -727,7 +894,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.\n\nFiring in Melee. Being within 5 feet of an enemy doesn’t impose Disadvantage on your attack rolls with Ranged weapons.\n\nPoint Blank. When you hit a creature that is within 5 feet of you with a ranged attack, you gain a +2 bonus to the damage roll."
+      "description": "Firing in Melee. Being within 5 feet of an enemy doesn’t impose Disadvantage on your attack rolls with Ranged weapons.\n\nPoint Blank. When you hit a creature that is within 5 feet of you with a ranged attack, you gain a +2 bonus to the damage roll."
     },
     {
       "slug": "dual-shot",
@@ -735,8 +902,16 @@
       "nameEn": "Dual Shot",
       "category": "fighting-style",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.",
+      "prerequisite": "Fighting Style Feature",
+      "requirementStructured": {
+        "minimumLevel": null,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": true,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Dual Shot",
@@ -749,7 +924,7 @@
       "actionEconomy": [
         "action"
       ],
-      "description": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.\n\nDual Shot. When you take the Attack action on your turn and attack with a bow or crossbow, you can make one extra attack as part of the same action against a creature that is within 10 feet of the original target that is within the weapon’s range. If you do so, both attacks are made with Disadvantage ."
+      "description": "Dual Shot. When you take the Attack action on your turn and attack with a bow or crossbow, you can make one extra attack as part of the same action against a creature that is within 10 feet of the original target that is within the weapon’s range. If you do so, both attacks are made with Disadvantage ."
     },
     {
       "slug": "flurry",
@@ -757,17 +932,25 @@
       "nameEn": "Flurry",
       "category": "fighting-style",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.",
+      "prerequisite": "Fighting Style Feature",
+      "requirementStructured": {
+        "minimumLevel": null,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": true,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Quick Strike",
-          "description": "Once on each of your turns when you make an attack roll with a weapon or an Unarmed Strike and have Advantage on the roll, you can forgo Advantage on that attack roll. After resolving that attack, you can then make another attack with the same weapon or Unarmed Strike against a different creature. The new target must be within 5 feet of the first target and within the weapon's reach. I’ve seen unorthodox fighting styles, but hers was as strange as it was deadly. — Valikan Raider",
+          "description": "Once on each of your turns when you make an attack roll with a weapon or an Unarmed Strike and have Advantage on the roll, you can forgo Advantage on that attack roll. After resolving that attack, you can then make another attack with the same weapon or Unarmed Strike against a different creature. The new target must be within 5 feet of the first target and within the weapon's reach.",
           "actionEconomy": []
         }
       ],
       "actionEconomy": [],
-      "description": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.\n\nQuick Strike. Once on each of your turns when you make an attack roll with a weapon or an Unarmed Strike and have Advantage on the roll, you can forgo Advantage on that attack roll. After resolving that attack, you can then make another attack with the same weapon or Unarmed Strike against a different creature. The new target must be within 5 feet of the first target and within the weapon's reach. I’ve seen unorthodox fighting styles, but hers was as strange as it was deadly. — Valikan Raider"
+      "description": "Quick Strike. Once on each of your turns when you make an attack roll with a weapon or an Unarmed Strike and have Advantage on the roll, you can forgo Advantage on that attack roll. After resolving that attack, you can then make another attack with the same weapon or Unarmed Strike against a different creature. The new target must be within 5 feet of the first target and within the weapon's reach."
     },
     {
       "slug": "mobile-combatant",
@@ -775,8 +958,16 @@
       "nameEn": "Mobile Combatant",
       "category": "fighting-style",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.",
+      "prerequisite": "Fighting Style Feature",
+      "requirementStructured": {
+        "minimumLevel": null,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": true,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Slippery",
@@ -789,7 +980,7 @@
       "actionEconomy": [
         "action"
       ],
-      "description": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.\n\nSlippery. When you take the Attack action, your Speed increases by 10 feet and Opportunity Attack action have Disadvantage against you until the end of your turn."
+      "description": "Slippery. When you take the Attack action, your Speed increases by 10 feet and Opportunity Attack action have Disadvantage against you until the end of your turn."
     },
     {
       "slug": "opportunist",
@@ -797,8 +988,16 @@
       "nameEn": "Opportunist",
       "category": "fighting-style",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.",
+      "prerequisite": "Fighting Style Feature",
+      "requirementStructured": {
+        "minimumLevel": null,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": true,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Exploit Weakness",
@@ -811,7 +1010,7 @@
       "actionEconomy": [
         "reaction"
       ],
-      "description": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.\n\nExploit Weakness. Whenever you make an attack as part of a Reaction , you gain a +2 bonus to the attack and damage rolls."
+      "description": "Exploit Weakness. Whenever you make an attack as part of a Reaction , you gain a +2 bonus to the attack and damage rolls."
     },
     {
       "slug": "prone-defense",
@@ -819,8 +1018,16 @@
       "nameEn": "Prone Defense",
       "category": "fighting-style",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.",
+      "prerequisite": "Fighting Style Feature",
+      "requirementStructured": {
+        "minimumLevel": null,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": true,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Defensive",
@@ -834,7 +1041,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Fighting Style Feat (Prerequisite: Fighting Style Feature)\n\nYou gain the following benefits.\n\nDefensive. When you have the Prone condition, you don’t have Disadvantage on attack rolls. Attack roll against you doesn’t have Advantage because of the Prone condition.\n\nHop Up. When you have the Prone condition, you can right yourself with only 5 feet of movement."
+      "description": "Defensive. When you have the Prone condition, you don’t have Disadvantage on attack rolls. Attack roll against you doesn’t have Advantage because of the Prone condition.\n\nHop Up. When you have the Prone condition, you can right yourself with only 5 feet of movement."
     },
     {
       "slug": "boonofthe-archlich",
@@ -842,8 +1049,18 @@
       "nameEn": "Boon of the Archlich",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Lich Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Lich Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-lich"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -857,7 +1074,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Lich Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nVessel of Vitality. Whenever you finish a Long Rest, if your Soul Vessel is not charged, it gains a soul and becomes charged."
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nVessel of Vitality. Whenever you finish a Long Rest, if your Soul Vessel is not charged, it gains a soul and becomes charged."
     },
     {
       "slug": "boonofthe-ascended-vampire",
@@ -865,8 +1082,18 @@
       "nameEn": "Boon of the Ascended Vampire",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Vampire Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Vampire Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-vampire"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -880,7 +1107,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Vampire Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nInured to Sunlight. You are no longer affected by sunlight."
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nInured to Sunlight. You are no longer affected by sunlight."
     },
     {
       "slug": "boonofthe-earthly-tether",
@@ -888,8 +1115,18 @@
       "nameEn": "Boon of the Earthly Tether",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Specter Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Specter Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-specter"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -908,7 +1145,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Specter Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nPersistent Haunter. You are no longer affected by the Fraying Reality Transformation Flaw .\n\nDivergent Growth. Choose any Specter Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nPersistent Haunter. You are no longer affected by the Fraying Reality Transformation Flaw .\n\nDivergent Growth. Choose any Specter Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
     },
     {
       "slug": "boonofthe-elder-horror",
@@ -916,8 +1153,18 @@
       "nameEn": "Boon of the Elder Horror",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Aberrant Horror Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Aberrant Horror Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-aberrant-horror"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -936,7 +1183,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Aberrant Horror Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nStabilizing Form. When you roll a 25 or lower on the Unstable Form table, you can choose to roll again. You must use the new result. Once you use this benefit, you can’t use it again until you finish a Long Rest.\n\nDivergent Growth. Choose any Aberrant Horror Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nStabilizing Form. When you roll a 25 or lower on the Unstable Form table, you can choose to roll again. You must use the new result. Once you use this benefit, you can’t use it again until you finish a Long Rest.\n\nDivergent Growth. Choose any Aberrant Horror Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
     },
     {
       "slug": "boonofthe-elder-fey",
@@ -944,8 +1191,18 @@
       "nameEn": "Boon of the Elder Fey",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Fey Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Fey Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-fey"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -964,7 +1221,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Fey Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nFey Bulwark. You are no longer affected by the Weakened Constitution Transformation Flaw .\n\nDivergent Growth. Choose any Fey Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nFey Bulwark. You are no longer affected by the Weakened Constitution Transformation Flaw .\n\nDivergent Growth. Choose any Fey Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
     },
     {
       "slug": "boonofthe-elder-fiend",
@@ -972,8 +1229,18 @@
       "nameEn": "Boon of the Elder Fiend",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Fiend Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Fiend Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-fiend"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -992,7 +1259,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Fiend Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nFree Agent. You are no longer affected by the Pull of The Netherworld Transformation Flaw .\n\nDivergent Growth. Choose any Fiend Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nFree Agent. You are no longer affected by the Pull of The Netherworld Transformation Flaw .\n\nDivergent Growth. Choose any Fiend Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
     },
     {
       "slug": "boonofthe-elemental-temperance",
@@ -1000,8 +1267,18 @@
       "nameEn": "Boon of the Elemental Temperance",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Primordial Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Primordial Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-primordial"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -1015,7 +1292,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Primordial Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nControlled Chaos. You are no longer affected by the Primordial Chaos Transformation Flaw ."
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nControlled Chaos. You are no longer affected by the Primordial Chaos Transformation Flaw ."
     },
     {
       "slug": "boonofthe-high-seraph",
@@ -1023,8 +1300,18 @@
       "nameEn": "Boon of the High Seraph",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Seraph Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Seraph Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-seraph"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -1038,12 +1325,12 @@
         },
         {
           "name": "Divergent Growth",
-          "description": "Choose any Seraph Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon. The most powerful creatures are mostly unknown and unobserved. You are usually dead before you can observe them—and therefore you cannot know them. But I’ve heard tales that there are some who can capture the spark of immortality through careful training, meditation, or magic. But I fear that these are only tales—for even a spark of the immortal would sear through mortal flesh like a hot iron through parchment. — Charneaultian Philosopher",
+          "description": "Choose any Seraph Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon.",
           "actionEconomy": []
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Seraph Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nAbsolution. You are no longer affected by the Seraph Corruption Transformation Flaw .\n\nDivergent Growth. Choose any Seraph Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon. The most powerful creatures are mostly unknown and unobserved. You are usually dead before you can observe them—and therefore you cannot know them. But I’ve heard tales that there are some who can capture the spark of immortality through careful training, meditation, or magic. But I fear that these are only tales—for even a spark of the immortal would sear through mortal flesh like a hot iron through parchment. — Charneaultian Philosopher"
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nAbsolution. You are no longer affected by the Seraph Corruption Transformation Flaw .\n\nDivergent Growth. Choose any Seraph Transformation Boon that you don’t already have but meet the prerequisites for. You gain that Boon."
     },
     {
       "slug": "boonof-magic-resistance",
@@ -1051,8 +1338,16 @@
       "nameEn": "Boon of Magic Resistance",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+)\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -1066,7 +1361,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Intelligence or Wisdom score by 1, to a maximum of 30.\n\nHeroic Resistance. If you fail a saving throw, you can cause yourself to succeed instead. Once you use this benefit, you can’t use it again until you finish a Short or Long Rest."
+      "description": "Ability Score Increase. Increase your Intelligence or Wisdom score by 1, to a maximum of 30.\n\nHeroic Resistance. If you fail a saving throw, you can cause yourself to succeed instead. Once you use this benefit, you can’t use it again until you finish a Short or Long Rest."
     },
     {
       "slug": "boonof-perfect-flight",
@@ -1074,8 +1369,16 @@
       "nameEn": "Boon of Perfect Flight",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+)\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -1089,12 +1392,12 @@
         },
         {
           "name": "Graceful Fall",
-          "description": "If you fall more than 5 feet, your rate of descent slows to 60 feet per round until you land. Kentigern endured the icy wyrm's frigid breath as if it were nothing more than a cool summer breeze. - Valikan Storyteller",
+          "description": "If you fall more than 5 feet, your rate of descent slows to 60 feet per round until you land.",
           "actionEconomy": []
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+)\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase your Strength or Dexterity score by 1, to a maximum of 30.\n\nFlying. You have a Fly Speed of 40 feet and can hover.\n\nGraceful Fall. If you fall more than 5 feet, your rate of descent slows to 60 feet per round until you land. Kentigern endured the icy wyrm's frigid breath as if it were nothing more than a cool summer breeze. - Valikan Storyteller"
+      "description": "Ability Score Increase. Increase your Strength or Dexterity score by 1, to a maximum of 30.\n\nFlying. You have a Fly Speed of 40 feet and can hover.\n\nGraceful Fall. If you fall more than 5 feet, your rate of descent slows to 60 feet per round until you land."
     },
     {
       "slug": "boonof-shadowsteel-mastery",
@@ -1102,8 +1405,18 @@
       "nameEn": "Boon of Shadowsteel Mastery",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Shadowsteel Ghoul Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Shadowsteel Ghoul Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-shadowsteel-ghoul"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -1117,7 +1430,7 @@
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Shadowsteel Ghoul Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nStrange Bedfellows. You are no longer affected by the Friendless Transformation Flaw ."
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nStrange Bedfellows. You are no longer affected by the Friendless Transformation Flaw ."
     },
     {
       "slug": "boonofthe-wilds",
@@ -1125,8 +1438,18 @@
       "nameEn": "Boon of the Wilds",
       "category": "epic-boon",
       "repeatable": false,
-      "prerequisite": null,
-      "intro": "Epic Boon Feat (Prerequisite: Level 19+, Lycanthrope Transformation )\n\nYou gain the following benefits.",
+      "prerequisite": "Level 19+, Lycanthrope Transformation",
+      "requirementStructured": {
+        "minimumLevel": 19,
+        "requiresSpellcasting": false,
+        "requiresFightingStyle": false,
+        "abilityPrerequisites": [],
+        "requiredFeatSlugs": [
+          "gh-transformation-lycanthrope"
+        ],
+        "requiredBackgroundSlug": null
+      },
+      "intro": "",
       "benefits": [
         {
           "name": "Ability Score Increase",
@@ -1135,12 +1458,12 @@
         },
         {
           "name": "Apex Predator",
-          "description": "When you enter your Hybrid Form, you gain 25 Temporary Hit Points . At the end of each of your turns while in Hybrid Form, if you have no Temporary Hit Points, you gain 10 Temporary Hit Points. While you are in your Hybrid Form and have no Temporary Hit points, you have Advantage on attack rolls. //",
+          "description": "When you enter your Hybrid Form, you gain 25 Temporary Hit Points . At the end of each of your turns while in Hybrid Form, if you have no Temporary Hit Points, you gain 10 Temporary Hit Points. While you are in your Hybrid Form and have no Temporary Hit points, you have Advantage on attack rolls.",
           "actionEconomy": []
         }
       ],
       "actionEconomy": [],
-      "description": "Epic Boon Feat (Prerequisite: Level 19+, Lycanthrope Transformation )\n\nYou gain the following benefits.\n\nAbility Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nApex Predator. When you enter your Hybrid Form, you gain 25 Temporary Hit Points . At the end of each of your turns while in Hybrid Form, if you have no Temporary Hit Points, you gain 10 Temporary Hit Points. While you are in your Hybrid Form and have no Temporary Hit points, you have Advantage on attack rolls. //"
+      "description": "Ability Score Increase. Increase one ability score of your choice by 1, to a maximum of 30.\n\nApex Predator. When you enter your Hybrid Form, you gain 25 Temporary Hit Points . At the end of each of your turns while in Hybrid Form, if you have no Temporary Hit Points, you gain 10 Temporary Hit Points. While you are in your Hybrid Form and have no Temporary Hit points, you have Advantage on attack rolls."
     }
   ]
 }

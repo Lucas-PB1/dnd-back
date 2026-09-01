@@ -48,11 +48,13 @@ export const extracts = {
     cap2FeaturesPt: extractPath('grim-hollow/cap2-features-pt.json'),
     cap3Backgrounds: extractPath('grim-hollow/cap3-backgrounds.json'),
     cap4Feats: extractPath('grim-hollow/cap4-feats.json'),
+    cap4FeatsPt: extractPath('grim-hollow/cap4-feats-pt.json'),
     cap5AdvancedEquipment: extractPath('grim-hollow/cap5-advanced-equipment.json'),
     cap5AdvancedEquipmentPt: extractPath('grim-hollow/cap5-advanced-equipment-pt.json'),
     cap5AdvancedEquipmentImages: extractPath('grim-hollow/cap5-advanced-equipment-images.json'),
     cap1HeritagesPt: extractPath('grim-hollow/cap1-heritages-pt.json'),
     cap6Transformations: extractPath('grim-hollow/cap6-transformations.json'),
+  cap6TransformationsPt: extractPath('grim-hollow/cap6-transformations-pt.json'),
     cap7Spells: extractPath('grim-hollow/cap7-spells.json'),
   },
   griffonsSaddlebag: {

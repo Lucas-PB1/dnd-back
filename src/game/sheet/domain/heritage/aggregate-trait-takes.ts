@@ -69,3 +69,18 @@ export function collectHeritageTraitPicks(
 ): HeritageTraitPick[] {
   return choices.filter((choice) => isHeritageTraitSlot(choice.choiceKind));
 }
+
+/** Slots 1..N consecutivos com base nos picks enviados (suporta builds de 7 ou 8 traços). */
+export function requiredHeritageTraitSlotKinds(
+  picks: readonly HeritageTraitPick[],
+): readonly string[] {
+  const indices = picks
+    .filter(
+      (pick) => isHeritageTraitSlot(pick.choiceKind) && pick.choiceSlug?.trim(),
+    )
+    .map((pick) => heritageTraitSlotIndex(pick.choiceKind))
+    .filter((index): index is number => index !== null);
+  if (indices.length === 0) return [];
+  const maxIndex = Math.max(...indices);
+  return HERITAGE_TRAIT_SLOTS.slice(0, maxIndex);
+}

@@ -115,6 +115,27 @@ describe('CharacterFeatOptionValueValidator', () => {
         [],
       ),
     ).rejects.toThrow(/not a valid choice/i);
+
+    dataSource.query.mockResolvedValueOnce([{ ok: 1 }]);
+    await expect(
+      validator.validate(
+        def({
+          valueType: 'spell',
+          optionKey: 'bloodMagicSpell',
+          spellSchoolSlugs: ['sangromancia'],
+          spellMaxLevel: null,
+        }),
+        {
+          featSlug: 'sangromantic-initiate',
+          optionKey: 'bloodMagicSpell',
+          valueId: 'sangue-vital',
+        },
+        [],
+        'sangromantic-initiate',
+        [],
+        [],
+      ),
+    ).resolves.toBeUndefined();
   });
 
   it('requires dependent spell list before spell validation', async () => {
@@ -128,6 +149,56 @@ describe('CharacterFeatOptionValueValidator', () => {
         [],
       ),
     ).rejects.toThrow(/requires 'spellList' first/i);
+  });
+
+  it('accepts any exact-level spell when feat has no spellList dependency', async () => {
+    dataSource.query.mockResolvedValueOnce([{ ok: 1 }]);
+    await expect(
+      validator.validate(
+        def({
+          valueType: 'spell',
+          optionKey: 'bonusSpell',
+          spellMaxLevel: 1,
+          dependsOnOptionKey: null,
+        }),
+        {
+          featSlug: 'blessing-of-wotan',
+          optionKey: 'bonusSpell',
+          valueId: 'alarme',
+        },
+        [],
+        'blessing-of-wotan',
+        [],
+        [],
+      ),
+    ).resolves.toBeUndefined();
+    expect(dataSource.query).toHaveBeenCalledWith(
+      expect.stringContaining('phb_spell'),
+      ['alarme', 1],
+    );
+  });
+
+  it('rejects wrong-level spell for open spell pick (Wotan)', async () => {
+    dataSource.query.mockResolvedValueOnce([]);
+    await expect(
+      validator.validate(
+        def({
+          valueType: 'spell',
+          optionKey: 'bonusSpell',
+          spellMaxLevel: 1,
+          dependsOnOptionKey: null,
+        }),
+        {
+          featSlug: 'blessing-of-wotan',
+          optionKey: 'bonusSpell',
+          valueId: 'bola-de-fogo',
+        },
+        [],
+        'blessing-of-wotan',
+        [],
+        [],
+      ),
+    ).rejects.toThrow(/must be level 1/i);
   });
 
   it('rejects spells missing from class list or wrong level', async () => {

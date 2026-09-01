@@ -10,7 +10,7 @@ export const CAP1_TRAIT_BENEFITS_PT = {
   },
   'animal-ally': {
     benefitBase: 'Tempo entre feras lhe deu jeito com essas criaturas. Você tem proficiência na perícia Adestrar Animais.',
-    benefitImproved: 'Aliado Animal. Se você escolher este traço duas vezes, você tem Vantagem em testes de Adestrar Animais. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.\n\nAlgo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela soltou meu próprio cão contra mim.\n\n— Vizinho ressentido',
+    benefitImproved: 'Aliado Animal. Se você escolher este traço duas vezes, você tem Vantagem em testes de Adestrar Animais. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   },
   'artisanal-expertise': {
     benefitBase: 'Você reverencia a perícia artesanal de ancestrais há muito mortos. Escolha uma Ferramenta de Artesão. Você tem proficiência com essa ferramenta.',
@@ -146,7 +146,7 @@ export const CAP1_TRAIT_BENEFITS_PT = {
   },
   'furious-speed': {
     benefitBase: 'As muitas coisas que querem matá-lo precisam alcançá-lo primeiro. No seu turno, você pode aumentar seu Deslocamento em 9 m até o fim do turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-    benefitImproved: 'Velocidade Furiosa. Se você escolher este traço duas vezes, em um turno em que usa Explosão de Velocidade, você não provoca Ataques de Oportunidade.\n\nNo campo de batalha, pés rápidos são a melhor armadura que se pode pedir. Se um inimigo não consegue alcançá-lo, não pode feri-lo. Agora erga esses joelhos!\n\n— Instrutor de milícia',
+    benefitImproved: 'Velocidade Furiosa. Se você escolher este traço duas vezes, em um turno em que usa Explosão de Velocidade, você não provoca Ataques de Oportunidade.',
   },
   'hard-to-kill': {
     benefitBase: 'Seus inimigos podem derrubá-lo, mas você nunca fica no chão por muito tempo. Você tem Vantagem em Salvaguardas contra a Morte.',
@@ -254,7 +254,7 @@ export const CAP1_TRAIT_BENEFITS_PT = {
   },
   'phase-shift': {
     benefitBase: 'Sua presença corpórea oscila e se desvanece, enfraquecendo a capacidade dos inimigos de feri-lo. Como Ação Bônus, por 1 minuto, todas as criaturas têm Desvantagem em jogadas de ataque contra você, e você pode se mover através dos espaços de outras criaturas sem tratá-los como Terreno Difícil. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-    benefitImproved: 'Mudança de Fase. Se você escolher este traço duas vezes, quando usa Fora de Fase, pode estender o benefício a qualquer aliado a até 3 m de você.\n\nPrepare uma cela especial para essa. Ela tem truques.\n\n— Carcereiro castinelano',
+    benefitImproved: 'Mudança de Fase. Se você escolher este traço duas vezes, quando usa Fora de Fase, pode estender o benefício a qualquer aliado a até 3 m de você.',
   },
   'piercing-perception': {
     benefitBase: 'A melhor forma de evitar o perigo é garantir que você seja a primeira pessoa a notá-lo. Você tem proficiência na perícia Percepção.',
@@ -314,7 +314,7 @@ export const CAP1_TRAIT_BENEFITS_PT = {
   },
   'secret-dreams': {
     benefitBase: 'Sempre que descansa, você toca os sonhos daqueles ao redor, semeando seus pensamentos e memórias em sua própria mente. Quando faz um teste de atributo para recordar lore ou conhecimento, tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-    benefitImproved: 'Sonhos Secretos. Se você escolher este traço duas vezes, você ganha um conhecimento instintivo dos segredos de outras criaturas enquanto toca seus sonhos. Usando uma ação Procurar, você se concentra em uma criatura que possa ver e faz um teste de Intuição de Sabedoria CD 15. Com um sucesso, aprende um segredo à escolha do Mestre conhecido por essa criatura. Os segredos de criaturas que não têm idioma chegam a você como imagens e impressões vagas. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.\n\nPara que se preocupar com interrogatório? Deixe-o descansar algumas horas. Eu trago suas respostas.\n\n— Varrigan, o Caminhante dos Sonhos',
+    benefitImproved: 'Sonhos Secretos. Se você escolher este traço duas vezes, você ganha um conhecimento instintivo dos segredos de outras criaturas enquanto toca seus sonhos. Usando uma ação Procurar, você se concentra em uma criatura que possa ver e faz um teste de Intuição de Sabedoria CD 15. Com um sucesso, aprende um segredo à escolha do Mestre conhecido por essa criatura. Os segredos de criaturas que não têm idioma chegam a você como imagens e impressões vagas. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.',
   },
   'self-repair': {
     benefitBase: 'Você foi feito, não nascido, e sua origem antinatural o marca para sempre como diferente. Você é um Constructo, mas sua forma encantada ainda se beneficia de magias de cura. Você também pode se curar gastando Dados de Vida durante Descansos Curtos e Descansos Longos, como de costume.\n\nVocê não precisa comer, beber, dormir ou respirar. Ainda deve permanecer inativo por 8 horas durante um Descanso Longo para obter seus benefícios.',
@@ -358,7 +358,7 @@ export const CAP1_TRAIT_BENEFITS_PT = {
   },
   'stand-fast': {
     benefitBase: 'Não importa que tipo de convulsão o cerca, você mantém a posição. Você tem Vantagem em salvaguardas contra a condição Caído.',
-    benefitImproved: 'Firmeza. Se você escolher este traço duas vezes, levantar-se de Caído consome apenas 1,5 m de deslocamento em vez da metade do seu deslocamento.\n\nAlém disso, quando falha em uma salvaguarda contra ser derrubado (Caído), pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.\n\nNão fique no chão. Nunca fique no chão. Se ficar no chão, você está morto.\n\n— Guia de Sobrevivência do Caçador de Monstros',
+    benefitImproved: 'Firmeza. Se você escolher este traço duas vezes, levantar-se de Caído consome apenas 1,5 m de deslocamento em vez da metade do seu deslocamento.\n\nAlém disso, quando falha em uma salvaguarda contra ser derrubado (Caído), pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   },
   'strength-of-life': {
     benefitBase: 'Efeitos que corrompem a essência de outras criaturas vivas pouco o preocupam. Você tem Resistência a dano Necrótico.',

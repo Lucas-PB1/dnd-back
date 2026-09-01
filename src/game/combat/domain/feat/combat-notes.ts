@@ -1,5 +1,7 @@
 /** Lembretes passivos de talento para Passivas (não entram na Economia). */
 
+import { grimHollowFeatCombatNotes } from '../grim-hollow-feat-combat-notes';
+
 const FEAT_PASSIVE_NOTES: Record<string, string[]> = {
   alert: [
     'Proficiência em Iniciativa (+PB).',
@@ -146,5 +148,5 @@ export function featCombatNotes(input: {
     for (const line of lines) notes.push(line);
   }
 
-  return notes;
+  return [...notes, ...grimHollowFeatCombatNotes(input)];
 }

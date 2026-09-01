@@ -1,0 +1,586 @@
+{
+  "generatedAt": "2026-08-31T21:24:09.123Z",
+  "featCount": 41,
+  "p0ActionCount": 11,
+  "bucketCounts": {
+    "economy": 11,
+    "passive-note": 34,
+    "combat-modifier": 23,
+    "spell-grant": 5,
+    "skip": 17
+  },
+  "entries": [
+    {
+      "featSlug": "blood-hound",
+      "benefitName": "Motion Sensor",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "blood-hound",
+      "benefitName": "No Hiding",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "convincing-inquisitor",
+      "benefitName": "Charming Presence",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "action"
+      ]
+    },
+    {
+      "featSlug": "convincing-inquisitor",
+      "benefitName": "Multiple Paths",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "action"
+      ]
+    },
+    {
+      "featSlug": "convincing-inquisitor",
+      "benefitName": "Zealous Insight",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "action"
+      ]
+    },
+    {
+      "featSlug": "deathbound",
+      "benefitName": "One Last Breath",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "deathbound",
+      "benefitName": "Recuperation",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "fortuneofthe-thaumaturge",
+      "benefitName": "Fortune's Fortitude",
+      "bucket": "economy",
+      "economy": "free",
+      "actionId": "feat-gh-fortune-fortitude"
+    },
+    {
+      "featSlug": "free-sword-mercenarys-will",
+      "benefitName": "Hold the Ground",
+      "bucket": "economy",
+      "economy": "reaction",
+      "actionId": "feat-gh-hold-the-ground"
+    },
+    {
+      "featSlug": "insightful-collector",
+      "benefitName": "Object Intuition",
+      "bucket": "economy",
+      "economy": "action",
+      "actionId": "feat-gh-insightful-study"
+    },
+    {
+      "featSlug": "resolutionofthe-syndicate",
+      "benefitName": "Quick Strike",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "resolutionofthe-syndicate",
+      "benefitName": "Resilient",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "survivor",
+      "benefitName": "Hardy",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "survivor",
+      "benefitName": "Intuitive",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "action"
+      ]
+    },
+    {
+      "featSlug": "survivor",
+      "benefitName": "Shake It Off",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "triage-expert",
+      "benefitName": "Blood and Bone",
+      "bucket": "economy",
+      "economy": "action",
+      "actionId": "feat-gh-triage-blood-and-bone"
+    },
+    {
+      "featSlug": "blackpowder-pistol-expert",
+      "benefitName": "Trick Shot",
+      "bucket": "economy",
+      "economy": "reaction",
+      "actionId": "feat-gh-trick-shot"
+    },
+    {
+      "featSlug": "expanded-grip",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "expanded-grip",
+      "benefitName": "One-Handed Grip",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "expanded-grip",
+      "benefitName": "Zealous Grasp",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "hulking-figure",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "hulking-figure",
+      "benefitName": "Brutal",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "hulking-figure",
+      "benefitName": "Intimidating",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "hulking-figure",
+      "benefitName": "Powerful",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "iron-gut",
+      "benefitName": "Quick to Recover",
+      "bucket": "economy",
+      "economy": "bonus",
+      "actionId": "feat-gh-iron-gut-quick-recover"
+    },
+    {
+      "featSlug": "lightning-caster",
+      "benefitName": "Dual Target",
+      "bucket": "economy",
+      "economy": "bonus",
+      "actionId": "feat-gh-lightning-dual-target"
+    },
+    {
+      "featSlug": "lightning-caster",
+      "benefitName": "Immediate Response",
+      "bucket": "economy",
+      "economy": "reaction",
+      "actionId": "feat-gh-lightning-immediate-response"
+    },
+    {
+      "featSlug": "medicianofthe-morbus-doctore",
+      "benefitName": "Adept Medic",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "medicianofthe-morbus-doctore",
+      "benefitName": "Battle Surgeon",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "nimble-physique",
+      "benefitName": "Ability Score Increase",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "nimble-physique",
+      "benefitName": "Dodgy",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "bonus",
+        "action"
+      ]
+    },
+    {
+      "featSlug": "nimble-physique",
+      "benefitName": "Slippery",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "sangromantic-initiate",
+      "benefitName": "Blood Magic",
+      "bucket": "spell-grant",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "sangromantic-initiate",
+      "benefitName": "Sanguine Potency",
+      "bucket": "spell-grant",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "shadowsteel-adept",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "shadowsteel-adept",
+      "benefitName": "Curse Caster",
+      "bucket": "spell-grant",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "shadowsteel-adept",
+      "benefitName": "Shadowsteel’s Bite",
+      "bucket": "spell-grant",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "shadowsteel-adept",
+      "benefitName": "Shadowsteel Weapon",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "shadowsteel-master",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "shadowsteel-master",
+      "benefitName": "Necrotic Harmony",
+      "bucket": "spell-grant",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "shadowsteel-master",
+      "benefitName": "Necrotic Weapon",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "syndicate-spy",
+      "benefitName": "Locksmith",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "syndicate-spy",
+      "benefitName": "Master of Disguise",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "syndicate-spy",
+      "benefitName": "Master Calligrapher",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "syndicate-spy",
+      "benefitName": "Blending In",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "action"
+      ]
+    },
+    {
+      "featSlug": "thrown-weapon-master",
+      "benefitName": "Ability Score Increase",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "thrown-weapon-master",
+      "benefitName": "Multithrow",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "bonus",
+        "action"
+      ]
+    },
+    {
+      "featSlug": "thrown-weapon-master",
+      "benefitName": "Quick Hands",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "bonus",
+        "action"
+      ]
+    },
+    {
+      "featSlug": "thrown-weapon-master",
+      "benefitName": "Returning",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "witch-hunter",
+      "benefitName": "Dodge Spells",
+      "bucket": "economy",
+      "economy": "reaction",
+      "actionId": "feat-gh-dodge-spells"
+    },
+    {
+      "featSlug": "advanced-weapon-proficiency",
+      "benefitName": "Weapon Proficiency",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "advanced-weapon-proficiency",
+      "benefitName": "Special",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "close-combat-artillerist",
+      "benefitName": "Firing in Melee",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "close-combat-artillerist",
+      "benefitName": "Point Blank",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "dual-shot",
+      "benefitName": "Dual Shot",
+      "bucket": "economy",
+      "economy": "action",
+      "actionId": "feat-gh-dual-shot"
+    },
+    {
+      "featSlug": "flurry",
+      "benefitName": "Quick Strike",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "mobile-combatant",
+      "benefitName": "Slippery",
+      "bucket": "combat-modifier",
+      "actionEconomy": [
+        "action"
+      ]
+    },
+    {
+      "featSlug": "opportunist",
+      "benefitName": "Exploit Weakness",
+      "bucket": "economy",
+      "economy": "reaction",
+      "actionId": "feat-gh-opportunist-exploit"
+    },
+    {
+      "featSlug": "prone-defense",
+      "benefitName": "Defensive",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "prone-defense",
+      "benefitName": "Hop Up",
+      "bucket": "combat-modifier",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-archlich",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-archlich",
+      "benefitName": "Vessel of Vitality",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-ascended-vampire",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-ascended-vampire",
+      "benefitName": "Inured to Sunlight",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-earthly-tether",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-earthly-tether",
+      "benefitName": "Persistent Haunter",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-earthly-tether",
+      "benefitName": "Divergent Growth",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-horror",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-horror",
+      "benefitName": "Stabilizing Form",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-horror",
+      "benefitName": "Divergent Growth",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-fey",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-fey",
+      "benefitName": "Fey Bulwark",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-fey",
+      "benefitName": "Divergent Growth",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-fiend",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-fiend",
+      "benefitName": "Free Agent",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elder-fiend",
+      "benefitName": "Divergent Growth",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elemental-temperance",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-elemental-temperance",
+      "benefitName": "Controlled Chaos",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-high-seraph",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-high-seraph",
+      "benefitName": "Absolution",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-high-seraph",
+      "benefitName": "Divergent Growth",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonof-magic-resistance",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonof-magic-resistance",
+      "benefitName": "Heroic Resistance",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonof-perfect-flight",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonof-perfect-flight",
+      "benefitName": "Flying",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonof-perfect-flight",
+      "benefitName": "Graceful Fall",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonof-shadowsteel-mastery",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonof-shadowsteel-mastery",
+      "benefitName": "Strange Bedfellows",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-wilds",
+      "benefitName": "Ability Score Increase",
+      "bucket": "skip",
+      "actionEconomy": []
+    },
+    {
+      "featSlug": "boonofthe-wilds",
+      "benefitName": "Apex Predator",
+      "bucket": "passive-note",
+      "actionEconomy": []
+    }
+  ]
+}

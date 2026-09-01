@@ -14,6 +14,7 @@ import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-gra
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { resolveEldritchGrantedSpellSlugs } from '@game/sheet/application/eldritch-granted-spells';
 import { assertSpellQuotas } from './assert-spell-quotas';
+import { validateSpellListAccess } from './validate-spell-list-access';
 import {
   loadSubclassSpellcasting,
   maxSpellLevelForCharacter,

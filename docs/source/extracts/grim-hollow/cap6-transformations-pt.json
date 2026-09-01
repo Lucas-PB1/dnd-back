@@ -1,0 +1,1178 @@
+{
+  "generatedAt": "2026-08-31T23:14:04.443Z",
+  "source": "D:/Projetos/dnd-work/dnd-api/docs/source/extracts/grim-hollow/cap6-transformations.json",
+  "transformations": {
+    "gh-transformation-aberrant-horror": {
+      "namePt": "Horror Aberrante",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "Every Aberrant Horror begins with a defining question: what happened to them? Some individuals make pacts with ancient entities for powers that have unforeseen effects. Others awaken after defeating an unnatural monster, surprised that they survived, only to feel something writhing in their stomach. Many tropes of body horror can be used as inspiration for an Aberrant Horror’s creation.\n\nUma vez você've established your origin, consider your character’s motivations regarding their Transformação. As their power grows and manifests, they may feel they have lost what makes them fundamentally themselves. Perhaps they decide to take revenge on the entity responsible for their Transformação, or perhaps they perceive their mutation como gift.\n\nReverter traços de Aberrant Horror\n\nOnce the character reaches Stage 1 of the Aberrant Horror Transformação, the Boons and Flaws they’ve received cannot be removed by normal or even typical magical means. Some magic might slow or halt the mutations that the character endures, but magic on the level of the magia Desejo is needed to completely remove the Transformação and its Boons and Flaws."
+        },
+        "AberrantHorrorStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela Transformação em Aberrant Horror pela primeira vez, ganha as duas Bênçãos do estágio 1 e a Falha do estágio 1."
+        },
+        "Stage1BoonAberrantForm": {
+          "namePt": "Bênção do estágio 1: Aberrant Form",
+          "descriptionPt": "Your creature type becomes Aberration in addition to any other creature types you have.\n\nAlso, the first time you become Ferido after a Short or Descanso Longo, you gain um número de Pontos de Vida Temporários igual a seu Bônus de Proficiência mais seu current Estágio de Transformação."
+        },
+        "Stage1BoonAberrantMutation": {
+          "namePt": "Bênção do estágio 1: Aberrant Mutation",
+          "descriptionPt": "Your body can twist and reshape itself as you will it, changing body parts into dangerous or useful tools and regenerating after taking damage. These abilities are represented by Aberrant Mutations. Você pode manifest an Aberrant Mutation listed below um número de times igual a seu Bônus de Proficiência mais seu current Estágio de Transformação.\n\nEach of these Aberrant Mutations last por 1 minuto, and você pode end them early by spending a Ação Bônus to remove them or take on a different mutation. Se você choose another Aberrant Mutation, you must spend another use of este recurso.\n\nYou regain all uses of this ability when you finish a Short or Descanso Longo.\n\nChitinous Shell. Como Ação Bônus, you grow a hard, crustacean-like shell. While this mutation is active and are not wearing heavy armor, your Armor Class increases by 2. While you maintain this shell, your Speed is reduced by 3 m.\n\nEldritch Limbs. Como Ação Bônus, you transform one or both of your arms into thick muscle, scything claws, or sharpened bone. Quando você use the ação Atacar, você pode replace one or more attacks with melee attacks made with your eldritch limb. Você é considered proficient with this attack, and it uses either Força or Destreza (sua escolha). On a hit, the attack deals 1d8 damage (either Contundente, Perfurante, or Cortante, chosen each time you manifest the mutation).\n\nComo Ação Bônus, você pode make a melee attack with your eldritch limb.\n\nYour eldritch limbs cannot hold weapons, shields, or other items. They are not considered weapons or Ataque Desarmados.\n\nSlimy Form. Como Ação Bônus, you cover yourself in a slippery slime. Você tem Vantagem em ability checks to escape a grapple, and você pode use the Dash action como Ação Bônus. You also gain Resistência to Acid, Fire, and dano Gélido while in this form."
+        },
+        "Stage1FlawUnstableForm": {
+          "namePt": "Falha do estágio 1: Unstable Form",
+          "descriptionPt": "Your body becomes malleable and struggles to maintain any one physical shape. Upon completing a Descanso Longo after an adventuring day in which you took damage, you must roll 1d100 on the Forma Instável table and apply the corresponding mutation based on current your Estágio de Transformação. This mutation lasts until you finish another Descanso Longo."
+        },
+        "AberrantHorrorStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Aberrant Horror, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonEfficientKiller": {
+          "namePt": "Bênção do estágio 2: Efficient Killer",
+          "descriptionPt": "Quando você make an attack with your eldritch limbs, você pode gain an added ability based on the damage type you have chosen.\n\nPerfurante. You may replace any attack made with your eldritch limb with a razor-sharp barb hurled at the target. Você é considered proficient with this barb, which hcomo Range of 20/60, has the Finesse and Thrown properties, and deals 2d6 Perfurante damage on a hit.\n\nContundente. You manifest a long tentacle, tipped with a hardened bone club. Your eldritch limb attack deals an additional 1d8 Contundente damage. Also, the attack uses the Slow Weapon Property, which you have Mastery with.\n\nCortante. Your arm forms a row of viciously hooked claws and talons. Your eldritch limb attack deals an additional 1d8 Cortante damage. Also, the attack uses the Graze Weapon Property, which you have Mastery with."
+        },
+        "Stage2BoonWrithingTendrils": {
+          "namePt": "Bênção do estágio 2: Writhing Tendrils",
+          "descriptionPt": "Você ganha a capacidade de grow long, tendril-like appendages out of your body. Como Ação Bônus, these tendrils sprout from you. While you maintain these tendrils, you gain o seguinte benefits:\n\n• When a creature moves to within 1,5 m of you, você pode try to push it back como Reação . Unless the creature succeeds on a Força salvaguarda, it is pushed 1,5 m away from you and its Speed is reduced to 0 until the start of your next turn. The CD of the salvaguarda is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação.\n\n• Your tendrils can protect you se você move. Você pode usar a Ação Bônus to Desengajar .\n\n• Como Reação to being targeted with a melee attack, você pode cause that creature to have Desvantagem on all melee attacks it makes that turn.\n\nThe tendrils last por 1 minuto. Você pode usar a Ação Bônus to retract your tendrils.\n\nVocê pode usar this ability um número de times igual a seu Bônus de Proficiência, and você recupera all uses when you finish a Descanso Curto or Descanso Longo."
+        },
+        "Stage2FlawHideousAppearance": {
+          "namePt": "Falha do estágio 2: Hideous Appearance",
+          "descriptionPt": "Your appearance has grotesquely transformed. You may have turned into a hulking mass of flesh adorned with countless eyes, or a bone-and-tusk-covered behemoth. Regardless of your true form, you’re horrific to behold.\n\nVocê pode suspend this form and take on the appearance of the humanoid you once were, but this is taxing and requires effort. This form is not permanent, and moments of stress are likely to reveal your true nature. Your true form may be revealed in o seguinte situations:\n\n• Becoming Ferido\n\n• Concentrating on a spell\n\n• Gaining the Unconscious condition\n\n• Entering hallowed ground\n\n• Choosing to reveal yourself\n\nIn these events, or times of other extreme emotional or physical stress, a GM can call or a Constituição salvaguarda with a CD based on your current Estágio de Transformação. Se você fail this save, your Horrific Appearance is revealed."
+        },
+        "AberrantHorrorStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Aberrant Horror, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonTerrifyingVisage": {
+          "namePt": "Bênção do estágio 3: Terrifying Visage",
+          "descriptionPt": "Your mutations and unearthly appearance can unsettle even the bravest creatures. Quando você invoke your Aberrant Mutations or Writhing Tendrils , você escolhe one creature within 9 m that can see you. That creature must succeed on a Sabedoria salvaguarda or gain the condição Amedrontado por 1 minuto. The CD for the salvaguarda is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação. A creature that makes its salvaguarda is immune to this effect por 24 horas."
+        },
+        "Stage3BoonConstrictingTendrils": {
+          "namePt": "Bênção do estágio 3: Constricting Tendrils",
+          "descriptionPt": "Você ganha um adicional option for your Writing Tendrils mutation.\n\nComo Ação Bônus while Writhing Tentacles is active, você pode attempt to restrain a creature within 1,5 m of you with your tendrils. The creature must succeed on a Força or Destreza salvaguarda or gain the Restrained condition. The CD is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação. A Restrained creature can take an action to make a Força ( Atletismo ) check against this CD, ending the condition on itself on a success. The Restrained condition ends se você are Incapacitado , you move from your current position, se você retract your tendrils, or se você use your tendrils to perform another ability."
+        },
+        "Stage3FlawUnstableExistence": {
+          "namePt": "Falha do estágio 3: Unstable Existence",
+          "descriptionPt": "Magic causes your physical form to unravel. Sempre que você roll a natural 1 or 2 on a salvaguarda against a spell, you reveal your Aparência Horrível and must roll again on the Forma Instável table. If the result is less than your current Forma Instável effect, replace it with the new result."
+        },
+        "AberrantHorrorStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Aberrant Horror, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonEldritchAberration": {
+          "namePt": "Bênção do estágio 4: Eldritch Aberration",
+          "descriptionPt": "Você ganha a capacidade de deliver jolts of magical energy with your eldritch limbs. Uma vez por turno, when you hit a creature with an attack using your eldritch limbs, você pode expend a espaço de magia to deal additional damage igual a 1d6 per spell level expended. Você pode escolher for this additional damage to be of any of o seguinte types: Acid, Cold, Fire, Force, Lightning, or Thunder. If any of these extra dice show a 6 when rolled, the target has the condição Caído."
+        },
+        "Stage4BoonPoisonousMutations": {
+          "namePt": "Bênção do estágio 4: Poisonous Mutations",
+          "descriptionPt": "Você tem Resistência to dano de Veneno and are Imune to the condição Envenenado.\n\nWhile you have an Aberrant Mutation active, any creature você escolhe that starts its turn within 1,5 m of you takes 3d6 dano de Veneno unless they succeed on a Constituição salvaguarda. The CD for this salvaguarda is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação."
+        },
+        "Stage4FlawEntropicAbomination": {
+          "namePt": "Falha do estágio 4: Entropic Abomination",
+          "descriptionPt": "This Flaw replaces the Stage 3 Flaw: Unstable Existence . The very essence of magic and the effect of stress aggravates the unstable nature of your aberrant body. Each time you fail a salvaguarda, or the first time you become Ferido after finishing a Descanso Longo, you must roll on the Forma Instável table. If the result is less than your current Forma Instável effect, replace it with the new result."
+        },
+        "HideousAppearanceDCsTable": {
+          "namePt": "Apêndice: Aparência Horrível DCs",
+          "descriptionPt": "Stage | Constituição Save CD\n2 | 13\n3 | 16\n4 | 20"
+        },
+        "UnstableFormTable": {
+          "namePt": "Apêndice: Forma Instável",
+          "descriptionPt": "Stage 1 | Stage 2 | Stage 3 | Stage 4 | Effect\n |  |  | 01–02 | The stress of your Transformação becomes too much. You die. Você podenot restored to life by any spell below level 5.\n |  | 01 | 03–04 | Your form becomes fragile. Your Hit Point Maximum is half your normal maximum.\n | 01 | 02–03 | 05–06 | Your body starts to lose cohesion. Você tem Desvantagem em all Teste D20s .\n01–05 | 02–03 | 04–06 | 07–24 | Your body’s metabolism quickly drains your energy. Você ganha 2 nível de Exaustãos.\n06–10 | 04–06 | 07–24 | 25–32 | Você tem trouble processing what is happening. After rolling Initiative, you have the Stunned condition até o fim de your first turn.\n11–15 | 07–24 | 25–32 | 33–40 | Your limbs weaken. Your Speed (in all modes of movement) decreases by 4,5 m and cannot be increased.\n16–24 | 25–32 | 33–40 | 41–48 | Your body does not react quickly to mental commands. Você podenot take Reaçãos .\n25–32 | 33–40 | 41–48 | 49–56 | Você é distracted by your changing form. Você tem Desvantagem em Sabedoria ( Percepção ) checks.\n33–40 | 41–48 | 49–56 | 57–64 | Your body becomes unable to fight off attacks. Você tem Desvantagem em Constituição salvaguardas.\n41–48 | 49–56 | 57–64 | 65–79 | You become clumsy. Você tem Desvantagem em Destreza salvaguardas and Destreza ability checks.\n49–56 | 57–64 | 65–79 | 80–87 | You lose blood or other vital fluids during your mutations. Você podenot add seu modificador de Constituição to any Dados de Vida spent to regain Pontos de Vida.\n57–64 | 65–79 | 80–87 | 88–93 | Speaking is difficult. Você pode only utter one word during each turn. This does not hamper spellcasting.\n65–79 | 80–87 | 88–93 | 94–100 | No effect.\n80–87 | 88–93 | 94–100 |  | Your lower limbs become more powerful. Your Speed increases by 1,5 m.\n88–93 | 94–100 |  |  | Your flesh becomes more hardy. You start the day with 4 Pontos de Vida Temporários per Estágio de Transformação.\n94–100 |  |  |  | Your body’s systems are enhanced. Você tem Vantagem em Death Salvaguardas."
+        },
+        "ReversingAberrantHorror": {
+          "namePt": "Apêndice: Reverter traços de Aberrant Horror",
+          "descriptionPt": "Reverter traços de Aberrant Horror\n\nOnce the character reaches Stage 1 of the Aberrant Horror Transformação, the Boons and Flaws they’ve received cannot be removed by normal or even typical magical means. Some magic might slow or halt the mutations that the character endures, but magic on the level of the magia Desejo is needed to completely remove the Transformação and its Boons and Flaws."
+        },
+        "PlayerAgencySome": {
+          "namePt": "Apêndice: Player Agency",
+          "descriptionPt": "Player Agency\n\nSome abilities or flaws dictate the way creatures respond to a character, such as the Aparência Horrível flaw that makes creatures Hostil. Other player characters always have the choice how they react to these revelations."
+        }
+      }
+    },
+    "gh-transformation-fey": {
+      "namePt": "Fada",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "Becoming a Fey requires a direct connection to the Realm of Faerie. Many mortals who become Fey are stolen from the mortal realm as children. These children, known as changelings, transform rapidly after a few days trapped in the Realm of Faerie. A changeling’s transition is often painful or strange, for a child altered in this way does not have a say in what type of Fey creature they ultimately become.\n\nOthers might be born mortal but have the taint of Fey blood coursing through their veins. As they mature, their Fey features slowly manifest. More than a few innocent folks quickly learn of their Fey destinies immediately after a joyous birthday celebration.\n\nA creature who voluntarily seeks to become a Fey can strike a deal with a Fey or beseech the court of a Faerie Queen. These pathways to transformation are as dangerous as the Realm of Faerie itself, and it requires a quick wit and sharp awareness to get the best of Feykind.\n\nReverter traços de Fey\n\nThe hold of the Fey over a mortal being is strong, but it’s even stronger when the mortal begins to show signs of Fey heritage. The rituals to reverse the Fey Transformação are dangerous and rarely successful."
+        },
+        "AchievingANewStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "To move from one stage to the next higher one in this Transformação, an event or some other notable occurrence tied to the story of the character should take place. The following events are suggestions for ones that might trigger a move to the next stage of the Transformação:\n\n• Striking a bargain with a greater Fey creature\n\n• Performing a great deed in the name of a Fey Queen\n\n• Establishing a new faerie ring or bridge to the Realm of Faerie\n\n• Defeating a powerful agent from your rival Fey Court\n\n• Earning a domain or title in the Realm of Faerie\n\n• Being born with Fey blood that starts manifesting Fey traits on the day of maturation"
+        },
+        "FeyStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela Transformação em Fey pela primeira vez, ganha a Bênção Fey Form e mais uma Bênção do estágio 1 de sua escolha. Também ganha a Falha do estágio 1."
+        },
+        "Stage1BoonFeyForm": {
+          "namePt": "Bênção do estágio 1: Fey Form",
+          "descriptionPt": "Your creature type becomes Fey in addition to any other creature type(s) you have.\n\nAlso, after you finish a Descanso Longo, pick a damage type from o seguinte list: Acid, Cold, Fire, Lightning, Psychic, or Thunder. Você ganha Resistência to that damage type until you finish a Descanso Longo."
+        },
+        "Stage1BoonServantOfTheSpringCourt": {
+          "namePt": "Bênção do estágio 1: Servant of the Spring Court",
+          "descriptionPt": "The Spring Court embodies carnal desires, rebirth, and the planting and sowing season. The Fey creatures of Spring tend to be capricious, unreliable, and quick to flare their emotions. This is the court most associated with satyrs and nymphs. Creatures of the Spring Court hide savage intentions and uncontrollable urges behind gentle words.\n\nComo Ação Bônus, você pode magically teleport up to 9 m to an unoccupied space você pode see. One creature de sua escolha que você possa ver within 1,5 m of your starting or ending space takes 1d6 dano Trovejante. Você pode usar this ability um número de times igual a seu Bônus de Proficiência, and você recupera all uses when you finish a Descanso Longo."
+        },
+        "Stage1BoonServantOfTheSummerCourt": {
+          "namePt": "Bênção do estágio 1: Servant of the Summer Court",
+          "descriptionPt": "The Summer Court embodies the lush warmth and manic celebration of the growing season. The Fey creatures of Summer tend toward joviality, excess, and vanity. This is the court most associated with dryads and pixies. Creatures of the Summer Court often hide their narcissism and cruelty behind beautiful façades.\n\nComo Ação Bônus, você pode magically teleport up to 9 m to an unoccupied space você pode see. One creature de sua escolha que você possa ver within 1,5 m of your starting or ending space takes 1d6 dano de Fogo. Você pode usar this ability um número de times igual a seu Bônus de Proficiência, and você recupera all uses when you finish a Descanso Longo."
+        },
+        "Stage1BoonServantOfTheAutumnCourt": {
+          "namePt": "Bênção do estágio 1: Servant of the Autumn Court",
+          "descriptionPt": "The Autumn Court embodies the careful scheming and approaching rot of the harvesting season. The Fey creatures of Autumn tend to be devious, scheming, and full of secrets. This is the court most associated with treants and other plant fey. Creatures of the Autumn Court often appear beautiful and helpful, but in truth their forms are hideous and methods vile.\n\nComo Ação Bônus, você pode magically teleport up to 9 m to an unoccupied space você pode see. One creature de sua escolha que você possa ver within 1,5 m of your starting or ending space takes 1d6 dano de Veneno. Você pode usar this ability um número de times igual a seu Bônus de Proficiência, and você recupera all uses when you finish a Descanso Longo."
+        },
+        "Stage1BoonServantOfTheWinterCourt": {
+          "namePt": "Bênção do estágio 1: Servant of the Winter Court",
+          "descriptionPt": "The winter court embodies the stillness, darkness, and death of the coldest season. The Fey creatures of Winter tend to be serious, cruel, and reflective. Creatures of the Winter Court are often terrifying to behold and very direct about their intentions.\n\nComo Ação Bônus, você pode magically teleport up to 9 m to an unoccupied space você pode see. One creature de sua escolha que você possa ver within 1,5 m of your starting or ending space takes 1d6 dano Gélido. Você pode usar this ability um número de times igual a seu Bônus de Proficiência, and você recupera all uses when you finish a Descanso Longo."
+        },
+        "Stage1FlawFeyPlanarBinding": {
+          "namePt": "Falha do estágio 1: Planar Binding",
+          "descriptionPt": "Your body and soul have been saturated with the magical energy of the Realm of Faerie. Rather than inuring you to the essence of magic, it has made you more susceptible. After finishing a Short or Descanso Longo, you have Desvantagem on the first salvaguarda you make against a spell originating from an enemy."
+        },
+        "FeyStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Fey, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonTwoFaced": {
+          "namePt": "Bênção do estágio 2: Two-Faced",
+          "descriptionPt": "Você pode transform your face into a vision of enchantment or horror that affects creatures around you, based on the Fey Court you serve. Como ação Mágica, you take on this visage. Creatures within 9 m who can see you must succeed on a Carisma salvaguarda with a CD igual a 8 mais seu modificador de Carisma mais seu Estágio de Transformação or be affected por 1 minuto.\n\nVocê pode do this um número de times igual a seu Bônus de Proficiência, and você recupera all uses after finishing a Descanso Longo.\n\nSpring. Any creature that fails the salvaguarda has the Stunned condition. The creature can attempt a Constituição salvaguarda at the end of each of their turns to end the condition. This effect ends early on a creature se você or an ally deal damage to it or take other harmful actions.\n\nSummer. Any creature that fails the salvaguarda gains the Charmed condition. This effect ends early on a creature se você or an ally deal damage to it or take other harmful actions.\n\nAutumn. Any creature that fails the salvaguarda gains the condição Envenenado. The creature can attempt a Constituição salvaguarda at the end of each of their turns to end the condition.\n\nWinter. Any creature that fails the salvaguarda becomes Amedrontado of you. This effect ends early if a creature affected by this ability ends its turn out of your line of sight."
+        },
+        "Stage2BoonMagicTricks": {
+          "namePt": "Bênção do estágio 2: Magic Tricks",
+          "descriptionPt": "Your Fey masters provide you with the ability to weave magic based on your Fey Court allegiance. Você ganha a capacidade de cast one cantrip, one level 1 spell, and one level 2 spell. Você pode conjurar each of these once without using a espaço de magia or needing spell components. You regain the ability to cast these spells when you finish a Descanso Longo. The CD for these spells is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação.\n\nSpring. Your cantrip is Poison Spray , e seu spells are Fog Cloud and Misty Step .\n\nSummer. Your cantrip is Fire Bolt , e seu spells are Burning Hands and Flame Blade .\n\nAutumn. Your cantrip is Shillelagh , e seu spells are Thunderwave and Ray of Enfeeblement .\n\nWinter. Your cantrip is Ray of Frost , e seu spells are Ice Knife and Darkness ."
+        },
+        "Stage2FlawQueensCommand": {
+          "namePt": "Falha do estágio 2: Queen’s Command",
+          "descriptionPt": "The Fey court lends you its power, and in exchange you must pay regular tribute to maintain your freedom. Twice a year, at times relevant to the Fey Court that you serve—such as the solstices or the equinoxes—you must deliver a treasure or other significant tribute to your ruling Fey Queen.\n\nSe vocêr queen considers the tribute lacking, you are immediately notified of your failure and are given detailed instructions on how to atone. Você tem Desvantagem em all Teste D20s until you rectify the situation. Se você do not satisfy your queen’s demand in one week’s time, your queen transports you immediately to her Fey Court, where you must answer for your insolence. Once transported in this way, you must remain in the Realm of Faerie for 100 years, or until you strike a bargain with your queen to let you return to the Material Plane.\n\nSeu Mestre will tell you what constitutes an appropriate tribute to the court. Some Fey Queens prefer magic items while others wish for long-kept secrets, the capture of Fey criminals, or Humanoidee servants."
+        },
+        "FeyStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Fey, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonIllusionaryCloak": {
+          "namePt": "Bênção do estágio 3: Illusionary Cloak",
+          "descriptionPt": "Você pode usar a ação Mágica to wrap yourself in an illusionary cloak for up to 1 hour. During this time, você pode make yourself look like another creature of your general size and humanoid shape. This illusion ends when you use a Ação Bônus to end it, or se você die or gain the Unconscious condition.\n\nA creature can pierce the illusion by taking the Study action and succeeding on a CD 20 Inteligência ( Investigação ) check, thus seeing your true form."
+        },
+        "Stage3BoonToothAndClaw": {
+          "namePt": "Bênção do estágio 3: Tooth and Claw",
+          "descriptionPt": "Você pode manifest fangs, tusks, claws, or other means of harming your enemies. These manifestations also deliver a powerful magic jolt.\n\nComo Ação Bônus, you manifest some natural defense mechanism por 1 minuto. This gives you o seguinte benefits:\n\n• You manifest a Claw, Bite, or Gore attack that you may use in place of any weapon attack. This manifested attack deals 1d6 mais seu Força or modificador de Destreza Cortante damage. Você é proficient with this attack, and you add either your Força or modificador de Destreza to attack and jogada de danos. This attack is not an Ataque Desarmado , nor can it be used in place of an Ataque Desarmado.\n\n• After taking an ação Atacar that did not use your manifested attack, you may take a Ação Bônus later in that turn to use your manifested attack once.\n\n• Uma vez por rodada, when you hit a target with a manifested attack, você pode choose to deal an additional 2d6 dano Psíquico to the target. The creature must succeed on a Constituição salvaguarda or have the Stunned condition até o fim de its next turn. The CD is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação.\n\nVocê pode usar this ability um número de times igual a seu Bônus de Proficiência mais seu Estágio de Transformação. You regain all uses of this ability after completing a Descanso Longo."
+        },
+        "Stage3BoonDreamsAndNightmares": {
+          "namePt": "Bênção do estágio 3: Dreams and Nightmares",
+          "descriptionPt": "Você ganha a capacidade de manipulate the mind of mortal beings. Como Ação Bônus, choose a Humanoidee você pode see within 9 m of you. That creature must succeed on a Sabedoria salvaguarda. The CD is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação.\n\nOn a failed salvaguarda, the creature has the Paralyzed condition, as it is stuck in a blissful dream or a terrifying nightmare. The condition lasts por 1 minuto. The target can attempt the Constituição salvaguarda at the end of each of its turns and each time it takes damage.\n\nVocê pode escolher to concentrate on the effect as you would a spell. Se você are concentrating on the effect when the target attempts its salvaguarda, the target has Desvantagem on the salvaguarda.\n\nVocê pode usar this ability um número de times igual a seu Bônus de Proficiência, and você recupera all uses of this ability when you finish a Descanso Longo."
+        },
+        "Stage3FlawWeakenedConstitution": {
+          "namePt": "Falha do estágio 3: Weakened Constitution",
+          "descriptionPt": "Your connection to the Fey Courts has granted you tremendous power but also an inherent fragility. Quando você become Ferido for the first time after you roll Initiative, you must succeed on a CD 20 Constituição salvaguarda. On a failed save, you gain a level of Exhaustion .\n\nComo ação Mágica, você pode expend um número de Dados de Vida igual a your Estágio de Transformação to remove one level of Exhaustion gained in this manner. Você ganha no other benefit from those expended Dados de Vida."
+        },
+        "FeyStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Fey, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonGreaterMagicTricks": {
+          "namePt": "Bênção do estágio 4: Greater Magic Tricks",
+          "descriptionPt": "Your Fey masters provide even further magical abilities. Você ganha a capacidade de cast one level 3 spell, one level 4 spell, and one level 5 spell. Você pode conjurar each of these once without using a espaço de magia or needing spell components. You regain the ability to cast these spells when you finish a Descanso Longo. The CD for these spells is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação.\n\nSpring. Your spells are Stinking Cloud , Vitriolic Sphere , and Cloudkill .\n\nSummer. Your spells are Fireball , Fire Escudo , and Dream .\n\nAutumn. Your spells are Lightning Bolt , Blight , and Hold Monster .\n\nWinter. Your spells are Vampiric Touch , Ice Storm , and Cone of Cold ."
+        },
+        "Stage4BoonTwilightGlamour": {
+          "namePt": "Bênção do estágio 4: Twilight Glamour",
+          "descriptionPt": "Como ação Mágica, you gain the Invisible condition por 1 hora or until you end it como Ação Bônus. Se você make uma jogada de ataque, deal damage, or cast a spell that causes the target to make a salvaguarda, the remaining duration changes to 1 minute.\n\nVocê pode usar this ability twice, and você recupera all uses after finishing a Descanso Longo."
+        },
+        "Stage4FlawSeasonallyAffected": {
+          "namePt": "Falha do estágio 4: Seasonally Affected",
+          "descriptionPt": "Your connection to the Realm of Fey hcomo stronger pull on you. Você tem Desvantagem em Death Salvaguardas as the Fey Court attempts to claim your soul as their own.\n\nAlém disso, you gain Vulnerability to a certain damage type based on the Fey Court that you are pledged to. Você podenot benefit from Resistência or Imunidade to that damage.\n\nSpring. Você é Vulnerable to dano Necrótico.\n\nSummer. Você é Vulnerable to dano Gélido.\n\nAutumn. Você é Vulnerable to dano Radiante.\n\nWinter. Você é Vulnerable to dano de Fogo."
+        },
+        "ReversingFeyTraits": {
+          "namePt": "Apêndice: Reverter traços de Fey",
+          "descriptionPt": "Reverter traços de Fey\n\nThe hold of the Fey over a mortal being is strong, but it’s even stronger when the mortal begins to show signs of Fey heritage. The rituals to reverse the Fey Transformação are dangerous and rarely successful."
+        }
+      }
+    },
+    "gh-transformation-fiend": {
+      "namePt": "Corruptor",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "Um mortal pode tornar-se Corruptor de várias maneiras. Alguns perdem a alma e tornam-se um ao morrer. Outros realizam rituais agonizantes para receber poder terrível de um Arquidaemônio. Alguns mortais podem tornar-se Corruptores sem intenção, como recompensa ou punição por uma vida de crueldade e maldades. Ainda assim, é raro que uma criatura seja escolhida para integrar as legiões do Submundo sem antes ter feito um pacto por tal dádiva.\n\nConversar com o Mestre sobre criar acordos com mortais na história é uma excelente forma de interpretar sua influência no mundo do jogo. Como Corruptor, considere as motivações do personagem e quais PNJs podem ajudá-lo a alcançar seus objetivos.\n\nVocê está a serviço de um Arquidaemônio ou divindade sombria específicos? Segue apenas suas próprias ambições, fazendo os pactos necessários para isso? Que maldades você infligirá ao mundo, e com que fins? Corruptores raramente agem sem ambição, mesmo que seja simplesmente corromper tantos mortais quanto conseguir convencer a assinar um contrato.\n\nReverter traços de Corruptor\n\nTornar-se Corruptor costuma exigir atos de grande maldade. Você pode ter realizado sacrifícios de sangue ou feito pactos que causaram sofrimento a outros. Nem mesmo magia do nível da magia Desejo poderia expiar suas ações ou redimir sua alma. Somente depois de realizar um ato de sacrifício ou expiação incríveis tal magia poderia remover as bênçãos e falhas da Transformação."
+        },
+        "FiendStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela Transformação em Corruptor pela primeira vez, ganha a Bênção Alma Corruptora e mais uma Bênção do estágio 1 de sua escolha. Também ganha a Falha do estágio 1."
+        },
+        "Stage1BoonFiendishSoul": {
+          "namePt": "Bênção do estágio 1: Alma Corruptora",
+          "descriptionPt": "Você torna-se um Corruptor além de qualquer outro tipo de criatura que tenha. Você tem Vantagem em testes de Carisma (Enganação).\n\nAlém disso, escolha um dos seguintes tipos de dano e ganhe Resistência a ele: Ácido, Gélido ou Fogo."
+        },
+        "Stage1BoonDevilishContractor": {
+          "namePt": "Bênção do estágio 1: Contratante Diabólico",
+          "descriptionPt": "Você adquiriu a capacidade de vincular criaturas mortais à sua vontade. Pode criar um contrato para prender a alma de um Humanoide mortal a você, alimentando-se de seu poder. O mortal recebe um presente pedido no contrato, e você ganha uma Dádiva da Perdição de sua escolha. (Consulte Dádivas da Perdição ao final desta Transformação.)\n\nPara prender a alma de um mortal, primeiro deve elaborar um contrato para o presente desejado. Um contrato exige tinta e papel mágicos no valor de 10 PO por Estágio de Transformação que você adquiriu.\n\nVocê e o mortal devem assinar o contrato de livre vontade, plenamente cientes dos custos. Uma vez assinado, entidades demoníacas concedem a você uma Dádiva da Perdição, e o mortal recebe seus desejos em até 7 dias. Você não precisa fornecer essa bênção pessoalmente.\n\nPor exemplo, ao assinar um contrato por uma Dádiva da Glória Irrestrita, você recebe os benefícios listados para essa dádiva. O mortal que assina recebe seu desejo declarado, providenciado pelos poderes duvidosos do Submundo. Você não pode se beneficiar diretamente do presente desejado pelo mortal, nem um aliado. Nenhum aliado seu pode jamais assinar um contrato com você.\n\nVocê pode escolher uma Dádiva da Perdição do estágio que alcançou ou inferior. Por exemplo, se está no estágio 2 da Transformação, só pode escolher uma Dádiva da Perdição de estágio 1 ou 2.\n\nNão há limite para o número de contratos que pode firmar, mas só pode ter uma Dádiva da Perdição ativa por vez. Quando ganharia uma segunda Dádiva da Perdição, pode substituir a ativa pela nova. Além disso, ao terminar um Descanso Longo, pode trocar sua Dádiva da Perdição ativa por qualquer outra dádiva associada a um contrato assinado."
+        },
+        "Stage1BoonInfernalSmite": {
+          "namePt": "Bênção do estágio 1: Punição Infernal",
+          "descriptionPt": "Uma vez em cada um dos seus turnos, pode escolher uma criatura que acabou de ferir com um ataque com arma, um Ataque Desarmado ou um truque. Cause 1d6 de dano extra de Ácido, Gélido ou Fogo a essa criatura, usando o mesmo tipo de dano escolhido para Alma Corruptora. Pode adicionar esse dano um número de vezes igual ao seu Bônus de Proficiência mais seu Estágio de Transformação, mas não mais de uma vez por jogada de dano. Recupera todos os usos ao terminar um Descanso Curto ou Descanso Longo.\n\nEm Estágios de Transformação mais altos, causa 1d6 de dano adicional por Estágio de Transformação, totalizando 2d6 no estágio 2, 3d6 no estágio 3 e 4d6 no estágio 4."
+        },
+        "Stage1FlawFiendBound": {
+          "namePt": "Falha do estágio 1: Vinculado ao Submundo",
+          "descriptionPt": "Seu corpo e alma estão presos ao Submundo. Você tem Desvantagem em Salvaguardas contra a Morte enquanto o plano tenta puxá-lo para dentro dele."
+        },
+        "AchievingANewStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Para avançar de um estágio para o próximo nesta Transformação, deve ocorrer um evento ou outra ocorrência notável ligada à história do personagem. Os eventos a seguir são sugestões que podem desencadear a passagem ao próximo estágio da Transformação:"
+        },
+        "FiendStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Corruptor, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonDaemonicBrand": {
+          "namePt": "Bênção do estágio 2: Marca Demoníaca",
+          "descriptionPt": "Como Ação Bônus no seu turno, pode marcar com um sinal ardente uma criatura a até 18 m de você que possa ver; a marca permanece por 1 minuto. Se o alvo passar em uma salvaguarda de Sabedoria, não é marcado. A CD da salvaguarda é 8 + seu Bônus de Proficiência + seu Estágio de Transformação.\n\nSe a criatura falhar na salvaguarda, escolhe um dos efeitos a seguir, que dura pela duração:\n\n• A criatura sofre –2 em todas as salvaguardas.\n• O primeiro ataque contra a criatura em cada turno é feito com Vantagem.\n• A criatura não pode recuperar Pontos de Vida.\n\nPode usar essa habilidade um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo."
+        },
+        "Stage2BoonEnhancedContract": {
+          "namePt": "Bênção do estágio 2: Contrato Aprimorado",
+          "descriptionPt": "Pode alternar entre sua Dádiva da Perdição ativa ao fim de um Descanso Curto ou Descanso Longo. Além disso, ao trocar de Dádivas da Perdição, ganha Pontos de Vida Temporários iguais a 5 vezes seu Estágio de Transformação."
+        },
+        "Stage2FlawFiendForm": {
+          "namePt": "Falha do estágio 2: Forma de Corruptor",
+          "descriptionPt": "Sua aparência transformou-se grotescamente. Sua pele fica vermelha e coriácea, e chifres, dentes e garras ferozes rompem a superfície da pele. Pode suprimir essa forma e apresentar a aparência do humanoide que um dia foi, mas isso é exaustivo e exige esforço. Momentos de estresse provavelmente revelarão sua verdadeira natureza. Nas situações a seguir, sua forma verdadeira pode ser revelada:\n\n• Ficar Ferido.\n• Concentração em uma magia.\n• Receber a condição Inconsciente.\n• Entrar em terreno sagrado.\n• Entrar na presença de Celestiais ou outros Corruptores.\n• Escolher revelar-se voluntariamente.\n\nNesses eventos, ou em momentos de estresse emocional ou físico extremo, o Mestre pode exigir uma salvaguarda de Constituição com CD baseada no seu Estágio de Transformação atual (estágio 2: CD 13; estágio 3: CD 16; estágio 4: CD 20). Se falhar, sua Aparência Horrível é revelada.\n\nCriaturas não malignas que testemunharem sua forma verdadeira tornam-se instantaneamente Hostis a você, salvo decisão contrária do Mestre."
+        },
+        "FiendStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Corruptor, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonDevilishSubcontractor": {
+          "namePt": "Bênção do estágio 3: Subcontratante Diabólico",
+          "descriptionPt": "Pode receber os benefícios de duas Dádivas da Perdição ao mesmo tempo. Ainda pode trocar apenas uma Dádiva da Perdição após um Descanso Curto ou Descanso Longo."
+        },
+        "Stage3BoonOverwhelmingBrand": {
+          "namePt": "Bênção do estágio 3: Marca Avassaladora",
+          "descriptionPt": "Pode aplicar um dos efeitos adicionais a seguir a uma criatura sob o efeito da sua Marca Demoníaca:\n\n• A Velocidade da criatura é reduzida à metade, e você pode mover a criatura até 3 m horizontalmente no seu turno (não exige ação).\n• A criatura tem a condição Cego. No seu turno, pode escolher remover essa condição (não exige ação)."
+        },
+        "Stage3FlawPullOfTheNetherworld": {
+          "namePt": "Falha do estágio 3: Puxão do Submundo",
+          "descriptionPt": "Seu novo plano natal tenta puxá-lo para si, reivindicando sua forma. Sempre que rolar 1 natural em um Teste D20, sofre 6d6 de dano Psíquico enquanto os habitantes do plano infernal tentam desvincular sua alma do Plano Material. Esse dano só pode ser sofrido uma vez por Descanso Curto e ignora todas as Resistências e Imunidades. Se esse dano reduzir seus Pontos de Vida a 0, você morre e sua alma é levada imediatamente ao Submundo. Só pode ser trazido de volta à vida por magias de 7º nível ou superior."
+        },
+        "FiendStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Corruptor, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonAbyssalResistance": {
+          "namePt": "Bênção do estágio 4: Resistência Abissal",
+          "descriptionPt": "Você ganha Imunidade ao tipo de dano escolhido para Alma Corruptora e Resistência aos outros dois tipos. Além disso, tem Resistência a dano de ataques com armas não mágicas ou Ataques Desarmados."
+        },
+        "Stage4BoonInfernalSummons": {
+          "namePt": "Bênção do estágio 4: Convocação Infernal",
+          "descriptionPt": "Como ação Mágica, pode abrir um portal para o Submundo e convocar até quatro Corruptores de ND 4 ou menos a até 9 m de você. Os Corruptores permanecem por 1 minuto antes de desaparecer de volta ao Submundo. (O Mestre decide quais Corruptores respondem à convocação.)\n\nOs Corruptores convocados são Aliados a você e seus companheiros. Agem imediatamente depois de você na ordem de iniciativa. Obedecem a quaisquer comandos verbais que você lhes der (não exige ação sua). Se não emitir comandos, usam a ação Esquivar no turno deles e não fazem outro movimento, Ações Bônus ou Reações, a não ser para se proteger."
+        },
+        "Stage4BoonUltimateBrand": {
+          "namePt": "Bênção do estágio 4: Marca Suprema",
+          "descriptionPt": "Quando uma criatura afetada pela sua Marca Demoníaca inicia o turno, pode usar uma Reação para ditar seu movimento e a ação que realiza. Se o fizer, a criatura repete a salvaguarda de Sabedoria inicial ao fim do turno. Em caso de sucesso, você não pode usar essa Reação novamente enquanto a marca durar."
+        },
+        "Stage4FlawTrueName": {
+          "namePt": "Falha do estágio 4: Nome Verdadeiro",
+          "descriptionPt": "Sua transformação em Corruptor está completa e você renasce. Os habitantes do Submundo atribuem a você um novo nome, que se torna seu Nome Verdadeiro. Você recebe um talismã de enxofre e latão com seu nome verdadeiro inscrito em Infernal.\n\nUma criatura com ND 10 ou superior a até 3 m de você que conheça seu Nome Verdadeiro pode usar uma ação Mágica e pronunciar seu Nome Verdadeiro. Você deve passar em uma salvaguarda de Carisma CD 20 ou sofrer os efeitos a seguir por 1 minuto. Pode tentar uma salvaguarda de Carisma ao fim de cada um dos seus turnos para encerrar os efeitos:\n\n• Você tem a condição Encantado, mesmo que seja Imune a ser Encantado.\n• Como Ação Bônus, a entidade que pronunciou seu Nome Verdadeiro pode forçá-lo a se mover até sua Velocidade e usar sua ação para atacar com uma arma, usar Ataque Desarmado ou lançar um truque contra um alvo de sua escolha.\n• Todos os ataques contra você têm Vantagem, e você tem Desvantagem em salvaguardas.\n• Você não pode recuperar Pontos de Vida nem ter Pontos de Vida Temporários. Perde imediatamente quaisquer Pontos de Vida Temporários que tenha."
+        },
+        "GiftsOfDamnation": {
+          "namePt": "Dádivas da Perdição",
+          "descriptionPt": "As Dádivas da Perdição são os benefícios que você ganha ao oferecer presentes a mortais em troca de suas almas, por meio da Bênção Contratante Diabólico."
+        },
+        "729ca189-a667-4a69-93c4-bde7b2a2f8f8": {
+          "namePt": "Dádivas do estágio 1",
+          "descriptionPt": "Você pode ganhar Dádivas do estágio 1 sempre que assinar um contrato infernal com uma vítima."
+        },
+        "GiftOfJoyousLife": {
+          "namePt": "Dádiva da Vida Jocosa",
+          "descriptionPt": "At the beginning of your turn, se você are Ferido , você pode choose to roll a Dado de Vida (no action required) and regain um número de Pontos de Vida igual a the roll. Se você roll a 1 on this die, você recupera no Hit points and take 1 point of dano de Força instead. You regain this ability when you finish a Short or Descanso Longo."
+        },
+        "GiftOfProdigiousTalent": {
+          "namePt": "Dádiva do Talento Prodigioso",
+          "descriptionPt": "Choose two Skills. Gain Especialização in the chosen skills.\n\nSe você roll a 1 or 2 on an Ability Check using one of the chosen skills, you immediately lose half your maximum number of Dados de Vida , rounded down. You do not regain Dados de Vida lost this way until you finish two Descanso Longos."
+        },
+        "GiftOfUnsurpassedFortune": {
+          "namePt": "Dádiva da Fortuna Inigualável",
+          "descriptionPt": "When an enemy você pode see within 3 m succeeds on uma jogada de ataque or a salvaguarda, você pode use your Reação to roll d20. On a 6 or higher, the triggering attack or save misses or fails, and você recupera the use of your Reação. Otherwise, you take 1d6 dano Psíquico per Estágio de Transformação, which cannot be reduced. You regain your use of this ability when you finish a Descanso Longo."
+        },
+        "2552345d-bf63-4234-8ba0-a5547ec1a8e9": {
+          "namePt": "Dádivas do estágio 2",
+          "descriptionPt": "Você pode ganhar Dádivas do estágio 2 sempre que assinar um contrato infernal com uma vítima while at Stage 2 or higher of the Corruptor Transformação."
+        },
+        "GiftOfLiberatingFreedom": {
+          "namePt": "Dádiva da Liberdade Libertadora",
+          "descriptionPt": "Como Ação Bônus while aren't wearing armadura pesada, você pode manifest a pair of leathery wings. Você ganha um Fly Speed igual a half your Speed. These wings recede se você dismiss them como Ação Bônus no seu turno, se você have the Unconscious condition, or se você become Ferido while they are manifested.\n\nVocê pode have your wing manifested por 1 hora total, including several shorter stints adding up to 1 hour. You regain your ability to use your wings for an hour after finishing a Descanso Longo."
+        },
+        "GiftOfUnfetteredGlory": {
+          "namePt": "Dádiva da Glória Irrestrita",
+          "descriptionPt": "Each time you damage a creature with a melee attack, an Ataque Desarmado , or a cantrip, você pode do an additional 2 points Force Damage per Estágio de Transformação.\n\nEach time you roll a Dado de Vida to regain Pontos de Vida during a Descanso Curto, você recupera 2 Pontos de Vida fewer per Hit Die."
+        },
+        "17c78356-6598-4d49-9ce7-873fe38586e2": {
+          "namePt": "Dádivas do estágio 3",
+          "descriptionPt": "Você pode gain these Gifts whenever you sign a victim to an infernal contract while at Stage 3 or higher of the Corruptor Transformação."
+        },
+        "GiftOfSecondChances": {
+          "namePt": "Dádiva das Segundas Chances",
+          "descriptionPt": "Quando você are reduced to 0 Pontos de Vida, você pode use your Reação to roll a Dado de Vida. Se você roll a 2 or better, set your Hit Point total to the result of the roll. If not, you suffer a Death Salvaguarda failure. You regain the use of this gift when you finish a Descanso Longo."
+        },
+        "GiftOfUnconditionalLove": {
+          "namePt": "Dádiva do Amor Incondicional",
+          "descriptionPt": "When a creature você pode see within 9 m of you fails a salvaguarda, você pode use your Reação to gain Pontos de Vida Temporários igual a 1d10 mais seu Estágio de Transformação. You regain the use of this gift when you finish a Short or Descanso Longo.\n\nSe você roll a 1 on the die, you gain no Pontos de Vida Temporários and instead have the condição Caído."
+        },
+        "3274fd5f-2506-4043-99b0-0410ef3af460": {
+          "namePt": "Dádivas do estágio 4",
+          "descriptionPt": "Você pode gain these Gifts whenever you sign a victim to an infernal contract while at Stage 4 of the Corruptor Transformação."
+        },
+        "GiftOfMartialProwess": {
+          "namePt": "Dádiva da Prowess Marcial",
+          "descriptionPt": "Uma vez por turno, when you miss with a weapon attack or Ataque Desarmado , você pode reroll the jogada de ataque. If the reroll hits, you must spend 3 Dados de Vida and add the result to the attack’s normal damage as dano de Força. If the reroll misses, you must spend 3 Dados de Vida and take dano Psíquico igual a the result. Se você have fewer than 3 Dados de Vida available, você podenot use this gift.\n\nUma vez você hit a target with an attack using a rerolled attack, você podenot use it again until you finish a Descanso Longo."
+        },
+        "GiftOfUnbridledPower": {
+          "namePt": "Dádiva do Poder Desenfreado",
+          "descriptionPt": "Upon finishing a Descanso Curto, você pode spend 2 Dados de Vida and regain um número de espaço de magia levels igual a the highest number rolled. However, you take dano Psíquico igual a twice the total that you rolled. You regain the reuse of this gift when you finish a Descanso Longo."
+        },
+        "FiendFormSaveDCTable": {
+          "namePt": "Apêndice: Corruptor Form Save CD",
+          "descriptionPt": "Stage | Constituição Save CD\n2 | 13\n3 | 16\n4 | 20"
+        },
+        "ReversingFiendTraits": {
+          "namePt": "Apêndice: Reverter traços de Corruptor",
+          "descriptionPt": "Reverter traços de Corruptor\n\nTransforming into a Corruptor usually requires deeds of great evil. You may have performed blood sacrifices or made bargains that resulted in others suffering. Even magic on the level of the magia Desejo could not atone for your actions or redeem your soul. Only once you perform a deed of incredible sacrifice or atonement could such magic remove your Transformação boons and flaws."
+        }
+      }
+    },
+    "gh-transformation-hag": {
+      "namePt": "Bruxa",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "Few creatures are born Hags. Humanoideees can become a Hag como result of a ritual or a curse. Sometimes the offspring of a cursed individual becomes a Hag after reaching the age of maturity. Hags have ways of spawning fully mature Hags, but only the most depraved individuals would consider that any sort of birth.\n\nOther Fey creatures see Hags as pitiful, revolting creatures who can never enjoy the blessing of an existence in the Realm of Faerie, so cursing a mortal to become a Hag is a particularly harsh consequence for angering a Fey. Hags themselves are fond of creating other Hags to join them and form a coven.\n\nVery few people are twisted enough to seek to transform themselves into a Hag. The power it provides is not worth the pain and anguish that comes with it. Yet that power is attractive to some, who seek out the rituals to make the change or entreat Hags to twist them como parte de uma bargain.\n\nReverter traços de Hag\n\nThe Hag Transformação is one of the few that can be reversed, especially when it is bestowed via a curse rather than sought, but only in its first two stages. Once the creature travels too far down the path of maddening power, the grip has become too strong.\n\nReversing the Transformação, even in its early stages, is an elaborate process that may take months or years, and often only with the assistance of a benevolent fey creature willing to donate some of their magic to the process.\n\nThe last step of the reversal process requires a powerful Fey creature to participate in a ritual to remove all remnants of the transformative magic. As with most Fey, this participation almost always comes at a steep cost."
+        },
+        "HagStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela Transformação em Hag pela primeira vez, ganha a Bênção Hag Form e mais uma Bênção do estágio 1 de sua escolha. Também ganha a Falha do estágio 1."
+        },
+        "Stage1BoonHagForm": {
+          "namePt": "Bênção do estágio 1: Hag Form",
+          "descriptionPt": "Your Creature Type becomes Fey in addition to any other creature type(s) you have.\n\nAlém disso, your connection with the magic of the natural world provides you with increased defenses. Quando você are not wearing armor, your Armor Class is 13 mais seu modificador de Destreza. Além disso, choose Força, Inteligência, or Carisma: you are proficient with Salvaguardas using that ability score."
+        },
+        "Stage1BoonTheGreenSisterhood": {
+          "namePt": "Bênção do estágio 1: The Green Sisterhood",
+          "descriptionPt": "Green Hags are skilled deceivers who collect corrupting magic and secret curses. They use their magic to twist pure into foul, poking at the weaknesses of their foes. Green Hags embrace magical deceptions and are known for their vile recipes. There are no worse cooks in Etharis.\n\n• Você tem Darkvision with a range of 18 m. Se você already have Darkvision, its range increases by 18 m.\n\n• You become Amphibious and can breathe both air and water.\n\n• Você pode mimic animal sounds and humanoid voices. A creature that hears the sounds can tell they are imitations with a Study action and a successful Sabedoria ( Intuição ) check with a CD igual a 8 mais seu modificador de Carisma mais seu Estágio de Transformação."
+        },
+        "Stage1BoonTheRedSisterhood": {
+          "namePt": "Bênção do estágio 1: The Red Sisterhood",
+          "descriptionPt": "Red Hags are sometimes called the “nice” hags due to their ability to pretend to be helpful, but their kindness is a mask. While they are more subtle than other Hags and may choose to do good deeds, their motives are selfish. They delight in using honeyed words and offering deals that are just too good to pass up.\n\n• Você tem Darkvision with a range of 18 m.\n\n• Você ganha proficiency in Enganação and Persuasão . Se você are already proficient, you gain Especialização instead.\n\n• Você é immutable. No effect can change your form, and an illusion can disguise you only if the illusion gives you the Invisible condition."
+        },
+        "Stage1BoonTheSeaSisterhood": {
+          "namePt": "Bênção do estágio 1: The Sea Sisterhood",
+          "descriptionPt": "Sea Hags enjoy spreading chaos. They hate order and calm, creating elaborate deceptions that lead to despair when uncovered. Their appearances are especially hideous, and their gaze can cause fear, or even kill. Você ganha os seguintes benefícios.\n\n• Você tem Darkvision with a range of 18 m.\n\n• You become Amphibious and can breathe both air and water. Você ganha um Swim Speed igual a your Speed. Se você already have a Swim Speed, it increases by 3 m.\n\n• Como ação Mágica, você pode gaze upon a creature você pode see within 9 m. If the creature fails a Sabedoria salvaguarda with a CD igual a 8 mais seu modificador de Carisma mais seu Estágio de Transformação, it takes 1d8 dano Psíquico for each Estágio de Transformação you have."
+        },
+        "Stage1FlawHideousAppearance": {
+          "namePt": "Falha do estágio 1: Hideous Appearance",
+          "descriptionPt": "Your appearance is grotesquely transformed. Your body, hair, and eyes change in ways mortals find abhorrent. Most creatures witnessing your true form become Hostil and no one is likely to trust you, unless o Mestre decides otherwise. Você tem Desvantagem em Carisma ( Persuasão ) checks.\n\nVocê podenot stand to look upon your own reflection. The first time you see your reflection after a Descanso Curto or Descanso Longo, you must succeed on a CD 18 Sabedoria salvaguarda or gain 1 nível de Exaustão.\n\nYour appearance changes based on your Stage 1 Sisterhood Boon:\n\nGreen Sisterhood. You wither or bloat as your body struggles to deal with the ravages of age. Your hair becomes white and several feet in length. Your skin becomes green and covered in warts and boils.\n\nRed Sisterhood. Your eyes have turned entirely red, e seu pupils are narrow like a cat’s. Your skin becomes blood red.\n\nSea Sisterhood. Você tem slimy scales and the pallid skin of a dead fish that sags from your emaciated body. Your hair resembles seaweed, e seu eyes are glassy."
+        },
+        "HagStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Hag, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonAdeptOfTheGreenSisterhood": {
+          "namePt": "Bênção do estágio 2: Adept of the Green Sisterhood",
+          "descriptionPt": "As your connection to your Green Sisterhood grows, your body e seu magical skills strengthen.\n\n• Você ganha um Claw attack that deals 1d6 mais seu Força or modificador de Destreza Cortante Damage. Você é proficient with this attack, and you add either your Força or modificador de Destreza to attack and jogada de danos. This attack is not an Ataque Desarmado , nor can it be used in place of an Ataque Desarmado.\n\n• Você pode hide yourself from others. Como ação Mágica, você pode cast Invisibility without expending a espaço de magia. Você pode usar este recurso um número de times igual a your Estágio de Transformação. You regain all uses after finishing a Descanso Longo."
+        },
+        "Stage2BoonAdeptOfTheRedSisterhood": {
+          "namePt": "Bênção do estágio 2: Adept of the Red Sisterhood",
+          "descriptionPt": "As your connection to your Red Sisterhood grows, your body e seu magical skills strengthen.\n\n• Você ganha um Claw attack that deals 1d6 mais seu Força or modificador de Destreza Cortante Damage. Você é proficient with this attack, and you add either your Força or modificador de Destreza to attack and jogada de danos. This attack is not an Ataque Desarmado , nor can it be used in place of an Ataque Desarmado.\n\n• Você pode sway others to your will. Como ação Mágica, você pode cast Charm Person without expending a espaço de magia. The spell save CD when cast in this way is 12 mais seu Estágio de Transformação. Você pode usar este recurso um número de times igual a your Estágio de Transformação. You regain all uses after finishing a Descanso Longo."
+        },
+        "Stage2BoonAdeptOfTheSeaSisterhood": {
+          "namePt": "Bênção do estágio 2: Adept of the Sea Sisterhood",
+          "descriptionPt": "As your connection to your Sea Sisterhood grows, your body e seu magical skills strengthen.\n\n• Você ganha um Claw attack that deals 1d6 mais seu Força or modificador de Destreza Cortante Damage. Você é proficient with this attack, and you add either your Força or modificador de Destreza to attack and jogada de danos. This attack is not an Ataque Desarmado , nor can it be used in place of an Ataque Desarmado.\n\n• Você pode appear as someone other than yourself. Como ação Mágica, você pode cast Disguise Self without expending a espaço de magia. The spell save CD when cast in this way is 12 mais seu Estágio de Transformação. Você pode usar este recurso um número de times igual a your Estágio de Transformação. You regain all uses after finishing a Descanso Longo."
+        },
+        "Stage2FlawIronSensitivity": {
+          "namePt": "Falha do estágio 2: Iron Sensitivity",
+          "descriptionPt": "Your body and soul connect back to the Realm of Faerie, and iron and steel weapons forged of the mortal realm cause you pain. After each Short or Descanso Longo, the first time you are damaged by an iron or steel weapon, you must succeed on a CD 15 Constituição salvaguarda or have the Stunned condition até o fim do seu próximo turno."
+        },
+        "AchievingANewStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "To move from one stage to the next higher one in this Transformação, an event or some other notable occurrence tied to the story of the character should take place. The following events are suggestions for ones that might trigger a move to the next stage of the Transformação:\n\n• Striking a bargain with a powerful Hag\n\n• Cursing or killing an innocent being under the new moon\n\n• Drinking a poisonous draught from a dead Hag’s cauldron\n\n• Becoming the victim of multiple curses at the same time\n\n• Consuming the flesh of the innocent\n\n• Crafting a Hag’s Eye or creating a Gasdra\n\nSmall Monstrosity, Neutral Evil\n\nAC 13 Initiative +4 (14)\n\nHP 22 (4d6 + 8)\n\nSpeed 9 m, Fly 12 m\n\nAbility | Score | Mod | Save\nSTR | 8 | -1 | -1\nDEX | 15 | +2 | +2\nCON | 15 | +2 | +2\n\nAbility | Score | Mod | Save\nINT | 6 | -2 | -2\nWIS | 10 | +0 | +0\nCHA | 7 | -2 | -2\n\nSkills Percepção +2\n\nSenses Darkvision 18 m; Passive Percepção 12\n\nLanguages Understands Sylvan but can’t speak\n\nChallenge 1 (XP 200; PB +2)\n\nTraits\n\nThree Heads. The gasdra has Vantagem on Sabedoria ( Percepção ) checks and on salvaguardas to avoid or end the Blinded , Charmed , Deafened , Amedrontado , Stunned , or Unconscious conditions. The gasdra can take one Reação for each of its heads. The extra Reaçãos can be used only for Ataque de Oportunidades .\n\nWakeful. While the gasdra sleeps, at least one of its heads is awake.\n\nAçãos\n\nMultiattack. The gasdra makes three Beak attacks.\n\nBeak. Melee Attack Roll: +4, reach 1,5 m Hit: 5 (1d6 + 2) Contundente damage."
+        },
+        "HagStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Hag, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonMasterOfTheGreenSisterhood": {
+          "namePt": "Bênção do estágio 3: Master of the Green Sisterhood",
+          "descriptionPt": "You come into your power como Hag and enhance your abilities.\n\n• Quando você realiza the ação Atacar no seu turno, you may make an additional Claw attack. Your Claw attacks deal an additional 1d6 dano de Veneno.\n\n• Você aprende a corrupt ritual to create a Hag Eye or a Gasdra companion. The ritual takes four hours and 200 PO to complete. You choose which ritual você conhece when you select this boon. Você pode only have one Hag Eye or Gasdra companion at a time, and você podenot have both.\n\n• Como ação Mágica, você pode recover an expended espaço de magia by spending Dados de Vida igual a the espaço de magia’s level. The espaço de magia can have a level igual a no more than one third your character level (round up). Depois de usar this boon, você pode’t do so again until you finish a Descanso Longo."
+        },
+        "Stage3BoonMasterOfTheRedSisterhood": {
+          "namePt": "Bênção do estágio 3: Master of the Red Sisterhood",
+          "descriptionPt": "You come into your power como Hag and enhance your abilities.\n\n• Quando você realiza the ação Atacar no seu turno, you may make an additional Claw attack. Your Claw attacks deal an additional 1d4 dano Psíquico. You regain Pontos de Vida igual a the dano Psíquico dealt.\n\n• Your banter becomes supernaturally charming. A creature under your magical influence (such as being Charmed by you) who is able to hear you por 1 minuto must must make a Carisma salvaguarda with a CD igual a 14 mais seu Estágio de Transformação. On a failed save, when your mental influence ends, the target forgets magic was used to influence it. You regain use of este recurso after you finish a Short or Descanso Longo.\n\n• Como Bonus action, você pode expend a Dado de Vida to cast the Charm Person spell."
+        },
+        "Stage3BoonMasterOfTheSeaSisterhood": {
+          "namePt": "Bênção do estágio 3: Master of the Sea Sisterhood",
+          "descriptionPt": "You come into your power como Hag and enhance your abilities.\n\n• Quando você realiza the ação Atacar no seu turno, you may make an additional Claw attack. Your Claw attacks deal an additional 1d6 Cortante damage.\n\n• Your appearance becomes so vile that it terrifies mortal creatures. Como Ação Bônus, you gaze upon a Beast or Humanoidee within 9 m that can see your true form. The creature must succeed on a Sabedoria salvaguarda with a CD igual a 14 mais seu modificador de Carisma. On a failed save, the target has the condição Amedrontado until the start of its next turn. A target that succeeds is immune to este recurso por 24 horas. You regain use of este recurso after you finish a Short or Descanso Longo.\n\n• Como ação Mágica, você pode expend and roll a Dado de Vida to touch a creature and allow the target to breathe water for um número de minutes igual a the amount rolled."
+        },
+        "Stage3FlawPuritysPain": {
+          "namePt": "Falha do estágio 3: Purity’s Pain",
+          "descriptionPt": "Unspoiled, pure things cause you physical pain to witness. A child hugging their parent, a loyal dog laying its head upon a sick man’s lap, a work of religious art devoted to an Arch Seraph, a baby’s laughter: these things make you physically ill.\n\nQuando você are in the presence of a pure act or object (GM’s discretion) you are wracked with pain. No início de each of your turns while você pode see the cause of your pain, you suffer 3d6 mais seu modificador de Carisma dano Psíquico, and cannot use a Hag Transformação boons until the start of your next turn. The first time you take dano Psíquico from this flaw after finishing a Short or Descanso Longo, you must make a CD 18 Sabedoria salvaguarda. Se você fail, you have the condição Amedrontado as long as você pode see the source of your pain."
+        },
+        "HagStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Hag, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonEvilEye": {
+          "namePt": "Bênção do estágio 4: Evil Eye",
+          "descriptionPt": "Your visage is so horrifying that você pode cause creatures to drop dead when your gaze falls upon them. Como ação Mágica, you gaze upon a Ferido Beast or Humanoidee within 9 m that can see your true form. The creature must succeed on a Sabedoria salvaguarda with a CD igual a 14 mais seu modificador de Carisma. If the target fails the save, it drops to 0 Pontos de Vida. On a successful save, the creature takes 6d8 dano Psíquico. You regain the use of este recurso when you finish a Descanso Longo."
+        },
+        "Stage4BoonGrandmothersCurse": {
+          "namePt": "Bênção do estágio 4: Grandmother’s Curse",
+          "descriptionPt": "Você aprende um maldição de Shadowsteel de sua escolha. You always have it prepared, and it doesn’t count against the number of spells você pode prepare each day. Você pode conjurar it once per day without using a espaço de magia or needing spell components."
+        },
+        "Stage4FlawArchCronesHunger": {
+          "namePt": "Falha do estágio 4: Arch-Crone’s Hunger",
+          "descriptionPt": "You develop a taste for strange, cursed, or vile foods, and normal food no longer nourishes you. Você deve consume one of these unusual foods at least once every day or you gain 1 nível de Exaustão, which cannot be removed until you feed your vile hunger. Se você are forced to eat or drink normal food, you must succeed on a CD 18 Constituição salvaguarda or vomit it up and gain 1 nível de Exaustão.\n\nExamples of vile foods include o seguinte:\n\n• The flesh of sapient creatures (Humanoideees, Fey, or Celestiais)\n\n• Magical ingredients (rare herbs, dragon’s blood, etc.)\n\n• The pain and suffering of others\n\n• Pages of a cursed tome"
+        },
+        "3aaa476f-ab1d-4fa7-b7ce-c38731c0f866": {
+          "namePt": "Apêndice: 3aaa476f-ab1d-4fa7-b7ce-c38731c0f866",
+          "descriptionPt": "Ability | Score | Mod | Save\nSTR | 8 | -1 | -1\nDEX | 15 | +2 | +2\nCON | 15 | +2 | +2"
+        },
+        "68b9ceac-a2cb-40b7-baaf-d1c4ef9d562d": {
+          "namePt": "Apêndice: 68b9ceac-a2cb-40b7-baaf-d1c4ef9d562d",
+          "descriptionPt": "Ability | Score | Mod | Save\nINT | 6 | -2 | -2\nWIS | 10 | +0 | +0\nCHA | 7 | -2 | -2"
+        },
+        "ReversingHagTraits": {
+          "namePt": "Apêndice: Reverter traços de Hag",
+          "descriptionPt": "Reverter traços de Hag\n\nThe Hag Transformação is one of the few that can be reversed, especially when it is bestowed via a curse rather than sought, but only in its first two stages. Once the creature travels too far down the path of maddening power, the grip has become too strong.\n\nReversing the Transformação, even in its early stages, is an elaborate process that may take months or years, and often only with the assistance of a benevolent fey creature willing to donate some of their magic to the process.\n\nThe last step of the reversal process requires a powerful Fey creature to participate in a ritual to remove all remnants of the transformative magic. As with most Fey, this participation almost always comes at a steep cost."
+        }
+      }
+    },
+    "gh-transformation-lich": {
+      "namePt": "Lich",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "There are many ways to become a Lich, each determining the type of Lich the mortal becomes. The Ritual of Dread is one of the main methods for arcanists of Etharis. The process of this ritual is a well-guarded secret, entrusted to only a handful of mortals at any one time. The process of the ritual involves several despicable acts including murder, the brewing of a vile concoction, and even one’s own death.\n\nFor Memori Liches, warriors of great renown who hope to break the cycle of death, the process is less involved but no less gruesome. The skull of a powerful vanquished foe serves at the focus of power, tipping off new opponents they are in for a hellish battle.\n\nFor Hierophants, the call of the divine is equally strong to the call of mortality. Those who want to spend an eternity with power over both life and death in the name of a powerful divine source.\n\nRegardless of the form of lichdom, the process of tearing one’s soul from the body is most despised, for this process involves the sacrifice of something truly dear to a mortal, and no substitute will be accepted. For some, it is the death of a cherished loved one. For others it is a family legacy. Regardless of the sacrifice, unless the dread spirits deem it worthy, lichdom will not be granted.\n\nReverter traços de Lich\n\nThe amount of raw magical energy that goes into becoming a Lich means that undoing it is impossible. The only stage beyond lichdom is annihilation, and even that can only occur if both the physical form of the lich and its soul vessel are both destroyed."
+        },
+        "LichStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela Transformação em Lich pela primeira vez, ganha a Bênção Undead Form e mais uma Bênção do estágio 1 de sua escolha. Também ganha a Falha do estágio 1."
+        },
+        "Stage1BoonUndeadForm": {
+          "namePt": "Bênção do estágio 1: Undead Form",
+          "descriptionPt": "You become an Undead in addition to any other creature type(s). Você podenot be excluded from Turn Undead.\n\nYou also stop aging. Você é imune a any effect that would age you, and você podenot die from old age. You do not require air, food, drink, or sleep."
+        },
+        "Stage1BoonLichMagica": {
+          "namePt": "Bênção do estágio 1: Lich Magica",
+          "descriptionPt": "Você pode trade the soul in your soul vessel for increased magical power.\n\nOn your turn, como Ação Bônus, você pode spend the charge in your soul vessel (see the Stage 1 Flaw below) for one of o seguinte effects.\n\n• Regain a espaço de magia igual a or lower than your current Lich Estágio de Transformação.\n\n• The next salvaguarda made before the end of your next turn against one of your spells has Desvantagem .\n\n• The next time you cast a spell before the end of your next turn, deal an extra 1d6 dano Necrótico per Lich Estágio de Transformação to a single creature damaged by that spell.\n\n• The next time you cast a spell before the end of your next turn that restores Pontos de Vida, that spell restores an additional 1d6 Pontos de Vida per Lich Estágio de Transformação."
+        },
+        "Stage1BoonMemoriLichdom": {
+          "namePt": "Bênção do estágio 1: Memori Lichdom",
+          "descriptionPt": "While your soul vessel is charged, you gain o seguinte benefits to your weapon attacks or Ataque Desarmados:\n\n• They deal sua escolha of dano de Força or their normal damage type.\n\n• They have Vantagem if taken como Reação .\n\n• After você causa damage with a weapon attack or an Ataque Desarmado , você pode spend a Ação Bônus later on that turn and spend a Dado de Vida. Roll the Dado de Vida and deal dano Necrótico igual a the result to one target damaged by the triggering attack or Ataque Desarmado."
+        },
+        "Stage1FlawSoulVessel": {
+          "namePt": "Falha do estágio 1: Soul Vessel",
+          "descriptionPt": "Você tem successfully torn your soul from your body and trapped it in a suitable object. The object must be a trinket or item no larger than 1 cubic foot in size. This item becomes your soul vessel.\n\nSoul Vessel. A soul vessel is an enchanted vessel containing a Lich’s soul. Além disso, a soul vessel is a conduit for the lich to feed on captured souls. A soul vessel has o seguinte statistics:\n\nArmor Class: 18\n\nPontos de Vida: 10 × your Character Level\n\nSpeed: 0\n\nDamage Immunities: Poison, Psychic; Contundente, Perfurante, and Cortante from non-magical sources\n\nDamage Resistências: Cold, Fire, Lightning, Necrotic, Thunder; Contundente, Perfurante, and Cortante from magical sources\n\nWhile a soul is stored in your soul vessel, the soul vessel is considered charged. The soul contained within the soul vessel must be from a creature whose ND is igual a or higher than half your Character Level. The soul vessel can only contain one soul at a time.\n\nVocê pode add a soul to the soul vessel 2 times for each of your Estágio de Transformaçãos. You regain this ability when you complete a Descanso Longo.\n\nTo store a soul within the soul vessel, the lich must use a ação Mágica within 1 minute of a creature’s death, or a Reação triggered by the creature’s death, while holding the vessel to capture the soul, and the dead creature’s body must be within 18 m of the vessel when the capture occurs. The creature cannot be returned to life until its soul is removed from your soul vessel.\n\nSe vocêr soul vessel is reduced to 0 hit points, you must create a new one. Doing so takes a Descanso Longo. Until you do, you do not gain any of the benefits of having the soul vessel. Also, until you have a soul vessel, you have Desvantagem on the first Teste D20 you make after finishing a Short or Descanso Longo.\n\nSe você are killed while you control a charged soul vessel on the same plane of existence, your soul vessel’s charge is consumed. Você é brought back to life as per the Resurrection spell within 1,5 m of your soul vessel 1 day later. Se você are killed e seu soul vessel is not charged, you are resurrected 7 days later instead."
+        },
+        "LichStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Lich, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonAcolyteOfUndeath": {
+          "namePt": "Bênção do estágio 2: Acolyte of Undeath",
+          "descriptionPt": "Quando você reduce a Humanoidee to 0 Pontos de Vida and it dies, você pode use a Reação to immediately transform it into a Zombie under your control. Você pode have three such creatures under your control at once. These Zombies act on their own initiative count, following your verbal commands to the best of their ability."
+        },
+        "Stage2BoonBindingCurse": {
+          "namePt": "Bênção do estágio 2: Binding Curse",
+          "descriptionPt": "Você pode compel a creature with a binding curse. Como Ação Bônus, choose a creature within 9 m who can see you. That creature makes a Carisma salvaguarda against a CD of 12 mais seu Estágio de Transformação. On a failed save it cannot move more than 9 m away from you por 1 minuto. Also, during that time, your weapon attacks and Ataque Desarmados against the creature deal an additional 2d6 dano Necrótico.\n\nVocê pode usar este recurso three times, regaining all uses after finishing a Descanso Curto or Descanso Longo."
+        },
+        "Stage2BoonCorruptingMagic": {
+          "namePt": "Bênção do estágio 2: Corrupting Magic",
+          "descriptionPt": "Sempre que você matar uma criatura com uma magia, pode aplicar um efeito adicional conforme o dano causado. Esta habilidade não pode ser usada ao matar um Constructo, Morto-vivo ou qualquer criatura sem alma.\n\nEscolha um dos efeitos a seguir ao usar esta habilidade:\n\nLife Force. As the soul of your enemy leaves their body, you siphon off part of their life force. You regain 1d6 Pontos de Vida per Estágio de Transformação.\n\nPoison. Choose a creature within 3 m of the killed creature. That creature takes 1d6 dano de Veneno per Estágio de Transformação.\n\nExhaustion. Choose a creature within 3 m of the killed creature. That creature gains one nível de Exaustão. A creature may only have one nível de Exaustão from este recurso at a time."
+        },
+        "Stage2LichFlawHideousAppearance": {
+          "namePt": "Falha do estágio 2: Hideous Appearance",
+          "descriptionPt": "Your appearance has grotesquely transformed. Your flesh withers and contracts around your bones, your eyes become sunken, and you reek of death. Regardless of your true form, you’re horrific to behold.\n\nVocê pode suspend this form and manifest the appearance of the humanoid you once were, but this is taxing and requires effort. This form is not permanent, and moments of stress are likely to reveal your true nature. Your true form may be revealed in o seguinte situations:\n\n• Becoming Ferido\n\n• Concentrating on a spell\n\n• Having the Unconscious condition\n\n• Entering hallowed ground\n\n• Choosing to reveal yourself\n\nIn these events, or times of other extreme emotional or physical stress, a GM can call or a Constituição salvaguarda with a CD based on your current Estágio de Transformação. Se você fail this save, your Horrific Appearance is revealed."
+        },
+        "LichStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Lich, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonEldritchConcentration": {
+          "namePt": "Bênção do estágio 3: Eldritch Concentration",
+          "descriptionPt": "Your supernatural ability with magic manifests in new ways. Quando você cast a spell that requires Concentração , se você are already concentrating on one such spell, você pode spend the charge of your soul vessel . Se você do this, you do not lose Concentração on the original spell. Instead, you gain 1 nível de Exaustão.\n\nSe você cast a third Concentração spell during this time, or lose Concentração for any other reason, you lose Concentração on both current spells you are concentrating on. Depois de usar este recurso você podenot use it again until you finish a Descanso Curto or Descanso Longo."
+        },
+        "Stage3BoonMasterOfUndeath": {
+          "namePt": "Bênção do estágio 3: Master of Undeath",
+          "descriptionPt": "Undead creatures under your control from a Lich Transformação Boon have Vantagem on jogada de ataques when they are within 1,5 m of you.\n\nAlém disso, whenever an Undead creature you control due to a Lich Transformação Boon is reduced to 0 Pontos de Vida, você pode spend the charge of your soul vessel como Reação . Se você do, that Undead creature is at 1 hit point instead and may immediately move up to its full speed and make an ação Atacar with Vantagem. This feature has no effect if the creature has been reduced to 0 Pontos de Vida by dano Radiante."
+        },
+        "Stage3BoonUnholyHealing": {
+          "namePt": "Bênção do estágio 3: Unholy Healing",
+          "descriptionPt": "Your magical connection to your soul vessel restores your vitality quickly. While your soul vessel is charged, você pode use a ação Mágica to draw healing power from it. No início de each of your turns por 1 minuto, você recupera 10 Pontos de Vida. The soul vessel does not lose its charge.\n\nVocê pode usar este recurso three times, and você recupera all uses after finishing a Descanso Longo."
+        },
+        "Stage3FlawNecromanticDystrophia": {
+          "namePt": "Falha do estágio 3: Necromantic Dystrophia",
+          "descriptionPt": "Quando vocêr soul vessel is not charged, you suffer o seguinte effects:\n\n• Você podenot use the Dash , Dodge , or Desengajar actions.\n\n• Você podenot use Reaçãos.\n\n• Você tem Desvantagem em Constituição salvaguardas.\n\n• Você podenot disguise your Aparência Horrível .\n\nUpon charging your soul vessel with an appropriate soul, you are no longer subject to these effects."
+        },
+        "AchievingANewStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "To move from one stage to the next higher one in this Transformação, an event or some other notable occurrence tied to the story of the character should take place. The following events are suggestions for ones that might trigger a move to the next stage of the Transformação:\n\n• Discover ancient and dark arcane knowledge\n\n• Consume the soul of an exceptionally powerful spellcaster\n\n• Build a monument to your power to serve como giant arcane focus\n\n• Create or lead an army of undead\n\n• Meditate in the glow of a powerful arcane item or location\n\n• Kill an Arquidaemônio or Arch Seraph and absorb their power"
+        },
+        "LichStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Lich, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonEldritchOmniscience": {
+          "namePt": "Bênção do estágio 4: Eldritch Omniscience",
+          "descriptionPt": "Você tem better mastered the magical arts. The number of spells você pode learn and can have prepared increases by 4. Além disso, whenever you finish a Descanso Curto or Descanso Longo you gain 1 additional espaço de magia of whichever level você escolhe.\n\nIf a creature dies como result of one of your spells, você pode instantly draw that soul into your soul vessel without using a ação Mágica or Reação ."
+        },
+        "Stage4BoonLordOfUndeath": {
+          "namePt": "Bênção do estágio 4: Lord of Undeath",
+          "descriptionPt": "Quando você use Acolyte of Undeath você pode choose to transform the target into a Ghoul instead of a Zombie ."
+        },
+        "Stage5BoonSoulShatteringAttack": {
+          "namePt": "Bênção do estágio 4: Soul-Shattering Attack",
+          "descriptionPt": "After you make a weapon attack or Ataque Desarmado , você pode spend the charge in your soul vessel to add the ND of the soul within it to the jogada de ataque and damage dealt with that attack. If the creature dies from that attack, você pode instantly recharge your soul vessel with the soul that you just expended.\n\nVocê pode usar este recurso um número de times igual a 4 mais seu Bônus de Proficiência. You regain all uses after finishing a Descanso Longo."
+        },
+        "Stage4FlawWeightOfTheAges": {
+          "namePt": "Falha do estágio 4: Weight of the Ages",
+          "descriptionPt": "The weight of time is degrading for your form, and only the magic of your soul vessel holds it together. Se vocêr soul vessel is reduced to 0 hit points, your soul is lost; you are killed instantly e seu body crumbles to dust."
+        },
+        "LichHideousAppearanceSaveDCTable": {
+          "namePt": "Apêndice: Aparência Horrível Save CD",
+          "descriptionPt": "Stage | Constituição Save CD\n2 | 13\n3 | 16\n4 | 20"
+        },
+        "ReversingLichTraits": {
+          "namePt": "Apêndice: Reverter traços de Lich",
+          "descriptionPt": "Reverter traços de Lich\n\nThe amount of raw magical energy that goes into becoming a Lich means that undoing it is impossible. The only stage beyond lichdom is annihilation, and even that can only occur if both the physical form of the lich and its soul vessel are both destroyed."
+        },
+        "MakingLichMost": {
+          "namePt": "Apêndice: The Making of a Lich",
+          "descriptionPt": "The Making of a Lich\n\nIn most fantasy stories, lichdom isn’t just something that happens to an innocent person. Becoming a Lich takes years of research, countless sacrifices for yourself and others, and the incredibly low moral and ethical standards necessary to follow through. The years or even decades of meticulous planning and study are infused into the mythology of what lichdom means.\n\nFor the Lich Transformação, that mythology may need to be rewritten slightly. The power of Liches comes much more quickly, or perhaps even accidentally, or through a curse. Liches may not be the all-powerful geniuses they are thought to be. They might be tricked or forced to undergo a transition to lichdom. They may even think they are free agents, but the forces that turn them into Liches are using them for other purposes."
+        }
+      }
+    },
+    "gh-transformation-lycanthrope": {
+      "namePt": "Licantropo",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "In Etharis, there are two well-known methods of contracting the lycanthropic curse. The first is being bitten by a lycanthrope and not curing the curse before it takes hold.\n\nThe second is to complete a Druidic ritual known as the Lunar Sacrament. This violent and bloody rite, involving the sacrifice of an innocent person, underscores the ruthless and uncompromising nature of someone willing to do evil in exchange for power.\n\nOther means of gaining lycanthropy are possible. The curse of a powerful being, a side effect of a powerful artifact, or eating the raw flesh of a lycanthropic creature: all of these are potential triggers for the Lycanthrope Transformação.\n\nUma vez vocêr character has become a Lycanthrope, consider how they feel about the curse. Do they wish to cure it before it progresses too far? Do they wish to understand it and make peace with the beast that resides within?\n\nCuring Lycanthropy\n\nOnce the character reaches Stage 1 of the Lycanthrope Transformação, no typical magic like Remove Curse can cure the character’s lycanthropy. Magic on the level of the magia Desejo is needed to completely remove the Transformação and its Boons and Flaws."
+        },
+        "LycanthropeStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você contrai lycanthropy, você escolhe uma Bênção do estágio 1 Boon e ganha a Falha do estágio 1 Flaw."
+        },
+        "Stage1BoonHybridWolfForm": {
+          "namePt": "Bênção do estágio 1: Hybrid Wolf Form",
+          "descriptionPt": "You become a Monstrosity in addition to any other creature type(s).\n\nComo ação Mágica, you may voluntarily transform into a hybrid half-wolf creature. While in your hybrid wolf form, o seguinte rules apply:\n\n• Your Força score becomes 18 unless it is higher.\n\n• Your Speed increases by 3 m, and você pode use the Dash action como Ação Bônus.\n\n• Você pode’t cast spells or concentrate on spells. Your ability to speak is reduced to short, basic, guttural responses.\n\n• While transformed, você pode use weapons and equipment as normal, unless specified elsewhere.\n\n• Você ganha um Claw or Bite attack that you may use in place of any weapon attack. These attacks deal 1d8 mais seu Força or modificador de Destreza Cortante damage. Você é proficient with this attack, and you add either your Força or modificador de Destreza to attack and jogada de danos. This attack is not an Ataque Desarmado , nor can it be used in place of an Ataque Desarmado.\n\n• After taking an ação Atacar, you may take a Ação Bônus later in that turn to attack once with either your Claw or Bite.\n\nYour hybrid wolf form lasts 1 hour per Estágio de Transformação. Se você entered your hybrid form voluntarily, você pode revert to your normal form by using a ação Mágica no seu turno. (Flaws listed below may override this rule.)"
+        },
+        "Stage1BoonHybridBearForm": {
+          "namePt": "Bênção do estágio 1: Hybrid Bear Form",
+          "descriptionPt": "You become a Monstrosity in addition to any other creature type(s).\n\nComo ação Mágica, you may voluntarily transform into a hybrid half-bear creature. While in your hybrid bear form, o seguinte rules apply:\n\n• Your Força score becomes 20 unless it was higher.\n\n• Você ganha um Climb Speed igual a your Speed.\n\n• Você pode’t cast spells or concentrate on spells. Your ability to speak is reduced to short, basic, guttural responses.\n\n• While transformed, você pode use weapons and equipment as normal, unless specified elsewhere.\n\n• Você ganha um Claw attack that you may use in place of any weapon attack. This attack deals 1d8 mais seu Força or modificador de Destreza Cortante damage. Você é proficient with this attack, and you add either your Força or modificador de Destreza to attack and jogada de danos. This attack is not an Ataque Desarmado , nor can it be used in place of an Ataque Desarmado.\n\n• Immediately after hitting a target with a Claw attack, você pode take a Ação Bônus to grab the creature with that hand, as long as it is no more than one size category larger than you. The grabbed target has the condição Agarrado. The escape CD is 8 mais seu modificador de Força mais seu Bônus de Proficiência.\n\nYour hybrid bear form lasts 1 hour per Estágio de Transformação. Se você entered your hybrid form voluntarily, você pode revert to your normal form by using a ação Mágica no seu turno. (Flaws listed below may override this rule.)"
+        },
+        "Stage1BoonHybridRatForm": {
+          "namePt": "Bênção do estágio 1: Hybrid Rat Form",
+          "descriptionPt": "You become a Monstrosity in addition to any other creature type(s).\n\nComo ação Mágica, you may voluntarily transform into a hybrid half-rat creature. While in your hybrid rat form, o seguinte rules apply:\n\n• Your Destreza score becomes 18 unless it was higher.\n\n• Você pode Hide or Desengajar como Ação Bônus.\n\n• Você ganha proficiência com Furtividade , and você pode double seu Bônus de Proficiência when making a Destreza (Furtividade) check.\n\n• Você pode’t cast spells or concentrate on spells. Your ability to speak is reduced to short, basic, guttural responses.\n\n• While transformed, você pode use weapons and equipment as normal, unless specified elsewhere.\n\n• Você ganha um Claw or Bite attack that you may use in place of any weapon attack. This attack deals 1d6 mais seu Força or modificador de Destreza Cortante damage. Você é proficient with this attack, and you add either your Força or modificador de Destreza to attack and jogada de danos. This attack is not an Ataque Desarmado , nor can it be used in place of an Ataque Desarmado.\n\n• After taking an ação Atacar, you may take a Ação Bônus later in that turn to attack once with either your Claw or Bite.\n\n• Se você target a creature that is within 1,5 m of one of its enemies, you have Vantagem on Claw or Bite attacks made against the target.\n\nYour hybrid rat form lasts 1 hour per Estágio de Transformação. Se você entered your hybrid form voluntarily, você pode revert to your normal form by using a ação Mágica no seu turno. (Flaws listed below may override this rule.)"
+        },
+        "Stage1FlawLustForTheHunt": {
+          "namePt": "Falha do estágio 1: Lust for the Hunt",
+          "descriptionPt": "The savage nature of your curse sometimes causes you to lose control. These ferocious tendencies are a constant struggle between you and the beast within.\n\nThe first time you become Ferido after finishing a Descanso Curto or Descanso Longo, you must succeed on a CD 10 Sabedoria salvaguarda. Se você are in the light of a full moon, you automatically fail this salvaguarda.\n\nSe você fail this salvaguarda, you are subjected to o seguinte rules until você pode end the hybrid form:\n\n• You immediately enter your hybrid form. You go completely feral, and você podenot use any of your equipment or class features.\n\n• On your turn while in hybrid form, you must move toward the closest creature você pode see, smell, or hear, prioritizing Ferido creatures. Se você end your movement and no creature is within 1,5 m of you, you must use the Dash action to move toward the closest one.\n\n• If there is a creature within 1,5 m of you and you have not used your action, you must make an ação Atacar using your Claw attack.\n\n• Quando você damage a creature no seu turno and it is not reduced to 0 Pontos de Vida, you must use further attacks that turn against that creature.\n\nSe você are at full Pontos de Vida at the start of your turn, você pode make a CD 10 Sabedoria salvaguarda. On a success, you return to your normal form. You also return to your normal form if Remove Curse is cast on you, or after 1 hour passes."
+        },
+        "LycanthropeStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 of lycanthropy, você escolhe uma Bênção do estágio 2 Boon e ganha a Falha do estágio 2 Flaw."
+        },
+        "Stage2BoonHuntersFocus": {
+          "namePt": "Bênção do estágio 2: Hunter’s Focus",
+          "descriptionPt": "While in hybrid form, você pode use a Ação Bônus to mark one creature within 18 m as your prey. A creature remains marked this way por 1 hora, or until it dies. You may only have 1 creature marked at a time.\n\nWhile a creature is marked as your prey, you gain o seguinte benefits:\n\n• Sempre que você hit the marked creature with a melee attack, você causa an additional 1d6 damage of that attack's type.\n\n• Você tem Vantagem em any Sabedoria ( Percepção or Sobrevivência ) check you make to find it."
+        },
+        "Stage2BoonIronPelt": {
+          "namePt": "Bênção do estágio 2: Iron Pelt",
+          "descriptionPt": "While in hybrid form, you have Resistência to Contundente, Perfurante, and Cortante damage. Magical and silvered weapons ignore this resistance."
+        },
+        "Stage2BoonKindredForm": {
+          "namePt": "Bênção do estágio 2: Kindred Form",
+          "descriptionPt": "Você ganha a capacidade de transform into the animal form representative of your Lycanthropy type, known as your Kindred Form. Use the stat block of the creature your lycanthropy corresponds with and follow the rules of the Polymorph spell:\n\n• Werebear: Black Bear\n\n• Wererat: Giant Rat\n\n• Werewolf: Wolf\n\nVocê é indistinguishable from other creatures of that type, and você pode communicate with those creatures. Você podenot speak, but você pode understand languages você conhece. All equipment you wear and carry falls off you when transforming."
+        },
+        "Stage2FlawSilverSensitivity": {
+          "namePt": "Falha do estágio 2: Silver Sensitivity",
+          "descriptionPt": "Você tem developed a debilitating sensitivity to silver. In all forms, you have Vulnerability to Contundente, Perfurante, or Cortante damage from silvered weapons. Além disso, você podenot have Resistência to damage inflicted by silvered weapons."
+        },
+        "LycanthropeStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 of lycanthropy, você escolhe uma Bênção do estágio 3 Boon e ganha a Falha do estágio 3 Flaw."
+        },
+        "Stage3BoonBestialVigor": {
+          "namePt": "Bênção do estágio 3: Bestial Vigor",
+          "descriptionPt": "Your Hit Point Maximum increases by an amount igual a your character level, and it increases by 1 every time you gain a character level.\n\nAlém disso, when in your hybrid form, you gain 5 Pontos de Vida Temporários at the start of each of your turns."
+        },
+        "Stage3BoonShapeshiftersSavagery": {
+          "namePt": "Bênção do estágio 3: Shapeshifter’s Savagery",
+          "descriptionPt": "Você tem embraced the animalistic side of your transformation. While in your hybrid form, you gain o seguinte benefits:\n\n• Your Claw and Bite attacks deal an additional 1d8 Cortante damage.\n\n• Você tem Imunidade to the Charmed and condição Amedrontados."
+        },
+        "Stage3FlawFrayedThoughts": {
+          "namePt": "Falha do estágio 3: Frayed Thoughts",
+          "descriptionPt": "You suffer the effects of sharing a mind with two personalities. Memories of less practical significance are lost to new ones of midnight hunts. Você tem Desvantagem em Inteligência ability checks and salvaguardas."
+        },
+        "LycanthropeStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 of lycanthropy, you select a Stage 4 Boon e ganha a Falha do estágio 4 Flaw."
+        },
+        "Stage4BoonHybridFormAffinity": {
+          "namePt": "Bênção do estágio 4: Hybrid Form Affinity",
+          "descriptionPt": "Você tem achieved a state of equilibrium that most Lycanthropes never find. Você ganha os seguintes benefícios while you are voluntarily in your hybrid form:\n\n• Você pode speak normally.\n\n• Você pode conjurar spells without needing to provide their Verbal or Somatic components. Além disso, você pode cast spells without needing to provide material components, provided they do not have a PO value listed.\n\n• Allies within 6 m of you have Vantagem on Sabedoria ability checks and salvaguardas."
+        },
+        "Stage4BoonSavageInstincts": {
+          "namePt": "Bênção do estágio 4: Savage Instincts",
+          "descriptionPt": "Você tem developed an unrelenting thirst for bloodshed and carnage. While in your hybrid form, se você hit a Ferido creature with a Claw or Bite attack, the attack deals an additional 1d8 Cortante damage."
+        },
+        "Stage4FlawUltimatePredator": {
+          "namePt": "Falha do estágio 4: Ultimate Predator",
+          "descriptionPt": "You realize the true cost of your transformation. The beast within has gained more control of your body than you have. While você pode control it at times, você conhece it cannot be contained forever—and when it breaks free, it delights in any slaughter it can find.\n\nVocê ganha o seguinte features:\n\n• Se você can see, hear or smell a Ferido creature, you have Desvantagem on Sabedoria salvaguardas.\n\n• No início do seu turno, se você can see, hear or smell a creature with the Unconscious condition, you must make a CD 15 Sabedoria salvaguarda. On a failure, you transform into your hybrid form, or, if already in hybrid form you go feral as described under Lust for Hunt, above. On a success, you are immune to this effect until you finish a Descanso Longo.\n\n• Sempre que você kill a creature while in your hybrid form, você podenot transform back into your normal form until dawn the next day."
+        },
+        "CuringLycanthropyOnce": {
+          "namePt": "Apêndice: Curing Lycanthropy",
+          "descriptionPt": "Curing Lycanthropy\n\nOnce the character reaches Stage 1 of the Lycanthrope Transformação, no typical magic like Remove Curse can cure the character’s lycanthropy. Magic on the level of the magia Desejo is needed to completely remove the Transformação and its Boons and Flaws."
+        }
+      }
+    },
+    "gh-transformation-ooze": {
+      "namePt": "Gosma",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "It may seem like Oozes are monsters that only appear in the deepest, dankest recesses of dungeons and cave complexes that never see the light. While they certainly do haunt those places, Oozes in Etharis are never far away. Urban areas with poor sanitation are breeding ground for Oozes, as are pastoral locations with proximity to the Fey Realms.\n\nAnd while some Ooze creatures may only devour and destroy, there are just as many — especially those who have been created or experimented on by the curious and the morbid — who seek to spread their oozy nature to others.\n\nIt is rumored by sage and peasant alike that the Filth Grazer, the force allegedly behind the creation and spread of the Weeping Pox, devours organic life by reducing it first into a putrescent sludge. Mortals are but food for aetheric horrors, and the Filth Grazer prefers theirs gurgling, gooey, and foul.\n\nThe truly mad might seek to gain the benefits of becoming an Ooze, thinking that being formless would provide power. Regardless of how it happens, people who become an Ooze find themselves in a terrible race: which will they lose first, their body or their mind?\n\nReverter traços de Ooze\n\nOoze features are terrible and difficult to undo once they have taken hold. Excruciating experimental trials might be able to alleviate some of the symptoms for a while, but a complete cure would take decades of knowledge and wealth that few in Etharis possess. Even then, it would still require a great deal of luck."
+        },
+        "OozeStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela Transformação em Ooze pela primeira vez, ganha a Bênção Ooze Form e mais uma Bênção do estágio 1 de sua escolha. Também ganha a Falha do estágio 1."
+        },
+        "Stage1BoonOozeForm": {
+          "namePt": "Bênção do estágio 1: Ooze Form",
+          "descriptionPt": "You become an Ooze in addition to any other creature type(s) you are. Você ganha Blindsight with a range of 9 m. Se você already have Blindsight, your range increases by 9 m.\n\nVocê pode will your body to melt and flow, becoming more fluid than solid. Como Ação Bônus, you manifest your Ooze Form. You become amorphous, able to move through a space as narrow as 1 inch without expending extra movement, and you are immune to the Agarrado and Restrained conditions. You remain in Ooze Form por 1 minuto or until you use your Ação Bônus to return to normal.\n\nVocê pode manifest your Ooze Form um número de times igual a seu Bônus de Proficiência mais seu Transformação stage. You regain all uses of este recurso after finishing a Descanso Longo."
+        },
+        "Stage1BoonMutableCorpus": {
+          "namePt": "Bênção do estágio 1: Mutable Corpus",
+          "descriptionPt": "Você tem abundant control over your Ooze Form. Each time you manifest your Ooze Form, você pode choose to augment it with one of as seguintes opções:\n\n• Breathless. You do not need to breathe.\n\n• Disguise. You remold your features and body to look different. Você pode change your apparent species, seem 1 foot shorter or taller, and appear heavier or lighter. Você deve adopt a form that has the same basic arrangement of limbs as you have. To discern that you are disguised, a creature must take the Study action to inspect your appearance and succeed on an Inteligência ( Investigação ) check with a CD igual a 10 mais seu modificador de Constituição mais seu Estágio de Transformação.\n\n• Transparent. You body becomes transparent. Você tem Vantagem em Destreza ( Furtividade ) checks."
+        },
+        "Stage1BoonSlimyMien": {
+          "namePt": "Bênção do estágio 1: Slimy Mien",
+          "descriptionPt": "While manifesting your Ooze Form, you gain o seguinte additional benefits:\n\n• Você é imune a the Charmed condition.\n\n• The range of your Blindsight increases by 9 m.\n\n• Você pode communicate with Oozes within 9 m as se você shared a common language. While Oozes are not automatically Aliado to you, they do not see you as food. Você pode ask them simple questions, and they may choose to respond if they are not Hostil ."
+        },
+        "Stage1FlawSluggish": {
+          "namePt": "Falha do estágio 1: Sluggish",
+          "descriptionPt": "Your body frequently shifts and melts without control, making you sluggish. Your speed decreases by 1,5 m for every Estágio de Transformação you achieve.\n\nAlém disso, your skin glistens with oozy droplets leaving a trail anywhere you go. Ability checks made to follow your tracks are made with Vantagem ."
+        },
+        "OozeStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Ooze, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonElasticLimbs": {
+          "namePt": "Bênção do estágio 2: Elastic Limbs",
+          "descriptionPt": "Your limbs have become elastic and tacky, allowing you to reach distant enemies and climb walls.\n\nYour reach increases by 1,5 m and you gain a Climb Speed igual a your Speed. Você pode move up, down, and across vertical surfaces and along ceilings, while leaving your hands free. Creatures you are grappling have Desvantagem on Força ( Atletismo ) and Destreza ( Acrobatics ) checks to escape."
+        },
+        "Stage2BoonViscousDurability": {
+          "namePt": "Bênção do estágio 2: Viscous Durability",
+          "descriptionPt": "Your mind and body become even more Ooze-like. Você tem Imunidade to the condição Amedrontado and dano Ácido.\n\nQuando você gain this Boon, choose Cold, Fire, or Lightning. Gain resistance to the chosen damage type."
+        },
+        "Stage2FlawMeltedAppearance": {
+          "namePt": "Falha do estágio 2: Melted Appearance",
+          "descriptionPt": "Your body is now a hideous lump of dripping flesh excreting foul smelling slime. While your form remains roughly humanoid, the horror of what you are is clear to anyone that looks upon your molten face. Você tem Desvantagem when you use the Influence action to make Carisma-based ability checks made against creatures that are not Aberrations or Oozes.\n\nAlém disso, your Transformação to an Ooze has liquefied many of your organs and dimmed your senses. Your eyes melt and run down your face and there is nothing but flesh where your ears once were. You permanently have the Blinded condition beyond the range of your Blindsight ."
+        },
+        "OozeStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Ooze, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonCorrosiveMembrane": {
+          "namePt": "Bênção do estágio 3: Corrosive Membrane",
+          "descriptionPt": "Quando você manifest your Ooze Form , it lasts for 10 minutes.\n\nWhile manifesting your Ooze Form, you are covered with a sheen of acidic slime. When a creature hits you with a melee attack, it takes dano Ácido igual a 1d6 mais seu Estágio de Transformação. Nonmagical ammunition is destroyed immediately after hitting you and dealing damage. Any nonmagical weapon takes a cumulative −1 penalty to jogada de ataques immediately after dealing damage or coming into contact with you. The weapon is destroyed if the penalty reaches −5. The penalty can be removed by casting the Mending spell on the weapon.\n\nAlém disso, você pode eat through 0,6 m of nonmagical wood or metal in 1 minute simply by touching it."
+        },
+        "Stage3BoonEngulf": {
+          "namePt": "Bênção do estágio 3: Engulf",
+          "descriptionPt": "Quando você manifest your Ooze Form, it lasts for 10 minutes.\n\nWhile manifesting your Ooze Form, você pode envelop your foes in your gooey body. Como ação Mágica, você pode try to engulf a creature of your size category or smaller that is within 1,5 m of you. The target makes a Força salvaguarda, with a CD igual a 10 mais seu modificador de Força mais seu Estágio de Transformação. On a failure, the creature is engulfed.\n\nWhile engulfed, a target has Total Cover against attacks and other effects outside of you, and when you move, the engulfed target moves with you. While engulfed, a creature takes 4d6 dano Ácido at the start of each of its turns, is suffocating, has the Restrained condition, and repeats the save at the end of each of its turns, ending the effect on a success. An engulfed creature that is reduced to 0 Pontos de Vida is fully digested, leaving no body or nonmagical equipment behind."
+        },
+        "Stage3FlawPhysicalDeterioration": {
+          "namePt": "Falha do estágio 3: Physical Deterioration",
+          "descriptionPt": "Your skin sloughs away in thick, syrupy sheets e seu bones become like melted wax. The sun itself burns you, and holy light becomes lethal. Now your reactions slow as much as your pace.\n\nVocê é Vulnerable to dano Radiante, and you have Desvantagem on Destreza ability checks and salvaguardas."
+        },
+        "OozeStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Ooze, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonLegionOfSlime": {
+          "namePt": "Bênção do estágio 4: Legion of Slime",
+          "descriptionPt": "Quando você manifest your Ooze Form , it lasts until you finish a Short or Descanso Longo.\n\nWhile you are manifesting your Ooze Form and you are hit by an attack that causes you to become Ferido , você pode use a Reação to split into two identical Oozes. Each Ooze uses your game statistics, except that they are one size category smaller than your normal size, e seu remaining Pontos de Vida and Hit Point Maximum are divided evenly between the two Oozes (round down). Your equipment is not duplicated; all of it remains on one of the Oozes.\n\nEach Ooze acts on your Initiative. They can each move independently, but they can only collectively take one action and Ação Bônus no seu turno and one Reação per round.\n\nAfter you use este recurso, você podenot use it again until after you finish a Descanso Longo."
+        },
+        "Stage4BoonMimicObject": {
+          "namePt": "Bênção do estágio 4: Mimic Object",
+          "descriptionPt": "Quando você manifest your Ooze Form, it lasts until you finish a Short or Descanso Longo.\n\nWhile manifesting your Ooze Form, você pode use a ação Mágica to transform into an object of your size or up to two sizes smaller. Any equipment worn or carried is dropped in your space. While mimicking an object, you retain your statistics.\n\nWhile mimicking an object, you are indistinguishable from the object and você pode take a Reação when you are touched to adhere to the creature that touches you. The creature has the condição Agarrado. The CD to escape is igual a CD igual a 8 mais seu modificador de Constituição mais seu Estágio de Transformação. Ability checks made to escape this grapple have Desvantagem ."
+        },
+        "Stage4FlawSlipperyEgo": {
+          "namePt": "Falha do estágio 4: Slippery Ego",
+          "descriptionPt": "As your brain becomes just one more part of the gooey mass that is you, e seu sense of self becomes ever more tentative, the slightest distraction can cause you to forget who you were.\n\nThe first time you become Ferido after a Descanso Longo, or whenever you roll a 1 on a salvaguarda, the pain or surprise causes you lose your grip on your mind. Você pode’t cast spells, activate magic items, understand language, or communicate in any intelligible way. Você é overwhelmed with hunger and take the ação Atacar no seu próximo turno to make melee attacks against a random creature within reach. If there are no creatures within reach, you move until you are adjacent to the nearest creature, using the Dash action if necessary.\n\nYou may attempt a CD 18 Sabedoria salvaguarda at the end of each of your turns to regain your sense of self. This effect ends automatically when you finish a Descanso Curto or Descanso Longo."
+        },
+        "ReversingOozeTraits": {
+          "namePt": "Apêndice: Reverter traços de Ooze",
+          "descriptionPt": "Reverter traços de Ooze\n\nOoze features are terrible and difficult to undo once they have taken hold. Excruciating experimental trials might be able to alleviate some of the symptoms for a while, but a complete cure would take decades of knowledge and wealth that few in Etharis possess. Even then, it would still require a great deal of luck."
+        }
+      }
+    },
+    "gh-transformation-primordial": {
+      "namePt": "Primordial",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "There are several ways for a mortal to consume a primordial spark. They might be born with one due to some sorcery or gifted one by accident in the dreams of a slumbering Primordial. A mortal may consume the power of an Elemental through arcane rituals. Or a body could become infused with primal energy after surviving a calamity caused by an Elemental creature or rift to an Elemental Plane.\n\nOnce acquired, one must spend a great deal of time contemplating and understanding the spark to unlock its full potential. The process of attaining elemental mastery is dangerous. The slightest slip in control can cause devastation on a massive scale. Such facts are why isolated individuals like Druids, Monks, or Rangers are most likely to see the Transformação through to its end.\n\nReverter traços de Primordial\n\nOnce a primordial spark has taken hold, your mortal body will continue to deteriorate from the roiling elements it now tries to contain. You will inevitably become one with the elements, your soul pulled into the Elemental Plane. Only magic on the level of the magia Desejo can then revive you, with or without your Transformação and its Boons and Flaws."
+        },
+        "PrimordialStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela Transformação em Primordial pela primeira vez, ganha as duas Bênçãos do estágio 1 e a Falha do estágio 1."
+        },
+        "Stage1BoonPrimordialForm": {
+          "namePt": "Bênção do estágio 1: Primordial Form",
+          "descriptionPt": "You become an Elemental in addition to any other creature type(s).\n\nYour Constituição score increases by 1, but cannot increase above 20 in this way."
+        },
+        "Stage1BoonElementalAffinity": {
+          "namePt": "Bênção do estágio 1: Elemental Affinity",
+          "descriptionPt": "Though you have sway over all the elements, your Primordial change was sparked by one particular element: your Elemental Affinity. This element infuses your form and dictates your powers. Você deve choose one element below and gain all the benefits of that element:\n\nAir. Você tem Resistência to dano de Relâmpago. Além disso, você pode channel the air currents around you to guide a ranged attack. Once on each of your turns, when you make an attack with a arma à distância or ranged spell, você pode make that attack with Vantagem. Se você are in a location without air—such as underwater or in a vacuum—este recurso has no effect.\n\nEarth. Você tem Resistência to Contundente damage. Além disso, whenever you gain Pontos de Vida Temporários , you gain additional Pontos de Vida Temporários igual a seu Bônus de Proficiência.\n\nFire. Você tem Resistência to dano de Fogo. Além disso, whenever você causa dano de Fogo, você pode add seu modificador de Constituição to the damage dealt.\n\nWater. Você tem Resistência to dano Gélido. Além disso, whenever a creature within 9 m regains Pontos de Vida, você pode use a Reação to imbue them with healing elemental energy. The creature regains an additional 1d6 Pontos de Vida."
+        },
+        "Stage1FlawPrimordialPlanarBinding2": {
+          "namePt": "Falha do estágio 1: Planar Binding",
+          "descriptionPt": "Your body and soul are connected to the Elemental Plane. Você tem Desvantagem em Death Salvaguardas as the plane attempts to pull you into it."
+        },
+        "PrimordialStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Primordial, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonDualNature": {
+          "namePt": "Bênção do estágio 2: Dual Nature",
+          "descriptionPt": "You add a second element to your Elemental Affinity Boon . Quando você do so, you gain the associated benefits of your new element."
+        },
+        "Stage2BoonElementalSurge": {
+          "namePt": "Bênção do estágio 2: Elemental Surge",
+          "descriptionPt": "Você pode channel pure elemental energy into a concentrated bolt of an element de sua escolha. Como ação Mágica, você pode use any of as seguintes opções:\n\nLightning Strike. Você pode make a ranged attack targeting a creature within 18 m. Você é proficient with this attack, which uses seu modificador de Constituição. On a hit, this attack deals 3d8 mais seu modificador de Constituição dano de Relâmpago. Você pode then use a Ação Bônus to target another creature within 9 m of the first target with the same attack.\n\nIncrease the damage of these attacks by 1d8 for each Estágio de Transformação above 2.\n\nEarth Shard. Você pode force a creature within 9 m to make a Constituição salvaguarda. On a failed save, the creature takes Contundente damage igual a 3d6 mais seu modificador de Constituição, or half as much on a successful save. Increase the damage by 1d6 for each Estágio de Transformação above 2.\n\nYou also gain Pontos de Vida Temporários igual a half the damage dealt.\n\nFlame Wave. Each creature in a 4,5 m Cone originating from you makes a Destreza salvaguarda against a CD igual a 8 mais seu modificador de Constituição mais seu Estágio de Transformação. On a failed save, creatures in the area take dano de Fogo igual a 2d8 mais seu modificador de Constituição. Increase the damage by 1d8 for each Estágio de Transformação above 2.\n\nAquatic Rejuvenation. Choose a creature você pode see within 18 m of you. The creature regains um número de Pontos de Vida igual a 2d8 mais seu modificador de Constituição. Increase the number of Pontos de Vida regained by 1d8 for each Estágio de Transformação above 2.\n\nVocê pode usar Elemental Surge um número de times igual a seu modificador de Constituição, regaining all expended uses upon finishing a Descanso Longo."
+        },
+        "Stage2FlawRoilingElements": {
+          "namePt": "Falha do estágio 2: Roiling Elements",
+          "descriptionPt": "Your physical vessel strains to contain the roiling elements trapped inside of you. In a moment of distraction your body may erupt momentarily to reveal your Primordial nature. Tongues of flame may lash out or arcs of lightning might burst from beneath your skin.\n\nVocê pode contain the elements and maintain the appearance of the humanoid you once were, but this is taxing and requires effort. Moments of stress are likely to unleash your true nature, which might occur under o seguinte circumstances:\n\n• Becoming Ferido\n\n• Having the Unconscious condition\n\n• Encountering Elemental creatures or powers\n\n• Having the Charmed or condição Amedrontados\n\n• Using your Primordial Transformação powers\n\nIn these events, or times of other extreme emotional or physical stress, o Mestre can call for a Constituição Salvaguarda with a CD based on your current Estágio de Transformação:"
+        },
+        "PrimordialStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Primordial, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonAuraOfAwakening": {
+          "namePt": "Bênção do estágio 3: Aura of Awakening",
+          "descriptionPt": "You emit an aura of power that awakens the elemental forces in your companions. Quando você first gain este recurso, choose one of the options below. You may change the aura you emit upon finishing a Descanso Longo.\n\nLight as Air. Sempre que você or an ally você pode see within 9 m of you makes a Destreza salvaguarda, the creature gains a bonus igual a seu modificador de Constituição.\n\nForged in Fire. When an ally within 3 m of você causas damage with a melee attack, você pode use a Reação to make the attack deal dano de Fogo instead of the normal damage type, and add 2d6 dano de Fogo to the attack’s damage.\n\nHeart of Stone. Você pode escolher to have Desvantagem on any Initiative check. Se você do, como Reação, you and each creature de sua escolha within 9 m of you gain Pontos de Vida Temporários igual a your 1d10 mais seu modificador de Constituição. While a creature has Pontos de Vida Temporários gained in this manner, they cannot have the condição Caído unless it is part of the Unconscious condition.\n\nFluid Movement. When an ally within 9 m moves or attempts to escape a Grapple, você pode use a Reação to give them o seguinte benefits:\n\n• Their Speed increases by 3 m até o fim de their turn.\n\n• Their movement doesn’t provoke Ataque de Oportunidades .\n\n• They have Vantagem on checks to escape the Grapple."
+        },
+        "Stage3BoonPrimevalBody": {
+          "namePt": "Bênção do estágio 3: Primeval Body",
+          "descriptionPt": "Your transformation to an Elemental creature has changed your body entirely. You no longer need to sleep, breathe, or eat. Also, you no longer age normally and suffer no effects of aging.\n\nAlém disso, choose one damage type from Contundente, Cold, Fire, and dano de Relâmpago. Você ganha Resistência to that damage type. Se você already have Resistência, you gain Imunidade to it."
+        },
+        "Stage3BoonMasterOfMany": {
+          "namePt": "Bênção do estágio 3: Master of Many",
+          "descriptionPt": "You add a third elemental to your Elemental Affinity Boon . Quando você do so, you gain the associated benefits of your new element."
+        },
+        "Stage3FlawElementalImbalance": {
+          "namePt": "Falha do estágio 3: Elemental Imbalance",
+          "descriptionPt": "Your body reacts in strange ways to the application of severe elemental damage. Quando você realiza Acid, Cold, Fire, Lightning, or dano Trovejante, roll 1d6. On a 1, your Primordial form reacts in a volatile manner, and o seguinte effects occur:\n\n• Você ganha Vulnerability to the instance of damage you just took, even se você had Resistência or Imunidade to that damage.\n\n• Creatures within 1,5 m of you take the original amount of damage that you took. A CD 15 Constituição salvaguarda halves esse dano."
+        },
+        "PrimordialStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Primordial, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonPrimordialAura": {
+          "namePt": "Bênção do estágio 4: Primordial Aura",
+          "descriptionPt": "Creatures de sua escolha within 4,5 m of you gain Resistência to Contundente, Cold, Fire, or dano de Relâmpago. You choose the damage type after finishing a Descanso Curto or Descanso Longo, and você pode change the damage type como Ação Bônus. If they already have Resistência to any of these damage types, they gain Imunidade to that damage type."
+        },
+        "Stage4BoonElementalMastery": {
+          "namePt": "Bênção do estágio 4: Elemental Mastery",
+          "descriptionPt": "You add the final element to you Elemental Affinity Boon . Quando você do so, you gain the associated benefits of your new element.\n\nAlém disso, você pode summon the four elements to wreathe you in power. Whenever a creature hits you with a melee attack, você pode use your Reação to force it to make a Destreza salvaguarda, dealing 6d6 damage of a type de sua escolha from Contundente, Cold, Fire, or Lightning, or half as much on a successful save.\n\nAfter you use this Reação, your Elemental Affinity features gain o seguinte benefits até o fim do seu próximo turno:\n\nAir. Você tem Vantagem em all arma à distância and ranged spell attacks.\n\nEarth. At the beginning of your turn, you gain 20 Pontos de Vida Temporários .\n\nFire. At the beginning of your turn, each creature de sua escolha within 1,5 m of you takes 2d6 dano de Fogo.\n\nWater. Whenever a creature withing 18 m que você possa ver regains Pontos de Vida by spending Dados de Vida or through a spell or magical ability, that creature regains an additional 20 Pontos de Vida.\n\nVocê pode usar este recurso um número de times igual a seu modificador de Constituição, regaining all uses upon completing a Descanso Longo."
+        },
+        "Stage4FlawPrimordialChaos": {
+          "namePt": "Falha do estágio 4: Primordial Chaos",
+          "descriptionPt": "The plane of Primordial energy that you’re tied to strengthens its pull on you. Sempre que você roll a natural 1 on a salvaguarda against a spell, you take 8d6 dano de Força, which ignores Resistências and Immunities. This damage is in addition to any normal damage from the effect."
+        },
+        "RoilingElementsSaveDCTable": {
+          "namePt": "Apêndice: Roiling Elements Save CD",
+          "descriptionPt": "Stage | Constituição Save CD\n2 | 13\n3 | 16\n4 | 20"
+        },
+        "ReversingPrimordialTraits": {
+          "namePt": "Apêndice: Reverter traços de Primordial",
+          "descriptionPt": "Reverter traços de Primordial\n\nOnce a primordial spark has taken hold, your mortal body will continue to deteriorate from the roiling elements it now tries to contain. You will inevitably become one with the elements, your soul pulled into the Elemental Plane. Only magic on the level of the magia Desejo can then revive you, with or without your Transformação and its Boons and Flaws."
+        },
+        "PrimordialExistenceMythological": {
+          "namePt": "Apêndice: The Primordial Existence",
+          "descriptionPt": "The Primordial Existence\n\nThe mythological, and perhaps even the empirical, representation of primordial power in Etharis is Gormadraug, the Prismatic Wyrm. Valikans grow up hearing tales of the power—and the world-ending danger of the Great Wyrm. The beast embodies all the apocalyptic potential of earth, air, fire, and water.\n\nWithin the land controlled by the Valikan Clans, creatures showing an ability to manifest the primordial elements would strike awe into witnesses of that power. And more importantly, they would also likely be feared and mistrusted. Indeed, with the awakening of Gormadraug such a feared event, such people would be seen como threat unless they could convince the common folk that they are not harbingers of doom.\n\nWhile other lands would not be as fearful as the Valikans of the elemental magic (save for maybe the Inquisição Arcanista), wielders of primordial elemental power are likely looked at as dangerous and in league with powers beyond their control and understanding."
+        }
+      }
+    },
+    "gh-transformation-seraph": {
+      "namePt": "Serafim",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "To be chosen by an Arch Seraph is to become a vessel for the principles they uphold. This is a charge not to be taken lightly, and those who display righteousness with the intention of becoming a Seraph are usually overlooked for this reason. When becoming a Seraph, consider why your character was chosen. Do you display hidden merit? Are you devoted to a cause they will value?\n\nRelinquishing Divinity\n\nCharacters who reach Stage 1 of the Seraph Transformação do not typically seek power without righteous cause. The Transformação’s Boons and Flaws can be removed at any time by relinquishing divinity, como warrior retires their sword when the war is over. Regaining such power may not be so easy."
+        },
+        "SeraphStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela the Seraph Transformação, you gain Celestial Form and mais uma Bênção do estágio 1 de sua escolha. You also gain the Stage 1 Flaw."
+        },
+        "Stage1BoonCelestialForm": {
+          "namePt": "Bênção do estágio 1: Celestial Form",
+          "descriptionPt": "You become a Celestial in addition to any other creature type(s) you are. Além disso, you have Resistência to Radiant Damage."
+        },
+        "Stage1BoonAngelicWings": {
+          "namePt": "Bênção do estágio 1: Angelic Wings",
+          "descriptionPt": "Como Ação Bônus, você pode manifest feathered wings por 1 hora. While they are manifested, you have a Fly Speed igual a your Speed when you are not wearing heavy armor.\n\nVocê pode manifest these wings um número de times igual a your Estágio de Transformação, and você recupera all uses after finishing a Short or Descanso Longo."
+        },
+        "Stage1BoonHolyStrikes": {
+          "namePt": "Bênção do estágio 1: Holy Strikes",
+          "descriptionPt": "Quando você acerta with a weapon or an Ataque Desarmado or damage a creature with a cantrip, você pode add 1d6 dano Radiante to that attack. Você pode add esse dano um número de times igual a seu Bônus de Proficiência mais seu Estágio de Transformação. You regain all uses of este recurso when you finish a Short or Descanso Longo.\n\nAt higher Estágio de Transformaçãos, você causa an additional 1d6 dano Radiante per Estágio de Transformação, for a total of 2d6 at Stage 2, 3d6 at Stage 3, and 4d6 at Stage 4."
+        },
+        "Stage1FlawSeraphPlanarBinding": {
+          "namePt": "Falha do estágio 1: Planar Binding",
+          "descriptionPt": "Your body and soul are bound to the higher planes of good. Você tem Desvantagem em Death Salvaguardas as the plane attempts to pull your soul into its place of final reward."
+        },
+        "SeraphStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Seraph, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonDivineClemency": {
+          "namePt": "Bênção do estágio 2: Divine Clemency",
+          "descriptionPt": "When an ally within 9 m of you que você possa ver takes damage, você pode use a Reação to cast Healing Word at first level on that ally without using a espaço de magia.\n\nVocê pode do this um número de times igual a your Estágio de Transformação. You regain all uses of este recurso after finishing a Descanso Longo."
+        },
+        "Stage2BoonSacredRetribution": {
+          "namePt": "Bênção do estágio 2: Sacred Retribution",
+          "descriptionPt": "When an ally você pode see within 9 m takes the ação Atacar with a weapon or Ataque Desarmado , você pode use your Reação to imbue them with holy zeal, allowing them to make one additional attack. On a hit, the target takes an additional 1d8 dano Radiante. You may use este recurso um número de times igual a your Estágio de Transformação. You regain all uses of este recurso when you finish a Descanso Longo."
+        },
+        "Stage2FlawBlindingRadiance": {
+          "namePt": "Falha do estágio 2: Blinding Radiance",
+          "descriptionPt": "Your Transformação into a Seraph brings with it changes to your physical features. Your body radiates a divine glow, your eyes may become hollow braziers of celestial light, or your many sets of wings may appear unsettling to mortal creatures.\n\nVocê pode suspend this form and manifest the appearance of the humanoid you once were, but this is taxing and requires effort. This form is not permanent, and moments of stress or wrath are likely to reveal your true nature. This might occur under o seguinte circumstances:\n\n• Becoming Ferido\n\n• Having the Unconscious condition\n\n• Witnessing an act of evil\n\n• Encountering Corruptorish creatures or powers\n\n• Using your Seraph Transformação powers for the first time after a Descanso Curto or Descanso Longo\n\nIn these events, or times of other extreme emotional or physical stress, a GM can call or a Constituição salvaguarda with a CD based on your current Estágio de Transformação. Se você fail this save, your Blinding Radiance is revealed."
+        },
+        "SeraphStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Seraph, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonCleanseAffliction": {
+          "namePt": "Bênção do estágio 3: Cleanse Affliction",
+          "descriptionPt": "Quando você use Divine Clemency on a creature, they gain o seguinte additional benefits:\n\n• They gain Pontos de Vida Temporários igual a the amount of damage healed by Healing Word .\n\n• They have Vantagem on their next Teste D20 made within the next minute.\n\n• You end one of o seguinte conditions on it: Blinded , Deafened , Paralyzed , or Envenenado ."
+        },
+        "Stage3BoonProtectiveWings": {
+          "namePt": "Bênção do estágio 3: Protective Wings",
+          "descriptionPt": "While you are manifesting your Angelic Wings , you gain o seguinte benefits:\n\n• Como Reação , when you or an ally within 1,5 m of you is targeted by a weapon attack, você pode impose Desvantagem on that attack. If the attack hits the ally, you take half the attack’s damage (rounded up) and the original target takes the other half.\n\n• Você tem Vantagem em salvaguardas or ability checks to avoid having the condição Agarrado or to escape a Grapple.\n\n• Your Fly Speed is increased by 3 m."
+        },
+        "Stage3BoonBowOfCelestialJudgement": {
+          "namePt": "Bênção do estágio 3: Bow of Celestial Judgement",
+          "descriptionPt": "Você pode usar a Ação Bônus to manifest a powerful bow made of divine light. The Bow of Celestial Judgement lasts por 1 minuto and grants you o seguinte abilities while manifested:\n\n• Você pode usar a ação Mágica to target a creature você pode see within 36 m with your bow. The creature must succeed on a Destreza salvaguarda against a CD igual a 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação. On a failed save, the creature takes 6d6 dano Radiante, or 10d6 if it is a Fey, Corruptor, or Undead. On a success, the creature takes half damage.\n\n• Você tem Resistência to dano Necrótico.\n\n• Você ganha 5 Pontos de Vida Temporários at the start of each of your turns.\n\nVocê pode usar este recurso um número de times igual a your Estágio de Transformação, and você recupera all uses after finishing a Descanso Longo."
+        },
+        "Stage3FlawBeaconToDarkness": {
+          "namePt": "Falha do estágio 3: Beacon to Darkness",
+          "descriptionPt": "Você é now a Seraph of noted virtue and divinity, becoming a target for the world's evil. Sempre que você or an ally within 9 m commits an evil act, such as murdering innocents, you acquire a trace of darkness and you are Corrupted. GMs determine what constitutes an evil act.\n\nWhile you are Corrupted, whenever you make uma jogada de ataque against an evil creature or a salvaguarda against a spell or effect from an evil creature, you have Desvantagem on the check. Also, if an ally is the one who caused your Corruption, they cannot be considered your ally or you theirs until the Corruption is removed.\n\nVocê pode remove the Corrupted condition by finishing a Descanso Curto or Descanso Longo, during which you must pray for at least 1 hour and burn holy incense or donate wealth to a local good cause worth at least 100 PO times your Estágio de Transformação."
+        },
+        "SeraphStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Seraph, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonAuraOfHolyPurge": {
+          "namePt": "Bênção do estágio 4: Aura of Holy Purge",
+          "descriptionPt": "You emit an aura of righteous fervor in a 6 m Emanação centered on you, except when you have the Unconscious condition. When an ally within your aura hits with a weapon attack, the ally can use their Reação to cause the hit to be a Acerto Crítico . If they do, you and the ally each gain a level of Exhaustion . After an ally uses this Reação, that ally can't use it again until after they finish a Descanso Longo."
+        },
+        "Stage4BoonAuraOfRighteousMercy": {
+          "namePt": "Bênção do estágio 4: Aura of Righteous Mercy",
+          "descriptionPt": "You emit an aura of peaceful resolution in a 6 m Emanação centered on you, except when you have the Unconscious condition. When an ally within your aura would be reduced to 0 Pontos de Vida, they can use their Reação to drop to 1 Hit Point instead. If they do, you and the ally each gain a level of Exhaustion. After an ally uses this Reação, that ally can't use it again until after they finish a Descanso Longo."
+        },
+        "Stage4BoonBowOfCelestialDomination": {
+          "namePt": "Bênção do estágio 4: Bow of Celestial Domination",
+          "descriptionPt": "While your Bow of Celestial Judgement is manifested, you gain these additional benefits:\n\n• Quando você use a ação Mágica to target a creature você pode see within 36 m, você pode also affect one other creature with 3 m of the original target.\n\n• Você tem Imunidade to dano Necrótico instead of Resistência .\n\n• Você ganha 15 Pontos de Vida Temporários at the start of each of your turns instead of 5."
+        },
+        "Stage4FlawSeraphCorruption": {
+          "namePt": "Falha do estágio 4: Seraph Corruption",
+          "descriptionPt": "The weight of evil in the world encumbers you more and more heavily as the days pass. Sometimes it becomes too much, e seu celestial form is wracked with pain and doubt.\n\nSempre que você roll a natural 1 on a salvaguarda, you suffer o seguinte effects por 1 minuto:\n\n• No início de each of your turns, you take 1d10 dano Psíquico. This damage cannot be reduced in any way.\n\n• Você podenot regain Pontos de Vida or have Pontos de Vida Temporários .\n\n• Você tem Desvantagem em the first attack you make every round.\n\n• Uma vez por rodada, the first creature you force to make a salvaguarda against your spell has Vantagem on the salvaguarda."
+        },
+        "BlindingRadianceSaveDCTable": {
+          "namePt": "Apêndice: Blinding Radiance Save CD",
+          "descriptionPt": "Stage | Constituição Save CD\n2 | 13\n3 | 16\n4 | 20"
+        }
+      }
+    },
+    "gh-transformation-shadowsteel-ghoul": {
+      "namePt": "Carniçal de Aço Sombrio",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "Curses are wrought from and woven with intense feelings of loathing, spite, and bitterness. Humanoideees who choose to wield such deeply evil magic leave an indelible mark upon their own soul. When enough of these marks pollute a person, their spirit begins to rot.\n\nA creature who uses a Foco de Conjuração made of Shadowsteel, particularly to cast curses, risks acquiring the Shadowsteel Ghoul curse. Being attuned to a Shadowsteel magic item or wielding a Shadowsteel weapon for a prolonged period also carries a similar danger.\n\nCuring Shadowsteel Ghoul Curses\n\nOnce the character reaches Stage 1 of the Shadowsteel Ghoul Transformação, no typical magic like Remove Curse can remove the affliction. Magic on the level of the magia Desejo is needed to completely remove the Transformação and its Boons and Flaws."
+        },
+        "ShadowsteelGhoulStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você contrai the Shadowsteel Ghoul curse, você escolhe uma Bênção do estágio 1 Boon e ganha a Falha do estágio 1 Flaw."
+        },
+        "Stage1BoonShadowsteelCurser": {
+          "namePt": "Bênção do estágio 1: Shadowsteel Curser",
+          "descriptionPt": "Se você do not already have it, you gain the Shadowsteel Adept feat .\n\nAlém disso, when you cast a maldição de Shadowsteel, the casting time is reduced by half, and the salvaguarda CD increases by 1."
+        },
+        "Stage1BoonShadowsteelWeapon": {
+          "namePt": "Bênção do estágio 1: Shadowsteel Weapon",
+          "descriptionPt": "During a Descanso Longo, you focus upon a arma corpo a corpo within your reach, imbuing it with a fragment of your Shadowsteel corruption. This Shadowsteel weapon deals sua escolha of dano de Força or their normal damage type.\n\nQuando você reduce a creature to 0 Pontos de Vida with a melee attack made with your Shadowsteel weapon, you gain 1d8 Pontos de Vida Temporários por 1 hora.\n\nVocê pode repeat the process described above to imbue a different weapon with Shadowsteel. This removes the effect from your existing Shadowsteel weapon."
+        },
+        "Stage1FlawDebilitatingMagic": {
+          "namePt": "Falha do estágio 1: Debilitating Magic",
+          "descriptionPt": "Choose one ability score. You lose 2 points in that ability as the power of the Shadowsteel slowly eats away at your body, soul, or both."
+        },
+        "ShadowsteelGhoulStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 of the Shadowsteel Ghoul curse, you select two Stage 2 Boons e ganha a Falha do estágio 2 Flaw."
+        },
+        "Stage2BoonMagicResistance": {
+          "namePt": "Bênção do estágio 2: Magic Resistance",
+          "descriptionPt": "Você tem Vantagem em salvaguardas against spells."
+        },
+        "Stage2BoonShadowsteelAbsorption": {
+          "namePt": "Bênção do estágio 2: Shadowsteel Absorption",
+          "descriptionPt": "As the Shadowsteel courses through you, it begins to harden your flesh. Your Armor Class increases by 1 when you aren’t wearing armor."
+        },
+        "Stage2BoonShadowsteelCaster": {
+          "namePt": "Bênção do estágio 2: Shadowsteel Caster",
+          "descriptionPt": "Se você do not already have it, you gain the Shadowsteel Master feat .\n\nAlém disso, when you use a Shadowsteel component to cast a spell using a espaço de magia, você pode spend a Hit Die to regain that espaço de magia. The espaço de magia level cannot be greater than twice your Shadowsteel Ghoul Estágio de Transformação.\n\nVocê pode usar este recurso um número de times igual a sua habilidade de conjuração modifier. You regain all uses of este recurso after finishing a Descanso Longo."
+        },
+        "Stage2BoonShadowsteelWeaponMaster": {
+          "namePt": "Bênção do estágio 2: Shadowsteel Weapon Master",
+          "descriptionPt": "Você ganha um +4 bonus to jogada de danos made with your Shadowsteel weapon."
+        },
+        "Stage2FlawFriendless": {
+          "namePt": "Falha do estágio 2: Friendless",
+          "descriptionPt": "Você é no longer able to connect with other creatures on a social level. You prefer isolation and twisted contemplation to friendship and camaraderie.\n\nVocê podenot be considered an ally to any Humanoideees or Beasts, and no living creature can be Aliado toward you.\n\nYou also have Desvantagem on all Carisma ability checks."
+        },
+        "ShadowsteelGhoulStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 of the Shadowsteel Ghoul Transformação, você ganha a Falha do estágio 3 Boon and the Stage 3 Flaw."
+        },
+        "Stage3BoonCursedClaw": {
+          "namePt": "Bênção do estágio 3: Cursed Claw",
+          "descriptionPt": "Você ganha um Claw attack. This attack uses either your Força or Destreza for attack and jogada de danos.\n\nVocê pode usar this attack twice como parte de uman ação Atacar, or once como Ação Bônus. The Claw attack deals 2d6 mais seu Força or modificador de Destreza.\n\nAlém disso, when the Claw attack hits, the target must succeed on a Constituição salvaguarda or be afflicted with a random maldição de Shadowsteel at Stage 1. The salvaguarda CD is 8 mais seu modificador de Constituição mais seu Bônus de Proficiência. A creature already afflicted with a maldição de Shadowsteel cannot gain another maldição de Shadowsteel with this attack."
+        },
+        "Stage3FlawHealingResistance": {
+          "namePt": "Falha do estágio 3: Healing Resistance",
+          "descriptionPt": "You heal at a slower rate than normal, whether that healing is magical or natural. Sempre que você regain Pontos de Vida, você recupera half as many Pontos de Vida as you should. You still recover all Pontos de Vida at the end of a Descanso Longo."
+        },
+        "ShadowsteelGhoulStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Shadowsteel Ghoul, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonShadowsteelArcaneVessel": {
+          "namePt": "Bênção do estágio 4: Shadowsteel Arcane Vessel",
+          "descriptionPt": "Quando você cast a spell using a espaço de magia, the power of your Shadowsteel infection emanates from you. One creature targeted by the spell within 18 m of you has Desvantagem on the salvaguarda to resist the spell, or you have Vantagem on the spell jogada de ataque.\n\nVocê pode usar este recurso um número de times igual a seu Bônus de Proficiência, and você recupera all uses after you finish a Descanso Longo."
+        },
+        "Stage4BoonShadowsteelFury": {
+          "namePt": "Bênção do estágio 4: Shadowsteel Fury",
+          "descriptionPt": "Quando você use the ação Atacar to attack with your Shadowsteel weapon or Cursed Claw , você pode use a Ação Bônus to make an additional attack with the same weapon or Claw. This extra attack carries with it the power of the Shadowsteel infection.\n\nQuando você acerta with this attack, the target must succeed on a Constituição salvaguarda or gain a 1 nível de Exaustão. The salvaguarda CD is 8 plus the ability modifier used in the attack mais seu Estágio de Transformação."
+        },
+        "Stage4FlawShadowsteelExplosion": {
+          "namePt": "Falha do estágio 4: Shadowsteel Explosion",
+          "descriptionPt": "The Shadowsteel that suffuses your flesh responds to stress, and você pode do nothing to control it. The first time you are Ferido or reduced to 0 Pontos de Vida after you finish a Short or Descanso Longo, you risk hurting everyone around you.\n\nWhen these events occur, all living creatures within 18 m of you must succeed on a CD 20 Constituição salvaguarda. On a failed save, creatures in the area suffer 4d10 dano de Força and have the Stunned condition até o fim de their next turn. On a successful save, a target takes half damage and is not Stunned."
+        },
+        "CuringShadowsteelGhoul": {
+          "namePt": "Apêndice: Curing Shadowsteel Ghoul Curses",
+          "descriptionPt": "Curing Shadowsteel Ghoul Curses\n\nOnce the character reaches Stage 1 of the Shadowsteel Ghoul Transformação, no typical magic like Remove Curse can remove the affliction. Magic on the level of the magia Desejo is needed to completely remove the Transformação and its Boons and Flaws."
+        },
+        "ShadowsteelapossTemptationShadowsteel": {
+          "namePt": "Apêndice: Shadowsteel's Temptation",
+          "descriptionPt": "Shadowsteel's Temptation\n\nThe Shadowsteel Ghoul Transformação might be the most likely change for characters to undertake. Each time a caster uses a Foco de Shadowsteel to cast a spell, or a warrior wields a Shadowsteel weapon, they risk losing a bit of their soul to gain a bit of power.\n\nPlayers should know what is happening to their characters when they wield Shadowsteel's power. It’s a boost to the power of a character, and the risk should be offsetting that power. The toll that is takes on the character should be explained by o Mestre, and hopefully the player—in the spirit of a dark fantasy campaign—should be able to express and illustrate that toll through roleplaying."
+        }
+      }
+    },
+    "gh-transformation-specter": {
+      "namePt": "Espectro",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "Methods of becoming a Specter vary, and few find their way willingly. One that dies of an unjust or violent cause may find their spirit refusing to depart, despite their physical form fading. Contact with the forces of death can drain the soul of vitality—a would-be hero is corrupted by the force they wanted to fight. Sinister rituals can also infuse a body with the powers of unmaking from the realm of the Aether Kindred .\n\nAlongside incorporeal beings and the magic of death stand entities that exist in a reality untethered from the material world as mortals understand it. These others and their minions, manifestations of otherworldly chaos, can infuse a person with that chaos, making the victim’s ultimate home a dream of cosmic horror.\n\nReverter traços de Specter\n\nOnce the character reaches Stage 1 of the Specter Transformação, typical magic like Remove Curse cannot remove the affliction. Você podenot be revived or restored by any magic lesser than the magia Desejo due to the ties that anchor your spirit to the corporeal world.\n\nUma vez você die completely e seu soul departs, you may be brought back to life by more conventional magic, free of the Transformação and its Boons and Flaws."
+        },
+        "SpecterStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você passa pela Transformação em Specter pela primeira vez, ganha a Bênção Spectral Form e mais uma Bênção do estágio 1 de sua escolha. Também ganha a Falha do estágio 1."
+        },
+        "Stage1BoonSpectralForm": {
+          "namePt": "Bênção do estágio 1: Spectral Form",
+          "descriptionPt": "Você é considered to be Undead in addition to your existing creature type(s). Você podenot be excluded from Turn Undead.\n\nAlém disso, you have Resistência to dano Necrótico. Se você have Resistência to dano Necrótico from another source, you have Imunidade instead.\n\nFinally, you stop aging. Você é imune a any effect that would age you, and você podenot die from old age."
+        },
+        "Stage1BoonGhastlyTouch": {
+          "namePt": "Bênção do estágio 1: Ghastly Touch",
+          "descriptionPt": "Você pode deliver a soul-chilling jolt through your attacks. Uma vez por turno, when you hit a target with a melee attack when you are within 1,5 m of the target, você pode deal an additional 1d6 dano Necrótico.\n\nVocê pode usar este recurso um número de times igual a seu Bônus de Proficiência mais seu Estágio de Transformação. You regain all uses of este recurso when you finish a Descanso Curto or Descanso Longo."
+        },
+        "Stage1BoonIncorporealMovement": {
+          "namePt": "Bênção do estágio 1: Incorporeal Movement",
+          "descriptionPt": "Você é able to loosen the binds that tie you to the material world to move through solid objects and creatures. Como ação Mágica, você pode make yourself incorporeal until the start of your next turn. While in this form, you gain o seguinte benefits:\n\n• Você pode move through solid objects at your full Speed. You take 1d10 dano de Força se você end your turn inside a solid object and are moved to the nearest open space.\n\n• Você tem Resistência to all damage types except dano de Força.\n\n• Você é Lightly Obscured .\n\nVocê pode usar este recurso um número de times igual a seu Bônus de Proficiência, and regain all uses after finishing a Descanso Longo."
+        },
+        "Stage1FlawDrawnToDarkness": {
+          "namePt": "Falha do estágio 1: Drawn to Darkness",
+          "descriptionPt": "Your body and soul are bound to the cold darkness of the realms of death. Você tem Desvantagem em Death Salvaguardas as your life force is drawn to oblivion."
+        },
+        "SpecterStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 da Transformação em Specter, escolhe uma Bênção do estágio 2 e ganha a Falha do estágio 2."
+        },
+        "Stage2BoonEtherealPhasing": {
+          "namePt": "Bênção do estágio 2: Ethereal Phasing",
+          "descriptionPt": "Você pode conjurar the Blink spell without expending a espaço de magia. Você pode conjurar the spell using this Boon um número de times igual a your Estágio de Transformação, and você recupera all uses after finishing a Descanso Longo.\n\nWhile you are under the effects of Blink when cast in this way, you also gain Pontos de Vida Temporários igual a seu Bônus de Proficiência mais seu Estágio de Transformação at the start of each of your turns."
+        },
+        "Stage2BoonHauntingFlight": {
+          "namePt": "Bênção do estágio 2: Haunting Flight",
+          "descriptionPt": "Você ganha um Fly Speed igual a your Speed.\n\nAlso, while you are flying, você pode use a Ação Bônus to focus your terrifying presence on one creature você pode see within 9 m. That creature must succeed on a Sabedoria salvaguarda or have the condição Amedrontado por 1 minuto. The CD for the Sabedoria salvaguarda is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação. Depois de usar este recurso, you must finish a Short or Descanso Longo before você pode use it again."
+        },
+        "Stage2FlawUntetheredFromLife": {
+          "namePt": "Falha do estágio 2: Untethered from Life",
+          "descriptionPt": "Your life force is weaker than other creatures. Quando você would regain Pontos de Vida, você recupera half as many Pontos de Vida as normal (rounded down)."
+        },
+        "SpecterStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 da Transformação em Specter, escolhe uma Bênção do estágio 3 e ganha a Falha do estágio 3."
+        },
+        "Stage3BoonDrainingFlight": {
+          "namePt": "Bênção do estágio 3: Draining Flight",
+          "descriptionPt": "Você pode now use your Incorporeal Movement feature como Ação Bônus. Além disso, your Fly Speed while using Haunting Flight becomes double your Speed.\n\nAlém disso, while you are using Incorporeal Movement, your movement does not provoke Ataque de Oportunidades and você pode damage creatures that you move through. Uma vez por turno, when you enter a space occupied by a creature, você pode choose to force that creature to succeed on a Constituição salvaguarda or take 6d6 dano Psíquico and have the condição Amedrontado até o fim do seu próximo turno. A creature takes half damage on a successful save and is not Amedrontado. The CD of the Constituição salvaguarda is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação.\n\nDepois de usar este recurso, you must finish a Descanso Curto or Descanso Longo before você pode use it again."
+        },
+        "Stage3BoonParalyzingTouch": {
+          "namePt": "Bênção do estágio 3: Paralyzing Touch",
+          "descriptionPt": "Your Ghastly Touch feature takes on a spirit-freezing quality. The damage from your Ghastly Touch increases to 2d6 dano Necrótico. Além disso, você pode force any creature you damage with Ghastly Touch to make a Constituição salvaguarda. The CD for this salvaguarda is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação.\n\nOn a failed save, the creature has the Paralyzed condition until the start of your next turn. On a successful save, they have the condição Caído instead. Você pode usar este recurso um número de times igual a your Estágio de Transformação. You regain all uses of este recurso when you finish a Short or Descanso Longo."
+        },
+        "Stage3FlawFrayingReality": {
+          "namePt": "Falha do estágio 3: Fraying Reality",
+          "descriptionPt": "Your mind begins to slip into the dark places where the world of life and world of death intersect. Quando você become Ferido for the first time after finishing a Short or Descanso Longo, you must make a CD 15 Carisma salvaguarda. On a failed save, you act as though under the effects of a Confusion spell por 1 minuto."
+        },
+        "SpecterStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 da Transformação em Specter, escolhe uma Bênção do estágio 4 e ganha a Falha do estágio 4."
+        },
+        "Stage4BoonCallOfUnmaking": {
+          "namePt": "Bênção do estágio 4: Call of Unmaking",
+          "descriptionPt": "Como Ação Bônus, você pode give a mournful wail or otherwise set up a wracking vibration. This sound has no effect on Constructs and Undead.\n\nAll other creatures de sua escolha within 9 m of you must make a Constituição salvaguarda. The CD of the Constituição salvaguarda is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação. Creatures that can’t hear you have Vantagem on the salvaguarda.\n\nOn a failed save, the creature bears the Mark of Unmaking por 1 minuto. While bearing this mark, a creature takes an additional 1d6 dano Necrótico each time it takes damage.\n\nDepois de usar este recurso, você pode’t use it again until you finish a Descanso Longo."
+        },
+        "Stage4BoonPossession": {
+          "namePt": "Bênção do estágio 4: Possession",
+          "descriptionPt": "Como ação Mágica, you enter the space of a Humanoidee or Beast and force that creature to make a CD 15 Carisma salvaguarda. If the target fails, you disappear, and the target is Incapacitado and loses control of its body. You control the body without depriving the target of awareness.\n\nWhile possessing a target, você pode’t be targeted by any attack, spell, or other effect. You retain your alignment, Inteligência, Sabedoria, Carisma, and any immunity to having the Charmed and condição Amedrontados. Otherwise, you use the possessed target’s statistics but don’t gain access to the target’s knowledge, spellcasting abilities or ação Mágicas, class features, or proficiencies.\n\nThe possession lasts por 1 hora, until the possessed target drops to 0 Pontos de Vida, you end it como Ação Bônus, or you are forced out by an effect that ends possession. When the possession ends, you reappear in an unoccupied space within 1,5 m of the possessed creature. Depois de usar este recurso, você pode’t use it again until you finish a Descanso Curto or Descanso Longo."
+        },
+        "Stage4FlawPullOfOblivion": {
+          "namePt": "Falha do estágio 4: Puxão do Oblívio",
+          "descriptionPt": "Sua conexão com o plano material torna-se tênue como seda. Sempre que rolar 1 natural em um Teste D20, sofre 4d6 de dano de Força, e esse dano não pode ser mitigado. Se esse dano reduzir seus Pontos de Vida a 0, você morre.\n\nQuando morrer dessa forma ou de qualquer outra, só pode ser trazido de volta à vida por magias de 7º nível ou superior."
+        },
+        "ReversingSpecterTraits": {
+          "namePt": "Apêndice: Reverter traços de Specter",
+          "descriptionPt": "Reverter traços de Specter\n\nOnce the character reaches Stage 1 of the Specter Transformação, typical magic like Remove Curse cannot remove the affliction. Você podenot be revived or restored by any magic lesser than the magia Desejo due to the ties that anchor your spirit to the corporeal world.\n\nUma vez você die completely e seu soul departs, you may be brought back to life by more conventional magic, free of the Transformação and its Boons and Flaws."
+        }
+      }
+    },
+    "gh-transformation-vampire": {
+      "namePt": "Vampiro",
+      "benefits": {
+        "becoming": {
+          "namePt": "Como começar",
+          "descriptionPt": "Vampires are spawned into the world when a mortal contracts the Sanguine Curse, dies, and is reborn undead. There are a variety of ways to contract the curse. A Vampire may have offered their blood to a loyal servant, powerful ally, or loved one they wished to elevate. More commonly, a Vampire may bite a victim, who survives the attack long enough to contract the Sanguine Curse before perishing and being reborn.\n\nOther methods of becoming a Vampire include ancient and dark magic, as well as powerful but cursed magical artifacts. Vampirism may be passed along when an ancient Vampire allows a beloved plaything to drink blood from the Undead creature’s cursed veins. Regardless of how you have become a Vampire, you should discuss with seu Mestre what type of Vampire you might become and how it can be implemented in the campaign.\n\nCuring Vampirism\n\nOnce the character reaches Stage 1 of the Vampire Transformação, no typical magic like Remove Curse can remove the affliction. Magic on the level of the magia Desejo is needed to completely remove the Transformação and its Boons and Flaws."
+        },
+        "VampireStage1": {
+          "namePt": "Estágio 1",
+          "descriptionPt": "Quando você contrai vampirism, you gain the Fanged Bite Boon and one other Stage 1 Boon. You also gain the Stage 1 Flaw."
+        },
+        "Stage1BoonFangedBite": {
+          "namePt": "Bênção do estágio 1: Fanged Bite",
+          "descriptionPt": "As an ação Atacar, você pode make a Bite attack. Você é considered proficient with this attack, and você pode use Força or Destreza as the ability. This attack deals Perfurante damage igual a 1d6 mais seu Força or modificador de Destreza. This Bite attack is not a weapon or an Ataque Desarmado .\n\nIf the attack hits a creature that has blood, the target must succeed on a Constituição salvaguarda or take an additional 1d6 dano Necrótico. You regain Pontos de Vida igual a the dano Necrótico dealt this way. The CD is 8 mais seu Bônus de Proficiência mais seu Estágio de Transformação."
+        },
+        "Stage1BoonSomanBloodline": {
+          "namePt": "Bênção do estágio 1: Soman Bloodline",
+          "descriptionPt": "Your vampirism follows the Soman bloodline, the most prevalent in Etharis. Você ganha o seguinte features:\n\n• Your Força and Destreza scores increase by 1. Neither score can exceed 19 with este recurso.\n\n• Você tem Vantagem em jogada de ataques with Fanged Bite .\n\n• The dano Necrótico dealt by Fanged Bite increases to 1d8.\n\n• Você ganha um Climb Speed igual a your Speed."
+        },
+        "Stage1BoonFzegBloodline": {
+          "namePt": "Bênção do estágio 1: Fzeg Bloodline",
+          "descriptionPt": "Your vampirism follows the Fzeg bloodline, a line of vampires that combines the affliction with lycanthropy. Você ganha o seguinte features:\n\n• Your Força score increases by 2. Your Força score cannot exceed 20 with este recurso.\n\n• Você ganha um Claw attack. This attack deals 1d8 mais seu modificador de Força Cortante damage, using seu modificador de Força and Bônus de Proficiência on jogada de ataques. This Claw attack is not a weapon or an Ataque Desarmado .\n\n• Quando você realiza the ação Atacar to make the Claw attack, you may use a Ação Bônus to make a Bite attack from Fanged Bite .\n\n• Your Speed increases by 3 m."
+        },
+        "Stage1BoonStrigoiBloodline": {
+          "namePt": "Bênção do estágio 1: Strigoi Bloodline",
+          "descriptionPt": "Your vampirism follows the Strigoi bloodline. Your speed and guile almost match your ferocity. Você ganha o seguinte features:\n\n• Your Destreza score increases by 2. Your Destreza score cannot exceed 20 with este recurso.\n\n• Se você make your Fanged Bite attack with Vantagem , the Perfurante damage increases to 2d4 mais seu Força or modificador de Destreza.\n\n• Você pode realizar the Hide action como Ação Bônus, and você pode use the Hide action anywhere that is not in sunlight.\n\n• Você tem proficiency with the Furtividade skill. Se você are already proficient in Furtividade, you gain Especialização in Furtividade instead."
+        },
+        "Stage1FlawTheSanguineCurse": {
+          "namePt": "Falha do estágio 1: The Sanguine Curse",
+          "descriptionPt": "The Sanguine Curse has taken hold of you. Como result, you gain o seguinte features:\n\n• Você podenot enter a private residence that you do not own without one of the occupants inviting you. Once invited, você pode enter without penalty as long as the inviter resides there. Se você do enter uninvited, you have Desvantagem on all Teste D20s while in the residence. Além disso, you take 1d4 dano Psíquico at the start of each of your turns. Você podenot be Resistant or Imune to dano Psíquico while inside such a residence uninvited.\n\n• Você deve feed at least once within seven days of your last feeding. See the Feeding sidebar for more information."
+        },
+        "VampireStage2": {
+          "namePt": "Estágio 2",
+          "descriptionPt": "Quando você alcança o estágio 2 of vampirism, you select two Stage 2 Boons e ganha a Falha do estágio 2 Flaw."
+        },
+        "Stage2BoonEyesOfTheNight": {
+          "namePt": "Bênção do estágio 2: Eyes of the Night",
+          "descriptionPt": "Você ganha Darkvision out to 18 m. Se você already have Darkvision, the range increases by 18 m."
+        },
+        "Stage2BoonGraveTouchedSoul": {
+          "namePt": "Bênção do estágio 2: Grave-Touched Soul",
+          "descriptionPt": "Você ganha Resistência to dano Necrótico. Se você already have Resistência to dano Necrótico, you gain Imunidade instead."
+        },
+        "Stage2BoonInhumanReflexes": {
+          "namePt": "Bênção do estágio 2: Inhuman Reflexes",
+          "descriptionPt": "Você tem Vantagem em Destreza salvaguardas."
+        },
+        "Stage2BoonUndeadResilience": {
+          "namePt": "Bênção do estágio 2: Undead Resilience",
+          "descriptionPt": "You become supernaturally tough to kill. Quando você are reduced to 0 Pontos de Vida by any type of damage except Radiant, você pode choose to be reduced to 1 Hit Point instead. Depois de usar este recurso, você podenot use it again until you finish a Descanso Longo."
+        },
+        "Stage2FlawGreaterSanguineCurse": {
+          "namePt": "Falha do estágio 2: Greater Sanguine Curse",
+          "descriptionPt": "Your curse has taken a stronger hold onto you. Você ganha o seguinte features:\n\n• Você tem Desvantagem em all Teste D20s when you are in sunlight.\n\n• Você deve feed every 4 days."
+        },
+        "VampireStage3": {
+          "namePt": "Estágio 3",
+          "descriptionPt": "Quando você alcança o estágio 3 of vampirism, you select two Stage 3 Boons e ganha a Falha do estágio 3 Flaw."
+        },
+        "Stage3BoonBeguilersCharm": {
+          "namePt": "Bênção do estágio 3: Beguiler’s Charm",
+          "descriptionPt": "Você ganha a capacidade de manipulate the mind of a creature with your unearthly charm. Como ação Mágica, você pode choose a Humanoidee or Beast within 9 m of you that can see you. The creature must succeed on a Carisma salvaguarda with a CD of 8 mais seu modificador de Carisma mais seu Bônus de Proficiência.\n\nOn a failed save, the creature has the Charmed condition por 24 horas. No fim de the 24 hours, você pode choose to automatically renew the Charmed condition on that creature with no salvaguarda. You may only have one creature Charmed in this manner at a time. Se você use este recurso on another creature, or you or an ally damages the creature, the Charmed condition ends on the previous creature immediately."
+        },
+        "Stage3BoonImprovedFangedBite": {
+          "namePt": "Bênção do estágio 3: Improved Fanged Bite",
+          "descriptionPt": "As an ação Atacar, você pode make 2 Fanged Bite attacks. Além disso, você pode make a Fanged Bite attack como Ação Bônus se você don't make a Fanged Bite attack como parte de uman ação Atacar on the same turn."
+        },
+        "Stage3BoonMistForm": {
+          "namePt": "Bênção do estágio 3: Mist Form",
+          "descriptionPt": "Você pode conjurar the Gaseous Form spell um número de times igual a your Vampire Estágio de Transformação without using a espaço de magia or needing to use Verbal, Somatic, or Material components. You regain all uses of este recurso when you finish a Descanso Longo.\n\nVocê pode conjurar this spell as an Ação no seu turno, or como Reação when you would take Contundente, Perfurante, or Cortante damage. You cast the spell before taking the damage."
+        },
+        "Stage3BoonSangromancySpecialist": {
+          "namePt": "Bênção do estágio 3: Sangromancy Specialist",
+          "descriptionPt": "Your magic is tinged with the blood that you crave. Você ganha o seguinte features:\n\n• Você ganha an extra 1d12 Sangromancy Dados de Vida per Vampire Transformação. Você pode usar those dice on Sangromancy spells. You regain all spent Dados de Sangromancia when you finish a Descanso Longo.\n\n• Quando você successfully restore Pontos de Vida using Fanged Bite , você recupera one spent Dado de Sangromancia.\n\n• Any cantrip you cast that does dano Necrótico can be enhanced by your Dados de Sangromancia. Você pode spend up to 2 Dados de Vida (including your Dados de Sangromancia) to deal extra dano Necrótico with those truques. Você pode decide to spend these Dados de Vida after você conhece if the cantrip affects the target(s)."
+        },
+        "Stage3FlawSupremeSanguineCurse": {
+          "namePt": "Falha do estágio 3: Supreme Sanguine Curse",
+          "descriptionPt": "Your curse continues to transform you, bringing about further debilitations. Você ganha o seguinte features:\n\n• Se você start your turn in sunlight, you take 1d10 dano Radiante. Você podenot have Imunidade or Resistência to this Radiant Damage.\n\n• Your appearance begins to resemble that of a true vampire. In stressful conditions, as determined by you or o Mestre, your appearance changes outside of your control. Quando você do, anyone observing você conheces your true nature.\n\n• Você deve feed every 2 days.\n\nVocê pode hide your true appearance and disguise yourself as the humanoid you once were by concentrating on your composure. However, moments of bloodlust or stress are likely to reveal your true nature, including o seguinte situations:\n\n• Becoming Ferido\n\n• Concentrating on a spell\n\n• Taking dano Radiante from sunlight\n\n• Entering a feeding frenzy\n\n• Having the Unconscious condition\n\n• Entering hallowed ground\n\n• Choosing to reveal yourself\n\nIn these events, or times of other extreme emotional or physical stress, a GM can call or a Constituição salvaguarda with a CD based on your current Estágio de Transformação. Se você fail this save, your Sanguine Curse is revealed."
+        },
+        "VampireStage4": {
+          "namePt": "Estágio 4",
+          "descriptionPt": "Quando você alcança o estágio 4 of vampirism, you gain the Regeneration Boon and one other Stage 4 Boon de sua escolha. You also gain the Stage 4 Flaw."
+        },
+        "Stage4BoonFinalSomanBloodline": {
+          "namePt": "Bênção do estágio 4: Final Soman Bloodline",
+          "descriptionPt": "You reach the full manifestation of your Soman Bloodline. Você ganha o seguinte features:\n\n• Your Força and Destreza scores increase by 1 to a maximum of 20.\n\n• Fanged Bite’s dano Necrótico increases to 3d8.\n\n• When a Humanoidee creature is reduced to 0 Pontos de Vida by your Fanged Bite attack or through your feeding, it rises como Vampire Spawn 24 hours later unless the body is destroyed or undergoes rituals to prevent its rising. Você pode have two Vampire Spawns created this way under your control, and they follow your verbal commands to the best of their abilities. Se você take control of a third Vampire Spawn, você escolhe one of the other Vampire Spawn you currently control to no longer follow your commands."
+        },
+        "Stage4BoonFinalFzegBloodline": {
+          "namePt": "Bênção do estágio 4: Final Fzeg Bloodline",
+          "descriptionPt": "You reach the full manifestation of your Fzeg Bloodline. Você tem o seguinte features:\n\n• Your Força score increases by 2 points to a maximum of 20.\n\n• The damage done by your Claw attack becomes 3d6 mais seu modificador de Força Cortante damage, using seu modificador de Força and Bônus de Proficiência on jogada de ataques. Você pode also make three Claw attacks with an ação Atacar.\n\n• Você é Resistant to Contundente, Perfurante, and Cortante damage. Magic and silvered weapons ignore this Resistência .\n\n• Your Speed increases by 3 m."
+        },
+        "Stage4BoonFinalStrigoiBloodline": {
+          "namePt": "Bênção do estágio 4: Final Strigoi Bloodline",
+          "descriptionPt": "You reach the full manifestation of your Strigoi Bloodline. Você tem o seguinte features:\n\n• Your Destreza score increases by 2 points to a maximum of 20.\n\n• Você pode summon 2d4 Swarms of Rats , Swarms of Bats , or Wolves como Ação Bônus. They appear at the start of your next turn within 18 m of you. They follow your verbal or mental commands. They disperse after 1 hour, when you are reduced to 0 Pontos de Vida, or when you dismiss them with a Ação Bônus. You regain this ability after finishing a Short or Descanso Longo.\n\n• Você pode conjurar the Misty Step spell up to four times without using a espaço de magia. Você pode also cast a spell in this way como Reação when you are targeted with a weapon attack. You cast the spell before taking damage. You regain this ability after finishing a Descanso Longo."
+        },
+        "Stage4BoonRegeneration": {
+          "namePt": "Bênção do estágio 4: Regeneration",
+          "descriptionPt": "The vampiric blood that flows in your veins gives you regenerative powers. You regain 15 Pontos de Vida at the start of your turn se você have at least 1 Hit Point but less than 60 Pontos de Vida. This feature has no effect se você are in sunlight or have taken dano Radiante since the end of your last turn."
+        },
+        "Stage4FlawUltimateSanguineCurse": {
+          "namePt": "Falha do estágio 4: Ultimate Sanguine Curse",
+          "descriptionPt": "Your transformation into a creature of the night is complete. And with that transformation comes susceptibilities. Você ganha o seguinte features:\n\n• One strike may end your existence forever. Quando você are Incapacitado , Stunned , or Unconscious , and you are struck by a Acerto Crítico with a Perfurante Weapon made of wood or silver, you must succeed on a CD 20 Constituição salvaguarda. On a failed save, you die and are reduced to ash. Only a True Resurrection or magia Desejo can resurrect you.\n\n• Você deve feed every day.\n\n//"
+        },
+        "SupremeSanguineCurseSaveDCTable": {
+          "namePt": "Apêndice: Supreme Sanguine Curse Save CD",
+          "descriptionPt": "Stage | Constituição Save CD\n3 | 16\n4 | 20"
+        },
+        "CuringVampirismOnce": {
+          "namePt": "Apêndice: Curing Vampirism",
+          "descriptionPt": "Curing Vampirism\n\nOnce the character reaches Stage 1 of the Vampire Transformação, no typical magic like Remove Curse can remove the affliction. Magic on the level of the magia Desejo is needed to completely remove the Transformação and its Boons and Flaws."
+        },
+        "FeedingVampireTransforms": {
+          "namePt": "Apêndice: Feeding",
+          "descriptionPt": "Feeding\n\nComo Vampire transforms further and further from its mortal form, its metabolic requirements change. The first change is a need for mortal blood. This need is approximately 1 pint of blood from a Humanoidee, Beast, or other creature with mortal blood.\n\nAs an action, você pode bite a living creature within 1,5 m that is Charmed by you, or that has the Incapacitado, Paralyzed, Restrained, or Unconscious condition. You drain the target of one pint of blood (or similar life-giving substance), leaving a visible bite mark on that creature. The bitten creature gains one nível de Exaustão.\n\nA Vampire that does not feed within the required time enters a rabid feeding frenzy under o Mestre’s control. They attack the nearest creature they could feed from. A Vampire remains in this state until they have drained a creature completely (killing them), at which point the Vampire falls unconscious for 4 hours."
+        }
+      }
+    }
+  }
+}

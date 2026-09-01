@@ -134,6 +134,25 @@ export class CharacterFeatOptionValueValidator {
     }
 
     if (def.spellSchoolSlugs?.length) {
+      if (def.spellMaxLevel === null) {
+        const schoolRows = await this.dataSource.query<{ ok: number }[]>(
+          `SELECT 1 AS ok
+           FROM rpg.phb_spell s
+           JOIN rpg.phb_spell_school sch ON sch.id = s.school_id
+           WHERE s.slug = $1
+             AND s.level >= 1
+             AND sch.slug = ANY($2::text[])
+           LIMIT 1`,
+          [option.valueId, def.spellSchoolSlugs],
+        );
+        if (schoolRows.length === 0) {
+          throw new BadRequestException(
+            `Spell '${option.valueId}' is not a valid Sangromancy choice for '${def.optionKey}'`,
+          );
+        }
+        return;
+      }
+
       const schoolRows = await this.dataSource.query<{ ok: number }[]>(
         `SELECT 1 AS ok
          FROM rpg.phb_spell s
@@ -147,6 +166,25 @@ export class CharacterFeatOptionValueValidator {
       if (schoolRows.length === 0) {
         throw new BadRequestException(
           `Spell '${option.valueId}' is not a valid choice for '${def.optionKey}'`,
+        );
+      }
+      return;
+    }
+
+    // Sem lista de classe (ex.: Bênção de Wotan) — qualquer magia do círculo exato.
+    if (!def.dependsOnOptionKey) {
+      const level = def.spellMaxLevel ?? 1;
+      const rows = await this.dataSource.query<{ ok: number }[]>(
+        `SELECT 1 AS ok
+         FROM rpg.phb_spell s
+         WHERE s.slug = $1
+           AND s.level = $2
+         LIMIT 1`,
+        [option.valueId, level],
+      );
+      if (rows.length === 0) {
+        throw new BadRequestException(
+          `Spell '${option.valueId}' must be level ${level} for '${def.optionKey}'`,
         );
       }
       return;

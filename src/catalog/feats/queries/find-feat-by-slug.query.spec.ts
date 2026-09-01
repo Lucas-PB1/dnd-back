@@ -2,13 +2,25 @@ import { NotFoundException } from '@nestjs/common';
 import { FindFeatBySlugQuery } from './find-feat-by-slug.query';
 
 describe('FindFeatBySlugQuery', () => {
+  const originBackgroundsQuery = {
+    execute: jest.fn().mockResolvedValue([]),
+  };
+
   it('maps found feat', async () => {
     const featsRepo = {
       findOne: jest.fn().mockResolvedValue({ featSlug: 'alert' }),
     };
     const mapper = { toDto: jest.fn().mockReturnValue({ slug: 'alert' }) };
-    const query = new FindFeatBySlugQuery(featsRepo as never, mapper as never);
-    await expect(query.execute('alert')).resolves.toEqual({ slug: 'alert' });
+    const query = new FindFeatBySlugQuery(
+      featsRepo as never,
+      mapper as never,
+      originBackgroundsQuery as never,
+    );
+    await expect(query.execute('alert')).resolves.toEqual({
+      slug: 'alert',
+      originBackgrounds: [],
+    });
+    expect(originBackgroundsQuery.execute).toHaveBeenCalledWith('alert');
   });
 
   it('throws when missing', async () => {
@@ -16,6 +28,7 @@ describe('FindFeatBySlugQuery', () => {
     const query = new FindFeatBySlugQuery(
       featsRepo as never,
       { toDto: jest.fn() } as never,
+      originBackgroundsQuery as never,
     );
     await expect(query.execute('x')).rejects.toThrow(NotFoundException);
   });

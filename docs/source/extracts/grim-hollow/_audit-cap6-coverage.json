@@ -1,0 +1,152 @@
+{
+  "extractedAt": "2026-08-31T23:12:53.382Z",
+  "transformationCount": 12,
+  "issueCount": 0,
+  "issues": [],
+  "rows": [
+    {
+      "slug": "gh-transformation-aberrant-horror",
+      "namePt": "Horror Aberrante",
+      "stages": 4,
+      "boons": 8,
+      "flaws": 4,
+      "appendices": 4,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J048_phb_feat_benefit_ghpg_transformation_aberrant_horror.sql"
+    },
+    {
+      "slug": "gh-transformation-fey",
+      "namePt": "Fada",
+      "stages": 4,
+      "boons": 12,
+      "flaws": 4,
+      "appendices": 1,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J049_phb_feat_benefit_ghpg_transformation_fey.sql"
+    },
+    {
+      "slug": "gh-transformation-fiend",
+      "namePt": "Corruptor",
+      "stages": 4,
+      "boons": 10,
+      "flaws": 4,
+      "appendices": 3,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J050_phb_feat_benefit_ghpg_transformation_fiend.sql"
+    },
+    {
+      "slug": "gh-transformation-hag",
+      "namePt": "Bruxa",
+      "stages": 4,
+      "boons": 12,
+      "flaws": 4,
+      "appendices": 3,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J051_phb_feat_benefit_ghpg_transformation_hag.sql"
+    },
+    {
+      "slug": "gh-transformation-lich",
+      "namePt": "Lich",
+      "stages": 4,
+      "boons": 12,
+      "flaws": 4,
+      "appendices": 3,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J052_phb_feat_benefit_ghpg_transformation_lich.sql"
+    },
+    {
+      "slug": "gh-transformation-lycanthrope",
+      "namePt": "Licantropo",
+      "stages": 4,
+      "boons": 10,
+      "flaws": 4,
+      "appendices": 1,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J053_phb_feat_benefit_ghpg_transformation_lycanthrope.sql"
+    },
+    {
+      "slug": "gh-transformation-ooze",
+      "namePt": "Gosma",
+      "stages": 4,
+      "boons": 9,
+      "flaws": 4,
+      "appendices": 1,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J054_phb_feat_benefit_ghpg_transformation_ooze.sql"
+    },
+    {
+      "slug": "gh-transformation-primordial",
+      "namePt": "Primordial",
+      "stages": 4,
+      "boons": 9,
+      "flaws": 4,
+      "appendices": 3,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J055_phb_feat_benefit_ghpg_transformation_primordial.sql"
+    },
+    {
+      "slug": "gh-transformation-seraph",
+      "namePt": "Serafim",
+      "stages": 4,
+      "boons": 11,
+      "flaws": 4,
+      "appendices": 1,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J056_phb_feat_benefit_ghpg_transformation_seraph.sql"
+    },
+    {
+      "slug": "gh-transformation-shadowsteel-ghoul",
+      "namePt": "Carniçal de Aço Sombrio",
+      "stages": 4,
+      "boons": 9,
+      "flaws": 4,
+      "appendices": 2,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J057_phb_feat_benefit_ghpg_transformation_shadowsteel_ghoul.sql"
+    },
+    {
+      "slug": "gh-transformation-specter",
+      "namePt": "Espectro",
+      "stages": 4,
+      "boons": 9,
+      "flaws": 4,
+      "appendices": 1,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J058_phb_feat_benefit_ghpg_transformation_specter.sql"
+    },
+    {
+      "slug": "gh-transformation-vampire",
+      "namePt": "Vampiro",
+      "stages": 4,
+      "boons": 16,
+      "flaws": 4,
+      "appendices": 3,
+      "emptyListRefs": 0,
+      "flavorLeaks": 0,
+      "orphanAdvancement": 0,
+      "seedFile": "J059_phb_feat_benefit_ghpg_transformation_vampire.sql"
+    }
+  ]
+}

@@ -30,10 +30,6 @@ export const GHPG_MODULAR_TRAIT_RAW_PATTERNS = [
     'Tempo entre feras lhe deu jeito com essas criaturas.',
   ],
   [
-    /Something must be done about that elf\. Last time I confronted her, she sicced my own dog on me\.\s*\n\s*—Disgruntled Neighbor/g,
-    'Algo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela sicou meu próprio cão contra mim.\n\n— Vizinho ressentido',
-  ],
-  [
     /When you desire to stand out, you have a natural gift for impressing others\./g,
     'Quando você quer se destacar, tem um dom natural para impressionar os outros.',
   ],
@@ -208,6 +204,18 @@ export function stripEnglishTraitPrefix(text, englishName, namePt) {
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** Remove citação de sidebar (— Autor) do fim de benefit_improved; fica só na description. */
+export function stripModularTraitFlavorAside(text) {
+  if (!text?.trim()) return text;
+  const attributionMatch = text.match(/\n\n— [^\n]+$/u);
+  if (!attributionMatch) return text;
+  const attributionStart = text.lastIndexOf(attributionMatch[0]);
+  const beforeAttribution = text.slice(0, attributionStart);
+  const quoteStart = beforeAttribution.lastIndexOf('\n\n');
+  if (quoteStart === -1) return text;
+  return beforeAttribution.slice(0, quoteStart).trimEnd();
 }
 
 export function translateGhpgModularTrait(text, options = {}) {

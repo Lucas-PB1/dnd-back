@@ -4,9 +4,9 @@ import {
   HERITAGE_SIZE_KIND,
   HERITAGE_SPEED_TRADE_KIND,
   HERITAGE_TRAIT_SLOT_9,
-  HERITAGE_TRAIT_SLOTS,
   aggregateTraitTakes,
   collectHeritageTraitPicks,
+  requiredHeritageTraitSlotKinds,
   type HeritageTraitPick,
 } from './aggregate-trait-takes';
 
@@ -41,7 +41,8 @@ export function validateHeritageChoices(input: ValidateHeritageChoicesInput): vo
     choice.choiceKind.startsWith('heritage_'),
   );
 
-  for (const kind of HERITAGE_TRAIT_SLOTS) {
+  const requiredTraitSlots = requiredHeritageTraitSlotKinds(heritageChoices);
+  for (const kind of requiredTraitSlots) {
     if (
       !heritageChoices.some(
         (choice) => choice.choiceKind === kind && choice.choiceSlug?.trim(),

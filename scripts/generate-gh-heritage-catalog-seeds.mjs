@@ -9,6 +9,7 @@ import { fileURLToPath } from 'url';
 import { HERITAGE_CATEGORY_LABEL_PT } from './lib/ghpg-cap1-heritage-pt.mjs';
 import { extracts } from './lib/docs-source.mjs';
 import { findTraitByAnchor } from './lib/ghpg-cap1-anchor.mjs';
+import { stripModularTraitFlavorAside } from './lib/ghpg-modular-trait-patterns.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
@@ -124,6 +125,9 @@ function buildJ037(cap1) {
   });
 
   const traitRows = cap1.traits.map((t) => {
+    const benefitImproved = t.benefitImproved
+      ? stripModularTraitFlavorAside(t.benefitImproved)
+      : null;
     return `(
   ${sqlLiteral(t.slug)},
   ${sqlLiteral(t.anchorId)},
@@ -131,7 +135,7 @@ function buildJ037(cap1) {
   ${sqlLiteral(t.name.replace(/\.$/, ''))},
   ${sqlLiteral(t.description)},
   ${sqlLiteral(t.benefitBase ?? t.description)},
-  ${t.benefitImproved ? sqlLiteral(t.benefitImproved) : 'NULL'},
+  ${benefitImproved ? sqlLiteral(benefitImproved) : 'NULL'},
   ${t.improvedName ? sqlLiteral(t.improvedName) : 'NULL'},
   ${sqlIntOrNull(t.maxTakes)},
   ${sqlLiteral(t.takeMode ?? 'stack')}::rpg.heritage_trait_take_mode

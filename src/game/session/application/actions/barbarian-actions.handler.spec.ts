@@ -34,11 +34,15 @@ describe('BarbarianActionsHandler', () => {
   };
   const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
   const mechanicalCatalog = { load: async () => ({ economyActions: [] }) };
+  const syncCompanion = { execute: jest.fn().mockResolvedValue(undefined) };
+  const dataSource = { query: jest.fn() };
   const handler = new BarbarianActionsHandler(
     access as never,
     state as never,
     domain as never,
     mechanicalCatalog as never,
+    syncCompanion as never,
+    dataSource as never,
   );
   const barbarian = {
     id: 'barb-1',

@@ -3,28 +3,23 @@
  * Uso: node scripts/verify-ghpg-mechanics.mjs
  */
 import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const apiRoot = path.join(__dirname, '..');
+import { extracts } from './lib/docs-source.mjs';
 
 const EXPECTED = {
-  backgrounds: { min: 25, file: 'ghpg-cap3-backgrounds-extract.json' },
-  feats: { min: 40, file: 'ghpg-cap4-feats-extract.json' },
-  transformations: { min: 12, file: 'ghpg-cap6-transformations-extract.json' },
+  backgrounds: { min: 25, path: extracts.grimHollow.cap3Backgrounds },
+  feats: { min: 40, path: extracts.grimHollow.cap4Feats },
+  transformations: { min: 12, path: extracts.grimHollow.cap6Transformations },
 };
 
-function loadJson(name) {
-  const p = path.join(apiRoot, 'docs/source', name);
-  if (!fs.existsSync(p)) {
-    console.error(`✗ Arquivo ausente: ${p}`);
+function loadJson(filePath) {
+  if (!fs.existsSync(filePath)) {
+    console.error(`✗ Arquivo ausente: ${filePath}`);
     return null;
   }
-  return JSON.parse(fs.readFileSync(p, 'utf8'));
+  return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
-function logActionEconomy(label, items, getText) {
+function logActionEconomy(label, items) {
   const withEconomy = items.filter((item) => (item.actionEconomy?.length ?? 0) > 0);
   const buckets = {};
   for (const item of items) {
@@ -37,17 +32,22 @@ function logActionEconomy(label, items, getText) {
 
 let ok = true;
 
-const cap3 = loadJson(EXPECTED.backgrounds.file);
+const cap3 = loadJson(EXPECTED.backgrounds.path);
 if (cap3) {
-  const pass = cap3.backgroundCount >= EXPECTED.backgrounds.min;
+  const count = cap3.backgroundCount ?? cap3.backgrounds?.length ?? 0;
+  const pass = count >= EXPECTED.backgrounds.min;
   ok &&= pass;
-  console.log(`${pass ? '✓' : '✗'} backgrounds: ${cap3.backgroundCount} (mín. ${EXPECTED.backgrounds.min})`);
-  logActionEconomy('backgrounds', cap3.backgrounds, (b) => b.description);
+  console.log(`${pass ? '✓' : '✗'} backgrounds: ${count} (mín. ${EXPECTED.backgrounds.min})`);
+  logActionEconomy('backgrounds', cap3.backgrounds ?? []);
 
-  const missingFeat = cap3.backgrounds.filter((b) => !b.feat?.slug);
-  const missingSkills = cap3.backgrounds.filter((b) => b.skillSlugs.length < 2);
-  const unmappedTools = cap3.backgrounds.filter((b) => b.toolProficiency?.kind === 'fixed' && !b.toolProficiency?.itemSlug);
-  const unmappedItems = cap3.backgrounds.flatMap((b) => b.equipment?.optionA?.items ?? []).filter((i) => !i.itemSlug && !i.choiceText);
+  const missingFeat = (cap3.backgrounds ?? []).filter((b) => !b.feat?.slug);
+  const missingSkills = (cap3.backgrounds ?? []).filter((b) => (b.skillSlugs?.length ?? 0) < 2);
+  const unmappedTools = (cap3.backgrounds ?? []).filter(
+    (b) => b.toolProficiency?.kind === 'fixed' && !b.toolProficiency?.itemSlug,
+  );
+  const unmappedItems = (cap3.backgrounds ?? [])
+    .flatMap((b) => b.equipment?.optionA?.items ?? [])
+    .filter((i) => !i.itemSlug && !i.choiceText);
   if (missingFeat.length) console.warn('  backgrounds sem feat:', missingFeat.map((b) => b.slug));
   if (missingSkills.length) console.warn('  backgrounds com <2 skills:', missingSkills.map((b) => b.slug));
   if (unmappedTools.length) console.warn('  tool proficiencies sem itemSlug:', unmappedTools.length);
@@ -57,24 +57,28 @@ if (cap3) {
   }
 }
 
-const cap4 = loadJson(EXPECTED.feats.file);
+const cap4 = loadJson(EXPECTED.feats.path);
 if (cap4) {
-  const pass = cap4.featCount >= EXPECTED.feats.min;
+  const count = cap4.featCount ?? cap4.feats?.length ?? 0;
+  const pass = count >= EXPECTED.feats.min;
   ok &&= pass;
-  console.log(`${pass ? '✓' : '✗'} feats: ${cap4.featCount} (mín. ${EXPECTED.feats.min})`, cap4.byCategory);
-  logActionEconomy('feats', cap4.feats, (f) => f.description);
-  const noBenefits = cap4.feats.filter((f) => !f.benefits.length);
+  console.log(`${pass ? '✓' : '✗'} feats: ${count} (mín. ${EXPECTED.feats.min})`, cap4.byCategory);
+  logActionEconomy('feats', cap4.feats ?? []);
+  const noBenefits = (cap4.feats ?? []).filter((f) => !f.benefits?.length);
   if (noBenefits.length) console.warn('  feats sem benefícios:', noBenefits.map((f) => f.slug));
 }
 
-const cap6 = loadJson(EXPECTED.transformations.file);
+const cap6 = loadJson(EXPECTED.transformations.path);
 if (cap6) {
-  const pass = cap6.transformationCount >= EXPECTED.transformations.min;
+  const count = cap6.transformationCount ?? cap6.transformations?.length ?? 0;
+  const pass = count >= EXPECTED.transformations.min;
   ok &&= pass;
-  console.log(`${pass ? '✓' : '✗'} transformations: ${cap6.transformationCount} (mín. ${EXPECTED.transformations.min})`);
-  logActionEconomy('transformations', cap6.transformations, (t) => t.becoming);
-  const stageCounts = cap6.transformations.map((t) => t.stages.length);
-  console.log(`  estágios por tipo: min=${Math.min(...stageCounts)} max=${Math.max(...stageCounts)}`);
+  console.log(`${pass ? '✓' : '✗'} transformations: ${count} (mín. ${EXPECTED.transformations.min})`);
+  logActionEconomy('transformations', cap6.transformations ?? []);
+  const stageCounts = (cap6.transformations ?? []).map((t) => t.stages?.length ?? 0);
+  if (stageCounts.length) {
+    console.log(`  estágios por tipo: min=${Math.min(...stageCounts)} max=${Math.max(...stageCounts)}`);
+  }
 }
 
 process.exit(ok ? 0 : 1);

@@ -169,8 +169,25 @@ Itens fora de J029 — comportamento de ficha, não prepared_spell.
 
 ---
 
+## Plano relacionado — Cap. 4 talentos
+
+**Doc:** [`grim-hollow-cap4-feats.md`](./grim-hollow-cap4-feats.md)  
+**Auditoria:** `node scripts/audit-ghpg-cap4.mjs`
+
+| Métrica | Estado |
+|---------|--------|
+| `phb_feat` GH | **41/41** ✓ |
+| PT (nomes/benefícios) | **~0%** |
+| Economy `feat_id` | **0** |
+| `featCombatNotes` GH | **0** |
+
+Próximo lote: overlay PT → pré-requisitos → passivos → economy P0 (~15 feats com AE).
+
+---
+
 ## Fora de escopo
 
 - Painel UI dedicado para cada uma das 40 subclasses
+- Cap. 4 feats (ver plano dedicado acima)
 - Re-tradução literária completa sem pedido explícito
 - Sub-escolhas de herança com persistência total (até bloquear mesa)

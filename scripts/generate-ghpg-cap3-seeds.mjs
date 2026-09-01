@@ -7,11 +7,16 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { extracts } from './lib/docs-source.mjs';
+import {
+  advancedWeaponProficiencyRequirement,
+  resolveFeatStructuredRequirement,
+} from './lib/ghpg-cap4-prerequisite-structured.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const apiRoot = path.join(__dirname, '..');
 const cap3Path = extracts.grimHollow.cap3Backgrounds;
 const cap4Path = extracts.grimHollow.cap4Feats;
+const cap4PtPath = extracts.grimHollow.cap4FeatsPt;
 const outDir = path.join(apiRoot, 'database/seeds/grim-hollow');
 
 const EDITION = 'grim-hollow-players-guide-2024-en';
@@ -74,9 +79,30 @@ WHERE slug = ${sqlLiteral(EDITION)};
 `;
 }
 
+/** @param {import('../docs/source/extracts/grim-hollow/cap4-feats.json')} cap4
+ * @param {import('../docs/source/extracts/grim-hollow/cap4-feats-pt.json') | null} cap4Pt
+ */
+function mergeFeatWithPt(feat, cap4Pt) {
+  const pt = cap4Pt?.feats?.[feat.slug];
+  if (!pt) return feat;
+  return {
+    ...feat,
+    nameEn: pt.namePt ?? feat.nameEn,
+    prerequisite: pt.prerequisitePt ?? feat.prerequisite,
+    intro: pt.introPt ?? feat.intro,
+    benefits: feat.benefits.map((benefit, index) => ({
+      ...benefit,
+      name: pt.benefits?.[index]?.namePt ?? benefit.name,
+      description: pt.benefits?.[index]?.descriptionPt ?? benefit.description,
+    })),
+  };
+}
+
 /** @param {import('../docs/source/extracts/grim-hollow/cap4-feats.json')} cap4 */
-function buildFeatsSql(cap4) {
-  const ghFeats = cap4.feats.filter((f) => f.slug !== 'advanced-weapon-proficiency');
+function buildFeatsSql(cap4, cap4Pt = null) {
+  const ghFeats = cap4.feats
+    .filter((f) => f.slug !== 'advanced-weapon-proficiency')
+    .map((f) => mergeFeatWithPt(f, cap4Pt));
   const featRows = ghFeats.map(
     (f) => `(
   ${sqlLiteral(f.slug)},
@@ -106,6 +132,15 @@ function buildFeatsSql(cap4) {
   }
 
   return `-- Grim Hollow Cap. 4 — talentos referenciados por antecedentes e catálogo GH
+
+DELETE FROM rpg.phb_feat_benefit
+WHERE feat_id IN (
+  SELECT f.id
+  FROM rpg.phb_feat f
+  INNER JOIN rpg.phb_source_citation sc ON sc.id = f.source_citation_id
+  WHERE sc.slug = ${sqlLiteral(CITATION_CAP4)}
+    AND f.slug <> 'advanced-weapon-proficiency'
+);
 
 INSERT INTO rpg.phb_feat (slug, name, category, repeatable, prerequisite, source_citation_id)
 VALUES
@@ -351,6 +386,111 @@ function resolveToolOptionSlugs(tp) {
   return [];
 }
 
+/** @param {import('../docs/source/extracts/grim-hollow/cap4-feats.json')} cap4 */
+function buildFeatRequirementsSql(cap4) {
+  /** @type {{ slug: string, req: import('./lib/ghpg-cap4-prerequisite-structured.mjs').StructuredFeatRequirement }[]} */
+  const entries = cap4.feats
+    .filter((f) => f.slug !== 'advanced-weapon-proficiency')
+    .map((f) => ({
+      slug: f.slug,
+      req: f.requirementStructured ?? resolveFeatStructuredRequirement(f),
+    }))
+    .filter((entry) => entry.req);
+
+  entries.push({
+    slug: 'advanced-weapon-proficiency',
+    req: advancedWeaponProficiencyRequirement(),
+  });
+
+  const mainRows = entries.map(
+    ({ slug, req }) => `(
+  ${sqlLiteral(slug)},
+  ${req.minimumLevel ?? 'NULL'},
+  ${req.requiresSpellcasting ? 'TRUE' : 'FALSE'},
+  ${req.requiresFightingStyle ? 'TRUE' : 'FALSE'}
+)`,
+  );
+
+  const abilityRows = [];
+  const featDepRows = [];
+  for (const { slug, req } of entries) {
+    for (const ability of req.abilityPrerequisites) {
+      abilityRows.push(
+        `(${sqlLiteral(slug)}, ${sqlLiteral(ability.abilitySlug)}, ${ability.minimumScore})`,
+      );
+    }
+    for (const requiredSlug of req.requiredFeatSlugs) {
+      featDepRows.push(`(${sqlLiteral(slug)}, ${sqlLiteral(requiredSlug)})`);
+    }
+  }
+
+  const backgroundNotes = entries
+    .filter(({ req }) => req.requiredBackgroundSlug)
+    .map(
+      ({ slug, req }) =>
+        `--   ${slug}: antecedente ${req.requiredBackgroundSlug} (só texto em prerequisite)`,
+    );
+
+  return `-- Grim Hollow Cap. 4 — pré-requisitos estruturados (phb_feat_requirement)
+-- Gerado por scripts/generate-ghpg-cap3-seeds.mjs
+${backgroundNotes.length ? `${backgroundNotes.join('\n')}\n` : ''}
+INSERT INTO rpg.phb_feat_requirement (
+  feat_id, minimum_level, requires_spellcasting, required_armor_category_id,
+  requires_fighting_style, requires_weapon_mastery
+)
+SELECT
+  feat.id,
+  requirement.minimum_level,
+  requirement.requires_spellcasting,
+  NULL,
+  requirement.requires_fighting_style,
+  FALSE
+FROM (
+  VALUES
+${mainRows.map((row) => `    ${row}`).join(',\n')}
+) AS requirement(feat_slug, minimum_level, requires_spellcasting, requires_fighting_style)
+JOIN rpg.phb_feat feat ON feat.slug = requirement.feat_slug
+JOIN rpg.phb_source_citation sc ON sc.id = feat.source_citation_id
+WHERE sc.slug = ${sqlLiteral(CITATION_CAP4)}
+ON CONFLICT (feat_id) DO UPDATE SET
+  minimum_level = EXCLUDED.minimum_level,
+  requires_spellcasting = EXCLUDED.requires_spellcasting,
+  required_armor_category_id = EXCLUDED.required_armor_category_id,
+  requires_fighting_style = EXCLUDED.requires_fighting_style,
+  requires_weapon_mastery = EXCLUDED.requires_weapon_mastery;
+
+${
+  abilityRows.length
+    ? `INSERT INTO rpg.phb_feat_requirement_ability (feat_id, ability_id, minimum_score)
+SELECT feat.id, ability.id, requirement.minimum_score
+FROM (
+  VALUES
+${abilityRows.map((row) => `    ${row}`).join(',\n')}
+) AS requirement(feat_slug, ability_slug, minimum_score)
+JOIN rpg.phb_feat feat ON feat.slug = requirement.feat_slug
+JOIN rpg.phb_ability ability ON ability.slug = requirement.ability_slug
+ON CONFLICT (feat_id, ability_id) DO UPDATE SET
+  minimum_score = EXCLUDED.minimum_score;
+
+`
+    : ''
+}${
+  featDepRows.length
+    ? `INSERT INTO rpg.phb_feat_requirement_feat (feat_id, required_feat_id)
+SELECT feat.id, required.id
+FROM (
+  VALUES
+${featDepRows.map((row) => `    ${row}`).join(',\n')}
+) AS dep(feat_slug, required_slug)
+JOIN rpg.phb_feat feat ON feat.slug = dep.feat_slug
+JOIN rpg.phb_feat required ON required.slug = dep.required_slug
+ON CONFLICT (feat_id, required_feat_id) DO NOTHING;
+
+`
+    : ''
+}`;
+}
+
 /** @param {import('../docs/source/extracts/grim-hollow/cap3-backgrounds.json')} cap3 */
 function buildToolOptionsSql(cap3) {
   const lines = [];
@@ -374,10 +514,18 @@ ON CONFLICT DO NOTHING;
 
 const cap3 = JSON.parse(fs.readFileSync(cap3Path, 'utf8'));
 const cap4 = JSON.parse(fs.readFileSync(cap4Path, 'utf8'));
+const cap4Pt = fs.existsSync(cap4PtPath)
+  ? JSON.parse(fs.readFileSync(cap4PtPath, 'utf8'))
+  : null;
 
 fs.mkdirSync(outDir, { recursive: true });
 fs.writeFileSync(path.join(outDir, 'J009_phb_edition_citation_cap1_cap3.sql'), buildCitationsSql(), 'utf8');
-fs.writeFileSync(path.join(outDir, 'J014_phb_feat_ghpg_cap4.sql'), buildFeatsSql(cap4), 'utf8');
+fs.writeFileSync(path.join(outDir, 'J014_phb_feat_ghpg_cap4.sql'), buildFeatsSql(cap4, cap4Pt), 'utf8');
+fs.writeFileSync(
+  path.join(outDir, 'J014b_phb_feat_requirement_ghpg.sql'),
+  buildFeatRequirementsSql(cap4),
+  'utf8',
+);
 fs.writeFileSync(path.join(outDir, 'J015_phb_background_ghpg.sql'), buildBackgroundsSql(cap3), 'utf8');
 fs.writeFileSync(path.join(outDir, 'J016_phb_background_ability_skill_ghpg.sql'), buildAbilitySkillSql(cap3), 'utf8');
 fs.writeFileSync(path.join(outDir, 'J017_phb_background_equipment_ghpg.sql'), buildEquipmentSql(cap3), 'utf8');
@@ -387,6 +535,6 @@ if (toolOptionsSql) {
   fs.writeFileSync(path.join(outDir, 'J020_phb_background_tool_option_ghpg.sql'), toolOptionsSql, 'utf8');
 }
 
-console.log('Seeds J009 (atualizado), J014–J018, J020 gerados em database/seeds/grim-hollow/');
+console.log('Seeds J009 (atualizado), J014–J014b, J015–J018, J020 gerados em database/seeds/grim-hollow/');
 console.log(`  backgrounds: ${cap3.backgroundCount}`);
-console.log(`  gh feats: ${cap4.featCount}`);
+console.log(`  gh feats: ${cap4.featCount}${cap4Pt ? ' (PT overlay)' : ''}`);

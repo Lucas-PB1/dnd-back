@@ -5,23 +5,23 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { extracts, scrapDir, scrapes } from './lib/docs-source.mjs';
 import {
   anchorToSlug,
   detectActionEconomy,
   extractBlock,
-  findGrimChapterHtml,
+  findGhpgChapterHtml,
   parseFeatBenefits,
+  parseFeatPrerequisite,
   stripTags,
 } from './lib/ghpg-html-utils.mjs';
+import { resolveFeatStructuredRequirement } from './lib/ghpg-cap4-prerequisite-structured.mjs';
 
-import { extracts, scrapes } from './lib/docs-source.mjs';
-
-const grimDir = scrapes.grimHollow;
 const outPath = extracts.grimHollow.cap4Feats;
 
-const htmlPath = findGrimChapterHtml(grimDir, 4);
+const htmlPath = findGhpgChapterHtml(4, scrapDir, scrapes.grimHollow);
 if (!htmlPath) {
-  console.error('HTML Cap. 4 GHPG não encontrado em docs/source/_scrapes/grim-hollow');
+  console.error('HTML Cap. 4 GHPG não encontrado em docs/source/scrap ou _scrapes/grim-hollow');
   process.exit(1);
 }
 
@@ -34,15 +34,10 @@ const SECTIONS = [
   { headingId: 'EpicBoonFeats', category: 'epic-boon', label: 'Epic Boon Feats' },
 ];
 
-function parsePrerequisite(block) {
-  const m = block.match(/<p[^>]*><em>Prerequisite:\s*([^<]+)<\/em><\/p>/i);
-  return m ? stripTags(m[1]) : null;
-}
-
 function parseFeat(anchorId, nameEn, category) {
   const block = extractBlock(html, anchorId, 3);
   const { intro, benefits } = parseFeatBenefits(block);
-  const prerequisite = parsePrerequisite(block);
+  const prerequisite = parseFeatPrerequisite(block);
   const fullText = stripTags(block);
   const repeatable = /repeatable/i.test(fullText);
 
@@ -52,6 +47,12 @@ function parseFeat(anchorId, nameEn, category) {
     actionEconomy: b.actionEconomy.length ? b.actionEconomy : detectActionEconomy(b.description),
   }));
 
+  const requirementStructured = resolveFeatStructuredRequirement({
+    slug: anchorToSlug(anchorId),
+    category,
+    prerequisite,
+  });
+
   return {
     slug: anchorToSlug(anchorId),
     anchorId,
@@ -59,6 +60,7 @@ function parseFeat(anchorId, nameEn, category) {
     category,
     repeatable,
     prerequisite,
+    requirementStructured,
     intro,
     benefits: benefitsWithEconomy,
     actionEconomy,

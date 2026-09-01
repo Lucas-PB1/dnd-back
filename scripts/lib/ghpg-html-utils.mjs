@@ -356,16 +356,136 @@ export function extractParagraphs(block, { skipAside = true } = {}) {
   return paras;
 }
 
+/** Parágrafos + listas + tabelas simples, na ordem do HTML. */
+export function extractStructuredProse(block, { skipAside = true } = {}) {
+  const cleaned = skipAside ? stripAsideBlocks(block) : block;
+  const parts = [];
+  const re =
+    /<p[^>]*>([\s\S]*?)<\/p>|<ul[^>]*>([\s\S]*?)<\/ul>|<ol[^>]*>([\s\S]*?)<\/ol>|<div class="table-overflow-wrapper">([\s\S]*?)<\/div>/gi;
+  for (const m of cleaned.matchAll(re)) {
+    if (m[1]) {
+      const text = stripTags(m[1]);
+      if (!text || text.startsWith('—')) continue;
+      if (/^He faded away as quickly/i.test(text)) continue;
+      parts.push(text);
+      continue;
+    }
+    if (m[2]) {
+      for (const li of m[2].matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)) {
+        const text = stripTags(li[1]);
+        if (text) parts.push(`• ${text}`);
+      }
+      continue;
+    }
+    if (m[3]) {
+      for (const li of m[3].matchAll(/<li[^>]*>([\s\S]*?)<\/li>/gi)) {
+        const text = stripTags(li[1]);
+        if (text) parts.push(`• ${text}`);
+      }
+      continue;
+    }
+    if (m[4]) {
+      const tableText = extractTableProse(m[4]);
+      if (tableText) parts.push(tableText);
+    }
+  }
+  if (parts.length > 0) return parts.join('\n\n');
+  return extractParagraphs(cleaned, { skipAside }).join('\n\n');
+}
+
+/** Converte `<table class="table-compendium">` em linhas legíveis. */
+export function extractTableProse(tableWrapper) {
+  const rows = [];
+  for (const tr of tableWrapper.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/gi)) {
+    const cells = [...tr[1].matchAll(/<t[dh][^>]*>([\s\S]*?)<\/t[dh]>/gi)].map(
+      (c) => stripTags(c[1]).replace(/\s+/g, ' ').trim(),
+    );
+    if (cells.some(Boolean)) rows.push(cells.join(' | '));
+  }
+  return rows.join('\n');
+}
+
+/** Remove citações de sabor coladas ao fim da prosa mecânica (Cap. 6). */
+export function stripCap6FlavorAside(text) {
+  if (!text) return text;
+  return text
+    .replace(/\n\nHe faded away[\s\S]*$/i, '')
+    .replace(/\n\n—Witness[\s\S]*$/i, '')
+    .trimEnd();
+}
+
+/** Remove sidebars DDB (ex.: regra opcional após o último benefício). */
+export function stripAsideBlocks(html) {
+  return html.replace(/<aside\b[\s\S]*?<\/aside>/gi, '');
+}
+
+const FEAT_TYPE_LINE_RE = /^(Origin|General|Fighting Style|Epic Boon) Feat\b/i;
+const BOILERPLATE_ONLY_RE = /^You gain the following benefits\.?$/i;
+
+function isFeatMetaParagraph(raw, text) {
+  if (!text) return true;
+  if (BOILERPLATE_ONLY_RE.test(text)) return true;
+  if (FEAT_TYPE_LINE_RE.test(text)) return true;
+  if (/^<em>(?:Origin|General|Fighting Style|Epic Boon)/i.test(raw)) return true;
+  return false;
+}
+
+function isFlavorOrQuoteParagraph(text) {
+  const trimmed = text.trim();
+  if (!trimmed) return true;
+  if (/^[\u2014—-]\s/.test(trimmed)) return true;
+  if (/^(?:Ah\.|The most powerful|I[''\u2019]ve seen|Kentigern endured)/i.test(trimmed)) return true;
+  if (trimmed === '//') return true;
+  return false;
+}
+
+function parsePlainBenefit(text) {
+  const match = text.match(/^([A-Z][A-Za-z\s'-]+)\.\s+(.+)/);
+  if (!match) return null;
+  return {
+    name: match[1].trim(),
+    description: match[2].trim(),
+    actionEconomy: detectActionEconomy(text),
+  };
+}
+
+function finalizeIntro(parts) {
+  return parts
+    .join('\n\n')
+    .trim()
+    .replace(/\s*You gain the following benefits\.?\s*$/i, '')
+    .trim();
+}
+
+/**
+ * Pré-requisito em parágrafo dedicado ou inline no tipo de talento GH.
+ * @param {string} block
+ * @returns {string | null}
+ */
+export function parseFeatPrerequisite(block) {
+  const legacy = block.match(/<p[^>]*><em>Prerequisite:\s*([^<]+)<\/em><\/p>/i);
+  if (legacy) return stripTags(legacy[1]);
+
+  const inline = block.match(
+    /<p[^>]*><em>(?:Origin|General|Fighting Style|Epic Boon) Feat\s*\(Prerequisite:\s*([\s\S]*?)\)<\/em><\/p>/i,
+  );
+  if (inline) {
+    return stripTags(inline[1].replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim();
+  }
+
+  return null;
+}
+
 export function parseFeatBenefits(block) {
   const benefits = [];
   const introParts = [];
   let seenBenefit = false;
+  const cleaned = stripAsideBlocks(block);
 
-  for (const m of block.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)) {
+  for (const m of cleaned.matchAll(/<p[^>]*>([\s\S]*?)<\/p>/gi)) {
     const raw = m[1];
     const text = stripTags(raw);
-    if (!text) continue;
-    if (/^(Origin|General|Fighting Style|Epic Boon) Feat$/i.test(text)) continue;
+    if (!text || isFeatMetaParagraph(raw, text)) continue;
 
     const benefit = raw.match(/<strong><em>([^<]+)\.<\/em><\/strong>\s*(.*)/i);
     if (benefit) {
@@ -375,14 +495,29 @@ export function parseFeatBenefits(block) {
         description: stripTags(benefit[2] || ''),
         actionEconomy: detectActionEconomy(stripTags(raw)),
       });
-    } else if (!seenBenefit) {
-      introParts.push(text);
-    } else if (seenBenefit && benefits.length) {
+      continue;
+    }
+
+    const plainBenefit = seenBenefit ? parsePlainBenefit(text) : null;
+    if (plainBenefit) {
+      benefits.push(plainBenefit);
+      continue;
+    }
+
+    if (/^Alternatively,/i.test(text) && benefits.length) {
       const last = benefits[benefits.length - 1];
       last.description = `${last.description} ${text}`.trim();
       last.actionEconomy = detectActionEconomy(last.description);
+      continue;
     }
+
+    if (!seenBenefit) {
+      introParts.push(text);
+      continue;
+    }
+
+    if (isFlavorOrQuoteParagraph(text)) continue;
   }
 
-  return { intro: introParts.join('\n\n'), benefits };
+  return { intro: finalizeIntro(introParts), benefits };
 }

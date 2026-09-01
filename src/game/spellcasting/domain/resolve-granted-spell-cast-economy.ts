@@ -87,7 +87,11 @@ export function resolveGrantedSpellCastEconomy(input: {
       input.featFixedSpells ?? [],
     );
     if (key === 'cantrip1' || key === 'cantrip2') return 'at_will';
-    if (key === 'firstLevelSpell' || key === 'bonusSpell') {
+    if (
+      key === 'firstLevelSpell' ||
+      key === 'bonusSpell' ||
+      key === 'bloodMagicSpell'
+    ) {
       return 'once_per_long_rest';
     }
     if (key?.startsWith('ritualSpell')) return 'slot_only';

@@ -55,6 +55,19 @@ describe('resolveGrantedSpellCastEconomy', () => {
         ],
       }),
     ).toBe('once_per_long_rest');
+    expect(
+      resolveGrantedSpellCastEconomy({
+        spellSlug: 'sangue-vital',
+        source: 'feat',
+        featOptions: [
+          {
+            featSlug: 'sangromantic-initiate',
+            optionKey: 'bloodMagicSpell',
+            valueId: 'sangue-vital',
+          },
+        ],
+      }),
+    ).toBe('once_per_long_rest');
   });
 
   it('marks species L1 at_will and L3+ once_per_long_rest', () => {

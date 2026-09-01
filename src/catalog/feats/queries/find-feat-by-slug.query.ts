@@ -5,6 +5,7 @@ import { requireFound } from '@common/require-found';
 import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import { FeatResponseDto } from '../dto/feat-response.dto';
 import { FeatsMapper } from '../feats.mapper';
+import { FindFeatOriginBackgroundsQuery } from './find-feat-origin-backgrounds.query';
 
 @Injectable()
 export class FindFeatBySlugQuery {
@@ -12,6 +13,7 @@ export class FindFeatBySlugQuery {
     @InjectRepository(VPhbFeat)
     private readonly featsRepo: Repository<VPhbFeat>,
     private readonly mapper: FeatsMapper,
+    private readonly originBackgroundsQuery: FindFeatOriginBackgroundsQuery,
   ) {}
 
   async execute(slug: string): Promise<FeatResponseDto> {
@@ -19,6 +21,10 @@ export class FindFeatBySlugQuery {
       await this.featsRepo.findOne({ where: { featSlug: slug } }),
       `Feat '${slug}' not found`,
     );
-    return this.mapper.toDto(row);
+    const originBackgrounds = await this.originBackgroundsQuery.execute(slug);
+    return {
+      ...this.mapper.toDto(row),
+      originBackgrounds,
+    };
   }
 }

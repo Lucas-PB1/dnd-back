@@ -5,24 +5,28 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { extracts, scrapDir, scrapes } from './lib/docs-source.mjs';
 import {
-  anchorToSlug,
   detectActionEconomy,
   extractBlock,
   extractParagraphs,
-  findGrimChapterHtml,
+  findGhpgChapterHtml,
   slugify,
   stripTags,
 } from './lib/ghpg-html-utils.mjs';
+import {
+  parseAppendices,
+  parseStages,
+} from './lib/ghpg-cap6-extract-helpers.mjs';
 
-import { extracts, scrapes } from './lib/docs-source.mjs';
-
-const grimDir = scrapes.grimHollow;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outPath = extracts.grimHollow.cap6Transformations;
 
-const htmlPath = findGrimChapterHtml(grimDir, 6);
+const htmlPath = findGhpgChapterHtml(6, scrapDir, scrapes.grimHollow);
 if (!htmlPath) {
-  console.error('HTML Cap. 6 GHPG não encontrado em docs/source/_scrapes/grim-hollow');
+  console.error(
+    'HTML Cap. 6 GHPG não encontrado em docs/source/scrap nem _scrapes/grim-hollow',
+  );
   process.exit(1);
 }
 
@@ -58,54 +62,6 @@ const TRANSFORMATION_NAME_PT = {
   Vampire: 'Vampiro',
 };
 
-function parseBoonsAndFlaws(stageBlock) {
-  const boons = [];
-  const flaws = [];
-
-  for (const m of stageBlock.matchAll(
-    /<h5[^>]*\sid="([^"]+)"[^>]*>([\s\S]*?)<\/h5>\s*([\s\S]*?)(?=<h5|<h4|<h3|<h2|<hr|$)/gi,
-  )) {
-    const anchorId = m[1];
-    const body = m[3];
-    const label = stripTags(m[2] || anchorId);
-    const text = extractParagraphs(body).join('\n\n');
-    const entry = {
-      anchorId,
-      name: label,
-      description: text,
-      actionEconomy: detectActionEconomy(text),
-    };
-    if (/flaw/i.test(anchorId) || /flaw/i.test(label)) flaws.push(entry);
-    else boons.push(entry);
-  }
-
-  return { boons, flaws };
-}
-
-function parseStages(typeBlock, typeName) {
-  const stages = [];
-
-  for (const m of typeBlock.matchAll(/<h4[^>]*\sid="([^"]*Stage(\d+))"[^>]*>[\s\S]*?<\/h4>\s*([^<]*)/gi)) {
-    const anchorId = m[1];
-    const stage = Number.parseInt(m[2], 10);
-    const stageBlock = extractBlock(typeBlock, anchorId, 4);
-    const { boons, flaws } = parseBoonsAndFlaws(stageBlock);
-    const bodyText = extractParagraphs(stageBlock).join('\n\n');
-    stages.push({
-      stage,
-      anchorId,
-      title: stripTags(m[3]) || `${typeName} Stage ${stage}`,
-      summary: bodyText.split('\n\n')[0] ?? '',
-      body: bodyText,
-      boons,
-      flaws,
-      actionEconomy: detectActionEconomy(bodyText),
-    });
-  }
-
-  return stages.sort((a, b) => a.stage - b.stage);
-}
-
 function anchorIdToDisplayName(anchorId) {
   const fixed = anchorId.replace(/^Abberant/, 'Aberrant');
   return fixed.replace(/([a-z])([A-Z])/g, '$1 $2');
@@ -118,12 +74,13 @@ function parseTransformation(anchorId) {
 
   const becomingId = block.match(/<h3[^>]*\sid="BecomingAn?([^"]+)"[^>]*>/i)?.[1];
   const becomingBlock = becomingId
-    ? extractBlock(block, `BecomingAn${becomingId}`, 3) || extractBlock(block, `BecomingA${becomingId}`, 3)
+    ? extractBlock(block, `BecomingAn${becomingId}`, 3) ||
+      extractBlock(block, `BecomingA${becomingId}`, 3)
     : '';
   const becoming = extractParagraphs(becomingBlock).join('\n\n');
 
-  const stagesBlockMatch = block.match(/<h3[^>]*id="[^"]*Stages"[^>]*>/i);
   const stages = parseStages(block, nameEn);
+  const appendices = parseAppendices(block);
 
   const fullText = stripTags(block);
 
@@ -134,13 +91,17 @@ function parseTransformation(anchorId) {
     namePt: TRANSFORMATION_NAME_PT[nameEn] ?? nameEn,
     becoming,
     stages,
+    appendices,
     boonCount: stages.reduce((n, s) => n + s.boons.length, 0),
     flawCount: stages.reduce((n, s) => n + s.flaws.length, 0),
+    appendixCount: appendices.length,
     actionEconomy: detectActionEconomy(fullText),
   };
 }
 
-const transformations = TRANSFORMATION_TYPES.map((id) => parseTransformation(id)).filter((t) => t.stages.length > 0);
+const transformations = TRANSFORMATION_TYPES.map((id) =>
+  parseTransformation(id),
+).filter((t) => t.stages.length > 0);
 
 const output = {
   source: {
@@ -160,5 +121,7 @@ fs.writeFileSync(outPath, `${JSON.stringify(output, null, 2)}\n`, 'utf8');
 console.log(`Wrote ${outPath}`);
 console.log(`Transformations: ${transformations.length}`);
 for (const t of transformations) {
-  console.log(`  ${t.nameEn}: ${t.stages.length} stages, ${t.boonCount} boons, ${t.flawCount} flaws`);
+  console.log(
+    `  ${t.nameEn}: ${t.stages.length} stages, ${t.boonCount} boons, ${t.flawCount} flaws, ${t.appendixCount} appendices`,
+  );
 }

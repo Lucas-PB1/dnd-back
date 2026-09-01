@@ -15,6 +15,7 @@ import { CAP1_TRAIT_BENEFITS_PT } from './lib/ghpg-cap1-trait-benefits-pt.mjs';
 import { translateGhpgBody } from './lib/ghpg-mechanical-glossary.mjs';
 import {
   applyModularTraitRawPatterns,
+  stripModularTraitFlavorAside,
   translateGhpgModularTrait,
   translateSkillNames,
 } from './lib/ghpg-modular-trait-patterns.mjs';
@@ -82,11 +83,14 @@ for (const t of extract.traits) {
   const benefitBase = curated
     ? curated.benefitBase
     : translateTraitField(t.benefitBase ?? t.description, t);
-  const benefitImproved = curated
+  const benefitImprovedRaw = curated
     ? curated.benefitImproved
     : t.benefitImproved
       ? translateTraitField(t.benefitImproved, t)
       : null;
+  const benefitImproved = benefitImprovedRaw
+    ? stripModularTraitFlavorAside(benefitImprovedRaw)
+    : null;
   const description = curated
     ? [benefitBase, benefitImproved].filter(Boolean).join('\n\n')
     : translateTraitField(t.description, t);

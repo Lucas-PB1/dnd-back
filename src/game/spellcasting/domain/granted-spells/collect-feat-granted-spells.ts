@@ -11,6 +11,7 @@ const FEAT_SPELL_OPTION_KEYS = new Set([
   'cantrip2',
   'firstLevelSpell',
   'bonusSpell',
+  'bloodMagicSpell',
 ]);
 
 function isFeatSpellOption(featSlug: string, optionKey: string): boolean {

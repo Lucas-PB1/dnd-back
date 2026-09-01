@@ -463,17 +463,9 @@ Além disso, quando você faz um teste de atributo usando Consciência Ambiental
   'Aliado Animal',
   'Tempo entre feras lhe deu jeito com essas criaturas. Você tem proficiência na perícia Adestrar Animais.
 
-Aliado Animal. Se você escolher este traço duas vezes, você tem Vantagem em testes de Adestrar Animais. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
-
-Algo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela soltou meu próprio cão contra mim.
-
-— Vizinho ressentido',
+Aliado Animal. Se você escolher este traço duas vezes, você tem Vantagem em testes de Adestrar Animais. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Tempo entre feras lhe deu jeito com essas criaturas. Você tem proficiência na perícia Adestrar Animais.',
-  'Aliado Animal. Se você escolher este traço duas vezes, você tem Vantagem em testes de Adestrar Animais. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
-
-Algo precisa ser feito com aquela elfa. Da última vez que a confrontei, ela soltou meu próprio cão contra mim.
-
-— Vizinho ressentido',
+  'Aliado Animal. Se você escolher este traço duas vezes, você tem Vantagem em testes de Adestrar Animais. Você pode usar este recurso um número de vezes igual a duas vezes seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
   'Aliado Animal',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -963,17 +955,9 @@ Investida Furiosa. Se você escolher este traço duas vezes, quando usa Ataque d
   'Velocidade Furiosa',
   'As muitas coisas que querem matá-lo precisam alcançá-lo primeiro. No seu turno, você pode aumentar seu Deslocamento em 9 m até o fim do turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Velocidade Furiosa. Se você escolher este traço duas vezes, em um turno em que usa Explosão de Velocidade, você não provoca Ataques de Oportunidade.
-
-No campo de batalha, pés rápidos são a melhor armadura que se pode pedir. Se um inimigo não consegue alcançá-lo, não pode feri-lo. Agora erga esses joelhos!
-
-— Instrutor de milícia',
+Velocidade Furiosa. Se você escolher este traço duas vezes, em um turno em que usa Explosão de Velocidade, você não provoca Ataques de Oportunidade.',
   'As muitas coisas que querem matá-lo precisam alcançá-lo primeiro. No seu turno, você pode aumentar seu Deslocamento em 9 m até o fim do turno. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Velocidade Furiosa. Se você escolher este traço duas vezes, em um turno em que usa Explosão de Velocidade, você não provoca Ataques de Oportunidade.
-
-No campo de batalha, pés rápidos são a melhor armadura que se pode pedir. Se um inimigo não consegue alcançá-lo, não pode feri-lo. Agora erga esses joelhos!
-
-— Instrutor de milícia',
+  'Velocidade Furiosa. Se você escolher este traço duas vezes, em um turno em que usa Explosão de Velocidade, você não provoca Ataques de Oportunidade.',
   'Velocidade Furiosa',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1365,17 +1349,9 @@ Líder de Matilha. Se você escolher este traço duas vezes, Caçador de Matilha
   'Mudança de Fase',
   'Sua presença corpórea oscila e se desvanece, enfraquecendo a capacidade dos inimigos de feri-lo. Como Ação Bônus, por 1 minuto, todas as criaturas têm Desvantagem em jogadas de ataque contra você, e você pode se mover através dos espaços de outras criaturas sem tratá-los como Terreno Difícil. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Mudança de Fase. Se você escolher este traço duas vezes, quando usa Fora de Fase, pode estender o benefício a qualquer aliado a até 3 m de você.
-
-Prepare uma cela especial para essa. Ela tem truques.
-
-— Carcereiro castinelano',
+Mudança de Fase. Se você escolher este traço duas vezes, quando usa Fora de Fase, pode estender o benefício a qualquer aliado a até 3 m de você.',
   'Sua presença corpórea oscila e se desvanece, enfraquecendo a capacidade dos inimigos de feri-lo. Como Ação Bônus, por 1 minuto, todas as criaturas têm Desvantagem em jogadas de ataque contra você, e você pode se mover através dos espaços de outras criaturas sem tratá-los como Terreno Difícil. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Mudança de Fase. Se você escolher este traço duas vezes, quando usa Fora de Fase, pode estender o benefício a qualquer aliado a até 3 m de você.
-
-Prepare uma cela especial para essa. Ela tem truques.
-
-— Carcereiro castinelano',
+  'Mudança de Fase. Se você escolher este traço duas vezes, quando usa Fora de Fase, pode estender o benefício a qualquer aliado a até 3 m de você.',
   'Mudança de Fase',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1599,17 +1575,9 @@ Erudito em Sangromancia. Se você escolher este traço duas vezes, quando usa Sa
   'Sonhos Secretos',
   'Sempre que descansa, você toca os sonhos daqueles ao redor, semeando seus pensamentos e memórias em sua própria mente. Quando faz um teste de atributo para recordar lore ou conhecimento, tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.
 
-Sonhos Secretos. Se você escolher este traço duas vezes, você ganha um conhecimento instintivo dos segredos de outras criaturas enquanto toca seus sonhos. Usando uma ação Procurar, você se concentra em uma criatura que possa ver e faz um teste de Intuição de Sabedoria CD 15. Com um sucesso, aprende um segredo à escolha do Mestre conhecido por essa criatura. Os segredos de criaturas que não têm idioma chegam a você como imagens e impressões vagas. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.
-
-Para que se preocupar com interrogatório? Deixe-o descansar algumas horas. Eu trago suas respostas.
-
-— Varrigan, o Caminhante dos Sonhos',
+Sonhos Secretos. Se você escolher este traço duas vezes, você ganha um conhecimento instintivo dos segredos de outras criaturas enquanto toca seus sonhos. Usando uma ação Procurar, você se concentra em uma criatura que possa ver e faz um teste de Intuição de Sabedoria CD 15. Com um sucesso, aprende um segredo à escolha do Mestre conhecido por essa criatura. Os segredos de criaturas que não têm idioma chegam a você como imagens e impressões vagas. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.',
   'Sempre que descansa, você toca os sonhos daqueles ao redor, semeando seus pensamentos e memórias em sua própria mente. Quando faz um teste de atributo para recordar lore ou conhecimento, tem Vantagem no teste. Você pode usar este recurso um número de vezes igual ao seu Bônus de Proficiência, recuperando todos os usos ao terminar um Descanso Longo.',
-  'Sonhos Secretos. Se você escolher este traço duas vezes, você ganha um conhecimento instintivo dos segredos de outras criaturas enquanto toca seus sonhos. Usando uma ação Procurar, você se concentra em uma criatura que possa ver e faz um teste de Intuição de Sabedoria CD 15. Com um sucesso, aprende um segredo à escolha do Mestre conhecido por essa criatura. Os segredos de criaturas que não têm idioma chegam a você como imagens e impressões vagas. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.
-
-Para que se preocupar com interrogatório? Deixe-o descansar algumas horas. Eu trago suas respostas.
-
-— Varrigan, o Caminhante dos Sonhos',
+  'Sonhos Secretos. Se você escolher este traço duas vezes, você ganha um conhecimento instintivo dos segredos de outras criaturas enquanto toca seus sonhos. Usando uma ação Procurar, você se concentra em uma criatura que possa ver e faz um teste de Intuição de Sabedoria CD 15. Com um sucesso, aprende um segredo à escolha do Mestre conhecido por essa criatura. Os segredos de criaturas que não têm idioma chegam a você como imagens e impressões vagas. Você recupera o uso deste recurso ao terminar um Descanso Curto ou Longo.',
   'Sonhos Secretos',
   2,
   'stack'::rpg.heritage_trait_take_mode
@@ -1795,19 +1763,11 @@ Fio Inabalável. Se você escolher este traço duas vezes, você pode obter o n�
 
 Firmeza. Se você escolher este traço duas vezes, levantar-se de Caído consome apenas 1,5 m de deslocamento em vez da metade do seu deslocamento.
 
-Além disso, quando falha em uma salvaguarda contra ser derrubado (Caído), pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.
-
-Não fique no chão. Nunca fique no chão. Se ficar no chão, você está morto.
-
-— Guia de Sobrevivência do Caçador de Monstros',
+Além disso, quando falha em uma salvaguarda contra ser derrubado (Caído), pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Não importa que tipo de convulsão o cerca, você mantém a posição. Você tem Vantagem em salvaguardas contra a condição Caído.',
   'Firmeza. Se você escolher este traço duas vezes, levantar-se de Caído consome apenas 1,5 m de deslocamento em vez da metade do seu deslocamento.
 
-Além disso, quando falha em uma salvaguarda contra ser derrubado (Caído), pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.
-
-Não fique no chão. Nunca fique no chão. Se ficar no chão, você está morto.
-
-— Guia de Sobrevivência do Caçador de Monstros',
+Além disso, quando falha em uma salvaguarda contra ser derrubado (Caído), pode usar sua Reação para ter sucesso na salvaguarda em vez disso. Você recupera o uso deste recurso ao terminar um Descanso Longo.',
   'Firmeza',
   2,
   'stack'::rpg.heritage_trait_take_mode

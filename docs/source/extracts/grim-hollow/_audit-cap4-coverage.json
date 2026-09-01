@@ -1,0 +1,434 @@
+{
+  "generatedAt": "2026-08-31T21:20:00.995Z",
+  "htmlFile": "Chapter 4_ Character Feats - Grim Hollow_ Player’s Guide - Dungeons & Dragons - Sources - D&D Beyond.html",
+  "extractCount": 41,
+  "byCategory": {
+    "origin": 9,
+    "general": 13,
+    "fighting-style": 7,
+    "epic-boon": 12
+  },
+  "seedCount": 40,
+  "dbCount": 41,
+  "missingInDb": [],
+  "extraInDb": [],
+  "missingInSeed": [],
+  "extraInSeed": [],
+  "benefitMismatches": [],
+  "dbBenefitDrift": [],
+  "categoryMismatches": [],
+  "enNamesInDb": 36,
+  "benefitsLikelyEn": 0,
+  "rows": [
+    {
+      "slug": "blood-hound",
+      "category": "origin",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "",
+      "actionEconomy": "",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "convincing-inquisitor",
+      "category": "origin",
+      "benefitsExtract": 4,
+      "benefitsDb": 4,
+      "prerequisite": "",
+      "actionEconomy": "action",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "deathbound",
+      "category": "origin",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "",
+      "actionEconomy": "",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "fortuneofthe-thaumaturge",
+      "category": "origin",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "",
+      "actionEconomy": "",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "free-sword-mercenarys-will",
+      "category": "origin",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "",
+      "actionEconomy": "reaction",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "insightful-collector",
+      "category": "origin",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "",
+      "actionEconomy": "action",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "resolutionofthe-syndicate",
+      "category": "origin",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "",
+      "actionEconomy": "",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "survivor",
+      "category": "origin",
+      "benefitsExtract": 4,
+      "benefitsDb": 4,
+      "prerequisite": "",
+      "actionEconomy": "action",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "triage-expert",
+      "category": "origin",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "",
+      "actionEconomy": "action",
+      "linkedBackground": true,
+      "status": "OK"
+    },
+    {
+      "slug": "blackpowder-pistol-expert",
+      "category": "general",
+      "benefitsExtract": 5,
+      "benefitsDb": 5,
+      "prerequisite": "Level 4+",
+      "actionEconomy": "reaction",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "expanded-grip",
+      "category": "general",
+      "benefitsExtract": 4,
+      "benefitsDb": 4,
+      "prerequisite": "Level 4+, Strength 13+",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "hulking-figure",
+      "category": "general",
+      "benefitsExtract": 5,
+      "benefitsDb": 5,
+      "prerequisite": "Level 4+, Strength 13+",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "iron-gut",
+      "category": "general",
+      "benefitsExtract": 5,
+      "benefitsDb": 5,
+      "prerequisite": "Level 4+, Constitution 13+",
+      "actionEconomy": "bonus,action",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "lightning-caster",
+      "category": "general",
+      "benefitsExtract": 4,
+      "benefitsDb": 4,
+      "prerequisite": "Level 4+, Spellcasting or Pact Magic Feature",
+      "actionEconomy": "bonus,reaction,action",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "medicianofthe-morbus-doctore",
+      "category": "general",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "Level 4+, Triage Expert Feat",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "nimble-physique",
+      "category": "general",
+      "benefitsExtract": 4,
+      "benefitsDb": 4,
+      "prerequisite": "Level 4+, Dexterity 13+",
+      "actionEconomy": "bonus,action",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "sangromantic-initiate",
+      "category": "general",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "Level 4+, Spellcasting or Pact Magic Feature",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "shadowsteel-adept",
+      "category": "general",
+      "benefitsExtract": 5,
+      "benefitsDb": 5,
+      "prerequisite": "Level 4+, Spellcasting or Pact Magic Feature",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "shadowsteel-master",
+      "category": "general",
+      "benefitsExtract": 4,
+      "benefitsDb": 4,
+      "prerequisite": "Level 8+, Shadowsteel Adept Feat",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "syndicate-spy",
+      "category": "general",
+      "benefitsExtract": 5,
+      "benefitsDb": 5,
+      "prerequisite": "Level 4+, Syndicate Smuggler background",
+      "actionEconomy": "action",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "thrown-weapon-master",
+      "category": "general",
+      "benefitsExtract": 5,
+      "benefitsDb": 5,
+      "prerequisite": "Level 4+, Strength or Dexterity 13+",
+      "actionEconomy": "bonus,action",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "witch-hunter",
+      "category": "general",
+      "benefitsExtract": 5,
+      "benefitsDb": 5,
+      "prerequisite": "Level 4+",
+      "actionEconomy": "reaction",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "advanced-weapon-proficiency",
+      "category": "fighting-style",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Fighting Style Feature, Special",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "close-combat-artillerist",
+      "category": "fighting-style",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Fighting Style Feature",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "dual-shot",
+      "category": "fighting-style",
+      "benefitsExtract": 1,
+      "benefitsDb": 1,
+      "prerequisite": "Fighting Style Feature",
+      "actionEconomy": "action",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "flurry",
+      "category": "fighting-style",
+      "benefitsExtract": 1,
+      "benefitsDb": 1,
+      "prerequisite": "Fighting Style Feature",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "mobile-combatant",
+      "category": "fighting-style",
+      "benefitsExtract": 1,
+      "benefitsDb": 1,
+      "prerequisite": "Fighting Style Feature",
+      "actionEconomy": "action",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "opportunist",
+      "category": "fighting-style",
+      "benefitsExtract": 1,
+      "benefitsDb": 1,
+      "prerequisite": "Fighting Style Feature",
+      "actionEconomy": "reaction",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "prone-defense",
+      "category": "fighting-style",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Fighting Style Feature",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-archlich",
+      "category": "epic-boon",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Level 19+, Lich Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-ascended-vampire",
+      "category": "epic-boon",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Level 19+, Vampire Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-earthly-tether",
+      "category": "epic-boon",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "Level 19+, Specter Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-elder-horror",
+      "category": "epic-boon",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "Level 19+, Aberrant Horror Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-elder-fey",
+      "category": "epic-boon",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "Level 19+, Fey Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-elder-fiend",
+      "category": "epic-boon",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "Level 19+, Fiend Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-elemental-temperance",
+      "category": "epic-boon",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Level 19+, Primordial Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-high-seraph",
+      "category": "epic-boon",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "Level 19+, Seraph Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonof-magic-resistance",
+      "category": "epic-boon",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Level 19+",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonof-perfect-flight",
+      "category": "epic-boon",
+      "benefitsExtract": 3,
+      "benefitsDb": 3,
+      "prerequisite": "Level 19+",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonof-shadowsteel-mastery",
+      "category": "epic-boon",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Level 19+, Shadowsteel Ghoul Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    },
+    {
+      "slug": "boonofthe-wilds",
+      "category": "epic-boon",
+      "benefitsExtract": 2,
+      "benefitsDb": 2,
+      "prerequisite": "Level 19+, Lycanthrope Transformation",
+      "actionEconomy": "",
+      "linkedBackground": false,
+      "status": "OK"
+    }
+  ]
+}

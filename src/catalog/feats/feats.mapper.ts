@@ -37,6 +37,7 @@ export class FeatsMapper {
       sourceChapterTitle: row.sourceChapterTitle,
       editionSlug: row.editionSlug,
       benefits: row.benefits ?? [],
+      originBackgrounds: [],
     };
   }
 }
