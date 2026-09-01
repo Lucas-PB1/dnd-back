@@ -1,6 +1,12 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { isGunslingerClass } from '@game/combat/domain/gunslinger';
+import {
+  canUseFirearmTableActions,
+  isBlackPowderPistolSlug,
+  isFirearmTableActionSlug,
+} from '@game/combat/domain/feat/grim-hollow-cap4-weapon-rules';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
   TableActionResponseDto,
@@ -13,6 +19,7 @@ export class GunslingerActionsHandler {
   constructor(
     private readonly access: PlayerCharacterAccessService,
     private readonly state: CharacterStateRepository,
+    private readonly sheet: CharacterSheetRepository,
   ) {}
 
   async listManeuvers(userId: string, characterId: string) {
@@ -34,8 +41,9 @@ export class GunslingerActionsHandler {
       characterId,
       'write',
     );
-    if (!isGunslingerClass(character.classSlug)) {
-      throw new BadRequestException('Gunslinger action is not available');
+    const isGunslinger = isGunslingerClass(character.classSlug);
+    if (!isGunslinger) {
+      await this.assertNonGunslingerFirearmAction(character.id, dto);
     }
 
     switch (dto.actionSlug) {
@@ -95,6 +103,26 @@ export class GunslingerActionsHandler {
         throw new BadRequestException(
           `Ação de Pistoleiro desconhecida: ${dto.actionSlug as string}`,
         );
+    }
+  }
+
+  private async assertNonGunslingerFirearmAction(
+    characterId: string,
+    dto: UseGunslingerTableActionDto,
+  ): Promise<void> {
+    if (!isFirearmTableActionSlug(dto.actionSlug)) {
+      throw new BadRequestException('Gunslinger action is not available');
+    }
+    const sheet = await this.sheet.load(characterId);
+    const featSlugs = sheet.characterFeats.map((feat) => feat.featSlug);
+    if (!canUseFirearmTableActions({ classSlug: '', featSlugs })) {
+      throw new BadRequestException('Gunslinger action is not available');
+    }
+    const itemSlug = requireItemSlug(dto.itemSlug);
+    if (!isBlackPowderPistolSlug(itemSlug)) {
+      throw new BadRequestException(
+        'Ação disponível apenas para pistola de pólvora',
+      );
     }
   }
 }

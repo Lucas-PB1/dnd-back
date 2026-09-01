@@ -29,6 +29,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
     Pick<
       CharacterClassOptionsValidator,
       | 'validateSpeciesChoices'
+      | 'validateOriginChoices'
       | 'validateSubclassOptions'
       | 'validateFightingStyleSelections'
       | 'validateClassExpertiseOptions'
@@ -69,6 +70,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
     spellsValidator = { validateCharacterSpells: jest.fn().mockResolvedValue(undefined) };
     classOptionsValidator = {
       validateSpeciesChoices: jest.fn().mockResolvedValue(undefined),
+      validateOriginChoices: jest.fn().mockResolvedValue(undefined),
       validateSubclassOptions: jest.fn().mockResolvedValue(undefined),
       validateFightingStyleSelections: jest.fn().mockResolvedValue(undefined),
       validateClassExpertiseOptions: jest.fn().mockResolvedValue(undefined),
@@ -169,7 +171,7 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       characterFeats: [{ featSlug: 'alert', instanceIndex: 0 }],
     };
     await validator.validateSheetInput(input, ctx);
-    expect(classOptionsValidator.validateSpeciesChoices).toHaveBeenCalled();
+    expect(classOptionsValidator.validateOriginChoices).toHaveBeenCalled();
     expect(classOptionsValidator.validateClassExpertiseOptions).toHaveBeenCalled();
     expect(classOptionsValidator.validateClassWeaponMasteryOptions).toHaveBeenCalled();
     expect(classOptionsValidator.validateClassFeatureOptions).toHaveBeenCalled();

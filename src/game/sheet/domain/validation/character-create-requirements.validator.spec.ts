@@ -24,6 +24,7 @@ describe('CharacterCreateRequirementsValidator', () => {
     Pick<
       CharacterClassOptionsValidator,
       | 'validateSpeciesChoices'
+      | 'validateOriginChoices'
       | 'resolveSubclassUnlockLevel'
       | 'loadSubclassOptionKeysAtLevel'
       | 'validateSubclassOptions'
@@ -63,6 +64,7 @@ describe('CharacterCreateRequirementsValidator', () => {
     };
     classOptionsValidator = {
       validateSpeciesChoices: jest.fn().mockResolvedValue(undefined),
+      validateOriginChoices: jest.fn().mockResolvedValue(undefined),
       resolveSubclassUnlockLevel: jest.fn().mockResolvedValue(3),
       loadSubclassOptionKeysAtLevel: jest.fn().mockResolvedValue([]),
       validateSubclassOptions: jest.fn().mockResolvedValue(undefined),

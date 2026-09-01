@@ -112,6 +112,12 @@ export type WeaponAttack = {
   /** Elegível para Ataque Furtivo: arma com Acuidade ou ataque à distância. */
   sneakAttackEligible: boolean;
   /**
+   * Golpe Rápido (Determinação do Sindicato) — dados extras no toggle de dano.
+   */
+  quickStrikeDice: string | null;
+  /** Recarga Rápida: ignora propriedade Recarregar (pistola de pólvora). */
+  ignoresReload: boolean;
+  /**
    * Dado de Artes Marciais do Monge aplicado a este ataque (`1d6`…`1d12`);
    * `null` quando não é arma de Monge ou o personagem não é Monge.
    */

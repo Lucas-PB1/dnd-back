@@ -497,6 +497,41 @@ describe('computeWeaponAttacks', () => {
     expect(attack.brutalStrikeDice).toBe('1d10');
   });
 
+  it('grants pistol proficiency and fast reload with blackpowder-pistol-expert', () => {
+    const pistol: EquippedWeaponPiece = {
+      itemSlug: 'blackpowder-pistol',
+      itemName: 'Pistola de Pólvora',
+      category: 'advanced',
+      damage: '2d4',
+      damageType: 'Perfurante',
+      versatileDamage: null,
+      propertySlugs: ['blackpowder', 'light', 'loading', 'ammunition', 'firearm', 'reload'],
+      equipmentSlot: 'main_hand',
+      reloadCapacity: 1,
+    };
+    const [attack] = computeWeaponAttacks(scores({ destreza: 16 }), [pistol], {
+      proficiencyBonus: 2,
+      weaponProficiencySlugs: ['armas-simples'],
+      featSlugs: ['blackpowder-pistol-expert'],
+      classSlug: 'fighter',
+      level: 5,
+    });
+    expect(attack.proficient).toBe(true);
+    expect(attack.reloadCapacity).toBeNull();
+    expect(attack.ignoresReload).toBe(true);
+    expect(attack.attackNote).toContain('Recarga Rápida');
+    expect(attack.attackNote).toContain('Olho de Águia');
+  });
+
+  it('exposes quick strike dice for resolutionofthe-syndicate', () => {
+    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
+      ...fighterContext,
+      featSlugs: ['resolutionofthe-syndicate'],
+      level: 9,
+    });
+    expect(attack.quickStrikeDice).toBe('2d4');
+  });
+
   it('adds a synthetic Unarmed Strike with the Martial Arts die for monks', () => {
     const attacks = computeWeaponAttacks(scores({ forca: 10, destreza: 16 }), [], {
       proficiencyBonus: 3,

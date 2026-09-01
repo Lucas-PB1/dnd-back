@@ -20,6 +20,7 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
+import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
 import { LoadGrantedSpellCatalog } from '../spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '../spellcasting/application/resolve-subclass-option-granted-spells';
 import { CampaignCharacterAccessService } from '../campaign/infrastructure/campaign-character-access.service';
@@ -219,8 +220,13 @@ describe('Characters application layer', () => {
               }),
             },
           },
-        },        {
+        },
+        {
           provide: getRepositoryToken(VPhbSubclassPreparedSpell),
+          useValue: { find: jest.fn().mockResolvedValue([]) },
+        },
+        {
+          provide: getRepositoryToken(PhbHeritageTrait),
           useValue: { find: jest.fn().mockResolvedValue([]) },
         },
         {

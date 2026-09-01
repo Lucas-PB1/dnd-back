@@ -1,4 +1,11 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import {
+  hasBlackPowderPistolExpert,
+  hasSyndicateQuickStrike,
+  ignoresBlackPowderPistolReload,
+  isBlackPowderPistolPiece,
+  syndicateQuickStrikeDice,
+} from '../feat/grim-hollow-cap4-weapon-rules';
 import { brutalStrikeDice as resolveBrutalStrikeDice, divineFuryExtraDice, hasDivineFury } from '../barbarian/rage';
 import { resolveAttackCritThreshold } from '../gunslinger/firearm';
 import {
@@ -117,6 +124,13 @@ export function computeOneAttack(
     monkEligible,
   });
   const isFirearm = hasProperty(piece, 'firearm');
+  const ignoresReload = ignoresBlackPowderPistolReload(
+    piece,
+    context.featSlugs,
+  );
+  const quickStrikeDice = hasSyndicateQuickStrike(context.featSlugs)
+    ? syndicateQuickStrikeDice(context.level ?? 1)
+    : null;
   const greatWeaponFighting =
     hasStyleOrFeat(context, 'great-weapon-fighting') &&
     qualifiesForGreatWeaponFighting(piece, mode, versatile2h);
@@ -169,6 +183,8 @@ export function computeOneAttack(
     monkMartialArtsDie,
     role,
     isFirearm,
+    ignoresReload,
+    quickStrikeDice,
     greatWeaponFighting,
     masteryActive,
     masterySlug,
@@ -184,6 +200,11 @@ export function computeOneAttack(
       role,
       versatile2h,
       isFirearm,
+      ignoresReload,
+      deadeyeNoLongRangePenalty:
+        mode === 'ranged' &&
+        hasBlackPowderPistolExpert(context.featSlugs) &&
+        isBlackPowderPistolPiece(piece),
       greatWeaponFighting,
       masteryActive,
       masterySlug,

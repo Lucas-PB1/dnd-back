@@ -554,4 +554,55 @@ describe('executeRollDamage', () => {
     expect(result.expression).toContain('+2d8');
     expect(result.note).toContain('Golpe Divino');
   });
+
+  it('adds syndicate quick strike dice when toggled', async () => {
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Rapier',
+        grazeOnMissDamage: null,
+        damageDice: '1d8',
+        damageBonus: 3,
+        greatWeaponFighting: false,
+        rageDamageBonus: 0,
+        overkillExtraDice: null,
+        brutalStrikeDice: null,
+        divineFuryDice: null,
+        quickStrikeDice: '2d4',
+        abilitySlug: 'destreza',
+      },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
+    });
+
+    const result = await executeRollDamage({
+      ...base,
+      dto: {
+        itemSlug: 'rapier',
+        mode: 'melee',
+        quickStrike: true,
+      },
+    });
+
+    expect(result.expression).toContain('+2d4');
+    expect(result.note).toContain('Golpe Rápido');
+  });
+
+  it('rejects quick strike without syndicate feat on attack', async () => {
+    (findEquippedWeaponAttack as jest.Mock).mockResolvedValue({
+      attack: {
+        itemName: 'Rapier',
+        grazeOnMissDamage: null,
+        damageDice: '1d8',
+        damageBonus: 3,
+        quickStrikeDice: null,
+      },
+      combatFlags: { rageActive: false, recklessActive: false, bestialAspectLevel: 0 },
+    });
+
+    await expect(
+      executeRollDamage({
+        ...base,
+        dto: { itemSlug: 'rapier', mode: 'melee', quickStrike: true },
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
 });

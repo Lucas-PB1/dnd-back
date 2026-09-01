@@ -10,7 +10,7 @@ Edição: `northlands-heroes-2024-en`. HTML de scrape **não** é mantido no rep
 | Catálogo (`phb_character_thread*`, `N036`, `GET /character-threads`) | **feito** |
 | Estado na ficha (`player_character_thread*`, mutações `/characters/:id/thread`, bundle) | **feito** |
 | UI Traços + step opcional no create wizard | **feito** |
-| Runtime mesa (Cursemarked brackets, Fatebound morte, economy 1/LR) | **fase 2** — pedido explícito |
+| Runtime mesa (Cursemarked brackets, Fatebound morte, economy 1/LR) | **fase 2** — [`backlog.md`](backlog.md) |
 
 Modelo: 1 thread `active` por personagem; completar mantém benefícios; abandonar limpa milestones.
 

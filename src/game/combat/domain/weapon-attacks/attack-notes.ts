@@ -10,6 +10,8 @@ export function collectAttackNoteExtras(input: {
   role: WeaponAttackRole;
   versatile2h: boolean;
   isFirearm: boolean;
+  ignoresReload: boolean;
+  deadeyeNoLongRangePenalty: boolean;
   greatWeaponFighting: boolean;
   masteryActive: boolean;
   masterySlug: string | null;
@@ -29,9 +31,14 @@ export function collectAttackNoteExtras(input: {
   }
   if (input.isFirearm) noteExtras.push('arma de fogo');
   if (hasProperty(piece, 'recoil')) noteExtras.push('recuo');
-  if (hasProperty(piece, 'reload')) {
+  if (input.ignoresReload) {
+    noteExtras.push('Recarga Rápida');
+  } else if (hasProperty(piece, 'reload')) {
     const cap = piece.reloadCapacity;
     noteExtras.push(cap != null ? `recarga (${cap})` : 'recarga');
+  }
+  if (input.deadeyeNoLongRangePenalty) {
+    noteExtras.push('Olho de Águia: sem desv. em alcance longo');
   }
   if (input.role === 'light_bonus') {
     if (piece.itemSlug === PSYCHIC_BLADE_BONUS_ITEM_SLUG) {

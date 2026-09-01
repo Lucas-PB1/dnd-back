@@ -106,6 +106,19 @@ export class WeaponAttackResponseDto {
   sneakAttackEligible!: boolean;
 
   @ApiPropertyOptional({
+    example: '1d4',
+    description:
+      'Golpe Rápido (Determinação do Sindicato) — dados extras no toggle de dano',
+  })
+  quickStrikeDice!: string | null;
+
+  @ApiProperty({
+    example: false,
+    description: 'Recarga Rápida: ignora propriedade Recarregar (pistola de pólvora)',
+  })
+  ignoresReload!: boolean;
+
+  @ApiPropertyOptional({
     example: '1d6',
     description: 'Dado de Artes Marciais do Monge aplicado neste ataque',
   })

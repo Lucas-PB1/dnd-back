@@ -1,4 +1,5 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { isBlackPowderPistolPiece } from '../feat/grim-hollow-cap4-weapon-rules';
 import type {
   EquippedWeaponPiece,
   WeaponAttackContext,
@@ -109,7 +110,13 @@ export function isProficient(
     }
   }
   if (piece.category === 'advanced') {
-    return proficiencySlugs.includes(ADVANCED_PROFICIENCY);
+    if (proficiencySlugs.includes(ADVANCED_PROFICIENCY)) return true;
+    if (
+      hasStyleOrFeat(context, 'blackpowder-pistol-expert') &&
+      isBlackPowderPistolPiece(piece)
+    ) {
+      return true;
+    }
   }
   return false;
 }

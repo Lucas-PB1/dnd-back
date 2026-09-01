@@ -7,7 +7,7 @@
 | Pasta | Conteúdo |
 |-------|----------|
 | [`architecture/`](architecture/) | Arquitetura, infra, modelo de dados, Game BC, padrões de código |
-| [`plans/`](plans/) | Backlog ativo + polish adiado |
+| [`plans/`](plans/) | Backlog ativo, planos por fonte, polish adiado |
 | [`source/`](source/) | Fontes regeneráveis do catálogo DMG (A–Z) |
 | [`glossary/`](glossary/) | Glossário EN→PT (JSON) |
 | [`deploy/`](deploy/) | Deploy Vercel + Supabase |
@@ -31,15 +31,36 @@ Contrato REST: Swagger em `/api`.
 
 ## Planos
 
+### Checklist único
+
 | Doc | Para quê |
 |-----|----------|
+| [`plans/backlog.md`](plans/backlog.md) | **SSOT** — o que ainda falta (ativo + adiado) |
+
+### Ativo (por fonte)
+
+| Doc | Para quê |
+|-----|----------|
+| [`plans/grim-hollow-mesa-audit.md`](plans/grim-hollow-mesa-audit.md) | GH Cap. 2 mesa + Cap. 1 — residual |
+| [`plans/grim-hollow-cap4-feats.md`](plans/grim-hollow-cap4-feats.md) | GH Cap. 4 — residual gunslinger/Quick Strike |
+| [`plans/grim-hollow-cap6-transformations.md`](plans/grim-hollow-cap6-transformations.md) | GH Cap. 6 — ficha/mesa (catálogo feito) |
+| [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads — extração + fase 2 mesa |
+| [`plans/code-health-audit.md`](plans/code-health-audit.md) | Auditoria clean code / DRY / SOLID / infra |
+
+### Referência (concluído)
+
+| Doc | Para quê |
+|-----|----------|
+| [`plans/northlands-audit.md`](plans/northlands-audit.md) | Northlands — gaps opcionais residuais |
+| [`plans/northlands-magic-and-miscellany.md`](plans/northlands-magic-and-miscellany.md) | Cap. 5 — extração + seeds (feito) |
 | [`plans/measure-latency.md`](plans/measure-latency.md) | Medir hot paths (cursor + X-Response-Time) |
-| [`plans/backlog.md`](plans/backlog.md) | Checklist — o que ainda falta |
-| [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Character Threads — MVP ficha feito; mesa fase 2 |
-| [`plans/northlands-magic-and-miscellany.md`](plans/northlands-magic-and-miscellany.md) | Cap. 5 — catálogo + veículos + Leviathan seedados |
-| [`plans/northlands-audit.md`](plans/northlands-audit.md) | Pente fino Northlands — gaps críticos fechados; residual M6/M7 |
-| [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Adiado: modal Escudo/Giga no cast de Mísseis |
-| [`plans/beast-master-primal-companion.md`](plans/beast-master-primal-companion.md) | Adiado: Companheiro Primal na mesa |
+
+### Adiado (polish)
+
+| Doc | Para quê |
+|-----|----------|
+| [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Modal Escudo/Giga no cast de Mísseis |
+| [`plans/beast-master-primal-companion.md`](plans/beast-master-primal-companion.md) | Companheiro Primal na mesa |
 
 Padrão de classe jogável (mesa): skills Cursor **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**.
 

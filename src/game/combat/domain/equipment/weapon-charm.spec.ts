@@ -75,6 +75,8 @@ describe('applyWeaponCharmToAttack', () => {
     brutalStrikeDice: null,
     divineFuryDice: null,
     sneakAttackEligible: false,
+    quickStrikeDice: null,
+    ignoresReload: false,
     martialArtsDie: null,
     attachedCharmSlug: null,
     attachedCharmName: null,

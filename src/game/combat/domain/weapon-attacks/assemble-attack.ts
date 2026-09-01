@@ -28,6 +28,8 @@ export function assembleWeaponAttack(input: {
   monkMartialArtsDie: string | null;
   role: WeaponAttackRole;
   isFirearm: boolean;
+  ignoresReload: boolean;
+  quickStrikeDice: string | null;
   greatWeaponFighting: boolean;
   masteryActive: boolean;
   masterySlug: string | null;
@@ -86,15 +88,18 @@ export function assembleWeaponAttack(input: {
     isFirearm: input.isFirearm,
     critThreshold: input.critThreshold,
     overkillExtraDice: input.overkillExtraDice,
-    reloadCapacity: hasProperty(input.piece, 'reload')
-      ? (input.piece.reloadCapacity ?? null)
-      : null,
+    reloadCapacity:
+      hasProperty(input.piece, 'reload') && !input.ignoresReload
+        ? (input.piece.reloadCapacity ?? null)
+        : null,
     hasRecoil: hasProperty(input.piece, 'recoil'),
     rageDamageBonus: input.rageBonus,
     brutalStrikeDice: input.brutalDice,
     divineFuryDice: input.divineFuryDice,
     sneakAttackEligible:
       input.mode === 'ranged' || hasProperty(input.piece, 'finesse'),
+    quickStrikeDice: input.quickStrikeDice,
+    ignoresReload: input.ignoresReload,
     martialArtsDie: input.monkMartialArtsDie,
     attachedCharmSlug: input.piece.attachedCharmSlug ?? null,
     attachedCharmName: input.piece.attachedCharmName ?? null,

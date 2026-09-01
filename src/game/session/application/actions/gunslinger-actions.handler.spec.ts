@@ -13,6 +13,11 @@ describe('GunslingerActionsHandler', () => {
     note: '+12 PV Temporários',
   };
   const access = { findAccessibleOrFail: jest.fn() };
+  const sheet = {
+    load: jest.fn().mockResolvedValue({
+      characterFeats: [{ featSlug: 'blackpowder-pistol-expert' }],
+    }),
+  };
   const martial = {
     listManeuvers: jest.fn(),
     useManeuver: jest.fn().mockResolvedValue(maneuverResult),
@@ -29,6 +34,7 @@ describe('GunslingerActionsHandler', () => {
   const handler = new GunslingerActionsHandler(
     access as never,
     state as never,
+    sheet as never,
   );
 
   const gunslinger = {
@@ -103,6 +109,49 @@ describe('GunslingerActionsHandler', () => {
     await expect(
       handler.useTableAction('user-1', 'gs-1', {
         actionSlug: 'recover-risk',
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('allows reload-firearm for non-gunslinger with blackpowder-pistol-expert', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...gunslinger,
+      classSlug: 'fighter',
+    });
+    const result = await handler.useTableAction('user-1', 'gs-1', {
+      actionSlug: 'reload-firearm',
+      itemSlug: 'blackpowder-pistol',
+    });
+    expect(martial.reloadFirearm).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'gs-1' }),
+      'blackpowder-pistol',
+    );
+    expect(result).toMatchObject({ actionName: 'Recarregar' });
+  });
+
+  it('rejects reload-firearm for non-gunslinger without feat', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...gunslinger,
+      classSlug: 'fighter',
+    });
+    sheet.load.mockResolvedValueOnce({ characterFeats: [] });
+    await expect(
+      handler.useTableAction('user-1', 'gs-1', {
+        actionSlug: 'reload-firearm',
+        itemSlug: 'blackpowder-pistol',
+      }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+  });
+
+  it('rejects reload-firearm for feat holder with non-pistol firearm', async () => {
+    access.findAccessibleOrFail.mockResolvedValueOnce({
+      ...gunslinger,
+      classSlug: 'fighter',
+    });
+    await expect(
+      handler.useTableAction('user-1', 'gs-1', {
+        actionSlug: 'reload-firearm',
+        itemSlug: 'revolver',
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
   });

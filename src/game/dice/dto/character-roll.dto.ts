@@ -136,6 +136,15 @@ export class RollDamageDto {
 
   @ApiPropertyOptional({
     default: false,
+    description:
+      'Golpe Rápido (Determinação do Sindicato): +1d4/2d4/4d4 no 1º dano após Iniciativa',
+  })
+  @IsOptional()
+  @IsBoolean()
+  quickStrike?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
     description: 'Fúria Divina (Fanático): 1d6 + metade do nível enquanto enfurecido',
   })
   @IsOptional()

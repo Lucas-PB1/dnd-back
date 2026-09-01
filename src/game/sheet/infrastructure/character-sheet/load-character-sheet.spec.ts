@@ -96,6 +96,7 @@ describe('load-character-sheet', () => {
       expect(result).toEqual({
         classSkillSlugs: ['stealth'],
         speciesChoices: [{ choiceKind: 'language', choiceSlug: 'elvish' }],
+        heritageChoices: [],
         subclassOptions: [{ optionKey: 'feature', valueId: 'fire' }],
         classOptions: [
           { optionKey: 'expertiseSkill1', valueId: 'stealth', instanceIndex: 0 },
@@ -263,6 +264,7 @@ describe('load-character-sheet', () => {
 
       expect(slice).toEqual({
         speciesChoices: [],
+        heritageChoices: [],
         classOptions: [
           {
             optionKey: 'eldritch-invocation',
