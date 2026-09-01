@@ -31,29 +31,23 @@ Contrato REST: Swagger em `/api`.
 
 ## Planos
 
+**Política:** plano de feature **concluído = apagado**. Só ficam docs com trabalho aberto ou dívida técnica ativa.
+
 ### Checklist único
 
 | Doc | Para quê |
 |-----|----------|
 | [`plans/backlog.md`](plans/backlog.md) | **SSOT** — o que ainda falta (ativo + adiado) |
 
-### Ativo (por fonte)
+### Ativo
 
 | Doc | Para quê |
 |-----|----------|
 | [`plans/grim-hollow-mesa-audit.md`](plans/grim-hollow-mesa-audit.md) | GH Cap. 2 mesa + Cap. 1 — residual |
-| [`plans/grim-hollow-cap4-feats.md`](plans/grim-hollow-cap4-feats.md) | GH Cap. 4 — residual gunslinger/Quick Strike |
 | [`plans/grim-hollow-cap6-transformations.md`](plans/grim-hollow-cap6-transformations.md) | GH Cap. 6 — ficha/mesa (catálogo feito) |
 | [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads — extração + fase 2 mesa |
-| [`plans/code-health-audit.md`](plans/code-health-audit.md) | Auditoria clean code / DRY / SOLID / infra |
-
-### Referência (concluído)
-
-| Doc | Para quê |
-|-----|----------|
 | [`plans/northlands-audit.md`](plans/northlands-audit.md) | Northlands — gaps opcionais residuais |
-| [`plans/northlands-magic-and-miscellany.md`](plans/northlands-magic-and-miscellany.md) | Cap. 5 — extração + seeds (feito) |
-| [`plans/measure-latency.md`](plans/measure-latency.md) | Medir hot paths (cursor + X-Response-Time) |
+| [`plans/code-health-audit.md`](plans/code-health-audit.md) | Dívida técnica — splits e DRY |
 
 ### Adiado (polish)
 
@@ -67,10 +61,11 @@ Padrão de classe jogável (mesa): skills Cursor **`rpg-class-mesa-api`** · **`
 ## Ops
 
 - Deploy → [`deploy/DEPLOY.md`](deploy/DEPLOY.md)
+- Latência hot paths → [`deploy/measure-latency.md`](deploy/measure-latency.md)
 - Catálogo DMG (regen) → [`source/README.md`](source/README.md)
 - Glossário → [`glossary/README.md`](glossary/README.md)
 
 ## Cursor (agente)
 
-Rules locais: `architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `docs-hub` · `class-mesa`  
-Skills locais: `dnd-glossary-pt` · `rpg-catalog-model` · `phb-query-views` · `postgres-apply-catalog` · `rpg-class-mesa-api` · `audit-code-health` · `split-large-module`
+Rules locais: `architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `typescript-quality` · `docs-hub` · `class-mesa`  
+Skills locais: `dnd-glossary-pt` · `rpg-catalog-model` · `phb-query-views` · `postgres-apply-catalog` · `rpg-class-mesa-api` · `audit-code-health` · `split-large-module` · `unify-game-stats`

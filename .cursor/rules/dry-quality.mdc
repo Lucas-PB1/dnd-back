@@ -1,0 +1,73 @@
+---
+description: DRY como qualidade — SSOT, menos código, nota no code-health
+globs: src/**/*.{ts,sql}
+alwaysApply: false
+---
+
+# DRY → qualidade
+
+**Princípio:** quanto mais **uma fonte por regra/contrato**, maior a qualidade. Duplicar **conhecimento** (regra D&D, stat, SQL, tipo, slug) é dívida — medida no [`code-health-audit.md`](../../docs/plans/code-health-audit.md).
+
+Skill genérica: shared-ai `dry`. Stats: `unify-game-stats`. Auditoria: `audit-code-health`.
+
+## O que é conhecimento (unificar)
+
+| Tipo | SSOT esperado |
+|------|----------------|
+| Fórmula (CA, PV, mod. atributo, moeda) | `unify-game-stats` |
+| Slug / `actionSlug` usado 2+× | `constants.ts` ou union |
+| Shape de coluna PHB | view / seed / migration |
+| Leitura runtime ficha/combate | RPC bundle |
+| Variante de DTO | `Omit` / `Pick` da forma base |
+| Mock de handler / catálogo em specs | harness + fixture compartilhado |
+
+## OK duplicar (não conta na nota DRY)
+
+- Wiring Nest (`@Module`, providers)
+- Controller fino repetido
+- Tabelas `option_def`/`option_value` por domínio de catálogo
+- Combat notes **por fonte** (`grim-hollow-*`, `northlands-*`)
+- `requireFound` (404) vs `requireCatalog` (400) — semântica HTTP distinta
+
+## Regra prática
+
+1. Mesma **razão de mudança** em 2 lugares → unificar antes de crescer.
+2. Terceira ocorrência → extrair SSOT (rule of three).
+3. PR novo com cópia de fórmula/SQL/tipo **sem** issue no backlog → review bloqueia.
+
+## Rubrica DRY (dimensão code-health)
+
+| Nota | Critério |
+|------|----------|
+| **A** | Zero 2º caminho para stats; SQL runtime via views/RPC/repository; harness de teste adotado |
+| **A−** | Catálogo SQL unificado; ≤2 cópias TS não críticas listadas no backlog |
+| **B** | Cópias de helper ou mocks; sem divergência de stat entre módulos |
+| **B−** | `as never` / boilerplate em 10+ specs; dois caminhos de lookup slug |
+| **C+** | SQL cru em validators; fórmula local (`abilityMod`) fora do SSOT |
+| **C** | Dois números para o mesmo stat (ex.: CA ficha ≠ combate) |
+
+## Condições que limitam a nota final
+
+Aplicadas no code-health ao calcular o veredito:
+
+| Condição ativa | Efeito |
+|----------------|--------|
+| 2+ implementações do mesmo stat (CA/PV/moeda/mod.) | Dimensão **Unificação stats** ≤ **C+**; **teto global B** até unificar |
+| `abilityMod` / `(score−10)/2` fora de `ability-scores` | Dimensão **DRY** ≤ **B−** |
+| Mesmo padrão `dataSource.query` em 3+ validators | **DRY SQL** ≤ **B** |
+| 10+ handler specs com mesmo boilerplate sem harness | **Testes** ≤ **B−** |
+| Nova duplicação de conhecimento em PR | Não mergear sem SSOT ou item no backlog |
+
+## Antes de escrever código novo
+
+1. Buscar SSOT existente (`rg` no símbolo / fórmula / slug).
+2. Se existir → **importar**, não copiar.
+3. Se não existir e for reutilizável → criar SSOT **antes** do segundo uso.
+
+## Medição rápida
+
+```powershell
+rg "function abilityMod|Math\.floor\(\(.*- 10\) / 2\)" src --glob "*.ts" --glob "!*.spec.ts" -l
+rg "dataSource\.query" src/game/sheet/domain/validation -l
+rg "as never" src --glob "*.spec.ts" -c
+```

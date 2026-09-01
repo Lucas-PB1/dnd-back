@@ -68,11 +68,52 @@ Catalog permanece **thin**: Query + view + mapper.
 
 ## DRY
 
+**Quanto mais DRY, mais qualidade** — rule `dry-quality`; condição obrigatória no [code-health-audit](../plans/code-health-audit.md#condição-dry).
+
 | OK duplicar | Não duplicar |
 |-------------|--------------|
 | Wiring Nest (`@Module`) | Regra de HP / CA / magia |
 | Boilerplate de controller fino | Shape de coluna PHB (use view/seed) |
 | Tabelas `option_def`/`option_value` por domínio | JOIN de granted spell no TS (use views — ver [`catalog-patterns.md`](catalog-patterns.md)) |
+| Combat notes por fonte de livro | Segundo caminho para o mesmo stat ou slug |
+
+Mesma razão de mudança em 2 lugares → unificar (rule of three). PR com cópia de conhecimento sem SSOT → bloquear no review.
+
+## TypeScript — menos código, mais qualidade
+
+Rule: `typescript-quality`. Skill: `unify-game-stats`.
+
+| Evitar | Preferir |
+|--------|----------|
+| `any`, `as never`, `as` para silenciar | Tipos honestos; `satisfies`; mocks tipados |
+| `undefined` em cascata no domain | Campos obrigatórios; `null` só quando DB exige |
+| Magic string (slug, `actionSlug`) | `const` SSOT / union type |
+| Magic number (dado, limiar) | Constante no domain |
+| Tipo copiado campo a campo | `Omit` / `Pick` da forma base |
+| Segunda fórmula de CA/PV/moeda | Import do SSOT (ver skill) |
+
+### SSOT de stats (runtime)
+
+| Stat | Módulo |
+|------|--------|
+| Mod. atributo | `@game/shared/domain/ability-scores` |
+| PV máx. | `sheet/domain/stats/hit-points.calc.ts` |
+| PV clamp / % | `shared/domain/combat-vitals.ts` |
+| CA equipada | `combat/domain/equipment/armor-class.ts` + `resolve-equipped-armor-class.ts` |
+| Moedas | `inventory/domain/coin-purse.ts` |
+
+**Dívida:** `abilityMod` duplicado em 3 arquivos; CA da ficha (`character-derived-stats`) ≠ combate (`resolve-character-combat-slice`).
+
+## Testes
+
+| Testar | Evitar |
+|--------|--------|
+| Comportamento público (handler, domain puro, contrato HTTP) | Espelhar implementação linha a linha |
+| 1 happy + 1 erro por `actionSlug` / branch crítico | 14 specs com o mesmo boilerplate de mock |
+| Regras D&D em `domain/` (entrada → saída) | Spec >300 linhas sem table-driven / helpers |
+| Smoke de catálogo via scripts/seeds | Query spec que só mocka `findOne` |
+
+Harness compartilhado para mesa: ver [`code-health-audit.md`](../plans/code-health-audit.md) §11. Fixtures: `mechanical-catalog.fixtures.ts`.
 
 ## Legado
 

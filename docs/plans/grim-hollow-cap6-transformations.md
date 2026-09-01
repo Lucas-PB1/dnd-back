@@ -53,5 +53,3 @@ node scripts/audit-ghpg-cap6.mjs
 1. Aplicar J019 + J048–J059 no Supabase (se ainda pendente no ambiente).
 2. Esboçar migration fase C + `TransformationSection` mock (só read).
 3. J060 após persistência definida.
-
-Cap. 4: [`grim-hollow-cap4-feats.md`](grim-hollow-cap4-feats.md)

@@ -8,15 +8,17 @@ Schema do **catálogo PHB** em migrations granulares.
 |-----------------|----------|
 | `001_schema.sql` | `CREATE SCHEMA rpg` + extensão `pg_trgm` |
 | `010_types/` | ENUMs |
-| `020_tables/T###_<nome>.sql` | Uma tabela por arquivo (`T001`–`T080`) |
+| `020_tables/T###_<nome>.sql` | Uma tabela por arquivo |
 | `040_functions/` | Funções PL/pgSQL |
 | `050_triggers/` | Triggers |
-| `060_views/V###_<nome>.sql` | Uma view por arquivo (`V001`–`V032`) |
+| `060_views/V###_<nome>.sql` | Views (`V001`+, hoje **~79** arquivos) |
 | `070_materialized/` | Materialized views |
 | `080_indexes/` | Índices adicionais |
-| `090_player/P###_<nome>.sql` | Jogador + RLS (`P001`–`P015`) |
+| `090_player/P###_<nome>.sql` | Jogador + RLS (`P001`+, hoje **~44** arquivos) |
 
 Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
+
+**Pré-prod:** com ~239 arquivos SQL e zero prod, avaliar squash para `baseline/001_full_schema.sql` — ver [`docs/plans/code-health-audit.md`](../../docs/plans/code-health-audit.md).
 
 ## Aplicar
 

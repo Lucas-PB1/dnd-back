@@ -33,7 +33,7 @@
 
 | Capítulo | Doc | Estado |
 |----------|-----|--------|
-| Talentos (Cap. 4) | [`grim-hollow-cap4-feats.md`](grim-hollow-cap4-feats.md) | Smoke ✓; residual gunslinger/Quick Strike |
+| Talentos (Cap. 4) | — | **Pronto** (gunslinger feat + Quick Strike) |
 | Transformações (Cap. 6) | [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md) | Catálogo **feito**; ficha/mesa **aberto** |
 
 ---

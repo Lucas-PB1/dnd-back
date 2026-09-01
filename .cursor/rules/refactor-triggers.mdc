@@ -13,7 +13,11 @@ Antes de **adicionar** código, se qualquer sinal bater → extrair ou abrir pla
 | Arquivo > 200 linhas | Split (rule `file-size`) |
 | Classe/função com “e” no nome (valida **e** calcula **e** persiste) | Quebrar SRP |
 | `domain/` importa TypeORM / HTTP | Inverter: domain puro |
-| Mesma regra D&D em 2+ arquivos TS | Uma função/domínio canônico |
+| Mesma regra D&D em 2+ arquivos TS | Skill `unify-game-stats` ou função canônica |
+| `abilityMod` / `Math.floor((score-10)/2)` fora de `ability-scores` | Importar SSOT |
+| `any` / `as never` em código novo | Tipar mock ou `unknown` + narrow |
+| Magic slug/number repetido 2+ vezes | `constants.ts` ou tipo union |
+| DTO copiado campo a campo | `Omit` / `Pick` da forma base |
 | Mesmo padrão SQL em 3+ tabelas sem view/helper | Unificar (skill `audit-code-health`) |
 | Handler > ~120 linhas | Extrair domain + repository |
 | Query catalog > ~80 linhas | Mapper / query dedicada |
@@ -29,4 +33,6 @@ Antes de **adicionar** código, se qualquer sinal bater → extrair ou abrir pla
 
 Duplicar **estrutura** de wiring Nest é OK; duplicar **regra de jogo** ou **contrato de coluna** não.
 
-Skills: `clean-code` · `solid` · `dry` (shared-ai) + locais `split-large-module` · `audit-code-health`.
+Rule **`dry-quality`** — DRY como qualidade; gates no code-health. Antes de copiar: buscar SSOT (`rg`).
+
+Skills: `clean-code` · `solid` · `dry` (shared-ai) + locais `split-large-module` · `audit-code-health` · `unify-game-stats`.

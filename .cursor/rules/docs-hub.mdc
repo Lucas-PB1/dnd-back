@@ -10,13 +10,13 @@ Fonte canônica: [`docs/README.md`](../../docs/README.md).
 | Tipo | Pasta |
 |------|-------|
 | Arquitetura / padrões | `docs/architecture/` |
-| Plans / backlog ativo | `docs/plans/` — SSOT: [`backlog.md`](../../docs/plans/backlog.md); detalhe por fonte (`grim-hollow-*`, `northlands-*`); polish adiado (`mm-cast-options-modal.md`, `beast-master-primal-companion.md`) |
-| Deploy | `docs/deploy/` |
+| Plans / backlog ativo | `docs/plans/` — SSOT: [`backlog.md`](../../docs/plans/backlog.md); polish adiado (`mm-cast-options-modal.md`, …) |
+| Deploy | `docs/deploy/` — incl. [`measure-latency.md`](../../docs/deploy/measure-latency.md) |
 
 ## Regras
 
 1. **Não** criar `.md` solto na raiz do repo (exceto `README.md`).
 2. Novo doc → pasta certa + **link no** `docs/README.md`.
-3. O que ainda falta → só [`docs/plans/backlog.md`](../../docs/plans/backlog.md). Padrão jogável → skills `rpg-class-mesa-api` / `rpg-class-mesa-front`.
+3. O que ainda falta → só [`docs/plans/backlog.md`](../../docs/plans/backlog.md). Plano **concluído** → apagar o `.md` e atualizar o índice.
 4. Skills/rules apontam para docs com path relativo; não duplicar o livro inteiro na rule.
 5. Ao achar doc órfão ou desatualizado → mover/atualizar o índice, não deixar esparso.

@@ -20,10 +20,11 @@ Genérico: shared-ai (`nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`,
 | Classe mesa (table-action / economy) | `rpg-class-mesa-api` |
 | Arquivos grandes / dívida | `audit-code-health` |
 | Split SRP de módulo TS | `split-large-module` |
+| CA / PV / moedas / mod. atributo | `unify-game-stats` |
 
 ## Rules locais
 
-`architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `docs-hub` · `class-mesa`
+`architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `dry-quality` · `typescript-quality` · `docs-hub` · `class-mesa`
 
 ## Ops rápidos
 

@@ -27,5 +27,5 @@ Character Threads runtime — ver [`northlands-character-threads.md`](northlands
 
 ## Referência
 
-- Extração Cap. 5: [`northlands-magic-and-miscellany.md`](northlands-magic-and-miscellany.md)
+- Extração Cap. 5: [`docs/source/extracts/northlands/cap5.json`](../source/extracts/northlands/cap5.json)
 - Seeds: `N001`–`N036`, `M003`, `M004`, economy `C052`–`C056`
