@@ -1,6 +1,6 @@
 /** Lembretes passivos de talento para Passivas (não entram na Economia). */
 
-import { grimHollowFeatCombatNotes } from '../grim-hollow-feat-combat-notes';
+import { grimHollowFeatCombatNotes } from '../notes';
 
 const FEAT_PASSIVE_NOTES: Record<string, string[]> = {
   alert: [

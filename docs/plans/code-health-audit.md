@@ -154,7 +154,7 @@ Regra do usuário: leaf com mais de 4 arquivos = smell. Inventário (produção,
 | 14 | `session/application/actions` | **Split** — já tem subpastas por classe; tirar handlers soltos da raiz |
 | 13 | `catalog/classes/dto` | OK — DTOs finos por query |
 | 11 | `dice/application/rolls/damage` | Monitorar — pipeline já separado |
-| 9 | `combat/domain` (raiz) | **Split** — mover `*-combat-notes-data.ts` para `combat/domain/notes/` |
+| 2 | `combat/domain` (raiz) | ✅ 4.3 — notes em `notes/{grim-hollow,northlands}/` |
 | 7+ | `session/application/actions/{wizard,…}` | OK se ≤4 por subpasta leaf |
 
 **Meta:** ao criar arquivo novo, se a pasta leaf passar de 4 → criar subpasta antes de commitar.
@@ -329,7 +329,7 @@ Runner: `run-migrations.mjs` — versão baseline = `baseline/001_full_schema`. 
 | Mock catálogo mecânico | Cada `*-actions.handler.spec.ts` monta `mechanicalCatalog.load` | Fixture + helper de teste |
 | Table-action deps | `monk-action-deps`, `paladin-action-deps`, `cleric-action-deps` | Estender padrão às classes que ainda inline |
 | Slug not-found | `requireFound` (404) vs `requireCatalog` (400) | OK — semântica HTTP distinta; **não** unificar |
-| Combat notes por fonte | `grim-hollow-*`, `northlands-*`, `aggregate-class-combat` | OK por fonte; falta subpasta `combat/domain/notes/` |
+| Combat notes por fonte | `notes/grim-hollow/*`, `notes/northlands/*`, `aggregate-class-combat` | ✅ 4.3 — subpasta por fonte |
 | Catalog lookup | `find-*-by-slug.query` **e** `CatalogLookupService.find*OrFail` | Dois caminhos para o mesmo slug — escolher um para **escrita de ficha** |
 
 ---
@@ -623,7 +623,7 @@ Política canônica de testes: [`code-standards.md` § Testes](../architecture/c
 |---|--------------|-------|
 | 4.1 | ~~Baseline greenfield~~ → [`database/baseline/001_full_schema.sql`](../../database/baseline/001_full_schema.sql) | ✅ 2026-09-02 |
 | 4.2 | ~~Barrel policy — `session/dto/index.ts`~~ | ✅ 2026-09-02 |
-| 4.3 | Mover `*-combat-notes-data.ts` → `combat/domain/notes/` | Baixo |
+| 4.3 | ~~`*-combat-notes` → `combat/domain/notes/`~~ | ✅ 2026-09-02 |
 | 4.4 | Split `inventory/application` (15 arquivos) | Médio |
 | 4.5 | `CatalogLookupService` vs queries — um caminho para escrita ficha | Médio |
 | 4.6 | DTOs com `Omit`/`Pick`; slugs em `constants.ts` | Baixo contínuo |

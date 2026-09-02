@@ -1,5 +1,5 @@
 import { grimHollowFeatCombatNotes } from './grim-hollow-feat-combat-notes';
-import { featCombatNotes } from './feat/combat-notes';
+import { featCombatNotes } from '../../feat/combat-notes';
 
 describe('grimHollowFeatCombatNotes', () => {
   it('returns blood-hound passives', () => {

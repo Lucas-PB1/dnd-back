@@ -32,11 +32,11 @@ import { warlockCombatNotes } from './warlock';
 import { druidCombatNotes } from './druid';
 import { wizardCombatNotes } from './wizard';
 import { gunslingerCombatNotes } from './gunslinger';
-import { northlandsSubclassCombatNotes } from './northlands-subclass-combat-notes';
 import {
   grimHollowClassCombatNotes,
   grimHollowSubclassCombatNotes,
-} from './grim-hollow-subclass-combat-notes';
+  northlandsSubclassCombatNotes,
+} from './notes';
 
 export type ClassCombatContribution = {
   notes: string[];
@@ -53,8 +53,7 @@ type ClassCombatInput = {
 /**
  * Agrega contribuições explícitas de cada classe.
  * Cada pasta de classe (`fighter/`, `rogue/`, …) permanece dona das regras via `index.ts`; este módulo só combina.
- * Pack Northlands: notas de subclasse em `northlands-subclass-combat-notes.ts`.
- * Grim Hollow Cap. 2: `grim-hollow-subclass-combat-notes.ts`.
+ * Pack Northlands / Grim Hollow Cap. 2: `notes/`.
  */
 export function aggregateClassCombatContributions(
   input: ClassCombatInput,

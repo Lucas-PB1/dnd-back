@@ -1,4 +1,4 @@
-/** Notas de passivas GH Cap. 2 — fonte para `grim-hollow-subclass-combat-notes.ts`. */
+/** Notas de passivas GH Cap. 2 — fonte para `./grim-hollow-subclass-combat-notes.ts`. */
 export type SubclassCombatNoteEntry = { minLevel: number; text: string };
 
 export const GH_SUBCLASS_COMBAT_NOTES: Record<string, SubclassCombatNoteEntry[]> =
