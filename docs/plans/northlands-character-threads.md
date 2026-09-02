@@ -10,7 +10,9 @@ Edição: `northlands-heroes-2024-en`. HTML de scrape **não** é mantido no rep
 | Catálogo (`phb_character_thread*`, `N036`, `GET /character-threads`) | **feito** |
 | Estado na ficha (`player_character_thread*`, mutações `/characters/:id/thread`, bundle) | **feito** |
 | UI Traços + step opcional no create wizard | **feito** |
-| Runtime mesa (Cursemarked brackets, Fatebound morte, economy 1/LR) | **fase 2** — [`backlog.md`](backlog.md) |
+| Economy mesa 1/DL (resources + `spend-resource`, `N040`/`N041`) | **MVP feito** — pools no estado de sessão; Usar na UI quando o front filtrar `threadSlug` |
+| Runtime Cursemarked (brackets d20 + anti-overlap) | **fase 2 restante** |
+| Runtime Fatebound (morte / Doom Delayed automático) | **fase 2 restante** |
 
 Modelo: 1 thread `active` por personagem; completar mantém benefícios; abandonar limpa milestones.
 
@@ -148,6 +150,6 @@ Servo jurado de jarl/rei/rainha para missão específica (não necessariamente v
 ## Referências no repo
 
 - Backlog: fase 2 mesa em [`backlog.md`](backlog.md)
-- Seeds: `database/seeds/northlands-heroes/N036_phb_character_threads.sql`
-- Migrations: `T085_character_threads.sql`, `V063_character_thread_bundle.sql`, `P039_player_character_thread.sql`
+- Seeds: `database/seeds/northlands-heroes/N036_phb_character_threads.sql`, `N040_phb_character_thread_resources.sql`, `N041_phb_character_thread_economy_action.sql`
+- Migrations: `T085_character_threads.sql`, `V063_character_thread_bundle.sql`, `P039_player_character_thread.sql` (histórico); schema atual em `database/baseline/001_full_schema.sql`
 - Cap. 5 (Magic and Miscellany) permanece fora deste doc

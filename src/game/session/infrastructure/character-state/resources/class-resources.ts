@@ -28,6 +28,7 @@ import {
   loadFeatResourceSchedule,
   loadItemResourceSchedule,
   loadHeritageResourceSchedule,
+  loadThreadResourceSchedule,
 } from '../../queries/class-resource-schedule.queries';
 import {
   loadCharacterFeatSlugs,
@@ -43,6 +44,7 @@ export {
   loadFeatResourceSchedule,
   loadItemResourceSchedule,
   loadHeritageResourceSchedule,
+  loadThreadResourceSchedule,
 } from '../../queries/class-resource-schedule.queries';
 export {
   loadCharacterFeatSlugs,
@@ -130,6 +132,7 @@ export async function resolveClassResources(
     dataSource,
     character.id,
   );
+  const threadRows = await loadThreadResourceSchedule(dataSource, character.id);
   const progression = await loadClassProgressionSnapshot(
     dataSource,
     character.classSlug,
@@ -145,6 +148,7 @@ export async function resolveClassResources(
       ...featRows,
       ...itemRows,
       ...heritageRows,
+      ...threadRows,
     ],
     level: character.level,
     proficiencyBonus: progression?.proficiencyBonus ?? 2,

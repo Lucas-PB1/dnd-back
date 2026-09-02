@@ -150,6 +150,12 @@ export class ClassEconomyActionDto {
   @ApiPropertyOptional({ example: 'ring-of-barrels', nullable: true })
   itemSlug?: string | null;
 
+  @ApiPropertyOptional({ example: 'extra-tough', nullable: true })
+  heritageTraitSlug?: string | null;
+
+  @ApiPropertyOptional({ example: 'sworn-huskarl', nullable: true })
+  threadSlug?: string | null;
+
   @ApiPropertyOptional({ example: 'giantAncestryId' })
   requiresOptionKey?: string;
 

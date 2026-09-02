@@ -156,3 +156,39 @@ export async function loadHeritageResourceSchedule(
     [characterId],
   );
 }
+
+const CURSEMARKED_GREATER_SACRIFICE = 'cursemarked-greater-sacrifice';
+const CURSEMARKED_BRACKET_BENEFITS = [
+  'tides-of-fate',
+  'burdens-shield',
+  'threads-entwined',
+  'two-edged-gift',
+] as const;
+
+/** Recursos de Character Thread — só milestones alcançados no thread ativo. */
+export async function loadThreadResourceSchedule(
+  dataSource: DataSource,
+  characterId: string,
+): Promise<ClassResourceScheduleRow[]> {
+  if (!characterId) return [];
+  return queryResourceSchedule(
+    dataSource,
+    'gr',
+    `JOIN rpg.phb_character_thread t
+       ON t.id = gr.owner_id
+      AND gr.owner_kind = 'character_thread'::rpg.resource_owner_kind
+     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
+     JOIN rpg.player_character_thread pct
+       ON pct.character_id = $1::uuid
+      AND pct.status = 'active'
+      AND pct.thread_slug = t.slug
+     JOIN rpg.player_character_thread_milestone m
+       ON m.character_thread_id = pct.id
+     WHERE m.benefit_key = rd.slug
+        OR (
+          rd.slug = $2
+          AND m.benefit_key = ANY($3::text[])
+        )`,
+    [characterId, CURSEMARKED_GREATER_SACRIFICE, [...CURSEMARKED_BRACKET_BENEFITS]],
+  );
+}

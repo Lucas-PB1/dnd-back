@@ -249,6 +249,7 @@ export class LoadCombatMechanicalCatalog {
         featSlug: row.featSlug ?? undefined,
         itemSlug: row.itemSlug ?? undefined,
         heritageTraitSlug: row.heritageTraitSlug ?? undefined,
+        threadSlug: row.threadSlug ?? undefined,
         minTraitTakes:
           row.minTraitTakes == null ? undefined : Number(row.minTraitTakes),
         requiresOptionKey: row.requiresOptionKey ?? undefined,

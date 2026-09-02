@@ -24,6 +24,9 @@ export class VPhbClassEconomyAction {
   @ViewColumn({ name: 'heritage_trait_slug' })
   heritageTraitSlug!: string | null;
 
+  @ViewColumn({ name: 'thread_slug' })
+  threadSlug!: string | null;
+
   @ViewColumn({ name: 'min_trait_takes' })
   minTraitTakes!: number | null;
 

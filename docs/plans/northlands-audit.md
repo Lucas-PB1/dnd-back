@@ -19,9 +19,9 @@ Skills: `rpg-class-mesa-api` · `rpg-class-mesa-front`
 
 ---
 
-## Mesa fase 2 (prioridade maior)
+## Mesa fase 2
 
-Character Threads runtime — ver [`northlands-character-threads.md`](northlands-character-threads.md) e [`backlog.md`](backlog.md).
+Character Threads — economy 1/DL MVP (**feito**); brackets Cursemarked + Fatebound morte — ver [`northlands-character-threads.md`](northlands-character-threads.md) e [`backlog.md`](backlog.md).
 
 ---
 

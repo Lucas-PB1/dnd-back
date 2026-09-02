@@ -12,7 +12,7 @@ CREATE TYPE rpg.item_type AS ENUM (
   'weapon','armor','gear','tool','focus','other'
 );
 
-CREATE TYPE rpg.resource_scope AS ENUM ('species','class','subclass','feat','item','heritage');
+CREATE TYPE rpg.resource_scope AS ENUM ('species','class','subclass','feat','item','heritage','character_thread');
 
 CREATE TYPE rpg.subclass_feature_kind AS ENUM (
   'passive',
@@ -135,7 +135,7 @@ CREATE TYPE rpg.class_proficiency_kind AS ENUM (
   'fighting_style'
 );
 
-CREATE TYPE rpg.resource_owner_kind AS ENUM ('class', 'subclass', 'species', 'feat', 'item', 'heritage');
+CREATE TYPE rpg.resource_owner_kind AS ENUM ('class', 'subclass', 'species', 'feat', 'item', 'heritage', 'character_thread');
 
 CREATE TYPE rpg.combat_modifier_kind AS ENUM ('hp_bonus', 'unarmored_defense');
 
@@ -563,6 +563,53 @@ CREATE TABLE rpg.phb_background_boost_option (
   label TEXT NOT NULL
 );
 
+-- Character Threads (Northlands) — catálogo (antes de resource_definition para FK)
+CREATE TABLE rpg.phb_character_thread (
+  id BIGSERIAL NOT NULL UNIQUE,
+  slug TEXT PRIMARY KEY,
+  edition_slug TEXT NOT NULL REFERENCES rpg.phb_edition(slug),
+  name TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 120),
+  summary TEXT NOT NULL,
+  special_rules_text TEXT,
+  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
+  sort_order INT NOT NULL DEFAULT 0
+);
+
+CREATE TABLE rpg.phb_character_thread_goal (
+  id BIGSERIAL PRIMARY KEY,
+  thread_slug TEXT NOT NULL REFERENCES rpg.phb_character_thread(slug) ON DELETE CASCADE,
+  sort_order INT NOT NULL CHECK (sort_order BETWEEN 1 AND 6),
+  text TEXT NOT NULL,
+  UNIQUE (thread_slug, sort_order)
+);
+
+CREATE TABLE rpg.phb_character_thread_milestone (
+  id BIGSERIAL PRIMARY KEY,
+  thread_slug TEXT NOT NULL REFERENCES rpg.phb_character_thread(slug) ON DELETE CASCADE,
+  rank TEXT NOT NULL CHECK (rank IN ('least', 'lesser', 'greater', 'superior')),
+  sort_order INT NOT NULL CHECK (sort_order BETWEEN 1 AND 4),
+  UNIQUE (thread_slug, rank),
+  UNIQUE (thread_slug, sort_order)
+);
+
+CREATE TABLE rpg.phb_character_thread_milestone_benefit (
+  id BIGSERIAL PRIMARY KEY,
+  milestone_id BIGINT NOT NULL REFERENCES rpg.phb_character_thread_milestone(id) ON DELETE CASCADE,
+  benefit_key TEXT NOT NULL CHECK (char_length(benefit_key) BETWEEN 1 AND 64),
+  name TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 120),
+  description TEXT NOT NULL,
+  choice_group TEXT,
+  sort_order INT NOT NULL DEFAULT 0,
+  UNIQUE (milestone_id, benefit_key)
+);
+
+CREATE INDEX idx_phb_character_thread_goal_thread
+  ON rpg.phb_character_thread_goal(thread_slug);
+CREATE INDEX idx_phb_character_thread_milestone_thread
+  ON rpg.phb_character_thread_milestone(thread_slug);
+CREATE INDEX idx_phb_character_thread_milestone_benefit_ms
+  ON rpg.phb_character_thread_milestone_benefit(milestone_id);
+
 
 CREATE TABLE rpg.phb_resource_definition (
   id BIGSERIAL PRIMARY KEY,
@@ -575,14 +622,16 @@ CREATE TABLE rpg.phb_resource_definition (
   feat_id BIGINT NULL REFERENCES rpg.phb_feat(id) ON DELETE CASCADE,
   item_id BIGINT NULL REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
   heritage_trait_id BIGINT NULL REFERENCES rpg.phb_heritage_trait(id) ON DELETE CASCADE,
+  thread_slug TEXT NULL REFERENCES rpg.phb_character_thread(slug) ON DELETE CASCADE,
   min_level INTEGER NOT NULL DEFAULT 1 CHECK (min_level BETWEEN 1 AND 20),
   CONSTRAINT prd_scope_fk CHECK (
-    (scope = 'species' AND species_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL)
-    OR (scope = 'class' AND class_id IS NOT NULL AND species_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL)
-    OR (scope = 'subclass' AND subclass_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL)
-    OR (scope = 'feat' AND feat_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND subclass_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL)
-    OR (scope = 'item' AND item_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND heritage_trait_id IS NULL)
-    OR (scope = 'heritage' AND heritage_trait_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND item_id IS NULL)
+    (scope = 'species' AND species_id IS NOT NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (scope = 'class' AND class_id IS NOT NULL AND species_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (scope = 'subclass' AND subclass_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (scope = 'feat' AND feat_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND subclass_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (scope = 'item' AND item_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (scope = 'heritage' AND heritage_trait_id IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND thread_slug IS NULL)
+    OR (scope = 'character_thread' AND thread_slug IS NOT NULL AND species_id IS NULL AND class_id IS NULL AND subclass_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL)
   )
 );
 
@@ -944,12 +993,14 @@ CREATE TABLE rpg.phb_class_economy_action (
   spell_slug TEXT NULL REFERENCES rpg.phb_spell(slug),
   min_trait_takes INTEGER NOT NULL DEFAULT 1 CHECK (min_trait_takes >= 1),
   heritage_trait_id BIGINT NULL REFERENCES rpg.phb_heritage_trait(id) ON DELETE CASCADE,
+  thread_slug TEXT NULL REFERENCES rpg.phb_character_thread(slug) ON DELETE CASCADE,
   CONSTRAINT phb_class_economy_action_owner_xor CHECK (
-    (class_id IS NOT NULL AND species_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL)
-    OR (class_id IS NULL AND species_id IS NOT NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL)
-    OR (class_id IS NULL AND species_id IS NULL AND feat_id IS NOT NULL AND item_id IS NULL AND heritage_trait_id IS NULL)
-    OR (class_id IS NULL AND species_id IS NULL AND feat_id IS NULL AND item_id IS NOT NULL AND heritage_trait_id IS NULL)
-    OR (class_id IS NULL AND species_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NOT NULL)
+    (class_id IS NOT NULL AND species_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (class_id IS NULL AND species_id IS NOT NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (class_id IS NULL AND species_id IS NULL AND feat_id IS NOT NULL AND item_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (class_id IS NULL AND species_id IS NULL AND feat_id IS NULL AND item_id IS NOT NULL AND heritage_trait_id IS NULL AND thread_slug IS NULL)
+    OR (class_id IS NULL AND species_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NOT NULL AND thread_slug IS NULL)
+    OR (class_id IS NULL AND species_id IS NULL AND feat_id IS NULL AND item_id IS NULL AND heritage_trait_id IS NULL AND thread_slug IS NOT NULL)
   )
 );
 
@@ -958,6 +1009,9 @@ CREATE INDEX idx_class_economy_action_subclass ON rpg.phb_class_economy_action(s
 CREATE INDEX idx_class_economy_action_heritage_trait
   ON rpg.phb_class_economy_action(heritage_trait_id)
   WHERE heritage_trait_id IS NOT NULL;
+CREATE INDEX idx_class_economy_action_thread
+  ON rpg.phb_class_economy_action(thread_slug)
+  WHERE thread_slug IS NOT NULL;
 
 -- Battle Master (Fighter) maneuvers catalog
 
@@ -1549,53 +1603,6 @@ CREATE TABLE rpg.phb_vehicle_template_trait (
 
 CREATE INDEX idx_phb_vehicle_template_trait_slug
   ON rpg.phb_vehicle_template_trait(template_slug);
-
--- Character Threads (Northlands) — catálogo
-
-CREATE TABLE rpg.phb_character_thread (
-  slug TEXT PRIMARY KEY,
-  edition_slug TEXT NOT NULL REFERENCES rpg.phb_edition(slug),
-  name TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 120),
-  summary TEXT NOT NULL,
-  special_rules_text TEXT,
-  source_citation_id BIGINT REFERENCES rpg.phb_source_citation(id),
-  sort_order INT NOT NULL DEFAULT 0
-);
-
-CREATE TABLE rpg.phb_character_thread_goal (
-  id BIGSERIAL PRIMARY KEY,
-  thread_slug TEXT NOT NULL REFERENCES rpg.phb_character_thread(slug) ON DELETE CASCADE,
-  sort_order INT NOT NULL CHECK (sort_order BETWEEN 1 AND 6),
-  text TEXT NOT NULL,
-  UNIQUE (thread_slug, sort_order)
-);
-
-CREATE TABLE rpg.phb_character_thread_milestone (
-  id BIGSERIAL PRIMARY KEY,
-  thread_slug TEXT NOT NULL REFERENCES rpg.phb_character_thread(slug) ON DELETE CASCADE,
-  rank TEXT NOT NULL CHECK (rank IN ('least', 'lesser', 'greater', 'superior')),
-  sort_order INT NOT NULL CHECK (sort_order BETWEEN 1 AND 4),
-  UNIQUE (thread_slug, rank),
-  UNIQUE (thread_slug, sort_order)
-);
-
-CREATE TABLE rpg.phb_character_thread_milestone_benefit (
-  id BIGSERIAL PRIMARY KEY,
-  milestone_id BIGINT NOT NULL REFERENCES rpg.phb_character_thread_milestone(id) ON DELETE CASCADE,
-  benefit_key TEXT NOT NULL CHECK (char_length(benefit_key) BETWEEN 1 AND 64),
-  name TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 120),
-  description TEXT NOT NULL,
-  choice_group TEXT,
-  sort_order INT NOT NULL DEFAULT 0,
-  UNIQUE (milestone_id, benefit_key)
-);
-
-CREATE INDEX idx_phb_character_thread_goal_thread
-  ON rpg.phb_character_thread_goal(thread_slug);
-CREATE INDEX idx_phb_character_thread_milestone_thread
-  ON rpg.phb_character_thread_milestone(thread_slug);
-CREATE INDEX idx_phb_character_thread_milestone_benefit_ms
-  ON rpg.phb_character_thread_milestone_benefit(milestone_id);
 
 -- Ilustrações de catálogo (montarias, criaturas, veículos, itens da loja)
 
@@ -3272,6 +3279,7 @@ SELECT
   f.slug AS feat_slug,
   i.slug AS item_slug,
   ht.slug AS heritage_trait_slug,
+  a.thread_slug AS thread_slug,
   a.name,
   a.economy::text AS economy,
   a.unlock_level,
@@ -3403,6 +3411,10 @@ CREATE UNIQUE INDEX uq_resource_subclass ON rpg.phb_resource_definition (subclas
 CREATE UNIQUE INDEX uq_resource_heritage
   ON rpg.phb_resource_definition (heritage_trait_id, slug)
   WHERE scope = 'heritage';
+
+CREATE UNIQUE INDEX uq_resource_character_thread
+  ON rpg.phb_resource_definition (thread_slug, slug)
+  WHERE scope = 'character_thread';
 
 CREATE INDEX idx_phb_spell_name_trgm ON rpg.phb_spell USING gin (name gin_trgm_ops);
 

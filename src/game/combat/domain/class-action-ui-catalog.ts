@@ -16,6 +16,8 @@ export type ClassEconomyActionRecord = {
   itemSlug?: string | null;
   /** Traço de herança GH; omitido/null em linhas de classe/espécie. */
   heritageTraitSlug?: string | null;
+  /** Character Thread (Northlands); omitido/null fora de threads. */
+  threadSlug?: string | null;
   /** Mínimo de picks do mesmo traço para liberar a ação. */
   minTraitTakes?: number;
   requiresOptionKey?: string;
