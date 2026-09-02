@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { applyResourceSpend } from '@game/session/domain/class-resources';
+import { RAGE_RESOURCE_SLUG } from '@game/session/domain/resource-slugs';
 import {
   CharacterStateResponseDto,
 } from '@game/session/dto/core/character-state-response.dto';
@@ -28,14 +29,14 @@ export async function applyToggleRage(input: {
   if (nextActive && !state.rageActive) {
     if (input.spendResource !== false) {
       const resources = await resolveClassResources(dataSource, character);
-      const rage = resources.find((item) => item.slug === 'rage');
+      const rage = resources.find((item) => item.slug === RAGE_RESOURCE_SLUG);
       if (!rage) {
         throw new BadRequestException('Rage is not available yet');
       }
       try {
         state.resourcesUsed = applyResourceSpend(
           state.resourcesUsed ?? {},
-          'rage',
+          RAGE_RESOURCE_SLUG,
           rage.max,
           1,
         );

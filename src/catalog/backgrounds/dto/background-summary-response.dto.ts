@@ -1,12 +1,7 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { PickType } from '@nestjs/swagger';
+import { BackgroundResponseDto } from './background-response.dto';
 
-export class BackgroundSummaryResponseDto {
-  @ApiProperty({ example: 'acolyte' })
-  slug!: string;
-
-  @ApiProperty({ example: 'Acólito' })
-  name!: string;
-
-  @ApiPropertyOptional()
-  editionSlug!: string | null;
-}
+export class BackgroundSummaryResponseDto extends PickType(
+  BackgroundResponseDto,
+  ['slug', 'name', 'editionSlug'] as const,
+) {}

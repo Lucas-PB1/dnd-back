@@ -23,8 +23,7 @@ import {
   spellOnClassList,
   wizardSchoolSpellMatches,
 } from '@game/sheet/infrastructure/queries/spell-catalog.queries';
-
-const LORE_SPELL_LIST_CLASS_SLUGS = ['cleric', 'druid', 'wizard'] as const;
+import { MAGICAL_SECRETS_LIST_SLUGS } from '@game/sheet/domain/validation/spells/magical-secrets';
 
 @Injectable()
 export class CharacterSubclassOptionValueValidator {
@@ -221,7 +220,7 @@ export class CharacterSubclassOptionValueValidator {
     const maxLevel = Math.min(3, Math.ceil(level / 2));
     const valid = await spellOnAnyClassListUpToLevel(
       this.dataSource,
-      LORE_SPELL_LIST_CLASS_SLUGS,
+      MAGICAL_SECRETS_LIST_SLUGS,
       option.valueId,
       maxLevel,
     );

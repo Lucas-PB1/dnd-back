@@ -439,7 +439,7 @@ Inventário histórico (pré-migração):
 | `as never` | **2** | Proibido em código novo |
 | `as never` em **specs** | **133 arquivos / 551 ocorrências** | Principal dívida — mocks sem tipo |
 | `undefined` | muitos | Aceitável em bordas HTTP; evitar no domain |
-| `Omit` / `Pick` | **3** arquivos | Subutilizado vs DTOs duplicados |
+| `Omit` / `Pick` | Nest `PickType`/`PartialType` em summaries + UpdateActor (4.6); continuo em DTOs restantes |
 
 ### Anti-padrões
 
@@ -447,7 +447,7 @@ Inventário histórico (pré-migração):
 - **Magic strings** — `actionSlug`, `featSlug`, `choiceKind` repetidos sem `const` (ex.: recursos de classe, table-actions).
 - **Magic numbers** — limiares de nível, dados de dano, caps de DEX média espalhados em handlers.
 - **Tipagem espalhada** — mesmo shape de `abilityScores` / `featOptions` redeclarado em 10+ validators.
-- **Sem `Omit`** — `CharacterResponseDto` vs subsets; variantes de update copiam campos.
+- **Sem `Omit`** — ~~`CharacterResponseDto` vs subsets~~; variantes de update — parcialmente 4.6 (`PickType` summaries, `UpdateActorDto`).
 
 ### Regras novas
 
@@ -626,7 +626,7 @@ Política canônica de testes: [`code-standards.md` § Testes](../architecture/c
 | 4.3 | ~~`*-combat-notes` → `combat/domain/notes/`~~ | ✅ 2026-09-02 |
 | 4.4 | ~~Split `inventory/application`~~ | ✅ 2026-09-02 |
 | 4.5 | ~~`CatalogLookupService` SSOT escrita ficha~~ | ✅ 2026-09-02 |
-| 4.6 | DTOs com `Omit`/`Pick`; slugs em `constants.ts` | Baixo contínuo |
+| 4.6 | ~~DTOs `PickType` + slugs SSOT~~ | ✅ 2026-09-02 |
 
 **Meta:** **A−** em catálogo/arquitetura; nota global **≥ 3,7** se fases 1–3 concluídas.
 

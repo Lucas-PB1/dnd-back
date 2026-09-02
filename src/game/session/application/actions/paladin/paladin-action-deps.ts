@@ -9,6 +9,10 @@ import type {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
+import {
+  CHANNEL_DIVINITY_SLUG,
+  LAY_ON_HANDS_SLUG,
+} from '@game/session/domain/resource-slugs';
 
 export type PaladinActionDeps = {
   access: PlayerCharacterAccessService;
@@ -19,8 +23,7 @@ export type PaladinActionDeps = {
 export type PaladinTableActionResult = TableActionResponseDto;
 export type { PlayerCharacter, UsePaladinTableActionDto };
 
-export const LAY_ON_HANDS_SLUG = 'layOnHands';
-export const CHANNEL_DIVINITY_SLUG = 'channelDivinity';
+export { LAY_ON_HANDS_SLUG, CHANNEL_DIVINITY_SLUG };
 export const CURE_POISON_COST = 5;
 
 export async function paladinSaveDc(

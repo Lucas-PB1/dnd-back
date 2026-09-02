@@ -105,7 +105,7 @@ Rule: `typescript-quality`. Skill: `unify-game-stats`.
 |--------|----------|
 | `any`, `as never`, `as unknown as T`, `as` para silenciar | Tipos honestos; `satisfies`; mocks tipados |
 | `undefined` em cascata no domain | Campos obrigatórios; `null` só quando DB exige |
-| Magic string (slug, `actionSlug`) | `const` SSOT / union type |
+| Magic string (slug, `actionSlug`) | `const` SSOT (`session/domain/resource-slugs.ts`, `warlock/constants.ts`, …) / union type |
 | Magic number (dado, limiar) | Constante no domain |
 | Tipo copiado campo a campo | `Omit` / `Pick` da forma base |
 | Segunda fórmula de CA/PV/moeda | Import do SSOT (ver skill) |

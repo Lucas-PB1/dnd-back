@@ -1,12 +1,8 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { PickType } from '@nestjs/swagger';
+import { SpeciesResponseDto } from './species-response.dto';
 
-export class SpeciesSummaryResponseDto {
-  @ApiProperty({ example: 'elf' })
-  slug!: string;
-
-  @ApiProperty({ example: 'Elfo' })
-  name!: string;
-
-  @ApiProperty({ example: 'phb-2024-pt' })
-  editionSlug!: string;
-}
+export class SpeciesSummaryResponseDto extends PickType(SpeciesResponseDto, [
+  'slug',
+  'name',
+  'editionSlug',
+] as const) {}

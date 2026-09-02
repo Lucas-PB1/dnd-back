@@ -1,5 +1,8 @@
 import { feetToMeters } from '@game/shared/domain/metric';
 import {
+  WARLOCK_PACT_SLUGS,
+} from './constants';
+import {
   BLAST_INVOCATION_SLUGS,
   ELDRITCH_INVOCATION_CANTRIP_OPTION_KEY,
   ELDRITCH_INVOCATION_OPTION_KEY,
@@ -135,12 +138,9 @@ export function knownPactSlugsFromPicks(
   picks: readonly { slug: string }[],
 ): Set<string> {
   const set = new Set<string>();
+  const pactSet = new Set<string>(WARLOCK_PACT_SLUGS);
   for (const pick of picks) {
-    if (
-      pick.slug === 'pact-of-the-tome' ||
-      pick.slug === 'pact-of-the-blade' ||
-      pick.slug === 'pact-of-the-chain'
-    ) {
+    if (pactSet.has(pick.slug)) {
       set.add(pick.slug);
     }
   }

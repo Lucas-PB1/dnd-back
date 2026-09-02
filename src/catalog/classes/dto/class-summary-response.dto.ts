@@ -1,12 +1,8 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { PickType } from '@nestjs/swagger';
+import { ClassResponseDto } from './class-response.dto';
 
-export class ClassSummaryResponseDto {
-  @ApiProperty({ example: 'fighter' })
-  slug!: string;
-
-  @ApiProperty({ example: 'Guerreiro' })
-  name!: string;
-
-  @ApiPropertyOptional()
-  editionSlug!: string | null;
-}
+export class ClassSummaryResponseDto extends PickType(ClassResponseDto, [
+  'slug',
+  'name',
+  'editionSlug',
+] as const) {}

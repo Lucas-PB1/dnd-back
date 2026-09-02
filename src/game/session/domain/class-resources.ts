@@ -6,6 +6,12 @@
 
 import { resolveFormulaMax } from './resource-max-formulas';
 import { rollExpression, type Rng } from '@game/dice/domain/dice';
+import {
+  BARDIC_INSPIRATION_KEBAB_SLUG,
+  BARDIC_INSPIRATION_SLUG,
+  CHANNEL_DIVINITY_SLUG,
+  LAY_ON_HANDS_SLUG,
+} from './resource-slugs';
 
 export type ResourceMaxFormula =
   | 'fixed'
@@ -81,14 +87,14 @@ export function resolveClassResourceMaxima(input: {
     );
 
     if (
-      slug === 'channelDivinity' &&
+      slug === CHANNEL_DIVINITY_SLUG &&
       input.channelDivinityFromProgression != null
     ) {
       max = input.channelDivinityFromProgression;
     }
 
     // Mãos Consagradas do Paladino: reserva de cura = 5 × nível (PHB).
-    if (slug === 'layOnHands') {
+    if (slug === LAY_ON_HANDS_SLUG) {
       const LAY_ON_HANDS_HP_PER_LEVEL = 5;
       max = LAY_ON_HANDS_HP_PER_LEVEL * input.level;
     }
@@ -97,7 +103,8 @@ export function resolveClassResourceMaxima(input: {
 
     const recoverAllOnShort =
       top.recoverAllOnShort ||
-      ((slug === 'bardicInspiration' || slug === 'bardic-inspiration') &&
+      ((slug === BARDIC_INSPIRATION_SLUG ||
+        slug === BARDIC_INSPIRATION_KEBAB_SLUG) &&
         input.level >= 5);
 
     result.push({

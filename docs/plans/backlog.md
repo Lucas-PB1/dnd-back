@@ -63,7 +63,7 @@ _Fase concluída (3.0–3.7). Próximo: Fase 4 abaixo._
 - [x] **4.3** `combat/domain/notes/` — GH + Northlands (`notes/grim-hollow/`, `notes/northlands/`)
 - [x] **4.4** Split `inventory/application` — `items|query|attach|purchase|artifact|assert|effects|actions`
 - [x] **4.5** `CatalogLookupService` SSOT escrita ficha; `find-*-by-slug` delega fetch (sem `findOne` paralelo)
-- [ ] **4.6** DTOs `Omit`/`Pick`; slugs em `constants.ts`
+- [x] **4.6** DTOs `PickType`/`PartialType` (summaries + UpdateActor); slugs SSOT (`resource-slugs`, warlock/constants)
 - [ ] **4.7** Pastas leaf >4: `session/application/actions` (raiz)
 
 ---

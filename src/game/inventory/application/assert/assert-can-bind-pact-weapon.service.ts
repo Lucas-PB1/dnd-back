@@ -7,10 +7,11 @@ import {
   propertyIdsFromItemProperties,
 } from '@game/combat/domain/warlock/pact-blade';
 import { isWarlockClass } from '@game/combat/domain/warlock';
+import { PACT_OF_THE_BLADE_SLUG } from '@game/combat/domain/warlock/constants';
 import { PlayerCharacterOption } from '@game/sheet/infrastructure/player-sheet.entities';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
-export const PACT_OF_THE_BLADE_SLUG = 'pact-of-the-blade';
+export { PACT_OF_THE_BLADE_SLUG };
 export const ELDRITCH_INVOCATION_OPTION_KEY = 'eldritch-invocation';
 
 @Injectable()

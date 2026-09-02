@@ -13,7 +13,9 @@ import {
   assertCharacterSubclass,
 } from '@game/session/application/core/table-action-guards';
 
-export const CHANNEL_DIVINITY_SLUG = 'channelDivinity';
+import { CHANNEL_DIVINITY_SLUG } from '@game/session/domain/resource-slugs';
+
+export { CHANNEL_DIVINITY_SLUG };
 
 export type ClericActionDeps = {
   state: CharacterStateRepository;

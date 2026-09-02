@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, PickType } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsOptional, ValidateNested } from 'class-validator';
 import {
@@ -268,46 +268,25 @@ export class CharacterResponseDto {
 }
 
 /** Resumo para GET /characters — sem sheet/combat/magias. */
-export class CharacterSummaryResponseDto {
-  @ApiProperty({ format: 'uuid' })
-  id!: string;
-
-  @ApiProperty({ example: 'Thorin' })
-  name!: string;
-
-  @ApiProperty({ example: 1 })
-  level!: number;
-
-  @ApiProperty({ example: 'fighter' })
-  classSlug!: string;
-
+export class CharacterSummaryResponseDto extends PickType(CharacterResponseDto, [
+  'id',
+  'name',
+  'level',
+  'classSlug',
+  'speciesSlug',
+  'heritageSlug',
+  'backgroundSlug',
+  'subclassSlug',
+  'createdAt',
+  'updatedAt',
+  'campaigns',
+] as const) {
   @ApiProperty({ example: 'Guerreiro' })
   className!: string;
-
-  @ApiPropertyOptional({ example: 'dwarf', nullable: true })
-  speciesSlug!: string | null;
-
-  @ApiPropertyOptional({ example: 'gh-dwarf', nullable: true })
-  heritageSlug!: string | null;
 
   @ApiProperty({ example: 'Anão' })
   speciesName!: string;
 
-  @ApiProperty({ example: 'acolyte' })
-  backgroundSlug!: string;
-
-  @ApiPropertyOptional({ example: 'champion' })
-  subclassSlug!: string | null;
-
   @ApiPropertyOptional({ example: 'Campeão', nullable: true })
   subclassName!: string | null;
-
-  @ApiProperty()
-  createdAt!: string;
-
-  @ApiProperty()
-  updatedAt!: string;
-
-  @ApiProperty({ type: [CharacterCampaignRefDto] })
-  campaigns!: CharacterCampaignRefDto[];
 }

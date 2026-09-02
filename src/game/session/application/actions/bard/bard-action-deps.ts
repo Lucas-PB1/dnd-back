@@ -9,8 +9,9 @@ import {
   UseBardTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+import { BARDIC_INSPIRATION_SLUG } from '@game/session/domain/resource-slugs';
 
-export const BARDIC_INSPIRATION_SLUG = 'bardicInspiration';
+export { BARDIC_INSPIRATION_SLUG };
 
 export type BardActionDeps = {
   access: PlayerCharacterAccessService;

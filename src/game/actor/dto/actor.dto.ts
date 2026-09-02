@@ -1,4 +1,4 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional, PartialType, PickType } from '@nestjs/swagger';
 import {
   IsArray,
   IsIn,
@@ -193,43 +193,16 @@ export class CreateActorDto {
   spells?: ActorSpellInputDto[];
 }
 
-export class UpdateActorDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  @MinLength(1)
-  @MaxLength(120)
-  name?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt()
-  @Min(0)
-  hitPointsMax?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt()
-  @Min(0)
-  hitPointsCurrent?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt()
-  @Min(1)
-  @Max(40)
-  armorClass?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsInt()
-  initiativeModifier?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsString()
-  notes?: string;
-}
+export class UpdateActorDto extends PartialType(
+  PickType(CreateActorDto, [
+    'name',
+    'hitPointsMax',
+    'hitPointsCurrent',
+    'armorClass',
+    'initiativeModifier',
+    'notes',
+  ] as const),
+) {}
 
 export class SpawnActorFromTemplateDto {
   @ApiProperty({ example: 'primal-companion-earth' })
@@ -293,12 +266,6 @@ export class ActorSummaryResponseDto {
 }
 
 export class ActorResponseDto extends ActorSummaryResponseDto {
-  @ApiPropertyOptional({ nullable: true })
-  parentCharacterId!: string | null;
-
-  @ApiPropertyOptional({ nullable: true })
-  templateSlug!: string | null;
-
   @ApiPropertyOptional({
     example: '/catalog/mounts/camelo.png',
     nullable: true,
