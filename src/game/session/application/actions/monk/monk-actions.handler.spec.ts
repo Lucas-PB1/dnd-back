@@ -4,7 +4,7 @@ import {
   createTableActionHandlerTestContext,
   createTestAbilityScores,
   createTestCharacter,
-} from './testing/table-action-handler.harness';
+} from '../testing/table-action-handler.harness';
 import { MonkActionsHandler } from './monk-actions.handler';
 
 describe('MonkActionsHandler', () => {

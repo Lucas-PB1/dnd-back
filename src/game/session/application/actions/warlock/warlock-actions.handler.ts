@@ -12,13 +12,13 @@ import {
   UseWarlockTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
-import type { WarlockActionDeps } from './warlock/warlock-action-deps';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import type { WarlockActionDeps } from './warlock-action-deps';
 import {
   resolveDarkOnesOwnLuck,
   resolveHealingLight,
   resolveMagicalCunning,
-} from './warlock/base-actions';
+} from './base-actions';
 import {
   resolveAwakenedMind,
   resolveBeguilingDefenses,
@@ -27,8 +27,8 @@ import {
   resolveFiendishResilience,
   resolveHurlThroughHell,
   resolveSearingVengeance,
-} from './warlock/patron-actions';
-import { resolveInvokePactWeapon } from './warlock/pact-blade-actions';
+} from './patron-actions';
+import { resolveInvokePactWeapon } from './pact-blade-actions';
 
 @Injectable()
 export class WarlockActionsHandler {

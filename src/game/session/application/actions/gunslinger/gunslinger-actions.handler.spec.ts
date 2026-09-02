@@ -4,7 +4,7 @@ import {
   asHandlerDep,
   createTableActionHandlerTestContext,
   createTestCharacter,
-} from './testing/table-action-handler.harness';
+} from '../testing/table-action-handler.harness';
 import { GunslingerActionsHandler } from './gunslinger-actions.handler';
 
 describe('GunslingerActionsHandler', () => {

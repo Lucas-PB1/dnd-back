@@ -12,12 +12,12 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
 import {
   resolveCompanionCommand,
   resolveCompanionSummon,
-} from './shared/companion-table-actions';
-import type { RangerActionDeps } from './ranger/ranger-action-deps';
+} from '../shared/companion-table-actions';
+import type { RangerActionDeps } from './ranger-action-deps';
 import {
   resolveFeralHowl,
   resolveFeyReinforcements,
@@ -25,12 +25,12 @@ import {
   resolveHunterDefense,
   resolveMistyWanderer,
   resolveSetBestialAspect,
-} from './ranger/subclass-actions';
+} from './subclass-actions';
 import {
   resolveHuntersMarkFree,
   resolveNaturesVeil,
   resolveTireless,
-} from './ranger/base-actions';
+} from './base-actions';
 
 @Injectable()
 export class RangerActionsHandler {

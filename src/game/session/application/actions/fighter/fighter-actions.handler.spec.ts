@@ -9,7 +9,7 @@ import {
   createTableActionHandlerTestContext,
   createTestAbilityScores,
   createTestCharacter,
-} from './testing/table-action-handler.harness';
+} from '../testing/table-action-handler.harness';
 import { FighterActionsHandler } from './fighter-actions.handler';
 
 describe('FighterActionsHandler tabletop actions', () => {

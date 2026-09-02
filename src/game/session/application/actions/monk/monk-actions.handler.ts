@@ -9,13 +9,13 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import type { MonkActionDeps } from './monk/monk-action-deps';
+import type { MonkActionDeps } from './monk-action-deps';
 import {
   resolveFlurryOfBlows,
   resolvePatientDefense,
   resolveStepOfTheWind,
   resolveStunningStrike,
-} from './monk/base-actions';
+} from './base-actions';
 import {
   resolveAirDash,
   resolveCloakOfShadows,
@@ -37,7 +37,7 @@ import {
   resolveUppercut,
   resolveVibratingPalm,
   resolveWholenessOfBody,
-} from './monk/subclass-actions';
+} from './subclass-actions';
 
 @Injectable()
 export class MonkActionsHandler {

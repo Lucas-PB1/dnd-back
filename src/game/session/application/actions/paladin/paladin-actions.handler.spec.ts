@@ -4,7 +4,7 @@ import {
   createTableActionHandlerTestContext,
   createTestAbilityScores,
   createTestCharacter,
-} from './testing/table-action-handler.harness';
+} from '../testing/table-action-handler.harness';
 import { PaladinActionsHandler } from './paladin-actions.handler';
 
 describe('PaladinActionsHandler', () => {

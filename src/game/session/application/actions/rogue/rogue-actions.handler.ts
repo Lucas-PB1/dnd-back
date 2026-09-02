@@ -9,24 +9,24 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
-import { assertCharacterSubclass } from '../core/table-action-guards';
-import type { RogueActionDeps } from './rogue/rogue-action-deps';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import { assertCharacterSubclass } from '../../core/table-action-guards';
+import type { RogueActionDeps } from './rogue-action-deps';
 import {
   resolveConditionalPsiBonus,
   rollPsychicBlade,
-} from './rogue/psychic-blade-actions';
+} from './psychic-blade-actions';
 import {
   resolvePsychicTeleport,
   resolvePsychicVeil,
   resolvePsychicWhispers,
   resolveRendMind,
-} from './rogue/soulknife-actions';
+} from './soulknife-actions';
 import {
   resolveArachnoidWeb,
   resolveMagicDeviceCharge,
   resolveSpellThief,
-} from './rogue/subclass-actions';
+} from './subclass-actions';
 
 @Injectable()
 export class RogueActionsHandler {

@@ -18,20 +18,20 @@ import type {
 import type {
   UseFighterTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
-import type { FighterActionDeps } from './fighter/fighter-action-deps';
+import type { FighterActionDeps } from './fighter-action-deps';
 import {
   useActionSurgeAction,
   useSecondWindAction,
   useTacticalMindAction,
-} from './fighter/core-actions';
+} from './core-actions';
 import {
   listBattleMasterManeuversAction,
   useBattleMasterManeuverAction,
-} from './fighter/battle-master-actions';
-import { useDungeonPrecautionAction } from './fighter/dungeoneer-actions';
-import { usePsiWarriorAction } from './fighter/psi-warrior-actions';
-import { useBloodStrikeAction } from './fighter/blood-hound-actions';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
+} from './battle-master-actions';
+import { useDungeonPrecautionAction } from './dungeoneer-actions';
+import { usePsiWarriorAction } from './psi-warrior-actions';
+import { useBloodStrikeAction } from './blood-hound-actions';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
 
 const PSI_PREFIX = 'psi:';
 

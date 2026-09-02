@@ -9,7 +9,7 @@ import {
 import {
   UseMonsterHunterTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-monster-hunter.dto';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
 
 @Injectable()
 export class MonsterHunterActionsHandler {

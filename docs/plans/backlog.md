@@ -64,7 +64,7 @@ _Fase concluída (3.0–3.7). Próximo: Fase 4 abaixo._
 - [x] **4.4** Split `inventory/application` — `items|query|attach|purchase|artifact|assert|effects|actions`
 - [x] **4.5** `CatalogLookupService` SSOT escrita ficha; `find-*-by-slug` delega fetch (sem `findOne` paralelo)
 - [x] **4.6** DTOs `PickType`/`PartialType` (summaries + UpdateActor); slugs SSOT (`resource-slugs`, warlock/constants)
-- [ ] **4.7** Pastas leaf >4: `session/application/actions` (raiz)
+- [x] **4.7** Pastas leaf — handlers `*-actions` movidos para `session/application/actions/<classe>/` (raiz limpa)
 
 ---
 

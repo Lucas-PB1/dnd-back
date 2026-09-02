@@ -10,14 +10,14 @@ import {
   UsePaladinTableActionDto,
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
-import type { PaladinActionDeps } from './paladin/paladin-action-deps';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import type { PaladinActionDeps } from './paladin-action-deps';
 import {
   resolveAbjureEnemies,
   resolveCurePoison,
   resolveDivineSense,
   resolveLayOnHands,
-} from './paladin/base-actions';
+} from './base-actions';
 import {
   resolveGloriousDefense,
   resolveInspiringSmite,
@@ -25,7 +25,7 @@ import {
   resolvePeerlessAthlete,
   resolveReveler,
   resolveUndyingSentinel,
-} from './paladin/oath-actions';
+} from './oath-actions';
 
 @Injectable()
 export class PaladinActionsHandler {

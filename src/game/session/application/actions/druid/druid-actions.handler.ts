@@ -10,13 +10,13 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
-import type { DruidActionDeps } from './druid/druid-action-deps';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import type { DruidActionDeps } from './druid-action-deps';
 import {
   resolveWildResurgenceShape,
   resolveWildResurgenceSlot,
   resolveWildShape,
-} from './druid/wild-shape-actions';
+} from './wild-shape-actions';
 import {
   resolveCityShape,
   resolveCosmicOmen,
@@ -29,17 +29,17 @@ import {
   resolveStellarGuidance,
   resolveWallWarp,
   resolveWrathOfTheSea,
-} from './druid/subclass-actions';
+} from './subclass-actions';
 import {
   resolveLunarStep,
   resolveRestoreLunarStep,
-} from './druid/moon-actions';
+} from './moon-actions';
 import {
   resolveLandAid,
   resolveNaturalRecovery,
   resolveNatureSanctuary,
-} from './druid/land-actions';
-import { resolveWickerboneBehemoth } from './druid/symbiosis-actions';
+} from './land-actions';
+import { resolveWickerboneBehemoth } from './symbiosis-actions';
 
 const NATURAL_RECOVERY_SLUGS = {
   'natural-recovery-1': 1,

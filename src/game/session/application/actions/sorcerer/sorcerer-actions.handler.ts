@@ -15,13 +15,13 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
-import type { SorcererActionDeps } from './sorcerer/sorcerer-action-deps';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import type { SorcererActionDeps } from './sorcerer-action-deps';
 import {
   convertPointsToSlot,
   convertSlotToPoints,
   useMetamagicOption,
-} from './sorcerer/font-of-magic-actions';
+} from './font-of-magic-actions';
 import {
   resolveBastionOfLaw,
   resolveBendLuck,
@@ -33,7 +33,7 @@ import {
   resolveSorcerousRestoration,
   resolveTidesOfChaos,
   resolveWarpImplosion,
-} from './sorcerer/feature-actions';
+} from './feature-actions';
 
 @Injectable()
 export class SorcererActionsHandler {

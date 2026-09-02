@@ -10,13 +10,13 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import type { BardActionDeps } from './bard/bard-action-deps';
+import type { BardActionDeps } from './bard-action-deps';
 import {
   resolveCombatInspiration,
   resolveCuttingWords,
   resolveGrantInspiration,
   resolveSuperiorInspiration,
-} from './bard/inspiration-actions';
+} from './inspiration-actions';
 import {
   resolveAgileResponse,
   resolveCoordinatedMovement,
@@ -32,9 +32,9 @@ import {
   resolveUnarmedDance,
   resolveUnbreakableMajesty,
   resolveVirtuosoSkill,
-} from './bard/subclass-actions';
-import { resolveBragiRune } from './bard/northlands-bard-actions';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
+} from './subclass-actions';
+import { resolveBragiRune } from './northlands-bard-actions';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
 
 @Injectable()
 export class BardActionsHandler {

@@ -10,14 +10,14 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
-import type { ClericActionDeps } from './cleric/cleric-action-deps';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import type { ClericActionDeps } from './cleric-action-deps';
 import {
   resolveDivineIntervention,
   resolveDivineSpark,
   resolvePreserveLife,
   resolveTurnUndead,
-} from './cleric/base-actions';
+} from './base-actions';
 import {
   resolveChromaticAffinity,
   resolveCrownOfLight,
@@ -33,7 +33,7 @@ import {
   resolveWardingFlare,
   resolveWarGodsBlessing,
   resolveWarPriest,
-} from './cleric/subclass-actions';
+} from './subclass-actions';
 
 @Injectable()
 export class ClericActionsHandler {

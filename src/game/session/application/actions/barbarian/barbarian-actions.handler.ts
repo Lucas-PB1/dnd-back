@@ -13,17 +13,17 @@ import {
 } from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
 import {
   resolveCompanionCommand,
   resolveCompanionSummon,
-} from './shared/companion-table-actions';
-import type { BarbarianActionDeps } from './barbarian/barbarian-action-deps';
+} from '../shared/companion-table-actions';
+import type { BarbarianActionDeps } from './barbarian-action-deps';
 import {
   resolveRecoverAllRage,
   resolveToggleRage,
   resolveToggleReckless,
-} from './barbarian/base-actions';
+} from './base-actions';
 import {
   resolveBranchesOfTheTree,
   resolveBurningHandsSlap,
@@ -46,7 +46,7 @@ import {
   resolveUndeniableMagicRage,
   resolveWildHeartEagle,
   resolveZealousPresence,
-} from './barbarian/subclass-actions';
+} from './subclass-actions';
 
 @Injectable()
 export class BarbarianActionsHandler {

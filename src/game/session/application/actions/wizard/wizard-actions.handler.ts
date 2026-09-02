@@ -10,30 +10,30 @@ import {
 } from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
-import type { WizardActionDeps } from './wizard/wizard-action-deps';
+import { resolveDeclaredEconomyTableAction } from '../../core/resolve-declared-economy-table-action';
+import type { WizardActionDeps } from './wizard-action-deps';
 import {
   resolveArcaneRecovery,
   resolveSpellMastery,
-} from './wizard/base-actions';
+} from './base-actions';
 import {
   resolveArcaneWard,
   resolveArcaneWardRecharge,
   resolveProjectedWard,
   resolveSpellBreaker,
-} from './wizard/abjurer-actions';
-import { resolvePortent, resolveThirdEye } from './wizard/diviner-actions';
+} from './abjurer-actions';
+import { resolvePortent, resolveThirdEye } from './diviner-actions';
 import {
   resolveOverchannel,
   resolveSculptSpells,
-} from './wizard/evoker-actions';
+} from './evoker-actions';
 import {
   resolveIllusoryReality,
   resolveIllusorySelf,
   resolveImprovedIllusions,
   resolveSpectralSummon,
-} from './wizard/illusionist-actions';
-import { resolveMissileFlag } from './wizard/missile-mage-actions';
+} from './illusionist-actions';
+import { resolveMissileFlag } from './missile-mage-actions';
 
 @Injectable()
 export class WizardActionsHandler {

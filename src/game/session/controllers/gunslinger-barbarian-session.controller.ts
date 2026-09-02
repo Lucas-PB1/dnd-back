@@ -15,7 +15,7 @@ import {
 import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
 import { CurrentUser } from '@identity/decorators/current-user.decorator';
 import { AuthUser } from '@identity/auth-user';
-import { GunslingerActionsHandler } from '../application/actions/gunslinger-actions.handler';
+import { GunslingerActionsHandler } from '../application/actions/gunslinger/gunslinger-actions.handler';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()

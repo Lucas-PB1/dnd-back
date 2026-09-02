@@ -5,7 +5,7 @@ import {
   createTableActionHandlerTestContext,
   createTestAbilityScores,
   createTestCharacter,
-} from './testing/table-action-handler.harness';
+} from '../testing/table-action-handler.harness';
 import { RangerActionsHandler } from './ranger-actions.handler';
 
 describe('RangerActionsHandler', () => {

@@ -151,11 +151,11 @@ Regra do usuário: leaf com mais de 4 arquivos = smell. Inventário (produção,
 | 26 | `src/entities` | OK — entidades |
 | 24 | `sheet/domain/validation/class-options` | **Aceito** — padrão documentado em `code-standards.md` |
 | ≤4 | `inventory/application/{items,query,attach,…}` | ✅ 4.4 — handlers por concern |
-| 14 | `session/application/actions` | **Split** — já tem subpastas por classe; tirar handlers soltos da raiz |
+| 0 | `session/application/actions` (raiz) | ✅ 4.7 — só subpastas (`shared/`, `testing/`, por classe) |
 | 13 | `catalog/classes/dto` | OK — DTOs finos por query |
 | 11 | `dice/application/rolls/damage` | Monitorar — pipeline já separado |
 | 2 | `combat/domain` (raiz) | ✅ 4.3 — notes em `notes/{grim-hollow,northlands}/` |
-| 7+ | `session/application/actions/{wizard,…}` | OK se ≤4 por subpasta leaf |
+| 7+ | `session/application/actions/{wizard,fighter,…}` | **Aceito** — handler + deps + subclass colocalizados (mesa) |
 
 **Meta:** ao criar arquivo novo, se a pasta leaf passar de 4 → criar subpasta antes de commitar.
 
@@ -617,7 +617,7 @@ Política canônica de testes: [`code-standards.md` § Testes](../architecture/c
 
 ### Fase 4 — Estrutura pré-prod (decisão explícita)
 
-**Done quando:** baseline migration ou decisão documentada de manter granular; barrels policy aplicada; `combat/domain/notes/`; pastas leaf >4 com plano.
+**Done quando:** baseline; barrels; `combat/domain/notes/`; inventory split; CatalogLookup SSOT; PickType/slugs; actions por classe ✅.
 
 | # | PR / entrega | Risco |
 |---|--------------|-------|
@@ -627,6 +627,7 @@ Política canônica de testes: [`code-standards.md` § Testes](../architecture/c
 | 4.4 | ~~Split `inventory/application`~~ | ✅ 2026-09-02 |
 | 4.5 | ~~`CatalogLookupService` SSOT escrita ficha~~ | ✅ 2026-09-02 |
 | 4.6 | ~~DTOs `PickType` + slugs SSOT~~ | ✅ 2026-09-02 |
+| 4.7 | ~~Handlers mesa → `actions/<classe>/`~~ | ✅ 2026-09-02 |
 
 **Meta:** **A−** em catálogo/arquitetura; nota global **≥ 3,7** se fases 1–3 concluídas.
 

@@ -15,7 +15,7 @@ import {
 import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
 import { CurrentUser } from '@identity/decorators/current-user.decorator';
 import { AuthUser } from '@identity/auth-user';
-import { FighterActionsHandler } from '../application/actions/fighter-actions.handler';
+import { FighterActionsHandler } from '../application/actions/fighter/fighter-actions.handler';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()
