@@ -18,11 +18,11 @@ import { validateSpellListAccess } from './validate-spell-list-access';
 import {
   loadSubclassSpellcasting,
   maxSpellLevelForCharacter,
-  SubclassSpellcastingInfo,
-} from './spell-progression-queries';
+  type SubclassSpellcastingInfo,
+} from '@game/sheet/infrastructure/queries/spell-progression.queries';
 import { magicalSecretsListSlugs } from './magical-secrets';
 import { loadSangromancySpellSlugsAmong } from '@game/spellcasting/domain/sangromancy/load-sangromancy-spell-slugs';
-import { isSangromancerWizard, usesWizardPlusSangromancyList } from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
+import { usesWizardPlusSangromancyList } from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
 
 @Injectable()
 export class CharacterSpellsValidator {

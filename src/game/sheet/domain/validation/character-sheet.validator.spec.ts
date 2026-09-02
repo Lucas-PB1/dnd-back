@@ -1,3 +1,39 @@
+jest.mock('@game/sheet/infrastructure/queries/background-origin.queries', () => ({
+  loadBackgroundSkillSlugs: jest.fn().mockResolvedValue([]),
+  loadBackgroundLanguageSlugs: jest.fn().mockResolvedValue([]),
+}));
+jest.mock('@game/sheet/infrastructure/queries/class-meta.queries', () => ({
+  resolveSubclassUnlockLevel: jest.fn().mockResolvedValue(3),
+  loadWeaponMasteryProgression: jest.fn().mockResolvedValue([]),
+  loadWeaponMasteryEligibility: jest.fn().mockResolvedValue('any'),
+}));
+jest.mock('@game/sheet/infrastructure/queries/class-option.queries', () => ({
+  loadClassOptionDefs: jest.fn().mockResolvedValue([]),
+  classOptionValueExists: jest.fn().mockResolvedValue(true),
+  loadSubclassOptionKeysAtLevel: jest.fn().mockResolvedValue(['fighting_style']),
+  subclassOptionValueType: jest.fn().mockResolvedValue('fighting_style'),
+  loadWeaponMasteryPiece: jest.fn(),
+}));
+jest.mock('@game/sheet/infrastructure/queries/feat-option.queries', () => ({
+  fightingStyleExists: jest.fn().mockResolvedValue(true),
+  loadClassFightingStyleSlugs: jest.fn().mockResolvedValue(['defense', 'archery']),
+}));
+jest.mock('@game/sheet/infrastructure/queries/skill-catalog.queries', () => ({
+  skillExists: jest.fn().mockResolvedValue(true),
+  loadClassSkillChoiceSlugs: jest.fn().mockResolvedValue([]),
+}));
+jest.mock('@game/sheet/infrastructure/queries/metamagic-catalog.queries', () => ({
+  loadMetamagicCatalog: jest.fn().mockResolvedValue([]),
+}));
+jest.mock('@game/sheet/infrastructure/queries/eldritch-invocation.queries', () => ({
+  loadEldritchInvocationCatalog: jest.fn().mockResolvedValue([]),
+  loadOriginFeatSlugs: jest.fn().mockResolvedValue(new Set()),
+}));
+jest.mock('@game/sheet/infrastructure/queries/spell-catalog.queries', () => ({
+  loadSpellLevel: jest.fn(),
+  spellOnClassList: jest.fn(),
+}));
+
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
@@ -21,6 +57,7 @@ import { CharacterMetamagicValidator } from './class-options/character-metamagic
 import { CharacterClassFeatureOptionsValidator } from './class-options/character-class-feature-options.validator';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterCreateRequirementsValidator } from './character-create-requirements.validator';
+import { mockClassProficienciesQuery } from './testing/class-validation.spec.helpers';
 import { EMPTY_SHEET_DATA, type CharacterSheetInput } from '../character-sheet.types';
 
 const emptyInput = EMPTY_SHEET_DATA as CharacterSheetInput;
@@ -109,6 +146,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
 
     const classOptionsValidator = new CharacterClassOptionsValidator(
       dataSource as unknown as DataSource,
+      mockClassProficienciesQuery().query,
       catalogLookup as unknown as CatalogLookupService,
       new CharacterSpeciesChoicesValidator(
         speciesTraitChoicesRepo as unknown as Repository<VPhbSpeciesTraitChoices>,
@@ -125,7 +163,10 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         { validate: jest.fn().mockResolvedValue(undefined) } as never,
       ),
       new CharacterClassExpertiseValidator(dataSource as unknown as DataSource),
-      new CharacterWeaponMasteryValidator(dataSource as unknown as DataSource),
+      new CharacterWeaponMasteryValidator(
+        dataSource as unknown as DataSource,
+        mockClassProficienciesQuery().query,
+      ),
       new CharacterSpellMasteryValidator(dataSource as unknown as DataSource),
       new CharacterEldritchInvocationsValidator(
         dataSource as unknown as DataSource,

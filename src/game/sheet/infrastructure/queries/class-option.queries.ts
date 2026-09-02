@@ -1,0 +1,129 @@
+import { DataSource } from 'typeorm';
+import { PhbClassRef } from '@entities/phb-class-ref.entity';
+import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { PhbItem } from '@entities/phb-item.entity';
+import { PhbWeapon } from '@entities/phb-weapon.entity';
+import { PhbWeaponMastery } from '@entities/phb-weapon-mastery.entity';
+
+export type ClassFeatureDefRow = { optionKey: string; unlockLevel: number };
+
+async function loadClassId(
+  dataSource: DataSource,
+  classSlug: string,
+): Promise<string | null> {
+  const row = await dataSource.getRepository(PhbClassRef).findOne({
+    where: { slug: classSlug },
+    select: ['id'],
+  });
+  return row?.id ?? null;
+}
+
+export async function loadClassOptionDefs(
+  dataSource: DataSource,
+  classSlug: string,
+): Promise<ClassFeatureDefRow[]> {
+  const classId = await loadClassId(dataSource, classSlug);
+  if (!classId) return [];
+  const rows = await dataSource.getRepository(PhbOptionDef).find({
+    where: { scope: 'class', ownerId: classId },
+    select: ['optionKey', 'unlockLevel'],
+    order: { unlockLevel: 'ASC', optionKey: 'ASC' },
+  });
+  return rows.map((row) => ({
+    optionKey: row.optionKey,
+    unlockLevel: row.unlockLevel ?? 1,
+  }));
+}
+
+export async function classOptionValueExists(
+  dataSource: DataSource,
+  classSlug: string,
+  optionKey: string,
+  valueId: string,
+): Promise<boolean> {
+  const classId = await loadClassId(dataSource, classSlug);
+  if (!classId) return false;
+  return dataSource.getRepository(PhbOptionValue).exists({
+    where: {
+      scope: 'class',
+      ownerId: classId,
+      optionKey,
+      valueId,
+    },
+  });
+}
+
+export async function loadSubclassOptionKeysAtLevel(
+  dataSource: DataSource,
+  subclassId: string,
+  level: number,
+): Promise<string[]> {
+  const rows = await dataSource
+    .getRepository(PhbOptionDef)
+    .createQueryBuilder('def')
+    .select('DISTINCT def.option_key', 'optionKey')
+    .where('def.scope = :scope', { scope: 'subclass' })
+    .andWhere('def.owner_id = :ownerId', { ownerId: subclassId })
+    .andWhere('COALESCE(def.unlock_level, 1) <= :level', { level })
+    .orderBy('def.option_key', 'ASC')
+    .getRawMany<{ optionKey: string }>();
+  return rows.map((row) => row.optionKey);
+}
+
+export async function subclassOptionValueType(
+  dataSource: DataSource,
+  subclassId: string,
+  optionKey: string,
+): Promise<string | null> {
+  const row = await dataSource.getRepository(PhbOptionDef).findOne({
+    where: { scope: 'subclass', ownerId: subclassId, optionKey },
+    select: ['valueType'],
+  });
+  return row?.valueType ?? null;
+}
+
+export type WeaponMasteryPieceRow = {
+  slug: string;
+  name: string;
+  category: string;
+  damage: string | null;
+  damageType: string | null;
+  properties: Record<string, unknown> | null;
+  masterySlug: string | null;
+};
+
+export async function loadWeaponMasteryPiece(
+  dataSource: DataSource,
+  weaponSlug: string,
+): Promise<WeaponMasteryPieceRow | null> {
+  const item = await dataSource.getRepository(PhbItem).findOne({
+    where: { slug: weaponSlug },
+    select: ['id', 'slug', 'name', 'properties'],
+  });
+  if (!item) return null;
+
+  const weapon = await dataSource.getRepository(PhbWeapon).findOne({
+    where: { itemId: item.id },
+    select: ['category', 'damage', 'damageType', 'masteryId'],
+  });
+  if (!weapon) return null;
+
+  let masterySlug: string | null = null;
+  if (weapon.masteryId) {
+    const mastery = await dataSource.getRepository(PhbWeaponMastery).findOne({
+      where: { id: weapon.masteryId },
+      select: ['slug'],
+    });
+    masterySlug = mastery?.slug ?? null;
+  }
+
+  return {
+    slug: item.slug,
+    name: item.name,
+    category: weapon.category,
+    damage: weapon.damage,
+    damageType: weapon.damageType,
+    properties: item.properties,
+    masterySlug,
+  };
+}

@@ -2,7 +2,7 @@ import {
   FIXTURE_BATTLE_MASTER_MANEUVERS,
   FIXTURE_DUNGEONEER_PRECAUTION_SPELLS,
   FIXTURE_PSI_ACTIONS,
-} from '../__fixtures__/mechanical-catalog.fixtures';
+} from '../__fixtures__/mechanical-catalog';
 import {
   findDungeoneerPrecautionSpell,
   resolveBattleMasterTableRoll,

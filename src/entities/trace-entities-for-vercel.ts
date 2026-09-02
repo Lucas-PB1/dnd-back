@@ -7,6 +7,7 @@ import './phb-ability-generation-method.entity';
 import './phb-ability.entity';
 import './phb-alignment.entity';
 import './phb-character-level.entity';
+import './phb-class-ref.entity';
 import './phb-edition.entity';
 import './phb-eldritch-invocation.entity';
 import './phb-feat-ref.entity';

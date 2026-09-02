@@ -3,7 +3,9 @@ jest.mock('./feat-option-proficiency', () => ({
 }));
 
 import { DataSource, Repository } from 'typeorm';
+import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
+import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { CharacterFeatOptionValueValidator } from './character-feat-option-value.validator';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
@@ -15,12 +17,25 @@ function def(partial: Partial<PhbOptionDef>): PhbOptionDef {
 
 describe('CharacterFeatOptionValueValidator', () => {
   let validator: CharacterFeatOptionValueValidator;
-  let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let dataSource: { getRepository: jest.Mock };
+  let fightingStyleRepo: { exists: jest.Mock };
+  let spellRepo: { exists: jest.Mock; findOne: jest.Mock };
   let classSpellsRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'findOne'>>;
   let featOptionValueRepo: jest.Mocked<Pick<Repository<PhbOptionValue>, 'findOne'>>;
 
   beforeEach(() => {
-    dataSource = { query: jest.fn().mockResolvedValue([{ ok: 1 }]) };
+    fightingStyleRepo = { exists: jest.fn().mockResolvedValue(true) };
+    spellRepo = {
+      exists: jest.fn().mockResolvedValue(true),
+      findOne: jest.fn().mockResolvedValue({ level: 1 }),
+    };
+    dataSource = {
+      getRepository: jest.fn((entity) => {
+        if (entity === PhbFightingStyle) return fightingStyleRepo;
+        if (entity === VPhbSpell) return spellRepo;
+        throw new Error(`Unexpected entity ${String(entity)}`);
+      }),
+    };
     classSpellsRepo = { findOne: jest.fn().mockResolvedValue({ spellLevel: 1 }) };
     featOptionValueRepo = { findOne: jest.fn().mockResolvedValue({ valueId: 'x' }) };
     validator = new CharacterFeatOptionValueValidator(
@@ -53,7 +68,7 @@ describe('CharacterFeatOptionValueValidator', () => {
       ),
     ).rejects.toThrow(/not a valid fighting style/i);
 
-    dataSource.query.mockResolvedValueOnce([]);
+    fightingStyleRepo.exists.mockResolvedValueOnce(false);
     await expect(
       validator.validate(
         def({ valueType: 'fighting_style' }),
@@ -92,7 +107,7 @@ describe('CharacterFeatOptionValueValidator', () => {
   });
 
   it('rejects invalid ritual and school spell queries', async () => {
-    dataSource.query.mockResolvedValueOnce([]);
+    spellRepo.exists.mockResolvedValueOnce(false);
     await expect(
       validator.validate(
         def({ valueType: 'spell', spellRitualOnly: true, spellMaxLevel: 1 }),
@@ -104,7 +119,7 @@ describe('CharacterFeatOptionValueValidator', () => {
       ),
     ).rejects.toThrow(/must be a level 1 ritual/i);
 
-    dataSource.query.mockResolvedValueOnce([]);
+    spellRepo.exists.mockResolvedValueOnce(false);
     await expect(
       validator.validate(
         def({ valueType: 'spell', spellSchoolSlugs: ['evocation'], spellMaxLevel: 1 }),
@@ -116,7 +131,7 @@ describe('CharacterFeatOptionValueValidator', () => {
       ),
     ).rejects.toThrow(/not a valid choice/i);
 
-    dataSource.query.mockResolvedValueOnce([{ ok: 1 }]);
+    spellRepo.findOne.mockResolvedValueOnce({ level: 2 });
     await expect(
       validator.validate(
         def({
@@ -152,7 +167,7 @@ describe('CharacterFeatOptionValueValidator', () => {
   });
 
   it('accepts any exact-level spell when feat has no spellList dependency', async () => {
-    dataSource.query.mockResolvedValueOnce([{ ok: 1 }]);
+    spellRepo.exists.mockResolvedValueOnce(true);
     await expect(
       validator.validate(
         def({
@@ -172,14 +187,13 @@ describe('CharacterFeatOptionValueValidator', () => {
         [],
       ),
     ).resolves.toBeUndefined();
-    expect(dataSource.query).toHaveBeenCalledWith(
-      expect.stringContaining('phb_spell'),
-      ['alarme', 1],
-    );
+    expect(spellRepo.exists).toHaveBeenCalledWith({
+      where: { slug: 'alarme', level: 1 },
+    });
   });
 
   it('rejects wrong-level spell for open spell pick (Wotan)', async () => {
-    dataSource.query.mockResolvedValueOnce([]);
+    spellRepo.exists.mockResolvedValueOnce(false);
     await expect(
       validator.validate(
         def({

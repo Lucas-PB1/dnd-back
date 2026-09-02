@@ -4,12 +4,12 @@ import {
   isSorcererClass,
   readMetamagicPicks,
   validateMetamagicPicks,
-  type MetamagicCatalogRow,
 } from '@game/combat/domain/sorcerer';
 import {
   CharacterSheetContext,
   CharacterSheetInput,
 } from '@game/sheet/domain/character-sheet.types';
+import { loadMetamagicCatalog } from '@game/sheet/infrastructure/queries/metamagic-catalog.queries';
 
 @Injectable()
 export class CharacterMetamagicValidator {
@@ -28,7 +28,7 @@ export class CharacterMetamagicValidator {
       );
     }
 
-    const catalog = await this.loadCatalog();
+    const catalog = await loadMetamagicCatalog(this.dataSource);
     const errors = validateMetamagicPicks({
       level: ctx.level,
       picks,
@@ -37,27 +37,5 @@ export class CharacterMetamagicValidator {
     if (errors.length > 0) {
       throw new BadRequestException(errors.join('; '));
     }
-  }
-
-  private async loadCatalog(): Promise<MetamagicCatalogRow[]> {
-    const rows = await this.dataSource.query<
-      {
-        slug: string;
-        name: string;
-        description: string;
-        cost: number;
-        stacks_with_other: boolean;
-      }[]
-    >(
-      `SELECT slug, name, description, cost, stacks_with_other
-       FROM rpg.phb_metamagic`,
-    );
-    return rows.map((row) => ({
-      slug: row.slug,
-      name: row.name,
-      description: row.description,
-      cost: Number(row.cost),
-      stacksWithOther: row.stacks_with_other,
-    }));
   }
 }

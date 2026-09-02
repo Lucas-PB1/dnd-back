@@ -1,73 +1,56 @@
 import { BadRequestException } from '@nestjs/common';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestAbilityScores,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { BarbarianActionsHandler } from './barbarian-actions.handler';
 
 describe('BarbarianActionsHandler', () => {
-  const stateResponse = {
-    classResources: [{ slug: 'rage', remaining: 2, max: 2 }],
-    tempHp: 0,
-    rageActive: false,
-    recklessActive: false,
-  };
-  const access = { findAccessibleOrFail: jest.fn() };
-  const state = {
-    useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
-    recoverClassResource: jest.fn().mockResolvedValue(stateResponse),
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
-    patch: jest.fn().mockImplementation(async (_c, dto) => ({
-      ...stateResponse,
-      ...dto,
-    })),
-    martial: {
-      toggleRage: jest.fn().mockImplementation(async (_c, active) => ({
-        ...stateResponse,
-        rageActive: active ?? true,
-      })),
-      toggleReckless: jest.fn().mockImplementation(async (_c, active) => ({
-        ...stateResponse,
-        recklessActive: active ?? true,
-      })),
-      recoverAllRage: jest.fn().mockResolvedValue({
-        ...stateResponse,
-        classResources: [{ slug: 'rage', remaining: 4, max: 4 }],
-      }),
-    },
-  };
-  const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
-  const mechanicalCatalog = { load: async () => ({ economyActions: [] }) };
-  const syncCompanion = { execute: jest.fn().mockResolvedValue(undefined) };
-  const dataSource = { query: jest.fn() };
-  const handler = new BarbarianActionsHandler(
-    access as never,
-    state as never,
-    domain as never,
-    mechanicalCatalog as never,
-    syncCompanion as never,
-    dataSource as never,
-  );
-  const barbarian = {
+  const barbarian = createTestCharacter({
     id: 'barb-1',
     classSlug: 'barbarian',
     subclassSlug: 'berserker',
     level: 5,
-    abilityScores: {
+    abilityScores: createTestAbilityScores({
       forca: 16,
       destreza: 14,
       constituicao: 14,
       inteligencia: 8,
       sabedoria: 10,
       carisma: 8,
+    }),
+  });
+  const ctx = createTableActionHandlerTestContext({
+    stateResponse: {
+      classResources: [
+        { slug: 'rage', remaining: 2, max: 2, name: 'Fúria', used: 0 },
+      ],
+      tempHp: 0,
+      rageActive: false,
+      recklessActive: false,
     },
-  };
+    defaultCharacter: barbarian,
+  });
+  const syncCompanion = { execute: jest.fn().mockResolvedValue(undefined) };
+  const dataSource = { query: jest.fn() };
+  let handler: BarbarianActionsHandler;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    access.findAccessibleOrFail.mockResolvedValue(barbarian);
-    state.buildResponse.mockResolvedValue({ ...stateResponse });
-    state.useClassResource.mockResolvedValue({ state: stateResponse });
-    state.martial.toggleRage.mockImplementation(async (_c, active) => ({
-      ...stateResponse,
+    ctx.resetMocks();
+    ctx.state.martial.toggleRage.mockImplementation(async (_c, active) => ({
+      ...ctx.stateResponse,
       rageActive: active ?? true,
     }));
+    handler = new BarbarianActionsHandler(
+      asHandlerDep(ctx.access),
+      asHandlerDep(ctx.state),
+      asHandlerDep(ctx.domain),
+      asHandlerDep(ctx.mechanicalCatalog),
+      asHandlerDep(syncCompanion),
+      asHandlerDep(dataSource),
+    );
   });
 
   it('toggles rage on and spends via martial', async () => {
@@ -75,7 +58,7 @@ describe('BarbarianActionsHandler', () => {
       actionSlug: 'toggle-rage',
     });
 
-    expect(state.martial.toggleRage).toHaveBeenCalledWith(
+    expect(ctx.state.martial.toggleRage).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'barb-1' }),
       true,
     );
@@ -84,7 +67,7 @@ describe('BarbarianActionsHandler', () => {
   });
 
   it('applies world-tree temp HP when entering rage', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...barbarian,
       subclassSlug: 'world-tree',
       level: 5,
@@ -94,7 +77,7 @@ describe('BarbarianActionsHandler', () => {
       actionSlug: 'toggle-rage',
     });
 
-    expect(state.patch).toHaveBeenCalledWith(
+    expect(ctx.state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'barb-1' }),
       expect.objectContaining({ tempHp: 5 }),
     );
@@ -111,7 +94,7 @@ describe('BarbarianActionsHandler', () => {
   });
 
   it('resolves Champion of the Gods with dice spend', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...barbarian,
       subclassSlug: 'zealot',
       level: 6,
@@ -122,7 +105,7 @@ describe('BarbarianActionsHandler', () => {
       diceCount: 2,
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'barb-1' }),
       'divine-fury-dice',
       2,
@@ -132,7 +115,7 @@ describe('BarbarianActionsHandler', () => {
   });
 
   it('enters free rage for muscle wizard without spend flag', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...barbarian,
       subclassSlug: 'path-of-the-muscle-wizard',
     });
@@ -141,7 +124,7 @@ describe('BarbarianActionsHandler', () => {
       actionSlug: 'undeniable-magic-rage',
     });
 
-    expect(state.martial.toggleRage).toHaveBeenCalledWith(
+    expect(ctx.state.martial.toggleRage).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'barb-1' }),
       true,
       false,
@@ -149,12 +132,12 @@ describe('BarbarianActionsHandler', () => {
   });
 
   it('resolves Wild Heart Eagle while raging', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...barbarian,
       subclassSlug: 'wild-heart',
     });
-    state.buildResponse.mockResolvedValueOnce({
-      ...stateResponse,
+    ctx.state.buildResponse.mockResolvedValueOnce({
+      ...ctx.stateResponse,
       rageActive: true,
     });
 
@@ -167,12 +150,12 @@ describe('BarbarianActionsHandler', () => {
   });
 
   it('rejects Wild Heart Eagle without rage', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...barbarian,
       subclassSlug: 'wild-heart',
     });
-    state.buildResponse.mockResolvedValueOnce({
-      ...stateResponse,
+    ctx.state.buildResponse.mockResolvedValueOnce({
+      ...ctx.stateResponse,
       rageActive: false,
     });
 
@@ -184,10 +167,7 @@ describe('BarbarianActionsHandler', () => {
   });
 
   it('rejects non-barbarian', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...barbarian,
-      classSlug: 'fighter',
-    });
+    ctx.mockCharacterOnce({ ...barbarian, classSlug: 'fighter' });
 
     await expect(
       handler.useTableAction('user-1', 'barb-1', {

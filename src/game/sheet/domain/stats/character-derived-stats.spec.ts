@@ -64,14 +64,4 @@ describe('character-derived-stats', () => {
     });
     expect(result.passivePerception).toBe(15);
   });
-
-  it('computes unarmored armor class', () => {
-    const result = computeDerivedStats({
-      abilityScores: scores,
-      proficiencyBonus: 2,
-      classSkillSlugs: [],
-      backgroundSkillSlugs: [],
-    });
-    expect(result.armorClass).toBe(12);
-  });
 });

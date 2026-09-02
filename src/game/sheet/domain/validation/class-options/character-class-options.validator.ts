@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { assertUnique } from '@common/assert';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
 import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { CharacterFeatDto, CharacterSpellDto } from '@game/sheet/dto/character-sheet.dto';
 import { isGeneralFeatFightingStylePick } from '@game/shared/domain/fighting-style-general-feat';
@@ -19,12 +20,17 @@ import { CharacterEldritchInvocationsValidator } from './character-eldritch-invo
 import { CharacterMetamagicValidator } from './character-metamagic.validator';
 import { CharacterClassFeatureOptionsValidator } from './character-class-feature-options.validator';
 import type { ClassProgressionMasteryRow } from './class-weapon-mastery-slots';
+import {
+  fightingStyleExists,
+  loadClassFightingStyleSlugs,
+} from '@game/sheet/infrastructure/queries/feat-option.queries';
 
 /** Facade estável: fighting styles + delegação para validators por concern. */
 @Injectable()
 export class CharacterClassOptionsValidator {
   constructor(
     private readonly dataSource: DataSource,
+    private readonly proficiencies: ClassProficienciesQuery,
     private readonly catalogLookup: CatalogLookupService,
     private readonly speciesChoicesValidator: CharacterSpeciesChoicesValidator,
     private readonly heritageChoicesValidator: CharacterHeritageChoicesValidator,
@@ -43,7 +49,10 @@ export class CharacterClassOptionsValidator {
     subclassOptions: CharacterSheetInput['subclassOptions'],
     level = 1,
   ): Promise<void> {
-    const allowedSlugs = await this.loadClassFightingStyleSlugs(classSlug);
+    const allowedSlugs = await loadClassFightingStyleSlugs(
+      this.proficiencies,
+      classSlug,
+    );
     const allowed = new Set(allowedSlugs);
     const styleSlugs: string[] = [];
 
@@ -63,11 +72,7 @@ export class CharacterClassOptionsValidator {
     }
 
     for (const slug of collectFightingStyleSlugsFromSubclassOptions(subclassOptions)) {
-      const exists = await this.dataSource.query<{ ok: number }[]>(
-        `SELECT 1 AS ok FROM rpg.phb_fighting_style WHERE slug = $1 LIMIT 1`,
-        [slug],
-      );
-      if (exists.length === 0) {
+      if (!(await fightingStyleExists(this.dataSource, slug))) {
         throw new BadRequestException(`Unknown fighting style '${slug}'`);
       }
       if (!allowed.has(slug)) {
@@ -84,16 +89,7 @@ export class CharacterClassOptionsValidator {
   }
 
   async loadClassFightingStyleSlugs(classSlug: string): Promise<string[]> {
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT fs.slug
-       FROM rpg.phb_class_proficiency cp
-       JOIN rpg.phb_class c ON c.id = cp.class_id
-       JOIN rpg.phb_fighting_style fs ON fs.id = cp.ref_id
-       WHERE c.slug = $1 AND cp.kind = 'fighting_style'::rpg.class_proficiency_kind
-       ORDER BY fs.slug`,
-      [classSlug],
-    );
-    return rows.map((row) => row.slug);
+    return loadClassFightingStyleSlugs(this.proficiencies, classSlug);
   }
 
   async validateLevelRules(ctx: CharacterSheetContext): Promise<void> {

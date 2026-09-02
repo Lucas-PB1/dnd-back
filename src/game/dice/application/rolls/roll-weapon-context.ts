@@ -15,6 +15,12 @@ import {
 } from '@game/inventory/domain/artifact/artifact-instance-ops';
 import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-character-item.entity';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import {
+  loadWeaponCombatFlags,
+  type WeaponCombatFlags,
+} from '@game/session/infrastructure/queries/character-combat-flags.queries';
+
+export type { WeaponCombatFlags } from '@game/session/infrastructure/queries/character-combat-flags.queries';
 
 export type RollWeaponCharacter = {
   id: string;
@@ -23,40 +29,6 @@ export type RollWeaponCharacter = {
   abilityScores: AbilityScores;
   level: number;
 };
-
-export type WeaponCombatFlags = {
-  rageActive: boolean;
-  recklessActive: boolean;
-  bestialAspectLevel: number;
-};
-
-async function loadWeaponCombatFlags(
-  dataSource: DataSource | undefined,
-  characterId: string,
-): Promise<WeaponCombatFlags> {
-  if (!dataSource) {
-    return { rageActive: false, recklessActive: false, bestialAspectLevel: 0 };
-  }
-  const rows = await dataSource.query<
-    {
-      rage_active: boolean;
-      reckless_active: boolean;
-      bestial_aspect_level: number | null;
-    }[]
-  >(
-    `SELECT rage_active, reckless_active, bestial_aspect_level
-     FROM rpg.player_character_state
-     WHERE character_id = $1
-     LIMIT 1`,
-    [characterId],
-  );
-  const row = rows[0];
-  return {
-    rageActive: Boolean(row?.rage_active),
-    recklessActive: Boolean(row?.reckless_active),
-    bestialAspectLevel: Number(row?.bestial_aspect_level ?? 0),
-  };
-}
 
 export async function findEquippedWeaponAttack(
   deps: {

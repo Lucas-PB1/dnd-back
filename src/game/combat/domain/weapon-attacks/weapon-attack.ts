@@ -5,7 +5,6 @@ export type {
   WeaponAttackRole,
 } from './weapon-attack.types';
 export {
-  abilityMod,
   abilityShortLabel,
   buildModes,
   formatDamageNote,

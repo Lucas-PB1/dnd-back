@@ -6,6 +6,12 @@ import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
 import { RESILIENT_FEAT_SLUG } from './resilient-feat-options';
+import {
+  featSpellMatchesExactLevel,
+  featSpellMatchesRitualLevel,
+  featSpellMatchesSchool,
+  fightingStyleExists,
+} from '@game/sheet/infrastructure/queries/feat-option.queries';
 
 @Injectable()
 export class CharacterFeatOptionValueValidator {
@@ -62,11 +68,7 @@ export class CharacterFeatOptionValueValidator {
         `Feat option '${def.optionKey}/${option.valueId}' is not a valid fighting style for this class`,
       );
     }
-    const exists = await this.dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok FROM rpg.phb_fighting_style WHERE slug = $1 LIMIT 1`,
-      [option.valueId],
-    );
-    if (exists.length === 0) {
+    if (!(await fightingStyleExists(this.dataSource, option.valueId))) {
       throw new BadRequestException(
         `Feat option '${def.optionKey}/${option.valueId}' is invalid`,
       );
@@ -116,16 +118,12 @@ export class CharacterFeatOptionValueValidator {
     featOptions: FeatOptionDto[],
   ): Promise<void> {
     if (def.spellRitualOnly) {
-      const ritualRows = await this.dataSource.query<{ ok: number }[]>(
-        `SELECT 1 AS ok
-         FROM rpg.phb_spell s
-         WHERE s.slug = $1
-           AND s.level = $2
-           AND s.ritual = TRUE
-         LIMIT 1`,
-        [option.valueId, def.spellMaxLevel ?? 1],
+      const ok = await featSpellMatchesRitualLevel(
+        this.dataSource,
+        option.valueId,
+        def.spellMaxLevel ?? 1,
       );
-      if (ritualRows.length === 0) {
+      if (!ok) {
         throw new BadRequestException(
           `Spell '${option.valueId}' must be a level ${def.spellMaxLevel ?? 1} ritual for '${def.optionKey}'`,
         );
@@ -134,55 +132,30 @@ export class CharacterFeatOptionValueValidator {
     }
 
     if (def.spellSchoolSlugs?.length) {
-      if (def.spellMaxLevel === null) {
-        const schoolRows = await this.dataSource.query<{ ok: number }[]>(
-          `SELECT 1 AS ok
-           FROM rpg.phb_spell s
-           JOIN rpg.phb_spell_school sch ON sch.id = s.school_id
-           WHERE s.slug = $1
-             AND s.level >= 1
-             AND sch.slug = ANY($2::text[])
-           LIMIT 1`,
-          [option.valueId, def.spellSchoolSlugs],
-        );
-        if (schoolRows.length === 0) {
-          throw new BadRequestException(
-            `Spell '${option.valueId}' is not a valid Sangromancy choice for '${def.optionKey}'`,
-          );
-        }
-        return;
-      }
-
-      const schoolRows = await this.dataSource.query<{ ok: number }[]>(
-        `SELECT 1 AS ok
-         FROM rpg.phb_spell s
-         JOIN rpg.phb_spell_school sch ON sch.id = s.school_id
-         WHERE s.slug = $1
-           AND s.level = $2
-           AND sch.slug = ANY($3::text[])
-         LIMIT 1`,
-        [option.valueId, def.spellMaxLevel ?? 1, def.spellSchoolSlugs],
+      const ok = await featSpellMatchesSchool(
+        this.dataSource,
+        option.valueId,
+        def.spellSchoolSlugs,
+        def.spellMaxLevel,
       );
-      if (schoolRows.length === 0) {
+      if (!ok) {
         throw new BadRequestException(
-          `Spell '${option.valueId}' is not a valid choice for '${def.optionKey}'`,
+          def.spellMaxLevel === null
+            ? `Spell '${option.valueId}' is not a valid Sangromancy choice for '${def.optionKey}'`
+            : `Spell '${option.valueId}' is not a valid choice for '${def.optionKey}'`,
         );
       }
       return;
     }
 
-    // Sem lista de classe (ex.: Bênção de Wotan) — qualquer magia do círculo exato.
     if (!def.dependsOnOptionKey) {
       const level = def.spellMaxLevel ?? 1;
-      const rows = await this.dataSource.query<{ ok: number }[]>(
-        `SELECT 1 AS ok
-         FROM rpg.phb_spell s
-         WHERE s.slug = $1
-           AND s.level = $2
-         LIMIT 1`,
-        [option.valueId, level],
+      const ok = await featSpellMatchesExactLevel(
+        this.dataSource,
+        option.valueId,
+        level,
       );
-      if (rows.length === 0) {
+      if (!ok) {
         throw new BadRequestException(
           `Spell '${option.valueId}' must be level ${level} for '${def.optionKey}'`,
         );

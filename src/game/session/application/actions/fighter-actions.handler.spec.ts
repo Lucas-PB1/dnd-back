@@ -2,88 +2,54 @@ import {
   FIXTURE_BATTLE_MASTER_MANEUVERS,
   FIXTURE_DUNGEONEER_PRECAUTION_SPELLS,
   FIXTURE_PSI_ACTIONS,
-} from '@game/combat/domain/__fixtures__/mechanical-catalog.fixtures';
-import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
-import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
-import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import { CharacterStateResponseDto } from '@game/session/dto';
-import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
+} from '@game/combat/domain/__fixtures__/mechanical-catalog';
+import type { CharacterSheetData } from '@game/sheet/domain/character-sheet.types';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestAbilityScores,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { FighterActionsHandler } from './fighter-actions.handler';
 
 describe('FighterActionsHandler tabletop actions', () => {
-  const stateResponse = {} as CharacterStateResponseDto;
-  const fighter = {
+  const fighter = createTestCharacter({
     id: 'fighter-id',
     classSlug: 'fighter',
     subclassSlug: 'battle-master',
     level: 15,
     backgroundSlug: 'soldier',
-    abilityScores: {
+    abilityScores: createTestAbilityScores({
       forca: 18,
       destreza: 14,
       constituicao: 14,
       inteligencia: 16,
       sabedoria: 10,
       carisma: 12,
+    }),
+  });
+  const ctx = createTableActionHandlerTestContext({
+    defaultCharacter: fighter,
+    proficiencyBonus: 5,
+    mechanicalCatalogLoad: {
+      battleMasterManeuvers: [...FIXTURE_BATTLE_MASTER_MANEUVERS],
+      tableActions: [...FIXTURE_PSI_ACTIONS],
+      precautionSpells: [...FIXTURE_DUNGEONEER_PRECAUTION_SPELLS],
     },
-  } as PlayerCharacter;
-
-  let access: jest.Mocked<
-    Pick<PlayerCharacterAccessService, 'findAccessibleOrFail'>
-  >;
-  let state: jest.Mocked<
-    Pick<CharacterStateRepository, 'buildResponse' | 'useClassResource'>
-  >;
-  let domain: jest.Mocked<
-    Pick<CharacterDomainService, 'getProficiencyBonus'>
-  >;
-  let sheet: jest.Mocked<Pick<CharacterSheetRepository, 'load'>>;
+  });
   let handler: FighterActionsHandler;
 
-  const mechanicalCatalog = {
-    load: async () => ({
-      gunslingerManeuvers: [],
-      battleMasterManeuvers: [...FIXTURE_BATTLE_MASTER_MANEUVERS],
-      cunningStrikeEffects: [],
-      tableActions: [...FIXTURE_PSI_ACTIONS],
-      personaMasks: [],
-      personaMaskSlugs: [],
-      beastborneAspectBenefits: [],
-      dungeoneerSlayerLabels: [],
-      precautionSpells: [...FIXTURE_DUNGEONEER_PRECAUTION_SPELLS],
-      economyActions: [],
-      panelActions: [],
-    }),
-  };
-
   beforeEach(() => {
-    access = {
-      findAccessibleOrFail: jest.fn().mockResolvedValue(fighter),
-    };
-    state = {
-      buildResponse: jest.fn().mockResolvedValue(stateResponse),
-      useClassResource: jest.fn().mockResolvedValue({
-        state: stateResponse,
-        roll: null,
-      }),
-    };
-    domain = {
-      getProficiencyBonus: jest.fn().mockResolvedValue(5),
-    };
-    sheet = {
-      load: jest.fn().mockResolvedValue({
-        subclassOptions: [
-          { optionKey: 'maneuver1', valueId: 'trip-attack' },
-        ],
-      }),
-    };
+    ctx.resetMocks();
+    ctx.sheet.load.mockResolvedValue({
+      subclassOptions: [{ optionKey: 'maneuver1', valueId: 'trip-attack' }],
+    } as CharacterSheetData);
     handler = new FighterActionsHandler(
-      access as unknown as PlayerCharacterAccessService,
-      state as unknown as CharacterStateRepository,
-      domain as unknown as CharacterDomainService,
-      sheet as unknown as CharacterSheetRepository,
-      mechanicalCatalog as never,
+      asHandlerDep(ctx.access),
+      asHandlerDep(ctx.state),
+      asHandlerDep(ctx.domain),
+      asHandlerDep(ctx.sheet),
+      asHandlerDep(ctx.mechanicalCatalog),
     );
   });
 
@@ -93,7 +59,7 @@ describe('FighterActionsHandler tabletop actions', () => {
       maneuverSlug: 'trip-attack',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       fighter,
       'superiority-dice',
       1,
@@ -110,20 +76,20 @@ describe('FighterActionsHandler tabletop actions', () => {
       useRelentless: true,
     });
 
-    expect(state.useClassResource).not.toHaveBeenCalled();
+    expect(ctx.state.useClassResource).not.toHaveBeenCalled();
     expect(result.resourceSpent).toBe(false);
     expect(result.expression).toBe('1d8');
   });
 
   it('spends Psi Energy for Protective Field', async () => {
     const psiWarrior = { ...fighter, subclassSlug: 'psi-warrior', level: 7 };
-    access.findAccessibleOrFail.mockResolvedValue(psiWarrior);
+    ctx.mockCharacter({ ...fighter, subclassSlug: 'psi-warrior', level: 7 });
 
     const result = await handler.useTableAction('user', fighter.id, {
       actionSlug: 'psi:protective-field',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       psiWarrior,
       'psi-energy-dice',
       1,
@@ -132,16 +98,15 @@ describe('FighterActionsHandler tabletop actions', () => {
   });
 
   it('spends one Dungeon Precaution for an allowed spell', async () => {
-    const dungeoneer = { ...fighter, subclassSlug: 'dungeoneer', level: 7 };
-    access.findAccessibleOrFail.mockResolvedValue(dungeoneer);
+    ctx.mockCharacter({ ...fighter, subclassSlug: 'dungeoneer', level: 7 });
 
     const result = await handler.useTableAction('user', fighter.id, {
       actionSlug: 'dungeon-precaution',
       spellSlug: 'detectar-magia',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
-      dungeoneer,
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
+      { ...fighter, subclassSlug: 'dungeoneer', level: 7 },
       'dungeon-precautions',
       1,
     );

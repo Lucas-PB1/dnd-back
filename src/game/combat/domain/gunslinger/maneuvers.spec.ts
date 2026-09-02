@@ -2,7 +2,7 @@ import {
   findGunslingerManeuver,
   listGunslingerManeuvers,
 } from './maneuvers';
-import { FIXTURE_GUNSLINGER_MANEUVERS } from '../__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_GUNSLINGER_MANEUVERS } from '../__fixtures__/mechanical-catalog';
 
 describe('listGunslingerManeuvers', () => {
   it('returns base maneuvers at level 2 without subclass', () => {

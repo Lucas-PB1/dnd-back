@@ -43,6 +43,6 @@ import { CharacterThreadsModule } from './character-threads/character-threads.mo
     VehicleTemplatesModule,
     CharacterThreadsModule,
   ],
-  exports: [CatalogLookupModule, ItemsModule, CharacterThreadsModule],
+  exports: [CatalogLookupModule, ItemsModule, CharacterThreadsModule, ClassesModule],
 })
 export class CatalogModule {}

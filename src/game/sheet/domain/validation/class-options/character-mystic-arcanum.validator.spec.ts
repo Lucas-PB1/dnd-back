@@ -1,16 +1,19 @@
+jest.mock('@game/sheet/infrastructure/queries/spell-catalog.queries', () => ({
+  spellOnClassList: jest.fn(),
+}));
+
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { CharacterMysticArcanumValidator } from './character-mystic-arcanum.validator';
+import { spellOnClassList } from '@game/sheet/infrastructure/queries/spell-catalog.queries';
 
 describe('CharacterMysticArcanumValidator', () => {
   let validator: CharacterMysticArcanumValidator;
-  let dataSource: { query: jest.Mock };
+  let dataSource: DataSource;
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
-    validator = new CharacterMysticArcanumValidator(
-      dataSource as unknown as DataSource,
-    );
+    dataSource = {} as DataSource;
+    validator = new CharacterMysticArcanumValidator(dataSource);
   });
 
   it('allows empty options', async () => {
@@ -44,7 +47,7 @@ describe('CharacterMysticArcanumValidator', () => {
   });
 
   it('accepts warlock 6th-circle spell at 11', async () => {
-    dataSource.query.mockResolvedValue([{ ok: 1 }]);
+    jest.mocked(spellOnClassList).mockResolvedValue(true);
     await expect(
       validator.validateMysticArcanumOptions(
         {

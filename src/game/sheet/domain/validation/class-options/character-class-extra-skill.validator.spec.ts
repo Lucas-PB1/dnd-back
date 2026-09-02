@@ -1,16 +1,23 @@
+jest.mock('@game/sheet/infrastructure/queries/background-origin.queries', () => ({
+  loadBackgroundSkillSlugs: jest.fn(),
+}));
+jest.mock('@game/sheet/infrastructure/queries/skill-catalog.queries', () => ({
+  loadClassSkillChoiceSlugs: jest.fn(),
+}));
+
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { CharacterClassExtraSkillValidator } from './character-class-extra-skill.validator';
+import { loadBackgroundSkillSlugs } from '@game/sheet/infrastructure/queries/background-origin.queries';
+import { loadClassSkillChoiceSlugs } from '@game/sheet/infrastructure/queries/skill-catalog.queries';
 
 describe('CharacterClassExtraSkillValidator', () => {
   let validator: CharacterClassExtraSkillValidator;
-  let dataSource: { query: jest.Mock };
+  let dataSource: DataSource;
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
-    validator = new CharacterClassExtraSkillValidator(
-      dataSource as unknown as DataSource,
-    );
+    dataSource = {} as DataSource;
+    validator = new CharacterClassExtraSkillValidator(dataSource);
   });
 
   it('rejects extra skill below unlock', async () => {
@@ -32,9 +39,8 @@ describe('CharacterClassExtraSkillValidator', () => {
   });
 
   it('accepts barbarian L3 skill from class pool', async () => {
-    dataSource.query
-      .mockResolvedValueOnce([])
-      .mockResolvedValueOnce([{ slug: 'survival' }, { slug: 'nature' }]);
+    jest.mocked(loadBackgroundSkillSlugs).mockResolvedValue([]);
+    jest.mocked(loadClassSkillChoiceSlugs).mockResolvedValue(['survival', 'nature']);
     await expect(
       validator.validateClassExtraSkillOptions(
         {
@@ -53,9 +59,8 @@ describe('CharacterClassExtraSkillValidator', () => {
   });
 
   it('rejects already proficient skill', async () => {
-    dataSource.query
-      .mockResolvedValueOnce([])
-      .mockResolvedValueOnce([{ slug: 'athletics' }]);
+    jest.mocked(loadBackgroundSkillSlugs).mockResolvedValue([]);
+    jest.mocked(loadClassSkillChoiceSlugs).mockResolvedValue(['athletics']);
     await expect(
       validator.validateClassExtraSkillOptions(
         {

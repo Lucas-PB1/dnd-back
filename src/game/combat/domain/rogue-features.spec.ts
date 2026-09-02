@@ -1,4 +1,4 @@
-import { FIXTURE_CUNNING_STRIKE_EFFECTS } from './__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_CUNNING_STRIKE_EFFECTS } from './__fixtures__/mechanical-catalog';
 import { psiEnergyDiceSchedule } from './fighter';
 import {
   availableCunningStrikeEffects,

@@ -4,7 +4,6 @@ import {
   computeAbilityModifiers,
   type AbilityModifiers,
 } from '@game/shared/domain/ability-scores';
-import { computeUnarmoredArmorClass } from '@game/combat/domain/equipment';
 import { classOrderSkillCheckBonus } from '../validation/class-options/class-order-effects';
 import {
   skillCheckBonus,
@@ -49,9 +48,12 @@ export function computePassivePerception(
 export type CharacterDerivedStats = {
   abilityModifiers: AbilityModifiers;
   passivePerception: number;
-  armorClass: number;
 };
 
+/**
+ * Stats derivados de atributos + perícias (sem equipamento).
+ * CA: SSOT em `ResolveEquippedArmorClass` / `resolveCharacterCombatSlice` — não calcular aqui.
+ */
 export function computeDerivedStats(input: {
   abilityScores: AbilityScores;
   proficiencyBonus: number;
@@ -86,6 +88,5 @@ export function computeDerivedStats(input: {
         level: input.level,
       },
     ),
-    armorClass: computeUnarmoredArmorClass(input.abilityScores),
   };
 }

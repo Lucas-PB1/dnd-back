@@ -1,47 +1,41 @@
 import { BadRequestException } from '@nestjs/common';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestAbilityScores,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { PaladinActionsHandler } from './paladin-actions.handler';
 
 describe('PaladinActionsHandler', () => {
-  const stateResponse = { classResources: [], tempHp: 0 };
-  const access = { findAccessibleOrFail: jest.fn() };
-  const state = {
-    useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
-    patch: jest.fn().mockResolvedValue({ ...stateResponse, tempHp: 12 }),
-  };
-  const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
-  const mechanicalCatalog = { load: async () => ({ economyActions: [] }) };
-  const handler = new PaladinActionsHandler(
-    access as never,
-    state as never,
-    domain as never,
-    mechanicalCatalog as never,
-  );
-
-  const paladin = {
+  const paladin = createTestCharacter({
     id: 'pal-1',
     classSlug: 'paladin',
     subclassSlug: 'vengeance',
     level: 9,
-    abilityScores: {
+    abilityScores: createTestAbilityScores({
       forca: 16,
       destreza: 10,
       constituicao: 14,
       inteligencia: 8,
       sabedoria: 10,
       carisma: 18,
-    },
-  };
+    }),
+  });
+  const ctx = createTableActionHandlerTestContext({
+    stateResponse: { tempHp: 0 },
+    defaultCharacter: paladin,
+  });
+  let handler: PaladinActionsHandler;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    state.useClassResource.mockResolvedValue({ state: stateResponse });
-    state.buildResponse.mockResolvedValue(stateResponse);
-    state.patch.mockImplementation(async (_c, dto) => ({
-      ...stateResponse,
-      ...dto,
-    }));
-    access.findAccessibleOrFail.mockResolvedValue(paladin);
+    ctx.resetMocks();
+    handler = new PaladinActionsHandler(
+      asHandlerDep(ctx.access),
+      asHandlerDep(ctx.state),
+      asHandlerDep(ctx.domain),
+      asHandlerDep(ctx.mechanicalCatalog),
+    );
   });
 
   it('spends the requested amount from the Lay on Hands pool', async () => {
@@ -49,7 +43,7 @@ describe('PaladinActionsHandler', () => {
       actionSlug: 'lay-on-hands',
       amount: 7,
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'layOnHands',
       7,
@@ -62,7 +56,7 @@ describe('PaladinActionsHandler', () => {
     await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'cure-poison',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'layOnHands',
       5,
@@ -73,7 +67,7 @@ describe('PaladinActionsHandler', () => {
     await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'divine-sense',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'channelDivinity',
       1,
@@ -84,16 +78,12 @@ describe('PaladinActionsHandler', () => {
     const result = await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'abjure-enemies',
     });
-    // 8 + CHA(4) + PB(3)
     expect(result.saveDc).toBe(15);
     expect(result.resourceSpent).toBe(true);
   });
 
   it('rejects Abjure Enemies below level 9', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...paladin,
-      level: 8,
-    });
+    ctx.mockCharacterOnce({ ...paladin, level: 8 });
     await expect(
       handler.useTableAction('user-1', 'pal-1', {
         actionSlug: 'abjure-enemies',
@@ -105,7 +95,7 @@ describe('PaladinActionsHandler', () => {
     const result = await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'oath-channel',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'channelDivinity',
       1,
@@ -115,7 +105,7 @@ describe('PaladinActionsHandler', () => {
   });
 
   it('rolls temp HP pool on Inspiring Smite for Glory', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...paladin,
       subclassSlug: 'glory',
       level: 5,
@@ -123,7 +113,7 @@ describe('PaladinActionsHandler', () => {
     const result = await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'inspiring-smite',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'channelDivinity',
       1,
@@ -131,14 +121,14 @@ describe('PaladinActionsHandler', () => {
     expect(result.actionName).toBe('Destruição Inspiradora');
     expect(result.expression).toMatch(/^2d8\+5$/);
     expect(result.total).toBeGreaterThanOrEqual(7);
-    expect(state.patch).toHaveBeenCalledWith(
+    expect(ctx.state.patch).toHaveBeenCalledWith(
       expect.anything(),
       expect.objectContaining({ tempHp: result.total }),
     );
   });
 
   it('routes Glory oath-channel to Inspiring Smite', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...paladin,
       subclassSlug: 'glory',
       level: 5,
@@ -151,7 +141,7 @@ describe('PaladinActionsHandler', () => {
   });
 
   it('spends Channel Divinity on Peerless Athlete for Glory', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...paladin,
       subclassSlug: 'glory',
       level: 3,
@@ -159,7 +149,7 @@ describe('PaladinActionsHandler', () => {
     const result = await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'peerless-athlete',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'channelDivinity',
       1,
@@ -177,7 +167,7 @@ describe('PaladinActionsHandler', () => {
   });
 
   it('spends Glorious Defense pool for Glory L15+', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...paladin,
       subclassSlug: 'glory',
       level: 15,
@@ -186,7 +176,7 @@ describe('PaladinActionsHandler', () => {
     const result = await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'glorious-defense',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'glorious-defense',
       1,
@@ -196,7 +186,7 @@ describe('PaladinActionsHandler', () => {
   });
 
   it('rejects Glorious Defense below level 15', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...paladin,
       subclassSlug: 'glory',
       level: 10,
@@ -209,7 +199,7 @@ describe('PaladinActionsHandler', () => {
   });
 
   it('spends Undying Sentinel and reports 1 + 3×level HP', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...paladin,
       subclassSlug: 'ancients',
       level: 15,
@@ -219,12 +209,12 @@ describe('PaladinActionsHandler', () => {
     const result = await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'undying-sentinel',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'undying-sentinel',
       1,
     );
-    expect(state.patch).toHaveBeenCalledWith(
+    expect(ctx.state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       { deathSaveSuccesses: 0, deathSaveFailures: 0 },
     );
@@ -234,7 +224,7 @@ describe('PaladinActionsHandler', () => {
   });
 
   it('spends Reveler pool for Oath of Revelry L15+', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...paladin,
       subclassSlug: 'oath-of-revelry',
       level: 15,
@@ -242,7 +232,7 @@ describe('PaladinActionsHandler', () => {
     const result = await handler.useTableAction('user-1', 'pal-1', {
       actionSlug: 'reveler',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pal-1' }),
       'reveler',
       1,
@@ -251,10 +241,7 @@ describe('PaladinActionsHandler', () => {
   });
 
   it('rejects paladin actions for non-paladins', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...paladin,
-      classSlug: 'cleric',
-    });
+    ctx.mockCharacterOnce({ ...paladin, classSlug: 'cleric' });
     await expect(
       handler.useTableAction('user-1', 'pal-1', {
         actionSlug: 'lay-on-hands',

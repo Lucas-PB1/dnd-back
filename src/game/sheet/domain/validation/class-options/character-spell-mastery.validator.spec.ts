@@ -1,10 +1,15 @@
+jest.mock('@game/sheet/infrastructure/queries/spell-catalog.queries', () => ({
+  loadSpellLevel: jest.fn(),
+}));
+
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { CharacterSpellMasteryValidator } from './character-spell-mastery.validator';
+import { loadSpellLevel } from '@game/sheet/infrastructure/queries/spell-catalog.queries';
 
 describe('CharacterSpellMasteryValidator', () => {
   let validator: CharacterSpellMasteryValidator;
-  let dataSource: { query: jest.Mock };
+  let dataSource: DataSource;
 
   const ctx = {
     level: 18,
@@ -15,10 +20,8 @@ describe('CharacterSpellMasteryValidator', () => {
   };
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
-    validator = new CharacterSpellMasteryValidator(
-      dataSource as unknown as DataSource,
-    );
+    dataSource = {} as DataSource;
+    validator = new CharacterSpellMasteryValidator(dataSource);
   });
 
   it('allows empty mastery options', async () => {
@@ -58,7 +61,7 @@ describe('CharacterSpellMasteryValidator', () => {
   });
 
   it('rejects wrong spell level for key', async () => {
-    dataSource.query.mockResolvedValue([{ level: 2 }]);
+    jest.mocked(loadSpellLevel).mockResolvedValue(2);
     await expect(
       validator.validateSpellMasteryOptions(
         ctx,
@@ -69,9 +72,7 @@ describe('CharacterSpellMasteryValidator', () => {
   });
 
   it('accepts valid 1st and 2nd picks', async () => {
-    dataSource.query
-      .mockResolvedValueOnce([{ level: 1 }])
-      .mockResolvedValueOnce([{ level: 2 }]);
+    jest.mocked(loadSpellLevel).mockResolvedValueOnce(1).mockResolvedValueOnce(2);
     await expect(
       validator.validateSpellMasteryOptions(
         ctx,

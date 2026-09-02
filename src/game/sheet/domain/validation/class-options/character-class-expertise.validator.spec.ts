@@ -1,10 +1,19 @@
+jest.mock('@game/sheet/infrastructure/queries/background-origin.queries', () => ({
+  loadBackgroundSkillSlugs: jest.fn(),
+}));
+jest.mock('@game/sheet/infrastructure/queries/skill-catalog.queries', () => ({
+  skillExists: jest.fn(),
+}));
+
 import { DataSource } from 'typeorm';
 import { CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { CharacterClassExpertiseValidator } from './character-class-expertise.validator';
+import { loadBackgroundSkillSlugs } from '@game/sheet/infrastructure/queries/background-origin.queries';
+import { skillExists } from '@game/sheet/infrastructure/queries/skill-catalog.queries';
 
 describe('CharacterClassExpertiseValidator', () => {
   let validator: CharacterClassExpertiseValidator;
-  let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let dataSource: DataSource;
 
   function ctx(
     classSlug: string,
@@ -21,23 +30,13 @@ describe('CharacterClassExpertiseValidator', () => {
   }
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
-    validator = new CharacterClassExpertiseValidator(
-      dataSource as unknown as DataSource,
-    );
+    dataSource = {} as DataSource;
+    validator = new CharacterClassExpertiseValidator(dataSource);
   });
 
   function mockBackgroundSkills(slugs: string[]) {
-    dataSource.query.mockImplementation((sql: string, params?: unknown[]) => {
-      if (sql.includes('phb_background_skill')) {
-        return Promise.resolve(slugs.map((slug) => ({ slug })));
-      }
-      if (sql.includes('phb_skill WHERE slug')) {
-        const skill = (params as string[])[0];
-        return Promise.resolve(skill === 'fake-skill' ? [] : [{ ok: 1 }]);
-      }
-      return Promise.resolve([]);
-    });
+    jest.mocked(loadBackgroundSkillSlugs).mockResolvedValue(slugs);
+    jest.mocked(skillExists).mockImplementation(async (_, skill) => skill !== 'fake-skill');
   }
 
   it('rejects expertise when class has no slots at level', async () => {

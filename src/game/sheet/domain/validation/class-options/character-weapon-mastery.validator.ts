@@ -1,19 +1,29 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { assertUnique } from '@common/assert';
+import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
 import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import {
   classWeaponMasterySlotsAtLevel,
   isClassWeaponMasteryOptionKey,
   parseWeaponMasteryEligibility,
-  type ClassProgressionMasteryRow,
 } from './class-weapon-mastery-slots';
 import { isProficient, type EquippedWeaponPiece } from '@game/combat/domain/weapon-attacks';
 import { collectFightingStyleSlugsFromSubclassOptions } from './fighting-style-feat-options';
+import {
+  loadWeaponMasteryPiece,
+} from '@game/sheet/infrastructure/queries/class-option.queries';
+import {
+  loadWeaponMasteryEligibility,
+  loadWeaponMasteryProgression,
+} from '@game/sheet/infrastructure/queries/class-meta.queries';
 
 @Injectable()
 export class CharacterWeaponMasteryValidator {
-  constructor(private readonly dataSource: DataSource) {}
+  constructor(
+    private readonly dataSource: DataSource,
+    private readonly proficiencies: ClassProficienciesQuery,
+  ) {}
 
   async validateClassWeaponMasteryOptions(
     ctx: CharacterSheetContext,
@@ -54,7 +64,9 @@ export class CharacterWeaponMasteryValidator {
     const eligibility = parseWeaponMasteryEligibility(
       await this.loadWeaponMasteryEligibility(ctx.classSlug),
     );
-    const weaponProficiencySlugs = await this.loadClassWeaponProficiencySlugs(ctx.classSlug);
+    const weaponProficiencySlugs = (
+      await this.proficiencies.forClassSlug(ctx.classSlug)
+    ).weaponProficiencySlugs;
     const featSlugs = (sheet?.characterFeats ?? ctx.characterFeats ?? []).map(
       (feat) => feat.featSlug,
     );
@@ -76,17 +88,12 @@ export class CharacterWeaponMasteryValidator {
     }
   }
 
-  async loadWeaponMasteryProgression(
-    classSlug: string,
-  ): Promise<ClassProgressionMasteryRow[]> {
-    return this.dataSource.query<ClassProgressionMasteryRow[]>(
-      `SELECT cp.level, cp.weapon_mastery AS "weaponMastery"
-       FROM rpg.phb_class_progression cp
-       JOIN rpg.phb_class c ON c.id = cp.class_id
-       WHERE c.slug = $1
-       ORDER BY cp.level`,
-      [classSlug],
-    );
+  async loadWeaponMasteryProgression(classSlug: string) {
+    return loadWeaponMasteryProgression(this.dataSource, classSlug);
+  }
+
+  private async loadWeaponMasteryEligibility(classSlug: string): Promise<string | null> {
+    return loadWeaponMasteryEligibility(this.dataSource, classSlug);
   }
 
   private async assertMasteryWeaponChoice(
@@ -97,33 +104,13 @@ export class CharacterWeaponMasteryValidator {
     featSlugs: string[],
     fightingStyleSlugs: string[],
   ): Promise<void> {
-    const rows = await this.dataSource.query<
-      {
-        slug: string;
-        name: string;
-        category: string;
-        damage: string | null;
-        damage_type: string | null;
-        properties: Record<string, unknown> | null;
-        mastery_slug: string | null;
-      }[]
-    >(
-      `SELECT i.slug, i.name, w.category, w.damage, w.damage_type,
-              i.properties, m.slug AS mastery_slug
-       FROM rpg.phb_weapon w
-       JOIN rpg.phb_item i ON i.id = w.item_id
-       LEFT JOIN rpg.phb_weapon_mastery m ON m.id = w.mastery_id
-       WHERE i.slug = $1
-       LIMIT 1`,
-      [weaponSlug],
-    );
-    const row = rows[0];
+    const row = await loadWeaponMasteryPiece(this.dataSource, weaponSlug);
     if (!row) {
       throw new BadRequestException(
         `Weapon mastery choice '${weaponSlug}' is not a valid weapon`,
       );
     }
-    if (!row.mastery_slug) {
+    if (!row.masterySlug) {
       throw new BadRequestException(`Weapon '${weaponSlug}' has no mastery property`);
     }
 
@@ -152,7 +139,7 @@ export class CharacterWeaponMasteryValidator {
       itemName: row.name,
       category: row.category,
       damage: row.damage,
-      damageType: row.damage_type,
+      damageType: row.damageType,
       versatileDamage: props.versatileDamage ?? null,
       propertySlugs,
       equipmentSlot: 'main_hand',
@@ -169,25 +156,5 @@ export class CharacterWeaponMasteryValidator {
         `Weapon mastery choice '${weaponSlug}' requires proficiency`,
       );
     }
-  }
-
-  private async loadWeaponMasteryEligibility(classSlug: string): Promise<string | null> {
-    const rows = await this.dataSource.query<{ weapon_mastery_eligibility: string | null }[]>(
-      `SELECT weapon_mastery_eligibility FROM rpg.phb_class WHERE slug = $1`,
-      [classSlug],
-    );
-    return rows[0]?.weapon_mastery_eligibility ?? null;
-  }
-
-  private async loadClassWeaponProficiencySlugs(classSlug: string): Promise<string[]> {
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT cwp.ref_slug AS slug
-       FROM rpg.phb_class c
-       JOIN rpg.phb_class_proficiency cwp
-         ON cwp.class_id = c.id AND cwp.kind = 'weapon'::rpg.class_proficiency_kind
-       WHERE c.slug = $1`,
-      [classSlug],
-    );
-    return rows.map((row) => row.slug);
   }
 }

@@ -1,4 +1,4 @@
-import { FIXTURE_PERSONA_MASK_SLUGS } from '../__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_PERSONA_MASK_SLUGS } from '../__fixtures__/mechanical-catalog';
 import {
   assertValidPersonaMasks,
   knownPersonaMaskCount,

@@ -1,16 +1,19 @@
+jest.mock('@game/sheet/infrastructure/queries/spell-catalog.queries', () => ({
+  loadSpellLevel: jest.fn(),
+}));
+
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { CharacterSignatureSpellsValidator } from './character-signature-spells.validator';
+import { loadSpellLevel } from '@game/sheet/infrastructure/queries/spell-catalog.queries';
 
 describe('CharacterSignatureSpellsValidator', () => {
   let validator: CharacterSignatureSpellsValidator;
-  let dataSource: { query: jest.Mock };
+  let dataSource: DataSource;
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
-    validator = new CharacterSignatureSpellsValidator(
-      dataSource as unknown as DataSource,
-    );
+    dataSource = {} as DataSource;
+    validator = new CharacterSignatureSpellsValidator(dataSource);
   });
 
   it('allows empty options', async () => {
@@ -46,9 +49,7 @@ describe('CharacterSignatureSpellsValidator', () => {
   });
 
   it('accepts two distinct 3rd-circle book spells', async () => {
-    dataSource.query
-      .mockResolvedValueOnce([{ level: 3 }])
-      .mockResolvedValueOnce([{ level: 3 }]);
+    jest.mocked(loadSpellLevel).mockResolvedValueOnce(3).mockResolvedValueOnce(3);
     await expect(
       validator.validateSignatureSpellOptions(
         {

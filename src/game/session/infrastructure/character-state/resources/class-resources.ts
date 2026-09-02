@@ -5,7 +5,6 @@ import { ClassResourceStateDto } from '@game/session/dto';
 import {
   resolveClassResourceMaxima,
   type ClassResourceMax,
-  type ClassResourceScheduleRow,
 } from '@game/session/domain/class-resources';
 import { filterSpeciesResourceScheduleByChoices } from '@game/session/domain/filter-species-resources-by-option';
 import { riskDieFaces, riskDieLabel } from '@game/session/domain/risk-die';
@@ -20,18 +19,34 @@ import {
   loadCharacterSpeciesChoices,
   loadSpeciesResourceOptionGates,
 } from './species-resource-option-gates';
+import {
+  loadClassResourceSchedule,
+  loadSubclassResourceSchedule,
+  loadSpeciesResourceSchedule,
+  loadFeatResourceSchedule,
+  loadItemResourceSchedule,
+  loadHeritageResourceSchedule,
+} from '../../queries/class-resource-schedule.queries';
+import {
+  loadCharacterFeatSlugs,
+  loadClassProgressionSnapshot,
+  loadActiveItemSlugs,
+} from '../../queries/class-resource-character.queries';
 
-export type ClassResourceDbRow = {
-  resource_slug: string;
-  resource_name: string;
-  unlock_level: number;
-  max_formula: string;
-  fixed_max: number | null;
-  recover_one_on_short: boolean;
-  recover_all_on_short: boolean;
-  recover_all_on_long: boolean;
-  recover_on_long_dice: string | null;
-};
+export type { ClassResourceDbRow } from '../../queries/class-resource-schedule.queries';
+export {
+  loadClassResourceSchedule,
+  loadSubclassResourceSchedule,
+  loadSpeciesResourceSchedule,
+  loadFeatResourceSchedule,
+  loadItemResourceSchedule,
+  loadHeritageResourceSchedule,
+} from '../../queries/class-resource-schedule.queries';
+export {
+  loadCharacterFeatSlugs,
+  loadClassProgressionSnapshot,
+  loadActiveItemSlugs,
+} from '../../queries/class-resource-character.queries';
 
 export async function buildClassResourceState(
   dataSource: DataSource,
@@ -134,325 +149,4 @@ export async function resolveClassResources(
     abilityModifiers: mods,
     channelDivinityFromProgression: progression?.channelDivinity ?? null,
   });
-}
-
-export async function loadCharacterFeatSlugs(
-  dataSource: DataSource,
-  characterId: string,
-): Promise<string[]> {
-  if (!characterId) return [];
-  const rows = await dataSource.query<{ feat_slug: string }[]>(
-    `SELECT DISTINCT feat_slug
-     FROM rpg.player_character_feat
-     WHERE character_id = $1
-     ORDER BY feat_slug`,
-    [characterId],
-  );
-  return rows.map((row) => row.feat_slug);
-}
-
-export async function loadClassProgressionSnapshot(
-  dataSource: DataSource,
-  classSlug: string,
-  level: number,
-): Promise<{
-  proficiencyBonus: number;
-  channelDivinity: number | null;
-} | null> {
-  const rows = await dataSource.query<
-    { proficiency_bonus: number; channel_divinity: number | null }[]
-  >(
-    `SELECT proficiency_bonus, channel_divinity
-     FROM rpg.v_phb_class_progression
-     WHERE class_slug = $1 AND level = $2
-     LIMIT 1`,
-    [classSlug, level],
-  );
-  const row = rows[0];
-  if (!row) return null;
-  return {
-    proficiencyBonus: row.proficiency_bonus,
-    channelDivinity: row.channel_divinity,
-  };
-}
-
-export async function loadClassResourceSchedule(
-  dataSource: DataSource,
-  classSlug: string,
-): Promise<ClassResourceScheduleRow[]> {
-  const rows = await dataSource.query<ClassResourceDbRow[]>(
-    `SELECT
-       rd.slug AS resource_slug,
-       rd.name AS resource_name,
-       cr.unlock_level,
-       cr.max_formula::text AS max_formula,
-       cr.fixed_max,
-       cr.recover_one_on_short,
-       cr.recover_all_on_short,
-       cr.recover_all_on_long,
-       cr.recover_on_long_dice
-     FROM rpg.phb_resource_grant cr
-     JOIN rpg.phb_class c ON c.id = cr.owner_id AND cr.owner_kind = 'class'::rpg.resource_owner_kind
-     JOIN rpg.phb_resource_definition rd ON rd.id = cr.resource_id
-     WHERE c.slug = $1
-     ORDER BY rd.slug, cr.unlock_level`,
-    [classSlug],
-  );
-
-  return rows.map((row) => ({
-    resourceSlug: row.resource_slug,
-    resourceName: row.resource_name,
-    unlockLevel: row.unlock_level,
-    maxFormula: row.max_formula,
-    fixedMax: row.fixed_max,
-    recoverOneOnShort: row.recover_one_on_short,
-    recoverAllOnShort: row.recover_all_on_short,
-    recoverAllOnLong: row.recover_all_on_long,
-    recoverOnLongDice: row.recover_on_long_dice ?? null,
-  }));
-}
-
-export async function loadSubclassResourceSchedule(
-  dataSource: DataSource,
-  subclassSlug: string,
-): Promise<ClassResourceScheduleRow[]> {
-  const rows = await dataSource.query<ClassResourceDbRow[]>(
-    `SELECT
-       rd.slug AS resource_slug,
-       rd.name AS resource_name,
-       sr.unlock_level,
-       sr.max_formula::text AS max_formula,
-       sr.fixed_max,
-       sr.recover_one_on_short,
-       sr.recover_all_on_short,
-       sr.recover_all_on_long,
-       sr.recover_on_long_dice
-     FROM rpg.phb_resource_grant sr
-     JOIN rpg.phb_subclass s ON s.id = sr.owner_id AND sr.owner_kind = 'subclass'::rpg.resource_owner_kind
-     JOIN rpg.phb_resource_definition rd ON rd.id = sr.resource_id
-     WHERE s.slug = $1
-     ORDER BY rd.slug, sr.unlock_level`,
-    [subclassSlug],
-  );
-
-  return rows.map((row) => ({
-    resourceSlug: row.resource_slug,
-    resourceName: row.resource_name,
-    unlockLevel: row.unlock_level,
-    maxFormula: row.max_formula,
-    fixedMax: row.fixed_max,
-    recoverOneOnShort: row.recover_one_on_short,
-    recoverAllOnShort: row.recover_all_on_short,
-    recoverAllOnLong: row.recover_all_on_long,
-    recoverOnLongDice: row.recover_on_long_dice ?? null,
-  }));
-}
-
-export async function loadSpeciesResourceSchedule(
-  dataSource: DataSource,
-  speciesSlug: string,
-): Promise<ClassResourceScheduleRow[]> {
-  const rows = await dataSource.query<ClassResourceDbRow[]>(
-    `SELECT
-       rd.slug AS resource_slug,
-       rd.name AS resource_name,
-       gr.unlock_level,
-       gr.max_formula::text AS max_formula,
-       gr.fixed_max,
-       gr.recover_one_on_short,
-       gr.recover_all_on_short,
-       gr.recover_all_on_long,
-       gr.recover_on_long_dice
-     FROM rpg.phb_resource_grant gr
-     JOIN rpg.phb_species sp
-       ON sp.id = gr.owner_id AND gr.owner_kind = 'species'::rpg.resource_owner_kind
-     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
-     WHERE sp.slug = $1
-     ORDER BY rd.slug, gr.unlock_level`,
-    [speciesSlug],
-  );
-
-  return rows.map((row) => ({
-    resourceSlug: row.resource_slug,
-    resourceName: row.resource_name,
-    unlockLevel: row.unlock_level,
-    maxFormula: row.max_formula,
-    fixedMax: row.fixed_max,
-    recoverOneOnShort: row.recover_one_on_short,
-    recoverAllOnShort: row.recover_all_on_short,
-    recoverAllOnLong: row.recover_all_on_long,
-    recoverOnLongDice: row.recover_on_long_dice ?? null,
-  }));
-}
-
-export async function loadFeatResourceSchedule(
-  dataSource: DataSource,
-  featSlugs: readonly string[],
-): Promise<ClassResourceScheduleRow[]> {
-  if (featSlugs.length === 0) return [];
-  const rows = await dataSource.query<ClassResourceDbRow[]>(
-    `SELECT
-       rd.slug AS resource_slug,
-       rd.name AS resource_name,
-       gr.unlock_level,
-       gr.max_formula::text AS max_formula,
-       gr.fixed_max,
-       gr.recover_one_on_short,
-       gr.recover_all_on_short,
-       gr.recover_all_on_long,
-       gr.recover_on_long_dice
-     FROM rpg.phb_resource_grant gr
-     JOIN rpg.phb_feat f
-       ON f.id = gr.owner_id AND gr.owner_kind = 'feat'::rpg.resource_owner_kind
-     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
-     WHERE f.slug = ANY($1::text[])
-     ORDER BY rd.slug, gr.unlock_level`,
-    [featSlugs],
-  );
-
-  return rows.map((row) => ({
-    resourceSlug: row.resource_slug,
-    resourceName: row.resource_name,
-    unlockLevel: row.unlock_level,
-    maxFormula: row.max_formula,
-    fixedMax: row.fixed_max,
-    recoverOneOnShort: row.recover_one_on_short,
-    recoverAllOnShort: row.recover_all_on_short,
-    recoverAllOnLong: row.recover_all_on_long,
-    recoverOnLongDice: row.recover_on_long_dice ?? null,
-  }));
-}
-
-/** Itens equipados (+ sintonizados se exigir), charms anexados e consumíveis com quantity > 0. */
-export async function loadActiveItemSlugs(
-  dataSource: DataSource,
-  characterId: string,
-): Promise<string[]> {
-  if (!characterId) return [];
-  const rows = await dataSource.query<{ item_slug: string }[]>(
-    `SELECT DISTINCT item_slug FROM (
-       SELECT pci.item_slug
-       FROM rpg.player_character_item pci
-       JOIN rpg.phb_item i ON i.slug = pci.item_slug
-       WHERE pci.character_id = $1
-         AND pci.location = 'equipped'
-         AND (
-           COALESCE((i.properties->>'requiresAttunement')::boolean, false) = false
-           OR pci.attuned = true
-         )
-       UNION ALL
-       SELECT pci.attached_charm_slug AS item_slug
-       FROM rpg.player_character_item pci
-       WHERE pci.character_id = $1
-         AND pci.location = 'equipped'
-         AND pci.attached_charm_slug IS NOT NULL
-       UNION ALL
-       SELECT pci.attached_coverage_slug AS item_slug
-       FROM rpg.player_character_item pci
-       JOIN rpg.phb_item cov ON cov.slug = pci.attached_coverage_slug
-       WHERE pci.character_id = $1
-         AND pci.location = 'equipped'
-         AND pci.attached_coverage_slug IS NOT NULL
-         AND (
-           COALESCE((cov.properties->>'requiresAttunement')::boolean, false) = false
-           OR pci.attached_coverage_attuned = true
-         )
-       UNION ALL
-       SELECT pci.item_slug
-       FROM rpg.player_character_item pci
-       JOIN rpg.phb_item i ON i.slug = pci.item_slug
-       WHERE pci.character_id = $1
-         AND pci.quantity > 0
-         AND COALESCE((i.properties->>'consumable')::boolean, false) = true
-     ) active
-     ORDER BY item_slug`,
-    [characterId],
-  );
-  return rows.map((row) => row.item_slug);
-}
-
-export async function loadItemResourceSchedule(
-  dataSource: DataSource,
-  itemSlugs: readonly string[],
-): Promise<ClassResourceScheduleRow[]> {
-  if (itemSlugs.length === 0) return [];
-  const rows = await dataSource.query<ClassResourceDbRow[]>(
-    `SELECT
-       rd.slug AS resource_slug,
-       rd.name AS resource_name,
-       gr.unlock_level,
-       gr.max_formula::text AS max_formula,
-       gr.fixed_max,
-       gr.recover_one_on_short,
-       gr.recover_all_on_short,
-       gr.recover_all_on_long,
-       gr.recover_on_long_dice
-     FROM rpg.phb_resource_grant gr
-     JOIN rpg.phb_item i
-       ON i.id = gr.owner_id AND gr.owner_kind = 'item'::rpg.resource_owner_kind
-     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
-     WHERE i.slug = ANY($1::text[])
-     ORDER BY rd.slug, gr.unlock_level`,
-    [itemSlugs],
-  );
-
-  return rows.map((row) => ({
-    resourceSlug: row.resource_slug,
-    resourceName: row.resource_name,
-    unlockLevel: row.unlock_level,
-    maxFormula: row.max_formula,
-    fixedMax: row.fixed_max,
-    recoverOneOnShort: row.recover_one_on_short,
-    recoverAllOnShort: row.recover_all_on_short,
-    recoverAllOnLong: row.recover_all_on_long,
-    recoverOnLongDice: row.recover_on_long_dice ?? null,
-  }));
-}
-
-/**
- * Recursos de traços de herança GH — exige takes >= min_trait_takes do grant.
- */
-export async function loadHeritageResourceSchedule(
-  dataSource: DataSource,
-  characterId: string,
-): Promise<ClassResourceScheduleRow[]> {
-  if (!characterId) return [];
-  const rows = await dataSource.query<ClassResourceDbRow[]>(
-    `SELECT
-       rd.slug AS resource_slug,
-       rd.name AS resource_name,
-       gr.unlock_level,
-       gr.max_formula::text AS max_formula,
-       gr.fixed_max,
-       gr.recover_one_on_short,
-       gr.recover_all_on_short,
-       gr.recover_all_on_long,
-       gr.recover_on_long_dice
-     FROM rpg.phb_resource_grant gr
-     JOIN rpg.phb_heritage_trait ht
-       ON ht.id = gr.owner_id
-      AND gr.owner_kind = 'heritage'::rpg.resource_owner_kind
-     JOIN rpg.phb_resource_definition rd ON rd.id = gr.resource_id
-     JOIN (
-       SELECT trait_id, COUNT(*)::int AS take_count
-       FROM rpg.player_character_heritage_trait
-       WHERE character_id = $1::uuid
-       GROUP BY trait_id
-     ) picks ON picks.trait_id = ht.id
-     WHERE picks.take_count >= COALESCE(gr.min_trait_takes, 1)
-     ORDER BY rd.slug, gr.unlock_level`,
-    [characterId],
-  );
-
-  return rows.map((row) => ({
-    resourceSlug: row.resource_slug,
-    resourceName: row.resource_name,
-    unlockLevel: row.unlock_level,
-    maxFormula: row.max_formula,
-    fixedMax: row.fixed_max,
-    recoverOneOnShort: row.recover_one_on_short,
-    recoverAllOnShort: row.recover_all_on_short,
-    recoverAllOnLong: row.recover_all_on_long,
-    recoverOnLongDice: row.recover_on_long_dice ?? null,
-  }));
 }

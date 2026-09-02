@@ -23,7 +23,7 @@ description: >-
 | Bônus PV (fontes) | `hitPointsBonus` + rows `HitPointsBonusRow` | Somar feat em 3 lugares |
 | PV atual ≤ máx. | `clampHitPointsCurrent` → `combat-vitals.ts` | `if (cur > max) cur = max` espalhado |
 | % PV | `hitPointsPercent` → `combat-vitals.ts` | `(cur/max)*100` na UI/API |
-| CA com equipamento | `resolveArmorClass` / `resolve-equipped-armor-class.ts` | CA manual no mapper |
+| CA com equipamento | `ResolveEquippedArmorClass` → `computeArmorClassFromEquipment` | CA em `computeDerivedStats` (removido fase 1.3) |
 | CA contexto (feat, estilo, item) | `ArmorClassContext` em `armor-class.ts` | Listas de slug soltas no handler |
 | Moedas / parse / total | `coin-purse.ts` (`CoinPurse`, `COPPER_PER_COIN`, …) | Parse de preço ad hoc |
 | PB | `CharacterDomainService.getProficiencyBonus` | Tabela `2 + floor((level-1)/4)` copiada |
@@ -31,7 +31,7 @@ description: >-
 ## Dívida conhecida (unificar)
 
 1. **`abilityMod` local** — `armor-class.ts`, `weapon-attack-predicates.ts`, `manikin-armor.ts` → importar `abilityModifier`.
-2. **CA ficha vs combate** — `character-derived-stats.ts` usa só `computeUnarmoredArmorClass`; combate usa `resolve-character-combat-slice`. Alinhar: ficha deve usar o mesmo resolver quando inventário disponível.
+2. ~~**CA ficha vs combate**~~ — ficha usa `resolveCharacterCombatSlice`; `computeDerivedStats` não expõe mais CA (fase 1.3).
 3. **Recursos de classe** — não são moedas; labels em `class-resources.ts` devem consumir catálogo, não strings soltas.
 
 ## Workflow ao adicionar fonte nova (ex.: feat +2 CA)

@@ -140,6 +140,28 @@ Itens mágicos (DMG) na mesma profundidade de mesa (várias ações, cargas, pas
 
 ---
 
+## 10. Runtime Game reads
+
+Matriz canônica para **leitura em runtime** (ficha, mesa, dados) — complementa §13 do [code-health-audit](../plans/code-health-audit.md#13-banco-de-dados--anti-padrão-mesma-cosa-jeitos-diferentes).
+
+| Caso de uso | Padrão | Onde |
+|-------------|--------|------|
+| Catálogo PHB (API) | Query + `@ViewEntity` | `catalog/*/queries` |
+| Ficha completa | RPC `get_character_sheet_bundle` | `sheet/infrastructure` |
+| Combate (inventário + CA) | RPC `get_character_combat_bundle` | `combat/infrastructure` |
+| CRUD filhos da ficha | TypeORM repository | `CharacterSheetRepository`, … |
+| Estado de sessão | Entity + repository/facade | `CharacterStateRepository` |
+| Recursos de classe | Queries dedicadas | `session/infrastructure/queries/class-resource-*.queries.ts` |
+| Reload de arma (JSONB item) | TypeORM `PhbItem.properties` | `session/infrastructure/queries/item-reload-capacity.queries.ts` |
+| Flags rage/reckless/beastborne no roll | TypeORM `PlayerCharacterState` | `session/infrastructure/queries/character-combat-flags.queries.ts` |
+| Validação create/update ficha | ✅ Orquestração em `domain/validation/`; leitura em `sheet/infrastructure/queries/` | [`adr-sheet-validation-layers.md`](./adr-sheet-validation-layers.md) |
+| Progressão magia / slots | ✅ `sheet/infrastructure/queries/spell-progression.queries.ts` | Views `v_*` via TypeORM |
+| Existe slug? (escrita ficha) | `CatalogLookupService` | Unificar com catalog queries (**Fase 4.5**) |
+
+**Regra:** SQL cru (`dataSource.query`) só em `infrastructure/queries/` ou views; **não** em `domain/` nem em application handlers.
+
+---
+
 ## Checklist — nova tabela de catálogo
 
 1. Existe entidade pai clara (`phb_*` + FK)?

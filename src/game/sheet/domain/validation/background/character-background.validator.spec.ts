@@ -1,18 +1,28 @@
+jest.mock('@game/sheet/infrastructure/queries/background-origin.queries', () => ({
+  loadBackgroundSkillSlugs: jest.fn(),
+  loadBackgroundLanguageSlugs: jest.fn(),
+}));
+
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { VPhbBackgroundToolOption } from '@entities/views/v-phb-background-tool-option.entity';
 import { CharacterBackgroundValidator } from './character-background.validator';
+import {
+  loadBackgroundLanguageSlugs,
+  loadBackgroundSkillSlugs,
+} from '@game/sheet/infrastructure/queries/background-origin.queries';
 
 describe('CharacterBackgroundValidator', () => {
   let validator: CharacterBackgroundValidator;
-  let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let dataSource: DataSource;
   let catalogLookup: jest.Mocked<
     Pick<CatalogLookupService, 'findBackgroundOrFail' | 'findLanguageOrFail'>
   >;
   let backgroundToolOptionsRepo: jest.Mocked<Pick<Repository<VPhbBackgroundToolOption>, 'find'>>;
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
+    jest.clearAllMocks();
+    dataSource = {} as DataSource;
     catalogLookup = {
       findBackgroundOrFail: jest.fn(),
       findLanguageOrFail: jest.fn().mockImplementation(async (slug: string) => ({
@@ -69,7 +79,7 @@ describe('CharacterBackgroundValidator', () => {
 
   describe('assertClassSkillsDoNotOverlapBackground', () => {
     it('passes when class skills do not overlap background', async () => {
-      dataSource.query.mockResolvedValue([{ slug: 'insight' }, { slug: 'religion' }]);
+      jest.mocked(loadBackgroundSkillSlugs).mockResolvedValue(['insight', 'religion']);
 
       await expect(
         validator.assertClassSkillsDoNotOverlapBackground('acolyte', ['stealth']),
@@ -77,7 +87,7 @@ describe('CharacterBackgroundValidator', () => {
     });
 
     it('rejects overlapping class skill', async () => {
-      dataSource.query.mockResolvedValue([{ slug: 'insight' }]);
+      jest.mocked(loadBackgroundSkillSlugs).mockResolvedValue(['insight']);
       await expect(
         validator.assertClassSkillsDoNotOverlapBackground('acolyte', ['insight']),
       ).rejects.toThrow(/already granted by background/i);
@@ -85,7 +95,7 @@ describe('CharacterBackgroundValidator', () => {
 
     it('skips when no class skills provided', async () => {
       await validator.assertClassSkillsDoNotOverlapBackground('acolyte', []);
-      expect(dataSource.query).not.toHaveBeenCalled();
+      expect(loadBackgroundSkillSlugs).not.toHaveBeenCalled();
     });
   });
 
@@ -94,7 +104,7 @@ describe('CharacterBackgroundValidator', () => {
       catalogLookup.findBackgroundOrFail.mockResolvedValue({
         languageChoiceCount: 1,
       } as never);
-      dataSource.query.mockResolvedValue([{ slug: 'common' }]);
+      jest.mocked(loadBackgroundLanguageSlugs).mockResolvedValue(['common']);
     });
 
     it('accepts fixed language plus one choice', async () => {
@@ -132,7 +142,7 @@ describe('CharacterBackgroundValidator', () => {
       catalogLookup.findBackgroundOrFail.mockResolvedValue({
         languageChoiceCount: 0,
       } as never);
-      dataSource.query.mockResolvedValue([]);
+      jest.mocked(loadBackgroundLanguageSlugs).mockResolvedValue([]);
 
       await expect(
         validator.validateBackgroundLanguages('hermit', undefined),

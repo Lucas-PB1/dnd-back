@@ -11,6 +11,7 @@ import {
   CharacterSheetContext,
   CharacterSheetInput,
 } from '@game/sheet/domain/character-sheet.types';
+import { loadSpellLevel } from '@game/sheet/infrastructure/queries/spell-catalog.queries';
 
 const BOOK_LIST_TYPES = new Set(['known', 'prepared', 'always_prepared']);
 
@@ -62,11 +63,8 @@ export class CharacterSignatureSpellsValidator {
           `Assinatura Mágica '${option.valueId}' precisa estar no livro de magias.`,
         );
       }
-      const rows = await this.dataSource.query<{ level: number }[]>(
-        `SELECT level FROM rpg.phb_spell WHERE slug = $1 LIMIT 1`,
-        [option.valueId],
-      );
-      if (rows.length === 0 || rows[0].level !== SIGNATURE_SPELL_LEVEL) {
+      const level = await loadSpellLevel(this.dataSource, option.valueId);
+      if (level !== SIGNATURE_SPELL_LEVEL) {
         throw new BadRequestException(
           `Assinatura Mágica exige magia de ${SIGNATURE_SPELL_LEVEL}º círculo.`,
         );

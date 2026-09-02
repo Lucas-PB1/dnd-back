@@ -1,75 +1,64 @@
 import { BadRequestException } from '@nestjs/common';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestAbilityScores,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { SorcererActionsHandler } from './sorcerer-actions.handler';
 
 describe('SorcererActionsHandler', () => {
-  const stateResponse = {
-    classResources: [
-      { slug: 'innate-sorcery', remaining: 2, max: 2, used: 0, name: 'Feitiçaria Inata' },
-      { slug: 'sorceryPoints', remaining: 5, max: 5, used: 0, name: 'Pontos de Feitiçaria' },
-    ],
-    tempHp: 0,
-  };
-  const access = { findAccessibleOrFail: jest.fn() };
-  const state = {
-    useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
-    recoverClassResource: jest.fn().mockResolvedValue(stateResponse),
-    consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
-    recoverSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
-    patch: jest.fn().mockImplementation(async (_c, dto) => ({
-      ...stateResponse,
-      ...dto,
-    })),
-  };
-  const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
-  const dataSource = {
-    query: jest.fn().mockResolvedValue([{ value_id: 'subtle-spell' }]),
-  };
-  const mechanicalCatalog = {
-    load: async () => ({
-      gunslingerManeuvers: [],
-      battleMasterManeuvers: [],
-      cunningStrikeEffects: [],
-      tableActions: [],
-      personaMasks: [],
-      personaMaskSlugs: [],
-      beastborneAspectBenefits: [],
-      dungeoneerSlayerLabels: [],
-      precautionSpells: [],
-      economyActions: [],
-      panelActions: [],
-    }),
-  };
-  const handler = new SorcererActionsHandler(
-    access as never,
-    state as never,
-    domain as never,
-    dataSource as never,
-    mechanicalCatalog as never,
-  );
-  const sorcerer = {
+  const sorcerer = createTestCharacter({
     id: 'sorc-1',
     classSlug: 'sorcerer',
     subclassSlug: 'wild-magic',
     level: 5,
-    abilityScores: {
+    abilityScores: createTestAbilityScores({
       forca: 8,
       destreza: 14,
       constituicao: 14,
       inteligencia: 10,
       sabedoria: 10,
       carisma: 18,
+    }),
+  });
+  const ctx = createTableActionHandlerTestContext({
+    stateResponse: {
+      classResources: [
+        {
+          slug: 'innate-sorcery',
+          remaining: 2,
+          max: 2,
+          used: 0,
+          name: 'Feitiçaria Inata',
+        },
+        {
+          slug: 'sorceryPoints',
+          remaining: 5,
+          max: 5,
+          used: 0,
+          name: 'Pontos de Feitiçaria',
+        },
+      ],
+      tempHp: 0,
     },
+    defaultCharacter: sorcerer,
+  });
+  const dataSource = {
+    query: jest.fn().mockResolvedValue([{ value_id: 'subtle-spell' }]),
   };
+  let handler: SorcererActionsHandler;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    access.findAccessibleOrFail.mockResolvedValue(sorcerer);
-    state.useClassResource.mockResolvedValue({ state: stateResponse });
-    state.recoverClassResource.mockResolvedValue(stateResponse);
-    state.buildResponse.mockResolvedValue(stateResponse);
-    domain.getProficiencyBonus.mockResolvedValue(3);
+    ctx.resetMocks();
     dataSource.query.mockResolvedValue([{ value_id: 'subtle-spell' }]);
+    handler = new SorcererActionsHandler(
+      asHandlerDep(ctx.access),
+      asHandlerDep(ctx.state),
+      asHandlerDep(ctx.domain),
+      asHandlerDep(dataSource),
+      asHandlerDep(ctx.mechanicalCatalog),
+    );
   });
 
   it('converts level 1 spell slot to 1 sorcery point', async () => {
@@ -77,11 +66,11 @@ describe('SorcererActionsHandler', () => {
       actionSlug: 'convert-slot-1-to-points',
     });
 
-    expect(state.consumeSpellSlotLevel).toHaveBeenCalledWith(
+    expect(ctx.state.consumeSpellSlotLevel).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       1,
     );
-    expect(state.recoverClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.recoverClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       'sorceryPoints',
       1,
@@ -94,12 +83,12 @@ describe('SorcererActionsHandler', () => {
       actionSlug: 'convert-points-to-slot-1',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       'sorceryPoints',
       2,
     );
-    expect(state.recoverSpellSlotLevel).toHaveBeenCalledWith(
+    expect(ctx.state.recoverSpellSlotLevel).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       1,
     );
@@ -124,7 +113,7 @@ describe('SorcererActionsHandler', () => {
       metamagicSlug: 'subtle-spell',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       'sorceryPoints',
       1,
@@ -137,7 +126,7 @@ describe('SorcererActionsHandler', () => {
       actionSlug: 'innate-sorcery',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       'innate-sorcery',
       1,
@@ -146,10 +135,23 @@ describe('SorcererActionsHandler', () => {
   });
 
   it('spends tides-of-chaos resource for Marés do Caos', async () => {
-    state.buildResponse.mockResolvedValue({
+    ctx.state.buildResponse.mockResolvedValue({
+      ...ctx.stateResponse,
       classResources: [
-        { slug: 'tides-of-chaos', remaining: 1, max: 1, used: 0, name: 'Marés do Caos' },
-        { slug: 'sorceryPoints', remaining: 5, max: 5, used: 0, name: 'Pontos de Feitiçaria' },
+        {
+          slug: 'tides-of-chaos',
+          remaining: 1,
+          max: 1,
+          used: 0,
+          name: 'Marés do Caos',
+        },
+        {
+          slug: 'sorceryPoints',
+          remaining: 5,
+          max: 5,
+          used: 0,
+          name: 'Pontos de Feitiçaria',
+        },
       ],
     });
 
@@ -157,7 +159,7 @@ describe('SorcererActionsHandler', () => {
       actionSlug: 'tides-of-chaos',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       'tides-of-chaos',
       1,
@@ -166,18 +168,14 @@ describe('SorcererActionsHandler', () => {
   });
 
   it('spends variable sorcery points for Bastião da Lei', async () => {
-    access.findAccessibleOrFail.mockResolvedValue({
-      ...sorcerer,
-      subclassSlug: 'clockwork',
-      level: 6,
-    });
+    ctx.mockCharacter({ ...sorcerer, subclassSlug: 'clockwork', level: 6 });
 
     const result = await handler.useTableAction('user-1', 'sorc-1', {
       actionSlug: 'bastion-of-law',
       pointsSpent: 4,
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       'sorceryPoints',
       4,
@@ -186,11 +184,7 @@ describe('SorcererActionsHandler', () => {
   });
 
   it('rejects bastion cost outside 1–5', async () => {
-    access.findAccessibleOrFail.mockResolvedValue({
-      ...sorcerer,
-      subclassSlug: 'clockwork',
-      level: 6,
-    });
+    ctx.mockCharacter({ ...sorcerer, subclassSlug: 'clockwork', level: 6 });
 
     await expect(
       handler.useTableAction('user-1', 'sorc-1', {
@@ -201,10 +195,7 @@ describe('SorcererActionsHandler', () => {
   });
 
   it('rejects Sorcerer actions for non-sorcerer characters', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...sorcerer,
-      classSlug: 'cleric',
-    });
+    ctx.mockCharacterOnce({ ...sorcerer, classSlug: 'cleric' });
 
     await expect(
       handler.useTableAction('user-1', 'sorc-1', {
@@ -214,7 +205,7 @@ describe('SorcererActionsHandler', () => {
   });
 
   it('rolls and applies temporary HP for Heroic Soul', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...sorcerer,
       subclassSlug: 'heroic-sorcery',
       level: 5,
@@ -224,13 +215,13 @@ describe('SorcererActionsHandler', () => {
       actionSlug: 'heroic-soul',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       'sorceryPoints',
       1,
     );
     expect(result.expression).toMatch(/^1d6\+5$/);
-    expect(state.patch).toHaveBeenCalledWith(
+    expect(ctx.state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'sorc-1' }),
       expect.objectContaining({ tempHp: result.total }),
     );

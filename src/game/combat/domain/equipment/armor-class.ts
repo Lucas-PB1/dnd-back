@@ -1,4 +1,6 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { abilityModifier } from '@game/shared/domain/ability-scores';
+import { hasStyleOrFeat } from '../feat/has-style-or-feat';
 import { computeManikinArmorPreset } from '../species/manikin-armor';
 
 export type EquippedArmorPiece = {
@@ -37,27 +39,13 @@ export type ArmorClassContext = {
 
 const BODY_ARMOR = new Set(['light', 'medium', 'heavy']);
 
-function abilityMod(score: number): number {
-  return Math.floor((score - 10) / 2);
-}
-
-function hasStyleOrFeat(
-  context: ArmorClassContext | undefined,
-  slug: string,
-): boolean {
-  return (
-    (context?.featSlugs ?? []).includes(slug) ||
-    (context?.fightingStyleSlugs ?? []).includes(slug)
-  );
-}
-
 function bodyArmorAc(
   piece: EquippedArmorPiece,
   scores: AbilityScores,
   mediumDexCap: number,
 ): number {
   const base = piece.acBase ?? 10;
-  const dexMod = abilityMod(scores.destreza);
+  const dexMod = abilityModifier(scores.destreza);
   switch (piece.categorySlug) {
     case 'light':
       return base + dexMod;
@@ -80,8 +68,8 @@ function pickBestUnarmoredDefense(
     if (hasShield && !candidate.allowsShield) continue;
     const value =
       10 +
-      abilityMod(scores.destreza) +
-      abilityMod(scores[candidate.secondAbility]);
+      abilityModifier(scores.destreza) +
+      abilityModifier(scores[candidate.secondAbility]);
     if (!best || value > best.armorClass) {
       best = { armorClass: value, label: candidate.label };
     }
@@ -134,7 +122,7 @@ export function computeArmorClassFromEquipment(
         armorClass = unarmored.armorClass;
         noteParts.push(unarmored.label);
       } else {
-        armorClass = 10 + abilityMod(scores.destreza);
+        armorClass = 10 + abilityModifier(scores.destreza);
         noteParts.push('Sem armadura');
       }
     }
@@ -169,5 +157,5 @@ export function computeArmorClassFromEquipment(
 
 /** Fallback simples (10 + DES) sem contexto de classe/talento. */
 export function computeUnarmoredArmorClass(scores: AbilityScores): number {
-  return 10 + abilityMod(scores.destreza);
+  return 10 + abilityModifier(scores.destreza);
 }

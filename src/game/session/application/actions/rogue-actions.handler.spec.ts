@@ -1,60 +1,41 @@
-import { FIXTURE_SOULKNIFE_ACTIONS } from '@game/combat/domain/__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_SOULKNIFE_ACTIONS } from '@game/combat/domain/__fixtures__/mechanical-catalog';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestAbilityScores,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { RogueActionsHandler } from './rogue-actions.handler';
 
 describe('RogueActionsHandler', () => {
-  const stateResponse = {
-    classResources: [],
-  };
-  const access = {
-    findAccessibleOrFail: jest.fn(),
-  };
-  const state = {
-    useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
-  };
-  const domain = {
-    getProficiencyBonus: jest.fn().mockResolvedValue(3),
-  };
-  const mechanicalCatalog = {
-    load: async () => ({
-      gunslingerManeuvers: [],
-      battleMasterManeuvers: [],
-      cunningStrikeEffects: [],
-      tableActions: [...FIXTURE_SOULKNIFE_ACTIONS],
-      personaMasks: [],
-      personaMaskSlugs: [],
-      beastborneAspectBenefits: [],
-      dungeoneerSlayerLabels: [],
-      precautionSpells: [],
-      economyActions: [],
-      panelActions: [],
+  const rogue = createTestCharacter({
+    id: 'rogue-1',
+    classSlug: 'rogue',
+    subclassSlug: 'soulknife',
+    level: 9,
+    abilityScores: createTestAbilityScores({
+      forca: 8,
+      destreza: 18,
+      constituicao: 12,
+      inteligencia: 12,
+      sabedoria: 10,
+      carisma: 10,
     }),
-  };
-  const handler = new RogueActionsHandler(
-    access as never,
-    state as never,
-    domain as never,
-    mechanicalCatalog as never,
-  );
+  });
+  const ctx = createTableActionHandlerTestContext({
+    defaultCharacter: rogue,
+    mechanicalCatalogLoad: { tableActions: [...FIXTURE_SOULKNIFE_ACTIONS] },
+  });
+  let handler: RogueActionsHandler;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    state.useClassResource.mockResolvedValue({ state: stateResponse });
-    state.buildResponse.mockResolvedValue(stateResponse);
-    access.findAccessibleOrFail.mockResolvedValue({
-      id: 'rogue-1',
-      classSlug: 'rogue',
-      subclassSlug: 'soulknife',
-      level: 9,
-      abilityScores: {
-        forca: 8,
-        destreza: 18,
-        constituicao: 12,
-        inteligencia: 12,
-        sabedoria: 10,
-        carisma: 10,
-      },
-    });
+    ctx.resetMocks();
+    handler = new RogueActionsHandler(
+      asHandlerDep(ctx.access),
+      asHandlerDep(ctx.state),
+      asHandlerDep(ctx.domain),
+      asHandlerDep(ctx.mechanicalCatalog),
+    );
   });
 
   it('spends a Soulknife die only when Psi-Bolstered Knack succeeds', async () => {
@@ -64,20 +45,21 @@ describe('RogueActionsHandler', () => {
       dc: 11,
     });
     expect(success.resourceSpent).toBe(true);
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'rogue-1' }),
       'soulknife-psi-dice',
       1,
     );
 
     jest.clearAllMocks();
+    ctx.resetMocks();
     const failure = await handler.useTableAction('user-1', 'rogue-1', {
       actionSlug: 'psi-bolstered-knack',
       checkTotal: 1,
       dc: 100,
     });
     expect(failure.resourceSpent).toBe(false);
-    expect(state.useClassResource).not.toHaveBeenCalled();
+    expect(ctx.state.useClassResource).not.toHaveBeenCalled();
   });
 
   it('rolls both attack and damage for the Psychic Blade', async () => {
@@ -94,7 +76,7 @@ describe('RogueActionsHandler', () => {
     await handler.useTableAction('user-1', 'rogue-1', {
       actionSlug: 'psychic-whispers',
     });
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'rogue-1' }),
       'psychic-whispers',
       1,
@@ -102,26 +84,24 @@ describe('RogueActionsHandler', () => {
   });
 
   it('spends the Arachnoid web resource', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      id: 'rogue-1',
-      classSlug: 'rogue',
+    ctx.mockCharacterOnce({
+      ...rogue,
       subclassSlug: 'arachnoid-stalker',
-      level: 9,
-      abilityScores: {
+      abilityScores: createTestAbilityScores({
         forca: 8,
         destreza: 18,
         constituicao: 12,
         inteligencia: 10,
         sabedoria: 10,
         carisma: 10,
-      },
+      }),
     });
 
     const result = await handler.useTableAction('user-1', 'rogue-1', {
       actionSlug: 'arachnoid-web',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ subclassSlug: 'arachnoid-stalker' }),
       'arachnoid-web',
       1,

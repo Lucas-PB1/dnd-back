@@ -10,6 +10,8 @@ import {
   classExtraSkillSlotsAtLevel,
   isClassExtraSkillOptionKey,
 } from './class-extra-skill-slots';
+import { loadBackgroundSkillSlugs } from '@game/sheet/infrastructure/queries/background-origin.queries';
+import { loadClassSkillChoiceSlugs } from '@game/sheet/infrastructure/queries/skill-catalog.queries';
 
 @Injectable()
 export class CharacterClassExtraSkillValidator {
@@ -50,29 +52,21 @@ export class CharacterClassExtraSkillValidator {
       }
     }
 
-    const backgroundSkills = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT s.slug
-       FROM rpg.phb_background_skill bs
-       JOIN rpg.phb_background b ON b.id = bs.background_id
-       JOIN rpg.phb_skill s ON s.id = bs.skill_id
-       WHERE b.slug = $1`,
-      [ctx.backgroundSlug],
+    const backgroundSkills = await loadBackgroundSkillSlugs(
+      this.dataSource,
+      ctx.backgroundSlug,
     );
     const proficient = new Set(
       collectProficientSkillSlugs({
         classSkillSlugs: classSkillSlugs ?? [],
-        backgroundSkillSlugs: backgroundSkills.map((row) => row.slug),
+        backgroundSkillSlugs: backgroundSkills,
         speciesChoices,
         featOptions,
       }),
     );
-    const poolRows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT skill_slug AS slug
-       FROM rpg.v_phb_class_skill_choice
-       WHERE class_slug = $1`,
-      [ctx.classSlug],
+    const pool = new Set(
+      await loadClassSkillChoiceSlugs(this.dataSource, ctx.classSlug),
     );
-    const pool = new Set(poolRows.map((row) => row.slug));
 
     for (const option of extraOptions) {
       if (!pool.has(option.valueId)) {

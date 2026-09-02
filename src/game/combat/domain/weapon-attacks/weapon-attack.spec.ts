@@ -1,648 +1,198 @@
+import { analyzeDualWield } from './weapon-attack';
 import {
-  analyzeDualWield,
-  computeWeaponAttacks,
-  type EquippedWeaponPiece,
-} from './weapon-attack';
-import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
-
-const scores = (partial: Partial<AbilityScores> = {}): AbilityScores => ({
-  forca: 16,
-  destreza: 14,
-  constituicao: 13,
-  inteligencia: 10,
-  sabedoria: 12,
-  carisma: 8,
-  ...partial,
-});
-
-const longsword = (slot: EquippedWeaponPiece['equipmentSlot'] = 'main_hand'): EquippedWeaponPiece => ({
-  itemSlug: 'longsword',
-  itemName: 'Espada Longa',
-  category: 'martial',
-  damage: '1d8',
-  damageType: 'Cortante',
-  versatileDamage: '1d10',
-  propertySlugs: ['versatile'],
-  equipmentSlot: slot,
-});
-
-const longbow = (): EquippedWeaponPiece => ({
-  itemSlug: 'longbow',
-  itemName: 'Arco Longo',
-  category: 'martial',
-  damage: '1d8',
-  damageType: 'Perfurante',
-  versatileDamage: null,
-  propertySlugs: ['two-handed', 'ammunition', 'heavy'],
-  equipmentSlot: 'main_hand',
-});
-
-const dagger = (slot: EquippedWeaponPiece['equipmentSlot'] = 'main_hand'): EquippedWeaponPiece => ({
-  itemSlug: 'dagger',
-  itemName: 'Adaga',
-  category: 'simple',
-  damage: '1d4',
-  damageType: 'Perfurante',
-  versatileDamage: null,
-  propertySlugs: ['finesse', 'thrown', 'light'],
-  equipmentSlot: slot,
-});
-
-const shortsword = (slot: EquippedWeaponPiece['equipmentSlot'] = 'off_hand'): EquippedWeaponPiece => ({
-  itemSlug: 'shortsword',
-  itemName: 'Espada Curta',
-  category: 'martial',
-  damage: '1d6',
-  damageType: 'Perfurante',
-  versatileDamage: null,
-  propertySlugs: ['finesse', 'light'],
-  equipmentSlot: slot,
-});
-
-const greataxe = (): EquippedWeaponPiece => ({
-  itemSlug: 'greataxe',
-  itemName: 'Machado Grande',
-  category: 'martial',
-  damage: '1d12',
-  damageType: 'Cortante',
-  versatileDamage: null,
-  propertySlugs: ['two-handed', 'heavy'],
-  equipmentSlot: 'main_hand',
-});
-
-const fighterContext = {
-  proficiencyBonus: 2,
-  weaponProficiencySlugs: ['armas-simples', 'armas-marciais'],
-};
+  dagger,
+  expectWeaponAttack,
+  FIGHTER_CTX,
+  greatswordGraze,
+  greataxe,
+  GUNSLINGER_RANGED_CTX,
+  GWF_CASES,
+  GWM_CASES,
+  longbow,
+  longsword,
+  oneAttack,
+  pickAttack,
+  PROFICIENCY_CASES,
+  runAttacks,
+  runWeaponAttackCase,
+  shortsword,
+  VERSATILE_CASES,
+} from './weapon-attack.spec.helpers';
 
 describe('computeWeaponAttacks', () => {
-  it('uses STR + PB and versatile 2H die when alone in main hand', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], fighterContext);
-    expect(attack.attackBonus).toBe(5);
-    expect(attack.damageDice).toBe('1d10');
-    expect(attack.damageBonus).toBe(3);
-    expect(attack.attackNote).toContain('versátil (2 mãos)');
-    expect(attack.proficient).toBe(true);
-  });
-
-  it('uses 1H die when versatile weapon is paired with a shield', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      ...fighterContext,
-      hasShield: true,
-    });
-    expect(attack.damageDice).toBe('1d8');
-    expect(attack.attackNote).toContain('versátil (1 mão)');
-  });
-
-  it('uses 1H die when off-hand weapon is equipped', () => {
-    const [attack] = computeWeaponAttacks(
-      scores(),
-      [longsword('main_hand'), dagger('off_hand')],
-      fighterContext,
-    ).filter((a) => a.itemSlug === 'longsword' && a.mode === 'melee');
-    expect(attack.damageDice).toBe('1d8');
-  });
-
-  it('omits PB when the class is not proficient with the weapon category', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      proficiencyBonus: 2,
-      weaponProficiencySlugs: ['armas-simples'],
-    });
-    expect(attack.attackBonus).toBe(3);
-    expect(attack.proficient).toBe(false);
-  });
-
-  it('grants proficiency from specific weapon group (wizard + dagger)', () => {
-    const [melee] = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
-      [dagger()],
-      {
-        proficiencyBonus: 2,
-        weaponProficiencySlugs: ['adagas', 'dardos', 'fundas', 'bordoes', 'bestas-leves'],
-      },
-    ).filter((a) => a.mode === 'melee');
-    expect(melee.proficient).toBe(true);
-    expect(melee.attackBonus).toBe(5);
-  });
-
-  it('does not grant longsword from adagas-only list', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      proficiencyBonus: 2,
-      weaponProficiencySlugs: ['adagas'],
-    });
-    expect(attack.proficient).toBe(false);
-  });
-
-  it('grants martial light weapons from armas-marciais-leves', () => {
-    const [melee] = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
-      [shortsword('main_hand')],
-      {
-        proficiencyBonus: 2,
-        weaponProficiencySlugs: ['armas-simples', 'armas-marciais-leves'],
-      },
-    ).filter((a) => a.mode === 'melee');
-    expect(melee.proficient).toBe(true);
-  });
+  it.each(VERSATILE_CASES)('$label', runWeaponAttackCase);
+  it.each(PROFICIENCY_CASES)('$label', runWeaponAttackCase);
+  it.each(GWM_CASES)('great-weapon-master on $label', runWeaponAttackCase);
+  it.each(GWF_CASES)('great-weapon-fighting on $label', runWeaponAttackCase);
 
   it('grants martial ranged only from armas-marciais-a-distancia', () => {
-    const gunslinger = {
-      proficiencyBonus: 2,
-      weaponProficiencySlugs: [
-        'armas-simples',
-        'armas-marciais-a-distancia',
-      ],
-    };
-    const [bow] = computeWeaponAttacks(scores(), [longbow()], gunslinger);
-    expect(bow.proficient).toBe(true);
-    const [sword] = computeWeaponAttacks(scores(), [longsword()], gunslinger);
-    expect(sword.proficient).toBe(false);
-    const [blade] = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
-      [dagger()],
-      gunslinger,
-    ).filter((a) => a.mode === 'melee');
-    expect(blade.proficient).toBe(true);
-  });
-
-  it('grants advanced proficiency from advanced-weapon-proficiency feat', () => {
-    const catchpole = (): EquippedWeaponPiece => ({
-      itemSlug: 'catchpole',
-      itemName: 'Catchpole',
-      category: 'advanced',
-      damage: '1d6',
-      damageType: 'Perfurante',
-      propertySlugs: ['hafted', 'reach', 'two-handed'],
-      equipmentSlot: 'main_hand',
-      versatileDamage: null,
-    });
-    const [attack] = computeWeaponAttacks(scores(), [catchpole()], {
-      proficiencyBonus: 2,
-      weaponProficiencySlugs: ['armas-simples'],
-      featSlugs: ['advanced-weapon-proficiency'],
-    });
-    expect(attack.proficient).toBe(true);
-  });
-
-  it('grants martial proficiency from martial-weapon-training feat', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      proficiencyBonus: 2,
-      weaponProficiencySlugs: ['armas-simples'],
-      featSlugs: ['martial-weapon-training'],
-    });
-    expect(attack.proficient).toBe(true);
-    expect(attack.attackBonus).toBe(5);
+    expect(oneAttack([longbow()], GUNSLINGER_RANGED_CTX).proficient).toBe(true);
+    expect(oneAttack([longsword()], GUNSLINGER_RANGED_CTX).proficient).toBe(
+      false,
+    );
+    expect(
+      oneAttack([dagger()], GUNSLINGER_RANGED_CTX, { mode: 'melee' }, {
+        forca: 10,
+        destreza: 16,
+      }).proficient,
+    ).toBe(true);
   });
 
   it('uses DEX for ammunition weapons and applies archery +2', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longbow()], {
-      ...fighterContext,
-      fightingStyleSlugs: ['archery'],
-    });
-    expect(attack.mode).toBe('ranged');
-    expect(attack.abilitySlug).toBe('destreza');
-    expect(attack.attackBonus).toBe(2 + 2 + 2);
-    expect(attack.damageBonus).toBe(2);
+    expectWeaponAttack(
+      [longbow()],
+      { ...FIGHTER_CTX, fightingStyleSlugs: ['archery'] },
+      undefined,
+      {},
+      { mode: 'ranged', abilitySlug: 'destreza', attackBonus: 6, damageBonus: 2 },
+    );
   });
 
   it('picks the better ability for finesse weapons', () => {
-    const [melee] = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
+    expectWeaponAttack(
       [dagger()],
-      fighterContext,
-    ).filter((attack) => attack.mode === 'melee');
-    expect(melee.abilitySlug).toBe('destreza');
-    expect(melee.attackBonus).toBe(5);
+      FIGHTER_CTX,
+      { mode: 'melee' },
+      { forca: 10, destreza: 16 },
+      { abilitySlug: 'destreza', attackBonus: 5 },
+    );
   });
 
   it('emits melee and ranged modes for thrown weapons', () => {
-    const attacks = computeWeaponAttacks(scores(), [dagger()], fighterContext);
-    expect(attacks.map((a) => a.mode).sort()).toEqual(['melee', 'ranged']);
+    expect(
+      runAttacks([dagger()], FIGHTER_CTX)
+        .map((a) => a.mode)
+        .sort(),
+    ).toEqual(['melee', 'ranged']);
   });
 
   it('applies dueling +2 damage with a single one-handed melee weapon', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      ...fighterContext,
-      featSlugs: ['dueling'],
-    });
-    expect(attack.damageBonus).toBe(5);
+    expect(
+      oneAttack([longsword()], { ...FIGHTER_CTX, featSlugs: ['dueling'] })
+        .damageBonus,
+    ).toBe(5);
   });
 
   it('does not apply dueling when two weapons are equipped', () => {
-    const [attack] = computeWeaponAttacks(
-      scores(),
-      [longsword('main_hand'), dagger('off_hand')],
-      { ...fighterContext, fightingStyleSlugs: ['dueling'] },
-    ).filter((a) => a.itemSlug === 'longsword' && a.mode === 'melee');
-    expect(attack.damageBonus).toBe(3);
+    expect(
+      oneAttack(
+        [longsword('main_hand'), dagger('off_hand')],
+        { ...FIGHTER_CTX, fightingStyleSlugs: ['dueling'] },
+        { itemSlug: 'longsword', mode: 'melee' },
+      ).damageBonus,
+    ).toBe(3);
   });
 
   it('applies thrown-weapon-fighting on the ranged thrown mode only', () => {
-    const attacks = computeWeaponAttacks(scores(), [dagger()], {
-      ...fighterContext,
+    const attacks = runAttacks([dagger()], {
+      ...FIGHTER_CTX,
       fightingStyleSlugs: ['thrown-weapon-fighting'],
     });
-    const melee = attacks.find((a) => a.mode === 'melee')!;
-    const ranged = attacks.find((a) => a.mode === 'ranged')!;
-    expect(melee.damageBonus).toBe(3);
-    expect(ranged.damageBonus).toBe(5);
-  });
-
-  it('applies great-weapon-master PB damage with heavy weapons', () => {
-    const [attack] = computeWeaponAttacks(scores(), [greataxe()], {
-      ...fighterContext,
-      featSlugs: ['great-weapon-master'],
-    });
-    expect(attack.damageBonus).toBe(3 + 2);
-    expect(attack.damageNote).toContain('Mestre em Armas Grandes');
-  });
-
-  it('flags great-weapon-fighting on two-handed melee', () => {
-    const [attack] = computeWeaponAttacks(scores(), [greataxe()], {
-      ...fighterContext,
-      fightingStyleSlugs: ['great-weapon-fighting'],
-    });
-    expect(attack.greatWeaponFighting).toBe(true);
-    expect(attack.damageNote).toContain('GWF');
-  });
-
-  it('flags great-weapon-fighting on versatile 2H melee', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      ...fighterContext,
-      featSlugs: ['great-weapon-fighting'],
-    });
-    expect(attack.greatWeaponFighting).toBe(true);
-  });
-
-  it('does not flag GWF when versatile weapon is used one-handed', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      ...fighterContext,
-      fightingStyleSlugs: ['great-weapon-fighting'],
-      hasShield: true,
-    });
-    expect(attack.greatWeaponFighting).toBe(false);
-  });
-
-  it('does not flag GWF on ranged attacks', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longbow()], {
-      ...fighterContext,
-      fightingStyleSlugs: ['great-weapon-fighting'],
-    });
-    expect(attack.greatWeaponFighting).toBe(false);
-  });
-
-  it('does not apply great-weapon-master without the heavy property', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      ...fighterContext,
-      featSlugs: ['great-weapon-master'],
-    });
-    expect(attack.damageBonus).toBe(3);
-  });
-
-  it('applies great-weapon-master to heavy ranged weapons too', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longbow()], {
-      ...fighterContext,
-      featSlugs: ['great-weapon-master'],
-    });
-    expect(attack.damageBonus).toBe(2 + 2);
+    expect(pickAttack(attacks, { mode: 'melee' }).damageBonus).toBe(3);
+    expect(pickAttack(attacks, { mode: 'ranged' }).damageBonus).toBe(5);
   });
 
   it('activates weapon mastery when the weapon type is mastered', () => {
-    const piece = {
-      ...longsword(),
-      masterySlug: 'sap',
-      masteryName: 'Drenar',
-    };
-    const [attack] = computeWeaponAttacks(scores(), [piece], {
-      ...fighterContext,
-      masteredWeaponSlugs: ['longsword'],
-    });
+    const attack = oneAttack(
+      [{ ...longsword(), masterySlug: 'sap', masteryName: 'Drenar' }],
+      { ...FIGHTER_CTX, masteredWeaponSlugs: ['longsword'] },
+    );
     expect(attack.masteryActive).toBe(true);
     expect(attack.masterySlug).toBe('sap');
-    expect(attack.masteryName).toBe('Drenar');
     expect(attack.attackNote).toContain('Maestria: Drenar');
   });
 
   it('applies Nick note on light bonus attacks', () => {
-    const main = {
-      ...dagger('main_hand'),
-      masterySlug: 'nick',
-      masteryName: 'Ágil',
-    };
-    const off = {
-      ...shortsword('off_hand'),
-      masterySlug: 'vex',
-      masteryName: 'Afligir',
-    };
-    const attack = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
-      [main, off],
-      {
-        ...fighterContext,
-        masteredWeaponSlugs: ['dagger', 'shortsword'],
-      },
-    ).find((row) => row.itemSlug === 'shortsword' && row.mode === 'melee')!;
-    expect(attack.nickUsesAttackAction).toBe(false);
+    expectWeaponAttack(
+      [
+        { ...dagger('main_hand'), masterySlug: 'nick', masteryName: 'Ágil' },
+        { ...shortsword('off_hand'), masterySlug: 'vex', masteryName: 'Afligir' },
+      ],
+      { ...FIGHTER_CTX, masteredWeaponSlugs: ['dagger', 'shortsword'] },
+      { itemSlug: 'shortsword', mode: 'melee' },
+      { forca: 10, destreza: 16 },
+      { nickUsesAttackAction: false },
+    );
   });
 
   it('flags Nick on light bonus when off-hand weapon has nick mastery', () => {
-    const main = {
-      ...shortsword('main_hand'),
-      masterySlug: 'vex',
-      masteryName: 'Afligir',
-    };
-    const off = {
-      ...dagger('off_hand'),
-      masterySlug: 'nick',
-      masteryName: 'Ágil',
-    };
-    const attack = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
-      [main, off],
+    expectWeaponAttack(
+      [
+        { ...shortsword('main_hand'), masterySlug: 'vex', masteryName: 'Afligir' },
+        { ...dagger('off_hand'), masterySlug: 'nick', masteryName: 'Ágil' },
+      ],
+      { ...FIGHTER_CTX, masteredWeaponSlugs: ['dagger'] },
+      { itemSlug: 'dagger', mode: 'melee' },
+      { forca: 10, destreza: 16 },
       {
-        ...fighterContext,
-        masteredWeaponSlugs: ['dagger'],
+        role: 'light_bonus',
+        nickUsesAttackAction: true,
+        attackNoteContains: 'Ágil · ação Atacar',
       },
-    ).find((row) => row.itemSlug === 'dagger' && row.mode === 'melee')!;
-    expect(attack.role).toBe('light_bonus');
-    expect(attack.nickUsesAttackAction).toBe(true);
-    expect(attack.attackNote).toContain('Ágil · ação Atacar');
+    );
   });
 
   it('exposes graze on-miss damage when mastered', () => {
-    const piece = {
-      itemSlug: 'greatsword',
-      itemName: 'Espada Grande',
-      category: 'martial',
-      damage: '2d6',
-      damageType: 'Cortante',
-      versatileDamage: null,
-      propertySlugs: ['two-handed', 'heavy'],
-      equipmentSlot: 'main_hand' as const,
-      masterySlug: 'graze',
-      masteryName: 'Resvalar',
-    };
-    const [attack] = computeWeaponAttacks(scores(), [piece], {
-      ...fighterContext,
-      masteredWeaponSlugs: ['greatsword'],
-    });
-    expect(attack.grazeOnMissDamage).toBe(3);
+    expectWeaponAttack(
+      [greatswordGraze()],
+      { ...FIGHTER_CTX, masteredWeaponSlugs: ['greatsword'] },
+      undefined,
+      {},
+      { grazeOnMissDamage: 3 },
+    );
   });
 
   it('marks light bonus off-hand without ability damage', () => {
-    const off = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
+    expectWeaponAttack(
       [dagger('main_hand'), shortsword('off_hand')],
-      fighterContext,
-    ).find((a) => a.itemSlug === 'shortsword' && a.mode === 'melee')!;
-    expect(off.role).toBe('light_bonus');
-    expect(off.omitsAbilityDamage).toBe(true);
-    expect(off.damageBonus).toBe(0);
-    expect(off.attackNote).toContain('ataque adicional (Leve)');
+      FIGHTER_CTX,
+      { itemSlug: 'shortsword', mode: 'melee' },
+      { forca: 10, destreza: 16 },
+      {
+        role: 'light_bonus',
+        omitsAbilityDamage: true,
+        damageBonus: 0,
+        attackNoteContains: 'ataque adicional (Leve)',
+      },
+    );
   });
 
   it('adds ability damage on light bonus with two-weapon-fighting', () => {
-    const off = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
+    expectWeaponAttack(
       [dagger('main_hand'), shortsword('off_hand')],
-      { ...fighterContext, fightingStyleSlugs: ['two-weapon-fighting'] },
-    ).find((a) => a.itemSlug === 'shortsword' && a.mode === 'melee')!;
-    expect(off.omitsAbilityDamage).toBe(false);
-    expect(off.damageBonus).toBe(3);
+      { ...FIGHTER_CTX, fightingStyleSlugs: ['two-weapon-fighting'] },
+      { itemSlug: 'shortsword', mode: 'melee' },
+      { forca: 10, destreza: 16 },
+      { omitsAbilityDamage: false, damageBonus: 3 },
+    );
   });
 
   it('allows dual-wielder bonus with non-light off-hand', () => {
-    const off = computeWeaponAttacks(
-      scores(),
+    expectWeaponAttack(
       [dagger('main_hand'), longsword('off_hand')],
-      { ...fighterContext, featSlugs: ['dual-wielder'] },
-    ).find((a) => a.itemSlug === 'longsword' && a.mode === 'melee')!;
-    expect(off.role).toBe('dual_bonus');
-    expect(off.omitsAbilityDamage).toBe(true);
-    expect(off.attackNote).toContain('Ambidestro');
+      { ...FIGHTER_CTX, featSlugs: ['dual-wielder'] },
+      { itemSlug: 'longsword', mode: 'melee' },
+      {},
+      {
+        role: 'dual_bonus',
+        omitsAbilityDamage: true,
+        attackNoteContains: 'Ambidestro',
+      },
+    );
   });
 
   it('flags attack disadvantage for heavy weapons on small creatures', () => {
-    const [attack] = computeWeaponAttacks(scores(), [greataxe()], {
-      ...fighterContext,
-      sizeCategory: 'small',
-    });
-    expect(attack.attackDisadvantage).toBe(true);
-    expect(attack.attackNote).toContain('desvantagem');
+    expectWeaponAttack(
+      [greataxe()],
+      { ...FIGHTER_CTX, sizeCategory: 'small' },
+      undefined,
+      {},
+      { attackDisadvantage: true, attackNoteContains: 'desvantagem' },
+    );
   });
 
   it('returns an empty list without equipped weapons', () => {
-    expect(computeWeaponAttacks(scores(), [], fighterContext)).toEqual([]);
-  });
-
-  it('omits ability damage on firearms and expands crit for gunslinger', () => {
-    const revolver: EquippedWeaponPiece = {
-      itemSlug: 'revolver',
-      itemName: 'Revólver',
-      category: 'martial',
-      damage: '2d8',
-      damageType: 'Perfurante',
-      versatileDamage: null,
-      propertySlugs: ['ammunition', 'firearm', 'reload'],
-      equipmentSlot: 'main_hand',
-      reloadCapacity: 6,
-    };
-    const [attack] = computeWeaponAttacks(scores({ destreza: 16 }), [revolver], {
-      proficiencyBonus: 2,
-      weaponProficiencySlugs: ['armas-simples', 'armas-marciais-a-distancia'],
-      classSlug: 'gunslinger',
-      level: 5,
-    });
-    expect(attack.isFirearm).toBe(true);
-    expect(attack.damageBonus).toBe(0);
-    expect(attack.omitsAbilityDamage).toBe(true);
-    expect(attack.critThreshold).toBe(19);
-    expect(attack.reloadCapacity).toBe(6);
-  });
-
-  it('applies overkill ability mod on firearms at level 11+', () => {
-    const revolver: EquippedWeaponPiece = {
-      itemSlug: 'revolver',
-      itemName: 'Revólver',
-      category: 'martial',
-      damage: '2d8',
-      damageType: 'Perfurante',
-      versatileDamage: null,
-      propertySlugs: ['ammunition', 'firearm', 'reload'],
-      equipmentSlot: 'main_hand',
-      reloadCapacity: 6,
-    };
-    const [attack] = computeWeaponAttacks(scores({ destreza: 16 }), [revolver], {
-      proficiencyBonus: 4,
-      weaponProficiencySlugs: ['armas-simples', 'armas-marciais-a-distancia'],
-      classSlug: 'gunslinger',
-      level: 11,
-    });
-    expect(attack.damageBonus).toBe(3);
-    expect(attack.omitsAbilityDamage).toBe(false);
-    expect(attack.damageNote).toContain('Exagero');
-  });
-
-  it('adds rage damage on barbarian melee Strength while raging', () => {
-    const [attack] = computeWeaponAttacks(scores({ forca: 16 }), [greataxe()], {
-      proficiencyBonus: 3,
-      weaponProficiencySlugs: ['armas-simples', 'armas-marciais'],
-      classSlug: 'barbarian',
-      level: 9,
-      rageActive: true,
-    });
-    expect(attack.rageDamageBonus).toBe(3);
-    expect(attack.damageBonus).toBe(3 + 3); // FOR + Fúria
-    expect(attack.damageNote).toContain('Fúria +3');
-    expect(attack.brutalStrikeDice).toBe('1d10');
-  });
-
-  it('grants pistol proficiency and fast reload with blackpowder-pistol-expert', () => {
-    const pistol: EquippedWeaponPiece = {
-      itemSlug: 'blackpowder-pistol',
-      itemName: 'Pistola de Pólvora',
-      category: 'advanced',
-      damage: '2d4',
-      damageType: 'Perfurante',
-      versatileDamage: null,
-      propertySlugs: ['blackpowder', 'light', 'loading', 'ammunition', 'firearm', 'reload'],
-      equipmentSlot: 'main_hand',
-      reloadCapacity: 1,
-    };
-    const [attack] = computeWeaponAttacks(scores({ destreza: 16 }), [pistol], {
-      proficiencyBonus: 2,
-      weaponProficiencySlugs: ['armas-simples'],
-      featSlugs: ['blackpowder-pistol-expert'],
-      classSlug: 'fighter',
-      level: 5,
-    });
-    expect(attack.proficient).toBe(true);
-    expect(attack.reloadCapacity).toBeNull();
-    expect(attack.ignoresReload).toBe(true);
-    expect(attack.attackNote).toContain('Recarga Rápida');
-    expect(attack.attackNote).toContain('Olho de Águia');
-  });
-
-  it('exposes quick strike dice for resolutionofthe-syndicate', () => {
-    const [attack] = computeWeaponAttacks(scores(), [longsword()], {
-      ...fighterContext,
-      featSlugs: ['resolutionofthe-syndicate'],
-      level: 9,
-    });
-    expect(attack.quickStrikeDice).toBe('2d4');
-  });
-
-  it('adds a synthetic Unarmed Strike with the Martial Arts die for monks', () => {
-    const attacks = computeWeaponAttacks(scores({ forca: 10, destreza: 16 }), [], {
-      proficiencyBonus: 3,
-      weaponProficiencySlugs: [],
-      classSlug: 'monk',
-      level: 5,
-    });
-    const unarmed = attacks.find((a) => a.itemSlug === 'unarmed-strike')!;
-    expect(unarmed).toBeDefined();
-    expect(unarmed.proficient).toBe(true);
-    expect(unarmed.abilitySlug).toBe('destreza');
-    expect(unarmed.attackBonus).toBe(3 + 3); // DES + PB
-    expect(unarmed.damageDice).toBe('1d8');
-    expect(unarmed.martialArtsDie).toBe('1d8');
-  });
-
-  it('upgrades a monk weapon die and allows DEX', () => {
-    const [attack] = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
-      [dagger('main_hand')],
-      {
-        proficiencyBonus: 2,
-        weaponProficiencySlugs: ['armas-simples'],
-        classSlug: 'monk',
-        level: 11,
-      },
-    ).filter((a) => a.itemSlug === 'dagger' && a.mode === 'melee');
-    expect(attack.abilitySlug).toBe('destreza');
-    expect(attack.damageDice).toBe('1d10'); // Martial Arts die beats 1d4
-    expect(attack.martialArtsDie).toBe('1d10');
-  });
-
-  it('does not grant Martial Arts benefits while a shield is equipped', () => {
-    const attacks = computeWeaponAttacks(scores(), [], {
-      proficiencyBonus: 3,
-      weaponProficiencySlugs: [],
-      classSlug: 'monk',
-      level: 5,
-      hasShield: true,
-    });
-    const unarmed = attacks.find((a) => a.itemSlug === 'unarmed-strike')!;
-    expect(unarmed.martialArtsDie).toBeNull();
-    expect(unarmed.damageDice).toBe('1'); // fica com o dano base 1
-  });
-
-  it('computes Soulknife Psychic Blades from catalog pieces (sneak + bonus blade)', () => {
-    const catalogPieces: EquippedWeaponPiece[] = [
-      {
-        itemSlug: 'psychic-blade',
-        itemName: 'Lâmina Psíquica',
-        category: 'simple',
-        damage: '1d6',
-        damageType: 'Psíquico',
-        versatileDamage: null,
-        propertySlugs: ['finesse', 'thrown'],
-        equipmentSlot: 'main_hand',
-        masterySlug: 'vex',
-        masteryName: 'Afligir',
-      },
-      {
-        itemSlug: 'psychic-blade-bonus',
-        itemName: 'Lâmina Psíquica (adicional)',
-        category: 'simple',
-        damage: '1d4',
-        damageType: 'Psíquico',
-        versatileDamage: null,
-        propertySlugs: ['finesse', 'thrown', 'light'],
-        equipmentSlot: 'off_hand',
-        masterySlug: 'vex',
-        masteryName: 'Afligir',
-      },
-    ];
-    const attacks = computeWeaponAttacks(
-      scores({ forca: 10, destreza: 16 }),
-      catalogPieces,
-      {
-        proficiencyBonus: 4,
-        weaponProficiencySlugs: [],
-        classSlug: 'rogue',
-        subclassSlug: 'soulknife',
-        level: 9,
-      },
-    );
-    const mainMelee = attacks.find(
-      (a) => a.itemSlug === 'psychic-blade' && a.mode === 'melee',
-    )!;
-    const mainRanged = attacks.find(
-      (a) => a.itemSlug === 'psychic-blade' && a.mode === 'ranged',
-    )!;
-    const bonus = attacks.find(
-      (a) => a.itemSlug === 'psychic-blade-bonus' && a.mode === 'melee',
-    )!;
-
-    expect(mainMelee).toMatchObject({
-      proficient: true,
-      abilitySlug: 'destreza',
-      damageDice: '1d6',
-      damageType: 'Psíquico',
-      sneakAttackEligible: true,
-      masterySlug: 'vex',
-      masteryActive: true,
-    });
-    expect(mainMelee.attackBonus).toBe(3 + 4);
-    expect(mainRanged.sneakAttackEligible).toBe(true);
-    expect(bonus).toMatchObject({
-      damageDice: '1d4',
-      role: 'light_bonus',
-      sneakAttackEligible: true,
-      omitsAbilityDamage: true,
-    });
-    expect(bonus.attackNote).toContain('segunda lâmina');
+    expect(runAttacks([], FIGHTER_CTX)).toEqual([]);
   });
 });
 
@@ -650,7 +200,7 @@ describe('analyzeDualWield', () => {
   it('requires dual-wielder when off-hand is not light', () => {
     const result = analyzeDualWield(
       [dagger('main_hand'), longsword('off_hand')],
-      fighterContext,
+      FIGHTER_CTX,
     );
     expect(result.bonusRole).toBeNull();
     expect(result.dualWieldNeedsFeat).toBe(true);

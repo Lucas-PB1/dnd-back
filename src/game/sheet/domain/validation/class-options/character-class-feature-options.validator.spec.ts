@@ -1,10 +1,19 @@
+jest.mock('@game/sheet/infrastructure/queries/class-option.queries', () => ({
+  loadClassOptionDefs: jest.fn(),
+  classOptionValueExists: jest.fn(),
+}));
+
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import { CharacterClassFeatureOptionsValidator } from './character-class-feature-options.validator';
+import {
+  classOptionValueExists,
+  loadClassOptionDefs,
+} from '@game/sheet/infrastructure/queries/class-option.queries';
 
 describe('CharacterClassFeatureOptionsValidator', () => {
   let validator: CharacterClassFeatureOptionsValidator;
-  let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let dataSource: DataSource;
 
   const ctx = {
     level: 12,
@@ -15,14 +24,12 @@ describe('CharacterClassFeatureOptionsValidator', () => {
   };
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
-    validator = new CharacterClassFeatureOptionsValidator(
-      dataSource as unknown as DataSource,
-    );
+    dataSource = {} as DataSource;
+    validator = new CharacterClassFeatureOptionsValidator(dataSource);
   });
 
   it('lists unlocked option keys by level', async () => {
-    dataSource.query.mockResolvedValue([
+    jest.mocked(loadClassOptionDefs).mockResolvedValue([
       { optionKey: 'divineOrder', unlockLevel: 1 },
       { optionKey: 'blessedStrikes', unlockLevel: 7 },
     ]);
@@ -36,18 +43,17 @@ describe('CharacterClassFeatureOptionsValidator', () => {
   });
 
   it('rejects unknown value for a class feature option', async () => {
-    dataSource.query
-      .mockResolvedValueOnce([
-        { optionKey: 'divineOrder', unlockLevel: 1 },
-      ])
-      .mockResolvedValueOnce([]);
+    jest.mocked(loadClassOptionDefs).mockResolvedValue([
+      { optionKey: 'divineOrder', unlockLevel: 1 },
+    ]);
+    jest.mocked(classOptionValueExists).mockResolvedValue(false);
     await expect(
       validator.validate(ctx, [{ optionKey: 'divineOrder', valueId: 'nope' }]),
     ).rejects.toThrow(BadRequestException);
   });
 
   it('ignores expertise keys that are not class feature defs', async () => {
-    dataSource.query.mockResolvedValue([
+    jest.mocked(loadClassOptionDefs).mockResolvedValue([
       { optionKey: 'divineOrder', unlockLevel: 1 },
     ]);
     await expect(

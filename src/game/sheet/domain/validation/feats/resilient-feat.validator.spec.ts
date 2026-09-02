@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
+import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
@@ -16,6 +17,7 @@ describe('CharacterFeatsValidator resilient feat', () => {
     Pick<Repository<PhbOptionValue>, 'findOne' | 'exists'>
   >;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let proficiencies: jest.Mocked<Pick<ClassProficienciesQuery, 'forClassSlug'>>;
   let characterLevelsRepo: jest.Mocked<Pick<Repository<PhbCharacterLevel>, 'findOne'>>;
 
   beforeEach(() => {
@@ -42,12 +44,17 @@ describe('CharacterFeatsValidator resilient feat', () => {
       findOne: jest.fn().mockResolvedValue({ valueId: 'forca' }),
       exists: jest.fn().mockResolvedValue(false),
     };
-    dataSource = {
-      query: jest.fn().mockImplementation((sql: string) => {
-        if (sql.includes('phb_class_proficiency') && sql.includes('saving_throw')) {
-          return Promise.resolve([{ slug: 'forca' }, { slug: 'constituicao' }]);
-        }
-        return Promise.resolve([]);
+    dataSource = { query: jest.fn().mockResolvedValue([]) };
+    proficiencies = {
+      forClassSlug: jest.fn().mockResolvedValue({
+        savingThrowSlugs: ['forca', 'constituicao'],
+        savingThrowNames: [],
+        armorTrainingSlugs: [],
+        armorTrainingNames: [],
+        weaponProficiencySlugs: [],
+        weaponProficiencyNames: [],
+        fightingStyleSlugs: [],
+        fightingStyleNames: [],
       }),
     };
     characterLevelsRepo = {
@@ -60,7 +67,7 @@ describe('CharacterFeatsValidator resilient feat', () => {
       featOptionValueRepo as unknown as Repository<PhbOptionValue>,
     );
     const optionsValidator = new CharacterFeatOptionsValidator(
-      dataSource as unknown as DataSource,
+      proficiencies as unknown as ClassProficienciesQuery,
       featRefRepo as unknown as Repository<PhbFeatRef>,
       featOptionDefRepo as unknown as Repository<PhbOptionDef>,
       characterLevelsRepo as unknown as Repository<PhbCharacterLevel>,

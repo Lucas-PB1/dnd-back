@@ -1,4 +1,5 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { abilityModifier } from '@game/shared/domain/ability-scores';
 
 export type ManikinArmorPresetSlug =
   | 'infiltrator'
@@ -12,10 +13,6 @@ export type ManikinArmorPresetResult = {
   countsAsWornArmor: boolean;
 };
 
-function abilityMod(score: number): number {
-  return Math.floor((score - 10) / 2);
-}
-
 /**
  * CA do Manikin via `manikin_armor` (armorPresetId).
  * Só aplica se não houver armadura de corpo vestida.
@@ -24,8 +21,8 @@ export function computeManikinArmorPreset(
   scores: AbilityScores,
   presetSlug: string,
 ): ManikinArmorPresetResult | null {
-  const dex = abilityMod(scores.destreza);
-  const str = abilityMod(scores.forca);
+  const dex = abilityModifier(scores.destreza);
+  const str = abilityModifier(scores.forca);
 
   switch (presetSlug as ManikinArmorPresetSlug) {
     case 'infiltrator':

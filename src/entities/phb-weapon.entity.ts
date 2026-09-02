@@ -1,5 +1,13 @@
-import { Entity, PrimaryColumn, Column, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryColumn,
+  Column,
+  OneToOne,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { PhbItem } from './phb-item.entity';
+import { PhbWeaponMastery } from './phb-weapon-mastery.entity';
 
 @Entity({ schema: 'rpg', name: 'phb_weapon' })
 export class PhbWeapon {
@@ -18,4 +26,11 @@ export class PhbWeapon {
 
   @Column({ name: 'damage_type', type: 'text', nullable: true })
   damageType!: string | null;
+
+  @Column({ name: 'mastery_id', type: 'bigint', nullable: true })
+  masteryId!: string | null;
+
+  @ManyToOne(() => PhbWeaponMastery, { nullable: true })
+  @JoinColumn({ name: 'mastery_id' })
+  mastery!: PhbWeaponMastery | null;
 }

@@ -1,6 +1,12 @@
+jest.mock('@game/sheet/infrastructure/queries/feat-option.queries', () => ({
+  ...jest.requireActual('@game/sheet/infrastructure/queries/feat-option.queries'),
+  fightingStyleExists: jest.fn().mockResolvedValue(true),
+}));
+
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
+import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
@@ -16,19 +22,24 @@ import { CharacterSpellMasteryValidator } from './character-spell-mastery.valida
 import { CharacterEldritchInvocationsValidator } from './character-eldritch-invocations.validator';
 import { CharacterMetamagicValidator } from './character-metamagic.validator';
 import { CharacterClassFeatureOptionsValidator } from './character-class-feature-options.validator';
+import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
 import { CharacterFeatOptionValueValidator } from '../feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from '../feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from '../feats/character-feats.validator';
+import { mockClassProficienciesQuery } from '../testing/class-validation.spec.helpers';
+import { fightingStyleExists } from '@game/sheet/infrastructure/queries/feat-option.queries';
 
 function buildClassOptionsValidator(
   dataSource: DataSource,
   catalogLookup: CatalogLookupService,
+  proficiencies = mockClassProficienciesQuery(),
   speciesTraitChoicesRepo: Repository<VPhbSpeciesTraitChoices> = {} as Repository<VPhbSpeciesTraitChoices>,
   subclassRefRepo: Repository<PhbSubclassRef> = {} as Repository<PhbSubclassRef>,
   subclassOptionValuesRepo: Repository<PhbOptionValue> = {} as Repository<PhbOptionValue>,
 ): CharacterClassOptionsValidator {
   return new CharacterClassOptionsValidator(
     dataSource,
+    proficiencies.query,
     catalogLookup,
     new CharacterSpeciesChoicesValidator(speciesTraitChoicesRepo, dataSource),
     {
@@ -42,7 +53,7 @@ function buildClassOptionsValidator(
       {} as never,
     ),
     new CharacterClassExpertiseValidator(dataSource),
-    new CharacterWeaponMasteryValidator(dataSource),
+    new CharacterWeaponMasteryValidator(dataSource, proficiencies.query),
     new CharacterSpellMasteryValidator(dataSource),
     new CharacterEldritchInvocationsValidator(dataSource, {
       find: jest.fn(),
@@ -55,9 +66,11 @@ function buildClassOptionsValidator(
 describe('CharacterClassOptionsValidator fighting styles', () => {
   let validator: CharacterClassOptionsValidator;
   let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'assertFeatInCatalog'>>;
-  let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let proficiencies: ReturnType<typeof mockClassProficienciesQuery>;
+  let dataSource: DataSource;
 
   beforeEach(() => {
+    jest.mocked(fightingStyleExists).mockResolvedValue(true);
     catalogLookup = {
       assertFeatInCatalog: jest.fn().mockImplementation((slug: string) =>
         Promise.resolve({
@@ -66,21 +79,13 @@ describe('CharacterClassOptionsValidator fighting styles', () => {
         }),
       ),
     };
-    dataSource = {
-      query: jest.fn().mockImplementation((sql: string) => {
-        if (sql.includes('phb_class_proficiency') && sql.includes('fighting_style')) {
-          return Promise.resolve([{ slug: 'defense' }, { slug: 'dueling' }]);
-        }
-        if (sql.includes('phb_fighting_style')) {
-          return Promise.resolve([{ ok: 1 }]);
-        }
-        return Promise.resolve([]);
-      }),
-    };
+    proficiencies = mockClassProficienciesQuery();
+    dataSource = {} as DataSource;
 
     validator = buildClassOptionsValidator(
-      dataSource as unknown as DataSource,
+      dataSource,
       catalogLookup as unknown as CatalogLookupService,
+      proficiencies,
     );
   });
 
@@ -95,11 +100,15 @@ describe('CharacterClassOptionsValidator fighting styles', () => {
   });
 
   it('rejects fighting style feat not allowed for class', async () => {
-    dataSource.query.mockImplementation((sql: string) => {
-      if (sql.includes('phb_class_proficiency') && sql.includes('fighting_style')) {
-        return Promise.resolve([{ slug: 'defense' }]);
-      }
-      return Promise.resolve([]);
+    proficiencies.forClassSlug.mockResolvedValue({
+      savingThrowSlugs: [],
+      savingThrowNames: [],
+      armorTrainingSlugs: [],
+      armorTrainingNames: [],
+      weaponProficiencySlugs: [],
+      weaponProficiencyNames: [],
+      fightingStyleSlugs: ['defense'],
+      fightingStyleNames: [],
     });
 
     await expect(
@@ -129,7 +138,9 @@ describe('CharacterFeatsValidator fighting_style feat option value', () => {
   let featOptionValueRepo: jest.Mocked<
     Pick<Repository<PhbOptionValue>, 'findOne' | 'exists'>
   >;
-  let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let dataSource: { getRepository: jest.Mock };
+  let fightingStyleRepo: { exists: jest.Mock };
+  let proficiencies: ReturnType<typeof mockClassProficienciesQuery>;
   let characterLevelsRepo: jest.Mocked<Pick<Repository<PhbCharacterLevel>, 'findOne'>>;
 
   beforeEach(() => {
@@ -156,17 +167,26 @@ describe('CharacterFeatsValidator fighting_style feat option value', () => {
       findOne: jest.fn(),
       exists: jest.fn().mockResolvedValue(false),
     };
+    fightingStyleRepo = { exists: jest.fn().mockResolvedValue(true) };
     dataSource = {
-      query: jest.fn().mockImplementation((sql: string) => {
-        if (sql.includes('phb_class_proficiency') && sql.includes('fighting_style')) {
-          return Promise.resolve([{ slug: 'defense' }]);
-        }
-        if (sql.includes('phb_fighting_style')) {
-          return Promise.resolve([{ ok: 1 }]);
-        }
-        return Promise.resolve([]);
+      getRepository: jest.fn((entity) => {
+        if (entity === PhbFightingStyle) return fightingStyleRepo;
+        throw new Error(`Unexpected entity ${String(entity)}`);
       }),
     };
+    proficiencies = mockClassProficienciesQuery({
+      fightingStyleSlugs: ['defense'],
+    });
+    proficiencies.forClassSlug.mockResolvedValue({
+      savingThrowSlugs: [],
+      savingThrowNames: [],
+      armorTrainingSlugs: [],
+      armorTrainingNames: [],
+      weaponProficiencySlugs: [],
+      weaponProficiencyNames: [],
+      fightingStyleSlugs: ['defense'],
+      fightingStyleNames: [],
+    });
     characterLevelsRepo = {
       findOne: jest.fn().mockResolvedValue({ level: 4, proficiencyBonus: 2 }),
     };
@@ -177,7 +197,7 @@ describe('CharacterFeatsValidator fighting_style feat option value', () => {
       featOptionValueRepo as unknown as Repository<PhbOptionValue>,
     );
     const optionsValidator = new CharacterFeatOptionsValidator(
-      dataSource as unknown as DataSource,
+      proficiencies.query,
       featRefRepo as unknown as Repository<PhbFeatRef>,
       featOptionDefRepo as unknown as Repository<PhbOptionDef>,
       characterLevelsRepo as unknown as Repository<PhbCharacterLevel>,

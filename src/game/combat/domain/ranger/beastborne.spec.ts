@@ -1,4 +1,4 @@
-import { FIXTURE_BESTIAL_ASPECT_BENEFITS } from '../__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_BESTIAL_ASPECT_BENEFITS } from '../__fixtures__/mechanical-catalog';
 import {
   bestialAspectBenefits,
   carnificinaDamageBonus,

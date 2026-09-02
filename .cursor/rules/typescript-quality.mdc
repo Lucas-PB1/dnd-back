@@ -12,8 +12,9 @@ Complementa [`code-standards.md`](../../docs/architecture/code-standards.md) e r
 
 | Smell | Por quê | Alternativa |
 |-------|---------|-------------|
-| `any` | Apaga o compilador | `unknown` + narrow; tipo genérico honesto |
+| `any` | Apaga o compilador | Tipo genérico honesto; narrow com type guard |
 | `as never` (especialmente em testes) | Esconde contrato quebrado | `satisfies Partial<T>`, `jest.Mocked<Pick<…>>`, helper tipado |
+| `as unknown as T` | Contorna o compilador em dois passos — mesmo smell que `as never` | Corrigir tipo na origem; helper de parse/narrow |
 | `as` para silenciar erro | Mascara bug | Corrigir tipo; `satisfies` quando inferência basta |
 | `undefined` opcional em cascata | Ramificações e `?.` em todo lugar | Input **obrigatório** no domain; `null` só quando semântica DB exige |
 | Magic string (slug, action, option) | Drift catálogo ↔ TS | `const` SSOT, union type, ou tipo gerado do seed |
@@ -42,7 +43,10 @@ Não criar terceiro caminho (ex.: CA só desarmado na ficha vs combate completo)
 
 ## Testes
 
-- `as never` é dívida — meta zerar em specs novos; refatorar ao tocar arquivo.
+Política completa: [`code-standards.md` § Testes](../../docs/architecture/code-standards.md#testes).
+
+- `as never` é dívida — meta zerar em specs legados; **proibido** em specs novos.
 - Preferir **menos** testes de wiring; **mais** testes de função pura SSOT.
+- Mesa: `table-action-handler.harness.ts` + `asHandlerDep` — não reinventar setup.
 
 Skill: **`unify-game-stats`**. Auditoria: **`audit-code-health`**.

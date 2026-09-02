@@ -54,5 +54,6 @@ import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
     FindClassProgressionQuery,
     FindClassOptionsQuery,
   ],
+  exports: [ClassProficienciesQuery],
 })
 export class ClassesModule {}

@@ -1,6 +1,7 @@
 import {
   buildEldritchCantripCastNote,
   readEldritchInvocationCantripBindings,
+  type ClassOptionLike,
   type EldritchFreeCastResolution,
 } from '@game/combat/domain/warlock';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
@@ -12,7 +13,7 @@ export function appendNonItemCastNotes(input: {
   usedEldritchFreeCast: EldritchFreeCastResolution | null;
   spell: { level: number };
   dto: CastSpellDto;
-  sheetClassOptions: unknown;
+  sheetClassOptions: readonly ClassOptionLike[] | null | undefined;
   character: PlayerCharacter;
 }): string | null {
   let note = input.note;
@@ -23,9 +24,7 @@ export function appendNonItemCastNotes(input: {
   const blastNote = buildEldritchCantripCastNote({
     spellLevel: input.spell.level,
     spellSlug: input.dto.spellSlug,
-    bindings: readEldritchInvocationCantripBindings(
-      input.sheetClassOptions as never,
-    ),
+    bindings: readEldritchInvocationCantripBindings(input.sheetClassOptions),
     charismaModifier: abilityModifier(
       input.character.abilityScores.carisma ?? 10,
     ),

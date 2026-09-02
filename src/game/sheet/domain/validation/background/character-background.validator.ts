@@ -9,6 +9,10 @@ import {
 } from '@game/sheet/domain/origin/background-ability-boost';
 import { CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 import { isPickableLanguageChoice } from './language-choice-rules';
+import {
+  loadBackgroundLanguageSlugs,
+  loadBackgroundSkillSlugs,
+} from '@game/sheet/infrastructure/queries/background-origin.queries';
 
 @Injectable()
 export class CharacterBackgroundValidator {
@@ -44,15 +48,8 @@ export class CharacterBackgroundValidator {
     classSkillSlugs: string[],
   ): Promise<void> {
     if (!classSkillSlugs.length) return;
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT sk.slug
-       FROM rpg.phb_background_skill bs
-       JOIN rpg.phb_background b ON b.id = bs.background_id
-       JOIN rpg.phb_skill sk ON sk.id = bs.skill_id
-       WHERE b.slug = $1`,
-      [backgroundSlug],
-    );
-    const backgroundSkills = new Set(rows.map((row) => row.slug));
+    const rows = await loadBackgroundSkillSlugs(this.dataSource, backgroundSlug);
+    const backgroundSkills = new Set(rows);
     const overlap = classSkillSlugs.filter((slug) => backgroundSkills.has(slug));
     if (overlap.length > 0) {
       throw new BadRequestException(
@@ -143,16 +140,11 @@ export class CharacterBackgroundValidator {
     const extraGranted = [...new Set(options?.extra?.grantedSlugs ?? [])];
     const extraChoice = options?.extra?.choiceCount ?? 0;
     const choiceCount = (background.languageChoiceCount ?? 0) + extraChoice;
-    const fixedRows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT l.slug
-       FROM rpg.phb_background_language bl
-       JOIN rpg.phb_background b ON b.id = bl.background_id
-       JOIN rpg.phb_language l ON l.id = bl.language_id
-       WHERE b.slug = $1
-       ORDER BY l.slug`,
-      [backgroundSlug],
+    const fixedRows = await loadBackgroundLanguageSlugs(
+      this.dataSource,
+      backgroundSlug,
     );
-    const fixed = [...new Set([...fixedRows.map((row) => row.slug), ...extraGranted])];
+    const fixed = [...new Set([...fixedRows, ...extraGranted])];
     const requiredTotal = fixed.length + choiceCount;
 
     if (requiredTotal === 0) {

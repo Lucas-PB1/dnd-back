@@ -21,6 +21,7 @@
 | [`architecture/data-model.md`](architecture/data-model.md) | Schema `rpg` / PHB |
 | [`architecture/catalog-patterns.md`](architecture/catalog-patterns.md) | Padrões DRY SQL do catálogo (+ catálogo mecânico) |
 | [`architecture/adr-schema-consolidation.md`](architecture/adr-schema-consolidation.md) | ADR — consolidação A→G (Aceito) |
+| [`architecture/adr-sheet-validation-layers.md`](architecture/adr-sheet-validation-layers.md) | ADR — validators ficha vs `infrastructure/queries` (Aceito) |
 | [`architecture/schema-equivalence-map.md`](architecture/schema-equivalence-map.md) | Mapa tabela atual → alvo consolidado |
 | [`architecture/game-module-structure.md`](architecture/game-module-structure.md) | Submódulos Game |
 | [`architecture/code-standards.md`](architecture/code-standards.md) | Tamanho de arquivo, SRP, DRY, legado |

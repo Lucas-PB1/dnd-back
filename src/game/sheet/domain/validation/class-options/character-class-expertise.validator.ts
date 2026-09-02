@@ -8,6 +8,8 @@ import {
   isClassExpertiseOptionKey,
 } from './class-expertise-slots';
 import { collectProficientSkillSlugs } from '@game/sheet/domain/stats/character-check-bonuses';
+import { loadBackgroundSkillSlugs } from '@game/sheet/infrastructure/queries/background-origin.queries';
+import { skillExists } from '@game/sheet/infrastructure/queries/skill-catalog.queries';
 
 @Injectable()
 export class CharacterClassExpertiseValidator {
@@ -48,19 +50,15 @@ export class CharacterClassExpertiseValidator {
       }
     }
 
-    const backgroundSkills = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT s.slug
-       FROM rpg.phb_background_skill bs
-       JOIN rpg.phb_background b ON b.id = bs.background_id
-       JOIN rpg.phb_skill s ON s.id = bs.skill_id
-       WHERE b.slug = $1`,
-      [ctx.backgroundSlug],
+    const backgroundSkills = await loadBackgroundSkillSlugs(
+      this.dataSource,
+      ctx.backgroundSlug,
     );
 
     const proficient = new Set(
       collectProficientSkillSlugs({
         classSkillSlugs: classSkillSlugs ?? [],
-        backgroundSkillSlugs: backgroundSkills.map((row) => row.slug),
+        backgroundSkillSlugs: backgroundSkills,
         speciesChoices,
         featOptions,
       }),
@@ -71,11 +69,7 @@ export class CharacterClassExpertiseValidator {
     assertUnique(chosen, 'Expertise skill choices must be distinct');
 
     for (const option of expertiseOptions) {
-      const skillRows = await this.dataSource.query<{ ok: number }[]>(
-        `SELECT 1 AS ok FROM rpg.phb_skill WHERE slug = $1 LIMIT 1`,
-        [option.valueId],
-      );
-      if (skillRows.length === 0) {
+      if (!(await skillExists(this.dataSource, option.valueId))) {
         throw new BadRequestException(
           `Expertise skill '${option.valueId}' is not a valid skill`,
         );

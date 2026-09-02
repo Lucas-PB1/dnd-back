@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
+import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
@@ -17,6 +18,7 @@ describe('CharacterFeatsValidator.validateFeatOptions', () => {
   let classSpellsRepo: jest.Mocked<Pick<Repository<VSpellByClass>, 'findOne'>>;
   let characterLevelsRepo: jest.Mocked<Pick<Repository<PhbCharacterLevel>, 'findOne'>>;
   let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let proficiencies: jest.Mocked<Pick<ClassProficienciesQuery, 'forClassSlug'>>;
 
   beforeEach(() => {
     featRefRepo = {
@@ -63,6 +65,18 @@ describe('CharacterFeatsValidator.validateFeatOptions', () => {
     dataSource = {
       query: jest.fn().mockResolvedValue([{ ok: 1 }]),
     };
+    proficiencies = {
+      forClassSlug: jest.fn().mockResolvedValue({
+        savingThrowSlugs: [],
+        savingThrowNames: [],
+        armorTrainingSlugs: [],
+        armorTrainingNames: [],
+        weaponProficiencySlugs: [],
+        weaponProficiencyNames: [],
+        fightingStyleSlugs: [],
+        fightingStyleNames: [],
+      }),
+    };
 
     const valueValidator = new CharacterFeatOptionValueValidator(
       dataSource as unknown as DataSource,
@@ -70,7 +84,7 @@ describe('CharacterFeatsValidator.validateFeatOptions', () => {
       featOptionValueRepo as unknown as Repository<PhbOptionValue>,
     );
     const optionsValidator = new CharacterFeatOptionsValidator(
-      dataSource as unknown as DataSource,
+      proficiencies as unknown as ClassProficienciesQuery,
       featRefRepo as unknown as Repository<PhbFeatRef>,
       featOptionDefRepo as unknown as Repository<PhbOptionDef>,
       characterLevelsRepo as unknown as Repository<PhbCharacterLevel>,

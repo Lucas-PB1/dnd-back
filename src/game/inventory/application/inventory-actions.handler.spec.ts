@@ -1,4 +1,5 @@
 import { BadRequestException } from '@nestjs/common';
+import { asHandlerDep } from '@game/session/application/actions/testing/table-action-handler.harness';
 import { InventoryActionsHandler } from './inventory-actions.handler';
 
 describe('InventoryActionsHandler', () => {
@@ -19,10 +20,10 @@ describe('InventoryActionsHandler', () => {
   };
 
   const handler = new InventoryActionsHandler(
-    weaponCharm as never,
-    coverage as never,
-    artifactRegen as never,
-    artifactPolish as never,
+    asHandlerDep(weaponCharm),
+    asHandlerDep(coverage),
+    asHandlerDep(artifactRegen),
+    asHandlerDep(artifactPolish),
   );
 
   beforeEach(() => {

@@ -1,4 +1,5 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { abilityModifier } from '@game/shared/domain/ability-scores';
 import {
   hasBlackPowderPistolExpert,
   hasSyndicateQuickStrike,
@@ -17,7 +18,6 @@ import {
 } from '../monk/features';
 import { isPsychicBladeItemSlug } from '../rogue/psychic-blades';
 import {
-  abilityMod,
   hasProperty,
   hasStyleOrFeat,
   isProficient,
@@ -43,8 +43,8 @@ function resolveMonkAbility(
   scores: AbilityScores,
   ability: AbilityPick,
 ): AbilityPick {
-  const str = abilityMod(scores.forca);
-  const dex = abilityMod(scores.destreza);
+  const str = abilityModifier(scores.forca);
+  const dex = abilityModifier(scores.destreza);
   if (dex > ability.mod) return { slug: 'destreza', mod: dex };
   if (str >= dex && str > ability.mod) return { slug: 'forca', mod: str };
   return ability;

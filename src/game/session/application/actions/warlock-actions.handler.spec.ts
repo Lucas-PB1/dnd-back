@@ -1,16 +1,28 @@
 import { BadRequestException } from '@nestjs/common';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestAbilityScores,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { WarlockActionsHandler } from './warlock-actions.handler';
 
 describe('WarlockActionsHandler', () => {
-  const stateResponse = { classResources: [] };
-  const access = { findAccessibleOrFail: jest.fn() };
-  const state = {
-    useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
-    recoverClassResource: jest.fn().mockResolvedValue(stateResponse),
-    recoverSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
-  };
-  const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
+  const warlock = createTestCharacter({
+    id: 'war-1',
+    classSlug: 'warlock',
+    subclassSlug: 'fiend',
+    level: 5,
+    abilityScores: createTestAbilityScores({
+      forca: 8,
+      destreza: 14,
+      constituicao: 14,
+      inteligencia: 10,
+      sabedoria: 10,
+      carisma: 18,
+    }),
+  });
+  const ctx = createTableActionHandlerTestContext({ defaultCharacter: warlock });
   const inventory = {
     findPactWeaponSlug: jest.fn(),
     bindAndEquipPactWeapon: jest.fn(),
@@ -20,51 +32,10 @@ describe('WarlockActionsHandler', () => {
     assertItemIsMeleeWeapon: jest.fn(),
     assert: jest.fn(),
   };
-  const mechanicalCatalog = {
-    load: async () => ({
-      gunslingerManeuvers: [],
-      battleMasterManeuvers: [],
-      cunningStrikeEffects: [],
-      tableActions: [],
-      personaMasks: [],
-      personaMaskSlugs: [],
-      beastborneAspectBenefits: [],
-      dungeoneerSlayerLabels: [],
-      precautionSpells: [],
-      economyActions: [],
-      panelActions: [],
-    }),
-  };
-  const handler = new WarlockActionsHandler(
-    access as never,
-    state as never,
-    domain as never,
-    inventory as never,
-    assertCanBindPact as never,
-    mechanicalCatalog as never,
-  );
-  const warlock = {
-    id: 'war-1',
-    classSlug: 'warlock',
-    subclassSlug: 'fiend',
-    level: 5,
-    abilityScores: {
-      forca: 8,
-      destreza: 14,
-      constituicao: 14,
-      inteligencia: 10,
-      sabedoria: 10,
-      carisma: 18,
-    },
-  };
+  let handler: WarlockActionsHandler;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    access.findAccessibleOrFail.mockResolvedValue(warlock);
-    state.useClassResource.mockResolvedValue({ state: stateResponse });
-    state.recoverClassResource.mockResolvedValue(stateResponse);
-    state.buildResponse.mockResolvedValue(stateResponse);
-    domain.getProficiencyBonus.mockResolvedValue(3);
+    ctx.resetMocks();
     assertCanBindPact.assertCharacterCanUsePactBlade.mockResolvedValue(
       undefined,
     );
@@ -73,6 +44,14 @@ describe('WarlockActionsHandler', () => {
       itemSlug: 'longsword',
       itemName: 'Espada Longa',
     });
+    handler = new WarlockActionsHandler(
+      asHandlerDep(ctx.access),
+      asHandlerDep(ctx.state),
+      asHandlerDep(ctx.domain),
+      asHandlerDep(inventory),
+      asHandlerDep(assertCanBindPact),
+      asHandlerDep(ctx.mechanicalCatalog),
+    );
   });
 
   it('recovers half pact slots for Magical Cunning', async () => {
@@ -80,13 +59,13 @@ describe('WarlockActionsHandler', () => {
       actionSlug: 'magical-cunning',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'war-1' }),
       'magical-cunning',
       1,
     );
-    expect(state.recoverSpellSlotLevel).toHaveBeenCalledTimes(1);
-    expect(state.recoverSpellSlotLevel).toHaveBeenCalledWith(
+    expect(ctx.state.recoverSpellSlotLevel).toHaveBeenCalledTimes(1);
+    expect(ctx.state.recoverSpellSlotLevel).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'war-1' }),
       3,
     );
@@ -102,16 +81,13 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('rolls 1d10 for Dark One’s Luck (Fiend L6+)', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...warlock,
-      level: 6,
-    });
+    ctx.mockCharacterOnce({ ...warlock, level: 6 });
 
     const result = await handler.useTableAction('user-1', 'war-1', {
       actionSlug: 'dark-ones-luck',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.anything(),
       'dark-ones-luck',
       1,
@@ -121,17 +97,14 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('resolves Healing Light for Celestial Warlock', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...warlock,
-      subclassSlug: 'celestial',
-    });
+    ctx.mockCharacterOnce({ ...warlock, subclassSlug: 'celestial' });
 
     const result = await handler.useTableAction('user-1', 'war-1', {
       actionSlug: 'healing-light',
       diceCount: 2,
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.anything(),
       'healing-light',
       2,
@@ -141,11 +114,8 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('rejects Dark One’s Luck when resource spend fails', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...warlock,
-      level: 6,
-    });
-    state.useClassResource.mockRejectedValueOnce(
+    ctx.mockCharacterOnce({ ...warlock, level: 6 });
+    ctx.state.useClassResource.mockRejectedValueOnce(
       new BadRequestException('Sem usos restantes'),
     );
 
@@ -157,7 +127,7 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('notes Clairvoyant Combatant as telepathic combat link', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...warlock,
       subclassSlug: 'great-old-one',
       level: 6,
@@ -167,7 +137,7 @@ describe('WarlockActionsHandler', () => {
       actionSlug: 'clairvoyant-combatant',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.anything(),
       'clairvoyant-competitor',
       1,
@@ -177,7 +147,7 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('notes Beguiling Defenses as post-hit reaction', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...warlock,
       subclassSlug: 'archfey',
       level: 10,
@@ -187,7 +157,7 @@ describe('WarlockActionsHandler', () => {
       actionSlug: 'beguiling-defenses',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.anything(),
       'beguiling-defenses',
       1,
@@ -197,10 +167,7 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('rejects Warlock actions for non-warlock characters', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...warlock,
-      classSlug: 'sorcerer',
-    });
+    ctx.mockCharacterOnce({ ...warlock, classSlug: 'sorcerer' });
 
     await expect(
       handler.useTableAction('user-1', 'war-1', {
@@ -258,16 +225,13 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('spends fey-steps on Passos Feéricos', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...warlock,
-      subclassSlug: 'archfey',
-    });
+    ctx.mockCharacterOnce({ ...warlock, subclassSlug: 'archfey' });
 
     const result = await handler.useTableAction('user-1', 'war-1', {
       actionSlug: 'fey-step-effect',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.anything(),
       'fey-steps',
       1,
@@ -277,7 +241,7 @@ describe('WarlockActionsHandler', () => {
   });
 
   it('rolls Hurl Through Hell for Fiend L14', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...warlock,
       subclassSlug: 'fiend',
       level: 14,
@@ -287,7 +251,7 @@ describe('WarlockActionsHandler', () => {
       actionSlug: 'hurl-through-hell',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.anything(),
       'hurl-through-hell',
       1,

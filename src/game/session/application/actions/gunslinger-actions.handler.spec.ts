@@ -1,10 +1,21 @@
 import { BadRequestException } from '@nestjs/common';
+import type { CharacterSheetData } from '@game/sheet/domain/character-sheet.types';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { GunslingerActionsHandler } from './gunslinger-actions.handler';
 
 describe('GunslingerActionsHandler', () => {
-  const stateResponse = { classResources: [{ slug: 'risk', remaining: 3, max: 4 }] };
+  const gunslinger = createTestCharacter({
+    id: 'gs-1',
+    classSlug: 'gunslinger',
+    subclassSlug: 'pistolero',
+    level: 15,
+  });
   const maneuverResult = {
-    state: stateResponse,
+    state: { classResources: [{ slug: 'risk', remaining: 3, max: 4 }] },
     maneuverSlug: 'bite-the-bullet',
     maneuverName: 'Morda a Bala',
     effectKind: 'temp_hp',
@@ -12,42 +23,35 @@ describe('GunslingerActionsHandler', () => {
     tempHpGained: 12,
     note: '+12 PV Temporários',
   };
-  const access = { findAccessibleOrFail: jest.fn() };
-  const sheet = {
-    load: jest.fn().mockResolvedValue({
-      characterFeats: [{ featSlug: 'blackpowder-pistol-expert' }],
-    }),
-  };
-  const martial = {
-    listManeuvers: jest.fn(),
-    useManeuver: jest.fn().mockResolvedValue(maneuverResult),
-    reloadFirearm: jest.fn().mockResolvedValue(stateResponse),
-    fireChamber: jest.fn().mockResolvedValue(stateResponse),
-  };
-  const state = {
-    martial,
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
-    recoverClassResource: jest
-      .fn()
-      .mockResolvedValue({ ...stateResponse, classResources: [{ slug: 'risk', remaining: 4, max: 4 }] }),
-  };
-  const handler = new GunslingerActionsHandler(
-    access as never,
-    state as never,
-    sheet as never,
-  );
-
-  const gunslinger = {
-    id: 'gs-1',
-    classSlug: 'gunslinger',
-    subclassSlug: 'pistolero',
-    level: 15,
-  };
+  const ctx = createTableActionHandlerTestContext({
+    stateResponse: {
+      classResources: [
+        { slug: 'risk', remaining: 3, max: 4, name: 'Risco', used: 1 },
+      ],
+    },
+    defaultCharacter: gunslinger,
+  });
+  let handler: GunslingerActionsHandler;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    access.findAccessibleOrFail.mockResolvedValue(gunslinger);
-    martial.useManeuver.mockResolvedValue(maneuverResult);
+    ctx.resetMocks();
+    ctx.sheet.load.mockResolvedValue({
+      characterFeats: [
+        { featSlug: 'blackpowder-pistol-expert', instanceIndex: 0 },
+      ],
+    } as CharacterSheetData);
+    ctx.state.martial.useManeuver.mockResolvedValue(maneuverResult);
+    ctx.state.recoverClassResource.mockResolvedValue({
+      ...ctx.stateResponse,
+      classResources: [
+        { slug: 'risk', remaining: 4, max: 4, name: 'Risco', used: 0 },
+      ],
+    });
+    handler = new GunslingerActionsHandler(
+      asHandlerDep(ctx.access),
+      asHandlerDep(ctx.state),
+      asHandlerDep(ctx.sheet),
+    );
   });
 
   it('routes use-maneuver through table-action', async () => {
@@ -55,7 +59,7 @@ describe('GunslingerActionsHandler', () => {
       actionSlug: 'use-maneuver',
       maneuverSlug: 'bite-the-bullet',
     });
-    expect(martial.useManeuver).toHaveBeenCalledWith(
+    expect(ctx.state.martial.useManeuver).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'gs-1' }),
       'bite-the-bullet',
     );
@@ -77,7 +81,7 @@ describe('GunslingerActionsHandler', () => {
     const result = await handler.useTableAction('user-1', 'gs-1', {
       actionSlug: 'recover-risk',
     });
-    expect(state.recoverClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.recoverClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'gs-1' }),
       'risk',
       1,
@@ -90,10 +94,7 @@ describe('GunslingerActionsHandler', () => {
   });
 
   it('rejects recover-risk below level 15', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...gunslinger,
-      level: 14,
-    });
+    ctx.mockCharacterOnce({ ...gunslinger, level: 14 });
     await expect(
       handler.useTableAction('user-1', 'gs-1', {
         actionSlug: 'recover-risk',
@@ -102,10 +103,7 @@ describe('GunslingerActionsHandler', () => {
   });
 
   it('rejects gunslinger actions for non-gunslingers', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...gunslinger,
-      classSlug: 'fighter',
-    });
+    ctx.mockCharacterOnce({ ...gunslinger, classSlug: 'fighter' });
     await expect(
       handler.useTableAction('user-1', 'gs-1', {
         actionSlug: 'recover-risk',
@@ -114,15 +112,12 @@ describe('GunslingerActionsHandler', () => {
   });
 
   it('allows reload-firearm for non-gunslinger with blackpowder-pistol-expert', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...gunslinger,
-      classSlug: 'fighter',
-    });
+    ctx.mockCharacterOnce({ ...gunslinger, classSlug: 'fighter' });
     const result = await handler.useTableAction('user-1', 'gs-1', {
       actionSlug: 'reload-firearm',
       itemSlug: 'blackpowder-pistol',
     });
-    expect(martial.reloadFirearm).toHaveBeenCalledWith(
+    expect(ctx.state.martial.reloadFirearm).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'gs-1' }),
       'blackpowder-pistol',
     );
@@ -130,11 +125,10 @@ describe('GunslingerActionsHandler', () => {
   });
 
   it('rejects reload-firearm for non-gunslinger without feat', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...gunslinger,
-      classSlug: 'fighter',
-    });
-    sheet.load.mockResolvedValueOnce({ characterFeats: [] });
+    ctx.mockCharacterOnce({ ...gunslinger, classSlug: 'fighter' });
+    ctx.sheet.load.mockResolvedValueOnce({
+      characterFeats: [],
+    } as unknown as CharacterSheetData);
     await expect(
       handler.useTableAction('user-1', 'gs-1', {
         actionSlug: 'reload-firearm',
@@ -144,10 +138,7 @@ describe('GunslingerActionsHandler', () => {
   });
 
   it('rejects reload-firearm for feat holder with non-pistol firearm', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...gunslinger,
-      classSlug: 'fighter',
-    });
+    ctx.mockCharacterOnce({ ...gunslinger, classSlug: 'fighter' });
     await expect(
       handler.useTableAction('user-1', 'gs-1', {
         actionSlug: 'reload-firearm',
@@ -161,7 +152,7 @@ describe('GunslingerActionsHandler', () => {
       actionSlug: 'reload-firearm',
       itemSlug: 'revolver',
     });
-    expect(martial.reloadFirearm).toHaveBeenCalledWith(
+    expect(ctx.state.martial.reloadFirearm).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'gs-1' }),
       'revolver',
     );
@@ -177,7 +168,7 @@ describe('GunslingerActionsHandler', () => {
       itemSlug: 'revolver',
       shots: 2,
     });
-    expect(martial.fireChamber).toHaveBeenCalledWith(
+    expect(ctx.state.martial.fireChamber).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'gs-1' }),
       'revolver',
       2,

@@ -73,6 +73,7 @@ export function assembleCharacterResponseDto(input: {
     backgroundToolItemSlug: row.backgroundToolItemSlug,
     abilityModifiers: derived.abilityModifiers,
     passivePerception: derived.passivePerception,
+    /** SSOT: `resolveCharacterCombatSlice` → `ResolveEquippedArmorClass`. */
     armorClass: combat.armorClass,
     armorClassNote: combat.armorClassNote,
     weaponAttacks: combat.weaponAttacks,

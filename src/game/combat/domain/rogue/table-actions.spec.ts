@@ -1,4 +1,4 @@
-import { FIXTURE_SOULKNIFE_ACTIONS } from '../__fixtures__/mechanical-catalog.fixtures';
+import { FIXTURE_SOULKNIFE_ACTIONS } from '../__fixtures__/mechanical-catalog';
 import { resolveSoulknifeTableAction } from './table-actions';
 
 describe('Soulknife tabletop actions', () => {

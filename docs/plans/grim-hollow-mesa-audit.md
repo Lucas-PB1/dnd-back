@@ -2,7 +2,7 @@
 
 **Status:** fases A–E **concluídas** (2026-08-31). Este doc só lista **residual aberto**.  
 **Skills:** `rpg-class-mesa-api` · `rpg-class-mesa-front` · `rpg-catalog-model`  
-**Auditoria:** `node scripts/_audit-gh-mesa-state.mjs` · `node scripts/verify-gh-heritage-e2.mjs`
+**Auditoria:** `node scripts/archive/_audit-gh-mesa-state.mjs` · `node scripts/verify-gh-heritage-e2.mjs`
 
 ---
 

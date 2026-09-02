@@ -3,6 +3,7 @@ import { DataSource, Repository } from 'typeorm';
 import { assertUnique } from '@common/assert';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
+import { isSkillOrToolSlug } from '@game/sheet/infrastructure/queries/feat-option.queries';
 
 export async function validateFeatProficiencyOption(
   dataSource: DataSource,
@@ -28,15 +29,8 @@ export async function validateFeatProficiencyOption(
         `Feat option '${def.optionKey}/${option.valueId}' is invalid`,
       );
     }
-    const rows = await dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok
-       FROM rpg.phb_skill WHERE slug = $1
-       UNION ALL
-       SELECT 1 FROM rpg.phb_item WHERE slug = $1 AND item_type = 'tool'::rpg.item_type
-       LIMIT 1`,
-      [option.valueId],
-    );
-    if (rows.length === 0) {
+    const valid = await isSkillOrToolSlug(dataSource, option.valueId);
+    if (!valid) {
       throw new BadRequestException(
         `Proficiency '${option.valueId}' is not a valid skill or tool`,
       );

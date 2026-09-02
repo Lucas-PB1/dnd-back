@@ -13,8 +13,8 @@ import { usesWizardPlusSangromancyList } from '@game/spellcasting/domain/sangrom
 import { loadSangromancySpellLevelsUpTo } from '@game/spellcasting/domain/sangromancy/load-sangromancy-spell-slugs';
 import {
   loadSpellProgressionLimits,
-  SubclassSpellcastingInfo,
-} from './spell-progression-queries';
+  type SubclassSpellcastingInfo,
+} from '@game/sheet/infrastructure/queries/spell-progression.queries';
 
 export async function assertSpellQuotas(
   dataSource: DataSource,

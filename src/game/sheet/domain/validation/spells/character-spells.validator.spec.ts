@@ -7,6 +7,8 @@ jest.mock('./assert-spell-quotas', () => ({
 }));
 
 import { DataSource, Repository } from 'typeorm';
+import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
+import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
@@ -16,7 +18,9 @@ import { validateSpellListAccess } from './validate-spell-list-access';
 
 describe('CharacterSpellsValidator', () => {
   let validator: CharacterSpellsValidator;
-  let dataSource: jest.Mocked<Pick<DataSource, 'query'>>;
+  let dataSource: { query: jest.Mock; getRepository: jest.Mock };
+  let subclassSpellSlotsRepo: { findOne: jest.Mock };
+  let classSpellSlotsRepo: { findOne: jest.Mock };
   let grantedSpellCatalog: jest.Mocked<Pick<LoadGrantedSpellCatalog, 'loadMergeCatalog'>>;
   let resolveSubclassOptionGrants: jest.Mocked<
     Pick<import('@game/spellcasting/application/resolve-subclass-option-granted-spells').ResolveSubclassOptionGrantedSpells, 'resolveExtraGrantedSlugs'>
@@ -31,7 +35,18 @@ describe('CharacterSpellsValidator', () => {
   };
 
   beforeEach(() => {
-    dataSource = { query: jest.fn().mockResolvedValue([]) };
+    subclassSpellSlotsRepo = { findOne: jest.fn().mockResolvedValue(null) };
+    classSpellSlotsRepo = {
+      findOne: jest.fn().mockResolvedValue({ spellSlots: { '1': 1 } }),
+    };
+    dataSource = {
+      query: jest.fn().mockResolvedValue([]),
+      getRepository: jest.fn((entity) => {
+        if (entity === VSubclassSpellSlots) return subclassSpellSlotsRepo;
+        if (entity === VClassSpellSlots) return classSpellSlotsRepo;
+        throw new Error(`Unexpected entity ${String(entity)}`);
+      }),
+    };
     grantedSpellCatalog = {
       loadMergeCatalog: jest.fn().mockResolvedValue({
         speciesCatalog: [],
@@ -91,7 +106,9 @@ describe('CharacterSpellsValidator', () => {
   });
 
   it('loadSubclassSpellcasting delegates to query helper', async () => {
-    dataSource.query.mockResolvedValue([{ spell_list_class_slug: 'wizard' }]);
+    subclassSpellSlotsRepo.findOne.mockResolvedValue({
+      spellListClassSlug: 'wizard',
+    });
     await expect(validator.loadSubclassSpellcasting('evoker')).resolves.toEqual({
       spellListClassSlug: 'wizard',
       spellcastingMode: 'prepared',
@@ -100,6 +117,6 @@ describe('CharacterSpellsValidator', () => {
 
   it('loadSubclassSpellcasting returns null for empty slug', async () => {
     await expect(validator.loadSubclassSpellcasting(null)).resolves.toBeNull();
-    expect(dataSource.query).not.toHaveBeenCalled();
+    expect(subclassSpellSlotsRepo.findOne).not.toHaveBeenCalled();
   });
 });

@@ -11,6 +11,7 @@ import {
   CharacterSheetContext,
   CharacterSheetInput,
 } from '@game/sheet/domain/character-sheet.types';
+import { spellOnClassList } from '@game/sheet/infrastructure/queries/spell-catalog.queries';
 
 @Injectable()
 export class CharacterMysticArcanumValidator {
@@ -49,16 +50,13 @@ export class CharacterMysticArcanumValidator {
         );
       }
       const spellLevel = mysticArcanumSpellLevelForKey(option.optionKey);
-      const rows = await this.dataSource.query<{ ok: number }[]>(
-        `SELECT 1 AS ok
-         FROM rpg.v_spell_by_class
-         WHERE class_slug = 'warlock'
-           AND spell_slug = $1
-           AND spell_level = $2
-         LIMIT 1`,
-        [option.valueId, spellLevel],
-      );
-      if (rows.length === 0) {
+      if (spellLevel == null) continue;
+      const valid = await spellOnClassList(this.dataSource, {
+        classSlug: 'warlock',
+        spellSlug: option.valueId,
+        spellLevel,
+      });
+      if (!valid) {
         throw new BadRequestException(
           `Arcana Mística '${option.optionKey}' exige magia de Bruxo de ${spellLevel}º círculo.`,
         );

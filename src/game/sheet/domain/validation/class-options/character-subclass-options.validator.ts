@@ -8,6 +8,12 @@ import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
 import { CharacterSheetInput, CharacterSheetContext } from '@game/sheet/domain/character-sheet.types';
 import { isFightingStyleSubclassOptionKey } from './fighting-style-feat-options';
 import { CharacterSubclassOptionValueValidator } from './character-subclass-option-value.validator';
+import {
+  loadSubclassOptionKeysAtLevel,
+  subclassOptionValueType,
+} from '@game/sheet/infrastructure/queries/class-option.queries';
+import { resolveSubclassUnlockLevel } from '@game/sheet/infrastructure/queries/class-meta.queries';
+import { fightingStyleExists } from '@game/sheet/infrastructure/queries/feat-option.queries';
 
 @Injectable()
 export class CharacterSubclassOptionsValidator {
@@ -39,11 +45,7 @@ export class CharacterSubclassOptionsValidator {
   }
 
   async resolveSubclassUnlockLevel(classSlug: string): Promise<number> {
-    const rows = await this.dataSource.query<{ subclass_unlock_level: number }[]>(
-      `SELECT subclass_unlock_level FROM rpg.phb_class WHERE slug = $1`,
-      [classSlug],
-    );
-    return rows[0]?.subclass_unlock_level ?? 3;
+    return resolveSubclassUnlockLevel(this.dataSource, classSlug);
   }
 
   async loadSubclassOptionKeysAtLevel(
@@ -53,17 +55,7 @@ export class CharacterSubclassOptionsValidator {
     const subclass = await this.subclassRefRepo.findOne({ where: { slug: subclassSlug } });
     if (!subclass) return [];
 
-    // Lote C: query unified phb_option_def with scope='subclass'
-    const rows = await this.dataSource.query<{ optionKey: string }[]>(
-      `SELECT DISTINCT def.option_key AS "optionKey"
-       FROM rpg.phb_option_def def
-       WHERE def.scope = 'subclass'
-         AND def.owner_id = $1
-         AND def.unlock_level <= $2
-       ORDER BY def.option_key ASC`,
-      [subclass.id, level],
-    );
-    return rows.map((row) => row.optionKey);
+    return loadSubclassOptionKeysAtLevel(this.dataSource, subclass.id, level);
   }
 
   async validateSubclassOptions(
@@ -96,15 +88,11 @@ export class CharacterSubclassOptionsValidator {
           valueId: option.valueId,
         },
       });
-      const defRows = await this.dataSource.query<{ value_type: string }[]>(
-        `SELECT value_type::text AS value_type
-         FROM rpg.phb_option_def
-         WHERE scope = 'subclass'::rpg.option_scope
-           AND owner_id = $1
-           AND option_key = $2`,
-        [subclass.id, option.optionKey],
+      const valueType = await subclassOptionValueType(
+        this.dataSource,
+        subclass.id,
+        option.optionKey,
       );
-      const valueType = defRows[0]?.value_type;
       const needsCatalogValue =
         valueType === 'catalog' ||
         valueType === 'terrain' ||
@@ -117,11 +105,7 @@ export class CharacterSubclassOptionsValidator {
       }
 
       if (isFightingStyleSubclassOptionKey(option.optionKey)) {
-        const exists = await this.dataSource.query<{ ok: number }[]>(
-          `SELECT 1 AS ok FROM rpg.phb_fighting_style WHERE slug = $1 LIMIT 1`,
-          [option.valueId],
-        );
-        if (exists.length === 0) {
+        if (!(await fightingStyleExists(this.dataSource, option.valueId))) {
           throw new BadRequestException(
             `Subclass option '${option.optionKey}/${option.valueId}' is not a valid fighting style`,
           );

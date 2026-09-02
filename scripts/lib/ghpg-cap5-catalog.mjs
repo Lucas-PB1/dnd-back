@@ -138,7 +138,7 @@ export const CAP5_EQUIPMENT_CATALOG = {
   },
 };
 
-/** Reexporta requisitos mecânicos (compatível com ghpg-cap5-requirements). */
+/** Reexporta requisitos mecânicos (catálogo Cap. 5). */
 export const GEAR_ADVANCED_REQUIREMENTS = {
   'blessed-stake': { kind: 'none' },
   'breath-of-beleth-poison': { kind: 'none' },

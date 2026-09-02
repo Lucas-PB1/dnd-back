@@ -79,11 +79,6 @@ export function findGhpgChapterHtml(chapterNumber, ...dirs) {
   return undefined;
 }
 
-/** @deprecated Use findGhpgChapterHtml(2, ...) */
-export function findGhpgCap2Html(...dirs) {
-  return findGhpgChapterHtml(2, ...dirs);
-}
-
 export function findGhpgCap5Html(...dirs) {
   return findGhpgChapterHtml(5, ...dirs);
 }

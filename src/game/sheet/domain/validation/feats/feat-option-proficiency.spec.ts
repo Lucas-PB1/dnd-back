@@ -1,16 +1,30 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource, Repository } from 'typeorm';
+import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
+import { PhbItem } from '@entities/phb-item.entity';
+import { PhbSkill } from '@entities/phb-skill.entity';
+import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { validateFeatProficiencyOption } from './feat-option-proficiency';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import type { FeatOptionDto } from '@game/sheet/dto/character-sheet.dto';
 
 describe('validateFeatProficiencyOption', () => {
-  let dataSource: { query: jest.Mock };
+  let dataSource: { getRepository: jest.Mock };
+  let skillRepo: { exists: jest.Mock };
+  let itemRepo: { exists: jest.Mock };
   let featOptionValueRepo: { findOne: jest.Mock; exists: jest.Mock };
   const def = { scope: 'feat', ownerId: '1', optionKey: 'proficiency1' } as PhbOptionDef;
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
+    skillRepo = { exists: jest.fn().mockResolvedValue(false) };
+    itemRepo = { exists: jest.fn().mockResolvedValue(false) };
+    dataSource = {
+      getRepository: jest.fn((entity) => {
+        if (entity === PhbSkill) return skillRepo;
+        if (entity === PhbItem) return itemRepo;
+        throw new Error(`Unexpected entity ${String(entity)}`);
+      }),
+    };
     featOptionValueRepo = { findOne: jest.fn(), exists: jest.fn() };
   });
 
@@ -32,7 +46,7 @@ describe('validateFeatProficiencyOption', () => {
     await expect(
       run({ featSlug: 'skilled', optionKey: 'proficiency1', valueId: 'athletics' }),
     ).resolves.toBeUndefined();
-    expect(dataSource.query).not.toHaveBeenCalled();
+    expect(dataSource.getRepository).not.toHaveBeenCalled();
   });
 
   it('rejects value not in whitelist when whitelist exists', async () => {
@@ -46,7 +60,7 @@ describe('validateFeatProficiencyOption', () => {
   it('accepts skill slug when no whitelist and catalog has match', async () => {
     featOptionValueRepo.findOne.mockResolvedValue(null);
     featOptionValueRepo.exists.mockResolvedValue(false);
-    dataSource.query.mockResolvedValue([{ ok: 1 }]);
+    skillRepo.exists.mockResolvedValue(true);
     await expect(
       run({ featSlug: 'skilled', optionKey: 'proficiency1', valueId: 'stealth' }),
     ).resolves.toBeUndefined();
@@ -55,7 +69,8 @@ describe('validateFeatProficiencyOption', () => {
   it('rejects unknown slug when no whitelist', async () => {
     featOptionValueRepo.findOne.mockResolvedValue(null);
     featOptionValueRepo.exists.mockResolvedValue(false);
-    dataSource.query.mockResolvedValue([]);
+    skillRepo.exists.mockResolvedValue(false);
+    itemRepo.exists.mockResolvedValue(false);
     await expect(
       run({ featSlug: 'skilled', optionKey: 'proficiency1', valueId: 'not-a-skill' }),
     ).rejects.toThrow(/not a valid skill or tool/i);

@@ -12,7 +12,7 @@ import {
   detectActionEconomy,
   extractBlock,
   extractParagraphs,
-  findGhpgCap2Html,
+  findGhpgChapterHtml,
   stripTags,
 } from './lib/ghpg-html-utils.mjs';
 import { extracts, scrap, scrapes } from './lib/docs-source.mjs';
@@ -273,7 +273,7 @@ function parseSubclasses(html) {
   return subclasses;
 }
 
-const htmlPath = findGhpgCap2Html(scrap.grimHollow, scrapes.grimHollow);
+const htmlPath = findGhpgChapterHtml(2, scrap.grimHollow, scrapes.grimHollow);
 if (!htmlPath) {
   console.error(
     'HTML Cap. 2 GHPG não encontrado.\n' +

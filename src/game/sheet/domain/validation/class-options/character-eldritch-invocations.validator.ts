@@ -12,7 +12,6 @@ import {
   validateEldritchInvocationPicks,
   validateEldritchOriginFeatBindings,
   type EldritchCantripEligibility,
-  type EldritchInvocationCatalogRow,
 } from '@game/combat/domain/warlock';
 import { isWarlockClass } from '@game/combat/domain/warlock';
 import {
@@ -23,6 +22,10 @@ import {
   CharacterSheetContext,
   CharacterSheetInput,
 } from '@game/sheet/domain/character-sheet.types';
+import {
+  loadEldritchInvocationCatalog,
+  loadOriginFeatSlugs,
+} from '@game/sheet/infrastructure/queries/eldritch-invocation.queries';
 
 @Injectable()
 export class CharacterEldritchInvocationsValidator {
@@ -56,7 +59,7 @@ export class CharacterEldritchInvocationsValidator {
       );
     }
 
-    const catalog = await this.loadCatalog();
+    const catalog = await loadEldritchInvocationCatalog(this.dataSource);
     const errors = validateEldritchInvocationPicks({
       level: ctx.level,
       picks,
@@ -75,7 +78,10 @@ export class CharacterEldritchInvocationsValidator {
       }),
     );
 
-    const originFeatSlugs = await this.loadOriginFeatSlugs(originBindings);
+    const originFeatSlugs = await loadOriginFeatSlugs(
+      this.dataSource,
+      originBindings.map((binding) => binding.featSlug),
+    );
     const lessonsFeatSlugs = new Set(
       originBindings.map((binding) => binding.featSlug),
     );
@@ -96,45 +102,6 @@ export class CharacterEldritchInvocationsValidator {
     if (errors.length > 0) {
       throw new BadRequestException(errors.join('; '));
     }
-  }
-
-  private async loadCatalog(): Promise<EldritchInvocationCatalogRow[]> {
-    const rows = await this.dataSource.query<
-      {
-        slug: string;
-        name: string;
-        min_level: number;
-        requires_pact_slug: string | null;
-        requires_invocation_slug: string | null;
-        repeatable: boolean;
-      }[]
-    >(
-      `SELECT slug, name, min_level, requires_pact_slug, requires_invocation_slug, repeatable
-       FROM rpg.phb_eldritch_invocation`,
-    );
-    return rows.map((row) => ({
-      slug: row.slug,
-      name: row.name,
-      minLevel: row.min_level,
-      requiresPactSlug: row.requires_pact_slug,
-      requiresInvocationSlug: row.requires_invocation_slug,
-      repeatable: row.repeatable,
-    }));
-  }
-
-  private async loadOriginFeatSlugs(
-    bindings: ReturnType<typeof readEldritchInvocationOriginFeatBindings>,
-  ): Promise<Set<string>> {
-    const slugs = [...new Set(bindings.map((binding) => binding.featSlug))];
-    if (slugs.length === 0) return new Set();
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT slug
-       FROM rpg.phb_feat
-       WHERE category = 'origin'::rpg.feat_category
-         AND slug = ANY($1::text[])`,
-      [slugs],
-    );
-    return new Set(rows.map((row) => row.slug));
   }
 
   private async loadCantripEligibility(

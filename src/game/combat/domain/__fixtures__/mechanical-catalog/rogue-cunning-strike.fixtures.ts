@@ -1,0 +1,69 @@
+import type { CunningStrikeEffect } from '../../rogue/types';
+
+/** Seeds `combat/C00*` — Rogue Cunning Strike effects. */
+export const FIXTURE_CUNNING_STRIKE_EFFECTS: readonly CunningStrikeEffect[] = [
+  {
+    slug: 'poison',
+    name: 'Envenenar',
+    cost: 1,
+    unlockLevel: 5,
+    saveAbility: 'constitution',
+    note: 'Requer Kit de Veneno; em falha, Envenenado por 1 minuto.',
+  },
+  {
+    slug: 'withdraw',
+    name: 'Retirada',
+    cost: 1,
+    unlockLevel: 5,
+    note: 'Mova-se até metade do Deslocamento sem provocar Ataques de Oportunidade.',
+  },
+  {
+    slug: 'trip',
+    name: 'Tropeço',
+    cost: 1,
+    unlockLevel: 5,
+    saveAbility: 'dexterity',
+    note: 'Alvo Grande ou menor fica Caído em uma falha.',
+  },
+  {
+    slug: 'hidden-attack',
+    name: 'Ataque Escondido',
+    cost: 1,
+    unlockLevel: 9,
+    subclassSlug: 'thief',
+    note: 'O ataque não encerra Invisível de Esconder se terminar atrás de cobertura adequada.',
+  },
+  {
+    slug: 'daze',
+    name: 'Aturdir',
+    cost: 2,
+    unlockLevel: 14,
+    saveAbility: 'constitution',
+    note: 'Em falha, no próximo turno o alvo só pode mover, agir ou usar Ação Bônus.',
+  },
+  {
+    slug: 'knock-out',
+    name: 'Nocaute',
+    cost: 6,
+    unlockLevel: 14,
+    saveAbility: 'constitution',
+    note: 'Em falha, Inconsciente por 1 minuto ou até sofrer dano.',
+  },
+  {
+    slug: 'obscure',
+    name: 'Obscurecer',
+    cost: 3,
+    unlockLevel: 14,
+    saveAbility: 'dexterity',
+    note: 'Em falha, Cego até o fim do próximo turno do alvo.',
+  },
+  {
+    slug: 'paralyze',
+    name: 'Paralisar',
+    cost: 4,
+    unlockLevel: 17,
+    saveAbility: 'constitution',
+    subclassSlug: 'arachnoid-stalker',
+    note: 'Com Golpe Venenoso, o alvo fica Paralisado até o fim do seu próximo turno.',
+  },
+];

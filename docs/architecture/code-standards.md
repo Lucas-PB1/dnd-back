@@ -18,8 +18,8 @@ Exceções: specs densas, seeds/migrations SQL. DTOs Swagger: preferir split > 2
 ```
 application/   → orquestra (handlers)
 domain/        → regras D&D por concern (core/combat/stats/…)
-  validation/  → validators Nest (feats/, class-options/, …)
-infrastructure/→ entities, repos, mappers
+  validation/  → orquestradores Nest + helpers de regra (feats/, class-options/, …)
+infrastructure/→ entities, repos, mappers, queries/ (leitura DB da ficha)
 dto/           → contrato HTTP
 ```
 
@@ -58,7 +58,25 @@ Não acumular validators flat. Agrupar:
 | `validation/feats/` | Feats, options, helpers de feat |
 | `validation/class-options/` | Species / subclass / expertise / mastery / fighting styles |
 
+**Leitura de catálogo na validação:** funções em `sheet/infrastructure/queries/*.queries.ts` (TypeORM views/entities). Validators **não** usam `dataSource.query`. ADR: [`adr-sheet-validation-layers.md`](adr-sheet-validation-layers.md).
+
 Catalog permanece **thin**: Query + view + mapper.
+
+## Barrels (`index.ts`)
+
+Todo re-export público de pasta → **`index.ts` na raiz da pasta** — nunca `foo.barrel.ts`, `*.fixtures.ts` ou arquivo irmão com o mesmo nome da pasta.
+
+| OK | Evitar |
+|----|--------|
+| `mechanical-catalog/index.ts` reexporta `gunslinger-maneuvers.fixtures.ts` | `mechanical-catalog.fixtures.ts` ao lado da pasta |
+| `barbarian/subclass-actions/index.ts` + arquivos por subclasse | `subclass-actions.ts` + pasta `subclass-actions/` |
+| `combat/domain/rogue/index.ts` na borda do módulo | Barrel no meio da árvore só para esconder split |
+
+**Imports externos:** path da pasta (`…/mechanical-catalog`, `…/subclass-actions`). **Imports internos** da pasta: arquivo concreto (`./berserker-actions`), não o próprio `index.ts`.
+
+Exceção documentada (Fase 4.2): mega-barrel `session/dto/index.ts` — preferir subpath por família ao migrar.
+
+Detalhe histórico: [`code-health-audit.md` §2](../plans/code-health-audit.md#2-barrels-indexts--sem-padrão-único).
 
 ## SRP / SOLID (prático)
 
@@ -85,7 +103,7 @@ Rule: `typescript-quality`. Skill: `unify-game-stats`.
 
 | Evitar | Preferir |
 |--------|----------|
-| `any`, `as never`, `as` para silenciar | Tipos honestos; `satisfies`; mocks tipados |
+| `any`, `as never`, `as unknown as T`, `as` para silenciar | Tipos honestos; `satisfies`; mocks tipados |
 | `undefined` em cascata no domain | Campos obrigatórios; `null` só quando DB exige |
 | Magic string (slug, `actionSlug`) | `const` SSOT / union type |
 | Magic number (dado, limiar) | Constante no domain |
@@ -102,18 +120,90 @@ Rule: `typescript-quality`. Skill: `unify-game-stats`.
 | CA equipada | `combat/domain/equipment/armor-class.ts` + `resolve-equipped-armor-class.ts` |
 | Moedas | `inventory/domain/coin-purse.ts` |
 
-**Dívida:** `abilityMod` duplicado em 3 arquivos; CA da ficha (`character-derived-stats`) ≠ combate (`resolve-character-combat-slice`).
+**Dívida:** ~~`abilityMod`~~ · ~~CA ficha≠combate~~ · ~~harness specs mesa~~ resolvidos (fases 1–2).
 
 ## Testes
+
+Política canônica — detalhe histórico: [`code-health-audit.md` §11](../plans/code-health-audit.md#11-testes-além-da-necessidade).
+
+### O que testar
 
 | Testar | Evitar |
 |--------|--------|
 | Comportamento público (handler, domain puro, contrato HTTP) | Espelhar implementação linha a linha |
-| 1 happy + 1 erro por `actionSlug` / branch crítico | 14 specs com o mesmo boilerplate de mock |
-| Regras D&D em `domain/` (entrada → saída) | Spec >300 linhas sem table-driven / helpers |
+| 1 happy + 1 erro por `actionSlug` / branch crítico | Re-testar subfunção privada já coberta pelo fluxo |
+| Regras D&D em `domain/` (entrada → saída) | Duplicar matriz inteira em centenas de linhas |
+| Integração crítica (load sheet bundle, cast spell) | 14 specs com o mesmo boilerplate de mock |
 | Smoke de catálogo via scripts/seeds | Query spec que só mocka `findOne` |
 
-Harness compartilhado para mesa: ver [`code-health-audit.md`](../plans/code-health-audit.md) §11. Fixtures: `mechanical-catalog.fixtures.ts`.
+### Tamanho e forma
+
+| Faixa | Linhas | Ação |
+|-------|--------|------|
+| OK | ≤ 200 | Seguir |
+| Soft | 201–300 | Extrair helpers ou `it.each` ao editar |
+| Hard | > 300 | Split obrigatório antes de crescer |
+| Crítico | ≥ 400 | Dívida — split imediato |
+
+Padrão de split para specs densos:
+
+```
+foo.spec.ts              ← orquestra (describe + it.each)
+foo.spec.helpers.ts      ← factories, fixtures locais, expect helpers
+foo.<concern>.spec.ts    ← matriz table-driven por concern (ex.: class-rules)
+```
+
+Domain com matriz de casos → **`it.each(CASES)`** + runner compartilhado (`runWeaponAttackCase`, …), não um `it()` por linha.
+
+### Mesa — table-action handlers
+
+**Obrigatório** em `*-actions.handler.spec.ts`:
+
+- Importar de `session/application/actions/testing/table-action-handler.harness.ts`
+- `createTableActionHandlerTestContext()` para setup (`access`, `state`, `domain`, `sheet`, `mechanicalCatalog`)
+- `asHandlerDep(mock)` para injetar no construtor — **não** `as never`
+- `createTestCharacter({ classSlug, … })` / `mockCharacter(overrides)` para personagem
+- Catálogo mecânico: `@game/combat/domain/__fixtures__/mechanical-catalog` (`index.ts`) — não montar arrays inline duplicados
+
+### Domain / application — helpers compartilhados
+
+| Área | Helper / fixture | Uso |
+|------|------------------|-----|
+| Mesa handlers | `table-action-handler.harness.ts` | 14 specs de classe |
+| Catálogo mecânico | `__fixtures__/mechanical-catalog/index.ts` | Manobras, table-actions, persona masks, … |
+| Ataques de arma | `weapon-attack.spec.helpers.ts` | `buildMock…`, `expectWeaponAttack`, `CASES` |
+| Rolagem de dano | `roll-damage.spec.helpers.ts` | `buildMockAttack`, `asRollDep`, `createRollDamageTestContext` |
+
+Novos specs de combate/dano: copiar o padrão acima antes de inventar setup local.
+
+### Mocks e tipos em specs
+
+| Evitar | Preferir |
+|--------|----------|
+| `as never` | `asHandlerDep` / `asRollDep` ou `jest.Mocked<Pick<…>>` |
+| `Partial` solto sem factory | `createTestCharacter(overrides)` / `buildMockAttack(overrides)` |
+| Duplicar `mechanicalCatalog.load` inline | `createEmptyMechanicalCatalogLoad()` + overrides pontuais |
+| Spec >300 linhas monolítico | Split + `it.each` |
+
+`as never` em specs legados: zerar ao tocar o arquivo; **proibido** em specs novos (rule `typescript-quality`).
+
+### Nomenclatura
+
+| Sufixo | Conteúdo |
+|--------|----------|
+| `*.spec.ts` | Casos e asserts |
+| `*.spec.helpers.ts` | Factories, runners, `CASES` — sem `describe` |
+| `*.class-rules.spec.ts` | Matriz table-driven de regras de classe/subclasse |
+| `*.queries.spec.ts` | Mapper/view — smoke, não re-testar SQL do validator |
+| `*.application.spec.ts` | Handler/service Nest com mocks |
+
+### Comandos
+
+```bash
+npm test                          # suite completa
+npm test -- --testPathPattern=foo # módulo tocado
+npm run test:cov                  # cobertura (CI)
+```
 
 ## Legado
 

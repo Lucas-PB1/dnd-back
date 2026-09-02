@@ -4,6 +4,7 @@ import { DataSource, Repository } from 'typeorm';
 import { assertUnique } from '@common/assert';
 import { VPhbSpeciesTraitChoices } from '@entities/views/v-phb-species-trait-choices.entity';
 import { CharacterSheetInput } from '@game/sheet/domain/character-sheet.types';
+import { spellOnClassList } from '@game/sheet/infrastructure/queries/spell-catalog.queries';
 
 const OPTIONAL_KINDS = new Set(['high_elf_cantrip', 'andari_druid_cantrip']);
 
@@ -104,14 +105,12 @@ export class CharacterSpeciesChoicesValidator {
       );
     }
 
-    const rows = await this.dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok
-       FROM rpg.v_spell_by_class
-       WHERE class_slug = 'wizard' AND spell_level = 0 AND spell_slug = $1
-       LIMIT 1`,
-      [highElf.choiceSlug],
-    );
-    if (rows.length === 0) {
+    const valid = await spellOnClassList(this.dataSource, {
+      classSlug: 'wizard',
+      spellSlug: highElf.choiceSlug,
+      spellLevel: 0,
+    });
+    if (!valid) {
       throw new BadRequestException(
         `High Elf cantrip '${highElf.choiceSlug}' must be a Wizard cantrip`,
       );
@@ -146,14 +145,12 @@ export class CharacterSpeciesChoicesValidator {
       );
     }
 
-    const rows = await this.dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok
-       FROM rpg.v_spell_by_class
-       WHERE class_slug = 'druid' AND spell_level = 0 AND spell_slug = $1
-       LIMIT 1`,
-      [andariCantrip.choiceSlug],
-    );
-    if (rows.length === 0) {
+    const valid = await spellOnClassList(this.dataSource, {
+      classSlug: 'druid',
+      spellSlug: andariCantrip.choiceSlug,
+      spellLevel: 0,
+    });
+    if (!valid) {
       throw new BadRequestException(
         `Andari cantrip '${andariCantrip.choiceSlug}' must be a Druid cantrip`,
       );

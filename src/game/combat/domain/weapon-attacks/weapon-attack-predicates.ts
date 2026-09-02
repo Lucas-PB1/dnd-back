@@ -1,4 +1,6 @@
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import { abilityModifier } from '@game/shared/domain/ability-scores';
+import { hasStyleOrFeat } from '../feat/has-style-or-feat';
 import { isBlackPowderPistolPiece } from '../feat/grim-hollow-cap4-weapon-rules';
 import type {
   EquippedWeaponPiece,
@@ -26,19 +28,7 @@ const SPECIFIC_WEAPON_PROFICIENCY: Record<string, string> = {
   machadinhas: 'handaxe',
 };
 
-export function abilityMod(score: number): number {
-  return Math.floor((score - 10) / 2);
-}
-
-export function hasStyleOrFeat(
-  context: WeaponAttackContext,
-  slug: string,
-): boolean {
-  return (
-    (context.featSlugs ?? []).includes(slug) ||
-    (context.fightingStyleSlugs ?? []).includes(slug)
-  );
-}
+export { hasStyleOrFeat } from '../feat/has-style-or-feat';
 
 export function hasProperty(piece: EquippedWeaponPiece, slug: string): boolean {
   return piece.propertySlugs.includes(slug);
@@ -126,8 +116,8 @@ export function pickAbility(
   piece: EquippedWeaponPiece,
   mode: 'melee' | 'ranged',
 ): { slug: 'forca' | 'destreza'; mod: number } {
-  const str = abilityMod(scores.forca);
-  const dex = abilityMod(scores.destreza);
+  const str = abilityModifier(scores.forca);
+  const dex = abilityModifier(scores.destreza);
 
   if (mode === 'ranged' && !hasProperty(piece, 'finesse')) {
     return { slug: 'destreza', mod: dex };

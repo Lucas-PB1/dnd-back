@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
 import { PhbSubclassRef } from '@entities/phb-subclass-ref.entity';
-import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { SubclassOptionDto } from '@game/sheet/dto/character-sheet.dto';
 import {
   BLADE_HOLY_CANTRIP_KEYS,
@@ -16,8 +15,14 @@ import {
   SANGROMANCY_SAVANT_OPTION_KEYS,
   SANGROMANCY_SCHOOL_FILTER_SLUG,
   isSangromancySavantOptionKey,
-  sangromancyDescriptionSqlPattern,
 } from '@game/spellcasting/domain/sangromancy/sangromancy-spells';
+import { loadClassSkillChoiceSlugs, skillExists } from '@game/sheet/infrastructure/queries/skill-catalog.queries';
+import {
+  sangromancySpellMatches,
+  spellOnAnyClassListUpToLevel,
+  spellOnClassList,
+  wizardSchoolSpellMatches,
+} from '@game/sheet/infrastructure/queries/spell-catalog.queries';
 
 const LORE_SPELL_LIST_CLASS_SLUGS = ['cleric', 'druid', 'wizard'] as const;
 
@@ -31,8 +36,6 @@ export class CharacterSubclassOptionValueValidator {
     private readonly optionDefRepo: Repository<PhbOptionDef>,
     @InjectRepository(PhbOptionValue)
     private readonly optionValuesRepo: Repository<PhbOptionValue>,
-    @InjectRepository(VSpellByClass)
-    private readonly classSpellsRepo: Repository<VSpellByClass>,
   ) {}
 
   async validate(
@@ -98,24 +101,15 @@ export class CharacterSubclassOptionValueValidator {
     classSlug: string,
     options: SubclassOptionDto[],
   ): Promise<void> {
-    const skillRows = await this.dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok FROM rpg.phb_skill WHERE slug = $1 LIMIT 1`,
-      [option.valueId],
-    );
-    if (skillRows.length === 0) {
+    if (!(await skillExists(this.dataSource, option.valueId))) {
       throw new BadRequestException(
         `Skill '${option.valueId}' is invalid for '${def.optionKey}'`,
       );
     }
 
     if (def.optionKey === 'warScholarSkill') {
-      const poolRows = await this.dataSource.query<{ slug: string }[]>(
-        `SELECT skill_slug AS slug
-         FROM rpg.v_phb_class_skill_choice
-         WHERE class_slug = $1`,
-        [classSlug],
-      );
-      if (!poolRows.some((row) => row.slug === option.valueId)) {
+      const pool = await loadClassSkillChoiceSlugs(this.dataSource, classSlug);
+      if (!pool.includes(option.valueId)) {
         throw new BadRequestException(
           `Skill '${option.valueId}' is not in the fighter skill list for warScholarSkill`,
         );
@@ -208,16 +202,12 @@ export class CharacterSubclassOptionValueValidator {
   private async validateClericCantrip(
     option: SubclassOptionDto,
   ): Promise<void> {
-    const rows = await this.dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok
-       FROM rpg.v_spell_by_class v
-       WHERE v.class_slug = 'cleric'
-         AND v.spell_slug = $1
-         AND v.spell_level = 0
-       LIMIT 1`,
-      [option.valueId],
-    );
-    if (rows.length === 0) {
+    const valid = await spellOnClassList(this.dataSource, {
+      classSlug: 'cleric',
+      spellSlug: option.valueId,
+      spellLevel: 0,
+    });
+    if (!valid) {
       throw new BadRequestException(
         `Spell '${option.valueId}' is not a Cleric cantrip`,
       );
@@ -229,16 +219,13 @@ export class CharacterSubclassOptionValueValidator {
     level: number,
   ): Promise<void> {
     const maxLevel = Math.min(3, Math.ceil(level / 2));
-    const rows = await this.dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok
-       FROM rpg.v_spell_by_class v
-       WHERE v.class_slug = ANY($1::text[])
-         AND v.spell_slug = $2
-         AND v.spell_level <= $3
-       LIMIT 1`,
-      [LORE_SPELL_LIST_CLASS_SLUGS, option.valueId, maxLevel],
+    const valid = await spellOnAnyClassListUpToLevel(
+      this.dataSource,
+      LORE_SPELL_LIST_CLASS_SLUGS,
+      option.valueId,
+      maxLevel,
     );
-    if (rows.length === 0) {
+    if (!valid) {
       throw new BadRequestException(
         `Spell '${option.valueId}' is not a valid Lore magical discovery`,
       );
@@ -257,16 +244,7 @@ export class CharacterSubclassOptionValueValidator {
       );
     }
 
-    const rows = await this.dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok
-       FROM rpg.phb_spell s
-       WHERE s.slug = $1
-         AND s.level BETWEEN 1 AND $2
-         AND s.description LIKE $3
-       LIMIT 1`,
-      [option.valueId, maxLevel, sangromancyDescriptionSqlPattern()],
-    );
-    if (rows.length === 0) {
+    if (!(await sangromancySpellMatches(this.dataSource, option.valueId, maxLevel))) {
       throw new BadRequestException(
         `Spell '${option.valueId}' is not a valid Sangromancy choice for '${def.optionKey}'`,
       );
@@ -279,18 +257,14 @@ export class CharacterSubclassOptionValueValidator {
   ): Promise<void> {
     const maxLevel = def.spellMaxLevel ?? 2;
     const schoolSlugs = def.spellSchoolSlugs ?? [];
-    const rows = await this.dataSource.query<{ ok: number }[]>(
-      `SELECT 1 AS ok
-       FROM rpg.phb_spell s
-       JOIN rpg.phb_spell_school sch ON sch.id = s.school_id
-       JOIN rpg.v_spell_by_class v ON v.spell_slug = s.slug AND v.class_slug = 'wizard'
-       WHERE s.slug = $1
-         AND s.level BETWEEN 1 AND $2
-         AND sch.slug = ANY($3::text[])
-       LIMIT 1`,
-      [option.valueId, maxLevel, schoolSlugs],
-    );
-    if (rows.length === 0) {
+    if (
+      !(await wizardSchoolSpellMatches(
+        this.dataSource,
+        option.valueId,
+        maxLevel,
+        schoolSlugs,
+      ))
+    ) {
       throw new BadRequestException(
         `Spell '${option.valueId}' is not a valid wizard school choice for '${def.optionKey}'`,
       );

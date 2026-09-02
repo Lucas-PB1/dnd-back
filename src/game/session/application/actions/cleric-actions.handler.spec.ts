@@ -1,60 +1,41 @@
 import { BadRequestException } from '@nestjs/common';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestAbilityScores,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { ClericActionsHandler } from './cleric-actions.handler';
 
 describe('ClericActionsHandler', () => {
-  const stateResponse = { classResources: [], tempHp: 0 };
-  const access = { findAccessibleOrFail: jest.fn() };
-  const state = {
-    useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
-    patch: jest.fn().mockImplementation(async (_c, dto) => ({
-      ...stateResponse,
-      ...dto,
-    })),
-  };
-  const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
-  const mechanicalCatalog = {
-    load: async () => ({
-      gunslingerManeuvers: [],
-      battleMasterManeuvers: [],
-      cunningStrikeEffects: [],
-      tableActions: [],
-      personaMasks: [],
-      personaMaskSlugs: [],
-      beastborneAspectBenefits: [],
-      dungeoneerSlayerLabels: [],
-      precautionSpells: [],
-      economyActions: [],
-      panelActions: [],
-    }),
-  };
-  const handler = new ClericActionsHandler(
-    access as never,
-    state as never,
-    domain as never,
-    mechanicalCatalog as never,
-  );
-  const cleric = {
+  const cleric = createTestCharacter({
     id: 'cleric-1',
     classSlug: 'cleric',
     subclassSlug: 'light',
     level: 7,
-    abilityScores: {
+    abilityScores: createTestAbilityScores({
       forca: 10,
       destreza: 10,
       constituicao: 14,
       inteligencia: 12,
       sabedoria: 18,
       carisma: 8,
-    },
-  };
+    }),
+  });
+  const ctx = createTableActionHandlerTestContext({
+    stateResponse: { tempHp: 0 },
+    defaultCharacter: cleric,
+  });
+  let handler: ClericActionsHandler;
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    access.findAccessibleOrFail.mockResolvedValue(cleric);
-    state.useClassResource.mockResolvedValue({ state: stateResponse });
-    state.buildResponse.mockResolvedValue(stateResponse);
-    domain.getProficiencyBonus.mockResolvedValue(3);
+    ctx.resetMocks();
+    handler = new ClericActionsHandler(
+      asHandlerDep(ctx.access),
+      asHandlerDep(ctx.state),
+      asHandlerDep(ctx.domain),
+      asHandlerDep(ctx.mechanicalCatalog),
+    );
   });
 
   it('spends Channel Divinity and rolls the scaled Divine Spark', async () => {
@@ -62,7 +43,7 @@ describe('ClericActionsHandler', () => {
       actionSlug: 'divine-spark-damage',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'cleric-1' }),
       'channelDivinity',
       1,
@@ -91,11 +72,7 @@ describe('ClericActionsHandler', () => {
   });
 
   it('uses the Life Domain healing pool without rolling', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...cleric,
-      subclassSlug: 'life',
-      level: 9,
-    });
+    ctx.mockCharacterOnce({ ...cleric, subclassSlug: 'life', level: 9 });
 
     const result = await handler.useTableAction('user-1', 'cleric-1', {
       actionSlug: 'preserve-life',
@@ -106,16 +83,13 @@ describe('ClericActionsHandler', () => {
   });
 
   it('spends War Priest uses from the subclass resource', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...cleric,
-      subclassSlug: 'war',
-    });
+    ctx.mockCharacterOnce({ ...cleric, subclassSlug: 'war' });
 
     await handler.useTableAction('user-1', 'cleric-1', {
       actionSlug: 'war-priest',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'cleric-1' }),
       'war-priest',
       1,
@@ -127,13 +101,13 @@ describe('ClericActionsHandler', () => {
       actionSlug: 'warding-flare',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'cleric-1' }),
       'warding-flare',
       1,
     );
     expect(result.expression).toMatch(/^2d6\+4$/);
-    expect(state.patch).toHaveBeenCalledWith(
+    expect(ctx.state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'cleric-1' }),
       expect.objectContaining({ tempHp: result.total }),
     );
@@ -141,10 +115,7 @@ describe('ClericActionsHandler', () => {
   });
 
   it('rejects Cleric actions for another class', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
-      ...cleric,
-      classSlug: 'wizard',
-    });
+    ctx.mockCharacterOnce({ ...cleric, classSlug: 'wizard' });
 
     await expect(
       handler.useTableAction('user-1', 'cleric-1', {
@@ -154,7 +125,7 @@ describe('ClericActionsHandler', () => {
   });
 
   it('spends Channel Divinity for Dragon Majesty with save DC', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...cleric,
       subclassSlug: 'dragon-domain',
       level: 5,
@@ -164,7 +135,7 @@ describe('ClericActionsHandler', () => {
       actionSlug: 'dragon-majesty',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'cleric-1' }),
       'channelDivinity',
       1,
@@ -174,7 +145,7 @@ describe('ClericActionsHandler', () => {
   });
 
   it('spends chromatic-affinity for Dragon Domain bonus damage', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...cleric,
       subclassSlug: 'dragon-domain',
       level: 8,
@@ -184,7 +155,7 @@ describe('ClericActionsHandler', () => {
       actionSlug: 'chromatic-affinity',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'cleric-1' }),
       'chromatic-affinity',
       1,
@@ -193,7 +164,7 @@ describe('ClericActionsHandler', () => {
   });
 
   it('spends legendary-aspect for Rend at level 17+', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...cleric,
       subclassSlug: 'dragon-domain',
       level: 17,
@@ -203,7 +174,7 @@ describe('ClericActionsHandler', () => {
       actionSlug: 'legendary-aspect-rend',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'cleric-1' }),
       'legendary-aspect',
       1,

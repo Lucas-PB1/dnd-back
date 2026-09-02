@@ -10,6 +10,7 @@ import {
   CharacterSheetContext,
   CharacterSheetInput,
 } from '@game/sheet/domain/character-sheet.types';
+import { loadSpellLevel } from '@game/sheet/infrastructure/queries/spell-catalog.queries';
 
 const PREPARED_LIST_TYPES = new Set(['prepared', 'always_prepared']);
 
@@ -62,18 +63,15 @@ export class CharacterSpellMasteryValidator {
         );
       }
 
-      const rows = await this.dataSource.query<{ level: number }[]>(
-        `SELECT level FROM rpg.phb_spell WHERE slug = $1 LIMIT 1`,
-        [option.valueId],
-      );
-      if (rows.length === 0) {
+      const level = await loadSpellLevel(this.dataSource, option.valueId);
+      if (level == null) {
         throw new BadRequestException(
           `Unknown spell '${option.valueId}' for Spell Mastery`,
         );
       }
-      if (rows[0].level !== requiredLevel) {
+      if (level !== requiredLevel) {
         throw new BadRequestException(
-          `Spell Mastery '${option.optionKey}' requires a level ${requiredLevel} spell (got '${option.valueId}' level ${rows[0].level})`,
+          `Spell Mastery '${option.optionKey}' requires a level ${requiredLevel} spell (got '${option.valueId}' level ${level})`,
         );
       }
     }

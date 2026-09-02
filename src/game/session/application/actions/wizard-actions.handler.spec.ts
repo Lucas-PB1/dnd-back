@@ -1,45 +1,39 @@
 import { BadRequestException } from '@nestjs/common';
+import {
+  asHandlerDep,
+  createTableActionHandlerTestContext,
+  createTestAbilityScores,
+  createTestCharacter,
+} from './testing/table-action-handler.harness';
 import { WizardActionsHandler } from './wizard-actions.handler';
 
 describe('WizardActionsHandler', () => {
-  const stateResponse = { classResources: [] };
-  const access = { findAccessibleOrFail: jest.fn() };
-  const state = {
-    useClassResource: jest.fn().mockResolvedValue({ state: stateResponse }),
-    recoverClassResource: jest.fn().mockResolvedValue(stateResponse),
-    recoverSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
-    buildResponse: jest.fn().mockResolvedValue(stateResponse),
-  };
-  const domain = { getProficiencyBonus: jest.fn().mockResolvedValue(3) };
-  const mechanicalCatalog = { load: async () => ({ economyActions: [] }) };
-  const handler = new WizardActionsHandler(
-    access as never,
-    state as never,
-    domain as never,
-    mechanicalCatalog as never,
-  );
-  const wizard = {
+  const wizard = createTestCharacter({
     id: 'wiz-1',
     classSlug: 'wizard',
     subclassSlug: 'abjurer',
-    level: 5,
-    abilityScores: {
+    abilityScores: createTestAbilityScores({
       forca: 8,
       destreza: 14,
       constituicao: 14,
       inteligencia: 18,
       sabedoria: 10,
       carisma: 10,
-    },
-  };
+    }),
+  });
+  const ctx = createTableActionHandlerTestContext({
+    stateResponse: { classResources: [] },
+    defaultCharacter: wizard,
+  });
+  const handler = new WizardActionsHandler(
+    asHandlerDep(ctx.access),
+    asHandlerDep(ctx.state),
+    asHandlerDep(ctx.domain),
+    asHandlerDep(ctx.mechanicalCatalog),
+  );
 
   beforeEach(() => {
-    jest.clearAllMocks();
-    access.findAccessibleOrFail.mockResolvedValue(wizard);
-    state.useClassResource.mockResolvedValue({ state: stateResponse });
-    state.recoverClassResource.mockResolvedValue(stateResponse);
-    state.buildResponse.mockResolvedValue(stateResponse);
-    domain.getProficiencyBonus.mockResolvedValue(3);
+    ctx.resetMocks();
   });
 
   it('recovers 1 spell slot for Arcane Recovery', async () => {
@@ -47,7 +41,7 @@ describe('WizardActionsHandler', () => {
       actionSlug: 'arcane-recovery-1',
     });
 
-    expect(state.recoverSpellSlotLevel).toHaveBeenCalledWith(
+    expect(ctx.state.recoverSpellSlotLevel).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'wiz-1' }),
       1,
     );
@@ -64,7 +58,7 @@ describe('WizardActionsHandler', () => {
   });
 
   it('requires level 6 for Sculpt Spells', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...wizard,
       subclassSlug: 'evoker',
       level: 3,
@@ -78,7 +72,7 @@ describe('WizardActionsHandler', () => {
   });
 
   it('spends Third Eye resource for Diviner', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...wizard,
       subclassSlug: 'diviner',
       level: 10,
@@ -88,7 +82,7 @@ describe('WizardActionsHandler', () => {
       actionSlug: 'third-eye',
     });
 
-    expect(state.useClassResource).toHaveBeenCalledWith(
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
       expect.objectContaining({ subclassSlug: 'diviner' }),
       'third-eye',
       1,
@@ -98,7 +92,7 @@ describe('WizardActionsHandler', () => {
   });
 
   it('rolls Portent dice for Diviner', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...wizard,
       subclassSlug: 'diviner',
     });
@@ -111,7 +105,7 @@ describe('WizardActionsHandler', () => {
   });
 
   it('rejects Wizard actions for non-wizard characters', async () => {
-    access.findAccessibleOrFail.mockResolvedValueOnce({
+    ctx.mockCharacterOnce({
       ...wizard,
       classSlug: 'cleric',
     });

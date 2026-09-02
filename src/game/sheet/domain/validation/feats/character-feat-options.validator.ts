@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DataSource, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
+import { ClassProficienciesQuery } from '@catalog/classes/queries/class-proficiencies.query';
 import { assertUnique } from '@common/assert';
 import { PhbOptionDef } from '@entities/phb-option.entity';
 import { PhbFeatRef } from '@entities/phb-feat-ref.entity';
@@ -20,10 +21,15 @@ import {
   RITUAL_CASTER_FEAT_SLUG,
 } from './ritual-caster-feat-options';
 
+import {
+  loadClassFightingStyleSlugs,
+  loadClassSavingThrowSlugs,
+} from '@game/sheet/infrastructure/queries/feat-option.queries';
+
 @Injectable()
 export class CharacterFeatOptionsValidator {
   constructor(
-    private readonly dataSource: DataSource,
+    private readonly proficiencies: ClassProficienciesQuery,
     @InjectRepository(PhbFeatRef)
     private readonly featRefRepo: Repository<PhbFeatRef>,
     @InjectRepository(PhbOptionDef)
@@ -41,10 +47,10 @@ export class CharacterFeatOptionsValidator {
   ): Promise<void> {
     const proficiencyBonus = await this.resolveProficiencyBonus(characterLevel);
     const classSavingThrowSlugs = classSlug
-      ? await this.loadClassSavingThrowSlugs(classSlug)
+      ? await loadClassSavingThrowSlugs(this.proficiencies, classSlug)
       : [];
     const classFightingStyleSlugs = classSlug
-      ? await this.loadClassFightingStyleSlugs(classSlug)
+      ? await loadClassFightingStyleSlugs(this.proficiencies, classSlug)
       : [];
     const keys = options.map(
       (o) => `${o.featSlug}:${o.instanceIndex ?? 0}:${o.optionKey}`,
@@ -119,32 +125,6 @@ export class CharacterFeatOptionsValidator {
     validateRitualCasterSpells(characterFeats, options, proficiencyBonus);
     validateLinkedCastingAbilityMatchesAsi(characterFeats, options);
     validateAbilityScoreImprovement(characterFeats, options);
-  }
-
-  private async loadClassFightingStyleSlugs(classSlug: string): Promise<string[]> {
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT fs.slug
-       FROM rpg.phb_class_proficiency cp
-       JOIN rpg.phb_class c ON c.id = cp.class_id
-       JOIN rpg.phb_fighting_style fs ON fs.id = cp.ref_id
-       WHERE c.slug = $1 AND cp.kind = 'fighting_style'::rpg.class_proficiency_kind
-       ORDER BY fs.slug`,
-      [classSlug],
-    );
-    return rows.map((row) => row.slug);
-  }
-
-  private async loadClassSavingThrowSlugs(classSlug: string): Promise<string[]> {
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT a.slug
-       FROM rpg.phb_class_proficiency cp
-       JOIN rpg.phb_class c ON c.id = cp.class_id
-       JOIN rpg.phb_ability a ON a.id = cp.ref_id
-       WHERE c.slug = $1 AND cp.kind = 'saving_throw'::rpg.class_proficiency_kind
-       ORDER BY a.slug`,
-      [classSlug],
-    );
-    return rows.map((row) => row.slug);
   }
 
   private async resolveProficiencyBonus(level: number): Promise<number> {
