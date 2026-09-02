@@ -1,4 +1,5 @@
 import { FindEditionsQuery } from './find-editions.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindEditionsQuery', () => {
   it('returns editions ordered by slug', async () => {
@@ -13,7 +14,7 @@ describe('FindEditionsQuery', () => {
         },
       ]),
     };
-    const query = new FindEditionsQuery(editionsRepo as never);
+    const query = new FindEditionsQuery(asDep(editionsRepo));
     await expect(query.execute()).resolves.toEqual([
       {
         slug: '2024',

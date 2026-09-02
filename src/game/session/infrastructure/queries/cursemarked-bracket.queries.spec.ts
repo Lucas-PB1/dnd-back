@@ -1,10 +1,11 @@
 import { loadActiveCursemarkedBracketBenefit } from './cursemarked-bracket.queries';
+import { asDep } from '@common/testing/as-dep';
 
 describe('loadActiveCursemarkedBracketBenefit', () => {
   it('returns null without characterId', async () => {
     const query = jest.fn();
     await expect(
-      loadActiveCursemarkedBracketBenefit({ query } as never, ''),
+      loadActiveCursemarkedBracketBenefit(asDep({ query }), ''),
     ).resolves.toBeNull();
     expect(query).not.toHaveBeenCalled();
   });
@@ -16,7 +17,7 @@ describe('loadActiveCursemarkedBracketBenefit', () => {
     ]);
 
     await expect(
-      loadActiveCursemarkedBracketBenefit({ query } as never, 'char-1'),
+      loadActiveCursemarkedBracketBenefit(asDep({ query }), 'char-1'),
     ).resolves.toBe('burdens-shield');
 
     expect(query).toHaveBeenCalledWith(

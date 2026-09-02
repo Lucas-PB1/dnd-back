@@ -1,4 +1,5 @@
 import { FindFeatsQuery } from './find-feats.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindFeatsQuery', () => {
   let featsRepo: { createQueryBuilder: jest.Mock };
@@ -31,7 +32,7 @@ describe('FindFeatsQuery', () => {
         categorySlug: 'origin',
       }),
     };
-    query = new FindFeatsQuery(featsRepo as never, mapper as never);
+    query = new FindFeatsQuery(asDep(featsRepo), asDep(mapper));
   });
 
   it('paginates and maps feats with search', async () => {

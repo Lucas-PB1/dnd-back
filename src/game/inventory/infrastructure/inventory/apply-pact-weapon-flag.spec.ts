@@ -1,5 +1,6 @@
 import { applyPactWeaponFlag } from './inventory-item-ops';
 import type { PlayerCharacterItem } from '../player-character-item.entity';
+import { asDep } from '@common/testing/as-dep';
 
 function itemRow(overrides: Partial<PlayerCharacterItem> = {}): PlayerCharacterItem {
   return {
@@ -28,7 +29,7 @@ describe('applyPactWeaponFlag', () => {
     };
 
     await applyPactWeaponFlag({
-      items: items as never,
+      items: asDep(items),
       characterId: 'ch1',
       row,
       pactWeapon: true,
@@ -47,7 +48,7 @@ describe('applyPactWeaponFlag', () => {
     };
 
     await applyPactWeaponFlag({
-      items: items as never,
+      items: asDep(items),
       characterId: 'ch1',
       row,
       pactWeapon: false,

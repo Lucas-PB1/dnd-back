@@ -1,3 +1,4 @@
+import { asDep } from '@common/testing/as-dep';
 jest.mock('./validate-spell-list-access', () => ({
   validateSpellListAccess: jest.fn().mockResolvedValue(undefined),
 }));
@@ -61,7 +62,7 @@ describe('CharacterSpellsValidator', () => {
       {} as Repository<VSpellByClass>,
       {} as Repository<VPhbSubclassPreparedSpell>,
       grantedSpellCatalog as unknown as LoadGrantedSpellCatalog,
-      resolveSubclassOptionGrants as never,
+      asDep(resolveSubclassOptionGrants),
     );
   });
 

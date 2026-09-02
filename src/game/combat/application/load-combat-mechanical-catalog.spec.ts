@@ -1,4 +1,5 @@
 import { LoadCombatMechanicalCatalog } from './load-combat-mechanical-catalog';
+import { asDep } from '@common/testing/as-dep';
 
 function emptyFindRepo() {
   return { find: jest.fn().mockResolvedValue([]) };
@@ -18,16 +19,16 @@ describe('LoadCombatMechanicalCatalog cache', () => {
     const panelRepo = emptyFindRepo();
 
     const service = new LoadCombatMechanicalCatalog(
-      gunslingerRepo as never,
-      battleMasterRepo as never,
-      cunningRepo as never,
-      tableActionRepo as never,
-      personaMaskRepo as never,
-      beastborneRepo as never,
-      slayerRepo as never,
-      precautionRepo as never,
-      economyRepo as never,
-      panelRepo as never,
+      asDep(gunslingerRepo),
+      asDep(battleMasterRepo),
+      asDep(cunningRepo),
+      asDep(tableActionRepo),
+      asDep(personaMaskRepo),
+      asDep(beastborneRepo),
+      asDep(slayerRepo),
+      asDep(precautionRepo),
+      asDep(economyRepo),
+      asDep(panelRepo),
     );
 
     return {

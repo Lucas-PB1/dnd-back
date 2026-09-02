@@ -1,5 +1,6 @@
 import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
 import { resolveCharacterCombatSlice } from './resolve-character-combat-slice';
+import { asDep } from '@common/testing/as-dep';
 
 describe('resolveCharacterCombatSlice combat bundle', () => {
   it('loads combat data via one RPC and reuses the snapshot', async () => {
@@ -108,11 +109,11 @@ describe('resolveCharacterCombatSlice combat bundle', () => {
       fightingStyleSlugs: [],
       masteredWeaponSlugs: [],
       sizeCategory: 'medium',
-      dataSource: dataSource as never,
-      equippedArmorClass: equippedArmorClass as never,
-      equippedWeaponAttacks: equippedWeaponAttacks as never,
-      equipmentCompliance: equipmentCompliance as never,
-      permanentItemEffects: permanentItemEffects as never,
+      dataSource: asDep(dataSource),
+      equippedArmorClass: asDep(equippedArmorClass),
+      equippedWeaponAttacks: asDep(equippedWeaponAttacks),
+      equipmentCompliance: asDep(equipmentCompliance),
+      permanentItemEffects: asDep(permanentItemEffects),
     });
 
     expect(dataSource.query).toHaveBeenCalledTimes(1);

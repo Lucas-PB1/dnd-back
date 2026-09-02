@@ -1,4 +1,5 @@
 import { FindSubclassSpellSlotsQuery } from './find-subclass-spell-slots.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSubclassSpellSlotsQuery', () => {
   let spellSlotsRepo: { find: jest.Mock };
@@ -22,8 +23,8 @@ describe('FindSubclassSpellSlotsQuery', () => {
     };
     catalogLookup = { findSubclassOrFail: jest.fn().mockResolvedValue({}) };
     query = new FindSubclassSpellSlotsQuery(
-      spellSlotsRepo as never,
-      catalogLookup as never,
+      asDep(spellSlotsRepo),
+      asDep(catalogLookup),
     );
   });
 

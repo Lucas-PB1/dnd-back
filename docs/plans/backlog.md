@@ -69,10 +69,10 @@ Detalhe: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sist
 
 Rules: `dry-quality` · `typescript-quality` · `file-size`. Skills: `audit-code-health` · `split-large-module` · `unify-game-stats`.
 
-- [ ] Reduzir `as never` residual nos specs
+_(vazio — hard files >200 e `as never` em specs feitos)_
 
 Scripts essenciais: só DB + smoke + measure — [`scripts/README.md`](../../scripts/README.md).  
-Hard files >200: **feito** (produção + DTO + test-support).
+Mocks em specs: `asDep` / `asHandlerDep` / `asRollDep` — `@common/testing/as-dep`.
 
 ### Editorial GH (não bloqueia mesa)
 

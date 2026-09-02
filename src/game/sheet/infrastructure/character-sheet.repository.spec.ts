@@ -1,3 +1,4 @@
+import { asDep } from '@common/testing/as-dep';
 jest.mock('./character-sheet/load-character-sheet', () => ({
   emptySheetData: jest.fn().mockReturnValue({ classSkillSlugs: [] }),
   loadBackgroundSkillSlugs: jest.fn().mockResolvedValue(['insight']),
@@ -24,14 +25,14 @@ describe('CharacterSheetRepository', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     repo = new CharacterSheetRepository(
-      {} as never,
-      {} as never,
-      {} as never,
-      {} as never,
-      {} as never,
-      {} as never,
-      {} as never,
-      {} as never,
+      asDep({}),
+      asDep({}),
+      asDep({}),
+      asDep({}),
+      asDep({}),
+      asDep({}),
+      asDep({}),
+      asDep({}),
     );
   });
 
@@ -58,8 +59,8 @@ describe('CharacterSheetRepository', () => {
   });
 
   it('delegates mergeSheetData and empty', () => {
-    const base = { classSkillSlugs: [] } as never;
-    repo.mergeSheetData(base, 'point-buy');
+    const base = { classSkillSlugs: [] };
+    repo.mergeSheetData(asDep(base), 'point-buy');
     repo.empty();
     expect(load.mergeSheetData).toHaveBeenCalledWith(base, 'point-buy');
     expect(load.emptySheetData).toHaveBeenCalled();

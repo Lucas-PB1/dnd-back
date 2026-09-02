@@ -1,4 +1,5 @@
 import { LoadEncounterDto } from './load-encounter-dto';
+import { asDep } from '@common/testing/as-dep';
 
 describe('LoadEncounterDto', () => {
   it('loads combatants, enriches PCs and builds DTO', async () => {
@@ -22,10 +23,10 @@ describe('LoadEncounterDto', () => {
       ),
     };
     const service = new LoadEncounterDto(
-      campaigns as never,
-      encounters as never,
-      enrichPcs as never,
-      enrichActors as never,
+      asDep(campaigns),
+      asDep(encounters),
+      asDep(enrichPcs),
+      asDep(enrichActors),
     );
 
     const encounter = {
@@ -39,7 +40,7 @@ describe('LoadEncounterDto', () => {
       turnIndex: 0,
     };
 
-    const dto = await service.load(encounter as never, 'dm');
+    const dto = await service.load(asDep(encounter), 'dm');
 
     expect(encounters.listCombatants).toHaveBeenCalledWith('e1');
     expect(campaigns.findCharactersByIds).toHaveBeenCalledWith(['pc1']);

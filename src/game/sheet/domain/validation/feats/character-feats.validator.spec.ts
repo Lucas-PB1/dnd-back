@@ -2,6 +2,7 @@ import { BadRequestException } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CharacterFeatsValidator } from './character-feats.validator';
 import { CharacterFeatOptionsValidator } from './character-feat-options.validator';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CharacterFeatsValidator', () => {
   let validator: CharacterFeatsValidator;
@@ -44,10 +45,10 @@ describe('CharacterFeatsValidator', () => {
     });
 
     it('rejects non-contiguous instance indices for repeatable feat', async () => {
-      catalogLookup.assertFeatInCatalog.mockResolvedValue({
+      catalogLookup.assertFeatInCatalog.mockResolvedValue(asDep({
         repeatable: true,
         requiredFeatSlugs: [],
-      } as never);
+      }));
       await expect(
         validator.validateCharacterFeats([
           { featSlug: 'lucky', instanceIndex: 0 },
@@ -57,10 +58,10 @@ describe('CharacterFeatsValidator', () => {
     });
 
     it('accepts repeatable feat with contiguous indices', async () => {
-      catalogLookup.assertFeatInCatalog.mockResolvedValue({
+      catalogLookup.assertFeatInCatalog.mockResolvedValue(asDep({
         repeatable: true,
         requiredFeatSlugs: [],
-      } as never);
+      }));
       await expect(
         validator.validateCharacterFeats([
           { featSlug: 'lucky', instanceIndex: 0 },
@@ -72,12 +73,12 @@ describe('CharacterFeatsValidator', () => {
     it('rejects feat missing required prerequisite feat', async () => {
       catalogLookup.assertFeatInCatalog.mockImplementation(async (slug: string) => {
         if (slug === 'greater-blessing-of-baldur') {
-          return {
+          return asDep({
             repeatable: false,
             requiredFeatSlugs: ['blessing-of-baldur'],
-          } as never;
+          });
         }
-        return { repeatable: false, requiredFeatSlugs: [] } as never;
+        return asDep({ repeatable: false, requiredFeatSlugs: [] });
       });
       await expect(
         validator.validateCharacterFeats([
@@ -89,12 +90,12 @@ describe('CharacterFeatsValidator', () => {
     it('accepts feat when required prerequisite feat is present', async () => {
       catalogLookup.assertFeatInCatalog.mockImplementation(async (slug: string) => {
         if (slug === 'greater-blessing-of-baldur') {
-          return {
+          return asDep({
             repeatable: false,
             requiredFeatSlugs: ['blessing-of-baldur'],
-          } as never;
+          });
         }
-        return { repeatable: false, requiredFeatSlugs: [] } as never;
+        return asDep({ repeatable: false, requiredFeatSlugs: [] });
       });
       await expect(
         validator.validateCharacterFeats([

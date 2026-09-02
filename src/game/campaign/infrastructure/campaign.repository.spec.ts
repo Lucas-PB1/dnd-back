@@ -28,6 +28,7 @@ import { CampaignRepository } from './campaign.repository';
 import * as crud from './campaign.repository/campaign-crud';
 import * as membership from './campaign.repository/campaign-membership';
 import * as links from './campaign.repository/campaign-character-links';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CampaignRepository', () => {
   let repo: CampaignRepository;
@@ -35,11 +36,11 @@ describe('CampaignRepository', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     repo = new CampaignRepository(
-      {} as never,
-      {} as never,
-      {} as never,
-      {} as never,
-      {} as never,
+      asDep({}),
+      asDep({}),
+      asDep({}),
+      asDep({}),
+      asDep({}),
     );
   });
 

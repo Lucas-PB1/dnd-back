@@ -1,4 +1,5 @@
 import { FindSkillsQuery } from './find-skills.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSkillsQuery', () => {
   let skillsRepo: { createQueryBuilder: jest.Mock };
@@ -24,7 +25,7 @@ describe('FindSkillsQuery', () => {
     };
     skillsRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toDto: jest.fn().mockReturnValue({ slug: 'stealth' }) };
-    query = new FindSkillsQuery(skillsRepo as never, mapper as never);
+    query = new FindSkillsQuery(asDep(skillsRepo), asDep(mapper));
   });
 
   it('joins ability, filters and maps', async () => {

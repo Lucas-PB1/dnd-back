@@ -1,10 +1,11 @@
 import { BadRequestException } from '@nestjs/common';
 import { AssertCanEquipItemService } from './assert-can-equip-item.service';
+import { asDep } from '@common/testing/as-dep';
 
 describe('AssertCanEquipItemService', () => {
   const catalogItems = { findOne: jest.fn() };
-  const service = new AssertCanEquipItemService(catalogItems as never);
-  const character = { id: 'c1', classSlug: 'fighter' } as never;
+  const service = new AssertCanEquipItemService(asDep(catalogItems));
+  const character = { id: 'c1', classSlug: 'fighter' };
 
   beforeEach(() => {
     catalogItems.findOne.mockReset();
@@ -20,7 +21,7 @@ describe('AssertCanEquipItemService', () => {
         requiresTierBonus: true,
       },
     });
-    await expect(service.assert(character, 'arma-1-2-ou-3')).rejects.toBeInstanceOf(
+    await expect(service.assert(asDep(character), 'arma-1-2-ou-3')).rejects.toBeInstanceOf(
       BadRequestException,
     );
   });
@@ -30,6 +31,6 @@ describe('AssertCanEquipItemService', () => {
       slug: 'longsword',
       properties: {},
     });
-    await expect(service.assert(character, 'longsword')).resolves.toBeUndefined();
+    await expect(service.assert(asDep(character), 'longsword')).resolves.toBeUndefined();
   });
 });

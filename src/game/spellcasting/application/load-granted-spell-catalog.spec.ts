@@ -4,6 +4,7 @@ import { VPhbSpeciesGrantedSpell } from '@entities/views/v-phb-species-granted-s
 import { VPhbFeatGrantedSpell } from '@entities/views/v-phb-feat-granted-spell.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { VPhbClassGrantedSpell } from '@entities/views/v-phb-class-granted-spell.entity';
+import { asDep } from '@common/testing/as-dep';
 
 describe('LoadGrantedSpellCatalog', () => {
   let service: LoadGrantedSpellCatalog;
@@ -22,10 +23,10 @@ describe('LoadGrantedSpellCatalog', () => {
     subclassSpells = { find: jest.fn() };
     classSpells = { find: jest.fn() };
     service = new LoadGrantedSpellCatalog(
-      speciesGrants as never,
-      featGrants as never,
-      subclassSpells as never,
-      classSpells as never,
+      asDep(speciesGrants),
+      asDep(featGrants),
+      asDep(subclassSpells),
+      asDep(classSpells),
     );
   });
 

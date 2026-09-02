@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { EquipmentSlotResolver } from './equipment-slot-resolver';
+import { asDep } from '@common/testing/as-dep';
 
 describe('EquipmentSlotResolver', () => {
   let catalogItems: { findOne: jest.Mock };
@@ -12,9 +13,9 @@ describe('EquipmentSlotResolver', () => {
     armorCatalog = { findOne: jest.fn() };
     inventoryItems = { findOne: jest.fn() };
     resolver = new EquipmentSlotResolver(
-      catalogItems as never,
-      armorCatalog as never,
-      inventoryItems as never,
+      asDep(catalogItems),
+      asDep(armorCatalog),
+      asDep(inventoryItems),
     );
   });
 

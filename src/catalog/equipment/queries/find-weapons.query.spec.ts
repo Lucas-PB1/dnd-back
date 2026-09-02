@@ -1,6 +1,7 @@
 import { FindWeaponsQuery } from './find-weapons.query';
 import type { EquipmentMapper } from '../equipment.mapper';
 import type { PhbWeapon } from '@entities/phb-weapon.entity';
+import { asDep } from '@common/testing/as-dep';
 
 function weaponRow(overrides: Partial<PhbWeapon> = {}): PhbWeapon {
   return {
@@ -47,10 +48,10 @@ describe('FindWeaponsQuery', () => {
     masteryRepo = { find: jest.fn().mockResolvedValue([]) };
     mapper = { toWeaponDto: jest.fn().mockReturnValue({ slug: 'longsword' }) };
     query = new FindWeaponsQuery(
-      weaponsRepo as never,
-      propertyRepo as never,
-      masteryRepo as never,
-      mapper as never,
+      asDep(weaponsRepo),
+      asDep(propertyRepo),
+      asDep(masteryRepo),
+      asDep(mapper),
     );
   });
 

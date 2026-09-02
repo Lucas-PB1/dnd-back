@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { resolveDeclaredEconomyTableAction } from './resolve-declared-economy-table-action';
+import { asDep } from '@common/testing/as-dep';
 
 describe('resolveDeclaredEconomyTableAction', () => {
   const stateResponse = { classResources: [], tempHp: 0 };
@@ -108,8 +109,8 @@ describe('resolveDeclaredEconomyTableAction', () => {
 
   it('spends spendAmount from economy catalog', async () => {
     const result = await resolveDeclaredEconomyTableAction(
-      { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
-      blade as never,
+      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+      asDep(blade),
       'erupting-blades',
     );
     expect(state.useClassResource).toHaveBeenCalledWith(
@@ -123,8 +124,8 @@ describe('resolveDeclaredEconomyTableAction', () => {
 
   it('applies temp HP for brittle-bone-armor', async () => {
     const result = await resolveDeclaredEconomyTableAction(
-      { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
-      osteo as never,
+      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+      asDep(osteo),
       'brittle-bone-armor',
     );
     expect(state.useClassResource).toHaveBeenCalledWith(
@@ -148,8 +149,8 @@ describe('resolveDeclaredEconomyTableAction', () => {
       level: 15,
     };
     const result = await resolveDeclaredEconomyTableAction(
-      { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
-      viking as never,
+      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+      asDep(viking),
       'marauders-reprisal',
     );
     expect(state.useClassResource).toHaveBeenCalledWith(
@@ -173,8 +174,8 @@ describe('resolveDeclaredEconomyTableAction', () => {
       level: 3,
     };
     const result = await resolveDeclaredEconomyTableAction(
-      { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
-      lightning as never,
+      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+      asDep(lightning),
       'lightning-step',
     );
     expect(state.useClassResource).not.toHaveBeenCalled();
@@ -186,10 +187,10 @@ describe('resolveDeclaredEconomyTableAction', () => {
     await expect(
       resolveDeclaredEconomyTableAction(
         {
-          state: state as never,
-          mechanicalCatalog: mechanicalCatalog as never,
+          state: asDep(state),
+          mechanicalCatalog: asDep(mechanicalCatalog),
         },
-        { ...blade, subclassSlug: 'soulknife' } as never,
+        asDep({ ...blade, subclassSlug: 'soulknife' }),
         'erupting-blades',
       ),
     ).rejects.toBeInstanceOf(BadRequestException);
@@ -203,8 +204,8 @@ describe('resolveDeclaredEconomyTableAction', () => {
       level: 14,
     };
     const result = await resolveDeclaredEconomyTableAction(
-      { state: state as never, mechanicalCatalog: mechanicalCatalog as never },
-      sangro as never,
+      { state: asDep(state), mechanicalCatalog: asDep(mechanicalCatalog) },
+      asDep(sangro),
       'red-renewal',
     );
     expect(state.useClassResource).toHaveBeenCalledWith(

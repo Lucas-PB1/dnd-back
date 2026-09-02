@@ -1,4 +1,5 @@
 import { FindSubclassBySlugQuery } from './find-subclass-by-slug.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSubclassBySlugQuery', () => {
   it('maps found subclass', async () => {
@@ -6,7 +7,7 @@ describe('FindSubclassBySlugQuery', () => {
       findSubclassOrFail: jest.fn().mockResolvedValue({ subclassSlug: 'champion' }),
     };
     const mapper = { toSubclassDto: jest.fn().mockReturnValue({ slug: 'champion' }) };
-    const query = new FindSubclassBySlugQuery(catalogLookup as never, mapper as never);
+    const query = new FindSubclassBySlugQuery(asDep(catalogLookup), asDep(mapper));
     await expect(query.execute('champion')).resolves.toEqual({ slug: 'champion' });
   });
 
@@ -15,8 +16,8 @@ describe('FindSubclassBySlugQuery', () => {
       findSubclassOrFail: jest.fn().mockRejectedValue(new Error('not found')),
     };
     const query = new FindSubclassBySlugQuery(
-      catalogLookup as never,
-      { toSubclassDto: jest.fn() } as never,
+      asDep(catalogLookup),
+      asDep({ toSubclassDto: jest.fn() }),
     );
     await expect(query.execute('x')).rejects.toThrow('not found');
   });

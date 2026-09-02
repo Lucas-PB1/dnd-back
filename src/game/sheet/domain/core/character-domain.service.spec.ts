@@ -3,6 +3,7 @@ import { CharacterDomainService } from './character-domain.service';
 import { DEFAULT_ABILITY_SCORES, PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import type { CombatCatalogService } from '@game/combat/infrastructure/combat-catalog.service';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CharacterDomainService', () => {
   let catalogLookup: { findClassOrFail: jest.Mock };
@@ -25,7 +26,7 @@ describe('CharacterDomainService', () => {
     service = new CharacterDomainService(
       catalogLookup as unknown as CatalogLookupService,
       combatCatalog as unknown as CombatCatalogService,
-      characterLevelsRepo as never,
+      asDep(characterLevelsRepo),
     );
   });
 
@@ -42,16 +43,16 @@ describe('CharacterDomainService', () => {
 
   describe('classHpProfile', () => {
     it('uses explicit hpLevel1DieValue when present', () => {
-      const profile = service.classHpProfile({
+      const profile = service.classHpProfile(asDep({
         hitDie: 'd8',
         hpLevel1DieValue: 8,
         hpFixedPerLevel: 5,
-      } as never);
+      }));
       expect(profile).toEqual({ hpLevel1DieValue: 8, hpFixedPerLevel: 5 });
     });
 
     it('derives die and fixed gain from hitDie label', () => {
-      const profile = service.classHpProfile({ hitDie: 'd12', hpLevel1DieValue: null, hpFixedPerLevel: null } as never);
+      const profile = service.classHpProfile(asDep({ hitDie: 'd12', hpLevel1DieValue: null, hpFixedPerLevel: null }));
       expect(profile).toEqual({ hpLevel1DieValue: 12, hpFixedPerLevel: 7 });
     });
   });

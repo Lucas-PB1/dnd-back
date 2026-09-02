@@ -1,4 +1,5 @@
 import { CombatCatalogService } from './combat-catalog.service';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CombatCatalogService', () => {
   let hpBonusRepo: { find: jest.Mock };
@@ -8,7 +9,7 @@ describe('CombatCatalogService', () => {
   beforeEach(() => {
     hpBonusRepo = { find: jest.fn() };
     unarmoredRepo = { find: jest.fn() };
-    service = new CombatCatalogService(hpBonusRepo as never, unarmoredRepo as never);
+    service = new CombatCatalogService(asDep(hpBonusRepo), asDep(unarmoredRepo));
   });
 
   describe('loadHitPointsBonusSources', () => {

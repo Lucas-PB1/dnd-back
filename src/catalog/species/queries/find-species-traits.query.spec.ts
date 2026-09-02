@@ -1,4 +1,5 @@
 import { FindSpeciesTraitsQuery } from './find-species-traits.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSpeciesTraitsQuery', () => {
   let traitsRepo: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('FindSpeciesTraitsQuery', () => {
     catalogLookup = { findSpeciesOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toTraitDto: jest.fn().mockReturnValue({ name: 'Darkvision' }) };
     query = new FindSpeciesTraitsQuery(
-      traitsRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(traitsRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

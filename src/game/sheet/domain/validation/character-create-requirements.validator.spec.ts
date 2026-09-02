@@ -5,6 +5,7 @@ import { CharacterBackgroundValidator } from './background/character-background.
 import { CharacterClassOptionsValidator } from './class-options/character-class-options.validator';
 import { CharacterCreateRequirementsValidator } from './character-create-requirements.validator';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CharacterCreateRequirementsValidator', () => {
   let validator: CharacterCreateRequirementsValidator;
@@ -91,9 +92,9 @@ describe('CharacterCreateRequirementsValidator', () => {
       backgroundValidator as unknown as CharacterBackgroundValidator,
       classOptionsValidator as unknown as CharacterClassOptionsValidator,
       featsValidator as unknown as CharacterFeatsValidator,
-      extraSkillValidator as never,
-      mysticArcanumValidator as never,
-      signatureSpellsValidator as never,
+      asDep(extraSkillValidator),
+      asDep(mysticArcanumValidator),
+      asDep(signatureSpellsValidator),
     );
   });
 
@@ -105,7 +106,7 @@ describe('CharacterCreateRequirementsValidator', () => {
 
   it('validates class skills when count matches', async () => {
     const fighterCtx = { ...ctx, classSlug: 'fighter', subclassSlug: null };
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 2 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 2 }));
     await validator.validateCreateRequiredFields(
       {
         classSkillSlugs: ['stealth', 'perception'],
@@ -121,7 +122,7 @@ describe('CharacterCreateRequirementsValidator', () => {
   });
 
   it('skips skill validation when class requires none', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     await validator.validateCreateRequiredFields(
       {
         classOptions: [
@@ -135,7 +136,7 @@ describe('CharacterCreateRequirementsValidator', () => {
   });
 
   it('requires missing subclass options at unlock level', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     classOptionsValidator.resolveSubclassUnlockLevel.mockResolvedValue(1);
     classOptionsValidator.loadSubclassOptionKeysAtLevel.mockResolvedValue(['thievesCant']);
     await expect(
@@ -144,7 +145,7 @@ describe('CharacterCreateRequirementsValidator', () => {
   });
 
   it('validates subclass options when provided', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     classOptionsValidator.resolveSubclassUnlockLevel.mockResolvedValue(1);
     classOptionsValidator.loadSubclassOptionKeysAtLevel.mockResolvedValue(['thievesCant']);
     await validator.validateCreateRequiredFields(
@@ -161,7 +162,7 @@ describe('CharacterCreateRequirementsValidator', () => {
   });
 
   it('validates feat options when feats are present', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     await validator.validateCreateRequiredFields(
       {
         characterFeats: [{ featSlug: 'alert', instanceIndex: 0 }],
@@ -177,14 +178,14 @@ describe('CharacterCreateRequirementsValidator', () => {
   });
 
   it('requires expertise options for rogue at level 1', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     await expect(validator.validateCreateRequiredFields({}, ctx)).rejects.toThrow(
       /requires expertise options/i,
     );
   });
 
   it('requires class feature options when catalog defines them', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     classOptionsValidator.loadClassFeatureOptionKeysAtLevel.mockResolvedValue([
       'divineOrder',
     ]);
@@ -202,7 +203,7 @@ describe('CharacterCreateRequirementsValidator', () => {
   });
 
   it('requires primordial knowledge skill for barbarian 3+', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     await expect(
       validator.validateCreateRequiredFields(
         { classSkillSlugs: [] },
@@ -212,7 +213,7 @@ describe('CharacterCreateRequirementsValidator', () => {
   });
 
   it('requires fighting style for paladin at level 2', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     await expect(
       validator.validateCreateRequiredFields(
         {},
@@ -222,7 +223,7 @@ describe('CharacterCreateRequirementsValidator', () => {
   });
 
   it('requires weapon mastery options when progression grants slots', async () => {
-    catalogLookup.findClassOrFail.mockResolvedValue({ skillChoiceCount: 0 } as never);
+    catalogLookup.findClassOrFail.mockResolvedValue(asDep({ skillChoiceCount: 0 }));
     classOptionsValidator.loadWeaponMasteryProgression.mockResolvedValue([
       { level: 1, weaponMastery: 1 },
     ]);

@@ -1,12 +1,14 @@
+import type { PhbOptionDef } from '@entities/phb-option.entity';
+import { asDep } from '@common/testing/as-dep';
 import { requiredFeatOptionDefsForInstance } from './ritual-caster-feat-options';
 
 describe('requiredFeatOptionDefsForInstance', () => {
-  const defs = [
+  const defs = asDep<PhbOptionDef[]>([
     { optionKey: 'abilityIncrease' },
     { optionKey: 'ritualSpell1' },
     { optionKey: 'ritualSpell2' },
     { optionKey: 'ritualSpell3' },
-  ] as never[];
+  ]);
 
   it('returns all defs for non ritual-caster feats', () => {
     expect(

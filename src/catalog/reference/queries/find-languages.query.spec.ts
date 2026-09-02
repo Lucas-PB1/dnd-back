@@ -1,6 +1,7 @@
 import { FindLanguagesQuery } from './find-languages.query';
 import type { ReferenceMapper } from '../reference.mapper';
 import type { PhbLanguage } from '@entities/phb-language.entity';
+import { asDep } from '@common/testing/as-dep';
 
 function languageRow(overrides: Partial<PhbLanguage> = {}): PhbLanguage {
   return {
@@ -35,7 +36,7 @@ describe('FindLanguagesQuery', () => {
     };
     languagesRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toLanguageDto: jest.fn().mockReturnValue({ slug: 'common' }) };
-    query = new FindLanguagesQuery(languagesRepo as never, mapper as never);
+    query = new FindLanguagesQuery(asDep(languagesRepo), asDep(mapper));
   });
 
   it('builds query, paginates and maps languages', async () => {

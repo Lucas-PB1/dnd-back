@@ -178,12 +178,12 @@ Novos specs de combate/dano: copiar o padrão acima antes de inventar setup loca
 
 | Evitar | Preferir |
 |--------|----------|
-| `as never` | `asHandlerDep` / `asRollDep` ou `jest.Mocked<Pick<…>>` |
+| `as never` | `asDep` (`@common/testing/as-dep`) · `asHandlerDep` / `asRollDep` · `jest.Mocked<Pick<…>>` |
 | `Partial` solto sem factory | `createTestCharacter(overrides)` / `buildMockAttack(overrides)` |
 | Duplicar `mechanicalCatalog.load` inline | `createEmptyMechanicalCatalogLoad()` + overrides pontuais |
 | Spec >300 linhas monolítico | Split + `it.each` |
 
-`as never` em specs legados: zerar ao tocar o arquivo; **proibido** em specs novos (rule `typescript-quality`).
+`as never` em specs: **proibido** (rule `typescript-quality`). Use `asDep` / `asHandlerDep` / `asRollDep`.
 
 ### Nomenclatura
 

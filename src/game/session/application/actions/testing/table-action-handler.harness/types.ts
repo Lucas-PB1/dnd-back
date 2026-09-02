@@ -6,9 +6,11 @@ import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-s
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 
+import { asDep } from '@common/testing/as-dep';
+
 /** Cast test double para construtor de handler — não usar `as never`. */
-export function asHandlerDep<T>(mock: object): T {
-  return mock as unknown as T;
+export function asHandlerDep<T = never>(mock: object): T {
+  return asDep<T>(mock);
 }
 
 export type TableActionTestCharacter = Pick<

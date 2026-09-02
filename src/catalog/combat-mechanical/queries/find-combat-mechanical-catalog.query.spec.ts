@@ -1,4 +1,5 @@
 import { FindCombatMechanicalCatalogQuery } from './find-combat-mechanical-catalog.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindCombatMechanicalCatalogQuery', () => {
   it('maps mechanical catalog to public response DTO', async () => {
@@ -48,7 +49,7 @@ describe('FindCombatMechanicalCatalogQuery', () => {
     };
 
     const query = new FindCombatMechanicalCatalogQuery(
-      mechanicalCatalog as never,
+      asDep(mechanicalCatalog),
     );
     const result = await query.execute();
 
@@ -125,7 +126,7 @@ describe('FindCombatMechanicalCatalogQuery', () => {
     };
 
     const query = new FindCombatMechanicalCatalogQuery(
-      mechanicalCatalog as never,
+      asDep(mechanicalCatalog),
     );
     const result = await query.execute({ classSlug: 'fighter' });
 

@@ -1,10 +1,11 @@
 import { loadFeatSlugsByCharacterIds } from './load-feat-slugs-by-character-ids';
+import { asDep } from '@common/testing/as-dep';
 
 describe('loadFeatSlugsByCharacterIds', () => {
   it('returns empty map for empty ids', async () => {
     const query = jest.fn();
     await expect(
-      loadFeatSlugsByCharacterIds({ query } as never, []),
+      loadFeatSlugsByCharacterIds(asDep({ query }), []),
     ).resolves.toEqual(new Map());
     expect(query).not.toHaveBeenCalled();
   });
@@ -15,7 +16,7 @@ describe('loadFeatSlugsByCharacterIds', () => {
       { character_id: 'a', feat_slug: 'tough' },
       { character_id: 'b', feat_slug: 'lucky' },
     ]);
-    const map = await loadFeatSlugsByCharacterIds({ query } as never, [
+    const map = await loadFeatSlugsByCharacterIds(asDep({ query }), [
       'a',
       'b',
       'c',

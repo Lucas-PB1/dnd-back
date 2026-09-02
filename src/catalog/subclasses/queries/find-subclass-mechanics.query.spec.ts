@@ -1,4 +1,5 @@
 import { FindSubclassMechanicsQuery } from './find-subclass-mechanics.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSubclassMechanicsQuery', () => {
   let mechanicsRepo: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('FindSubclassMechanicsQuery', () => {
     catalogLookup = { findSubclassOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toMechanicDto: jest.fn().mockReturnValue({ name: 'Sculpt' }) };
     query = new FindSubclassMechanicsQuery(
-      mechanicsRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(mechanicsRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

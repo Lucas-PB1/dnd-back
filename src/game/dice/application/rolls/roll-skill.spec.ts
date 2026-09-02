@@ -31,12 +31,13 @@ jest.mock('./apply-cursemarked-bracket', () => ({
 }));
 
 import { executeRollSkill } from './roll-skill';
+import { asRollDep } from './roll-damage.spec.helpers';
 
 describe('executeRollSkill', () => {
   it('treats a proficient Rogue d20 result below 10 as 10', async () => {
     const result = await executeRollSkill({
-      access: {} as never,
-      sheet: {
+      access: asRollDep({}),
+      sheet: asRollDep({
         load: jest.fn().mockResolvedValue({
           classSkillSlugs: ['stealth'],
           backgroundSkillSlugs: [],
@@ -44,11 +45,11 @@ describe('executeRollSkill', () => {
           featOptions: [],
           classOptions: [],
         }),
-      } as never,
-      domain: {
+      }),
+      domain: asRollDep({
         getProficiencyBonus: jest.fn().mockResolvedValue(3),
-      } as never,
-      dataSource: {
+      }),
+      dataSource: asRollDep({
         query: jest.fn().mockResolvedValue([
           {
             slug: 'stealth',
@@ -56,7 +57,7 @@ describe('executeRollSkill', () => {
             ability_slug: 'destreza',
           },
         ]),
-      } as never,
+      }),
       resourceSpender: {
         spendClassResource: jest.fn(),
         consumeSpellSlotLevel: jest.fn(),

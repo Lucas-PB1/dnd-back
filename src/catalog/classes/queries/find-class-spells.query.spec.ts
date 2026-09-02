@@ -1,4 +1,5 @@
 import { FindClassSpellsQuery } from './find-class-spells.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassSpellsQuery', () => {
   let spellsRepo: { createQueryBuilder: jest.Mock };
@@ -24,9 +25,9 @@ describe('FindClassSpellsQuery', () => {
       toClassSpellDto: jest.fn((row) => ({ name: row.spellName, slug: row.spellSlug })),
     };
     query = new FindClassSpellsQuery(
-      spellsRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(spellsRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

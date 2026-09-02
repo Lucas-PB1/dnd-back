@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { In } from 'typeorm';
 import { validateSpellListAccess } from './validate-spell-list-access';
+import { asDep } from '@common/testing/as-dep';
 
 describe('validateSpellListAccess', () => {
   let classSpellsRepo: {
@@ -37,10 +38,10 @@ describe('validateSpellListAccess', () => {
     } = {},
   ): Promise<void> {
     await validateSpellListAccess(
-      classSpellsRepo as never,
-      subclassSpellsRepo as never,
-      spells as never,
-      ctx as never,
+      asDep(classSpellsRepo),
+      asDep(subclassSpellsRepo),
+      asDep(spells),
+      asDep(ctx),
       new Set(opts.featGranted ?? []),
       new Set(opts.speciesGranted ?? []),
       opts.spellListClassSlug ?? 'wizard',
@@ -92,10 +93,10 @@ describe('validateSpellListAccess', () => {
       { classSlug: 'cleric', spellSlug: 'cura-ferimentos', spellLevel: 2 },
     ]);
     await validateSpellListAccess(
-      classSpellsRepo as never,
-      subclassSpellsRepo as never,
-      [{ spellSlug: 'cura-ferimentos' }] as never,
-      { ...ctx, classSlug: 'bard', subclassSlug: null, level: 10 } as never,
+      asDep(classSpellsRepo),
+      asDep(subclassSpellsRepo),
+      asDep([{ spellSlug: 'cura-ferimentos' }]),
+      asDep({ ...ctx, classSlug: 'bard', subclassSlug: null, level: 10 }),
       new Set(),
       new Set(),
       'bard',

@@ -2,6 +2,7 @@ import {
   applySpeciesResourceSpendSideEffects,
   proficiencyBonusForLevel,
 } from './apply-species-resource-spend-side-effects';
+import { asDep } from '@common/testing/as-dep';
 
 describe('applySpeciesResourceSpendSideEffects', () => {
   const stateResponse = { classResources: [], tempHp: 0 };
@@ -30,10 +31,10 @@ describe('applySpeciesResourceSpendSideEffects', () => {
       level: 5,
     };
     const result = await applySpeciesResourceSpendSideEffects({
-      state: state as never,
-      character: character as never,
+      state: asDep(state),
+      character: asDep(character),
       resourceSlug: 'werekin-shift-aspect',
-      currentState: stateResponse as never,
+      currentState: asDep(stateResponse),
     });
     expect(state.patch).toHaveBeenCalledWith(
       expect.objectContaining({ id: 'pc-1' }),
@@ -45,14 +46,14 @@ describe('applySpeciesResourceSpendSideEffects', () => {
 
   it('ignores other resources', async () => {
     const result = await applySpeciesResourceSpendSideEffects({
-      state: state as never,
-      character: {
+      state: asDep(state),
+      character: asDep({
         id: 'pc-1',
         speciesSlug: 'werekin',
         level: 5,
-      } as never,
+      }),
       resourceSlug: 'bearfolk-apex-predator',
-      currentState: stateResponse as never,
+      currentState: asDep(stateResponse),
     });
     expect(state.patch).not.toHaveBeenCalled();
     expect(result.note).toBeNull();

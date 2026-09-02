@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindSpeciesBySlugQuery } from './find-species-by-slug.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSpeciesBySlugQuery', () => {
   it('maps found species', async () => {
@@ -7,7 +8,7 @@ describe('FindSpeciesBySlugQuery', () => {
       findSpeciesOrFail: jest.fn().mockResolvedValue({ slug: 'human' }),
     };
     const mapper = { toDto: jest.fn().mockReturnValue({ slug: 'human' }) };
-    const query = new FindSpeciesBySlugQuery(catalogLookup as never, mapper as never);
+    const query = new FindSpeciesBySlugQuery(asDep(catalogLookup), asDep(mapper));
     await expect(query.execute('human')).resolves.toEqual({ slug: 'human' });
   });
 
@@ -16,8 +17,8 @@ describe('FindSpeciesBySlugQuery', () => {
       findSpeciesOrFail: jest.fn(),
     };
     const query = new FindSpeciesBySlugQuery(
-      catalogLookup as never,
-      { toDto: jest.fn() } as never,
+      asDep(catalogLookup),
+      asDep({ toDto: jest.fn() }),
     );
     await expect(
       query.execute('goliath', ['northlands-heroes-2024-en']),
@@ -30,7 +31,7 @@ describe('FindSpeciesBySlugQuery', () => {
       findSpeciesOrFail: jest.fn().mockResolvedValue({ slug: 'goliath' }),
     };
     const mapper = { toDto: jest.fn().mockReturnValue({ slug: 'goliath' }) };
-    const query = new FindSpeciesBySlugQuery(catalogLookup as never, mapper as never);
+    const query = new FindSpeciesBySlugQuery(asDep(catalogLookup), asDep(mapper));
     await expect(query.execute('goliath', ['phb-2024-pt'])).resolves.toEqual({
       slug: 'goliath',
     });
@@ -41,8 +42,8 @@ describe('FindSpeciesBySlugQuery', () => {
       findSpeciesOrFail: jest.fn().mockRejectedValue(new Error('not found')),
     };
     const query = new FindSpeciesBySlugQuery(
-      catalogLookup as never,
-      { toDto: jest.fn() } as never,
+      asDep(catalogLookup),
+      asDep({ toDto: jest.fn() }),
     );
     await expect(query.execute('x')).rejects.toThrow('not found');
   });

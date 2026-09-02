@@ -1,4 +1,5 @@
 import { FindClassBySlugQuery } from './find-class-by-slug.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassBySlugQuery', () => {
   it('merges class dto with proficiencies', async () => {
@@ -10,9 +11,9 @@ describe('FindClassBySlugQuery', () => {
       forClassSlug: jest.fn().mockResolvedValue({ armor: ['light'] }),
     };
     const query = new FindClassBySlugQuery(
-      catalogLookup as never,
-      mapper as never,
-      proficiencies as never,
+      asDep(catalogLookup),
+      asDep(mapper),
+      asDep(proficiencies),
     );
     await expect(query.execute('fighter')).resolves.toEqual({
       slug: 'fighter',
@@ -25,9 +26,9 @@ describe('FindClassBySlugQuery', () => {
       findClassOrFail: jest.fn().mockRejectedValue(new Error('not found')),
     };
     const query = new FindClassBySlugQuery(
-      catalogLookup as never,
-      { toClassDto: jest.fn() } as never,
-      { forClassSlug: jest.fn() } as never,
+      asDep(catalogLookup),
+      asDep({ toClassDto: jest.fn() }),
+      asDep({ forClassSlug: jest.fn() }),
     );
     await expect(query.execute('x')).rejects.toThrow('not found');
   });

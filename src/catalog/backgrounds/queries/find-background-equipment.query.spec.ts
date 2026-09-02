@@ -1,4 +1,5 @@
 import { FindBackgroundEquipmentQuery } from './find-background-equipment.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindBackgroundEquipmentQuery', () => {
   let equipmentRepo: { find: jest.Mock };
@@ -13,9 +14,9 @@ describe('FindBackgroundEquipmentQuery', () => {
     catalogLookup = { findBackgroundOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toEquipmentDto: jest.fn().mockReturnValue({ packageSlug: 'a' }) };
     query = new FindBackgroundEquipmentQuery(
-      equipmentRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(equipmentRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

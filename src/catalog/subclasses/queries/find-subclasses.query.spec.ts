@@ -1,4 +1,5 @@
 import { FindSubclassesQuery } from './find-subclasses.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSubclassesQuery', () => {
   let subclassesRepo: { createQueryBuilder: jest.Mock };
@@ -22,7 +23,7 @@ describe('FindSubclassesQuery', () => {
     };
     subclassesRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toSubclassDto: jest.fn().mockReturnValue({ slug: 'champion' }) };
-    query = new FindSubclassesQuery(subclassesRepo as never, mapper as never);
+    query = new FindSubclassesQuery(asDep(subclassesRepo), asDep(mapper));
   });
 
   it('filters by class and maps', async () => {

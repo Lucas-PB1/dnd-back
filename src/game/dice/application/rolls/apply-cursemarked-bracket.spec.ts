@@ -1,6 +1,7 @@
 import { applyCursemarkedBracketIfTriggered } from './apply-cursemarked-bracket';
 import { CURSEMARKED_BRACKET_LOCK } from '@game/session/domain/cursemarked-bracket';
 import { loadActiveCursemarkedBracketBenefit } from '@game/session/infrastructure/queries/cursemarked-bracket.queries';
+import { asRollDep } from './roll-damage.spec.helpers';
 
 jest.mock(
   '@game/session/infrastructure/queries/cursemarked-bracket.queries',
@@ -14,8 +15,8 @@ const loadBracket = loadActiveCursemarkedBracketBenefit as jest.MockedFunction<
 >;
 
 describe('applyCursemarkedBracketIfTriggered', () => {
-  const character = { id: 'pc-1', level: 5 } as never;
-  const dataSource = {} as never;
+  const character = asRollDep({ id: 'pc-1', level: 5 });
+  const dataSource = asRollDep({});
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -32,7 +33,7 @@ describe('applyCursemarkedBracketIfTriggered', () => {
     await applyCursemarkedBracketIfTriggered({
       dataSource,
       character,
-      resourceSpender: resourceSpender as never,
+      resourceSpender: asRollDep(resourceSpender),
       kind: 'save',
       kept: 2,
       notes,
@@ -53,7 +54,7 @@ describe('applyCursemarkedBracketIfTriggered', () => {
     await applyCursemarkedBracketIfTriggered({
       dataSource,
       character,
-      resourceSpender: resourceSpender as never,
+      resourceSpender: asRollDep(resourceSpender),
       kind: 'attack',
       kept: 2,
       notes,
@@ -74,7 +75,7 @@ describe('applyCursemarkedBracketIfTriggered', () => {
     await applyCursemarkedBracketIfTriggered({
       dataSource,
       character,
-      resourceSpender: resourceSpender as never,
+      resourceSpender: asRollDep(resourceSpender),
       kind: 'save',
       kept: 4,
       notes,
@@ -95,7 +96,7 @@ describe('applyCursemarkedBracketIfTriggered', () => {
     await applyCursemarkedBracketIfTriggered({
       dataSource,
       character,
-      resourceSpender: resourceSpender as never,
+      resourceSpender: asRollDep(resourceSpender),
       kind: 'attack',
       kept: 7,
       notes,

@@ -1,4 +1,5 @@
 import { FindArmorQuery } from './find-armor.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindArmorQuery', () => {
   let armorRepo: { createQueryBuilder: jest.Mock };
@@ -22,7 +23,7 @@ describe('FindArmorQuery', () => {
     };
     armorRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toArmorDto: jest.fn().mockReturnValue({ slug: 'leather-armor' }) };
-    query = new FindArmorQuery(armorRepo as never, mapper as never);
+    query = new FindArmorQuery(asDep(armorRepo), asDep(mapper));
   });
 
   it('filters by category and maps', async () => {

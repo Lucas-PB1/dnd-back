@@ -1,4 +1,5 @@
 import { ListCharactersQuery } from './list-characters.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('ListCharactersQuery', () => {
   let repository: { findAllByUser: jest.Mock };
@@ -48,10 +49,10 @@ describe('ListCharactersQuery', () => {
       ]),
     };
     query = new ListCharactersQuery(
-      repository as never,
-      mapper as never,
-      campaigns as never,
-      dataSource as never,
+      asDep(repository),
+      asDep(mapper),
+      asDep(campaigns),
+      asDep(dataSource),
     );
   });
 

@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { AddInventoryItemHandler } from './add-inventory-item.handler';
+import { asDep } from '@common/testing/as-dep';
 
 describe('AddInventoryItemHandler', () => {
   const character = {
@@ -37,11 +38,11 @@ describe('AddInventoryItemHandler', () => {
     };
     catalogStats = { recordPurchase: jest.fn().mockResolvedValue(undefined) };
     handler = new AddInventoryItemHandler(
-      access as never,
-      campaignAccess as never,
-      catalogLookup as never,
-      inventory as never,
-      catalogStats as never,
+      asDep(access),
+      asDep(campaignAccess),
+      asDep(catalogLookup),
+      asDep(inventory),
+      asDep(catalogStats),
     );
   });
 

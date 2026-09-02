@@ -14,6 +14,7 @@ import {
   PlayerCharacterOption,
   PlayerCharacterSpeciesChoice,
 } from '../player-sheet.entities';
+import { asDep } from '@common/testing/as-dep';
 
 function repo<T extends ObjectLiteral>(): jest.Mocked<
   Pick<Repository<T>, 'delete' | 'insert' | 'find'>
@@ -36,11 +37,11 @@ describe('syncCharacterSheet', () => {
         repo<PlayerCharacterSpeciesChoice>() as unknown as Repository<PlayerCharacterSpeciesChoice>,
       options: repo<PlayerCharacterOption>() as unknown as Repository<PlayerCharacterOption>,
       feats: repo<PlayerCharacterFeat>() as unknown as Repository<PlayerCharacterFeat>,
-      spells: repo() as never,
-      equipment: repo() as never,
+      spells: asDep(repo()),
+      equipment: asDep(repo()),
       languages:
         repo<PlayerCharacterLanguage>() as unknown as Repository<PlayerCharacterLanguage>,
-      dataSource: { query: jest.fn().mockResolvedValue([]) } as never,
+      dataSource: asDep({ query: jest.fn().mockResolvedValue([]) }),
     };
   });
 
@@ -163,14 +164,14 @@ describe('clearCharacterSheet helpers', () => {
 
   beforeEach(() => {
     deps = {
-      skills: repo() as never,
-      speciesChoices: repo() as never,
-      options: repo() as never,
-      feats: repo() as never,
-      spells: repo() as never,
-      equipment: repo() as never,
-      languages: repo() as never,
-      dataSource: { query: jest.fn().mockResolvedValue([]) } as never,
+      skills: asDep(repo()),
+      speciesChoices: asDep(repo()),
+      options: asDep(repo()),
+      feats: asDep(repo()),
+      spells: asDep(repo()),
+      equipment: asDep(repo()),
+      languages: asDep(repo()),
+      dataSource: asDep({ query: jest.fn().mockResolvedValue([]) }),
     };
   });
 

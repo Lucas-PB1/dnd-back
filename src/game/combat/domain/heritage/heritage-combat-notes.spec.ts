@@ -2,6 +2,7 @@ import {
   heritageCombatNotes,
   loadHeritageHitPointsBonus,
 } from './heritage-combat-notes';
+import { asDep } from '@common/testing/as-dep';
 
 describe('heritageCombatNotes', () => {
   it('notes extra-tough HP per take', () => {
@@ -57,7 +58,7 @@ describe('loadHeritageHitPointsBonus', () => {
   it('scales per level and take count', async () => {
     await expect(
       loadHeritageHitPointsBonus(
-        dataSource as never,
+        asDep(dataSource),
         [{ choiceKind: 'heritage_trait_1', choiceSlug: 'extra-tough' }],
         5,
       ),
@@ -65,7 +66,7 @@ describe('loadHeritageHitPointsBonus', () => {
 
     await expect(
       loadHeritageHitPointsBonus(
-        dataSource as never,
+        asDep(dataSource),
         [
           { choiceKind: 'heritage_trait_1', choiceSlug: 'extra-tough' },
           { choiceKind: 'heritage_trait_2', choiceSlug: 'extra-tough' },

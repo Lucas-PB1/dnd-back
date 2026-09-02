@@ -1,4 +1,5 @@
 import { syncTransformation } from './sync-transformation';
+import { asDep } from '@common/testing/as-dep';
 
 describe('syncTransformation', () => {
   let query: jest.Mock;
@@ -10,14 +11,14 @@ describe('syncTransformation', () => {
   });
 
   it('clears transformation when null', async () => {
-    await syncTransformation(dataSource as never, 'char-1', null);
+    await syncTransformation(asDep(dataSource), 'char-1', null);
     expect(query).toHaveBeenCalledTimes(1);
     expect(query.mock.calls[0][0]).toContain('DELETE FROM rpg.player_character_transformation');
     expect(query.mock.calls[0][1]).toEqual(['char-1']);
   });
 
   it('inserts transformation and choices', async () => {
-    await syncTransformation(dataSource as never, 'char-1', {
+    await syncTransformation(asDep(dataSource), 'char-1', {
       slug: 'gh-transformation-vampire',
       stage: 3,
       choices: [

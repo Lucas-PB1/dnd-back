@@ -1,4 +1,5 @@
 import { FindBackgroundsQuery } from './find-backgrounds.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindBackgroundsQuery', () => {
   let backgroundsRepo: { createQueryBuilder: jest.Mock };
@@ -16,7 +17,7 @@ describe('FindBackgroundsQuery', () => {
     };
     backgroundsRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toDto: jest.fn().mockReturnValue({ slug: 'soldier' }) };
-    query = new FindBackgroundsQuery(backgroundsRepo as never, mapper as never);
+    query = new FindBackgroundsQuery(asDep(backgroundsRepo), asDep(mapper));
   });
 
   it('searches and maps backgrounds', async () => {

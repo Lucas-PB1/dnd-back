@@ -1,3 +1,4 @@
+import { asDep } from '@common/testing/as-dep';
 jest.mock('./feat-option-proficiency', () => ({
   validateFeatProficiencyOption: jest.fn().mockResolvedValue(undefined),
 }));
@@ -41,7 +42,7 @@ describe('CharacterFeatOptionValueValidator', () => {
     validator = new CharacterFeatOptionValueValidator(
       dataSource as unknown as DataSource,
       classSpellsRepo as unknown as Repository<VSpellByClass>,
-      featOptionValueRepo as never,
+      asDep(featOptionValueRepo),
     );
   });
 
@@ -234,7 +235,7 @@ describe('CharacterFeatOptionValueValidator', () => {
       ),
     ).rejects.toThrow(/not on the 'cleric' list/i);
 
-    classSpellsRepo.findOne.mockResolvedValueOnce({ spellLevel: 3 } as never);
+    classSpellsRepo.findOne.mockResolvedValueOnce(asDep({ spellLevel: 3 }));
     await expect(
       validator.validate(
         spellDef,
@@ -253,7 +254,7 @@ describe('CharacterFeatOptionValueValidator', () => {
       { featSlug: 'magic-initiate', optionKey: 'cantrip1', valueId: 'fire-bolt' },
       { featSlug: 'magic-initiate', optionKey: 'cantrip2', valueId: 'fire-bolt' },
     ];
-    classSpellsRepo.findOne.mockResolvedValue({ spellLevel: 0 } as never);
+    classSpellsRepo.findOne.mockResolvedValue(asDep({ spellLevel: 0 }));
     await expect(
       validator.validate(
         def({ valueType: 'spell', optionKey: 'cantrip2', dependsOnOptionKey: 'spellList', spellMaxLevel: 0 }),

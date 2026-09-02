@@ -1,3 +1,4 @@
+import { asDep } from '@common/testing/as-dep';
 jest.mock('@game/sheet/infrastructure/queries/background-origin.queries', () => ({
   loadBackgroundSkillSlugs: jest.fn().mockResolvedValue([]),
   loadBackgroundLanguageSlugs: jest.fn().mockResolvedValue([]),
@@ -160,7 +161,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
         catalogLookup as unknown as CatalogLookupService,
         subclassRefRepo as unknown as Repository<PhbSubclassRef>,
         subclassOptionValuesRepo as unknown as Repository<PhbOptionValue>,
-        { validate: jest.fn().mockResolvedValue(undefined) } as never,
+        asDep({ validate: jest.fn().mockResolvedValue(undefined) }),
       ),
       new CharacterClassExpertiseValidator(dataSource as unknown as DataSource),
       new CharacterWeaponMasteryValidator(
@@ -170,7 +171,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       new CharacterSpellMasteryValidator(dataSource as unknown as DataSource),
       new CharacterEldritchInvocationsValidator(
         dataSource as unknown as DataSource,
-        { find: jest.fn() } as never,
+        asDep({ find: jest.fn() }),
       ),
       new CharacterMetamagicValidator(dataSource as unknown as DataSource),
       new CharacterClassFeatureOptionsValidator(dataSource as unknown as DataSource),
@@ -205,9 +206,9 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       backgroundValidator,
       classOptionsValidator,
       featsValidator,
-      extraSkillValidator as never,
-      mysticArcanumValidator as never,
-      signatureSpellsValidator as never,
+      asDep(extraSkillValidator),
+      asDep(mysticArcanumValidator),
+      asDep(signatureSpellsValidator),
     );
 
     validator = new CharacterSheetValidator(
@@ -218,10 +219,10 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       classOptionsValidator,
       featsValidator,
       createRequirementsValidator,
-      extraSkillValidator as never,
-      mysticArcanumValidator as never,
-      signatureSpellsValidator as never,
-      { validate: jest.fn().mockResolvedValue(undefined) } as never,
+      asDep(extraSkillValidator),
+      asDep(mysticArcanumValidator),
+      asDep(signatureSpellsValidator),
+      asDep({ validate: jest.fn().mockResolvedValue(undefined) }),
     );
   });
 

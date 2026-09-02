@@ -1,4 +1,5 @@
 import { ClassProficienciesQuery } from './class-proficiencies.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('ClassProficienciesQuery', () => {
   let dataSource: { query: jest.Mock };
@@ -6,7 +7,7 @@ describe('ClassProficienciesQuery', () => {
 
   beforeEach(() => {
     dataSource = { query: jest.fn() };
-    query = new ClassProficienciesQuery(dataSource as never);
+    query = new ClassProficienciesQuery(asDep(dataSource));
   });
 
   it('returns empty profile when all queries empty', async () => {

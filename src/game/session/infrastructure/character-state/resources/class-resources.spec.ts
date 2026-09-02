@@ -5,6 +5,7 @@ import {
   resolveClassResources,
 } from './class-resources';
 import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
+import { asDep } from '@common/testing/as-dep';
 
 describe('character-state/class-resources', () => {
   let dataSource: { query: jest.Mock };
@@ -17,7 +18,7 @@ describe('character-state/class-resources', () => {
     it('returns null when row missing', async () => {
       dataSource.query.mockResolvedValue([]);
       await expect(
-        loadClassProgressionSnapshot(dataSource as never, 'fighter', 1),
+        loadClassProgressionSnapshot(asDep(dataSource), 'fighter', 1),
       ).resolves.toBeNull();
     });
 
@@ -26,7 +27,7 @@ describe('character-state/class-resources', () => {
         { proficiency_bonus: 3, channel_divinity: 2 },
       ]);
       await expect(
-        loadClassProgressionSnapshot(dataSource as never, 'cleric', 5),
+        loadClassProgressionSnapshot(asDep(dataSource), 'cleric', 5),
       ).resolves.toEqual({ proficiencyBonus: 3, channelDivinity: 2 });
     });
   });
@@ -47,7 +48,7 @@ describe('character-state/class-resources', () => {
         },
       ]);
       await expect(
-        loadClassResourceSchedule(dataSource as never, 'barbarian'),
+        loadClassResourceSchedule(asDep(dataSource), 'barbarian'),
       ).resolves.toEqual([
         {
           resourceSlug: 'rage',
@@ -106,21 +107,21 @@ describe('character-state/class-resources', () => {
         return [];
       });
 
-      const character = {
+      const character = asDep({
         id: 'char-1',
         classSlug: 'barbarian',
         speciesSlug: 'human',
         level: 3,
         abilityScores: DEFAULT_ABILITY_SCORES,
-      } as never;
+      });
 
-      const resources = await resolveClassResources(dataSource as never, character);
+      const resources = await resolveClassResources(asDep(dataSource), character);
       expect(resources.some((r) => r.slug === 'risk')).toBe(true);
 
       const state = await buildClassResourceState(
-        dataSource as never,
+        asDep(dataSource),
         character,
-        { resourcesUsed: { rage: 1, risk: 5 } } as never,
+        asDep({ resourcesUsed: { rage: 1, risk: 5 } }),
       );
       const rage = state.find((r) => r.slug === 'rage');
       const risk = state.find((r) => r.slug === 'risk');
@@ -134,13 +135,13 @@ describe('character-state/class-resources', () => {
 
     it('defaults proficiency when progression missing', async () => {
       dataSource.query.mockResolvedValue([]);
-      const resources = await resolveClassResources(dataSource as never, {
+      const resources = await resolveClassResources(asDep(dataSource), asDep({
         id: 'char-2',
         classSlug: 'fighter',
         speciesSlug: 'human',
         level: 1,
         abilityScores: DEFAULT_ABILITY_SCORES,
-      } as never);
+      }));
       expect(resources).toEqual([]);
     });
 
@@ -204,7 +205,7 @@ describe('character-state/class-resources', () => {
         return [];
       });
 
-      const resources = await resolveClassResources(dataSource as never, {
+      const resources = await resolveClassResources(asDep(dataSource), asDep({
         id: 'andari-1',
         classSlug: 'fighter',
         speciesSlug: 'bearfolk',
@@ -213,7 +214,7 @@ describe('character-state/class-resources', () => {
           ...DEFAULT_ABILITY_SCORES,
           constituicao: 14,
         },
-      } as never);
+      }));
 
       expect(resources.map((r) => r.slug)).toEqual([
         'bearfolk-apex-predator',

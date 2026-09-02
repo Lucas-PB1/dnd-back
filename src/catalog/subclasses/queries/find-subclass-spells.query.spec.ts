@@ -1,4 +1,5 @@
 import { FindSubclassSpellsQuery } from './find-subclass-spells.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSubclassSpellsQuery', () => {
   let spellsRepo: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('FindSubclassSpellsQuery', () => {
     catalogLookup = { findSubclassOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toSpellDto: jest.fn().mockReturnValue({ slug: 'fireball' }) };
     query = new FindSubclassSpellsQuery(
-      spellsRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(spellsRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

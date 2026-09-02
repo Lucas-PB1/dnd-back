@@ -1,4 +1,5 @@
 import { FindClassSpellSlotsQuery } from './find-class-spell-slots.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassSpellSlotsQuery', () => {
   let spellSlotsRepo: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('FindClassSpellSlotsQuery', () => {
     catalogLookup = { findClassOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toSpellSlotsDto: jest.fn().mockReturnValue({ classLevel: 1 }) };
     query = new FindClassSpellSlotsQuery(
-      spellSlotsRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(spellSlotsRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

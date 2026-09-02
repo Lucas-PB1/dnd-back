@@ -1,3 +1,4 @@
+import { asDep } from '@common/testing/as-dep';
 jest.mock('@game/sheet/infrastructure/queries/class-meta.queries', () => ({
   loadWeaponMasteryProgression: jest.fn(),
   loadWeaponMasteryEligibility: jest.fn(),
@@ -42,7 +43,7 @@ describe('CharacterWeaponMasteryValidator', () => {
       { level: 4, weaponMastery: 1 },
     ]);
     jest.mocked(loadWeaponMasteryEligibility).mockResolvedValue('any');
-    jest.mocked(loadWeaponMasteryPiece).mockResolvedValue({
+    jest.mocked(loadWeaponMasteryPiece).mockResolvedValue(asDep({
       slug: 'longsword',
       name: 'Longsword',
       category: 'martial',
@@ -51,7 +52,7 @@ describe('CharacterWeaponMasteryValidator', () => {
       properties: { propertyIds: [] },
       masterySlug: 'sap',
       ...weaponRow,
-    } as never);
+    }));
   }
 
   it('allows empty mastery options', async () => {

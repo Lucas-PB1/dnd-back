@@ -8,6 +8,7 @@ import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
 import { CharacterFeatOptionValueValidator } from './character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from './character-feat-options.validator';
 import { CharacterFeatsValidator } from './character-feats.validator';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CharacterFeatsValidator resilient feat', () => {
   let validator: CharacterFeatsValidator;
@@ -63,7 +64,7 @@ describe('CharacterFeatsValidator resilient feat', () => {
 
     const valueValidator = new CharacterFeatOptionValueValidator(
       dataSource as unknown as DataSource,
-      {} as never,
+      asDep({}),
       featOptionValueRepo as unknown as Repository<PhbOptionValue>,
     );
     const optionsValidator = new CharacterFeatOptionsValidator(

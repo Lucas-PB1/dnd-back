@@ -1,4 +1,5 @@
 import { FindClassesQuery } from './find-classes.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassesQuery', () => {
   let classesRepo: { createQueryBuilder: jest.Mock };
@@ -16,7 +17,7 @@ describe('FindClassesQuery', () => {
     };
     classesRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toClassDto: jest.fn().mockReturnValue({ slug: 'fighter' }) };
-    query = new FindClassesQuery(classesRepo as never, mapper as never);
+    query = new FindClassesQuery(asDep(classesRepo), asDep(mapper));
   });
 
   it('searches and maps', async () => {

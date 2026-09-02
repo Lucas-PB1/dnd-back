@@ -1,4 +1,5 @@
 import { FindBackgroundSkillsQuery } from './find-background-skills.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindBackgroundSkillsQuery', () => {
   let skillsRepo: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('FindBackgroundSkillsQuery', () => {
     catalogLookup = { findBackgroundOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toSkillDto: jest.fn().mockReturnValue({ slug: 'athletics' }) };
     query = new FindBackgroundSkillsQuery(
-      skillsRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(skillsRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

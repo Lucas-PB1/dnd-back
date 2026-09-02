@@ -25,6 +25,7 @@ jest.mock('@game/combat/application/load-eldritch-invocation-effect-catalog', ()
 
 import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
 import { buildCharacterStateResponse } from './build-response';
+import { asDep } from '@common/testing/as-dep';
 
 describe('buildCharacterStateResponse — granted spell sheet loads', () => {
   const baseState = {
@@ -92,15 +93,15 @@ describe('buildCharacterStateResponse — granted spell sheet loads', () => {
     };
 
     return {
-      character: character as never,
-      state: { ...baseState, characterId: 'ch1' } as never,
-      stateRepo: { save: jest.fn(), update: jest.fn() } as never,
-      classSlots: { find: jest.fn() } as never,
-      subclassSlots: { find: jest.fn() } as never,
-      catalogLookup: catalogLookup as never,
-      dataSource: { query: jest.fn() } as never,
-      sheetRepository: sheetRepository as never,
-      grantedSpellCatalog: grantedSpellCatalog as never,
+      character: asDep(character),
+      state: asDep({ ...baseState, characterId: 'ch1' }),
+      stateRepo: asDep({ save: jest.fn(), update: jest.fn() }),
+      classSlots: asDep({ find: jest.fn() }),
+      subclassSlots: asDep({ find: jest.fn() }),
+      catalogLookup: asDep(catalogLookup),
+      dataSource: asDep({ query: jest.fn() }),
+      sheetRepository: asDep(sheetRepository),
+      grantedSpellCatalog: asDep(grantedSpellCatalog),
       spies: { sheetRepository },
     };
   }

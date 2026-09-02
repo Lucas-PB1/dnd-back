@@ -4,6 +4,7 @@ import {
 import { PreviewGrantedSpellsHandler } from './preview-granted-spells.handler';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
+import { asDep } from '@common/testing/as-dep';
 
 describe('PreviewGrantedSpellsHandler', () => {
   const resolveSubclassOptionGrants = {
@@ -34,8 +35,8 @@ describe('PreviewGrantedSpellsHandler', () => {
       }),
     };
     const handler = new PreviewGrantedSpellsHandler(
-      catalog as never,
-      resolveSubclassOptionGrants as never,
+      asDep(catalog),
+      asDep(resolveSubclassOptionGrants),
     );
     const result = await handler.execute({
       speciesSlug: 'elf',
@@ -80,8 +81,8 @@ describe('PreviewGrantedSpellsHandler', () => {
       }),
     };
     const handler = new PreviewGrantedSpellsHandler(
-      catalog as never,
-      resolveSubclassOptionGrants as never,
+      asDep(catalog),
+      asDep(resolveSubclassOptionGrants),
     );
     const result = await handler.execute({
       speciesSlug: 'human',

@@ -7,6 +7,7 @@ import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { SpellsMapper } from './spells.mapper';
 import { FindSpellsQuery } from './queries/find-spells.query';
 import { FindSpellBySlugQuery } from './queries/find-spell-by-slug.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('Spells queries', () => {
   let findSpells: FindSpellsQuery;
@@ -73,7 +74,7 @@ describe('Spells queries', () => {
   });
 
   it('findAll returns paginated data', async () => {
-    repo.createQueryBuilder.mockReturnValue(mockQb([sample], 1) as never);
+    repo.createQueryBuilder.mockReturnValue(asDep(mockQb([sample], 1)));
     const result = await findSpells.execute(undefined, 20);
     expect(result.data[0].slug).toBe('alarme');
     expect(result.meta.hasMore).toBe(false);
@@ -83,7 +84,7 @@ describe('Spells queries', () => {
 
   it('findAll with fields=summary omits description', async () => {
     const qb = mockQb([sample], 1);
-    repo.createQueryBuilder.mockReturnValue(qb as never);
+    repo.createQueryBuilder.mockReturnValue(asDep(qb));
     const result = await findSpells.execute(
       undefined,
       20,
@@ -106,7 +107,7 @@ describe('Spells queries', () => {
 
   it('findAll applies search filter', async () => {
     const qb = mockQb([sample], 1);
-    repo.createQueryBuilder.mockReturnValue(qb as never);
+    repo.createQueryBuilder.mockReturnValue(asDep(qb));
     await findSpells.execute(undefined, 20, 'alarme');
     expect(qb.andWhere).toHaveBeenCalled();
   });

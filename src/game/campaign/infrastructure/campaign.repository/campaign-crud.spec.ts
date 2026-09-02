@@ -15,6 +15,7 @@ import {
   updateCampaign,
   type CampaignCrudDeps,
 } from './campaign-crud';
+import { asDep } from '@common/testing/as-dep';
 
 const mockGenerateCode = generateCampaignInviteCode as jest.MockedFunction<
   typeof generateCampaignInviteCode
@@ -73,7 +74,7 @@ describe('campaign-crud', () => {
   beforeEach(() => {
     campaigns = repo();
     members = repo();
-    deps = { campaigns: campaigns as never, members: members as never };
+    deps = { campaigns: asDep(campaigns), members: asDep(members) };
     mockGenerateCode.mockReturnValue('NEWCODE1');
     campaigns.exist.mockResolvedValue(false);
     jest.clearAllMocks();

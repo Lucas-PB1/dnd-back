@@ -8,6 +8,7 @@ jest.mock('../resources/class-resources', () => ({
 }));
 
 import { loadActiveItemSlugs } from '../resources/class-resources';
+import { asDep } from '@common/testing/as-dep';
 
 const resolveClassResourcesMock = resolveClassResources as jest.MockedFunction<
   typeof resolveClassResources
@@ -115,17 +116,17 @@ describe('applyCastSpell', () => {
     dataSourceOverride?: { query: jest.Mock },
   ) {
     return applyCastSpell({
-      character: { ...character, ...(characterOverride ?? {}) } as never,
-      state: state as never,
-      dto: dto as never,
-      stateRepo: stateRepo as never,
-      classSlots: classSlots as never,
-      subclassSlots: subclassSlots as never,
-      catalogLookup: catalogLookup as never,
-      spellLookup: spellLookup as never,
-      sheetRepository: sheetRepository as never,
-      grantedSpellCatalog: grantedSpellCatalog as never,
-      dataSource: (dataSourceOverride ?? { query: jest.fn() }) as never,
+      character: asDep({ ...character, ...(characterOverride ?? {}) }),
+      state: asDep(state),
+      dto: asDep(dto),
+      stateRepo: asDep(stateRepo),
+      classSlots: asDep(classSlots),
+      subclassSlots: asDep(subclassSlots),
+      catalogLookup: asDep(catalogLookup),
+      spellLookup: asDep(spellLookup),
+      sheetRepository: asDep(sheetRepository),
+      grantedSpellCatalog: asDep(grantedSpellCatalog),
+      dataSource: asDep(dataSourceOverride ?? { query: jest.fn() }),
       buildResponse,
     });
   }
@@ -137,9 +138,9 @@ describe('applyCastSpell', () => {
       concentration: false,
     });
     loadActiveItemSlugsMock.mockResolvedValue(['varinha-de-misseis-magicos']);
-    resolveClassResourcesMock.mockResolvedValue([
+    resolveClassResourcesMock.mockResolvedValue(asDep([
       { slug: 'varinhaMisseisCharges', name: 'Cargas', max: 7 },
-    ] as never);
+    ]));
     const query = jest
       .fn()
       .mockResolvedValueOnce([
@@ -187,9 +188,9 @@ describe('applyCastSpell', () => {
       },
     });
     loadActiveItemSlugsMock.mockResolvedValue(['varinha-de-relampagos']);
-    resolveClassResourcesMock.mockResolvedValue([
+    resolveClassResourcesMock.mockResolvedValue(asDep([
       { slug: 'varinhaRelampagosCharges', name: 'Cargas', max: 7 },
-    ] as never);
+    ]));
     const query = jest
       .fn()
       .mockResolvedValueOnce([
@@ -230,9 +231,9 @@ describe('applyCastSpell', () => {
       properties: { useCasterAbility: true },
     });
     loadActiveItemSlugsMock.mockResolvedValue(['item-usa-atributo']);
-    resolveClassResourcesMock.mockResolvedValue([
+    resolveClassResourcesMock.mockResolvedValue(asDep([
       { slug: 'itemUsaAtributoCharges', name: 'Cargas', max: 3 },
-    ] as never);
+    ]));
     const query = jest
       .fn()
       .mockResolvedValueOnce([
@@ -309,11 +310,11 @@ describe('applyCastSpell', () => {
         level: 1,
         concentration: false,
       });
-      resolveClassResourcesMock.mockResolvedValue([
+      resolveClassResourcesMock.mockResolvedValue(asDep([
         { slug: 'magic-missile-free', name: 'Mísseis Gratuitos', max: 4 },
         { slug: 'missile-shield', name: 'Escudo', max: 1 },
         { slug: 'giga-missile', name: 'Giga', max: 1 },
-      ] as never);
+      ]));
     });
 
     it('spends magic-missile-free and returns dart note', async () => {
@@ -477,19 +478,19 @@ describe('applyCastSpell', () => {
       slotLevel?: number;
     }) {
       return applyCastSpell({
-        character: { ...character, ...warlock } as never,
-        state: state as never,
-        dto: dto as never,
-        stateRepo: stateRepo as never,
-        classSlots: classSlots as never,
-        subclassSlots: subclassSlots as never,
-        catalogLookup: catalogLookup as never,
-        spellLookup: spellLookup as never,
-        sheetRepository: sheetRepository as never,
-        grantedSpellCatalog: grantedSpellCatalog as never,
-        dataSource: {
+        character: asDep({ ...character, ...warlock }),
+        state: asDep(state),
+        dto: asDep(dto),
+        stateRepo: asDep(stateRepo),
+        classSlots: asDep(classSlots),
+        subclassSlots: asDep(subclassSlots),
+        catalogLookup: asDep(catalogLookup),
+        spellLookup: asDep(spellLookup),
+        sheetRepository: asDep(sheetRepository),
+        grantedSpellCatalog: asDep(grantedSpellCatalog),
+        dataSource: asDep({
           query: jest.fn().mockResolvedValue(catalogRows),
-        } as never,
+        }),
         buildResponse,
       });
     }

@@ -1,4 +1,5 @@
 import { FindSpellsQuery } from './find-spells.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSpellsQuery', () => {
   let spellsRepo: { createQueryBuilder: jest.Mock };
@@ -16,7 +17,7 @@ describe('FindSpellsQuery', () => {
     };
     spellsRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toDto: jest.fn().mockReturnValue({ slug: 'fireball' }) };
-    query = new FindSpellsQuery(spellsRepo as never, mapper as never);
+    query = new FindSpellsQuery(asDep(spellsRepo), asDep(mapper));
   });
 
   it('filters by level and school', async () => {

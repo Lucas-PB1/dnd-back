@@ -1,12 +1,13 @@
 import { BadRequestException } from '@nestjs/common';
 import { AssertCanBindPactWeaponService } from './assert-can-bind-pact-weapon.service';
+import { asDep } from '@common/testing/as-dep';
 
 describe('AssertCanBindPactWeaponService', () => {
   const catalogLookup = { assertItemInCatalog: jest.fn() };
   const options = { count: jest.fn() };
   const service = new AssertCanBindPactWeaponService(
-    catalogLookup as never,
-    options as never,
+    asDep(catalogLookup),
+    asDep(options),
   );
   const warlock = {
     id: 'war-1',
@@ -25,7 +26,7 @@ describe('AssertCanBindPactWeaponService', () => {
   it('rejects non-warlock characters', async () => {
     await expect(
       service.assert(
-        { ...warlock, classSlug: 'fighter' } as never,
+        asDep({ ...warlock, classSlug: 'fighter' }),
         'longsword',
       ),
     ).rejects.toBeInstanceOf(BadRequestException);
@@ -34,7 +35,7 @@ describe('AssertCanBindPactWeaponService', () => {
   it('rejects without pact-of-the-blade pick', async () => {
     options.count.mockResolvedValueOnce(0);
     await expect(
-      service.assert(warlock as never, 'longsword'),
+      service.assert(asDep(warlock), 'longsword'),
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 
@@ -44,13 +45,13 @@ describe('AssertCanBindPactWeaponService', () => {
       properties: { propertyIds: ['ammunition'] },
     });
     await expect(
-      service.assert(warlock as never, 'longbow'),
+      service.assert(asDep(warlock), 'longbow'),
     ).rejects.toBeInstanceOf(BadRequestException);
   });
 
   it('accepts melee weapon for warlock with pact', async () => {
     await expect(
-      service.assert(warlock as never, 'longsword'),
+      service.assert(asDep(warlock), 'longsword'),
     ).resolves.toBeUndefined();
   });
 });

@@ -1,35 +1,36 @@
 import { filterCombatMechanicalCatalog } from './filter-combat-mechanical-catalog';
 import type { CombatMechanicalCatalogResponseDto } from '../dto/combat-mechanical-catalog-response.dto';
+import { asDep } from '@common/testing/as-dep';
 
 function sampleCatalog(): CombatMechanicalCatalogResponseDto {
   return {
-    gunslingerManeuvers: [{ slug: 'g1' } as never],
-    battleMasterManeuvers: [{ slug: 'bm1' } as never],
+    gunslingerManeuvers: [asDep({ slug: 'g1' })],
+    battleMasterManeuvers: [asDep({ slug: 'bm1' })],
     cunningStrikeEffects: [
-      { slug: 'poison', subclassSlug: 'thief' } as never,
-      { slug: 'trip' } as never,
+      asDep({ slug: 'poison', subclassSlug: 'thief' }),
+      asDep({ slug: 'trip' }),
     ],
     tableActions: [
-      { subclassSlug: 'psi-warrior', slug: 'telekinetic' } as never,
-      { subclassSlug: 'battle-master', slug: 'maneuver' } as never,
+      asDep({ subclassSlug: 'psi-warrior', slug: 'telekinetic' }),
+      asDep({ subclassSlug: 'battle-master', slug: 'maneuver' }),
     ],
     personaMasks: [{ slug: 'jester', name: 'Bobão' }],
     beastborneAspectBenefits: [{ level: 3, note: 'x' }],
     dungeoneerSlayerLabels: ['Aberração'],
     precautionSpells: [{ slug: 'alarme', name: 'Alarme' }],
     economyActions: [
-      { id: 'fighter-a', classSlug: 'fighter' } as never,
-      { id: 'bard-a', classSlug: 'bard' } as never,
-      { id: 'species-a', speciesSlug: 'dwarf' } as never,
-      {
+      asDep({ id: 'fighter-a', classSlug: 'fighter' }),
+      asDep({ id: 'bard-a', classSlug: 'bard' }),
+      asDep({ id: 'species-a', speciesSlug: 'dwarf' }),
+      asDep({
         id: 'fighter-sub',
         classSlug: 'fighter',
         subclassSlug: 'psi-warrior',
-      } as never,
+      }),
     ],
     panelActions: [
-      { panelKey: 'fighter|a', classSlug: 'fighter' } as never,
-      { panelKey: 'bard|a', classSlug: 'bard' } as never,
+      asDep({ panelKey: 'fighter|a', classSlug: 'fighter' }),
+      asDep({ panelKey: 'bard|a', classSlug: 'bard' }),
     ],
   };
 }
@@ -68,9 +69,9 @@ describe('filterCombatMechanicalCatalog', () => {
   it('keeps gunslinger maneuvers for Valdas subclasses and filters by subclassSlug', () => {
     const catalog = sampleCatalog();
     catalog.gunslingerManeuvers = [
-      { slug: 'base', subclassSlug: undefined } as never,
-      { slug: 'eagle', subclassSlug: 'deadeye' } as never,
-      { slug: 'fan', subclassSlug: 'pistolero' } as never,
+      asDep({ slug: 'base', subclassSlug: undefined }),
+      asDep({ slug: 'eagle', subclassSlug: 'deadeye' }),
+      asDep({ slug: 'fan', subclassSlug: 'pistolero' }),
     ];
     const result = filterCombatMechanicalCatalog(catalog, {
       classSlug: 'gunslinger',

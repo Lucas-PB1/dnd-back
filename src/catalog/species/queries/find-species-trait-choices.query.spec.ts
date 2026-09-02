@@ -1,4 +1,5 @@
 import { FindSpeciesTraitChoicesQuery } from './find-species-trait-choices.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSpeciesTraitChoicesQuery', () => {
   let traitChoicesRepo: {
@@ -31,9 +32,9 @@ describe('FindSpeciesTraitChoicesQuery', () => {
       toTraitChoiceDto: jest.fn().mockReturnValue({ choiceSlug: 'small' }),
     };
     query = new FindSpeciesTraitChoicesQuery(
-      traitChoicesRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(traitChoicesRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

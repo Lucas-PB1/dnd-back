@@ -1,4 +1,5 @@
 import { FindClassFeaturesQuery } from './find-class-features.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassFeaturesQuery', () => {
   let featuresRepo: { find: jest.Mock };
@@ -9,8 +10,8 @@ describe('FindClassFeaturesQuery', () => {
   beforeEach(() => {
     featuresRepo = {
       find: jest.fn().mockResolvedValue([
-        { featureLevel: 1, featureName: 'A' },
-        { featureLevel: 5, featureName: 'B' },
+        { level: 1, featureName: 'A' },
+        { level: 5, featureName: 'B' },
       ]),
     };
     catalogLookup = { findClassOrFail: jest.fn().mockResolvedValue({}) };
@@ -18,9 +19,9 @@ describe('FindClassFeaturesQuery', () => {
       toClassFeatureDto: jest.fn((row) => ({ name: row.featureName })),
     };
     query = new FindClassFeaturesQuery(
-      featuresRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(featuresRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

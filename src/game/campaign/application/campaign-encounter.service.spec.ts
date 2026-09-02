@@ -13,6 +13,7 @@ import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import type { Repository } from 'typeorm';
+import { asDep } from '@common/testing/as-dep';
 
 const enc = (o: Partial<CampaignEncounter> = {}): CampaignEncounter => ({
   id: 'e1',
@@ -107,7 +108,7 @@ describe('CampaignEncounterService', () => {
       loadDto as unknown as LoadEncounterDto,
       actorPersistence as unknown as ActorPersistenceService,
       actors as unknown as Repository<GameActor>,
-      characterStateMock as never,
+      asDep(characterStateMock),
     );
   });
 

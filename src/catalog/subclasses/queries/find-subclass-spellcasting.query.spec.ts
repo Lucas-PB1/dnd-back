@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindSubclassSpellcastingQuery } from './find-subclass-spellcasting.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSubclassSpellcastingQuery', () => {
   let catalogLookup: { findSubclassOrFail: jest.Mock };
@@ -22,8 +23,8 @@ describe('FindSubclassSpellcastingQuery', () => {
       ]),
     };
     query = new FindSubclassSpellcastingQuery(
-      catalogLookup as never,
-      dataSource as never,
+      asDep(catalogLookup),
+      asDep(dataSource),
     );
   });
 

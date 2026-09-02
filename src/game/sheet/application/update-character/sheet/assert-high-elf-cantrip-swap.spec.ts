@@ -1,5 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import { assertAndConsumeHighElfCantripSwap } from './assert-high-elf-cantrip-swap';
+import { asDep } from '@common/testing/as-dep';
 
 describe('assertAndConsumeHighElfCantripSwap', () => {
   let dataSource: { query: jest.Mock };
@@ -10,7 +11,7 @@ describe('assertAndConsumeHighElfCantripSwap', () => {
 
   it('no-ops when cantrip unchanged', async () => {
     await assertAndConsumeHighElfCantripSwap(
-      dataSource as never,
+      asDep(dataSource),
       'c1',
       [{ choiceKind: 'high_elf_cantrip', choiceSlug: 'fire-bolt' }],
       [{ choiceKind: 'high_elf_cantrip', choiceSlug: 'fire-bolt' }],
@@ -24,7 +25,7 @@ describe('assertAndConsumeHighElfCantripSwap', () => {
     ]);
     await expect(
       assertAndConsumeHighElfCantripSwap(
-        dataSource as never,
+        asDep(dataSource),
         'c1',
         [{ choiceKind: 'high_elf_cantrip', choiceSlug: 'prestidigitacao-arcana' }],
         [{ choiceKind: 'high_elf_cantrip', choiceSlug: 'fire-bolt' }],
@@ -37,7 +38,7 @@ describe('assertAndConsumeHighElfCantripSwap', () => {
       .mockResolvedValueOnce([{ high_elf_cantrip_swap_available: true }])
       .mockResolvedValueOnce([]);
     await assertAndConsumeHighElfCantripSwap(
-      dataSource as never,
+      asDep(dataSource),
       'c1',
       [],
       [{ choiceKind: 'high_elf_cantrip', choiceSlug: 'fire-bolt' }],

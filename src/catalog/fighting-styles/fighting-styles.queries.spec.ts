@@ -6,6 +6,7 @@ import { PhbFightingStyle } from '@entities/phb-fighting-style.entity';
 import { FightingStylesMapper } from './fighting-styles.mapper';
 import { FindFightingStyleBySlugQuery } from './queries/find-fighting-style-by-slug.query';
 import { FindFightingStylesQuery } from './queries/find-fighting-styles.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('Fighting styles queries', () => {
   let findBySlug: FindFightingStyleBySlugQuery;
@@ -64,7 +65,7 @@ describe('Fighting styles queries', () => {
       take: jest.fn().mockReturnThis(),
       getMany: jest.fn().mockResolvedValue([sample]),
     };
-    repo.createQueryBuilder.mockReturnValue(qb as never);
+    repo.createQueryBuilder.mockReturnValue(asDep(qb));
 
     const result = await findAll.execute(undefined, 20, 'fighter');
     expect(qb.andWhere).toHaveBeenCalled();

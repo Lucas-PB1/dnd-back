@@ -1,4 +1,5 @@
 import { PatchInventoryItemHandler } from './patch-inventory-item.handler';
+import { asDep } from '@common/testing/as-dep';
 
 describe('PatchInventoryItemHandler', () => {
   let access: { findAccessibleOrFail: jest.Mock };
@@ -44,13 +45,13 @@ describe('PatchInventoryItemHandler', () => {
     assertCanBindPact = { assert: jest.fn().mockResolvedValue(undefined) };
     catalogStats = { recordPurchase: jest.fn() };
     handler = new PatchInventoryItemHandler(
-      access as never,
-      campaignAccess as never,
-      catalogLookup as never,
-      inventory as never,
-      assertCanEquip as never,
-      assertCanBindPact as never,
-      catalogStats as never,
+      asDep(access),
+      asDep(campaignAccess),
+      asDep(catalogLookup),
+      asDep(inventory),
+      asDep(assertCanEquip),
+      asDep(assertCanBindPact),
+      asDep(catalogStats),
     );
   });
 

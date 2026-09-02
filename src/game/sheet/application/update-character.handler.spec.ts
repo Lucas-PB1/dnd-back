@@ -1,3 +1,4 @@
+import { asDep } from '@common/testing/as-dep';
 jest.mock('./update-character/apply-background-and-identity-update', () => ({
   applyBackgroundAndIdentityUpdate: jest.fn(),
 }));
@@ -85,16 +86,16 @@ describe('UpdateCharacterHandler', () => {
     mockClearStale.mockResolvedValue(undefined);
     mockMergeSpells.mockResolvedValue(undefined);
     handler = new UpdateCharacterHandler(
-      catalogLookup as never,
-      sheetValidator as never,
-      domain as never,
-      repository as never,
-      sheetRepository as never,
-      mapper as never,
-      seedStartingInventory as never,
-      grantedSpellCatalog as never,
-      { resolveExtraGrantedSlugs: jest.fn().mockResolvedValue(new Set()) } as never,
-      { query: jest.fn() } as never,
+      asDep(catalogLookup),
+      asDep(sheetValidator),
+      asDep(domain),
+      asDep(repository),
+      asDep(sheetRepository),
+      asDep(mapper),
+      asDep(seedStartingInventory),
+      asDep(grantedSpellCatalog),
+      asDep({ resolveExtraGrantedSlugs: jest.fn().mockResolvedValue(new Set()) }),
+      asDep({ query: jest.fn() }),
     );
   });
 

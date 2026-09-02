@@ -6,8 +6,10 @@ import {
   loadAccessibleCharacter,
 } from '../roll-weapon-context';
 
-export function asRollDep<T>(mock: object): T {
-  return mock as unknown as T;
+import { asDep } from '@common/testing/as-dep';
+
+export function asRollDep<T = never>(mock: object): T {
+  return asDep<T>(mock);
 }
 
 export const IDLE_COMBAT_FLAGS: DamageCombatFlags = {

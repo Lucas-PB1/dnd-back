@@ -1,6 +1,7 @@
 import { EquipmentMapper } from './equipment.mapper';
 import type { PhbWeapon } from '@entities/phb-weapon.entity';
 import type { VPhbArmor } from '@entities/views/v-phb-armor.entity';
+import { asDep } from '@common/testing/as-dep';
 
 describe('EquipmentMapper', () => {
   const mapper = new EquipmentMapper();
@@ -27,11 +28,11 @@ describe('EquipmentMapper', () => {
       const dto = mapper.toWeaponDto(
         weapon,
         [
-          {
+          asDep({
             slug: 'versatile',
             name: 'Versátil',
             description: '1d10',
-          } as never,
+          }),
         ],
         null,
       );
@@ -56,11 +57,11 @@ describe('EquipmentMapper', () => {
           },
         },
       } as unknown as PhbWeapon;
-      const dto = mapper.toWeaponDto(ranged, [], {
+      const dto = mapper.toWeaponDto(ranged, [], asDep({
         slug: 'vex',
         name: 'Vex',
         description: 'd',
-      } as never);
+      }));
       expect(dto.range).toEqual({ normal: 80, max: 320 });
       expect(dto.mastery).toEqual({ slug: 'vex', name: 'Vex', description: 'd' });
     });

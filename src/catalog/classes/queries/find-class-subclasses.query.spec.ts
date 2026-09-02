@@ -1,4 +1,5 @@
 import { FindClassSubclassesQuery } from './find-class-subclasses.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassSubclassesQuery', () => {
   let subclassesRepo: { find: jest.Mock };
@@ -13,9 +14,9 @@ describe('FindClassSubclassesQuery', () => {
     catalogLookup = { findClassOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toSubclassDto: jest.fn().mockReturnValue({ slug: 'champion' }) };
     query = new FindClassSubclassesQuery(
-      subclassesRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(subclassesRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

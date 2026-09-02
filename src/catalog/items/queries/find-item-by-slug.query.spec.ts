@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindItemBySlugQuery } from './find-item-by-slug.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindItemBySlugQuery', () => {
   it('maps found item', async () => {
@@ -8,8 +9,8 @@ describe('FindItemBySlugQuery', () => {
     };
     const mapper = { toDto: jest.fn().mockReturnValue({ slug: 'rope' }) };
     const query = new FindItemBySlugQuery(
-      catalogLookup as never,
-      mapper as never,
+      asDep(catalogLookup),
+      asDep(mapper),
     );
     await expect(query.execute('rope')).resolves.toEqual({ slug: 'rope' });
   });
@@ -19,8 +20,8 @@ describe('FindItemBySlugQuery', () => {
       findItemOrFail: jest.fn().mockRejectedValue(new NotFoundException()),
     };
     const query = new FindItemBySlugQuery(
-      catalogLookup as never,
-      { toDto: jest.fn() } as never,
+      asDep(catalogLookup),
+      asDep({ toDto: jest.fn() }),
     );
     await expect(query.execute('x')).rejects.toThrow(NotFoundException);
   });

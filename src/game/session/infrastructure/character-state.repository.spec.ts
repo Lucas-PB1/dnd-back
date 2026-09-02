@@ -7,6 +7,7 @@ import { CharacterSpellLookup } from '@game/sheet/application/character-spell-lo
 import { PhbCondition } from './phb-condition.entity';
 import { PlayerCharacterState } from './player-character-state.entity';
 import { CharacterStateRepository } from './character-state.repository';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CharacterStateRepository', () => {
   let repository: CharacterStateRepository;
@@ -31,9 +32,9 @@ describe('CharacterStateRepository', () => {
       {} as CatalogLookupService,
       {} as CharacterRepository,
       {} as CharacterSpellLookup,
-      {} as never,
-      {} as never,
-      {
+      asDep({}),
+      asDep({}),
+      asDep({
         load: async () => ({
           gunslingerManeuvers: [],
           battleMasterManeuvers: [],
@@ -47,7 +48,7 @@ describe('CharacterStateRepository', () => {
           economyActions: [],
           panelActions: [],
         }),
-      } as never,
+      }),
       {} as DataSource,
     );
   });

@@ -1,6 +1,7 @@
 import { FindClassOptionsQuery } from './find-class-options.query';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbOptionValue } from '@entities/phb-option.entity';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassOptionsQuery', () => {
   let query: FindClassOptionsQuery;
@@ -11,7 +12,7 @@ describe('FindClassOptionsQuery', () => {
     catalogLookup = { findClassOrFail: jest.fn().mockResolvedValue({}) };
     optionValuesRepo = { manager: { query: jest.fn() } };
     query = new FindClassOptionsQuery(
-      optionValuesRepo as never,
+      asDep(optionValuesRepo),
       catalogLookup as unknown as CatalogLookupService,
     );
   });

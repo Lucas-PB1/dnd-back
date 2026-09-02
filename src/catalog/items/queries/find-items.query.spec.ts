@@ -1,4 +1,5 @@
 import { FindItemsQuery } from './find-items.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindItemsQuery', () => {
   let itemsRepo: { createQueryBuilder: jest.Mock };
@@ -16,7 +17,7 @@ describe('FindItemsQuery', () => {
     };
     itemsRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toDto: jest.fn().mockReturnValue({ slug: 'rope' }) };
-    query = new FindItemsQuery(itemsRepo as never, mapper as never);
+    query = new FindItemsQuery(asDep(itemsRepo), asDep(mapper));
   });
 
   it('searches and filters by item type', async () => {

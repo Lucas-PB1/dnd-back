@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindSkillBySlugQuery } from './find-skill-by-slug.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSkillBySlugQuery', () => {
   it('maps found skill', async () => {
@@ -8,8 +9,8 @@ describe('FindSkillBySlugQuery', () => {
     };
     const mapper = { toDto: jest.fn().mockReturnValue({ slug: 'athletics' }) };
     const query = new FindSkillBySlugQuery(
-      catalogLookup as never,
-      mapper as never,
+      asDep(catalogLookup),
+      asDep(mapper),
     );
     await expect(query.execute('athletics')).resolves.toEqual({
       slug: 'athletics',
@@ -21,8 +22,8 @@ describe('FindSkillBySlugQuery', () => {
       findSkillOrFail: jest.fn().mockRejectedValue(new NotFoundException()),
     };
     const query = new FindSkillBySlugQuery(
-      catalogLookup as never,
-      { toDto: jest.fn() } as never,
+      asDep(catalogLookup),
+      asDep({ toDto: jest.fn() }),
     );
     await expect(query.execute('x')).rejects.toThrow(NotFoundException);
   });

@@ -1,4 +1,5 @@
 import { FindSpeciesQuery } from './find-species.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSpeciesQuery', () => {
   let speciesRepo: { createQueryBuilder: jest.Mock };
@@ -16,7 +17,7 @@ describe('FindSpeciesQuery', () => {
     };
     speciesRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toDto: jest.fn().mockReturnValue({ slug: 'human' }) };
-    query = new FindSpeciesQuery(speciesRepo as never, mapper as never);
+    query = new FindSpeciesQuery(asDep(speciesRepo), asDep(mapper));
   });
 
   it('searches and maps species', async () => {

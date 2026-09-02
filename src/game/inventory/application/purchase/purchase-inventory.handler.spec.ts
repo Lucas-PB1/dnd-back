@@ -1,4 +1,5 @@
 import { PurchaseInventoryHandler } from './purchase-inventory.handler';
+import { asDep } from '@common/testing/as-dep';
 
 describe('PurchaseInventoryHandler', () => {
   const character = {
@@ -61,15 +62,15 @@ describe('PurchaseInventoryHandler', () => {
     dataSource = { transaction: jest.fn() };
     catalogItems = {};
     handler = new PurchaseInventoryHandler(
-      access as never,
-      campaignAccess as never,
-      catalogLookup as never,
-      inventory as never,
-      getInventory as never,
-      catalogStats as never,
-      attachCoverage as never,
-      dataSource as never,
-      catalogItems as never,
+      asDep(access),
+      asDep(campaignAccess),
+      asDep(catalogLookup),
+      asDep(inventory),
+      asDep(getInventory),
+      asDep(catalogStats),
+      asDep(attachCoverage),
+      asDep(dataSource),
+      asDep(catalogItems),
     );
   });
 

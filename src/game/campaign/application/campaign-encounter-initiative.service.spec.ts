@@ -8,6 +8,7 @@ import type { CampaignEncounter } from '../infrastructure/campaign-encounter.ent
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import { rollD20Check } from '@game/dice/domain/dice';
+import { asDep } from '@common/testing/as-dep';
 
 jest.mock('@game/dice/domain/dice', () => ({
   ...jest.requireActual('@game/dice/domain/dice'),
@@ -123,7 +124,7 @@ describe('CampaignEncounterInitiativeService', () => {
     campaigns.requireMember.mockResolvedValue({ role: 'player', userId: 'u1' } as CampaignMember);
     const pc = cb({ kind: 'pc', characterId: 'char1' });
     encounters.findCombatantByIdOrFail.mockResolvedValue(pc);
-    campaigns.findCharactersByIds.mockResolvedValue([{ id: 'char1', userId: 'u1' }] as never);
+    campaigns.findCharactersByIds.mockResolvedValue(asDep([{ id: 'char1', userId: 'u1' }]));
     rolls.rollInitiative.mockResolvedValue({
       kind: 'initiative',
       label: 'Init',

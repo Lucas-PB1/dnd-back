@@ -23,6 +23,7 @@ import { FindClassSkillsQuery } from './queries/find-class-skills.query';
 import { FindClassFeaturesQuery } from './queries/find-class-features.query';
 import { FindClassProgressionQuery } from './queries/find-class-progression.query';
 import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('Classes queries', () => {
   let findClasses: FindClassesQuery;
@@ -154,13 +155,13 @@ describe('Classes queries', () => {
     classesRepo = {
       find: jest.fn(),
       findOne: jest.fn(),
-      createQueryBuilder: jest.fn().mockReturnValue(qb as never),
+      createQueryBuilder: jest.fn().mockReturnValue(asDep(qb)),
     };
     subclassesRepo = { find: jest.fn() };
     const spellsQb = makeListQb([sampleSpell], 1);
     spellsByClassRepo = {
       find: jest.fn(),
-      createQueryBuilder: jest.fn().mockReturnValue(spellsQb as never),
+      createQueryBuilder: jest.fn().mockReturnValue(asDep(spellsQb)),
     };
     spellSlotsRepo = { find: jest.fn() };
     equipmentRepo = { find: jest.fn() };
@@ -240,7 +241,7 @@ describe('Classes queries', () => {
       clone: jest.fn(),
     };
     qb.clone.mockImplementation(() => ({ ...qb, clone: qb.clone }));
-    classesRepo.createQueryBuilder.mockReturnValue(qb as never);
+    classesRepo.createQueryBuilder.mockReturnValue(asDep(qb));
     await findClasses.execute(undefined, 20, 'fighter');
     expect(qb.andWhere).toHaveBeenCalled();
   });
@@ -273,7 +274,7 @@ describe('Classes queries', () => {
       clone: jest.fn(),
     };
     spellsQb.clone.mockImplementation(() => ({ ...spellsQb, clone: spellsQb.clone }));
-    spellsByClassRepo.createQueryBuilder.mockReturnValue(spellsQb as never);
+    spellsByClassRepo.createQueryBuilder.mockReturnValue(asDep(spellsQb));
 
     const result = await findClassSpells.execute('', undefined, 20, 1);
     expect(result.data).toHaveLength(1);

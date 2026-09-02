@@ -12,6 +12,7 @@ import {
   updateMemberRole,
   type CampaignMembershipDeps,
 } from './campaign-membership';
+import { asDep } from '@common/testing/as-dep';
 
 describe('campaign-membership', () => {
   let deps: CampaignMembershipDeps;
@@ -36,8 +37,8 @@ describe('campaign-membership', () => {
     };
     campaigns = { findOne: jest.fn() };
     deps = {
-      members: members as never,
-      campaigns: campaigns as never,
+      members: asDep(members),
+      campaigns: asDep(campaigns),
     };
   });
 

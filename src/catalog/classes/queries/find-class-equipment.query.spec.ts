@@ -1,4 +1,5 @@
 import { FindClassEquipmentQuery } from './find-class-equipment.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassEquipmentQuery', () => {
   let equipmentRepo: { find: jest.Mock };
@@ -13,9 +14,9 @@ describe('FindClassEquipmentQuery', () => {
     catalogLookup = { findClassOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toEquipmentDto: jest.fn().mockReturnValue({ packageSlug: 'a' }) };
     query = new FindClassEquipmentQuery(
-      equipmentRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(equipmentRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

@@ -6,6 +6,7 @@ import {
   paginateBySlug,
   paginateQbCursor,
 } from './pagination.dto';
+import { asDep } from '@common/testing/as-dep';
 
 describe('pagination helpers', () => {
   it('normalizeLimit clamps to 1–100', () => {
@@ -28,13 +29,13 @@ describe('pagination helpers', () => {
 
   it('applyIlikeSearch skips blank terms', () => {
     const qb = { andWhere: jest.fn() };
-    applyIlikeSearch(qb as never, ['name'], '  ');
+    applyIlikeSearch(asDep(qb), ['name'], '  ');
     expect(qb.andWhere).not.toHaveBeenCalled();
   });
 
   it('applyIlikeSearch builds OR ILIKE clause', () => {
     const qb = { andWhere: jest.fn() };
-    applyIlikeSearch(qb as never, ['a.name', 'a.slug'], 'sword');
+    applyIlikeSearch(asDep(qb), ['a.name', 'a.slug'], 'sword');
     expect(qb.andWhere).toHaveBeenCalledWith('(a.name ILIKE :q OR a.slug ILIKE :q)', {
       q: '%sword%',
     });
@@ -65,7 +66,7 @@ describe('pagination helpers', () => {
       getMany: jest.fn().mockResolvedValue(rows.slice(0, 3)),
     };
 
-    const result = await paginateQbCursor(qb as never, {
+    const result = await paginateQbCursor(asDep(qb), {
       limit: 2,
       keys: [
         { expr: 'spell.level', name: 'level' },

@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindBackgroundToolsQuery } from './find-background-tools.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindBackgroundToolsQuery', () => {
   let toolsRepo: { find: jest.Mock };
@@ -12,9 +13,9 @@ describe('FindBackgroundToolsQuery', () => {
     catalogLookup = { findBackgroundOrFail: jest.fn() };
     mapper = { toToolDto: jest.fn().mockReturnValue({ slug: 'smiths-tools' }) };
     query = new FindBackgroundToolsQuery(
-      toolsRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(toolsRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

@@ -1,4 +1,5 @@
 import { FindClassProgressionQuery } from './find-class-progression.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassProgressionQuery', () => {
   let progressionRepo: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('FindClassProgressionQuery', () => {
     catalogLookup = { findClassOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toProgressionDto: jest.fn().mockReturnValue({ level: 1 }) };
     query = new FindClassProgressionQuery(
-      progressionRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(progressionRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

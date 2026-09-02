@@ -8,6 +8,7 @@ import {
   mergeSheetData,
   type CharacterSheetLoadDeps,
 } from './load-character-sheet';
+import { asDep } from '@common/testing/as-dep';
 
 describe('load-character-sheet', () => {
   let deps: CharacterSheetLoadDeps;
@@ -15,7 +16,7 @@ describe('load-character-sheet', () => {
 
   beforeEach(() => {
     dataSource = { query: jest.fn().mockResolvedValue([]) };
-    deps = { dataSource: dataSource as never };
+    deps = { dataSource: asDep(dataSource) };
   });
 
   describe('emptySheetData', () => {

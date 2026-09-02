@@ -3,6 +3,7 @@ import type { CampaignRepository } from '../infrastructure/campaign.repository';
 import type { Campaign } from '../infrastructure/campaign.entity';
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { DataSource } from 'typeorm';
+import { asDep } from '@common/testing/as-dep';
 
 const iso = '2026-01-01T00:00:00.000Z';
 
@@ -83,14 +84,14 @@ describe('CampaignService', () => {
       { id: 'l2', campaignId: 'c1', characterId: 'gone', linkedBy: 'u1', linkedAt: linkAt },
     ]);
     repo.findCharactersByIds.mockResolvedValue([
-      {
+      asDep({
         id: 'ch1',
         userId: 'u1',
         name: 'Hero',
         level: 3,
         classSlug: 'fighter',
         speciesSlug: 'human',
-      } as never,
+      }),
     ]);
     dataSource.query.mockResolvedValue([
       {
@@ -180,7 +181,7 @@ describe('CampaignService', () => {
       linkedAt: new Date('2026-01-04T00:00:00.000Z'),
     });
     repo.findCharactersByIds.mockResolvedValue([
-      { id: 'ch1', name: 'Rogue', level: 5, classSlug: 'rogue', speciesSlug: 'elf' } as never,
+      asDep({ id: 'ch1', name: 'Rogue', level: 5, classSlug: 'rogue', speciesSlug: 'elf' }),
     ]);
 
     await expect(

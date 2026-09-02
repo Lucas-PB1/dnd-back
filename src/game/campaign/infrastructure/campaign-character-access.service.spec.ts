@@ -1,4 +1,5 @@
 import { CampaignCharacterAccessService } from './campaign-character-access.service';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CampaignCharacterAccessService', () => {
   let links: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('CampaignCharacterAccessService', () => {
     members = { find: jest.fn(), findOne: jest.fn() };
     campaigns = { find: jest.fn() };
     service = new CampaignCharacterAccessService(
-      links as never,
-      members as never,
-      campaigns as never,
+      asDep(links),
+      asDep(members),
+      asDep(campaigns),
     );
   });
 

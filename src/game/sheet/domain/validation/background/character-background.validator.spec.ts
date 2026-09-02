@@ -1,3 +1,4 @@
+import { asDep } from '@common/testing/as-dep';
 jest.mock('@game/sheet/infrastructure/queries/background-origin.queries', () => ({
   loadBackgroundSkillSlugs: jest.fn(),
   loadBackgroundLanguageSlugs: jest.fn(),
@@ -40,9 +41,9 @@ describe('CharacterBackgroundValidator', () => {
 
   describe('validateBackgroundAbilityBoosts', () => {
     it('skips when background has no ability options', async () => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({
         abilityOptionSlugs: [],
-      } as never);
+      }));
 
       await expect(
         validator.validateBackgroundAbilityBoosts('acolyte', {}),
@@ -50,9 +51,9 @@ describe('CharacterBackgroundValidator', () => {
     });
 
     it('accepts valid plus2plus1 boosts', async () => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({
         abilityOptionSlugs: ['sabedoria', 'carisma', 'inteligencia'],
-      } as never);
+      }));
 
       await expect(
         validator.validateBackgroundAbilityBoosts('acolyte', {
@@ -64,9 +65,9 @@ describe('CharacterBackgroundValidator', () => {
     });
 
     it('rejects disallowed ability slug', async () => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({
         abilityOptionSlugs: ['sabedoria'],
-      } as never);
+      }));
 
       await expect(
         validator.validateBackgroundAbilityBoosts('acolyte', {
@@ -101,9 +102,9 @@ describe('CharacterBackgroundValidator', () => {
 
   describe('validateBackgroundLanguages', () => {
     beforeEach(() => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({
         languageChoiceCount: 1,
-      } as never);
+      }));
       jest.mocked(loadBackgroundLanguageSlugs).mockResolvedValue(['common']);
     });
 
@@ -139,9 +140,9 @@ describe('CharacterBackgroundValidator', () => {
     });
 
     it('skips when background grants no languages', async () => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({
         languageChoiceCount: 0,
-      } as never);
+      }));
       jest.mocked(loadBackgroundLanguageSlugs).mockResolvedValue([]);
 
       await expect(

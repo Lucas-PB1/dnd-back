@@ -1,4 +1,5 @@
 import { clearStaleSheetChoices } from './clear-stale-sheet-choices';
+import { asDep } from '@common/testing/as-dep';
 
 describe('clearStaleSheetChoices', () => {
   let sheetRepository: {
@@ -18,7 +19,7 @@ describe('clearStaleSheetChoices', () => {
   });
 
   it('clears all stale groups when changed without payload', async () => {
-    await clearStaleSheetChoices(sheetRepository as never, 'ch1', {}, {
+    await clearStaleSheetChoices(asDep(sheetRepository), 'ch1', {}, {
       classChanged: true,
       speciesChanged: true,
       subclassChanged: true,
@@ -31,14 +32,14 @@ describe('clearStaleSheetChoices', () => {
 
   it('skips clears when dto provides replacements', async () => {
     await clearStaleSheetChoices(
-      sheetRepository as never,
+      asDep(sheetRepository),
       'ch1',
-      {
+      asDep({
         classSkillSlugs: ['athletics'],
         classOptions: [],
         speciesChoices: [],
         subclassOptions: [],
-      } as never,
+      }),
       {
         classChanged: true,
         speciesChanged: true,
@@ -52,7 +53,7 @@ describe('clearStaleSheetChoices', () => {
   });
 
   it('does nothing when nothing changed', async () => {
-    await clearStaleSheetChoices(sheetRepository as never, 'ch1', {}, {
+    await clearStaleSheetChoices(asDep(sheetRepository), 'ch1', {}, {
       classChanged: false,
       speciesChanged: false,
       subclassChanged: false,

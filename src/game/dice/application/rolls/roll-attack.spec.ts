@@ -16,15 +16,16 @@ import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,
 } from './roll-weapon-context';
+import { asRollDep } from './roll-damage.spec.helpers';
 
 describe('executeRollAttack', () => {
   const base = {
-    access: {} as never,
-    sheet: {} as never,
-    domain: {} as never,
-    weaponAttacks: {} as never,
-    permanentItemEffects: {} as never,
-    dataSource: {} as never,
+    access: asRollDep({}),
+    sheet: asRollDep({}),
+    domain: asRollDep({}),
+    weaponAttacks: asRollDep({}),
+    permanentItemEffects: asRollDep({}),
+    dataSource: asRollDep({}),
     resourceSpender: {
       spendClassResource: jest.fn(),
       consumeSpellSlotLevel: jest.fn(),

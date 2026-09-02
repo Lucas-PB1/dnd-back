@@ -4,15 +4,12 @@ import type { CharacterDomainService } from '@game/sheet/domain/core/character-d
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import * as levelUpCatalog from '../infrastructure/queries/level-up-catalog.queries';
+import { asDep } from '@common/testing/as-dep';
 
 type Repo = { findOne: jest.Mock; find: jest.Mock };
 
 function repo(): Repo {
   return { findOne: jest.fn(), find: jest.fn() };
-}
-
-function asMock<T>(value: unknown): T {
-  return value as T;
 }
 
 function character(overrides: Partial<PlayerCharacter> = {}): PlayerCharacter {
@@ -80,12 +77,12 @@ describe('LevelUpService', () => {
       .mockResolvedValue(1);
 
     service = new LevelUpService(
-      asMock(dataSource),
-      asMock(domain),
-      asMock(sheetRepository),
-      asMock(levelsRepo),
-      asMock(classSpellsRepo),
-      asMock(subclassSpellsRepo),
+      asDep(dataSource),
+      asDep(domain),
+      asDep(sheetRepository),
+      asDep(levelsRepo),
+      asDep(classSpellsRepo),
+      asDep(subclassSpellsRepo),
     );
   });
 
@@ -100,7 +97,7 @@ describe('LevelUpService', () => {
   it('buildPreview returns hp, pb, spells and mastery slots', async () => {
     const pc = character();
     sheetRepository.load.mockResolvedValue(
-      asMock({ characterFeats: [{ featSlug: 'alert' }] }),
+      asDep({ characterFeats: [{ featSlug: 'alert' }] }),
     );
     domain.calculateHitPointsMaxForCharacter
       .mockResolvedValueOnce(8)

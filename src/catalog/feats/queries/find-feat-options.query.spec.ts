@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindFeatOptionsQuery } from './find-feat-options.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindFeatOptionsQuery', () => {
   let featRepo: { findOne: jest.Mock };
@@ -20,9 +21,9 @@ describe('FindFeatOptionsQuery', () => {
       ]),
     };
     query = new FindFeatOptionsQuery(
-      featRepo as never,
-      optionDefRepo as never,
-      optionValueRepo as never,
+      asDep(featRepo),
+      asDep(optionDefRepo),
+      asDep(optionValueRepo),
     );
   });
 

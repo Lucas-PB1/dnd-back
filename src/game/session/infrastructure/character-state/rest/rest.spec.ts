@@ -7,6 +7,7 @@ import { PlayerCharacterState } from '@game/session/infrastructure/player-charac
 import { applyLongRestState, applyShortRestState } from './rest';
 import { resolveClassResources } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';
+import { asDep } from '@common/testing/as-dep';
 
 jest.mock('../resources/class-resources', () => ({
   resolveClassResources: jest.fn(),
@@ -78,7 +79,7 @@ describe('rest', () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockResolveClassResources.mockResolvedValue([
+    mockResolveClassResources.mockResolvedValue(asDep([
       {
         slug: 'secondWind',
         name: 'Second Wind',
@@ -88,7 +89,7 @@ describe('rest', () => {
         recoverAllOnShort: false,
         recoverOnLongDice: null,
       },
-    ] as never);
+    ]));
     mockClampHitDice.mockResolvedValue(undefined);
     buildResponse.mockResolvedValue({ id: 'char1' });
   });

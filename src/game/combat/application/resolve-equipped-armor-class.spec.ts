@@ -1,5 +1,6 @@
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { DEFAULT_ABILITY_SCORES } from '@game/shared/infrastructure/player-character.entity';
+import { asDep } from '@common/testing/as-dep';
 
 describe('ResolveEquippedArmorClass', () => {
   let inventoryItems: { find: jest.Mock };
@@ -12,9 +13,9 @@ describe('ResolveEquippedArmorClass', () => {
     armorCatalog = { find: jest.fn() };
     combatCatalog = { loadUnarmoredDefenses: jest.fn().mockResolvedValue([]) };
     service = new ResolveEquippedArmorClass(
-      inventoryItems as never,
-      armorCatalog as never,
-      combatCatalog as never,
+      asDep(inventoryItems),
+      asDep(armorCatalog),
+      asDep(combatCatalog),
     );
   });
 

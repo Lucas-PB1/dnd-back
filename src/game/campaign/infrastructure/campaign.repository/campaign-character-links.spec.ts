@@ -12,6 +12,7 @@ import {
   unlinkCharacter,
   type CampaignCharacterLinksDeps,
 } from './campaign-character-links';
+import { asDep } from '@common/testing/as-dep';
 
 type Repo = {
   findOne: jest.Mock;
@@ -68,10 +69,10 @@ describe('campaign-character-links', () => {
     characterRows = repo();
     characters = { findOwnedOrFail: jest.fn() };
     deps = {
-      campaigns: campaigns as never,
-      members: members as never,
-      links: links as never,
-      characterRows: characterRows as never,
+      campaigns: asDep(campaigns),
+      members: asDep(members),
+      links: asDep(links),
+      characterRows: asDep(characterRows),
       characters: characters as unknown as CharacterRepository,
     };
     jest.clearAllMocks();
@@ -170,9 +171,9 @@ describe('campaign-character-links', () => {
     it('returns empty map for empty input', async () => {
       const result = await listCampaignRefsByCharacterIds(
         {
-          links: links as never,
-          campaigns: campaigns as never,
-          members: members as never,
+          links: asDep(links),
+          campaigns: asDep(campaigns),
+          members: asDep(members),
         },
         [],
         'u1',
@@ -204,9 +205,9 @@ describe('campaign-character-links', () => {
 
       const result = await listCampaignRefsByCharacterIds(
         {
-          links: links as never,
-          campaigns: campaigns as never,
-          members: members as never,
+          links: asDep(links),
+          campaigns: asDep(campaigns),
+          members: asDep(members),
         },
         ['ch1'],
         'u1',

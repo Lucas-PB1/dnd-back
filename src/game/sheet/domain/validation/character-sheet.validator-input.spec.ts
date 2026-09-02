@@ -6,6 +6,7 @@ import { CharacterSpellsValidator } from './spells/character-spells.validator';
 import { CharacterClassOptionsValidator } from './class-options/character-class-options.validator';
 import { CharacterFeatsValidator } from './feats/character-feats.validator';
 import { CharacterCreateRequirementsValidator } from './character-create-requirements.validator';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CharacterSheetValidator.validateSheetInput', () => {
   let validator: CharacterSheetValidator;
@@ -102,10 +103,10 @@ describe('CharacterSheetValidator.validateSheetInput', () => {
       classOptionsValidator as unknown as CharacterClassOptionsValidator,
       featsValidator as unknown as CharacterFeatsValidator,
       {} as CharacterCreateRequirementsValidator,
-      extraSkillValidator as never,
-      mysticArcanumValidator as never,
-      signatureSpellsValidator as never,
-      { validate: jest.fn().mockResolvedValue(undefined) } as never,
+      asDep(extraSkillValidator),
+      asDep(mysticArcanumValidator),
+      asDep(signatureSpellsValidator),
+      asDep({ validate: jest.fn().mockResolvedValue(undefined) }),
     );
   });
 

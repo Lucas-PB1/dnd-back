@@ -3,6 +3,7 @@ import { CharacterEquipmentValidator } from './character-equipment.validator';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
 import { VPhbBackgroundEquipment } from '@entities/views/v-phb-background-equipment.entity';
+import { asDep } from '@common/testing/as-dep';
 
 describe('CharacterEquipmentValidator', () => {
   let validator: CharacterEquipmentValidator;
@@ -36,14 +37,14 @@ describe('CharacterEquipmentValidator', () => {
     backgroundEquipmentRepo = { find: jest.fn() };
     validator = new CharacterEquipmentValidator(
       catalogLookup as unknown as CatalogLookupService,
-      classEquipmentRepo as never,
-      backgroundEquipmentRepo as never,
+      asDep(classEquipmentRepo),
+      asDep(backgroundEquipmentRepo),
     );
   });
 
   describe('validateEquipment', () => {
     it('accepts background gold option when background offers gold', async () => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({ equipmentGoldOption: 50 } as never);
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({ equipmentGoldOption: 50 }));
       await expect(
         validator.validateEquipment(
           [{ source: 'background', packageSlug: 'gold' }],
@@ -53,7 +54,7 @@ describe('CharacterEquipmentValidator', () => {
     });
 
     it('rejects gold option when background has no gold', async () => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({ equipmentGoldOption: null } as never);
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({ equipmentGoldOption: null }));
       await expect(
         validator.validateEquipment(
           [{ source: 'background', packageSlug: 'gold' }],
@@ -63,14 +64,14 @@ describe('CharacterEquipmentValidator', () => {
     });
 
     it('rejects gold option when background gold is zero', async () => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({ equipmentGoldOption: 0 } as never);
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({ equipmentGoldOption: 0 }));
       await expect(
         validator.validateEquipment([{ source: 'background', packageSlug: 'gold' }], ctx),
       ).rejects.toThrow(/does not offer a gold equipment option/i);
     });
 
     it('rejects item rows on gold background package', async () => {
-      catalogLookup.findBackgroundOrFail.mockResolvedValue({ equipmentGoldOption: 50 } as never);
+      catalogLookup.findBackgroundOrFail.mockResolvedValue(asDep({ equipmentGoldOption: 50 }));
       await expect(
         validator.validateEquipment(
           [{ source: 'background', packageSlug: 'gold', itemSlug: 'longsword' }],
@@ -100,9 +101,9 @@ describe('CharacterEquipmentValidator', () => {
     });
 
     it('accepts item listed in class package', async () => {
-      classEquipmentRepo.find.mockResolvedValue([
+      classEquipmentRepo.find.mockResolvedValue(asDep([
         { itemSlug: 'longsword', choiceText: null },
-      ] as never);
+      ]));
       await expect(
         validator.validateEquipment(
           [{ source: 'class', packageSlug: 'a', itemSlug: 'longsword' }],
@@ -112,9 +113,9 @@ describe('CharacterEquipmentValidator', () => {
     });
 
     it('allows custom item when package has choiceText rows', async () => {
-      backgroundEquipmentRepo.find.mockResolvedValue([
+      backgroundEquipmentRepo.find.mockResolvedValue(asDep([
         { itemSlug: null, choiceText: 'Any martial weapon' },
-      ] as never);
+      ]));
       await expect(
         validator.validateEquipment(
           [{ source: 'background', packageSlug: 'gear', itemSlug: 'longsword' }],
@@ -125,9 +126,9 @@ describe('CharacterEquipmentValidator', () => {
     });
 
     it('allows custom class item when package has choiceText rows', async () => {
-      classEquipmentRepo.find.mockResolvedValue([
+      classEquipmentRepo.find.mockResolvedValue(asDep([
         { itemSlug: null, choiceText: 'Any simple weapon' },
-      ] as never);
+      ]));
       await validator.validateEquipment(
         [{ source: 'class', packageSlug: 'b', itemSlug: 'club' }],
         ctx,
@@ -136,9 +137,9 @@ describe('CharacterEquipmentValidator', () => {
     });
 
     it('rejects item not in fixed background package', async () => {
-      backgroundEquipmentRepo.find.mockResolvedValue([
+      backgroundEquipmentRepo.find.mockResolvedValue(asDep([
         { itemSlug: 'dagger', choiceText: null },
-      ] as never);
+      ]));
       await expect(
         validator.validateEquipment(
           [{ source: 'background', packageSlug: 'gear', itemSlug: 'longsword' }],
@@ -148,9 +149,9 @@ describe('CharacterEquipmentValidator', () => {
     });
 
     it('accepts package row without itemSlug', async () => {
-      classEquipmentRepo.find.mockResolvedValue([
+      classEquipmentRepo.find.mockResolvedValue(asDep([
         { itemSlug: 'shield', choiceText: null },
-      ] as never);
+      ]));
       await expect(
         validator.validateEquipment([{ source: 'class', packageSlug: 'a' }], ctx),
       ).resolves.toBeUndefined();

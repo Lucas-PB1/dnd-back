@@ -8,15 +8,12 @@ import type { CharacterSheetRepository } from '@game/sheet/infrastructure/charac
 import type { LevelUpService } from '../domain/level-up.service';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import * as levelUpCatalog from '../infrastructure/queries/level-up-catalog.queries';
+import { asDep } from '@common/testing/as-dep';
 
 const fighterProgression = [
   { level: 1, weaponMastery: 3 },
   { level: 4, weaponMastery: 4 },
 ];
-
-function asMock<T>(value: unknown): T {
-  return value as T;
-}
 
 function character(overrides: Partial<PlayerCharacter> = {}): PlayerCharacter {
   return {
@@ -54,14 +51,14 @@ describe('LevelUpPreviewQuery', () => {
   beforeEach(() => {
     repository = { findAccessibleOrFail: jest.fn() };
     levelUp = { buildPreview: jest.fn() };
-    query = new LevelUpPreviewQuery(asMock(repository), asMock(levelUp));
+    query = new LevelUpPreviewQuery(asDep(repository), asDep(levelUp));
   });
 
   it('loads character and delegates preview to LevelUpService', async () => {
     const pc = character();
     repository.findAccessibleOrFail.mockResolvedValue(pc);
     levelUp.buildPreview.mockResolvedValue(
-      asMock({ currentLevel: 3, nextLevel: 4 }),
+      asDep({ currentLevel: 3, nextLevel: 4 }),
     );
 
     await expect(query.execute('u1', 'ch1')).resolves.toMatchObject({
@@ -95,11 +92,11 @@ describe('LevelUpHandler', () => {
     characterState = { syncHitDiceOnLevelChange: jest.fn() };
     sheetRepository = { load: jest.fn() };
     handler = new LevelUpHandler(
-      asMock(repository),
-      asMock(updateCharacter),
-      asMock(characterState),
-      asMock(sheetRepository),
-      asMock({}),
+      asDep(repository),
+      asDep(updateCharacter),
+      asDep(characterState),
+      asDep(sheetRepository),
+      asDep({}),
     );
   });
 
@@ -110,7 +107,7 @@ describe('LevelUpHandler', () => {
   it('apply level-up patches character and syncs hit dice', async () => {
     const pc = character();
     repository.findAccessibleOrFail.mockResolvedValue(pc);
-    updateCharacter.execute.mockResolvedValue(asMock({ id: 'ch1', level: 4 }));
+    updateCharacter.execute.mockResolvedValue(asDep({ id: 'ch1', level: 4 }));
 
     const result = await handler.execute('u1', 'ch1', {
       classOptions: [{ optionKey: 'masteryWeapon4', valueId: 'longsword' }],
@@ -145,7 +142,7 @@ describe('LevelUpHandler', () => {
     );
 
     repository.findAccessibleOrFail.mockResolvedValue(character());
-    sheetRepository.load.mockResolvedValue(asMock({ classOptions: [] }));
+    sheetRepository.load.mockResolvedValue(asDep({ classOptions: [] }));
     await expect(handler.execute('u1', 'ch1', {})).rejects.toThrow(
       /unlocks weapon mastery choices: masteryWeapon4/,
     );

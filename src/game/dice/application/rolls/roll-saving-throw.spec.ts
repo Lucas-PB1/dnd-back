@@ -46,6 +46,7 @@ jest.mock('@game/sheet/infrastructure/load-class-ability-boosts', () => ({
 import { BadRequestException } from '@nestjs/common';
 import { executeRollSavingThrow } from './roll-saving-throw';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
+import { asRollDep } from './roll-damage.spec.helpers';
 
 describe('executeRollSavingThrow', () => {
   const sheet = {
@@ -67,18 +68,18 @@ describe('executeRollSavingThrow', () => {
   };
 
   const base = {
-    access: {} as never,
-    sheet: sheet as never,
-    domain: {
+    access: asRollDep({}),
+    sheet: asRollDep(sheet),
+    domain: asRollDep({
       getProficiencyBonus: jest.fn().mockResolvedValue(4),
-    } as never,
-    permanentItemEffects: {
+    }),
+    permanentItemEffects: asRollDep({
       resolve: jest.fn().mockResolvedValue({
         abilityBonuses: {},
         abilityScoreCaps: {},
         savingThrowBonuses: {},
       }),
-    } as never,
+    }),
     resourceSpender,
     userId: 'user-1',
     characterId: 'fighter-1',
@@ -92,7 +93,7 @@ describe('executeRollSavingThrow', () => {
     await expect(
       executeRollSavingThrow({
         ...base,
-        dataSource: { query: jest.fn().mockResolvedValue([]) } as never,
+        dataSource: asRollDep({ query: jest.fn().mockResolvedValue([]) }),
         dto: {
           abilitySlug: 'sabedoria',
           indomitable: true,
@@ -107,7 +108,7 @@ describe('executeRollSavingThrow', () => {
   it('spends Indomitable and adds character level to the save bonus', async () => {
     const result = await executeRollSavingThrow({
       ...base,
-      dataSource: { query: jest.fn().mockResolvedValue([]) } as never,
+      dataSource: asRollDep({ query: jest.fn().mockResolvedValue([]) }),
       dto: {
         abilitySlug: 'sabedoria',
         indomitable: true,

@@ -1,4 +1,5 @@
 import { FindSubclassOptionsQuery } from './find-subclass-options.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindSubclassOptionsQuery', () => {
   const optionValuesRepo = {
@@ -18,9 +19,9 @@ describe('FindSubclassOptionsQuery', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     query = new FindSubclassOptionsQuery(
-      subclassRepo as never,
-      optionValuesRepo as never,
-      catalogLookup as never,
+      asDep(subclassRepo),
+      asDep(optionValuesRepo),
+      asDep(catalogLookup),
     );
     subclassRepo.findOne.mockResolvedValue({ id: '1', slug: 'lore' });
   });

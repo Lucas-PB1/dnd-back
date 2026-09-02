@@ -1,10 +1,11 @@
 import { loadThreadResourceSchedule } from './class-resource-schedule.queries';
+import { asDep } from '@common/testing/as-dep';
 
 describe('loadThreadResourceSchedule', () => {
   it('returns empty without characterId', async () => {
     const query = jest.fn();
     await expect(
-      loadThreadResourceSchedule({ query } as never, ''),
+      loadThreadResourceSchedule(asDep({ query }), ''),
     ).resolves.toEqual([]);
     expect(query).not.toHaveBeenCalled();
   });
@@ -25,7 +26,7 @@ describe('loadThreadResourceSchedule', () => {
     ]);
 
     await expect(
-      loadThreadResourceSchedule({ query } as never, 'char-1'),
+      loadThreadResourceSchedule(asDep({ query }), 'char-1'),
     ).resolves.toEqual([
       {
         resourceSlug: 'jarls-authority',

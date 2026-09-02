@@ -1,3 +1,4 @@
+import { asDep } from '@common/testing/as-dep';
 jest.mock('@game/sheet/infrastructure/queries/feat-option.queries', () => ({
   ...jest.requireActual('@game/sheet/infrastructure/queries/feat-option.queries'),
   fightingStyleExists: jest.fn().mockResolvedValue(true),
@@ -50,14 +51,14 @@ function buildClassOptionsValidator(
       catalogLookup,
       subclassRefRepo,
       subclassOptionValuesRepo,
-      {} as never,
+      asDep({}),
     ),
     new CharacterClassExpertiseValidator(dataSource),
     new CharacterWeaponMasteryValidator(dataSource, proficiencies.query),
     new CharacterSpellMasteryValidator(dataSource),
-    new CharacterEldritchInvocationsValidator(dataSource, {
+    new CharacterEldritchInvocationsValidator(dataSource, asDep({
       find: jest.fn(),
-    } as never),
+    })),
     new CharacterMetamagicValidator(dataSource),
     new CharacterClassFeatureOptionsValidator(dataSource),
   );
@@ -193,7 +194,7 @@ describe('CharacterFeatsValidator fighting_style feat option value', () => {
 
     const valueValidator = new CharacterFeatOptionValueValidator(
       dataSource as unknown as DataSource,
-      {} as never,
+      asDep({}),
       featOptionValueRepo as unknown as Repository<PhbOptionValue>,
     );
     const optionsValidator = new CharacterFeatOptionsValidator(

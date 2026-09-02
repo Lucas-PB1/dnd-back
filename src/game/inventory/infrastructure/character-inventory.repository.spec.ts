@@ -5,6 +5,7 @@ import type { PhbItem } from '@entities/phb-item.entity';
 import { CharacterInventoryRepository } from './character-inventory.repository';
 import type { EquipmentSlotResolver } from './equipment-slot-resolver';
 import type { PlayerCharacterItem } from './player-character-item.entity';
+import { asDep } from '@common/testing/as-dep';
 
 function itemRow(overrides: Partial<PlayerCharacterItem> = {}): PlayerCharacterItem {
   return {
@@ -72,11 +73,11 @@ describe('CharacterInventoryRepository', () => {
     repository = new CharacterInventoryRepository(
       items as unknown as Repository<PlayerCharacterItem>,
       catalogItems as unknown as Repository<PhbItem>,
-      { findOne: jest.fn() } as never,
-      { find: jest.fn().mockResolvedValue([]) } as never,
+      asDep({ findOne: jest.fn() }),
+      asDep({ find: jest.fn().mockResolvedValue([]) }),
       catalogLookup as unknown as CatalogLookupService,
       slotResolver as unknown as EquipmentSlotResolver,
-      { transaction: jest.fn(), query: jest.fn().mockResolvedValue([]) } as never,
+      asDep({ transaction: jest.fn(), query: jest.fn().mockResolvedValue([]) }),
     );
   });
 

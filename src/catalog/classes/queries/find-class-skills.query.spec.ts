@@ -1,4 +1,5 @@
 import { FindClassSkillsQuery } from './find-class-skills.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindClassSkillsQuery', () => {
   let skillsRepo: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('FindClassSkillsQuery', () => {
     catalogLookup = { findClassOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toClassSkillDto: jest.fn().mockReturnValue({ slug: 'athletics' }) };
     query = new FindClassSkillsQuery(
-      skillsRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(skillsRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

@@ -1,4 +1,5 @@
 import { FindFeatsBySlugsQuery } from './find-feats-by-slugs.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindFeatsBySlugsQuery', () => {
   it('returns feats in requested slug order and skips missing', async () => {
@@ -12,8 +13,8 @@ describe('FindFeatsBySlugsQuery', () => {
       toDto: jest.fn((row: { featSlug: string }) => ({ slug: row.featSlug })),
     };
     const query = new FindFeatsBySlugsQuery(
-      featsRepo as never,
-      mapper as never,
+      asDep(featsRepo),
+      asDep(mapper),
     );
 
     const result = await query.execute(['tough', 'missing', 'alert']);
@@ -23,8 +24,8 @@ describe('FindFeatsBySlugsQuery', () => {
   it('returns empty for empty input', async () => {
     const featsRepo = { find: jest.fn() };
     const query = new FindFeatsBySlugsQuery(
-      featsRepo as never,
-      { toDto: jest.fn() } as never,
+      asDep(featsRepo),
+      asDep({ toDto: jest.fn() }),
     );
     await expect(query.execute([])).resolves.toEqual([]);
     expect(featsRepo.find).not.toHaveBeenCalled();

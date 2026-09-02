@@ -4,9 +4,10 @@ import {
   GLORIOUS_END_RESOURCE,
   LAST_ACT_OF_FATE_RESOURCE,
 } from './apply-thread-resource-spend-side-effects';
+import { asDep } from '@common/testing/as-dep';
 
 describe('applyThreadResourceSpendSideEffects', () => {
-  const character = { id: 'pc-1', hitPointsCurrent: 12 } as never;
+  const character = asDep({ id: 'pc-1', hitPointsCurrent: 12 });
   const baseState = {
     conditions: [] as string[],
     deathSaveSuccesses: 0,
@@ -23,10 +24,10 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     const result = await applyThreadResourceSpendSideEffects({
-      state: state as never,
+      state: asDep(state),
       character,
       resourceSlug: 'jarls-authority',
-      currentState: baseState as never,
+      currentState: asDep(baseState),
     });
 
     expect(state.applyCurrentHitPoints).not.toHaveBeenCalled();
@@ -53,10 +54,10 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     const result = await applyThreadResourceSpendSideEffects({
-      state: state as never,
+      state: asDep(state),
       character,
       resourceSlug: DOOM_DELAYED_RESOURCE,
-      currentState: baseState as never,
+      currentState: asDep(baseState),
     });
 
     expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(character, 0);
@@ -81,10 +82,10 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     await applyThreadResourceSpendSideEffects({
-      state: state as never,
+      state: asDep(state),
       character,
       resourceSlug: DOOM_DELAYED_RESOURCE,
-      currentState: baseState as never,
+      currentState: asDep(baseState),
     });
 
     expect(state.patch).toHaveBeenCalledWith(character, {
@@ -112,10 +113,10 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     const result = await applyThreadResourceSpendSideEffects({
-      state: state as never,
+      state: asDep(state),
       character,
       resourceSlug: LAST_ACT_OF_FATE_RESOURCE,
-      currentState: baseState as never,
+      currentState: asDep(baseState),
     });
 
     expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(character, 1);
@@ -136,10 +137,10 @@ describe('applyThreadResourceSpendSideEffects', () => {
     };
 
     const result = await applyThreadResourceSpendSideEffects({
-      state: state as never,
+      state: asDep(state),
       character,
       resourceSlug: GLORIOUS_END_RESOURCE,
-      currentState: baseState as never,
+      currentState: asDep(baseState),
     });
 
     expect(state.applyCurrentHitPoints).not.toHaveBeenCalled();

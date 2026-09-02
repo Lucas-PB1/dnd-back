@@ -1,4 +1,5 @@
 import { FindBackgroundLanguagesQuery } from './find-background-languages.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindBackgroundLanguagesQuery', () => {
   let languagesRepo: { find: jest.Mock };
@@ -11,9 +12,9 @@ describe('FindBackgroundLanguagesQuery', () => {
     catalogLookup = { findBackgroundOrFail: jest.fn().mockResolvedValue({}) };
     mapper = { toLanguageDto: jest.fn().mockReturnValue({ slug: 'common' }) };
     query = new FindBackgroundLanguagesQuery(
-      languagesRepo as never,
-      catalogLookup as never,
-      mapper as never,
+      asDep(languagesRepo),
+      asDep(catalogLookup),
+      asDep(mapper),
     );
   });
 

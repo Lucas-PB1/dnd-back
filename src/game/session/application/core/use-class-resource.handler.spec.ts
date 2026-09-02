@@ -1,4 +1,5 @@
 import { UseClassResourceHandler } from './use-class-resource.handler';
+import { asDep } from '@common/testing/as-dep';
 
 describe('UseClassResourceHandler', () => {
   const stateResponse = {
@@ -24,8 +25,8 @@ describe('UseClassResourceHandler', () => {
     })),
   };
   const handler = new UseClassResourceHandler(
-    access as never,
-    state as never,
+    asDep(access),
+    asDep(state),
   );
 
   beforeEach(() => {

@@ -1,4 +1,5 @@
 import { FindFightingStylesQuery } from './find-fighting-styles.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindFightingStylesQuery', () => {
   let stylesRepo: { createQueryBuilder: jest.Mock };
@@ -16,7 +17,7 @@ describe('FindFightingStylesQuery', () => {
     };
     stylesRepo = { createQueryBuilder: jest.fn().mockReturnValue(qb) };
     mapper = { toDto: jest.fn().mockReturnValue({ slug: 'defense' }) };
-    query = new FindFightingStylesQuery(stylesRepo as never, mapper as never);
+    query = new FindFightingStylesQuery(asDep(stylesRepo), asDep(mapper));
   });
 
   it('filters by class and search', async () => {

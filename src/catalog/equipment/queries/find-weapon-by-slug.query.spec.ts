@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { FindWeaponBySlugQuery } from './find-weapon-by-slug.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('FindWeaponBySlugQuery', () => {
   let weaponsRepo: { findOne: jest.Mock };
@@ -18,10 +19,10 @@ describe('FindWeaponBySlugQuery', () => {
     masteryRepo = { find: jest.fn().mockResolvedValue([]) };
     mapper = { toWeaponDto: jest.fn().mockReturnValue({ slug: 'longsword' }) };
     query = new FindWeaponBySlugQuery(
-      weaponsRepo as never,
-      propertyRepo as never,
-      masteryRepo as never,
-      mapper as never,
+      asDep(weaponsRepo),
+      asDep(propertyRepo),
+      asDep(masteryRepo),
+      asDep(mapper),
     );
   });
 

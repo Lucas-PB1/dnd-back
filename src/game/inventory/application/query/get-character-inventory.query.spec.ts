@@ -1,4 +1,5 @@
 import { GetCharacterInventoryQuery } from './get-character-inventory.query';
+import { asDep } from '@common/testing/as-dep';
 
 describe('GetCharacterInventoryQuery', () => {
   let access: { findAccessibleOrFail: jest.Mock };
@@ -34,11 +35,11 @@ describe('GetCharacterInventoryQuery', () => {
     seedStartingInventory = { execute: jest.fn() };
     equipment = { find: jest.fn() };
     query = new GetCharacterInventoryQuery(
-      access as never,
-      campaignAccess as never,
-      inventory as never,
-      seedStartingInventory as never,
-      equipment as never,
+      asDep(access),
+      asDep(campaignAccess),
+      asDep(inventory),
+      asDep(seedStartingInventory),
+      asDep(equipment),
     );
   });
 
