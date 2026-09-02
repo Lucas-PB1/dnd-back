@@ -4,8 +4,10 @@ import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseMonkTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export const FOCUS_RESOURCE_SLUG = 'focusPoints';

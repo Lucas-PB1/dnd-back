@@ -10,10 +10,12 @@ import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.enti
 import { grantHitDiceOnLevelUp } from '@game/session/domain/hit-dice-rest';
 import {
   CastSpellDto,
-  CharacterStateResponseDto,
   PatchCharacterStateDto,
   RestResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/session-commands.dto';
+import {
+  CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
 import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import type { BuildResponse } from '../core/mutation-types';

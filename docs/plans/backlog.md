@@ -59,7 +59,7 @@ _Fase concluída (3.0–3.7). Próximo: Fase 4 abaixo._
 - [x] **4.1b Read models — espelho → tabela:** 11 views combat/progression; inventário [`read-model-inventory.md`](read-model-inventory.md); ADR [`adr-read-model-layers.md`](../architecture/adr-read-model-layers.md)
 - [x] **4.1c Read models — MV agregados:** 8 MVs (feat, background, species choices, economy, bundles, spell-by-class)
 - [x] **4.1d Read models — MV lista fechada runtime:** +9 (slots, granted, CA/PV, boost, heritage choices) → **17 MVs**; [`read-model-inventory.md`](read-model-inventory.md)
-- [ ] **4.2** Barrel policy (`session/dto/index.ts`, …)
+- [x] **4.2** Barrel policy — `session/dto/index.ts` removido; imports por família (`dto/core|fighter|martial|table-actions`)
 - [ ] **4.3** `combat/domain/notes/` para combat-notes
 - [ ] **4.4** Split `inventory/application`
 - [ ] **4.5** `CatalogLookupService` vs queries — caminho único escrita ficha

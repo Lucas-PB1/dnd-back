@@ -2,7 +2,7 @@ import {
   ActionSurgeResponseDto,
   SecondWindResponseDto,
   TacticalMindResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/fighter/fighter-session.dto';
 import type { MartialSessionDeps, PlayerCharacter } from './martial-deps';
 import {
   applyActionSurge,

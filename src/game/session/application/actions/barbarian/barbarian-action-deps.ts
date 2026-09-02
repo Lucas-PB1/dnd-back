@@ -3,8 +3,10 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseBarbarianTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export type BarbarianActionDeps = {

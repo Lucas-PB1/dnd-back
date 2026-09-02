@@ -30,13 +30,15 @@ import { RecoverClassResourceHandler } from '../application/core/recover-class-r
 import {
   CastSpellDto,
   CastSpellResponseDto,
-  CharacterStateResponseDto,
   PatchCharacterStateDto,
   RestDto,
   RestResponseDto,
   UseClassResourceDto,
   UseClassResourceResponseDto,
-} from '../dto';
+} from '../dto/core/session-commands.dto';
+import {
+  CharacterStateResponseDto,
+} from '../dto/core/character-state-response.dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()

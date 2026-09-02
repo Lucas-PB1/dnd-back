@@ -1,5 +1,7 @@
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import type { UseClassResourceResponseDto } from '@game/session/dto';
+import type {
+  UseClassResourceResponseDto,
+} from '@game/session/dto/core/session-commands.dto';
 import {
   consumeSpellSlotLevelOp,
   recoverClassResourceOp,

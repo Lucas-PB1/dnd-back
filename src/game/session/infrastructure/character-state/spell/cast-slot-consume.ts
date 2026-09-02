@@ -10,7 +10,9 @@ import {
   consumeGrantedFreeCast,
   freeCastsRemaining,
 } from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
-import { CastSpellDto } from '@game/session/dto';
+import {
+  CastSpellDto,
+} from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { consumeSpellSlot, loadMaxSlots } from '../resources/spell-slots';
 import { resolveSpellCastEconomyForCharacter } from './cast-granted-economy';

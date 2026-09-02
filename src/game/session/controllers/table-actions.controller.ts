@@ -34,22 +34,30 @@ import { GunslingerActionsHandler } from '../application/actions/gunslinger-acti
 import { MonsterHunterActionsHandler } from '../application/actions/monster-hunter-actions.handler';
 import {
   TableActionResponseDto,
+} from '../dto/fighter/fighter-session.dto';
+import {
   UseBarbarianTableActionDto,
-  UseBardTableActionDto,
-  UseClericTableActionDto,
-  UseDruidTableActionDto,
   UseFighterTableActionDto,
   UseGunslingerTableActionDto,
   UseMonkTableActionDto,
   UsePaladinTableActionDto,
   UseRangerTableActionDto,
   UseRogueTableActionDto,
+} from '../dto/table-actions/table-actions-martial.dto';
+import {
+  UseBardTableActionDto,
+  UseClericTableActionDto,
+  UseDruidTableActionDto,
   UseSorcererTableActionDto,
   UseWarlockTableActionDto,
   UseWizardTableActionDto,
+} from '../dto/table-actions/table-actions-caster.dto';
+import {
   UseMonsterHunterTableActionDto,
+} from '../dto/table-actions/table-actions-monster-hunter.dto';
+import {
   UseManeuverResponseDto,
-} from '../dto';
+} from '../dto/core/session-commands.dto';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()

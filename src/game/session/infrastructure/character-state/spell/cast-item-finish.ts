@@ -11,7 +11,9 @@ import {
   getEnspelledSpellStats,
   isEnspelledEconomyItemSlug,
 } from '@game/inventory/domain/coverage/enspelled-weapon';
-import { CastSpellDto } from '@game/session/dto';
+import {
+  CastSpellDto,
+} from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 
 /** Notas Treasure + overrides CD/ataque após gasto de cast de item. */

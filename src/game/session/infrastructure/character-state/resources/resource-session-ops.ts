@@ -6,8 +6,10 @@ import { PlayerCharacter } from '@game/shared/infrastructure/player-character.en
 import { applyResourceSpend } from '@game/session/domain/class-resources';
 import {
   CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
+import {
   UseClassResourceResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import type { BuildResponse } from '../core/mutation-types';
 import { resolveClassResources } from './class-resources';

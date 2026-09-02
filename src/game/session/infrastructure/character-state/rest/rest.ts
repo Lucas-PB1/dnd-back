@@ -4,7 +4,9 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterRepository } from '@game/shared/infrastructure/character.repository';
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
-import { RestResponseDto } from '@game/session/dto';
+import {
+  RestResponseDto,
+} from '@game/session/dto/core/session-commands.dto';
 import {
   restoreHitDiceOnLongRest,
   spendHitDice,

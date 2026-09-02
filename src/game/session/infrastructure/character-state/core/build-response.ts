@@ -20,7 +20,9 @@ import {
   freeCastsRemaining,
   resolveGrantedSpellCastEconomy,
 } from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
-import { CharacterStateResponseDto } from '@game/session/dto';
+import {
+  CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { buildClassResourceState } from '../resources/class-resources';
 import { clampHitDiceToLevel } from '../resources/hit-dice';

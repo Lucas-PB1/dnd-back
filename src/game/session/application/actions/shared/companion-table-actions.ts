@@ -1,7 +1,9 @@
 import { BadRequestException } from '@nestjs/common';
 import { DataSource } from 'typeorm';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import type { TableActionResponseDto } from '@game/session/dto';
+import type {
+  TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
 import {
   formatCompanionCommandNote,
   isCompanionCommandSlug,

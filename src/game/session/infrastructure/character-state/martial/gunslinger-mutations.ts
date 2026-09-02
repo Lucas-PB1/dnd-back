@@ -11,8 +11,10 @@ import { applyResourceSpend } from '@game/session/domain/class-resources';
 import { resolveManeuverEffect, rollRiskDie } from '@game/session/domain/maneuver-resolve';
 import {
   CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
+import {
   UseManeuverResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from '../resources/class-resources';
 import type { BuildResponse } from '../core/mutation-types';

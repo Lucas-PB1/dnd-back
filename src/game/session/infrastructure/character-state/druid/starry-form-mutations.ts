@@ -2,7 +2,9 @@ import { BadRequestException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import type { StellarConstellation } from '@game/combat/domain/druid/starry-form-state';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import { CharacterStateResponseDto } from '@game/session/dto';
+import {
+  CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import type { BuildResponse } from '../core/mutation-types';
 

@@ -6,7 +6,9 @@ import {
   pickItemCastSlotRule,
 } from '@game/session/domain/item-cast-rules';
 import { resolveItemCastSlotLevel } from '@game/session/domain/resolve-item-cast-slot-level';
-import { CastSpellDto } from '@game/session/dto';
+import {
+  CastSpellDto,
+} from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { spendArtifactRandomSpellCast } from './cast-artifact-spell';
 import {

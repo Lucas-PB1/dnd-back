@@ -12,11 +12,13 @@ import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-s
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import {
   CastSpellDto,
-  CharacterStateResponseDto,
   PatchCharacterStateDto,
   RestResponseDto,
   UseClassResourceResponseDto,
-} from '../dto';
+} from '../dto/core/session-commands.dto';
+import {
+  CharacterStateResponseDto,
+} from '../dto/core/character-state-response.dto';
 import { PhbCondition } from './phb-condition.entity';
 import { PlayerCharacterState } from './player-character-state.entity';
 import { buildCharacterStateResponse } from './character-state/core/build-response';

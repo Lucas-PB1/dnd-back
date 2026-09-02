@@ -7,7 +7,9 @@ import type { EldritchFreeCastResolution } from '@game/combat/domain/warlock';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
-import { CastSpellDto } from '@game/session/dto';
+import {
+  CastSpellDto,
+} from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { spendItemCast } from './cast-item';
 import { spendFreeCastResource } from './cast-magic-missile';

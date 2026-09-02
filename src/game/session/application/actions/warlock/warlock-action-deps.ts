@@ -2,8 +2,10 @@ import type { CharacterDomainService } from '@game/sheet/domain/core/character-d
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import type {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import type {
   UseWarlockTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-caster.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 

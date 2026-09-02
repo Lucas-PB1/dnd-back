@@ -1,5 +1,7 @@
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import type { CharacterStateResponseDto } from '@game/session/dto';
+import type {
+  CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 /**

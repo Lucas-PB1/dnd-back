@@ -8,8 +8,10 @@ import {
 import { rollRiskDie } from '@game/session/domain/maneuver-resolve';
 import {
   CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
+import {
   UseClassResourceResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from './class-resources';
 import type { BuildResponse } from '../core/mutation-types';

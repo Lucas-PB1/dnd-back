@@ -1,4 +1,6 @@
-import { CharacterStateResponseDto } from '@game/session/dto';
+import {
+  CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
 import type { MartialSessionDeps, PlayerCharacter } from './martial-deps';
 import {
   applyRecoverAllRage,

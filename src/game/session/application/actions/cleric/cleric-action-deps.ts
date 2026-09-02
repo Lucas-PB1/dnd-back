@@ -3,8 +3,10 @@ import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseClericTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
   assertCharacterLevel,

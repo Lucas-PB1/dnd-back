@@ -1,4 +1,6 @@
-import { CharacterStateResponseDto } from '@game/session/dto';
+import {
+  CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 

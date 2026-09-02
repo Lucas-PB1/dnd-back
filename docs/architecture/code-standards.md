@@ -74,7 +74,7 @@ Todo re-export público de pasta → **`index.ts` na raiz da pasta** — nunca `
 
 **Imports externos:** path da pasta (`…/mechanical-catalog`, `…/subclass-actions`). **Imports internos** da pasta: arquivo concreto (`./berserker-actions`), não o próprio `index.ts`.
 
-Exceção documentada (Fase 4.2): mega-barrel `session/dto/index.ts` — preferir subpath por família ao migrar.
+**DTOs de sessão:** sem mega-barrel. Importar por família — `@game/session/dto/core/…`, `…/fighter/…`, `…/martial/…`, `…/table-actions/…` (nunca `@game/session/dto` sozinho).
 
 Detalhe histórico: [`code-health-audit.md` §2](../plans/code-health-audit.md#2-barrels-indexts--sem-padrão-único).
 

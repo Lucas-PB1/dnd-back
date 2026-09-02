@@ -3,8 +3,10 @@ import { isMonkClass } from '@game/combat/domain/monk';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseMonkTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { MonkActionDeps } from './monk/monk-action-deps';

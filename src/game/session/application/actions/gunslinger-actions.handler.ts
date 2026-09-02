@@ -10,9 +10,13 @@ import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-s
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseGunslingerTableActionDto,
+} from '@game/session/dto/table-actions/table-actions-martial.dto';
+import {
   UseManeuverResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/session-commands.dto';
 
 @Injectable()
 export class GunslingerActionsHandler {

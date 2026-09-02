@@ -4,8 +4,10 @@ import type { PlayerCharacter } from '@game/shared/infrastructure/player-charact
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseBardTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export const BARDIC_INSPIRATION_SLUG = 'bardicInspiration';

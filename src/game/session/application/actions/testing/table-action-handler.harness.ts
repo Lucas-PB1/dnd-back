@@ -1,6 +1,8 @@
 import type { CombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import type { CharacterSheetData } from '@game/sheet/domain/character-sheet.types';
-import type { CharacterStateResponseDto } from '@game/session/dto';
+import type {
+  CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';

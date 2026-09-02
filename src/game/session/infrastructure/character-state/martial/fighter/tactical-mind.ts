@@ -7,7 +7,9 @@ import {
 import { rollDie } from '@game/dice/domain/dice';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { applyResourceSpend } from '@game/session/domain/class-resources';
-import { TacticalMindResponseDto } from '@game/session/dto';
+import {
+  TacticalMindResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { resolveClassResources } from '@game/session/infrastructure/character-state/resources/class-resources';
 import type { BuildResponse } from '@game/session/infrastructure/character-state/core/mutation-types';

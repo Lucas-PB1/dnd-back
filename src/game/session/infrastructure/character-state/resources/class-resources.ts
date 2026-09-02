@@ -1,7 +1,9 @@
 import { DataSource } from 'typeorm';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
-import { ClassResourceStateDto } from '@game/session/dto';
+import {
+  ClassResourceStateDto,
+} from '@game/session/dto/core/character-state-response.dto';
 import {
   resolveClassResourceMaxima,
   type ClassResourceMax,

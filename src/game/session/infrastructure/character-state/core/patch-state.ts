@@ -5,8 +5,10 @@ import { PlayerCharacter } from '@game/shared/infrastructure/player-character.en
 import { clampDeathSaveCount } from '@game/session/domain/death-saves';
 import {
   CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
+import {
   PatchCharacterStateDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/session-commands.dto';
 import { PhbCondition } from '@game/session/infrastructure/phb-condition.entity';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { assertValidConditions } from './conditions';

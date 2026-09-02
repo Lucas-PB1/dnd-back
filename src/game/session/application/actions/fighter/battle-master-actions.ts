@@ -7,7 +7,7 @@ import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import type {
   TableActionResponseDto,
   UseBattleMasterManeuverDto,
-} from '@game/session/dto';
+} from '@game/session/dto/fighter/fighter-session.dto';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export async function listBattleMasterManeuversAction(

@@ -3,8 +3,10 @@ import { PlayerCharacterAccessService } from '@game/shared/player-character-acce
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
   CharacterStateResponseDto,
+} from '@game/session/dto/core/character-state-response.dto';
+import {
   UseClassResourceDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/session-commands.dto';
 
 @Injectable()
 export class RecoverClassResourceHandler {

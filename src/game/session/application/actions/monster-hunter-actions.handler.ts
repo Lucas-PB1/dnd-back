@@ -5,8 +5,10 @@ import { PlayerCharacterAccessService } from '@game/shared/player-character-acce
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseMonsterHunterTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-monster-hunter.dto';
 import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 
 @Injectable()

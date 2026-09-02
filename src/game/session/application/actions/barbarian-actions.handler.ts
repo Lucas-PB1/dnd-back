@@ -7,8 +7,10 @@ import { SyncCharacterCompanionHandler } from '@game/actor/application/sync-char
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseBarbarianTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';

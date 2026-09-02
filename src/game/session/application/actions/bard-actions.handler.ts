@@ -4,8 +4,10 @@ import { isBardClass } from '@game/combat/domain/bard';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseBardTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import type { BardActionDeps } from './bard/bard-action-deps';

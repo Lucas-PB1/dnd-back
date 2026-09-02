@@ -2,8 +2,10 @@ import type { CharacterDomainService } from '@game/sheet/domain/core/character-d
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseDruidTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 export const WILD_SHAPE_SLUG = 'wildShape';

@@ -6,8 +6,10 @@ import { isRangerClass } from '@game/combat/domain/ranger';
 import { SyncCharacterCompanionHandler } from '@game/actor/application/sync-character-companion.handler';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseRangerTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-martial.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';

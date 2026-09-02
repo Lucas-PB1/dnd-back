@@ -13,9 +13,11 @@ import type {
   TacticalMindResponseDto,
   UseBattleMasterManeuverDto,
   UseDungeonPrecautionDto,
-  UseFighterTableActionDto,
   UsePsiWarriorActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/fighter/fighter-session.dto';
+import type {
+  UseFighterTableActionDto,
+} from '@game/session/dto/table-actions/table-actions-martial.dto';
 import type { FighterActionDeps } from './fighter/fighter-action-deps';
 import {
   useActionSurgeAction,

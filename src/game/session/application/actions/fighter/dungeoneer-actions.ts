@@ -3,7 +3,7 @@ import { findDungeoneerPrecautionSpell } from '@game/combat/domain/fighter';
 import type {
   TableActionResponseDto,
   UseDungeonPrecautionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/fighter/fighter-session.dto';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export async function useDungeonPrecautionAction(

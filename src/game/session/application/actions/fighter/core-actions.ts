@@ -3,7 +3,7 @@ import type {
   SecondWindResponseDto,
   TacticalMindDto,
   TacticalMindResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/fighter/fighter-session.dto';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export async function useSecondWindAction(

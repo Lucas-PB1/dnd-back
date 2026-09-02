@@ -10,8 +10,10 @@ import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-s
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import {
   CastSpellDto,
+} from '@game/session/dto/core/session-commands.dto';
+import {
   CharacterStateResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/character-state-response.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { appendItemCastTreasureNotes } from './cast-item-finish';
 import { applyPostCastInventoryEffects } from './cast-inventory-effects';

@@ -134,7 +134,7 @@ Scripts `_audit-*` citados em planos GH ainda úteis como CLI manual — se mant
 |--------|---------|----------|
 | `export *` cego | `barbarian/index.ts` | Reexporta tudo; acoplamento oculto |
 | Exports nomeados longos | `rogue/index.ts` | OK — explícito |
-| Barrel de DTO gigante | `session/dto/index.ts` | 50+ reexports; import `@game/session/dto` puxa tudo |
+| ~~Barrel de DTO gigante~~ | ~~`session/dto/index.ts`~~ | **Removido (4.2)** — imports por família `dto/core|fighter|martial|table-actions` |
 | Barrel de ops | `character-state/martial/index.ts` | Mistura tipos + 10 funções de facade |
 
 **Padrão alvo:** barrel = **`index.ts` na pasta** (`combat/domain/rogue/index.ts`, `__fixtures__/mechanical-catalog/index.ts`); imports internos diretos ao arquivo; DTOs importados por path (`./fighter/fighter-session.dto`), não mega-barrel.
@@ -622,7 +622,7 @@ Política canônica de testes: [`code-standards.md` § Testes](../architecture/c
 | # | PR / entrega | Risco |
 |---|--------------|-------|
 | 4.1 | ~~Baseline greenfield~~ → [`database/baseline/001_full_schema.sql`](../../database/baseline/001_full_schema.sql) | ✅ 2026-09-02 |
-| 4.2 | **Barrel policy** — quebrar `session/dto/index.ts` mega-export | Médio |
+| 4.2 | ~~Barrel policy — `session/dto/index.ts`~~ | ✅ 2026-09-02 |
 | 4.3 | Mover `*-combat-notes-data.ts` → `combat/domain/notes/` | Baixo |
 | 4.4 | Split `inventory/application` (15 arquivos) | Médio |
 | 4.5 | `CatalogLookupService` vs queries — um caminho para escrita ficha | Médio |

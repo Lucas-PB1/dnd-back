@@ -4,7 +4,7 @@ import { CharacterStateRepository } from '@game/session/infrastructure/character
 import {
   UseClassResourceDto,
   UseClassResourceResponseDto,
-} from '@game/session/dto';
+} from '@game/session/dto/core/session-commands.dto';
 import { applySpeciesResourceSpendSideEffects } from './apply-species-resource-spend-side-effects';
 
 @Injectable()

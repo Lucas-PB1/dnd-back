@@ -11,7 +11,9 @@ import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
 import { BLOOD_STRIKE_OPTION_KEY_RE } from '@game/sheet/domain/validation/class-options/subclass-option-effects';
 import { applyCurrentHitPoints } from '@game/session/application/core/apply-current-hit-points';
 import { assertCharacterLevel } from '@game/session/application/core/table-action-guards';
-import type { TableActionResponseDto } from '@game/session/dto';
+import type {
+  TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
 import type { FighterActionDeps } from './fighter-action-deps';
 
 export type BloodStrikeDto = {

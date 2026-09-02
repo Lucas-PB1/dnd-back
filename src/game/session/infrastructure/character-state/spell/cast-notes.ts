@@ -6,7 +6,9 @@ import {
 } from '@game/combat/domain/warlock';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
-import { CastSpellDto } from '@game/session/dto';
+import {
+  CastSpellDto,
+} from '@game/session/dto/core/session-commands.dto';
 
 export function appendNonItemCastNotes(input: {
   note: string | null;

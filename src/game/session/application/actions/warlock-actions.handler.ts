@@ -7,8 +7,10 @@ import { CharacterDomainService } from '@game/sheet/domain/core/character-domain
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import {
   TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
+import {
   UseWarlockTableActionDto,
-} from '@game/session/dto';
+} from '@game/session/dto/table-actions/table-actions-caster.dto';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { resolveDeclaredEconomyTableAction } from '../core/resolve-declared-economy-table-action';
 import type { WarlockActionDeps } from './warlock/warlock-action-deps';

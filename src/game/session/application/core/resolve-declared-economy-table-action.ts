@@ -2,7 +2,9 @@ import { BadRequestException } from '@nestjs/common';
 import type { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import type { ClassEconomyActionRecord } from '@game/combat/domain/class-action-ui-catalog';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import type { TableActionResponseDto } from '@game/session/dto';
+import type {
+  TableActionResponseDto,
+} from '@game/session/dto/fighter/fighter-session.dto';
 import type { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { applyTemporaryHitPoints } from './apply-temporary-hit-points';
 import { assertCharacterLevel } from './table-action-guards';
