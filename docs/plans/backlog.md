@@ -34,7 +34,7 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
 ### Northlands
 
-- [ ] **Character Threads — fase 2 / mesa:** economy 1/DL **MVP** (resources + seeds N040/N041); falta brackets Cursemarked e Fatebound na morte. Extração: [`northlands-character-threads.md`](northlands-character-threads.md).
+- [ ] **Character Threads — fase 2 / mesa:** economy 1/DL + **Ruína Adiada** feitos; falta brackets Cursemarked e Fatebound Último Ato. Extração: [`northlands-character-threads.md`](northlands-character-threads.md).
 - [ ] **Pente fino residual (opcional):** M6 features só texto; Greater Freyr usos PB/dia — [`northlands-audit.md`](northlands-audit.md).
 
 ---

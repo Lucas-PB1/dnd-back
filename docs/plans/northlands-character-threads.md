@@ -11,8 +11,9 @@ Edição: `northlands-heroes-2024-en`. HTML de scrape **não** é mantido no rep
 | Estado na ficha (`player_character_thread*`, mutações `/characters/:id/thread`, bundle) | **feito** |
 | UI Traços + step opcional no create wizard | **feito** |
 | Economy mesa 1/DL (resources + `spend-resource`, `N040`/`N041`) | **MVP feito** — pools no estado de sessão; Usar na UI quando o front filtrar `threadSlug` |
+| Fatebound — Ruína Adiada (`doom-delayed` → estável a 0 PV) | **feito** (Usar / spend-resource) |
 | Runtime Cursemarked (brackets d20 + anti-overlap) | **fase 2 restante** |
-| Runtime Fatebound (morte / Doom Delayed automático) | **fase 2 restante** |
+| Fatebound — Último Ato / Fim Glorioso | **fase 2 restante** |
 
 Modelo: 1 thread `active` por personagem; completar mantém benefícios; abandonar limpa milestones.
 

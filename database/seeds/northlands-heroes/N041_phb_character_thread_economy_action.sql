@@ -83,7 +83,7 @@ INSERT INTO rpg.phb_class_economy_action (
   'Ruína Adiada', 'free'::rpg.action_economy_bucket, 1,
   'doom-delayed', NULL, true,
   'Em vez de morrer → estável 0 PV',
-  'Em vez de morrer, fica estável com 0 PV. 1 uso / Descanso Longo. (Hook automático de morte: fase 2 restante.)',
+  'Usar quando o personagem morreria: fica estável com 0 PV (3 sucessos de morte). 1 uso / Descanso Longo.',
   'spend-resource', NULL, 733
 ),
 (
