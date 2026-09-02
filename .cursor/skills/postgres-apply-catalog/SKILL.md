@@ -1,6 +1,6 @@
 ---
 name: postgres-apply-catalog
-description: Aplica catálogo PHB ao PostgreSQL — dev-reset, migrations granulares e seeds. Use quando subir banco local, Supabase ou reaplicar schema e dados.
+description: Aplica catálogo PHB ao PostgreSQL — dev-reset, baseline + migrations forward e seeds. Use quando subir banco local, Supabase ou reaplicar schema e dados.
 ---
 
 # Aplicar catálogo SQL
@@ -14,7 +14,7 @@ description: Aplica catálogo PHB ao PostgreSQL — dev-reset, migrations granul
 ## Ordem
 
 1. `dev-reset.sql` (só dev)
-2. Migrations recursivas ordenadas
+2. Baseline (`database/baseline/`) + migrations forward (`database/migrations/`)
 3. Seeds recursivos ordenados
 
 ## Preferir npm

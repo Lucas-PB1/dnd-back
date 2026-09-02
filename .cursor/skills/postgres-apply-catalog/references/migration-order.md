@@ -1,19 +1,25 @@
 # Ordem das migrations
 
-Baseline canônico em fases (lexicográfico por path):
+## Baseline (squash + compactação greenfield — 2026-09)
 
-1. `001_schema.sql`
-2. `010_types/002_types.sql` + `003_combat_mechanical_enums.sql` — enums
-3. `020_tables/T001`–`T089` — uma tabela por arquivo, CREATE no estado final
-4. `040_functions/F001_set_updated_at.sql`
-5. `050_triggers/TR001_audit.sql`
-6. `060_views/V001`–`V040` — uma view = definição final
-7. `070_materialized/MV001_mv_spell_by_class.sql`
-8. `080_indexes/IX001_catalog.sql`
-9. `090_player/P001`–… — tabelas de jogador + RLS + slots mágicos
+1. [`database/baseline/001_full_schema.sql`](../../../database/baseline/001_full_schema.sql) — schema `rpg` completo (~241 KiB; 0 `ALTER TABLE` evolutivo top-level; enums no `CREATE TYPE`)
 
-Não há migrations de dados de catálogo — isso fica nos seeds (`database/seeds/`).  
-Exceção: `090_player/P026` configura bucket/policies de storage (infra Supabase), não catálogo PHB.
+Registro: versão `baseline/001_full_schema` em `rpg.schema_migration`.
+
+Histórico granular (239 arquivos): git history pré 2026-09-01. **Não** regerar — editar baseline ou forward.
+
+## Forward-only
+
+Novos arquivos em `database/migrations/` — ordem lexicográfica por path:
+
+1. `010_types/` — enums
+2. `020_tables/T###` — tabelas
+3. `040_functions/`, `050_triggers/`
+4. `060_views/V###`
+5. `070_materialized/`, `080_indexes/`
+6. `090_player/P###` — runtime + RLS
+
+Não há migrations de dados de catálogo — isso fica nos seeds (`database/seeds/`).
 
 ## Registro
 
@@ -22,7 +28,9 @@ Tabela `rpg.schema_migration` via `npm run db:migrate` (versão = caminho relati
 ## Setup
 
 ```bash
-npm run db:setup   # reset → migrate → seed
+npm run db:setup   # reset → baseline + forward → seed
 ```
 
-Fonte de verdade: `database/migrations/` + `database/seeds/`.
+Fonte de verdade: `database/baseline/` + `database/migrations/` + `database/seeds/`.
+
+Histórico granular: git history (pré 2026-09-01).

@@ -5,7 +5,7 @@
 Deploy: [`docs/deploy/DEPLOY.md`](../deploy/DEPLOY.md) · Front: repo `dnd-front`  
 Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
-**Última revisão:** 2026-09-01
+**Última revisão:** 2026-09-02
 
 ---
 
@@ -20,7 +20,7 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 | Grim Hollow Cap. 2 mesa + Cap. 1 heranças | **Quase** — residual em [`grim-hollow-mesa-audit.md`](grim-hollow-mesa-audit.md) |
 | Grim Hollow Cap. 4 talentos | Pronto |
 | Grim Hollow Cap. 6 transformações | Catálogo pronto; **ficha/mesa** aberto — [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md) |
-| Saúde do código | **Ativo** — [`code-health-audit.md`](code-health-audit.md) |
+| Saúde do código | **Fase 2 ✅** — Fase 3 ativa — [`code-health-audit.md`](code-health-audit.md) |
 | Combate situacional / monstros catálogo | **Adiado** (seção abaixo) |
 
 ---
@@ -41,45 +41,21 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
 Plano faseado: [`code-health-audit.md` § Plano de melhoria](code-health-audit.md#plano-de-melhoria). Rule: `dry-quality`. Skills: `split-large-module` · `unify-game-stats`.
 
-#### Fase 0 — Limpeza
-
-- [ ] **0.1** Apagar `scripts/lib/ghpg-cap5-requirements.mjs`
-- [ ] **0.2** Remover `@deprecated` em `ghpg-html-utils.mjs` (`findGhpgCap2Html` → `findGhpgChapterHtml`)
-- [ ] **0.3** Arquivar ou apagar `scripts/_*.mjs` (13 arquivos)
-- [ ] **0.4** Criar `scripts/README.md`
-
-#### Fase 1 — SSOT stats + harness → nota **B**
-
-- [ ] **1.1** `abilityMod` → `abilityModifier` (3 arquivos combat)
-- [ ] **1.2** Extrair `hasStyleOrFeat` compartilhado
-- [ ] **1.3** CA ficha = mesmo resolver que combate
-- [ ] **1.4** Harness `table-action-handler.harness.ts`
-- [ ] **1.5** Remover `as never` prod (`cast-notes`, `cast-eldritch-prelude`)
-
 #### Fase 2 — Testes + splits críticos → nota **B+**
 
-- [ ] **2.1** Migrar 14 `*-actions.handler.spec.ts` para harness
-- [ ] **2.2** Enxugar `weapon-attack.spec.ts` (<300 linhas)
-- [ ] **2.3** Enxugar `roll-damage.spec.ts` (<300 linhas)
-- [ ] **2.4** Split `mechanical-catalog.fixtures.ts`
-- [ ] **2.5** Split `class-resources.ts` + SQL em infrastructure
-- [ ] **2.6** Split `barbarian/subclass-actions.ts` (template outras classes)
-- [ ] **2.7** Política de testes em `code-standards.md`
+_Fase concluída (2.1–2.7). Próximo: Fase 3 abaixo._
 
 #### Fase 3 — DB unificado
 
-- [ ] **3.0** Inventário SQL cru em validators
-- [ ] **3.1** `spell-progression-queries.ts` → view ou bundle RPC
-- [ ] **3.2** `class-resources.ts` queries em infrastructure
-- [ ] **3.3** `firearm-ops` + `roll-weapon-context` → repository
-- [ ] **3.4** Validators spells/feats → views/RPC
-- [ ] **3.5** Validators class-options restantes
-- [ ] **3.6** ADR domain vs `infrastructure/validation/`
-- [ ] **3.7** Matriz runtime em `catalog-patterns.md`
+_Fase concluída (3.0–3.7). Próximo: Fase 4 abaixo._
+
+- [x] **3.4** Validators spells/feats → views/RPC (`feat-option.queries.ts`, `spell-progression.queries.ts`)
+- [x] **3.5** Validators class-options/background → `sheet/infrastructure/queries/*`
+- [x] **3.6** ADR domain vs `infrastructure/validation/` → [`adr-sheet-validation-layers.md`](../architecture/adr-sheet-validation-layers.md)
 
 #### Fase 4 — Estrutura pré-prod → nota **A−**
 
-- [ ] **4.1** Squash migrations (baseline único)
+- [x] **4.1** Baseline greenfield → [`database/baseline/001_full_schema.sql`](../baseline/001_full_schema.sql) (~241 KiB; enums/tabelas fundidos; forward em `database/migrations/`)
 - [ ] **4.2** Barrel policy (`session/dto/index.ts`, …)
 - [ ] **4.3** `combat/domain/notes/` para combat-notes
 - [ ] **4.4** Split `inventory/application`

@@ -23,7 +23,7 @@ function fail(msg) {
 function checkSeq(dir, prefix, opts = {}) {
   const abs = path.join(root, dir);
   if (!fs.existsSync(abs)) {
-    fail(`${dir}: directory missing`);
+    console.log(`SKIP ${dir}: directory missing`);
     return;
   }
 

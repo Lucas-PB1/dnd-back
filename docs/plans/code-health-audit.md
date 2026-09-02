@@ -25,13 +25,13 @@ Rule: [`.cursor/rules/dry-quality.mdc`](../../.cursor/rules/dry-quality.mdc) · 
 
 | Condição | Ativo? | Efeito na nota |
 |----------|--------|----------------|
-| CA ficha ≠ combate (2 caminhos) | **Sim** | Unificação stats **C+** · **teto global B** |
-| `abilityMod` local (3 arquivos) | **Sim** | DRY **≤ B−** |
+| CA ficha ≠ combate (2 caminhos) | ~~**Sim**~~ **Não** (fase 1.3) | Teto global **B** liberado |
+| `abilityMod` local (3 arquivos) | ~~**Sim**~~ **Não** (2026-09-01) | DRY **≤ B−** → parcialmente liberado |
 | Validators com `dataSource.query` (~30) | **Sim** | DRY SQL **B** (catálogo A− puxa média) |
 | 133 specs com `as never` | **Sim** | Testes **≤ B−** |
 | PV / moedas / SSOT `abilityModifier` | Parcial | Não bloqueia — manter |
 
-**Teto efetivo hoje:** **B** (bloqueado por CA duplicada). Nota calculada **B−** (2,96) — abaixo do teto.
+**Teto efetivo hoje:** **B+** possível (gate CA liberado). Nota calculada **B−** (2,96).
 
 ### Rubrica (dimensão DRY isolada)
 
@@ -60,13 +60,13 @@ PR que **copia** fórmula, SQL de leitura, tipo de DTO ou mock de handler já ex
 | SOLID | B− | DIP fraco: 27 domain + TypeORM, 40 + Nest |
 | Arquitetura | B | BC respeitados; drift em validation e API mesa |
 | Scripts | C+ | 13 `_*.mjs` órfãos; deprecated não removido |
-| Migrations | B (oportunidade) | 239 SQL — squash viável **antes de prod** |
+| Migrations | **A−** | Baseline único + forward-only (`database/baseline/`) |
 | Docs agente | B− | `scripts/` sem README; skill de testes ausente |
 | **Testes** | **B−** | 45% linhas vs prod; specs espelho; handler boilerplate |
 | **DB (consistência)** | **C+** | RPC bundle vs raw SQL vs TypeORM espalhados |
 | **Centralização TS** | **B−** | Duplicatas de helper e mocks de teste |
 | **TypeScript** | **C+** | 551× `as never` em specs; 4× `any` prod; `Omit` subutilizado |
-| **Unificação stats** | **C+** | PV/moedas OK; CA ficha ≠ combate; 3× `abilityMod` local |
+| **Unificação stats** | **B** | PV/moedas/CA via combat slice; sem 2º caminho na ficha |
 
 **Nota final (média ponderada): B− (2,96 / 4,0)** — ver [§ Nota final](#nota-final).
 
@@ -92,7 +92,7 @@ PR que **copia** fórmula, SQL de leitura, tipo de DTO ou mock de handler já ex
 | `as never` em prod | **2 arquivos** (`cast-notes`, `cast-eldritch-prelude`) | 0 |
 | `as never` em specs | **551 ocorrências / 133 arquivos** | harness tipado |
 | `Omit` / `Pick` | **3 arquivos** (subutilizado) | DTOs derivados |
-| `abilityMod` local (`Math.floor`) | **3 arquivos** combat | import `abilityModifier` |
+| `abilityMod` local (`Math.floor`) | **0 arquivos** (fase 1.1 ✅) | import `abilityModifier` |
 | `dataSource.query` em validators | **~30 arquivos** domain validation | views/RPC |
 
 ### Tamanho de arquivos (prod)
@@ -137,7 +137,7 @@ Scripts `_audit-*` citados em planos GH ainda úteis como CLI manual — se mant
 | Barrel de DTO gigante | `session/dto/index.ts` | 50+ reexports; import `@game/session/dto` puxa tudo |
 | Barrel de ops | `character-state/martial/index.ts` | Mistura tipos + 10 funções de facade |
 
-**Padrão alvo:** barrel **só na borda do módulo** (`combat/domain/rogue/index.ts`); imports internos diretos ao arquivo; DTOs importados por path (`./fighter/fighter-session.dto`), não mega-barrel.
+**Padrão alvo:** barrel = **`index.ts` na pasta** (`combat/domain/rogue/index.ts`, `__fixtures__/mechanical-catalog/index.ts`); imports internos diretos ao arquivo; DTOs importados por path (`./fighter/fighter-session.dto`), não mega-barrel.
 
 ---
 
@@ -167,10 +167,7 @@ Regra do usuário: leaf com mais de 4 arquivos = smell. Inventário (produção,
 
 | Arquivo | Linhas | Split |
 |---------|--------|-------|
-| `combat/domain/__fixtures__/mechanical-catalog.fixtures.ts` | 567 | Por origem (class / feat / species / …) |
 | `combat/domain/warlock/eldritch-invocations.ts` | 481 | definitions + effects |
-| `session/.../class-resources.ts` | 439 | query SQL vs map DTO |
-| `session/.../barbarian/subclass-actions.ts` | 414 | por subclasse |
 | `session/.../monk/subclass-actions.ts` | 407 | por subclasse |
 
 ### Hard — clusters
@@ -200,17 +197,14 @@ DTOs >250: exceção Swagger em `code-standards.md`, mas preferir split por dom�
 | **SRP** | `subclass-actions.ts` (7 classes); `TableActionsController` (14 handlers); `CatalogLookupService` (12 repos) |
 | **OCP** | Nova fonte GH = novo `*-combat-notes-data.ts` — OK mas infla pastas |
 | **DIP** | 27/213 arquivos `domain/` importam TypeORM; 40/213 importam Nest (`BadRequestException`, `@Injectable` validators) |
-| **DRY TS** | `spell-progression-queries.ts` vs views; labels de resource em `class-resources.ts` |
+| **DRY TS** | ~~`spell-progression-queries.ts`~~ · labels de resource em `class-resources.ts` |
 | **DRY SQL** | Bom no catálogo; 239 migrations granulares é duplicação de *processo*, não de schema |
 
-### Domain híbrido (decisão pendente)
+### Domain híbrido — decidido (ADR)
 
-Validators em `sheet/domain/validation/` são Nest services com DB — **não é domain puro**. Opções pré-prod:
+Validators em `sheet/domain/validation/` permanecem como **orquestradores Nest**; leitura de catálogo/DB foi extraída para `sheet/infrastructure/queries/` (Fases 3.4–3.5). **Não** criar `sheet/infrastructure/validation/` espelhando validators.
 
-1. Mover para `sheet/infrastructure/validation/` (ports/adapters), ou
-2. Extrair regras puras + thin adapter Nest
-
-Registrar decisão em ADR curto antes de escalar.
+Decisão completa: [`adr-sheet-validation-layers.md`](../architecture/adr-sheet-validation-layers.md).
 
 ---
 
@@ -218,7 +212,7 @@ Registrar decisão em ADR curto antes de escalar.
 
 | Desvio | Onde | Severidade |
 |--------|------|------------|
-| Domain + TypeORM | `sheet/domain/validation/**`, `progression/domain/level-up.service.ts` | Alta |
+| Domain + TypeORM (SQL cru) | ~~`sheet/domain/validation/**`~~ → **0**; restante: `progression/domain/level-up.service.ts` | Resolvido validators (ADR); level-up backlog |
 | Domain + `BadRequestException` | ~40 arquivos domain | Média (pragmático) |
 | Catalog gordo | `CatalogLookupService` — 12 entidades num service | Média |
 | Combat notes na raiz de `combat/domain/` | GH/NL/Steinhardt `*-data.ts` | Baixa — mover para `notes/` |
@@ -265,24 +259,17 @@ Scripts de geração GH (600–850 linhas) são pipeline de conteúdo — crité
 
 ---
 
-## 9. Migrations (squash pré-prod)
+## 9. Migrations (squash + baseline greenfield) — **concluído 2026-09-02**
 
-| Pasta | Arquivos |
-|-------|----------|
-| `010_types` | 18 |
-| `020_tables` | 93 |
-| `060_views` | 79 |
-| `090_player` | 44 |
-| Outros | 5 |
-| **Total** | **239** |
+| Antes | Depois |
+|-------|--------|
+| 239 SQL granulares em `database/migrations/` | 1 baseline [`database/baseline/001_full_schema.sql`](../../database/baseline/001_full_schema.sql) (~241 KiB) |
+| Runner só `migrations/` | Baseline primeiro, depois forward-only em `database/migrations/` |
+| `ALTER TYPE` / `ALTER TABLE` evolutivos | Fundidos nos `CREATE TYPE` / `CREATE TABLE`; RLS/FK `auth` permanecem em `DO $$` |
 
-Runner incremental (`rpg.schema_migration`) funciona, mas **sem prod** dá para:
+Runner: `run-migrations.mjs` — versão baseline = `baseline/001_full_schema`. Manutenção: editar baseline (pré-prod) ou adicionar SQL em `database/migrations/`.
 
-1. Gerar `database/baseline/001_full_schema.sql` (dump pós-migrate)
-2. Substituir árvore granular por baseline + migrations forward-only novas
-3. Atualizar `run-migrations.mjs` para aceitar modo baseline
-
-**Docs desatualizados:** [`database/migrations/README.md`](../database/migrations/README.md) cita `V001–V032` e `P001–P015` — realidade: **79 views**, **44 player**.
+**Forward:** novos DDL em `database/migrations/` — ver [`database/migrations/README.md`](../../database/migrations/README.md).
 
 ---
 
@@ -305,6 +292,8 @@ Runner incremental (`rpg.schema_migration`) funciona, mas **sem prod** dá para:
 
 ## 11. Testes além da necessidade
 
+**Política canônica (atualizada):** [`code-standards.md` § Testes](../architecture/code-standards.md#testes).
+
 ### Diagnóstico
 
 - **289** arquivos spec para **838** prod (0,34 arquivos spec/arquivo — alto em contagem, não só em linhas).
@@ -325,7 +314,7 @@ Runner incremental (`rpg.schema_migration`) funciona, mas **sem prod** dá para:
 ### Centralizar em testes
 
 1. **`table-action-handler.harness.ts`** — factory `createTableActionHandlerTestContext()` para mesa.
-2. **`mechanical-catalog.fixtures.ts`** — já existe; **obrigar** uso em handler/damage specs (hoje só parcial).
+2. **`mechanical-catalog/index.ts`** + arquivos por origem — **obrigar** uso em handler/damage specs (hoje só parcial).
 3. **`buildMockWeaponAttack(overrides)`** — para `roll-damage.spec.ts` / `roll-attack.spec.ts`.
 4. Revisar specs **>300 linhas** — split ou table-driven; meta: nenhum spec >400.
 
@@ -335,7 +324,8 @@ Runner incremental (`rpg.schema_migration`) funciona, mas **sem prod** dá para:
 
 | Duplicação | Onde | SSOT sugerido |
 |------------|------|----------------|
-| Modificador de atributo | `abilityModifier()` (`sheet/domain/stats`) vs `abilityMod()` (`combat/.../predicates`) | `@game/shared/domain/ability-scores` ou `ability-modifier.ts` único |
+| Modificador de atributo | ~~`abilityMod()` local~~ | ✅ `@game/shared/domain/ability-scores` (fase 1.1) |
+| `hasStyleOrFeat` | ~~duplicado armor + predicates~~ | ✅ `feat/has-style-or-feat.ts` (fase 1.2) |
 | Mock catálogo mecânico | Cada `*-actions.handler.spec.ts` monta `mechanicalCatalog.load` | Fixture + helper de teste |
 | Table-action deps | `monk-action-deps`, `paladin-action-deps`, `cleric-action-deps` | Estender padrão às classes que ainda inline |
 | Slug not-found | `requireFound` (404) vs `requireCatalog` (400) | OK — semântica HTTP distinta; **não** unificar |
@@ -355,11 +345,11 @@ Runner incremental (`rpg.schema_migration`) funciona, mas **sem prod** dá para:
 | Combate — inventário + armadura | RPC `get_character_combat_bundle` | ✅ |
 | Player `player_character_*` CRUD | TypeORM repository (`CharacterSheetRepository`) | ✅ |
 | Estado de sessão (rage, chambers) | `CharacterStateRepository` + entity | ✅ |
-| Validação de ficha (spells, feats, options) | ❌ `dataSource.query` inline em **~30** validators | **Anti-padrão** |
-| Progressão de magia / slots | ❌ `spell-progression-queries.ts` (TS + SQL ad hoc) | Deveria ser view `v_*` ou RPC |
-| Recursos de classe (dados, labels) | ❌ `class-resources.ts` — **9** `dataSource.query` | Extrair para `infrastructure/queries/` ou view |
-| Propriedade de item (`reload`) | ❌ `firearm-ops.loadReloadCapacity` query JSONB cru | Usar view de item ou catálogo já carregado |
-| Flags de combate no roll | ❌ `roll-weapon-context` SELECT cru em `player_character_state` | Método no `CharacterStateRepository` |
+| Validação de ficha (spells, feats, options) | ✅ Sem `dataSource.query` no domain — queries em `sheet/infrastructure/queries/` | Fase **3.4–3.5** ✅ |
+| Progressão de magia / slots | ✅ `sheet/infrastructure/queries/spell-progression.queries.ts` | Views `v_*` via TypeORM |
+| Recursos de classe (dados, labels) | ✅ `session/infrastructure/queries/class-resource-*.queries.ts` | — |
+| Propriedade de item (`reload`) | ✅ `session/infrastructure/queries/item-reload-capacity.queries.ts` | TypeORM `PhbItem` |
+| Flags de combate no roll | ✅ `session/infrastructure/queries/character-combat-flags.queries.ts` | TypeORM `PlayerCharacterState` |
 | Lookup slug em create/update | `CatalogLookupService` (12 repos) | Duplica queries finas do catalog |
 
 ### Por que é problema
@@ -371,10 +361,71 @@ Runner incremental (`rpg.schema_migration`) funciona, mas **sem prod** dá para:
 ### Remediação (ordem)
 
 1. Inventariar SQL cru em `sheet/domain/validation/**` → listar views/RPCs faltantes.
-2. `spell-progression-queries.ts` → view ou estender `get_character_sheet_bundle`.
-3. `class-resources.ts` → queries dedicadas em `session/infrastructure/` (sem Nest no domain).
-4. `loadReloadCapacity` / `roll-weapon-context` → repository methods.
-5. Documentar matriz em [`catalog-patterns.md`](../architecture/catalog-patterns.md) seção “Runtime Game reads”.
+2. ~~`spell-progression-queries.ts` → views via TypeORM~~ ✅ Fase 3.1
+3. ~~`class-resources.ts` → queries dedicadas em `session/infrastructure/`~~ ✅ Fase 2.5
+4. ~~`loadReloadCapacity` / `roll-weapon-context` → `session/infrastructure/queries/`~~ ✅ Fase 3.3
+5. Documentar matriz em [`catalog-patterns.md` §10](../architecture/catalog-patterns.md#10-runtime-game-reads) ✅ Fase 3.7
+
+---
+
+## Inventário SQL cru — validators (Fase 3.0)
+
+**0 arquivos prod** em `sheet/domain/validation/` com `dataSource.query`. Remediação concluída nas fases 3.4–3.5:
+
+| Módulo infra | Fase | Consumidores |
+|--------------|------|--------------|
+| `spell-progression.queries.ts` | 3.1 | spells validator |
+| `feat-option.queries.ts` | 3.4 | feats + fighting styles |
+| `spell-catalog.queries.ts` | 3.5 | signature/spell-mastery, mystic arcanum, species, subclass spells |
+| `background-origin.queries.ts` | 3.5 | background, expertise, extra-skill |
+| `skill-catalog.queries.ts` | 3.5 | expertise, extra-skill, subclass option value |
+| `metamagic-catalog.queries.ts` | 3.5 | metamagic validator |
+| `eldritch-invocation.queries.ts` | 3.5 | eldritch invocations |
+| `class-meta.queries.ts` | 3.5 | subclass unlock, weapon mastery progression |
+| `class-option.queries.ts` | 3.5 | class/subclass options, weapon mastery piece |
+
+Inventário histórico (pré-migração):
+
+| Pasta / arquivo | Queries | Remediação |
+|-----------------|---------|------------|
+|-----------------|---------|------------|
+| `infrastructure/queries/spell-progression.queries.ts` | 0 | ✅ **3.1** — `v_class_spell_slots`, `v_subclass_spell_slots`, `v_phb_class_progression` |
+| `infrastructure/queries/feat-option.queries.ts` | 0 | ✅ **3.4** — `VPhbSpell`, `PhbFightingStyle`, `PhbSkill`/`PhbItem`, `ClassProficienciesQuery` |
+| `feats/character-feat-option-value.validator.ts` | 0 | ✅ **3.4** |
+| `feats/character-feat-options.validator.ts` | 0 | ✅ **3.4** — injeta `ClassProficienciesQuery` |
+| `feats/feat-option-proficiency.ts` | 0 | ✅ **3.4** |
+| `class-options/character-subclass-option-value.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-subclass-options.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-weapon-mastery.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-species-choices.validator.ts` | 0 | ✅ **3.5** |
+| `background/character-background.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-class-options.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-class-extra-skill.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-class-feature-options.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-eldritch-invocations.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-class-expertise.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-spell-mastery.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-signature-spells.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-mystic-arcanum.validator.ts` | 0 | ✅ **3.5** |
+| `class-options/character-metamagic.validator.ts` | 0 | ✅ **3.5** |
+
+**Hotspots runtime fora de validation** (já endereçados ou backlog):
+
+| Arquivo | Status |
+|---------|--------|
+| `class-resource-*.queries.ts` | ✅ Fase 2.5 |
+| `feat-option.queries.ts` | ✅ Fase 3.4 |
+| `spell-catalog.queries.ts` | ✅ Fase 3.5 |
+| `background-origin.queries.ts` | ✅ Fase 3.5 |
+| `skill-catalog.queries.ts` | ✅ Fase 3.5 |
+| `class-meta.queries.ts` | ✅ Fase 3.5 |
+| `class-option.queries.ts` | ✅ Fase 3.5 |
+| `metamagic-catalog.queries.ts` | ✅ Fase 3.5 |
+| `eldritch-invocation.queries.ts` | ✅ Fase 3.5 |
+| `spell-progression.queries.ts` | ✅ Fase 3.1 |
+| `item-reload-capacity.queries.ts` | ✅ Fase 3.3 |
+| `character-combat-flags.queries.ts` | ✅ Fase 3.3 |
+| `level-up.service.ts`, `sorcerer-actions.handler.ts`, … | Backlog — migrar ao tocar |
 
 ---
 
@@ -423,9 +474,9 @@ Objetivo: **um caminho por stat** — facilita entrada de novos dados (feat, esp
 | Problema | Onde | Ação |
 |----------|------|------|
 | `abilityMod` local | `armor-class.ts`, `weapon-attack-predicates.ts`, `manikin-armor.ts` | Import `abilityModifier` |
-| CA ficha simplificada | `character-derived-stats` → só desarmado | Usar mesmo resolver que combate quando bundle disponível |
+| CA ficha simplificada | ~~`character-derived-stats`~~ | ✅ removido — CA só via `resolveCharacterCombatSlice` (1.3) |
 | CA combate | `resolve-equipped-armor-class` + slice | SSOT alvo para **toda** exibição de CA |
-| `hasStyleOrFeat` | `armor-class.ts` e `weapon-attack-predicates.ts` | Extrair helper compartilhado (feat + fighting style slugs) |
+| `hasStyleOrFeat` | ~~`armor-class.ts` e `weapon-attack-predicates.ts`~~ | ✅ `feat/has-style-or-feat.ts` (fase 1.2) |
 | Ouro starting | `resolve-starting-gold.ts` | OK se só delega `coin-purse` — auditar |
 
 ### Padrão para nova fonte de dado
@@ -498,7 +549,7 @@ Regras durante execução: `dry-quality` · `typescript-quality` · skills `unif
 
 | Indicador | Hoje | Meta fase 1 |
 |-----------|------|-------------|
-| `abilityMod` local | 3 arquivos | **0** |
+| `abilityMod` local | 3 arquivos | **0** ✅ |
 | CA 2 caminhos | Sim | **Não** |
 | Gate teto global | B | **Liberado → B+** |
 | Unificação stats | C+ | **B** |
@@ -509,19 +560,21 @@ Regras durante execução: `dry-quality` · `typescript-quality` · skills `unif
 
 ---
 
-### Fase 2 — Testes + arquivos críticos
+### Fase 2 — Testes + arquivos críticos ✅
 
 **Done quando:** 14 handler specs usam harness; nenhum spec >400 linhas; 5 arquivos críticos ≥400 splitados ou reduzidos <200.
 
 | # | PR / entrega | Depende |
 |---|--------------|---------|
-| 2.1 | Migrar **14 `*-actions.handler.spec.ts`** para harness | 1.4 |
-| 2.2 | **`weapon-attack.spec.ts`** — `it.each` + helpers; meta <300 linhas | — |
-| 2.3 | **`roll-damage.spec.ts`** — `buildMockWeaponAttack()`; meta <300 | — |
-| 2.4 | Split **`mechanical-catalog.fixtures.ts`** (567) | — |
-| 2.5 | Split **`class-resources.ts`** — SQL → `session/infrastructure/queries/` | — |
-| 2.6 | Split **`barbarian/subclass-actions.ts`** (template para monk/bard/…) | — |
-| 2.7 | Política de testes em `code-standards.md` | 2.1 |
+| ~~2.1~~ | Migrar **14 `*-actions.handler.spec.ts`** para harness | 1.4 ✅ |
+| ~~2.2~~ | **`weapon-attack.spec.ts`** — `it.each` + helpers; meta <300 linhas | — ✅ |
+| ~~2.3~~ | **`roll-damage.spec.ts`** — `buildMockWeaponAttack()`; meta <300 | — ✅ |
+| ~~2.4~~ | Split fixtures mecânicas → `__fixtures__/mechanical-catalog/index.ts` | — ✅ |
+| ~~2.5~~ | Split **`class-resources.ts`** — SQL → `session/infrastructure/queries/` | — ✅ |
+| ~~2.6~~ | Split **`barbarian/subclass-actions/index.ts`** (template monk/bard/…) | — ✅ |
+| ~~2.7~~ | Política de testes em [`code-standards.md`](../architecture/code-standards.md#testes) | 2.1 ✅ |
+
+Política canônica de testes: [`code-standards.md` § Testes](../architecture/code-standards.md#testes).
 
 **Métricas de saída:**
 
@@ -538,23 +591,24 @@ Regras durante execução: `dry-quality` · `typescript-quality` · skills `unif
 
 ### Fase 3 — DB: um jeito por caso de uso
 
-**Done quando:** matriz em `catalog-patterns.md`; inventário de validators com plano view/RPC; 3 hotspots (spell-progression, class-resources, roll-weapon) sem SQL cru no domain.
+**Done quando:** matriz em `catalog-patterns.md`; inventário validators **0 SQL cru**; ADR validators; hotspots (spell-progression, class-resources, roll-weapon) em queries infra.
 
 | # | PR / entrega | Depende |
 |---|--------------|---------|
-| 3.0 | **Inventário SQL** — listar validators + queries ad hoc | — |
-| 3.1 | **`spell-progression-queries.ts`** → view ou extensão `get_character_sheet_bundle` | 3.0 |
-| 3.2 | **`class-resources.ts`** — queries em infrastructure | 2.5 |
-| 3.3 | **`firearm-ops`** + **`roll-weapon-context`** → repository methods | 3.0 |
-| 3.4 | **Validators fase 1** — spells + feats (maior volume) → views/RPC | 3.1 |
-| 3.5 | **Validators fase 2** — class-options restantes | 3.4 |
-| 3.6 | **ADR** domain vs `infrastructure/validation/` | 3.4 |
+| 3.0 | ~~**Inventário SQL**~~ — [`§ Inventário validators`](#inventário-sql-cru--validators-fase-30) | — ✅ |
+| ~~3.1~~ | **`spell-progression.queries.ts`** — views `v_*` via TypeORM | 3.0 ✅ |
+| 3.2 | ~~**`class-resources.ts`** — queries em infrastructure~~ | 2.5 ✅ |
+| ~~3.3~~ | **`firearm-ops`** + **`roll-weapon-context`** → `session/infrastructure/queries/` | 3.0 ✅ |
+| ~~3.4~~ | **Validators fase 1** — spells + feats → `feat-option.queries.ts` + views TypeORM | 3.1 ✅ |
+| ~~3.5~~ | **Validators fase 2** — class-options + background → queries infra | 3.4 ✅ |
+| ~~3.6~~ | **ADR** — [`adr-sheet-validation-layers.md`](../architecture/adr-sheet-validation-layers.md) | 3.5 ✅ |
+| ~~3.7~~ | **Matriz runtime** em [`catalog-patterns.md` §10](../architecture/catalog-patterns.md#10-runtime-game-reads) | 3.0 ✅ |
 
 **Métricas de saída:**
 
 | Indicador | Hoje | Meta fase 3 |
 |-----------|------|-------------|
-| Validators com `dataSource.query` | ~30 | **<10** (resto no backlog) |
+| Validators com `dataSource.query` | **0** | **0** ✅ |
 | DB consistência | C+ | **B** |
 | DRY SQL | A−/B | **A−** |
 | Nota final | ~3,3 | **≥ 3,4 (B+ estável)** |
@@ -567,7 +621,7 @@ Regras durante execução: `dry-quality` · `typescript-quality` · skills `unif
 
 | # | PR / entrega | Risco |
 |---|--------------|-------|
-| 4.1 | **Squash migrations** → `database/baseline/001_full_schema.sql` | Alto — só com janela dedicada |
+| 4.1 | ~~Baseline greenfield~~ → [`database/baseline/001_full_schema.sql`](../../database/baseline/001_full_schema.sql) | ✅ 2026-09-02 |
 | 4.2 | **Barrel policy** — quebrar `session/dto/index.ts` mega-export | Médio |
 | 4.3 | Mover `*-combat-notes-data.ts` → `combat/domain/notes/` | Baixo |
 | 4.4 | Split `inventory/application` (15 arquivos) | Médio |
@@ -634,12 +688,12 @@ Média numérica **2,96** (limiar B = 3,0). Nota **B−** por arredondamento con
 
 | Stat | SSOT | Status check |
 |------|------|--------------|
-| Mod. atributo | `ability-scores.ts` | ⚠️ 3 cópias `abilityMod` em combat |
+| Mod. atributo | `ability-scores.ts` | ✅ (fase 1.1) |
 | PV máx. | `hit-points.calc.ts` | ✅ |
 | PV clamp | `combat-vitals.ts` | ✅ |
 | Moedas | `coin-purse.ts` | ✅ |
-| CA | `resolve-equipped-armor-class` | ❌ ficha usa só `computeUnarmoredArmorClass` |
-| `hasStyleOrFeat` | — | ❌ duplicado em armor-class + weapon-predicates |
+| CA | `resolve-equipped-armor-class` | ✅ ficha via `combat` slice (fase 1.3) |
+| `hasStyleOrFeat` | `feat/has-style-or-feat.ts` | ✅ (fase 1.2) |
 
 ---
 

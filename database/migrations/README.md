@@ -1,57 +1,30 @@
-# Migrations PostgreSQL
+# Migrations forward-only
 
-Schema do **catálogo PHB** em migrations granulares.
+Schema **incremental** após o baseline. Catálogo completo vive em [`../baseline/`](../baseline/README.md).
 
-## Estrutura
+## Estrutura (quando houver arquivos)
 
-| Pasta / arquivo | Conteúdo |
-|-----------------|----------|
-| `001_schema.sql` | `CREATE SCHEMA rpg` + extensão `pg_trgm` |
-| `010_types/` | ENUMs |
-| `020_tables/T###_<nome>.sql` | Uma tabela por arquivo |
+| Pasta | Conteúdo |
+|-------|----------|
+| `010_types/` | Novos ENUMs ou `ALTER TYPE` (evitar — preferir enum completo no baseline pré-prod) |
+| `020_tables/T###_<nome>.sql` | Tabelas / colunas novas |
 | `040_functions/` | Funções PL/pgSQL |
 | `050_triggers/` | Triggers |
-| `060_views/V###_<nome>.sql` | Views (`V001`+, hoje **~79** arquivos) |
+| `060_views/V###_<nome>.sql` | Views |
 | `070_materialized/` | Materialized views |
 | `080_indexes/` | Índices adicionais |
-| `090_player/P###_<nome>.sql` | Jogador + RLS (`P001`+, hoje **~44** arquivos) |
+| `090_player/P###_<nome>.sql` | Runtime jogador + RLS |
 
 Registro: `rpg.schema_migration` (versão = caminho relativo sem `.sql`).
 
-**Pré-prod:** com ~239 arquivos SQL e zero prod, avaliar squash para `baseline/001_full_schema.sql` — ver [`docs/plans/code-health-audit.md`](../../docs/plans/code-health-audit.md).
-
 ## Aplicar
 
-**Dev local (reset + catálogo completo):**
-
 ```bash
-npm run db:setup
+npm run db:setup              # reset + baseline + forward + seeds
+npm run db:migrate            # DATABASE_URL
+npm run db:migrate:supabase   # SUPABASE_DATABASE_URL (direct 5432)
 ```
 
-Ordem: reset → migrations → seeds (PHB + Valdas).
+O runner aplica `database/baseline/001_full_schema.sql` uma vez, depois só arquivos `.sql` pendentes nesta pasta (ordem lexicográfica).
 
-**Incremental:**
-
-```bash
-npm run db:migrate          # DATABASE_URL
-npm run db:migrate:supabase # SUPABASE_DATABASE_URL (direct 5432)
-npm run db:migrate:all      # os dois
-```
-
-O runner registra versões em `rpg.schema_migration` e só aplica arquivos pendentes.
-
-**Seeds** (banco vazio ou após `db:reset`):
-
-```bash
-npm run db:seed
-npm run db:seed:supabase
-```
-
-**Dev reset com confirmação:**
-
-```bash
-npm run db:reset                    # LOCAL apenas
-npm run db:reset -- --target=supabase # Supabase (requer CONFIRM_DROP_RPG=yes)
-```
-
-Sem tabelas `player_character_*` no fluxo padrão de catálogo — ver `090_player/` para dados de jogador (fase 5+).
+**Seeds** (dados de catálogo): [`../seeds/`](../seeds/) via `npm run db:seed` — não ficam em migrations.
