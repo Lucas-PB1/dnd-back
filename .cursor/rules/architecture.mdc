@@ -22,9 +22,10 @@ Doc: [`docs/architecture/architecture.md`](../../docs/architecture/architecture.
 
 ## Catalog (thin)
 
-- Controller → **Query** (`execute()`) → `@ViewEntity` + mapper
+- Controller → **Query** (`execute()`) → **`@Entity` tabela** ou **`@ViewEntity`** / **MV** + mapper
+- **Sem** view espelho 1:1 — ler `phb_*` direto ([`adr-read-model-layers.md`](../../docs/architecture/adr-read-model-layers.md))
 - **Sem** `domain/`, agregados ou POST/PATCH/DELETE em `phb_*`
-- Regras PHB no Postgres (views/seeds), não em TS
+- Regras PHB no Postgres (tabelas/views/seeds), não em TS
 - Lookup compartilhado: `CatalogLookupService`
 
 ## Game

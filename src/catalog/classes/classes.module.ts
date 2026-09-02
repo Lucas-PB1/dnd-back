@@ -6,8 +6,9 @@ import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '@entities/views/v-phb-class-skill-choice.entity';
-import { VPhbClassFeature } from '@entities/views/v-phb-class-feature.entity';
-import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
+import { PhbClassFeature } from '@entities/phb-class-feature.entity';
+import { PhbClassProgression } from '@entities/phb-class-progression.entity';
+import { PhbClassRef } from '@entities/phb-class-ref.entity';
 import { PhbOptionValue } from '@entities/phb-option.entity';
 import { CatalogLookupModule } from '../catalog-lookup.module';
 import { ClassesController } from './classes.controller';
@@ -33,8 +34,9 @@ import { ClassProficienciesQuery } from './queries/class-proficiencies.query';
       VClassSpellSlots,
       VPhbClassEquipment,
       VPhbClassSkillChoice,
-      VPhbClassFeature,
-      VPhbClassProgression,
+      PhbClassRef,
+      PhbClassFeature,
+      PhbClassProgression,
       PhbOptionValue,
     ]),
     CatalogLookupModule,

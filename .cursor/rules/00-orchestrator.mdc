@@ -15,7 +15,7 @@ Genérico: shared-ai (`nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`,
 |--------|-------|
 | Glossário / slugs PT-EN | `dnd-glossary-pt` |
 | Tabelas, FKs, views PHB | `rpg-catalog-model` |
-| Queries prontas nas views | `phb-query-views` |
+| Queries read models (tabela/view/MV) | `phb-query-views` |
 | `db:setup` / migrate / seed | `postgres-apply-catalog` |
 | Classe mesa (table-action / economy) | `rpg-class-mesa-api` |
 | Arquivos grandes / dívida | `audit-code-health` |
@@ -24,7 +24,7 @@ Genérico: shared-ai (`nestjs`, `typeorm`, `jest`, `testing`, `sql`, `postgres`,
 
 ## Rules locais
 
-`architecture` · `api-contract` · `phb-data` · `file-size` · `refactor-triggers` · `dry-quality` · `typescript-quality` · `docs-hub` · `class-mesa`
+`architecture` · `api-contract` · `phb-data` · `read-model-layers` · `file-size` · `refactor-triggers` · `dry-quality` · `typescript-quality` · `docs-hub` · `class-mesa`
 
 ## Ops rápidos
 

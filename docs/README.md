@@ -22,6 +22,9 @@
 | [`architecture/catalog-patterns.md`](architecture/catalog-patterns.md) | Padrões DRY SQL do catálogo (+ catálogo mecânico) |
 | [`architecture/adr-schema-consolidation.md`](architecture/adr-schema-consolidation.md) | ADR — consolidação A→G (Aceito) |
 | [`architecture/adr-sheet-validation-layers.md`](architecture/adr-sheet-validation-layers.md) | ADR — validators ficha vs `infrastructure/queries` (Aceito) |
+| [`architecture/adr-read-model-layers.md`](architecture/adr-read-model-layers.md) | ADR — view vs MV vs RPC JSONB (Aceito conceitual) |
+| [`plans/read-model-inventory.md`](plans/read-model-inventory.md) | **Lista objetiva** — o que é tabela / view / MV / RPC |
+| [`plans/read-model-mirror-refactor.md`](plans/read-model-mirror-refactor.md) | Preview — refactor views espelho → tabela (fase 2) |
 | [`architecture/schema-equivalence-map.md`](architecture/schema-equivalence-map.md) | Mapa tabela atual → alvo consolidado |
 | [`architecture/game-module-structure.md`](architecture/game-module-structure.md) | Submódulos Game |
 | [`architecture/code-standards.md`](architecture/code-standards.md) | Tamanho de arquivo, SRP, DRY, legado |

@@ -8,8 +8,9 @@ import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '@entities/views/v-phb-class-skill-choice.entity';
-import { VPhbClassFeature } from '@entities/views/v-phb-class-feature.entity';
-import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
+import { PhbClassFeature } from '@entities/phb-class-feature.entity';
+import { PhbClassProgression } from '@entities/phb-class-progression.entity';
+import { PhbClassRef } from '@entities/phb-class-ref.entity';
 import { CatalogLookupService } from '../catalog-lookup.service';
 import { ClassesMapper } from './classes.mapper';
 import { FindClassesQuery } from './queries/find-classes.query';
@@ -43,8 +44,8 @@ describe('Classes queries', () => {
   let spellSlotsRepo: jest.Mocked<Pick<Repository<VClassSpellSlots>, 'find'>>;
   let equipmentRepo: jest.Mocked<Pick<Repository<VPhbClassEquipment>, 'find'>>;
   let skillsRepo: jest.Mocked<Pick<Repository<VPhbClassSkillChoice>, 'find'>>;
-  let featuresRepo: jest.Mocked<Pick<Repository<VPhbClassFeature>, 'find'>>;
-  let progressionRepo: jest.Mocked<Pick<Repository<VPhbClassProgression>, 'find'>>;
+  let featuresRepo: jest.Mocked<Pick<Repository<PhbClassFeature>, 'find'>>;
+  let progressionRepo: jest.Mocked<Pick<Repository<PhbClassProgression>, 'find'>>;
   let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findClassOrFail'>>;
 
   const sample: VPhbClass = {
@@ -116,16 +117,18 @@ describe('Classes queries', () => {
     goldAmount: null,
   };
 
-  const sampleFeature: VPhbClassFeature = {
-    classSlug: 'bard',
-    featureLevel: 1,
-    featureName: 'Conjuração',
-    featureDescription: 'Você aprendeu a conjurar magias.',
+  const sampleFeature: PhbClassFeature = {
+    id: '1',
+    klass: { id: '10', slug: 'bard', subclassUnlockLevel: 3, weaponMasteryEligibility: null },
+    level: 1,
+    name: 'Conjuração',
+    description: 'Você aprendeu a conjurar magias.',
   };
 
-  const sampleProgression: VPhbClassProgression = {
-    classSlug: 'wizard',
+  const sampleProgression: PhbClassProgression = {
+    classId: '11',
     level: 1,
+    klass: { id: '11', slug: 'wizard', subclassUnlockLevel: 3, weaponMasteryEligibility: null },
     proficiencyBonus: 2,
     cantrips: 3,
     preparedSpells: 4,
@@ -201,11 +204,12 @@ describe('Classes queries', () => {
         { provide: getRepositoryToken(VClassSpellSlots), useValue: spellSlotsRepo },
         { provide: getRepositoryToken(VPhbClassEquipment), useValue: equipmentRepo },
         { provide: getRepositoryToken(VPhbClassSkillChoice), useValue: skillsRepo },
-        { provide: getRepositoryToken(VPhbClassFeature), useValue: featuresRepo },
+        { provide: getRepositoryToken(PhbClassFeature), useValue: featuresRepo },
         {
-          provide: getRepositoryToken(VPhbClassProgression),
+          provide: getRepositoryToken(PhbClassProgression),
           useValue: progressionRepo,
         },
+        { provide: getRepositoryToken(PhbClassRef), useValue: {} },
         { provide: CatalogLookupService, useValue: catalogLookup },
       ],
     }).compile();
@@ -314,7 +318,7 @@ describe('Classes queries', () => {
   it('findFeaturesByClassSlug filters by maxLevel', async () => {
     featuresRepo.find.mockResolvedValue([
       sampleFeature,
-      { ...sampleFeature, featureLevel: 5, featureName: 'Inspiração de Bardo' },
+      { ...sampleFeature, level: 5, name: 'Inspiração de Bardo' },
     ]);
     const result = await findClassFeatures.execute('', undefined, 50, 1);
     expect(result.data).toHaveLength(1);

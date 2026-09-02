@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
-import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
+import { PhbClassProgression } from '@entities/phb-class-progression.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { maxSpellLevelFromSlots } from '@game/spellcasting/domain/max-spell-level';
 
@@ -81,9 +81,8 @@ export async function loadSpellProgressionLimits(
     };
   }
 
-  const row = await dataSource.getRepository(VPhbClassProgression).findOne({
-    where: { classSlug: ctx.classSlug, level: ctx.level },
-    select: ['cantrips', 'preparedSpells'],
+  const row = await dataSource.getRepository(PhbClassProgression).findOne({
+    where: { klass: { slug: ctx.classSlug }, level: ctx.level },
   });
   if (!row) return null;
   return {

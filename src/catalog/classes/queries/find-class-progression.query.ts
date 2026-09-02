@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
+import { PhbClassProgression } from '@entities/phb-class-progression.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { requireNonEmpty } from '@common/require-found';
 import {
@@ -14,8 +14,8 @@ import { ClassesMapper } from '../classes.mapper';
 @Injectable()
 export class FindClassProgressionQuery {
   constructor(
-    @InjectRepository(VPhbClassProgression)
-    private readonly progressionRepo: Repository<VPhbClassProgression>,
+    @InjectRepository(PhbClassProgression)
+    private readonly progressionRepo: Repository<PhbClassProgression>,
     private readonly catalogLookup: CatalogLookupService,
     private readonly mapper: ClassesMapper,
   ) {}
@@ -27,7 +27,8 @@ export class FindClassProgressionQuery {
   ): Promise<PaginatedResponseDto<ClassProgressionResponseDto>> {
     await this.catalogLookup.findClassOrFail(classSlug);
     const rows = await this.progressionRepo.find({
-      where: { classSlug },
+      where: { klass: { slug: classSlug } },
+      relations: ['klass'],
       order: { level: 'ASC' },
     });
     requireNonEmpty(rows, `Class '${classSlug}' has no level progression`);

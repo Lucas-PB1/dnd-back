@@ -13,7 +13,7 @@ description: Explica tabelas, FKs, views e clusters do catálogo PHB 2024 no sch
 
 ## Workflow
 
-1. Ler [`docs/architecture/data-model.md`](../../../docs/architecture/data-model.md) para visão geral
+1. Ler [`docs/architecture/data-model.md`](../../../docs/architecture/data-model.md) e [`adr-read-model-layers.md`](../../../docs/architecture/adr-read-model-layers.md)
 2. Abrir referência específica em `references/`:
    - [`clusters.md`](references/clusters.md) — 7 domínios
    - [`fk-map.md`](references/fk-map.md) — FKs e chaves compostas
@@ -26,6 +26,8 @@ description: Explica tabelas, FKs, views e clusters do catálogo PHB 2024 no sch
 ## Regras rápidas
 
 - API/contratos: **slug** · joins SQL: **id**
+- **ENUM + view VALUES** para labels estáticos (Decisão 1 ADR)
+- **Tabela direta** se catálogo 1:1; **view** se join/agregado; **MV** se lista pesada — rule `read-model-layers`
 - Itens: sempre partir de `phb_item`; subtipo em weapon/armor/tool
 - Armas concedidas por classe/subclasse: seed no catálogo + load por slug — **não** hardcodar dano/propriedades no domain ([`conventions.md`](references/conventions.md) § Armas concedidas)
 - Catálogo read-only na aplicação

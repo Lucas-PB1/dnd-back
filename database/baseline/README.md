@@ -1,6 +1,6 @@
 # Baseline schema `rpg`
 
-Snapshot **greenfield** do DDL (~241 KiB, ~7k linhas). Substitui 239 migrations granulares (histórico no git).
+Snapshot **greenfield** do DDL (~225 KiB, ~5,2k linhas). Substitui 239 migrations granulares (histórico no git).
 
 | Arquivo | Conteúdo |
 |---------|----------|

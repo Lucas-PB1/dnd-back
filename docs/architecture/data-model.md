@@ -126,7 +126,9 @@ Combatente de encontro: `kind IN ('pc','actor')`. Criaturas manuais viram `game_
 
 ## Views (read models)
 
-Contratos estáveis para a API — ver pasta `060_views/` e skill `phb-query-views`. Principais: `v_phb_class_equipment`, `v_phb_background_equipment`, `v_phb_species_trait_choices`, `v_phb_species_granted_spell`, `v_phb_feat_granted_spell`, `mv_spell_by_class`.
+Contratos estáveis para a API — skill `phb-query-views`. Política view / MV / RPC: [`adr-read-model-layers.md`](adr-read-model-layers.md).
+
+Principais: `v_phb_class_equipment`, `v_phb_background_equipment`, `v_phb_species_trait_choices`, `v_phb_species_granted_spell`, `v_phb_feat_granted_spell`, **`mv_spell_by_class`** (consumo; `v_spell_by_class` = definição).
 
 Ficha do jogador (GET): `rpg.get_character_sheet_bundle` (P030/P032 — filhos + PB + boosts de classe + size da espécie) + `rpg.get_character_combat_bundle` (P031 — inventário/itens/armadura/defesa sem armadura).
 

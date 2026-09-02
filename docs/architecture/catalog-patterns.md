@@ -1,8 +1,8 @@
 # Padrões do catálogo — DRY SQL
 
 Auditoria P7 (2026-07-27); atualizado com consolidação A–G (2026-08-07).  
-Fonte: [`database/migrations/`](../../database/migrations/) + [`database/seeds/`](../../database/seeds/).  
-ADR: [`adr-schema-consolidation.md`](adr-schema-consolidation.md).
+Fonte: [`database/baseline/`](../../database/baseline/) + [`database/seeds/`](../../database/seeds/).  
+ADR: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) · **Read models:** [`adr-read-model-layers.md`](adr-read-model-layers.md).
 
 ## Princípio
 
@@ -160,6 +160,23 @@ Matriz canônica para **leitura em runtime** (ficha, mesa, dados) — complement
 
 **Regra:** SQL cru (`dataSource.query`) só em `infrastructure/queries/` ou views; **não** em `domain/` nem em application handlers.
 
+Camadas view / MV / RPC JSONB: [`adr-read-model-layers.md`](./adr-read-model-layers.md).
+
+---
+
+## 11. Read models — view, MV, RPC (ADR)
+
+| Camada | Mecanismo | Quando |
+|--------|-----------|--------|
+| Catálogo join simples | View `v_phb_*` | API compêndio, detail |
+| Catálogo pesado / lista | **MV** `mv_*` (refresh pós-seed) | Feat, species choices, bundles, spell-by-class |
+| Lookup enum | ENUM + view VALUES | Labels PT estáticos |
+| Espelho 1:1 | **Tabela** `phb_*` (não nova view) | Manobras, masks — views legadas deprecadas |
+| Runtime hot path | RPC JSONB bundle | Ficha, combate, actor |
+| Runtime + regra catálogo | RPC (estado) + queries (MV/view lista fechada) | Ver ADR § Decisão 5 |
+
+Implementação das MVs pendentes: DoD no ADR.
+
 ---
 
 ## Checklist — nova tabela de catálogo
@@ -167,5 +184,5 @@ Matriz canônica para **leitura em runtime** (ficha, mesa, dados) — complement
 1. Existe entidade pai clara (`phb_*` + FK)?
 2. Cabe em `option_*`, `starting_*`, `spell_grant`, `class_proficiency`, `resource_grant` ou `combat_modifier`?
 3. A leitura repete JOIN de 3+ migrations? → view `v_phb_*`.
-4. A ficha precisa da regra? → consumir view no domain.
+4. A ficha precisa da regra? → projeção na [lista fechada](adr-read-model-layers.md#decisão-5--fronteira-runtime--catálogo) (MV/view via `infrastructure/queries/`).
 5. Migration já aplicada em prod? → **nova** migration (neste repo: rewrite + `db:setup` enquanto sem produção).

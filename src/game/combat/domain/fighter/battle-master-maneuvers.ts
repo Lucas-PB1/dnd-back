@@ -1,6 +1,6 @@
 /**
  * Manobras do Mestre da Batalha — tipos e lookups.
- * Catálogo: `rpg.phb_battle_master_maneuver` / `v_phb_battle_master_maneuver`.
+ * Catálogo: `rpg.phb_battle_master_maneuver`.
  */
 
 export type BattleMasterManeuver = {

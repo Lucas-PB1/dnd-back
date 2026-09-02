@@ -55,7 +55,9 @@ _Fase concluída (3.0–3.7). Próximo: Fase 4 abaixo._
 
 #### Fase 4 — Estrutura pré-prod → nota **A−**
 
-- [x] **4.1** Baseline greenfield → [`database/baseline/001_full_schema.sql`](../baseline/001_full_schema.sql) (~241 KiB; enums/tabelas fundidos; forward em `database/migrations/`)
+- [x] **4.1** Baseline greenfield → [`database/baseline/001_full_schema.sql`](../baseline/001_full_schema.sql) (~5,2k linhas; forward em `database/migrations/`)
+- [x] **4.1b Read models — espelho → tabela:** 11 views combat/progression; inventário [`read-model-inventory.md`](read-model-inventory.md); ADR [`adr-read-model-layers.md`](../architecture/adr-read-model-layers.md)
+- [ ] **4.1c Read models — MV agregados:** `mv_phb_feat`, `mv_phb_species_trait_choices`, bundles (ADR Decisões 3–4)
 - [ ] **4.2** Barrel policy (`session/dto/index.ts`, …)
 - [ ] **4.3** `combat/domain/notes/` para combat-notes
 - [ ] **4.4** Split `inventory/application`

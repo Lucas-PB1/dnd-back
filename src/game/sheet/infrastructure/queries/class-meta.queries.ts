@@ -1,7 +1,7 @@
 import { DataSource } from 'typeorm';
 import { PhbClassRef } from '@entities/phb-class-ref.entity';
 import { VPhbClass } from '@entities/views/v-phb-class.entity';
-import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
+import { PhbClassProgression } from '@entities/phb-class-progression.entity';
 import type { ClassProgressionMasteryRow } from '@game/sheet/domain/validation/class-options/class-weapon-mastery-slots';
 
 export async function resolveSubclassUnlockLevel(
@@ -19,9 +19,8 @@ export async function loadWeaponMasteryProgression(
   dataSource: DataSource,
   classSlug: string,
 ): Promise<ClassProgressionMasteryRow[]> {
-  const rows = await dataSource.getRepository(VPhbClassProgression).find({
-    where: { classSlug },
-    select: ['level', 'weaponMastery'],
+  const rows = await dataSource.getRepository(PhbClassProgression).find({
+    where: { klass: { slug: classSlug } },
     order: { level: 'ASC' },
   });
   return rows.map((row) => ({

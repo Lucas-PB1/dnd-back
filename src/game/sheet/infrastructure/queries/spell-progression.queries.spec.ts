@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
-import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
+import { PhbClassProgression } from '@entities/phb-class-progression.entity';
 import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import {
   loadSpellProgressionLimits,
@@ -22,7 +22,7 @@ describe('spell-progression.queries', () => {
       getRepository: jest.fn((entity) => {
         if (entity === VSubclassSpellSlots) return subclassRepo;
         if (entity === VClassSpellSlots) return classSlotsRepo;
-        if (entity === VPhbClassProgression) return classProgressionRepo;
+        if (entity === PhbClassProgression) return classProgressionRepo;
         throw new Error(`Unexpected entity ${entity}`);
       }),
     } as unknown as DataSource;
@@ -121,8 +121,7 @@ describe('spell-progression.queries', () => {
         loadSpellProgressionLimits(dataSource, ctx, null),
       ).resolves.toEqual({ cantripsMax: 2, preparedOrKnownMax: 6 });
       expect(classProgressionRepo.findOne).toHaveBeenCalledWith({
-        where: { classSlug: 'wizard', level: 3 },
-        select: ['cantrips', 'preparedSpells'],
+        where: { klass: { slug: 'wizard' }, level: 3 },
       });
     });
 

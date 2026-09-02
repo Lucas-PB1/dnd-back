@@ -1,34 +1,46 @@
 # Views do catálogo
 
-Preferir views para endpoints read-only da API.
+SSOT camadas: [`adr-read-model-layers.md`](../../../../docs/architecture/adr-read-model-layers.md).
 
-| View | Descrição |
-|------|-----------|
-| `v_phb_class` | Classes com hit die, primary abilities, source |
-| `v_phb_spell` | Magias com escola e edição |
-| `v_phb_subclass` | Subclasses com classe pai |
-| `v_spell_by_class` | Magias por classe e nível |
-| `v_phb_background` | Antecedentes enriquecidos |
-| `v_phb_background_equipment` | Equipamento de antecedente |
-| `v_phb_class_equipment` | Equipamento inicial de classe |
-| `v_phb_feat` | Talentos com benefícios |
-| `v_phb_armor` | Armaduras com categoria |
-| `v_class_spell_slots` | Slots por classe/nível |
-| `v_phb_class_skill_choice` | Pool de perícias |
-| `v_phb_species_trait_choices` | Escolhas de traço |
-| `v_phb_subclass_mechanics` | Mecânicas de subclasse |
-| `v_phb_subclass_prepared_spell` | Magias preparadas |
-| `v_phb_subclass_spells_expected` | Magias esperadas |
-| `v_phb_species_granted_spell` | Magias always_prepared de espécie/linhagem |
-| `v_phb_feat_granted_spell` | Magias fixas de talento (fey/shadow touched etc.) |
-| `v_phb_class_granted_spell` | Magias always_prepared de classe (S023) |
-| `v_phb_background_flavor` | Tagline/summary de antecedente |
-| `v_phb_background_tool_option` | Whitelist de ferramentas por antecedente |
-| `v_phb_background_tool_option_whitelist` | Alias agregado para validação |
-| `v_class_spell_slots_progression` | Progressão de slots (fixes Valdas/third) |
-| `v_phb_spell_save_attack` | CD/ataque de magia enriquecido |
-| `mv_spell_by_class` | Materialized — refresh manual/cron |
+## Quando usar o quê
 
-Definições SQL: `database/migrations/060_views/` e `070_materialized/`
+| Mecanismo | Usar quando |
+|-----------|-------------|
+| **Tabela `phb_*`** | Espelho 1:1, combat mecânico, join mínimo (slug via relation) |
+| **View VALUES** | Label/ordem de enum |
+| **View join** | Enriquecimento multi-FK (`v_phb_armor`, `v_phb_spell`) |
+| **View agregado** | 1 root + filhos JSONB (`v_phb_feat`) → MV se list lenta |
+| **MV `mv_*`** | Consumo em API/listagem; refresh pós-seed |
 
-Magias concedidas na ficha → [`granted-spells-read-model.md`](granted-spells-read-model.md)
+**Não** criar view espelho. Refactor em curso: [`read-model-mirror-refactor.md`](../../../../docs/plans/read-model-mirror-refactor.md).
+
+## Views ativas (pós refactor espelho)
+
+| View | Tipo | Descrição |
+|------|------|-----------|
+| `v_phb_feat_category` | VALUES | Categorias de talento |
+| `v_phb_condition` | VALUES | Condições |
+| `v_phb_weapon_proficiency` | VALUES | Labels proficiência |
+| `v_phb_ability_generation_method` | VALUES | Métodos de geração |
+| `v_phb_class` | join | Classes enriquecidas |
+| `v_phb_spell` | join | Magias + escola |
+| `v_phb_subclass` | join | Subclasses + edition |
+| `v_phb_armor` | join | Armaduras + item |
+| `v_phb_background` | agregado | Antecedentes + arrays |
+| `v_phb_feat` | agregado | Talentos + JSONB filhos |
+| `v_phb_class_equipment` | join | Pacote inicial classe |
+| `v_phb_background_equipment` | join | Pacote inicial antecedente |
+| `v_phb_species_trait_choices` | união | Linhagens / choices |
+| `v_phb_class_economy_action` | união | Economy multi-owner |
+| `v_phb_creature_template_bundle` | bundle | Bestiário |
+| `v_phb_vehicle_template_bundle` | bundle | Veículos |
+| `v_phb_character_thread_bundle` | bundle | Threads Northlands |
+| `mv_spell_by_class` | MV | Magias por classe |
+
+Lista completa SQL: `database/baseline/001_full_schema.sql`.
+
+Magias concedidas → [`granted-spells-read-model.md`](granted-spells-read-model.md).
+
+## Removidas (ler tabela)
+
+`v_phb_battle_master_maneuver`, `v_phb_gunslinger_maneuver`, `v_phb_class_panel_action`, `v_phb_class_feature`, … — ver plano mirror refactor.

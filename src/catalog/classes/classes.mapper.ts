@@ -5,8 +5,8 @@ import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
 import { VPhbClassEquipment } from '@entities/views/v-phb-class-equipment.entity';
 import { VPhbClassSkillChoice } from '@entities/views/v-phb-class-skill-choice.entity';
-import { VPhbClassFeature } from '@entities/views/v-phb-class-feature.entity';
-import { VPhbClassProgression } from '@entities/views/v-phb-class-progression.entity';
+import { PhbClassFeature } from '@entities/phb-class-feature.entity';
+import { PhbClassProgression } from '@entities/phb-class-progression.entity';
 import { ClassResponseDto } from './dto/class-response.dto';
 import { ClassSummaryResponseDto } from './dto/class-summary-response.dto';
 import { SubclassResponseDto } from '../subclasses/dto/subclass-response.dto';
@@ -110,16 +110,16 @@ export class ClassesMapper {
     };
   }
 
-  toClassFeatureDto(row: VPhbClassFeature): ClassFeatureResponseDto {
+  toClassFeatureDto(row: PhbClassFeature): ClassFeatureResponseDto {
     return {
-      classSlug: row.classSlug,
-      featureLevel: row.featureLevel,
-      featureName: row.featureName,
-      featureDescription: row.featureDescription,
+      classSlug: row.klass.slug,
+      featureLevel: row.level,
+      featureName: row.name,
+      featureDescription: row.description,
     };
   }
 
-  toProgressionDto(row: VPhbClassProgression): ClassProgressionResponseDto {
+  toProgressionDto(row: PhbClassProgression): ClassProgressionResponseDto {
     return {
       level: row.level,
       proficiencyBonus: row.proficiencyBonus,

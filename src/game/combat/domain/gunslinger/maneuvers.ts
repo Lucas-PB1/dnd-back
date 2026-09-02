@@ -1,6 +1,6 @@
 /**
  * Manobras do Pistoleiro (Valdas) — tipos e lookups.
- * Catálogo: `rpg.phb_gunslinger_maneuver` / `v_phb_gunslinger_maneuver`.
+ * Catálogo: `rpg.phb_gunslinger_maneuver`.
  */
 
 export type ManeuverEffectKind =

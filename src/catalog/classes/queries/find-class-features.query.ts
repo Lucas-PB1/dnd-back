@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbClassFeature } from '@entities/views/v-phb-class-feature.entity';
+import { PhbClassFeature } from '@entities/phb-class-feature.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { requireNonEmpty } from '@common/require-found';
 import {
@@ -14,8 +14,8 @@ import { ClassesMapper } from '../classes.mapper';
 @Injectable()
 export class FindClassFeaturesQuery {
   constructor(
-    @InjectRepository(VPhbClassFeature)
-    private readonly featuresRepo: Repository<VPhbClassFeature>,
+    @InjectRepository(PhbClassFeature)
+    private readonly featuresRepo: Repository<PhbClassFeature>,
     private readonly catalogLookup: CatalogLookupService,
     private readonly mapper: ClassesMapper,
   ) {}
@@ -29,11 +29,12 @@ export class FindClassFeaturesQuery {
     await this.catalogLookup.findClassOrFail(classSlug);
 
     let rows = await this.featuresRepo.find({
-      where: { classSlug },
-      order: { featureLevel: 'ASC', featureName: 'ASC' },
+      where: { klass: { slug: classSlug } },
+      relations: ['klass'],
+      order: { level: 'ASC', name: 'ASC' },
     });
     if (maxLevel !== undefined) {
-      rows = rows.filter((row) => row.featureLevel <= maxLevel);
+      rows = rows.filter((row) => row.level <= maxLevel);
     }
 
     requireNonEmpty(rows, `Class '${classSlug}' has no class features data`);

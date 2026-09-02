@@ -1,0 +1,28 @@
+---
+description: Camadas de read model — view vs MV vs tabela vs RPC JSONB (ADR)
+globs: database/**/*,src/entities/**/*,src/catalog/**/*,src/game/**/infrastructure/**/*
+alwaysApply: false
+---
+
+# Read model layers
+
+SSOT: [`docs/architecture/adr-read-model-layers.md`](../../docs/architecture/adr-read-model-layers.md) · preview refactor: [`docs/plans/read-model-mirror-refactor.md`](../../docs/plans/read-model-mirror-refactor.md).
+
+## Regras
+
+1. **ENUM + view VALUES** — labels/ordem de enum estático (`v_phb_feat_category`, `v_phb_condition`). Não recriar tabela lookup.
+2. **Tabela `phb_*` direta** — catálogo 1:1 ou join mínimo (só resolver `*_slug`). **Não** criar view espelho.
+3. **View `v_phb_*`** — só join enriquecido, agregado JSONB ou união multi-owner. Nova view exige justificativa no PR.
+4. **MV `mv_*`** — listagem pesada + dados estáticos até seed; consumidor lê MV; refresh em `run-seeds.mjs`.
+5. **RPC JSONB** — hot path runtime (`get_character_*_bundle`, `get_game_actor_bundle`). Não listar catálogo.
+6. **JSONB coluna** — extensão (`phb_item.properties`), não mecânica tipada.
+
+## Runtime ↔ catálogo
+
+Híbrido (ADR §5): RPC = **estado**; `infrastructure/queries/` = **regras** via lista fechada de MV/view. Proibido montar ficha encadeando views.
+
+## TypeORM
+
+- Tabela: `@Entity` em `src/entities/phb-*.entity.ts`
+- View/MV: `@ViewEntity` em `src/entities/views/` (ou `mv-*`)
+- Catalog: Query → entity/view → mapper (rule `architecture`)

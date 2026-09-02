@@ -1,16 +1,10 @@
--- Baseline schema `rpg` — greenfield (239 migrations compactadas)
--- Generated: 2026-09-02
--- Forward-only: database/migrations/
-
--- ── 001_schema.sql ──
+-- Baseline schema `rpg` — greenfield DDL (schema + runtime)
 
 -- Schema rpg + extensão pg_trgm
 
 CREATE SCHEMA IF NOT EXISTS rpg;
 
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
-
--- ── 010_types/002_types.sql ──
 
 -- ENUMs do catálogo PHB (baseline canônico)
 
@@ -115,8 +109,6 @@ CREATE TYPE rpg.weapon_category AS ENUM ('simple', 'martial', 'advanced');
 
 CREATE TYPE rpg.casting_type AS ENUM ('full', 'half', 'pact', 'third', 'none');
 
--- Lote A: small lookup tables consolidated to ENUMs
-
 CREATE TYPE rpg.hit_die AS ENUM ('d6', 'd8', 'd10', 'd12');
 
 CREATE TYPE rpg.druid_land_terrain AS ENUM ('arid', 'polar', 'temperate', 'tropical');
@@ -131,13 +123,10 @@ CREATE TYPE rpg.condition_slug AS ENUM (
   'poisoned', 'prone', 'restrained', 'stunned', 'unconscious'
 );
 
--- Lote C: option families unificadas (+ class para runtime)
 CREATE TYPE rpg.option_scope AS ENUM ('subclass', 'species', 'feat', 'class');
 
--- Lote D: pacotes de equipamento inicial (classe + antecedente)
 CREATE TYPE rpg.starting_package_source AS ENUM ('class', 'background');
 
--- Lote F: afinidades de classe unificadas
 CREATE TYPE rpg.class_proficiency_kind AS ENUM (
   'saving_throw',
   'primary_ability',
@@ -146,14 +135,11 @@ CREATE TYPE rpg.class_proficiency_kind AS ENUM (
   'fighting_style'
 );
 
--- Lote G: recursos e modificadores de combate unificados
 CREATE TYPE rpg.resource_owner_kind AS ENUM ('class', 'subclass', 'species', 'feat', 'item', 'heritage');
 
 CREATE TYPE rpg.combat_modifier_kind AS ENUM ('hp_bonus', 'unarmored_defense');
 
 CREATE TYPE rpg.combat_modifier_owner AS ENUM ('species', 'class', 'subclass', 'feat', 'heritage');
-
--- ── 010_types/003_combat_mechanical_enums.sql ──
 
 -- Combat mechanical enums for subclass features
 
@@ -183,8 +169,6 @@ CREATE TYPE rpg.save_ability AS ENUM (
   'charisma'
 );
 
--- ── 010_types/004_class_action_ui_enums.sql ──
-
 -- Action economy bucket for class economy catalog (UI Actions tab)
 
 CREATE TYPE rpg.action_economy_bucket AS ENUM (
@@ -200,8 +184,6 @@ CREATE TYPE rpg.panel_action_section AS ENUM (
   'metamagic',
   'channel'
 );
-
--- ── 010_types/011_actor_types.sql ──
 
 -- Runtime game_actor: tipos de ficha e conjuração inata
 
@@ -227,7 +209,14 @@ CREATE TYPE rpg.actor_action_bucket AS ENUM (
   'other'
 );
 
--- ── 010_types/017_heritage_types.sql ──
+CREATE TYPE rpg.eldritch_invocation_kind AS ENUM (
+  'passive',
+  'note',
+  'free_cast',
+  'bonus',
+  'action',
+  'reaction'
+);
 
 -- Grim Hollow — tipos de herança e traços modulares
 
@@ -236,8 +225,6 @@ CREATE TYPE rpg.heritage_category AS ENUM ('common', 'rare', 'eldritch');
 CREATE TYPE rpg.heritage_trait_category AS ENUM ('combat', 'exploration', 'roleplaying');
 
 CREATE TYPE rpg.heritage_trait_take_mode AS ENUM ('stack', 'choice_each_take');
-
--- ── 020_tables/T088_phb_heritage.sql ──
 
 -- Grim Hollow — identidade de herança (17 jogáveis)
 
@@ -268,8 +255,6 @@ COMMENT ON TABLE rpg.phb_heritage IS
 COMMENT ON COLUMN rpg.phb_heritage.image_url IS
   'Caminho público da ilustração (ex. /catalog/heritages/dwarf.png).';
 
--- ── 020_tables/T089_phb_heritage_trait.sql ──
-
 -- Grim Hollow — pool global de traços modulares (~107)
 
 CREATE TABLE rpg.phb_heritage_trait (
@@ -294,9 +279,6 @@ CREATE INDEX idx_phb_heritage_trait_anchor ON rpg.phb_heritage_trait(anchor_id);
 COMMENT ON TABLE rpg.phb_heritage_trait IS
   'Traços modulares GH — pool global; repetição aplica benefit_improved conforme max_takes/take_mode.';
 
--- ── 020_tables/T001_phb_edition.sql ──
-
--- Tabela rpg.phb_edition
 
 CREATE TABLE rpg.phb_edition (
   id           BIGSERIAL PRIMARY KEY,
@@ -308,9 +290,6 @@ CREATE TABLE rpg.phb_edition (
   notes        TEXT
 );
 
--- ── 020_tables/T002_phb_source_citation.sql ──
-
--- Tabela rpg.phb_source_citation
 
 CREATE TABLE rpg.phb_source_citation (
   id BIGSERIAL PRIMARY KEY,
@@ -323,9 +302,6 @@ CREATE TABLE rpg.phb_source_citation (
   extracted_at TIMESTAMPTZ
 );
 
--- ── 020_tables/T003_phb_ability.sql ──
-
--- Tabela rpg.phb_ability
 
 CREATE TABLE rpg.phb_ability (
   id BIGSERIAL PRIMARY KEY,
@@ -334,9 +310,6 @@ CREATE TABLE rpg.phb_ability (
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 
--- ── 020_tables/T004_phb_alignment.sql ──
-
--- Tabela rpg.phb_alignment
 
 CREATE TABLE rpg.phb_alignment (
   id BIGSERIAL PRIMARY KEY,
@@ -346,9 +319,6 @@ CREATE TABLE rpg.phb_alignment (
   description TEXT
 );
 
--- ── 020_tables/T005_phb_language.sql ──
-
--- Tabela rpg.phb_language
 
 CREATE TABLE rpg.phb_language (
   id BIGSERIAL PRIMARY KEY,
@@ -359,9 +329,6 @@ CREATE TABLE rpg.phb_language (
   is_rare BOOLEAN NOT NULL DEFAULT FALSE
 );
 
--- ── 020_tables/T006_phb_skill.sql ──
-
--- Tabela rpg.phb_skill
 
 CREATE TABLE rpg.phb_skill (
   id BIGSERIAL PRIMARY KEY,
@@ -371,9 +338,6 @@ CREATE TABLE rpg.phb_skill (
   description TEXT
 );
 
--- ── 020_tables/T007_phb_fighting_style.sql ──
-
--- Tabela rpg.phb_fighting_style
 
 CREATE TABLE rpg.phb_fighting_style (
   id BIGSERIAL PRIMARY KEY,
@@ -382,9 +346,6 @@ CREATE TABLE rpg.phb_fighting_style (
   description TEXT NOT NULL
 );
 
--- ── 020_tables/T008_phb_weapon_property.sql ──
-
--- Tabela rpg.phb_weapon_property
 
 CREATE TABLE rpg.phb_weapon_property (
   id BIGSERIAL PRIMARY KEY,
@@ -393,9 +354,6 @@ CREATE TABLE rpg.phb_weapon_property (
   description TEXT NOT NULL
 );
 
--- ── 020_tables/T009_phb_feat.sql ──
-
--- Tabela rpg.phb_feat
 
 CREATE TABLE rpg.phb_feat (
   id BIGSERIAL PRIMARY KEY,
@@ -409,9 +367,6 @@ CREATE TABLE rpg.phb_feat (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- ── 020_tables/T010_phb_feat_benefit.sql ──
-
--- Tabela rpg.phb_feat_benefit
 
 CREATE TABLE rpg.phb_feat_benefit (
   id BIGSERIAL PRIMARY KEY,
@@ -422,9 +377,6 @@ CREATE TABLE rpg.phb_feat_benefit (
   UNIQUE (feat_id, sort_order)
 );
 
--- ── 020_tables/T011_phb_spell_school.sql ──
-
--- Tabela rpg.phb_spell_school
 
 CREATE TABLE rpg.phb_spell_school (
   id BIGSERIAL PRIMARY KEY,
@@ -433,9 +385,6 @@ CREATE TABLE rpg.phb_spell_school (
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 
--- ── 020_tables/T012_phb_spell.sql ──
-
--- Tabela rpg.phb_spell
 
 CREATE TABLE rpg.phb_spell (
   id BIGSERIAL PRIMARY KEY,
@@ -463,9 +412,6 @@ CREATE TABLE rpg.phb_spell (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- ── 020_tables/T013_phb_spell_slot_pattern.sql ──
-
--- Tabela rpg.phb_spell_slot_pattern
 
 CREATE TABLE rpg.phb_spell_slot_pattern (
   id BIGSERIAL PRIMARY KEY,
@@ -474,9 +420,6 @@ CREATE TABLE rpg.phb_spell_slot_pattern (
   description TEXT
 );
 
--- ── 020_tables/T014_phb_spell_slot_by_level.sql ──
-
--- Tabela rpg.phb_spell_slot_by_level
 
 CREATE TABLE rpg.phb_spell_slot_by_level (
   pattern_id BIGINT NOT NULL REFERENCES rpg.phb_spell_slot_pattern(id) ON DELETE CASCADE,
@@ -486,9 +429,6 @@ CREATE TABLE rpg.phb_spell_slot_by_level (
   PRIMARY KEY (pattern_id, level, circle)
 );
 
--- ── 020_tables/T015_phb_class.sql ──
-
--- Tabela rpg.phb_class
 
 CREATE TABLE rpg.phb_class (
   id BIGSERIAL PRIMARY KEY,
@@ -519,9 +459,6 @@ CREATE TABLE rpg.phb_class (
   )
 );
 
--- ── 020_tables/T016_phb_subclass.sql ──
-
--- Tabela rpg.phb_subclass
 
 CREATE TABLE rpg.phb_subclass (
   id BIGSERIAL PRIMARY KEY,
@@ -538,9 +475,6 @@ CREATE TABLE rpg.phb_subclass (
   UNIQUE (class_id, id)
 );
 
--- ── 020_tables/T017_phb_subclass_feature.sql ──
-
--- Tabela rpg.phb_subclass_feature
 
 CREATE TABLE rpg.phb_subclass_feature (
   id BIGSERIAL PRIMARY KEY,
@@ -553,9 +487,6 @@ CREATE TABLE rpg.phb_subclass_feature (
   UNIQUE (subclass_id, level, name)
 );
 
--- ── 020_tables/T018_phb_species.sql ──
-
--- Tabela rpg.phb_species
 
 CREATE TABLE rpg.phb_species (
   id BIGSERIAL PRIMARY KEY,
@@ -573,9 +504,6 @@ CREATE TABLE rpg.phb_species (
   image_url TEXT
 );
 
--- ── 020_tables/T019_phb_item.sql ──
-
--- Tabela rpg.phb_item
 
 CREATE TABLE rpg.phb_item (
   id BIGSERIAL PRIMARY KEY,
@@ -591,9 +519,6 @@ CREATE TABLE rpg.phb_item (
   image_url TEXT
 );
 
--- ── 020_tables/T020_phb_tool_category.sql ──
-
--- Tabela rpg.phb_tool_category
 
 CREATE TABLE rpg.phb_tool_category (
   id BIGSERIAL PRIMARY KEY,
@@ -602,9 +527,6 @@ CREATE TABLE rpg.phb_tool_category (
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 
--- ── 020_tables/T021_phb_background.sql ──
-
--- Tabela rpg.phb_background
 
 CREATE TABLE rpg.phb_background (
   id BIGSERIAL PRIMARY KEY,
@@ -625,9 +547,6 @@ CREATE TABLE rpg.phb_background (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
--- ── 020_tables/T022_phb_armor_category.sql ──
-
--- Tabela rpg.phb_armor_category
 
 CREATE TABLE rpg.phb_armor_category (
   id BIGSERIAL PRIMARY KEY,
@@ -637,9 +556,6 @@ CREATE TABLE rpg.phb_armor_category (
   sort_order INTEGER NOT NULL DEFAULT 0
 );
 
--- ── 020_tables/T023_phb_background_boost_option.sql ──
-
--- Tabela rpg.phb_background_boost_option
 
 CREATE TABLE rpg.phb_background_boost_option (
   id BIGSERIAL PRIMARY KEY,
@@ -647,9 +563,6 @@ CREATE TABLE rpg.phb_background_boost_option (
   label TEXT NOT NULL
 );
 
--- ── 020_tables/T024_phb_resource_definition.sql ──
-
--- Tabela rpg.phb_resource_definition
 
 CREATE TABLE rpg.phb_resource_definition (
   id BIGSERIAL PRIMARY KEY,
@@ -673,9 +586,6 @@ CREATE TABLE rpg.phb_resource_definition (
   )
 );
 
--- ── 020_tables/T025_phb_option_def.sql ──
-
--- Lote C: option_def unificado (subclass | species | feat)
 -- owner_id = subclass_id | species_id | feat_id conforme scope (sem FK polimórfica)
 
 CREATE TABLE rpg.phb_option_def (
@@ -699,9 +609,6 @@ CREATE TABLE rpg.phb_option_def (
 CREATE INDEX idx_phb_option_def_scope_owner
   ON rpg.phb_option_def(scope, owner_id);
 
--- ── 020_tables/T026_phb_option_value.sql ──
-
--- Lote C: option_value unificado (+ colunas tipadas do Lote B para species)
 
 CREATE TABLE rpg.phb_option_value (
   scope rpg.option_scope NOT NULL,
@@ -727,9 +634,6 @@ CREATE TABLE rpg.phb_option_value (
 CREATE INDEX idx_phb_option_value_scope_owner
   ON rpg.phb_option_value(scope, owner_id);
 
--- ── 020_tables/T027_phb_resource_grant.sql ──
-
--- Lote G: cotas jogáveis unificadas (classe + subclasse)
 
 CREATE TABLE rpg.phb_resource_grant (
   owner_kind rpg.resource_owner_kind NOT NULL,
@@ -757,9 +661,6 @@ CREATE TABLE rpg.phb_resource_grant (
 CREATE INDEX idx_phb_resource_grant_owner
   ON rpg.phb_resource_grant(owner_kind, owner_id);
 
--- ── 020_tables/T028_phb_spell_source.sql ──
-
--- Tabela rpg.phb_spell_source
 
 CREATE TABLE rpg.phb_spell_source (
   id BIGSERIAL PRIMARY KEY,
@@ -780,9 +681,6 @@ CREATE TABLE rpg.phb_spell_source (
     FOREIGN KEY (class_id, subclass_id) REFERENCES rpg.phb_subclass(class_id, id)
 );
 
--- ── 020_tables/T029_phb_class_progression.sql ──
-
--- Tabela rpg.phb_class_progression
 
 CREATE TABLE rpg.phb_class_progression (
   class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
@@ -795,9 +693,6 @@ CREATE TABLE rpg.phb_class_progression (
   PRIMARY KEY (class_id, level)
 );
 
--- ── 020_tables/T030_phb_class_feature.sql ──
-
--- Tabela rpg.phb_class_feature
 
 CREATE TABLE rpg.phb_class_feature (
   id BIGSERIAL PRIMARY KEY,
@@ -808,9 +703,6 @@ CREATE TABLE rpg.phb_class_feature (
   UNIQUE (class_id, level, name)
 );
 
--- ── 020_tables/T031_phb_class_skill_pool.sql ──
-
--- Tabela rpg.phb_class_skill_pool
 
 CREATE TABLE rpg.phb_class_skill_pool (
   class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
@@ -818,20 +710,12 @@ CREATE TABLE rpg.phb_class_skill_pool (
   PRIMARY KEY (class_id, skill_id)
 );
 
--- ── 020_tables/T032_phb_spell_class.sql ──
-
--- Tabela rpg.phb_spell_class
 
 CREATE TABLE rpg.phb_spell_class (
   spell_id BIGINT NOT NULL REFERENCES rpg.phb_spell(id) ON DELETE CASCADE,
   class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
   PRIMARY KEY (spell_id, class_id)
 );
-
--- ── 020_tables/T033_phb_subclass_prepared_spell.sql ──
-
--- Tabela rpg.phb_subclass_prepared_spell
--- Lote A: terrain replaces FK to dropped phb_druid_land_terrain table
 
 CREATE TABLE rpg.phb_subclass_prepared_spell (
   id BIGSERIAL PRIMARY KEY,
@@ -843,9 +727,6 @@ CREATE TABLE rpg.phb_subclass_prepared_spell (
     UNIQUE NULLS NOT DISTINCT (subclass_id, unlock_level, spell_id, terrain)
 );
 
--- ── 020_tables/T034_phb_species_trait.sql ──
-
--- Tabela rpg.phb_species_trait
 
 CREATE TABLE rpg.phb_species_trait (
   id BIGSERIAL PRIMARY KEY,
@@ -857,9 +738,6 @@ CREATE TABLE rpg.phb_species_trait (
   UNIQUE (species_id, name)
 );
 
--- ── 020_tables/T035_phb_background_skill.sql ──
-
--- Tabela rpg.phb_background_skill
 
 CREATE TABLE rpg.phb_background_skill (
   background_id BIGINT NOT NULL REFERENCES rpg.phb_background(id) ON DELETE CASCADE,
@@ -867,9 +745,6 @@ CREATE TABLE rpg.phb_background_skill (
   PRIMARY KEY (background_id, skill_id)
 );
 
--- ── 020_tables/T036_phb_background_ability_option.sql ──
-
--- Tabela rpg.phb_background_ability_option
 
 CREATE TABLE rpg.phb_background_ability_option (
   background_id BIGINT NOT NULL REFERENCES rpg.phb_background(id) ON DELETE CASCADE,
@@ -878,9 +753,7 @@ CREATE TABLE rpg.phb_background_ability_option (
   PRIMARY KEY (background_id, ability_id)
 );
 
--- ── 020_tables/T037_phb_starting_package.sql ──
-
--- Tabela rpg.phb_starting_package (Lote D: class + background unificados)
+-- Pacotes de equipamento inicial (classe ou antecedente)
 
 CREATE TABLE rpg.phb_starting_package (
   id BIGSERIAL PRIMARY KEY,
@@ -895,9 +768,7 @@ CREATE TABLE rpg.phb_starting_package (
 
 CREATE INDEX idx_phb_starting_package_source_owner ON rpg.phb_starting_package(source, owner_id);
 
--- ── 020_tables/T038_phb_starting_item.sql ──
-
--- Tabela rpg.phb_starting_item (Lote D: itens de pacote inicial unificados)
+-- Itens de pacote de equipamento inicial
 
 CREATE TABLE rpg.phb_starting_item (
   id BIGSERIAL PRIMARY KEY,
@@ -911,10 +782,6 @@ CREATE TABLE rpg.phb_starting_item (
     item_id IS NOT NULL OR choice_text IS NOT NULL OR gold_amount IS NOT NULL
   )
 );
-
--- ── 020_tables/T039_phb_class_proficiency.sql ──
-
--- Lote F: afinidades de classe unificadas (saving throw, primary ability, armor, weapon, fighting style)
 
 CREATE TABLE rpg.phb_class_proficiency (
   class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
@@ -937,9 +804,6 @@ CREATE UNIQUE INDEX uq_phb_class_prof_slug
   ON rpg.phb_class_proficiency (class_id, kind, ref_slug) WHERE ref_slug IS NOT NULL;
 CREATE INDEX idx_phb_class_proficiency_class ON rpg.phb_class_proficiency(class_id, kind);
 
--- ── 020_tables/T040_phb_class_spellcasting.sql ──
-
--- Tabela rpg.phb_class_spellcasting
 
 CREATE TABLE rpg.phb_class_spellcasting (
   class_id BIGINT PRIMARY KEY REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
@@ -950,9 +814,6 @@ CREATE TABLE rpg.phb_class_spellcasting (
   ritual BOOLEAN NOT NULL DEFAULT FALSE
 );
 
--- ── 020_tables/T041_phb_weapon_mastery.sql ──
-
--- Tabela rpg.phb_weapon_mastery
 
 CREATE TABLE rpg.phb_weapon_mastery (
   id BIGSERIAL PRIMARY KEY,
@@ -961,9 +822,6 @@ CREATE TABLE rpg.phb_weapon_mastery (
   description TEXT NOT NULL
 );
 
--- ── 020_tables/T042_phb_weapon.sql ──
-
--- Tabela rpg.phb_weapon
 
 CREATE TABLE rpg.phb_weapon (
   item_id BIGINT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
@@ -973,9 +831,6 @@ CREATE TABLE rpg.phb_weapon (
   mastery_id BIGINT REFERENCES rpg.phb_weapon_mastery(id)
 );
 
--- ── 020_tables/T043_phb_armor.sql ──
-
--- Tabela rpg.phb_armor
 
 CREATE TABLE rpg.phb_armor (
   item_id BIGINT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
@@ -986,9 +841,6 @@ CREATE TABLE rpg.phb_armor (
   stealth_disadvantage BOOLEAN NOT NULL DEFAULT FALSE
 );
 
--- ── 020_tables/T044_phb_tool.sql ──
-
--- Tabela rpg.phb_tool
 
 CREATE TABLE rpg.phb_tool (
   item_id BIGINT PRIMARY KEY REFERENCES rpg.phb_item(id) ON DELETE CASCADE,
@@ -996,9 +848,6 @@ CREATE TABLE rpg.phb_tool (
   use_description TEXT
 );
 
--- ── 020_tables/T045_phb_character_level.sql ──
-
--- Tabela rpg.phb_character_level
 
 CREATE TABLE rpg.phb_character_level (
   level INTEGER PRIMARY KEY CHECK (level BETWEEN 1 AND 20),
@@ -1006,17 +855,12 @@ CREATE TABLE rpg.phb_character_level (
   xp_threshold INTEGER CHECK (xp_threshold >= 0)
 );
 
--- ── 020_tables/T046_phb_weapon_property_link.sql ──
-
--- Tabela rpg.phb_weapon_property_link
 
 CREATE TABLE rpg.phb_weapon_property_link (
   weapon_id BIGINT NOT NULL REFERENCES rpg.phb_weapon(item_id) ON DELETE CASCADE,
   property_id BIGINT NOT NULL REFERENCES rpg.phb_weapon_property(id) ON DELETE CASCADE,
   PRIMARY KEY (weapon_id, property_id)
 );
-
--- ── 020_tables/T047_phb_background_tool_option.sql ──
 
 -- Whitelist de ferramentas por antecedente (substitui “toda a categoria”)
 
@@ -1029,11 +873,9 @@ CREATE TABLE rpg.phb_background_tool_option (
 CREATE INDEX idx_phb_background_tool_option_item
   ON rpg.phb_background_tool_option(item_id);
 
--- ── 020_tables/T048_phb_spell_grant.sql ──
-
 -- Magias concedidas por talento ou espécie (unificado; linhagens via option_value + traits)
 
-CREATE TABLE IF NOT EXISTS rpg.phb_spell_grant (
+CREATE TABLE rpg.phb_spell_grant (
   origin_type rpg.spell_grant_origin NOT NULL,
   origin_id BIGINT NOT NULL,
   spell_id BIGINT NOT NULL REFERENCES rpg.phb_spell(id) ON DELETE CASCADE,
@@ -1042,10 +884,6 @@ CREATE TABLE IF NOT EXISTS rpg.phb_spell_grant (
 );
 
 CREATE INDEX idx_phb_spell_grant_origin ON rpg.phb_spell_grant(origin_type, origin_id);
-
--- ── 020_tables/T049_phb_combat_modifier.sql ──
-
--- Lote G: bônus permanentes de PV e Defesa sem Armadura unificados
 
 CREATE TABLE rpg.phb_combat_modifier (
   id BIGSERIAL PRIMARY KEY,
@@ -1079,8 +917,6 @@ CREATE INDEX idx_phb_combat_modifier_owner
 CREATE INDEX idx_phb_combat_modifier_heritage_trait
   ON rpg.phb_combat_modifier(heritage_trait_id)
   WHERE heritage_trait_id IS NOT NULL;
-
--- ── 020_tables/T050_phb_class_economy_action.sql ──
 
 -- Class economy actions (Actions tab catalog)
 
@@ -1123,8 +959,6 @@ CREATE INDEX idx_class_economy_action_heritage_trait
   ON rpg.phb_class_economy_action(heritage_trait_id)
   WHERE heritage_trait_id IS NOT NULL;
 
--- ── 020_tables/T051_phb_battle_master_maneuver.sql ──
-
 -- Battle Master (Fighter) maneuvers catalog
 
 CREATE TABLE rpg.phb_battle_master_maneuver (
@@ -1139,21 +973,17 @@ CREATE TABLE rpg.phb_battle_master_maneuver (
 
 CREATE INDEX idx_battle_master_maneuver_slug ON rpg.phb_battle_master_maneuver(slug);
 
--- ── 020_tables/T052_phb_background_language.sql ──
-
 -- Idiomas fixos concedidos por antecedente (PHB 2024)
 
-CREATE TABLE IF NOT EXISTS rpg.phb_background_language (
+CREATE TABLE rpg.phb_background_language (
   background_id BIGINT NOT NULL REFERENCES rpg.phb_background(id) ON DELETE CASCADE,
   language_id BIGINT NOT NULL REFERENCES rpg.phb_language(id),
   PRIMARY KEY (background_id, language_id)
 );
 
--- ── 020_tables/T053_phb_subclass_spellcasting.sql ──
-
 -- Conjuração por subclasse (Spellslinger etc.)
 
-CREATE TABLE IF NOT EXISTS rpg.phb_subclass_spellcasting (
+CREATE TABLE rpg.phb_subclass_spellcasting (
   subclass_id BIGINT PRIMARY KEY REFERENCES rpg.phb_subclass(id) ON DELETE CASCADE,
   casting_type rpg.casting_type NOT NULL,
   ability_id BIGINT REFERENCES rpg.phb_ability(id),
@@ -1164,14 +994,12 @@ CREATE TABLE IF NOT EXISTS rpg.phb_subclass_spellcasting (
   ritual BOOLEAN NOT NULL DEFAULT FALSE
 );
 
-CREATE INDEX IF NOT EXISTS idx_subclass_spellcasting_list
+CREATE INDEX idx_subclass_spellcasting_list
   ON rpg.phb_subclass_spellcasting(spell_list_class_id);
-
--- ── 020_tables/T054_phb_subclass_progression.sql ──
 
 -- Cotas de truques / magias preparadas por nível (subclasse conjuradora)
 
-CREATE TABLE IF NOT EXISTS rpg.phb_subclass_progression (
+CREATE TABLE rpg.phb_subclass_progression (
   subclass_id BIGINT NOT NULL REFERENCES rpg.phb_subclass(id) ON DELETE CASCADE,
   level INTEGER NOT NULL CHECK (level BETWEEN 1 AND 20),
   cantrips INTEGER CHECK (cantrips IS NULL OR cantrips >= 0),
@@ -1179,10 +1007,8 @@ CREATE TABLE IF NOT EXISTS rpg.phb_subclass_progression (
   PRIMARY KEY (subclass_id, level)
 );
 
-CREATE INDEX IF NOT EXISTS idx_subclass_progression_subclass
+CREATE INDEX idx_subclass_progression_subclass
   ON rpg.phb_subclass_progression(subclass_id);
-
--- ── 020_tables/T055_phb_cunning_strike_effect.sql ──
 
 -- Cunning Strike effects (Rogue) catalog
 
@@ -1200,8 +1026,6 @@ CREATE TABLE rpg.phb_cunning_strike_effect (
 CREATE INDEX idx_cunning_strike_effect_slug ON rpg.phb_cunning_strike_effect(slug);
 CREATE INDEX idx_cunning_strike_effect_subclass ON rpg.phb_cunning_strike_effect(subclass_id);
 
--- ── 020_tables/T056_phb_subclass_precaution_spell.sql ──
-
 -- Subclass precaution spells (Dungeoneer Fighter)
 
 CREATE TABLE rpg.phb_subclass_precaution_spell (
@@ -1212,8 +1036,6 @@ CREATE TABLE rpg.phb_subclass_precaution_spell (
 
 CREATE INDEX idx_subclass_precaution_spell_subclass ON rpg.phb_subclass_precaution_spell(subclass_id);
 CREATE INDEX idx_subclass_precaution_spell_spell ON rpg.phb_subclass_precaution_spell(spell_id);
-
--- ── 020_tables/T057_phb_feat_requirement.sql ──
 
 -- Pré-requisitos estruturados de talentos.
 
@@ -1233,12 +1055,10 @@ CREATE TABLE rpg.phb_feat_requirement_ability (
   PRIMARY KEY (feat_id, ability_id)
 );
 
--- ── 020_tables/T058_phb_class_ability_boost.sql ──
-
 -- Aumentos de atributo concedidos por capacidade de classe em um nível fixo
 -- (ex.: Bárbaro "Campeão Primitivo" e Monge "Corpo e Mente" no nível 20),
 -- que elevam atributos acima do teto normal de 20 até um teto próprio.
-CREATE TABLE IF NOT EXISTS rpg.phb_class_ability_boost (
+CREATE TABLE rpg.phb_class_ability_boost (
   id BIGSERIAL PRIMARY KEY,
   class_id BIGINT NOT NULL REFERENCES rpg.phb_class(id) ON DELETE CASCADE,
   ability_slug TEXT NOT NULL REFERENCES rpg.phb_ability(slug),
@@ -1249,13 +1069,7 @@ CREATE TABLE IF NOT EXISTS rpg.phb_class_ability_boost (
   UNIQUE (class_id, ability_slug, from_level)
 );
 
--- ── 020_tables/T059_weapon_mastery_eligibility_ranged.sql ──
-
 -- Permite elegibilidade de maestria só para armas à distância (Pistoleiro Valdas).
--- folded into phb_class CREATE
-
--- ── 020_tables/T060_phb_gunslinger_maneuver.sql ──
-
 -- Gunslinger (Valdas) maneuvers catalog
 
 CREATE TABLE rpg.phb_gunslinger_maneuver (
@@ -1272,16 +1086,12 @@ CREATE TABLE rpg.phb_gunslinger_maneuver (
 CREATE INDEX idx_gunslinger_maneuver_slug ON rpg.phb_gunslinger_maneuver(slug);
 CREATE INDEX idx_gunslinger_maneuver_subclass ON rpg.phb_gunslinger_maneuver(subclass_id);
 
--- ── 020_tables/T061_phb_beastborne_aspect_benefit.sql ──
-
 -- Beastborne Aspect benefits by level (Barbarian)
 
 CREATE TABLE rpg.phb_beastborne_aspect_benefit (
   aspect_level  INT PRIMARY KEY CHECK (aspect_level BETWEEN 1 AND 5),
   note          TEXT NOT NULL
 );
-
--- ── 020_tables/T062_phb_dungeoneer_slayer_type.sql ──
 
 -- Dungeoneer slayer types (Fighter subclass)
 
@@ -1293,8 +1103,6 @@ CREATE TABLE rpg.phb_dungeoneer_slayer_type (
 );
 
 CREATE INDEX idx_dungeoneer_slayer_type_slug ON rpg.phb_dungeoneer_slayer_type(slug);
-
--- ── 020_tables/T063_phb_subclass_table_action.sql ──
 
 -- Subclass table actions (Psi Warrior, Soulknife, etc.)
 
@@ -1315,8 +1123,6 @@ CREATE TABLE rpg.phb_subclass_table_action (
 
 CREATE INDEX idx_subclass_table_action_subclass ON rpg.phb_subclass_table_action(subclass_id);
 
--- ── 020_tables/T064_phb_persona_mask.sql ──
-
 -- Persona masks for College of Masks (Bard)
 
 CREATE TABLE rpg.phb_persona_mask (
@@ -1328,8 +1134,6 @@ CREATE TABLE rpg.phb_persona_mask (
 
 CREATE INDEX idx_persona_mask_slug ON rpg.phb_persona_mask(slug);
 CREATE INDEX idx_persona_mask_subclass ON rpg.phb_persona_mask(subclass_id);
-
--- ── 020_tables/T065_phb_class_panel_action.sql ──
 
 -- Class panel actions (combat class panel buttons)
 
@@ -1351,8 +1155,6 @@ CREATE TABLE rpg.phb_class_panel_action (
 CREATE INDEX idx_class_panel_action_class ON rpg.phb_class_panel_action(class_id);
 CREATE INDEX idx_class_panel_action_subclass ON rpg.phb_class_panel_action(subclass_id);
 
--- ── 020_tables/T066_phb_class_economy_action_species.sql ──
-
 -- Economy actions: class XOR species; filtro opcional por escolha de espécie.
 
 
@@ -1363,12 +1165,8 @@ CREATE INDEX idx_class_panel_action_subclass ON rpg.phb_class_panel_action(subcl
 
 
 
--- folded: owner_xor definido em T091
-
-CREATE INDEX IF NOT EXISTS idx_class_economy_action_species
+CREATE INDEX idx_class_economy_action_species
   ON rpg.phb_class_economy_action(species_id);
-
--- ── 020_tables/T067_phb_resource_definition_feat.sql ──
 
 -- Recursos com dono talento (scope = feat).
 
@@ -1378,11 +1176,9 @@ CREATE INDEX IF NOT EXISTS idx_class_economy_action_species
 
 
 
-CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_feat
+CREATE UNIQUE INDEX uq_resource_feat
   ON rpg.phb_resource_definition (feat_id, slug)
   WHERE scope = 'feat';
-
--- ── 020_tables/T068_phb_class_economy_action_feat.sql ──
 
 -- Economy actions: class XOR species XOR feat.
 
@@ -1392,10 +1188,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_feat
 
 
 
-CREATE INDEX IF NOT EXISTS idx_class_economy_action_feat
+CREATE INDEX idx_class_economy_action_feat
   ON rpg.phb_class_economy_action(feat_id);
-
--- ── 020_tables/T069_phb_resource_definition_item.sql ──
 
 -- Recursos com dono item (scope = item).
 
@@ -1405,11 +1199,9 @@ CREATE INDEX IF NOT EXISTS idx_class_economy_action_feat
 
 
 
-CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_item
+CREATE UNIQUE INDEX uq_resource_item
   ON rpg.phb_resource_definition (item_id, slug)
   WHERE scope = 'item';
-
--- ── 020_tables/T070_phb_class_economy_action_item.sql ──
 
 -- Economy actions: class XOR species XOR feat XOR item.
 
@@ -1419,27 +1211,12 @@ CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_item
 
 
 
-CREATE INDEX IF NOT EXISTS idx_class_economy_action_item
+CREATE INDEX idx_class_economy_action_item
   ON rpg.phb_class_economy_action(item_id);
-
--- ── 020_tables/T071_phb_eldritch_invocation.sql ──
 
 -- Tipos + tabela de Invocações Místicas (Bruxo PHB 2024)
 
-DO $$ BEGIN
-  CREATE TYPE rpg.eldritch_invocation_kind AS ENUM (
-    'passive',
-    'note',
-    'free_cast',
-    'bonus',
-    'action',
-    'reaction'
-  );
-EXCEPTION
-  WHEN duplicate_object THEN NULL;
-END $$;
-
-CREATE TABLE IF NOT EXISTS rpg.phb_eldritch_invocation (
+CREATE TABLE rpg.phb_eldritch_invocation (
   id BIGSERIAL PRIMARY KEY,
   slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
@@ -1462,14 +1239,12 @@ CREATE TABLE IF NOT EXISTS rpg.phb_eldritch_invocation (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_phb_eldritch_invocation_min_level
+CREATE INDEX idx_phb_eldritch_invocation_min_level
   ON rpg.phb_eldritch_invocation(min_level);
-
--- ── 020_tables/T072_phb_metamagic.sql ──
 
 -- Catálogo de Metamagia (Feiticeiro PHB 2024)
 
-CREATE TABLE IF NOT EXISTS rpg.phb_metamagic (
+CREATE TABLE rpg.phb_metamagic (
   id BIGSERIAL PRIMARY KEY,
   slug TEXT NOT NULL UNIQUE,
   name TEXT NOT NULL,
@@ -1481,10 +1256,8 @@ CREATE TABLE IF NOT EXISTS rpg.phb_metamagic (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_phb_metamagic_sort
+CREATE INDEX idx_phb_metamagic_sort
   ON rpg.phb_metamagic(sort_order);
-
--- ── 020_tables/T073_phb_resource_grant_recover_dice.sql ──
 
 -- Recover 1dN ao Descanso Longo (amanhecer) para pools de cargas de item.
 
@@ -1492,19 +1265,15 @@ CREATE INDEX IF NOT EXISTS idx_phb_metamagic_sort
 COMMENT ON COLUMN rpg.phb_resource_grant.recover_on_long_dice IS
   'Expressão NdM[+K] recuperada no long rest (ex. 1d6+1). NULL = usa recover_all_on_long.';
 
--- ── 020_tables/T074_phb_class_economy_action_spell.sql ──
-
 -- Fase 6: liga economy action → magia do catálogo (cast de item).
 
 
-CREATE INDEX IF NOT EXISTS idx_class_economy_action_spell
+CREATE INDEX idx_class_economy_action_spell
   ON rpg.phb_class_economy_action(spell_slug)
   WHERE spell_slug IS NOT NULL;
 
--- ── 020_tables/T075_dmg_artifact_random_property.sql ──
-
 -- Tabelas 1d100 de propriedades aleatórias de Artefato (DMG Treasure).
-CREATE TABLE IF NOT EXISTS rpg.dmg_artifact_random_property (
+CREATE TABLE rpg.dmg_artifact_random_property (
   id          BIGSERIAL PRIMARY KEY,
   kind        TEXT NOT NULL CHECK (
     kind IN (
@@ -1523,19 +1292,17 @@ CREATE TABLE IF NOT EXISTS rpg.dmg_artifact_random_property (
   CONSTRAINT dmg_artifact_random_property_kind_slug_unique UNIQUE (kind, slug)
 );
 
-CREATE INDEX IF NOT EXISTS idx_dmg_artifact_random_property_kind
+CREATE INDEX idx_dmg_artifact_random_property_kind
   ON rpg.dmg_artifact_random_property (kind);
 
-CREATE INDEX IF NOT EXISTS idx_dmg_artifact_random_property_roll
+CREATE INDEX idx_dmg_artifact_random_property_roll
   ON rpg.dmg_artifact_random_property (kind, roll_min, roll_max);
 
 COMMENT ON TABLE rpg.dmg_artifact_random_property IS
   'Faixas 1d100 de propriedades aleatórias de artefato (benéfica/prejudicial × menor/maior).';
 
--- ── 020_tables/T076_dmg_sentient_trait_table.sql ──
-
 -- Tabelas de geração de item senciente (DMG Treasure — Sentient Magic Items).
-CREATE TABLE IF NOT EXISTS rpg.dmg_sentient_trait_table (
+CREATE TABLE rpg.dmg_sentient_trait_table (
   id          BIGSERIAL PRIMARY KEY,
   kind        TEXT NOT NULL CHECK (
     kind IN (
@@ -1555,19 +1322,17 @@ CREATE TABLE IF NOT EXISTS rpg.dmg_sentient_trait_table (
   CONSTRAINT dmg_sentient_trait_table_kind_slug_unique UNIQUE (kind, slug)
 );
 
-CREATE INDEX IF NOT EXISTS idx_dmg_sentient_trait_table_kind
+CREATE INDEX idx_dmg_sentient_trait_table_kind
   ON rpg.dmg_sentient_trait_table (kind);
 
-CREATE INDEX IF NOT EXISTS idx_dmg_sentient_trait_table_roll
+CREATE INDEX idx_dmg_sentient_trait_table_roll
   ON rpg.dmg_sentient_trait_table (kind, roll_min, roll_max);
 
 COMMENT ON TABLE rpg.dmg_sentient_trait_table IS
   'Faixas de rolagem para gerar alinhamento/comunicação/sentidos/propósito/attrs de item senciente.';
 
--- ── 020_tables/T077_phb_item_catalog_stats.sql ──
-
 -- Contadores de catálogo (view/purchase) — não polui phb_item (seed-owned).
-CREATE TABLE IF NOT EXISTS rpg.phb_item_catalog_stats (
+CREATE TABLE rpg.phb_item_catalog_stats (
   item_slug       TEXT PRIMARY KEY
     REFERENCES rpg.phb_item (slug) ON DELETE CASCADE,
   view_count      BIGINT NOT NULL DEFAULT 0
@@ -1577,22 +1342,18 @@ CREATE TABLE IF NOT EXISTS rpg.phb_item_catalog_stats (
   updated_at      TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
-CREATE INDEX IF NOT EXISTS idx_phb_item_catalog_stats_purchase
+CREATE INDEX idx_phb_item_catalog_stats_purchase
   ON rpg.phb_item_catalog_stats (purchase_count DESC);
 
-CREATE INDEX IF NOT EXISTS idx_phb_item_catalog_stats_view
+CREATE INDEX idx_phb_item_catalog_stats_view
   ON rpg.phb_item_catalog_stats (view_count DESC);
 
 COMMENT ON TABLE rpg.phb_item_catalog_stats IS
   'Telemetria de catálogo: visualizações e compras (Beyond shop).';
 
--- ── 020_tables/T078_phb_option_value_edition_slug.sql ──
-
 -- Marca opção de catálogo com edição de origem (ex.: lineages Northlands no Elfo PHB).
 -- NULL = herda da espécie-pai / sempre disponível com ela.
 
-
--- ── 020_tables/T079_phb_feat_requirement_feat.sql ──
 
 -- Pré-requisito: talento(s) já adquiridos.
 
@@ -1606,41 +1367,37 @@ CREATE TABLE rpg.phb_feat_requirement_feat (
 CREATE INDEX idx_phb_feat_requirement_feat_required
   ON rpg.phb_feat_requirement_feat (required_feat_id);
 
--- ── 020_tables/T080_phb_feat_requirement_extras.sql ──
-
 -- Pré-requisitos adicionais de talentos: perícia, espécie (OR) e Maestria em Arma.
 
 
 
-CREATE TABLE IF NOT EXISTS rpg.phb_feat_requirement_skill (
+CREATE TABLE rpg.phb_feat_requirement_skill (
   feat_id BIGINT NOT NULL REFERENCES rpg.phb_feat_requirement(feat_id) ON DELETE CASCADE,
   skill_id BIGINT NOT NULL REFERENCES rpg.phb_skill(id),
   PRIMARY KEY (feat_id, skill_id)
 );
 
-CREATE TABLE IF NOT EXISTS rpg.phb_feat_requirement_species (
+CREATE TABLE rpg.phb_feat_requirement_species (
   feat_id BIGINT NOT NULL REFERENCES rpg.phb_feat_requirement(feat_id) ON DELETE CASCADE,
   species_id BIGINT NOT NULL REFERENCES rpg.phb_species(id),
   PRIMARY KEY (feat_id, species_id)
 );
 
-CREATE INDEX IF NOT EXISTS idx_phb_feat_requirement_skill_skill
+CREATE INDEX idx_phb_feat_requirement_skill_skill
   ON rpg.phb_feat_requirement_skill (skill_id);
 
-CREATE INDEX IF NOT EXISTS idx_phb_feat_requirement_species_species
+CREATE INDEX idx_phb_feat_requirement_species_species
   ON rpg.phb_feat_requirement_species (species_id);
-
--- ── 020_tables/T081_phb_feat_requirement_weapon_and_feat_option.sql ──
 
 -- Proficiência de arma exigida + opção de talento pré-requisito (ex.: Adepto Elemental / tipo).
 
-CREATE TABLE IF NOT EXISTS rpg.phb_feat_requirement_weapon_proficiency (
+CREATE TABLE rpg.phb_feat_requirement_weapon_proficiency (
   feat_id BIGINT NOT NULL REFERENCES rpg.phb_feat_requirement(feat_id) ON DELETE CASCADE,
   proficiency_slug TEXT NOT NULL,
   PRIMARY KEY (feat_id, proficiency_slug)
 );
 
-CREATE TABLE IF NOT EXISTS rpg.phb_feat_requirement_feat_option (
+CREATE TABLE rpg.phb_feat_requirement_feat_option (
   feat_id BIGINT NOT NULL REFERENCES rpg.phb_feat_requirement(feat_id) ON DELETE CASCADE,
   required_feat_id BIGINT NOT NULL REFERENCES rpg.phb_feat(id),
   option_key TEXT NOT NULL,
@@ -1648,10 +1405,8 @@ CREATE TABLE IF NOT EXISTS rpg.phb_feat_requirement_feat_option (
   PRIMARY KEY (feat_id, required_feat_id, option_key, value_id)
 );
 
-CREATE INDEX IF NOT EXISTS idx_phb_feat_requirement_feat_option_required
+CREATE INDEX idx_phb_feat_requirement_feat_option_required
   ON rpg.phb_feat_requirement_feat_option (required_feat_id);
-
--- ── 020_tables/T082_phb_background_feat_option.sql ──
 
 -- Opções de talento de origem quando o antecedente não tem feat_id fixo.
 
@@ -1663,8 +1418,6 @@ CREATE TABLE rpg.phb_background_feat_option (
 
 CREATE INDEX idx_phb_background_feat_option_feat
   ON rpg.phb_background_feat_option (feat_id);
-
--- ── 020_tables/T083_creature_vehicle_templates.sql ──
 
 -- Catálogo read-only: templates de criatura (stat blocks)
 
@@ -1776,8 +1529,6 @@ CREATE TABLE rpg.phb_vehicle_template_action (
 CREATE INDEX idx_phb_vehicle_template_action_slug
   ON rpg.phb_vehicle_template_action(template_slug);
 
--- ── 020_tables/T084_stat_block_extras.sql ──
-
 -- Stat blocks completos: atributos, descrição de ações, veículos Northlands
 
 
@@ -1788,7 +1539,7 @@ CREATE INDEX idx_phb_vehicle_template_action_slug
 
 
 
-CREATE TABLE IF NOT EXISTS rpg.phb_vehicle_template_trait (
+CREATE TABLE rpg.phb_vehicle_template_trait (
   id BIGSERIAL PRIMARY KEY,
   template_slug TEXT NOT NULL REFERENCES rpg.phb_vehicle_template(slug) ON DELETE CASCADE,
   name TEXT NOT NULL CHECK (char_length(name) BETWEEN 1 AND 120),
@@ -1796,10 +1547,8 @@ CREATE TABLE IF NOT EXISTS rpg.phb_vehicle_template_trait (
   sort_order INT NOT NULL DEFAULT 0
 );
 
-CREATE INDEX IF NOT EXISTS idx_phb_vehicle_template_trait_slug
+CREATE INDEX idx_phb_vehicle_template_trait_slug
   ON rpg.phb_vehicle_template_trait(template_slug);
-
--- ── 020_tables/T085_character_threads.sql ──
 
 -- Character Threads (Northlands) — catálogo
 
@@ -1848,8 +1597,6 @@ CREATE INDEX idx_phb_character_thread_milestone_thread
 CREATE INDEX idx_phb_character_thread_milestone_benefit_ms
   ON rpg.phb_character_thread_milestone_benefit(milestone_id);
 
--- ── 020_tables/T086_catalog_image_url.sql ──
-
 -- Ilustrações de catálogo (montarias, criaturas, veículos, itens da loja)
 
 
@@ -1867,8 +1614,6 @@ COMMENT ON COLUMN rpg.phb_vehicle_template.image_url IS
 COMMENT ON COLUMN rpg.phb_item.image_url IS
   'Caminho público da ilustração no front (loja/compêndio).';
 
--- ── 020_tables/T087_catalog_image_url_species_subclass.sql ──
-
 -- Ilustrações de espécies e subclasses no compêndio
 
 
@@ -1880,8 +1625,6 @@ COMMENT ON COLUMN rpg.phb_species.image_url IS
 
 COMMENT ON COLUMN rpg.phb_subclass.image_url IS
   'Caminho público da ilustração (ex. /catalog/subclasses/path-of-the-glacier.png).';
-
--- ── 020_tables/T090_phb_heritage_traditional.sql ──
 
 -- Grim Hollow — build tradicional sugerido por herança (preset 8 traços)
 
@@ -1902,8 +1645,6 @@ COMMENT ON TABLE rpg.phb_heritage_traditional IS
 
 
 
--- ── 040_functions/F001_set_updated_at.sql ──
-
 -- Função de auditoria updated_at
 
 CREATE OR REPLACE FUNCTION rpg.set_updated_at()
@@ -1914,8 +1655,6 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
--- deferred: set_updated_at triggers from 020_tables
-
 CREATE TRIGGER tr_phb_heritage_updated_at
   BEFORE UPDATE ON rpg.phb_heritage
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
@@ -1923,8 +1662,6 @@ CREATE TRIGGER tr_phb_heritage_updated_at
 CREATE TRIGGER tr_phb_heritage_trait_updated_at
   BEFORE UPDATE ON rpg.phb_heritage_trait
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
-
--- ── 050_triggers/TR001_audit.sql ──
 
 -- Triggers updated_at em tabelas PHB
 
@@ -1942,30 +1679,27 @@ CREATE TRIGGER tr_phb_feat_updated_at BEFORE UPDATE ON rpg.phb_feat FOR EACH ROW
 
 CREATE TRIGGER tr_phb_item_updated_at BEFORE UPDATE ON rpg.phb_item FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
--- ── 060_views/V001_v_phb_feat_category.sql ──
-
-DROP VIEW IF EXISTS rpg.v_phb_feat_category;
-
--- VALUES view for feat category metadata
--- Lote A: replaces dropped phb_feat_category table
+CREATE VIEW rpg.v_phb_ability_generation_method AS
+SELECT slug, name, description FROM (VALUES
+  ('standard-array'::rpg.ability_generation_method, 'Conjunto Padrão', 'Use os seis valores fixos abaixo e atribua a Força, Destreza, Constituição, Inteligência, Sabedoria e Carisma.'),
+  ('roll'::rpg.ability_generation_method, 'Geração Aleatória', 'Jogue 4d6, descarte o menor dado e some os três restantes. Repita seis vezes. A soma dos seis atributos costuma ficar entre 72 e 80 (média ~73).'),
+  ('point-buy'::rpg.ability_generation_method, 'Custo de Pontos', '27 pontos para distribuir entre os seis atributos, conforme a tabela de custos.')
+) AS t(slug, name, description);
 
 CREATE VIEW rpg.v_phb_feat_category AS
 SELECT slug, name, type_label, sort_order FROM (VALUES
   ('origin'::rpg.feat_category, 'Origem', 'Talento de Origem', 1),
   ('general'::rpg.feat_category, 'Geral', 'Talento Geral', 2),
   ('fighting-style'::rpg.feat_category, 'Estilo de Luta', 'Talento de Estilo de Luta', 3),
-  ('epic-boon'::rpg.feat_category, 'Dádiva Épica', 'Talento de Dádiva Épica', 4)
+  ('epic-boon'::rpg.feat_category, 'Dádiva Épica', 'Talento de Dádiva Épica', 4),
+  ('gh-transformation'::rpg.feat_category, 'Transformação GH', 'Transformação Grim Hollow', 5)
 ) AS t(slug, name, type_label, sort_order);
-
--- ── 060_views/V002_v_phb_weapon_proficiency.sql ──
-
--- VALUES view for weapon proficiency labels
--- Lote A: replaces dropped phb_weapon_proficiency table
 
 CREATE VIEW rpg.v_phb_weapon_proficiency AS
 SELECT slug, label FROM (VALUES
   ('armas-simples', 'Armas Simples'),
   ('armas-marciais', 'Armas Marciais'),
+  ('armas-avancadas', 'Armas Avançadas'),
   ('adagas', 'Adagas'),
   ('dardos', 'Dardos'),
   ('fundas', 'Fundas'),
@@ -1975,27 +1709,13 @@ SELECT slug, label FROM (VALUES
   ('espada-longa', 'Espada Longa'),
   ('rapieira', 'Rapieira'),
   ('espada-curta', 'Espada Curta'),
+  ('machadinhas', 'Machadinhas'),
   ('armas-marciais-leves', 'Armas Marciais (leves)'),
   ('armas-marciais-a-distancia', 'Armas Marciais (à Distância)')
 ) AS t(slug, label);
 
--- ── 060_views/V003_v_phb_ability_generation_method.sql ──
 
--- VALUES view for ability generation methods
--- Lote A: replaces dropped phb_ability_generation_method table
-
-CREATE VIEW rpg.v_phb_ability_generation_method AS
-SELECT slug, name, description FROM (VALUES
-  ('standard-array'::rpg.ability_generation_method, 'Conjunto Padrão', 'Use os seis valores fixos abaixo e atribua a Força, Destreza, Constituição, Inteligência, Sabedoria e Carisma.'),
-  ('roll'::rpg.ability_generation_method, 'Geração Aleatória', 'Jogue 4d6, descarte o menor dado e some os três restantes. Repita seis vezes. A soma dos seis atributos costuma ficar entre 72 e 80 (média ~73).'),
-  ('point-buy'::rpg.ability_generation_method, 'Custo de Pontos', '27 pontos para distribuir entre os seis atributos, conforme a tabela de custos.')
-) AS t(slug, name, description);
-
--- ── 060_views/V004_v_spell_by_class.sql ──
-
--- View rpg.v_spell_by_class
-
-CREATE OR REPLACE VIEW rpg.v_spell_by_class AS
+CREATE VIEW rpg.v_spell_by_class AS
 SELECT
   c.slug AS class_slug,
   c.name AS class_name,
@@ -2009,11 +1729,8 @@ JOIN rpg.phb_spell_class sc ON sc.class_id = c.id
 JOIN rpg.phb_spell s ON s.id = sc.spell_id
 JOIN rpg.phb_spell_school sch ON sch.id = s.school_id;
 
--- ── 060_views/V005_v_phb_spell.sql ──
 
--- View rpg.v_phb_spell
-
-CREATE OR REPLACE VIEW rpg.v_phb_spell AS
+CREATE VIEW rpg.v_phb_spell AS
 SELECT
   s.slug,
   s.name,
@@ -2043,34 +1760,8 @@ LEFT JOIN rpg.phb_ability a ON a.id = s.save_ability_id
 LEFT JOIN rpg.phb_source_citation sc ON sc.id = s.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id;
 
--- ── 060_views/V006_v_phb_subclass.sql ──
 
--- View rpg.v_phb_subclass
-
-CREATE OR REPLACE VIEW rpg.v_phb_subclass AS
-SELECT
-  s.slug AS subclass_slug,
-  s.name AS subclass_name,
-  c.slug AS class_slug,
-  c.name AS class_name,
-  s.tagline,
-  s.summary,
-  cit.chapter AS source_chapter,
-  e.slug AS edition_slug,
-  ss.slug AS spell_source_slug,
-  ss.label AS spell_source_label
-FROM rpg.phb_subclass s
-JOIN rpg.phb_class c ON c.id = s.class_id
-LEFT JOIN rpg.phb_source_citation cit ON cit.id = s.source_citation_id
-LEFT JOIN rpg.phb_edition e ON e.id = cit.edition_id
-LEFT JOIN rpg.phb_spell_source ss ON ss.subclass_id = s.id;
-
--- ── 060_views/V007_v_phb_subclass_prepared_spell.sql ──
-
--- View rpg.v_phb_subclass_prepared_spell
--- Lote A: terrain is now enum column, no join needed
-
-CREATE OR REPLACE VIEW rpg.v_phb_subclass_prepared_spell AS
+CREATE VIEW rpg.v_phb_subclass_prepared_spell AS
 SELECT
   s.slug AS subclass_slug,
   ps.unlock_level,
@@ -2082,11 +1773,8 @@ FROM rpg.phb_subclass_prepared_spell ps
 JOIN rpg.phb_subclass s ON s.id = ps.subclass_id
 JOIN rpg.phb_spell sp ON sp.id = ps.spell_id;
 
--- ── 060_views/V009_v_phb_subclass_spells_expected.sql ──
 
--- View rpg.v_phb_subclass_spells_expected
-
-CREATE OR REPLACE VIEW rpg.v_phb_subclass_spells_expected AS
+CREATE VIEW rpg.v_phb_subclass_spells_expected AS
 SELECT
   c.slug AS class_slug,
   s.slug AS subclass_slug,
@@ -2099,51 +1787,10 @@ JOIN rpg.phb_class c ON c.id = s.class_id
 JOIN rpg.phb_spell sp ON sp.id = ps.spell_id
 LEFT JOIN rpg.phb_spell_source ss ON ss.subclass_id = s.id AND ss.origin_type = 'subclass';
 
--- ── 060_views/V010_v_phb_armor.sql ──
 
--- View rpg.v_phb_armor
 
-CREATE OR REPLACE VIEW rpg.v_phb_armor AS
-SELECT
-  i.slug AS item_slug,
-  i.name AS item_name,
-  c.slug AS category_slug,
-  c.name AS category_name,
-  c.don_doff,
-  a.ac_base,
-  a.ac_formula,
-  a.strength_req,
-  a.stealth_disadvantage
-FROM rpg.phb_armor a
-JOIN rpg.phb_item i ON i.id = a.item_id
-JOIN rpg.phb_armor_category c ON c.id = a.category_id;
 
--- ── 060_views/V011_v_phb_background.sql ──
-
--- View rpg.v_phb_background
-
-CREATE OR REPLACE VIEW rpg.v_phb_background AS
-SELECT
-  b.slug AS background_slug,
-  b.name AS background_name,
-  b.equipment_gold_option,
-  sc.chapter AS source_chapter,
-  sc.chapter_title AS source_chapter_title,
-  e.slug AS edition_slug,
-  array_agg(ab.slug ORDER BY bao.sort_order) AS ability_option_slugs,
-  array_agg(ab.name ORDER BY bao.sort_order) AS ability_option_names
-FROM rpg.phb_background b
-LEFT JOIN rpg.phb_source_citation sc ON sc.id = b.source_citation_id
-LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id
-LEFT JOIN rpg.phb_background_ability_option bao ON bao.background_id = b.id
-LEFT JOIN rpg.phb_ability ab ON ab.id = bao.ability_id
-GROUP BY b.id, b.slug, b.name, b.equipment_gold_option, sc.chapter, sc.chapter_title, e.slug;
-
--- ── 060_views/V012_v_phb_background_equipment.sql ──
-
--- View rpg.v_phb_background_equipment
-
-CREATE OR REPLACE VIEW rpg.v_phb_background_equipment AS
+CREATE VIEW rpg.v_phb_background_equipment AS
 SELECT
   b.slug AS background_slug,
   p.slug AS package_slug,
@@ -2161,11 +1808,8 @@ JOIN rpg.phb_starting_item si ON si.package_id = p.id
 LEFT JOIN rpg.phb_item i ON i.id = si.item_id
 ORDER BY b.slug, p.sort_order, si.sort_order;
 
--- ── 060_views/V013_v_phb_class_equipment.sql ──
 
--- View rpg.v_phb_class_equipment
-
-CREATE OR REPLACE VIEW rpg.v_phb_class_equipment AS
+CREATE VIEW rpg.v_phb_class_equipment AS
 SELECT
   c.slug AS class_slug,
   p.slug AS package_slug,
@@ -2183,43 +1827,8 @@ JOIN rpg.phb_starting_item si ON si.package_id = p.id
 LEFT JOIN rpg.phb_item i ON i.id = si.item_id
 ORDER BY c.slug, p.sort_order, si.sort_order;
 
--- ── 060_views/V014_v_phb_feat.sql ──
 
--- View rpg.v_phb_feat
--- Lote A: feat.category is now enum, joins VALUES view for labels
-
-CREATE OR REPLACE VIEW rpg.v_phb_feat AS
-SELECT
-  f.slug AS feat_slug,
-  f.name AS feat_name,
-  f.category::text AS category_slug,
-  fc.name AS category_name,
-  fc.type_label AS category_type_label,
-  f.repeatable,
-  f.prerequisite,
-  sc.chapter AS source_chapter,
-  sc.chapter_title AS source_chapter_title,
-  e.slug AS edition_slug,
-  COALESCE(
-    jsonb_agg(
-      jsonb_strip_nulls(jsonb_build_object('name', fb.name, 'description', fb.description))
-      ORDER BY fb.sort_order
-    ) FILTER (WHERE fb.id IS NOT NULL),
-    '[]'::jsonb
-  ) AS benefits
-FROM rpg.phb_feat f
-JOIN rpg.v_phb_feat_category fc ON fc.slug = f.category
-LEFT JOIN rpg.phb_source_citation sc ON sc.id = f.source_citation_id
-LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id
-LEFT JOIN rpg.phb_feat_benefit fb ON fb.feat_id = f.id
-GROUP BY f.id, f.slug, f.name, f.category, fc.name, fc.type_label, f.repeatable, f.prerequisite,
-  sc.chapter, sc.chapter_title, e.slug;
-
--- ── 060_views/V015_v_phb_class_skill_choice.sql ──
-
--- View rpg.v_phb_class_skill_choice
-
-CREATE OR REPLACE VIEW rpg.v_phb_class_skill_choice AS
+CREATE VIEW rpg.v_phb_class_skill_choice AS
 SELECT
   c.slug AS class_slug,
   c.skill_choice_count,
@@ -2231,13 +1840,11 @@ JOIN rpg.phb_class_skill_pool p ON p.class_id = c.id
 JOIN rpg.phb_skill s ON s.id = p.skill_id
 ORDER BY c.slug, s.slug;
 
--- ── 060_views/V016_v_phb_high_elf_cantrip_options.sql ──
-
 -- Opções de truque para Alto Elfo (lista de cantrips de Mago).
 -- Kind opcional: não entra nos requiredKinds da validação padrão;
 -- validado no application quando presente.
 
-CREATE OR REPLACE VIEW rpg.v_phb_high_elf_cantrip_options AS
+CREATE VIEW rpg.v_phb_high_elf_cantrip_options AS
 SELECT
   'elf'::text AS species_slug,
   'high_elf_cantrip'::rpg.species_choice_kind AS choice_kind,
@@ -2248,306 +1855,9 @@ WHERE s.class_slug = 'wizard'
   AND s.spell_level = 0
 ORDER BY s.spell_name;
 
--- ── 060_views/V017_v_phb_species_trait_choices.sql ──
 
--- View rpg.v_phb_species_trait_choices
--- Lote B: usa phb_species_option_value em vez de tabelas de lineage/ancestry
 
-CREATE OR REPLACE VIEW rpg.v_phb_species_trait_choices AS
--- Elf lineage (option_key = 'lineageId')
-SELECT
-  sp.slug AS species_slug,
-  t.name AS trait_name,
-  t.choice_kind,
-  ov.value_id AS choice_slug,
-  ov.label AS choice_name,
-  ov.level1_benefit,
-  s3.slug AS spell_level3_slug,
-  s5.slug AS spell_level5_slug,
-  NULL::text AS damage_type
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'lineageId'
-  AND t.choice_kind = 'elf_lineage'::rpg.species_choice_kind
-LEFT JOIN rpg.phb_spell s3 ON s3.id = ov.spell_level3_id
-LEFT JOIN rpg.phb_spell s5 ON s5.id = ov.spell_level5_id
-UNION ALL
--- Infernal legacy (option_key = 'infernalLegacyId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  ov.level1_benefit,
-  s3.slug,
-  s5.slug,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'infernalLegacyId'
-  AND t.choice_kind = 'infernal_legacy'::rpg.species_choice_kind
-LEFT JOIN rpg.phb_spell s3 ON s3.id = ov.spell_level3_id
-LEFT JOIN rpg.phb_spell s5 ON s5.id = ov.spell_level5_id
-UNION ALL
--- Dragon ancestry (option_key = 'dragonAncestryId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.damage_type
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'dragonAncestryId'
-  AND t.choice_kind = 'dragon_ancestry'::rpg.species_choice_kind
-UNION ALL
--- Gnome lineage (option_key = 'gnomeLineageId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  ov.level1_benefit,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'gnomeLineageId'
-  AND t.choice_kind = 'gnome_lineage'::rpg.species_choice_kind
-UNION ALL
--- Giant ancestry (option_key = 'giantAncestryId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'giantAncestryId'
-  AND t.choice_kind = 'giant_ancestry'::rpg.species_choice_kind
-UNION ALL
--- Geppettin construction (option_key = 'constructionId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'constructionId'
-  AND t.choice_kind = 'geppettin_construction'::rpg.species_choice_kind
-UNION ALL
--- Mandrake season (option_key = 'seasonId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'seasonId'
-  AND t.choice_kind = 'mandrake_season'::rpg.species_choice_kind
-UNION ALL
--- Manikin armor preset (option_key = 'armorPresetId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'armorPresetId'
-  AND t.choice_kind = 'manikin_armor'::rpg.species_choice_kind
-UNION ALL
--- Manikin service model (option_key = 'serviceModelId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'serviceModelId'
-  AND t.choice_kind = 'manikin_service_model'::rpg.species_choice_kind
-UNION ALL
--- Scourgeborne madness (option_key = 'madnessId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'madnessId'
-  AND t.choice_kind = 'scourgeborne_madness'::rpg.species_choice_kind
-UNION ALL
--- Scourgeborne monstrous lineage (option_key = 'monstrousLineageId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'monstrousLineageId'
-  AND t.choice_kind = 'scourgeborne_lineage'::rpg.species_choice_kind
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  sk.slug,
-  sk.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_skill sk ON t.choice_kind IN ('human_skill'::rpg.species_choice_kind, 'geppettin_skill'::rpg.species_choice_kind, 'mandrake_skill'::rpg.species_choice_kind)
-  AND (
-    (t.choice_kind = 'human_skill'::rpg.species_choice_kind)
-    OR (t.choice_kind = 'geppettin_skill'::rpg.species_choice_kind AND sk.slug IN ('intimidation', 'performance', 'persuasion'))
-    OR (t.choice_kind = 'mandrake_skill'::rpg.species_choice_kind AND sk.slug IN ('nature', 'survival'))
-  )
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  sk.slug,
-  sk.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_skill sk
-  ON t.choice_kind = 'elf_keen_senses'::rpg.species_choice_kind
- AND sk.slug IN ('insight', 'perception', 'survival')
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  f.slug,
-  f.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_feat f ON t.choice_kind = 'human_origin_feat'::rpg.species_choice_kind
-  AND f.category = 'origin'::rpg.feat_category
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ab.slug,
-  ab.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_ability ab
-  ON t.choice_kind IN (
-    'elf_casting_ability'::rpg.species_choice_kind,
-    'gnome_casting_ability'::rpg.species_choice_kind,
-    'infernal_casting_ability'::rpg.species_choice_kind,
-    'mandrake_casting_ability'::rpg.species_choice_kind
-  )
- AND ab.slug IN ('inteligencia', 'sabedoria', 'carisma')
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  sz.slug,
-  sz.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN (
-  VALUES
-    ('medium', 'Médio'),
-    ('small', 'Pequeno')
-) AS sz(slug, name)
-  ON t.choice_kind IN (
-    'human_size'::rpg.species_choice_kind,
-    'aasimar_size'::rpg.species_choice_kind,
-    'tiefling_size'::rpg.species_choice_kind,
-    'geppettin_size'::rpg.species_choice_kind,
-    'manikin_size'::rpg.species_choice_kind
-  )
-UNION ALL
--- Truques swappable do Alto Elfo (opcional)
-SELECT
-  'elf'::text AS species_slug,
-  'Truque de Alto Elfo'::text AS trait_name,
-  'high_elf_cantrip'::rpg.species_choice_kind AS choice_kind,
-  o.choice_slug,
-  o.choice_name,
-  NULL::text AS level1_benefit,
-  NULL::text AS spell_level3_slug,
-  NULL::text AS spell_level5_slug,
-  NULL::text AS damage_type
-FROM rpg.v_phb_high_elf_cantrip_options o;
-
--- ── 060_views/V018_v_phb_background_skill.sql ──
-
--- View rpg.v_phb_background_skill
-
-CREATE OR REPLACE VIEW rpg.v_phb_background_skill AS
+CREATE VIEW rpg.v_phb_background_skill AS
 SELECT
   b.slug AS background_slug,
   s.slug AS skill_slug,
@@ -2557,92 +1867,13 @@ JOIN rpg.phb_background_skill bs ON bs.background_id = b.id
 JOIN rpg.phb_skill s ON s.id = bs.skill_id
 ORDER BY b.slug, s.slug;
 
--- ── 060_views/V019_v_phb_class_feature.sql ──
-
--- View rpg.v_phb_class_feature
-
-CREATE OR REPLACE VIEW rpg.v_phb_class_feature AS
-SELECT
-  c.slug AS class_slug,
-  cf.level AS feature_level,
-  cf.name AS feature_name,
-  cf.description AS feature_description
-FROM rpg.phb_class_feature cf
-JOIN rpg.phb_class c ON c.id = cf.class_id;
-
--- ── 060_views/V020_v_phb_background_feat_tool.sql ──
 
 -- Enriquece v_phb_background com talento de origem e proficiência em ferramenta
 
-CREATE OR REPLACE VIEW rpg.v_phb_background AS
-SELECT
-  b.slug AS background_slug,
-  b.name AS background_name,
-  b.equipment_gold_option,
-  sc.chapter AS source_chapter,
-  sc.chapter_title AS source_chapter_title,
-  e.slug AS edition_slug,
-  array_agg(ab.slug ORDER BY bao.sort_order)
-    FILTER (WHERE ab.slug IS NOT NULL) AS ability_option_slugs,
-  array_agg(ab.name ORDER BY bao.sort_order)
-    FILTER (WHERE ab.name IS NOT NULL) AS ability_option_names,
-  f.slug AS feat_slug,
-  f.name AS feat_name,
-  b.tool_proficiency_kind,
-  b.tool_proficiency_description,
-  ti.slug AS tool_item_slug,
-  ti.name AS tool_item_name,
-  tc.slug AS tool_category_slug,
-  tc.name AS tool_category_name
-FROM rpg.phb_background b
-LEFT JOIN rpg.phb_source_citation sc ON sc.id = b.source_citation_id
-LEFT JOIN rpg.phb_edition e ON e.id = sc.edition_id
-LEFT JOIN rpg.phb_feat f ON f.id = b.feat_id
-LEFT JOIN rpg.phb_item ti ON ti.id = b.tool_item_id
-LEFT JOIN rpg.phb_tool_category tc ON tc.id = b.tool_category_id
-LEFT JOIN rpg.phb_background_ability_option bao ON bao.background_id = b.id
-LEFT JOIN rpg.phb_ability ab ON ab.id = bao.ability_id
-GROUP BY
-  b.id,
-  b.slug,
-  b.name,
-  b.equipment_gold_option,
-  sc.chapter,
-  sc.chapter_title,
-  e.slug,
-  f.slug,
-  f.name,
-  b.tool_proficiency_kind,
-  b.tool_proficiency_description,
-  ti.slug,
-  ti.name,
-  tc.slug,
-  tc.name;
-
--- ── 060_views/V021_v_phb_background_tool_option.sql ──
-
 -- Opções de ferramenta quando o antecedente exige escolha (tool_proficiency_kind = choice)
-
-CREATE OR REPLACE VIEW rpg.v_phb_background_tool_option AS
-SELECT
-  b.slug AS background_slug,
-  i.slug AS item_slug,
-  i.name AS item_name,
-  tc.slug AS category_slug,
-  tc.name AS category_name
-FROM rpg.phb_background b
-JOIN rpg.phb_tool_category tc ON tc.id = b.tool_category_id
-JOIN rpg.phb_tool t ON t.category_id = tc.id
-JOIN rpg.phb_item i ON i.id = t.item_id
-WHERE b.tool_proficiency_kind = 'choice'
-ORDER BY b.slug, i.name;
-
--- ── 060_views/V022_v_phb_subclass_mechanics_description.sql ──
 
 -- Recria a view para incluir feature_description (CREATE OR REPLACE
 -- não permite inserir coluna no meio da lista existente).
-
-DROP VIEW IF EXISTS rpg.v_phb_subclass_mechanics;
 
 CREATE VIEW rpg.v_phb_subclass_mechanics AS
 SELECT
@@ -2667,13 +1898,7 @@ LEFT JOIN rpg.phb_resource_grant psr
  AND psr.feature_id = sf.id
 LEFT JOIN rpg.phb_resource_definition rd ON rd.id = psr.resource_id;
 
--- ── 060_views/V023_v_phb_class_flavor.sql ──
-
 -- View canônica rpg.v_phb_class (flavor + mastery eligibility)
--- Lote A: hit_die is now enum column, no join needed
-
-DROP VIEW IF EXISTS rpg.v_phb_class;
-
 CREATE VIEW rpg.v_phb_class AS
 SELECT
   c.slug AS class_slug,
@@ -2703,48 +1928,10 @@ GROUP BY c.id, c.slug, c.name, c.tagline, c.summary, c.description,
   c.hit_die, c.hp_level1_die_value, c.hp_fixed_per_level, c.skill_choice_count,
   c.skill_choice_from, c.weapon_mastery_eligibility, sc.chapter, e.slug;
 
--- ── 060_views/V025_v_phb_armor_cost_weight.sql ──
-
 -- v_phb_armor: incluir custo e peso do phb_item
 
-CREATE OR REPLACE VIEW rpg.v_phb_armor AS
-SELECT
-  i.slug AS item_slug,
-  i.name AS item_name,
-  c.slug AS category_slug,
-  c.name AS category_name,
-  c.don_doff,
-  a.ac_base,
-  a.ac_formula,
-  a.strength_req,
-  a.stealth_disadvantage,
-  i.cost->>'text' AS cost_text,
-  i.weight
-FROM rpg.phb_armor a
-JOIN rpg.phb_item i ON i.id = a.item_id
-JOIN rpg.phb_armor_category c ON c.id = a.category_id;
 
--- ── 060_views/V026_v_phb_class_progression.sql ──
-
--- View rpg.v_phb_class_progression
-
-CREATE OR REPLACE VIEW rpg.v_phb_class_progression AS
-SELECT
-  c.slug AS class_slug,
-  cp.level,
-  cp.proficiency_bonus,
-  cp.cantrips,
-  cp.prepared_spells,
-  cp.channel_divinity,
-  cp.weapon_mastery
-FROM rpg.phb_class_progression cp
-JOIN rpg.phb_class c ON c.id = cp.class_id;
-
--- ── 060_views/V027_v_phb_background_tool_option_whitelist.sql ──
-
--- View rpg.v_phb_background_tool_option — whitelist PHB (não a categoria inteira)
-
-CREATE OR REPLACE VIEW rpg.v_phb_background_tool_option AS
+CREATE VIEW rpg.v_phb_background_tool_option AS
 SELECT
   b.slug AS background_slug,
   i.slug AS item_slug,
@@ -2760,11 +1947,6 @@ LEFT JOIN rpg.phb_tool_category tc ON tc.id = t.category_id
 WHERE b.tool_proficiency_kind = 'choice'
 ORDER BY b.slug, i.name;
 
--- ── 060_views/V028_v_class_spell_slots.sql ──
-
--- View rpg.v_class_spell_slots
-
-DROP VIEW IF EXISTS rpg.v_class_spell_slots;
 
 CREATE VIEW rpg.v_class_spell_slots AS
 SELECT
@@ -2791,11 +1973,8 @@ GROUP BY
   cp.prepared_spells,
   cp.channel_divinity;
 
--- ── 060_views/V029_v_phb_background_language.sql ──
 
--- View rpg.v_phb_background_language
-
-CREATE OR REPLACE VIEW rpg.v_phb_background_language AS
+CREATE VIEW rpg.v_phb_background_language AS
 SELECT
   b.slug AS background_slug,
   l.slug AS language_slug,
@@ -2806,113 +1985,9 @@ JOIN rpg.phb_background_language bl ON bl.background_id = b.id
 JOIN rpg.phb_language l ON l.id = bl.language_id
 ORDER BY b.slug, l.slug;
 
--- ── 060_views/V031_v_phb_species_and_feat_granted_spell.sql ──
-
 -- View unificada: magias concedidas por espécie (fixas + linhagem/legado)
--- Lote B: usa phb_species_option_value em vez de tabelas de lineage
-
-CREATE OR REPLACE VIEW rpg.v_phb_species_granted_spell AS
--- Traços fixos (ex.: aasimar Luz, tiferino Taumaturgia)
-SELECT
-  sp.slug AS species_slug,
-  NULL::rpg.species_choice_kind AS choice_kind,
-  NULL::text AS choice_slug,
-  1 AS unlock_level,
-  s.slug AS spell_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_spell s ON s.id = t.spell_id
-WHERE t.spell_id IS NOT NULL
-
-UNION ALL
-
--- Linhagem élfica L1 / L3 / L5 (option_key = 'lineageId')
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'lineageId'
-  AND t.choice_kind = 'elf_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level1_id
-WHERE ov.spell_level1_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 3, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'lineageId'
-  AND t.choice_kind = 'elf_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level3_id
-WHERE ov.spell_level3_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 5, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'lineageId'
-  AND t.choice_kind = 'elf_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level5_id
-WHERE ov.spell_level5_id IS NOT NULL
-
-UNION ALL
-
--- Legado ínfero L1 / L3 / L5 (option_key = 'infernalLegacyId')
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'infernalLegacyId'
-  AND t.choice_kind = 'infernal_legacy'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level1_id
-WHERE ov.spell_level1_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 3, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'infernalLegacyId'
-  AND t.choice_kind = 'infernal_legacy'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level3_id
-WHERE ov.spell_level3_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 5, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'infernalLegacyId'
-  AND t.choice_kind = 'infernal_legacy'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level5_id
-WHERE ov.spell_level5_id IS NOT NULL
-
-UNION ALL
-
--- Linhagem gnômica (spell_1 / spell_2 no 1º nível, option_key = 'gnomeLineageId')
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'gnomeLineageId'
-  AND t.choice_kind = 'gnome_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_1_id
-WHERE ov.spell_1_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'gnomeLineageId'
-  AND t.choice_kind = 'gnome_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_2_id
-WHERE ov.spell_2_id IS NOT NULL
-
-UNION ALL
-
--- Magias diretas de espécie (ex.: Mandrágora)
-SELECT
-  sp.slug,
-  NULL::rpg.species_choice_kind,
-  NULL::text,
-  g.unlock_level,
-  s.slug
-FROM rpg.phb_spell_grant g
-JOIN rpg.phb_species sp ON sp.id = g.origin_id
-JOIN rpg.phb_spell s ON s.id = g.spell_id
-WHERE g.origin_type = 'species'::rpg.spell_grant_origin;
-
 -- Magias fixas de talento (além de featOptions)
-CREATE OR REPLACE VIEW rpg.v_phb_feat_granted_spell AS
+CREATE VIEW rpg.v_phb_feat_granted_spell AS
 SELECT
   f.slug AS feat_slug,
   s.slug AS spell_slug
@@ -2921,11 +1996,9 @@ JOIN rpg.phb_feat f ON f.id = g.origin_id
 JOIN rpg.phb_spell s ON s.id = g.spell_id
 WHERE g.origin_type = 'feat'::rpg.spell_grant_origin;
 
--- ── 060_views/V032_v_hp_bonus_unarmored_defense.sql ──
+-- PV e defesa sem armadura (views de leitura)
 
--- Views de leitura do catálogo de PV e Defesa sem Armadura (Lote G: phb_combat_modifier)
-
-CREATE OR REPLACE VIEW rpg.v_phb_hp_bonus_source AS
+CREATE VIEW rpg.v_phb_hp_bonus_source AS
 SELECT
   cm.owner_kind::text AS source_kind,
   sp.slug AS source_slug,
@@ -2963,7 +2036,7 @@ FROM rpg.phb_combat_modifier cm
 JOIN rpg.phb_feat f ON f.id = cm.owner_id
 WHERE cm.kind = 'hp_bonus' AND cm.owner_kind = 'feat';
 
-CREATE OR REPLACE VIEW rpg.v_phb_unarmored_defense AS
+CREATE VIEW rpg.v_phb_unarmored_defense AS
 SELECT
   cm.owner_kind::text AS source_kind,
   c.slug AS source_slug,
@@ -2986,11 +2059,9 @@ FROM rpg.phb_combat_modifier cm
 JOIN rpg.phb_subclass sc ON sc.id = cm.owner_id
 WHERE cm.kind = 'unarmored_defense' AND cm.owner_kind = 'subclass';
 
--- ── 060_views/V033_v_subclass_spell_slots.sql ──
-
 -- Espaços de magia + cotas por nível de personagem (subclasse conjuradora)
 
-CREATE OR REPLACE VIEW rpg.v_subclass_spell_slots AS
+CREATE VIEW rpg.v_subclass_spell_slots AS
 SELECT
   sc.slug AS subclass_slug,
   c.slug AS class_slug,
@@ -3021,63 +2092,9 @@ GROUP BY
   sp.prepared_spells,
   list_c.slug;
 
--- ── 060_views/V034_v_phb_feat_requirements.sql ──
-
 -- Adiciona pré-requisitos estruturados à view de talentos.
--- Lote A: feat.category is now enum, joins VALUES view for labels
-
-CREATE OR REPLACE VIEW rpg.v_phb_feat AS
-SELECT
-  feat.slug AS feat_slug,
-  feat.name AS feat_name,
-  feat.category::text AS category_slug,
-  category.name AS category_name,
-  category.type_label AS category_type_label,
-  feat.repeatable,
-  feat.prerequisite,
-  citation.chapter AS source_chapter,
-  citation.chapter_title AS source_chapter_title,
-  edition.slug AS edition_slug,
-  COALESCE(benefits.items, '[]'::jsonb) AS benefits,
-  requirement.minimum_level,
-  COALESCE(ability_requirements.items, '[]'::jsonb) AS ability_prerequisites,
-  COALESCE(requirement.requires_spellcasting, FALSE) AS requires_spellcasting,
-  armor_category.slug AS required_armor_training_slug,
-  COALESCE(requirement.requires_fighting_style, FALSE) AS requires_fighting_style
-FROM rpg.phb_feat feat
-JOIN rpg.v_phb_feat_category category ON category.slug = feat.category
-LEFT JOIN rpg.phb_feat_requirement requirement ON requirement.feat_id = feat.id
-LEFT JOIN rpg.phb_armor_category armor_category
-  ON armor_category.id = requirement.required_armor_category_id
-LEFT JOIN rpg.phb_source_citation citation ON citation.id = feat.source_citation_id
-LEFT JOIN rpg.phb_edition edition ON edition.id = citation.edition_id
-LEFT JOIN LATERAL (
-  SELECT jsonb_agg(
-    jsonb_build_object(
-      'abilitySlug', ability.slug,
-      'minimumScore', ability_requirement.minimum_score
-    )
-    ORDER BY ability.sort_order
-  ) AS items
-  FROM rpg.phb_feat_requirement_ability ability_requirement
-  JOIN rpg.phb_ability ability ON ability.id = ability_requirement.ability_id
-  WHERE ability_requirement.feat_id = feat.id
-) ability_requirements ON TRUE
-LEFT JOIN LATERAL (
-  SELECT jsonb_agg(
-    jsonb_strip_nulls(
-      jsonb_build_object('name', benefit.name, 'description', benefit.description)
-    )
-    ORDER BY benefit.sort_order
-  ) AS items
-  FROM rpg.phb_feat_benefit benefit
-  WHERE benefit.feat_id = feat.id
-) benefits ON TRUE;
-
--- ── 060_views/V035_v_class_ability_boost.sql ──
-
 -- Aumentos de atributo por classe/nível com a classe normalizada (slug).
-CREATE OR REPLACE VIEW rpg.v_phb_class_ability_boost AS
+CREATE VIEW rpg.v_phb_class_ability_boost AS
 SELECT
   c.slug AS class_slug,
   b.ability_slug,
@@ -3088,151 +2105,9 @@ SELECT
 FROM rpg.phb_class_ability_boost b
 JOIN rpg.phb_class c ON c.id = b.class_id;
 
--- ── 060_views/V036_v_phb_gunslinger_maneuver.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_gunslinger_maneuver AS
-SELECT
-  m.slug,
-  m.name,
-  m.description,
-  m.effect_kind::text AS effect_kind,
-  m.risk_cost,
-  m.from_level,
-  sc.slug AS subclass_slug
-FROM rpg.phb_gunslinger_maneuver m
-LEFT JOIN rpg.phb_subclass sc ON sc.id = m.subclass_id;
-
--- ── 060_views/V037_v_phb_battle_master_maneuver.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_battle_master_maneuver AS
-SELECT
-  m.slug,
-  m.name,
-  m.description,
-  m.timing::text AS timing,
-  m.adds_to_damage,
-  m.adds_to_attack
-FROM rpg.phb_battle_master_maneuver m;
-
--- ── 060_views/V038_v_phb_cunning_strike_effect.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_cunning_strike_effect AS
-SELECT
-  e.slug,
-  e.name,
-  e.cost,
-  e.unlock_level,
-  e.save_ability::text AS save_ability,
-  sc.slug AS subclass_slug,
-  e.note
-FROM rpg.phb_cunning_strike_effect e
-LEFT JOIN rpg.phb_subclass sc ON sc.id = e.subclass_id;
-
--- ── 060_views/V039_v_phb_subclass_table_action.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_subclass_table_action AS
-SELECT
-  sc.slug AS subclass_slug,
-  a.slug,
-  a.name,
-  a.unlock_level,
-  a.free_resource_slug,
-  a.always_spends_pool,
-  a.rolls_pool_die,
-  a.spends_only_on_success,
-  a.always_pool_cost,
-  a.repeat_pool_cost
-FROM rpg.phb_subclass_table_action a
-JOIN rpg.phb_subclass sc ON sc.id = a.subclass_id;
-
--- ── 060_views/V040_v_phb_class_economy_action.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_class_economy_action AS
-SELECT
-  a.action_id,
-  c.slug AS class_slug,
-  sc.slug AS subclass_slug,
-  sp.slug AS species_slug,
-  a.name,
-  a.economy::text AS economy,
-  a.unlock_level,
-  a.resource_slug,
-  a.free_resource_slug,
-  a.always_spends_resource,
-  a.summary,
-  a.description,
-  a.table_action,
-  a.spend_amount,
-  a.sort_order,
-  a.requires_option_key,
-  a.requires_option_value
-FROM rpg.phb_class_economy_action a
-LEFT JOIN rpg.phb_class c ON c.id = a.class_id
-LEFT JOIN rpg.phb_subclass sc ON sc.id = a.subclass_id
-LEFT JOIN rpg.phb_species sp ON sp.id = a.species_id;
-
--- ── 060_views/V041_v_phb_persona_mask.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_persona_mask AS
-SELECT
-  m.slug,
-  m.name,
-  sc.slug AS subclass_slug
-FROM rpg.phb_persona_mask m
-JOIN rpg.phb_subclass sc ON sc.id = m.subclass_id;
-
--- ── 060_views/V042_v_phb_beastborne_aspect_benefit.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_beastborne_aspect_benefit AS
-SELECT
-  b.aspect_level,
-  b.note
-FROM rpg.phb_beastborne_aspect_benefit b;
-
--- ── 060_views/V043_v_phb_class_panel_action.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_class_panel_action AS
-SELECT
-  a.panel_key,
-  c.slug AS class_slug,
-  sc.slug AS subclass_slug,
-  a.slug,
-  a.name,
-  a.title,
-  a.unlock_level,
-  a.resource_slug,
-  a.section::text AS section,
-  a.spends_focus,
-  a.sort_order
-FROM rpg.phb_class_panel_action a
-JOIN rpg.phb_class c ON c.id = a.class_id
-LEFT JOIN rpg.phb_subclass sc ON sc.id = a.subclass_id;
-
--- ── 060_views/V044_v_phb_dungeoneer_slayer_type.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_dungeoneer_slayer_type AS
-SELECT
-  t.slug,
-  t.label,
-  t.sort_order
-FROM rpg.phb_dungeoneer_slayer_type t;
-
--- ── 060_views/V045_v_phb_subclass_precaution_spell.sql ──
-
-CREATE OR REPLACE VIEW rpg.v_phb_subclass_precaution_spell AS
-SELECT
-  sc.slug AS subclass_slug,
-  sp.slug AS spell_slug,
-  sp.name AS spell_name
-FROM rpg.phb_subclass_precaution_spell link
-JOIN rpg.phb_subclass sc ON sc.id = link.subclass_id
-JOIN rpg.phb_spell sp ON sp.id = link.spell_id;
-
--- ── 060_views/V050_v_phb_class_granted_spell.sql ──
-
 -- Magias always_prepared de classe (phb_spell_grant origin=class)
 
-CREATE OR REPLACE VIEW rpg.v_phb_class_granted_spell AS
+CREATE VIEW rpg.v_phb_class_granted_spell AS
 SELECT
   c.slug AS class_slug,
   g.unlock_level,
@@ -3243,416 +2118,8 @@ JOIN rpg.phb_class c ON c.id = g.origin_id
 JOIN rpg.phb_spell s ON s.id = g.spell_id
 WHERE g.origin_type = 'class'::rpg.spell_grant_origin;
 
--- ── 060_views/V052_v_phb_species_trait_choices_edition.sql ──
-
--- View rpg.v_phb_species_trait_choices — edition_slug por option_value
--- Substitui o antigo V051 (packs Eldritch Hunt + Northlands).
--- NULL edition_slug = escolha da espécie-base (sempre disponível com a espécie).
-
-CREATE OR REPLACE VIEW rpg.v_phb_species_trait_choices AS
--- Elf lineage (option_key = 'lineageId')
-SELECT
-  sp.slug AS species_slug,
-  t.name AS trait_name,
-  t.choice_kind,
-  ov.value_id AS choice_slug,
-  ov.label AS choice_name,
-  ov.level1_benefit,
-  s3.slug AS spell_level3_slug,
-  s5.slug AS spell_level5_slug,
-  NULL::text AS damage_type,
-  ov.edition_slug AS edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'lineageId'
-  AND t.choice_kind = 'elf_lineage'::rpg.species_choice_kind
-LEFT JOIN rpg.phb_spell s3 ON s3.id = ov.spell_level3_id
-LEFT JOIN rpg.phb_spell s5 ON s5.id = ov.spell_level5_id
-UNION ALL
--- Infernal legacy (option_key = 'infernalLegacyId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  ov.level1_benefit,
-  s3.slug,
-  s5.slug,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'infernalLegacyId'
-  AND t.choice_kind = 'infernal_legacy'::rpg.species_choice_kind
-LEFT JOIN rpg.phb_spell s3 ON s3.id = ov.spell_level3_id
-LEFT JOIN rpg.phb_spell s5 ON s5.id = ov.spell_level5_id
-UNION ALL
--- Dragon ancestry (option_key = 'dragonAncestryId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.damage_type,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'dragonAncestryId'
-  AND t.choice_kind = 'dragon_ancestry'::rpg.species_choice_kind
-UNION ALL
--- Gnome lineage (option_key = 'gnomeLineageId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  ov.level1_benefit,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'gnomeLineageId'
-  AND t.choice_kind = 'gnome_lineage'::rpg.species_choice_kind
-UNION ALL
--- Giant ancestry (option_key = 'giantAncestryId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'giantAncestryId'
-  AND t.choice_kind = 'giant_ancestry'::rpg.species_choice_kind
-UNION ALL
--- Geppettin construction (option_key = 'constructionId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'constructionId'
-  AND t.choice_kind = 'geppettin_construction'::rpg.species_choice_kind
-UNION ALL
--- Mandrake season (option_key = 'seasonId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'seasonId'
-  AND t.choice_kind = 'mandrake_season'::rpg.species_choice_kind
-UNION ALL
--- Manikin armor preset (option_key = 'armorPresetId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'armorPresetId'
-  AND t.choice_kind = 'manikin_armor'::rpg.species_choice_kind
-UNION ALL
--- Manikin service model (option_key = 'serviceModelId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'serviceModelId'
-  AND t.choice_kind = 'manikin_service_model'::rpg.species_choice_kind
-UNION ALL
--- Scourgeborne madness (option_key = 'madnessId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'madnessId'
-  AND t.choice_kind = 'scourgeborne_madness'::rpg.species_choice_kind
-UNION ALL
--- Scourgeborne monstrous lineage (option_key = 'monstrousLineageId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'monstrousLineageId'
-  AND t.choice_kind = 'scourgeborne_lineage'::rpg.species_choice_kind
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  sk.slug,
-  sk.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_skill sk ON t.choice_kind IN ('human_skill'::rpg.species_choice_kind, 'geppettin_skill'::rpg.species_choice_kind, 'mandrake_skill'::rpg.species_choice_kind)
-  AND (
-    (t.choice_kind = 'human_skill'::rpg.species_choice_kind)
-    OR (t.choice_kind = 'geppettin_skill'::rpg.species_choice_kind AND sk.slug IN ('intimidation', 'performance', 'persuasion'))
-    OR (t.choice_kind = 'mandrake_skill'::rpg.species_choice_kind AND sk.slug IN ('nature', 'survival'))
-  )
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  sk.slug,
-  sk.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_skill sk
-  ON t.choice_kind = 'elf_keen_senses'::rpg.species_choice_kind
- AND sk.slug IN ('insight', 'perception', 'survival')
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  f.slug,
-  f.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_feat f ON t.choice_kind = 'human_origin_feat'::rpg.species_choice_kind
-  AND f.category = 'origin'::rpg.feat_category
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ab.slug,
-  ab.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_ability ab
-  ON t.choice_kind IN (
-    'elf_casting_ability'::rpg.species_choice_kind,
-    'gnome_casting_ability'::rpg.species_choice_kind,
-    'infernal_casting_ability'::rpg.species_choice_kind,
-    'mandrake_casting_ability'::rpg.species_choice_kind
-  )
- AND ab.slug IN ('inteligencia', 'sabedoria', 'carisma')
-UNION ALL
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  sz.slug,
-  sz.name,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  NULL::text
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN (
-  VALUES
-    ('medium', 'Médio'),
-    ('small', 'Pequeno')
-) AS sz(slug, name)
-  ON t.choice_kind IN (
-    'human_size'::rpg.species_choice_kind,
-    'aasimar_size'::rpg.species_choice_kind,
-    'tiefling_size'::rpg.species_choice_kind,
-    'geppettin_size'::rpg.species_choice_kind,
-    'manikin_size'::rpg.species_choice_kind,
-    'beastkin_size'::rpg.species_choice_kind
-  )
-UNION ALL
--- Bearfolk lineage (option_key = 'bearfolkLineageId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'bearfolkLineageId'
-  AND t.choice_kind = 'bearfolk_lineage'::rpg.species_choice_kind
-UNION ALL
--- Beastkin adaptation (option_key = 'naturalAdaptationId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'naturalAdaptationId'
-  AND t.choice_kind = 'beastkin_adaptation'::rpg.species_choice_kind
-UNION ALL
--- Giantkin ancestry (option_key = 'giantkinAncestryId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'giantkinAncestryId'
-  AND t.choice_kind = 'giantkin_ancestry'::rpg.species_choice_kind
-UNION ALL
--- Trollkin ancestry (option_key = 'trollkinAncestryId')
-SELECT
-  sp.slug,
-  t.name,
-  t.choice_kind,
-  ov.value_id,
-  ov.label,
-  COALESCE(ov.level1_benefit, ov.benefit),
-  NULL::text,
-  NULL::text,
-  NULL::text,
-  ov.edition_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'trollkinAncestryId'
-  AND t.choice_kind = 'trollkin_ancestry'::rpg.species_choice_kind
-UNION ALL
--- Truques swappable do Alto Elfo (opcional)
-SELECT
-  'elf'::text AS species_slug,
-  'Truque de Alto Elfo'::text AS trait_name,
-  'high_elf_cantrip'::rpg.species_choice_kind AS choice_kind,
-  o.choice_slug,
-  o.choice_name,
-  NULL::text AS level1_benefit,
-  NULL::text AS spell_level3_slug,
-  NULL::text AS spell_level5_slug,
-  NULL::text AS damage_type,
-  NULL::text AS edition_slug
-FROM rpg.v_phb_high_elf_cantrip_options o;
-
--- ── 060_views/V055_v_phb_weapon_proficiency_machadinhas.sql ──
 
 -- Inclui machadinhas (handaxe) nas labels de proficiência de arma.
-
-CREATE OR REPLACE VIEW rpg.v_phb_weapon_proficiency AS
-SELECT slug, label FROM (VALUES
-  ('armas-simples', 'Armas Simples'),
-  ('armas-marciais', 'Armas Marciais'),
-  ('adagas', 'Adagas'),
-  ('dardos', 'Dardos'),
-  ('fundas', 'Fundas'),
-  ('bordoes', 'Bordões'),
-  ('bestas-leves', 'Bestas Leves'),
-  ('bestas-de-mao', 'Bestas de Mão'),
-  ('espada-longa', 'Espada Longa'),
-  ('rapieira', 'Rapieira'),
-  ('espada-curta', 'Espada Curta'),
-  ('machadinhas', 'Machadinhas'),
-  ('armas-marciais-leves', 'Armas Marciais (leves)'),
-  ('armas-marciais-a-distancia', 'Armas Marciais (à Distância)')
-) AS t(slug, label);
-
--- ── 060_views/V056_v_phb_feat_weapon_and_feat_option.sql ──
-
--- Expõe required_weapon_proficiency_slugs e required_feat_options em v_phb_feat.
--- DROP + CREATE: CREATE OR REPLACE não permite mudar a lista de colunas.
-
-DROP VIEW IF EXISTS rpg.v_phb_feat;
 
 CREATE VIEW rpg.v_phb_feat AS
 SELECT
@@ -3744,12 +2211,10 @@ LEFT JOIN LATERAL (
   WHERE benefit.feat_id = feat.id
 ) benefits ON TRUE;
 
--- ── 060_views/V057_v_phb_andari_druid_cantrip_options.sql ──
-
 -- Opções de truque para Andari (lista de cantrips de Druida).
 -- Kind opcional na validação padrão; exigido quando bearfolk_lineage = andari.
 
-CREATE OR REPLACE VIEW rpg.v_phb_andari_druid_cantrip_options AS
+CREATE VIEW rpg.v_phb_andari_druid_cantrip_options AS
 SELECT
   'bearfolk'::text AS species_slug,
   'andari_druid_cantrip'::rpg.species_choice_kind AS choice_kind,
@@ -3759,13 +2224,6 @@ FROM rpg.v_spell_by_class s
 WHERE s.class_slug = 'druid'
   AND s.spell_level = 0
 ORDER BY s.spell_name;
-
--- ── 060_views/V059_v_phb_background_feat_choices.sql ──
-
--- Expõe origin_feat_choice_slugs em v_phb_background.
--- DROP + CREATE: CREATE OR REPLACE não permite mudar a lista de colunas.
-
-DROP VIEW IF EXISTS rpg.v_phb_background;
 
 CREATE VIEW rpg.v_phb_background AS
 SELECT
@@ -3829,241 +2287,13 @@ GROUP BY
   tc.slug,
   tc.name;
 
--- ── 060_views/V060_v_phb_species_granted_spell_giantkin.sql ──
-
 -- Magias concedidas por ancestria Giantkin (Nuvem / Tempestade)
-
-CREATE OR REPLACE VIEW rpg.v_phb_species_granted_spell AS
--- Traços fixos (ex.: aasimar Luz, tiferino Taumaturgia)
-SELECT
-  sp.slug AS species_slug,
-  NULL::rpg.species_choice_kind AS choice_kind,
-  NULL::text AS choice_slug,
-  1 AS unlock_level,
-  s.slug AS spell_slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_spell s ON s.id = t.spell_id
-WHERE t.spell_id IS NOT NULL
-
-UNION ALL
-
--- Linhagem élfica L1 / L3 / L5 (option_key = 'lineageId')
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'lineageId'
-  AND t.choice_kind = 'elf_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level1_id
-WHERE ov.spell_level1_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 3, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'lineageId'
-  AND t.choice_kind = 'elf_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level3_id
-WHERE ov.spell_level3_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 5, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'lineageId'
-  AND t.choice_kind = 'elf_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level5_id
-WHERE ov.spell_level5_id IS NOT NULL
-
-UNION ALL
-
--- Legado ínfero L1 / L3 / L5 (option_key = 'infernalLegacyId')
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'infernalLegacyId'
-  AND t.choice_kind = 'infernal_legacy'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level1_id
-WHERE ov.spell_level1_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 3, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'infernalLegacyId'
-  AND t.choice_kind = 'infernal_legacy'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level3_id
-WHERE ov.spell_level3_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 5, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'infernalLegacyId'
-  AND t.choice_kind = 'infernal_legacy'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level5_id
-WHERE ov.spell_level5_id IS NOT NULL
-
-UNION ALL
-
--- Linhagem gnômica (spell_1 / spell_2 no 1º nível, option_key = 'gnomeLineageId')
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'gnomeLineageId'
-  AND t.choice_kind = 'gnome_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_1_id
-WHERE ov.spell_1_id IS NOT NULL
-UNION ALL
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'gnomeLineageId'
-  AND t.choice_kind = 'gnome_lineage'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_2_id
-WHERE ov.spell_2_id IS NOT NULL
-
-UNION ALL
-
--- Ancestria Giantkin (option_key = 'giantkinAncestryId') — Nuvem Queda Suave / Tempestade Levitação
-SELECT sp.slug, t.choice_kind, ov.value_id, 1, s.slug
-FROM rpg.phb_species_trait t
-JOIN rpg.phb_species sp ON sp.id = t.species_id
-JOIN rpg.phb_option_value ov ON ov.scope = 'species'::rpg.option_scope AND ov.owner_id = sp.id AND ov.option_key = 'giantkinAncestryId'
-  AND t.choice_kind = 'giantkin_ancestry'::rpg.species_choice_kind
-JOIN rpg.phb_spell s ON s.id = ov.spell_level1_id
-WHERE ov.spell_level1_id IS NOT NULL
-
-UNION ALL
-
--- Magias diretas de espécie (ex.: Mandrágora)
-SELECT
-  sp.slug,
-  NULL::rpg.species_choice_kind,
-  NULL::text,
-  g.unlock_level,
-  s.slug
-FROM rpg.phb_spell_grant g
-JOIN rpg.phb_species sp ON sp.id = g.origin_id
-JOIN rpg.phb_spell s ON s.id = g.spell_id
-WHERE g.origin_type = 'species'::rpg.spell_grant_origin;
-
--- ── 060_views/V061_creature_vehicle_template_bundles.sql ──
 
 -- Views: bundle de template de criatura / veículo (catálogo read-only)
 
-CREATE OR REPLACE VIEW rpg.v_phb_creature_template_bundle AS
-SELECT
-  t.slug,
-  t.edition_slug,
-  t.name,
-  t.creature_type,
-  t.creature_subtype,
-  t.size_slug,
-  t.challenge_rating,
-  t.proficiency_bonus,
-  t.armor_class,
-  t.hit_points_avg,
-  t.hit_points_formula,
-  t.spellcasting_ability_slug,
-  t.spell_save_dc,
-  t.spell_attack_bonus,
-  COALESCE((
-    SELECT jsonb_agg(
-      jsonb_build_object(
-        'movementKind', s.movement_kind,
-        'speedFt', s.speed_ft
-      )
-      ORDER BY s.movement_kind
-    )
-    FROM rpg.phb_creature_template_speed s
-    WHERE s.template_slug = t.slug
-  ), '[]'::jsonb) AS speeds,
-  COALESCE((
-    SELECT jsonb_agg(
-      jsonb_build_object(
-        'id', a.id,
-        'name', a.name,
-        'actionBucket', a.action_bucket,
-        'attackBonus', a.attack_bonus,
-        'damageExpression', a.damage_expression,
-        'reachFt', a.reach_ft,
-        'sortOrder', a.sort_order
-      )
-      ORDER BY a.sort_order, a.name
-    )
-    FROM rpg.phb_creature_template_action a
-    WHERE a.template_slug = t.slug
-  ), '[]'::jsonb) AS actions,
-  COALESCE((
-    SELECT jsonb_agg(
-      jsonb_build_object(
-        'spellSlug', sp.spell_slug,
-        'usageKind', sp.usage_kind,
-        'usesPerDay', sp.uses_per_day,
-        'slotLevel', sp.slot_level,
-        'rechargeDice', sp.recharge_dice,
-        'sortOrder', sp.sort_order
-      )
-      ORDER BY sp.sort_order, sp.spell_slug
-    )
-    FROM rpg.phb_creature_template_spell sp
-    WHERE sp.template_slug = t.slug
-  ), '[]'::jsonb) AS spells,
-  COALESCE((
-    SELECT jsonb_agg(
-      jsonb_build_object(
-        'name', tr.name,
-        'description', tr.description,
-        'sortOrder', tr.sort_order
-      )
-      ORDER BY tr.sort_order, tr.name
-    )
-    FROM rpg.phb_creature_template_trait tr
-    WHERE tr.template_slug = t.slug
-  ), '[]'::jsonb) AS traits
-FROM rpg.phb_creature_template t;
-
-CREATE OR REPLACE VIEW rpg.v_phb_vehicle_template_bundle AS
-SELECT
-  t.slug,
-  t.edition_slug,
-  t.name,
-  t.armor_class,
-  t.hit_points,
-  t.damage_threshold,
-  t.crew_capacity,
-  t.cargo_capacity_lb,
-  COALESCE((
-    SELECT jsonb_agg(
-      jsonb_build_object(
-        'movementKind', s.movement_kind,
-        'speedFt', s.speed_ft
-      )
-      ORDER BY s.movement_kind
-    )
-    FROM rpg.phb_vehicle_template_speed s
-    WHERE s.template_slug = t.slug
-  ), '[]'::jsonb) AS speeds,
-  COALESCE((
-    SELECT jsonb_agg(
-      jsonb_build_object(
-        'id', a.id,
-        'name', a.name,
-        'actionBucket', a.action_bucket,
-        'attackBonus', a.attack_bonus,
-        'damageExpression', a.damage_expression,
-        'reachFt', a.reach_ft,
-        'sortOrder', a.sort_order
-      )
-      ORDER BY a.sort_order, a.name
-    )
-    FROM rpg.phb_vehicle_template_action a
-    WHERE a.template_slug = t.slug
-  ), '[]'::jsonb) AS actions
-FROM rpg.phb_vehicle_template t;
-
--- ── 060_views/V063_character_thread_bundle.sql ──
-
 -- Bundle de catálogo: thread + goals + milestones + benefits
 
-CREATE OR REPLACE VIEW rpg.v_phb_character_thread_bundle AS
+CREATE VIEW rpg.v_phb_character_thread_bundle AS
 SELECT
   t.slug,
   t.edition_slug,
@@ -4110,12 +2340,7 @@ SELECT
   ), '[]'::jsonb) AS milestones
 FROM rpg.phb_character_thread t;
 
--- ── 060_views/V063_creature_vehicle_template_image_url.sql ──
-
 -- Views: expõe image_url nos bundles de criatura/veículo
-
-DROP VIEW IF EXISTS rpg.v_phb_creature_template_bundle;
-DROP VIEW IF EXISTS rpg.v_phb_vehicle_template_bundle;
 
 CREATE VIEW rpg.v_phb_creature_template_bundle AS
 SELECT
@@ -4253,11 +2478,9 @@ SELECT
   ), '[]'::jsonb) AS traits
 FROM rpg.phb_vehicle_template t;
 
--- ── 060_views/V066_v_phb_species_granted_spell_feathren.sql ──
-
 -- Magias concedidas por ancestria Feathren + Identificar / Aprimorar Atributo
 
-CREATE OR REPLACE VIEW rpg.v_phb_species_granted_spell AS
+CREATE VIEW rpg.v_phb_species_granted_spell AS
 SELECT * FROM (
   SELECT
     sp.slug AS species_slug,
@@ -4379,11 +2602,6 @@ SELECT * FROM (
   WHERE g.origin_type = 'species'::rpg.spell_grant_origin
 ) AS granted;
 
--- ── 060_views/V067_v_phb_subclass_image_url.sql ──
-
--- View rpg.v_phb_subclass — expõe image_url
-
-DROP VIEW IF EXISTS rpg.v_phb_subclass;
 
 CREATE VIEW rpg.v_phb_subclass AS
 SELECT
@@ -4404,47 +2622,9 @@ LEFT JOIN rpg.phb_source_citation cit ON cit.id = s.source_citation_id
 LEFT JOIN rpg.phb_edition e ON e.id = cit.edition_id
 LEFT JOIN rpg.phb_spell_source ss ON ss.subclass_id = s.id;
 
--- ── 060_views/V068_v_phb_weapon_proficiency_advanced.sql ──
-
--- Proficiência em Armas Avançadas (Grim Hollow)
-
-CREATE OR REPLACE VIEW rpg.v_phb_weapon_proficiency AS
-SELECT slug, label FROM (VALUES
-  ('armas-simples', 'Armas Simples'),
-  ('armas-marciais', 'Armas Marciais'),
-  ('armas-avancadas', 'Armas Avançadas'),
-  ('adagas', 'Adagas'),
-  ('dardos', 'Dardos'),
-  ('fundas', 'Fundas'),
-  ('bordoes', 'Bordões'),
-  ('bestas-leves', 'Bestas Leves'),
-  ('bestas-de-mao', 'Bestas de Mão'),
-  ('espada-longa', 'Espada Longa'),
-  ('rapieira', 'Rapieira'),
-  ('espada-curta', 'Espada Curta'),
-  ('machadinhas', 'Machadinhas'),
-  ('armas-marciais-leves', 'Armas Marciais (leves)'),
-  ('armas-marciais-a-distancia', 'Armas Marciais (à Distância)')
-) AS t(slug, label);
-
--- ── 060_views/V069_v_phb_feat_category_gh_transformation.sql ──
-
--- Inclui categoria gh-transformation na view de categorias de talento
-
-CREATE OR REPLACE VIEW rpg.v_phb_feat_category AS
-SELECT slug, name, type_label, sort_order FROM (VALUES
-  ('origin'::rpg.feat_category, 'Origem', 'Talento de Origem', 1),
-  ('general'::rpg.feat_category, 'Geral', 'Talento Geral', 2),
-  ('fighting-style'::rpg.feat_category, 'Estilo de Luta', 'Talento de Estilo de Luta', 3),
-  ('epic-boon'::rpg.feat_category, 'Dádiva Épica', 'Talento de Dádiva Épica', 4),
-  ('gh-transformation'::rpg.feat_category, 'Transformação GH', 'Transformação Grim Hollow', 5)
-) AS t(slug, name, type_label, sort_order);
-
--- ── 060_views/V071_v_phb_armor_edition_image.sql ──
-
 -- v_phb_armor: edition_slug e image_url para compêndio (ex. escudos GH)
 
-CREATE OR REPLACE VIEW rpg.v_phb_armor AS
+CREATE VIEW rpg.v_phb_armor AS
 SELECT
   i.slug AS item_slug,
   i.name AS item_name,
@@ -4463,119 +2643,11 @@ FROM rpg.phb_armor a
 JOIN rpg.phb_item i ON i.id = a.item_id
 JOIN rpg.phb_armor_category c ON c.id = a.category_id;
 
--- ── 060_views/V072_v_phb_heritage_trait_choices.sql ──
-
 -- Pool global, slots modulares, speed trade e tamanho por herança GH
-
-CREATE OR REPLACE VIEW rpg.v_phb_heritage_trait_choices AS
-SELECT
-  h.slug AS heritage_slug,
-  ('heritage_trait_' || gs.slot_index)::text AS choice_kind,
-  t.slug AS trait_slug,
-  regexp_replace(t.name, '\.$', '', 'g') AS trait_name,
-  ('[' || CASE t.category
-    WHEN 'combat' THEN 'Combate'
-    WHEN 'exploration' THEN 'Exploração'
-    ELSE 'Interpretação'
-  END || '] ' || regexp_replace(t.name, '\.$', '', 'g')) AS label,
-  t.benefit_base,
-  t.benefit_improved,
-  EXISTS (
-    SELECT 1
-    FROM rpg.phb_heritage_traditional ht
-    WHERE ht.heritage_id = h.id AND ht.trait_id = t.id
-  ) AS is_traditional,
-  (
-    gs.slot_index * 100000
-    + CASE t.category
-        WHEN 'combat' THEN 10000
-        WHEN 'exploration' THEN 20000
-        ELSE 30000
-      END
-    + row_number() OVER (
-        PARTITION BY h.slug, gs.slot_index
-        ORDER BY t.category, t.name
-      )
-  )::integer AS sort_order
-FROM rpg.phb_heritage h
-CROSS JOIN generate_series(1, 8) AS gs(slot_index)
-CROSS JOIN rpg.phb_heritage_trait t
-
-UNION ALL
-
-SELECT
-  h.slug,
-  'heritage_trait_9'::text,
-  t.slug,
-  regexp_replace(t.name, '\.$', '', 'g'),
-  ('[' || CASE t.category
-    WHEN 'combat' THEN 'Combate'
-    WHEN 'exploration' THEN 'Exploração'
-    ELSE 'Interpretação'
-  END || '] ' || regexp_replace(t.name, '\.$', '', 'g')),
-  t.benefit_base,
-  t.benefit_improved,
-  EXISTS (
-    SELECT 1
-    FROM rpg.phb_heritage_traditional ht
-    WHERE ht.heritage_id = h.id AND ht.trait_id = t.id
-  ),
-  (
-    900000
-    + CASE t.category
-        WHEN 'combat' THEN 10000
-        WHEN 'exploration' THEN 20000
-        ELSE 30000
-      END
-    + row_number() OVER (PARTITION BY h.slug ORDER BY t.category, t.name)
-  )::integer
-FROM rpg.phb_heritage h
-CROSS JOIN rpg.phb_heritage_trait t
-WHERE h.allows_speed_trade
-
-UNION ALL
-
-SELECT
-  h.slug,
-  'heritage_speed_trade'::text,
-  v.choice_slug,
-  v.choice_name,
-  v.choice_name,
-  v.level1_benefit,
-  NULL::text,
-  FALSE,
-  910000 + v.sort_order
-FROM rpg.phb_heritage h
-JOIN (VALUES
-  (1, 'no', 'Não', 'Mantém o deslocamento base da herança.'),
-  (2, 'yes', 'Sim', 'Reduz 1,5 m de deslocamento; escolha o 9º traço modular.')
-) AS v(sort_order, choice_slug, choice_name, level1_benefit) ON TRUE
-WHERE h.allows_speed_trade
-
-UNION ALL
-
-SELECT
-  h.slug,
-  'heritage_size'::text,
-  v.choice_slug,
-  v.choice_name,
-  v.choice_name,
-  v.level1_benefit,
-  NULL::text,
-  FALSE,
-  920000 + v.sort_order
-FROM rpg.phb_heritage h
-JOIN (VALUES
-  (1, 'small', 'Pequeno', 'Tamanho Pequeno.'),
-  (2, 'medium', 'Médio', 'Tamanho Médio.')
-) AS v(sort_order, choice_slug, choice_name, level1_benefit) ON TRUE
-WHERE h.allows_size_choice;
-
--- ── 060_views/V073_v_phb_heritage_traditional_build.sql ──
 
 -- Build tradicional sugerido (8 traços por herança)
 
-CREATE OR REPLACE VIEW rpg.v_phb_heritage_traditional_build AS
+CREATE VIEW rpg.v_phb_heritage_traditional_build AS
 SELECT
   h.slug AS heritage_slug,
   tr.slug AS trait_slug,
@@ -4594,11 +2666,9 @@ JOIN rpg.phb_heritage h ON h.id = trt.heritage_id
 JOIN rpg.phb_heritage_trait tr ON tr.id = trt.trait_id
 ORDER BY h.slug, trt.sort_order;
 
--- ── 060_views/V074_v_phb_heritage_passive_modifier.sql ──
-
 -- Passivos de combate/ficha ligados a traços de herança
 
-CREATE OR REPLACE VIEW rpg.v_phb_heritage_passive_modifier AS
+CREATE VIEW rpg.v_phb_heritage_passive_modifier AS
 SELECT
   ht.slug AS trait_slug,
   cm.kind::text AS kind,
@@ -4613,11 +2683,9 @@ FROM rpg.phb_combat_modifier cm
 JOIN rpg.phb_heritage_trait ht ON ht.id = cm.heritage_trait_id
 WHERE cm.owner_kind = 'heritage'::rpg.combat_modifier_owner;
 
--- ── 060_views/V075_v_phb_heritage_economy_action.sql ──
-
 -- Ações de economia (Usar) ligadas a traços de herança
 
-CREATE OR REPLACE VIEW rpg.v_phb_heritage_economy_action AS
+CREATE VIEW rpg.v_phb_heritage_economy_action AS
 SELECT
   a.action_id,
   ht.slug AS trait_slug,
@@ -4638,11 +2706,8 @@ FROM rpg.phb_class_economy_action a
 JOIN rpg.phb_heritage_trait ht ON ht.id = a.heritage_trait_id
 WHERE a.heritage_trait_id IS NOT NULL;
 
--- ── 060_views/V076_v_phb_species_trait_choices_drop_gh.sql ──
 
--- Remove blocos GH de v_phb_species_trait_choices (heranças em phb_heritage + V072)
-
-DROP VIEW IF EXISTS rpg.v_phb_species_trait_choices;
+-- Escolhas de linhagem/ancestralidade por espécie
 
 CREATE VIEW rpg.v_phb_species_trait_choices AS
 -- Elf lineage (option_key = 'lineageId')
@@ -5088,13 +3153,9 @@ SELECT
   NULL::text AS edition_slug
 FROM rpg.v_phb_andari_druid_cantrip_options o;
 
--- GH heritages moved to phb_heritage / v_phb_heritage_trait_choices (V072).
 
--- ── 060_views/V077_v_phb_heritage_trait_choices_api.sql ──
 
--- Atualiza V072: colunas choice_kind / label / is_traditional para API heritages
-
-DROP VIEW IF EXISTS rpg.v_phb_heritage_trait_choices;
+-- Escolhas modulares de traço por herança GH
 
 CREATE VIEW rpg.v_phb_heritage_trait_choices AS
 SELECT
@@ -5200,11 +3261,7 @@ JOIN (VALUES
 ) AS v(sort_order, choice_slug, choice_name, level1_benefit) ON TRUE
 WHERE h.allows_size_choice;
 
--- ── 060_views/V078_v_phb_class_economy_action_heritage.sql ──
-
 -- v_phb_class_economy_action inclui ações de traços de herança GH
-
-DROP VIEW IF EXISTS rpg.v_phb_class_economy_action;
 
 CREATE VIEW rpg.v_phb_class_economy_action AS
 SELECT
@@ -5238,20 +3295,15 @@ LEFT JOIN rpg.phb_feat f ON f.id = a.feat_id
 LEFT JOIN rpg.phb_item i ON i.id = a.item_id
 LEFT JOIN rpg.phb_heritage_trait ht ON ht.id = a.heritage_trait_id;
 
--- ── 070_materialized/MV001_mv_spell_by_class.sql ──
-
 -- Materialized view rpg.mv_spell_by_class
 
 CREATE MATERIALIZED VIEW rpg.mv_spell_by_class AS
   SELECT * FROM rpg.v_spell_by_class;
 
--- ── 080_indexes/IX001_catalog.sql ──
-
 -- Índices adicionais do catálogo
 
 CREATE INDEX idx_phb_species_trait_choice ON rpg.phb_species_trait(choice_kind);
 
--- Lote B: índice de lineage movido para species_option_value
 CREATE INDEX idx_phb_option_value_spells ON rpg.phb_option_value(spell_level1_id, spell_level3_id, spell_level5_id)
   WHERE spell_level1_id IS NOT NULL OR spell_level3_id IS NOT NULL OR spell_level5_id IS NOT NULL;
 
@@ -5300,13 +3352,7 @@ CREATE UNIQUE INDEX uq_resource_class ON rpg.phb_resource_definition (class_id, 
 CREATE UNIQUE INDEX uq_resource_subclass ON rpg.phb_resource_definition (subclass_id, slug)
   WHERE scope = 'subclass';
 
-CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_feat ON rpg.phb_resource_definition (feat_id, slug)
-  WHERE scope = 'feat';
-
-CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_item ON rpg.phb_resource_definition (item_id, slug)
-  WHERE scope = 'item';
-
-CREATE UNIQUE INDEX IF NOT EXISTS uq_resource_heritage
+CREATE UNIQUE INDEX uq_resource_heritage
   ON rpg.phb_resource_definition (heritage_trait_id, slug)
   WHERE scope = 'heritage';
 
@@ -5326,9 +3372,6 @@ CREATE INDEX idx_phb_background_name_trgm ON rpg.phb_background USING gin (name 
 
 CREATE UNIQUE INDEX idx_mv_spell_by_class ON rpg.mv_spell_by_class (class_slug, spell_slug);
 
--- ── 090_player/P001_player_character.sql ──
-
--- Tabela rpg.player_character (dados de jogador — fora do catálogo PHB)
 -- Criticals: ownership FK (auth.users quando existir); subclass ∈ class; HP current ≤ max
 
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
@@ -5417,8 +3460,6 @@ BEGIN
     FOREIGN KEY (user_id) REFERENCES auth.users(id);
 END $$;
 
--- ── 090_player/P002_player_character_skill.sql ──
-
 -- Perícias escolhidas da pool da classe (PHB skill choice)
 
 CREATE TABLE rpg.player_character_skill (
@@ -5430,11 +3471,7 @@ CREATE TABLE rpg.player_character_skill (
 CREATE INDEX idx_player_character_skill_character
   ON rpg.player_character_skill(character_id);
 
--- ── 090_player/P003_player_character_sheet.sql ──
-
 -- Extensões da ficha: espécie, subclasse, feats, magias, equipamento, idiomas
--- Lote C: player_character_option unificado
-
 CREATE TABLE rpg.player_character_species_choice (
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   choice_kind TEXT NOT NULL,
@@ -5442,7 +3479,6 @@ CREATE TABLE rpg.player_character_species_choice (
   PRIMARY KEY (character_id, choice_kind)
 );
 
--- Lote C: unified runtime option storage (subclass | species | feat | class)
 CREATE TABLE rpg.player_character_option (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   character_id UUID NOT NULL REFERENCES rpg.player_character(id) ON DELETE CASCADE,
@@ -5499,8 +3535,6 @@ CREATE INDEX idx_player_character_equipment_character
   ON rpg.player_character_equipment(character_id);
 CREATE INDEX idx_player_character_language_character
   ON rpg.player_character_language(character_id);
-
--- ── 090_player/P004_player_rls.sql ──
 
 -- RLS para tabelas de jogador (Supabase — requer schema auth)
 
@@ -5566,8 +3600,6 @@ BEGIN
       character_id IN (SELECT id FROM rpg.player_character WHERE user_id = auth.uid())
     );
 END $$;
-
--- ── 090_player/P005_player_character_item.sql ──
 
 -- Inventário do personagem (mochila + equipado)
 
@@ -5649,13 +3681,7 @@ BEGIN
     );
 END $$;
 
--- ── 090_player/P006_player_character_state.sql ──
-
 -- Estado de mesa (slots gastos, concentração, condições, HP temporário)
--- Lote A: phb_condition is now a VALUES view (enum rpg.condition_slug defined in 002_types)
-
-DROP VIEW IF EXISTS rpg.v_phb_condition;
-
 CREATE VIEW rpg.v_phb_condition AS
 SELECT slug, name FROM (VALUES
   ('blinded'::rpg.condition_slug, 'Cegueira'),
@@ -5675,10 +3701,6 @@ SELECT slug, name FROM (VALUES
   ('unconscious'::rpg.condition_slug, 'Inconsciente')
 ) AS t(slug, name);
 
-
--- player_character_state → após game_actor (P012)
-
--- ── 090_player/P009_campaign.sql ──
 
 -- Campanhas: mesa, membros (mestre/jogador/auxiliar) e personagens vinculados.
 -- Personagem continua do dono; pode estar em várias campanhas.
@@ -5744,8 +3766,6 @@ BEGIN
     ADD CONSTRAINT campaign_character_linked_by_fkey
     FOREIGN KEY (linked_by) REFERENCES auth.users(id);
 END $$;
-
--- ── 090_player/P010_campaign_rls.sql ──
 
 -- RLS para campanhas (Supabase — requer schema auth)
 
@@ -5874,8 +3894,6 @@ BEGIN
     );
 END $$;
 
--- ── 090_player/P012_campaign_encounter.sql ──
-
 -- Encontro de campanha + combatentes (PCs + criaturas manuais)
 
 CREATE TABLE rpg.campaign_encounter (
@@ -5903,8 +3921,6 @@ CREATE TRIGGER tr_campaign_encounter_updated_at
   BEFORE UPDATE ON rpg.campaign_encounter
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
-
--- ── 090_player/P033_game_actor.sql ──
 
 -- Runtime: fichas de mesa além do personagem jogador (criatura, montaria, veículo, companion)
 
@@ -6000,8 +4016,6 @@ CREATE TRIGGER tr_game_actor_state_updated_at
   BEFORE UPDATE ON rpg.game_actor_state
   FOR EACH ROW EXECUTE FUNCTION rpg.set_updated_at();
 
--- ── 090_player/P006_player_character_state.sql (tabela; view permanece acima em P006) ──
-
 CREATE TABLE rpg.player_character_state (
   character_id UUID PRIMARY KEY REFERENCES rpg.player_character(id) ON DELETE CASCADE,
   spell_slots_used JSONB NOT NULL DEFAULT '{}',
@@ -6094,8 +4108,6 @@ BEGIN
     FOREIGN KEY (created_by) REFERENCES auth.users(id);
 END $$;
 
--- ── 090_player/P013_campaign_encounter_rls.sql ──
-
 -- RLS para encontro de campanha (Supabase — requer schema auth)
 
 DO $$
@@ -6166,24 +4178,16 @@ BEGIN
     );
 END $$;
 
--- ── 090_player/P014_player_character_item_magic_slots.sql ──
-
 -- Slots não exclusivos para itens mágicos vestíveis / carregados.
 
 
 
 
--- ── 090_player/P015_firearm_chambers.sql ──
-
 -- Câmara de armas de fogo por personagem (estado de sessão).
-
--- ── 090_player/P016_barbarian_combat_state.sql ──
 
 -- Estado de combate do Bárbaro (Fúria / Ataque Imprudente).
 
 
-
--- ── 090_player/P017_attached_weapon_charm.sql ──
 
 -- Encanto de arma preso a um item do inventário (slug do phb_item do encanto).
 
@@ -6192,28 +4196,20 @@ END $$;
 
 -- Soft check: null ou slug de encanto; sem FK (catálogo pode atrasar).
 
--- ── 090_player/P018_pack2_subclass_trackers.sql ──
-
 -- Trackers de sessão Pack 2: Colégio das Máscaras / Beastborne.
 
 
-
--- ── 090_player/P019_missile_mage_cast_flags.sql ──
 
 -- Trackers de sessão: Mago dos Mísseis (Escudo / Giga armados para o próximo cast).
 
 
 
--- ── 090_player/P020_player_character_item_pact_weapon.sql ──
-
 -- Arma de Pacto (Bruxo · Pacto da Lâmina): no máximo uma por personagem.
 
 
-CREATE UNIQUE INDEX IF NOT EXISTS uq_player_character_item_one_pact_weapon
+CREATE UNIQUE INDEX uq_player_character_item_one_pact_weapon
   ON rpg.player_character_item (character_id)
   WHERE is_pact_weapon = TRUE;
-
--- ── 090_player/P021_attached_coverage.sql ──
 
 -- Overlay DMG §3.1: cobertura presa à peça base (estilo Valdas charm).
 
@@ -6229,27 +4225,17 @@ CREATE UNIQUE INDEX IF NOT EXISTS uq_player_character_item_one_pact_weapon
 
 
 
--- ── 090_player/P022_attached_coverage_spell.sql ──
-
 -- Arma Magificada: magia vinculada na cobertura anexada.
 
 
 
 
 
--- ── 090_player/P023_bound_spell.sql ──
-
 -- Magia vinculada em item único (ex.: Cajado Magificado).
-
--- ── 090_player/P024_player_character_coins.sql ──
 
 -- Wealth: 5 moedas D&D no personagem (PC / PP prata / PE / PO / PL platina)
 
--- ── 090_player/P025_campaign_allow_player_skip_payment.sql ──
-
 -- Campanha: players podem optar por não pagar ao pegar item
-
--- ── 090_player/P026_avatars_storage.sql ──
 
 -- Bucket público de avatares (perfil do usuário).
 -- Rode no SQL Editor do Supabase se o pipeline de migrations não cobre storage.
@@ -6308,15 +4294,11 @@ CREATE POLICY "avatars_owner_delete"
     AND (storage.foldername(name))[1] = auth.uid()::text
   );
 
--- ── 090_player/P027_instance_properties.sql ──
-
 -- Props de instância (artefato rolado na 1ª sintonia, senciência copiada, etc.)
 
 
 COMMENT ON COLUMN rpg.player_character_item.instance_properties IS
   'Estado por instância: artifactRandom (1ª sintonia), sentience copiada do catálogo, etc.';
-
--- ── 090_player/P028_player_character_item_contained_in.sql ──
 
 -- Compartimentos de inventário: item contido em outro (bolsa/saca/cesta).
 -- Nullable = mochila raiz (compatível com inventário existente).
@@ -6325,25 +4307,18 @@ COMMENT ON COLUMN rpg.player_character_item.instance_properties IS
 COMMENT ON COLUMN rpg.player_character_item.contained_in_item_slug IS
   'Slug do recipiente no mesmo personagem; NULL = raiz (Equipado/Mochila).';
 
-CREATE INDEX IF NOT EXISTS idx_player_character_item_contained_in
+CREATE INDEX idx_player_character_item_contained_in
   ON rpg.player_character_item (character_id, contained_in_item_slug)
   WHERE contained_in_item_slug IS NOT NULL;
-
--- ── 090_player/P029_starry_form_state.sql ──
 
 -- Forma Estrelada (Círculo das Estrelas): constelação ativa na sessão
 
 
 
--- ── 090_player/P030_get_character_sheet_bundle.sql ──
-
 -- RPC de leitura: ficha do jogador em 1 round-trip (JSONB).
 -- Substitui N finds TypeORM em player_character_* + skills do antecedente.
 
--- ── 090_player/P031_get_character_combat_bundle.sql ──
-
 -- RPC de leitura: inventário + catálogo de combate em 1 round-trip.
--- Filho de P030 (sheet bundle) para o GET da ficha.
 
 CREATE OR REPLACE FUNCTION rpg.get_character_combat_bundle(
   p_character_id uuid,
@@ -6503,19 +4478,10 @@ $$;
 COMMENT ON FUNCTION rpg.get_character_combat_bundle(uuid, text, text) IS
   'Read model de combate da ficha: inventário + itens + armadura + defesa sem armadura + active slugs.';
 
--- ── 090_player/P032_sheet_bundle_pb_boosts_species.sql ──
-
 -- Estende get_character_sheet_bundle: PB + class ability boosts + species.size
--- (elimina 1 hop paralelo no GET ficha após P030).
 
-
--- game_actor → P012 (antes de campaign_encounter_combatant)
-
--- ── 090_player/P035_get_game_actor_bundle.sql ──
 
 -- RPC: bundle da ficha actor (1 round-trip)
-
--- ── 090_player/P036_game_actor_rls.sql ──
 
 -- RLS para game_actor* (espelha player_character; dono + campanha via app)
 
@@ -6562,11 +4528,7 @@ BEGIN
     );
 END $$;
 
--- ── 090_player/P037_spawn_game_actor_from_template.sql ──
-
 -- Spawn runtime game_actor a partir de template de criatura ou veículo
-
--- ── 090_player/P038_spawn_stat_block_extras.sql ──
 
 -- Spawn: copiar ability_scores, initiative, passageiros e descrição de ações
 
@@ -6633,8 +4595,6 @@ AS $$
     )
   );
 $$;
-
--- ── 090_player/P039_player_character_thread.sql ──
 
 -- Character Threads — estado na ficha (1 ativo por personagem)
 
@@ -6711,8 +4671,6 @@ EXCEPTION
     NULL;
 END $$;
 
--- ── 090_player/P040_player_character_heritage.sql ──
-
 -- Personagem: origem PHB species XOR herança GH + picks modulares
 
 
@@ -6723,7 +4681,7 @@ END $$;
 
 
 
-CREATE INDEX IF NOT EXISTS idx_player_character_heritage_slug
+CREATE INDEX idx_player_character_heritage_slug
   ON rpg.player_character(heritage_slug)
   WHERE heritage_slug IS NOT NULL;
 
@@ -6902,15 +4860,11 @@ BEGIN
 END;
 $$;
 
--- ── 090_player/P041_character_session_notes.sql ──
-
 -- Anotações livres da sessão (ficha do personagem)
 
 
 COMMENT ON COLUMN rpg.player_character.session_notes IS
   'Anotações da sessão (jogador/DM) — texto livre, não confundir com game_actor.notes';
-
--- ── 090_player/P041_sheet_bundle_heritage.sql ──
 
 -- Bundle da ficha: herança GH via player_character_heritage_* + species PHB separados
 

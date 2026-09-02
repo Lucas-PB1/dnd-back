@@ -99,7 +99,7 @@ describe('character-state/class-resources', () => {
         if (text.includes('player_character_heritage_trait')) return [];
         if (text.includes('phb_class_economy_action')) return [];
         if (text.includes('phb_resource_grant')) return scheduleRows;
-        if (text.includes('v_phb_class_progression')) {
+        if (text.includes('phb_class_progression')) {
           return [{ proficiency_bonus: 2, channel_divinity: null }];
         }
         return [];
@@ -195,7 +195,7 @@ describe('character-state/class-resources', () => {
           return speciesSchedule;
         }
         if (text.includes('phb_resource_grant')) return [];
-        if (text.includes('v_phb_class_progression')) {
+        if (text.includes('phb_class_progression')) {
           return [{ proficiency_bonus: 2, channel_divinity: null }];
         }
         return [];

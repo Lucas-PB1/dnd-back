@@ -1,16 +1,16 @@
 ﻿import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { VPhbBattleMasterManeuver } from '@entities/views/v-phb-battle-master-maneuver.entity';
-import { VPhbBeastborneAspectBenefit } from '@entities/views/v-phb-beastborne-aspect-benefit.entity';
+import { PhbBattleMasterManeuver } from '@entities/phb-battle-master-maneuver.entity';
+import { PhbBeastborneAspectBenefit } from '@entities/phb-beastborne-aspect-benefit.entity';
+import { PhbClassPanelAction } from '@entities/phb-class-panel-action.entity';
+import { PhbCunningStrikeEffect } from '@entities/phb-cunning-strike-effect.entity';
+import { PhbDungeoneerSlayerType } from '@entities/phb-dungeoneer-slayer-type.entity';
+import { PhbGunslingerManeuver } from '@entities/phb-gunslinger-maneuver.entity';
+import { PhbPersonaMask } from '@entities/phb-persona-mask.entity';
+import { PhbSubclassPrecautionSpell } from '@entities/phb-subclass-precaution-spell.entity';
+import { PhbSubclassTableAction } from '@entities/phb-subclass-table-action.entity';
 import { VPhbClassEconomyAction } from '@entities/views/v-phb-class-economy-action.entity';
-import { VPhbClassPanelAction } from '@entities/views/v-phb-class-panel-action.entity';
-import { VPhbCunningStrikeEffect } from '@entities/views/v-phb-cunning-strike-effect.entity';
-import { VPhbDungeoneerSlayerType } from '@entities/views/v-phb-dungeoneer-slayer-type.entity';
-import { VPhbGunslingerManeuver } from '@entities/views/v-phb-gunslinger-maneuver.entity';
-import { VPhbPersonaMask } from '@entities/views/v-phb-persona-mask.entity';
-import { VPhbSubclassPrecautionSpell } from '@entities/views/v-phb-subclass-precaution-spell.entity';
-import { VPhbSubclassTableAction } from '@entities/views/v-phb-subclass-table-action.entity';
 import type { BattleMasterManeuver } from '../domain/fighter';
 import type {
   ActionEconomyBucket,
@@ -91,26 +91,26 @@ export class LoadCombatMechanicalCatalog {
   private inflight: Promise<CombatMechanicalCatalog> | null = null;
 
   constructor(
-    @InjectRepository(VPhbGunslingerManeuver)
-    private readonly gunslingerRepo: Repository<VPhbGunslingerManeuver>,
-    @InjectRepository(VPhbBattleMasterManeuver)
-    private readonly battleMasterRepo: Repository<VPhbBattleMasterManeuver>,
-    @InjectRepository(VPhbCunningStrikeEffect)
-    private readonly cunningRepo: Repository<VPhbCunningStrikeEffect>,
-    @InjectRepository(VPhbSubclassTableAction)
-    private readonly tableActionRepo: Repository<VPhbSubclassTableAction>,
-    @InjectRepository(VPhbPersonaMask)
-    private readonly personaMaskRepo: Repository<VPhbPersonaMask>,
-    @InjectRepository(VPhbBeastborneAspectBenefit)
-    private readonly beastborneRepo: Repository<VPhbBeastborneAspectBenefit>,
-    @InjectRepository(VPhbDungeoneerSlayerType)
-    private readonly slayerRepo: Repository<VPhbDungeoneerSlayerType>,
-    @InjectRepository(VPhbSubclassPrecautionSpell)
-    private readonly precautionRepo: Repository<VPhbSubclassPrecautionSpell>,
+    @InjectRepository(PhbGunslingerManeuver)
+    private readonly gunslingerRepo: Repository<PhbGunslingerManeuver>,
+    @InjectRepository(PhbBattleMasterManeuver)
+    private readonly battleMasterRepo: Repository<PhbBattleMasterManeuver>,
+    @InjectRepository(PhbCunningStrikeEffect)
+    private readonly cunningRepo: Repository<PhbCunningStrikeEffect>,
+    @InjectRepository(PhbSubclassTableAction)
+    private readonly tableActionRepo: Repository<PhbSubclassTableAction>,
+    @InjectRepository(PhbPersonaMask)
+    private readonly personaMaskRepo: Repository<PhbPersonaMask>,
+    @InjectRepository(PhbBeastborneAspectBenefit)
+    private readonly beastborneRepo: Repository<PhbBeastborneAspectBenefit>,
+    @InjectRepository(PhbDungeoneerSlayerType)
+    private readonly slayerRepo: Repository<PhbDungeoneerSlayerType>,
+    @InjectRepository(PhbSubclassPrecautionSpell)
+    private readonly precautionRepo: Repository<PhbSubclassPrecautionSpell>,
     @InjectRepository(VPhbClassEconomyAction)
     private readonly economyRepo: Repository<VPhbClassEconomyAction>,
-    @InjectRepository(VPhbClassPanelAction)
-    private readonly panelRepo: Repository<VPhbClassPanelAction>,
+    @InjectRepository(PhbClassPanelAction)
+    private readonly panelRepo: Repository<PhbClassPanelAction>,
   ) {}
 
   async load(): Promise<CombatMechanicalCatalog> {
@@ -158,18 +158,22 @@ export class LoadCombatMechanicalCatalog {
       economyRows,
       panelRows,
     ] = await Promise.all([
-      this.gunslingerRepo.find(),
+      this.gunslingerRepo.find({ relations: ['subclass'] }),
       this.battleMasterRepo.find(),
-      this.cunningRepo.find(),
-      this.tableActionRepo.find(),
-      this.personaMaskRepo.find(),
+      this.cunningRepo.find({ relations: ['subclass'] }),
+      this.tableActionRepo.find({ relations: ['subclass'] }),
+      this.personaMaskRepo.find({ relations: ['subclass'] }),
       this.beastborneRepo.find(),
       this.slayerRepo.find({ order: { sortOrder: 'ASC' } }),
       this.precautionRepo.find({
-        where: { subclassSlug: 'dungeoneer' },
+        where: { subclass: { slug: 'dungeoneer' } },
+        relations: ['subclass', 'spell'],
       }),
       this.economyRepo.find({ order: { sortOrder: 'ASC' } }),
-      this.panelRepo.find({ order: { sortOrder: 'ASC' } }),
+      this.panelRepo.find({
+        relations: ['klass', 'subclass'],
+        order: { sortOrder: 'ASC' },
+      }),
     ]);
 
     return {
@@ -180,7 +184,7 @@ export class LoadCombatMechanicalCatalog {
         effectKind: row.effectKind as ManeuverEffectKind,
         riskCost: Number(row.riskCost),
         fromLevel: Number(row.fromLevel),
-        subclassSlug: row.subclassSlug ?? undefined,
+        subclassSlug: row.subclass?.slug ?? undefined,
       })),
       battleMasterManeuvers: battleMasterRows.map((row) => ({
         slug: row.slug,
@@ -200,14 +204,14 @@ export class LoadCombatMechanicalCatalog {
             ? row.saveAbility
             : undefined,
         subclassSlug:
-          row.subclassSlug === 'thief' ||
-          row.subclassSlug === 'arachnoid-stalker'
-            ? row.subclassSlug
+          row.subclass?.slug === 'thief' ||
+          row.subclass?.slug === 'arachnoid-stalker'
+            ? row.subclass.slug
             : undefined,
         note: row.note,
       })),
       tableActions: tableActionRows.map((row) => ({
-        subclassSlug: row.subclassSlug,
+        subclassSlug: row.subclass.slug,
         slug: row.slug,
         name: row.name,
         unlockLevel: Number(row.unlockLevel),
@@ -231,8 +235,8 @@ export class LoadCombatMechanicalCatalog {
       })),
       dungeoneerSlayerLabels: slayerRows.map((row) => row.label),
       precautionSpells: precautionRows.map((row) => ({
-        slug: row.spellSlug,
-        name: row.spellName,
+        slug: row.spell.slug,
+        name: row.spell.name,
       })),
       economyActions: economyRows.map((row) => ({
         id: row.actionId,
@@ -269,13 +273,13 @@ export class LoadCombatMechanicalCatalog {
         }
         return panelRows.map((row) => ({
           panelKey: row.panelKey,
-          classSlug: row.classSlug,
-          subclassSlug: row.subclassSlug ?? undefined,
+          classSlug: row.klass.slug,
+          subclassSlug: row.subclass?.slug ?? undefined,
           slug: row.slug,
           name: row.name,
           title: row.title ?? undefined,
           description: pickPlayableText(
-            economyTextByKey.get(`${row.classSlug}|${row.slug}`),
+            economyTextByKey.get(`${row.klass.slug}|${row.slug}`),
             row.title,
           ),
           minLevel: Number(row.unlockLevel),

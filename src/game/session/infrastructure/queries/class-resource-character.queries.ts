@@ -26,9 +26,10 @@ export async function loadClassProgressionSnapshot(
   const rows = await dataSource.query<
     { proficiency_bonus: number; channel_divinity: number | null }[]
   >(
-    `SELECT proficiency_bonus, channel_divinity
-     FROM rpg.v_phb_class_progression
-     WHERE class_slug = $1 AND level = $2
+    `SELECT cp.proficiency_bonus, cp.channel_divinity
+     FROM rpg.phb_class_progression cp
+     JOIN rpg.phb_class c ON c.id = cp.class_id
+     WHERE c.slug = $1 AND cp.level = $2
      LIMIT 1`,
     [classSlug, level],
   );
