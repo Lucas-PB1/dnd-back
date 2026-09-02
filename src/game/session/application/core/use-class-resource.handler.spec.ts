@@ -96,6 +96,34 @@ describe('UseClassResourceHandler', () => {
     expect(result.state.deathSaveFailures).toBe(0);
   });
 
+  it('applies Fatebound Last Act of Fate at 1 HP', async () => {
+    access.findAccessibleOrFail.mockResolvedValue({
+      id: 'pc-1',
+      speciesSlug: 'human',
+      level: 17,
+    });
+
+    const result = await handler.execute('user-1', 'pc-1', {
+      resourceSlug: 'last-act-of-fate',
+      amount: 1,
+    });
+
+    expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pc-1' }),
+      1,
+    );
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pc-1' }),
+      {
+        deathSaveSuccesses: 0,
+        deathSaveFailures: 0,
+        conditions: [],
+      },
+    );
+    expect(result.note).toMatch(/Último Ato/);
+    expect(result.state.conditions).toEqual([]);
+  });
+
   it('passes through without note for other resources', async () => {
     access.findAccessibleOrFail.mockResolvedValue({
       id: 'pc-1',

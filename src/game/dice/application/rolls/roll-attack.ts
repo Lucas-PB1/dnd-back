@@ -20,6 +20,7 @@ import {
   upgradeTowardAdvantage,
 } from './advantage-mode';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
+import { applyCursemarkedBracketIfTriggered } from './apply-cursemarked-bracket';
 import { hasPreciseHunter, isRangerClass } from '@game/combat/domain/ranger';
 
 export async function executeRollAttack(input: {
@@ -153,6 +154,14 @@ export async function executeRollAttack(input: {
       'Caçador Preciso: vantagem contra a criatura marcada pela Marca do Predador',
     );
   }
+  await applyCursemarkedBracketIfTriggered({
+    dataSource: input.dataSource,
+    character,
+    resourceSpender: input.resourceSpender,
+    kind: 'attack',
+    kept,
+    notes,
+  });
   return {
     kind: 'attack',
     label: `Ataque — ${attack.itemName} (${input.dto.mode === 'ranged' ? 'à distância' : 'corpo a corpo'})${critical ? ' (crítico)' : ''}`,

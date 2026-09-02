@@ -14,4 +14,19 @@ export type CharacterResourceSpender = {
     character: PlayerCharacter,
     slotLevel: number,
   ): Promise<void>;
+  /** Lê contador em resourcesUsed (ex.: locks órfãos fora do schedule). */
+  getResourcesUsedEntry(
+    character: PlayerCharacter,
+    key: string,
+  ): Promise<number>;
+  /** Grava contador em resourcesUsed sem passar pelo schedule. */
+  setResourcesUsedEntry(
+    character: PlayerCharacter,
+    key: string,
+    value: number,
+  ): Promise<void>;
+  clearResourcesUsedEntry(
+    character: PlayerCharacter,
+    key: string,
+  ): Promise<void>;
 };

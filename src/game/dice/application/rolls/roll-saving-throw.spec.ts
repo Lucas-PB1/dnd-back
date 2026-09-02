@@ -32,6 +32,10 @@ jest.mock('./stroke-of-luck', () => ({
   turnCheckIntoNaturalTwenty: jest.fn((result) => result),
 }));
 
+jest.mock('./apply-cursemarked-bracket', () => ({
+  applyCursemarkedBracketIfTriggered: jest.fn().mockResolvedValue(undefined),
+}));
+
 jest.mock('@game/sheet/infrastructure/load-class-ability-boosts', () => ({
   resolveEffectiveAbilityScores: jest.fn(
     async (_ds: unknown, _classSlug: string, _level: number, scores: unknown) =>
@@ -57,6 +61,9 @@ describe('executeRollSavingThrow', () => {
   const resourceSpender = {
     spendClassResource: jest.fn().mockResolvedValue(undefined),
     consumeSpellSlotLevel: jest.fn().mockResolvedValue(undefined),
+    getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
+    setResourcesUsedEntry: jest.fn().mockResolvedValue(undefined),
+    clearResourcesUsedEntry: jest.fn().mockResolvedValue(undefined),
   };
 
   const base = {

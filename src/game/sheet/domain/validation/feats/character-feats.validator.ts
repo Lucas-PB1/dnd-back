@@ -4,6 +4,7 @@ import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { FeatOptionDto, CharacterFeatDto } from '@game/sheet/dto/character-sheet.dto';
 import { featInstanceKey } from './character-feat';
 import { CharacterFeatOptionsValidator } from './character-feat-options.validator';
+import { assertFeatIsNotTransformationCatalog } from '@game/sheet/domain/transformation/validate-transformation';
 
 @Injectable()
 export class CharacterFeatsValidator {
@@ -18,6 +19,7 @@ export class CharacterFeatsValidator {
 
     const bySlug = new Map<string, CharacterFeatDto[]>();
     for (const feat of feats) {
+      assertFeatIsNotTransformationCatalog(feat.featSlug);
       const list = bySlug.get(feat.featSlug) ?? [];
       list.push(feat);
       bySlug.set(feat.featSlug, list);

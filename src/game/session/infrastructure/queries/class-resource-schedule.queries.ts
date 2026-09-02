@@ -1,5 +1,9 @@
 import { DataSource } from 'typeorm';
 import type { ClassResourceScheduleRow } from '@game/session/domain/class-resources';
+import {
+  CURSEMARKED_BRACKET_BENEFITS,
+  CURSEMARKED_GREATER_SACRIFICE,
+} from '@game/session/domain/cursemarked-bracket';
 
 export type ClassResourceDbRow = {
   resource_slug: string;
@@ -156,14 +160,6 @@ export async function loadHeritageResourceSchedule(
     [characterId],
   );
 }
-
-const CURSEMARKED_GREATER_SACRIFICE = 'cursemarked-greater-sacrifice';
-const CURSEMARKED_BRACKET_BENEFITS = [
-  'tides-of-fate',
-  'burdens-shield',
-  'threads-entwined',
-  'two-edged-gift',
-] as const;
 
 /** Recursos de Character Thread — só milestones alcançados no thread ativo. */
 export async function loadThreadResourceSchedule(

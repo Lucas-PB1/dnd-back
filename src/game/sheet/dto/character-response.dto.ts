@@ -5,6 +5,7 @@ import {
   CharacterEquipmentDto,
   CharacterFeatDto,
   CharacterSpellDto,
+  CharacterTransformationDto,
   ClassOptionDto,
   FeatOptionDto,
   SpeciesChoiceDto,
@@ -102,6 +103,13 @@ export class CharacterResponseDto {
 
   @ApiProperty({ type: [SpeciesChoiceDto] })
   heritageChoices!: SpeciesChoiceDto[];
+
+  @ApiPropertyOptional({
+    type: CharacterTransformationDto,
+    nullable: true,
+    description: 'Transformação GH Cap. 6 ativa; null se ausente',
+  })
+  transformation!: CharacterTransformationDto | null;
 
   @ApiPropertyOptional({ type: [AggregatedHeritageTraitDto] })
   aggregatedHeritageTraits?: AggregatedHeritageTraitDto[];

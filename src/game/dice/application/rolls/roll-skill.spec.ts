@@ -26,6 +26,10 @@ jest.mock('./roll-weapon-context', () => ({
   }),
 }));
 
+jest.mock('./apply-cursemarked-bracket', () => ({
+  applyCursemarkedBracketIfTriggered: jest.fn().mockResolvedValue(undefined),
+}));
+
 import { executeRollSkill } from './roll-skill';
 
 describe('executeRollSkill', () => {
@@ -56,6 +60,9 @@ describe('executeRollSkill', () => {
       resourceSpender: {
         spendClassResource: jest.fn(),
         consumeSpellSlotLevel: jest.fn(),
+        getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
+        setResourcesUsedEntry: jest.fn(),
+        clearResourcesUsedEntry: jest.fn(),
       },
       userId: 'user-1',
       characterId: 'rogue-1',

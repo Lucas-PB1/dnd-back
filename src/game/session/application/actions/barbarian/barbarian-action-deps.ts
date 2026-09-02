@@ -24,3 +24,4 @@ export const DIVINE_FURY_DICE = 'divine-fury-dice';
 export const INTIMIDATING_PRESENCE = 'intimidating-presence';
 export const ZEALOUS_PRESENCE = 'zealous-presence';
 export const RAGE_OF_THE_GODS = 'rage-of-the-gods';
+export const SHAPE_OF_THE_WILD = 'shape-of-the-wild';

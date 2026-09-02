@@ -19,6 +19,8 @@ VALUES
   ('strength-of-wyrd', 'Força do Wyrd', 'character_thread'::rpg.resource_scope, 'fatebound', 1),
   ('enduring-wyrd', 'Wyrd Duradouro', 'character_thread'::rpg.resource_scope, 'fatebound', 1),
   ('doom-delayed', 'Ruína Adiada', 'character_thread'::rpg.resource_scope, 'fatebound', 1),
+  ('last-act-of-fate', 'Último Ato do Destino', 'character_thread'::rpg.resource_scope, 'fatebound', 1),
+  ('glorious-end', 'Fim Glorioso', 'character_thread'::rpg.resource_scope, 'fatebound', 1),
   ('enthralling-speaker', 'Orador Cativante', 'character_thread'::rpg.resource_scope, 'herald', 1),
   ('persuasive-words', 'Palavras Persuasivas', 'character_thread'::rpg.resource_scope, 'herald', 1),
   ('reliable-senses', 'Sentidos Confiáveis', 'character_thread'::rpg.resource_scope, 'legend-hunter', 1),
@@ -45,25 +47,27 @@ SELECT
   v.fixed_max,
   FALSE,
   v.recover_all_on_short,
-  TRUE
+  v.recover_all_on_long
 FROM (VALUES
-  ('bloodsworn', 'wrath', 'fixed', 1, FALSE),
-  ('bloodsworn', 'tenacity', 'fixed', 1, FALSE),
-  ('cursemarked', 'cursemarked-greater-sacrifice', 'fixed', 1, FALSE),
-  ('explorer', 'traversal-expert', 'fixed', 1, TRUE),
-  ('explorer', 'scouts-awareness', 'fixed', 1, FALSE),
-  ('explorer', 'wayfarers-steps', 'fixed', 1, FALSE),
-  ('fatebound', 'fates-blessing', 'fixed', 1, FALSE),
-  ('fatebound', 'strength-of-wyrd', 'proficiency_bonus', NULL, FALSE),
-  ('fatebound', 'enduring-wyrd', 'fixed', 1, TRUE),
-  ('fatebound', 'doom-delayed', 'fixed', 1, FALSE),
-  ('herald', 'enthralling-speaker', 'fixed', 1, FALSE),
-  ('herald', 'persuasive-words', 'charisma_mod', NULL, FALSE),
-  ('legend-hunter', 'reliable-senses', 'fixed', 1, FALSE),
-  ('legend-hunter', 'finish-the-fight', 'fixed', 1, FALSE),
-  ('sworn-huskarl', 'jarls-authority', 'fixed', 1, FALSE),
-  ('sworn-huskarl', 'extreme-loyalty', 'fixed', 1, FALSE)
-) AS v(thread_slug, resource_slug, max_formula, fixed_max, recover_all_on_short)
+  ('bloodsworn', 'wrath', 'fixed', 1, FALSE, TRUE),
+  ('bloodsworn', 'tenacity', 'fixed', 1, FALSE, TRUE),
+  ('cursemarked', 'cursemarked-greater-sacrifice', 'fixed', 1, FALSE, TRUE),
+  ('explorer', 'traversal-expert', 'fixed', 1, TRUE, TRUE),
+  ('explorer', 'scouts-awareness', 'fixed', 1, FALSE, TRUE),
+  ('explorer', 'wayfarers-steps', 'fixed', 1, FALSE, TRUE),
+  ('fatebound', 'fates-blessing', 'fixed', 1, FALSE, TRUE),
+  ('fatebound', 'strength-of-wyrd', 'proficiency_bonus', NULL, FALSE, TRUE),
+  ('fatebound', 'enduring-wyrd', 'fixed', 1, TRUE, TRUE),
+  ('fatebound', 'doom-delayed', 'fixed', 1, FALSE, TRUE),
+  ('fatebound', 'last-act-of-fate', 'fixed', 1, FALSE, FALSE),
+  ('fatebound', 'glorious-end', 'fixed', 1, FALSE, FALSE),
+  ('herald', 'enthralling-speaker', 'fixed', 1, FALSE, TRUE),
+  ('herald', 'persuasive-words', 'charisma_mod', NULL, FALSE, TRUE),
+  ('legend-hunter', 'reliable-senses', 'fixed', 1, FALSE, TRUE),
+  ('legend-hunter', 'finish-the-fight', 'fixed', 1, FALSE, TRUE),
+  ('sworn-huskarl', 'jarls-authority', 'fixed', 1, FALSE, TRUE),
+  ('sworn-huskarl', 'extreme-loyalty', 'fixed', 1, FALSE, TRUE)
+) AS v(thread_slug, resource_slug, max_formula, fixed_max, recover_all_on_short, recover_all_on_long)
 JOIN rpg.phb_character_thread t ON t.slug = v.thread_slug
 JOIN rpg.phb_resource_definition rd
   ON rd.slug = v.resource_slug

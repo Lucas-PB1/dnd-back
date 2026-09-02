@@ -6,14 +6,36 @@ import {
   collectFeatGrantedSpellSlugs,
   collectSpeciesGrantedSpellSlugs,
 } from '@game/spellcasting/domain/granted-spells';
-import { resolveGrantedSpellCastEconomy } from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
+import {
+  freeCastMaxUses,
+  resolveGrantedSpellCastEconomy,
+  type CastEconomy,
+} from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
+import { resolveFeatSlugForGrantedSpell } from '@game/spellcasting/domain/resolve-granted-spellcasting-ability';
+import { proficiencyBonusForLevel } from '@game/session/application/core/apply-species-resource-spend-side-effects';
 
 export async function resolveSpellCastEconomyForCharacter(
   character: PlayerCharacter,
   spellSlug: string,
   sheetRepository: CharacterSheetRepository,
   grantedSpellCatalog: LoadGrantedSpellCatalog,
-) {
+): Promise<CastEconomy> {
+  const budget = await resolveGrantedFreeCastBudget(
+    character,
+    spellSlug,
+    sheetRepository,
+    grantedSpellCatalog,
+  );
+  return budget.economy;
+}
+
+/** Economia + teto de free casts (Greater Freyr = PB). */
+export async function resolveGrantedFreeCastBudget(
+  character: PlayerCharacter,
+  spellSlug: string,
+  sheetRepository: CharacterSheetRepository,
+  grantedSpellCatalog: LoadGrantedSpellCatalog,
+): Promise<{ economy: CastEconomy; maxUses: number }> {
   const sheet = await sheetRepository.load(
     character.id,
     character.backgroundSlug,
@@ -41,7 +63,7 @@ export async function resolveSpellCastEconomyForCharacter(
     [{ spellSlug, listType: 'always_prepared' }],
     { featGrantedSlugs, speciesGrantedSlugs },
   );
-  return resolveGrantedSpellCastEconomy({
+  const economy = resolveGrantedSpellCastEconomy({
     spellSlug,
     source: annotated.source,
     featOptions: sheet.featOptions,
@@ -50,4 +72,19 @@ export async function resolveSpellCastEconomyForCharacter(
     speciesChoices: sheet.speciesChoices,
     speciesCatalog,
   });
+  const feat =
+    annotated.source === 'feat'
+      ? resolveFeatSlugForGrantedSpell(
+          spellSlug,
+          sheet.featOptions,
+          featFixedSpells,
+        )
+      : null;
+  const maxUses = freeCastMaxUses({
+    economy,
+    spellSlug,
+    featSlug: feat?.featSlug,
+    proficiencyBonus: proficiencyBonusForLevel(character.level),
+  });
+  return { economy, maxUses };
 }

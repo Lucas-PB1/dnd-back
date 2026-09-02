@@ -1,10 +1,10 @@
 # Grim Hollow Cap. 6 — Transformações
 
-**Status:** fase A (catálogo) **concluída** · fases B–E **abertas**  
+**Status:** fases A + C + D (read) **concluídas** · B (J060) + D (edit) + E (mesa) **abertas**  
 **Extract:** `docs/source/extracts/grim-hollow/cap6-transformations.json`  
 **Auditoria:** `node scripts/audit-ghpg-cap6.mjs`
 
-Transformação ≠ talento ≠ herança: **4 estágios**, boons por estágio, flaws automáticos. Compêndio = referência; ficha precisa de persistência dedicada.
+Transformação ≠ talento ≠ herança: **4 estágios**, boons por estágio, flaws automáticos. Compêndio = referência; ficha usa tabelas dedicadas (`player_character_transformation*`).
 
 ---
 
@@ -23,6 +23,16 @@ node scripts/audit-ghpg-cap6.mjs
 
 ---
 
+## Concluído — fase C (persistência) + D read
+
+- Migration `090_player/P001_player_character_transformation.sql` (+ mirror no baseline)
+- Bundle `get_character_sheet_bundle` → `transformation: { slug, stage, choices[] } | null`
+- Sync / load / DTO sheet; **não** usar `characterFeats[]` (`gh-transformation-*` rejeitado)
+- Choices **opacas** até J060
+- Front: `TransformationSection` read-only em `beyond-traits-tab.tsx`
+
+---
+
 ## Aberto
 
 ### B — Opções estruturadas (J060)
@@ -30,16 +40,9 @@ node scripts/audit-ghpg-cap6.mjs
 - `phb_option_def`: `stage1Boon`, `stage2Boon`, … + sub-opções (`fiendDamageType`, `vampireBloodline`, …)
 - Validador espelhando `heritage-choices.validator.ts` (regras 1 de N, 2 de 4, flaws automáticos)
 
-### C — Persistência ficha
+### D — UI edit
 
-- Migration `player_character_transformation` + `player_character_transformation_choice`
-- DTO sheet: `transformation: { slug, stage, choices[] }`
-- **Não** usar `characterFeats[]` para transformação
-
-### D — UI read
-
-- `TransformationSection` em `beyond-traits-tab.tsx` (padrão `SheetReadSection`)
-- Edição: wizard/painel separado para avançar estágio / trocar boon
+- Wizard/painel para avançar estágio / trocar boon (após J060)
 
 ### E — Mesa (pós-ficha)
 
@@ -50,6 +53,6 @@ node scripts/audit-ghpg-cap6.mjs
 
 ## Próximo passo
 
-1. Aplicar J019 + J048–J059 no Supabase (se ainda pendente no ambiente).
-2. Esboçar migration fase C + `TransformationSection` mock (só read).
-3. J060 após persistência definida.
+1. J060 `phb_option_def` + validator de boons/flaws.
+2. UI edit (wizard) no front.
+3. Mesa / economy.

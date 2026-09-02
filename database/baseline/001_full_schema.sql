@@ -4819,6 +4819,26 @@ COMMENT ON TABLE rpg.player_character_heritage_trait IS
 COMMENT ON TABLE rpg.player_character_heritage_config IS
   'Opções de customização GH: trocar 1,5 m por 9º traço; tamanho Pequeno/Médio.';
 
+CREATE TABLE rpg.player_character_transformation (
+  character_id UUID PRIMARY KEY REFERENCES rpg.player_character(id) ON DELETE CASCADE,
+  transformation_slug TEXT NOT NULL REFERENCES rpg.phb_feat(slug),
+  stage SMALLINT NOT NULL CHECK (stage BETWEEN 1 AND 4)
+);
+
+CREATE TABLE rpg.player_character_transformation_choice (
+  character_id UUID NOT NULL
+    REFERENCES rpg.player_character_transformation(character_id) ON DELETE CASCADE,
+  choice_kind TEXT NOT NULL,
+  choice_slug TEXT NOT NULL,
+  PRIMARY KEY (character_id, choice_kind)
+);
+
+COMMENT ON TABLE rpg.player_character_transformation IS
+  'Transformação GH Cap. 6 ativa na ficha (1:1). Não usar player_character_feat.';
+
+COMMENT ON TABLE rpg.player_character_transformation_choice IS
+  'Escolhas opacas da transformação (boons etc.); validadas por J060 quando existir.';
+
 CREATE OR REPLACE FUNCTION rpg.spawn_game_actor_from_template(
   p_template_slug text,
   p_owner_user_id uuid,
@@ -5158,6 +5178,25 @@ AS $$
       FROM pc
       JOIN rpg.v_phb_class_ability_boost b ON b.class_slug = pc.class_slug
     ), '[]'::jsonb),
+    'transformation', (
+      SELECT jsonb_build_object(
+        'slug', t.transformation_slug,
+        'stage', t.stage,
+        'choices', COALESCE((
+          SELECT jsonb_agg(
+            jsonb_build_object(
+              'choiceKind', c.choice_kind,
+              'choiceSlug', c.choice_slug
+            )
+            ORDER BY c.choice_kind
+          )
+          FROM rpg.player_character_transformation_choice c
+          WHERE c.character_id = p_character_id
+        ), '[]'::jsonb)
+      )
+      FROM rpg.player_character_transformation t
+      WHERE t.character_id = p_character_id
+    ),
     'speciesSize', COALESCE(
       (
         SELECT cfg.size_choice
@@ -5180,4 +5219,4 @@ AS $$
 $$;
 
 COMMENT ON FUNCTION rpg.get_character_sheet_bundle(uuid, text) IS
-  'Read model da ficha: filhos + PB + boosts + origem PHB/herança GH.';
+  'Read model da ficha: filhos + PB + boosts + origem PHB/herança GH + transformação Cap. 6.';

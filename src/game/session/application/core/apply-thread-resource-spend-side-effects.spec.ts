@@ -1,6 +1,8 @@
 import {
   applyThreadResourceSpendSideEffects,
   DOOM_DELAYED_RESOURCE,
+  GLORIOUS_END_RESOURCE,
+  LAST_ACT_OF_FATE_RESOURCE,
 } from './apply-thread-resource-spend-side-effects';
 
 describe('applyThreadResourceSpendSideEffects', () => {
@@ -90,5 +92,59 @@ describe('applyThreadResourceSpendSideEffects', () => {
       deathSaveFailures: 0,
       conditions: ['unconscious', 'prone'],
     });
+  });
+
+  it('sets 1 HP and clears conditions for last-act-of-fate', async () => {
+    const afterHp = {
+      ...baseState,
+      hitPointsCurrent: 1,
+      conditions: ['prone', 'poisoned'],
+    };
+    const afterPatch = {
+      ...afterHp,
+      deathSaveSuccesses: 0,
+      deathSaveFailures: 0,
+      conditions: [],
+    };
+    const state = {
+      applyCurrentHitPoints: jest.fn().mockResolvedValue(afterHp),
+      patch: jest.fn().mockResolvedValue(afterPatch),
+    };
+
+    const result = await applyThreadResourceSpendSideEffects({
+      state: state as never,
+      character,
+      resourceSlug: LAST_ACT_OF_FATE_RESOURCE,
+      currentState: baseState as never,
+    });
+
+    expect(state.applyCurrentHitPoints).toHaveBeenCalledWith(character, 1);
+    expect(state.patch).toHaveBeenCalledWith(character, {
+      deathSaveSuccesses: 0,
+      deathSaveFailures: 0,
+      conditions: [],
+    });
+    expect(result.note).toMatch(/Último Ato/);
+    expect(result.note).toMatch(/Fim Glorioso/);
+    expect(result.state).toEqual(afterPatch);
+  });
+
+  it('returns note only for glorious-end', async () => {
+    const state = {
+      applyCurrentHitPoints: jest.fn(),
+      patch: jest.fn(),
+    };
+
+    const result = await applyThreadResourceSpendSideEffects({
+      state: state as never,
+      character,
+      resourceSlug: GLORIOUS_END_RESOURCE,
+      currentState: baseState as never,
+    });
+
+    expect(state.applyCurrentHitPoints).not.toHaveBeenCalled();
+    expect(state.patch).not.toHaveBeenCalled();
+    expect(result.note).toMatch(/Fim Glorioso/);
+    expect(result.state).toBe(baseState);
   });
 });

@@ -13,6 +13,7 @@ import {
   PlayerCharacterSpell,
 } from '../player-sheet.entities';
 import { syncHeritageChoices } from './sync-heritage-choices';
+import { syncTransformation } from './sync-transformation';
 
 export type CharacterSheetSyncDeps = {
   skills: Repository<PlayerCharacterSkill>;
@@ -61,6 +62,10 @@ export async function syncCharacterSheet(
         })),
       );
     }
+  }
+
+  if (input.transformation !== undefined) {
+    await syncTransformation(deps.dataSource, characterId, input.transformation);
   }
 
   if (input.subclassOptions !== undefined) {

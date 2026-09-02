@@ -55,11 +55,13 @@ describe('CampaignEncounterService', () => {
       | 'saveCombatant'
       | 'deleteCombatant'
       | 'advanceTurn'
+      | 'listCombatants'
     >
   >;
   let loadDto: jest.Mocked<Pick<LoadEncounterDto, 'load'>>;
   let actorPersistence: jest.Mocked<Pick<ActorPersistenceService, 'createWithChildren'>>;
   let actors: jest.Mocked<Pick<Repository<GameActor>, 'create' | 'findOne' | 'save'>>;
+  let characterState: { clearResourcesUsedEntryByCharacterId: jest.Mock };
   const dto = { id: 'e1', name: 'Fight' };
 
   beforeEach(() => {
@@ -79,6 +81,7 @@ describe('CampaignEncounterService', () => {
       saveCombatant: jest.fn().mockResolvedValue(undefined),
       deleteCombatant: jest.fn().mockResolvedValue(undefined),
       advanceTurn: jest.fn().mockResolvedValue(enc({ currentTurnIndex: 1 })),
+      listCombatants: jest.fn().mockResolvedValue([]),
     };
     loadDto = { load: jest.fn().mockResolvedValue(dto) };
     actorPersistence = {
@@ -94,12 +97,17 @@ describe('CampaignEncounterService', () => {
       findOne: jest.fn(),
       save: jest.fn().mockResolvedValue(undefined),
     };
+    const characterStateMock = {
+      clearResourcesUsedEntryByCharacterId: jest.fn().mockResolvedValue(undefined),
+    };
+    characterState = characterStateMock;
     service = new CampaignEncounterService(
       campaigns as unknown as CampaignRepository,
       encounters as unknown as CampaignEncounterRepository,
       loadDto as unknown as LoadEncounterDto,
       actorPersistence as unknown as ActorPersistenceService,
       actors as unknown as Repository<GameActor>,
+      characterStateMock as never,
     );
   });
 
@@ -193,6 +201,30 @@ describe('CampaignEncounterService', () => {
     expect(loadDto.load).toHaveBeenCalledWith(
       expect.objectContaining({ currentTurnIndex: 1 }),
       'dm',
+    );
+  });
+
+  it('nextTurn clears Cursemarked lock for current PC', async () => {
+    encounters.advanceTurn.mockResolvedValue(enc({ currentTurnIndex: 0 }));
+    encounters.listCombatants.mockResolvedValue([
+      {
+        id: 'cb1',
+        encounterId: 'e1',
+        kind: 'pc',
+        characterId: 'char-cursed',
+        actorId: null,
+        initiativeTotal: 15,
+        initiativeModifier: 2,
+        sortOrder: 0,
+        isActive: true,
+      } as CampaignEncounterCombatant,
+    ]);
+
+    await service.nextTurn('u1', 'c1', 'e1');
+
+    expect(characterState.clearResourcesUsedEntryByCharacterId).toHaveBeenCalledWith(
+      'char-cursed',
+      'cursemarked-bracket-lock',
     );
   });
 

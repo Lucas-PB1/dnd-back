@@ -87,6 +87,22 @@ INSERT INTO rpg.phb_class_economy_action (
   'spend-resource', NULL, 733
 ),
 (
+  'thread-last-act-of-fate', NULL, NULL, NULL, NULL, NULL, NULL, 'fatebound',
+  'Último Ato do Destino', 'free'::rpg.action_economy_bucket, 1,
+  'last-act-of-fate', NULL, true,
+  '1 PV, limpa condições, 1 turno final',
+  'No momento predeterminado: 1 PV, limpa condições; 1 turno com imunidade + vantagem + dano +nível; depois morte permanente. Uso único.',
+  'spend-resource', NULL, 734
+),
+(
+  'thread-glorious-end', NULL, NULL, NULL, NULL, NULL, NULL, 'fatebound',
+  'Fim Glorioso', 'free'::rpg.action_economy_bucket, 1,
+  'glorious-end', NULL, true,
+  'Aliados testemunhas: vantagem 24h',
+  'Declare Fim Glorioso: aliados que testemunharam têm vantagem em testes d20 por 24 horas. Uso único.',
+  'spend-resource', NULL, 735
+),
+(
   'thread-enthralling-speaker', NULL, NULL, NULL, NULL, NULL, NULL, 'herald',
   'Orador Cativante', 'action'::rpg.action_economy_bucket, 1,
   'enthralling-speaker', NULL, true,

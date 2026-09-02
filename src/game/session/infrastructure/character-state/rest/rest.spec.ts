@@ -97,6 +97,10 @@ describe('rest', () => {
     it('resets state, restores HP and returns long rest dto', async () => {
       state.bestialAspectLevel = 3;
       state.personaMasks = ['persona-mask-angel'];
+      state.resourcesUsed = {
+        secondWind: 1,
+        'cursemarked-bracket-lock': 1,
+      };
 
       const result = await applyLongRestState({
         character,
@@ -115,6 +119,7 @@ describe('rest', () => {
       expect(state.tempHp).toBe(0);
       expect(state.bestialAspectLevel).toBe(0);
       expect(state.personaMasks).toEqual(['persona-mask-angel']);
+      expect(state.resourcesUsed['cursemarked-bracket-lock']).toBeUndefined();
       expect(state.deathSaveSuccesses).toBe(0);
       expect(state.deathSaveFailures).toBe(0);
       expect(character.hitPointsCurrent).toBe(44);

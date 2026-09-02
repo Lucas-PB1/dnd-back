@@ -13,7 +13,6 @@ Skills: `rpg-class-mesa-api` · `rpg-class-mesa-front`
 |---|------|-------|
 | M6 | Features jogáveis só texto (Provocação, Regeneração, Pegar e Arremessar, …) | Lembrete em Passivas ou economy futura |
 | M7 | Escolhas secundárias de espécie só narrativas | `choice_kind` se a ficha precisar |
-| — | Greater Freyr: grant `curar-ferimentos` 1×/DL vs texto PB usos/dia | Gap de economia |
 | B2 | Ulfberht dual mastery só em jsonb | Limitação de modelo |
 | B5 | DTO `actionSlug` enums hardcodados | Validar vs catálogo (médio prazo) |
 
@@ -21,7 +20,7 @@ Skills: `rpg-class-mesa-api` · `rpg-class-mesa-front`
 
 ## Mesa fase 2
 
-Character Threads — economy 1/DL + Ruína Adiada (**feitos**); brackets Cursemarked + Último Ato — ver [`northlands-character-threads.md`](northlands-character-threads.md) e [`backlog.md`](backlog.md).
+Character Threads fase 2 mesa (**feito** — economy, Fatebound, Cursemarked brackets MVP) — ver [`northlands-character-threads.md`](northlands-character-threads.md) e [`backlog.md`](backlog.md).
 
 ---
 

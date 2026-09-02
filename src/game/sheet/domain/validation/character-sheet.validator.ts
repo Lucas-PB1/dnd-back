@@ -12,6 +12,10 @@ import { CharacterClassExtraSkillValidator } from './class-options/character-cla
 import { CharacterMysticArcanumValidator } from './class-options/character-mystic-arcanum.validator';
 import { CharacterSignatureSpellsValidator } from './class-options/character-signature-spells.validator';
 import { classLanguageGrant } from './class-options/class-language-grant';
+import {
+  GH_TRANSFORMATION_CATEGORY,
+  validateTransformationShape,
+} from '../transformation/validate-transformation';
 
 export type { CharacterSheetContext } from '../character-sheet.types';
 
@@ -46,6 +50,10 @@ export class CharacterSheetValidator {
 
     if (input.speciesChoices !== undefined || input.heritageChoices !== undefined) {
       await this.classOptionsValidator.validateOriginChoices(ctx, input);
+    }
+
+    if (input.transformation !== undefined) {
+      await this.validateTransformation(input.transformation);
     }
 
     if (input.subclassOptions !== undefined) {
@@ -247,5 +255,18 @@ export class CharacterSheetValidator {
     ctx: Pick<CharacterSheetContext, 'classSlug' | 'backgroundSlug'>,
   ): Promise<number> {
     return this.equipmentValidator.resolveStartingGold(equipment, ctx);
+  }
+
+  private async validateTransformation(
+    transformation: CharacterSheetInput['transformation'],
+  ): Promise<void> {
+    if (transformation === null || transformation === undefined) return;
+    validateTransformationShape(transformation);
+    const feat = await this.catalogLookup.assertFeatInCatalog(transformation.slug.trim());
+    if (feat.categorySlug !== GH_TRANSFORMATION_CATEGORY) {
+      throw new BadRequestException(
+        `Feat '${transformation.slug}' is not a Cap. 6 transformation`,
+      );
+    }
   }
 }

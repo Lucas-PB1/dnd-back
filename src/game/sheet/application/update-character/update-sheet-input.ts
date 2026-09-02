@@ -14,6 +14,7 @@ export function toSheetInput(dto: UpdateCharacterDto): CharacterSheetInput {
     classSkillSlugs: dto.classSkillSlugs,
     speciesChoices: dto.speciesChoices,
     heritageChoices: dto.heritageChoices,
+    transformation: dto.transformation,
     subclassOptions: dto.subclassOptions,
     classOptions: dto.classOptions,
     characterFeats: dto.characterFeats,

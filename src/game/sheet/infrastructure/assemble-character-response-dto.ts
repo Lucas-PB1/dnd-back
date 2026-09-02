@@ -55,6 +55,7 @@ export function assembleCharacterResponseDto(input: {
     classSkillSlugs: loaded.classSkillSlugs,
     speciesChoices: loaded.speciesChoices,
     heritageChoices: loaded.heritageChoices,
+    transformation: loaded.transformation,
     aggregatedHeritageTraits: input.aggregatedHeritageTraits,
     subclassOptions: loaded.subclassOptions,
     classOptions: loaded.classOptions,

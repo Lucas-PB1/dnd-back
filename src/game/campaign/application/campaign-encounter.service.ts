@@ -1,9 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { DEFAULT_ABILITY_SCORES } from '@game/shared/domain/ability-scores';
 import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
+import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 import { CampaignRepository } from '../infrastructure/campaign.repository';
 import { CampaignEncounterRepository } from '../infrastructure/campaign-encounter.repository';
 import {
@@ -13,6 +14,7 @@ import {
 } from './encounter-combatant-ops';
 import { LoadEncounterDto } from './load-encounter-dto';
 import { requireActiveEncounter } from './require-active-encounter';
+import { clearCursemarkedLockForCurrentPc } from './clear-cursemarked-lock-on-turn';
 import {
   AddEncounterCreatureDto,
   CampaignEncounterDto,
@@ -30,6 +32,8 @@ export class CampaignEncounterService {
     private readonly actorPersistence: ActorPersistenceService,
     @InjectRepository(GameActor)
     private readonly actors: Repository<GameActor>,
+    @Inject(forwardRef(() => CharacterStateRepository))
+    private readonly characterState: CharacterStateRepository,
   ) {}
 
   async create(
@@ -189,10 +193,13 @@ export class CampaignEncounterService {
       encounterId,
     );
     await this.encounters.refreshSortOrders(encounter.id);
-    return this.loadDto.load(
-      await this.encounters.advanceTurn(encounter),
-      'dm',
-    );
+    const advanced = await this.encounters.advanceTurn(encounter);
+    await clearCursemarkedLockForCurrentPc({
+      encounters: this.encounters,
+      characterState: this.characterState,
+      encounter: advanced,
+    });
+    return this.loadDto.load(advanced, 'dm');
   }
 
   async close(userId: string, campaignId: string, encounterId: string) {

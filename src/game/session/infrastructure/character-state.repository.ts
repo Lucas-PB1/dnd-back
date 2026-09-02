@@ -191,6 +191,44 @@ export class CharacterStateRepository {
     );
   }
 
+  async getResourcesUsedEntry(
+    character: PlayerCharacter,
+    key: string,
+  ): Promise<number> {
+    const state = await this.findOrCreate(character.id, character.level);
+    return state.resourcesUsed?.[key] ?? 0;
+  }
+
+  async setResourcesUsedEntry(
+    character: PlayerCharacter,
+    key: string,
+    value: number,
+  ): Promise<void> {
+    const state = await this.findOrCreate(character.id, character.level);
+    state.resourcesUsed = { ...(state.resourcesUsed ?? {}), [key]: value };
+    await this.state.save(state);
+  }
+
+  async clearResourcesUsedEntry(
+    character: PlayerCharacter,
+    key: string,
+  ): Promise<void> {
+    await this.clearResourcesUsedEntryByCharacterId(character.id, key);
+  }
+
+  async clearResourcesUsedEntryByCharacterId(
+    characterId: string,
+    key: string,
+  ): Promise<void> {
+    if (!characterId) return;
+    const state = await this.findOrCreate(characterId);
+    const used = { ...(state.resourcesUsed ?? {}) };
+    if (!(key in used)) return;
+    delete used[key];
+    state.resourcesUsed = used;
+    await this.state.save(state);
+  }
+
   applyLongRest(character: PlayerCharacter): Promise<RestResponseDto> {
     return applyLongRestOp(this.coreDeps(), character);
   }

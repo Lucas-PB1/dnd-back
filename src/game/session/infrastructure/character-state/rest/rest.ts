@@ -12,6 +12,9 @@ import {
   spendHitDice,
 } from '@game/session/domain/hit-dice-rest';
 import {
+  CURSEMARKED_BRACKET_LOCK,
+} from '@game/session/domain/cursemarked-bracket';
+import {
   applyLongRestResourceRecovery,
   applyShortRestResourceRecovery,
 } from '@game/session/domain/class-resources';
@@ -46,7 +49,9 @@ export async function applyLongRestState(input: {
     state.resourcesUsed ?? {},
     resources,
   );
-  state.resourcesUsed = recovery.used;
+  const used = { ...recovery.used };
+  delete used[CURSEMARKED_BRACKET_LOCK];
+  state.resourcesUsed = used;
   state.concentratingOn = null;
   state.conditions = [];
   state.tempHp = 0;

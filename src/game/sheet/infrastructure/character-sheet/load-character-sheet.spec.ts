@@ -97,6 +97,7 @@ describe('load-character-sheet', () => {
         classSkillSlugs: ['stealth'],
         speciesChoices: [{ choiceKind: 'language', choiceSlug: 'elvish' }],
         heritageChoices: [],
+        transformation: null,
         subclassOptions: [{ optionKey: 'feature', valueId: 'fire' }],
         classOptions: [
           { optionKey: 'expertiseSkill1', valueId: 'stealth', instanceIndex: 0 },
@@ -162,6 +163,7 @@ describe('load-character-sheet', () => {
       const result = await loadCharacterSheet(deps, 'char-1');
       expect(result.proficiencyBonus).toBe(3);
       expect(result.speciesSize).toBe('Médio');
+      expect(result.transformation).toBeNull();
       expect(result.classAbilityBoosts).toEqual([
         {
           ability: 'forca',
@@ -171,6 +173,26 @@ describe('load-character-sheet', () => {
           fromLevel: 6,
         },
       ]);
+    });
+
+    it('maps Cap. 6 transformation from RPC', async () => {
+      dataSource.query.mockResolvedValue([
+        {
+          bundle: {
+            transformation: {
+              slug: 'gh-transformation-vampire',
+              stage: 2,
+              choices: [{ choiceKind: 'stage1Boon', choiceSlug: 'bloodline' }],
+            },
+          },
+        },
+      ]);
+      const result = await loadCharacterSheet(deps, 'char-1');
+      expect(result.transformation).toEqual({
+        slug: 'gh-transformation-vampire',
+        stage: 2,
+        choices: [{ choiceKind: 'stage1Boon', choiceSlug: 'bloodline' }],
+      });
     });
 
     it('normalizes null equipment itemSlug to undefined', async () => {

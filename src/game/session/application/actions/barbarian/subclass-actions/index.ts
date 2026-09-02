@@ -28,3 +28,7 @@ export {
   resolveShieldBlock,
   resolveICastFist,
 } from './muscle-wizard-actions';
+export {
+  resolveShapeOfTheWild,
+  resolveShapeOfTheWildRageRecover,
+} from './primal-spirit-actions';

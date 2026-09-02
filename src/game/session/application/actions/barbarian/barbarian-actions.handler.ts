@@ -46,6 +46,8 @@ import {
   resolveUndeniableMagicRage,
   resolveWildHeartEagle,
   resolveZealousPresence,
+  resolveShapeOfTheWild,
+  resolveShapeOfTheWildRageRecover,
 } from './subclass-actions';
 
 @Injectable()
@@ -168,6 +170,16 @@ export class BarbarianActionsHandler {
           'Companheiro Primal',
           dto.companionCommand ?? 'strike',
         );
+      case 'shape-of-the-wild':
+      case 'shape-of-the-wild-action':
+        return resolveShapeOfTheWild(
+          deps,
+          this.companionDeps(),
+          userId,
+          character,
+        );
+      case 'shape-of-the-wild-rage-recover':
+        return resolveShapeOfTheWildRageRecover(deps, character);
       default:
         return resolveDeclaredEconomyTableAction(
           { state: this.state, mechanicalCatalog: this.mechanicalCatalog },

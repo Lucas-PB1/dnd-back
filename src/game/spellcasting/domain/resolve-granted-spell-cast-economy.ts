@@ -11,6 +11,10 @@ import { resolveFeatSlugForGrantedSpell } from './resolve-granted-spellcasting-a
 
 export type CastEconomy = 'at_will' | 'once_per_long_rest' | 'slot_only';
 
+/** Greater Blessing of Freyr and Freyja — Curar Ferimentos free casts = PB / DL. */
+export const GREATER_FREYR_FEAT_SLUG = 'greater-blessing-of-freyr-and-freyja';
+export const CURAR_FERIMENTOS_SPELL_SLUG = 'curar-ferimentos';
+
 const SPECIES_CHOICE_KINDS_FOR_LINEAGE = new Set([
   'elf_lineage',
   'gnome_lineage',
@@ -114,15 +118,33 @@ export function resolveGrantedSpellCastEconomy(input: {
   return 'slot_only';
 }
 
+/** Máximo de free casts por magia concedida (default 1/DL; Greater Freyr = PB). */
+export function freeCastMaxUses(input: {
+  economy: CastEconomy;
+  spellSlug: string;
+  featSlug?: string | null;
+  proficiencyBonus?: number;
+}): number {
+  if (input.economy !== 'once_per_long_rest') return 0;
+  if (
+    input.featSlug === GREATER_FREYR_FEAT_SLUG &&
+    input.spellSlug === CURAR_FERIMENTOS_SPELL_SLUG
+  ) {
+    return Math.max(1, input.proficiencyBonus ?? 1);
+  }
+  return 1;
+}
+
 export function freeCastsRemaining(
   economy: CastEconomy,
   spellSlug: string,
   grantedSpellUses: Record<string, number> | null | undefined,
+  maxUses = 1,
 ): number | null {
   if (economy === 'at_will') return null;
   if (economy === 'slot_only') return 0;
   const used = grantedSpellUses?.[spellSlug] ?? 0;
-  return Math.max(0, 1 - used);
+  return Math.max(0, maxUses - used);
 }
 
 export function consumeGrantedFreeCast(

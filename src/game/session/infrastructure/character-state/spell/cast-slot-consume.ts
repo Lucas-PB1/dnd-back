@@ -15,7 +15,9 @@ import {
 } from '@game/session/dto/core/session-commands.dto';
 import { PlayerCharacterState } from '@game/session/infrastructure/player-character-state.entity';
 import { consumeSpellSlot, loadMaxSlots } from '../resources/spell-slots';
-import { resolveSpellCastEconomyForCharacter } from './cast-granted-economy';
+import {
+  resolveGrantedFreeCastBudget,
+} from './cast-granted-economy';
 
 export type SlotConsumeResult = {
   slotLevelUsed: number | null;
@@ -60,24 +62,26 @@ export async function consumeNonItemCastCost(input: {
     await input.spendFreeCastResource();
     usedFreeResource = true;
   } else if (dto.useFreeCast) {
-    const economy =
-      eldritchFreeCast?.economy === 'once_per_long_rest'
-        ? eldritchFreeCast.economy
-        : await resolveSpellCastEconomyForCharacter(
-            character,
-            dto.spellSlug,
-            sheetRepository,
-            grantedSpellCatalog,
-          );
-    if (economy !== 'once_per_long_rest') {
+    const isEldritchOnce =
+      eldritchFreeCast?.economy === 'once_per_long_rest';
+    const budget = isEldritchOnce
+      ? { economy: eldritchFreeCast.economy, maxUses: 1 as const }
+      : await resolveGrantedFreeCastBudget(
+          character,
+          dto.spellSlug,
+          sheetRepository,
+          grantedSpellCatalog,
+        );
+    if (budget.economy !== 'once_per_long_rest') {
       throw new BadRequestException(
         `Spell '${dto.spellSlug}' cannot be cast with a free granted use`,
       );
     }
     const remaining = freeCastsRemaining(
-      economy,
+      budget.economy,
       dto.spellSlug,
       state.grantedSpellUses,
+      budget.maxUses,
     );
     if (remaining !== null && remaining <= 0) {
       throw new BadRequestException(
@@ -88,7 +92,7 @@ export async function consumeNonItemCastCost(input: {
       state.grantedSpellUses,
       dto.spellSlug,
     );
-    if (eldritchFreeCast?.economy === 'once_per_long_rest') {
+    if (isEldritchOnce) {
       usedEldritchFreeCast = eldritchFreeCast;
     }
   } else if (eldritchFreeCast?.economy === 'at_will') {

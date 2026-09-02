@@ -24,6 +24,7 @@ import { PlayerCharacterItem } from '@game/inventory/infrastructure/player-chara
 import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-class-ability-boosts';
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
+import { applyCursemarkedBracketIfTriggered } from './apply-cursemarked-bracket';
 
 async function loadAbilityPenalties(dataSource: DataSource, characterId: string) {
   if (typeof dataSource?.getRepository !== 'function') {
@@ -155,6 +156,14 @@ export async function executeRollSavingThrow(input: {
       'Evasão: sucesso = nenhum dano; falha = metade (quando a salvaguarda normalmente reduz à metade)',
     );
   }
+  await applyCursemarkedBracketIfTriggered({
+    dataSource: input.dataSource,
+    character,
+    resourceSpender: input.resourceSpender,
+    kind: 'save',
+    kept: result.d20.kept[0] ?? 0,
+    notes,
+  });
   return {
     kind: 'saving_throw',
     label: `Salvaguarda — ${ABILITY_LABELS[ability]}`,

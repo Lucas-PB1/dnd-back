@@ -1,6 +1,8 @@
 import {
   consumeGrantedFreeCast,
+  freeCastMaxUses,
   freeCastsRemaining,
+  GREATER_FREYR_FEAT_SLUG,
   resolveGrantedSpellCastEconomy,
 } from './resolve-granted-spell-cast-economy';
 import type { SpeciesGrantedSpellRow } from './granted-spells/types';
@@ -100,5 +102,32 @@ describe('freeCast helpers', () => {
     expect(freeCastsRemaining('once_per_long_rest', 'x', {})).toBe(1);
     expect(freeCastsRemaining('once_per_long_rest', 'x', { x: 1 })).toBe(0);
     expect(consumeGrantedFreeCast({ x: 0 }, 'x')).toEqual({ x: 1 });
+  });
+
+  it('uses PB max for Greater Freyr Curar Ferimentos', () => {
+    expect(
+      freeCastMaxUses({
+        economy: 'once_per_long_rest',
+        spellSlug: 'curar-ferimentos',
+        featSlug: GREATER_FREYR_FEAT_SLUG,
+        proficiencyBonus: 3,
+      }),
+    ).toBe(3);
+    expect(
+      freeCastsRemaining(
+        'once_per_long_rest',
+        'curar-ferimentos',
+        { 'curar-ferimentos': 2 },
+        3,
+      ),
+    ).toBe(1);
+    expect(
+      freeCastMaxUses({
+        economy: 'once_per_long_rest',
+        spellSlug: 'curar-ferimentos',
+        featSlug: 'magic-initiate',
+        proficiencyBonus: 3,
+      }),
+    ).toBe(1);
   });
 });

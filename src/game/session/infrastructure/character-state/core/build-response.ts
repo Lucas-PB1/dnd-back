@@ -17,9 +17,12 @@ import {
   collectSpeciesGrantedSpellSlugs,
 } from '@game/spellcasting/domain/granted-spells';
 import {
+  freeCastMaxUses,
   freeCastsRemaining,
   resolveGrantedSpellCastEconomy,
 } from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
+import { resolveFeatSlugForGrantedSpell } from '@game/spellcasting/domain/resolve-granted-spellcasting-ability';
+import { proficiencyBonusForLevel } from '@game/session/application/core/apply-species-resource-spend-side-effects';
 import {
   CharacterStateResponseDto,
 } from '@game/session/dto/core/character-state-response.dto';
@@ -139,6 +142,7 @@ async function buildGrantedSpellCastOptions(
     speciesGrantedSlugs,
   });
 
+  const proficiencyBonus = proficiencyBonusForLevel(character.level);
   const options = annotated
     .filter((spell) => spell.source === 'feat' || spell.source === 'species')
     .map((spell) => {
@@ -151,6 +155,20 @@ async function buildGrantedSpellCastOptions(
         speciesChoices: sheet.speciesChoices,
         speciesCatalog,
       });
+      const feat =
+        spell.source === 'feat'
+          ? resolveFeatSlugForGrantedSpell(
+              spell.spellSlug,
+              sheet.featOptions,
+              featFixedSpells,
+            )
+          : null;
+      const maxUses = freeCastMaxUses({
+        economy: castEconomy,
+        spellSlug: spell.spellSlug,
+        featSlug: feat?.featSlug,
+        proficiencyBonus,
+      });
       return {
         spellSlug: spell.spellSlug,
         castEconomy,
@@ -158,6 +176,7 @@ async function buildGrantedSpellCastOptions(
           castEconomy,
           spell.spellSlug,
           grantedSpellUses,
+          maxUses,
         ),
       };
     });

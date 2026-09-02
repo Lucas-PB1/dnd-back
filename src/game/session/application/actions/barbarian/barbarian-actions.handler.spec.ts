@@ -175,4 +175,58 @@ describe('BarbarianActionsHandler', () => {
       }),
     ).rejects.toBeInstanceOf(BadRequestException);
   });
+
+  it('uses Shape of the Wild: spends resource and restores companion HP', async () => {
+    ctx.mockCharacterOnce({
+      ...barbarian,
+      subclassSlug: 'pathofthe-primal-spirit',
+      level: 14,
+    });
+    syncCompanion.execute.mockResolvedValueOnce({
+      name: 'Espírito Primal',
+      variantLabel: 'Striker · Mar',
+      hitPointsCurrent: 40,
+      hitPointsMax: 40,
+      reused: true,
+    });
+
+    const result = await handler.useTableAction('user-1', 'barb-1', {
+      actionSlug: 'shape-of-the-wild',
+    });
+
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'barb-1' }),
+      'shape-of-the-wild',
+      1,
+    );
+    expect(syncCompanion.execute).toHaveBeenCalledWith('user-1', 'barb-1', {
+      restoreHp: true,
+    });
+    expect(result.resourceSpent).toBe(true);
+    expect(result.note).toMatch(/Forma do Selvagem/);
+  });
+
+  it('recovers Shape of the Wild by spending Rage', async () => {
+    ctx.mockCharacterOnce({
+      ...barbarian,
+      subclassSlug: 'pathofthe-primal-spirit',
+      level: 14,
+    });
+
+    const result = await handler.useTableAction('user-1', 'barb-1', {
+      actionSlug: 'shape-of-the-wild-rage-recover',
+    });
+
+    expect(ctx.state.useClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'barb-1' }),
+      'rage',
+      1,
+    );
+    expect(ctx.state.recoverClassResource).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'barb-1' }),
+      'shape-of-the-wild',
+      1,
+    );
+    expect(result.note).toMatch(/Restaurou Forma do Selvagem/);
+  });
 });

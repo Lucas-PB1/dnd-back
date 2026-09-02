@@ -8,7 +8,9 @@ import {
   IsNotEmpty,
   IsOptional,
   IsString,
+  Max,
   Min,
+  ValidateIf,
   ValidateNested,
 } from 'class-validator';
 
@@ -69,6 +71,26 @@ export class CharacterFeatDto {
   @IsInt()
   @Min(0)
   instanceIndex!: number;
+}
+
+/** Transformação GH Cap. 6 — não usar characterFeats. */
+export class CharacterTransformationDto {
+  @ApiProperty({ example: 'gh-transformation-vampire' })
+  @IsString()
+  @IsNotEmpty()
+  slug!: string;
+
+  @ApiProperty({ example: 2, minimum: 1, maximum: 4 })
+  @IsInt()
+  @Min(1)
+  @Max(4)
+  stage!: number;
+
+  @ApiProperty({ type: [SpeciesChoiceDto] })
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => SpeciesChoiceDto)
+  choices!: SpeciesChoiceDto[];
 }
 
 export class FeatOptionDto {
@@ -197,6 +219,17 @@ export class CharacterSheetInputDto {
   @ValidateNested({ each: true })
   @Type(() => SpeciesChoiceDto)
   heritageChoices?: SpeciesChoiceDto[];
+
+  @ApiPropertyOptional({
+    type: CharacterTransformationDto,
+    nullable: true,
+    description: 'Transformação GH Cap. 6; null remove. Não usar characterFeats.',
+  })
+  @IsOptional()
+  @ValidateIf((_, value) => value !== null)
+  @ValidateNested()
+  @Type(() => CharacterTransformationDto)
+  transformation?: CharacterTransformationDto | null;
 
   @ApiPropertyOptional({ type: [SubclassOptionDto] })
   @IsOptional()

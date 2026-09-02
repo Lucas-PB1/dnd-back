@@ -2,6 +2,7 @@ import { Module, forwardRef } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { CharacterDiceModule } from '../dice/character-dice.module';
+import { CharacterSessionModule } from '../session/character-session.module';
 import { CombatModule } from '../combat/combat.module';
 import { ActorModule } from '../actor/actor.module';
 import { GameActor } from '../actor/infrastructure/game-actor.entity';
@@ -28,6 +29,7 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
     GameSharedModule,
     CombatModule,
     forwardRef(() => CharacterDiceModule),
+    forwardRef(() => CharacterSessionModule),
     forwardRef(() => ActorModule),
     TypeOrmModule.forFeature([
       Campaign,

@@ -372,6 +372,9 @@ const BARBARIAN_TABLE_ACTION_SLUGS = [
   'primal-companion',
   'primal-companion-summon',
   'primal-companion-restore',
+  'shape-of-the-wild',
+  'shape-of-the-wild-action',
+  'shape-of-the-wild-rage-recover',
 ] as const;
 
 export class UseBarbarianTableActionDto {

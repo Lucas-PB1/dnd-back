@@ -10,6 +10,7 @@ import type {
   CharacterEquipmentDto,
   CharacterFeatDto,
   CharacterSpellDto,
+  CharacterTransformationDto,
   ClassOptionDto,
   FeatOptionDto,
   SpeciesChoiceDto,
@@ -33,6 +34,7 @@ type SheetBundleJson = {
   classSkillSlugs?: string[] | null;
   speciesChoices?: SpeciesChoiceDto[] | null;
   heritageChoices?: SpeciesChoiceDto[] | null;
+  transformation?: CharacterTransformationDto | null;
   subclassOptions?: SubclassOptionDto[] | null;
   classOptions?: ClassOptionDto[] | null;
   characterFeats?: CharacterFeatDto[] | null;
@@ -143,6 +145,7 @@ function mapSheetBundle(bundle: SheetBundleJson | null | undefined): CharacterSh
     classSkillSlugs: asStringArray(bundle.classSkillSlugs),
     speciesChoices: split.speciesChoices,
     heritageChoices: split.heritageChoices,
+    transformation: mapTransformation(bundle.transformation),
     subclassOptions: bundle.subclassOptions ?? [],
     classOptions: bundle.classOptions ?? [],
     characterFeats: bundle.characterFeats ?? [],
@@ -156,6 +159,20 @@ function mapSheetBundle(bundle: SheetBundleJson | null | undefined): CharacterSh
       bundle.proficiencyBonus == null ? null : Number(bundle.proficiencyBonus),
     classAbilityBoosts: mapClassAbilityBoosts(bundle.classAbilityBoosts),
     speciesSize: bundle.speciesSize ?? null,
+  };
+}
+
+function mapTransformation(
+  value: CharacterTransformationDto | null | undefined,
+): CharacterTransformationDto | null {
+  if (!value?.slug) return null;
+  return {
+    slug: value.slug,
+    stage: Number(value.stage),
+    choices: (value.choices ?? []).map((choice) => ({
+      choiceKind: choice.choiceKind,
+      choiceSlug: choice.choiceSlug,
+    })),
   };
 }
 

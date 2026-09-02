@@ -17,9 +17,9 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 | Classes mesa PHB (13) | Pronto |
 | Steinhardt + Northlands (Waves 1–4 + Cap. 5 + veículos) | Pronto — residual opcional em [`northlands-audit.md`](northlands-audit.md) |
 | Itens DMG mesa | Pronto — [`dmg-wiring-status.md`](../source/dmg-wiring-status.md) |
-| Grim Hollow Cap. 2 mesa + Cap. 1 heranças | **Quase** — [`grim-hollow-mesa-audit.md`](grim-hollow-mesa-audit.md) |
+| Grim Hollow Cap. 2 mesa + Cap. 1 heranças | Pronto — residual adiado em [`grim-hollow-mesa-audit.md`](grim-hollow-mesa-audit.md) |
 | Grim Hollow Cap. 4 talentos | Pronto |
-| Grim Hollow Cap. 6 transformações | Catálogo pronto; **ficha/mesa** aberto — [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md) |
+| Grim Hollow Cap. 6 transformações | Catálogo + ficha read prontos; **J060 + edit + mesa** abertos — [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md) |
 | Saúde do código (Fases 0–4) | **Pronto** — dívida residual em Adiado |
 | Combate situacional / monstros catálogo | **Adiado** |
 
@@ -29,13 +29,7 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
 ### Grim Hollow
 
-- [ ] **Mesa Cap. 2 + Cap. 1 (residual):** companion Primordial Spirit, smoke UI heranças, sub-escolhas de traço (se bloquear). Plano: [`grim-hollow-mesa-audit.md`](grim-hollow-mesa-audit.md).
-- [ ] **Cap. 6 transformações:** persistência ficha + UI read + opções J060. Plano: [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md).
-
-### Northlands
-
-- [ ] **Character Threads — fase 2 / mesa:** economy 1/DL + **Ruína Adiada** feitos; falta brackets Cursemarked e Fatebound Último Ato. Extração: [`northlands-character-threads.md`](northlands-character-threads.md).
-- [ ] **Pente fino residual (opcional):** M6 features só texto; Greater Freyr usos PB/dia — [`northlands-audit.md`](northlands-audit.md).
+- [ ] **Cap. 6 transformações:** J060 (`option_def` + validator) + UI edit + mesa. Persistência + UI read feitos — [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md).
 
 ---
 

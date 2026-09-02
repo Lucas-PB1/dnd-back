@@ -7,6 +7,10 @@ jest.mock('./roll-weapon-context', () => ({
   findEquippedWeaponAttack: jest.fn(),
 }));
 
+jest.mock('./apply-cursemarked-bracket', () => ({
+  applyCursemarkedBracketIfTriggered: jest.fn().mockResolvedValue(undefined),
+}));
+
 import { executeRollAttack } from './roll-attack';
 import {
   findEquippedWeaponAttack,
@@ -24,6 +28,9 @@ describe('executeRollAttack', () => {
     resourceSpender: {
       spendClassResource: jest.fn(),
       consumeSpellSlotLevel: jest.fn(),
+      getResourcesUsedEntry: jest.fn().mockResolvedValue(0),
+      setResourcesUsedEntry: jest.fn(),
+      clearResourcesUsedEntry: jest.fn(),
     },
     userId: 'u1',
     characterId: 'c1',

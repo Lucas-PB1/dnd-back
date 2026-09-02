@@ -16,6 +16,7 @@ import type { CharacterResourceSpender } from '@game/session/domain/character-re
 import { forceAdvantageIfNormal } from './advantage-mode';
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
+import { applyCursemarkedBracketIfTriggered } from './apply-cursemarked-bracket';
 
 export async function executeRollSkill(input: {
   access: PlayerCharacterAccessService;
@@ -105,6 +106,14 @@ export async function executeRollSkill(input: {
   ) {
     notes.push('Atleta Extraordinário: Vantagem em Atletismo');
   }
+  await applyCursemarkedBracketIfTriggered({
+    dataSource: input.dataSource,
+    character,
+    resourceSpender: input.resourceSpender,
+    kind: 'skill',
+    kept: result.d20.kept[0] ?? 0,
+    notes,
+  });
   return {
     kind: 'skill',
     label: `Perícia — ${skill.name}`,
