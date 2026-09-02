@@ -24,12 +24,11 @@ Pedido de auditoria, “arquivos grandes”, “domínio gordo”, “DRY no ban
 8. Scripts: mortos, deprecated, fora do `package.json`.
 9. Migrations: contagem; squash viável pré-prod; README alinhado.
 10. Docs: rules/skills/commands desatualizados vs repo.
-11. **DRY** (`dry-quality`): inventariar duplicação de conhecimento; aplicar [Condição DRY](../../../docs/plans/code-health-audit.md#condição-dry) e teto de nota.
+11. **DRY** (`dry-quality`): inventariar duplicação de conhecimento; rubrica da rule.
 12. **TypeScript** (`typescript-quality`): `any`, `as never`, `Omit`, magic strings/numbers.
-13. **Unificação stats** (`unify-game-stats`): `abilityModifier` único, CA/PV/moedas — checklist §15.
+13. **Unificação stats** (`unify-game-stats`): `abilityModifier` único, CA/PV/moedas.
 14. SQL DRY: clusters em `database/` — `rpg-catalog-model` / `catalog-patterns.md`.
-15. **Plano de melhoria:** fase ativa + critérios Done — [`code-health-audit.md` § Plano de melhoria](../../../docs/plans/code-health-audit.md#plano-de-melhoria).
-16. Atualizar [`code-health-audit.md`](../../../docs/plans/code-health-audit.md) e [`backlog.md`](../../../docs/plans/backlog.md) (checkboxes da fase).
+15. Abrir itens no [`backlog.md`](../../../docs/plans/backlog.md) (Adiado — qualidade) — **não** recriar plano histórico.
 
 ## Output (obrigatório)
 
@@ -48,8 +47,8 @@ Pedido de auditoria, “arquivos grandes”, “domínio gordo”, “DRY no ban
 ### Testes (excesso / duplicação)
 - specs >300 linhas, handler boilerplate, espelho de validator
 
-### DRY (condição + teto de nota)
-- gates ativos, rubrica, teto global — ver `dry-quality` + § Condição DRY no plano
+### DRY
+- gates ativos, rubrica — ver `dry-quality`
 
 ### TypeScript (any / never / magic / Omit)
 - …
@@ -60,18 +59,20 @@ Pedido de auditoria, “arquivos grandes”, “domínio gordo”, “DRY no ban
 ### SQL / DRY / anti-padrão DB
 - matriz: RPC bundle vs raw SQL vs TypeORM — ver `catalog-patterns`
 
-### Plano de melhoria (fase ativa + próximos 3 PRs)
-- fase N — itens Done pendentes — ver § Plano de melhoria
+### Próximos PRs
+- itens a abrir no backlog (Adiado — qualidade)
 ```
 
 ## Não fazer
 
 - Não refatorar tudo na mesma sessão sem plano.
 - Não inventar arquivos — só o que o inventário mostrou.
+- Não recriar `code-health-audit.md` — Fases 0–4 concluídas; residual só no backlog.
 
 ## Referências
 
 - [file-size](../../rules/file-size.mdc) · [refactor-triggers](../../rules/refactor-triggers.mdc) · [dry-quality](../../rules/dry-quality.mdc) · [typescript-quality](../../rules/typescript-quality.mdc)
 - [code-standards.md](../../../docs/architecture/code-standards.md)
 - [catalog-patterns.md](../../../docs/architecture/catalog-patterns.md)
+- [backlog.md](../../../docs/plans/backlog.md)
 - [unify-game-stats](../unify-game-stats/SKILL.md)

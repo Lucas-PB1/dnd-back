@@ -1,6 +1,6 @@
 # Views do catálogo
 
-SSOT: [`adr-read-model-layers.md`](../../../../docs/architecture/adr-read-model-layers.md) · lista: [`read-model-inventory.md`](../../../../docs/plans/read-model-inventory.md).
+SSOT: [`adr-read-model-layers.md`](../../../../docs/architecture/adr-read-model-layers.md) · lista: [`read-model-inventory.md`](../../../../docs/architecture/read-model-inventory.md).
 
 ## Quando usar
 

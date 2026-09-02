@@ -51,5 +51,5 @@ Ao terminar refactor:
 ## Referências
 
 - [`code-standards.md`](../../../docs/architecture/code-standards.md)
-- [`code-health-audit.md`](../../../docs/plans/code-health-audit.md) §12–15
-- Rule `typescript-quality`
+- Rule `typescript-quality` · skill `audit-code-health`
+- Residual: [`backlog.md`](../../../docs/plans/backlog.md) (Adiado — qualidade)

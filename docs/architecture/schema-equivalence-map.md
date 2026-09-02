@@ -1,8 +1,9 @@
 # Mapa de equivalência — schema atual → alvo consolidado
 
-Uso: checklist ao portar o plano da auditoria (`analise`) para o **dnd-api** (ou greenfield).  
-Status do redesign: ver [`adr-schema-consolidation.md`](adr-schema-consolidation.md) (**Aceito**).  
-Baseline (pré-consolidação): ~91 CREATE em `020_tables` + runtime em `090_player` (~160 arquivos SQL de migration).
+**Status:** histórico dos lotes A–G (**DONE** 2026-08-07). Redesign: [`adr-schema-consolidation.md`](adr-schema-consolidation.md) (**Aceito**).  
+Baseline atual: [`database/baseline/001_full_schema.sql`](../../database/baseline/001_full_schema.sql).
+
+Uso: referência ao portar ou auditar equivalências — **não** é checklist aberto.
 
 Legenda da coluna **Ação**:
 

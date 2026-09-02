@@ -6,7 +6,7 @@ alwaysApply: false
 
 # DRY → qualidade
 
-**Princípio:** quanto mais **uma fonte por regra/contrato**, maior a qualidade. Duplicar **conhecimento** (regra D&D, stat, SQL, tipo, slug) é dívida — medida no [`code-health-audit.md`](../../docs/plans/code-health-audit.md).
+**Princípio:** quanto mais **uma fonte por regra/contrato**, maior a qualidade. Duplicar **conhecimento** (regra D&D, stat, SQL, tipo, slug) é dívida — inventariar com skill `audit-code-health`; residual em [`backlog.md`](../../docs/plans/backlog.md) (Adiado — qualidade).
 
 Skill genérica: shared-ai `dry`. Stats: `unify-game-stats`. Auditoria: `audit-code-health`.
 

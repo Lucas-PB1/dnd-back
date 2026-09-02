@@ -4,7 +4,7 @@
 |-------|--------|
 | Status | **Aceito (conceitual)** — fase 2 (espelho→tabela) aplicada |
 | Data | 2026-09-02 |
-| Inventário | [`docs/plans/read-model-inventory.md`](../plans/read-model-inventory.md) |
+| Inventário | [`read-model-inventory.md`](./read-model-inventory.md) |
 | Contexto | Três mecanismos de leitura (view, materialized view, RPC JSONB) coexistem; lentidão histórica veio de view no hot path da ficha, não de view no catálogo |
 | Relacionado | [`catalog-patterns.md`](./catalog-patterns.md) · [`data-model.md`](./data-model.md) · [`adr-schema-consolidation.md`](./adr-schema-consolidation.md) |
 
@@ -281,7 +281,7 @@ Escreve normalizado (Camada 1). Labels de enum via VALUES view (Camada 2). Expõ
 - [x] Inventário views tipo B → tabela (fase 2)
 - [x] `catalog-patterns.md` §10/§11 e `data-model.md` referenciam este ADR
 - [x] Skill `phb-query-views` menciona MV vs view viva
-- [x] Inventário objetivo: [`read-model-inventory.md`](../plans/read-model-inventory.md)
+- [x] Inventário objetivo: [`read-model-inventory.md`](./read-model-inventory.md)
 
 ## Histórico
 

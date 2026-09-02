@@ -1,19 +1,8 @@
 # Grim Hollow — mesa (Cap. 2 + Cap. 1)
 
-**Status:** fases A–E **concluídas** (2026-08-31). Este doc só lista **residual aberto**.  
+**Status:** fases A–E **concluídas** (2026-08-31). Este doc só lista **residual aberto** (resumo do feito: Cap. 2 economia/resources/spells/passivos 40/40; Cap. 1 heranças E1–E2; Cap. 4 talentos pronto).  
 **Skills:** `rpg-class-mesa-api` · `rpg-class-mesa-front` · `rpg-catalog-model`  
 **Auditoria:** `node scripts/archive/_audit-gh-mesa-state.mjs` · `node scripts/verify-gh-heritage-e2.mjs`
-
----
-
-## Concluído (resumo)
-
-| Fase | Entrega |
-|------|---------|
-| A–C | Economia Cap. 2, resources (53 AEs), spells J029 (157 rows / 24 subs), Cap. 7 catálogo |
-| D | Passivos Cap. 2: `grim-hollow-subclass-combat-notes` **40/40** subs + MH L9/L14 |
-| E1–E2 | Heranças: migrations + seeds C070–C072; validação auto (`verify-gh-heritage-e2.mjs`) |
-| Sangromante | J045/J046, grimório Sangromancia, Sanguine Thief |
 
 ---
 

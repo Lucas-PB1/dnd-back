@@ -142,7 +142,7 @@ Itens mágicos (DMG) na mesma profundidade de mesa (várias ações, cargas, pas
 
 ## 10. Runtime Game reads
 
-Matriz canônica para **leitura em runtime** (ficha, mesa, dados) — complementa §13 do [code-health-audit](../plans/code-health-audit.md#13-banco-de-dados--anti-padrão-mesma-cosa-jeitos-diferentes).
+Matriz canônica para **leitura em runtime** (ficha, mesa, dados). ADR: [`adr-read-model-layers.md`](./adr-read-model-layers.md).
 
 | Caso de uso | Padrão | Onde |
 |-------------|--------|------|

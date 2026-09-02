@@ -39,7 +39,7 @@ Complementa [`code-standards.md`](../../docs/architecture/code-standards.md) e r
 | CA (armadura equipada) | `combat/domain/equipment/armor-class.ts` + `resolve-equipped-armor-class.ts` |
 | Moedas / preço | `inventory/domain/coin-purse.ts` |
 
-Não criar terceiro caminho (ex.: CA só desarmado na ficha vs combate completo) sem issue no [`code-health-audit.md`](../../docs/plans/code-health-audit.md).
+Não criar terceiro caminho (ex.: CA só desarmado na ficha vs combate completo) sem issue no [`backlog.md`](../../docs/plans/backlog.md) (Adiado — qualidade).
 
 ## Testes
 

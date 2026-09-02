@@ -8,7 +8,7 @@ Aceito — 2026-09-01 (Fase 3.6)
 
 Validators de create/update da ficha vivem em `sheet/domain/validation/` como services Nest (`@Injectable`, `BadRequestException`). Até a Fase 3.4–3.5, ~18 arquivos usavam `dataSource.query` inline — duplicando JOINs já cobertos por views TypeORM e fugindo do padrão de leitura runtime ([`catalog-patterns.md` §10](./catalog-patterns.md#10-runtime-game-reads)).
 
-Duas opções estavam em aberto ([`code-health-audit.md` §5](../plans/code-health-audit.md#5-solid--domain-híbrido)):
+Duas opções estavam em aberto (auditoria de saúde do código, domínio híbrido):
 
 1. **Mover** validators inteiros para `sheet/infrastructure/validation/` (ports/adapters).
 2. **Extrair** regras puras + adapter Nest fino, mantendo orquestração no domain.
@@ -67,4 +67,4 @@ Specs: `*.queries.spec.ts` (smoke TypeORM); validators mockam queries ou `getRep
 
 - [`code-standards.md`](./code-standards.md) — layout `validation/` + queries
 - [`catalog-patterns.md` §10](./catalog-patterns.md#10-runtime-game-reads)
-- [`code-health-audit.md` § Inventário validators](../plans/code-health-audit.md#inventário-sql-cru--validators-fase-30)
+- Dívida residual: [`backlog.md`](../plans/backlog.md) (Adiado — qualidade)

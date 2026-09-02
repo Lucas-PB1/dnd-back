@@ -15,7 +15,7 @@ description: Queries SQL e TypeORM contra read models do catálogo PHB. Use ao e
 1. **Tabela `phb_*`** — espelho 1:1 ou join mínimo (`subclass.slug`). Preferir `@Entity` + relations.
 2. **View VALUES** — label de enum (`v_phb_feat_category`, `v_phb_condition`, `v_phb_weapon_proficiency`).
 3. **View join/agregado** — enriquecimento real (`v_phb_armor`, `v_phb_class_equipment`).
-4. **MV `mv_*`** — listagem pesada; consumir MV, não view viva (`mv_spell_by_class`, `mv_phb_feat`, …). Inventário: [`read-model-inventory.md`](../../../docs/plans/read-model-inventory.md).
+4. **MV `mv_*`** — listagem pesada; consumir MV, não view viva (`mv_spell_by_class`, `mv_phb_feat`, …). Inventário: [`read-model-inventory.md`](../../../docs/architecture/read-model-inventory.md).
 5. **RPC JSONB** — **não** usar aqui; só runtime ficha/mesa.
 
 ## Referências SQL
@@ -26,6 +26,6 @@ description: Queries SQL e TypeORM contra read models do catálogo PHB. Use ao e
 
 ## Views removidas (espelho — ler tabela)
 
-Não queryar — usar entity: `phb_battle_master_maneuver`, `phb_gunslinger_maneuver`, `phb_class_panel_action`, etc. Lista completa: [`read-model-mirror-refactor.md`](../../../docs/plans/read-model-mirror-refactor.md).
+Não queryar — usar entity: `phb_battle_master_maneuver`, `phb_gunslinger_maneuver`, `phb_class_panel_action`, etc. Lista: [`read-model-inventory.md`](../../../docs/architecture/read-model-inventory.md) §1.
 
 Slugs: skill `dnd-glossary-pt`.

@@ -1,6 +1,6 @@
 # Inventário alvo — read models
 
-SSOT: [`adr-read-model-layers.md`](../architecture/adr-read-model-layers.md).
+SSOT: [`adr-read-model-layers.md`](./adr-read-model-layers.md).
 
 ---
 
