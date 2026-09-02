@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
+import { CharacterInventoryRepository } from '../../infrastructure/character-inventory.repository';
 
 type StartingEquipmentRow = {
   itemSlug?: string;

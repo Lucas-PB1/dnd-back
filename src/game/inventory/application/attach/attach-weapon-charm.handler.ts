@@ -13,12 +13,12 @@ import {
   AttachWeaponCharmDto,
   DetachWeaponCharmDto,
   InventoryItemResponseDto,
-} from '../dto/inventory.dto';
+} from '../../dto/inventory.dto';
 import {
   findInventoryItemOrFail,
   inventoryItemToDto,
-} from '../infrastructure/inventory/inventory-item-ops';
-import { PlayerCharacterItem } from '../infrastructure/player-character-item.entity';
+} from '../../infrastructure/inventory/inventory-item-ops';
+import { PlayerCharacterItem } from '../../infrastructure/player-character-item.entity';
 
 @Injectable()
 export class AttachWeaponCharmHandler {

@@ -19,7 +19,7 @@ import { VPhbArmor } from '@entities/views/v-phb-armor.entity';
 import { VPhbClassEconomyAction } from '@entities/views/v-phb-class-economy-action.entity';
 import { VPhbHpBonusSource } from '@entities/views/v-phb-hp-bonus-source.entity';
 import { VPhbUnarmoredDefense } from '@entities/views/v-phb-unarmored-defense.entity';
-import { ResolveActivePermanentItemEffects } from '../inventory/application/resolve-active-permanent-item-effects';
+import { ResolveActivePermanentItemEffects } from '../inventory/application/effects/resolve-active-permanent-item-effects';
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { GameSharedModule } from '../shared/game-shared.module';
 import { LoadCombatMechanicalCatalog } from './application/load-combat-mechanical-catalog';

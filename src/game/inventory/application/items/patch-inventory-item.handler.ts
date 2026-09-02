@@ -2,13 +2,13 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
+import { CharacterInventoryRepository } from '../../infrastructure/character-inventory.repository';
 import {
   InventoryItemResponseDto,
   PatchInventoryItemDto,
-} from '../dto/inventory.dto';
-import { AssertCanBindPactWeaponService } from './assert-can-bind-pact-weapon.service';
-import { AssertCanEquipItemService } from './assert-can-equip-item.service';
+} from '../../dto/inventory.dto';
+import { AssertCanBindPactWeaponService } from '../assert/assert-can-bind-pact-weapon.service';
+import { AssertCanEquipItemService } from '../assert/assert-can-equip-item.service';
 import {
   catalogCostText,
   coinPurseErrorMessage,
@@ -18,7 +18,7 @@ import {
   parseCostText,
   resolveInventoryPayment,
   scaleCoinPurse,
-} from '../domain/coin-purse';
+} from '../../domain/coin-purse';
 import { RecordItemCatalogStatsService } from '@catalog/items/application/record-item-catalog-stats.service';
 
 function isEquipping(dto: PatchInventoryItemDto): boolean {

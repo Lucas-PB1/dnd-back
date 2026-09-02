@@ -9,7 +9,7 @@ import {
   type AdvantageMode,
 } from '@game/dice/domain/dice';
 import type { CharacterRollResponseDto, RollAttackDto } from '@game/dice/dto/character-roll.dto';
-import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
 import {
   findEquippedWeaponAttack,

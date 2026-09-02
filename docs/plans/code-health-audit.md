@@ -150,7 +150,7 @@ Regra do usuário: leaf com mais de 4 arquivos = smell. Inventário (produção,
 | 40 | `src/entities/views` | OK — TypeORM views |
 | 26 | `src/entities` | OK — entidades |
 | 24 | `sheet/domain/validation/class-options` | **Aceito** — padrão documentado em `code-standards.md` |
-| 15 | `inventory/application` | **Split** — handlers por concern (attach / purchase / artifact) |
+| ≤4 | `inventory/application/{items,query,attach,…}` | ✅ 4.4 — handlers por concern |
 | 14 | `session/application/actions` | **Split** — já tem subpastas por classe; tirar handlers soltos da raiz |
 | 13 | `catalog/classes/dto` | OK — DTOs finos por query |
 | 11 | `dice/application/rolls/damage` | Monitorar — pipeline já separado |
@@ -624,7 +624,7 @@ Política canônica de testes: [`code-standards.md` § Testes](../architecture/c
 | 4.1 | ~~Baseline greenfield~~ → [`database/baseline/001_full_schema.sql`](../../database/baseline/001_full_schema.sql) | ✅ 2026-09-02 |
 | 4.2 | ~~Barrel policy — `session/dto/index.ts`~~ | ✅ 2026-09-02 |
 | 4.3 | ~~`*-combat-notes` → `combat/domain/notes/`~~ | ✅ 2026-09-02 |
-| 4.4 | Split `inventory/application` (15 arquivos) | Médio |
+| 4.4 | ~~Split `inventory/application`~~ | ✅ 2026-09-02 |
 | 4.5 | `CatalogLookupService` vs queries — um caminho para escrita ficha | Médio |
 | 4.6 | DTOs com `Omit`/`Pick`; slugs em `constants.ts` | Baixo contínuo |
 

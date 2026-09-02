@@ -9,7 +9,7 @@ import { CharacterMapper } from './infrastructure/character.mapper';
 import { ResolveEquippedArmorClass } from '../combat/application/resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from '../combat/application/resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from '../combat/application/resolve-equipment-compliance';
-import { ResolveActivePermanentItemEffects } from '../inventory/application/resolve-active-permanent-item-effects';
+import { ResolveActivePermanentItemEffects } from '../inventory/application/effects/resolve-active-permanent-item-effects';
 import { CreateCharacterHandler } from './application/create-character.handler';
 import { GetCharacterQuery } from './application/get-character.query';
 import { CharacterDomainService } from './domain/core/character-domain.service';
@@ -18,7 +18,7 @@ import { PlayerCharacter } from '../shared/infrastructure/player-character.entit
 import { PlayerCharacterItem } from '../inventory/infrastructure/player-character-item.entity';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { EMPTY_SHEET_DATA } from './domain/character-sheet.types';
-import { SeedStartingInventoryHandler } from '../inventory/application/seed-starting-inventory.handler';
+import { SeedStartingInventoryHandler } from '../inventory/application/query/seed-starting-inventory.handler';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
 import { PhbHeritageTrait } from '@entities/phb-heritage-trait.entity';
 import { LoadGrantedSpellCatalog } from '../spellcasting/application/load-granted-spell-catalog';

@@ -11,7 +11,7 @@ import type {
   CharacterRollResponseDto,
   RollDamageDto,
 } from '@game/dice/dto/character-roll.dto';
-import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,

@@ -17,20 +17,20 @@ import { DmgSentientTraitTable } from './infrastructure/dmg-sentient-trait-table
 import { CharacterInventoryRepository } from './infrastructure/character-inventory.repository';
 import { EquipmentSlotResolver } from './infrastructure/equipment-slot-resolver';
 import { CharacterInventoryController } from './character-inventory.controller';
-import { AssertCanBindPactWeaponService } from './application/assert-can-bind-pact-weapon.service';
-import { AssertCanEquipItemService } from './application/assert-can-equip-item.service';
-import { AttachWeaponCharmHandler } from './application/attach-weapon-charm.handler';
-import { AttachCoverageHandler } from './application/attach-coverage.handler';
-import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
-import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
-import { PurchaseInventoryHandler } from './application/purchase-inventory.handler';
-import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
-import { RemoveInventoryItemHandler } from './application/remove-inventory-item.handler';
-import { SeedStartingInventoryHandler } from './application/seed-starting-inventory.handler';
-import { ApplyArtifactRegenHandler } from './application/apply-artifact-regen.handler';
-import { ArtifactRegenAccessHandler } from './application/artifact-regen-access.handler';
-import { ApplyArtifactPolishHandler } from './application/apply-artifact-polish.handler';
-import { InventoryActionsHandler } from './application/inventory-actions.handler';
+import { AssertCanBindPactWeaponService } from './application/assert/assert-can-bind-pact-weapon.service';
+import { AssertCanEquipItemService } from './application/assert/assert-can-equip-item.service';
+import { AttachWeaponCharmHandler } from './application/attach/attach-weapon-charm.handler';
+import { AttachCoverageHandler } from './application/attach/attach-coverage.handler';
+import { GetCharacterInventoryQuery } from './application/query/get-character-inventory.query';
+import { AddInventoryItemHandler } from './application/items/add-inventory-item.handler';
+import { PurchaseInventoryHandler } from './application/purchase/purchase-inventory.handler';
+import { PatchInventoryItemHandler } from './application/items/patch-inventory-item.handler';
+import { RemoveInventoryItemHandler } from './application/items/remove-inventory-item.handler';
+import { SeedStartingInventoryHandler } from './application/query/seed-starting-inventory.handler';
+import { ApplyArtifactRegenHandler } from './application/artifact/apply-artifact-regen.handler';
+import { ArtifactRegenAccessHandler } from './application/artifact/artifact-regen-access.handler';
+import { ApplyArtifactPolishHandler } from './application/artifact/apply-artifact-polish.handler';
+import { InventoryActionsHandler } from './application/actions/inventory-actions.handler';
 import { PlayerCharacter } from '../shared/infrastructure/player-character.entity';
 
 @Module({

@@ -1,6 +1,6 @@
 import { BadRequestException } from '@nestjs/common';
 import type { CharacterInventoryRepository } from '@game/inventory/infrastructure/character-inventory.repository';
-import type { AssertCanBindPactWeaponService } from '@game/inventory/application/assert-can-bind-pact-weapon.service';
+import type { AssertCanBindPactWeaponService } from '@game/inventory/application/assert/assert-can-bind-pact-weapon.service';
 import type { WarlockTableActionResult } from './warlock-action-deps';
 import type { PlayerCharacter, WarlockActionDeps } from './warlock-action-deps';
 

@@ -1,14 +1,14 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import type { InventoryActionDto } from '../dto/inventory-action.dto';
-import type { InventoryItemResponseDto } from '../dto/inventory.dto';
-import { AttachCoverageHandler } from './attach-coverage.handler';
-import { AttachWeaponCharmHandler } from './attach-weapon-charm.handler';
-import { ArtifactRegenAccessHandler } from './artifact-regen-access.handler';
-import type { ArtifactRegenResult } from './apply-artifact-regen.handler';
+import type { InventoryActionDto } from '../../dto/inventory-action.dto';
+import type { InventoryItemResponseDto } from '../../dto/inventory.dto';
+import { AttachCoverageHandler } from '../attach/attach-coverage.handler';
+import { AttachWeaponCharmHandler } from '../attach/attach-weapon-charm.handler';
+import { ArtifactRegenAccessHandler } from '../artifact/artifact-regen-access.handler';
+import type { ArtifactRegenResult } from '../artifact/apply-artifact-regen.handler';
 import {
   ApplyArtifactPolishHandler,
   type SentientConflictResult,
-} from './apply-artifact-polish.handler';
+} from '../artifact/apply-artifact-polish.handler';
 
 export type InventoryActionResult =
   | InventoryItemResponseDto

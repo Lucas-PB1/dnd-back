@@ -12,29 +12,29 @@ import { PlayerCharacterAccessService } from '@game/shared/player-character-acce
 import {
   itemRequiresAttunement,
   MAX_ATTUNED_ITEMS,
-} from '../domain/attunement';
-import { assertCharacterMayAttune } from '../domain/attunement-restriction';
+} from '../../domain/attunement';
+import { assertCharacterMayAttune } from '../../domain/attunement-restriction';
 import {
   coverageMatchesBase,
   coverageRequiresTierBonus,
   parseItemCoverage,
   type CoverageBaseContext,
-} from '../domain/coverage/item-coverage';
-import { assertBaseEligibleForCoverage } from '../domain/coverage/coverage-base-eligibility';
+} from '../../domain/coverage/item-coverage';
+import { assertBaseEligibleForCoverage } from '../../domain/coverage/coverage-base-eligibility';
 import {
   assertEnspelledBoundSpell,
   isEnspelledCoverageSlug,
-} from '../domain/coverage/enspelled-weapon';
+} from '../../domain/coverage/enspelled-weapon';
 import {
   AttachCoverageDto,
   DetachCoverageDto,
   InventoryItemResponseDto,
-} from '../dto/inventory.dto';
+} from '../../dto/inventory.dto';
 import {
   findInventoryItemOrFail,
   inventoryItemToDto,
-} from '../infrastructure/inventory/inventory-item-ops';
-import { PlayerCharacterItem } from '../infrastructure/player-character-item.entity';
+} from '../../infrastructure/inventory/inventory-item-ops';
+import { PlayerCharacterItem } from '../../infrastructure/player-character-item.entity';
 
 @Injectable()
 export class AttachCoverageHandler {

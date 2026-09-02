@@ -7,7 +7,7 @@ import { collectMasteredWeaponSlugs } from '@game/sheet/domain/validation/class-
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-class-ability-boosts';
 import { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
-import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
 import {
   applyAbilityPenalties,

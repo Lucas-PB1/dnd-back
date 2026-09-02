@@ -17,7 +17,7 @@ import { paladinSavingThrowAuraBonus } from '../domain/paladin';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
 import { ResolveEquippedWeaponAttacks } from './resolve-equipped-weapon-attacks';
 import { ResolveEquipmentCompliance } from './resolve-equipment-compliance';
-import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
 import type { SizeCategory } from '../domain/equipment';
 import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';

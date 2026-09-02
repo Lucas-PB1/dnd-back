@@ -3,11 +3,11 @@ import { RecordItemCatalogStatsService } from '@catalog/items/application/record
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
+import { CharacterInventoryRepository } from '../../infrastructure/character-inventory.repository';
 import {
   AddInventoryItemDto,
   InventoryItemResponseDto,
-} from '../dto/inventory.dto';
+} from '../../dto/inventory.dto';
 import {
   catalogCostText,
   coinPurseErrorMessage,
@@ -16,10 +16,10 @@ import {
   parseCostText,
   resolveInventoryPayment,
   scaleCoinPurse,
-} from '../domain/coin-purse';
-import { isServiceItem } from '../domain/item-kind';
+} from '../../domain/coin-purse';
+import { isServiceItem } from '../../domain/item-kind';
 import { assertNotClassGrantedCatalogItem } from '@catalog/items/domain/class-granted-catalog-item';
-import { assertNotStandaloneCoverageItem } from '../domain/coverage/coverage-inventory-rules';
+import { assertNotStandaloneCoverageItem } from '../../domain/coverage/coverage-inventory-rules';
 
 @Injectable()
 export class AddInventoryItemHandler {

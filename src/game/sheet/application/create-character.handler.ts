@@ -23,7 +23,7 @@ import { resolveLessonsOriginCharacterFeats } from '../domain/origin/lessons-ori
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { mergeGrantedSpells } from '@game/spellcasting/application/merge-granted-spells';
-import { SeedStartingInventoryHandler } from '@game/inventory/application/seed-starting-inventory.handler';
+import { SeedStartingInventoryHandler } from '@game/inventory/application/query/seed-starting-inventory.handler';
 import { resolveEldritchGrantedSpellSlugs } from './eldritch-granted-spells';
 
 const AUTH_USER_MISSING_MESSAGE =

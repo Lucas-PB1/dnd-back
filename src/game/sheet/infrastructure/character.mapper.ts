@@ -25,7 +25,7 @@ import {
   resolveSizeCategory,
   sizeCategoryFromChoices,
 } from '@game/combat/domain/equipment';
-import { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import { resolveCharacterCombatSlice } from '@game/combat/application/resolve-character-combat-slice';
 import { resolveCharacterSpellcastingSlice } from '@game/spellcasting/application/resolve-character-spellcasting-slice';
 import { collectFightingStyleSlugsFromSubclassOptions } from '../domain/validation/class-options/fighting-style-feat-options';

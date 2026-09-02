@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { LoadCombatMechanicalCatalog } from '@game/combat/application/load-combat-mechanical-catalog';
 import { isWarlockClass } from '@game/combat/domain/warlock';
-import { AssertCanBindPactWeaponService } from '@game/inventory/application/assert-can-bind-pact-weapon.service';
+import { AssertCanBindPactWeaponService } from '@game/inventory/application/assert/assert-can-bind-pact-weapon.service';
 import { CharacterInventoryRepository } from '@game/inventory/infrastructure/character-inventory.repository';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';

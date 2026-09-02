@@ -3,19 +3,19 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { clearArtifactRandomForReroll } from '../domain/artifact/artifact-reroll';
-import { resolveSentientConflict } from '../domain/artifact/sentient-conflict';
+import { clearArtifactRandomForReroll } from '../../domain/artifact/artifact-reroll';
+import { resolveSentientConflict } from '../../domain/artifact/sentient-conflict';
 import {
   buildArtifactInstanceProperties,
   parseArtifactRandomQuota,
-} from '../domain/artifact/roll-artifact-instance';
-import type { ArtifactRandomTableRow } from '../domain/artifact/artifact-instance.types';
-import { PlayerCharacterItem } from '../infrastructure/player-character-item.entity';
-import { DmgArtifactRandomProperty } from '../infrastructure/dmg-artifact-random-property.entity';
-import { inventoryItemToDto } from '../infrastructure/inventory/inventory-item-mappers';
+} from '../../domain/artifact/roll-artifact-instance';
+import type { ArtifactRandomTableRow } from '../../domain/artifact/artifact-instance.types';
+import { PlayerCharacterItem } from '../../infrastructure/player-character-item.entity';
+import { DmgArtifactRandomProperty } from '../../infrastructure/dmg-artifact-random-property.entity';
+import { inventoryItemToDto } from '../../infrastructure/inventory/inventory-item-mappers';
 import { PhbItem } from '@entities/phb-item.entity';
-import type { InventoryItemResponseDto } from '../dto/inventory.dto';
-import { loadArtifactRandomRows } from '../infrastructure/inventory/load-artifact-attunement-deps';
+import type { InventoryItemResponseDto } from '../../dto/inventory.dto';
+import { loadArtifactRandomRows } from '../../infrastructure/inventory/load-artifact-attunement-deps';
 
 export type SentientConflictResult = {
   itemSlug: string;

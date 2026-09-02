@@ -9,7 +9,7 @@ import { CharacterMapper } from '../infrastructure/character.mapper';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
 import { CharacterSheetInput } from '../domain/character-sheet.types';
-import { SeedStartingInventoryHandler } from '@game/inventory/application/seed-starting-inventory.handler';
+import { SeedStartingInventoryHandler } from '@game/inventory/application/query/seed-starting-inventory.handler';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';

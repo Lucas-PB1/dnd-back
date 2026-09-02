@@ -26,12 +26,12 @@ import {
 import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
 import { CurrentUser } from '@identity/decorators/current-user.decorator';
 import { AuthUser } from '@identity/auth-user';
-import { GetCharacterInventoryQuery } from './application/get-character-inventory.query';
-import { AddInventoryItemHandler } from './application/add-inventory-item.handler';
-import { InventoryActionsHandler } from './application/inventory-actions.handler';
-import { PatchInventoryItemHandler } from './application/patch-inventory-item.handler';
-import { PurchaseInventoryHandler } from './application/purchase-inventory.handler';
-import { RemoveInventoryItemHandler } from './application/remove-inventory-item.handler';
+import { GetCharacterInventoryQuery } from './application/query/get-character-inventory.query';
+import { AddInventoryItemHandler } from './application/items/add-inventory-item.handler';
+import { InventoryActionsHandler } from './application/actions/inventory-actions.handler';
+import { PatchInventoryItemHandler } from './application/items/patch-inventory-item.handler';
+import { PurchaseInventoryHandler } from './application/purchase/purchase-inventory.handler';
+import { RemoveInventoryItemHandler } from './application/items/remove-inventory-item.handler';
 import { InventoryActionDto } from './dto/inventory-action.dto';
 import {
   AddInventoryItemDto,

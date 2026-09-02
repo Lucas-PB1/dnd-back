@@ -18,7 +18,7 @@ import { executeRollDamage } from './rolls/roll-damage';
 import { executeRollInitiative } from './rolls/roll-initiative';
 import { executeRollSavingThrow } from './rolls/roll-saving-throw';
 import { executeRollSkill } from './rolls/roll-skill';
-import { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
 
 @Injectable()

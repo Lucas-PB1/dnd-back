@@ -4,10 +4,10 @@ import { Repository } from 'typeorm';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
 import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';
 import { PlayerCharacterEquipment } from '@game/sheet/infrastructure/player-sheet.entities';
-import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
-import { CharacterInventoryResponseDto } from '../dto/inventory.dto';
+import { CharacterInventoryRepository } from '../../infrastructure/character-inventory.repository';
+import { CharacterInventoryResponseDto } from '../../dto/inventory.dto';
 import { SeedStartingInventoryHandler } from './seed-starting-inventory.handler';
-import { coinPurseFromColumns } from '../domain/coin-purse';
+import { coinPurseFromColumns } from '../../domain/coin-purse';
 
 @Injectable()
 export class GetCharacterInventoryQuery {

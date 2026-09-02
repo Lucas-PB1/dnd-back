@@ -2,14 +2,14 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { CampaignCharacterAccessService } from '@game/campaign/infrastructure/campaign-character-access.service';
 import { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
+import { CharacterInventoryRepository } from '../../infrastructure/character-inventory.repository';
 import {
   catalogCostText,
   coinPurseErrorMessage,
   halfCoinPurseValue,
   parseCostText,
   scaleCoinPurse,
-} from '../domain/coin-purse';
+} from '../../domain/coin-purse';
 
 export type RemoveInventoryMode = 'sell' | 'discard';
 

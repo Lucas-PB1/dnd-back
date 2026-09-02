@@ -2,10 +2,10 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
-import { findArtifactRegenOnInstance } from '../domain/artifact/artifact-instance-ops';
-import { PlayerCharacterItem } from '../infrastructure/player-character-item.entity';
-import { itemEffectsActive } from '../domain/item-effects-active';
-import { itemRequiresAttunement } from '../domain/attunement';
+import { findArtifactRegenOnInstance } from '../../domain/artifact/artifact-instance-ops';
+import { PlayerCharacterItem } from '../../infrastructure/player-character-item.entity';
+import { itemEffectsActive } from '../../domain/item-effects-active';
+import { itemRequiresAttunement } from '../../domain/attunement';
 import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 
 export type ArtifactRegenResult = {

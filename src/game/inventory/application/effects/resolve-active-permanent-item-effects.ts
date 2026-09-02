@@ -2,18 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
 import { PhbItem } from '@entities/phb-item.entity';
-import { itemRequiresAttunement } from '../domain/attunement';
+import { itemRequiresAttunement } from '../../domain/attunement';
 import {
   coverageBonusToEffects,
   parseItemCoverage,
-} from '../domain/coverage/item-coverage';
-import { mergeArtifactInstanceIntoCatalogProperties } from '../domain/artifact/merge-artifact-instance-effects';
+} from '../../domain/coverage/item-coverage';
+import { mergeArtifactInstanceIntoCatalogProperties } from '../../domain/artifact/merge-artifact-instance-effects';
 import {
   resolveActivePermanentItemEffects,
   type InventoryItemForEffects,
   type ResolvedPermanentItemEffects,
-} from '../domain/permanent-item-effects';
-import { PlayerCharacterItem } from '../infrastructure/player-character-item.entity';
+} from '../../domain/permanent-item-effects';
+import { PlayerCharacterItem } from '../../infrastructure/player-character-item.entity';
 
 export type ActivePermanentItemEffects = ResolvedPermanentItemEffects;
 

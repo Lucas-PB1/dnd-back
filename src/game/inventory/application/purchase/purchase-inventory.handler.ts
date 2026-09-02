@@ -17,23 +17,23 @@ import {
   resolveInventoryPayment,
   scaleCoinPurse,
   type CoinPurse,
-} from '../domain/coin-purse';
-import { parseItemCoverage } from '../domain/coverage/item-coverage';
+} from '../../domain/coin-purse';
+import { parseItemCoverage } from '../../domain/coverage/item-coverage';
 import {
   assertAttachCoverageSlugIsCoverage,
   assertCoverageLineHasTarget,
   assertNotStandaloneCoverageItem,
-} from '../domain/coverage/coverage-inventory-rules';
-import { assertBaseEligibleForCoverage } from '../domain/coverage/coverage-base-eligibility';
-import { resolveCoveragePurchaseCost } from '../domain/coverage/coverage-tier-cost';
-import { isServiceItem } from '../domain/item-kind';
+} from '../../domain/coverage/coverage-inventory-rules';
+import { assertBaseEligibleForCoverage } from '../../domain/coverage/coverage-base-eligibility';
+import { resolveCoveragePurchaseCost } from '../../domain/coverage/coverage-tier-cost';
+import { isServiceItem } from '../../domain/item-kind';
 import { assertNotClassGrantedCatalogItem } from '@catalog/items/domain/class-granted-catalog-item';
-import { CharacterInventoryResponseDto } from '../dto/inventory.dto';
-import { PurchaseInventoryDto } from '../dto/purchase-inventory.dto';
-import { CharacterInventoryRepository } from '../infrastructure/character-inventory.repository';
-import { purchaseInventoryLines } from '../infrastructure/inventory/inventory-purchase-tx';
-import { AttachCoverageHandler } from './attach-coverage.handler';
-import { GetCharacterInventoryQuery } from './get-character-inventory.query';
+import { CharacterInventoryResponseDto } from '../../dto/inventory.dto';
+import { PurchaseInventoryDto } from '../../dto/purchase-inventory.dto';
+import { CharacterInventoryRepository } from '../../infrastructure/character-inventory.repository';
+import { purchaseInventoryLines } from '../../infrastructure/inventory/inventory-purchase-tx';
+import { AttachCoverageHandler } from '../attach/attach-coverage.handler';
+import { GetCharacterInventoryQuery } from '../query/get-character-inventory.query';
 
 type ResolvedPurchase = {
   inventoryLines: Array<{ itemSlug: string; quantity: number }>;

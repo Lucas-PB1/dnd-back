@@ -14,7 +14,7 @@ import type {
   RollSavingThrowDto,
 } from '@game/dice/dto/character-roll.dto';
 import { loadAccessibleCharacter } from './roll-weapon-context';
-import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/resolve-active-permanent-item-effects';
+import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import { applyItemAbilityBonuses } from '@game/inventory/domain/permanent-item-effects';
 import {
   applyAbilityPenalties,
