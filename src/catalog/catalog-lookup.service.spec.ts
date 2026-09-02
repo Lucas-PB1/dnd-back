@@ -1,57 +1,65 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
+import type { ObjectLiteral, Repository } from 'typeorm';
 import { CatalogLookupService } from './catalog-lookup.service';
 
-type Repo = { findOne: jest.Mock; find: jest.Mock };
+type RepoMocks = {
+  findOne: jest.Mock;
+  find: jest.Mock;
+};
 
-function repo(): Repo {
+function mockRepo(): RepoMocks {
   return { findOne: jest.fn(), find: jest.fn() };
+}
+
+function asMockRepo<T extends ObjectLiteral>(mocks: RepoMocks): Repository<T> {
+  return mocks as unknown as Repository<T>;
 }
 
 describe('CatalogLookupService', () => {
   let service: CatalogLookupService;
-  let classesRepo: Repo;
-  let speciesRepo: Repo;
-  let heritageRepo: Repo;
-  let backgroundsRepo: Repo;
-  let subclassesRepo: Repo;
-  let alignmentsRepo: Repo;
-  let classSkillChoiceRepo: Repo;
-  let featsRepo: Repo;
-  let languagesRepo: Repo;
-  let abilityMethodsRepo: Repo;
-  let itemsRepo: Repo;
-  let spellsRepo: Repo;
-  let skillsRepo: Repo;
+  let classesRepo: RepoMocks;
+  let speciesRepo: RepoMocks;
+  let heritageRepo: RepoMocks;
+  let backgroundsRepo: RepoMocks;
+  let subclassesRepo: RepoMocks;
+  let alignmentsRepo: RepoMocks;
+  let classSkillChoiceRepo: RepoMocks;
+  let featsRepo: RepoMocks;
+  let languagesRepo: RepoMocks;
+  let abilityMethodsRepo: RepoMocks;
+  let itemsRepo: RepoMocks;
+  let spellsRepo: RepoMocks;
+  let skillsRepo: RepoMocks;
 
   beforeEach(() => {
-    classesRepo = repo();
-    speciesRepo = repo();
-    heritageRepo = repo();
-    backgroundsRepo = repo();
-    subclassesRepo = repo();
-    alignmentsRepo = repo();
-    classSkillChoiceRepo = repo();
-    featsRepo = repo();
-    languagesRepo = repo();
-    abilityMethodsRepo = repo();
-    itemsRepo = repo();
-    spellsRepo = repo();
-    skillsRepo = repo();
+    classesRepo = mockRepo();
+    speciesRepo = mockRepo();
+    heritageRepo = mockRepo();
+    backgroundsRepo = mockRepo();
+    subclassesRepo = mockRepo();
+    alignmentsRepo = mockRepo();
+    classSkillChoiceRepo = mockRepo();
+    featsRepo = mockRepo();
+    languagesRepo = mockRepo();
+    abilityMethodsRepo = mockRepo();
+    itemsRepo = mockRepo();
+    spellsRepo = mockRepo();
+    skillsRepo = mockRepo();
 
     service = new CatalogLookupService(
-      classesRepo as never,
-      speciesRepo as never,
-      heritageRepo as never,
-      backgroundsRepo as never,
-      subclassesRepo as never,
-      alignmentsRepo as never,
-      classSkillChoiceRepo as never,
-      featsRepo as never,
-      languagesRepo as never,
-      abilityMethodsRepo as never,
-      itemsRepo as never,
-      spellsRepo as never,
-      skillsRepo as never,
+      asMockRepo(classesRepo),
+      asMockRepo(speciesRepo),
+      asMockRepo(heritageRepo),
+      asMockRepo(backgroundsRepo),
+      asMockRepo(subclassesRepo),
+      asMockRepo(alignmentsRepo),
+      asMockRepo(classSkillChoiceRepo),
+      asMockRepo(featsRepo),
+      asMockRepo(languagesRepo),
+      asMockRepo(abilityMethodsRepo),
+      asMockRepo(itemsRepo),
+      asMockRepo(spellsRepo),
+      asMockRepo(skillsRepo),
     );
   });
 

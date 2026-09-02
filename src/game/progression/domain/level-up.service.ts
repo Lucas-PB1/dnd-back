@@ -1,26 +1,27 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DataSource, Repository } from 'typeorm';
-import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
 import { VSpellByClass } from '@entities/views/v-spell-by-class.entity';
 import { VPhbSubclassPreparedSpell } from '@entities/views/v-phb-subclass-prepared-spell.entity';
-import { VClassSpellSlots } from '@entities/views/v-class-spell-slots.entity';
-import { VSubclassSpellSlots } from '@entities/views/v-subclass-spell-slots.entity';
 import { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
 import { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
-import { maxSpellLevelFromSlots } from '@game/spellcasting/domain/max-spell-level';
 import { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { LevelUpPreviewDto } from '../dto/level-up.dto';
 import { isAsiOrFeatLevel } from './asi-feat-levels';
 import { classExpertiseSlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-expertise-slots';
 import { classWeaponMasterySlotsNewAtLevel } from '@game/sheet/domain/validation/class-options/class-weapon-mastery-slots';
+import {
+  loadClassWeaponMasteryProgression,
+  loadMaxSpellLevelForCharacter,
+  loadSubclassSpellListClassSlug,
+  loadSubclassUnlockLevel,
+} from '../infrastructure/queries/level-up-catalog.queries';
 
 @Injectable()
 export class LevelUpService {
   constructor(
     private readonly dataSource: DataSource,
-    private readonly catalogLookup: CatalogLookupService,
     private readonly domain: CharacterDomainService,
     private readonly sheetRepository: CharacterSheetRepository,
     @InjectRepository(PhbCharacterLevel)
@@ -29,10 +30,6 @@ export class LevelUpService {
     private readonly classSpellsRepo: Repository<VSpellByClass>,
     @InjectRepository(VPhbSubclassPreparedSpell)
     private readonly subclassSpellsRepo: Repository<VPhbSubclassPreparedSpell>,
-    @InjectRepository(VClassSpellSlots)
-    private readonly spellSlotsRepo: Repository<VClassSpellSlots>,
-    @InjectRepository(VSubclassSpellSlots)
-    private readonly subclassSpellSlotsRepo: Repository<VSubclassSpellSlots>,
   ) {}
 
   async buildPreview(character: PlayerCharacter): Promise<LevelUpPreviewDto> {
@@ -64,19 +61,17 @@ export class LevelUpService {
       this.levelsRepo.findOne({ where: { level: nextLevel } }),
     ]);
 
-    const subclassUnlockLevel = await this.resolveSubclassUnlockLevel(character.classSlug);
-    const subclassRequired = nextLevel >= subclassUnlockLevel && !character.subclassSlug;
+    const subclassUnlockLevel = await loadSubclassUnlockLevel(
+      this.dataSource,
+      character.classSlug,
+    );
+    const subclassRequired =
+      nextLevel >= subclassUnlockLevel && !character.subclassSlug;
 
     const newSpellOptions = await this.findNewSpellOptions(character, nextLevel);
-    const masteryProgression = await this.dataSource.query<
-      { level: number; weaponMastery: number | null }[]
-    >(
-      `SELECT cp.level, cp.weapon_mastery AS "weaponMastery"
-       FROM rpg.phb_class_progression cp
-       JOIN rpg.phb_class c ON c.id = cp.class_id
-       WHERE c.slug = $1
-       ORDER BY cp.level`,
-      [character.classSlug],
+    const masteryProgression = await loadClassWeaponMasteryProgression(
+      this.dataSource,
+      character.classSlug,
     );
 
     return {
@@ -101,22 +96,16 @@ export class LevelUpService {
     };
   }
 
-  private async resolveSubclassUnlockLevel(classSlug: string): Promise<number> {
-    const rows = await this.dataSource.query<{ subclass_unlock_level: number }[]>(
-      `SELECT subclass_unlock_level FROM rpg.phb_class WHERE slug = $1`,
-      [classSlug],
-    );
-    return rows[0]?.subclass_unlock_level ?? 3;
-  }
-
   private async findNewSpellOptions(
     character: PlayerCharacter,
     nextLevel: number,
   ): Promise<LevelUpPreviewDto['newSpellOptions']> {
-    const spellListClassSlug = await this.resolveSpellListClassSlug(
+    const spellListClassSlug = await loadSubclassSpellListClassSlug(
+      this.dataSource,
       character.subclassSlug,
     );
-    const maxSpellLevel = await this.maxSpellLevelForCharacter(
+    const maxSpellLevel = await loadMaxSpellLevelForCharacter(
+      this.dataSource,
       character.classSlug,
       nextLevel,
       character.subclassSlug,
@@ -160,41 +149,5 @@ export class LevelUpService {
       seen.add(opt.spellSlug);
       return true;
     });
-  }
-
-  private async resolveSpellListClassSlug(
-    subclassSlug: string | null,
-  ): Promise<string | null> {
-    if (!subclassSlug) return null;
-    const rows = await this.dataSource.query<{ slug: string }[]>(
-      `SELECT list_c.slug
-       FROM rpg.phb_subclass_spellcasting ssc
-       JOIN rpg.phb_subclass sc ON sc.id = ssc.subclass_id
-       JOIN rpg.phb_class list_c ON list_c.id = ssc.spell_list_class_id
-       WHERE sc.slug = $1
-       LIMIT 1`,
-      [subclassSlug],
-    );
-    return rows[0]?.slug ?? null;
-  }
-
-  /** Círculo máximo com slot > 0 (classe ou subclasse conjuradora). */
-  private async maxSpellLevelForCharacter(
-    classSlug: string,
-    level: number,
-    subclassSlug: string | null,
-  ): Promise<number> {
-    if (subclassSlug) {
-      const subclassRow = await this.subclassSpellSlotsRepo.findOne({
-        where: { subclassSlug, classLevel: level },
-      });
-      if (subclassRow?.spellSlots) {
-        return maxSpellLevelFromSlots(subclassRow.spellSlots);
-      }
-    }
-    const row = await this.spellSlotsRepo.findOne({
-      where: { classSlug, classLevel: level },
-    });
-    return maxSpellLevelFromSlots(row?.spellSlots);
   }
 }

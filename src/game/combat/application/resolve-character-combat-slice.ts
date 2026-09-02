@@ -12,6 +12,7 @@ import {
   heritageCombatNotes,
   loadHeritageHitPointsBonus,
 } from '../domain/heritage/heritage-combat-notes';
+import { transformationCombatNotes } from '../domain/notes/grim-hollow/transformation-combat-notes';
 import { manikinArmorPresetFromChoices } from '../domain/species/manikin-armor';
 import { paladinSavingThrowAuraBonus } from '../domain/paladin';
 import { ResolveEquippedArmorClass } from './resolve-equipped-armor-class';
@@ -52,6 +53,11 @@ export async function resolveCharacterCombatSlice(input: {
   heritageChoices?: readonly { choiceKind: string; choiceSlug: string }[];
   speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[];
   classOptions?: readonly { optionKey: string; valueId: string }[];
+  transformation?: {
+    slug: string;
+    stage: number;
+    choices?: readonly { choiceKind: string; choiceSlug: string }[];
+  } | null;
   level: number;
   proficiencyBonus: number;
   featSlugs: string[];
@@ -73,6 +79,7 @@ export async function resolveCharacterCombatSlice(input: {
     heritageChoices,
     speciesChoices,
     classOptions,
+    transformation,
     level,
     proficiencyBonus,
     featSlugs,
@@ -170,6 +177,7 @@ export async function resolveCharacterCombatSlice(input: {
   });
   const speciesNotes = speciesCombatNotes({ speciesSlug, speciesChoices });
   const heritageNotes = heritageCombatNotes({ heritageChoices });
+  const transformationNotes = transformationCombatNotes(transformation ?? null);
   const heritageHpBonus = await sheetProfile('combat.heritageHp', () =>
     loadHeritageHitPointsBonus(
       dataSource,
@@ -202,6 +210,7 @@ export async function resolveCharacterCombatSlice(input: {
     classCombatNotes: [
       ...speciesNotes,
       ...heritageNotes,
+      ...transformationNotes,
       ...featNotes,
       ...itemNotes,
       ...classCombat.notes,

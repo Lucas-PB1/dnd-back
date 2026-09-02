@@ -56,6 +56,7 @@ import { CharacterSignatureSpellsValidator } from './domain/validation/class-opt
 import { CharacterFeatOptionValueValidator } from './domain/validation/feats/character-feat-option-value.validator';
 import { CharacterFeatOptionsValidator } from './domain/validation/feats/character-feat-options.validator';
 import { CharacterFeatsValidator } from './domain/validation/feats/character-feats.validator';
+import { CharacterTransformationValidator } from './domain/transformation/character-transformation.validator';
 import { CharacterCreateRequirementsValidator } from './domain/validation/character-create-requirements.validator';
 import { ListCharactersQuery } from './application/list-characters.query';
 import { GetCharacterQuery } from './application/get-character.query';
@@ -132,6 +133,7 @@ import { VPhbCharacterThreadBundle } from '@entities/views/v-phb-character-threa
     CharacterFeatOptionValueValidator,
     CharacterFeatOptionsValidator,
     CharacterFeatsValidator,
+    CharacterTransformationValidator,
     CharacterCreateRequirementsValidator,
     CharacterSheetValidator,
     CharacterSheetRepository,

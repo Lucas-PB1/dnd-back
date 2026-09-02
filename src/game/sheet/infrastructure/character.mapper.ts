@@ -114,6 +114,7 @@ export class CharacterMapper {
           heritageChoices: loaded.heritageChoices,
           speciesChoices: loaded.speciesChoices,
           classOptions: loaded.classOptions,
+          transformation: loaded.transformation,
           level: row.level,
           proficiencyBonus,
           featSlugs,

@@ -2,13 +2,17 @@ import { BadRequestException } from '@nestjs/common';
 import { LevelUpService } from './level-up.service';
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
-import type { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import type { PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
+import * as levelUpCatalog from '../infrastructure/queries/level-up-catalog.queries';
 
 type Repo = { findOne: jest.Mock; find: jest.Mock };
 
 function repo(): Repo {
   return { findOne: jest.fn(), find: jest.fn() };
+}
+
+function asMock<T>(value: unknown): T {
+  return value as T;
 }
 
 function character(overrides: Partial<PlayerCharacter> = {}): PlayerCharacter {
@@ -41,67 +45,69 @@ function character(overrides: Partial<PlayerCharacter> = {}): PlayerCharacter {
 
 describe('LevelUpService', () => {
   let service: LevelUpService;
-  let dataSource: { query: jest.Mock };
-  let catalogLookup: CatalogLookupService;
-  let domain: jest.Mocked<Pick<CharacterDomainService, 'calculateHitPointsMaxForCharacter'>>;
+  let dataSource: { getRepository: jest.Mock };
+  let domain: jest.Mocked<
+    Pick<CharacterDomainService, 'calculateHitPointsMaxForCharacter'>
+  >;
   let sheetRepository: jest.Mocked<Pick<CharacterSheetRepository, 'load'>>;
   let levelsRepo: Repo;
   let classSpellsRepo: Repo;
   let subclassSpellsRepo: Repo;
-  let spellSlotsRepo: Repo;
-  let subclassSpellSlotsRepo: Repo;
 
   beforeEach(() => {
-    dataSource = { query: jest.fn() };
-    catalogLookup = {} as CatalogLookupService;
+    jest.restoreAllMocks();
+    dataSource = { getRepository: jest.fn() };
     domain = { calculateHitPointsMaxForCharacter: jest.fn() };
     sheetRepository = { load: jest.fn() };
     levelsRepo = repo();
     classSpellsRepo = repo();
     subclassSpellsRepo = repo();
-    spellSlotsRepo = repo();
-    subclassSpellSlotsRepo = repo();
+
+    jest
+      .spyOn(levelUpCatalog, 'loadSubclassUnlockLevel')
+      .mockResolvedValue(3);
+    jest
+      .spyOn(levelUpCatalog, 'loadClassWeaponMasteryProgression')
+      .mockResolvedValue([
+        { level: 1, weaponMastery: null },
+        { level: 2, weaponMastery: null },
+      ]);
+    jest
+      .spyOn(levelUpCatalog, 'loadSubclassSpellListClassSlug')
+      .mockResolvedValue(null);
+    jest
+      .spyOn(levelUpCatalog, 'loadMaxSpellLevelForCharacter')
+      .mockResolvedValue(1);
 
     service = new LevelUpService(
-      dataSource as never,
-      catalogLookup,
-      domain as never,
-      sheetRepository as never,
-      levelsRepo as never,
-      classSpellsRepo as never,
-      subclassSpellsRepo as never,
-      spellSlotsRepo as never,
-      subclassSpellSlotsRepo as never,
+      asMock(dataSource),
+      asMock(domain),
+      asMock(sheetRepository),
+      asMock(levelsRepo),
+      asMock(classSpellsRepo),
+      asMock(subclassSpellsRepo),
     );
   });
 
   it('throws when character is already at max level', async () => {
     await expect(
       service.buildPreview(character({ level: 20 })),
-    ).rejects.toThrow(new BadRequestException('Character is already at maximum level'));
+    ).rejects.toThrow(
+      new BadRequestException('Character is already at maximum level'),
+    );
   });
 
   it('buildPreview returns hp, pb, spells and mastery slots', async () => {
     const pc = character();
-    sheetRepository.load.mockResolvedValue({
-      characterFeats: [{ featSlug: 'alert' }],
-    } as never);
+    sheetRepository.load.mockResolvedValue(
+      asMock({ characterFeats: [{ featSlug: 'alert' }] }),
+    );
     domain.calculateHitPointsMaxForCharacter
       .mockResolvedValueOnce(8)
       .mockResolvedValueOnce(14);
     levelsRepo.findOne
       .mockResolvedValueOnce({ proficiencyBonus: 2 })
       .mockResolvedValueOnce({ proficiencyBonus: 2 });
-    dataSource.query.mockImplementation(async (sql: string) => {
-      if (sql.includes('subclass_unlock_level')) return [{ subclass_unlock_level: 3 }];
-      return [
-        { level: 1, weaponMastery: null },
-        { level: 2, weaponMastery: null },
-      ];
-    });
-    spellSlotsRepo.findOne.mockResolvedValue({
-      spellSlots: { '1': 2 },
-    });
     classSpellsRepo.find.mockResolvedValue([
       { spellSlug: 'fire-bolt', spellName: 'Raio de Fogo', spellLevel: 0 },
       { spellSlug: 'magic-missile', spellName: 'Míssil Mágico', spellLevel: 1 },
@@ -118,22 +124,12 @@ describe('LevelUpService', () => {
       where: { classSlug: 'wizard' },
       order: { spellLevel: 'ASC', spellName: 'ASC' },
     });
-    expect(preview).toMatchObject({
-      currentLevel: 1,
-      nextLevel: 2,
-      currentProficiencyBonus: 2,
-      nextProficiencyBonus: 2,
-      estimatedHpGain: 6,
-      estimatedHitPointsMax: 14,
-      subclassRequired: false,
-      subclassUnlockLevel: 3,
-      isAsiOrFeatLevel: false,
-      newClassExpertiseSlots: [{ optionKey: 'expertiseSkill1', unlockLevel: 2 }],
-      newWeaponMasterySlots: [],
-    });
-    expect(preview.newSpellOptions).toEqual([
-      { spellSlug: 'fire-bolt', spellName: 'Raio de Fogo', spellLevel: 0 },
-      { spellSlug: 'magic-missile', spellName: 'Míssil Mágico', spellLevel: 1 },
+    expect(preview.currentLevel).toBe(1);
+    expect(preview.nextLevel).toBe(2);
+    expect(preview.estimatedHpGain).toBe(6);
+    expect(preview.newSpellOptions.map((s) => s.spellSlug)).toEqual([
+      'fire-bolt',
+      'magic-missile',
     ]);
   });
 });

@@ -20,7 +20,7 @@ Objetivo: regras do capítulo (não o A–Z de itens) que **explicam falhas** ou
 | Preços PHB equipamento + câmbio de moedas | `S031` auditado; compra via `POST …/inventory/purchase` (carrinho) + add; venda ½ / discard; qty PATCH cobrado; serviços sem inventariar; stats view/purchase |
 | Cap. 6 extras (variantes, montarias, veículos, serviços, scrolls 2–9) | Seedados em `S031` com `cost.text` (categorias `Varia` → `cost NULL` + filhas precificadas). Instrumentos/jogos **não** mais patchados em `S060`. Rerolar `db:seed` |
 | Compartimentos (bolsa/saca/cesta) | `contained_in_item_slug` (P028) + UI Beyond por recipiente |
-| Preços mágicos sugeridos (raridade) | `D010` via `generate-dmg-item-seeds.mjs` |
+| Preços mágicos sugeridos (raridade) | `D010` (seed versionado) |
 
 ---
 

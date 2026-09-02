@@ -221,6 +221,7 @@ describe('CharacterSheetValidator.validateCreateRequiredFields', () => {
       extraSkillValidator as never,
       mysticArcanumValidator as never,
       signatureSpellsValidator as never,
+      { validate: jest.fn().mockResolvedValue(undefined) } as never,
     );
   });
 

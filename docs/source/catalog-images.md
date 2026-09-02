@@ -1,116 +1,28 @@
 # Imagens de catálogo — fluxo
 
-Como popular ilustrações no front (`dnd-front/public/catalog/…`), gerar seeds SQL e **descartar** artefatos de scrape sem perder o que o repo precisa.
+Como as ilustrações chegam ao front (`dnd-front/public/catalog/…`) e aos seeds SQL. Geradores de import/split **não** ficam no repo — assets e seeds já versionados são a SSOT.
 
 ## Onde cada coisa mora
 
 | Camada | Caminho | Papel |
 |--------|---------|--------|
-| Fonte (temporária) | `docs/source/_assets/montarias/images/*.png` | PNGs extraídos do Beyond — **apagar após import** |
-| Fonte (temporária) | `docs/source/_assets/phb-equipment/07-*.png` | Ilustrações Cap. 7 — mapear → slug, depois apagar |
-| SSOT metadados | `docs/source/extracts/phb/cap6-mounts.json` | Slugs, custos, `imageUrl` das 8 montarias — **manter** |
-| SSOT regra (não é imagem) | `docs/source/extracts/phb/cap6-barding.json` | Regra de barding ×4/×2 — **manter** |
-| Assets públicos | `dnd-front/public/catalog/mounts/{slug}.png` | Servidos pelo Next — **commitar** |
-| DB | `database/seeds/creatures/M006_*.sql`, `phb/S079_*.sql` | `UPDATE … image_url` — **manter** |
+| Fonte (temporária) | `docs/source/_assets/…` | PNGs de scrape — **apagar após import** (gitignored) |
+| SSOT metadados | `docs/source/extracts/…` | JSON com `imageUrl` / slugs — **manter** |
+| Assets públicos | `dnd-front/public/catalog/…` | Servidos pelo Next — **commitar** |
+| DB | `database/seeds/**` (`image_url`) | **manter** |
 
-A “coisinha minúscula” em `extracts/phb/cap6-barding.json` é só a regra de armadura de montaria (custo ×4, peso ×2), não ilustração.
+## Lotes fechados (estado)
 
-## Lote 1 — Montarias PHB (Cap. 6) ✅
+| Lote | Público | Extract / seed |
+|------|---------|----------------|
+| Montarias PHB Cap. 6 | `public/catalog/mounts/` | `extracts/phb/cap6-mounts.json` · `M006` / `S079` |
+| Subclasses GH Cap. 2 | `public/catalog/subclasses/` | `cap2-subclasses-en.json` · `J034` |
+| Equipamento GH Cap. 5 | (front + fallbacks PHB) | `cap5-advanced-equipment-images.json` · `J008` |
+| Equipamento PHB Cap. 7 | `public/catalog/equipment/` | `cap7-equipment-sprites.json` + status JSON |
 
-Estado atual (2026-08-29):
+## Lote 2 — Equipamento PHB (Cap. 7) — composites
 
-- 8 PNGs em `public/catalog/mounts/`
-- `extracts/phb/cap6-mounts.json` com `imageUrl` e `imagesImportedAt`
-- Seeds `M006_phb_mount_images.sql` + `S079_phb_mount_images.sql`
-- `_assets/montarias/images/` vazio (fonte já descartada — correto)
-
-### Reimportar / regenerar seeds (sem fonte)
-
-```bash
-cd dnd-api
-node scripts/import-phb-mount-images.mjs --seeds-only
-```
-
-### Novo scrape de montarias
-
-1. Salvar HTML em `docs/source/_scrapes/phb/` **ou** PNGs nomeados por slug em `_assets/montarias/images/`
-2. `node scripts/cleanup-docs-source-scrapes.mjs` (se veio HTML + `_files`)
-3. `node scripts/import-phb-mount-images.mjs`
-4. `node scripts/import-phb-mount-images.mjs --prune-source` — remove PNGs de `_assets/montarias/images/`
-5. Rodar seeds no DB se `image_url` ainda for `NULL`
-
-## Lote GH Cap. 2 — Subclasses Grim Hollow ✅
-
-Estado (2026-08-30):
-
-- 40 PNGs em `dnd-api/public/catalog/subclasses/{slug}.png`
-- `extracts/grim-hollow/cap2-subclasses-en.json` com `imageFile` por subclasse
-- Seed `database/seeds/grim-hollow/J034_catalog_subclass_images.sql`
-- Compêndio: `/subclasses` (filtro Fontes → Grim Hollow) e `/subclasses/{slug}`
-
-### Regenerar
-
-```bash
-cd dnd-api
-node scripts/extract-ghpg-cap2.mjs
-node scripts/import-ghpg-cap2-subclass-images.mjs
-# aplicar J034 no DB
-node scripts/verify-ghpg-compendium.mjs
-```
-
-`--seeds-only` no import gera só o SQL se a pasta `_files` do Cap. 2 não estiver local.
-
-## Lote GH Cap. 5 — Equipamento avançado ✅ (parcial)
-
-Estado (2026-08-30):
-
-- 5 ilustrações no scrape Beyond (`06-001`…`06-005` + JPG artificer)
-- `scripts/lib/ghpg-cap5-image-fallbacks.mjs` — bundles do scrape + fallbacks PHB (sprites S080)
-- `extracts/grim-hollow/cap5-advanced-equipment-images.json` — SSOT `imageUrl` por slug (78/78)
-- Seed `database/seeds/grim-hollow/J008_catalog_images.sql`
-
-Itens sem arte GH própria usam sprite PHB parecido (ex.: `cavalry-flail` → `flail.png`) ou ilustração de cena compartilhada (munição → `arrows-shield.png`).
-
-### Regenerar
-
-```bash
-cd dnd-api
-node scripts/import-ghpg-cap5-images.mjs          # copia PNGs do scrape + seed
-node scripts/import-ghpg-cap5-images.mjs --seeds-only
-```
-
-Requer pasta `Chapter 5*_files` em `docs/source/scrap/` (ou `_scrapes/grim-hollow/`) para copiar os 5 arquivos GH; fallbacks PHB funcionam sem ela.
-
-## Lote 2 — Equipamento PHB (Cap. 7) 🔜
-
-Sprites do Beyond vêm **agrupados** (ex.: `07-059.simple-range.png` = dardo + besta + funda + arco no mesmo PNG).
-
-### Pipeline (verificação item a item)
-
-Sprites compostos exigem **conferência visual** — não confiar só na ordem do blob.
-
-1. `node scripts/verify-phb-equipment-sprites.mjs init`
-2. `node scripts/verify-phb-equipment-sprites.mjs checklist`
-3. Conferir PNG em `_review/` ou `public/catalog/equipment/`
-4. `node scripts/verify-phb-equipment-sprites.mjs mark <slug> ok|wrong [--note "..."]`
-5. Ajustar só `wrong`/`pending`: `node scripts/split-phb-equipment-sprites.mjs --only wrong,pending`
-
-Registro: `extracts/phb/cap7-equipment-images-status.json` (`ok` congela crop em `frozen`).
-
-### Recorte
-
-```bash
-node scripts/split-phb-equipment-sprites.mjs --review
-node scripts/split-phb-equipment-sprites.mjs --skip-verified
-node scripts/split-phb-equipment-sprites.mjs --only wrong,pending
-node scripts/split-phb-equipment-sprites.mjs --slug battleaxe
-```
-
-Manifesto de crops/ordem: `extracts/phb/cap7-equipment-sprites.json`
-
-Próximo: seed `image_url` → apagar fonte quando o lote fechar.
-
-### Composites por item
+Sprites do Beyond vêm **agrupados**. Manifesto de crops/ordem: `extracts/phb/cap7-equipment-sprites.json`. Status: `extracts/phb/cap7-equipment-images-status.json`.
 
 | Arquivo | Itens no sprite |
 |---------|-----------------|
@@ -129,23 +41,23 @@ Ilustrações de **cena** (`07-001`, `07-003`, `07-005`, `07-006`) — não reco
 
 | Fonte | Destino público | SSOT |
 |-------|-----------------|------|
-| `extracts/northlands/stat-blocks.json` | `public/catalog/creatures/` | stat block + `imageUrl` no JSON |
+| `extracts/northlands/stat-blocks.json` | `public/catalog/creatures/` | stat block + `imageUrl` |
 | DMG itens mágicos | `public/catalog/magic-items/` | `extracts/dmg/items-az.json` |
 | Veículos | `public/catalog/vehicles/` | templates em seeds |
 
-Mesmo padrão: **PNG no front + `image_url` no seed + caminho no JSON de extrato**; descartar PNG/fonte em `_assets/` quando o lote estiver fechado.
+## Regeneração
+
+Não há scripts `import-*` / `split-*` no repo. Para reabrir um pipeline, histórico git de `scripts/`. Aplicar seeds: `npm run db:seed` — [`scripts/README.md`](../../scripts/README.md).
 
 ## O que nunca jogar fora
 
 - JSONs em `extracts/` listados em [`README.md`](./README.md)
-- Seeds SQL gerados
-- PNGs já em `dnd-front/public/catalog/`
-- Scrapes HTML/`_files` **depois** de extrair imagens (cleanup remove)
+- Seeds SQL e PNGs já em `dnd-front/public/catalog/`
 
 ## Checklist por lote
 
 - [ ] PNGs no `public/catalog/…`
 - [ ] `imageUrl` no JSON de extrato
 - [ ] Seed `UPDATE … image_url`
-- [ ] Fonte temporária removida (`--prune-source` ou cleanup)
-- [ ] UI: detalhe/stat block mostra imagem (`CatalogMediaImage`)
+- [ ] Fonte temporária removida
+- [ ] UI mostra imagem (`CatalogMediaImage`)

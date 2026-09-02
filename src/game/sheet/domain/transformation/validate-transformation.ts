@@ -14,7 +14,7 @@ export function isGhTransformationFeatSlug(featSlug: string): boolean {
   return featSlug.startsWith('gh-transformation-');
 }
 
-/** Shape + regras mínimas (sem J060). */
+/** Shape + regras mínimas (slug/stage/kinds). Choices: validateTransformationChoices. */
 export function validateTransformationShape(
   transformation: CharacterTransformation,
 ): void {

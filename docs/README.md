@@ -62,6 +62,7 @@ Contrato REST: Swagger em `/api`.
 
 | Doc | Para quê |
 |------|----------|
+| [`plans/hard-files-checklist.md`](plans/hard-files-checklist.md) | Inventário hard >200 + pastas >4 (qualidade) |
 | [`plans/mm-cast-options-modal.md`](plans/mm-cast-options-modal.md) | Modal Escudo/Giga no cast de Mísseis |
 | [`plans/beast-master-primal-companion.md`](plans/beast-master-primal-companion.md) | Companheiro Primal na mesa |
 

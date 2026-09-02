@@ -14,6 +14,7 @@ import {
   applyLevelUpAsiBoost,
   resolveLevelUpAsiFromDto,
 } from '../domain/level-up-asi';
+import { loadClassWeaponMasteryProgression } from '../infrastructure/queries/level-up-catalog.queries';
 
 @Injectable()
 export class LevelUpHandler {
@@ -43,15 +44,9 @@ export class LevelUpHandler {
     const previousLevel = character.level;
     const nextLevel = previousLevel + 1;
 
-    const masteryProgression = await this.dataSource.query<
-      { level: number; weaponMastery: number | null }[]
-    >(
-      `SELECT cp.level, cp.weapon_mastery AS "weaponMastery"
-       FROM rpg.phb_class_progression cp
-       JOIN rpg.phb_class c ON c.id = cp.class_id
-       WHERE c.slug = $1
-       ORDER BY cp.level`,
-      [character.classSlug],
+    const masteryProgression = await loadClassWeaponMasteryProgression(
+      this.dataSource,
+      character.classSlug,
     );
     const newExpertiseSlots = classExpertiseSlotsNewAtLevel(
       character.classSlug,

@@ -12,10 +12,7 @@ import { CharacterClassExtraSkillValidator } from './class-options/character-cla
 import { CharacterMysticArcanumValidator } from './class-options/character-mystic-arcanum.validator';
 import { CharacterSignatureSpellsValidator } from './class-options/character-signature-spells.validator';
 import { classLanguageGrant } from './class-options/class-language-grant';
-import {
-  GH_TRANSFORMATION_CATEGORY,
-  validateTransformationShape,
-} from '../transformation/validate-transformation';
+import { CharacterTransformationValidator } from '../transformation/character-transformation.validator';
 
 export type { CharacterSheetContext } from '../character-sheet.types';
 
@@ -32,6 +29,7 @@ export class CharacterSheetValidator {
     private readonly extraSkillValidator: CharacterClassExtraSkillValidator,
     private readonly mysticArcanumValidator: CharacterMysticArcanumValidator,
     private readonly signatureSpellsValidator: CharacterSignatureSpellsValidator,
+    private readonly transformationValidator: CharacterTransformationValidator,
   ) {}
 
   async validateSheetInput(
@@ -53,7 +51,7 @@ export class CharacterSheetValidator {
     }
 
     if (input.transformation !== undefined) {
-      await this.validateTransformation(input.transformation);
+      await this.transformationValidator.validate(input.transformation);
     }
 
     if (input.subclassOptions !== undefined) {
@@ -255,18 +253,5 @@ export class CharacterSheetValidator {
     ctx: Pick<CharacterSheetContext, 'classSlug' | 'backgroundSlug'>,
   ): Promise<number> {
     return this.equipmentValidator.resolveStartingGold(equipment, ctx);
-  }
-
-  private async validateTransformation(
-    transformation: CharacterSheetInput['transformation'],
-  ): Promise<void> {
-    if (transformation === null || transformation === undefined) return;
-    validateTransformationShape(transformation);
-    const feat = await this.catalogLookup.assertFeatInCatalog(transformation.slug.trim());
-    if (feat.categorySlug !== GH_TRANSFORMATION_CATEGORY) {
-      throw new BadRequestException(
-        `Feat '${transformation.slug}' is not a Cap. 6 transformation`,
-      );
-    }
   }
 }

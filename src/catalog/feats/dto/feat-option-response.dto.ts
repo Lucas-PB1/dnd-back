@@ -48,6 +48,12 @@ export class FeatOptionResponseDto {
   })
   spellRitualOnly!: boolean;
 
+  @ApiPropertyOptional({
+    example: 2,
+    description: 'Nível mínimo (ou estágio Cap. 6) para a opção aparecer',
+  })
+  unlockLevel!: number | null;
+
   @ApiPropertyOptional({ type: [FeatOptionValueDto] })
   values!: FeatOptionValueDto[];
 }

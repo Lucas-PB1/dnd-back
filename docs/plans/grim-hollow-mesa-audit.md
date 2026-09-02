@@ -1,8 +1,7 @@
 # Grim Hollow — mesa (Cap. 2 + Cap. 1)
 
 **Status:** fases A–E **concluídas**; residual de mesa Cap. 2/1 **fechado** (2026-09-02).  
-**Skills:** `rpg-class-mesa-api` · `rpg-class-mesa-front` · `rpg-catalog-model`  
-**Auditoria:** `node scripts/archive/_audit-gh-mesa-state.mjs` · `node scripts/verify-gh-heritage-e2.mjs`
+**Skills:** `rpg-class-mesa-api` · `rpg-class-mesa-front` · `rpg-catalog-model`
 
 ---
 

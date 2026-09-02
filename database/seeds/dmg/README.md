@@ -58,9 +58,4 @@ Modelo: `docs/architecture/dmg-item-mesa.md`.
 Gaps Treasure: `docs/architecture/treasure-rules-vs-sistema.md`.  
 Compêndio: `/equipment?tab=magic` + `GET /items?magic=true`.
 
-```bash
-node scripts/generate-dmg-item-seeds.mjs
-node scripts/generate-dmg-consumable-lote.mjs
-node scripts/generate-dmg-coverage-lote.mjs
-node scripts/generate-dmg-artifact-sentience-seeds.mjs
-```
+Seeds `D010+` já versionados; geradores removidos do repo (histórico git se precisar). Aplicar: `npm run db:seed`.
