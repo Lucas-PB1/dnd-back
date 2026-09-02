@@ -62,7 +62,7 @@ _Fase concluída (3.0–3.7). Próximo: Fase 4 abaixo._
 - [x] **4.2** Barrel policy — `session/dto/index.ts` removido; imports por família (`dto/core|fighter|martial|table-actions`)
 - [x] **4.3** `combat/domain/notes/` — GH + Northlands (`notes/grim-hollow/`, `notes/northlands/`)
 - [x] **4.4** Split `inventory/application` — `items|query|attach|purchase|artifact|assert|effects|actions`
-- [ ] **4.5** `CatalogLookupService` vs queries — caminho único escrita ficha
+- [x] **4.5** `CatalogLookupService` SSOT escrita ficha; `find-*-by-slug` delega fetch (sem `findOne` paralelo)
 - [ ] **4.6** DTOs `Omit`/`Pick`; slugs em `constants.ts`
 - [ ] **4.7** Pastas leaf >4: `session/application/actions` (raiz)
 

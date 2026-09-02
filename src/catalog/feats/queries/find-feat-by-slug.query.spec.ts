@@ -7,12 +7,12 @@ describe('FindFeatBySlugQuery', () => {
   };
 
   it('maps found feat', async () => {
-    const featsRepo = {
-      findOne: jest.fn().mockResolvedValue({ featSlug: 'alert' }),
+    const catalogLookup = {
+      findFeatOrFail: jest.fn().mockResolvedValue({ featSlug: 'alert' }),
     };
     const mapper = { toDto: jest.fn().mockReturnValue({ slug: 'alert' }) };
     const query = new FindFeatBySlugQuery(
-      featsRepo as never,
+      catalogLookup as never,
       mapper as never,
       originBackgroundsQuery as never,
     );
@@ -24,9 +24,11 @@ describe('FindFeatBySlugQuery', () => {
   });
 
   it('throws when missing', async () => {
-    const featsRepo = { findOne: jest.fn().mockResolvedValue(null) };
+    const catalogLookup = {
+      findFeatOrFail: jest.fn().mockRejectedValue(new NotFoundException()),
+    };
     const query = new FindFeatBySlugQuery(
-      featsRepo as never,
+      catalogLookup as never,
       { toDto: jest.fn() } as never,
       originBackgroundsQuery as never,
     );

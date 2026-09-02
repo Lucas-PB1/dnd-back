@@ -188,7 +188,7 @@ export class CharacterBackgroundValidator {
     }
 
     for (const slug of choices) {
-      const language = await this.catalogLookup.findLanguageOrFail(slug);
+      const language = await this.catalogLookup.assertLanguageInCatalog(slug);
       if (!isPickableLanguageChoice(slug, language)) {
         throw new BadRequestException(
           `Language '${slug}' is not available as a language choice (standard languages only)`,

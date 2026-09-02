@@ -89,6 +89,18 @@ describe('CatalogLookupService', () => {
     await expect(service.findItemOrFail('longsword')).resolves.toEqual({
       slug: 'longsword',
     });
+    languagesRepo.findOne.mockResolvedValue({ slug: 'common' });
+    await expect(service.findLanguageOrFail('common')).resolves.toEqual({
+      slug: 'common',
+    });
+    languagesRepo.findOne.mockResolvedValue(null);
+    await expect(service.findLanguageOrFail('x')).rejects.toBeInstanceOf(
+      NotFoundException,
+    );
+    skillsRepo.findOne.mockResolvedValue({ slug: 'athletics' });
+    await expect(service.findSkillOrFail('athletics')).resolves.toEqual({
+      slug: 'athletics',
+    });
   });
 
   it('assert*Slug methods reject missing catalog rows', async () => {
@@ -118,7 +130,7 @@ describe('CatalogLookupService', () => {
     );
   });
 
-  it('assertFeatInCatalog / item / spell return rows', async () => {
+  it('assertFeatInCatalog / item / spell / language return rows', async () => {
     featsRepo.findOne.mockResolvedValue({ featSlug: 'alert' });
     await expect(service.assertFeatInCatalog('alert')).resolves.toEqual({
       featSlug: 'alert',
@@ -130,6 +142,10 @@ describe('CatalogLookupService', () => {
     spellsRepo.findOne.mockResolvedValue({ slug: 'luz' });
     await expect(service.assertSpellInCatalog('luz')).resolves.toEqual({
       slug: 'luz',
+    });
+    languagesRepo.findOne.mockResolvedValue({ slug: 'elvish' });
+    await expect(service.assertLanguageInCatalog('elvish')).resolves.toEqual({
+      slug: 'elvish',
     });
   });
 

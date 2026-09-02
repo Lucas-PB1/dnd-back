@@ -16,7 +16,7 @@ describe('CharacterBackgroundValidator', () => {
   let validator: CharacterBackgroundValidator;
   let dataSource: DataSource;
   let catalogLookup: jest.Mocked<
-    Pick<CatalogLookupService, 'findBackgroundOrFail' | 'findLanguageOrFail'>
+    Pick<CatalogLookupService, 'findBackgroundOrFail' | 'assertLanguageInCatalog'>
   >;
   let backgroundToolOptionsRepo: jest.Mocked<Pick<Repository<VPhbBackgroundToolOption>, 'find'>>;
 
@@ -25,7 +25,7 @@ describe('CharacterBackgroundValidator', () => {
     dataSource = {} as DataSource;
     catalogLookup = {
       findBackgroundOrFail: jest.fn(),
-      findLanguageOrFail: jest.fn().mockImplementation(async (slug: string) => ({
+      assertLanguageInCatalog: jest.fn().mockImplementation(async (slug: string) => ({
         slug,
         isRare: ['abyssal', 'druidic', 'thieves-cant'].includes(slug),
       })),
@@ -111,7 +111,7 @@ describe('CharacterBackgroundValidator', () => {
       await expect(
         validator.validateBackgroundLanguages('acolyte', ['common', 'elvish']),
       ).resolves.toBeUndefined();
-      expect(catalogLookup.findLanguageOrFail).toHaveBeenCalledWith('elvish');
+      expect(catalogLookup.assertLanguageInCatalog).toHaveBeenCalledWith('elvish');
     });
 
     it('rejects rare language as a choice', async () => {

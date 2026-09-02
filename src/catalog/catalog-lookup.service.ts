@@ -17,6 +17,15 @@ import { PhbItem } from '../entities/phb-item.entity';
 import { VPhbSpell } from '../entities/views/v-phb-spell.entity';
 import { PhbSkill } from '../entities/phb-skill.entity';
 
+/**
+ * SSOT de “existe este slug?” para escrita de ficha / inventário / sessão.
+ *
+ * - `find*OrFail` → 404 (API GET e fetch compartilhado)
+ * - `assert*` / `assert*InCatalog` → 400 (validação de create/update)
+ *
+ * Queries HTTP `find-*-by-slug` devem delegar o fetch da entity aqui quando
+ * o tipo estiver coberto — sem segundo `repo.findOne` paralelo.
+ */
 @Injectable()
 export class CatalogLookupService {
   constructor(
@@ -179,13 +188,27 @@ export class CatalogLookupService {
   }
 
   async assertLanguageSlug(slug: string): Promise<void> {
-    await this.findLanguageOrFail(slug);
+    await this.assertLanguageInCatalog(slug);
   }
 
   async findLanguageOrFail(slug: string): Promise<PhbLanguage> {
+    return requireFound(
+      await this.languagesRepo.findOne({ where: { slug } }),
+      `Language '${slug}' not found`,
+    );
+  }
+
+  async assertLanguageInCatalog(slug: string): Promise<PhbLanguage> {
     return requireCatalog(
       await this.languagesRepo.findOne({ where: { slug } }),
       `Language '${slug}' not found in catalog`,
+    );
+  }
+
+  async findSkillOrFail(slug: string): Promise<PhbSkill> {
+    return requireFound(
+      await this.skillsRepo.findOne({ where: { slug } }),
+      `Skill '${slug}' not found`,
     );
   }
 

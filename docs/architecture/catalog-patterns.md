@@ -156,7 +156,7 @@ Matriz canônica para **leitura em runtime** (ficha, mesa, dados) — complement
 | Flags rage/reckless/beastborne no roll | TypeORM `PlayerCharacterState` | `session/infrastructure/queries/character-combat-flags.queries.ts` |
 | Validação create/update ficha | ✅ Orquestração em `domain/validation/`; leitura em `sheet/infrastructure/queries/` | [`adr-sheet-validation-layers.md`](./adr-sheet-validation-layers.md) |
 | Progressão magia / slots | ✅ `sheet/infrastructure/queries/spell-progression.queries.ts` | Views `v_*` via TypeORM |
-| Existe slug? (escrita ficha) | `CatalogLookupService` | Unificar com catalog queries (**Fase 4.5**) |
+| Existe slug? (escrita ficha) | ✅ `CatalogLookupService` (`assert*` 400 / `find*OrFail` 404) | API `find-*-by-slug` **delega** o fetch; sem `repo.findOne` paralelo |
 
 **Regra:** SQL cru (`dataSource.query`) só em `infrastructure/queries/` ou views; **não** em `domain/` nem em application handlers.
 

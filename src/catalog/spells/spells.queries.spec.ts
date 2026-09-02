@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { VPhbSpell } from '@entities/views/v-phb-spell.entity';
 import { SpellsMapper } from './spells.mapper';
 import { FindSpellsQuery } from './queries/find-spells.query';
@@ -13,6 +14,7 @@ describe('Spells queries', () => {
   let repo: jest.Mocked<
     Pick<Repository<VPhbSpell>, 'findOne' | 'createQueryBuilder'>
   >;
+  let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findSpellOrFail'>>;
 
   const sample: VPhbSpell = {
     slug: 'alarme',
@@ -55,12 +57,14 @@ describe('Spells queries', () => {
       findOne: jest.fn(),
       createQueryBuilder: jest.fn(),
     };
+    catalogLookup = { findSpellOrFail: jest.fn() };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         SpellsMapper,
         FindSpellsQuery,
         FindSpellBySlugQuery,
         { provide: getRepositoryToken(VPhbSpell), useValue: repo },
+        { provide: CatalogLookupService, useValue: catalogLookup },
       ],
     }).compile();
 
@@ -108,13 +112,15 @@ describe('Spells queries', () => {
   });
 
   it('findBySlug returns dto', async () => {
-    repo.findOne.mockResolvedValue(sample);
+    catalogLookup.findSpellOrFail.mockResolvedValue(sample);
     const result = await findSpellBySlug.execute('alarme');
     expect(result.name).toBe('Alarme');
   });
 
   it('findBySlug throws NotFoundException', async () => {
-    repo.findOne.mockResolvedValue(null);
-    await expect(findSpellBySlug.execute('invalid')).rejects.toThrow(NotFoundException);
+    catalogLookup.findSpellOrFail.mockRejectedValue(new NotFoundException());
+    await expect(findSpellBySlug.execute('invalid')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 });

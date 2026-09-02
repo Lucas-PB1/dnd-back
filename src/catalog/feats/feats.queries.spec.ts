@@ -1,7 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import { FeatsMapper } from './feats.mapper';
 import { FindFeatBySlugQuery } from './queries/find-feat-by-slug.query';
@@ -9,7 +8,7 @@ import { FindFeatOriginBackgroundsQuery } from './queries/find-feat-origin-backg
 
 describe('Feats queries', () => {
   let findFeatBySlug: FindFeatBySlugQuery;
-  let repo: jest.Mocked<Pick<Repository<VPhbFeat>, 'find' | 'findOne'>>;
+  let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findFeatOrFail'>>;
   let originBackgroundsQuery: jest.Mocked<
     Pick<FindFeatOriginBackgroundsQuery, 'execute'>
   >;
@@ -40,7 +39,7 @@ describe('Feats queries', () => {
   };
 
   beforeEach(async () => {
-    repo = { find: jest.fn(), findOne: jest.fn() };
+    catalogLookup = { findFeatOrFail: jest.fn() };
     originBackgroundsQuery = { execute: jest.fn().mockResolvedValue([]) };
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -50,7 +49,7 @@ describe('Feats queries', () => {
           provide: FindFeatOriginBackgroundsQuery,
           useValue: originBackgroundsQuery,
         },
-        { provide: getRepositoryToken(VPhbFeat), useValue: repo },
+        { provide: CatalogLookupService, useValue: catalogLookup },
       ],
     }).compile();
 
@@ -58,7 +57,7 @@ describe('Feats queries', () => {
   });
 
   it('findBySlug returns dto', async () => {
-    repo.findOne.mockResolvedValue(sample);
+    catalogLookup.findFeatOrFail.mockResolvedValue(sample);
     const result = await findFeatBySlug.execute('alert');
     expect(result.name).toBe('Alerta');
     expect(result.originBackgrounds).toEqual([]);
@@ -66,7 +65,9 @@ describe('Feats queries', () => {
   });
 
   it('findBySlug throws NotFoundException', async () => {
-    repo.findOne.mockResolvedValue(null);
-    await expect(findFeatBySlug.execute('invalid')).rejects.toThrow(NotFoundException);
+    catalogLookup.findFeatOrFail.mockRejectedValue(new NotFoundException());
+    await expect(findFeatBySlug.execute('invalid')).rejects.toThrow(
+      NotFoundException,
+    );
   });
 });

@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CatalogLookupModule } from '@catalog/catalog-lookup.module';
 import { VPhbFeat } from '@entities/views/v-phb-feat.entity';
 import { VPhbBackground } from '@entities/views/v-phb-background.entity';
 import { PhbOptionDef, PhbOptionValue } from '@entities/phb-option.entity';
@@ -15,6 +16,7 @@ import { FindFeatOriginBackgroundsQuery } from './queries/find-feat-origin-backg
 
 @Module({
   imports: [
+    CatalogLookupModule,
     TypeOrmModule.forFeature([
       VPhbFeat,
       VPhbBackground,

@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
+import { CatalogLookupService } from '@catalog/catalog-lookup.service';
 import { PhbItem } from '@entities/phb-item.entity';
 import { ItemResponseDto } from './dto/item-response.dto';
 import { ItemsMapper } from './items.mapper';
@@ -14,6 +15,7 @@ describe('Items queries', () => {
   let repo: jest.Mocked<
     Pick<Repository<PhbItem>, 'findOne' | 'createQueryBuilder'>
   >;
+  let catalogLookup: jest.Mocked<Pick<CatalogLookupService, 'findItemOrFail'>>;
 
   const sample: PhbItem = {
     id: '1',
@@ -39,6 +41,9 @@ describe('Items queries', () => {
       findOne: jest.fn(),
       createQueryBuilder: jest.fn().mockReturnValue(qb),
     };
+    catalogLookup = {
+      findItemOrFail: jest.fn(),
+    };
 
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -46,6 +51,7 @@ describe('Items queries', () => {
         FindItemsQuery,
         FindItemBySlugQuery,
         { provide: getRepositoryToken(PhbItem), useValue: repo },
+        { provide: CatalogLookupService, useValue: catalogLookup },
       ],
     }).compile();
 
@@ -92,13 +98,13 @@ describe('Items queries', () => {
   });
 
   it('findBySlug returns dto', async () => {
-    repo.findOne.mockResolvedValue(sample);
+    catalogLookup.findItemOrFail.mockResolvedValue(sample);
     const result = await findItemBySlug.execute('longsword');
     expect(result.slug).toBe('longsword');
   });
 
   it('findBySlug throws NotFoundException', async () => {
-    repo.findOne.mockResolvedValue(null);
+    catalogLookup.findItemOrFail.mockRejectedValue(new NotFoundException());
     await expect(findItemBySlug.execute('invalid')).rejects.toThrow(
       NotFoundException,
     );

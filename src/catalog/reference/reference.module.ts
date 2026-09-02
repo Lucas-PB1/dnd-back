@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CatalogLookupModule } from '@catalog/catalog-lookup.module';
 import { PhbAlignment } from '@entities/phb-alignment.entity';
 import { PhbLanguage } from '@entities/phb-language.entity';
 import { PhbCharacterLevel } from '@entities/phb-character-level.entity';
@@ -23,6 +24,7 @@ import { EditionsController } from './editions.controller';
 
 @Module({
   imports: [
+    CatalogLookupModule,
     TypeOrmModule.forFeature([
       PhbAlignment,
       PhbLanguage,

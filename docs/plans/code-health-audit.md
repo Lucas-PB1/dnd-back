@@ -330,7 +330,7 @@ Runner: `run-migrations.mjs` — versão baseline = `baseline/001_full_schema`. 
 | Table-action deps | `monk-action-deps`, `paladin-action-deps`, `cleric-action-deps` | Estender padrão às classes que ainda inline |
 | Slug not-found | `requireFound` (404) vs `requireCatalog` (400) | OK — semântica HTTP distinta; **não** unificar |
 | Combat notes por fonte | `notes/grim-hollow/*`, `notes/northlands/*`, `aggregate-class-combat` | ✅ 4.3 — subpasta por fonte |
-| Catalog lookup | `find-*-by-slug.query` **e** `CatalogLookupService.find*OrFail` | Dois caminhos para o mesmo slug — escolher um para **escrita de ficha** |
+| Catalog lookup | ~~`find-*-by-slug` **e** `CatalogLookupService.find*OrFail`~~ | ✅ 4.5 — queries delegam; escrita = `assert*` / lookup |
 
 ---
 
@@ -350,13 +350,13 @@ Runner: `run-migrations.mjs` — versão baseline = `baseline/001_full_schema`. 
 | Recursos de classe (dados, labels) | ✅ `session/infrastructure/queries/class-resource-*.queries.ts` | — |
 | Propriedade de item (`reload`) | ✅ `session/infrastructure/queries/item-reload-capacity.queries.ts` | TypeORM `PhbItem` |
 | Flags de combate no roll | ✅ `session/infrastructure/queries/character-combat-flags.queries.ts` | TypeORM `PlayerCharacterState` |
-| Lookup slug em create/update | `CatalogLookupService` (12 repos) | Duplica queries finas do catalog |
+| Lookup slug em create/update | ✅ `CatalogLookupService` | Queries catalog só mapeiam DTO (4.5) |
 
 ### Por que é problema
 
 - **Sem prod**, cada novo validator inventa SQL em vez de reutilizar view/RPC → drift de colunas e performance imprevisível.
 - Ficha já provou o caminho certo (bundle RPC); validação e mesa **não seguiram**.
-- `CatalogLookupService` + queries catalog = **duas APIs** para “existe este slug?”.
+- `CatalogLookupService` = SSOT de slug na escrita; queries HTTP delegam o fetch (fase **4.5**).
 
 ### Remediação (ordem)
 
@@ -625,7 +625,7 @@ Política canônica de testes: [`code-standards.md` § Testes](../architecture/c
 | 4.2 | ~~Barrel policy — `session/dto/index.ts`~~ | ✅ 2026-09-02 |
 | 4.3 | ~~`*-combat-notes` → `combat/domain/notes/`~~ | ✅ 2026-09-02 |
 | 4.4 | ~~Split `inventory/application`~~ | ✅ 2026-09-02 |
-| 4.5 | `CatalogLookupService` vs queries — um caminho para escrita ficha | Médio |
+| 4.5 | ~~`CatalogLookupService` SSOT escrita ficha~~ | ✅ 2026-09-02 |
 | 4.6 | DTOs com `Omit`/`Pick`; slugs em `constants.ts` | Baixo contínuo |
 
 **Meta:** **A−** em catálogo/arquitetura; nota global **≥ 3,7** se fases 1–3 concluídas.

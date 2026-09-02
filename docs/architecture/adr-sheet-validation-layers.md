@@ -24,7 +24,7 @@ Adotar **separação por responsabilidade**, não por mover a pasta:
 | **Regras puras** | `sheet/domain/validation/**` (helpers irmãos: `*-slots.ts`, `*-options.ts`, `assert-*.ts`) | Slots, whitelist, asserts sem I/O |
 | **Orquestração Nest** | `sheet/domain/validation/**` (`*.validator.ts`) | `@Injectable`, fluxo por concern, `BadRequestException` |
 | **Leitura catálogo/DB** | `sheet/infrastructure/queries/*.queries.ts` | TypeORM `@ViewEntity` / entities; **zero** `dataSource.query` cru |
-| **Lookup fino de escrita** | `CatalogLookupService` + queries catalog | Existe slug? (unificar na Fase 4.5) |
+| **Lookup fino de escrita** | ✅ `CatalogLookupService` | `assert*` (400) na ficha; queries HTTP delegam `find*OrFail` |
 
 **Validators permanecem em `domain/validation/`** — são orquestradores de regra de negócio da ficha, não adapters de persistência.
 
@@ -61,7 +61,7 @@ Specs: `*.queries.spec.ts` (smoke TypeORM); validators mockam queries ou `getRep
 
 - **Positivas:** inventário validators com **0** SQL cru; matriz runtime alinhada; testes de query isolados.
 - **Aceitas:** domain continua acoplado a Nest + TypeORM na borda (pragmático para monolith Nest).
-- **Backlog:** `CatalogLookupService` vs catalog queries → Fase 4.5; `level-up.service.ts` ainda com SQL cru (migrar ao tocar).
+- **Backlog:** ~~`CatalogLookupService` vs catalog queries~~ → Fase **4.5** ✅; `level-up.service.ts` ainda com SQL cru (migrar ao tocar).
 
 ## Referências
 
