@@ -1,0 +1,16 @@
+/** Regras e notas de combate do Patrulheiro (PHB 2024). */
+
+export type { RangerSubclassSlug } from './rules';
+export {
+  HUNTERS_MARK_SPELL_SLUG,
+  isRangerClass,
+  huntersMarkDie,
+  feyDreadfulStrikesDie,
+  gloomDreadAmbusherDie,
+  hasPreciseHunter,
+  hasRelentlessHunter,
+  rangerAttacksPerAction,
+  rangerSpeedBonusMeters,
+} from './rules';
+
+export { rangerCombatNotes } from './combat-notes';

@@ -1,4 +1,4 @@
-jest.mock('./campaign/campaign-crud', () => ({
+jest.mock('./campaign.repository/campaign-crud', () => ({
   createCampaign: jest.fn().mockResolvedValue({ campaign: { id: 'c1' }, membership: {} }),
   listForUser: jest.fn().mockResolvedValue([]),
   findCampaignOrFail: jest.fn().mockResolvedValue({ id: 'c1' }),
@@ -7,7 +7,7 @@ jest.mock('./campaign/campaign-crud', () => ({
   rotateInviteCode: jest.fn().mockResolvedValue({ id: 'c1', inviteCode: 'x' }),
 }));
 
-jest.mock('./campaign/campaign-membership', () => ({
+jest.mock('./campaign.repository/campaign-membership', () => ({
   requireMember: jest.fn().mockResolvedValue({ role: 'dm' }),
   requireRole: jest.fn().mockResolvedValue({ role: 'dm' }),
   joinByInviteCode: jest.fn().mockResolvedValue({ campaign: {}, membership: {} }),
@@ -16,7 +16,7 @@ jest.mock('./campaign/campaign-membership', () => ({
   removeMember: jest.fn().mockResolvedValue(undefined),
 }));
 
-jest.mock('./campaign/campaign-character-links', () => ({
+jest.mock('./campaign.repository/campaign-character-links', () => ({
   linkCharacter: jest.fn().mockResolvedValue({ characterId: 'ch1' }),
   unlinkCharacter: jest.fn().mockResolvedValue(undefined),
   listLinkedCharacters: jest.fn().mockResolvedValue([]),
@@ -25,9 +25,9 @@ jest.mock('./campaign/campaign-character-links', () => ({
 }));
 
 import { CampaignRepository } from './campaign.repository';
-import * as crud from './campaign/campaign-crud';
-import * as membership from './campaign/campaign-membership';
-import * as links from './campaign/campaign-character-links';
+import * as crud from './campaign.repository/campaign-crud';
+import * as membership from './campaign.repository/campaign-membership';
+import * as links from './campaign.repository/campaign-character-links';
 
 describe('CampaignRepository', () => {
   let repo: CampaignRepository;

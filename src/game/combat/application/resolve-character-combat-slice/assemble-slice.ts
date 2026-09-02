@@ -1,0 +1,117 @@
+import type { DataSource } from 'typeorm';
+import { aggregateClassCombatContributions } from '../../domain/aggregate-class-combat';
+import { featCombatNotes } from '../../domain/feat/combat-notes';
+import { itemCombatNotes } from '../../domain/item/combat-notes';
+import { speciesCombatNotes } from '../../domain/species/combat-notes';
+import {
+  heritageCombatNotes,
+  loadHeritageHitPointsBonus,
+} from '../../domain/heritage/heritage-combat-notes';
+import { transformationCombatNotes } from '../../domain/notes/grim-hollow/transformation-combat-notes';
+import { paladinSavingThrowAuraBonus } from '../../domain/paladin';
+import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
+import { sheetProfile } from '@common/perf/sheet-profile';
+import type { AbilityScores } from '@game/shared/infrastructure/player-character.entity';
+import type { CharacterCombatBundle } from '../../infrastructure/load-character-combat-bundle';
+import type { MappedCombatSlice } from './types';
+
+type ArmorResult = {
+  armorClass: number;
+  armorClassNote: string;
+};
+
+type ComplianceResult = {
+  warnings: MappedCombatSlice['equipmentWarnings'];
+  cannotCastSpells: boolean;
+  speedPenaltyMeters: MappedCombatSlice['speedPenaltyMeters'];
+};
+
+type ItemEffectsSlice = {
+  speedBonusMeters: number;
+  hpBonus: number;
+};
+
+export async function assembleMappedCombatSlice(input: {
+  armor: ArmorResult;
+  weaponAttacks: MappedCombatSlice['weaponAttacks'];
+  compliance: ComplianceResult;
+  itemEffects: ItemEffectsSlice;
+  classSlug: string;
+  subclassSlug: string | null;
+  level: number;
+  speciesSlug?: string | null;
+  heritageChoices?: readonly { choiceKind: string; choiceSlug: string }[];
+  speciesChoices?: readonly { choiceKind: string; choiceSlug: string }[];
+  transformation?: {
+    slug: string;
+    stage: number;
+    choices?: readonly { choiceKind: string; choiceSlug: string }[];
+  } | null;
+  featSlugs: string[];
+  fightingStyleSlugs: string[];
+  combatScores: AbilityScores;
+  dataSource: DataSource;
+  bundle: Pick<CharacterCombatBundle, 'items' | 'activeItemSlugs'>;
+}): Promise<MappedCombatSlice> {
+  const classCombat = aggregateClassCombatContributions({
+    classSlug: input.classSlug,
+    subclassSlug: input.subclassSlug,
+    level: input.level,
+  });
+  const speciesNotes = speciesCombatNotes({
+    speciesSlug: input.speciesSlug,
+    speciesChoices: input.speciesChoices,
+  });
+  const heritageNotes = heritageCombatNotes({
+    heritageChoices: input.heritageChoices,
+  });
+  const transformationNotes = transformationCombatNotes(
+    input.transformation ?? null,
+  );
+  const heritageHpBonus = await sheetProfile('combat.heritageHp', () =>
+    loadHeritageHitPointsBonus(
+      input.dataSource,
+      input.heritageChoices ?? [],
+      input.level,
+    ),
+  );
+  const featNotes = featCombatNotes({
+    featSlugs: [...input.featSlugs, ...input.fightingStyleSlugs],
+  });
+  const propertiesBySlug = new Map(
+    input.bundle.items.map(
+      (item) => [item.slug, item.properties] as const,
+    ),
+  );
+  const itemNotes = itemCombatNotes({
+    itemSlugs: input.bundle.activeItemSlugs,
+    propertiesBySlug,
+  });
+
+  return {
+    armorClass: input.armor.armorClass,
+    armorClassNote: input.armor.armorClassNote,
+    weaponAttacks: input.weaponAttacks,
+    equipmentWarnings: input.compliance.warnings,
+    cannotCastSpellsInArmor: input.compliance.cannotCastSpells,
+    speedPenaltyMeters: input.compliance.speedPenaltyMeters,
+    itemSpeedBonusMeters:
+      input.itemEffects.speedBonusMeters + classCombat.speedBonusMeters,
+    itemHpBonus: input.itemEffects.hpBonus,
+    heritageHpBonus,
+    classCombatNotes: [
+      ...speciesNotes,
+      ...heritageNotes,
+      ...transformationNotes,
+      ...featNotes,
+      ...itemNotes,
+      ...classCombat.notes,
+    ],
+    attacksPerAction: classCombat.attacksPerAction,
+    savingThrowAuraBonus: paladinSavingThrowAuraBonus({
+      classSlug: input.classSlug,
+      level: input.level,
+      charismaModifier: abilityModifier(input.combatScores.carisma),
+    }),
+  };
+}

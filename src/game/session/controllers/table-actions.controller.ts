@@ -1,23 +1,10 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseUUIDPipe,
-  Post,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiOkResponse,
-  ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 import { SupabaseAuthGuard } from '@identity/guards/supabase-auth.guard';
-import { CurrentUser } from '@identity/decorators/current-user.decorator';
-import { AuthUser } from '@identity/auth-user';
 import { RogueActionsHandler } from '../application/actions/rogue/rogue-actions.handler';
 import { MonkActionsHandler } from '../application/actions/monk/monk-actions.handler';
 import { PaladinActionsHandler } from '../application/actions/paladin/paladin-actions.handler';
@@ -32,249 +19,33 @@ import { WizardActionsHandler } from '../application/actions/wizard/wizard-actio
 import { FighterActionsHandler } from '../application/actions/fighter/fighter-actions.handler';
 import { GunslingerActionsHandler } from '../application/actions/gunslinger/gunslinger-actions.handler';
 import { MonsterHunterActionsHandler } from '../application/actions/monster-hunter/monster-hunter-actions.handler';
-import {
-  TableActionResponseDto,
-} from '../dto/fighter/fighter-session.dto';
-import {
-  UseBarbarianTableActionDto,
-  UseFighterTableActionDto,
-  UseGunslingerTableActionDto,
-  UseMonkTableActionDto,
-  UsePaladinTableActionDto,
-  UseRangerTableActionDto,
-  UseRogueTableActionDto,
-} from '../dto/table-actions/table-actions-martial.dto';
-import {
-  UseBardTableActionDto,
-  UseClericTableActionDto,
-  UseDruidTableActionDto,
-  UseSorcererTableActionDto,
-  UseWarlockTableActionDto,
-  UseWizardTableActionDto,
-} from '../dto/table-actions/table-actions-caster.dto';
-import {
-  UseMonsterHunterTableActionDto,
-} from '../dto/table-actions/table-actions-monster-hunter.dto';
-import {
-  UseManeuverResponseDto,
-} from '../dto/core/session-commands.dto';
+import { WithCasterTableActions } from './table-actions/caster.routes';
+import { WithMartialTableActions } from './table-actions/martial.routes';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({ description: 'Missing or invalid Bearer token' })
 @UseGuards(SupabaseAuthGuard)
 @Controller('characters')
-export class TableActionsController {
+export class TableActionsController extends WithMartialTableActions(
+  WithCasterTableActions(class {}),
+) {
   constructor(
-    private readonly rogue: RogueActionsHandler,
-    private readonly monk: MonkActionsHandler,
-    private readonly paladin: PaladinActionsHandler,
-    private readonly ranger: RangerActionsHandler,
-    private readonly cleric: ClericActionsHandler,
-    private readonly bard: BardActionsHandler,
-    private readonly barbarian: BarbarianActionsHandler,
-    private readonly sorcerer: SorcererActionsHandler,
-    private readonly warlock: WarlockActionsHandler,
-    private readonly druid: DruidActionsHandler,
-    private readonly wizard: WizardActionsHandler,
-    private readonly fighter: FighterActionsHandler,
-    private readonly gunslinger: GunslingerActionsHandler,
-    private readonly monsterHunter: MonsterHunterActionsHandler,
-  ) {}
-
-  @Post(':id/fighter/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Fighter or Fighter-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useFighterTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseFighterTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.fighter.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/gunslinger/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Gunslinger tabletop action (maneuver / recover-risk)',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useGunslingerTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseGunslingerTableActionDto,
-  ): Promise<UseManeuverResponseDto | TableActionResponseDto> {
-    return this.gunslinger.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/rogue/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Rogue or Rogue-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useRogueTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseRogueTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.rogue.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/monk/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Monk or Monk-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useMonkTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseMonkTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.monk.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/paladin/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Paladin or Paladin-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  usePaladinTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UsePaladinTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.paladin.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/ranger/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Ranger or Ranger-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useRangerTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseRangerTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.ranger.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/cleric/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Cleric or Cleric-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useClericTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseClericTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.cleric.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/bard/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Bard or Bard-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useBardTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseBardTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.bard.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/barbarian/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Barbarian or Barbarian-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useBarbarianTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseBarbarianTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.barbarian.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/sorcerer/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Sorcerer or Sorcerer-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useSorcererTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseSorcererTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.sorcerer.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/warlock/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Warlock or Warlock-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useWarlockTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseWarlockTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.warlock.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/druid/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Druid or Druid-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useDruidTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseDruidTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.druid.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/wizard/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Wizard or Wizard-subclass tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useWizardTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseWizardTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.wizard.useTableAction(user.id, id, dto);
-  }
-
-  @Post(':id/monster-hunter/table-action')
-  @HttpCode(HttpStatus.OK)
-  @ApiOperation({
-    summary: 'Resolve a Monster Hunter tabletop action',
-  })
-  @ApiOkResponse({ type: TableActionResponseDto })
-  useMonsterHunterTableAction(
-    @CurrentUser() user: AuthUser,
-    @Param('id', ParseUUIDPipe) id: string,
-    @Body() dto: UseMonsterHunterTableActionDto,
-  ): Promise<TableActionResponseDto> {
-    return this.monsterHunter.useTableAction(user.id, id, dto);
+    protected readonly rogue: RogueActionsHandler,
+    protected readonly monk: MonkActionsHandler,
+    protected readonly paladin: PaladinActionsHandler,
+    protected readonly ranger: RangerActionsHandler,
+    protected readonly cleric: ClericActionsHandler,
+    protected readonly bard: BardActionsHandler,
+    protected readonly barbarian: BarbarianActionsHandler,
+    protected readonly sorcerer: SorcererActionsHandler,
+    protected readonly warlock: WarlockActionsHandler,
+    protected readonly druid: DruidActionsHandler,
+    protected readonly wizard: WizardActionsHandler,
+    protected readonly fighter: FighterActionsHandler,
+    protected readonly gunslinger: GunslingerActionsHandler,
+    protected readonly monsterHunter: MonsterHunterActionsHandler,
+  ) {
+    super();
   }
 }

@@ -8,22 +8,25 @@ import { CharacterSheetValidator } from '../domain/validation/character-sheet.va
 import { CharacterMapper } from '../infrastructure/character.mapper';
 import { UpdateCharacterDto } from '../dto/update-character.dto';
 import { CharacterResponseDto } from '../dto/character-response.dto';
-import { CharacterSheetInput } from '../domain/character-sheet.types';
 import { SeedStartingInventoryHandler } from '@game/inventory/application/query/seed-starting-inventory.handler';
 import { LoadGrantedSpellCatalog } from '@game/spellcasting/application/load-granted-spell-catalog';
 import { ResolveSubclassOptionGrantedSpells } from '@game/spellcasting/application/resolve-subclass-option-granted-spells';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';
-import { assertAndConsumeHighElfCantripSwap } from './update-character/assert-high-elf-cantrip-swap';
-import { clearStaleSheetChoices } from './update-character/clear-stale-sheet-choices';
 import { mergeUpdateCharacterSpells } from './update-character/merge-update-character-spells';
+import { clearStaleSheetChoices } from './update-character/sheet/clear-stale-sheet-choices';
+import { resolveEffectiveUpdateSheet } from './update-character/sheet/resolve-effective-update-sheet';
 import {
+  detectCharacterIdentityChanges,
   featSlugsOf,
-  resolveEffectiveFeatOptions,
   shouldResyncCharacterSpells,
   toSheetInput,
-} from './update-character/update-sheet-input';
-import { syncLessonsOriginCharacterFeats } from '../domain/origin/lessons-origin';
-import { readEldritchInvocationOriginFeatBindings } from '@game/combat/domain/warlock';
+} from './update-character/sheet/update-sheet-input';
+import { buildUpdateValidationInput } from './update-character/validate/build-update-validation-input';
+import {
+  resolveEffectiveCharacterIdentity,
+  validateUpdateCatalogRefsIfNeeded,
+} from './update-character/validate/resolve-effective-identity';
+import { validateUpdateCharacterSheet } from './update-character/validate/validate-update-character-sheet';
 
 @Injectable()
 export class UpdateCharacterHandler {
@@ -46,93 +49,36 @@ export class UpdateCharacterHandler {
     dto: UpdateCharacterDto,
   ): Promise<CharacterResponseDto> {
     const row = await this.repository.findAccessibleOrFail(userId, id, 'write');
+    const effective = resolveEffectiveCharacterIdentity(dto, row);
 
-    const effective = {
-      level: dto.level ?? row.level,
-      classSlug: dto.classSlug ?? row.classSlug,
-      speciesSlug: dto.speciesSlug !== undefined ? (dto.speciesSlug ?? null) : row.speciesSlug,
-      heritageSlug:
-        dto.heritageSlug !== undefined ? (dto.heritageSlug ?? null) : row.heritageSlug,
-      backgroundSlug: dto.backgroundSlug ?? row.backgroundSlug,
-      subclassSlug:
-        dto.subclassSlug !== undefined ? (dto.subclassSlug ?? null) : row.subclassSlug,
-    };
-
-    if (
-      dto.classSlug !== undefined ||
-      dto.speciesSlug !== undefined ||
-      dto.heritageSlug !== undefined ||
-      dto.backgroundSlug !== undefined ||
-      dto.subclassSlug !== undefined ||
-      dto.alignmentSlug !== undefined
-    ) {
-      await this.catalogLookup.validateCharacterCatalogRefs({
-        classSlug: effective.classSlug,
-        speciesSlug: effective.speciesSlug,
-        heritageSlug: effective.heritageSlug,
-        backgroundSlug: effective.backgroundSlug,
-        subclassSlug: effective.subclassSlug,
-        alignmentSlug: dto.alignmentSlug !== undefined ? dto.alignmentSlug : row.alignmentSlug,
-      });
-    }
-
+    await validateUpdateCatalogRefsIfNeeded({
+      catalogLookup: this.catalogLookup,
+      dto,
+      row,
+      effective,
+    });
     await this.sheetValidator.validateLevelRules(effective);
 
     const sheetSnapshot = await this.sheetRepository.load(row.id, effective.backgroundSlug);
-    let effectiveCharacterFeats =
-      dto.characterFeats !== undefined ? dto.characterFeats : sheetSnapshot.characterFeats;
-
-    if (dto.classOptions !== undefined) {
-      const previousLessons = new Set(
-        readEldritchInvocationOriginFeatBindings(
-          sheetSnapshot.classOptions,
-        ).map((binding) => binding.featSlug),
-      );
-      const protectedFeatSlugs = new Set(
-        effectiveCharacterFeats
-          .map((feat) => feat.featSlug)
-          .filter((slug) => !previousLessons.has(slug)),
-      );
-      effectiveCharacterFeats = syncLessonsOriginCharacterFeats({
-        previousClassOptions: sheetSnapshot.classOptions,
-        nextClassOptions: dto.classOptions,
-        characterFeats: effectiveCharacterFeats,
-        protectedFeatSlugs,
-      });
-    }
-
-    const effectiveFeatOptions = resolveEffectiveFeatOptions(
+    const {
+      effectiveCharacterFeats,
+      effectiveFeatOptions,
+      effectiveSpeciesChoices,
+      effectiveHeritageChoices,
+    } = await resolveEffectiveUpdateSheet({
+      dataSource: this.dataSource,
+      characterId: row.id,
       dto,
       sheetSnapshot,
-      effectiveCharacterFeats,
-    );
-    const effectiveSpeciesChoices =
-      dto.speciesChoices !== undefined
-        ? dto.speciesChoices
-        : sheetSnapshot.speciesChoices;
-    const effectiveHeritageChoices =
-      dto.heritageChoices !== undefined
-        ? dto.heritageChoices
-        : sheetSnapshot.heritageChoices;
+    });
 
-    if (dto.speciesChoices !== undefined) {
-      await assertAndConsumeHighElfCantripSwap(
-        this.dataSource,
-        row.id,
-        sheetSnapshot.speciesChoices,
-        dto.speciesChoices,
-      );
-    }
-
-    const levelChanged = dto.level !== undefined && dto.level !== row.level;
-    const speciesChanged =
-      dto.speciesSlug !== undefined && dto.speciesSlug !== row.speciesSlug;
-    const subclassChanged =
-      dto.subclassSlug !== undefined && dto.subclassSlug !== row.subclassSlug;
-    const classChanged =
-      dto.classSlug !== undefined && dto.classSlug !== row.classSlug;
-    const backgroundChanged =
-      dto.backgroundSlug !== undefined && dto.backgroundSlug !== row.backgroundSlug;
+    const {
+      levelChanged,
+      speciesChanged,
+      subclassChanged,
+      classChanged,
+      backgroundChanged,
+    } = detectCharacterIdentityChanges(dto, row);
 
     const shouldResyncSpells = shouldResyncCharacterSpells(
       dto,
@@ -143,10 +89,7 @@ export class UpdateCharacterHandler {
     );
 
     const sheetInput = toSheetInput(dto);
-    if (
-      dto.classOptions !== undefined &&
-      dto.characterFeats === undefined
-    ) {
+    if (dto.classOptions !== undefined && dto.characterFeats === undefined) {
       sheetInput.characterFeats = effectiveCharacterFeats;
     }
     if (shouldResyncSpells) {
@@ -170,69 +113,25 @@ export class UpdateCharacterHandler {
       });
     }
 
-    // Expertise/weapon mastery patches often omit skills/feats already on the sheet.
-    // Validation still needs those sources or proficient checks fail (e.g. level-up).
-    const needsProficiencyContext = sheetInput.classOptions !== undefined;
-    const injectFeatOptions =
-      (shouldResyncSpells || needsProficiencyContext) &&
-      sheetInput.featOptions === undefined;
-    const injectHeritageChoices =
-      (shouldResyncSpells || needsProficiencyContext) &&
-      sheetInput.heritageChoices === undefined &&
-      effective.heritageSlug;
-    const injectSpeciesChoices =
-      (shouldResyncSpells || needsProficiencyContext) &&
-      sheetInput.speciesChoices === undefined &&
-      effective.speciesSlug;
-    const injectClassOptions =
-      shouldResyncSpells && sheetInput.classOptions === undefined;
-
-    const validationInput: CharacterSheetInput = {
-      ...sheetInput,
-      ...(needsProficiencyContext && sheetInput.classSkillSlugs === undefined
-        ? { classSkillSlugs: sheetSnapshot.classSkillSlugs }
-        : {}),
-      ...(needsProficiencyContext && sheetInput.characterSpells === undefined
-        ? { characterSpells: sheetSnapshot.characterSpells }
-        : {}),
-      ...(injectFeatOptions ? { featOptions: effectiveFeatOptions } : {}),
-      ...(injectSpeciesChoices
-        ? { speciesChoices: effectiveSpeciesChoices }
-        : {}),
-      ...(injectHeritageChoices
-        ? { heritageChoices: effectiveHeritageChoices }
-        : {}),
-      ...(injectClassOptions
-        ? { classOptions: sheetSnapshot.classOptions }
-        : {}),
-    };
-
-    await this.sheetValidator.validateSheetInput(validationInput, {
-      ...effective,
-      characterFeats: effectiveCharacterFeats,
-    });
-
-    if (dto.characterFeats !== undefined || dto.featOptions !== undefined) {
-      await this.sheetValidator.validateFeatOptions(
-        effectiveCharacterFeats,
+    await validateUpdateCharacterSheet({
+      sheetValidator: this.sheetValidator,
+      dto,
+      validationInput: buildUpdateValidationInput({
+        sheetInput,
+        sheetSnapshot,
+        shouldResyncSpells,
+        effective,
         effectiveFeatOptions,
-        dto.level ?? row.level,
-        dto.classSlug ?? row.classSlug,
-      );
-    }
-
-    const effectiveSubclassOptions =
-      dto.subclassOptions !== undefined
-        ? dto.subclassOptions
-        : sheetSnapshot.subclassOptions;
-    if (dto.characterFeats !== undefined || dto.subclassOptions !== undefined) {
-      await this.sheetValidator.validateFightingStyleSelections(
-        dto.classSlug ?? row.classSlug,
-        effectiveCharacterFeats,
-        effectiveSubclassOptions,
-        dto.level ?? row.level,
-      );
-    }
+        effectiveSpeciesChoices,
+        effectiveHeritageChoices,
+      }),
+      effective,
+      sheetSnapshot,
+      effectiveCharacterFeats,
+      effectiveFeatOptions,
+      rowLevel: row.level,
+      rowClassSlug: row.classSlug,
+    });
 
     await clearStaleSheetChoices(this.sheetRepository, row.id, dto, {
       classChanged,

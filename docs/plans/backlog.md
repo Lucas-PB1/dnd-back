@@ -69,10 +69,10 @@ Detalhe: [`treasure-rules-vs-sistema.md`](../architecture/treasure-rules-vs-sist
 
 Rules: `dry-quality` · `typescript-quality` · `file-size`. Skills: `audit-code-health` · `split-large-module` · `unify-game-stats`.
 
-- [ ] Splits hard >200 + pastas gordas — [`hard-files-checklist.md`](hard-files-checklist.md) (clean-code / solid / dry)
 - [ ] Reduzir `as never` residual nos specs
 
-Scripts essenciais: só DB + smoke + measure — [`scripts/README.md`](../../scripts/README.md).
+Scripts essenciais: só DB + smoke + measure — [`scripts/README.md`](../../scripts/README.md).  
+Hard files >200: **feito** (produção + DTO + test-support).
 
 ### Editorial GH (não bloqueia mesa)
 

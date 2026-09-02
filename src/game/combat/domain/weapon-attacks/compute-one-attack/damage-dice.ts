@@ -1,0 +1,37 @@
+import {
+  martialArtsDie,
+  martialArtsDieFaces,
+} from '../../monk/features';
+import {
+  usesVersatileTwoHanded,
+} from '../weapon-attack-predicates';
+import type {
+  EquippedWeaponPiece,
+  WeaponAttackContext,
+} from '../weapon-attack.types';
+
+export function resolveDamageDice(input: {
+  piece: EquippedWeaponPiece;
+  equippedWeapons: EquippedWeaponPiece[];
+  context: WeaponAttackContext;
+  monkEligible: boolean;
+}): { damageDice: string; monkMartialArtsDie: string | null } {
+  const versatile2h = usesVersatileTwoHanded(
+    input.piece,
+    input.equippedWeapons,
+    Boolean(input.context.hasShield),
+  );
+  let damageDice = versatile2h
+    ? (input.piece.versatileDamage ?? input.piece.damage ?? '1')
+    : (input.piece.damage ?? '1');
+  let monkMartialArtsDie: string | null = null;
+  if (input.monkEligible) {
+    const maFaces = martialArtsDieFaces(input.context.level ?? 1);
+    const weaponFaces = Number(/d(\d+)/i.exec(damageDice)?.[1] ?? '0');
+    if (maFaces > weaponFaces) {
+      damageDice = martialArtsDie(input.context.level ?? 1);
+    }
+    monkMartialArtsDie = martialArtsDie(input.context.level ?? 1);
+  }
+  return { damageDice, monkMartialArtsDie };
+}

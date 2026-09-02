@@ -1,19 +1,19 @@
 jest.mock('./update-character/apply-background-and-identity-update', () => ({
   applyBackgroundAndIdentityUpdate: jest.fn(),
 }));
-jest.mock('./update-character/clear-stale-sheet-choices', () => ({
+jest.mock('./update-character/sheet/clear-stale-sheet-choices', () => ({
   clearStaleSheetChoices: jest.fn(),
 }));
 jest.mock('./update-character/merge-update-character-spells', () => ({
   mergeUpdateCharacterSpells: jest.fn(),
 }));
-jest.mock('./update-character/assert-high-elf-cantrip-swap', () => ({
+jest.mock('./update-character/sheet/assert-high-elf-cantrip-swap', () => ({
   assertAndConsumeHighElfCantripSwap: jest.fn().mockResolvedValue(undefined),
 }));
 
 import { UpdateCharacterHandler } from './update-character.handler';
 import { applyBackgroundAndIdentityUpdate } from './update-character/apply-background-and-identity-update';
-import { clearStaleSheetChoices } from './update-character/clear-stale-sheet-choices';
+import { clearStaleSheetChoices } from './update-character/sheet/clear-stale-sheet-choices';
 import { mergeUpdateCharacterSpells } from './update-character/merge-update-character-spells';
 import { EMPTY_SHEET_DATA } from '../domain/character-sheet.types';
 import { DEFAULT_ABILITY_SCORES, type PlayerCharacter } from '@game/shared/infrastructure/player-character.entity';
