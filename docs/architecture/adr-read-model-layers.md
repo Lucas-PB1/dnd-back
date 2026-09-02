@@ -205,14 +205,14 @@ Projeções usadas em ficha, combate, sessão ou validação — expandir só vi
 | Projeção | Uso runtime |
 |----------|-------------|
 | `mv_spell_by_class` | Magias por classe / validação |
-| `v_phb_class_progression` | PB, cantrips, prepared (→ candidata MV) |
-| `v_class_spell_slots` / `v_subclass_spell_slots` | Slots por nível |
-| `v_phb_*_granted_spell` | Magias concedidas |
-| `v_phb_unarmored_defense` / `v_phb_hp_bonus_source` | CA / PV |
-| `v_phb_class_ability_boost` | Boost de atributo de classe |
-| `v_phb_species_trait_choices` / `v_phb_heritage_trait_choices` | Validação de picks (→ MV) |
-| `v_phb_class_economy_action` (+ panel, table action) | Mesa / painel (→ MV) |
-| `v_phb_feat` | Pré-requisitos (→ MV) |
+| `mv_phb_class_progression` *(tabela `phb_class_progression`)* | PB, cantrips, prepared |
+| `mv_class_spell_slots` / `mv_subclass_spell_slots` | Slots por nível |
+| `mv_phb_*_granted_spell` | Magias concedidas |
+| `mv_phb_unarmored_defense` / `mv_phb_hp_bonus_source` | CA / PV |
+| `mv_phb_class_ability_boost` | Boost de atributo de classe |
+| `mv_phb_species_trait_choices` / `mv_phb_heritage_trait_choices` | Validação de picks |
+| `mv_phb_class_economy_action` (+ panel/table em tabela) | Mesa / painel |
+| `mv_phb_feat` | Pré-requisitos / listagem |
 | Views de equipamento (`v_phb_class_equipment`, …) | Pacote inicial |
 
 #### Proibido no runtime
@@ -276,14 +276,18 @@ Escreve normalizado (Camada 1). Labels de enum via VALUES view (Camada 2). Expõ
 
 ## Definition of Done (implementação — fase posterior)
 
-- [ ] MVs das Decisões 3 e 4 no baseline + refresh em `run-seeds.mjs`
-- [ ] Entities TypeORM apontando para `mv_*` onde aplicável
-- [ ] Inventário views tipo B → issues de deprecação
-- [ ] `catalog-patterns.md` §10 e `data-model.md` referenciam este ADR
-- [ ] Skill `phb-query-views` menciona MV vs view viva
+- [x] MVs das Decisões 3 e 4 no baseline + refresh em `run-seeds.mjs`
+- [x] Entities TypeORM apontando para `mv_*` onde aplicável
+- [x] Inventário views tipo B → tabela (fase 2)
+- [x] `catalog-patterns.md` §10/§11 e `data-model.md` referenciam este ADR
+- [x] Skill `phb-query-views` menciona MV vs view viva
+- [x] Inventário objetivo: [`read-model-inventory.md`](../plans/read-model-inventory.md)
 
 ## Histórico
 
 | Data | Nota |
 |------|------|
-| 2026-09-02 | Aceite conceitual das decisões 1–5 (sem alteração de SQL neste passo) |
+| 2026-09-02 | Aceite conceitual das decisões 1–5 |
+| 2026-09-02 | Fase 2: 11 views espelho → tabela |
+| 2026-09-02 | Fase 4.1c: 7 MVs agregados/bundles + refresh seed |
+| 2026-09-02 | Fase 4.1d: +9 MVs lista fechada runtime (17 total) |

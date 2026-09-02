@@ -1,6 +1,7 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-@ViewEntity({ schema: 'rpg', name: 'v_phb_background' })
+/** Read model de antecedentes. Consome MV `mv_phb_background` (definição: `v_phb_background`). */
+@ViewEntity({ schema: 'rpg', name: 'mv_phb_background' })
 export class VPhbBackground {
   @ViewColumn({ name: 'background_slug' })
   backgroundSlug!: string;

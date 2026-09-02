@@ -16,7 +16,11 @@ export interface FeatOptionPrerequisite {
   valueId: string;
 }
 
-@ViewEntity({ schema: 'rpg', name: 'v_phb_feat' })
+/**
+ * Read model de talentos (agregado).
+ * Consome MV `mv_phb_feat` — refresh pós-seed. Definição: `v_phb_feat`.
+ */
+@ViewEntity({ schema: 'rpg', name: 'mv_phb_feat' })
 export class VPhbFeat {
   @ViewColumn({ name: 'feat_slug' })
   featSlug!: string;

@@ -3295,10 +3295,58 @@ LEFT JOIN rpg.phb_feat f ON f.id = a.feat_id
 LEFT JOIN rpg.phb_item i ON i.id = a.item_id
 LEFT JOIN rpg.phb_heritage_trait ht ON ht.id = a.heritage_trait_id;
 
--- Materialized view rpg.mv_spell_by_class
+-- Materialized views (catálogo estático — refresh pós-seed)
 
 CREATE MATERIALIZED VIEW rpg.mv_spell_by_class AS
   SELECT * FROM rpg.v_spell_by_class;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_feat AS
+  SELECT * FROM rpg.v_phb_feat;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_background AS
+  SELECT * FROM rpg.v_phb_background;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_species_trait_choices AS
+  SELECT * FROM rpg.v_phb_species_trait_choices;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_class_economy_action AS
+  SELECT * FROM rpg.v_phb_class_economy_action;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_creature_template_bundle AS
+  SELECT * FROM rpg.v_phb_creature_template_bundle;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_vehicle_template_bundle AS
+  SELECT * FROM rpg.v_phb_vehicle_template_bundle;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_character_thread_bundle AS
+  SELECT * FROM rpg.v_phb_character_thread_bundle;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_hp_bonus_source AS
+  SELECT * FROM rpg.v_phb_hp_bonus_source;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_unarmored_defense AS
+  SELECT * FROM rpg.v_phb_unarmored_defense;
+
+CREATE MATERIALIZED VIEW rpg.mv_class_spell_slots AS
+  SELECT * FROM rpg.v_class_spell_slots;
+
+CREATE MATERIALIZED VIEW rpg.mv_subclass_spell_slots AS
+  SELECT * FROM rpg.v_subclass_spell_slots;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_class_ability_boost AS
+  SELECT * FROM rpg.v_phb_class_ability_boost;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_feat_granted_spell AS
+  SELECT * FROM rpg.v_phb_feat_granted_spell;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_class_granted_spell AS
+  SELECT * FROM rpg.v_phb_class_granted_spell;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_species_granted_spell AS
+  SELECT * FROM rpg.v_phb_species_granted_spell;
+
+CREATE MATERIALIZED VIEW rpg.mv_phb_heritage_trait_choices AS
+  SELECT * FROM rpg.v_phb_heritage_trait_choices;
 
 -- Índices adicionais do catálogo
 
@@ -3371,6 +3419,58 @@ CREATE INDEX idx_phb_subclass_name_trgm ON rpg.phb_subclass USING gin (name gin_
 CREATE INDEX idx_phb_background_name_trgm ON rpg.phb_background USING gin (name gin_trgm_ops);
 
 CREATE UNIQUE INDEX idx_mv_spell_by_class ON rpg.mv_spell_by_class (class_slug, spell_slug);
+
+CREATE UNIQUE INDEX idx_mv_phb_feat ON rpg.mv_phb_feat (feat_slug);
+
+CREATE UNIQUE INDEX idx_mv_phb_background ON rpg.mv_phb_background (background_slug);
+
+CREATE UNIQUE INDEX idx_mv_phb_species_trait_choices
+  ON rpg.mv_phb_species_trait_choices (species_slug, choice_kind, choice_slug);
+
+CREATE UNIQUE INDEX idx_mv_phb_class_economy_action
+  ON rpg.mv_phb_class_economy_action (action_id);
+
+CREATE UNIQUE INDEX idx_mv_phb_creature_template_bundle
+  ON rpg.mv_phb_creature_template_bundle (slug);
+
+CREATE UNIQUE INDEX idx_mv_phb_vehicle_template_bundle
+  ON rpg.mv_phb_vehicle_template_bundle (slug);
+
+CREATE UNIQUE INDEX idx_mv_phb_character_thread_bundle
+  ON rpg.mv_phb_character_thread_bundle (slug);
+
+CREATE UNIQUE INDEX idx_mv_phb_hp_bonus_source
+  ON rpg.mv_phb_hp_bonus_source (source_kind, source_slug, from_level);
+
+CREATE UNIQUE INDEX idx_mv_phb_unarmored_defense
+  ON rpg.mv_phb_unarmored_defense (source_kind, source_slug);
+
+CREATE UNIQUE INDEX idx_mv_class_spell_slots
+  ON rpg.mv_class_spell_slots (class_slug, class_level);
+
+CREATE UNIQUE INDEX idx_mv_subclass_spell_slots
+  ON rpg.mv_subclass_spell_slots (subclass_slug, class_level);
+
+CREATE UNIQUE INDEX idx_mv_phb_class_ability_boost
+  ON rpg.mv_phb_class_ability_boost (class_slug, ability_slug, from_level);
+
+CREATE UNIQUE INDEX idx_mv_phb_feat_granted_spell
+  ON rpg.mv_phb_feat_granted_spell (feat_slug, spell_slug);
+
+CREATE UNIQUE INDEX idx_mv_phb_class_granted_spell
+  ON rpg.mv_phb_class_granted_spell (class_slug, spell_slug, unlock_level);
+
+CREATE UNIQUE INDEX idx_mv_phb_species_granted_spell
+  ON rpg.mv_phb_species_granted_spell (
+    species_slug,
+    unlock_level,
+    spell_slug,
+    choice_kind,
+    choice_slug
+  );
+
+CREATE UNIQUE INDEX idx_mv_phb_heritage_trait_choices
+  ON rpg.mv_phb_heritage_trait_choices (heritage_slug, choice_kind, trait_slug);
 
 -- Criticals: ownership FK (auth.users quando existir); subclass ∈ class; HP current ≤ max
 

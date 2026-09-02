@@ -31,7 +31,8 @@ export type TemplateTraitRow = {
   sortOrder: number;
 };
 
-@ViewEntity({ schema: 'rpg', name: 'v_phb_creature_template_bundle' })
+/** Bundle criatura. Consome MV `mv_phb_creature_template_bundle`. */
+@ViewEntity({ schema: 'rpg', name: 'mv_phb_creature_template_bundle' })
 export class VPhbCreatureTemplateBundle {
   @ViewColumn()
   slug!: string;

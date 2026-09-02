@@ -3,7 +3,7 @@ import { abilityModifier } from './ability-modifier';
 
 /**
  * Aumento de atributo concedido por capacidade de classe em um nível fixo
- * (resolvido de `v_phb_class_ability_boost`). Diferente do ASI/talentos, pode
+ * (resolvido de `mv_phb_class_ability_boost`). Diferente do ASI/talentos, pode
  * elevar o atributo acima de 20 até `scoreMax`. A regra de qual classe/nível
  * concede o bônus vive no banco; aqui só aplicamos os efeitos.
  */

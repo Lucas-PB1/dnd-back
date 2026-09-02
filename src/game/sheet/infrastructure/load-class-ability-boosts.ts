@@ -14,7 +14,7 @@ type ClassAbilityBoostQueryRow = {
 };
 
 /**
- * Lê os aumentos permanentes de atributo por classe (`v_phb_class_ability_boost`)
+ * Lê os aumentos permanentes de atributo por classe (`mv_phb_class_ability_boost`)
  * para a classe informada. A regra de qual classe/nível concede o bônus vive no
  * banco; o teto próprio e o nível são aplicados por `applyClassAbilityBoosts`.
  */
@@ -25,7 +25,7 @@ export async function loadClassAbilityBoosts(
   if (!classSlug) return [];
   const rows = await dataSource.query<ClassAbilityBoostQueryRow[]>(
     `SELECT ability_slug, label, bonus, score_max, from_level
-     FROM rpg.v_phb_class_ability_boost
+     FROM rpg.mv_phb_class_ability_boost
      WHERE class_slug = $1`,
     [classSlug],
   );

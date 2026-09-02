@@ -1,6 +1,7 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-@ViewEntity({ schema: 'rpg', name: 'v_phb_species_trait_choices' })
+/** Read model de choices de espécie. Consome MV `mv_phb_species_trait_choices`. */
+@ViewEntity({ schema: 'rpg', name: 'mv_phb_species_trait_choices' })
 export class VPhbSpeciesTraitChoices {
   @ViewColumn({ name: 'species_slug' })
   speciesSlug!: string;

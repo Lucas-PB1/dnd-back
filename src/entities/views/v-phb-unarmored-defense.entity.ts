@@ -1,6 +1,7 @@
 import { ViewColumn, ViewEntity } from 'typeorm';
 
-@ViewEntity({ schema: 'rpg', name: 'v_phb_unarmored_defense' })
+/** Consome MV `mv_phb_unarmored_defense`. */
+@ViewEntity({ schema: 'rpg', name: 'mv_phb_unarmored_defense' })
 export class VPhbUnarmoredDefense {
   @ViewColumn({ name: 'source_kind' })
   sourceKind!: string;

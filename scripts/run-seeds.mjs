@@ -110,11 +110,30 @@ async function seedOne(label, url) {
       console.log('ok');
     }
 
-    process.stdout.write('  refresh rpg.mv_spell_by_class... ');
-    await client.query(
-      'REFRESH MATERIALIZED VIEW CONCURRENTLY rpg.mv_spell_by_class',
-    );
-    console.log('ok');
+    const materializedViews = [
+      'mv_spell_by_class',
+      'mv_phb_feat',
+      'mv_phb_background',
+      'mv_phb_species_trait_choices',
+      'mv_phb_class_economy_action',
+      'mv_phb_creature_template_bundle',
+      'mv_phb_vehicle_template_bundle',
+      'mv_phb_character_thread_bundle',
+      'mv_phb_hp_bonus_source',
+      'mv_phb_unarmored_defense',
+      'mv_class_spell_slots',
+      'mv_subclass_spell_slots',
+      'mv_phb_class_ability_boost',
+      'mv_phb_feat_granted_spell',
+      'mv_phb_class_granted_spell',
+      'mv_phb_species_granted_spell',
+      'mv_phb_heritage_trait_choices',
+    ];
+    for (const name of materializedViews) {
+      process.stdout.write(`  refresh rpg.${name}... `);
+      await client.query(`REFRESH MATERIALIZED VIEW CONCURRENTLY rpg.${name}`);
+      console.log('ok');
+    }
 
     console.log(`  ${files.length} seed(s) aplicado(s)`);
   } finally {

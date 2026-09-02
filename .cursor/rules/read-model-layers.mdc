@@ -6,7 +6,7 @@ alwaysApply: false
 
 # Read model layers
 
-SSOT: [`docs/architecture/adr-read-model-layers.md`](../../docs/architecture/adr-read-model-layers.md) · preview refactor: [`docs/plans/read-model-mirror-refactor.md`](../../docs/plans/read-model-mirror-refactor.md).
+SSOT: [`docs/architecture/adr-read-model-layers.md`](../../docs/architecture/adr-read-model-layers.md) · inventário: [`docs/plans/read-model-inventory.md`](../../docs/plans/read-model-inventory.md).
 
 ## Regras
 
