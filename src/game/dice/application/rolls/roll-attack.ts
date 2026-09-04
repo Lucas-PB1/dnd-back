@@ -4,24 +4,32 @@ import type { CharacterDomainService } from '@game/sheet/domain/core/character-d
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import type { ResolveEquippedWeaponAttacks } from '@game/combat/application/resolve-equipped-weapon-attacks';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import {
-  rollD20Check,
-  type AdvantageMode,
-} from '@game/dice/domain/dice';
-import type { CharacterRollResponseDto, RollAttackDto } from '@game/dice/dto/character-roll.dto';
+import { rollD20Check } from '@game/dice/domain/dice';
+import type {
+  CharacterRollResponseDto,
+  RollAttackDto,
+} from '@game/dice/dto/character-roll.dto';
 import type { ResolveActivePermanentItemEffects } from '@game/inventory/application/effects/resolve-active-permanent-item-effects';
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
+import {
+  coverAcBonus,
+  effectiveCoverForAttack,
+  isCoverBlockingAttack,
+} from '@game/dice/domain/attack-cover';
+import { hasPreciseHunter, isRangerClass } from '@game/combat/domain/ranger';
 import {
   findEquippedWeaponAttack,
   loadAccessibleCharacter,
 } from './roll-weapon-context';
-import {
-  forceAdvantageIfNormal,
-  upgradeTowardAdvantage,
-} from './advantage-mode';
+import { buildAttackAdvantageContributions } from './build-attack-advantage-contributions';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
 import { applyCursemarkedBracketIfTriggered } from './apply-cursemarked-bracket';
-import { hasPreciseHunter, isRangerClass } from '@game/combat/domain/ranger';
+
+function coverNote(level: ReturnType<typeof effectiveCoverForAttack>): string | null {
+  if (level === 'half') return 'Cobertura parcial: +2 CA do alvo';
+  if (level === 'three_quarters') return 'Cobertura ¾: +5 CA do alvo';
+  return null;
+}
 
 export async function executeRollAttack(input: {
   access: PlayerCharacterAccessService;
@@ -40,7 +48,7 @@ export async function executeRollAttack(input: {
     input.userId,
     input.characterId,
   );
-  const { attack, combatFlags } = await findEquippedWeaponAttack(
+  const { attack, combatFlags, featSlugs } = await findEquippedWeaponAttack(
     {
       sheet: input.sheet,
       domain: input.domain,
@@ -52,51 +60,16 @@ export async function executeRollAttack(input: {
     input.dto.itemSlug,
     input.dto.mode,
   );
-  let mode: AdvantageMode = input.dto.advantage ?? 'normal';
-  if (attack.attackDisadvantage && mode === 'normal') {
-    mode = 'disadvantage';
-  }
-  if (
-    input.dto.automatic &&
-    attack.masteryActive &&
-    attack.masterySlug === 'automatic' &&
-    mode === 'normal'
-  ) {
-    mode = 'disadvantage';
-  }
-  if (
-    combatFlags.recklessActive &&
-    character.classSlug === 'barbarian' &&
-    input.dto.mode === 'melee' &&
-    attack.abilitySlug === 'forca'
-  ) {
-    mode = forceAdvantageIfNormal(mode);
-  }
-  if (
-    input.dto.studiedAttack &&
-    character.classSlug === 'fighter' &&
-    character.level >= 13
-  ) {
-    mode = forceAdvantageIfNormal(mode);
-  }
-  if (
-    input.dto.doorKick &&
-    character.subclassSlug === 'dungeoneer' &&
-    character.level >= 3
-  ) {
-    mode = forceAdvantageIfNormal(mode);
-  }
+
   if (input.dto.steadyAim) {
     if (character.classSlug !== 'rogue' || character.level < 3) {
       throw new BadRequestException('Steady Aim requires Rogue level 3');
     }
-    mode = upgradeTowardAdvantage(mode);
   }
   if (input.dto.assassinate) {
     if (character.subclassSlug !== 'assassin' || character.level < 3) {
       throw new BadRequestException('Assassinate requires Assassin level 3');
     }
-    mode = upgradeTowardAdvantage(mode);
   }
   if (input.dto.preciseHunter) {
     if (
@@ -105,10 +78,36 @@ export async function executeRollAttack(input: {
     ) {
       throw new BadRequestException('Precise Hunter requires Ranger level 17');
     }
-    mode = upgradeTowardAdvantage(mode);
   }
+
+  const effectiveCover = effectiveCoverForAttack({
+    cover: input.dto.targetCover ?? 'none',
+    featSlugs,
+  });
+  if (isCoverBlockingAttack(effectiveCover)) {
+    throw new BadRequestException(
+      'Cobertura total: alvo inacessível para este ataque',
+    );
+  }
+  const targetAcBonus = coverAcBonus(effectiveCover);
+
+  const { mode, notes } = buildAttackAdvantageContributions({
+    dto: input.dto,
+    classSlug: character.classSlug,
+    subclassSlug: character.subclassSlug,
+    level: character.level,
+    attackDisadvantage: attack.attackDisadvantage,
+    masteryActive: attack.masteryActive,
+    masterySlug: attack.masterySlug,
+    abilitySlug: attack.abilitySlug,
+    combatFlags,
+    featSlugs,
+  });
+
+  const coverLabel = coverNote(effectiveCover);
+  if (coverLabel) notes.unshift(coverLabel);
+
   let result = rollD20Check(attack.attackBonus, mode);
-  const notes: string[] = [];
   result = await applyStrokeOfLuckIfRequested({
     requested: input.dto.strokeOfLuck,
     spender: input.resourceSpender,
@@ -123,37 +122,6 @@ export async function executeRollAttack(input: {
       'Tiro intestinal: Velocidade pela metade e Desvantagem nos ataques (1 min; criatura Grande ou menor)',
     );
   }
-  if (input.dto.automatic) {
-    notes.push('Automática: 2 ataques / 2× munição');
-  }
-  if (mode === 'advantage' && combatFlags.recklessActive) {
-    notes.push(
-      'Imprudente: vantagem ofensiva; ataques contra você têm vantagem',
-    );
-  }
-  if (input.dto.studiedAttack) {
-    notes.push('Ataques Estudados: vantagem contra o mesmo alvo');
-  }
-  if (input.dto.doorKick) {
-    notes.push('Chute na Porta: vantagem na primeira rodada');
-  }
-  if (input.dto.steadyAim) {
-    notes.push(
-      character.subclassSlug === 'assassin' && character.level >= 9
-        ? 'Mira Móvel: Mira Firme concede vantagem sem reduzir o Deslocamento'
-        : 'Mira Firme: vantagem; Deslocamento 0 até o fim do turno',
-    );
-  }
-  if (input.dto.assassinate) {
-    notes.push(
-      'Assassinar: vantagem contra criatura que ainda não agiu na primeira rodada',
-    );
-  }
-  if (input.dto.preciseHunter) {
-    notes.push(
-      'Caçador Preciso: vantagem contra a criatura marcada pela Marca do Predador',
-    );
-  }
   await applyCursemarkedBracketIfTriggered({
     dataSource: input.dataSource,
     character,
@@ -162,7 +130,8 @@ export async function executeRollAttack(input: {
     kept,
     notes,
   });
-  return {
+
+  const response: CharacterRollResponseDto = {
     kind: 'attack',
     label: `Ataque — ${attack.itemName} (${input.dto.mode === 'ranged' ? 'à distância' : 'corpo a corpo'})${critical ? ' (crítico)' : ''}`,
     expression: result.expression,
@@ -174,4 +143,15 @@ export async function executeRollAttack(input: {
     kept: result.d20.kept,
     note: notes.length > 0 ? notes.join(' · ') : undefined,
   };
+
+  if (targetAcBonus > 0) {
+    response.targetAcBonus = targetAcBonus;
+  }
+  if (input.dto.targetAc != null) {
+    const effectiveTargetAc = input.dto.targetAc + targetAcBonus;
+    response.effectiveTargetAc = effectiveTargetAc;
+    response.hit = result.total >= effectiveTargetAc;
+  }
+
+  return response;
 }

@@ -74,4 +74,21 @@ export class RollInitiativeDto {
   @IsOptional()
   @IsBoolean()
   strokeOfLuck?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Pulso de Pedra (Gigante pedra): vantagem se todos estão em solo sólido',
+  })
+  @IsOptional()
+  @IsBoolean()
+  stonePulse?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Espada de Kas: +1d10 na rolagem de Iniciativa',
+  })
+  @IsOptional()
+  @IsBoolean()
+  kasInitiativeBoost?: boolean;
 }

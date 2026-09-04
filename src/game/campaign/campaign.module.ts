@@ -5,6 +5,7 @@ import { CharacterDiceModule } from '../dice/character-dice.module';
 import { CharacterSessionModule } from '../session/character-session.module';
 import { CombatModule } from '../combat/combat.module';
 import { ActorModule } from '../actor/actor.module';
+import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
 import { GameActor } from '../actor/infrastructure/game-actor.entity';
 import { GameActorState } from '../actor/infrastructure/game-actor-state.entity';
 import { PlayerCharacterState } from '../session/infrastructure/player-character-state.entity';
@@ -40,6 +41,7 @@ import { CampaignEncountersController } from './campaign-encounters.controller';
       PlayerCharacterState,
       GameActor,
       GameActorState,
+      PhbCreatureTemplate,
     ]),
   ],
   controllers: [CampaignsController, CampaignEncountersController],

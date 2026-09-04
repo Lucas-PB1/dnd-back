@@ -103,7 +103,7 @@ export async function findEquippedWeaponAttack(
       `No equipped weapon attack for '${itemSlug}' (${mode})`,
     );
   }
-  return { attack, combatFlags };
+  return { attack, combatFlags, featSlugs };
 }
 
 export async function loadAccessibleCharacter(

@@ -54,7 +54,6 @@ Contrato REST: Swagger em `/api`.
 | Doc | Para quê |
 |------|----------|
 | [`plans/grim-hollow-mesa-audit.md`](plans/grim-hollow-mesa-audit.md) | GH Cap. 2 mesa + Cap. 1 — residual |
-| [`plans/grim-hollow-cap6-transformations.md`](plans/grim-hollow-cap6-transformations.md) | GH Cap. 6 — ficha/mesa |
 | [`plans/northlands-character-threads.md`](plans/northlands-character-threads.md) | Threads — extração + fase 2 mesa |
 | [`plans/northlands-audit.md`](plans/northlands-audit.md) | Northlands — gaps opcionais |
 

@@ -12,6 +12,7 @@ import type { CampaignEncounter } from '../infrastructure/campaign-encounter.ent
 import type { CampaignMember } from '../infrastructure/campaign-member.entity';
 import type { CampaignEncounterCombatant } from '../infrastructure/campaign-encounter-combatant.entity';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
+import type { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
 import type { Repository } from 'typeorm';
 import { asDep } from '@common/testing/as-dep';
 
@@ -60,8 +61,11 @@ describe('CampaignEncounterService', () => {
     >
   >;
   let loadDto: jest.Mocked<Pick<LoadEncounterDto, 'load'>>;
-  let actorPersistence: jest.Mocked<Pick<ActorPersistenceService, 'createWithChildren'>>;
+  let actorPersistence: jest.Mocked<
+    Pick<ActorPersistenceService, 'createWithChildren' | 'spawnFromTemplate'>
+  >;
   let actors: jest.Mocked<Pick<Repository<GameActor>, 'create' | 'findOne' | 'save'>>;
+  let creatureTemplates: jest.Mocked<Pick<Repository<PhbCreatureTemplate>, 'findOne'>>;
   let characterState: { clearResourcesUsedEntryByCharacterId: jest.Mock };
   const dto = { id: 'e1', name: 'Fight' };
 
@@ -92,11 +96,15 @@ describe('CampaignEncounterService', () => {
         hitPointsMax: 7,
         hitPointsCurrent: 7,
       } as GameActor),
+      spawnFromTemplate: jest.fn(),
     };
     actors = {
       create: jest.fn().mockImplementation((row?: unknown) => row as GameActor),
       findOne: jest.fn(),
-      save: jest.fn().mockResolvedValue(undefined),
+      save: jest.fn().mockImplementation(async (row) => row as GameActor),
+    };
+    creatureTemplates = {
+      findOne: jest.fn(),
     };
     const characterStateMock = {
       clearResourcesUsedEntryByCharacterId: jest.fn().mockResolvedValue(undefined),
@@ -108,6 +116,7 @@ describe('CampaignEncounterService', () => {
       loadDto as unknown as LoadEncounterDto,
       actorPersistence as unknown as ActorPersistenceService,
       actors as unknown as Repository<GameActor>,
+      creatureTemplates as unknown as Repository<PhbCreatureTemplate>,
       asDep(characterStateMock),
     );
   });
@@ -160,7 +169,11 @@ describe('CampaignEncounterService', () => {
   });
 
   it('addCreature creates actor, links combatant and refreshes order', async () => {
-    await service.addCreature('u1', 'c1', 'e1', { name: 'Goblin', hpMax: 7, armorClass: 13 });
+    await service.addCreature('u1', 'c1', 'e1', {
+      name: 'Goblin',
+      hpMax: 7,
+      armorClass: 13,
+    });
     expect(actorPersistence.createWithChildren).toHaveBeenCalled();
     expect(encounters.addActor).toHaveBeenCalledWith(
       expect.objectContaining({ actorId: 'actor1' }),
@@ -169,6 +182,29 @@ describe('CampaignEncounterService', () => {
       'e1',
       expect.any(Map),
     );
+  });
+
+  it('addCreature spawns from catalog template', async () => {
+    creatureTemplates.findOne.mockResolvedValue({
+      slug: 'goblin',
+      name: 'Goblin',
+    } as PhbCreatureTemplate);
+    actorPersistence.spawnFromTemplate.mockResolvedValue('actor-catalog');
+    actors.findOne.mockResolvedValue({
+      id: 'actor-catalog',
+      name: 'Goblin #1',
+      initiativeModifier: 2,
+      hitPointsMax: 7,
+      hitPointsCurrent: 7,
+      armorClass: 15,
+    } as GameActor);
+
+    await service.addCreature('u1', 'c1', 'e1', {
+      templateSlug: 'goblin',
+      count: 2,
+    });
+    expect(actorPersistence.spawnFromTemplate).toHaveBeenCalledTimes(2);
+    expect(encounters.addActor).toHaveBeenCalledTimes(2);
   });
 
   it('patchCombatant and removeCombatant mutate combatants', async () => {

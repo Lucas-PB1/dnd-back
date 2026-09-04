@@ -22,5 +22,16 @@ export { skillCheckBonus, skillProficiencyRank } from './compute/skill-check';
 export {
   collectSaveProficiencyAbilities,
   hasAlertFeat,
-  initiativeBonus,
 } from './compute/saves-and-initiative';
+export {
+  applyFocusedInitiativeFloor,
+  focusedInitiativeTakeCount,
+  hasGiantkinStoneAncestry,
+  hasInitiativeProficiency,
+  initiativeBonus,
+  resolveInitiativeAdvantageContributions,
+  resolveInitiativeBonus,
+  type InitiativeBonusBreakdown,
+  type InitiativeRollContext,
+  type InitiativeRollOptions,
+} from '../resolve-initiative-roll';

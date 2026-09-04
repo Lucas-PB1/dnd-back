@@ -19,7 +19,7 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 | Itens DMG mesa | Pronto — [`dmg-wiring-status.md`](../source/dmg-wiring-status.md) |
 | Grim Hollow Cap. 2 mesa + Cap. 1 heranças | Pronto — residual adiado em [`grim-hollow-mesa-audit.md`](grim-hollow-mesa-audit.md) |
 | Grim Hollow Cap. 4 talentos | Pronto |
-| Grim Hollow Cap. 6 transformações | Ficha + J060 + UI edit + notes prontos; **economy/mesa tipada** adiada — [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md) |
+| Grim Hollow Cap. 6 transformações | Pronto — economy tipada API + front mesa |
 | Saúde do código (Fases 0–4) | **Pronto** — dívida residual em Adiado |
 | Combate situacional / monstros catálogo | **Adiado** |
 
@@ -27,17 +27,13 @@ Padrão mesa: skills **`rpg-class-mesa-api`** · **`rpg-class-mesa-front`**
 
 ## Ativo
 
-_(vazio — Cap. 6 economy tipada está em Adiado)_
+_(vazio)_
 
 ---
 
 ## Adiado — polish / ops
 
 Só retomar com pedido explícito.
-
-### Grim Hollow Cap. 6
-
-- [ ] **Cap. 6 economy/mesa:** `phb_resource_*` + table-actions (Marca Demoníaca, Possession, …). Notes + UI edit feitos — [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md).
 
 ### Classe / UI
 
@@ -49,14 +45,7 @@ Só retomar com pedido explícito.
 
 ### Combate / campanha
 
-- [ ] Monstros de catálogo no tracker (hoje: criaturas manuais)
-- [ ] Iniciativa PC: fontes além de DEX + Alerta
-- [ ] Buffs temporários / reações de CA
-- [ ] PV temporários (`tempHp` na mesa + fontes) e cura/pools reativos
-- [ ] Fúria / Imprudente / dano situacional de subclasse
 - [ ] Estilos e talentos condicionais (GWF, TWF, Charger, PAM, …)
-- [ ] Maestria de arma como sistema de combate
-- [ ] Vantagem / desvantagem / cobertura no ataque (mesa)
 
 ### Treasure / itens
 

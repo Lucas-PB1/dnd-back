@@ -1,4 +1,5 @@
 import type { Repository } from 'typeorm';
+import type { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
 import type { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import type { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import type { CampaignRepository } from '../../infrastructure/campaign.repository';
@@ -13,7 +14,7 @@ import type {
   CampaignEncounterDto,
   PatchEncounterCombatantDto,
 } from '../../dto/encounter.dto';
-import { DEFAULT_ABILITY_SCORES } from '@game/shared/domain/ability-scores';
+import { spawnEncounterCreatures } from './spawn-encounter-creatures';
 
 export type EncounterCombatantDeps = {
   campaigns: CampaignRepository;
@@ -21,6 +22,7 @@ export type EncounterCombatantDeps = {
   loadDto: LoadEncounterDto;
   actorPersistence: ActorPersistenceService;
   actors: Repository<GameActor>;
+  creatureTemplates: Repository<PhbCreatureTemplate>;
 };
 
 export async function addEncounterCreature(
@@ -37,30 +39,25 @@ export async function addEncounterCreature(
     encounterId,
   );
 
-  const actor = await deps.actorPersistence.createWithChildren(
-    deps.actors.create({
-      ownerUserId: userId,
-      campaignId,
-      actorKind: 'creature',
-      name: dto.name.trim(),
-      hitPointsMax: dto.hpMax,
-      hitPointsCurrent: dto.hpCurrent ?? dto.hpMax,
-      armorClass: dto.armorClass,
-      initiativeModifier: dto.initiativeModifier ?? null,
-      abilityScores: DEFAULT_ABILITY_SCORES,
-    }),
-    { actorKind: 'creature', name: dto.name },
-  );
-
-  await deps.encounters.addActor({
-    encounterId: encounter.id,
-    actorId: actor.id,
-    initiativeModifier: dto.initiativeModifier ?? null,
+  const actors = await spawnEncounterCreatures({
+    actorPersistence: deps.actorPersistence,
+    actors: deps.actors,
+    templates: deps.creatureTemplates,
+    userId,
+    campaignId,
+    dto,
   });
-  await deps.encounters.refreshSortOrders(
-    encounter.id,
-    new Map([[actor.id, actor.name]]),
-  );
+
+  const nameByActorId = new Map<string, string>();
+  for (const actor of actors) {
+    await deps.encounters.addActor({
+      encounterId: encounter.id,
+      actorId: actor.id,
+      initiativeModifier: actor.initiativeModifier,
+    });
+    nameByActorId.set(actor.id, actor.name);
+  }
+  await deps.encounters.refreshSortOrders(encounter.id, nameByActorId);
   return deps.loadDto.load(encounter, 'dm');
 }
 

@@ -19,16 +19,18 @@ import { WizardActionsHandler } from '../application/actions/wizard/wizard-actio
 import { FighterActionsHandler } from '../application/actions/fighter/fighter-actions.handler';
 import { GunslingerActionsHandler } from '../application/actions/gunslinger/gunslinger-actions.handler';
 import { MonsterHunterActionsHandler } from '../application/actions/monster-hunter/monster-hunter-actions.handler';
+import { TransformationActionsHandler } from '../application/actions/transformation/transformation-actions.handler';
 import { WithCasterTableActions } from './table-actions/caster.routes';
 import { WithMartialTableActions } from './table-actions/martial.routes';
+import { WithTransformationTableActions } from './table-actions/transformation.routes';
 
 @ApiTags('game-characters')
 @ApiBearerAuth()
 @ApiUnauthorizedResponse({ description: 'Missing or invalid Bearer token' })
 @UseGuards(SupabaseAuthGuard)
 @Controller('characters')
-export class TableActionsController extends WithMartialTableActions(
-  WithCasterTableActions(class {}),
+export class TableActionsController extends WithTransformationTableActions(
+  WithMartialTableActions(WithCasterTableActions(class {})),
 ) {
   constructor(
     protected readonly rogue: RogueActionsHandler,
@@ -45,6 +47,7 @@ export class TableActionsController extends WithMartialTableActions(
     protected readonly fighter: FighterActionsHandler,
     protected readonly gunslinger: GunslingerActionsHandler,
     protected readonly monsterHunter: MonsterHunterActionsHandler,
+    protected readonly transformation: TransformationActionsHandler,
   ) {
     super();
   }

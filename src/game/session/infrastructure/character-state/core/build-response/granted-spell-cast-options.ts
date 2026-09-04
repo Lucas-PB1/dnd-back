@@ -14,7 +14,7 @@ import {
   resolveGrantedSpellCastEconomy,
 } from '@game/spellcasting/domain/resolve-granted-spell-cast-economy';
 import { resolveFeatSlugForGrantedSpell } from '@game/spellcasting/domain/resolve-granted-spellcasting-ability';
-import { proficiencyBonusForLevel } from '@game/session/application/core/apply-species-resource-spend-side-effects';
+import { proficiencyBonusForLevel } from '@game/session/domain/proficiency-bonus-for-level';
 import { CharacterStateResponseDto } from '@game/session/dto/core/character-state-response.dto';
 import {
   appendEldritchFreeCastOptions,

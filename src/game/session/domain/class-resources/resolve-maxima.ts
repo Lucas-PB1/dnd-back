@@ -25,6 +25,9 @@ export function resolveClassResourceMaxima(input: {
   abilityModifiers: AbilityMods;
   /** Sobrescreve max de channelDivinity (coluna de progressão). */
   channelDivinityFromProgression?: number | null;
+  /** Cap. 6: `fixed` sem fixedMax → estágio; slugs PB+stage somam estágio ao PB. */
+  transformationStage?: number;
+  proficiencyBonusPlusStageSlugs?: ReadonlySet<string>;
 }): ClassResourceMax[] {
   const bySlug = new Map<string, ClassResourceScheduleRow[]>();
   for (const row of input.rows) {
@@ -58,6 +61,15 @@ export function resolveClassResourceMaxima(input: {
     if (slug === LAY_ON_HANDS_SLUG) {
       const LAY_ON_HANDS_HP_PER_LEVEL = 5;
       max = LAY_ON_HANDS_HP_PER_LEVEL * input.level;
+    }
+
+    if (input.transformationStage != null) {
+      if (top.maxFormula === 'fixed' && top.fixedMax == null) {
+        max = input.transformationStage;
+      }
+      if (input.proficiencyBonusPlusStageSlugs?.has(slug)) {
+        max = input.proficiencyBonus + input.transformationStage;
+      }
     }
 
     if (max <= 0) continue;

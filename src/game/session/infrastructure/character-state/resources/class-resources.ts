@@ -9,6 +9,7 @@ import {
   type ClassResourceMax,
 } from '@game/session/domain/class-resources';
 import { filterSpeciesResourceScheduleByChoices } from '@game/session/domain/filter-species-resources-by-option';
+import { CAP6_PB_PLUS_STAGE_RESOURCE_SLUGS } from '@game/session/domain/transformation/cap6-resource-max';
 import { riskDieFaces, riskDieLabel } from '@game/session/domain/risk-die';
 import {
   psiEnergyDieFaces,
@@ -35,6 +36,8 @@ import {
   loadClassProgressionSnapshot,
   loadActiveItemSlugs,
 } from '../../queries/class-resource-character.queries';
+import { loadCharacterTransformation } from '../../queries/transformation-character.queries';
+import { loadTransformationResourceOptionGates } from '../../queries/transformation-resource-option-gates';
 
 export type { ClassResourceDbRow } from '../../queries/class-resource-schedule.queries';
 export {
@@ -139,8 +142,37 @@ export async function resolveClassResources(
     character.level,
   );
   const mods = computeAbilityModifiers(character.abilityScores);
+  const proficiencyBonus = progression?.proficiencyBonus ?? 2;
 
-  return resolveClassResourceMaxima({
+  const transformation = await loadCharacterTransformation(
+    dataSource,
+    character.id,
+  );
+  let transformationMax: ClassResourceMax[] = [];
+  if (transformation) {
+    const transformationRowsRaw = await loadFeatResourceSchedule(dataSource, [
+      transformation.slug,
+    ]);
+    const transformationGates = await loadTransformationResourceOptionGates(
+      dataSource,
+      transformation.slug,
+    );
+    const transformationRows = filterSpeciesResourceScheduleByChoices(
+      transformationRowsRaw,
+      transformationGates,
+      transformation.choices,
+    );
+    transformationMax = resolveClassResourceMaxima({
+      rows: transformationRows,
+      level: transformation.stage,
+      proficiencyBonus,
+      abilityModifiers: mods,
+      transformationStage: transformation.stage,
+      proficiencyBonusPlusStageSlugs: CAP6_PB_PLUS_STAGE_RESOURCE_SLUGS,
+    });
+  }
+
+  const standardMax = resolveClassResourceMaxima({
     rows: [
       ...classRows,
       ...subclassRows,
@@ -151,8 +183,19 @@ export async function resolveClassResources(
       ...threadRows,
     ],
     level: character.level,
-    proficiencyBonus: progression?.proficiencyBonus ?? 2,
+    proficiencyBonus,
     abilityModifiers: mods,
     channelDivinityFromProgression: progression?.channelDivinity ?? null,
   });
+
+  const bySlug = new Map<string, ClassResourceMax>();
+  for (const resource of standardMax) {
+    bySlug.set(resource.slug, resource);
+  }
+  for (const resource of transformationMax) {
+    bySlug.set(resource.slug, resource);
+  }
+  return [...bySlug.values()].sort((a, b) =>
+    a.name.localeCompare(b.name, 'pt'),
+  );
 }

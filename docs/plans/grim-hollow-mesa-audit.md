@@ -30,7 +30,7 @@
 | Capítulo | Doc | Estado |
 |----------|-----|--------|
 | Talentos (Cap. 4) | — | **Pronto** (gunslinger feat + Quick Strike) |
-| Transformações (Cap. 6) | [`grim-hollow-cap6-transformations.md`](grim-hollow-cap6-transformations.md) | Catálogo **feito**; ficha/mesa **aberto** |
+| Transformações (Cap. 6) | — | **Pronto** (`J061` resources + `C078` economy; mesa tipada) |
 
 ---
 

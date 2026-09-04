@@ -35,4 +35,26 @@ export class CharacterRollResponseDto {
     description: 'Nota situacional (Tiro intestinal, Tiro na cabeça, etc.)',
   })
   note?: string;
+
+  @ApiPropertyOptional({
+    description: 'Bônus de CA por cobertura aplicado ao alvo',
+    example: 2,
+  })
+  targetAcBonus?: number;
+
+  @ApiPropertyOptional({
+    description: 'CA efetiva do alvo (targetAc + cobertura) quando informada',
+    example: 17,
+  })
+  effectiveTargetAc?: number;
+
+  @ApiPropertyOptional({
+    description: 'Acerto contra effectiveTargetAc (quando targetAc informado)',
+  })
+  hit?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'Ataque bloqueado por cobertura total (sem rolagem)',
+  })
+  blocked?: boolean;
 }

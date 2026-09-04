@@ -1,5 +1,14 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsIn, IsOptional, IsString } from 'class-validator';
+import {
+  IsBoolean,
+  IsIn,
+  IsInt,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
+import type { AttackCoverLevel } from '../../domain/attack-cover';
 import type { AdvantageMode } from '../../domain/dice';
 
 export class RollAttackDto {
@@ -77,4 +86,47 @@ export class RollAttackDto {
   @IsOptional()
   @IsBoolean()
   preciseHunter?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description:
+      'Golpe Brutal (Berserker): abre mão da vantagem do Imprudente neste ataque',
+  })
+  @IsOptional()
+  @IsBoolean()
+  brutalStrike?: boolean;
+
+  @ApiPropertyOptional({
+    default: 'none',
+    description: 'Cobertura de combate do alvo (+2 / +5 CA; total bloqueia o ataque)',
+  })
+  @IsOptional()
+  @IsIn(['none', 'half', 'three_quarters', 'full'])
+  targetCover?: AttackCoverLevel;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Alcance longo (ataque à distância): desvantagem',
+  })
+  @IsOptional()
+  @IsBoolean()
+  longRange?: boolean;
+
+  @ApiPropertyOptional({
+    default: false,
+    description: 'Ataque à distância a 1,5 m do alvo: desvantagem',
+  })
+  @IsOptional()
+  @IsBoolean()
+  meleeWithRanged?: boolean;
+
+  @ApiPropertyOptional({
+    description: 'CA base do alvo; resposta inclui acerto/erro com bônus de cobertura',
+    example: 15,
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(40)
+  targetAc?: number;
 }

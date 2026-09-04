@@ -13,8 +13,8 @@ Dados do catálogo PHB 2024 e Valdas Spire of Secrets. **Um arquivo por tabela.*
 | `steinhardt-eldritch-hunt/H###_<tabela>.sql` | Steinhardt Eldritch Hunt Player Pack (`H001`–`H025`) |
 | `northlands-heroes/N###_<tabela>.sql` | Northlands Worldbook — Heroes of the Sagas (`N001`–`N037`; Cap. 5 + Character Threads + longships em `N037`; veículos/templates em `creatures/M003`) |
 | `griffons-saddlebag/R###_<tabela>.sql` | The Griffon's Saddlebag: Book One — Part II Character Options (`R001`–`R011`: Feathren + 12 subclasses + stubs de magia + `image_url` + recursos de combate GSB) |
-| `grim-hollow/J###_<tabela>.sql` | Grim Hollow Player's Guide (`J001`–`J035`: heranças, antecedentes, feats, MH + 40 subclasses Cap. 2, imagens, opções wizard; Cap. 5: `J005` armas, `J006` gear/foco/upgrades, `J007` munição, `J036` escudos GH; Cap. 6: `J019` shells transformações + `J048`–`J059` benefícios + `J060` option_def/value de boons) |
-| `combat/C###_*.sql` | Economia/painel/recursos (`C001`–`C062`; Eir `C056`; Northlands C052–C055; GSB Book One C057–C062) |
+| `grim-hollow/J###_<tabela>.sql` | Grim Hollow Player's Guide (`J001`–`J035`: heranças, antecedentes, feats, MH + 40 subclasses Cap. 2, imagens, opções wizard; Cap. 5: `J005` armas, `J006` gear/foco/upgrades, `J007` munição, `J036` escudos GH; Cap. 6: `J019` shells transformações + `J048`–`J059` benefícios + `J060` option_def/value de boons + `J061` resources economy) |
+| `combat/C###_*.sql` | Economia/painel/recursos (`C001`–`C078`; Eir `C056`; Northlands C052–C055; GSB C057–C062; GH Cap. 6 transformações `C078`) |
 | `dmg/D###_*.sql` | Itens mágicos DMG 2024 Cap. 7 A–Z (`D010_phb_item`) |
 
 **Regra:** stats de arma (dano, tipo, propriedades, maestria) vivem no catálogo (`phb_item` / `phb_weapon`), nunca hardcoded no domain TypeScript.
@@ -32,6 +32,8 @@ Numeração sequencial sem lacunas (ordem de dependência). Exemplos:
 
 Ordem de aplicação dos packs: `phb` → `subclass` → `valdas` → `valdas-gunslinger` → `valdas-player-pack-2` → `steinhardt-eldritch-hunt` → `northlands-heroes` → `griffons-saddlebag` → `grim-hollow` → `dmg` → `combat`.
 
-No pack `combat`, heranças GH Cap. 1: `C070` (HP), `C071` (economia ~44 ações), `C072` (recursos tipados; requer migration `T093`).
+No pack `combat`, heranças GH Cap. 1: `C070` (HP), `C071` (economia ~44 ações), `C072` (recursos tipados; requer migration `T093`). Cap. 6 transformações: `C078` (44 table-actions; gerado por `scripts/generate-ghpg-cap6-economy-seeds.mjs`).
+
+Incremental (só Cap. 6 economy): `node scripts/apply-cap6-economy-seeds.mjs` (após `J061` no pack grim-hollow).
 
 Pack incremental em produção: preferir `npm run db:seed:supabase` (aplica a árvore de seeds). Seeds já versionados — sem `apply-seed-pack`.

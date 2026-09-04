@@ -81,6 +81,7 @@ import { MonsterHunterActionsHandler } from './application/actions/monster-hunte
     DruidActionsHandler,
     WizardActionsHandler,
     MonsterHunterActionsHandler,
+    TransformationActionsHandler,
   ],
   exports: [CharacterStateRepository],
 })

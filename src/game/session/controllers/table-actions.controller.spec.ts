@@ -42,6 +42,7 @@ describe('TableActionsController routes', () => {
         ':id/gunslinger/table-action',
         ':id/monk/table-action',
         ':id/monster-hunter/table-action',
+        ':id/transformation/table-action',
         ':id/paladin/table-action',
         ':id/ranger/table-action',
         ':id/rogue/table-action',

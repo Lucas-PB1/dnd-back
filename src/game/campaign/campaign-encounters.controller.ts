@@ -92,7 +92,7 @@ export class CampaignEncountersController {
   }
 
   @Post(':encounterId/creatures')
-  @ApiOperation({ summary: 'Add manual creature (dm)' })
+  @ApiOperation({ summary: 'Add creature from catalog or manual stats (dm)' })
   @ApiCreatedResponse({ type: CampaignEncounterDto })
   addCreature(
     @CurrentUser() user: AuthUser,

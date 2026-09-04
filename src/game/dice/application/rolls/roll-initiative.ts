@@ -1,21 +1,22 @@
 import type { DataSource } from 'typeorm';
 import type { CharacterDomainService } from '@game/sheet/domain/core/character-domain.service';
-import { initiativeBonus } from '@game/sheet/domain/stats/character-check-bonuses';
 import { computeAbilityModifiers } from '@game/sheet/domain/stats/character-derived-stats';
+import {
+  applyFocusedInitiativeFloor,
+  resolveInitiativeAdvantageContributions,
+  resolveInitiativeBonus,
+} from '@game/sheet/domain/stats/character-check-bonuses';
 import type { CharacterSheetRepository } from '@game/sheet/infrastructure/character-sheet.repository';
 import { resolveEffectiveAbilityScores } from '@game/sheet/infrastructure/load-class-ability-boosts';
 import type { PlayerCharacterAccessService } from '@game/shared/player-character-access.service';
-import { rollD20Check } from '@game/dice/domain/dice';
+import { rollDie, rollD20Check } from '@game/dice/domain/dice';
 import type {
   CharacterRollResponseDto,
   RollInitiativeDto,
 } from '@game/dice/dto/character-roll.dto';
 import type { CharacterResourceSpender } from '@game/session/domain/character-resource-spender';
-import { forceAdvantageIfNormal } from './advantage-mode';
 import { loadAccessibleCharacter } from './roll-weapon-context';
 import { applyStrokeOfLuckIfRequested } from './stroke-of-luck';
-import { abilityModifier } from '@game/sheet/domain/stats/ability-modifier';
-import { isRangerClass } from '@game/combat/domain/ranger';
 
 export async function executeRollInitiative(input: {
   access: PlayerCharacterAccessService;
@@ -41,25 +42,49 @@ export async function executeRollInitiative(input: {
     character.abilityScores,
   );
   const mods = computeAbilityModifiers(scores);
-  let bonus = initiativeBonus(mods.destreza, pb, sheet.characterFeats);
-  const notes: string[] = [];
-  if (
-    isRangerClass(character.classSlug) &&
-    character.subclassSlug === 'gloom-stalker' &&
-    character.level >= 3
-  ) {
-    const wisdom = abilityModifier(scores.sabedoria);
-    bonus += wisdom;
-    notes.push(`Emboscador das Sombras: +${wisdom} (mod. de Sabedoria) na Iniciativa`);
+  const rollContext = {
+    dexterityModifier: mods.destreza,
+    wisdomModifier: mods.sabedoria,
+    intelligenceModifier: mods.inteligencia,
+    proficiencyBonus: pb,
+    classSlug: character.classSlug,
+    subclassSlug: character.subclassSlug,
+    level: character.level,
+    characterFeats: sheet.characterFeats,
+    heritageChoices: sheet.heritageChoices,
+    speciesChoices: sheet.speciesChoices,
+  };
+
+  const { total: modifier, notes: bonusNotes } =
+    resolveInitiativeBonus(rollContext);
+  const { mode, notes: advantageNotes } = resolveInitiativeAdvantageContributions(
+    rollContext,
+    input.dto,
+  );
+  const notes = [...bonusNotes, ...advantageNotes];
+
+  let result = rollD20Check(modifier, mode);
+  const floor = applyFocusedInitiativeFloor(
+    result.d20.kept,
+    sheet.heritageChoices,
+  );
+  if (floor.note) notes.push(floor.note);
+  if (floor.kept.some((face, index) => face !== result.d20.kept[index])) {
+    const keptFace = floor.kept[0] ?? 0;
+    result = {
+      ...result,
+      d20: { ...result.d20, kept: floor.kept },
+      total: keptFace + modifier,
+      expression: `1d20${modifier >= 0 ? `+${modifier}` : modifier}`,
+    };
   }
-  let mode = input.dto.advantage ?? 'normal';
-  if (character.subclassSlug === 'champion' && character.level >= 3) {
-    mode = forceAdvantageIfNormal(mode);
+
+  if (input.dto.kasInitiativeBoost) {
+    const kasRoll = rollDie(10);
+    result.total += kasRoll;
+    notes.push(`Espada de Kas: +${kasRoll} (1d10) na Iniciativa`);
   }
-  if (character.subclassSlug === 'assassin' && character.level >= 3) {
-    mode = forceAdvantageIfNormal(mode);
-  }
-  let result = rollD20Check(bonus, mode);
+
   result = await applyStrokeOfLuckIfRequested({
     requested: input.dto.strokeOfLuck,
     spender: input.resourceSpender,
@@ -67,12 +92,7 @@ export async function executeRollInitiative(input: {
     result,
     notes,
   });
-  if (mode === 'advantage' && character.subclassSlug === 'champion') {
-    notes.push('Atleta Extraordinário: Vantagem na Iniciativa');
-  }
-  if (mode === 'advantage' && character.subclassSlug === 'assassin') {
-    notes.push('Assassinar: Vantagem na Iniciativa');
-  }
+
   return {
     kind: 'initiative',
     label: 'Iniciativa',

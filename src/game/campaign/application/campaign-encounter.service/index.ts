@@ -1,6 +1,7 @@
 import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { PhbCreatureTemplate } from '@entities/phb-creature-template.entity';
 import { ActorPersistenceService } from '@game/actor/infrastructure/actor-persistence.service';
 import { GameActor } from '@game/actor/infrastructure/game-actor.entity';
 import { CharacterStateRepository } from '@game/session/infrastructure/character-state.repository';
@@ -38,6 +39,8 @@ export class CampaignEncounterService {
     private readonly actorPersistence: ActorPersistenceService,
     @InjectRepository(GameActor)
     private readonly actors: Repository<GameActor>,
+    @InjectRepository(PhbCreatureTemplate)
+    private readonly creatureTemplates: Repository<PhbCreatureTemplate>,
     @Inject(forwardRef(() => CharacterStateRepository))
     private readonly characterState: CharacterStateRepository,
   ) {}
@@ -55,6 +58,7 @@ export class CampaignEncounterService {
       ...this.lifecycleDeps(),
       actorPersistence: this.actorPersistence,
       actors: this.actors,
+      creatureTemplates: this.creatureTemplates,
     };
   }
 

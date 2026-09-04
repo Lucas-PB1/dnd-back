@@ -5,7 +5,7 @@ import {
   UseClassResourceDto,
   UseClassResourceResponseDto,
 } from '@game/session/dto/core/session-commands.dto';
-import { applySpeciesResourceSpendSideEffects } from './apply-species-resource-spend-side-effects';
+import { applyOriginResourceSpendEffects } from './apply-origin-resource-spend-effects';
 import { applyThreadResourceSpendSideEffects } from './apply-thread-resource-spend-side-effects';
 
 @Injectable()
@@ -31,7 +31,7 @@ export class UseClassResourceHandler {
       resourceSlug,
       dto.amount ?? 1,
     );
-    const species = await applySpeciesResourceSpendSideEffects({
+    const origin = await applyOriginResourceSpendEffects({
       state: this.state,
       character,
       resourceSlug,
@@ -41,14 +41,16 @@ export class UseClassResourceHandler {
       state: this.state,
       character,
       resourceSlug,
-      currentState: species.state,
+      currentState: origin.state,
     });
-    const notes = [species.note, thread.note].filter(
+    const notes = [origin.note, thread.note].filter(
       (note): note is string => Boolean(note?.trim()),
     );
+    const roll = origin.roll ?? spent.roll ?? null;
     return {
       ...spent,
       state: thread.state,
+      ...(roll ? { roll } : {}),
       ...(notes.length > 0 ? { note: notes.join(' ') } : {}),
     };
   }

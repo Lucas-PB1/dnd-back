@@ -48,17 +48,43 @@ export class RollEncounterInitiativeDto {
 }
 
 export class AddEncounterCreatureDto {
-  @ApiProperty({ example: 'Goblin #1' })
+  @ApiPropertyOptional({
+    example: 'goblin',
+    description: 'Slug do template de criatura (catálogo). Omitir para criatura manual.',
+  })
+  @IsOptional()
   @IsString()
   @MinLength(1)
   @MaxLength(120)
-  name!: string;
+  templateSlug?: string;
 
-  @ApiProperty({ example: 7 })
+  @ApiPropertyOptional({
+    example: 3,
+    default: 1,
+    description: 'Quantidade (somente com templateSlug)',
+  })
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  @Max(20)
+  count?: number;
+
+  @ApiPropertyOptional({
+    example: 'Goblin #1',
+    description: 'Nome customizado (manual) ou prefixo/alias (catálogo)',
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(1)
+  @MaxLength(120)
+  name?: string;
+
+  @ApiPropertyOptional({ example: 7, description: 'Obrigatório sem templateSlug' })
+  @IsOptional()
   @IsInt()
   @Min(1)
   @Max(9999)
-  hpMax!: number;
+  hpMax?: number;
 
   @ApiPropertyOptional({ example: 7 })
   @IsOptional()
@@ -67,11 +93,12 @@ export class AddEncounterCreatureDto {
   @Max(9999)
   hpCurrent?: number;
 
-  @ApiProperty({ example: 15 })
+  @ApiPropertyOptional({ example: 15, description: 'Obrigatório sem templateSlug' })
+  @IsOptional()
   @IsInt()
   @Min(1)
   @Max(40)
-  armorClass!: number;
+  armorClass?: number;
 
   @ApiPropertyOptional({ example: 2, description: 'Modificador de iniciativa' })
   @IsOptional()

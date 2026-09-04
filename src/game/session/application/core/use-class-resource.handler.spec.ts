@@ -43,6 +43,26 @@ describe('UseClassResourceHandler', () => {
     }));
   });
 
+  it('applies orc Adrenaline Surge temp HP after spend', async () => {
+    access.findAccessibleOrFail.mockResolvedValue({
+      id: 'pc-1',
+      speciesSlug: 'orc',
+      level: 5,
+    });
+
+    const result = await handler.execute('user-1', 'pc-1', {
+      resourceSlug: 'adrenalineSurge',
+      amount: 1,
+    });
+
+    expect(state.patch).toHaveBeenCalledWith(
+      expect.objectContaining({ id: 'pc-1' }),
+      { tempHp: 3 },
+    );
+    expect(result.note).toMatch(/Pico de Adrenalina/);
+    expect(result.state.tempHp).toBe(3);
+  });
+
   it('applies werekin Força Bestial temp HP after spend', async () => {
     access.findAccessibleOrFail.mockResolvedValue({
       id: 'pc-1',

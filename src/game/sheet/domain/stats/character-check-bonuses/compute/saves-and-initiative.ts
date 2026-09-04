@@ -28,7 +28,7 @@ export function hasAlertFeat(
   );
 }
 
-/** Iniciativa: mod DEX + PB se Alerta. */
+/** Iniciativa: mod DEX + PB (Alerta / Iniciativa Concentrada) + fontes de subclasse. */
 export function initiativeBonus(
   dexterityModifier: number,
   proficiencyBonus: number,
